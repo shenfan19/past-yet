@@ -1,4 +1,4 @@
-# Temporal Agency
+# The Teleporter
 
 Working title. You run a small staffing agency that sends people into the past. History cannot be changed, so every trip creates a branch timeline. The staff come home with stories, gifts and time energy, and you spend the energy on getting back to your own family.
 
