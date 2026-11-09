@@ -1,0 +1,17 @@
+# Employees. Final stats = base + the sum of trait modifiers.
+stats: [stamina, skill, eloquence, kindness, stubbornness, curiosity, homesick_trait, greed]
+default_base: {stamina: 1.0, skill: 0.4, eloquence: 0.4, kindness: 0.2, stubbornness: 0.2, curiosity: 0.2, homesick_trait: 0.2, greed: 0}
+traits:
+  kind: {kindness: 0.4}
+  stubborn: {stubbornness: 0.5, eloquence: -0.1}
+  curious: {curiosity: 0.4}
+  homesick: {homesick_trait: 0.5}
+  studious: {skill: 0.2}
+  sturdy: {stamina: 0.25}
+  glib: {eloquence: 0.3}
+  greedy: {greed: 0.6, kindness: -0.1}
+staff:
+  s_ning: {base: {skill: 0.45, eloquence: 0.45}, traits: [kind, stubborn], habit: {focus: cure, on_block: insist}, start_hired: true}
+  s_zhou: {base: {stamina: 1.1, skill: 0.5}, traits: [sturdy, glib], habit: {focus: ally, on_block: appeal}, start_hired: true}
+  s_lin: {base: {stamina: 0.9, skill: 0.55}, traits: [curious, homesick, studious], habit: {focus: prevent, on_block: yield}, start_hired: true}
+  s_qian: {base: {skill: 0.4, eloquence: 0.5}, traits: [greedy, glib], habit: {focus: balanced, on_block: insist}, start_hired: false}

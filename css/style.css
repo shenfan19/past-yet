@@ -1,0 +1,157 @@
+:root {
+  --paper: #f1e8d4;
+  --paper2: #e8dcc0;
+  --card: #f8f2e3;
+  --ink: #2b241b;
+  --ink2: #6b5f4d;
+  --line: #cdbf9f;
+  --stamp: #b3382c;
+  --blue: #2f4f6f;
+  --good: #3b6b45;
+  --warn: #a8731c;
+  --chip: #e3d6b7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #231f19;
+    --paper2: #2d2820;
+    --card: #2a251d;
+    --ink: #eadfc8;
+    --ink2: #a99d85;
+    --line: #4a4234;
+    --stamp: #d8695c;
+    --blue: #8fb1d4;
+    --good: #7fb48a;
+    --warn: #d6a24a;
+    --chip: #3a3326;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.6 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; }
+h1, h2, h3 { font-family: "Noto Serif SC", "Songti SC", SimSun, serif; margin: 0; }
+button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 4px; padding: 5px 12px; }
+button:hover:not(:disabled) { border-color: var(--stamp); }
+button:disabled { opacity: .45; cursor: default; }
+button.primary { background: var(--stamp); border-color: var(--stamp); color: #fff; }
+button.ghost { background: transparent; }
+input, select { font: inherit; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); }
+th { color: var(--ink2); font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+#top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 2px solid var(--ink); background: var(--paper2); }
+.brand { display: flex; gap: 12px; align-items: center; }
+.logo { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--stamp); color: var(--stamp); border-radius: 4px; font: 700 22px "Noto Serif SC", serif; transform: rotate(-6deg); }
+#top h1 { font-size: 20px; }
+#subtitle { font-size: 12px; color: var(--ink2); letter-spacing: .08em; }
+#tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+#tabs button { border-color: transparent; background: transparent; }
+#tabs button.on { border-color: var(--ink); background: var(--card); font-weight: 600; }
+
+#view { max-width: 980px; margin: 0 auto; padding: 16px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
+.card.on { border-color: var(--stamp); box-shadow: 0 0 0 1px var(--stamp) inset; }
+.card h3 { font-size: 15px; margin-bottom: 4px; }
+.sec { margin: 20px 0 8px; font-size: 13px; color: var(--ink2); letter-spacing: .1em; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.muted { color: var(--ink2); font-size: 13px; }
+.chip { display: inline-block; font-size: 12px; padding: 0 7px; border-radius: 10px; background: var(--chip); margin-right: 4px; }
+.chip.history { background: #d9c9a2; color: #5a4210; }
+.chip.branch { background: #c6d6e6; color: #1f3f5f; }
+.chip.trait { background: #e6cfd0; color: #6a2a2e; }
+.chip.param { background: #d6e0cf; color: #2f4f2f; }
+.chip.warn { background: var(--warn); color: #fff; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row.sp { justify-content: space-between; }
+.bar { height: 8px; background: var(--chip); border-radius: 4px; overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--stamp); }
+.bar.ok > i { background: var(--good); }
+.bar.over > i { background: var(--warn); }
+.stat { font: 600 22px "Noto Serif SC", serif; }
+.stamp { display: inline-block; border: 3px double var(--stamp); color: var(--stamp); padding: 2px 12px; font: 700 18px "Noto Serif SC", serif; transform: rotate(-3deg); border-radius: 4px; letter-spacing: .1em; }
+.quote { border-left: 3px solid var(--stamp); padding: 2px 12px; font-family: "Noto Serif SC", serif; font-size: 17px; margin: 10px 0; }
+.item { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); align-items: center; }
+.item .nm { font-weight: 600; }
+.stepper { display: flex; align-items: center; gap: 6px; }
+.stepper button { width: 28px; padding: 2px 0; }
+.stepper .n { min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
+.tl { list-style: none; padding: 0; margin: 0; }
+.tl li { padding: 6px 0 6px 18px; border-left: 2px solid var(--line); margin-left: 6px; position: relative; }
+.tl li::before { content: ""; position: absolute; left: -6px; top: 13px; width: 10px; height: 10px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink2); }
+.tl li.history::before { border-color: #8a6a1f; }
+.tl li.branch::before { border-color: var(--blue); }
+.tl li.trait::before { border-color: var(--stamp); }
+.fn { cursor: pointer; color: var(--blue); font-size: 12px; margin-left: 4px; user-select: none; }
+.fntext { font-size: 12px; color: var(--ink2); margin: 2px 0 0; }
+svg.chart { width: 100%; height: auto; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+svg.chart text { fill: var(--ink2); font-size: 11px; }
+.legend { display: flex; gap: 14px; font-size: 12px; color: var(--ink2); margin: 4px 0; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 4px; }
+pre.yaml { max-height: 420px; overflow: auto; background: var(--card); border: 1px solid var(--line); padding: 10px; font-size: 12px; line-height: 1.45; }
+.scroll { max-height: 360px; overflow: auto; border: 1px solid var(--line); border-radius: 6px; }
+.hint { padding: 8px 12px; background: var(--paper2); border-radius: 6px; margin: 6px 0; }
+.delta.up { color: var(--good); }
+.delta.down { color: var(--stamp); }
+
+.stage { display: grid; grid-template-columns: minmax(240px, 380px) 1fr; gap: 14px; align-items: start; }
+@media (max-width: 720px) { .stage { grid-template-columns: 1fr; } }
+svg.map, svg.axis { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+svg.map .grid line { stroke: var(--line); stroke-width: .6; opacity: .6; }
+svg.map .land polygon { fill: url(#dots); stroke: var(--ink2); stroke-width: 1; stroke-linejoin: round; }
+svg.map pattern circle { fill: var(--ink2); }
+svg .pt { cursor: pointer; }
+svg .pt .hit { fill: transparent; }
+svg .pt text { pointer-events: none; }
+svg .pt .dot { fill: var(--ink2); stroke: var(--card); stroke-width: 1.5; }
+svg .pt .ring { fill: none; stroke: var(--ink2); stroke-width: 1; opacity: .5; }
+svg .pt text { fill: var(--ink); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--card); stroke-width: 3px; }
+svg .pt.locked .dot { fill: var(--card); stroke: var(--ink2); stroke-dasharray: 2 2; }
+.card.locked { opacity: .65; border-style: dashed; }
+svg .pt:hover .dot, svg .pt.on .dot { fill: var(--stamp); }
+svg .pt.on .ring { stroke: var(--stamp); opacity: 1; transform-box: fill-box; transform-origin: center; animation: pulse 1.8s ease-out infinite; }
+@keyframes pulse { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
+svg.axis .ax { stroke: var(--ink2); stroke-width: 2; }
+svg.axis .tick { stroke: var(--ink2); stroke-width: 1.5; }
+svg.axis text.yr, svg.axis text.edge { fill: var(--ink2); font-size: 11px; }
+@media (prefers-reduced-motion: reduce) { svg .pt.on .ring { animation: none; } }
+@media (max-width: 560px) { #view { padding: 12px; } .item { grid-template-columns: 1fr; } }
+
+.hero { display: flex; gap: 16px; align-items: center; margin: 8px 0 12px; }
+.logo.big { width: 72px; height: 72px; font-size: 40px; }
+.lead { font: 600 18px/1.7 "Noto Serif SC", "Songti SC", SimSun, serif; margin: 8px 0 4px; }
+.gobtn { display: grid; gap: 2px; text-align: left; padding: 12px 14px; }
+.gobtn b { font-family: "Noto Serif SC", serif; font-size: 16px; }
+.refs { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; font-size: 12px; }
+.ref { color: var(--ink2); }
+details summary { cursor: pointer; color: var(--blue); font-size: 13px; }
+
+.wiki { display: grid; grid-template-columns: minmax(220px, 300px) 1fr; gap: 16px; align-items: start; }
+@media (max-width: 720px) { .wiki { grid-template-columns: 1fr; } }
+.wside { position: sticky; top: 8px; max-height: calc(100vh - 24px); overflow: auto; border: 1px solid var(--line); border-radius: 6px; padding: 10px; background: var(--card); }
+.wside input[type=search] { width: 100%; margin: 8px 0; }
+.wmain { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; min-height: 240px; }
+.wmain h2 { margin-bottom: 6px; }
+.wcat summary { cursor: pointer; font-weight: 600; padding: 4px 0; color: var(--ink); }
+.wrow { padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+.wrow:hover { background: var(--paper2); }
+.wrow.on { background: var(--chip); font-weight: 600; }
+.wrow.locked { color: var(--ink2); cursor: default; }
+a.wl { color: var(--blue); cursor: pointer; text-decoration: underline dotted; }
+.wrap { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.tagbar { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+.chipbtn { font-size: 12px; padding: 0 8px; border-radius: 10px; background: var(--chip); border: 1px solid transparent; }
+.chipbtn.on { background: var(--stamp); color: #fff; }
+.mapwrap { position: relative; }
+.zoombtns { position: absolute; top: 8px; right: 8px; display: grid; gap: 4px; }
+.zoombtns button { width: 30px; padding: 2px 0; }
+svg.map { touch-action: none; cursor: grab; }
+svg.map .land polygon { vector-effect: non-scaling-stroke; }
+svg.map .grid line { vector-effect: non-scaling-stroke; }
+svg.map .pt text { font-size: 5px; }
+svg.map .pt .dot { r: 2.2px; }
+svg.map .pt .ring { r: 5px; }
+.evrow { padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; margin: 4px 0; cursor: pointer; background: var(--card); }
+.evrow.on { border-color: var(--stamp); box-shadow: 0 0 0 1px var(--stamp) inset; }
+svg.map .pt text { display: none; }
+svg.map.labels .pt text, svg.map .pt.sel text, svg.map .pt.on text { display: block; }

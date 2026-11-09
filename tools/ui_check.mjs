@@ -1,0 +1,124 @@
+// Drive the page with Playwright: dispatch, fast-forward, claim, read the report, screenshot each tab.
+// Set PLAYWRIGHT_DIR to a folder that has playwright installed.
+import { createRequire } from 'node:module';
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(here, '..');
+const pwDir = process.env.PLAYWRIGHT_DIR || 'C:/fight/life-matters-reference-engine/gui';
+const { chromium } = createRequire(path.join(pwDir, 'x.js'))('playwright');
+const outDir = process.argv[2] || path.join(root, 'temp_screens');
+fs.mkdirSync(outDir, { recursive: true });
+const port = 8792;
+const server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: root, stdio: 'ignore' });
+await new Promise((r) => setTimeout(r, 1200));
+const errors = [];
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') errors.push(m.type() + ': ' + m.text()); });
+page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
+try {
+  const ok = (label, cond) => console.log(label + ':', cond ? 'ok' : 'MISMATCH');
+  await page.goto(`http://127.0.0.1:${port}/index.html`);
+  await page.waitForSelector('.lead');
+  await page.screenshot({ path: path.join(outDir, '0_home.png'), fullPage: true });
+  await page.click('[data-act=go][data-id=office]');
+  await page.waitForSelector('.stat');
+  await page.screenshot({ path: path.join(outDir, '1_office.png'), fullPage: true });
+  // dispatch through the world map
+  await page.click('[data-tab=dispatch]');
+  await page.waitForSelector('svg.map');
+  const vb0 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
+  await page.click('[data-act=mapz][data-id=in]');
+  const vb1 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
+  ok('zoom in narrows the view', vb1 < vb0);
+  await page.click('[data-act=mapz][data-id=reset]');
+  await page.click('.map [data-id=london_soho] .hit', { force: true });
+  await page.click('.evrow[data-id=broad_street_1854]');
+  await page.fill('#map-q', 'xyz-no-match');
+  ok('filter hides all pins', (await page.locator('svg.map .pt').count()) === 0);
+  await page.fill('#map-q', '');
+  ok('filter restore pins', (await page.locator('svg.map .pt').count()) === 2);
+  await page.click('[data-act=suggest]');
+  await page.waitForSelector('[data-act=use]', { timeout: 60000 });
+  await page.locator('[data-act=use]').last().click();
+  await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
+  await page.click('[data-act=send]');
+  await page.waitForSelector('[data-act=ff]');
+  await page.click('[data-act=ff]');
+  await page.waitForSelector('[data-act=claim]');
+  await page.click('[data-act=claim]');
+  await page.waitForSelector('.tl');
+  await page.screenshot({ path: path.join(outDir, '4_report.png'), fullPage: true });
+  const inv = await page.evaluate(() => window.__game.ctx.S().inv);
+  ok('stock was consumed', inv.chlorine_tablet < 40 || inv.ors_pack < 40 || inv.handbook < 1);
+  const before = await page.evaluate(() => window.__game.ctx.S().energy);
+  await page.reload();
+  await page.waitForSelector('.lead');
+  const after = await page.evaluate(() => window.__game.ctx.S().energy);
+  ok('energy kept after reload', before === after);
+  // shop: the used anchor is locked, antiques sell and buy, items buy and sell
+  await page.click('[data-tab=shop]');
+  await page.waitForSelector('[data-act=antlock]');
+  ok('used anchor is locked and cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
+  await page.click('[data-act=antlock][data-id=pump_rust]');
+  ok('unlock then sell possible', !(await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled()));
+  await page.click('[data-act=antlock][data-id=pump_rust]');
+  await page.click('[data-act=shopbuy][data-id=disinfectant]');
+  ok('bought disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 2);
+  await page.click('[data-act=shopsell][data-id=disinfectant]');
+  ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
+  ok('future shop items are not buyable', await page.locator('[data-act=shopbuy][data-id=bionic_lung]').isDisabled());
+  await page.fill('#shop-q', '心率');
+  ok('shop text filter', (await page.locator('[data-act=shopbuy]').count()) === 1);
+  await page.fill('#shop-q', '');
+  await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
+  await page.click('[data-act=antbuy][data-id=clinic_bell]');
+  // second place
+  await page.click('[data-tab=dispatch]');
+  await page.click('.map [data-id=vienna_general_hospital] .hit', { force: true });
+  await page.screenshot({ path: path.join(outDir, '7_dispatch_vienna.png'), fullPage: true });
+  ok('vienna sendable after buying its antique', !(await page.locator('[data-act=send]').isDisabled()));
+  // wiki
+  await page.click('[data-tab=enc]');
+  await page.waitForSelector('.wiki');
+  await page.fill('#wiki-q', '斯诺');
+  ok('wiki filter by text', (await page.locator('#wiki-list .wrow:not(.locked)').count()) >= 1);
+  await page.locator('#wiki-list .wrow:not(.locked)').first().click();
+  await page.waitForSelector('#wiki-article h2');
+  await page.locator('#wiki-article a.wl').first().click();
+  await page.click('[data-act=wikiback]');
+  await page.fill('#wiki-q', '');
+  await page.click('[data-act=wikitag][data-id=obstetrics]');
+  ok('wiki tag filter', (await page.locator('#wiki-list .wrow:not(.locked)').count()) >= 1);
+  await page.click('[data-act=wikitag][data-id=""]');
+  await page.locator('#wiki-list .wrow', { hasText: '被拒之门外' }).first().click();
+  ok('model event lists formulas in dev', (await page.locator('#wiki-article').innerText()).includes('用到的公式'));
+  await page.locator('#wiki-article a.wl').nth(1).click();
+  await page.screenshot({ path: path.join(outDir, '9_wiki.png'), fullPage: true });
+  // hire, then guest mode
+  await page.click('[data-tab=office]');
+  await page.click('[data-act=hire]');
+  ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 4);
+  await page.goto(`http://127.0.0.1:${port}/index.html?dev=0`);
+  await page.waitForSelector('.lead');
+  ok('guest has five tabs', (await page.locator('#tabs button').count()) === 5);
+  await page.click('[data-tab=enc]');
+  await page.waitForSelector('.wiki');
+  ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
+  ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
+  await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
+  await page.click('[data-tab=dispatch]');
+  ok('guest map shows only unlocked places', (await page.locator('svg.map .pt').count()) === 2);
+  await page.click('[data-tab=shop]');
+  ok('guest future shop is a locked card', (await page.locator('[data-act=shopbuy][data-id=bionic_lung]').count()) === 0);
+} catch (e) {
+  errors.push('script: ' + e.message);
+  await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });
+}
+await browser.close();
+server.kill();
+console.log(errors.length ? errors.join('\n') : 'no console errors');

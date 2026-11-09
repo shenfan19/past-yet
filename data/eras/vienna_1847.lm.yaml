@@ -1,0 +1,478 @@
+# Vienna General Hospital, first obstetric clinic, 1847. Same engine, different mechanism:
+# an inflow of births, hand contamination from autopsy work, and a hospital that has to be persuaded to wash.
+# Day 0 is 1 May 1847. Facts marked source: historical are placeholders awaiting a source check, see README.
+
+metadata:
+  name: vienna_1847
+  version: "0.1"
+  lm_format_version: "1.0"
+  extension_version: "teleporter/0.1"
+  tags: [childbed_fever, hygiene, vienna, 1847]
+  era:
+    year: 1847
+    geo: {lon: 16.353, lat: 48.221}
+    place: vienna_general_hospital
+    protagonist: semmelweis
+    calendar: {month: 5, day0: 1, month_length: 31}
+  description:
+    problem: "Mothers on one ward die at several times the rate of mothers on the next ward. History says the doctor who sees the pattern gets a washing rule through in mid May. What can a visitor change about how fast the rule comes and how many wash their hands before it does?"
+    method: "Half-day step. A birth inflow, contamination from doctors' hands, a hand-washing coverage state, two agents. The traveller teaches washing and nurses the sick. The protagonist collects the death statistics and pushes the clinic head."
+    result: "Teaching washing early saves the most mothers per unit of supply, but only as far as the clinic's resistance gives way. Winning the protagonist's trust moves the date of the rule."
+    limitations: "All rates are game assumptions. Not medical advice."
+
+extensions:
+  agents: "Named actors with their own states. Each step an agent picks the available action with the highest utility."
+  actions: "requires and utility are expressions over declared variables."
+  events: "Seeded stochastic events."
+  milestones: "One-shot report lines."
+  outcomes: "Ordered end states."
+  scoring: "Counterfactual score against a no-traveller baseline with the same seed."
+  provenance: "Every variable carries source: historical | lm_model | game_assumption | calibrated."
+  item_bindings: "Items chosen before departure are delivered at arrival."
+  strategies: "Staff habits. The option writes input variables when that employee is dispatched."
+
+roles:
+  stay: stay_days
+  horizon: horizon_days
+  arrive: arrive_day
+  recalled: traveler.recalled
+  charm: has_charm
+
+agents:
+  traveler: {label: employee, role: dispatched, order: 1}
+  semmelweis: {label: protagonist, role: era_protagonist, order: 2}
+
+variables:
+  Iu: {type: state, value: 3, unit: person, bounds: [0, null], source: game_assumption, note: "Mothers with fever, no care."}
+  It: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  R: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  D: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  cum_cases: {type: state, value: 3, unit: person, bounds: [0, null], source: game_assumption}
+  new_cases: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  death_flow: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  treated_flow: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  treat_cap: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  treated_total: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  wash: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption, note: "Share of doctors and students who wash before examining."}
+  wash_flow: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  wash_cap: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  wash_supply: {type: state, value: 0, unit: unit, bounds: [0, null], source: game_assumption, note: "Basins of washing solution still available."}
+  wash_total: {type: state, value: 0, unit: fraction, bounds: [0, null], source: game_assumption}
+  hazard: {type: state, value: 0, unit: "fraction/birth", bounds: [0, 1], source: game_assumption}
+  resist: {type: state, value: 0.7, unit: fraction, bounds: [0, 1], source: game_assumption, note: "Senior staff resistance to washing."}
+  mandate_day: {type: state, value: -1, unit: day, bounds: [-1, null], source: historical, note: "Day the washing rule starts. Historical: mid May 1847."}
+  mandate_on: {type: state, value: 0, unit: flag, bounds: [0, 1], source: historical}
+  advance_days: {type: state, value: 0, unit: day, bounds: [0, null], source: game_assumption}
+  instability: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  access: {type: state, value: 0.4, unit: fraction, bounds: [0, 1], source: game_assumption}
+  ward_load: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+
+  traveler.fatigue: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.health: {type: state, value: 1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.trust: {type: state, value: 0.15, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.loot_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption, note: "Objects the employee pocketed."}
+  traveler.greed: {type: parameter, value: 0.1, from_staff: greed, source: game_assumption}
+  traveler.homesick: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.attachment: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.satisfaction: {type: state, value: 0.6, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.progress: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.block_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption}
+  traveler.strain_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption}
+  traveler.appeal_urge: {type: state, value: 0, unit: fraction, bounds: [0, 2], source: game_assumption}
+  traveler.recalled: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.charm_used: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.lost_all: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.stamina: {type: parameter, value: 1, from_staff: stamina, source: game_assumption}
+  traveler.skill: {type: parameter, value: 0.4, from_staff: skill, source: game_assumption}
+  traveler.eloquence: {type: parameter, value: 0.4, from_staff: eloquence, source: game_assumption}
+  traveler.kindness: {type: parameter, value: 0.3, from_staff: kindness, source: game_assumption}
+  traveler.stubbornness: {type: parameter, value: 0.3, from_staff: stubbornness, source: game_assumption}
+  traveler.curiosity: {type: parameter, value: 0.3, from_staff: curiosity, source: game_assumption}
+  traveler.homesick_trait: {type: parameter, value: 0.2, from_staff: homesick_trait, source: game_assumption}
+  has_handbook: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_monitor: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_charm: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+
+  semmelweis.belief: {type: state, value: 0.5, unit: fraction, bounds: [0, 1], source: historical, note: "Already linked the fever to the autopsy room after a colleague's death earlier in 1847."}
+  semmelweis.evidence: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  semmelweis.rapport: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  semmelweis.board_pressure: {type: state, value: 0, unit: fraction, bounds: [0, 1.5], source: calibrated, note: "Pressure on the clinic head, calibrated so the baseline reaches 1 near the historical date."}
+  semmelweis.authority: {type: parameter, value: 0.5, unit: fraction, source: game_assumption}
+
+  act_teach: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_nurse: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_talk: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_lobby: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_rest: {type: input, value: 0, delivery: level, source: game_assumption}
+  sem_act_count: {type: input, value: 0, delivery: level, source: game_assumption}
+  sem_act_push: {type: input, value: 0, delivery: level, source: game_assumption}
+  sem_act_meet: {type: input, value: 0, delivery: level, source: game_assumption}
+
+  arrive_day: {type: input, value: 0.5, unit: day, source: game_assumption}
+  pref_treat: {type: input, value: 1, source: game_assumption}
+  pref_prevent: {type: input, value: 1, source: game_assumption}
+  pref_ally: {type: input, value: 1, source: game_assumption}
+  on_block: {type: input, value: 0, source: game_assumption}
+  resp_insist: {type: state, value: 0, bounds: [0, 1], source: game_assumption}
+  resp_yield: {type: state, value: 0, bounds: [0, 1], source: game_assumption}
+  resp_appeal: {type: state, value: 0, bounds: [0, 1], source: game_assumption}
+
+  births_per_day: {type: parameter, value: 12, unit: "birth/day", source: game_assumption}
+  hazard_open: {type: parameter, value: 0.3, unit: "fraction/birth", source: game_assumption}
+  wash_eff: {type: parameter, value: 0.9, unit: fraction, source: historical, note: "Washing with chlorinated solution removed most of the contamination."}
+  mandate_cover: {type: parameter, value: 0.9, unit: fraction, source: historical}
+  course_days: {type: parameter, value: 4, unit: day, source: game_assumption}
+  cfr_untreated: {type: parameter, value: 0.7, unit: fraction, source: game_assumption}
+  cfr_treated: {type: parameter, value: 0.4, unit: fraction, source: game_assumption}
+  mandate_day_hist: {type: parameter, value: 17, unit: day, source: historical, note: "Mid May 1847."}
+  stay_days: {type: parameter, value: 21, unit: day, source: game_assumption}
+  horizon_days: {type: parameter, value: 60, unit: day, source: game_assumption}
+  goal_target: {type: parameter, value: 60, unit: score, source: game_assumption}
+  w_treated: {type: parameter, value: 1, source: game_assumption}
+  w_washed: {type: parameter, value: 60, source: game_assumption}
+  w_advance: {type: parameter, value: 6, source: game_assumption}
+
+  nurse_per_day: {type: parameter, value: 4, unit: "person/day", source: game_assumption}
+  teach_rate: {type: parameter, value: 0.12, unit: "1/day", source: game_assumption}
+  supply_per_wash: {type: parameter, value: 8, unit: unit, source: game_assumption}
+  treat_sat: {type: parameter, value: 6, unit: person, source: game_assumption}
+  access_floor: {type: parameter, value: 0.25, source: game_assumption}
+  skill_gain_handbook: {type: parameter, value: 0.25, source: game_assumption}
+  resist_floor: {type: parameter, value: 0.15, source: game_assumption}
+  resist_decay: {type: parameter, value: 0.05, unit: "1/day", source: game_assumption}
+  fatigue_penalty: {type: parameter, value: 0.6, source: game_assumption}
+  tired_limit: {type: parameter, value: 0.85, source: game_assumption}
+  monitor_fatigue_cut: {type: parameter, value: 0.25, source: game_assumption, note: "Share of fatigue growth a heart rate monitor removes."}
+  rest_from: {type: parameter, value: 0.5, source: game_assumption}
+  rest_weight: {type: parameter, value: 6, source: game_assumption}
+  fat_teach: {type: parameter, value: 0.35, unit: "1/day", source: game_assumption}
+  fat_nurse: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  fat_talk: {type: parameter, value: 0.15, unit: "1/day", source: game_assumption}
+  fat_lobby: {type: parameter, value: 0.25, unit: "1/day", source: game_assumption}
+  fat_rest: {type: parameter, value: 1.5, unit: "1/day", source: game_assumption}
+  exposure_rate: {type: parameter, value: 0.28, unit: "1/day", source: game_assumption}
+  ward_scale: {type: parameter, value: 20, unit: person, source: game_assumption}
+  guard_skill: {type: parameter, value: 0.6, source: game_assumption}
+  health_recover: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  recall_health: {type: parameter, value: 0.2, source: game_assumption}
+
+  trust_gain_treat: {type: parameter, value: 0.04, source: game_assumption}
+  trust_gain_teach: {type: parameter, value: 0.05, source: game_assumption}
+  trust_loss_block: {type: parameter, value: 0.03, source: game_assumption}
+  block_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  pocket_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption, note: "Pocketing rate per day at greed 1."}
+  pocket_trust_loss: {type: parameter, value: 0.15, source: game_assumption}
+  prestige: {type: parameter, value: 0.8, source: historical, note: "A junior outsider telling senior doctors to wash is not welcome."}
+  loss_insist: {type: parameter, value: 4, unit: unit, source: game_assumption}
+  loss_yield: {type: parameter, value: 0, unit: unit, source: game_assumption}
+  yield_override: {type: parameter, value: 0.7, source: game_assumption}
+  sat_treat: {type: parameter, value: 0.02, source: game_assumption}
+  sat_wash: {type: parameter, value: 0.6, source: game_assumption}
+  sat_death: {type: parameter, value: 0.003, source: game_assumption}
+  sat_block: {type: parameter, value: 0.04, source: game_assumption}
+  sat_fatigue: {type: parameter, value: 0.2, source: game_assumption}
+  homesick_rate: {type: parameter, value: 0.02, unit: "1/day", source: game_assumption}
+  homesick_mult: {type: parameter, value: 3, source: game_assumption}
+  talk_relief: {type: parameter, value: 0.1, unit: "1/day", source: game_assumption}
+  attach_nurse: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  attach_load: {type: parameter, value: 0.06, unit: "1/day", source: game_assumption}
+  attach_talk: {type: parameter, value: 0.05, unit: "1/day", source: game_assumption}
+  stay_attach: {type: parameter, value: 0.75, source: game_assumption}
+  give_up_homesick: {type: parameter, value: 0.9, source: game_assumption}
+  give_up_satisfaction: {type: parameter, value: 0.12, source: game_assumption}
+  appeal_decay: {type: parameter, value: 1.2, unit: "1/day", source: game_assumption}
+
+  count_rate: {type: parameter, value: 0.035, unit: "1/day", source: game_assumption, note: "His own death count, ward by ward."}
+  count_gain: {type: parameter, value: 0.1, source: game_assumption}
+  belief_evidence_rate: {type: parameter, value: 0.4, unit: "1/day", source: game_assumption}
+  belief_talk: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  rapport_base: {type: parameter, value: 0.2, unit: "1/day", source: game_assumption}
+  rapport_eloquence: {type: parameter, value: 0.4, unit: "1/day", source: game_assumption}
+  rapport_handbook: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  evidence_handbook: {type: parameter, value: 0.18, unit: "1/day", source: game_assumption}
+  push_gain: {type: parameter, value: 0.25, unit: "1/day", source: calibrated}
+  lobby_gain: {type: parameter, value: 0.9, unit: "1/day", source: game_assumption}
+  lobby_rapport_min: {type: parameter, value: 0.35, source: game_assumption}
+  lobby_evidence_min: {type: parameter, value: 0.3, source: game_assumption}
+  push_evidence_min: {type: parameter, value: 0.3, source: game_assumption}
+  push_belief_min: {type: parameter, value: 0.45, source: game_assumption}
+  talk_base: {type: parameter, value: 0.3, source: game_assumption}
+
+  instab_work: {type: parameter, value: 1.2, source: game_assumption}
+  instab_advance: {type: parameter, value: 0.05, source: game_assumption}
+  strain_base: {type: parameter, value: 1.6, unit: "1/day", source: game_assumption}
+  strain_health: {type: parameter, value: 0.12, source: game_assumption}
+  strain_fatigue: {type: parameter, value: 0.15, source: game_assumption}
+
+equations:
+  traveler_response:
+    priority: 95
+    dynamics:
+      resp_insist: "1 if (on_block == 1 or traveler.stubbornness >= yield_override) else 0"
+      resp_yield: "1 if (resp_insist == 0 and on_block == 0) else 0"
+      resp_appeal: "1 if (resp_insist == 0 and on_block == 2) else 0"
+
+  washing_rule:
+    priority: 90
+    description: "The washing rule starts when the clinic head gives way or on the historical date, whichever is first."
+    dynamics:
+      semmelweis.board_pressure: "semmelweis.board_pressure + (sem_act_push * semmelweis.authority * semmelweis.belief * semmelweis.evidence * push_gain + act_lobby * traveler.eloquence * semmelweis.rapport * semmelweis.evidence * lobby_gain) * step"
+      mandate_day: "mandate_day if mandate_day >= 0 else (day if (semmelweis.board_pressure >= 1 or day >= mandate_day_hist) else -1)"
+      mandate_on: "1 if mandate_day >= 0 else 0"
+      advance_days: "max(0, mandate_day_hist - mandate_day) if mandate_day >= 0 else 0"
+      resist: "max(resist_floor, resist - resist_decay * (semmelweis.evidence * semmelweis.belief + act_lobby * semmelweis.rapport) * step)"
+
+  contamination:
+    priority: 80
+    dynamics:
+      wash: "max(wash, mandate_cover * mandate_on)"
+      hazard: "hazard_open * (1 - wash * wash_eff)"
+
+  access_and_load:
+    priority: 75
+    dynamics:
+      access: "access_floor + (1 - access_floor) * clamp(traveler.trust, 0, 1)"
+      ward_load: "clamp((Iu + It) / ward_scale, 0, 1)"
+
+  teach_washing:
+    priority: 70
+    dynamics:
+      wash_cap: "act_teach * teach_rate * (1 - resist) * (1 + prestige * 0) * access * (1 - traveler.fatigue * fatigue_penalty) * step"
+      wash_flow: "min(1 - wash, wash_cap, wash_supply / supply_per_wash)"
+      wash_supply: "wash_supply - wash_flow * supply_per_wash"
+      wash: "wash + wash_flow"
+      wash_total: "wash_total + wash_flow"
+
+  nurse_patients:
+    priority: 70
+    dynamics:
+      treat_cap: "act_nurse * nurse_per_day * (1 - traveler.fatigue * fatigue_penalty) * access * (1 + skill_gain_handbook * has_handbook) * step"
+      treated_flow: "min(Iu, treat_cap)"
+      Iu: "Iu - treated_flow"
+      It: "It + treated_flow"
+      treated_total: "treated_total + treated_flow"
+
+  births_and_fever:
+    priority: 60
+    dynamics:
+      new_cases: "births_per_day * step * hazard"
+      Iu: "Iu + new_cases"
+      cum_cases: "cum_cases + new_cases"
+
+  fever_outcome:
+    priority: 59
+    dynamics:
+      death_flow: "(Iu * cfr_untreated + It * cfr_treated * (1 - 0.3 * traveler.skill)) * (1 - exp(-step / course_days))"
+      R: "R + (Iu + It) * (1 - exp(-step / course_days)) - death_flow"
+      D: "D + death_flow"
+      Iu: "Iu * exp(-step / course_days)"
+      It: "It * exp(-step / course_days)"
+
+  traveller_trust:
+    priority: 50
+    dynamics:
+      traveler.trust: "traveler.trust + trust_gain_treat * treated_flow + trust_gain_teach * wash_flow * 10"
+
+  traveller_body:
+    priority: 45
+    dynamics:
+      traveler.fatigue: "traveler.fatigue + (fat_teach * act_teach + fat_nurse * act_nurse + fat_talk * act_talk + fat_lobby * act_lobby - fat_rest * act_rest) / traveler.stamina * (1 - monitor_fatigue_cut * has_monitor) * step"
+      traveler.health: "traveler.health - exposure_rate * (act_nurse * 1.2 + act_teach * 0.4 + act_talk * 0.15) * ward_load * (1 - clamp(traveler.skill * guard_skill, 0, 0.9)) * step + health_recover * act_rest * step"
+
+  traveller_mind:
+    priority: 40
+    dynamics:
+      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) - talk_relief * act_talk * semmelweis.rapport) * step"
+      traveler.attachment: "traveler.attachment + (attach_nurse * act_nurse + attach_load * ward_load * arrived + attach_talk * act_talk * semmelweis.rapport) * traveler.kindness * step"
+      traveler.satisfaction: "traveler.satisfaction + arrived * (sat_treat * treated_flow + sat_wash * wash_flow - sat_death * death_flow - sat_fatigue * max(0, traveler.fatigue - 0.7) * step)"
+      traveler.appeal_urge: "max(0, traveler.appeal_urge - appeal_decay * step)"
+      traveler.progress: "(treated_total * w_treated + wash_total * w_washed + advance_days * w_advance) / goal_target"
+
+  protagonist:
+    priority: 55
+    dynamics:
+      semmelweis.rapport: "semmelweis.rapport + sem_act_meet * act_talk * (rapport_base + rapport_eloquence * traveler.eloquence + rapport_handbook * has_handbook) * step"
+      semmelweis.evidence: "semmelweis.evidence + (sem_act_count * count_rate + count_gain * new_cases / births_per_day + sem_act_meet * act_talk * semmelweis.rapport * evidence_handbook * has_handbook) * step"
+      semmelweis.belief: "semmelweis.belief + (belief_evidence_rate * max(0, semmelweis.evidence - semmelweis.belief) + sem_act_meet * act_talk * semmelweis.rapport * traveler.eloquence * belief_talk) * step"
+
+  timeline_strain:
+    priority: 35
+    dynamics:
+      instability: "clamp(instab_work * (treated_total + wash_total * 20) / goal_target + instab_advance * advance_days, 0, 1)"
+
+actions:
+  traveler:
+    teach:
+      level: act_teach
+      requires: "arrived == 1 and wash_supply >= supply_per_wash * 0.1 and wash < 1 and traveler.fatigue < tired_limit"
+      utility: "pref_prevent * (0.7 + 0.8 * (1 - resist))"
+    nurse:
+      level: act_nurse
+      requires: "arrived == 1 and Iu >= 0.5 and traveler.fatigue < tired_limit"
+      utility: "pref_treat * (0.5 + 1.0 * min(1, Iu / treat_sat)) + traveler.kindness * 0.4 * min(1, Iu / treat_sat)"
+    talk:
+      level: act_talk
+      requires: "arrived == 1 and semmelweis.rapport < 1 and traveler.fatigue < tired_limit"
+      utility: "pref_ally * (talk_base + traveler.curiosity * 0.7 + (1 - semmelweis.rapport) * 0.5 + 0.3 * has_handbook) + traveler.appeal_urge * 1.2 - traveler.kindness * 0.6 * min(1, Iu / treat_sat)"
+    lobby:
+      level: act_lobby
+      requires: "arrived == 1 and mandate_day < 0 and semmelweis.rapport >= lobby_rapport_min and semmelweis.evidence >= lobby_evidence_min and traveler.fatigue < tired_limit"
+      utility: "pref_ally * (traveler.eloquence * 1.4 * semmelweis.rapport + 0.4)"
+    rest:
+      level: act_rest
+      requires: "arrived == 1"
+      utility: "rest_weight * max(0, traveler.fatigue - rest_from) + 0.05"
+  semmelweis:
+    count:
+      level: sem_act_count
+      requires: "1 == 1"
+      utility: "1.1 - semmelweis.evidence"
+    push:
+      level: sem_act_push
+      requires: "semmelweis.evidence >= push_evidence_min and semmelweis.belief >= push_belief_min and mandate_day < 0"
+      utility: "0.1 + 2.5 * semmelweis.belief * semmelweis.evidence"
+    meet:
+      level: sem_act_meet
+      requires: "act_talk == 1"
+      utility: "3 * (0.4 + semmelweis.rapport)"
+
+events:
+  door_block:
+    source: game_assumption
+    importance: 2
+    tag: trait
+    when: "(act_teach + act_nurse) > 0"
+    probability: "block_base * (1 - access) * (1 + prestige) * step"
+    cooldown_days: 1
+    effects:
+      wash_supply: "max(0, wash_supply - resp_insist * loss_insist - resp_yield * loss_yield)"
+      traveler.trust: "traveler.trust - trust_loss_block * (1 + resp_insist) + resp_appeal * 0.03"
+      traveler.block_count: "traveler.block_count + 1"
+      traveler.appeal_urge: "traveler.appeal_urge + resp_appeal + 0.3 * resp_yield"
+      traveler.satisfaction: "traveler.satisfaction - sat_block * (resp_insist + 0.4)"
+      traveler.fatigue: "traveler.fatigue + 0.05"
+    variants:
+      - {when: "resp_insist == 1 and on_block != 1 and d_wash_supply == 0", key: door_block_stubborn_empty}
+      - {when: "resp_insist == 1 and d_wash_supply == 0", key: door_block_insist_empty}
+      - {when: "resp_insist == 1 and on_block != 1", key: door_block_stubborn}
+      - {when: "resp_insist == 1", key: door_block_insist}
+      - {when: "resp_appeal == 1", key: door_block_appeal}
+      - {when: "resp_yield == 1", key: door_block_yield}
+  time_strain:
+    source: game_assumption
+    importance: 3
+    tag: param
+    when: "advance_days > 1 and arrived == 1"
+    probability: "instability * strain_base * step"
+    cooldown_days: 3
+    effects:
+      traveler.health: "traveler.health - strain_health"
+      traveler.fatigue: "traveler.fatigue + strain_fatigue"
+      traveler.strain_count: "traveler.strain_count + 1"
+  pocket:
+    source: game_assumption
+    importance: 2
+    tag: trait
+    when: "arrived == 1"
+    probability: "traveler.greed * pocket_base * step"
+    cooldown_days: 1.5
+    effects:
+      traveler.trust: "traveler.trust - pocket_trust_loss"
+      traveler.loot_count: "traveler.loot_count + 1"
+
+milestones:
+  first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}
+  first_protect: {when: "wash_total >= 0.05", importance: 3, tag: branch, needs_traveler: true}
+  met_snow: {when: "sem_act_meet * act_talk >= 1", importance: 4, tag: branch, needs_traveler: true}
+  snow_trusts: {when: "semmelweis.rapport >= 0.5", importance: 3, tag: branch, needs_traveler: true}
+  snow_convinced: {when: "semmelweis.belief >= 0.8 and semmelweis.rapport >= 0.4", importance: 4, tag: branch, needs_traveler: true}
+  board_moves: {when: "semmelweis.board_pressure >= 0.6", importance: 4, tag: branch, needs_traveler: false}
+  handle_off_history: {when: "mandate_day >= 0 and advance_days <= 1", importance: 5, tag: history, needs_traveler: false}
+  handle_off_early: {when: "mandate_day >= 0 and advance_days > 1", importance: 5, tag: branch, needs_traveler: true}
+  trust_won: {when: "traveler.trust >= 0.5", importance: 2, tag: trait, needs_traveler: true}
+  exhausted: {when: "traveler.fatigue >= 0.8", importance: 1, tag: param, needs_traveler: true}
+  outbreak_fades: {when: "day >= 10 and Iu + It < 4", importance: 2, tag: param, needs_traveler: false}
+
+report: {deaths: D, cases: cum_cases, handle: mandate_day, treated: treated_total, protected: wash_total, protected_scale: 40}
+
+log_importance: {arrive: 5, leave: 5, recall: 5}
+
+tag_source: {history: historical, branch: game_assumption, trait: game_assumption, param: game_assumption}
+
+hints:
+  - {when: "wash_supply >= supply_per_wash * 2", key: unused_protect}
+  - {when: "traveler.block_count >= 2 and resp_insist == 1", key: lost_ors}
+  - {when: "semmelweis.rapport < 0.4 and has_handbook > 0", key: ally_gap}
+  - {when: "1 == 1", key: none}
+
+recall:
+  when: "traveler.health <= recall_health and arrived == 1"
+  with_charm:
+    traveler.charm_used: "1"
+  without_charm:
+    traveler.lost_all: "1"
+    wash_supply: "0"
+
+outcomes:
+  - {id: near_death, when: "traveler.recalled == 1", energy_mult: 0.3, rest_days: 3}
+  - {id: stay_and_gifts, when: "traveler.attachment >= stay_attach and traveler.progress >= 0.45", energy_mult: 0.9, rest_days: 0}
+  - {id: gave_up, when: "traveler.homesick >= give_up_homesick or traveler.satisfaction <= give_up_satisfaction", energy_mult: 0.5, rest_days: 1}
+  - {id: legend, when: "traveler.progress >= 0.95 and advance_days >= 5", energy_mult: 1.5, rest_days: 1}
+  - {id: perfect, when: "traveler.progress >= 0.5 and traveler.satisfaction >= 0.3", energy_mult: 1.0, rest_days: 1}
+  - {id: scramble, when: "traveler.block_count >= 2 and traveler.progress < 0.35", energy_mult: 0.4, rest_days: 1}
+  - {id: modest, when: "1 == 1", energy_mult: 0.7, rest_days: 1}
+
+scoring:
+  lives_saved: "base_D - D"
+  cases_prevented: "base_cum_cases - cum_cases"
+  change_amount: "max(0, base_D - D) + max(0, base_cum_cases - cum_cases) * 0.3 + advance_days * 1.5"
+
+item_bindings:
+  chlorine_tablet: {wash_supply: 3}
+  handbook: {has_handbook: 1}
+  recall_charm: {has_charm: 1}
+  disinfectant: {wash_supply: 6}
+  heart_monitor: {has_monitor: 1}
+
+strategies:
+  focus:
+    cure: {pref_treat: 1.2, pref_prevent: 0.6, pref_ally: 0.5}
+    prevent: {pref_treat: 0.6, pref_prevent: 1.2, pref_ally: 0.5}
+    ally: {pref_treat: 0.7, pref_prevent: 0.7, pref_ally: 1.5}
+    balanced: {pref_treat: 1.0, pref_prevent: 1.0, pref_ally: 0.9}
+  on_block:
+    yield: {on_block: 0}
+    insist: {on_block: 1}
+    appeal: {on_block: 2}
+
+series:
+  - {id: cases, expr: "Iu + It", label: sick}
+  - {id: deaths, expr: "D", label: dead}
+
+simulation:
+  step_size: {value: 0.5, unit: day}
+  start_day: 0
+  plans:
+    - {id: baseline, label: "Main timeline, no visitor", regimens: []}
+    - id: dispatch
+      label: "Dispatch plan built from the pre-departure sheet"
+      regimens:
+        - {variable: wash_supply, delivery: total, time_start: arrival, from_item: chlorine_tablet}
+
+optimization:
+  method: pareto_sample
+  objectives:
+    - {variable: lives_saved, metric: final, direction: maximize}
+    - {variable: cost, metric: final, direction: minimize}
+  constraints:
+    - {variable: weight, condition: "<= capacity"}
+    - {variable: cost, condition: "<= funds"}
+  algorithm: {samples: 200, refine: 200, max_jump: 4, skip_prob: 0.5, seed: 11}
+  mc: {runs: 4, seed: 7}
+  startpoint:
+    regimens:
+      - {item: chlorine_tablet, variable: wash_supply, delivery: total, optimize: {value: [0, 80], integer: true}}
+      - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: disinfectant, variable: wash_supply, delivery: total, optimize: {value: [0, 40], integer: true}}
+      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

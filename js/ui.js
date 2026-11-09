@@ -1,0 +1,420 @@
+import * as sim from './sim.js';
+import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, stratText } from './narrate.js';
+import { createWiki } from './wiki.js';
+import { createShop } from './shop.js';
+import { createWorldMap } from './worldmap.js';
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const r1 = (x) => (Math.round(x * 10) / 10).toString();
+const ri = (x) => String(Math.round(x));
+
+export function createUI(D, ctx) {
+  const T = D.get('text_zh');
+  const U = T.ui;
+  const O = D.get('config.office');
+  const view = document.getElementById('view');
+  const tabsEl = document.getElementById('tabs');
+  document.getElementById('title').textContent = U.title;
+  document.getElementById('subtitle').textContent = U.subtitle;
+
+  const devParam = new URLSearchParams(location.search).get('dev');
+  const DEV = devParam === null ? D.get('config.ui.dev_mode') : devParam === '1';
+  const st = { tab: 'home', sub: null, back: 'office', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {} }, map: null };
+
+  const eraList = () => D.get('config.eras');
+  const E = () => ctx.era(st.form.eraId);
+
+  const antiqueDefs = () => D.get('antiques.antiques');
+  const owns = (id) => ctx.S().antiques.includes(id);
+  const anchorOf = (eraId) => Object.keys(antiqueDefs()).find((id) => antiqueDefs()[id].era === eraId);
+  const eraOpen = (eraId) => owns(anchorOf(eraId));
+  const visibleEras = () => eraList().filter((id) => DEV || eraOpen(id));
+  const hiredIds = () => Object.keys(D.get('staff.staff')).filter((id) => ctx.S().staff[id].hired);
+  function isUnlocked(rule) {
+    if (rule === 'always') return true;
+    if ('era' in rule) return eraOpen(rule.era) || ctx.S().dispatches.some((d) => d.eraId === rule.era);
+    if ('antique' in rule) return owns(rule.antique);
+    if ('trait' in rule) return hiredIds().some((id) => staffTraits(D, id).includes(rule.trait));
+    if ('staff' in rule) return hiredIds().includes(rule.staff);
+    if ('item' in rule) return D.get('items.' + rule.item + '.playable') || (ctx.S().inv[rule.item] || 0) > 0;
+    throw new Error('未知解锁条件');
+  }
+  const hiddenChip = () => `<span class="chip warn">${U.enc.hidden}</span>`;
+
+  function newForm(eraId) {
+    const e = ctx.era(eraId);
+    return {
+      eraId, staffId: hiredIds()[0],
+      items: Object.fromEntries(Object.keys(e.itemBindings).map((k) => [k, 0])),
+      seed: Math.floor(Math.random() * 100000) + 1,
+    };
+  }
+
+  // ---------- helpers ----------
+  const staffState = (id) => {
+    const S = ctx.S();
+    if (S.dispatches.some((d) => d.spec.staffId === id && !d.claimed)) return 'away';
+    if ((S.staff[id].restUntil || 0) > ctx.now()) return 'resting';
+    return 'ready';
+  };
+  const totals = () => sim.itemTotals(D, st.form.items);
+  const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: { ...st.form.items } });
+  const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
+  const tagLabel = (tag) => U.report[tag];
+  const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
+  const habitOf = (id) => D.get('staff.staff.' + id + '.habit');
+  const habitText = (id, eraId) => {
+    const h = habitOf(id);
+    return `${stratText(D, eraId, 'focus', h.focus).name} · ${U.dispatch.on_block}${stratText(D, eraId, 'on_block', h.on_block).name}`;
+  };
+  const recordRow = (d, withStaff) => `<tr><td>${esc(withStaff ? staffName(D, d.spec.staffId) : T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`;
+  function selectEra(id) {
+    if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId }; st.suggest = null; }
+  }
+  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, habitText, isUnlocked, visibleEras, eraOpen, selectEra };
+  const wiki = createWiki(X);
+  const shop = createShop(X);
+  const worldMap = createWorldMap(X);
+  st.map = worldMap.init();
+  st.form = newForm(visibleEras()[0]);
+  worldMap.attach(view);
+
+  // ---------- tabs ----------
+  function renderTabs() {
+    tabsEl.innerHTML = Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" class="${st.tab === k && !st.sub ? 'on' : ''}">${esc(label)}</button>`).join('');
+  }
+
+  // ---------- office ----------
+  function officeHtml() {
+    const S = ctx.S();
+    const now = ctx.now();
+    const pct = Math.min(100, (S.energy / O.home_cost) * 100);
+    const staffCards = hiredIds().map((id) => {
+      const state = staffState(id);
+      const stats = sim.staffStats(D, id);
+      const traits = staffTraits(D, id).map((t) => `<span class="chip">${esc(T.traits[t])}</span>`).join('');
+      const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
+      const label = { ready: U.office.ready, away: U.office.away, resting: U.office.resting }[state];
+      const hist = reports().filter((d) => d.spec.staffId === id).slice(0, 3).map((d) => recordRow(d, false)).join('');
+      return `<div class="card"><div class="row sp"><h3>${esc(staffName(D, id))}</h3><span class="chip ${state === 'ready' ? '' : 'warn'}">${label}</span></div>
+        <div>${traits}</div><p class="muted">${esc(T.staff[id].bio)}</p><div class="muted" style="font-size:12px">${mini}</div>
+        <div class="muted" style="margin-top:4px">${U.office.habit}：${esc(habitText(id, eraList()[0]))}</div>
+        <div class="muted" style="margin-top:6px">${U.office.history}</div>${hist ? `<table><tbody>${hist}</tbody></table>` : `<div class="muted">${U.office.no_history}</div>`}</div>`;
+    }).join('');
+    const recruits = Object.keys(D.get('staff.staff')).filter((id) => !S.staff[id].hired).map((id) => `<div class="card locked"><div class="row sp"><h3>${U.office.unknown_candidate}</h3><button data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} · ${U.office.cost} ${O.hire_cost}</button></div><p class="muted">${U.office.recruit_hint}</p>${DEV ? `<div>${hiddenChip()} ${esc(staffName(D, id))}</div>` : ''}</div>`).join('');
+    const open = S.dispatches.filter((d) => !d.claimed);
+    const openHtml = open.length ? open.map((d) => {
+      const left = Math.max(0, Math.ceil((d.revealAt - now) / 1000));
+      const ready = left === 0;
+      return `<div class="card row sp"><div><b>${esc(staffName(D, d.spec.staffId))}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + left + 's'}</div></div>
+        <div class="row">${ready ? `<button class="primary" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>`}</div></div>`;
+    }).join('') : `<p class="muted">${U.office.nothing}</p>`;
+    const done = reports().slice(0, 8).map((d) => `<tr><td>${esc(staffName(D, d.spec.staffId))}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
+    return `
+      <div class="grid2">
+        <div class="card"><div class="muted">${U.office.funds}</div><div class="stat">${ri(S.funds)}</div></div>
+        <div class="card"><div class="muted">${U.office.energy}</div><div class="stat">${ri(S.energy)} <span class="muted" style="font-size:13px">/ ${O.home_cost}</span></div>
+          <div class="bar ${pct >= 100 ? 'ok' : ''}"><i style="width:${pct}%"></i></div><div class="muted">${U.office.home}${pct >= 100 ? ' · ' + U.office.reached_home : ''}</div></div>
+      </div>
+      <div class="sec">${U.office.staff}</div><div class="grid2">${staffCards}</div>${recruits ? `<div class="sec">${U.office.recruit}</div><div class="grid2">${recruits}</div>` : ''}
+      <div class="sec">${U.office.transit}</div>${openHtml}
+      <div class="sec">${U.office.recent}</div>
+      ${done ? `<table><tbody>${done}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}
+      <p style="margin-top:24px"><button class="ghost danger" data-act="reset">${U.office.reset}</button></p>`;
+  }
+
+  // ---------- dispatch ----------
+  function placeFile(id) {
+    const ET = T.eras[id];
+    const done = reports().filter((d) => d.eraId === id);
+    const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
+      <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>`;
+    if (!done.length) return `<div class="card">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p><div class="muted">${U.dispatch.no_records_here}</div></div>`;
+    const hist = ET.encyclopedia.history.map((h) => `<li>${esc(h.text)}${h.check ? ` <span class="chip warn">${U.archive.check_pending}</span>` : ''}</li>`).join('');
+    const reg = ET.encyclopedia.regret.map((h) => `<li>${esc(h)}</li>`).join('');
+    const rows = done.map((d) => recordRow(d, true)).join('');
+    return `<div class="card">${head}<div class="sec">${U.archive.history}</div><ul>${hist}</ul><div class="sec">${U.archive.regret}</div><ul>${reg}</ul>
+      <div class="sec">${U.dispatch.records_here}</div><table><tbody>${rows}</tbody></table></div>`;
+  }
+
+  function dispatchHtml() {
+    if (!visibleEras().includes(st.form.eraId)) st.form = { ...newForm(visibleEras()[0]), staffId: st.form.staffId };
+    if (!hiredIds().includes(st.form.staffId)) st.form.staffId = hiredIds()[0];
+    const f = st.form;
+    if (staffState(f.staffId) !== 'ready') {
+      const free = hiredIds().find((id) => staffState(id) === 'ready');
+      if (free) f.staffId = free;
+    }
+    const e = E();
+    const tot = totals();
+    const S = ctx.S();
+    const overW = tot.weight > O.weight_capacity + 1e-9;
+    const stState = staffState(f.staffId);
+    const staff = hiredIds().map((id) => {
+      const state = staffState(id);
+      const traits = staffTraits(D, id).map((t) => esc(T.traits[t])).join('、');
+      return `<label class="card ${f.staffId === id ? 'on' : ''}" style="cursor:${state === 'ready' ? 'pointer' : 'default'};${state === 'ready' ? '' : 'opacity:.55'}"><input type="radio" name="staff" value="${id}" ${f.staffId === id ? 'checked' : ''} hidden><b>${esc(staffName(D, id))}</b> <span class="muted">${esc(traits)}</span><div class="muted">${U.office.habit}：${esc(habitText(id, e.id))}</div></label>`;
+    }).join('');
+    const items = Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => {
+      const it = D.get('items.' + id);
+      const tx = itemText(D, e.id, id);
+      return `<div class="item"><div><div class="nm">${esc(tx.name)} <span class="muted" style="font-weight:400">${U.dispatch.weight} ${it.weight} · ${U.dispatch.cost} ${it.cost}</span></div><div class="muted">${esc(tx.desc)}</div></div>
+        <div class="stepper"><span class="muted">${U.shop.stock} ${S.inv[id] || 0}</span><button data-act="dec" data-id="${id}">−</button><span class="n">${f.items[id]}</span><button data-act="inc" data-id="${id}">+</button></div></div>`;
+    }).join('');
+    let sug = '';
+    if (st.searching) sug = `<p class="muted">${U.dispatch.searching}</p>`;
+    else if (st.suggest) {
+      if (!st.suggest.front.length) sug = `<p class="muted">${U.dispatch.none_found}</p>`;
+      else {
+        const rec = st.suggest.recommended;
+        sug = `<div class="muted">${U.dispatch.suggest_front}</div><div class="scroll"><table><thead><tr><th class="num">${U.dispatch.lives}</th><th class="num">${U.dispatch.cost}</th><th>${U.dispatch.kit}</th><th></th></tr></thead><tbody>` +
+          st.suggest.front.map((c, i) => `<tr style="${c === rec ? 'background:var(--paper2);font-weight:600' : ''}"><td class="num">${r1(c.lives)}</td><td class="num">${ri(c.cost)}</td><td>${esc(kitText(D, c.items, e.id) || '—')}</td><td><button data-act="use" data-i="${i}">${U.dispatch.use}</button></td></tr>`).join('') + '</tbody></table></div>';
+      }
+    }
+    const msg = !eraOpen(e.id) ? U.dispatch.no_anchor : overW ? U.dispatch.over_weight : stState !== 'ready' ? U.dispatch.busy : '';
+    const seedRow = DEV ? `<div class="sec">${U.dispatch.seed}</div><div class="row"><input id="seed" type="number" value="${f.seed}" style="width:120px"><span class="muted">${U.dispatch.seed_hint}</span></div>` : '';
+    return `
+      <div class="sec">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
+      ${worldMap.html()}
+      <div style="margin-top:10px">${placeFile(e.id)}</div>
+      <div class="sec">${U.dispatch.staff}</div><div class="grid2">${staff}</div>
+      <div class="sec">${U.dispatch.items}</div><p class="muted">${U.dispatch.items_hint}</p>${items || `<p class="muted">${U.dispatch.no_stock}</p>`}
+      <div class="grid2" style="margin-top:8px">
+        <div><div class="row sp"><span>${U.dispatch.weight}</span><span class="${overW ? 'delta down' : ''}">${r1(tot.weight)} / ${O.weight_capacity}</span></div><div class="bar ${overW ? 'over' : ''}"><i style="width:${Math.min(100, (tot.weight / O.weight_capacity) * 100)}%"></i></div></div>
+        <div><div class="row sp"><span>${U.dispatch.kit_value}</span><span>${ri(tot.cost)}</span></div></div>
+      </div>
+      <div class="sec">${U.dispatch.suggest}</div><p class="muted">${U.dispatch.suggest_hint}</p>
+      <div class="row"><button data-act="suggest" ${st.searching ? 'disabled' : ''}>${U.dispatch.suggest}</button><button class="ghost" data-act="clear">${U.dispatch.clear}</button></div>${sug}
+      ${seedRow}
+      <div class="row" style="margin:20px 0"><button class="primary" data-act="send" ${msg ? 'disabled' : ''}>${U.dispatch.send}</button><span class="delta down">${esc(msg)}</span></div>`;
+  }
+
+  // ---------- report ----------
+  function lineChart(series, markers, ymax, W = 520, H = 170) {
+    const m = { l: 36, r: 10, t: 10, b: 22 };
+    const xmax = Math.max(...series.flatMap((s) => s.pts.map((p) => p[0])));
+    const x = (v) => m.l + (v / xmax) * (W - m.l - m.r);
+    const y = (v) => H - m.b - (v / ymax) * (H - m.t - m.b);
+    let g = '';
+    for (let i = 0; i <= 4; i++) {
+      const v = (ymax * i) / 4;
+      g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".12"/><text x="${m.l - 4}" y="${y(v) + 3}" text-anchor="end">${ri(v)}</text>`;
+    }
+    for (let d = 0; d <= xmax; d += Math.ceil(xmax / 8)) g += `<text x="${x(d)}" y="${H - 6}" text-anchor="middle">${d}</text>`;
+    for (const mk of markers) if (mk.x !== null && mk.x !== undefined) g += `<line x1="${x(mk.x)}" x2="${x(mk.x)}" y1="${m.t}" y2="${H - m.b}" stroke="${mk.color}" stroke-dasharray="${mk.dash || '3 3'}" opacity=".7"/>`;
+    for (const s of series) g += `<polyline fill="none" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''} points="${s.pts.map((p) => x(p[0]).toFixed(1) + ',' + y(p[1]).toFixed(1)).join(' ')}"/>`;
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`;
+  }
+
+  function reportHtml() {
+    const cur = ctx.S().dispatches.find((d) => d.id === st.sub);
+    if (!cur) return `<p class="muted">${U.report.none}</p>`;
+    const R = cur.report;
+    const e = ctx.era(cur.eraId);
+    const spec = cur.spec;
+    const fn = (key, label, text) => {
+      const open = st.opened.has(cur.id + key);
+      return `<span class="fn" data-act="fn" data-key="${key}">${label}</span>${open ? `<div class="fntext">${esc(text)}</div>` : ''}`;
+    };
+    const varNote = (name) => {
+      const v = e.vars[name];
+      return `${srcLabel(v.source)}${v.note ? '：' + v.note : ''}`;
+    };
+    const tl = R.timeline.map((t, i) => `<li class="${t.tag || ''}"><div>${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`).join('');
+    const C = R.chart;
+    const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * 1.1;
+    const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * 1.1;
+    const pts = (rows, k) => rows.map((p) => [p.day, p[k]]);
+    const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }];
+    const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${U.report.legend_handle_hist}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${U.report.legend_handle_branch}</span></div>`;
+    const charts = `<div class="grid2"><div><div class="muted">${U.report.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
+      <div><div class="muted">${U.report.dead}</div>${lineChart([{ pts: pts(C.base, 'deaths'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'deaths'), color: '#b3382c' }], mk, deadMax)}</div></div>`;
+    const led = R.ledger.map((l) => `<tr><td>${l.day}</td><td class="num">${ri(l.sick)}</td><td class="num">${ri(l.baseDead)}</td><td class="num">${ri(l.dead)}</td><td class="num">${ri(l.treated)}</td><td class="num">${ri(l.protected)}</td></tr>`).join('');
+    const cmp = R.compare;
+    const A = R.accounts;
+    const vsHtml = st.vs ? vsBlock(cur) : '';
+    return `
+      <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
+      <div class="row sp"><h2>${esc(R.staff)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>
+      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')} · ${esc(habitText(spec.staffId, cur.eraId))}</div>
+      <div class="sec">${U.report.summary}</div>
+      <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">“${esc(R.quote)}”<div class="muted" style="font-family:inherit;font-size:12px">—— ${esc(R.staff)}</div></div>
+      <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>
+      <div class="sec">${U.report.chart}</div>${legend}${charts}
+      <div class="sec">${U.report.compare}</div>
+      <table><thead><tr><th></th><th class="num">${U.report.mainline}</th><th class="num">${U.report.this_branch}</th></tr></thead><tbody>
+        <tr><td>${U.report.deaths}${fn('c1', '†', varNote(e.report.deaths))}</td><td class="num">${ri(cmp.deathsBase)}</td><td class="num">${ri(cmp.deathsBranch)}</td></tr>
+        <tr><td>${U.report.sick}（累计）${fn('c2', '†', varNote(e.report.cases))}</td><td class="num">${ri(cmp.casesBase)}</td><td class="num">${ri(cmp.casesBranch)}</td></tr>
+        <tr><td>${esc(T.eras[cur.eraId].handle_label)}${fn('c3', '†', varNote(e.report.handle))}</td><td class="num">${esc(cmp.handleBase)}</td><td class="num">${esc(cmp.handleBranch)}</td></tr>
+        <tr><td>${U.report.treated} / ${U.report.protected}${fn('c4', '†', varNote(e.report.treated))}</td><td class="num">—</td><td class="num">${ri(cmp.treated)} / ${ri(cmp.protectedTotal)}</td></tr>
+      </tbody></table>
+      <div class="sec">${U.report.ledger}</div>
+      <div class="scroll"><table><thead><tr><th>${U.report.day}</th><th class="num">${U.report.sick}</th><th class="num">${U.report.dead}·${U.report.mainline}</th><th class="num">${U.report.dead}·${U.report.this_branch}</th><th class="num">${U.report.treated}</th><th class="num">${U.report.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
+      <div class="sec">${U.report.accounts}</div>
+      <table><tbody>
+        <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
+        <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(A.funds)}</td></tr>
+        <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(A.energy)}</td></tr>
+        <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
+      </tbody></table>
+      ${R.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
+      <div class="row" style="margin:16px 0"><button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="vs">${U.report.vs_prev}</button></div>${vsHtml}
+      <div class="sec">${U.report.footnotes}</div><p class="muted">† ${U.report.drilldown}</p>`;
+  }
+
+  function vsBlock(cur) {
+    const older = reports().filter((d) => d.eraId === cur.eraId && d.claimedAt < cur.claimedAt)[0];
+    if (!older) return `<p class="muted">${U.report.none}</p>`;
+    const rows = diffRows(D, cur.eraId, { res: cur }, { res: older }).map((r) => `<tr><td>${esc(r.k)}</td><td class="num">${esc(r.b)}</td><td class="num">${esc(r.a)}</td></tr>`).join('');
+    const dl = (a, b) => { const d = a - b; return `<span class="delta ${d < 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${r1(d)}</span>`; };
+    return `<div class="card"><h3>${U.report.vs_title}</h3><table><thead><tr><th></th><th class="num">上一份</th><th class="num">这一份</th></tr></thead><tbody>${rows}
+      <tr><td>${U.report.deaths}</td><td class="num">${ri(older.report.compare.deathsBranch)}</td><td class="num">${ri(cur.report.compare.deathsBranch)} ${dl(cur.report.compare.deathsBranch, older.report.compare.deathsBranch)}</td></tr>
+      <tr><td>${esc(T.eras[cur.eraId].handle_label)}</td><td class="num">${esc(older.report.compare.handleBranch)}</td><td class="num">${esc(cur.report.compare.handleBranch)}</td></tr>
+      <tr><td>${esc(older.report.outcomeName)}</td><td class="num">→</td><td class="num">${esc(cur.report.outcomeName)}</td></tr></tbody></table></div>`;
+  }
+
+  // ---------- home ----------
+  function homeHtml() {
+    const H = U.home;
+    const refs = D.get('encyclopedia_zh.refs');
+    const sources = Object.values(refs).filter((r) => r.status === 'pending').map((r) => `<li>${esc(r.cite)} <span class="chip warn">${U.enc.pending}</span></li>`).join('');
+    const go = Object.entries(H.go).filter(([k]) => DEV || k !== 'model').map(([k, g]) => `<button class="gobtn" data-act="go" data-id="${k}"><b>${esc(g.name)}</b><span class="muted">${esc(g.desc)}</span></button>`).join('');
+    return `
+      <div class="hero"><span class="logo big">穿</span><div><h2>${esc(U.title)}</h2><div class="muted">${esc(U.subtitle)}</div></div></div>
+      <p class="lead">${esc(H.lead)}</p>
+      <div class="sec">${H.mainline_title}</div><ul>${H.mainline.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="sec">${H.materials_title}</div>
+      <ul>${sources}<li>${esc(H.materials_model)}</li><li>${esc(H.materials_enc)}</li></ul>
+      <div class="sec">${H.go_title}</div><div class="grid2">${go}</div>`;
+  }
+
+  // ---------- render ----------
+  function render() {
+    renderTabs();
+    const html = st.sub ? reportHtml() : { home: homeHtml, office: officeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html }[st.tab]();
+    const act = document.activeElement;
+    const keep = act && act.id && view.contains(act) ? { id: act.id, a: act.selectionStart, b: act.selectionEnd } : null;
+    view.innerHTML = html;
+    if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
+  }
+
+  // ---------- actions ----------
+  function addItem(id, dir) {
+    const it = D.get('items.' + id);
+    const v = st.form.items[id] + dir * it.step;
+    st.form.items[id] = Math.min(it.max, ctx.S().inv[id] || 0, Math.max(0, v));
+  }
+
+  function send() {
+    const e = E();
+    const spec = formSpec();
+    const S = ctx.S();
+    const err = sim.validateSpec(e, D, spec, S.inv);
+    if (err || staffState(spec.staffId) !== 'ready') return;
+    const res = sim.runDispatch(e, D, spec);
+    const report = buildReport(D, e, res);
+    for (const [id, n] of Object.entries(spec.items)) S.inv[id] = (S.inv[id] || 0) - n;
+    const anchor = anchorOf(e.id);
+    if (!S.locks.includes(anchor)) S.locks.push(anchor);
+    S.seq += 1;
+    S.dispatches.push({
+      id: 'd' + S.seq, eraId: e.id, spec, report, revealAt: ctx.now() + O.wall_reveal_seconds * 1000, claimed: false,
+      payout: { energy: res.energy, funds: res.funds, restDays: res.restDays },
+    });
+    ctx.save();
+    st.tab = 'office';
+    st.sub = null;
+    render();
+  }
+
+  function claim(id) {
+    const S = ctx.S();
+    const d = S.dispatches.find((x) => x.id === id);
+    if (!d || d.claimed) return;
+    d.claimed = true;
+    d.claimedAt = ctx.now();
+    S.energy += d.payout.energy;
+    S.funds += d.payout.funds;
+    S.staff[d.spec.staffId].restUntil = ctx.now() + d.payout.restDays * O.rest_seconds_per_day * 1000;
+    S.dispatches.sort((a, b) => (a.claimedAt || Infinity) - (b.claimedAt || Infinity));
+    const closed = S.dispatches.filter((x) => x.claimed);
+    if (closed.length > O.max_archive) {
+      const drop = new Set(closed.slice(0, closed.length - O.max_archive).map((x) => x.id));
+      S.dispatches = S.dispatches.filter((x) => !drop.has(x.id));
+    }
+    ctx.save();
+    st.sub = id;
+    st.back = 'office';
+    st.vs = false;
+    render();
+  }
+
+  function suggest() {
+    st.searching = true;
+    st.suggest = null;
+    render();
+    setTimeout(() => {
+      const e = E();
+      st.suggest = sim.optimize(e, D, { spec: formSpec(), stock: ctx.S().inv });
+      st.searching = false;
+      render();
+    }, 30);
+  }
+
+  view.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-act]');
+    if (!b) return;
+    const act = b.dataset.act;
+    const id = b.dataset.id;
+    if (act === 'inc') { addItem(id, 1); st.suggest = null; render(); }
+    else if (act === 'dec') { addItem(id, -1); st.suggest = null; render(); }
+    else if (act === 'clear') { for (const k of Object.keys(st.form.items)) st.form.items[k] = 0; st.suggest = null; render(); }
+    else if (act === 'suggest') suggest();
+    else if (act === 'use') { Object.assign(st.form.items, st.suggest.front[Number(b.dataset.i)].items); render(); }
+    else if (act === 'send') send();
+    else if (act === 'claim') claim(id);
+    else if (act === 'ff') { const d = ctx.S().dispatches.find((x) => x.id === id); d.revealAt = ctx.now(); ctx.save(); render(); }
+    else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; render(); }
+    else if (act === 'hire') { const S = ctx.S(); if (!S.staff[id].hired && S.funds >= O.hire_cost) { S.funds -= O.hire_cost; S.staff[id].hired = true; ctx.save(); } render(); }
+    else if (act === 'wiki') { wiki.go(id); render(); }
+    else if (act === 'wikitag') { st.wiki.tag = id; render(); }
+    else if (act === 'wikiback') { wiki.move(-1); render(); }
+    else if (act === 'wikifwd') { wiki.move(1); render(); }
+    else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
+    else if (['shoptag', 'shopbuy', 'shopsell', 'antbuy', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) render(); }
+    else if (act === 'go') { st.tab = id; st.sub = null; render(); }
+    else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
+    else if (act === 'vs') { st.vs = !st.vs; render(); }
+    else if (act === 'fn') { const k = st.sub + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
+    else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
+    else if (act === 'again') {
+      const d = ctx.S().dispatches.find((x) => x.id === id);
+      const fresh = newForm(d.eraId);
+      st.form = { ...fresh, staffId: d.spec.staffId, items: Object.fromEntries(Object.entries(d.spec.items).map(([k, n]) => [k, Math.min(n, ctx.S().inv[k] || 0)])), seed: DEV ? d.spec.seed : fresh.seed };
+      st.suggest = null;
+      st.sub = null;
+      st.tab = 'dispatch';
+      render();
+    } else if (act === 'reset') { if (confirm(U.office.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
+  });
+  view.addEventListener('input', (ev) => {
+    const t = ev.target;
+    if (t.id === 'wiki-q') wiki.onInput(t.value);
+    else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
+    else if (shop.onInput(t)) render();
+  });
+  view.addEventListener('change', (ev) => {
+    const t = ev.target;
+    if (t.name === 'staff') { if (staffState(t.value) === 'ready') { st.form.staffId = t.value; st.suggest = null; } render(); }
+    else if (t.id === 'seed') { st.form.seed = Number(t.value) || 1; st.suggest = null; }
+  });
+  tabsEl.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-tab]');
+    if (!b) return;
+    st.tab = b.dataset.tab;
+    st.sub = null;
+    render();
+  });
+
+  return { render, tick() { if (st.tab === 'office' && !st.sub) render(); }, state: st };
+}

@@ -1,0 +1,487 @@
+# All player-facing text. Templates: {name} variable value, {name:i} integer, {name:p} percent, {name:1} one decimal,
+# {d.name:i} absolute change an event caused, {date} calendar date of the entry, {staff} employee name.
+ui:
+  title: 穿越事务所
+  subtitle: The Teleporter · 原型
+  tabs: {home: 首页, office: 总览, dispatch: 派遣, shop: 商店, enc: 百科}
+  home:
+    lead: 你是穿越事务所的所长。雇员工去古代做事，赚时空能量，攒够了回自己的时空见家人。
+    mainline_title: 主线
+    mainline:
+      - 派出去，等一会儿，读一份归来报告。不盯着也可以，回来读报告是奖励。
+      - 历史不可改变。员工做的一切都落在平行分支上，主时间线保持原样，分支与主时间线的差换算成时空能量。
+      - 事务所守则：不介入战争，不介入政权更替，只做医疗、技术、文献、民生、见证。
+      - 员工不会死。濒死时被回收符接回，付出代价，但不结束。
+    materials_title: 主要资料
+    materials_model: 每个时空是一份公开的 YAML 模型，数字都带出处标签：史实、LM 模型、游戏设定、校准值。
+    materials_enc: 人物、事件、地区、属性和员工都收在百科里，可以跳转，可以按标签和文字过滤，尽量附出处。
+    go_title: 去哪里
+    go:
+      office: {name: 总览, desc: 资金、能量、员工、在途派遣和最近的记录。}
+      dispatch: {name: 派遣, desc: 在地图上选地点，选员工，配装备。}
+      shop: {name: 商店, desc: 买卖现代与未来的物品，卖掉或锁定古董。}
+      enc: {name: 百科, desc: 可跳转可过滤的资料页，附出处。}
+  enc:
+    sections: {places: 地区, people: 人物, events: 事件, stories: 故事, staff: 员工, stats: 属性, antiques: 古董, items: 道具, formulas: 公式, vars: 变量}
+    locked_name: "？"
+    locked_text: 还没有遇到。
+    hidden: (hidden)
+    edge_gain: 好处
+    edge_cost: 代价
+    edge_impl: 已写入模型
+    edge_pending: 模型里还没有这一面
+    edge_none: 暂无
+    antique_kind: 类别
+    antique_points: 指向
+    antique_price: 价格
+    refs: 出处
+    pending: 待核对
+    game_ref: 游戏设定
+    stat_rule: 最终数值等于基础值加各特质修正之和。
+    modified_by: 受这些特质影响
+    base: 基础值
+    formula_note: 公式原文来自模型文件，说明为英文。
+    expression: 表达式
+    equation_ref: 模型内记录的出处
+    no_ref: 无
+    traits_of: 特质
+    bio: 简介
+    cost: 费用
+    weight: 重量
+    max: 上限
+  shop:
+    modern: {name: 现代商店, desc: 现代的药品、器械和书。买来放进库存，派遣时从库存里带。}
+    future: {name: 未来时空商店, desc: 未来时空的物品和技术。通往那里的时空还没有做成。}
+    buy: 买入
+    sell: 卖出
+    stock: 库存
+    sell_price: 卖价
+    buy_price: 价格
+    planned: 还没做成
+    ip_unchecked: 名称与设计借用了别人的作品，核查前不出售
+    filter_ph: 按名称或说明过滤
+    all_tags: 全部标签
+    inv_title: 库存
+    inv_empty: 库存是空的
+    antiques_title: 古董
+    antiques_hint: 古董可以卖钱，用来运营事务所。锁定后不会被误卖，派遣时用到的锚点会自动锁定。
+    lock: 锁定
+    unlock: 解除锁定
+    locked: 已锁定
+    sell_antique: 卖出
+    not_carried_here: 这个时空用不上
+    no_funds: 资金不足
+    empty_shop: 没有符合的商品
+  wiki:
+    search_ph: 输入文字过滤
+    all_tags: 全部标签
+    clear: 清除过滤
+    back: 返回
+    forward: 前进
+    pick: 从左边选一个条目。
+    none: 没有符合的条目
+    cats: {places: 地区, people: 人物, events: 事件, stories: 故事, staff: 员工, stats: 属性, antiques: 古董, items: 物品, formulas: 公式, vars: 变量, models: 模型}
+    dev_cats: 开发者
+    uses_formulas: 用到的公式
+    uses_vars: 用到的变量
+    used_by_events: 被这些事件用到
+    used_by_formulas: 被这些公式用到
+    event_count: 个事件
+    formula_count: 条公式
+    var_count: 个变量
+    in_era: 所属时空
+    related: 相关条目
+    model_events: 模型事件
+    source: 出处标签
+    value: 初始值
+    unit: 单位
+    expr: 表达式
+    desc: 说明
+    full_yaml: 完整模型 YAML
+    tags: 标签
+    refs: 出处
+  map:
+    zoom_in: 放大
+    zoom_out: 缩小
+    zoom_reset: 复位
+    events_here: 这里的事件
+    events_filter_ph: 按事件、人物、地点过滤
+    from: 从
+    to: 到
+    all_tags: 全部标签
+    no_events: 没有符合的事件
+    drag_hint: 滚轮缩放，拖动平移。
+    pick_event: 点一个地点，再选它的时间点。
+    n_events: 个事件
+  office:
+    funds: 资金
+    energy: 时空能量
+    home: 回家进度
+    staff: 员工
+    ready: 在岗
+    away: 在途
+    resting: 休整中
+    transit: 在途派遣
+    pending: 待领取
+    nothing: 暂无
+    claim: 领取报告
+    fast_forward: 快进到归来
+    eta: 预计归来
+    reports: 已领取的报告
+    reset: 清空存档
+    history: 履历
+    no_history: 还没出过差
+    habit: 习惯
+    recent: 最近的记录
+    recruit: 招募
+    recruit_hint: 一位应聘者，来历不明。招募之后才知道他是谁。
+    unknown_candidate: "？"
+    hire: 招募
+    cost: 费用
+    reset_confirm: 清空全部存档，重新开始？
+    reached_home: 能量已够回家。这个原型到此为止。
+  dispatch:
+    era: 时空
+    market: 黑市古董
+    market_hint: 古董是穿越的锚点，拿在手里才找得到对应的时空。古董不会消耗，买一次就一直有。
+    buy: 购买
+    owned: 已拥有
+    points_to: 指向
+    unknown_dest: "？"
+    no_anchor: 缺少这个时空的锚点古董
+    kind_key: 关键历史点
+    kind_daily: 日常地区
+    kind_story: 小故事
+    not_ready: 还没做成可玩的内容
+    no_funds: 资金不足
+    hidden_mark: (hidden)
+    pick_map: 在地图上点一个地点，再选它的时间点。可以缩放和拖动，用过滤框、标签和时间范围缩小事件。
+    time_axis: 时间
+    far_past: 更早的年代尚未开放
+    far_future: 更晚的年代尚未开放
+    place_file: 地点档案
+    records_here: 在这里留下的记录
+    no_records_here: 还没有人去过
+    staff: 派谁
+    items: 道具分配
+    items_hint: 装备越多成本越高，收益上限也越高。重量有上限，资金有上限。
+    weight: 重量
+    cost: 费用
+    funds_left: 余额
+    habit: 行事习惯
+    kit_value: 装备购入价值
+    no_stock: 库存里没有这个时空用得上的东西，去商店买。
+    focus: 优先做什么
+    on_block: 被拦在门外时
+    seed: 种子
+    seed_hint: 同一种子换配置，结果对照最清楚
+    suggest: 建议配置
+    suggest_hint: 在当前员工下，用后台模型搜索一组道具
+    suggest_front: 搜索结果，每行是一个方案
+    use: 采用
+    send: 派遣
+    over_weight: 超重
+    over_funds: 资金不足
+    busy: 该员工不在岗
+    clear: 清空
+    lives: 预计少死
+    searching: 正在用后台模型搜索……
+    none_found: 没有找到可行方案
+    kit: 随身
+  report:
+    none: 还没有归来报告。先去派一趟。
+    back: 返回
+    summary: 摘要
+    timeline: 经历
+    chart: 主时间线与这条分支
+    ledger: 每日记录
+    accounts: 账目
+    compare: 与史实对照
+    footnotes: 脚注
+    again: 按这份派遣单再派一趟
+    vs_prev: 与上一份对照
+    vs_title: 与上一份同时空报告的差别
+    history: 史实
+    branch: 分支
+    trait: 特质
+    param: 参数
+    day: 日
+    sick: 病人
+    dead: 死亡
+    mainline: 主时间线
+    this_branch: 这条分支
+    treated: 救治
+    protected: 保护
+    deaths: 死亡
+    handle: 泵柄拆除
+    energy_gain: 时空能量
+    funds_gain: 资金
+    spent: 消耗装备的购入价值
+    rest: 员工休整
+    days: 天
+    source_historical: 史实，出处待核对
+    source_lm: LM 模型
+    source_game: 游戏设定
+    source_calibrated: 校准值
+    people: 人
+    drilldown: 点开看这个数字的出处
+    seed: 种子
+    legend_visit: 员工在场
+    legend_handle_hist: 主时间线拆泵柄
+    legend_handle_branch: 这条分支拆泵柄
+  archive:
+    history: 史实
+    regret: 遗憾
+    check_pending: 出处待核对
+    sealed: 去过一次之后，这里会补上史实与遗憾。
+  model:
+    note: 后台模型就是这一份 YAML。游戏规则的数全部在里面，代码只负责解释它。
+    variables: 变量
+    provenance: 出处
+    show_yaml: 展开完整 YAML
+    count: 个变量
+    ext: 在 LM 1.0 基础上的扩展
+    ext_text:
+      agents: 多主体。每个主体有自己的状态，每步在可用动作里选效用最高的一个，动作写成水平输入。
+      actions: 动作的前提和效用都是对已声明变量的表达式。
+      events: 带种子的随机事件，抽签只取决于种子、事件编号和出现序号。
+      milestones: 表达式变真时触发一次的报告句子。
+      outcomes: 有序的结局，第一个为真者生效。
+      scoring: 反事实记分。同一种子再跑一次没有员工的主时间线，作为对照。
+      provenance: 每个变量和事件都标明出处：史实、LM 模型、游戏设定、校准值。
+      item_bindings: 出发前选的道具在到达时一次性写入对应变量。
+      strategies: 员工的行事习惯，派谁出去，就用谁的习惯，每个选项写入若干输入变量。
+    blocks: 块
+staff:
+  s_ning: {name: 阿宁, bio: 做过护士，认死理，见不得病人没人管。}
+  s_zhou: {name: 老周, bio: 干过工地，身体好，嘴上功夫了得，不爱绕弯。}
+  s_lin: {name: 小林, bio: 读过很多书，什么都想弄明白，想家想得最早。}
+  s_qian: {name: 老钱, bio: 倒腾过旧货，眼睛毒，什么东西值几个钱一眼就知道。}
+traits:
+  kind: 善良
+  stubborn: 固执
+  curious: 好奇
+  homesick: 思乡
+  studious: 好学
+  sturdy: 结实
+  glib: 口才好
+  greedy: 贪财
+stats: {stamina: 体力, skill: 医护手艺, eloquence: 口才, kindness: 善意, stubbornness: 固执度, curiosity: 好奇心, homesick_trait: 思乡度, greed: 贪婪}
+tags:
+  medical: 医疗
+  sterilize: 消毒
+  consumable: 消耗品
+  modern: 现代
+  future: 未来
+  device: 器械
+  book: 书
+  safety: 安全
+  cyber: 义体
+  scifi: 科幻
+  neta: 梗
+  history: 历史
+  key: 关键历史点
+  story: 故事
+  romance: 恋爱
+  infection: 传染病
+  cholera: 霍乱
+  obstetrics: 产科
+  c19: 十九世纪
+  london: 伦敦
+  vienna: 维也纳
+antiques:
+  pump_rust: {name: 宽街水泵的锈片, desc: 从一台旧水泵上刮下来的一片锈。拿着它，能找到一条街的九月。}
+  clinic_bell: {name: 产科病房的铜铃, desc: 一只铃，铃舌已经没了。拿着它，能找到一间病房的春天。}
+  royal_comb: {name: 镶珠小梳子, desc: 一把梳子，梳齿间缠着一根很长的头发。}
+items:
+  detox_water: {name: 泛用解毒水, desc: 能中和多种常见毒物的现代药水。比补液盐贵，但一瓶顶三包。}
+  disinfectant: {name: 杀菌水, desc: 现代的消毒液。一瓶能让十几个人的水或手变得安全。}
+  heart_monitor: {name: 心率检测器, desc: 戴在员工身上，能提前发现过劳，疲劳涨得更慢。}
+  bionic_lung: {name: 仿生肺义体, desc: 未来时空的医疗义体。还没有对应的时空。}
+  radiation_shield: {name: 辐射隔离器, desc: 未来时空的防护装置。还没有对应的时空。}
+  bamboo_copter: {name: 竹蜻蜓, desc: 一个梗。名称借用了别人的作品，核查之前不出售。}
+  ors_pack: {name: 口服补液盐, desc: 一包兑一升水。救治病人用，每个病人要两包。}
+  chlorine_tablet: {name: 氯片, desc: 一片能让五个人的饮水变安全。又轻又便宜，但要有人肯听你讲。}
+  handbook: {name: 现代医护手册, desc: 提高救治手艺。也是递给当地医生的见面礼。}
+  recall_charm: {name: 回收符, desc: 濒死时把人接回。没带的话，装备全丢。}
+strategies:
+  focus:
+    balanced: {name: 均衡, desc: 有病人就治，有水可救就救，有空就见当地医生。}
+    cure: {name: 先救病人, desc: 补液优先，防护次之，少去找人聊。}
+    prevent: {name: 先保水, desc: 分氯片，教煮水，病人排在后面。}
+    ally: {name: 与当地名医合作, desc: 多花时间在斯诺身上，帮他把证据送到该去的人面前。}
+  on_block:
+    yield: {name: 让步, desc: 退一步，不吵。}
+    insist: {name: 坚持, desc: 站在门口说清楚，丢点东西也要进去。}
+    appeal: {name: 求助, desc: 转头去找斯诺帮忙说话。}
+outcomes:
+  near_death: {name: 濒死回收}
+  stay_and_gifts: {name: 留下并寄礼物}
+  gave_up: {name: 放弃任务回到现代}
+  legend: {name: 成为传说}
+  perfect: {name: 圆满归来}
+  scramble: {name: 狼狈逃回}
+  modest: {name: 平淡完成}
+date_format: "{m}月{d}日{part}"
+day_parts:
+  - {from: 0, name: 深夜}
+  - {from: 5, name: 清晨}
+  - {from: 9, name: 上午}
+  - {from: 12, name: 正午}
+  - {from: 14, name: 下午}
+  - {from: 18, name: 傍晚}
+  - {from: 22, name: 深夜}
+generic:
+  arrive: "{date}，{staff}抵达{era}。随身带了：{kit}。"
+  arrive_empty: "{date}，{staff}抵达{era}，两手空空。"
+  leave: "{date}，{staff}被收回。"
+  recall_charm: "{date}，{staff}倒下，回收符亮起，被接了回去。装备保住了。"
+  recall_lost: "{date}，{staff}倒下，被强制送回。没有回收符，装备全丢了，人也留下了阴影。"
+
+
+eras:
+  broad_street_1854:
+    name: 伦敦宽街 1854
+    short: 宽街
+    place_name: 伦敦苏荷区宽街
+    tags: [medical, infection, cholera, c19, london, history]
+    event_titles: {door_block: 被拒之门外, time_strain: 时间错位, pocket: 顺手牵羊}
+    blurb: 霍乱，一台水泵，一位还没被人听进去的医生。近，成本低，卫生知识和药物的效果清楚。
+    handle_label: 泵柄拆除
+    protagonist: 约翰·斯诺
+    protagonist_role: 医生，三年前就在说霍乱是喝水喝出来的
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - {text: "1854 年 8 月 31 日夜间，伦敦苏荷区宽街一带暴发霍乱。", check: true}
+        - {text: "当时流行的解释是瘴气，也就是脏空气。", check: true}
+        - {text: "斯诺在 1849 年已经提出霍乱经水传播，多数同行不接受。", check: true}
+        - {text: "9 月 8 日，宽街水泵的手柄被拆走。", check: true}
+        - {text: "拆泵柄时，疫情已经在下降，很多居民早已离开。", check: true}
+      regret:
+        - 救得了今天的，救不了明天的。主时间线上，泵柄拆在第八天。
+        - 数据与地图比药更重要，但让人相信数据需要时间。
+    events:
+      door_block_stubborn: "邻居拦在门口，说这是瘴气，不能让外人碰病人。{staff}固执，没有退让，被赶出一户，丢了 {d.ors_stock:i} 包补液。"
+      door_block_stubborn_empty: "邻居拦在门口，说这是瘴气，不能让外人碰病人。{staff}固执，没有退让，被赶了出来。"
+      door_block_insist_empty: "邻居拦在门口，说这是瘴气。{staff}站在门口把话说完，被推了出来。"
+      door_block_insist: "邻居拦在门口，说这是瘴气。{staff}站在门口把话说完，被推了出来，丢了 {d.ors_stock:i} 包补液。"
+      door_block_appeal: "邻居拦在门口，说这是瘴气。{staff}没有硬闯，转身去找斯诺，请他出面说句话。"
+      door_block_yield: "邻居拦在门口，说这是瘴气。{staff}退了一步，没有吵，浪费了半天。"
+      time_strain: "{date}，{staff}听见钟声错了半拍。这条分支离史实越来越远，人明显更累了。"
+      pocket: "{date}，{staff}见一件小东西没人看管，顺手揣进了口袋。有街坊看见了，看他的眼神变了。"
+    milestones:
+      first_treat: "{date}，{staff}配好了第一杯补液。一个人开始能说话。"
+      first_protect: "{date}，{staff}把第一批氯片分到了愿意听的几户，教他们把水烧开或者加药。"
+      met_snow: "{date}，{staff}在街口见到了斯诺。他听得很认真，但一直在问：证据在哪里。"
+      snow_trusts: "{date}，斯诺开始把{staff}当作自己人，愿意把他挨家挨户记下的名单拿出来对照。"
+      snow_convinced: "{date}，斯诺不再只是怀疑水。他有了足够的名单，也相信了这个陌生人说的话。"
+      board_moves: "{date}，教区委员会的人开始松口，说也许可以先停一下水泵。"
+      handle_off_history: "{date}，水泵手柄被拆走。主时间线不变。"
+      handle_off_early: "{date}，水泵手柄比史实早 {advance_days:1} 天被拆走。主时间线不变，只有这条分支里是这样。"
+      trust_won: "{date}，街角的人不再把{staff}拦在门外，有人主动来敲门。"
+      exhausted: "{date}，{staff}累得手在抖，被迫停下来休息。"
+      outbreak_fades: "{date}，病人数降到了个位数附近。很多人已经离开了这一带。"
+    summary:
+      near_death: "{staff}在宽街倒下，被回收符接了回来。保住了命，付出了代价。"
+      stay_and_gifts: "{staff}完成了任务，却没有回来。离开时留下一封信，说想多陪陪这里的人。以后会有礼物寄来。"
+      gave_up: "{staff}提前放弃，回到了现代。{staff}说，这里不属于自己。"
+      legend: "{staff}在宽街留下了传说，比史实早 {advance_days:1} 天，泵柄被拆走。"
+      perfect: "{staff}在宽街完成任务，平安回来。主时间线 {base_D:i} 人死亡，这条分支 {D:i} 人。"
+      scramble: "{staff}被邻居一次次拦在门外，最后狼狈地逃了回来，带着一个笑话。"
+      modest: "{staff}在宽街待了七天，做了力所能及的事，平安回来。"
+    quotes:
+      near_death: [{trait: kind, text: "我最后还想着，床边的那个人有没有人陪。"}, {text: "我以为我能多撑一会儿。"}]
+      stay_and_gifts: [{trait: kind, text: "我记得他们每一个人的名字。我想再待一阵。"}, {text: "这里需要人。"}]
+      gave_up: [{trait: homesick, text: "我想回家。就是这样。"}, {text: "我不是做这个的料。"}]
+      legend: [{text: "我只是把该告诉他们的告诉了。"}]
+      perfect: [{trait: kind, text: "我救得了今天的，救不了明天的。"}, {trait: curious, text: "原来是这样，水真的会带着病走。"}, {text: "该做的做了。"}]
+      scramble: [{trait: stubborn, text: "他们早晚会明白。就是晚了点。"}, {text: "下次我想多带点东西。"}]
+      modest: [{trait: glib, text: "话我都说了。信不信是他们的事。"}, {text: "如果多带一样东西，也许能多救一户人家。"}]
+    hints:
+      lost_ors: 补液被丢了很多，下一次可以让员工让步，或者多带一点。
+      unused_protect: 氯片没用完。受限于邻居的信任，不是氯片不够，让员工先去帮病人建立信任。
+      unused_ors: 补液没用完。可能是员工把时间花在别处，或者病人没让进门。
+      ally_gap: 斯诺的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
+      none: 换一项配置再派一趟，同一个种子，对照起来最清楚。
+
+  vienna_1847:
+    name: 维也纳总医院 1847
+    short: 产科诊所
+    place_name: 维也纳总医院产科病房
+    tags: [medical, infection, obstetrics, c19, vienna, history]
+    event_titles: {door_block: 被前辈挡回, time_strain: 时间错位, pocket: 顺手牵羊}
+    blurb: 产褥热，两间产科病房，一位把死亡数字对在一起的年轻医生。要说服的不是病，是一屋子不肯洗手的前辈。
+    handle_label: 洗手规定开始
+    protagonist: 伊格纳茨·森梅尔维斯
+    protagonist_role: 产科助理医生，刚刚发现解剖室和产房的死亡有关
+    stay: 停留二十一天
+    items:
+      chlorine_tablet: {name: 氯化石灰片, desc: 一片能配出一盆洗手液，够几十次检查前用。便宜，但要有人肯洗。}
+      handbook: {name: 现代护理手册, desc: 提高照料产妇的手艺。也是递给森梅尔维斯的见面礼。}
+      recall_charm: {name: 回收符, desc: 倒下时把人接回。没带的话，装备全丢。}
+    strategies:
+      focus:
+        balanced: {name: 均衡, desc: 有产妇发热就照料，有机会就教洗手，有空见森梅尔维斯。}
+        cure: {name: 先照料产妇, desc: 床边照料优先，少去劝人洗手。}
+        prevent: {name: 先教洗手, desc: 在病房里一个个劝，分发洗手液。}
+        ally: {name: 与森梅尔维斯合作, desc: 多花时间帮他整理数字，陪他去见该去的人。}
+      on_block:
+        yield: {name: 让步, desc: 被前辈挡回来就算了。}
+        insist: {name: 坚持, desc: 站在病房门口把话说完，洗手液被没收也不退。}
+        appeal: {name: 求助, desc: 转头去找森梅尔维斯，请他出面。}
+    encyclopedia:
+      history:
+        - {text: "1847 年，维也纳总医院第一产科病房的产妇死亡率明显高于第二产科病房。", check: true}
+        - {text: "第一病房由医生和医学生接生，他们常常刚做完尸体解剖。", check: true}
+        - {text: "森梅尔维斯在 1847 年 5 月中旬要求医生和学生用含氯石灰溶液洗手后再检查产妇。", check: true}
+        - {text: "规定实行后，死亡率在几个月内明显下降。", check: true}
+        - {text: "当时的主流同行并没有接受他的解释，细菌致病论还没有建立。", check: true}
+      regret:
+        - 数字摆在眼前，也要等有权力的人点头。主时间线上，洗手规定在五月中旬才到。
+        - 他一生都没有等到同行真正接受他。
+    events:
+      door_block_stubborn: "一位前辈医生说，没有人需要一个外人来教怎么检查产妇。{staff}固执，没有退让，洗手液被没收了 {d.wash_supply:i} 份。"
+      door_block_stubborn_empty: "一位前辈医生说，没有人需要一个外人来教怎么检查产妇。{staff}固执，没有退让，被请出了病房。"
+      door_block_insist: "一位前辈医生说，没有人需要外人来教怎么检查产妇。{staff}站在病房门口把话说完，洗手液被没收了 {d.wash_supply:i} 份。"
+      door_block_insist_empty: "一位前辈医生说，没有人需要外人来教怎么检查产妇。{staff}站在病房门口把话说完，被请了出去。"
+      door_block_appeal: "一位前辈医生把{staff}挡在病房外。{staff}没有硬闯，转身去找森梅尔维斯，请他出面说句话。"
+      door_block_yield: "一位前辈医生把{staff}挡在病房外。{staff}退了一步，没有吵，浪费了半天。"
+      time_strain: "{date}，{staff}听见钟声错了半拍。这条分支离史实越来越远，人明显更累了。"
+      pocket: "{date}，{staff}见病房里一件小东西没人看管，顺手揣进了口袋。有学生看见了，看他的眼神变了。"
+    milestones:
+      first_treat: "{date}，{staff}守在第一位发热的产妇床边，把她照料到烧退了一点。"
+      first_protect: "{date}，{staff}劝动了第一批医生和学生，检查前先在盆里洗手。"
+      met_snow: "{date}，{staff}在走廊里见到了森梅尔维斯。他一直在翻两间病房的死亡数字，抬头问：你是从哪里知道这些的。"
+      snow_trusts: "{date}，森梅尔维斯开始把{staff}当作自己人，愿意把没写完的表格拿出来一起对。"
+      snow_convinced: "{date}，森梅尔维斯不再只是怀疑。他把数字排成了一张谁也绕不开的表，也相信了这个陌生人。"
+      board_moves: "{date}，诊所主任开始松口，说也许可以让检查前洗手试一试。"
+      handle_off_history: "{date}，洗手规定在第一产科病房开始实行。主时间线不变。"
+      handle_off_early: "{date}，洗手规定比史实早 {advance_days:1} 天开始实行。主时间线不变，只有这条分支里是这样。"
+      trust_won: "{date}，病房里的护士和学生不再绕开{staff}，有人主动来问怎么洗。"
+      exhausted: "{date}，{staff}累得站不稳，被迫停下来休息。"
+      outbreak_fades: "{date}，发热的产妇已经不多了。"
+    summary:
+      near_death: "{staff}在产科病房倒下，被回收符接了回来。保住了命，付出了代价。"
+      stay_and_gifts: "{staff}完成了任务，却没有回来。离开时留下一封信，说想多陪陪这些产妇。以后会有礼物寄来。"
+      gave_up: "{staff}提前放弃，回到了现代。{staff}说，这里不属于自己。"
+      legend: "{staff}在产科病房留下了传说，洗手规定比史实早 {advance_days:1} 天开始。"
+      perfect: "{staff}在产科病房完成任务，平安回来。主时间线 {base_D:i} 位产妇死亡，这条分支 {D:i} 位。"
+      scramble: "{staff}一次次被前辈挡在病房外，最后狼狈地逃了回来，带着一个笑话。"
+      modest: "{staff}在产科病房待了二十一天，做了力所能及的事，平安回来。"
+    quotes:
+      near_death: [{trait: kind, text: "我最后还惦记着，床边那位产妇有没有人陪。"}, {text: "我以为我能多撑一会儿。"}]
+      stay_and_gifts: [{trait: kind, text: "我记得她们每一个人的名字。我想再待一阵。"}, {text: "这里需要人。"}]
+      gave_up: [{trait: homesick, text: "我想回家。就是这样。"}, {text: "我不是做这个的料。"}]
+      legend: [{text: "我只是帮他把数字摆在了该看的人面前。"}]
+      perfect: [{trait: kind, text: "我救得了这几个，救不了所有人。"}, {trait: curious, text: "原来是这样，手上的东西会带着病走。"}, {text: "该做的做了。"}]
+      scramble: [{trait: stubborn, text: "他们早晚会明白。就是晚了点。"}, {text: "下次我想先去找他，再去劝别人。"}]
+      modest: [{trait: glib, text: "话我都说了。信不信是他们的事。"}, {text: "如果多带一样东西，也许能多救几位。"}]
+    hints:
+      lost_ors: 洗手液被没收了很多，下一次可以让员工让步，或者先去找森梅尔维斯。
+      unused_protect: 洗手液没用完。前辈们不愿意听，不是不够用，试试先和森梅尔维斯合作，把阻力降下来。
+      unused_ors: 物资没用完。
+      ally_gap: 森梅尔维斯的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
+      none: 换一项配置再派一趟，同一个种子，对照起来最清楚。
+
