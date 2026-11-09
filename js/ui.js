@@ -1,5 +1,5 @@
 import * as sim from './sim.js';
-import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, stratText } from './narrate.js';
+import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence } from './narrate.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
@@ -11,11 +11,22 @@ const r1 = (x) => (Math.round(x * 10) / 10).toString();
 const ri = (x) => String(Math.round(x));
 
 export function createUI(D, ctx) {
-  const T = D.get('text_zh');
+  const T = D.get('text');
   const U = T.ui;
+  const COLON = U.fmt.colon, SEP = U.fmt.sep;
   const O = D.get('config.office');
   const view = document.getElementById('view');
   const tabsEl = document.getElementById('tabs');
+  const langSel = document.getElementById('lang');
+  const I = D.get('config.i18n');
+  langSel.innerHTML = Object.entries(I.locales).map(([code, name]) => `<option value="${code}" ${D.lang === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
+  langSel.addEventListener('change', () => {
+    try { localStorage.setItem(I.storage_key, langSel.value); } catch (e) { /* storage blocked */ }
+    const u = new URL(location.href);
+    u.searchParams.delete('lang');
+    location.href = u.toString();
+  });
+  document.getElementById('logo').textContent = U.logo;
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
@@ -63,15 +74,15 @@ export function createUI(D, ctx) {
   const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
   function traitTip(t) {
     const tr = D.get('staff.traits.' + t);
-    const mods = Object.entries(tr.mods).map(([k, v]) => `${T.stats[k]} ${v > 0 ? '+' : ''}${v}`).join('、');
-    const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}：${T.strategies[grp][key].name}`).join('；');
-    const pref = tr.prefer ? `${U.office.secretary_pref}：${U.office.aims[tr.prefer]}` : '';
+    const mods = Object.entries(tr.mods).map(([k, v]) => `${T.stats[k]} ${v > 0 ? '+' : ''}${v}`).join(SEP);
+    const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}${COLON}${T.strategies[grp][key].name}`).join('${U.fmt.semi}');
+    const pref = tr.prefer ? `${U.office.secretary_pref}${COLON}${U.office.aims[tr.prefer]}` : '';
     return [T.traits[t], mods, pol, pref].filter(Boolean).join('\n');
   }
   function staffTip(id) {
     const stats = sim.staffStats(D, id);
     const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
-    return [T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join('、'), mini].join('\n');
+    return [T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
   }
   const staffLink = (id) => wl('staff:' + id, staffName(D, id), staffTip(id));
   const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
@@ -149,8 +160,8 @@ export function createUI(D, ctx) {
     const pk = office.perks();
     const perkText = Object.entries(pk).filter(([, v]) => v !== 0).map(([k, v]) => `${U.office.perks[k]} ${k === 'rest_cut' ? '−' : (v > 0 ? '+' : '')}${Math.round(Math.abs(v) * 100)}%`).join(' · ');
     const secLine = S.secretary
-      ? `<div class="muted">${U.office.secretary}：${staffLink(S.secretary)} · ${perkText || U.enc.edge_none} · ${U.office.secretary_pref}：${U.office.aims[office.secretaryAim()] || U.enc.edge_none}${S.secretaryLast ? ` <span class="chip ${S.secretaryLast.met ? '' : 'warn'}">${S.secretaryLast.met ? U.office.verdict_match : U.office.verdict_miss}</span>` : ''}</div>`
-      : `<div class="muted">${U.office.secretary}：${U.office.no_secretary}</div>`;
+      ? `<div class="muted">${U.office.secretary}${COLON}${staffLink(S.secretary)} · ${perkText || U.enc.edge_none} · ${U.office.secretary_pref}${COLON}${U.office.aims[office.secretaryAim()] || U.enc.edge_none}${S.secretaryLast ? ` <span class="chip ${S.secretaryLast.met ? '' : 'warn'}">${S.secretaryLast.met ? U.office.verdict_match : U.office.verdict_miss}</span>` : ''}</div>`
+      : `<div class="muted">${U.office.secretary}${COLON}${U.office.no_secretary}</div>`;
     const stages = D.get('mainline.stages');
     const sIdx = office.stageIndex();
     const stageRows = stages.map((g, i) => {
@@ -224,7 +235,7 @@ export function createUI(D, ctx) {
       pinned: (r) => f.items[r.id] > 0,
       foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${O.weight_capacity}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
       cols: [
-        { k: 'name', label: U.shop.col_name, w: '42%', val: (r) => r.name, cell: (r) => { const tx = itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}`)}<div class="oneline muted">${esc(tx.desc.split('。')[0] + '。')}</div>`; } },
+        { k: 'name', label: U.shop.col_name, w: '42%', val: (r) => r.name, cell: (r) => { const tx = itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}`)}<div class="oneline muted">${esc(firstSentence(tx.desc))}</div>`; } },
         { k: 'weight', label: U.dispatch.weight, w: '14%', cls: 'num', val: (r) => r.it.weight, cell: (r) => r.it.weight },
         { k: 'stock', label: U.shop.stock, w: '12%', cls: 'num', val: (r) => r.stock, cell: (r) => r.stock },
         { k: 'qty', label: U.dispatch.carry, w: '32%', cls: 'num', cell: (r) => `<span class="stepper"><button data-act="dec" data-id="${r.id}" ${f.items[r.id] > 0 ? '' : 'disabled'}>−</button><span class="n">${f.items[r.id]}</span><button data-act="inc" data-id="${r.id}" ${f.items[r.id] < Math.min(r.it.max, r.stock) ? '' : 'disabled'}>+</button></span>` },
@@ -299,7 +310,7 @@ export function createUI(D, ctx) {
     };
     const varNote = (name) => {
       const v = e.vars[name];
-      return `${srcLabel(v.source)}${v.note ? '：' + v.note : ''}`;
+      return `${srcLabel(v.source)}${v.note ? COLON + v.note : ''}`;
     };
     const tl = R.timeline.map((t, i) => `<li class="${t.tag || ''}"><div>${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`).join('');
     const C = R.chart;
@@ -317,15 +328,15 @@ export function createUI(D, ctx) {
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${staffLink(spec.staffId)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>
-      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join('、') : ''}</div>
+      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
       <div class="sec">${U.report.summary}</div>
-      <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">“${esc(R.quote)}”<div class="muted" style="font-family:inherit;font-size:12px">—— ${esc(R.staff)}</div></div>
+      <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>
       <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>
       <div class="sec">${U.report.chart}</div>${legend}${charts}
       <div class="sec">${U.report.compare}</div>
       <table><thead><tr><th></th><th class="num">${U.report.mainline}</th><th class="num">${U.report.this_branch}</th></tr></thead><tbody>
         <tr><td>${U.report.deaths}${fn('c1', '†', varNote(e.report.deaths))}</td><td class="num">${ri(cmp.deathsBase)}</td><td class="num">${ri(cmp.deathsBranch)}</td></tr>
-        <tr><td>${U.report.sick}（累计）${fn('c2', '†', varNote(e.report.cases))}</td><td class="num">${ri(cmp.casesBase)}</td><td class="num">${ri(cmp.casesBranch)}</td></tr>
+        <tr><td>${U.report.sick}${U.report.cumulative}${fn('c2', '†', varNote(e.report.cases))}</td><td class="num">${ri(cmp.casesBase)}</td><td class="num">${ri(cmp.casesBranch)}</td></tr>
         <tr><td>${esc(T.eras[cur.eraId].handle_label)}${fn('c3', '†', varNote(e.report.handle))}</td><td class="num">${esc(cmp.handleBase)}</td><td class="num">${esc(cmp.handleBranch)}</td></tr>
         <tr><td>${U.report.treated} / ${U.report.protected}${fn('c4', '†', varNote(e.report.treated))}</td><td class="num">—</td><td class="num">${ri(cmp.treated)} / ${ri(cmp.protectedTotal)}</td></tr>
       </tbody></table>
@@ -348,7 +359,7 @@ export function createUI(D, ctx) {
     if (!older) return `<p class="muted">${U.report.none}</p>`;
     const rows = diffRows(D, cur.eraId, { res: cur }, { res: older }).map((r) => `<tr><td>${esc(r.k)}</td><td class="num">${esc(r.b)}</td><td class="num">${esc(r.a)}</td></tr>`).join('');
     const dl = (a, b) => { const d = a - b; return `<span class="delta ${d < 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${r1(d)}</span>`; };
-    return `<div class="card"><h3>${U.report.vs_title}</h3><table><thead><tr><th></th><th class="num">上一份</th><th class="num">这一份</th></tr></thead><tbody>${rows}
+    return `<div class="card"><h3>${U.report.vs_title}</h3><table><thead><tr><th></th><th class="num">${U.report.prev}</th><th class="num">${U.report.this}</th></tr></thead><tbody>${rows}
       <tr><td>${U.report.deaths}</td><td class="num">${ri(older.report.compare.deathsBranch)}</td><td class="num">${ri(cur.report.compare.deathsBranch)} ${dl(cur.report.compare.deathsBranch, older.report.compare.deathsBranch)}</td></tr>
       <tr><td>${esc(T.eras[cur.eraId].handle_label)}</td><td class="num">${esc(older.report.compare.handleBranch)}</td><td class="num">${esc(cur.report.compare.handleBranch)}</td></tr>
       <tr><td>${esc(older.report.outcomeName)}</td><td class="num">→</td><td class="num">${esc(cur.report.outcomeName)}</td></tr></tbody></table></div>`;
@@ -357,11 +368,11 @@ export function createUI(D, ctx) {
   // ---------- home ----------
   function homeHtml() {
     const H = U.home;
-    const refs = D.get('encyclopedia_zh.refs');
-    const sources = Object.values(refs).filter((r) => r.status === 'pending').map((r) => `<li>${esc(r.cite)} <span class="chip warn">${U.enc.pending}</span></li>`).join('');
+    const refs = D.get('encyclopedia.refs');
+    const sources = Object.keys(refs).filter((id) => refs[id].status === 'pending').map((id) => `<li>${esc(D.get('enc_text.refs.' + id))} <span class="chip warn">${U.enc.pending}</span></li>`).join('');
     const go = Object.entries(H.go).map(([k, g]) => `<button class="gobtn" data-act="go" data-id="${k}"><b>${esc(g.name)}</b><span class="muted">${esc(g.desc)}</span></button>`).join('');
     return `
-      <div class="hero"><span class="logo big">穿</span><div><h2>${esc(U.title)}</h2><div class="muted">${esc(U.subtitle)}</div></div></div>
+      <div class="hero"><span class="logo big">${esc(U.logo)}</span><div><h2>${esc(U.title)}</h2><div class="muted">${esc(U.subtitle)}</div></div></div>
       <p class="lead">${esc(H.lead)}</p>
       <div class="grid2" style="margin-top:12px">${go}</div>
       ${officeHtml()}

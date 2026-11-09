@@ -1,0 +1,40 @@
+# Structure of the encyclopedia, the same in every language. Names and texts are in data/i18n/encyclopedia.<lang>.yaml, keyed by the ids here.
+# Employees, antiques, items, formulas and variables are generated from the other data files.
+# refs: a status of pending means the source has not been checked yet and the page says so. game means a game assumption.
+# unlock: always | {era: id} unlocked once that era is visited or its anchor antique is owned | {antique: id} owned | {trait: id} some hired employee has it.
+# Locked entries show as a question mark. In dev mode they show in full with a hidden mark.
+refs:
+  snow1855: {status: pending}
+  semmelweis1861: {status: pending}
+  game: {status: game}
+  lm: {status: game}
+  readme: {status: game}
+sections:
+  places:
+    - {id: broad_street, era: broad_street_1854, tags: [medical, infection, cholera, c19, london, history], related: ['people:snow', 'events:pump_handle', 'antiques:pump_rust'], unlock: {era: broad_street_1854}, refs: [snow1855, game]}
+    - {id: vienna_clinic, era: vienna_1847, tags: [medical, infection, obstetrics, c19, vienna, history], related: ['people:semmelweis', 'events:handwashing_rule', 'antiques:clinic_bell'], unlock: {era: vienna_1847}, refs: [semmelweis1861, game]}
+  people:
+    - {id: snow, tags: [medical, cholera, c19, london, history], related: ['places:broad_street', 'events:pump_handle'], unlock: {era: broad_street_1854}, refs: [snow1855]}
+    - {id: semmelweis, tags: [medical, obstetrics, c19, vienna, history], related: ['places:vienna_clinic', 'events:handwashing_rule'], unlock: {era: vienna_1847}, refs: [semmelweis1861]}
+  events:
+    - {id: pump_handle, tags: [cholera, c19, london, history], related: ['people:snow', 'places:broad_street'], unlock: {era: broad_street_1854}, refs: [snow1855, game]}
+    - {id: handwashing_rule, tags: [obstetrics, sterilize, c19, vienna, history], related: ['people:semmelweis', 'places:vienna_clinic'], unlock: {era: vienna_1847}, refs: [semmelweis1861]}
+    - {id: branch, tags: [history], related: [], unlock: always, refs: [game]}
+  stories:
+    - {id: royal_comb_story, tags: [story, romance], related: ['antiques:royal_comb'], unlock: {antique: royal_comb}, refs: [game]}
+# Events that come out of the models. The key is the event id in data/eras/*.lm.yaml, shared by every era.
+model_events:
+  door_block: {refs: [game]}
+  time_strain: {refs: [game]}
+  pocket: {refs: [game]}
+# Double edges. gain_in_model and cost_in_model say whether the model really has that side. kind: office means the attribute is not a trait stat.
+stats:
+  - {id: favor, kind: office, unlock: always, gain_in_model: true, cost_in_model: true}
+  - {id: stamina, unlock: always, gain_in_model: true, cost_in_model: false}
+  - {id: skill, unlock: always, gain_in_model: true, cost_in_model: false}
+  - {id: eloquence, unlock: always, gain_in_model: true, cost_in_model: false}
+  - {id: kindness, unlock: always, gain_in_model: true, cost_in_model: true}
+  - {id: stubbornness, unlock: always, gain_in_model: true, cost_in_model: true}
+  - {id: curiosity, unlock: always, gain_in_model: true, cost_in_model: false}
+  - {id: homesick_trait, unlock: always, gain_in_model: false, cost_in_model: true}
+  - {id: greed, unlock: {trait: greedy}, gain_in_model: true, cost_in_model: true}

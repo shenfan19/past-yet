@@ -2,11 +2,28 @@ import { loadData } from './data.js';
 import * as sim from './sim.js';
 import { createUI } from './ui.js';
 
+// Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
+function pickLang(I) {
+  const codes = Object.keys(I.locales);
+  const url = new URLSearchParams(location.search).get('lang');
+  let saved = null;
+  try { saved = localStorage.getItem(I.storage_key); } catch (e) { /* storage blocked */ }
+  for (const c of [url, saved]) if (c && codes.includes(c)) return c;
+  for (const n of navigator.languages || [navigator.language]) {
+    const pre = String(n).toLowerCase().split('-')[0];
+    if (codes.includes(pre)) return pre;
+  }
+  return I.fallback;
+}
+
 const D = await loadData(async (p) => {
   const res = await fetch(p);
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();
-}, (t) => window.jsyaml.load(t));
+}, (t) => window.jsyaml.load(t), pickLang);
+
+document.documentElement.lang = D.lang;
+document.title = D.get('text.ui.title') + ' · ' + D.get('text.ui.subtitle');
 
 const eras = {};
 for (const id of D.get('config.eras')) eras[id] = sim.compileEra(D.get('era_raw.' + id), D, id);

@@ -1,0 +1,34 @@
+# Encyclopedia text, English. English is the fallback language. Structure is in data/encyclopedia.yaml, names and texts are keyed by its ids.
+refs:
+  snow1855: "Snow J. On the Mode of Communication of Cholera. 2nd ed. London: John Churchill; 1855."
+  semmelweis1861: "Semmelweis I. Die Aetiologie, der Begriff und die Prophylaxis des Kindbettfiebers. Pest, Wien, Leipzig: C. A. Hartleben; 1861."
+  game: "Game assumption. There is no historical source behind it, the numbers are set to make the game fun."
+  lm: "Life Matters model library and reference engine, repository life-matters-reference-engine."
+  readme: "The README of this game repository and the model files under data/eras, where every variable carries a source tag."
+sections:
+  places:
+    broad_street: {name: "Broad Street, London, 1854", text: "A street in Soho, London, with a public water pump at its corner. From the end of August to early September 1854 cholera broke out here. Broad Street in the game is a neighbourhood model of about five hundred people."}
+    vienna_clinic: {name: "Vienna General Hospital, 1847", text: "One of the largest hospitals in Europe in the mid nineteenth century, with two maternity wards, one where doctors and students delivered and one where midwives did. The maternal death rates of the two wards differed greatly."}
+  people:
+    snow: {name: "John Snow", text: "English physician. He had proposed in 1849 that cholera spreads through water, and in 1854 tied the cases to the Broad Street pump with a house to house survey. In the game he is someone an employee can work with."}
+    semmelweis: {name: "Ignaz Semmelweis", text: "Obstetrician of Hungarian origin. In 1847 he found that deaths in the dissecting room and the delivery room were linked, and required hands to be washed in a chlorinated lime solution before deliveries. In the game he is someone an employee can work with."}
+  events:
+    pump_handle: {name: "The Broad Street pump handle is removed", text: "History records the handle being removed on 8 September. The outbreak was already declining by then and many residents had left, so how many lives the removal saved is still debated. In the game an employee can get the handle removed earlier, but only on that branch."}
+    handwashing_rule: {name: "The Vienna handwashing rule", text: "History records that in mid May 1847 Semmelweis required hands to be washed in a chlorinated lime solution before deliveries, and the death rate in the ward then fell. The exact dates and numbers are unchecked."}
+    branch: {name: "Branches and the main timeline", text: "Game assumption. History cannot be changed. Everything an employee does lands on a parallel branch and the main timeline stays as it was. The difference between the branch and the main timeline is converted into time energy."}
+  stories:
+    royal_comb_story: {name: "The girl and the prince", text: "A girl travels into the past and marries a prince. A small story like this has no history to change, it reuses the same simulation with a minor character as protagonist and goal. Not built as playable content yet."}
+model_events:
+  door_block: "While going door to door to treat people, an employee may be turned away by neighbours or seniors. Whether they yield, insist or appeal is decided by their traits."
+  time_strain: "When a branch drifts too far from history, the employee feels the time slip, gets more tired, and is more likely to come to harm."
+  pocket: "A greedy employee may pocket local objects and turn them into funds, but neighbours may see it and trust drops."
+stats:
+  favor: {name: "Favor", text: "An employee's affection for the agency, 0 to 1, starting at 0.5. Kept up with bonuses and successful trips, lowered by failures and giving up.", gain: "With high favor an employee is slower to get homesick and give up, and a greedy one is less likely to pocket things.", cost: "Favor has to be bought with money and success, and falls fast when trips go badly."}
+  stamina: {gain: "The higher the stamina the slower fatigue builds, so more can be done in a row.", cost: "Will not rest, and needs a longer rest after returning."}
+  skill: {gain: "Lower death rate among those treated, and less likely to catch the disease from patients.", cost: "Too professional, and hard to get through to people who do not understand."}
+  eloquence: {gain: "Wins the trust of the local doctor more easily and can move the parish.", cost: "Talks too much and irritates people, more likely to be taken for a fraud."}
+  kindness: {gain: "Sitting at the bedside earns neighbours' trust more easily, and the employee is more willing to treat when there are many patients.", cost: "Attachment grows faster, so they find it harder to leave and are reluctant to leave patients to find the local doctor."}
+  stubbornness: {gain: "Does not yield when turned away at the door, and can push through.", cost: "Loses more gear when thrown out, and neighbours' trust falls further."}
+  curiosity: {gain: "More willing to go and talk to the local doctor, so cooperation starts earlier.", cost: "Easily distracted by new things, which delays the treatment at hand."}
+  homesick_trait: {gain: "Someone who misses home keeps steady and is reluctant to take risks.", cost: "Homesickness grows faster, so they give up earlier and return to the present."}
+  greed: {gain: "Brings back local objects and turns them into extra funds.", cost: "Trust drops if neighbours see it, and they may take what they should not."}

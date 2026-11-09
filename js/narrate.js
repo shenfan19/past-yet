@@ -17,39 +17,40 @@ export function fmt(tpl, vars, extra = {}) {
 }
 
 export function dateLabel(D, E, t) {
-  const T = D.get('text_zh');
+  const T = D.get('text');
   const hour = (t - Math.floor(t)) * 24;
   let part = T.day_parts[0].name;
   for (const p of T.day_parts) if (hour >= p.from) part = p.name;
   const cal = E.calendar;
   const total = cal.day0 + Math.floor(t);
   const month = cal.month + Math.floor((total - 1) / cal.month_length);
+  const monthName = T.month_names[month - 1];
   const day = ((total - 1) % cal.month_length) + 1;
-  return fmt(T.date_format, {}, { m: month, d: day, part });
+  return fmt(T.date_format, {}, { m: month, mn: monthName, d: day, part });
 }
 
 export function itemText(D, eraId, id) {
-  const e = D.get('text_zh.eras.' + eraId);
-  return (e.items && e.items[id]) || D.get('text_zh.items.' + id);
+  const e = D.get('text.eras.' + eraId);
+  return (e.items && e.items[id]) || D.get('text.items.' + id);
 }
 
 export function stratText(D, eraId, grp, key) {
-  const e = D.get('text_zh.eras.' + eraId);
-  return (e.strategies && e.strategies[grp] && e.strategies[grp][key]) || D.get(`text_zh.strategies.${grp}.${key}`);
+  const e = D.get('text.eras.' + eraId);
+  return (e.strategies && e.strategies[grp] && e.strategies[grp][key]) || D.get(`text.strategies.${grp}.${key}`);
 }
 
 export function kitText(D, items, eraId) {
   return Object.entries(items).filter(([, n]) => n > 0).map(([id, n]) => {
     const name = itemText(D, eraId, id).name;
     return D.get(`items.${id}.max`) === 1 ? name : `${name}×${n}`;
-  }).join('、');
+  }).join(D.get('text.ui.fmt.sep'));
 }
 
-export function staffName(D, id) { return D.get(`text_zh.staff.${id}.name`); }
+export function staffName(D, id) { return D.get(`text.staff.${id}.name`); }
 export function staffTraits(D, id) { return D.get(`staff.staff.${id}.traits`); }
 
 export function buildReport(D, E, res) {
-  const T = D.get('text_zh');
+  const T = D.get('text');
   const ET = T.eras[E.id];
   const spec = res.spec;
   const staff = staffName(D, spec.staffId);
@@ -115,7 +116,7 @@ export function buildReport(D, E, res) {
 
 // Rows comparing two reports of the same era.
 export function diffRows(D, eraId, A, B) {
-  const T = D.get('text_zh');
+  const T = D.get('text');
   const rows = [];
   const ids = new Set([...Object.keys(A.res.spec.items), ...Object.keys(B.res.spec.items)]);
   for (const id of ids) {
@@ -127,10 +128,16 @@ export function diffRows(D, eraId, A, B) {
   return rows;
 }
 
-// Years are stored as signed integers. Shown with a short Chinese prefix: negative years as 前 N, years before the cut off as 公元 N, later years plain.
+// Years are stored as signed integers. The text decides how they read: negative years use the bc template, years before the cut off the ad template.
 export function fmtYear(D, y) {
-  const C = D.get('text_zh.ui.cal');
+  const C = D.get('text.ui.cal');
   if (y === 0) throw new Error('没有 0 年');
-  if (y < 0) return C.bc + (-y);
-  return y < D.get('map.calendar.ad_prefix_below') ? C.ad + y : String(y);
+  if (y < 0) return C.bc.replace('{n}', String(-y));
+  return y < D.get('map.calendar.ad_prefix_below') ? C.ad.replace('{n}', String(y)) : String(y);
+}
+
+// The first sentence of a description, for one line list cells.
+export function firstSentence(text) {
+  const m = text.match(/^.*?[。.!?！？]/);
+  return m ? m[0] : text;
 }

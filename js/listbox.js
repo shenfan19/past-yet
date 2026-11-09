@@ -1,6 +1,6 @@
 // A framed list like a delivery menu: sortable columns, a scrolling body, and chosen rows pinned at the top of the frame.
 export function createListbox(X) {
-  const { esc, st, U } = X;
+  const { esc, st, U, D } = X;
   const L = U.lbox;
 
   function sortOf(id) { return st.sort[id] || (st.sort[id] = { k: null, dir: 1 }); }
@@ -14,7 +14,7 @@ export function createListbox(X) {
       if (col && col.val) {
         rows.sort((a, b) => {
           const x = col.val(a), y = col.val(b);
-          return (typeof x === 'string' ? x.localeCompare(y, 'zh') : x - y) * ss.dir;
+          return (typeof x === 'string' ? x.localeCompare(y, D.lang) : x - y) * ss.dir;
         });
       }
     }

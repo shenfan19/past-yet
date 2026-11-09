@@ -1,0 +1,34 @@
+# 百科的文字，简体中文。结构在 data/encyclopedia.yaml，这里按 id 写名称和正文。缺的键落回英文。
+refs:
+  snow1855: "Snow J. On the Mode of Communication of Cholera. 2nd ed. London: John Churchill; 1855."
+  semmelweis1861: "Semmelweis I. Die Aetiologie, der Begriff und die Prophylaxis des Kindbettfiebers. Pest, Wien, Leipzig: C. A. Hartleben; 1861."
+  game: "游戏设定，没有史料依据，数值是为了好玩而定的。"
+  lm: "Life Matters 模型库与参考引擎，仓库 life-matters-reference-engine。"
+  readme: "本游戏仓库 README 与 data/eras 下的模型文件，每个变量带出处标签。"
+sections:
+  places:
+    broad_street: {name: "伦敦宽街，1854", text: "伦敦苏荷区的一条街，街口有一台公用水泵。1854 年 8 月底到 9 月初，这一带暴发霍乱。游戏里的宽街是一个约五百人的街区模型。"}
+    vienna_clinic: {name: "维也纳总医院，1847", text: "十九世纪中叶欧洲最大的医院之一，设有两间产科病房，一间由医生和学生接生，一间由助产士接生。两间病房的产妇死亡率差别很大。"}
+  people:
+    snow: {name: "约翰·斯诺", text: "英国医生。1849 年已提出霍乱经水传播，1854 年通过逐户调查把病例与宽街水泵联系起来。游戏里他是员工可以合作的对象。"}
+    semmelweis: {name: "伊格纳茨·森梅尔维斯", text: "匈牙利出身的产科医生，1847 年发现解剖室与产房的死亡有关，并要求接生前用氯化石灰溶液洗手。游戏里他是员工可以合作的对象。"}
+  events:
+    pump_handle: {name: "宽街泵柄被拆", text: "史载 9 月 8 日泵柄被拆走。拆走时疫情已经在下降，很多居民早已离开，所以泵柄被拆能救多少人至今有争论。游戏里员工能让泵柄提前拆走，只在这条分支里成立。"}
+    handwashing_rule: {name: "维也纳洗手规定", text: "史载 1847 年 5 月中旬，森梅尔维斯要求接生前用氯化石灰溶液洗手，随后产房的死亡率下降。具体日期与数字待核对。"}
+    branch: {name: "分支与主时间线", text: "游戏设定。历史不可改变，员工的一切行动都落在一条平行分支上，主时间线保持原样，分支与主时间线的差值换算成时空能量。"}
+  stories:
+    royal_comb_story: {name: "少女与王子", text: "一个少女穿到过去，嫁给了王子。这类小故事没有史实可改，沿用同一套仿真，只是主角和目标换成一个小人物。还没有做成可玩的内容。"}
+model_events:
+  door_block: "员工上门救治时，可能被邻居或前辈拦在门外。是让步、坚持还是求助，由员工自己的特质决定。"
+  time_strain: "分支离史实太远时，员工会感到时间错位，人更累，也更容易出事。"
+  pocket: "贪婪的员工可能顺手拿走当地的东西，换成资金，但会被街坊看见，掉信任。"
+stats:
+  favor: {name: "好感度", text: "员工对事务所的好感，0 到 1，初始 0.5。靠奖金和成功的派遣维持，失败和放弃会让它掉。", gain: "好感高，员工更不容易想家放弃任务，贪婪的员工也更少顺手拿东西。", cost: "好感要靠花钱和成功去养，派遣结果不好时掉得很快。"}
+  stamina: {gain: "体力越高，疲劳涨得越慢，能连续做更多事。", cost: "不肯休息，回来后需要的休整更长。"}
+  skill: {gain: "救治死亡率更低，接触病人时更不容易被传染。", cost: "过于专业，遇到不懂的人容易讲不通。"}
+  eloquence: {gain: "更容易赢得当地名医的信任，劝动教区。", cost: "话多招人烦，被怀疑是骗子的机会更高。"}
+  kindness: {gain: "床边陪伴更容易换来邻居的信任，病人多时更愿意去救。", cost: "牵挂度涨得更快，更容易舍不得走，也不愿意离开病人去找名医。"}
+  stubbornness: {gain: "被拦在门外时不让步，能挤进去。", cost: "被赶出来时丢更多东西，邻居信任掉得更多。"}
+  curiosity: {gain: "更愿意去找当地名医聊，合作更早开始。", cost: "容易被新鲜事分心，耽误手头的救治。"}
+  homesick_trait: {gain: "想家的人做事收得住，不愿意冒险。", cost: "思乡涨得更快，更早放弃任务回到现代。"}
+  greed: {gain: "顺手带回当地的东西，换成额外的资金。", cost: "被街坊看见会掉信任，也可能拿走不该拿的东西。"}

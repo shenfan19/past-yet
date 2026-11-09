@@ -22,7 +22,7 @@ page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') 
 page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 try {
   const ok = (label, cond) => console.log(label + ':', cond ? 'ok' : 'MISMATCH');
-  await page.goto(`http://127.0.0.1:${port}/index.html`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
   await page.waitForSelector('.lead');
   await page.screenshot({ path: path.join(outDir, '0_home.png'), fullPage: true });
   await page.waitForSelector('.stat');
@@ -158,7 +158,7 @@ try {
   await page.click('[data-clk=auto]');
   await page.click('[data-clk=speed][data-i="0"]');
   ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 4);
-  await page.goto(`http://127.0.0.1:${port}/index.html?dev=0`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
   await page.waitForSelector('.lead');
   ok('guest has four tabs', (await page.locator('#tabs button').count()) === 4);
   await page.click('[data-tab=enc]');
@@ -170,6 +170,32 @@ try {
   ok('guest map shows only unlocked places', (await page.locator('svg.map .pt').count()) === 2);
   await page.click('[data-tab=shop]');
   ok('guest future shop is a locked card', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 0);
+  // English, language switch and fallback
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
+  await page.waitForSelector('.lead');
+  ok('English title', (await page.title()) === 'The Teleporter · Prototype');
+  ok('English tab label', (await page.locator('#tabs [data-tab=dispatch]').innerText()).includes('Dispatch'));
+  await page.click('[data-tab=dispatch]');
+  await page.waitForSelector('svg.map');
+  await page.fill('#map-from', '-500');
+  ok('English BC format', (await page.locator('#map-fromtxt').innerText()) === '500 BC');
+  await page.fill('#map-from', '1840');
+  await page.click('[data-tab=enc]');
+  await page.waitForSelector('.wiki');
+  ok('English wiki lists categories', (await page.locator('.wcat summary').first().innerText()).length > 0);
+  await page.click('[data-tab=home]');
+  await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'zh')]);
+  await page.waitForSelector('.lead');
+  ok('switching to Chinese sticks', (await page.locator('#tabs [data-tab=dispatch]').innerText()).includes('派遣') && (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh');
+  const frCtx = await browser.newContext({ locale: 'fr-FR' });
+  const frPage = await frCtx.newPage();
+  await frPage.goto(`http://127.0.0.1:${port}/index.html`);
+  await frPage.waitForSelector('.lead');
+  ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=dispatch]').innerText()).includes('Dispatch'));
+  await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=fr`);
+  await frPage.waitForSelector('.lead');
+  ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=dispatch]').innerText()).includes('Dispatch'));
+  await frCtx.close();
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });

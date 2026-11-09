@@ -38,3 +38,11 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - Shop: items are bought into stock and carried from stock, items and antiques can be sold, antiques can be locked. The future shop is closed until a future place exists.
 - Encyclopedia: a wiki with a left list, search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear, with the formulas and variables each event uses.
 - Dev mode: `ui.dev_mode` in `data/config.yaml`, overridden by `?dev=1` or `?dev=0` in the address.
+
+## Languages
+
+- Language files are `data/i18n/text.<code>.yaml` and `data/i18n/encyclopedia.<code>.yaml`. The structure of the encyclopedia is language neutral in `data/encyclopedia.yaml`.
+- Supported languages are listed in `config.yaml` under `i18n.locales`. English is the fallback and must be complete. Any key another language lacks, a missing file, or a language that is not configured, reads English.
+- The language is picked from `?lang=`, then the saved choice, then the browser language, then English. The header selector saves the choice and reloads.
+- To add a language: add its code to `i18n.locales`, copy `text.en.yaml` and `encyclopedia.en.yaml` to the new code, translate what you want, leave the rest.
+- `node tools/check_i18n.mjs` compares the files with English (missing keys, stray keys, placeholders that differ) and tests the fallback.

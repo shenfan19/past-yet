@@ -8,8 +8,11 @@ const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
 export function createWiki(X) {
   const { D, ctx, T, U, DEV, esc, r1, st } = X;
   const W = U.wiki;
+  const COLON = U.fmt.colon, SEP = U.fmt.sep;
+  const paren = (x) => U.fmt.paren.replace('{x}', x);
   const eraIds = () => D.get('config.eras');
-  const refs = () => D.get('encyclopedia_zh.refs');
+  const refStatus = (id) => D.get('encyclopedia.refs.' + id + '.status');
+  const refCite = (id) => D.get('enc_text.refs.' + id);
   const depCache = {};
 
   // ---------- model dependencies, used by the dev categories ----------
@@ -46,7 +49,7 @@ export function createWiki(X) {
   function buildArticles() {
     const A = [];
     const add = (a) => A.push(a);
-    const sec = (k) => D.get('encyclopedia_zh.sections.' + k);
+    const sec = (k) => D.get('encyclopedia.sections.' + k).map((e) => ({ ...e, ...D.get('enc_text.sections.' + k + '.' + e.id) }));
     const tagsOfEra = (eraId) => T.eras[eraId].tags;
     const eraTitle = (eraId) => T.eras[eraId].name;
 
@@ -56,18 +59,18 @@ export function createWiki(X) {
     for (const e of sec('stories')) add({ id: 'stories:' + e.id, cat: 'stories', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
 
     // events that come out of the models
-    const me = D.get('encyclopedia_zh.model_events');
+    const me = Object.fromEntries(Object.entries(D.get('encyclopedia.model_events')).map(([k, v]) => [k, { refs: v.refs, text: D.get('enc_text.model_events.' + k) }]));
     for (const eraId of eraIds()) {
       for (const key of Object.keys(ctx.era(eraId).raw.events)) {
         const info = me[key];
         add({
-          id: `events:m:${eraId}:${key}`, cat: 'events', title: `${T.eras[eraId].event_titles[key]}（${T.eras[eraId].short}）`, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: info.refs,
+          id: `events:m:${eraId}:${key}`, cat: 'events', title: `${T.eras[eraId].event_titles[key]}${paren(`${T.eras[eraId].short}`)}`, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: info.refs,
           body: () => {
-            let h = `<p>${link(info.text)}</p><div class="muted">${W.in_era}：${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div>`;
+            let h = `<p>${link(info.text)}</p><div class="muted">${W.in_era}${COLON}${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div>`;
             if (DEV) {
               const d = deps(eraId).ev[key];
-              h += `<div class="sec">${W.uses_formulas}（${d.formulas.length} ${W.formula_count}）</div><ul>${d.formulas.map((n) => `<li>${a(`formulas:${eraId}:${n}`, n)}</li>`).join('') || `<li class="muted">${U.enc.no_ref}</li>`}</ul>`;
-              h += `<div class="sec">${W.uses_vars}（${d.vars.length} ${W.var_count}）</div><div class="wrap">${d.vars.map((n) => a(`vars:${eraId}:${n}`, n)).join(' ')}</div>`;
+              h += `<div class="sec">${W.uses_formulas}${paren(`${d.formulas.length} ${W.formula_count}`)}</div><ul>${d.formulas.map((n) => `<li>${a(`formulas:${eraId}:${n}`, n)}</li>`).join('') || `<li class="muted">${U.enc.no_ref}</li>`}</ul>`;
+              h += `<div class="sec">${W.uses_vars}${paren(`${d.vars.length} ${W.var_count}`)}</div><div class="wrap">${d.vars.map((n) => a(`vars:${eraId}:${n}`, n)).join(' ')}</div>`;
             }
             return h;
           },
@@ -93,23 +96,23 @@ export function createWiki(X) {
         id: 'traits:' + t, cat: 'traits', title: T.traits[t], tags: [], unlock: { trait: t }, refs: ['game'],
         body: () => {
           const tr = D.get('staff.traits.' + t);
-          const mods = Object.entries(tr.mods).map(([k, v]) => `${esc(T.stats[k])} ${v > 0 ? '+' : ''}${v}`).join('、');
-          const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}：${esc(T.strategies[grp][key].name)}`).join('；');
+          const mods = Object.entries(tr.mods).map(([k, v]) => `${esc(T.stats[k])} ${v > 0 ? '+' : ''}${v}`).join(SEP);
+          const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}${COLON}${esc(T.strategies[grp][key].name)}`).join('${U.fmt.semi}');
           const who = Object.keys(D.get('staff.staff')).filter((id) => staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
-          const pref = tr.prefer ? `<div>${U.office.secretary_pref}：${esc(U.office.aims[tr.prefer])}</div>` : '';
-          return `<div>${U.enc.modified_by}：${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
+          const pref = tr.prefer ? `<div>${U.office.secretary_pref}${COLON}${esc(U.office.aims[tr.prefer])}</div>` : '';
+          return `<div>${U.enc.modified_by}${COLON}${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
         },
       });
     }
 
     const base = D.get('staff.default_base');
-    for (const e of D.get('encyclopedia_zh.stats')) {
+    for (const e of D.get('encyclopedia.stats').map((x) => ({ ...x, ...D.get('enc_text.stats.' + x.id) }))) {
       add({
         id: 'stats:' + e.id, cat: 'stats', title: e.name || T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'],
         body: () => {
-          const mods = Object.entries(D.get('staff.traits')).filter(([, tr]) => e.id in tr.mods).map(([t, tr]) => `${esc(T.traits[t])} ${tr.mods[e.id] > 0 ? '+' : ''}${tr.mods[e.id]}`).join('、');
-          const side = (label, text, inModel) => (inModel || DEV) ? `<div><b>${label}</b>：${esc(text)}${DEV ? ` <span class="chip ${inModel ? '' : 'warn'}">${inModel ? U.enc.edge_impl : U.enc.edge_pending}</span>` : ''}</div>` : `<div><b>${label}</b>：${U.enc.edge_none}</div>`;
-          const head = e.kind === 'office' ? `<p>${esc(e.text)}</p>` : `<p class="muted">${U.enc.stat_rule}</p><div>${U.enc.base} ${base[e.id]}</div><div>${U.enc.modified_by}：${esc(mods || U.enc.no_ref)}</div>`;
+          const mods = Object.entries(D.get('staff.traits')).filter(([, tr]) => e.id in tr.mods).map(([t, tr]) => `${esc(T.traits[t])} ${tr.mods[e.id] > 0 ? '+' : ''}${tr.mods[e.id]}`).join(SEP);
+          const side = (label, text, inModel) => (inModel || DEV) ? `<div><b>${label}</b>${COLON}${esc(text)}${DEV ? ` <span class="chip ${inModel ? '' : 'warn'}">${inModel ? U.enc.edge_impl : U.enc.edge_pending}</span>` : ''}</div>` : `<div><b>${label}</b>${COLON}${U.enc.edge_none}</div>`;
+          const head = e.kind === 'office' ? `<p>${esc(e.text)}</p>` : `<p class="muted">${U.enc.stat_rule}</p><div>${U.enc.base} ${base[e.id]}</div><div>${U.enc.modified_by}${COLON}${esc(mods || U.enc.no_ref)}</div>`;
           return `${head}${side(U.enc.edge_gain, e.gain, e.gain_in_model)}${side(U.enc.edge_cost, e.cost, e.cost_in_model)}`;
         },
       });
@@ -120,7 +123,7 @@ export function createWiki(X) {
         const px = T.eras[eraId].plots[pid];
         add({
           id: `plots:${eraId}:${pid}`, cat: 'plots', title: px.name, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: ['game'],
-          body: () => `<p>${esc(px.desc)}</p><div>${W.in_era}：${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div><div>${U.dispatch.character}：${a(px.article, px.character)}</div><div>${U.dispatch.tech}：${p.tech} / ${ctx.era(eraId).tech} ${p.tech <= ctx.era(eraId).tech ? '' : '<span class="chip warn">' + U.dispatch.tech_low + '</span>'}</div>`,
+          body: () => `<p>${esc(px.desc)}</p><div>${W.in_era}${COLON}${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div><div>${U.dispatch.character}${COLON}${a(px.article, px.character)}</div><div>${U.dispatch.tech}${COLON}${p.tech} / ${ctx.era(eraId).tech} ${p.tech <= ctx.era(eraId).tech ? '' : '<span class="chip warn">' + U.dispatch.tech_low + '</span>'}</div>`,
         });
       }
     }
@@ -129,7 +132,7 @@ export function createWiki(X) {
       const tx = T.antiques[id];
       add({
         id: 'antiques:' + id, cat: 'antiques', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'],
-        body: () => `<p>${esc(tx.desc)}</p><div class="muted">${U.dispatch.points_to}：${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
+        body: () => `<p>${esc(tx.desc)}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
       });
     }
 
@@ -148,22 +151,22 @@ export function createWiki(X) {
         const dp = deps(eraId);
         for (const [n, q] of Object.entries(E.raw.equations)) {
           add({
-            id: `formulas:${eraId}:${n}`, cat: 'formulas', title: `${n}（${T.eras[eraId].short}）`, tags: tagsOfEra(eraId), unlock: 'always', refs: ['readme'], dev: true,
+            id: `formulas:${eraId}:${n}`, cat: 'formulas', title: `${n}${paren(`${T.eras[eraId].short}`)}`, tags: tagsOfEra(eraId), unlock: 'always', refs: ['readme'], dev: true,
             body: () => {
               const lines = Object.entries(q.dynamics).map(([v, ex]) => `<div><code>${varLink(eraId, v)} = ${exprLinks(eraId, ex)}</code></div>`).join('');
               const evs = (dp.eqEvents[n] || []).map((k) => a(`events:m:${eraId}:${k}`, T.eras[eraId].event_titles[k])).join(' ');
-              return `<p>${esc(q.description)}</p><div class="muted">${W.expr}</div>${lines}<div class="muted">${U.enc.equation_ref}：${esc(q.reference || U.enc.no_ref)}</div>${evs ? `<div class="sec">${W.used_by_events}</div><div class="wrap">${evs}</div>` : ''}<div class="muted">${W.in_era}：${a('models:' + eraId, T.eras[eraId].name)}</div>`;
+              return `<p>${esc(q.description)}</p><div class="muted">${W.expr}</div>${lines}<div class="muted">${U.enc.equation_ref}${COLON}${esc(q.reference || U.enc.no_ref)}</div>${evs ? `<div class="sec">${W.used_by_events}</div><div class="wrap">${evs}</div>` : ''}<div class="muted">${W.in_era}${COLON}${a('models:' + eraId, T.eras[eraId].name)}</div>`;
             },
           });
         }
         for (const [n, v] of Object.entries(E.vars)) {
           add({
-            id: `vars:${eraId}:${n}`, cat: 'vars', title: `${n}（${T.eras[eraId].short}）`, tags: tagsOfEra(eraId), unlock: 'always', refs: ['readme', 'lm'], dev: true,
+            id: `vars:${eraId}:${n}`, cat: 'vars', title: `${n}${paren(`${T.eras[eraId].short}`)}`, tags: tagsOfEra(eraId), unlock: 'always', refs: ['readme', 'lm'], dev: true,
             body: () => {
               const u = dp.varUsers[n] || { eq: [], ev: [] };
-              return `<div>${W.value}：<code>${esc(v.value)}</code> ${esc(v.unit || '')}</div><div><span class="chip">${esc(X.srcLabel(v.source))}</span> ${esc(v.note || '')}</div>
-                <div class="sec">${W.used_by_formulas}（${u.eq.length}）</div><div class="wrap">${u.eq.map((q) => a(`formulas:${eraId}:${q}`, q)).join(' ') || '—'}</div>
-                <div class="sec">${W.used_by_events}（${u.ev.length}）</div><div class="wrap">${u.ev.map((k) => a(`events:m:${eraId}:${k}`, T.eras[eraId].event_titles[k])).join(' ') || '—'}</div>`;
+              return `<div>${W.value}${COLON}<code>${esc(v.value)}</code> ${esc(v.unit || '')}</div><div><span class="chip">${esc(X.srcLabel(v.source))}</span> ${esc(v.note || '')}</div>
+                <div class="sec">${W.used_by_formulas}${paren(`${u.eq.length}`)}</div><div class="wrap">${u.eq.map((q) => a(`formulas:${eraId}:${q}`, q)).join(' ') || '—'}</div>
+                <div class="sec">${W.used_by_events}${paren(`${u.ev.length}`)}</div><div class="wrap">${u.ev.map((k) => a(`events:m:${eraId}:${k}`, T.eras[eraId].event_titles[k])).join(' ') || '—'}</div>`;
             },
           });
         }
@@ -176,7 +179,7 @@ export function createWiki(X) {
     return A;
   }
 
-  const eraPlaceId = (eraId) => D.get('encyclopedia_zh.sections.places').find((p) => p.era === eraId).id;
+  const eraPlaceId = (eraId) => D.get('encyclopedia.sections.places').find((p) => p.era === eraId).id;
   const a = (id, label) => `<a class="wl" data-act="wiki" data-id="${esc(id)}">${esc(label)}</a>`;
   function varLink(eraId, v) { return ctx.era(eraId).vars[v] ? a(`vars:${eraId}:${v}`, v) : esc(v); }
   function exprLinks(eraId, ex) {
@@ -227,7 +230,7 @@ export function createWiki(X) {
   function tagBar() {
     const present = new Set();
     for (const x of articles()) if (visible(x)) (x.tags || []).forEach((t) => present.add(t));
-    return `<details class="tagfold" ${w().tagOpen ? 'open' : ''}><summary>${W.tag_filter}${w().tag ? '：' + esc(T.tags[w().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${w().tag ? '' : 'on'}" data-act="wikitag" data-id="">${W.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${w().tag === t ? 'on' : ''}" data-act="wikitag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
+    return `<details class="tagfold" ${w().tagOpen ? 'open' : ''}><summary>${W.tag_filter}${w().tag ? COLON + esc(T.tags[w().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${w().tag ? '' : 'on'}" data-act="wikitag" data-id="">${W.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${w().tag === t ? 'on' : ''}" data-act="wikitag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
   }
 
   function listHtml() {
@@ -255,9 +258,8 @@ export function createWiki(X) {
     if (!visible(x)) return `<p class="muted">${U.enc.locked_text}</p>`;
     const tags = (x.tags || []).map((t) => `<button class="chipbtn" data-act="wikitag" data-id="${t}">${esc(T.tags[t])}</button>`).join('');
     const rf = x.refs.map((id) => {
-      const r = refs()[id];
-      if (!r) throw new Error('百科引用缺失: ' + id);
-      return `<div class="ref">${esc(r.cite)} ${r.status === 'pending' ? `<span class="chip warn">${U.enc.pending}</span>` : r.status === 'game' ? `<span class="chip">${U.enc.game_ref}</span>` : ''}</div>`;
+      if (!(id in D.get('encyclopedia.refs'))) throw new Error('百科引用缺失: ' + id);
+      return `<div class="ref">${esc(refCite(id))} ${refStatus(id) === 'pending' ? `<span class="chip warn">${U.enc.pending}</span>` : refStatus(id) === 'game' ? `<span class="chip">${U.enc.game_ref}</span>` : ''}</div>`;
     }).join('');
     return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}<div class="refs"><span class="muted">${U.enc.refs}</span>${rf}</div>`;
   }

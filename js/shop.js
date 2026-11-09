@@ -1,4 +1,6 @@
 // Shops, stock and antiques as framed lists. Chosen purchases sit in a cart pinned at the top of the frame.
+import { firstSentence } from './narrate.js';
+
 export function createShop(X) {
   const { D, ctx, T, U, esc, st, DEV, listbox } = X;
   const S_ = U.shop;
@@ -11,12 +13,13 @@ export function createShop(X) {
   const hiddenChip = () => `<span class="chip warn">${U.enc.hidden}</span>`;
   const cart = () => st.cart;
   const cartTotal = () => Object.entries(cart()).reduce((a, [id, n]) => a + D.get(`items.${id}.cost`) * n, 0);
-  const oneLine = (desc) => desc.split('。')[0] + '。';
+  const oneLine = firstSentence;
+  const COLON = U.fmt.colon, SEP = U.fmt.sep;
 
   const nameCell = (kind, id, name, desc, tip, extra = '') => `${X.wl(kind + ':' + id, name, tip)}${extra}<div class="oneline muted">${esc(oneLine(desc))}</div>`;
   const itemTip = (id) => {
     const it = D.get('items.' + id);
-    return `${T.items[id].desc}\n${U.enc.weight} ${it.weight} · ${S_.buy_price} ${it.cost} · ${S_.sell_price} ${sell1(id)}\n${it.tags.map((t) => T.tags[t]).join('、')}`;
+    return `${T.items[id].desc}\n${U.enc.weight} ${it.weight} · ${S_.buy_price} ${it.cost} · ${S_.sell_price} ${sell1(id)}\n${it.tags.map((t) => T.tags[t]).join(SEP)}`;
   };
   const stepper = (decAct, incAct, id, n, decOff, incOff) => `<span class="stepper"><button data-act="${decAct}" data-id="${id}" ${decOff ? 'disabled' : ''}>−</button><span class="n">${n}</span><button data-act="${incAct}" data-id="${id}" ${incOff ? 'disabled' : ''}>+</button></span>`;
 
@@ -70,7 +73,7 @@ export function createShop(X) {
     return listbox.html({
       id: 'ants', rows, maxH: 240,
       cols: [
-        { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join('、'), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
+        { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
         { k: 'dest', label: U.dispatch.points_to, w: '18%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
         { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.an.price, cell: (r) => r.an.price },
         { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.sell, cell: (r) => r.an.sell },
@@ -86,7 +89,7 @@ export function createShop(X) {
     const present = new Set();
     for (const id of Object.keys(D.get('items'))) D.get('items.' + id).tags.forEach((t) => present.add(t));
     for (const id of Object.keys(D.get('antiques.antiques'))) D.get('antiques.antiques.' + id).tags.forEach((t) => present.add(t));
-    const bar = `<details class="tagfold"><summary>${S_.tag_filter}${s().tag ? '：' + esc(T.tags[s().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${s().tag ? '' : 'on'}" data-act="shoptag" data-id="">${S_.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${s().tag === t ? 'on' : ''}" data-act="shoptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
+    const bar = `<details class="tagfold"><summary>${S_.tag_filter}${s().tag ? COLON + esc(T.tags[s().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${s().tag ? '' : 'on'}" data-act="shoptag" data-id="">${S_.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${s().tag === t ? 'on' : ''}" data-act="shoptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
     const futureSh = D.get('shops.shops.future');
     const future = !futureSh.playable && !DEV
       ? `<div class="lbox"><div class="lfoot muted">${U.enc.locked_name} ${U.enc.locked_text}</div></div>`

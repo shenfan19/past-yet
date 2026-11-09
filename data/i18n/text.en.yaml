@@ -1,0 +1,553 @@
+# All player-facing text, English. English is the fallback language: any key a language file lacks reads from here.
+# Templates: {name} variable value, {name:i} integer, {name:p} percent, {name:1} one decimal,
+# {d.name:i} absolute change an event caused, {date} calendar date of the entry, {staff} employee name.
+ui:
+  title: The Teleporter
+  subtitle: Prototype
+  logo: T
+  fmt: {colon: ': ', sep: ', ', semi: '; ', paren: ' ({x})', quote: '"{x}"', dash: '- '}
+  cal: {bc: '{n} BC', ad: 'AD {n}'}
+  tabs: {home: "Home", dispatch: "Dispatch", shop: "Shop", enc: "Wiki"}
+  home:
+    lead: You run a time travel agency. Send employees into the past, earn time energy, and save up enough to go back to your own time and see your family.
+    mainline_title: Premise and rules
+    mainline:
+      - Send someone out, wait a while, read the report when they return. You do not have to watch. Reading the report is the reward.
+      - History cannot be changed. Everything an employee does lands on a parallel branch and the main timeline stays as it was. The difference between the branch and the main timeline is converted into time energy.
+      - Agency rules: no wars, no regime changes. Only medicine, technology, documents, daily life and witnessing.
+      - Employees do not die. When one is about to, the recall charm pulls them back at a cost, and the story goes on.
+    materials_title: Main sources
+    materials_model: Every era is a public YAML model. Every number carries a source tag - historical, LM model, game assumption or calibrated.
+    materials_enc: People, events, places, attributes and employees are in the wiki, linked, filterable by tag and text, with sources wherever possible.
+    go_title: Where to
+    go:
+      dispatch: {name: "Dispatch", desc: "Pick a place on the map, an employee and a kit."}
+      shop: {name: "Shop", desc: "Buy and sell modern and future goods, sell or lock antiques."}
+      enc: {name: "Wiki", desc: "Linked, filterable reference pages with sources."}
+  enc:
+    sections: {places: "Places", people: "People", events: "Events", stories: "Stories", staff: "Employees", stats: "Attributes", antiques: "Antiques", items: "Items", formulas: "Formulas", vars: "Variables"}
+    locked_name: "?"
+    locked_text: Not encountered yet.
+    hidden: (hidden)
+    edge_gain: Upside
+    edge_cost: Downside
+    edge_impl: In the model
+    edge_pending: Not in the model yet
+    edge_none: None yet
+    antique_kind: Kind
+    antique_points: Points to
+    antique_price: Price
+    refs: Sources
+    pending: unchecked
+    game_ref: game assumption
+    stat_rule: The final value is the base value plus the modifiers of all traits.
+    modified_by: Affected by these traits
+    base: Base value
+    formula_note: Formula text comes from the model files and is in English.
+    expression: Expression
+    equation_ref: Source recorded in the model
+    no_ref: none
+    traits_of: Traits
+    bio: Bio
+    cost: Cost
+    weight: Weight
+    max: Limit
+  clock:
+    day: Day {n}
+    pause: Pause
+    auto: Auto
+    auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses. The secretary has a preference too - if the auto results suit it, favor goes up, otherwise down.
+    paused_report: A report is waiting, paused
+  lbox: {chosen: "Chosen", empty: "No matching entries"}
+  shop:
+    cart: Cart
+    total: Total
+    confirm: Confirm purchase
+    clear_cart: Clear
+    col_name: Name
+    col_tags: Tags
+    col_qty: Qty
+    ip_short: Under review
+    tag_filter: Tag filter
+    modern: {name: "Modern shop", desc: "Modern medicine, devices and books. Buy into stock, carry from stock when dispatching."}
+    future: {name: "Future shop", desc: "Goods and technology from the future. The era that leads there is not built yet."}
+    buy: Buy
+    sell: Sell
+    stock: Stock
+    sell_price: Sells for
+    buy_price: Price
+    planned: Not built yet
+    ip_unchecked: The name or design borrows from someone else's work, not for sale until checked
+    filter_ph: Filter by name or description
+    all_tags: All tags
+    inv_title: Stock
+    inv_empty: Stock is empty
+    antiques_title: Antiques
+    antiques_hint: Antiques sell for money to run the agency. Lock one so it cannot be sold by mistake. The anchor a dispatch uses is locked automatically.
+    lock: Lock
+    unlock: Unlock
+    locked: Locked
+    sell_antique: Sell
+    not_carried_here: Not usable in this era
+    no_funds: Not enough funds
+    empty_shop: Nothing matches
+  wiki:
+    search_ph: Type to filter
+    all_tags: All tags
+    clear: Clear filter
+    back: Back
+    forward: Forward
+    pick: Pick an entry from the left.
+    none: No matching entries
+    cats: {places: "Places", people: "People", events: "Events", stories: "Stories", plots: "Plots", staff: "Employees", traits: "Traits", stats: "Attributes", antiques: "Antiques", items: "Items", formulas: "Formulas", vars: "Variables", models: "Models"}
+    tag_filter: Tag filter
+    dev_cats: dev
+    uses_formulas: Formulas used
+    uses_vars: Variables used
+    used_by_events: Used by these events
+    used_by_formulas: Used by these formulas
+    event_count: events
+    formula_count: formulas
+    var_count: variables
+    in_era: Era
+    related: Related
+    model_events: Model events
+    source: Source tag
+    value: Initial value
+    unit: Unit
+    expr: Expression
+    desc: Description
+    full_yaml: Full model YAML
+    tags: Tags
+    refs: Sources
+  map:
+    zoom_in: Zoom in
+    zoom_out: Zoom out
+    zoom_reset: Reset
+    events_here: Events here
+    events_filter_ph: Filter by event, person or place
+    from: From
+    to: to
+    all_tags: All tags
+    no_events: No matching events
+    drag_hint: Scroll to zoom, drag to pan.
+    pick_event: Click a place, then pick its point in time.
+    n_events: events
+  office:
+    funds: Funds
+    energy: Time energy
+    home: Progress toward home
+    staff: Employees
+    ready: Ready
+    away: Away
+    resting: Resting
+    transit: Dispatches in transit
+    pending: Waiting to be collected
+    nothing: None
+    claim: Collect report
+    fast_forward: Skip to return
+    eta: Back in
+    reports: Collected reports
+    reset: Clear save
+    history: History
+    no_history: No trips yet
+    habit: Habit
+    recent: Recent records
+    recruit: Recruit
+    mainline: Main line
+    secretary: Secretary
+    no_secretary: None appointed. An appointed employee stays at the agency, no longer travels, and their traits give the agency bonuses.
+    secretary_state: Secretary
+    appoint: Appoint secretary
+    dismiss: Dismiss
+    gift: Bonus
+    gift_tip: Pay a bonus, favor goes up.
+    favor_tip: Favor. When high, an employee is slower to get homesick and give up, and less likely to pocket things. Good trips raise it, failures and giving up lower it.
+    col_favor: Favor
+    aims: {funds: "funds", lives: "lives saved", energy: "time energy", safety: "staff safety"}
+    secretary_pref: Secretary preference
+    verdict_match: The last auto result suited the secretary, favor up
+    verdict_miss: The last auto result did not suit the secretary, favor down
+    perks: {funds_mult: "Funds income", energy_mult: "Time energy income", rest_cut: "Rest time", favor_gain: "Favor growth"}
+    recruit_hint_short: Known after hiring
+    col_staff: Employee
+    col_traits: Traits
+    col_state: State
+    col_history: History
+    recruit_hint: An applicant of unknown background. You learn who they are once hired.
+    unknown_candidate: "?"
+    hire: Hire
+    cost: Cost
+    reset_confirm: Clear the whole save and start over?
+    reached_home: Enough energy to go home. The prototype ends here.
+  dispatch:
+    era: Era
+    market: Antiques market
+    market_hint: An antique anchors a trip. You only find its era while holding it. Antiques are not consumed, buy once and keep.
+    buy: Buy
+    owned: Owned
+    points_to: Points to
+    unknown_dest: "?"
+    no_anchor: Missing the anchor antique for this era
+    kind_key: Historical turning point
+    kind_daily: Ordinary place
+    kind_story: Small story
+    not_ready: Content not built yet
+    no_funds: Not enough funds
+    hidden_mark: (hidden)
+    pick_map: Click a place on the map, then pick its point in time. Zoom and drag, and narrow the events with the filter box, tags and time range.
+    time_axis: Time
+    far_past: Earlier eras are not open yet
+    far_future: Later eras are not open yet
+    place_file: Place file
+    records_here: Records left here
+    no_records_here: Nobody has been here yet
+    staff: Who goes
+    items: Kit
+    items_hint: More gear costs more and raises the ceiling. Weight and funds are limited.
+    weight: Weight
+    cost: Cost
+    funds_left: Left
+    chosen_staff: Chosen employee
+    chosen_plots: Chosen plots
+    plots: Plots
+    plots_hint: Bring an idea or a design to a historical figure of this era. Whether the era's craft is advanced enough matters. Two at most.
+    character: Historical figure
+    tech: Craft level
+    tech_low: Craft too low
+    drop: Drop
+    pick: Pick
+    picked: Picked
+    carrying: Carrying
+    carry: Carry
+    kit_value: Kit purchase value
+    no_stock: Nothing in stock is usable in this era, go to the shop.
+    focus: Priority
+    on_block: When turned away at the door
+    seed: Seed
+    seed_hint: Same seed with a different setup gives the clearest comparison
+    suggest: Suggest a kit
+    suggest_hint: Search a set of items with the backend model for the current employee
+    suggest_front: Search result, each row is a plan
+    use: Use
+    send: Dispatch
+    over_weight: Overweight
+    over_funds: Not enough funds
+    busy: This employee is not available
+    clear: Clear
+    lives: Expected lives saved
+    searching: Searching with the backend model...
+    none_found: No feasible plan found
+    kit: Kit
+  report:
+    none: No reports yet. Send someone out first.
+    cumulative: " (cumulative)"
+    prev: Previous
+    this: This one
+    back: Back
+    summary: Summary
+    timeline: What happened
+    chart: Main timeline and this branch
+    ledger: Daily log
+    accounts: Accounts
+    compare: Compared with history
+    footnotes: Footnotes
+    again: Send again with this setup
+    vs_prev: Compare with previous
+    vs_title: Difference from the previous report for the same era
+    history: History
+    branch: Branch
+    trait: Trait
+    param: Parameter
+    day: Day
+    sick: Sick
+    dead: Dead
+    mainline: Main timeline
+    this_branch: This branch
+    treated: Treated
+    protected: Protected
+    deaths: Deaths
+    handle: Pump handle removed
+    energy_gain: Time energy
+    funds_gain: Funds
+    spent: Purchase value of gear used
+    rest: Employee rest
+    days: days
+    source_historical: Historical, source unchecked
+    source_lm: LM model
+    source_game: Game assumption
+    source_calibrated: Calibrated
+    people: people
+    drilldown: Open to see where this number comes from
+    seed: Seed
+    legend_visit: Employee present
+    legend_handle_hist: Handle removed on the main timeline
+    legend_handle_branch: Handle removed on this branch
+  archive:
+    history: History
+    regret: Regret
+    check_pending: source unchecked
+    sealed: After one trip here, the history and regret will be filled in.
+  model:
+    note: The backend model is this one YAML. Every game rule number is in it, the code only interprets it.
+    variables: Variables
+    provenance: Source
+    show_yaml: Show full YAML
+    count: variables
+    ext: Extensions on LM 1.0
+    ext_text:
+      agents: Multi-agent. Each agent has its own state and each step picks the available action with the highest utility, written as a level input.
+      actions: Preconditions and utilities are expressions over declared variables.
+      events: Seeded random events. The draw depends only on the seed, the event id and the occurrence index.
+      milestones: Report sentences that fire once when an expression turns true.
+      outcomes: Ordered end states, the first one that is true applies.
+      scoring: Counterfactual scoring. The same seed is run again without the employee as the comparison.
+      provenance: Every variable and event says where it comes from - historical, LM model, game assumption, calibrated.
+      item_bindings: Items chosen before departure are written to their variables once on arrival.
+      strategies: An employee's field tendencies come from their traits. Whoever is sent uses their tendencies, each option writes some input variables.
+    blocks: Blocks
+staff:
+  s_ning: {name: "Ning", bio: "Used to be a nurse. Stubborn, cannot bear to see a patient with nobody looking after them."}
+  s_zhou: {name: "Zhou", bio: "Worked construction. Strong, a talker, does not like going around things."}
+  s_lin: {name: "Lin", bio: "Reads a lot, wants to understand everything, gets homesick first."}
+  s_qian: {name: "Qian", bio: "Used to trade in second hand goods. Sharp eyes, knows what anything is worth at a glance."}
+traits:
+  kind: Kind
+  stubborn: Stubborn
+  curious: Curious
+  homesick: Homesick
+  studious: Studious
+  sturdy: Sturdy
+  glib: Silver tongued
+  greedy: Greedy
+mainline:
+  open: {name: "Opening day", desc: "The agency opens. One shopfront, three employees."}
+  first_trip: {name: "First trip", desc: "An employee brings back the first time energy."}
+  reputation: {name: "A name", desc: "The neighbours start to mention the agency."}
+  far_past: {name: "Further back", desc: "Enough energy to open up more distant times."}
+  home: {name: "Home", desc: "Enough energy. The boss can go back to their own time and see their family."}
+stats: {stamina: "Stamina", skill: "Medical skill", eloquence: "Eloquence", kindness: "Kindness", stubbornness: "Stubbornness", curiosity: "Curiosity", homesick_trait: "Homesickness", greed: "Greed"}
+tags:
+  medical: medical
+  sterilize: disinfection
+  consumable: consumable
+  modern: modern
+  future: future
+  device: device
+  book: book
+  safety: safety
+  cyber: cybernetic
+  scifi: sci-fi
+  neta: meme
+  history: history
+  key: turning point
+  story: story
+  romance: romance
+  infection: infectious disease
+  cholera: cholera
+  obstetrics: obstetrics
+  c19: 19th century
+  london: London
+  vienna: Vienna
+antiques:
+  pump_rust: {name: "Rust flake from the Broad Street pump", desc: "A flake of rust scraped off an old pump. Hold it and you can find a street in September."}
+  clinic_bell: {name: "Brass bell from the maternity ward", desc: "A bell with no clapper. Hold it and you can find a ward in spring."}
+  royal_comb: {name: "Pearl studded comb", desc: "A comb with one very long hair caught in its teeth."}
+items:
+  detox_water: {name: "All purpose antidote water", desc: "A modern solution that neutralises many common poisons. Pricier than rehydration salts, but one bottle is worth three packets."}
+  disinfectant: {name: "Disinfectant", desc: "Modern disinfectant. One bottle makes the water or hands of a dozen people safe."}
+  heart_monitor: {name: "Heart rate monitor", desc: "Worn by the employee, it spots overwork early so fatigue builds more slowly."}
+  bionic_lung: {name: "Bionic lung implant", desc: "A medical implant from the future. No era leads there yet."}
+  radiation_shield: {name: "Radiation shield", desc: "A protective device from the future. No era leads there yet."}
+  bamboo_copter: {name: "Bamboo copter", desc: "A meme. The name borrows from someone else's work, not for sale until checked."}
+  ors_pack: {name: "Oral rehydration salts", desc: "One packet makes a litre. Used to treat patients, two packets per patient."}
+  chlorine_tablet: {name: "Chlorine tablet", desc: "One tablet makes the drinking water of five people safe. Light and cheap, but someone has to listen to you."}
+  handbook: {name: "Modern care handbook", desc: "Raises treatment skill. Also a gift for the local doctor."}
+  recall_charm: {name: "Recall charm", desc: "Pulls a dying employee back. Without it, all gear is lost."}
+strategies:
+  focus:
+    balanced: {name: "Balanced", desc: "Treat the sick, save the water, and meet the local doctor when there is time."}
+    cure: {name: "Patients first", desc: "Rehydration first, protection second, little talking."}
+    prevent: {name: "Water first", desc: "Hand out chlorine, teach boiling, patients come last."}
+    ally: {name: "Work with the local doctor", desc: "Spend time with Snow and help carry his evidence to the people who need it."}
+  on_block:
+    yield: {name: "Yield", desc: "Step back, no quarrel."}
+    insist: {name: "Insist", desc: "Stand at the door and say it, lose some gear if needed."}
+    appeal: {name: "Appeal", desc: "Turn and go to Snow for help."}
+outcomes:
+  near_death: {name: "Recalled near death"}
+  stay_and_gifts: {name: "Stayed, sent gifts"}
+  gave_up: {name: "Gave up, back in the present"}
+  legend: {name: "Became a legend"}
+  perfect: {name: "Returned in triumph"}
+  scramble: {name: "Fled in a scramble"}
+  modest: {name: "Modest result"}
+date_format: "{mn} {d}, {part}"
+month_names: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+day_parts:
+  - {from: 0, name: "late night"}
+  - {from: 5, name: "early morning"}
+  - {from: 9, name: "morning"}
+  - {from: 12, name: "noon"}
+  - {from: 14, name: "afternoon"}
+  - {from: 18, name: "evening"}
+  - {from: 22, name: "late night"}
+generic:
+  arrive: "{date}: {staff} arrives at {era}. Carrying: {kit}."
+  arrive_empty: "{date}: {staff} arrives at {era}, empty handed."
+  leave: "{date}: {staff} is recalled."
+  recall_charm: "{date}: {staff} collapses, the recall charm glows and pulls them back. The gear is saved."
+  recall_lost: "{date}: {staff} collapses and is forced back. Without a recall charm the gear is lost and the scare stays."
+
+
+eras:
+  broad_street_1854:
+    name: Broad Street, London 1854
+    short: Broad St.
+    place_name: Broad Street, Soho, London
+    tags: [medical, infection, cholera, c19, london, history]
+    event_titles: {door_block: "Turned away at the door", time_strain: "Time slip", pocket: "Light fingers"}
+    plots:
+      microscope: {name: "Give Snow a microscope", desc: "Lets him show people what is in the water more clearly.", character: "John Snow", article: 'people:snow'}
+      germ_theory: {name: "Explain germ theory to Snow", desc: "Needs the craft of microbiology, which this era does not have.", character: "John Snow", article: 'people:snow'}
+    blurb: Cholera, one pump, and a doctor nobody has listened to yet. Close, cheap, and the effect of hygiene and medicine is clear.
+    handle_label: Pump handle removed
+    protagonist: John Snow
+    protagonist_role: A doctor who has said for three years that cholera comes from drinking water
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - {text: "On the night of 31 August 1854, cholera broke out around Broad Street in Soho, London.", check: true}
+        - {text: "The popular explanation was miasma, bad air.", check: true}
+        - {text: "Snow had already proposed in 1849 that cholera spreads through water. Most colleagues did not accept it.", check: true}
+        - {text: "On 8 September the handle of the Broad Street pump was removed.", check: true}
+        - {text: "By the time the handle was removed the outbreak was already declining and many residents had left.", check: true}
+      regret:
+        - You can save today's patients but not tomorrow's. On the main timeline the handle came off on day eight.
+        - Data and maps matter more than medicine, but making people believe data takes time.
+    events:
+      door_block_stubborn: "A neighbour blocks the door, saying it is miasma and no stranger may touch the patient. {staff} is stubborn, does not give way, is thrown out of one house and loses {d.ors_stock:i} packets of rehydration salts."
+      door_block_stubborn_empty: "A neighbour blocks the door, saying it is miasma and no stranger may touch the patient. {staff} is stubborn, does not give way, and is thrown out."
+      door_block_insist_empty: "A neighbour blocks the door, saying it is miasma. {staff} stands at the door and finishes speaking, and is pushed out."
+      door_block_insist: "A neighbour blocks the door, saying it is miasma. {staff} stands at the door and finishes speaking, is pushed out, and loses {d.ors_stock:i} packets of rehydration salts."
+      door_block_appeal: "A neighbour blocks the door, saying it is miasma. {staff} does not force the way, turns and goes to Snow to ask him to speak up."
+      door_block_yield: "A neighbour blocks the door, saying it is miasma. {staff} steps back without a quarrel, and half a day is wasted."
+      time_strain: "{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired."
+      pocket: "{date}: {staff} sees a small object left unattended and slips it into a pocket. A neighbour saw it and looks at them differently now."
+    milestones:
+      first_treat: "{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak."
+      first_protect: "{date}: {staff} hands the first chlorine tablets to a few households willing to listen, and teaches them to boil or treat the water."
+      met_snow: "{date}: {staff} meets Snow at the street corner. He listens closely but keeps asking one thing: where is the evidence."
+      snow_trusts: "{date}: Snow starts to treat {staff} as one of his own and brings out the house by house list he has been keeping to compare."
+      snow_convinced: "{date}: Snow no longer merely suspects the water. He has enough names, and believes what the stranger told him."
+      board_moves: "{date}: The parish board starts to give way and says the pump might be shut for now."
+      handle_off_history: "{date}: The pump handle is removed. The main timeline does not change."
+      handle_off_early: "{date}: The pump handle is removed {advance_days:1} days earlier than in history. The main timeline does not change, only this branch."
+      trust_won: "{date}: People on the corner no longer keep {staff} out, and some knock on their own."
+      exhausted: "{date}: {staff} is so tired their hands shake and is forced to rest."
+      outbreak_fades: "{date}: The number of patients falls to around single digits. Many people have left the area."
+    summary:
+      near_death: "{staff} collapses on Broad Street and is pulled back by the recall charm. Life saved, at a price."
+      stay_and_gifts: "{staff} finished the task but did not come back. They left a letter saying they want to stay with these people a while longer. Gifts will arrive later."
+      gave_up: "{staff} gave up early and went back to the present. {staff} said this was not the place for them."
+      legend: "{staff} left a legend on Broad Street. The pump handle came off {advance_days:1} days earlier than in history."
+      perfect: "{staff} completed the task on Broad Street and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch."
+      scramble: "{staff} was turned away at the door again and again and finally fled back with a joke to tell."
+      modest: "{staff} spent seven days on Broad Street, did what was within reach, and came back safe."
+    quotes:
+      near_death: [{trait: kind, text: "At the end I was still wondering whether anyone was sitting with the patient by the bed."}, {text: "I thought I could hold out a little longer."}]
+      stay_and_gifts: [{trait: kind, text: "I remember every one of their names. I want to stay a while."}, {text: "They need people here."}]
+      gave_up: [{trait: homesick, text: "I want to go home. That is all."}, {text: "I am not cut out for this."}]
+      legend: [{text: "I only told them what they needed to hear."}]
+      perfect: [{trait: kind, text: "I could save today's patients, not tomorrow's."}, {trait: curious, text: "So that is how it is, water really does carry the sickness away."}, {text: "Did what had to be done."}]
+      scramble: [{trait: stubborn, text: "They will understand sooner or later. Just later."}, {text: "Next time I want to bring more."}]
+      modest: [{trait: glib, text: "I said all I had to say. Whether they believe it is up to them."}, {text: "With one more item I might have saved one more household."}]
+    hints:
+      lost_ors: A lot of rehydration salts were lost. Next time let the employee yield, or bring more.
+      unused_protect: Chlorine was left over. The limit was the neighbours' trust, not the tablets. Let the employee help patients first to build trust.
+      unused_ors: Rehydration salts were left over. The employee may have spent time elsewhere, or patients were not let in.
+      ally_gap: Snow's evidence is still thin. The handbook helps him, provided the employee spends time with him.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+
+  vienna_1847:
+    name: Vienna General Hospital 1847
+    short: Maternity ward
+    place_name: Maternity ward, Vienna General Hospital
+    tags: [medical, infection, obstetrics, c19, vienna, history]
+    event_titles: {door_block: "Turned back by seniors", time_strain: "Time slip", pocket: "Light fingers"}
+    plots:
+      forceps: {name: "Hand Semmelweis the design of obstetric forceps", desc: "Saves more mothers in a difficult birth, and the era's craft can make them.", character: "Ignaz Semmelweis", article: 'people:semmelweis'}
+      germ_theory: {name: "Explain germ theory to Semmelweis", desc: "Needs the craft of microbiology, which this era does not have.", character: "Ignaz Semmelweis", article: 'people:semmelweis'}
+    blurb: Childbed fever, two maternity wards, and a young doctor who put the death counts side by side. The task is not to beat a disease but to persuade a room of seniors who will not wash their hands.
+    handle_label: Washing rule starts
+    protagonist: Ignaz Semmelweis
+    protagonist_role: Assistant obstetrician who has just found that the dissecting room and the delivery room deaths are linked
+    stay: Stay twenty-one days
+    items:
+      chlorine_tablet: {name: "Chlorinated lime tablet", desc: "One tablet makes a basin of washing solution, enough for dozens of examinations. Cheap, but someone has to wash."}
+      handbook: {name: "Modern nursing handbook", desc: "Raises skill in caring for mothers. Also a gift for Semmelweis."}
+      recall_charm: {name: "Recall charm", desc: "Pulls an employee back when they collapse. Without it, all gear is lost."}
+    strategies:
+      focus:
+        balanced: {name: "Balanced", desc: "Care for mothers with fever, teach washing when there is a chance, see Semmelweis when there is time."}
+        cure: {name: "Mothers first", desc: "Bedside care first, little persuading about washing."}
+        prevent: {name: "Teach washing first", desc: "Persuade people in the ward one by one and hand out washing solution."}
+        ally: {name: "Work with Semmelweis", desc: "Spend time helping him organise the numbers and go with him to the people he must see."}
+      on_block:
+        yield: {name: "Yield", desc: "If a senior turns you back, let it be."}
+        insist: {name: "Insist", desc: "Stand at the ward door and finish speaking, do not retreat even if the solution is confiscated."}
+        appeal: {name: "Appeal", desc: "Turn and go to Semmelweis and ask him to step in."}
+    encyclopedia:
+      history:
+        - {text: "In 1847 the maternal death rate in the first maternity ward of Vienna General Hospital was clearly higher than in the second.", check: true}
+        - {text: "The first ward was staffed by doctors and medical students, who often came straight from dissecting corpses.", check: true}
+        - {text: "In mid May 1847 Semmelweis required doctors and students to wash their hands in a chlorinated lime solution before examining mothers.", check: true}
+        - {text: "After the rule took effect the death rate fell markedly within a few months.", check: true}
+        - {text: "Mainstream colleagues did not accept his explanation, and germ theory had not been established yet.", check: true}
+      regret:
+        - The numbers are in front of you, and still you wait for the powerful to nod. On the main timeline the washing rule came in mid May.
+        - He never lived to see his colleagues truly accept him.
+    events:
+      door_block_stubborn: "A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and {d.wash_supply:i} portions of washing solution are confiscated."
+      door_block_stubborn_empty: "A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and is shown out of the ward."
+      door_block_insist: "A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} stands at the ward door and finishes speaking, and {d.wash_supply:i} portions of washing solution are confiscated."
+      door_block_insist_empty: "A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} stands at the ward door and finishes speaking, and is shown out."
+      door_block_appeal: "A senior doctor keeps {staff} out of the ward. {staff} does not force the way, turns and goes to Semmelweis to ask him to speak up."
+      door_block_yield: "A senior doctor keeps {staff} out of the ward. {staff} steps back without a quarrel, and half a day is wasted."
+      time_strain: "{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired."
+      pocket: "{date}: {staff} sees a small object left unattended in the ward and slips it into a pocket. A student saw it and looks at them differently now."
+    milestones:
+      first_treat: "{date}: {staff} sits by the first feverish mother and nurses her until the fever eases a little."
+      first_protect: "{date}: {staff} persuades the first group of doctors and students to wash their hands in the basin before examining."
+      met_snow: "{date}: {staff} meets Semmelweis in the corridor. He is going through the death counts of the two wards and looks up: where did you learn these numbers."
+      snow_trusts: "{date}: Semmelweis starts to treat {staff} as one of his own and brings out his unfinished tables to compare."
+      snow_convinced: "{date}: Semmelweis no longer merely suspects. He has laid the numbers out in a table nobody can avoid, and he believes the stranger."
+      board_moves: "{date}: The clinic director starts to give way and says handwashing before examinations might be tried."
+      handle_off_history: "{date}: The washing rule starts in the first maternity ward. The main timeline does not change."
+      handle_off_early: "{date}: The washing rule starts {advance_days:1} days earlier than in history. The main timeline does not change, only this branch."
+      trust_won: "{date}: Nurses and students in the ward no longer avoid {staff}, and some come to ask how to wash."
+      exhausted: "{date}: {staff} is so tired they cannot stand steady and is forced to rest."
+      outbreak_fades: "{date}: Few mothers still have a fever."
+    summary:
+      near_death: "{staff} collapses in the maternity ward and is pulled back by the recall charm. Life saved, at a price."
+      stay_and_gifts: "{staff} finished the task but did not come back. They left a letter saying they want to stay with these mothers a while longer. Gifts will arrive later."
+      gave_up: "{staff} gave up early and went back to the present. {staff} said this was not the place for them."
+      legend: "{staff} left a legend in the maternity ward. The washing rule started {advance_days:1} days earlier than in history."
+      perfect: "{staff} completed the task in the maternity ward and came back safe. {base_D:i} mothers died on the main timeline, {D:i} on this branch."
+      scramble: "{staff} was kept out of the ward by seniors again and again and finally fled back with a joke to tell."
+      modest: "{staff} spent twenty-one days in the maternity ward, did what was within reach, and came back safe."
+    quotes:
+      near_death: [{trait: kind, text: "At the end I was still thinking about whether anyone was with the mother by the bed."}, {text: "I thought I could hold out a little longer."}]
+      stay_and_gifts: [{trait: kind, text: "I remember every one of their names. I want to stay a while."}, {text: "They need people here."}]
+      gave_up: [{trait: homesick, text: "I want to go home. That is all."}, {text: "I am not cut out for this."}]
+      legend: [{text: "I only helped him put the numbers in front of the people who needed to see them."}]
+      perfect: [{trait: kind, text: "I could save these few, not everyone."}, {trait: curious, text: "So that is how it is, what is on your hands carries the sickness."}, {text: "Did what had to be done."}]
+      scramble: [{trait: stubborn, text: "They will understand sooner or later. Just later."}, {text: "Next time I want to go to him first, and persuade the others after."}]
+      modest: [{trait: glib, text: "I said all I had to say. Whether they believe it is up to them."}, {text: "With one more item I might have saved a few more."}]
+    hints:
+      lost_ors: A lot of washing solution was confiscated. Next time let the employee yield, or go to Semmelweis first.
+      unused_protect: Washing solution was left over. The seniors would not listen, it was not a shortage. Try working with Semmelweis first to lower the resistance.
+      unused_ors: Supplies were left over.
+      ally_gap: Semmelweis's evidence is still thin. The handbook helps him, provided the employee spends time with him.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
