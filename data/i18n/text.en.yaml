@@ -5,6 +5,7 @@ ui:
   title: The Teleporter
   subtitle: Prototype
   logo: T
+  gender: {f: Female, m: Male}
   lang: {auto: Follow browser, label: Language}
   about:
     title: About The Teleporter
@@ -45,7 +46,7 @@ ui:
       - h: Author
         p:
           - "This is a personal project by Fan Shen."
-  fmt: {colon: ': ', sep: ', ', semi: '; ', paren: ' ({x})', quote: '"{x}"', dash: '- '}
+  fmt: {colon: ': ', sep: ', ', semi: '; ', paren: ' ({x})', quote: '"{x}"', dash: '- ', age: '{n} yrs'}
   cal: {bc: '{n} BC', ad: 'AD {n}'}
   tabs: {home: "Home", dispatch: "Dispatch", shop: "Shop", enc: "Wiki", about: "About"}
   home:
@@ -161,6 +162,7 @@ ui:
     tags: Tags
     refs: Sources
   map:
+    tag_filter: Tag filter
     zoom_in: Zoom in
     zoom_out: Zoom out
     zoom_reset: Reset
@@ -233,6 +235,9 @@ ui:
     kind_daily: Ordinary place
     kind_story: Small story
     not_ready: Content not built yet
+    not_built: This event has no simulation yet. You can find it, collect its relic and read about it, but not send anyone.
+    not_built_short: not built
+    relic: Relic
     no_funds: Not enough funds
     hidden_mark: (hidden)
     pick_map: Click a place on the map, then pick its point in time. Zoom and drag, and narrow the events with the filter box, tags and time range.
@@ -347,11 +352,32 @@ ui:
       strategies: An employee's field tendencies come from their traits. Whoever is sent uses their tendencies, each option writes some input variables.
     blocks: Blocks
 staff:
-  s_ning: {name: "Ning", bio: "Used to be a nurse. Stubborn, cannot bear to see a patient with nobody looking after them."}
-  s_zhou: {name: "Zhou", bio: "Worked construction. Strong, a talker, does not like going around things."}
-  s_lin: {name: "Lin", bio: "Reads a lot, wants to understand everything, gets homesick first."}
-  s_qian: {name: "Qian", bio: "Used to trade in second hand goods. Sharp eyes, knows what anything is worth at a glance."}
+  s_ning: {name: "Ning", job: "Nurse", bio: "Used to be a nurse. Stubborn, cannot bear to see a patient with nobody looking after them."}
+  s_zhou: {name: "Zhou", job: "Builder", bio: "Worked construction. Strong, a talker, does not like going around things."}
+  s_lin: {name: "Lin", job: "Graduate student", bio: "Reads a lot, wants to understand everything, gets homesick first."}
+  s_qian: {name: "Qian", job: "Antique dealer", bio: "Used to trade in second hand goods. Sharp eyes, knows what anything is worth at a glance."}
+  s_amara: {name: "Amara Okafor", job: "Midwife", bio: "Has delivered hundreds of babies and stays calm when everyone else panics."}
+  s_kenji: {name: "Kenji Mori", job: "Software engineer", bio: "Debugs for a living and cannot leave a loose end alone."}
+  s_isabella: {name: "Isabella Rossi", job: "Retired teacher", bio: "Forty years of teaching taught her to explain anything twice, and kindly."}
+  s_tariq: {name: "Tariq Hassan", job: "Driver", bio: "Knows every back street, and how to talk his way past a closed door."}
+  s_meiling: {name: "Mei-Ling Chen", job: "Art student", bio: "Sketches everything she sees and asks why about the rest."}
+  s_lars: {name: "Lars Nilsson", job: "Shipwright", bio: "Builds things to last and does not like to be hurried."}
+  s_priya: {name: "Priya Sharma", job: "Pharmacist", bio: "Reads every label twice and counts the dose a third time."}
+  s_diego: {name: "Diego Fernández", job: "Street musician", bio: "Can draw a crowd with one guitar, and misses his mother's cooking."}
+  s_olga: {name: "Olga Petrova", job: "Retired physician", bio: "Practised for fifty years and trusts her own eyes over any manual."}
+  s_samuel: {name: "Samuel Mensah", job: "Journalist", bio: "Asks the question nobody else dares to, and writes the answer down at once."}
+  s_minji: {name: "Min-ji Park", job: "Chef", bio: "Feeds everyone first and sits down last."}
+  s_jeanluc: {name: "Jean-Luc Moreau", job: "Retired sea captain", bio: "Has weathered worse storms and gives orders without raising his voice."}
+  s_fatima: {name: "Fatima Al-Sayed", job: "Archivist", bio: "Finds the one page that matters in a room full of boxes."}
+  s_tom: {name: "Tom Becker", job: "Apprentice mechanic", bio: "Takes apart every machine he meets, and puts it back together, mostly."}
+  s_wanjiru: {name: "Wanjiru Kamau", job: "Data analyst", bio: "Is the first to see the pattern in the numbers."}
+  s_ricardo: {name: "Ricardo Silva", job: "Retired fisherman", bio: "Waits for the tide without hurry and tells long stories while he does."}
 traits:
+  patient: "Patient"
+  bold: "Bold"
+  meticulous: "Meticulous"
+  artistic: "Artistic"
+  wise: "Wise"
   kind: Kind
   stubborn: Stubborn
   curious: Curious
@@ -368,6 +394,26 @@ mainline:
   home: {name: "Home", desc: "Enough energy. The boss can go back to their own time and see their family."}
 stats: {stamina: "Stamina", skill: "Medical skill", eloquence: "Eloquence", kindness: "Kindness", stubbornness: "Stubbornness", curiosity: "Curiosity", homesick_trait: "Homesickness", greed: "Greed"}
 tags:
+  science: "science"
+  technology: "technology"
+  math: "mathematics"
+  philosophy: "philosophy"
+  thought: "ideas"
+  art: "art"
+  literature: "literature"
+  music: "music"
+  medicine: "medicine"
+  architecture: "architecture"
+  exploration: "exploration"
+  europe: "Europe"
+  asia: "Asia"
+  africa: "Africa"
+  americas: "the Americas"
+  oceania: "Oceania"
+  ancient: "ancient"
+  medieval: "medieval"
+  early_modern: "early modern"
+  modern_era: "modern era"
   medical: medical
   sterilize: disinfection
   consumable: consumable
@@ -591,3 +637,105 @@ eras:
       unused_ors: Supplies were left over.
       ally_gap: Semmelweis's evidence is still thin. The handbook helps him, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
+
+catalog:
+  pythagoras_croton: {name: "A school where number is the nature of things", place: "Croton, southern Italy", figure: "Pythagoras", story: "In Croton a community studies mathematics, music and living as one discipline, and ratios become the key to harmony.", relic: "A monochord string", relic_desc: "A single taut string that can be stopped at simple ratios."}
+  thales_miletus: {name: "Explaining nature without gods", place: "Miletus, Ionia", figure: "Thales", story: "Thales of Miletus looks for natural causes of things, and tradition says he foretold a solar eclipse.", relic: "An amber bead", relic_desc: "Rubbed on cloth, it picks up feathers, the oldest puzzle of electricity."}
+  socrates_athens: {name: "A life of questions", place: "Athens", figure: "Socrates", story: "Socrates spends his life asking what justice and virtue are, and at his trial chooses his questions over his safety.", relic: "A plain clay cup", relic_desc: "An ordinary cup, kept because of what the last evening was."}
+  hippocrates_kos: {name: "Medicine as careful observation", place: "Kos", figure: "Hippocrates", story: "On Kos a physician and his school teach that disease has natural causes and must be watched at the bedside.", relic: "A bronze probe", relic_desc: "A thin tool of a doctor who preferred looking to guessing."}
+  plato_academy: {name: "The first school of its kind", place: "Athens", figure: "Plato", story: "Plato founds the Academy in a grove outside Athens, a place to study mathematics and philosophy together.", relic: "A wax writing tablet", relic_desc: "A wooden tablet whose notes can be smoothed away and rewritten."}
+  aristotle_lyceum: {name: "Sorting the living world", place: "Athens", figure: "Aristotle", story: "At the Lyceum Aristotle and his students describe animals and plants and lay out the first systematic logic.", relic: "A labelled seashell", relic_desc: "A shell from a collection where every specimen carries a Greek name."}
+  euclid_alexandria: {name: "Geometry from a few axioms", place: "Alexandria", figure: "Euclid", story: "Euclid gathers the geometry of his time into the Elements, building everything from a few plain starting points.", relic: "A bronze compass", relic_desc: "Two arms and a pivot, enough to draw every figure in the book."}
+  archimedes_syracuse: {name: "Buoyancy and the lever", place: "Syracuse, Sicily", figure: "Archimedes", story: "Archimedes works out why things float, and tradition says the answer came to him in a bath.", relic: "A bath sponge", relic_desc: "A humble sponge from the story of the bath."}
+  eratosthenes_alexandria: {name: "Measuring the Earth with shadows", place: "Alexandria and Syene", figure: "Eratosthenes", story: "By comparing noon shadows in two cities Eratosthenes estimates the size of the Earth, and gets surprisingly close.", relic: "A gnomon rod", relic_desc: "A plain upright rod whose shadow told him the angle of the sun."}
+  hypatia_alexandria: {name: "Teaching mathematics and astronomy", place: "Alexandria", figure: "Hypatia", story: "Hypatia teaches mathematics, astronomy and philosophy in Alexandria and is remembered as its best known woman scholar.", relic: "An astrolabe plate", relic_desc: "An engraved brass disc for finding the stars and the hour."}
+  fibonacci_pisa: {name: "Hindu-Arabic numerals reach Europe", place: "Pisa", figure: "Fibonacci", story: "In the Liber Abaci Fibonacci shows merchants how nine digits and a zero make arithmetic quick.", relic: "A wax tablet of numerals", relic_desc: "A tablet with the ten new numerals set out beside the old Roman ones."}
+  giotto_padua: {name: "Figures with weight and feeling", place: "Padua", figure: "Giotto", story: "In the Scrovegni Chapel Giotto paints saints as people with weight and feeling, a turn in European painting.", relic: "A pot of blue pigment", relic_desc: "Ground blue, the colour of the chapel vault."}
+  dante_ravenna: {name: "A poem in the language of the street", place: "Ravenna", figure: "Dante Alighieri", story: "In exile Dante finishes the Divine Comedy, written in the Italian people actually spoke.", relic: "A laurel leaf", relic_desc: "A dried leaf of the poet's crown."}
+  gutenberg_mainz: {name: "Printing with movable metal type", place: "Mainz", figure: "Johannes Gutenberg", story: "Gutenberg combines movable metal type, oil based ink and a press, and books stop being rare.", relic: "A lead type sort", relic_desc: "One small letter of lead and tin, backwards."}
+  leonardo_florence: {name: "A painter who drew machines", place: "Florence", figure: "Leonardo da Vinci", story: "Leonardo paints the Mona Lisa and fills his notebooks with anatomy, water and flying machines.", relic: "A mirror-written notebook page", relic_desc: "A page of backwards script that needs a mirror to read."}
+  copernicus_frombork: {name: "The Sun at the centre", place: "Frombork, Poland", figure: "Nicolaus Copernicus", story: "Copernicus publishes a model in which the Earth goes round the Sun.", relic: "A brass quadrant", relic_desc: "A quarter circle for measuring the height of stars."}
+  vesalius_padua: {name: "Anatomy drawn from the body", place: "Padua", figure: "Andreas Vesalius", story: "Vesalius publishes the Fabrica, a book of the human body drawn from dissection rather than from old authority.", relic: "A dissection knife", relic_desc: "A narrow blade for looking before believing."}
+  shakespeare_globe: {name: "A playhouse for everyone", place: "London", figure: "William Shakespeare", story: "The Globe opens on the Thames bank, and its plays reach from the cheapest standing place to the best seats.", relic: "A goose quill", relic_desc: "A feather cut for writing, ink still on the tip."}
+  galileo_padua: {name: "Moons around Jupiter", place: "Padua", figure: "Galileo Galilei", story: "Galileo points a telescope at Jupiter and sees four small moons going round it.", relic: "A ground lens", relic_desc: "A small glass lens, polished by hand."}
+  descartes_leiden: {name: "Doubt as a method", place: "Leiden", figure: "René Descartes", story: "Descartes publishes the Discourse on the Method, starting from doubting everything and building up again.", relic: "A folded cogito note", relic_desc: "A slip with a single sentence about thinking and being."}
+  leeuwenhoek_delft: {name: "A world in a drop of water", place: "Delft", figure: "Antonie van Leeuwenhoek", story: "A draper with hand ground lenses sees tiny living things in pond water and writes to the Royal Society.", relic: "A tiny brass lens plate", relic_desc: "A thumb sized plate holding one very small, very clear lens."}
+  newton_cambridge: {name: "One law for the apple and the Moon", place: "Cambridge", figure: "Isaac Newton", story: "In the Principia Newton shows that the same law of gravity governs falling objects and the orbits of the planets.", relic: "A glass prism", relic_desc: "A triangle of glass that splits white light into colours."}
+  bach_leipzig: {name: "A cantor writes for every Sunday", place: "Leipzig", figure: "Johann Sebastian Bach", story: "Bach becomes cantor in Leipzig and over the years writes music for the church year at a pace few could match.", relic: "An organ pipe cut from quill", relic_desc: "A small pipe, tuned and tested, left unsold."}
+  smith_kirkcaldy: {name: "How a nation grows rich", place: "Kirkcaldy, Scotland", figure: "Adam Smith", story: "Adam Smith publishes The Wealth of Nations, arguing that division of labour and trade make people richer.", relic: "A pin from the pin factory", relic_desc: "The pin he used to show what dividing a job can do."}
+  kant_konigsberg: {name: "What reason can and cannot know", place: "Königsberg", figure: "Immanuel Kant", story: "Kant publishes the Critique of Pure Reason, asking what the mind brings to what it knows.", relic: "A walking cane", relic_desc: "The cane of a man whose daily walk was so regular neighbours set clocks by it."}
+  mozart_prague: {name: "An opera Prague loved", place: "Prague", figure: "Wolfgang Amadeus Mozart", story: "Mozart's Don Giovanni premieres in Prague, a city that had taken his Figaro to heart.", relic: "A manuscript leaf", relic_desc: "One page of fast, clean handwriting with almost no corrections."}
+  lavoisier_paris: {name: "A new language for chemistry", place: "Paris", figure: "Antoine Lavoisier", story: "Lavoisier publishes a treatise that names oxygen, treats combustion as combining with it, and measures everything by weight.", relic: "A precision balance", relic_desc: "A fine balance that kept the books of chemistry."}
+  jenner_berkeley: {name: "The first vaccine", place: "Berkeley, England", figure: "Edward Jenner", story: "Jenner tests that cowpox protects against smallpox, and vaccination begins.", relic: "A glass lancet", relic_desc: "A thin blade for the first small scratch."}
+  beethoven_vienna: {name: "The Ninth Symphony", place: "Vienna", figure: "Ludwig van Beethoven", story: "Beethoven, almost deaf, premieres the Ninth Symphony and has to be turned round to see the applause.", relic: "An ear trumpet", relic_desc: "A horn he held to his ear as the world went quiet."}
+  faraday_london: {name: "Electricity from magnetism", place: "London", figure: "Michael Faraday", story: "Faraday moves a magnet through a coil of wire and gets a current, the principle behind the dynamo.", relic: "An iron ring and coil", relic_desc: "Two coils of wire on a ring of soft iron."}
+  darwin_galapagos: {name: "Islands and the variety of life", place: "Galápagos Islands", figure: "Charles Darwin", story: "A young naturalist on the Beagle notices how birds and tortoises differ from island to island, and years later explains why.", relic: "A finch feather", relic_desc: "A small brown feather from the islands."}
+  lovelace_london: {name: "The first program", place: "London", figure: "Ada Lovelace", story: "Ada Lovelace publishes notes on the Analytical Engine with an algorithm and the idea that such machines could work with more than numbers.", relic: "A punched card", relic_desc: "A card of holes, meant to tell an engine what to do."}
+  nightingale_scutari: {name: "Nursing as a discipline of data and care", place: "Scutari, Ottoman Empire", figure: "Florence Nightingale", story: "At the Scutari hospital Nightingale cleans the wards, counts the deaths, and turns the counts into a case for reform.", relic: "A small oil lamp", relic_desc: "The lamp from her night rounds."}
+  mendel_brno: {name: "Peas and the rules of heredity", place: "Brno", figure: "Gregor Mendel", story: "Mendel reports what years of crossing garden peas show about how traits are passed on.", relic: "A pea pod", relic_desc: "A dried pod from the monastery garden."}
+  mendeleev_petersburg: {name: "The periodic table", place: "Saint Petersburg", figure: "Dmitri Mendeleev", story: "Mendeleev arranges the elements by weight and recurring properties, and leaves gaps for ones not yet found.", relic: "A deck of element cards", relic_desc: "Hand written cards that can be dealt like patience."}
+  pasteur_paris: {name: "A vaccine for rabies", place: "Paris", figure: "Louis Pasteur", story: "Pasteur and his team give a boy bitten by a rabid dog the first rabies vaccine, and he lives.", relic: "A swan-neck flask", relic_desc: "A flask whose curved neck kept dust out and air in."}
+  curie_paris: {name: "Two new elements", place: "Paris", figure: "Marie Curie", story: "Working in a shed, Marie and Pierre Curie separate polonium and radium from tonnes of ore.", relic: "A tube of pitchblende", relic_desc: "A glass tube of dark ore that left a faint glow in the dark."}
+  freud_vienna: {name: "Dreams as a way into the mind", place: "Vienna", figure: "Sigmund Freud", story: "Freud publishes The Interpretation of Dreams, a book that changes how people talk about the mind.", relic: "A statuette from his study", relic_desc: "One of the small antiquities he kept on his desk."}
+  einstein_bern: {name: "A year that changed physics", place: "Bern", figure: "Albert Einstein", story: "While working in the patent office Einstein publishes papers on light, atoms and relativity within a few months.", relic: "A patent office stamp", relic_desc: "A small rubber stamp of the desk where it happened."}
+  picasso_paris: {name: "Breaking the single viewpoint", place: "Paris", figure: "Pablo Picasso", story: "Picasso paints Les Demoiselles d'Avignon, and European painting stops insisting on one point of view.", relic: "A charcoal stick", relic_desc: "A stub of charcoal black on the fingers."}
+  fleming_london: {name: "A mould that stops bacteria", place: "London", figure: "Alexander Fleming", story: "Fleming notices that a mould on a forgotten dish has cleared the bacteria around it, and penicillin is named.", relic: "A mouldy petri dish", relic_desc: "A glass dish with a clear ring round a green spot."}
+  turing_cambridge: {name: "What can be computed", place: "Cambridge", figure: "Alan Turing", story: "Turing describes an imaginary machine that reads and writes symbols on a tape, and defines what computing means.", relic: "A strip of paper tape", relic_desc: "A tape of marks, one symbol at a time."}
+  meitner_stockholm: {name: "Explaining nuclear fission", place: "Stockholm", figure: "Lise Meitner", story: "In exile Lise Meitner and her nephew work out that a uranium nucleus has split, and give it the name fission.", relic: "A piece of chalk", relic_desc: "A worn stub of chalk from the walk where it was worked out."}
+  franklin_cambridge: {name: "The shape of DNA", place: "Cambridge", figure: "Rosalind Franklin, James Watson and Francis Crick", story: "X-ray pictures by Rosalind Franklin and her student help Watson and Crick build the double helix model.", relic: "A wire helix model", relic_desc: "A small twisted wire model of two strands."}
+  berners_lee_geneva: {name: "A web of linked pages", place: "Geneva", figure: "Tim Berners-Lee", story: "At CERN Tim Berners-Lee proposes a way of linking documents across computers, which becomes the World Wide Web.", relic: "A floppy disk", relic_desc: "A square disk, its label in pencil."}
+  cajal_barcelona: {name: "Nerve cells as separate units", place: "Barcelona", figure: "Santiago Ramón y Cajal", story: "Cajal draws silver stained nerve cells in beautiful detail and argues that the brain is made of separate cells.", relic: "A fine drawing pen", relic_desc: "A pen so fine it drew every branch of a neuron."}
+  marconi_bologna: {name: "Signals through the air", place: "Bologna", figure: "Guglielmo Marconi", story: "Marconi sends a signal across his family's fields with no wire between the two ends, and keeps pushing the distance.", relic: "A coherer tube", relic_desc: "A small glass tube of metal filings that woke at a radio wave."}
+  imhotep_saqqara: {name: "The first great stone pyramid", place: "Saqqara, Egypt", figure: "Imhotep", story: "Imhotep, the architect of King Djoser, is credited with the step pyramid, one of the first large buildings of cut stone.", relic: "A mason's mallet", relic_desc: "A wooden mallet worn smooth by many hands."}
+  enheduanna_ur: {name: "The first named author", place: "Ur, Mesopotamia", figure: "Enheduanna", story: "Enheduanna, a priestess of Ur, writes hymns to the goddess Inanna and signs them, the earliest author we know by name.", relic: "An alabaster disc", relic_desc: "A carved disc showing a priestess at an offering."}
+  hammurabi_babylon: {name: "Law set in stone", place: "Babylon", figure: "Hammurabi", story: "Hammurabi has laws carved on a stone pillar where everyone can read them, so that judges answer to something written.", relic: "A clay cylinder seal", relic_desc: "A small stone cylinder that rolls a signature into clay."}
+  lalibela_rock: {name: "Churches carved down into the rock", place: "Lalibela, Ethiopia", figure: "Lalibela and the stonecutters", story: "Stonecutters carve a set of churches downwards out of the living rock, with no stone laid on stone.", relic: "A stonecutter's chisel", relic_desc: "An iron chisel, the edge ground thin."}
+  ife_bronzes: {name: "Lifelike heads in cast metal", place: "Ife, Nigeria", figure: "The casters of Ife", story: "Craftsmen in Ife cast heads in brass and copper so lifelike that visitors long afterwards could not believe they were local work.", relic: "A small bronze head", relic_desc: "A hand sized head with lines of fine scarring."}
+  great_zimbabwe: {name: "A stone city without mortar", place: "Masvingo, Zimbabwe", figure: "The builders of Great Zimbabwe", story: "Builders raise high walls of fitted granite blocks without mortar, the centre of a trading kingdom.", relic: "A soapstone bird", relic_desc: "A carved bird on a short column."}
+  timbuktu_sankore: {name: "A city of manuscripts", place: "Timbuktu, Mali", figure: "Mansa Musa and the scholars of Sankore", story: "Timbuktu grows into a centre where scholars copy and collect books on law, astronomy and medicine.", relic: "A gold-flecked manuscript leaf", relic_desc: "A page with a border of gold dust."}
+  al_haytham_cairo: {name: "Light, tested by experiment", place: "Cairo", figure: "Ibn al-Haytham", story: "Ibn al-Haytham, writing in Cairo, tests how light travels in a dark room and shows that we see because light enters the eye.", relic: "A pinhole screen", relic_desc: "A dark board with one small hole."}
+  house_of_wisdom: {name: "Scholars translating the world's books", place: "Baghdad", figure: "Al-Khwarizmi and the House of Wisdom", story: "In Baghdad scholars translate Greek, Persian and Indian works and go further, and al-Khwarizmi gives algebra its name.", relic: "A brass inkwell", relic_desc: "A small lidded well for ink."}
+  ibn_sina_hamadan: {name: "A medical encyclopedia for centuries", place: "Hamadan, Persia", figure: "Ibn Sina", story: "Ibn Sina finishes the Canon of Medicine, which is taught for centuries from Persia to Europe.", relic: "A glass vial", relic_desc: "A small stoppered vial of a physician."}
+  omar_khayyam_nishapur: {name: "A calendar more exact than ours", place: "Nishapur, Persia", figure: "Omar Khayyam", story: "Omar Khayyam and other astronomers reform the calendar with a length of year very near the true one.", relic: "A star chart scroll", relic_desc: "A rolled chart of fixed stars."}
+  al_jazari_diyarbakir: {name: "A book of ingenious machines", place: "Diyarbakır", figure: "Al-Jazari", story: "Al-Jazari writes a book describing and drawing automata, water clocks and pumps, with their cams and cranks.", relic: "A brass cam", relic_desc: "A shaped wheel that turns a spin into a stroke."}
+  ibn_battuta_tangier: {name: "A journey of thirty years", place: "Tangier, Morocco", figure: "Ibn Battuta", story: "Ibn Battuta leaves Tangier for a pilgrimage and keeps going for about three decades, across much of the known world.", relic: "A travel-worn sandal", relic_desc: "A leather sandal resoled many times."}
+  ulugh_beg_samarkand: {name: "An observatory and a star catalogue", place: "Samarkand", figure: "Ulugh Beg", story: "Ulugh Beg builds a great observatory and publishes a star catalogue more exact than any for centuries.", relic: "A fragment of the great arc", relic_desc: "A piece of the stone arc once used to measure the stars."}
+  achebe_lagos: {name: "A story told by the Igbo themselves", place: "Lagos", figure: "Chinua Achebe", story: "Chinua Achebe publishes Things Fall Apart, telling the arrival of the colonial world from within an Igbo village.", relic: "A typed manuscript page", relic_desc: "A page typed with a few corrections in ink."}
+  maathai_nairobi: {name: "Planting trees as a movement", place: "Nairobi", figure: "Wangari Maathai", story: "Wangari Maathai starts the Green Belt Movement, asking women to plant trees and mend the land.", relic: "A tree seedling", relic_desc: "A small seedling in a rolled leaf."}
+  laozi_hangu: {name: "Five thousand characters on the Way", place: "Hangu Pass, China", figure: "Laozi", story: "Tradition says Laozi, leaving through Hangu Pass, is asked to write down his teaching and leaves the short Daodejing.", relic: "A small bronze buffalo bell", relic_desc: "A bell for the buffalo he is said to have ridden."}
+  confucius_qufu: {name: "Teaching without regard to birth", place: "Qufu, China", figure: "Confucius", story: "Confucius teaches students of every background about ritual, learning and how to be a good person.", relic: "A bamboo scroll strap", relic_desc: "A cord worn thin by many readings."}
+  buddha_sarnath: {name: "The first teaching", place: "Sarnath, India", figure: "Siddhartha Gautama", story: "In the Deer Park at Sarnath the Buddha gives his first teaching, on suffering and the path out of it.", relic: "A pressed bodhi leaf", relic_desc: "A leaf with its veins like a map."}
+  cai_lun_luoyang: {name: "Paper made cheaply", place: "Luoyang, China", figure: "Cai Lun", story: "Cai Lun reports a way of making paper from bark, rags and old nets, light and cheap to write on.", relic: "A sheet of coarse paper", relic_desc: "A sheet with bits of fibre still showing."}
+  zhang_heng_luoyang: {name: "An instrument that senses distant earthquakes", place: "Luoyang, China", figure: "Zhang Heng", story: "Zhang Heng builds a bronze vessel whose dragons drop a ball toward the direction of a distant earthquake.", relic: "A bronze ball and dragon mouth", relic_desc: "A small ball for the toad below to catch."}
+  zu_chongzhi_jiankang: {name: "Pi to seven places", place: "Jiankang, China", figure: "Zu Chongzhi", story: "Zu Chongzhi calculates pi between 3.1415926 and 3.1415927, a record that stands for about nine centuries.", relic: "A set of counting rods", relic_desc: "A bundle of slim rods that are numbers when laid out."}
+  aryabhata_patna: {name: "A turning Earth and a table of sines", place: "Kusumapura, India", figure: "Aryabhata", story: "Aryabhata writes a short work giving a table of sines, a good value of pi, and the idea that the Earth turns.", relic: "A palm-leaf of verses", relic_desc: "A thin leaf with verses scratched in."}
+  brahmagupta_bhillamala: {name: "Zero as a number", place: "Bhillamala, India", figure: "Brahmagupta", story: "Brahmagupta gives rules for working with zero and negative numbers, as numbers like any others.", relic: "A palm-leaf with a small circle", relic_desc: "A leaf with a small round mark for nothing."}
+  li_bai_changan: {name: "Poems of wine, moon and travel", place: "Chang'an, China", figure: "Li Bai", story: "In Chang'an Li Bai writes poems of moonlight, wine and distance that every schoolchild still learns.", relic: "A small wine cup", relic_desc: "A cup with a faint line of moon painted inside."}
+  murasaki_kyoto: {name: "The world's first great novel", place: "Kyoto", figure: "Murasaki Shikibu", story: "A lady at the Heian court, Murasaki Shikibu writes The Tale of Genji, a long novel of court life and its feelings.", relic: "A lacquered brush box", relic_desc: "A small box with brushes, a stone and water."}
+  su_song_kaifeng: {name: "A great water-driven clock tower", place: "Kaifeng, China", figure: "Su Song", story: "Su Song completes a tall water clock that turns a star sphere and rings the hours.", relic: "A gear tooth", relic_desc: "One bronze tooth of a gear as tall as a person."}
+  shen_kuo_runzhou: {name: "A notebook of everything he saw", place: "Runzhou, China", figure: "Shen Kuo", story: "Shen Kuo writes the Dream Pool Essays, noting among much else that a magnet needle points a little off true north.", relic: "A magnetised needle", relic_desc: "A needle that finds the same direction every time."}
+  angkor_wat: {name: "A temple the size of a city", place: "Angkor, Cambodia", figure: "The Khmer builders", story: "Khmer builders raise the vast temple of Angkor Wat, with miles of carved reliefs on its galleries.", relic: "A sandstone apsara fragment", relic_desc: "A carved face the size of a hand."}
+  sejong_hangul: {name: "An alphabet anyone can learn", place: "Seoul", figure: "King Sejong and the scholars", story: "King Sejong and his scholars design Hangul, an alphabet whose letters copy the shape of the mouth.", relic: "A woodblock of letters", relic_desc: "A block carved with the first letters, ready to ink."}
+  li_shizhen_qizhou: {name: "A compendium of a thousand medicines", place: "Qizhou, China", figure: "Li Shizhen", story: "After decades of fieldwork Li Shizhen completes the Compendium of Materia Medica, describing nearly two thousand substances.", relic: "A herbalist's mortar", relic_desc: "A small stone mortar with a stain of green."}
+  basho_hiraizumi: {name: "The narrow road to the deep north", place: "Hiraizumi, Japan", figure: "Matsuo Basho", story: "Basho walks north through Japan for months and writes the travel diary, with haiku, of the Narrow Road to the Deep North.", relic: "A straw hat", relic_desc: "A woven hat grey with rain."}
+  hokusai_edo: {name: "The Great Wave", place: "Edo, Japan", figure: "Katsushika Hokusai", story: "Hokusai, in his seventies, makes the Great Wave off Kanagawa and the series of Thirty-six Views of Mount Fuji.", relic: "A woodblock for printing", relic_desc: "A carved plank of cherry wood."}
+  bose_calcutta: {name: "Plants that answer back", place: "Calcutta", figure: "Jagadish Chandra Bose", story: "Bose builds instruments so fine that they show plants responding to touch and light, and works on radio waves.", relic: "A crescograph part", relic_desc: "A lever that magnified a plant's growth ten thousand times."}
+  tagore_santiniketan: {name: "The first Nobel for literature in Asia", place: "Santiniketan, India", figure: "Rabindranath Tagore", story: "Tagore, poet, songwriter and school founder, is awarded the Nobel Prize in Literature.", relic: "A hand-copied songbook", relic_desc: "A small book of songs in his own hand."}
+  ramanujan_madras: {name: "A letter to Hardy", place: "Madras", figure: "Srinivasa Ramanujan", story: "A clerk in Madras sends pages of results to G. H. Hardy in England, who sees at once that they are the work of a genius.", relic: "A slate", relic_desc: "A school slate, wiped and written on many times."}
+  raman_calcutta: {name: "Why the sea looks blue, and what light can tell us", place: "Calcutta", figure: "C. V. Raman", story: "Raman and his student find that light scattered by a liquid carries a small change in colour, now called the Raman effect.", relic: "A spectrograph slit", relic_desc: "A narrow gap that let in a thread of light."}
+  franklin_philadelphia: {name: "Lightning is electricity", place: "Philadelphia", figure: "Benjamin Franklin", story: "Franklin flies a kite in a storm and shows that lightning is electrical, and soon puts rods on roofs.", relic: "A silk ribbon and key", relic_desc: "A key tied to a kite string with a dry silk ribbon."}
+  morse_washington: {name: "What hath God wrought", place: "Washington", figure: "Samuel Morse", story: "Samuel Morse taps out a message over forty miles of wire to Baltimore, and the telegraph is open.", relic: "A telegraph key", relic_desc: "A brass lever worn bright where a thumb rested."}
+  edison_menlo_park: {name: "A lamp that lasts", place: "Menlo Park, New Jersey", figure: "Thomas Edison", story: "In Menlo Park Edison's team tests a carbonised thread in a glass bulb that glows for hours, and goes on to build a whole system.", relic: "A carbon filament bulb", relic_desc: "A glass bulb with one hair thin loop inside."}
+  wright_kitty_hawk: {name: "Twelve seconds in the air", place: "Kitty Hawk, North Carolina", figure: "Orville and Wilbur Wright", story: "On a windy beach the Wright brothers fly a powered machine for twelve seconds, and then three more times that day.", relic: "A propeller blade", relic_desc: "A wooden blade shaped like a twisted wing."}
+  tenochtitlan_lake: {name: "A city built on a lake", place: "Tenochtitlan, Mexico", figure: "The Mexica builders", story: "The Mexica build their city on an island in a lake, with causeways, canals and floating gardens of piled earth.", relic: "A turquoise mosaic tile", relic_desc: "A tiny tile of blue stone."}
+  machu_picchu: {name: "A mountain citadel of fitted stone", place: "Machu Picchu, Peru", figure: "The Inca builders", story: "Inca builders raise terraces and temples of fitted stone on a mountain ridge, with water carried through stone channels.", relic: "A carved stone", relic_desc: "A palm sized stone with a straight, true edge."}
+  maya_venus_tables: {name: "Venus tracked for centuries", place: "Chichen Itza, Mexico", figure: "The Maya scribes", story: "Maya scribes keep tables of the movements of Venus, accurate across centuries, in painted bark paper books.", relic: "A painted bark strip", relic_desc: "A strip of bark paper with red and black glyphs."}
+  sequoyah_syllabary: {name: "A writing system made by one man", place: "Cherokee country, southeastern United States", figure: "Sequoyah", story: "Sequoyah, who could not read English, invents a syllabary for Cherokee, and within a few years many Cherokee can read and write.", relic: "A syllabary chart", relic_desc: "A sheet with eighty-odd characters laid out in rows."}
+  finlay_havana: {name: "Mosquitoes and yellow fever", place: "Havana", figure: "Carlos Finlay", story: "Carlos Finlay proposes that yellow fever is carried by mosquitoes, years before it is confirmed.", relic: "A glass slide of mosquitoes", relic_desc: "A mounted slide with a mosquito wing."}
+  carson_silver_spring: {name: "A spring without birdsong", place: "Silver Spring, Maryland", figure: "Rachel Carson", story: "Rachel Carson publishes Silent Spring, which asks what pesticides do to living things, and starts a movement.", relic: "A grey feather", relic_desc: "A single plain feather."}
+  apollo_cape_canaveral: {name: "People on the Moon", place: "Cape Canaveral, Florida", figure: "Neil Armstrong, Buzz Aldrin and the Apollo teams", story: "Apollo 11 lifts from Florida, and two of its crew walk on the Moon while hundreds of thousands of people on Earth made it possible.", relic: "A checklist card", relic_desc: "A card of steps, with a pencil smudge."}
+  bell_boston: {name: "The voice on a wire", place: "Boston", figure: "Alexander Graham Bell", story: "Bell speaks to his assistant down a wire in the next room, and the telephone is born.", relic: "A telephone receiver", relic_desc: "A wooden handpiece with a thin diaphragm."}
+  borges_buenos_aires: {name: "Libraries and labyrinths in a story", place: "Buenos Aires", figure: "Jorge Luis Borges", story: "Jorge Luis Borges publishes The Garden of Forking Paths, short stories of infinite libraries and branching time.", relic: "A pair of thick spectacles", relic_desc: "Glasses for a man whose sight was failing."}
+  frida_mexico_city: {name: "Painting her own life", place: "Mexico City", figure: "Frida Kahlo", story: "Frida Kahlo paints The Two Fridas and many self portraits, turning pain and identity into some of the best known images of her country.", relic: "A fine paintbrush", relic_desc: "A brush with a few strands of red."}
+  hokulea_honolulu: {name: "Sailing to Tahiti by the stars", place: "Honolulu", figure: "Mau Piailug and Nainoa Thompson", story: "The canoe Hōkūleʻa sails from Hawaiʻi to Tahiti with no instruments, guided by star paths and swells, and revives a navigating tradition.", relic: "A knotted sennit cord", relic_desc: "A cord of coconut fibre with a knot for each day."}
+  budj_bim_eels: {name: "Fish farming on a lava plain", place: "Budj Bim, Victoria, Australia", figure: "The Gunditjmara people", story: "The Gunditjmara shape channels and weirs on a lava flow to trap and keep eels, a system dated to thousands of years ago.", relic: "A woven eel trap", relic_desc: "A long basket with a funnel mouth."}

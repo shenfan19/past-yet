@@ -47,3 +47,10 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - The About tab holds the introduction, disclaimer, privacy, how it is driven and credits, in every language.
 - To add a language: add its code to `i18n.locales`, copy `text.en.yaml` and `encyclopedia.en.yaml` to the new code, translate what you want, leave the rest.
 - `node tools/check_i18n.mjs` compares the files with English (missing keys, stray keys, placeholders that differ) and tests the fallback.
+
+## Catalogue and employees
+
+- `data/catalog.yaml` lists 100 famous events across the world, mostly science, technology, philosophy, art and ideas, each with a place, a year and a field. Names, stories and relics are in the language files under `catalog`.
+- Each event has a relic, made into an antique when the data loads. Buying a relic puts its event on the map and in the wiki. The events have no simulation model yet, so they can be found and read but not dispatched to.
+- The map groups nearby events into one pin, and the grouping radius shrinks as you zoom in. The time axis spreads recent years and compresses the deep past.
+- `data/staff.yaml` has twenty employees with a gender, an age and a job, and thirteen traits. Event summaries are written from general knowledge and unchecked, the wiki marks them so.

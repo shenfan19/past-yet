@@ -74,7 +74,7 @@ export function createShop(X) {
       id: 'ants', rows, maxH: 240,
       cols: [
         { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
-        { k: 'dest', label: U.dispatch.points_to, w: '18%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
+        { k: 'dest', label: U.dispatch.points_to, w: '18%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
         { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.an.price, cell: (r) => r.an.price },
         { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.sell, cell: (r) => r.an.sell },
         { k: 'act', label: '', w: '28%', cls: 'num', cell: (r) => (r.own

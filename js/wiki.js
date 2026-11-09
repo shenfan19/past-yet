@@ -1,7 +1,7 @@
 // Wiki style encyclopedia: a left list with search and tag filter, a right article with links, a back and forward history.
 // Locked articles show as a question mark for visitors. In dev mode they show in full with a hidden mark, and the model categories appear.
 import * as sim from './sim.js';
-import { staffName, staffTraits } from './narrate.js';
+import { staffName, staffTraits, fmtYear, staffProfile } from './narrate.js';
 
 const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
 
@@ -58,6 +58,16 @@ export function createWiki(X) {
     for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
     for (const e of sec('stories')) add({ id: 'stories:' + e.id, cat: 'stories', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
 
+    // the catalogue: famous events with a relic each, readable once the relic is owned
+    for (const ev of D.get('catalog.events')) {
+      const c = T.catalog[ev.id];
+      const relicId = 'relic_' + ev.id;
+      add({
+        id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { antique: relicId }, refs: ['catalog'],
+        body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.not_built}</div>`,
+      });
+    }
+
     // events that come out of the models
     const me = Object.fromEntries(Object.entries(D.get('encyclopedia.model_events')).map(([k, v]) => [k, { refs: v.refs, text: D.get('enc_text.model_events.' + k) }]));
     for (const eraId of eraIds()) {
@@ -86,7 +96,7 @@ export function createWiki(X) {
           const stats = sim.staffStats(D, id);
           const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
           const traits = staffTraits(D, id).map((t) => a('traits:' + t, T.traits[t])).join(' ');
-          return `<div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div>`;
+          return `<div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div>`;
         },
       });
     }
@@ -132,7 +142,7 @@ export function createWiki(X) {
       const tx = T.antiques[id];
       add({
         id: 'antiques:' + id, cat: 'antiques', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'],
-        body: () => `<p>${esc(tx.desc)}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
+        body: () => `<p>${esc(tx.desc)}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : an.event ? a('events:c:' + an.event, T.catalog[an.event].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
       });
     }
 

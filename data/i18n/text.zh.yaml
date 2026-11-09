@@ -49,6 +49,7 @@ ui:
     weight: 重量
     max: 上限
   logo: 穿
+  gender: {f: 女, m: 男}
   lang: {auto: 跟随浏览器, label: 语言}
   about:
     title: 关于穿越事务所
@@ -89,7 +90,7 @@ ui:
       - h: 作者
         p:
           - "这是 Fan Shen 的个人项目。"
-  fmt: {colon: '：', sep: '、', semi: '；', paren: '（{x}）', quote: '“{x}”', dash: '—— '}
+  fmt: {colon: '：', sep: '、', semi: '；', paren: '（{x}）', quote: '“{x}”', dash: '—— ', age: '{n} 岁'}
   cal: {bc: '前{n}', ad: '公元{n}'}
   clock:
     day: 第 {n} 天
@@ -160,6 +161,7 @@ ui:
     tags: 标签
     refs: 出处
   map:
+    tag_filter: 标签过滤
     zoom_in: 放大
     zoom_out: 缩小
     zoom_reset: 复位
@@ -232,6 +234,9 @@ ui:
     kind_daily: 日常地区
     kind_story: 小故事
     not_ready: 还没做成可玩的内容
+    not_built: 这个事件还没有仿真。可以找到它、收集它的遗物、读它的故事，但还不能派人去。
+    not_built_short: 未做
+    relic: 遗物
     no_funds: 资金不足
     hidden_mark: (hidden)
     pick_map: 在地图上点一个地点，再选它的时间点。可以缩放和拖动，用过滤框、标签和时间范围缩小事件。
@@ -346,11 +351,32 @@ ui:
       strategies: 员工的行事倾向由他的特质决定，派谁出去，就用谁的倾向，每个选项写入若干输入变量。
     blocks: 块
 staff:
-  s_ning: {name: 阿宁, bio: 做过护士，认死理，见不得病人没人管。}
-  s_zhou: {name: 老周, bio: 干过工地，身体好，嘴上功夫了得，不爱绕弯。}
-  s_lin: {name: 小林, bio: 读过很多书，什么都想弄明白，想家想得最早。}
-  s_qian: {name: 老钱, bio: 倒腾过旧货，眼睛毒，什么东西值几个钱一眼就知道。}
+  s_ning: {name: "阿宁", job: "护士", bio: "做过护士，认死理，见不得病人没人管。"}
+  s_zhou: {name: "老周", job: "建筑工人", bio: "干过工地，身体好，嘴上功夫了得，不爱绕弯。"}
+  s_lin: {name: "小林", job: "研究生", bio: "读过很多书，什么都想弄明白，想家想得最早。"}
+  s_qian: {name: "老钱", job: "旧货商", bio: "倒腾过旧货，眼睛毒，什么东西值几个钱一眼就知道。"}
+  s_amara: {name: "阿玛拉·奥卡福", job: "助产士", bio: "接生过几百个孩子，别人慌的时候她最稳。"}
+  s_kenji: {name: "森健二", job: "软件工程师", bio: "靠调试吃饭，见不得没收尾的东西。"}
+  s_isabella: {name: "伊莎贝拉·罗西", job: "退休教师", bio: "教了四十年书，什么都能换个说法再耐心讲一遍。"}
+  s_tariq: {name: "塔里克·哈桑", job: "司机", bio: "熟悉每一条小巷，也知道怎么说动一扇关着的门。"}
+  s_meiling: {name: "陈美玲", job: "美术生", bio: "看到什么都画下来，剩下的就追着问为什么。"}
+  s_lars: {name: "拉尔斯·尼尔森", job: "造船匠", bio: "做东西要做得结实，最不喜欢被人催。"}
+  s_priya: {name: "普里娅·夏尔马", job: "药剂师", bio: "标签要读两遍，剂量要数第三遍。"}
+  s_diego: {name: "迭戈·费尔南德斯", job: "街头乐手", bio: "一把吉他就能让一群人围过来，也想念妈妈做的饭。"}
+  s_olga: {name: "奥尔加·彼得罗娃", job: "退休医生", bio: "行医五十年，相信自己的眼睛胜过任何手册。"}
+  s_samuel: {name: "塞缪尔·门萨", job: "记者", bio: "敢问别人不敢问的，问完马上记下来。"}
+  s_minji: {name: "朴敏智", job: "厨师", bio: "先让大家吃上，自己最后一个坐下。"}
+  s_jeanluc: {name: "让-吕克·莫罗", job: "退休船长", bio: "见过更大的风浪，下命令从不提高嗓门。"}
+  s_fatima: {name: "法蒂玛·赛义德", job: "档案员", bio: "能在一屋子的箱子里找出那一页要紧的纸。"}
+  s_tom: {name: "汤姆·贝克", job: "修理学徒", bio: "遇到机器就拆开，大部分时候还能装回去。"}
+  s_wanjiru: {name: "万吉鲁·卡毛", job: "数据分析师", bio: "总是第一个从数字里看出规律。"}
+  s_ricardo: {name: "里卡多·席尔瓦", job: "退休渔夫", bio: "守着潮水一点也不着急，一边等一边讲长故事。"}
 traits:
+  patient: "耐心"
+  bold: "大胆"
+  meticulous: "一丝不苟"
+  artistic: "有艺术气质"
+  wise: "睿智"
   kind: 善良
   stubborn: 固执
   curious: 好奇
@@ -367,6 +393,26 @@ mainline:
   home: {name: 回家, desc: 能量够了，所长可以回到自己的时空，见家人。}
 stats: {stamina: 体力, skill: 医护手艺, eloquence: 口才, kindness: 善意, stubbornness: 固执度, curiosity: 好奇心, homesick_trait: 思乡度, greed: 贪婪}
 tags:
+  science: "科学"
+  technology: "技术"
+  math: "数学"
+  philosophy: "哲学"
+  thought: "思想"
+  art: "艺术"
+  literature: "文学"
+  music: "音乐"
+  medicine: "医学"
+  architecture: "建筑"
+  exploration: "探索"
+  europe: "欧洲"
+  asia: "亚洲"
+  africa: "非洲"
+  americas: "美洲"
+  oceania: "大洋洲"
+  ancient: "古代"
+  medieval: "中世纪"
+  early_modern: "近代早期"
+  modern_era: "近现代"
   medical: 医疗
   sterilize: 消毒
   consumable: 消耗品
@@ -591,3 +637,104 @@ eras:
       ally_gap: 森梅尔维斯的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
       none: 换一项配置再派一趟，同一个种子，对照起来最清楚。
 
+catalog:
+  pythagoras_croton: {name: "以数为万物本质的学派", place: "意大利南部克罗顿", figure: "毕达哥拉斯", story: "在克罗顿，一个团体把数学、音乐和生活当作同一门功课来学，比例成了和谐的钥匙。", relic: "单弦琴的弦", relic_desc: "一根绷紧的弦，按在简单的比例上能发出和谐的音。"}
+  thales_miletus: {name: "不借神明解释自然", place: "伊奥尼亚米利都", figure: "泰勒斯", story: "米利都的泰勒斯去找事物的自然原因，传说他预言过一次日食。", relic: "一颗琥珀珠", relic_desc: "在布上擦一擦就能吸起羽毛，是电最古老的谜。"}
+  socrates_athens: {name: "一生都在发问", place: "雅典", figure: "苏格拉底", story: "苏格拉底一生都在追问正义和美德是什么，受审时他选择守住提问，而不是保全自己。", relic: "一只朴素的陶杯", relic_desc: "一只普通的杯子，被留下来，是因为那个最后的夜晚。"}
+  hippocrates_kos: {name: "把医学当作细致的观察", place: "科斯岛", figure: "希波克拉底", story: "在科斯岛，一位医生和他的学派教人：疾病有自然的原因，要守在床边仔细看。", relic: "一根青铜探针", relic_desc: "一件细细的器具，属于宁愿多看也不乱猜的医生。"}
+  plato_academy: {name: "最早的学园", place: "雅典", figure: "柏拉图", story: "柏拉图在雅典城外的树林里办起学园，一个把数学和哲学放在一起学习的地方。", relic: "一块蜡板", relic_desc: "木板上的字迹可以抹平，再写一遍。"}
+  aristotle_lyceum: {name: "给生物世界分类", place: "雅典", figure: "亚里士多德", story: "在吕克昂学园，亚里士多德和学生描述动植物，并写出第一套系统的逻辑。", relic: "一枚贴了标签的贝壳", relic_desc: "一个标本集里的贝壳，每件都写着希腊文名字。"}
+  euclid_alexandria: {name: "从几条公理推出几何", place: "亚历山大", figure: "欧几里得", story: "欧几里得把当时的几何收进《几何原本》，一切都从几个朴素的起点推出来。", relic: "一把青铜圆规", relic_desc: "两条臂和一个轴，足够画出书里的每一个图形。"}
+  archimedes_syracuse: {name: "浮力与杠杆", place: "西西里锡拉库扎", figure: "阿基米德", story: "阿基米德弄清了东西为什么会浮起来，传说答案是在浴缸里想到的。", relic: "一块浴室海绵", relic_desc: "来自浴缸故事里的一块朴素海绵。"}
+  eratosthenes_alexandria: {name: "用影子量地球", place: "亚历山大与赛伊尼", figure: "埃拉托色尼", story: "埃拉托色尼比较两座城市正午的影子，估出了地球的大小，结果出奇地接近。", relic: "一根日晷针", relic_desc: "一根朴素的立杆，影子告诉他太阳的角度。"}
+  hypatia_alexandria: {name: "讲授数学与天文", place: "亚历山大", figure: "希帕提娅", story: "希帕提娅在亚历山大教数学、天文和哲学，被人记作那座城最有名的女学者。", relic: "一块星盘的盘面", relic_desc: "刻着星位的黄铜圆盘，用来找星星和时辰。"}
+  fibonacci_pisa: {name: "印度阿拉伯数字传入欧洲", place: "比萨", figure: "斐波那契", story: "在《计算之书》里，斐波那契告诉商人：九个数字加一个零，能让算术快得多。", relic: "一块写着数字的蜡板", relic_desc: "板上把十个新数字和旧的罗马数字并排写在一起。"}
+  giotto_padua: {name: "有分量、有感情的人物", place: "帕多瓦", figure: "乔托", story: "在斯克罗威尼礼拜堂里，乔托把圣徒画成有分量、有感情的人，欧洲绘画由此转了向。", relic: "一罐蓝颜料", relic_desc: "磨好的蓝色，是礼拜堂穹顶的颜色。"}
+  dante_ravenna: {name: "用街头的语言写一部长诗", place: "拉文纳", figure: "但丁", story: "流亡中的但丁写完了《神曲》，用的是人们真正说的意大利语。", relic: "一片月桂叶", relic_desc: "诗人桂冠上的一片干叶。"}
+  gutenberg_mainz: {name: "用活动金属字模印书", place: "美因茨", figure: "古腾堡", story: "古腾堡把活动金属字模、油墨和压印机合在一起，书不再稀罕了。", relic: "一粒铅字", relic_desc: "铅锡合金的一个小字，是反着的。"}
+  leonardo_florence: {name: "画画的人，也画机器", place: "佛罗伦萨", figure: "列奥纳多·达·芬奇", story: "列奥纳多画了《蒙娜丽莎》，笔记本里却画满了解剖、水流和飞行机器。", relic: "一页镜像书写的笔记", relic_desc: "一页反着写的字，要对着镜子才读得出。"}
+  copernicus_frombork: {name: "太阳在中心", place: "波兰弗龙堡", figure: "哥白尼", story: "哥白尼发表了一个地球绕着太阳转的模型。", relic: "一个黄铜象限仪", relic_desc: "四分之一圆，用来量星星的高度。"}
+  vesalius_padua: {name: "照着人体画出来的解剖学", place: "帕多瓦", figure: "维萨里", story: "维萨里出版《人体构造》，书里的人体是照着解剖画的，而不是照着旧权威写的。", relic: "一把解剖刀", relic_desc: "一片窄窄的刀刃，先看再信。"}
+  shakespeare_globe: {name: "人人都能进的剧场", place: "伦敦", figure: "威廉·莎士比亚", story: "环球剧场在泰晤士河边开张，戏文从最便宜的站票一直演到最好的座位。", relic: "一支鹅毛笔", relic_desc: "削好的羽毛笔，笔尖上还有墨。"}
+  galileo_padua: {name: "木星身边的卫星", place: "帕多瓦", figure: "伽利略", story: "伽利略把望远镜对准木星，看见四颗小卫星在绕着它转。", relic: "一片磨制的透镜", relic_desc: "一片小小的玻璃透镜，是手工磨出来的。"}
+  descartes_leiden: {name: "把怀疑当作方法", place: "莱顿", figure: "笛卡尔", story: "笛卡尔发表《谈谈方法》，从怀疑一切出发，再一步步重新搭起来。", relic: "一张折起来的小纸条", relic_desc: "纸条上只有一句话，讲思考与存在。"}
+  leeuwenhoek_delft: {name: "一滴水里的世界", place: "代尔夫特", figure: "列文虎克", story: "一位布商用自己磨的透镜，在池水里看见了微小的生命，并写信告诉皇家学会。", relic: "一块小黄铜透镜板", relic_desc: "拇指大的板子，里面嵌着一片极小又极清晰的透镜。"}
+  newton_cambridge: {name: "苹果与月亮服从同一条定律", place: "剑桥", figure: "艾萨克·牛顿", story: "牛顿在《原理》里证明：同一条引力定律，管着落下的东西，也管着行星的轨道。", relic: "一块玻璃三棱镜", relic_desc: "一块三角的玻璃，能把白光分成各种颜色。"}
+  bach_leipzig: {name: "一位乐长为每个礼拜日写曲", place: "莱比锡", figure: "约翰·塞巴斯蒂安·巴赫", story: "巴赫在莱比锡做了乐长，多年里为教会历写下了很少有人比得上的大量音乐。", relic: "一根小风琴管", relic_desc: "一根调好音、试过音的小管子，没有卖掉。"}
+  smith_kirkcaldy: {name: "一个国家怎样变富", place: "苏格兰柯卡尔迪", figure: "亚当·斯密", story: "亚当·斯密出版《国富论》，论证分工和贸易会让人变得更富。", relic: "一枚别针", relic_desc: "他用来说明分工威力的那种别针。"}
+  kant_konigsberg: {name: "理性能知道什么，不能知道什么", place: "柯尼斯堡", figure: "伊曼努尔·康德", story: "康德发表《纯粹理性批判》，追问心灵给它所知道的东西带来了什么。", relic: "一根手杖", relic_desc: "一个人的手杖，他每天散步准时到邻居拿他对表。"}
+  mozart_prague: {name: "布拉格喜爱的歌剧", place: "布拉格", figure: "沃尔夫冈·阿马德乌斯·莫扎特", story: "莫扎特的《唐璜》在布拉格首演，这座城早已把他的《费加罗》放进了心里。", relic: "一页乐谱手稿", relic_desc: "字迹又快又干净，几乎没有涂改。"}
+  lavoisier_paris: {name: "化学有了新语言", place: "巴黎", figure: "拉瓦锡", story: "拉瓦锡出版专著，给氧命了名，把燃烧看作与氧的化合，一切都用重量来量。", relic: "一台精密天平", relic_desc: "一台精细的天平，给化学记账。"}
+  jenner_berkeley: {name: "第一支疫苗", place: "英国伯克利", figure: "爱德华·詹纳", story: "詹纳验证了牛痘能防天花，接种由此开始。", relic: "一把玻璃小刀", relic_desc: "一片很薄的刀片，划下第一道小口。"}
+  beethoven_vienna: {name: "第九交响曲", place: "维也纳", figure: "路德维希·凡·贝多芬", story: "几乎全聋的贝多芬首演了第九交响曲，要有人把他转过身，他才看见掌声。", relic: "一只助听喇叭", relic_desc: "世界静下来的时候，他举到耳边的号角。"}
+  faraday_london: {name: "从磁里得到电", place: "伦敦", figure: "迈克尔·法拉第", story: "法拉第让磁铁穿过线圈，得到了电流，发电机的原理就在这里。", relic: "一个铁环和线圈", relic_desc: "软铁环上绕着两组线圈。"}
+  darwin_galapagos: {name: "岛屿与生命的多样", place: "加拉帕戈斯群岛", figure: "查尔斯·达尔文", story: "贝格尔号上的年轻博物学家注意到鸟和龟每座岛都不一样，多年之后他讲清了为什么。", relic: "一根雀的羽毛", relic_desc: "来自群岛的一根小小的褐色羽毛。"}
+  lovelace_london: {name: "第一段程序", place: "伦敦", figure: "阿达·洛芙莱斯", story: "阿达·洛芙莱斯发表了对分析机的注释，里面有一段算法，还有一个想法：这样的机器不只能算数。", relic: "一张穿孔卡", relic_desc: "一张打了孔的卡片，用来告诉机器做什么。"}
+  nightingale_scutari: {name: "把护理做成用数据和关怀的学科", place: "奥斯曼斯库塔里", figure: "弗洛伦斯·南丁格尔", story: "在斯库塔里的医院，南丁格尔打扫病房、清点死亡数字，又把数字变成改革的理由。", relic: "一盏小油灯", relic_desc: "她夜里查房时用的那盏灯。"}
+  mendel_brno: {name: "豌豆与遗传的规律", place: "布尔诺", figure: "格雷戈尔·孟德尔", story: "孟德尔报告了多年杂交豌豆的结果：性状是怎样传下去的。", relic: "一只豌豆荚", relic_desc: "修道院花园里的一只干豆荚。"}
+  mendeleev_petersburg: {name: "元素周期表", place: "圣彼得堡", figure: "门捷列夫", story: "门捷列夫按重量和反复出现的性质排列元素，还给没发现的元素留了空位。", relic: "一副元素卡片", relic_desc: "手写的卡片，可以像摆纸牌一样摆。"}
+  pasteur_paris: {name: "狂犬病疫苗", place: "巴黎", figure: "路易·巴斯德", story: "巴斯德和同事给一个被疯狗咬伤的男孩打了第一针狂犬病疫苗，孩子活了下来。", relic: "一只鹅颈瓶", relic_desc: "弯曲的瓶颈挡住灰尘，让空气进去。"}
+  curie_paris: {name: "两种新元素", place: "巴黎", figure: "玛丽·居里", story: "玛丽和皮埃尔·居里在一间棚屋里，从成吨的矿石中分离出了钋和镭。", relic: "一管沥青铀矿", relic_desc: "一支装着黑色矿石的玻璃管，在黑暗里有一点微光。"}
+  freud_vienna: {name: "把梦当作进入内心的路", place: "维也纳", figure: "西格蒙德·弗洛伊德", story: "弗洛伊德出版《梦的解析》，一本改变了人们谈论心灵方式的书。", relic: "一座书房里的小塑像", relic_desc: "他放在书桌上的小古物之一。"}
+  einstein_bern: {name: "一年改变物理学", place: "伯尔尼", figure: "阿尔伯特·爱因斯坦", story: "在专利局上班的爱因斯坦，几个月里发表了关于光、原子和相对论的论文。", relic: "一枚专利局印章", relic_desc: "出事的那张办公桌上的一枚小橡皮章。"}
+  picasso_paris: {name: "打破单一的视角", place: "巴黎", figure: "巴勃罗·毕加索", story: "毕加索画了《亚维农少女》，欧洲绘画不再坚持只有一个视角。", relic: "一截炭条", relic_desc: "一小截炭，一拿就黑了手指。"}
+  fleming_london: {name: "一种能拦住细菌的霉", place: "伦敦", figure: "亚历山大·弗莱明", story: "弗莱明发现忘在桌上的培养皿里，一团霉让周围的细菌消失了，青霉素由此得名。", relic: "一只长霉的培养皿", relic_desc: "玻璃皿里，一团绿斑周围有一圈清清的空白。"}
+  turing_cambridge: {name: "什么是可计算的", place: "剑桥", figure: "艾伦·图灵", story: "图灵描述了一台想象中的机器，在纸带上读写符号，由此定义了什么叫计算。", relic: "一条纸带", relic_desc: "一条带着符号的纸带，一次一个符号。"}
+  meitner_stockholm: {name: "解释核裂变", place: "斯德哥尔摩", figure: "莉泽·迈特纳", story: "流亡中的迈特纳和外甥算出铀核分裂了，并给它起名叫裂变。", relic: "一截粉笔", relic_desc: "一截用得很短的粉笔，来自算出答案的那次散步。"}
+  franklin_cambridge: {name: "DNA 的形状", place: "剑桥", figure: "罗莎琳德·富兰克林、詹姆斯·沃森和弗朗西斯·克里克", story: "罗莎琳德·富兰克林和她的学生拍的 X 射线照片，帮着沃森和克里克搭出了双螺旋模型。", relic: "一个铁丝螺旋模型", relic_desc: "两股铁丝扭在一起的小模型。"}
+  berners_lee_geneva: {name: "一张链接起来的网页之网", place: "日内瓦", figure: "蒂姆·伯纳斯-李", story: "在欧洲核子研究中心，蒂姆·伯纳斯-李提出一种把不同电脑上的文档链接起来的办法，后来成了万维网。", relic: "一张软盘", relic_desc: "一张方形的盘，标签是铅笔写的。"}
+  cajal_barcelona: {name: "神经细胞是一个个独立的单位", place: "巴塞罗那", figure: "圣地亚哥·拉蒙-卡哈尔", story: "卡哈尔把银染的神经细胞画得极细致，并论证大脑是由一个个独立的细胞组成的。", relic: "一支极细的绘图笔", relic_desc: "细到能画出神经元每一条分支的笔。"}
+  marconi_bologna: {name: "信号穿过空气", place: "博洛尼亚", figure: "古列尔莫·马可尼", story: "马可尼在自家田野上发出了一个两端之间没有电线的信号，并一直把距离往远推。", relic: "一支检波管", relic_desc: "一支装着金属屑的小玻璃管，遇到无线电波就醒过来。"}
+  imhotep_saqqara: {name: "第一座大型石头金字塔", place: "埃及萨卡拉", figure: "伊姆霍特普", story: "国王左塞尔的建筑师伊姆霍特普被认为设计了阶梯金字塔，那是最早的大型切石建筑之一。", relic: "石匠的木槌", relic_desc: "被许多只手磨得光滑的木槌。"}
+  enheduanna_ur: {name: "第一位留名的作者", place: "美索不达米亚乌尔", figure: "恩赫杜安娜", story: "乌尔的女祭司恩赫杜安娜给女神伊南娜写下赞歌，并署了名，是我们所知最早留名的作者。", relic: "一块雪花石膏圆盘", relic_desc: "圆盘上刻着一位女祭司在献祭。"}
+  hammurabi_babylon: {name: "刻在石头上的法律", place: "巴比伦", figure: "汉谟拉比", story: "汉谟拉比让人把法律刻在一根石柱上，人人都看得见，法官要对写下来的东西负责。", relic: "一枚泥印滚筒", relic_desc: "一个小石柱，在泥上一滚就留下签名。"}
+  lalibela_rock: {name: "向下凿进岩石的教堂", place: "埃塞俄比亚拉利贝拉", figure: "拉利贝拉与石匠们", story: "石匠们从整块岩石里向下凿出一组教堂，没有一块石头是垒上去的。", relic: "石匠的凿子", relic_desc: "一把铁凿子，刃口磨得很薄。"}
+  ife_bronzes: {name: "金属铸出的逼真头像", place: "尼日利亚伊费", figure: "伊费的铸造匠人", story: "伊费的匠人用黄铜和铜铸出逼真的头像，后来的访客甚至不相信那是本地的手艺。", relic: "一个小铜头像", relic_desc: "巴掌大的头像，脸上有细细的刻痕。"}
+  great_zimbabwe: {name: "不用灰浆的石头城", place: "津巴布韦马斯温戈", figure: "大津巴布韦的建造者", story: "建造者用切好的花岗岩块不加灰浆垒起高墙，那里是一个商贸王国的中心。", relic: "一只皂石鸟", relic_desc: "立在矮柱上的一只雕刻小鸟。"}
+  timbuktu_sankore: {name: "一座手稿之城", place: "马里廷巴克图", figure: "曼萨·穆萨与桑科雷的学者们", story: "廷巴克图成了学者们抄写、收藏法律、天文和医学书的中心。", relic: "一页点金的手稿", relic_desc: "页边有一圈金粉。"}
+  al_haytham_cairo: {name: "用实验检验光", place: "开罗", figure: "伊本·海赛姆", story: "在开罗写作的伊本·海赛姆，在暗室里检验光是怎么走的，证明我们看见东西，是因为光进了眼睛。", relic: "一块小孔屏", relic_desc: "一块暗板，上面只有一个小孔。"}
+  house_of_wisdom: {name: "学者们翻译天下的书", place: "巴格达", figure: "花拉子米与智慧宫", story: "在巴格达，学者们翻译希腊、波斯和印度的著作，并往前走得更远，花拉子米给代数起了名字。", relic: "一只黄铜墨水瓶", relic_desc: "一个带盖的小墨池。"}
+  ibn_sina_hamadan: {name: "用了几百年的医学全书", place: "波斯哈马丹", figure: "伊本·西那", story: "伊本·西那写完《医典》，这部书从波斯到欧洲被教了好几百年。", relic: "一只玻璃小瓶", relic_desc: "医生用的带塞的小瓶。"}
+  omar_khayyam_nishapur: {name: "比我们更精确的历法", place: "波斯内沙布尔", figure: "欧玛尔·海亚姆", story: "欧玛尔·海亚姆和其他天文学家改革历法，定出的一年长度非常接近真值。", relic: "一卷星图", relic_desc: "一卷卷起来的恒星图。"}
+  al_jazari_diyarbakir: {name: "一本奇巧机械之书", place: "迪亚巴克尔", figure: "加扎里", story: "加扎里写了一本书，描述并画出了自动机、水钟和水泵，连凸轮和曲柄都有。", relic: "一个黄铜凸轮", relic_desc: "一个有形状的轮子，把转动变成往复。"}
+  ibn_battuta_tangier: {name: "三十年的旅程", place: "摩洛哥丹吉尔", figure: "伊本·白图泰", story: "伊本·白图泰离开丹吉尔去朝圣，一路走了大约三十年，几乎走遍当时已知的世界。", relic: "一只走旧的凉鞋", relic_desc: "一只补过很多次底的皮凉鞋。"}
+  ulugh_beg_samarkand: {name: "一座天文台和一份星表", place: "撒马尔罕", figure: "兀鲁伯", story: "兀鲁伯建了一座大天文台，发表的星表在好几个世纪里没有谁比它更精确。", relic: "大弧的一块碎片", relic_desc: "曾用来测星的石弧的一块残片。"}
+  achebe_lagos: {name: "由伊博人自己来讲的故事", place: "拉各斯", figure: "钦努阿·阿契贝", story: "钦努阿·阿契贝出版了《瓦解》，从伊博村庄的内部讲殖民世界的到来。", relic: "一页打字稿", relic_desc: "一页打字稿，上面有几处用墨水改过。"}
+  maathai_nairobi: {name: "把种树做成一场运动", place: "内罗毕", figure: "旺加里·马塔伊", story: "旺加里·马塔伊发起绿带运动，请妇女们种树，修补土地。", relic: "一棵树苗", relic_desc: "卷在叶子里的一棵小苗。"}
+  laozi_hangu: {name: "五千言说道", place: "中国函谷关", figure: "老子", story: "传说老子出函谷关时被请求写下他的学说，于是留下了短短的《道德经》。", relic: "一枚小铜牛铃", relic_desc: "据说他骑的那头牛脖子上的铃。"}
+  confucius_qufu: {name: "有教无类", place: "中国曲阜", figure: "孔子", story: "孔子教各种出身的学生，讲礼、讲学，也讲怎样做一个好人。", relic: "一根竹简捆绳", relic_desc: "被反复翻读磨细的一根绳。"}
+  buddha_sarnath: {name: "第一次说法", place: "印度鹿野苑", figure: "悉达多·乔达摩", story: "在鹿野苑，佛陀第一次说法，讲苦，也讲走出苦的路。", relic: "一片压平的菩提叶", relic_desc: "叶脉像一张地图。"}
+  cai_lun_luoyang: {name: "廉价造纸", place: "中国洛阳", figure: "蔡伦", story: "蔡伦上报了用树皮、破布和旧渔网造纸的办法，写字又轻又便宜。", relic: "一张粗纸", relic_desc: "纸里还看得见纤维的碎屑。"}
+  zhang_heng_luoyang: {name: "一台能感知远处地震的仪器", place: "中国洛阳", figure: "张衡", story: "张衡造了一只青铜器，远处发生地震时，龙口会把一颗球朝震来的方向吐下去。", relic: "一颗铜球和龙口", relic_desc: "一颗小球，下面的蟾蜍张口接住。"}
+  zu_chongzhi_jiankang: {name: "圆周率精确到七位", place: "中国建康", figure: "祖冲之", story: "祖冲之算出圆周率介于 3.1415926 和 3.1415927 之间，这个纪录保持了大约九个世纪。", relic: "一束算筹", relic_desc: "一捆细细的小棍，摆开就是数字。"}
+  aryabhata_patna: {name: "转动的地球与正弦表", place: "印度库苏马普拉", figure: "阿耶波多", story: "阿耶波多写了一部短书，里面有正弦表、一个很好的圆周率，还有地球在转动的想法。", relic: "一片棕榈叶经文", relic_desc: "一片薄叶，上面刻着诗句。"}
+  brahmagupta_bhillamala: {name: "零也是一个数", place: "印度比拉马拉", figure: "婆罗摩笈多", story: "婆罗摩笈多给出了用零和负数做运算的规则，把它们当作和别的数一样的数。", relic: "一片画着小圆圈的棕榈叶", relic_desc: "一片叶子，上面有个代表“没有”的小圆圈。"}
+  li_bai_changan: {name: "关于酒、月和远方的诗", place: "中国长安", figure: "李白", story: "李白在长安写下关于月光、酒和远方的诗，至今每个孩子都要背。", relic: "一只小酒杯", relic_desc: "杯底画着一弯淡淡的月。"}
+  murasaki_kyoto: {name: "世界上第一部伟大的长篇小说", place: "京都", figure: "紫式部", story: "平安宫廷里的紫式部写出了《源氏物语》，一部写宫廷生活和人心的长篇小说。", relic: "一只漆制笔盒", relic_desc: "一只小盒子，里面有笔、砚和水。"}
+  su_song_kaifeng: {name: "一座水力驱动的大钟楼", place: "中国开封", figure: "苏颂", story: "苏颂建成一座高高的水运仪象台，带着星球转动，还能报时。", relic: "一枚齿轮的齿", relic_desc: "一个与人一样高的齿轮上的一颗青铜齿。"}
+  shen_kuo_runzhou: {name: "什么都记下来的笔记", place: "中国润州", figure: "沈括", story: "沈括写下《梦溪笔谈》，其中记到磁针指的方向略偏离正北。", relic: "一根磁化的针", relic_desc: "每次都指向同一个方向的针。"}
+  angkor_wat: {name: "一座城那么大的庙", place: "柬埔寨吴哥", figure: "高棉的建造者们", story: "高棉的建造者们建起了巨大的吴哥窟，回廊上有长长的石雕浮雕。", relic: "一块砂岩飞天碎片", relic_desc: "一张巴掌大的雕刻脸。"}
+  sejong_hangul: {name: "人人都学得会的字母", place: "首尔", figure: "世宗大王与学者们", story: "世宗大王和学者们设计了谚文，字母的形状模仿口型。", relic: "一块刻着字母的木板", relic_desc: "刻着最早几个字母的木板，等着上墨。"}
+  li_shizhen_qizhou: {name: "一千多种药物的汇编", place: "中国蕲州", figure: "李时珍", story: "李时珍多年野外调查，完成《本草纲目》，记载了近两千种药物。", relic: "一只药臼", relic_desc: "一只带着一点绿渍的小石臼。"}
+  basho_hiraizumi: {name: "奥州小路", place: "日本平泉", figure: "松尾芭蕉", story: "芭蕉一路向北走了几个月，写下了夹着俳句的《奥之细道》。", relic: "一顶草笠", relic_desc: "被雨淋灰了的编织草帽。"}
+  hokusai_edo: {name: "神奈川冲浪里", place: "日本江户", figure: "葛饰北斋", story: "年过七十的北斋画出了《神奈川冲浪里》和《富岳三十六景》。", relic: "一块印刷用的木版", relic_desc: "一块雕好的樱木版。"}
+  bose_calcutta: {name: "会回应的植物", place: "加尔各答", figure: "贾格迪什·钱德拉·博斯", story: "博斯造出极精细的仪器，能显示植物对触碰和光的反应，他还研究无线电波。", relic: "一个植物生长记录仪的部件", relic_desc: "一根把植物的生长放大一万倍的杠杆。"}
+  tagore_santiniketan: {name: "亚洲第一个文学诺贝尔奖", place: "印度圣蒂尼克坦", figure: "罗宾德拉纳特·泰戈尔", story: "诗人、词曲作者、办学者泰戈尔获得诺贝尔文学奖。", relic: "一本手抄的歌集", relic_desc: "一本小小的歌本，是他的亲笔。"}
+  ramanujan_madras: {name: "一封寄给哈代的信", place: "马德拉斯", figure: "斯里尼瓦瑟·拉马努金", story: "马德拉斯的一位职员把几页结果寄给英国的哈代，哈代一眼就看出那是天才之作。", relic: "一块石板", relic_desc: "一块学生用的石板，写了擦、擦了写好多次。"}
+  raman_calcutta: {name: "海为什么是蓝的，光还能告诉我们什么", place: "加尔各答", figure: "钱德拉塞卡拉·拉曼", story: "拉曼和学生发现，被液体散射的光带着一点颜色的变化，这就是后来的拉曼效应。", relic: "一条光谱仪狭缝", relic_desc: "一道窄缝，让一线光漏进来。"}
+  franklin_philadelphia: {name: "闪电就是电", place: "费城", figure: "本杰明·富兰克林", story: "富兰克林在暴风雨里放风筝，证明闪电是电，不久屋顶就装上了避雷针。", relic: "一条丝带和一把钥匙", relic_desc: "一把钥匙系在风筝线上，线头接着一条干丝带。"}
+  morse_washington: {name: "上帝做了何等的事", place: "华盛顿", figure: "塞缪尔·莫尔斯", story: "塞缪尔·莫尔斯通过四十英里长的电线向巴尔的摩拍出一条消息，电报通了。", relic: "一只电报键", relic_desc: "一根黄铜杠杆，拇指放的地方磨亮了。"}
+  edison_menlo_park: {name: "一盏能一直亮着的灯", place: "新泽西门洛帕克", figure: "托马斯·爱迪生", story: "在门洛帕克，爱迪生的团队试验了玻璃泡里的一根炭化细丝，能亮好几个小时，之后又建起了一整套系统。", relic: "一只炭丝灯泡", relic_desc: "玻璃泡里有一根头发丝细的圈。"}
+  wright_kitty_hawk: {name: "在空中的十二秒", place: "北卡罗来纳基蒂霍克", figure: "奥维尔和威尔伯·莱特", story: "在一片大风的海滩上，莱特兄弟驾着动力飞机飞了十二秒，当天又飞了三次。", relic: "一片螺旋桨叶", relic_desc: "一片木头叶子，像一只扭过的翅膀。"}
+  tenochtitlan_lake: {name: "建在湖上的城市", place: "墨西哥特诺奇蒂特兰", figure: "墨西卡的建造者们", story: "墨西卡人把城建在湖心的岛上，有堤道、运河，还有堆土做成的浮动园圃。", relic: "一片绿松石镶嵌片", relic_desc: "一小片蓝色石头。"}
+  machu_picchu: {name: "山上严丝合缝的石头城", place: "秘鲁马丘比丘", figure: "印加的建造者们", story: "印加的建造者们在山脊上用严丝合缝的石头建起梯田和神庙，水由石槽引进来。", relic: "一块切好的石头", relic_desc: "一块巴掌大的石头，边是直的、正的。"}
+  maya_venus_tables: {name: "几个世纪里追踪着金星", place: "墨西哥奇琴伊察", figure: "玛雅书吏们", story: "玛雅书吏在彩绘树皮纸书里记录金星的运行表，几个世纪都很准。", relic: "一条彩绘树皮纸", relic_desc: "一条树皮纸，上面有红黑的字符。"}
+  sequoyah_syllabary: {name: "一个人造出来的文字", place: "美国东南部切罗基地区", figure: "塞阔雅", story: "不识英文的塞阔雅为切罗基语发明了一套音节文字，几年内就有许多切罗基人学会了读写。", relic: "一张音节表", relic_desc: "一张纸，八十多个字符排成行。"}
+  finlay_havana: {name: "蚊子与黄热病", place: "哈瓦那", figure: "卡洛斯·芬莱", story: "卡洛斯·芬莱提出黄热病是蚊子传播的，早了证实好几年。", relic: "一片蚊子的玻片标本", relic_desc: "一片标本，里面有一只蚊子的翅。"}
+  carson_silver_spring: {name: "没有鸟鸣的春天", place: "马里兰银泉", figure: "蕾切尔·卡森", story: "蕾切尔·卡森出版《寂静的春天》，追问杀虫剂对生物做了什么，并掀起了一场运动。", relic: "一根灰羽毛", relic_desc: "一根朴素的羽毛。"}
+  apollo_cape_canaveral: {name: "人类走上月球", place: "佛罗里达卡纳维拉尔角", figure: "尼尔·阿姆斯特朗、巴兹·奥尔德林和阿波罗团队", story: "阿波罗 11 号从佛罗里达升空，两名机组成员踏上月球，而让这件事成真的是地球上几十万人。", relic: "一张检查清单卡", relic_desc: "一张写着步骤的卡，上面有铅笔的污迹。"}
+  bell_boston: {name: "电线里的声音", place: "波士顿", figure: "亚历山大·格雷厄姆·贝尔", story: "贝尔通过电线向隔壁房间的助手说话，电话就这样诞生了。", relic: "一只电话听筒", relic_desc: "一个木制听筒，里面有一片薄薄的振膜。"}
+  borges_buenos_aires: {name: "短篇里的图书馆和迷宫", place: "布宜诺斯艾利斯", figure: "豪尔赫·路易斯·博尔赫斯", story: "博尔赫斯出版《小径分岔的花园》，短篇里有无限的图书馆和分岔的时间。", relic: "一副厚眼镜", relic_desc: "一个视力在衰退的人的眼镜。"}
+  frida_mexico_city: {name: "画自己的生活", place: "墨西哥城", figure: "弗里达·卡罗", story: "弗里达·卡罗画了《两个弗里达》和许多自画像，把痛苦和身份画成了她国家最知名的一些画面。", relic: "一支细画笔", relic_desc: "笔毛上沾着几丝红色。"}
+  hokulea_honolulu: {name: "靠星星驶向塔希提", place: "檀香山", figure: "毛·皮艾卢格与纳伊诺阿·汤普森", story: "独木舟“星光号”不带任何仪器，从夏威夷驶到塔希提，靠星路和海浪指路，让一种航海传统重新活了起来。", relic: "一根打了结的椰壳纤维绳", relic_desc: "一根椰壳纤维编的绳，每天打一个结。"}
+  budj_bim_eels: {name: "熔岩平原上的养鱼", place: "澳大利亚维多利亚州布吉比姆", figure: "贡迪玛拉人", story: "贡迪玛拉人在熔岩流上修出水渠和堰，把鳗鱼拦住养起来，这套系统的年代可追到几千年前。", relic: "一只编织的鳗鱼笼", relic_desc: "一只长筐，口像漏斗。"}

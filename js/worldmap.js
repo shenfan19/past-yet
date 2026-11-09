@@ -8,18 +8,42 @@ export function createWorldMap(X) {
   const V = () => D.get('map.view');
   const m = () => st.map;
 
-  const events = () => X.visibleEras().map((id) => {
+  // Events are the simulated eras and the catalogue events. A catalogue event shows once its relic is owned, in dev mode always.
+  const eraEvents = () => X.visibleEras().map((id) => {
     const era = ctx.era(id).raw.metadata.era;
-    return { id, year: era.year, place: era.place, geo: era.geo, locked: !X.eraOpen(id) };
+    return { id, year: era.year, place: era.place, geo: era.geo, locked: !X.eraOpen(id), catalog: false };
   });
+  const catEvents = () => D.get('catalog.events').filter((e) => DEV || X.owns('relic_' + e.id)).map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.owns('relic_' + e.id), catalog: true, cell: e }));
+  // One pin per place. Events within a radius of each other share a pin, and the radius shrinks as you zoom in so the pins part; which takes the name of the simulated era there if there is one.
+  const events = () => {
+    const all = [...eraEvents(), ...catEvents()];
+    const R = D.get('map.group_radius') / m().z;
+    const clusters = [];
+    for (const e of all) {
+      let c = clusters.find((k) => Math.hypot(k.geo.lon - e.geo.lon, k.geo.lat - e.geo.lat) < R);
+      if (!c) { c = { id: 'cell:' + e.id, geo: e.geo }; clusters.push(c); }
+      if (!e.catalog) c.id = e.place;
+      e.cluster = c;
+    }
+    for (const e of all) e.place = e.cluster.id;
+    return all;
+  };
+  const info = (e) => {
+    if (!e.catalog) {
+      const ET = T.eras[e.id];
+      return { name: ET.name, short: ET.short, place: ET.place_name, who: ET.protagonist, tags: ET.tags };
+    }
+    const c = T.catalog[e.id];
+    return { name: c.name, short: c.figure, place: c.place, who: c.figure, tags: X.catalogTags(e.id) };
+  };
   const evText = (e) => {
-    const ET = T.eras[e.id];
-    return [ET.name, ET.short, ET.place_name, ET.protagonist, e.year, ...ET.tags.map((t) => T.tags[t])].join(' ').toLowerCase();
+    const i = info(e);
+    return [i.name, i.short, i.place, i.who, e.year, ...i.tags.map((t) => T.tags[t])].join(' ').toLowerCase();
   };
   const passes = (e) => {
     const s = m();
     if (e.year < s.from || e.year > s.to) return false;
-    if (s.tag && !T.eras[e.id].tags.includes(s.tag)) return false;
+    if (s.tag && !info(e).tags.includes(s.tag)) return false;
     const q = s.q.trim().toLowerCase();
     return !q || evText(e).includes(q);
   };
@@ -29,6 +53,7 @@ export function createWorldMap(X) {
     for (const e of filtered()) (out[e.place] = out[e.place] || { id: e.place, geo: e.geo, events: [] }).events.push(e);
     return out;
   };
+  const isSel = (e) => (e.catalog ? m().cat === e.id : !m().cat && st.form.eraId === e.id);
 
   const px = (lon) => lon - V().lon_min;
   const py = (lat) => V().lat_max - lat;
@@ -52,11 +77,11 @@ export function createWorldMap(X) {
     const shape = (poly, off) => `<polygon points="${poly.map(([lo, la]) => (px(lo) + off) + ',' + py(la)).join(' ')}"/>`;
     const land = D.get('world').map((poly) => shape(poly, 0) + (Math.min(...poly.map((q) => q[0])) < V().lon_min ? shape(poly, 360) : '')).join('');
     const pins = Object.values(places()).map((p) => {
-      const on = p.events.some((e) => e.id === st.form.eraId);
+      const on = p.events.some(isSel);
       const sel = m().place === p.id;
       const lock = p.events.every((e) => e.locked);
-      const name = T.eras[p.events[0].id].place_name;
-      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-6" y="-6" width="12" height="12"/><circle class="ring" r="5"/><circle class="dot" r="2.2"/><text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
+      const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
+      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="ring" r="5"/><circle class="dot" r="2.2"/><text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
     }).join('');
     return `<svg class="map ${labelsOn() ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${pins}</svg>`;
   }
@@ -70,15 +95,26 @@ export function createWorldMap(X) {
   }
   function axisHtml() {
     const s = m();
+    const A = D.get('map.axis');
     const Wd = 600, pad = 30, y0 = 36;
-    const span = s.to - s.from;
-    const x = (yr) => pad + ((yr - s.from) / span) * (Wd - 2 * pad);
-    const step = niceStep(span);
+    // recent years are spread out, the deep past is compressed: position follows the square root of the years before the end of the range
+    const L = (y) => Math.sqrt(Math.max(0, s.to - y));
+    const Lmax = L(s.from);
+    const x = (yr) => pad + (1 - L(yr) / Lmax) * (Wd - 2 * pad);
     let g = `<line class="ax" x1="${pad - 20}" x2="${Wd - pad + 20}" y1="${y0}" y2="${y0}"/>`;
-    for (let yr = Math.ceil(s.from / step) * step; yr <= s.to; yr += step) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - 4}" y2="${y0 + 4}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1)}</text>`;
+    let ticks = A.ticks.filter((t) => t >= s.from && t <= s.to);
+    if (ticks.length < A.min_ticks) {
+      const step = niceStep(s.to - s.from);
+      ticks = [];
+      for (let yr = Math.ceil(s.from / step) * step; yr <= s.to; yr += step) ticks.push(yr);
+    }
+    for (const yr of ticks) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - 4}" y2="${y0 + 4}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1)}</text>`;
     for (const e of filtered()) {
-      const on = st.form.eraId === e.id;
-      g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''}" data-act="mapevent" data-id="${e.id}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="-46" y="-28" width="92" height="44"/><circle class="ring" r="9"/><circle class="dot" r="4.5"/><text x="0" y="-14" text-anchor="middle">${fmtYear(D, e.year)} ${esc(T.eras[e.id].short)}${e.locked ? ' ' + U.dispatch.hidden_mark : ''}</text></g>`;
+      const i = info(e);
+      const on = isSel(e);
+      const tipText = `${fmtYear(D, e.year)} ${i.name}`;
+      const label = !e.catalog || on ? `<text x="0" y="-14" text-anchor="middle">${fmtYear(D, e.year)} ${esc(i.short)}${e.locked ? ' ' + U.dispatch.hidden_mark : ''}</text>` : '';
+      g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''} ${e.catalog ? 'cat' : ''}" data-act="mapevent" data-id="${e.id}" data-tip="${esc(tipText)}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="${e.catalog ? -4 : -46}" y="${e.catalog ? -8 : -28}" width="${e.catalog ? 8 : 92}" height="${e.catalog ? 16 : 44}"/><circle class="ring" r="${e.catalog ? 6 : 9}"/><circle class="dot" r="${e.catalog ? 2.6 : 4.5}"/>${label}</g>`;
     }
     return `<svg class="axis" viewBox="0 0 ${Wd} 70" role="img">${g}</svg>`;
   }
@@ -88,15 +124,15 @@ export function createWorldMap(X) {
     const p = s.place ? places()[s.place] : null;
     if (!p) return `<p class="muted">${M.pick_event}</p>`;
     return `<div class="muted">${M.events_here}</div>` + p.events.sort((a, b) => a.year - b.year).map((e) => {
-      const ET = T.eras[e.id];
-      return `<div class="evrow ${st.form.eraId === e.id ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(ET.name)}</span> ${ET.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
+      const i = info(e);
+      return `<div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${i.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.catalog ? ` <span class="chip">${U.dispatch.not_built_short}</span>` : ''}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
     }).join('');
   }
 
   function tagBar() {
     const present = new Set();
-    for (const e of events()) T.eras[e.id].tags.forEach((t) => present.add(t));
-    return `<div class="tagbar"><button class="chipbtn ${m().tag ? '' : 'on'}" data-act="maptag" data-id="">${M.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${m().tag === t ? 'on' : ''}" data-act="maptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div>`;
+    for (const e of events()) info(e).tags.forEach((t) => present.add(t));
+    return `<details class="tagfold" ${m().tagOpen ? 'open' : ''}><summary>${M.tag_filter}${m().tag ? U.fmt.colon + esc(T.tags[m().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${m().tag ? '' : 'on'}" data-act="maptag" data-id="">${M.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${m().tag === t ? 'on' : ''}" data-act="maptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
   }
 
   function html() {
@@ -104,7 +140,7 @@ export function createWorldMap(X) {
     return `
       <div class="row" style="margin-bottom:6px"><input id="map-q" type="search" placeholder="${M.events_filter_ph}" value="${esc(s.q)}" style="flex:1;min-width:200px">
         <span class="muted">${M.from}</span><input id="map-from" type="number" value="${s.from}" style="width:80px"><span class="muted" id="map-fromtxt">${fmtYear(D, s.from === 0 ? 1 : s.from)}</span><span class="muted">${M.to}</span><input id="map-to" type="number" value="${s.to}" style="width:80px"><span class="muted" id="map-totxt">${fmtYear(D, s.to === 0 ? 1 : s.to)}</span></div>
-      ${tagBar()}
+      <div id="map-tags">${tagBar()}</div>
       <div class="mapwrap"><div id="map-svg">${svgHtml()}</div><div class="zoombtns"><button data-act="mapz" data-id="in" title="${M.zoom_in}">+</button><button data-act="mapz" data-id="out" title="${M.zoom_out}">−</button><button data-act="mapz" data-id="reset" title="${M.zoom_reset}">⌂</button></div></div>
       <div class="muted">${M.drag_hint}</div>
       <div id="map-axis">${axisHtml()}</div>
@@ -116,6 +152,17 @@ export function createWorldMap(X) {
     const a = document.getElementById('map-svg'); if (a) a.innerHTML = svgHtml();
     const b = document.getElementById('map-axis'); if (b) b.innerHTML = axisHtml();
     const c = document.getElementById('map-events'); if (c) c.innerHTML = eventRows();
+  }
+  function refreshPins() {
+    const a = document.getElementById('map-svg');
+    if (!a) return;
+    const svg = a.querySelector('svg.map');
+    if (!svg) return;
+    // swap only the pins and the land stay, so a wheel zoom keeps its pointer
+    svg.querySelectorAll('g.pt').forEach((g) => g.remove());
+    const tmp = document.createElement('div');
+    tmp.innerHTML = svgHtml();
+    tmp.querySelectorAll('svg.map > g.pt').forEach((g) => svg.appendChild(g));
   }
   function applyView() {
     const svg = document.querySelector('svg.map');
@@ -138,6 +185,7 @@ export function createWorldMap(X) {
     const v2 = view();
     s.cx = v2.x0 + v2.w / 2; s.cy = v2.y0 + v2.h / 2;
     applyView();
+    refreshPins();
   }
 
   function attach(root) {
@@ -175,7 +223,7 @@ export function createWorldMap(X) {
   function act(a, id) {
     const s = m();
     if (a === 'mapz') {
-      if (id === 'reset') { s.z = 1; s.cx = W() / 2; s.cy = H() / 2; applyView(); }
+      if (id === 'reset') { s.z = 1; s.cx = W() / 2; s.cy = H() / 2; applyView(); refreshPins(); }
       else zoomAt(id === 'in' ? D.get('map.zoom.step') ** 2 : 1 / D.get('map.zoom.step') ** 2, 0.5, 0.5);
       return false;
     }
@@ -183,11 +231,16 @@ export function createWorldMap(X) {
     if (a === 'mapplace') {
       s.place = id;
       const p = places()[id];
-      if (p && p.events.length === 1) X.selectEra(p.events[0].id);
-      else if (p && !p.events.some((e) => e.id === st.form.eraId)) { /* keep the form until an event is picked */ }
+      if (p && p.events.length === 1) { const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } }
       return true;
     }
-    if (a === 'mapevent') { X.selectEra(id); s.place = ctx.era(id).raw.metadata.era.place; return true; }
+    if (a === 'mapevent') {
+      const e = events().find((x) => x.id === id);
+      if (!e) return false;
+      if (e.catalog) s.cat = id; else { s.cat = null; X.selectEra(id); }
+      s.place = e.place;
+      return true;
+    }
     if (a === 'maptag') { s.tag = id; return true; }
     return false;
   }
@@ -205,7 +258,7 @@ export function createWorldMap(X) {
 
   function init() {
     const A = D.get('map.axis');
-    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', from: A.from, to: A.to, place: null, drag: null, justDragged: false };
+    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, from: A.from, to: A.to, place: null, drag: null, justDragged: false };
   }
   return { html, act, onInput, attach, init };
 }

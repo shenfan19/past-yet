@@ -46,6 +46,13 @@ export function kitText(D, items, eraId) {
   }).join(D.get('text.ui.fmt.sep'));
 }
 
+// Gender, age and job of an employee as one line, in the current language.
+export function staffProfile(D, id) {
+  const st = D.get('staff.staff.' + id);
+  const U = D.get('text.ui');
+  return [U.gender[st.gender], U.fmt.age.replace('{n}', String(st.age)), D.get('text.staff.' + id + '.job')].join(' · ');
+}
+
 export function staffName(D, id) { return D.get(`text.staff.${id}.name`); }
 export function staffTraits(D, id) { return D.get(`staff.staff.${id}.traits`); }
 

@@ -11,7 +11,7 @@ export class Data {
   }
 }
 
-const FILES = ['config', 'items', 'staff', 'map', 'antiques', 'shops', 'mainline', 'encyclopedia'];
+const FILES = ['config', 'items', 'staff', 'map', 'antiques', 'shops', 'mainline', 'encyclopedia', 'catalog'];
 // Language files: the key under which the merged text lives, and the file name stem in data/i18n.
 const LOCALE_KINDS = { text: 'text', enc_text: 'encyclopedia' };
 
@@ -38,6 +38,16 @@ export async function loadData(readText, parse, pickLang) {
   for (const [key, stem] of Object.entries(LOCALE_KINDS)) {
     const base = await loadLocale(stem, I.fallback);
     o[key] = lang === I.fallback ? base : merge(base, await loadLocale(stem, lang));
+  }
+  // every catalogue event has a relic, which is an antique: it points at the event and sells for money
+  const C = o.catalog;
+  const period = (y) => C.periods.find((p) => y < p.until).id;
+  for (const e of C.events) {
+    const id = 'relic_' + e.id;
+    const price = C.price[e.tier];
+    o.antiques.antiques[id] = { era: null, event: e.id, kind: 'key', price, sell: Math.floor(price * C.sell_ratio), start_owned: false, playable: true, tags: [e.field, e.region, period(e.year)] };
+    const t = o.text.catalog[e.id];
+    o.text.antiques[id] = { name: t.relic, desc: t.relic_desc };
   }
   o.world = JSON.parse(await readText('data/world_land.json'));
   o.era_raw = {};

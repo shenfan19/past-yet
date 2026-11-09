@@ -16,9 +16,30 @@ traits:
   studious: {mods: {skill: 0.2}, policy: {focus: prevent}, priority: 2, secretary: {energy_mult: 0.05}, prefer: lives}
   sturdy: {mods: {stamina: 0.25}, priority: 0, secretary: {rest_cut: 0.3}, prefer: safety}
   glib: {mods: {eloquence: 0.3}, policy: {focus: ally, on_block: appeal}, priority: 1, secretary: {funds_mult: 0.05}, prefer: funds}
+  patient: {mods: {stamina: 0.15, homesick_trait: -0.1}, policy: {on_block: yield}, priority: 1, secretary: {favor_gain: 0.2}, prefer: safety}
+  bold: {mods: {stubbornness: 0.2, stamina: 0.1}, policy: {on_block: insist}, priority: 1, secretary: {energy_mult: 0.05}, prefer: energy}
+  meticulous: {mods: {skill: 0.25}, policy: {focus: prevent}, priority: 1, secretary: {energy_mult: 0.05}, prefer: lives}
+  artistic: {mods: {curiosity: 0.2, eloquence: 0.1}, policy: {focus: ally}, priority: 1, secretary: {favor_gain: 0.2}, prefer: energy}
+  wise: {mods: {skill: 0.1, eloquence: 0.2, kindness: 0.1}, policy: {focus: ally, on_block: appeal}, priority: 2, secretary: {favor_gain: 0.3}, prefer: lives}
   greedy: {mods: {greed: 0.6, kindness: -0.1}, policy: {on_block: insist}, priority: 3, secretary: {funds_mult: 0.15, favor_gain: -0.2}, prefer: funds}
 staff:
-  s_ning: {base: {skill: 0.45, eloquence: 0.45}, traits: [kind, stubborn], start_hired: true}
-  s_zhou: {base: {stamina: 1.1, skill: 0.5}, traits: [sturdy, glib], start_hired: true}
-  s_lin: {base: {stamina: 0.9, skill: 0.55}, traits: [curious, homesick, studious], start_hired: true}
-  s_qian: {base: {skill: 0.4}, traits: [greedy, glib], start_hired: false}
+  s_ning: {gender: f, age: 31, base: {skill: 0.45, eloquence: 0.45}, traits: [kind, stubborn], start_hired: true}
+  s_zhou: {gender: m, age: 45, base: {stamina: 1.1, skill: 0.5}, traits: [sturdy, glib], start_hired: true}
+  s_lin: {gender: f, age: 24, base: {stamina: 0.9, skill: 0.55}, traits: [curious, homesick, studious], start_hired: true}
+  s_qian: {gender: m, age: 52, base: {skill: 0.4}, traits: [greedy, glib], start_hired: false}
+  s_amara: {gender: f, age: 38, base: {skill: 0.55}, traits: [kind, patient], start_hired: false}
+  s_kenji: {gender: m, age: 29, base: {eloquence: 0.3}, traits: [studious, meticulous], start_hired: false}
+  s_isabella: {gender: f, age: 67, base: {stamina: 0.75, eloquence: 0.5}, traits: [wise, patient], start_hired: false}
+  s_tariq: {gender: m, age: 41, base: {stamina: 1.1}, traits: [bold, glib], start_hired: false}
+  s_meiling: {gender: f, age: 19, base: {stamina: 1.15, skill: 0.3}, traits: [artistic, curious], start_hired: false}
+  s_lars: {gender: m, age: 58, base: {stamina: 1.05, skill: 0.5}, traits: [sturdy, stubborn], start_hired: false}
+  s_priya: {gender: f, age: 34, base: {skill: 0.6}, traits: [meticulous, studious], start_hired: false}
+  s_diego: {gender: m, age: 22, base: {stamina: 1.1}, traits: [glib, homesick], start_hired: false}
+  s_olga: {gender: f, age: 72, base: {stamina: 0.7, skill: 0.7}, traits: [stubborn, wise], start_hired: false}
+  s_samuel: {gender: m, age: 27, base: {}, traits: [curious, glib], start_hired: false}
+  s_minji: {gender: f, age: 45, base: {stamina: 1.05}, traits: [sturdy, kind], start_hired: false}
+  s_jeanluc: {gender: m, age: 63, base: {stamina: 0.85}, traits: [bold, stubborn], start_hired: false}
+  s_fatima: {gender: f, age: 50, base: {}, traits: [meticulous, wise], start_hired: false}
+  s_tom: {gender: m, age: 18, base: {stamina: 1.15}, traits: [curious, homesick], start_hired: false}
+  s_wanjiru: {gender: f, age: 28, base: {skill: 0.5}, traits: [curious, patient], start_hired: false}
+  s_ricardo: {gender: m, age: 76, base: {stamina: 0.8}, traits: [patient, sturdy], start_hired: false}

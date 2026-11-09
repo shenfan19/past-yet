@@ -47,12 +47,13 @@ try {
   await page.fill('#map-from', '-500');
   ok('negative year shows with a prefix', (await page.locator('#map-fromtxt').innerText()) === '前500');
   await page.fill('#map-from', '1840');
+  await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 12; m.cx = 179.86; m.cy = 32.5; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   await page.click('.evrow[data-id=broad_street_1854]');
   await page.fill('#map-q', 'xyz-no-match');
   ok('filter hides all pins', (await page.locator('svg.map .pt').count()) === 0);
   await page.fill('#map-q', '');
-  ok('filter restore pins', (await page.locator('svg.map .pt').count()) === 2);
+  ok('filter restore pins', (await page.locator('svg.map .pt').count()) > 2);
   await page.click('[data-act=suggest]');
   await page.waitForSelector('[data-act=use]', { timeout: 60000 });
   await page.locator('[data-act=use]').last().click();
@@ -100,7 +101,9 @@ try {
   await page.click('[data-act=antbuy][data-id=clinic_bell]');
   // second place
   await page.click('[data-tab=dispatch]');
+  await page.click('[data-act=mapz][data-id=reset]');
   await page.click('.map [data-id=vienna_general_hospital] .hit', { force: true });
+  await page.click('.evrow[data-id=vienna_1847]');
   await page.screenshot({ path: path.join(outDir, '7_dispatch_vienna.png'), fullPage: true });
   ok('vienna sendable after buying its antique', !(await page.locator('[data-act=send]').isDisabled()));
   // wiki
@@ -168,6 +171,20 @@ try {
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
   await page.click('[data-tab=dispatch]');
   ok('guest map shows only unlocked places', (await page.locator('svg.map .pt').count()) === 2);
+  // a catalogue relic reveals its event on the map and in the wiki, but nobody can be sent there
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 5000; window.__game.ctx.save(); });
+  await page.click('[data-tab=shop]');
+  await page.click('[data-act=antbuy][data-id=relic_newton_cambridge]');
+  await page.click('[data-tab=dispatch]');
+  await page.waitForSelector('svg.map');
+  await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 1; m.cx = 180; m.cy = 71; window.__game.ui.render(); });
+  await page.click('.map [data-id=london_soho] .hit', { force: true });
+  ok('a relic puts its event in the list of its place', (await page.locator('.evrow[data-id=newton_cambridge]').count()) === 1);
+  await page.click('.evrow[data-id=newton_cambridge]');
+  ok('catalogue event shows its card and cannot be dispatched', (await page.locator('.lbox').filter({ hasText: '牛顿' }).count()) >= 1 && await page.locator('[data-act=send]').isDisabled());
+  await page.click('[data-tab=enc]');
+  await page.fill('#wiki-q', '苹果');
+  ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
   await page.click('[data-tab=shop]');
   ok('guest future shop is a locked card', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 0);
   // English, language switch and fallback

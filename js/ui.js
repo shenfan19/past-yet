@@ -1,5 +1,5 @@
 import * as sim from './sim.js';
-import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence } from './narrate.js';
+import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile } from './narrate.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
@@ -50,6 +50,7 @@ export function createUI(D, ctx) {
   const owns = (id) => ctx.S().antiques.includes(id);
   const anchorOf = (eraId) => Object.keys(antiqueDefs()).find((id) => antiqueDefs()[id].era === eraId);
   const eraOpen = (eraId) => owns(anchorOf(eraId));
+  const catalogTags = (id) => D.get('antiques.antiques.relic_' + id + '.tags');
   const visibleEras = () => eraList().filter((id) => DEV || eraOpen(id));
   const hiredIds = () => Object.keys(D.get('staff.staff')).filter((id) => ctx.S().staff[id].hired);
   function isUnlocked(rule) {
@@ -91,7 +92,7 @@ export function createUI(D, ctx) {
   function staffTip(id) {
     const stats = sim.staffStats(D, id);
     const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
-    return [T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
+    return [staffProfile(D, id), T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
   }
   const staffLink = (id) => wl('staff:' + id, staffName(D, id), staffTip(id));
   const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
@@ -99,7 +100,7 @@ export function createUI(D, ctx) {
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId }; st.suggest = null; }
   }
-  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip, anchorOf };
+  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip, anchorOf, owns, catalogTags };
   const office = createOffice(X);
   const clockEl = document.getElementById('clock');
   X.listbox = createListbox(X);
@@ -248,6 +249,20 @@ export function createUI(D, ctx) {
       <div class="sec">${U.dispatch.records_here}</div><table><tbody>${rows}</tbody></table></div></div>`;
   }
 
+  function catalogCard(id) {
+    const c = T.catalog[id];
+    const ev = D.get('catalog.events').find((x) => x.id === id);
+    const relicId = 'relic_' + id;
+    const own = owns(relicId);
+    const tags = catalogTags(id).map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('');
+    return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:220px">
+      <div class="row sp"><h3>${esc(c.name)}${own ? '' : ' ' + hiddenChip()}</h3><span class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</span></div>
+      <div>${tags}<span class="chip warn">${U.dispatch.not_built_short}</span></div>
+      <p>${esc(c.story)}</p><div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
+      <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
+      <p class="muted" style="margin-top:8px">${U.dispatch.not_built}</p></div></div>`;
+  }
+
   function dispatchHtml() {
     if (!visibleEras().includes(st.form.eraId)) st.form = { ...newForm(visibleEras()[0]), staffId: st.form.staffId };
     if (!hiredIds().includes(st.form.staffId)) st.form.staffId = hiredIds()[0];
@@ -307,12 +322,12 @@ export function createUI(D, ctx) {
           st.suggest.front.map((c, i) => `<tr style="${c === rec ? 'background:var(--paper2);font-weight:600' : ''}"><td class="num">${r1(c.lives)}</td><td class="num">${ri(c.cost)}</td><td>${esc(kitText(D, c.items, e.id) || '—')}</td><td><button data-act="use" data-i="${i}">${U.dispatch.use}</button></td></tr>`).join('') + '</tbody></table></div>';
       }
     }
-    const msg = !eraOpen(e.id) ? U.dispatch.no_anchor : overW ? U.dispatch.over_weight : stState !== 'ready' ? U.dispatch.busy : '';
+    const msg = st.map.cat ? U.dispatch.not_built : !eraOpen(e.id) ? U.dispatch.no_anchor : overW ? U.dispatch.over_weight : stState !== 'ready' ? U.dispatch.busy : '';
     const seedRow = DEV ? `<div class="sec">${U.dispatch.seed}</div><div class="row"><input id="seed" type="number" value="${f.seed}" style="width:120px"><span class="muted">${U.dispatch.seed_hint}</span></div>` : '';
     return `
       <div class="sec">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
       ${worldMap.html()}
-      <div style="margin-top:10px">${placeFile(e.id)}</div>
+      <div style="margin-top:10px">${st.map.cat ? catalogCard(st.map.cat) : placeFile(e.id)}</div>
       <div class="grid2" style="margin-top:12px">
         <div><div class="sec" style="margin-top:0">${U.dispatch.staff}</div>${staffBox}</div>
         <div><div class="sec" style="margin-top:0">${U.dispatch.items}</div>${carryBox}</div>
@@ -541,6 +556,7 @@ export function createUI(D, ctx) {
     if (!t.matches) return;
     if (t.matches('details.wcat')) st.wiki.openCats[t.dataset.cat] = t.open;
     else if (t.matches('#wiki-tags details.tagfold')) st.wiki.tagOpen = t.open;
+    else if (t.matches('#map-tags details.tagfold')) st.map.tagOpen = t.open;
   }, true);
   const tipEl = document.createElement('div');
   tipEl.id = 'tip';
