@@ -1,5 +1,7 @@
 // World map with zoom and pan. A pin is a place, a place holds events at different times.
 // The filter row and the time axis narrow the events, so a crowded map stays readable. Real coastlines: Natural Earth, public domain.
+import { fmtYear } from './narrate.js';
+
 export function createWorldMap(X) {
   const { D, ctx, T, U, DEV, esc, st } = X;
   const M = U.map;
@@ -73,10 +75,10 @@ export function createWorldMap(X) {
     const x = (yr) => pad + ((yr - s.from) / span) * (Wd - 2 * pad);
     const step = niceStep(span);
     let g = `<line class="ax" x1="${pad - 20}" x2="${Wd - pad + 20}" y1="${y0}" y2="${y0}"/>`;
-    for (let yr = Math.ceil(s.from / step) * step; yr <= s.to; yr += step) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - 4}" y2="${y0 + 4}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${yr}</text>`;
+    for (let yr = Math.ceil(s.from / step) * step; yr <= s.to; yr += step) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - 4}" y2="${y0 + 4}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1)}</text>`;
     for (const e of filtered()) {
       const on = st.form.eraId === e.id;
-      g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''}" data-act="mapevent" data-id="${e.id}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="-46" y="-28" width="92" height="44"/><circle class="ring" r="9"/><circle class="dot" r="4.5"/><text x="0" y="-14" text-anchor="middle">${e.year} ${esc(T.eras[e.id].short)}${e.locked ? ' ' + U.dispatch.hidden_mark : ''}</text></g>`;
+      g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''}" data-act="mapevent" data-id="${e.id}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="-46" y="-28" width="92" height="44"/><circle class="ring" r="9"/><circle class="dot" r="4.5"/><text x="0" y="-14" text-anchor="middle">${fmtYear(D, e.year)} ${esc(T.eras[e.id].short)}${e.locked ? ' ' + U.dispatch.hidden_mark : ''}</text></g>`;
     }
     return `<svg class="axis" viewBox="0 0 ${Wd} 70" role="img">${g}</svg>`;
   }
@@ -87,7 +89,7 @@ export function createWorldMap(X) {
     if (!p) return `<p class="muted">${M.pick_event}</p>`;
     return `<div class="muted">${M.events_here}</div>` + p.events.sort((a, b) => a.year - b.year).map((e) => {
       const ET = T.eras[e.id];
-      return `<div class="evrow ${st.form.eraId === e.id ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${e.year}</b> <span>${esc(ET.name)}</span> ${ET.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
+      return `<div class="evrow ${st.form.eraId === e.id ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(ET.name)}</span> ${ET.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
     }).join('');
   }
 
@@ -101,7 +103,7 @@ export function createWorldMap(X) {
     const s = m();
     return `
       <div class="row" style="margin-bottom:6px"><input id="map-q" type="search" placeholder="${M.events_filter_ph}" value="${esc(s.q)}" style="flex:1;min-width:200px">
-        <span class="muted">${M.from}</span><input id="map-from" type="number" value="${s.from}" style="width:80px"><span class="muted">${M.to}</span><input id="map-to" type="number" value="${s.to}" style="width:80px"></div>
+        <span class="muted">${M.from}</span><input id="map-from" type="number" value="${s.from}" style="width:80px"><span class="muted" id="map-fromtxt">${fmtYear(D, s.from === 0 ? 1 : s.from)}</span><span class="muted">${M.to}</span><input id="map-to" type="number" value="${s.to}" style="width:80px"><span class="muted" id="map-totxt">${fmtYear(D, s.to === 0 ? 1 : s.to)}</span></div>
       ${tagBar()}
       <div class="mapwrap"><div id="map-svg">${svgHtml()}</div><div class="zoombtns"><button data-act="mapz" data-id="in" title="${M.zoom_in}">+</button><button data-act="mapz" data-id="out" title="${M.zoom_out}">−</button><button data-act="mapz" data-id="reset" title="${M.zoom_reset}">⌂</button></div></div>
       <div class="muted">${M.drag_hint}</div>
@@ -195,6 +197,8 @@ export function createWorldMap(X) {
     else if (el.id === 'map-from') { const v = Number(el.value); if (Number.isFinite(v) && v < s.to) s.from = v; }
     else if (el.id === 'map-to') { const v = Number(el.value); if (Number.isFinite(v) && v > s.from) s.to = v; }
     else return false;
+    const ft = document.getElementById('map-fromtxt'); if (ft) ft.textContent = fmtYear(D, s.from === 0 ? 1 : s.from);
+    const tt = document.getElementById('map-totxt'); if (tt) tt.textContent = fmtYear(D, s.to === 0 ? 1 : s.to);
     refreshParts();
     return true;
   }

@@ -126,3 +126,11 @@ export function diffRows(D, eraId, A, B) {
   if (sa.staffId !== sb.staffId) rows.push({ k: T.ui.dispatch.staff, a: staffName(D, sa.staffId), b: staffName(D, sb.staffId) });
   return rows;
 }
+
+// Years are stored as signed integers. Shown with a short Chinese prefix: negative years as 前 N, years before the cut off as 公元 N, later years plain.
+export function fmtYear(D, y) {
+  const C = D.get('text_zh.ui.cal');
+  if (y === 0) throw new Error('没有 0 年');
+  if (y < 0) return C.bc + (-y);
+  return y < D.get('map.calendar.ad_prefix_below') ? C.ad + y : String(y);
+}

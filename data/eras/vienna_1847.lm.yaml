@@ -160,8 +160,9 @@ variables:
   trust_gain_teach: {type: parameter, value: 0.05, source: game_assumption}
   trust_loss_block: {type: parameter, value: 0.03, source: game_assumption}
   block_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
-  pocket_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption, note: "Pocketing rate per day at greed 1."}
-  pocket_trust_loss: {type: parameter, value: 0.15, source: game_assumption}
+  pocket_base: {type: parameter, value: 0.8, unit: "1/day", source: game_assumption, note: "Pocketing rate per day at greed 1."}
+  pocket_trust_loss: {type: parameter, value: 0.3, source: game_assumption}
+  pocket_rapport_loss: {type: parameter, value: 0.15, source: game_assumption, note: "Rapport the protagonist loses when the employee is caught pocketing."}
   prestige: {type: parameter, value: 0.8, source: historical, note: "A junior outsider telling senior doctors to wash is not welcome."}
   loss_insist: {type: parameter, value: 4, unit: unit, source: game_assumption}
   loss_yield: {type: parameter, value: 0, unit: unit, source: game_assumption}
@@ -379,6 +380,7 @@ events:
     effects:
       traveler.trust: "traveler.trust - pocket_trust_loss"
       traveler.loot_count: "traveler.loot_count + 1"
+      semmelweis.rapport: "max(0, semmelweis.rapport - pocket_rapport_loss)"
 
 milestones:
   first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}

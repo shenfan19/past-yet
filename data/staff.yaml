@@ -1,17 +1,20 @@
 # Employees. Final stats = base + the sum of trait modifiers.
 stats: [stamina, skill, eloquence, kindness, stubbornness, curiosity, homesick_trait, greed]
 default_base: {stamina: 1.0, skill: 0.4, eloquence: 0.4, kindness: 0.2, stubbornness: 0.2, curiosity: 0.2, homesick_trait: 0.2, greed: 0}
+# A trait carries stat modifiers and, optionally, a behaviour policy for the field. Where several traits set the same policy group,
+# the one with the higher priority wins, then the one listed first. Groups no trait sets fall back to default_habit.
+default_habit: {focus: balanced, on_block: yield}
 traits:
-  kind: {kindness: 0.4}
-  stubborn: {stubbornness: 0.5, eloquence: -0.1}
-  curious: {curiosity: 0.4}
-  homesick: {homesick_trait: 0.5}
-  studious: {skill: 0.2}
-  sturdy: {stamina: 0.25}
-  glib: {eloquence: 0.3}
-  greedy: {greed: 0.6, kindness: -0.1}
+  kind: {mods: {kindness: 0.4}, policy: {focus: cure}, priority: 1}
+  stubborn: {mods: {stubbornness: 0.5, eloquence: -0.1}, policy: {on_block: insist}, priority: 2}
+  curious: {mods: {curiosity: 0.4}, policy: {focus: ally}, priority: 1}
+  homesick: {mods: {homesick_trait: 0.5}, policy: {on_block: yield}, priority: 1}
+  studious: {mods: {skill: 0.2}, policy: {focus: prevent}, priority: 2}
+  sturdy: {mods: {stamina: 0.25}, priority: 0}
+  glib: {mods: {eloquence: 0.3}, policy: {focus: ally, on_block: appeal}, priority: 1}
+  greedy: {mods: {greed: 0.6, kindness: -0.1}, policy: {on_block: insist}, priority: 3}
 staff:
-  s_ning: {base: {skill: 0.45, eloquence: 0.45}, traits: [kind, stubborn], habit: {focus: cure, on_block: insist}, start_hired: true}
-  s_zhou: {base: {stamina: 1.1, skill: 0.5}, traits: [sturdy, glib], habit: {focus: ally, on_block: appeal}, start_hired: true}
-  s_lin: {base: {stamina: 0.9, skill: 0.55}, traits: [curious, homesick, studious], habit: {focus: prevent, on_block: yield}, start_hired: true}
-  s_qian: {base: {skill: 0.4, eloquence: 0.5}, traits: [greedy, glib], habit: {focus: balanced, on_block: insist}, start_hired: false}
+  s_ning: {base: {skill: 0.45, eloquence: 0.45}, traits: [kind, stubborn], start_hired: true}
+  s_zhou: {base: {stamina: 1.1, skill: 0.5}, traits: [sturdy, glib], start_hired: true}
+  s_lin: {base: {stamina: 0.9, skill: 0.55}, traits: [curious, homesick, studious], start_hired: true}
+  s_qian: {base: {skill: 0.4}, traits: [greedy, glib], start_hired: false}

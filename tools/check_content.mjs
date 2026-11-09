@@ -27,7 +27,7 @@ for (const id of D.get('config.eras')) {
         n++;
       }
     }
-    const h = D.get('staff.staff.' + staffId + '.habit');
+    const h = sim.staffHabit(D, staffId);
     stratText(D, id, 'focus', h.focus);
     stratText(D, id, 'on_block', h.on_block);
   }

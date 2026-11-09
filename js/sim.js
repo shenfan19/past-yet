@@ -131,9 +131,22 @@ export function compileEra(raw, D, id) {
 export function staffStats(D, staffId) {
   const base = { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
   for (const t of D.get('staff.staff.' + staffId + '.traits')) {
-    for (const [k, dv] of Object.entries(D.get('staff.traits.' + t))) base[k] += dv;
+    for (const [k, dv] of Object.entries(D.get('staff.traits.' + t + '.mods'))) base[k] += dv;
   }
   return base;
+}
+
+// The field behaviour an employee brings, derived from the policies of their traits.
+export function staffHabit(D, staffId) {
+  const out = { ...D.get('staff.default_habit') };
+  const best = {};
+  for (const t of D.get('staff.staff.' + staffId + '.traits')) {
+    const tr = D.get('staff.traits.' + t);
+    for (const [grp, key] of Object.entries(tr.policy || {})) {
+      if (!(grp in best) || tr.priority > best[grp]) { best[grp] = tr.priority; out[grp] = key; }
+    }
+  }
+  return out;
 }
 
 export function itemTotals(D, items) {
@@ -145,7 +158,7 @@ export function itemTotals(D, items) {
   return { cost, weight };
 }
 
-// spec: { seed, staffId, items:{id:n} }. Focus and on_block come from the staff habit.
+// spec: { seed, staffId, items:{id:n} }. Focus and on_block come from the staff traits.
 export function validateSpec(E, D, spec, stock) {
   const t = itemTotals(D, spec.items);
   const cap = D.get('config.office.weight_capacity');
@@ -166,7 +179,7 @@ function initVars(E, D, spec, withTraveler) {
     if (!o) throw new Error('未知策略 ' + grp + '.' + key);
     Object.assign(v, o);
   };
-  const habit = D.get('staff.staff.' + spec.staffId + '.habit');
+  const habit = staffHabit(D, spec.staffId);
   apply('focus', habit.focus);
   apply('on_block', habit.on_block);
   v.day = 0; v.step = E.step; v.arrived = 0;

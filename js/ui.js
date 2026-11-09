@@ -3,6 +3,7 @@ import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, strat
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
+import { createListbox } from './listbox.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const r1 = (x) => (Math.round(x * 10) / 10).toString();
@@ -19,7 +20,7 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? D.get('config.ui.dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, back: 'office', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {} }, map: null };
+  const st = { tab: 'home', sub: null, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   const eraList = () => D.get('config.eras');
   const E = () => ctx.era(st.form.eraId);
@@ -62,16 +63,28 @@ export function createUI(D, ctx) {
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const tagLabel = (tag) => U.report[tag];
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
-  const habitOf = (id) => D.get('staff.staff.' + id + '.habit');
-  const habitText = (id, eraId) => {
-    const h = habitOf(id);
-    return `${stratText(D, eraId, 'focus', h.focus).name} · ${U.dispatch.on_block}${stratText(D, eraId, 'on_block', h.on_block).name}`;
-  };
-  const recordRow = (d, withStaff) => `<tr><td>${esc(withStaff ? staffName(D, d.spec.staffId) : T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`;
+  const tip = (text) => ` data-tip="${esc(text)}"`;
+  const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
+  function traitTip(t) {
+    const tr = D.get('staff.traits.' + t);
+    const mods = Object.entries(tr.mods).map(([k, v]) => `${T.stats[k]} ${v > 0 ? '+' : ''}${v}`).join('、');
+    const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}：${T.strategies[grp][key].name}`).join('；');
+    return [T.traits[t], mods, pol].filter(Boolean).join('\n');
+  }
+  function staffTip(id) {
+    const stats = sim.staffStats(D, id);
+    const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
+    return [T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join('、'), mini].join('\n');
+  }
+  const staffLink = (id) => wl('staff:' + id, staffName(D, id), staffTip(id));
+  const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
+  const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`;
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId }; st.suggest = null; }
   }
-  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, habitText, isUnlocked, visibleEras, eraOpen, selectEra };
+  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip };
+  X.listbox = createListbox(X);
+  const listbox = X.listbox;
   const wiki = createWiki(X);
   const shop = createShop(X);
   const worldMap = createWorldMap(X);
@@ -89,34 +102,37 @@ export function createUI(D, ctx) {
     const S = ctx.S();
     const now = ctx.now();
     const pct = Math.min(100, (S.energy / O.home_cost) * 100);
-    const staffCards = hiredIds().map((id) => {
-      const state = staffState(id);
-      const stats = sim.staffStats(D, id);
-      const traits = staffTraits(D, id).map((t) => `<span class="chip">${esc(T.traits[t])}</span>`).join('');
-      const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
-      const label = { ready: U.office.ready, away: U.office.away, resting: U.office.resting }[state];
-      const hist = reports().filter((d) => d.spec.staffId === id).slice(0, 3).map((d) => recordRow(d, false)).join('');
-      return `<div class="card"><div class="row sp"><h3>${esc(staffName(D, id))}</h3><span class="chip ${state === 'ready' ? '' : 'warn'}">${label}</span></div>
-        <div>${traits}</div><p class="muted">${esc(T.staff[id].bio)}</p><div class="muted" style="font-size:12px">${mini}</div>
-        <div class="muted" style="margin-top:4px">${U.office.habit}：${esc(habitText(id, eraList()[0]))}</div>
-        <div class="muted" style="margin-top:6px">${U.office.history}</div>${hist ? `<table><tbody>${hist}</tbody></table>` : `<div class="muted">${U.office.no_history}</div>`}</div>`;
-    }).join('');
-    const recruits = Object.keys(D.get('staff.staff')).filter((id) => !S.staff[id].hired).map((id) => `<div class="card locked"><div class="row sp"><h3>${U.office.unknown_candidate}</h3><button data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} · ${U.office.cost} ${O.hire_cost}</button></div><p class="muted">${U.office.recruit_hint}</p>${DEV ? `<div>${hiddenChip()} ${esc(staffName(D, id))}</div>` : ''}</div>`).join('');
+    const stateLabel = { ready: U.office.ready, away: U.office.away, resting: U.office.resting };
+    const staffRows = Object.keys(D.get('staff.staff')).map((id) => {
+      const hired = S.staff[id].hired;
+      const mine = reports().filter((d) => d.spec.staffId === id);
+      return { id, hired, name: hired ? staffName(D, id) : U.office.unknown_candidate, state: hired ? staffState(id) : 'recruit', last: mine[0], count: mine.length, cls: hired ? '' : 'dim' };
+    });
+    const staffBox = listbox.html({
+      id: 'home_staff', rows: staffRows, maxH: 260,
+      cols: [
+        { k: 'name', label: U.office.col_staff, w: '24%', val: (r) => r.name, cell: (r) => (r.hired ? staffLink(r.id) : `${r.name}${DEV ? ' ' + hiddenChip() + ' ' + esc(staffName(D, r.id)) : ''}`) },
+        { k: 'traits', label: U.office.col_traits, w: '34%', cell: (r) => (r.hired ? staffTraits(D, r.id).map(traitChip).join('') : `<span class="muted">${U.office.recruit_hint_short}</span>`) },
+        { k: 'state', label: U.office.col_state, w: '14%', val: (r) => r.state, cell: (r) => (r.hired ? `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel[r.state]}</span>` : `<span class="chip warn">${U.office.recruit}</span>`) },
+        { k: 'count', label: U.office.col_history, w: '16%', val: (r) => r.count, cell: (r) => (r.last ? `${r.count} · <button class="ghost" data-act="open" data-id="${r.last.id}">${esc(r.last.report.outcomeName)} ›</button>` : (r.hired ? `<span class="muted">${U.office.no_history}</span>` : '')) },
+        { k: 'act', label: '', w: '12%', cls: 'num', cell: (r) => (r.hired ? '' : `<button data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>`) },
+      ],
+    });
     const open = S.dispatches.filter((d) => !d.claimed);
     const openHtml = open.length ? open.map((d) => {
       const left = Math.max(0, Math.ceil((d.revealAt - now) / 1000));
       const ready = left === 0;
-      return `<div class="card row sp"><div><b>${esc(staffName(D, d.spec.staffId))}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + left + 's'}</div></div>
+      return `<div class="card row sp"><div><b>${staffLink(d.spec.staffId)}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + left + 's'}</div></div>
         <div class="row">${ready ? `<button class="primary" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>`}</div></div>`;
     }).join('') : `<p class="muted">${U.office.nothing}</p>`;
-    const done = reports().slice(0, 8).map((d) => `<tr><td>${esc(staffName(D, d.spec.staffId))}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
+    const done = reports().slice(0, 8).map((d) => `<tr><td>${staffLink(d.spec.staffId)}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
     return `
       <div class="grid2">
         <div class="card"><div class="muted">${U.office.funds}</div><div class="stat">${ri(S.funds)}</div></div>
         <div class="card"><div class="muted">${U.office.energy}</div><div class="stat">${ri(S.energy)} <span class="muted" style="font-size:13px">/ ${O.home_cost}</span></div>
           <div class="bar ${pct >= 100 ? 'ok' : ''}"><i style="width:${pct}%"></i></div><div class="muted">${U.office.home}${pct >= 100 ? ' · ' + U.office.reached_home : ''}</div></div>
       </div>
-      <div class="sec">${U.office.staff}</div><div class="grid2">${staffCards}</div>${recruits ? `<div class="sec">${U.office.recruit}</div><div class="grid2">${recruits}</div>` : ''}
+      <div class="sec">${U.office.staff}</div>${staffBox}
       <div class="sec">${U.office.transit}</div>${openHtml}
       <div class="sec">${U.office.recent}</div>
       ${done ? `<table><tbody>${done}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}
@@ -129,12 +145,12 @@ export function createUI(D, ctx) {
     const done = reports().filter((d) => d.eraId === id);
     const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
       <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>`;
-    if (!done.length) return `<div class="card">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p><div class="muted">${U.dispatch.no_records_here}</div></div>`;
+    if (!done.length) return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:200px">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p><div class="muted">${U.dispatch.no_records_here}</div></div></div>`;
     const hist = ET.encyclopedia.history.map((h) => `<li>${esc(h.text)}${h.check ? ` <span class="chip warn">${U.archive.check_pending}</span>` : ''}</li>`).join('');
     const reg = ET.encyclopedia.regret.map((h) => `<li>${esc(h)}</li>`).join('');
     const rows = done.map((d) => recordRow(d, true)).join('');
-    return `<div class="card">${head}<div class="sec">${U.archive.history}</div><ul>${hist}</ul><div class="sec">${U.archive.regret}</div><ul>${reg}</ul>
-      <div class="sec">${U.dispatch.records_here}</div><table><tbody>${rows}</tbody></table></div>`;
+    return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:200px">${head}<div class="sec">${U.archive.history}</div><ul>${hist}</ul><div class="sec">${U.archive.regret}</div><ul>${reg}</ul>
+      <div class="sec">${U.dispatch.records_here}</div><table><tbody>${rows}</tbody></table></div></div>`;
   }
 
   function dispatchHtml() {
@@ -150,17 +166,29 @@ export function createUI(D, ctx) {
     const S = ctx.S();
     const overW = tot.weight > O.weight_capacity + 1e-9;
     const stState = staffState(f.staffId);
-    const staff = hiredIds().map((id) => {
-      const state = staffState(id);
-      const traits = staffTraits(D, id).map((t) => esc(T.traits[t])).join('、');
-      return `<label class="card ${f.staffId === id ? 'on' : ''}" style="cursor:${state === 'ready' ? 'pointer' : 'default'};${state === 'ready' ? '' : 'opacity:.55'}"><input type="radio" name="staff" value="${id}" ${f.staffId === id ? 'checked' : ''} hidden><b>${esc(staffName(D, id))}</b> <span class="muted">${esc(traits)}</span><div class="muted">${U.office.habit}：${esc(habitText(id, e.id))}</div></label>`;
-    }).join('');
-    const items = Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => {
-      const it = D.get('items.' + id);
-      const tx = itemText(D, e.id, id);
-      return `<div class="item"><div><div class="nm">${esc(tx.name)} <span class="muted" style="font-weight:400">${U.dispatch.weight} ${it.weight} · ${U.dispatch.cost} ${it.cost}</span></div><div class="muted">${esc(tx.desc)}</div></div>
-        <div class="stepper"><span class="muted">${U.shop.stock} ${S.inv[id] || 0}</span><button data-act="dec" data-id="${id}">−</button><span class="n">${f.items[id]}</span><button data-act="inc" data-id="${id}">+</button></div></div>`;
-    }).join('');
+    const staffBox = listbox.html({
+      id: 'pick_staff', maxH: 200, pinTitle: U.dispatch.chosen_staff,
+      rows: hiredIds().map((id) => ({ id, name: staffName(D, id), state: staffState(id) })),
+      pinned: (r) => r.id === f.staffId,
+      cols: [
+        { k: 'name', label: U.office.col_staff, w: '30%', val: (r) => r.name, cell: (r) => staffLink(r.id) },
+        { k: 'traits', label: U.office.col_traits, w: '40%', cell: (r) => staffTraits(D, r.id).map(traitChip).join('') },
+        { k: 'state', label: U.office.col_state, w: '14%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${({ ready: U.office.ready, away: U.office.away, resting: U.office.resting })[r.state]}</span>` },
+        { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (r.id === f.staffId ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${r.id}" ${r.state === 'ready' ? '' : 'disabled'}>${U.dispatch.pick}</button>`) },
+      ],
+    });
+    const carryRows = Object.keys(e.itemBindings).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
+    const carryBox = listbox.html({
+      id: 'carry', maxH: 200, rows: carryRows, pinTitle: U.dispatch.carrying, empty: U.dispatch.no_stock,
+      pinned: (r) => f.items[r.id] > 0,
+      foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${O.weight_capacity}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
+      cols: [
+        { k: 'name', label: U.shop.col_name, w: '42%', val: (r) => r.name, cell: (r) => { const tx = itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}`)}<div class="oneline muted">${esc(tx.desc.split('。')[0] + '。')}</div>`; } },
+        { k: 'weight', label: U.dispatch.weight, w: '14%', cls: 'num', val: (r) => r.it.weight, cell: (r) => r.it.weight },
+        { k: 'stock', label: U.shop.stock, w: '12%', cls: 'num', val: (r) => r.stock, cell: (r) => r.stock },
+        { k: 'qty', label: U.dispatch.carry, w: '32%', cls: 'num', cell: (r) => `<span class="stepper"><button data-act="dec" data-id="${r.id}" ${f.items[r.id] > 0 ? '' : 'disabled'}>−</button><span class="n">${f.items[r.id]}</span><button data-act="inc" data-id="${r.id}" ${f.items[r.id] < Math.min(r.it.max, r.stock) ? '' : 'disabled'}>+</button></span>` },
+      ],
+    });
     let sug = '';
     if (st.searching) sug = `<p class="muted">${U.dispatch.searching}</p>`;
     else if (st.suggest) {
@@ -177,11 +205,9 @@ export function createUI(D, ctx) {
       <div class="sec">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
       ${worldMap.html()}
       <div style="margin-top:10px">${placeFile(e.id)}</div>
-      <div class="sec">${U.dispatch.staff}</div><div class="grid2">${staff}</div>
-      <div class="sec">${U.dispatch.items}</div><p class="muted">${U.dispatch.items_hint}</p>${items || `<p class="muted">${U.dispatch.no_stock}</p>`}
-      <div class="grid2" style="margin-top:8px">
-        <div><div class="row sp"><span>${U.dispatch.weight}</span><span class="${overW ? 'delta down' : ''}">${r1(tot.weight)} / ${O.weight_capacity}</span></div><div class="bar ${overW ? 'over' : ''}"><i style="width:${Math.min(100, (tot.weight / O.weight_capacity) * 100)}%"></i></div></div>
-        <div><div class="row sp"><span>${U.dispatch.kit_value}</span><span>${ri(tot.cost)}</span></div></div>
+      <div class="grid2" style="margin-top:12px">
+        <div><div class="sec" style="margin-top:0">${U.dispatch.staff}</div>${staffBox}</div>
+        <div><div class="sec" style="margin-top:0">${U.dispatch.items}</div>${carryBox}</div>
       </div>
       <div class="sec">${U.dispatch.suggest}</div><p class="muted">${U.dispatch.suggest_hint}</p>
       <div class="row"><button data-act="suggest" ${st.searching ? 'disabled' : ''}>${U.dispatch.suggest}</button><button class="ghost" data-act="clear">${U.dispatch.clear}</button></div>${sug}
@@ -235,8 +261,8 @@ export function createUI(D, ctx) {
     const vsHtml = st.vs ? vsBlock(cur) : '';
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${esc(R.staff)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>
-      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')} · ${esc(habitText(spec.staffId, cur.eraId))}</div>
+      <div class="row sp"><h2>${staffLink(spec.staffId)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>
+      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}</div>
       <div class="sec">${U.report.summary}</div>
       <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">“${esc(R.quote)}”<div class="muted" style="font-family:inherit;font-size:12px">—— ${esc(R.staff)}</div></div>
       <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>
@@ -278,23 +304,31 @@ export function createUI(D, ctx) {
     const H = U.home;
     const refs = D.get('encyclopedia_zh.refs');
     const sources = Object.values(refs).filter((r) => r.status === 'pending').map((r) => `<li>${esc(r.cite)} <span class="chip warn">${U.enc.pending}</span></li>`).join('');
-    const go = Object.entries(H.go).filter(([k]) => DEV || k !== 'model').map(([k, g]) => `<button class="gobtn" data-act="go" data-id="${k}"><b>${esc(g.name)}</b><span class="muted">${esc(g.desc)}</span></button>`).join('');
+    const go = Object.entries(H.go).map(([k, g]) => `<button class="gobtn" data-act="go" data-id="${k}"><b>${esc(g.name)}</b><span class="muted">${esc(g.desc)}</span></button>`).join('');
     return `
       <div class="hero"><span class="logo big">穿</span><div><h2>${esc(U.title)}</h2><div class="muted">${esc(U.subtitle)}</div></div></div>
       <p class="lead">${esc(H.lead)}</p>
+      <div class="grid2" style="margin-top:12px">${go}</div>
+      ${officeHtml()}
       <div class="sec">${H.mainline_title}</div><ul>${H.mainline.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
       <div class="sec">${H.materials_title}</div>
-      <ul>${sources}<li>${esc(H.materials_model)}</li><li>${esc(H.materials_enc)}</li></ul>
-      <div class="sec">${H.go_title}</div><div class="grid2">${go}</div>`;
+      <ul>${sources}<li>${esc(H.materials_model)}</li><li>${esc(H.materials_enc)}</li></ul>`;
   }
 
   // ---------- render ----------
   function render() {
     renderTabs();
-    const html = st.sub ? reportHtml() : { home: homeHtml, office: officeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html }[st.tab]();
+    const html = st.sub ? reportHtml() : { home: homeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html }[st.tab]();
+    const key = st.sub ? 'sub:' + st.sub : st.tab;
+    if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
+    const keeps = {};
+    view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
     const act = document.activeElement;
     const keep = act && act.id && view.contains(act) ? { id: act.id, a: act.selectionStart, b: act.selectionEnd } : null;
     view.innerHTML = html;
+    view.querySelectorAll('[data-keep]').forEach((el) => { if (el.dataset.keep in keeps) el.scrollTop = keeps[el.dataset.keep]; });
+    window.scrollTo(0, st.scrollY[key] || 0);
+    st.lastKey = key;
     if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
   }
 
@@ -322,7 +356,7 @@ export function createUI(D, ctx) {
       payout: { energy: res.energy, funds: res.funds, restDays: res.restDays },
     });
     ctx.save();
-    st.tab = 'office';
+    st.tab = 'home';
     st.sub = null;
     render();
   }
@@ -344,7 +378,7 @@ export function createUI(D, ctx) {
     }
     ctx.save();
     st.sub = id;
-    st.back = 'office';
+    st.back = 'home';
     st.vs = false;
     render();
   }
@@ -376,12 +410,14 @@ export function createUI(D, ctx) {
     else if (act === 'ff') { const d = ctx.S().dispatches.find((x) => x.id === id); d.revealAt = ctx.now(); ctx.save(); render(); }
     else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; render(); }
     else if (act === 'hire') { const S = ctx.S(); if (!S.staff[id].hired && S.funds >= O.hire_cost) { S.funds -= O.hire_cost; S.staff[id].hired = true; ctx.save(); } render(); }
-    else if (act === 'wiki') { wiki.go(id); render(); }
-    else if (act === 'wikitag') { st.wiki.tag = id; render(); }
-    else if (act === 'wikiback') { wiki.move(-1); render(); }
-    else if (act === 'wikifwd') { wiki.move(1); render(); }
+    else if (act === 'wiki') { wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
+    else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
+    else if (act === 'wikiback') { wiki.move(-1); wiki.refresh(); }
+    else if (act === 'wikifwd') { wiki.move(1); wiki.refresh(); }
+    else if (act === 'lsort') { listbox.sort(id); render(); }
+    else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id; st.suggest = null; } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['shoptag', 'shopbuy', 'shopsell', 'antbuy', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) render(); }
+    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antbuy', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) render(); }
     else if (act === 'go') { st.tab = id; st.sub = null; render(); }
     else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
@@ -396,6 +432,28 @@ export function createUI(D, ctx) {
       st.tab = 'dispatch';
       render();
     } else if (act === 'reset') { if (confirm(U.office.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
+  });
+  view.addEventListener('toggle', (ev) => {
+    const t = ev.target;
+    if (!t.matches) return;
+    if (t.matches('details.wcat')) st.wiki.openCats[t.dataset.cat] = t.open;
+    else if (t.matches('#wiki-tags details.tagfold')) st.wiki.tagOpen = t.open;
+  }, true);
+  const tipEl = document.createElement('div');
+  tipEl.id = 'tip';
+  document.body.appendChild(tipEl);
+  document.addEventListener('mouseover', (ev) => {
+    const el = ev.target.closest && ev.target.closest('[data-tip]');
+    if (!el) { tipEl.style.display = 'none'; return; }
+    tipEl.textContent = el.dataset.tip;
+    tipEl.style.display = 'block';
+  });
+  document.addEventListener('mousemove', (ev) => {
+    if (tipEl.style.display === 'none') return;
+    const pad = 14;
+    const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+    tipEl.style.left = Math.max(4, Math.min(window.innerWidth - w - 4, ev.clientX + pad)) + 'px';
+    tipEl.style.top = Math.max(4, Math.min(window.innerHeight - h - 4, ev.clientY + pad)) + 'px';
   });
   view.addEventListener('input', (ev) => {
     const t = ev.target;
@@ -416,5 +474,5 @@ export function createUI(D, ctx) {
     render();
   });
 
-  return { render, tick() { if (st.tab === 'office' && !st.sub) render(); }, state: st };
+  return { render, tick() { if (st.tab === 'home' && !st.sub && ctx.S().dispatches.some((d) => !d.claimed)) render(); }, state: st };
 }

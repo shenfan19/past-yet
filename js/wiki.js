@@ -82,8 +82,21 @@ export function createWiki(X) {
         body: () => {
           const stats = sim.staffStats(D, id);
           const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
-          const traits = staffTraits(D, id).map((t) => `<span class="chip">${esc(T.traits[t])}</span>`).join('');
-          return `<div>${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div><div class="muted">${U.office.habit}：${esc(X.habitText(id, eraIds()[0]))}</div>`;
+          const traits = staffTraits(D, id).map((t) => a('traits:' + t, T.traits[t])).join(' ');
+          return `<div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div>`;
+        },
+      });
+    }
+
+    for (const t of Object.keys(D.get('staff.traits'))) {
+      add({
+        id: 'traits:' + t, cat: 'traits', title: T.traits[t], tags: [], unlock: { trait: t }, refs: ['game'],
+        body: () => {
+          const tr = D.get('staff.traits.' + t);
+          const mods = Object.entries(tr.mods).map(([k, v]) => `${esc(T.stats[k])} ${v > 0 ? '+' : ''}${v}`).join('、');
+          const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}：${esc(T.strategies[grp][key].name)}`).join('；');
+          const who = Object.keys(D.get('staff.staff')).filter((id) => staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
+          return `<div>${U.enc.modified_by}：${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div><div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
         },
       });
     }
@@ -93,7 +106,7 @@ export function createWiki(X) {
       add({
         id: 'stats:' + e.id, cat: 'stats', title: T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'],
         body: () => {
-          const mods = Object.entries(D.get('staff.traits')).filter(([, m]) => e.id in m).map(([t, m]) => `${esc(T.traits[t])} ${m[e.id] > 0 ? '+' : ''}${m[e.id]}`).join('、');
+          const mods = Object.entries(D.get('staff.traits')).filter(([, tr]) => e.id in tr.mods).map(([t, tr]) => `${esc(T.traits[t])} ${tr.mods[e.id] > 0 ? '+' : ''}${tr.mods[e.id]}`).join('、');
           const side = (label, text, inModel) => (inModel || DEV) ? `<div><b>${label}</b>：${esc(text)}${DEV ? ` <span class="chip ${inModel ? '' : 'warn'}">${inModel ? U.enc.edge_impl : U.enc.edge_pending}</span>` : ''}</div>` : `<div><b>${label}</b>：${U.enc.edge_none}</div>`;
           return `<p class="muted">${U.enc.stat_rule}</p><div>${U.enc.base} ${base[e.id]}</div><div>${U.enc.modified_by}：${esc(mods || U.enc.no_ref)}</div>${side(U.enc.edge_gain, e.gain, e.gain_in_model)}${side(U.enc.edge_cost, e.cost, e.cost_in_model)}`;
         },
@@ -202,7 +215,7 @@ export function createWiki(X) {
   function tagBar() {
     const present = new Set();
     for (const x of articles()) if (visible(x)) (x.tags || []).forEach((t) => present.add(t));
-    return `<div class="tagbar"><button class="chipbtn ${w().tag ? '' : 'on'}" data-act="wikitag" data-id="">${W.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${w().tag === t ? 'on' : ''}" data-act="wikitag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div>`;
+    return `<details class="tagfold" ${w().tagOpen ? 'open' : ''}><summary>${W.tag_filter}${w().tag ? '：' + esc(T.tags[w().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${w().tag ? '' : 'on'}" data-act="wikitag" data-id="">${W.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${w().tag === t ? 'on' : ''}" data-act="wikitag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
   }
 
   function listHtml() {
@@ -219,7 +232,7 @@ export function createWiki(X) {
       }
       if (!n) return '';
       const devCat = ['formulas', 'vars', 'models'].includes(c);
-      return `<details class="wcat" ${w().openCats[c] !== false ? 'open' : ''} data-cat="${c}"><summary>${esc(W.cats[c])} <span class="muted">${n}</span>${devCat ? ' <span class="chip warn">' + W.dev_cats + '</span>' : ''}</summary>${rows}</details>`;
+      return `<details class="wcat" ${w().openCats[c] || filtering() ? 'open' : ''} data-cat="${c}"><summary>${esc(W.cats[c])} <span class="muted">${n}</span>${devCat ? ' <span class="chip warn">' + W.dev_cats + '</span>' : ''}</summary>${rows}</details>`;
     }).join('');
     return out || `<p class="muted">${W.none}</p>`;
   }
@@ -237,13 +250,17 @@ export function createWiki(X) {
     return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}<div class="refs"><span class="muted">${U.enc.refs}</span>${rf}</div>`;
   }
 
+  function navHtml() {
+    const hist = w().hist, pos = w().pos;
+    return `<button data-act="wikiback" ${pos > 0 ? '' : 'disabled'}>‹ ${W.back}</button><button data-act="wikifwd" ${pos < hist.length - 1 ? '' : 'disabled'}>${W.forward} ›</button>`;
+  }
   function html() {
     const hist = w().hist, pos = w().pos;
     return `<div class="wiki">
-      <aside class="wside">
-        <div class="row"><button data-act="wikiback" ${pos > 0 ? '' : 'disabled'}>‹ ${W.back}</button><button data-act="wikifwd" ${pos < hist.length - 1 ? '' : 'disabled'}>${W.forward} ›</button></div>
+      <aside class="wside" data-keep="wikiside">
+        <div class="row" id="wiki-nav">${navHtml()}</div>
         <input id="wiki-q" type="search" placeholder="${W.search_ph}" value="${esc(w().q)}">
-        ${tagBar()}
+        <div id="wiki-tags">${tagBar()}</div>
         <div id="wiki-list">${listHtml()}</div>
       </aside>
       <article class="wmain" id="wiki-article">${articleHtml()}</article>
@@ -256,13 +273,22 @@ export function createWiki(X) {
     const s = w();
     if (s.hist[s.pos] !== id) { s.hist = s.hist.slice(0, s.pos + 1); s.hist.push(id); s.pos = s.hist.length - 1; }
     s.cur = id;
+    s.openCats[x.cat] = true;
   }
-  function move(d) { const s = w(); const p = s.pos + d; if (p >= 0 && p < s.hist.length) { s.pos = p; s.cur = s.hist[p]; } }
+  function move(d) { const s = w(); const p = s.pos + d; if (p >= 0 && p < s.hist.length) { s.pos = p; s.cur = s.hist[p]; w().openCats[byId(s.cur).cat] = true; } }
+  // update only the wiki panels, so the page scroll and the list scroll stay where they are
+  function refresh() {
+    const set = (id, h) => { const el = document.getElementById(id); if (el) el.innerHTML = h; };
+    set('wiki-nav', navHtml());
+    set('wiki-tags', tagBar());
+    set('wiki-list', listHtml());
+    set('wiki-article', articleHtml());
+  }
   function invalidate() { cache = null; }
   function onInput(value) {
     w().q = value;
     const el = document.getElementById('wiki-list');
     if (el) el.innerHTML = listHtml();
   }
-  return { html, go, move, onInput, invalidate, articles };
+  return { html, go, move, onInput, invalidate, articles, refresh };
 }

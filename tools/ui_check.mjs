@@ -25,10 +25,18 @@ try {
   await page.goto(`http://127.0.0.1:${port}/index.html`);
   await page.waitForSelector('.lead');
   await page.screenshot({ path: path.join(outDir, '0_home.png'), fullPage: true });
-  await page.click('[data-act=go][data-id=office]');
   await page.waitForSelector('.stat');
   await page.screenshot({ path: path.join(outDir, '1_office.png'), fullPage: true });
   // dispatch through the world map
+  // tooltip on a trait chip, and a staff link opens the wiki with only its category expanded
+  await page.hover('a.chip.tr >> nth=0');
+  ok('trait tooltip shows', (await page.locator('#tip').isVisible()) && (await page.locator('#tip').innerText()).length > 0);
+  await page.click('a.wl[data-id="staff:s_ning"] >> nth=0');
+  await page.waitForSelector('.wiki');
+  ok('staff link opens wiki and expands only its category', (await page.locator('.wcat[open]').count()) === 1);
+  await page.click('[data-tab=home]');
+  await page.click('[data-tab=enc]');
+  ok('wiki keeps its state when you come back', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
   await page.click('[data-tab=dispatch]');
   await page.waitForSelector('svg.map');
   const vb0 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
@@ -36,6 +44,9 @@ try {
   const vb1 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
   ok('zoom in narrows the view', vb1 < vb0);
   await page.click('[data-act=mapz][data-id=reset]');
+  await page.fill('#map-from', '-500');
+  ok('negative year shows with a prefix', (await page.locator('#map-fromtxt').innerText()) === '前500');
+  await page.fill('#map-from', '1840');
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   await page.click('.evrow[data-id=broad_street_1854]');
   await page.fill('#map-q', 'xyz-no-match');
@@ -45,6 +56,10 @@ try {
   await page.click('[data-act=suggest]');
   await page.waitForSelector('[data-act=use]', { timeout: 60000 });
   await page.locator('[data-act=use]').last().click();
+  ok('chosen items are pinned in the carry box', (await page.locator('.lpin [data-act=dec]').count()) >= 1);
+  await page.click('[data-act=lsort][data-id="carry:weight"]');
+  await page.click('[data-act=pickstaff][data-id=s_zhou]');
+  ok('picked staff is pinned', (await page.locator('.lpin a.wl[data-id="staff:s_zhou"]').count()) === 1);
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
   await page.waitForSelector('[data-act=ff]');
@@ -67,13 +82,15 @@ try {
   await page.click('[data-act=antlock][data-id=pump_rust]');
   ok('unlock then sell possible', !(await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled()));
   await page.click('[data-act=antlock][data-id=pump_rust]');
-  await page.click('[data-act=shopbuy][data-id=disinfectant]');
+  await page.click('[data-act=cartinc][data-id=disinfectant]');
+  ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=disinfectant]').count()) === 1);
+  await page.click('[data-act=cartbuy]');
   ok('bought disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 2);
   await page.click('[data-act=shopsell][data-id=disinfectant]');
   ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
-  ok('future shop items are not buyable', await page.locator('[data-act=shopbuy][data-id=bionic_lung]').isDisabled());
+  ok('future shop items are not buyable', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 0);
   await page.fill('#shop-q', '心率');
-  ok('shop text filter', (await page.locator('[data-act=shopbuy]').count()) === 1);
+  ok('shop text filter', (await page.locator('[data-act=cartinc]').count()) === 1);
   await page.fill('#shop-q', '');
   await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
   await page.click('[data-act=antbuy][data-id=clinic_bell]');
@@ -92,6 +109,7 @@ try {
   await page.locator('#wiki-article a.wl').first().click();
   await page.click('[data-act=wikiback]');
   await page.fill('#wiki-q', '');
+  await page.click('#wiki-tags summary');
   await page.click('[data-act=wikitag][data-id=obstetrics]');
   ok('wiki tag filter', (await page.locator('#wiki-list .wrow:not(.locked)').count()) >= 1);
   await page.click('[data-act=wikitag][data-id=""]');
@@ -100,12 +118,12 @@ try {
   await page.locator('#wiki-article a.wl').nth(1).click();
   await page.screenshot({ path: path.join(outDir, '9_wiki.png'), fullPage: true });
   // hire, then guest mode
-  await page.click('[data-tab=office]');
+  await page.click('[data-tab=home]');
   await page.click('[data-act=hire]');
   ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 4);
   await page.goto(`http://127.0.0.1:${port}/index.html?dev=0`);
   await page.waitForSelector('.lead');
-  ok('guest has five tabs', (await page.locator('#tabs button').count()) === 5);
+  ok('guest has four tabs', (await page.locator('#tabs button').count()) === 4);
   await page.click('[data-tab=enc]');
   await page.waitForSelector('.wiki');
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
@@ -114,7 +132,7 @@ try {
   await page.click('[data-tab=dispatch]');
   ok('guest map shows only unlocked places', (await page.locator('svg.map .pt').count()) === 2);
   await page.click('[data-tab=shop]');
-  ok('guest future shop is a locked card', (await page.locator('[data-act=shopbuy][data-id=bionic_lung]').count()) === 0);
+  ok('guest future shop is a locked card', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 0);
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });
