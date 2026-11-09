@@ -160,7 +160,7 @@ try {
   ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 4);
   await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
   await page.waitForSelector('.lead');
-  ok('guest has four tabs', (await page.locator('#tabs button').count()) === 4);
+  ok('guest has five tabs', (await page.locator('#tabs button').count()) === 5);
   await page.click('[data-tab=enc]');
   await page.waitForSelector('.wiki');
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
@@ -183,10 +183,25 @@ try {
   await page.click('[data-tab=enc]');
   await page.waitForSelector('.wiki');
   ok('English wiki lists categories', (await page.locator('.wcat summary').first().innerText()).length > 0);
-  await page.click('[data-tab=home]');
+  // follow browser is the default, a switch keeps the page and the state
+  ok('follow browser is offered and selected by default', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === null && (await page.locator('#lang').inputValue()) === 'en');
+  await page.click('[data-tab=about]');
+  ok('about page has the disclaimer', (await page.locator('.about h3').allInnerTexts()).includes('Disclaimer'));
+  ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
+  await page.click('[data-tab=enc]');
+  await page.click('.wcat[data-cat=people] summary');
+  await page.locator('#wiki-list .wrow', { hasText: 'John Snow' }).first().click();
+  await page.waitForSelector('#wiki-article h2');
+  await page.fill('#wiki-q', 'Snow');
   await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'zh')]);
-  await page.waitForSelector('.lead');
-  ok('switching to Chinese sticks', (await page.locator('#tabs [data-tab=dispatch]').innerText()).includes('派遣') && (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh');
+  await page.waitForSelector('.wiki');
+  ok('switching language keeps the tab', (await page.locator('#tabs [data-tab=enc]').getAttribute('class')).includes('on'));
+  ok('switching language keeps the article', (await page.locator('#wiki-article h2').innerText()).includes('斯诺'));
+  ok('switching language keeps the filter text and the open category', (await page.locator('#wiki-q').inputValue()) === 'Snow' && (await page.evaluate(() => window.__game.ui.state.wiki.openCats.people)) === true);
+  ok('switching to Chinese sticks', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh' && (await page.locator('#tabs [data-tab=dispatch]').innerText()).includes('派遣'));
+  await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'auto')]);
+  await page.waitForSelector('.wiki');
+  ok('choosing follow browser clears the saved choice', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === null && (await page.locator('#lang').inputValue()) === 'auto');
   const frCtx = await browser.newContext({ locale: 'fr-FR' });
   const frPage = await frCtx.newPage();
   await frPage.goto(`http://127.0.0.1:${port}/index.html`);

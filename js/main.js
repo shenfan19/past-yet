@@ -8,7 +8,7 @@ function pickLang(I) {
   const url = new URLSearchParams(location.search).get('lang');
   let saved = null;
   try { saved = localStorage.getItem(I.storage_key); } catch (e) { /* storage blocked */ }
-  for (const c of [url, saved]) if (c && codes.includes(c)) return c;
+  for (const c of [url, saved]) if (c && c !== I.auto && codes.includes(c)) return c;
   for (const n of navigator.languages || [navigator.language]) {
     const pre = String(n).toLowerCase().split('-')[0];
     if (codes.includes(pre)) return pre;

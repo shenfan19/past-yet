@@ -43,6 +43,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 - Language files are `data/i18n/text.<code>.yaml` and `data/i18n/encyclopedia.<code>.yaml`. The structure of the encyclopedia is language neutral in `data/encyclopedia.yaml`.
 - Supported languages are listed in `config.yaml` under `i18n.locales`. English is the fallback and must be complete. Any key another language lacks, a missing file, or a language that is not configured, reads English.
-- The language is picked from `?lang=`, then the saved choice, then the browser language, then English. The header selector saves the choice and reloads.
+- The language is picked from `?lang=`, then the saved choice, then the browser language, then English. The header selector has Follow browser as its default, which clears the saved choice. Choosing a language saves it and reloads, and the page, filters, wiki article and scroll positions come back as they were.
+- The About tab holds the introduction, disclaimer, privacy, how it is driven and credits, in every language.
 - To add a language: add its code to `i18n.locales`, copy `text.en.yaml` and `encyclopedia.en.yaml` to the new code, translate what you want, leave the rest.
 - `node tools/check_i18n.mjs` compares the files with English (missing keys, stray keys, placeholders that differ) and tests the fallback.

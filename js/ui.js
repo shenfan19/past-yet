@@ -19,9 +19,18 @@ export function createUI(D, ctx) {
   const tabsEl = document.getElementById('tabs');
   const langSel = document.getElementById('lang');
   const I = D.get('config.i18n');
-  langSel.innerHTML = Object.entries(I.locales).map(([code, name]) => `<option value="${code}" ${D.lang === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
+  const UI_KEY = 'teleporter_ui_state';
+  let savedLang = null;
+  try { savedLang = localStorage.getItem(I.storage_key); } catch (e) { /* storage blocked */ }
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  const chosen = urlLang && urlLang in I.locales ? urlLang : (savedLang && savedLang in I.locales ? savedLang : I.auto);
+  langSel.setAttribute('aria-label', U.lang.label);
+  langSel.innerHTML = `<option value="${I.auto}" ${chosen === I.auto ? 'selected' : ''}>${esc(U.lang.auto)}</option>` + Object.entries(I.locales).map(([code, name]) => `<option value="${code}" ${chosen === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
   langSel.addEventListener('change', () => {
-    try { localStorage.setItem(I.storage_key, langSel.value); } catch (e) { /* storage blocked */ }
+    try {
+      if (langSel.value === I.auto) localStorage.removeItem(I.storage_key); else localStorage.setItem(I.storage_key, langSel.value);
+    } catch (e) { /* storage blocked */ }
+    saveUiState();
     const u = new URL(location.href);
     u.searchParams.delete('lang');
     location.href = u.toString();
@@ -101,6 +110,40 @@ export function createUI(D, ctx) {
   st.map = worldMap.init();
   st.form = newForm(visibleEras()[0]);
   worldMap.attach(view);
+  restoreUiState();
+
+  // ---------- interface state over a language switch ----------
+  // The game itself is in localStorage. The page and the filters live here, so a switch of language comes back to the same place.
+  function saveUiState() {
+    try {
+      const keeps = {};
+      view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
+      const key = st.sub ? 'sub:' + st.sub : st.tab;
+      sessionStorage.setItem(UI_KEY, JSON.stringify({
+        tab: st.tab, sub: st.sub, back: st.back, vs: st.vs, opened: [...st.opened], shop: st.shop, cart: st.cart, sort: st.sort,
+        wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
+      }));
+    } catch (e) { /* storage blocked, the switch just starts fresh */ }
+  }
+  function restoreUiState() {
+    let raw = null;
+    try { raw = sessionStorage.getItem(UI_KEY); sessionStorage.removeItem(UI_KEY); } catch (e) { return; }
+    if (!raw) return;
+    try {
+      const o = JSON.parse(raw);
+      if (o.tab in U.tabs) st.tab = o.tab;
+      if (o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) { st.sub = o.sub; st.back = o.back in U.tabs ? o.back : 'home'; st.vs = !!o.vs; }
+      st.opened = new Set(o.opened || []);
+      Object.assign(st.shop, o.shop);
+      st.cart = o.cart || {};
+      st.sort = o.sort || {};
+      Object.assign(st.wiki, o.wiki);
+      Object.assign(st.map, o.map);
+      if (o.form && visibleEras().includes(o.form.eraId) && hiredIds().includes(o.form.staffId)) st.form = { ...st.form, ...o.form };
+      st.scrollY = o.scrollY || {};
+      st.pendingKeeps = o.keeps || {};
+    } catch (e) { console.warn('界面状态恢复失败', e); }
+  }
 
   // ---------- clock ----------
   function renderClock() {
@@ -365,6 +408,18 @@ export function createUI(D, ctx) {
       <tr><td>${esc(older.report.outcomeName)}</td><td class="num">→</td><td class="num">${esc(cur.report.outcomeName)}</td></tr></tbody></table></div>`;
   }
 
+  // ---------- about ----------
+  function aboutHtml() {
+    const A = U.about;
+    const M = D.get('config.meta');
+    const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
+    const secs = A.sections.map((sec) => `<h3>${esc(sec.h)}</h3>${sec.p.map((x) => `<p>${esc(x)}</p>`).join('')}`).join('');
+    const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
+    return `<div class="about">
+      <div class="hero"><span class="logo big">${esc(U.logo)}</span><div><h2>${esc(A.title)}</h2><div class="muted">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div></div></div>
+      ${secs}<p>${links}</p></div>`;
+  }
+
   // ---------- home ----------
   function homeHtml() {
     const H = U.home;
@@ -384,7 +439,7 @@ export function createUI(D, ctx) {
   // ---------- render ----------
   function render() {
     renderTabs();
-    const html = st.sub ? reportHtml() : { home: homeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html }[st.tab]();
+    const html = st.sub ? reportHtml() : { home: homeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html, about: aboutHtml }[st.tab]();
     const key = st.sub ? 'sub:' + st.sub : st.tab;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
     const keeps = {};
@@ -393,6 +448,10 @@ export function createUI(D, ctx) {
     const keep = act && act.id && view.contains(act) ? { id: act.id, a: act.selectionStart, b: act.selectionEnd } : null;
     view.innerHTML = html;
     view.querySelectorAll('[data-keep]').forEach((el) => { if (el.dataset.keep in keeps) el.scrollTop = keeps[el.dataset.keep]; });
+    if (st.pendingKeeps) {
+      view.querySelectorAll('[data-keep]').forEach((el) => { if (el.dataset.keep in st.pendingKeeps) el.scrollTop = st.pendingKeeps[el.dataset.keep]; });
+      st.pendingKeeps = null;
+    }
     window.scrollTo(0, st.scrollY[key] || 0);
     st.lastKey = key;
     if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
