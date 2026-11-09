@@ -11,7 +11,7 @@ export class Data {
   }
 }
 
-const FILES = ['config', 'items', 'staff', 'map', 'antiques', 'shops', 'text.zh', 'encyclopedia.zh'];
+const FILES = ['config', 'items', 'staff', 'map', 'antiques', 'shops', 'mainline', 'text.zh', 'encyclopedia.zh'];
 
 export async function loadData(readText, parse) {
   const o = {};

@@ -78,6 +78,7 @@ model_events:
   pocket: {text: 贪婪的员工可能顺手拿走当地的东西，换成资金，但会被街坊看见，掉信任。, refs: [game]}
 # Double edges. gain and cost are written for the player. in_model says whether the model really has that side.
 stats:
+  - {id: favor, name: 好感度, kind: office, unlock: always, text: 员工对事务所的好感，0 到 1，初始 0.5。靠奖金和成功的派遣维持，失败和放弃会让它掉。, gain: 好感高，员工更不容易想家放弃任务，贪婪的员工也更少顺手拿东西。, gain_in_model: true, cost: 好感要靠花钱和成功去养，派遣结果不好时掉得很快。, cost_in_model: true}
   - {id: stamina, unlock: always, gain: 体力越高，疲劳涨得越慢，能连续做更多事。, gain_in_model: true, cost: 不肯休息，回来后需要的休整更长。, cost_in_model: false}
   - {id: skill, unlock: always, gain: 救治死亡率更低，接触病人时更不容易被传染。, gain_in_model: true, cost: 过于专业，遇到不懂的人容易讲不通。, cost_in_model: false}
   - {id: eloquence, unlock: always, gain: 更容易赢得当地名医的信任，劝动教区。, gain_in_model: true, cost: 话多招人烦，被怀疑是骗子的机会更高。, cost_in_model: false}

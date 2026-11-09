@@ -1,7 +1,7 @@
 # Office and interface numbers. Era rules live in eras/*.lm.yaml.
 save:
   key: teleporter_save
-  version: 3
+  version: 4
 eras: [broad_street_1854, vienna_1847]
 office:
   start_funds: 400
@@ -11,13 +11,28 @@ office:
   dispatch_fee: 150
   gift_funds: 120
   energy_per_change: 6
-  wall_reveal_seconds: 25
-  rest_seconds_per_day: 8
+  max_plots: 2
   max_archive: 30
   hire_cost: 100
   sell_ratio: 0.5
   start_stock: {ors_pack: 40, chlorine_tablet: 40, handbook: 1}
   loot_funds: 25
+clock:
+  sec_per_day: 3
+  speeds: [0, 1, 2, 4]
+  pause_on_report: true
+favor:
+  start: 0.5
+  gift_cost: 60
+  gift_gain: 0.1
+  min: 0
+  max: 1
+  outcome: {perfect: 0.08, legend: 0.1, modest: 0.02, stay_and_gifts: 0.05, scramble: -0.05, gave_up: -0.08, near_death: -0.1}
+auto:
+  reserve_funds: 100
+  buy_target: {ors_pack: 40, chlorine_tablet: 40}
+  secretary_rules: {funds_min: 200, lives_min: 10, energy_min: 40, safety_bad: [near_death, scramble, gave_up], favor_match: 0.03, favor_miss: -0.03}
+  kit_order: [handbook, recall_charm, chlorine_tablet, ors_pack, disinfectant, detox_water, heart_monitor]
 ui:
   dev_mode: true
   refresh_ms: 500

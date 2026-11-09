@@ -10,6 +10,7 @@ metadata:
   tags: [childbed_fever, hygiene, vienna, 1847]
   era:
     year: 1847
+    tech: 5
     geo: {lon: 16.353, lat: 48.221}
     place: vienna_general_hospital
     protagonist: semmelweis
@@ -56,6 +57,7 @@ variables:
   wash: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption, note: "Share of doctors and students who wash before examining."}
   wash_flow: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
   wash_cap: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  forceps_given: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption, note: "Stand-in until the model has a labour compartment: the forceps design lowers deaths among treated mothers."}
   wash_supply: {type: state, value: 0, unit: unit, bounds: [0, null], source: game_assumption, note: "Basins of washing solution still available."}
   wash_total: {type: state, value: 0, unit: fraction, bounds: [0, null], source: game_assumption}
   hazard: {type: state, value: 0, unit: "fraction/birth", bounds: [0, 1], source: game_assumption}
@@ -72,6 +74,7 @@ variables:
   traveler.trust: {type: state, value: 0.15, unit: fraction, bounds: [0, 1], source: game_assumption}
   traveler.loot_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption, note: "Objects the employee pocketed."}
   traveler.greed: {type: parameter, value: 0.1, from_staff: greed, source: game_assumption}
+  traveler.favor: {type: parameter, value: 0.5, from_spec: favor, source: game_assumption, note: "The employee affection for the office, 0 to 1. 0.5 is neutral."}
   traveler.homesick: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
   traveler.attachment: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
   traveler.satisfaction: {type: state, value: 0.6, unit: fraction, bounds: [0, 1], source: game_assumption}
@@ -124,6 +127,7 @@ variables:
   course_days: {type: parameter, value: 4, unit: day, source: game_assumption}
   cfr_untreated: {type: parameter, value: 0.7, unit: fraction, source: game_assumption}
   cfr_treated: {type: parameter, value: 0.4, unit: fraction, source: game_assumption}
+  forceps_cfr_cut: {type: parameter, value: 0.15, unit: fraction, source: game_assumption}
   mandate_day_hist: {type: parameter, value: 17, unit: day, source: historical, note: "Mid May 1847."}
   stay_days: {type: parameter, value: 21, unit: day, source: game_assumption}
   horizon_days: {type: parameter, value: 60, unit: day, source: game_assumption}
@@ -161,6 +165,8 @@ variables:
   trust_loss_block: {type: parameter, value: 0.03, source: game_assumption}
   block_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
   pocket_base: {type: parameter, value: 0.8, unit: "1/day", source: game_assumption, note: "Pocketing rate per day at greed 1."}
+  favor_calm: {type: parameter, value: 0.6, source: game_assumption, note: "How much affection above 0.5 slows homesickness."}
+  favor_greed: {type: parameter, value: 1.0, source: game_assumption, note: "How much low affection makes pocketing more likely."}
   pocket_trust_loss: {type: parameter, value: 0.3, source: game_assumption}
   pocket_rapport_loss: {type: parameter, value: 0.15, source: game_assumption, note: "Rapport the protagonist loses when the employee is caught pocketing."}
   prestige: {type: parameter, value: 0.8, source: historical, note: "A junior outsider telling senior doctors to wash is not welcome."}
@@ -263,7 +269,7 @@ equations:
   fever_outcome:
     priority: 59
     dynamics:
-      death_flow: "(Iu * cfr_untreated + It * cfr_treated * (1 - 0.3 * traveler.skill)) * (1 - exp(-step / course_days))"
+      death_flow: "(Iu * cfr_untreated + It * cfr_treated * (1 - forceps_cfr_cut * forceps_given) * (1 - 0.3 * traveler.skill)) * (1 - exp(-step / course_days))"
       R: "R + (Iu + It) * (1 - exp(-step / course_days)) - death_flow"
       D: "D + death_flow"
       Iu: "Iu * exp(-step / course_days)"
@@ -283,7 +289,7 @@ equations:
   traveller_mind:
     priority: 40
     dynamics:
-      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) - talk_relief * act_talk * semmelweis.rapport) * step"
+      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * semmelweis.rapport) * step"
       traveler.attachment: "traveler.attachment + (attach_nurse * act_nurse + attach_load * ward_load * arrived + attach_talk * act_talk * semmelweis.rapport) * traveler.kindness * step"
       traveler.satisfaction: "traveler.satisfaction + arrived * (sat_treat * treated_flow + sat_wash * wash_flow - sat_death * death_flow - sat_fatigue * max(0, traveler.fatigue - 0.7) * step)"
       traveler.appeal_urge: "max(0, traveler.appeal_urge - appeal_decay * step)"
@@ -375,7 +381,7 @@ events:
     importance: 2
     tag: trait
     when: "arrived == 1"
-    probability: "traveler.greed * pocket_base * step"
+    probability: "traveler.greed * pocket_base * (1 + favor_greed * (0.5 - traveler.favor)) * step"
     cooldown_days: 1.5
     effects:
       traveler.trust: "traveler.trust - pocket_trust_loss"
@@ -435,6 +441,10 @@ item_bindings:
   recall_charm: {has_charm: 1}
   disinfectant: {wash_supply: 6}
   heart_monitor: {has_monitor: 1}
+
+plots:
+  forceps: {character: semmelweis, tech: 4, bindings: {forceps_given: 1}}
+  germ_theory: {character: semmelweis, tech: 7, bindings: {semmelweis.evidence: 0.5}}
 
 strategies:
   focus:

@@ -18,8 +18,11 @@ const O = D.get('config.office');
 function fresh() {
   return {
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired }])),
+    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired, favor: D.get('config.favor.start') }])),
     inv: { ...O.start_stock },
+    clock: { day: 0, speed: 0, auto: false },
+    secretary: null,
+    secretaryLast: null,
     locks: [],
     antiques: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
   };

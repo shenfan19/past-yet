@@ -96,7 +96,8 @@ export function createWiki(X) {
           const mods = Object.entries(tr.mods).map(([k, v]) => `${esc(T.stats[k])} ${v > 0 ? '+' : ''}${v}`).join('、');
           const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}：${esc(T.strategies[grp][key].name)}`).join('；');
           const who = Object.keys(D.get('staff.staff')).filter((id) => staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
-          return `<div>${U.enc.modified_by}：${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div><div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
+          const pref = tr.prefer ? `<div>${U.office.secretary_pref}：${esc(U.office.aims[tr.prefer])}</div>` : '';
+          return `<div>${U.enc.modified_by}：${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
         },
       });
     }
@@ -104,13 +105,24 @@ export function createWiki(X) {
     const base = D.get('staff.default_base');
     for (const e of D.get('encyclopedia_zh.stats')) {
       add({
-        id: 'stats:' + e.id, cat: 'stats', title: T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'],
+        id: 'stats:' + e.id, cat: 'stats', title: e.name || T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'],
         body: () => {
           const mods = Object.entries(D.get('staff.traits')).filter(([, tr]) => e.id in tr.mods).map(([t, tr]) => `${esc(T.traits[t])} ${tr.mods[e.id] > 0 ? '+' : ''}${tr.mods[e.id]}`).join('、');
           const side = (label, text, inModel) => (inModel || DEV) ? `<div><b>${label}</b>：${esc(text)}${DEV ? ` <span class="chip ${inModel ? '' : 'warn'}">${inModel ? U.enc.edge_impl : U.enc.edge_pending}</span>` : ''}</div>` : `<div><b>${label}</b>：${U.enc.edge_none}</div>`;
-          return `<p class="muted">${U.enc.stat_rule}</p><div>${U.enc.base} ${base[e.id]}</div><div>${U.enc.modified_by}：${esc(mods || U.enc.no_ref)}</div>${side(U.enc.edge_gain, e.gain, e.gain_in_model)}${side(U.enc.edge_cost, e.cost, e.cost_in_model)}`;
+          const head = e.kind === 'office' ? `<p>${esc(e.text)}</p>` : `<p class="muted">${U.enc.stat_rule}</p><div>${U.enc.base} ${base[e.id]}</div><div>${U.enc.modified_by}：${esc(mods || U.enc.no_ref)}</div>`;
+          return `${head}${side(U.enc.edge_gain, e.gain, e.gain_in_model)}${side(U.enc.edge_cost, e.cost, e.cost_in_model)}`;
         },
       });
+    }
+
+    for (const eraId of eraIds()) {
+      for (const [pid, p] of Object.entries(ctx.era(eraId).plots)) {
+        const px = T.eras[eraId].plots[pid];
+        add({
+          id: `plots:${eraId}:${pid}`, cat: 'plots', title: px.name, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: ['game'],
+          body: () => `<p>${esc(px.desc)}</p><div>${W.in_era}：${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div><div>${U.dispatch.character}：${a(px.article, px.character)}</div><div>${U.dispatch.tech}：${p.tech} / ${ctx.era(eraId).tech} ${p.tech <= ctx.era(eraId).tech ? '' : '<span class="chip warn">' + U.dispatch.tech_low + '</span>'}</div>`,
+        });
+      }
     }
 
     for (const [id, an] of Object.entries(D.get('antiques.antiques'))) {
@@ -232,7 +244,7 @@ export function createWiki(X) {
       }
       if (!n) return '';
       const devCat = ['formulas', 'vars', 'models'].includes(c);
-      return `<details class="wcat" ${w().openCats[c] || filtering() ? 'open' : ''} data-cat="${c}"><summary>${esc(W.cats[c])} <span class="muted">${n}</span>${devCat ? ' <span class="chip warn">' + W.dev_cats + '</span>' : ''}</summary>${rows}</details>`;
+      return `<details class="wcat" ${w().openCats[c] ? 'open' : ''} data-cat="${c}"><summary>${esc(W.cats[c])} <span class="muted">${n}</span>${devCat ? ' <span class="chip warn">' + W.dev_cats + '</span>' : ''}</summary>${rows}</details>`;
     }).join('');
     return out || `<p class="muted">${W.none}</p>`;
   }

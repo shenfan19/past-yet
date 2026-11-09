@@ -6,7 +6,7 @@ ui:
   tabs: {home: 首页, dispatch: 派遣, shop: 商店, enc: 百科}
   home:
     lead: 你是穿越事务所的所长。雇员工去古代做事，赚时空能量，攒够了回自己的时空见家人。
-    mainline_title: 主线
+    mainline_title: 设定与规则
     mainline:
       - 派出去，等一会儿，读一份归来报告。不盯着也可以，回来读报告是奖励。
       - 历史不可改变。员工做的一切都落在平行分支上，主时间线保持原样，分支与主时间线的差换算成时空能量。
@@ -49,6 +49,12 @@ ui:
     weight: 重量
     max: 上限
   cal: {bc: 前, ad: 公元}
+  clock:
+    day: 第 {n} 天
+    pause: 暂停
+    auto: 全自动
+    auto_tip: 打开后，事务所自己收报告、补货、派人，你可以只看海。秘书的特质会带来额外的加成，他有自己的偏好，全自动的结果合他的意，他的好感上升，否则下降。
+    paused_report: 有报告待领取，已暂停
   lbox: {chosen: 已选, empty: 没有符合的条目}
   shop:
     cart: 购物车
@@ -90,7 +96,7 @@ ui:
     forward: 前进
     pick: 从左边选一个条目。
     none: 没有符合的条目
-    cats: {places: 地区, people: 人物, events: 事件, stories: 故事, staff: 员工, traits: 特质, stats: 属性, antiques: 古董, items: 物品, formulas: 公式, vars: 变量, models: 模型}
+    cats: {places: 地区, people: 人物, events: 事件, stories: 故事, plots: 剧情, staff: 员工, traits: 特质, stats: 属性, antiques: 古董, items: 物品, formulas: 公式, vars: 变量, models: 模型}
     tag_filter: 标签过滤
     dev_cats: 开发者
     uses_formulas: 用到的公式
@@ -145,6 +151,21 @@ ui:
     habit: 习惯
     recent: 最近的记录
     recruit: 招募
+    mainline: 主线
+    secretary: 秘书
+    no_secretary: 未任命。任命后，他留在事务所，不再出差，但特质会给事务所带来加成。
+    secretary_state: 秘书
+    appoint: 任命秘书
+    dismiss: 解任
+    gift: 奖励
+    gift_tip: 花钱发奖金，好感度上升。
+    favor_tip: 好感度。高了，员工更不容易想家放弃，也更少顺手拿东西。成功的派遣让它涨，失败和放弃让它掉。
+    col_favor: 好感
+    aims: {funds: 资金, lives: 救人, energy: 时空能量, safety: 员工平安}
+    secretary_pref: 秘书偏好
+    verdict_match: 上次全自动的结果合他的意，好感上升
+    verdict_miss: 上次全自动的结果不合他的意，好感下降
+    perks: {funds_mult: 资金收入, energy_mult: 时空能量收入, rest_cut: 员工休整时间, favor_gain: 好感增长}
     recruit_hint_short: 招募后才知道
     col_staff: 角色
     col_traits: 特质
@@ -185,6 +206,13 @@ ui:
     cost: 费用
     funds_left: 余额
     chosen_staff: 已选角色
+    chosen_plots: 已选剧情
+    plots: 剧情
+    plots_hint: 给这个时代的历史人物带去一个想法或一份设计。要看这个时代的工艺够不够，最多带两个。
+    character: 历史人物
+    tech: 工艺
+    tech_low: 工艺不够
+    drop: 取消
     pick: 选择
     picked: 已选
     carrying: 已携带
@@ -286,6 +314,12 @@ traits:
   sturdy: 结实
   glib: 口才好
   greedy: 贪财
+mainline:
+  open: {name: 开张, desc: 事务所挂牌，一间店面，三个员工。}
+  first_trip: {name: 第一趟差, desc: 员工带回了第一笔时空能量。}
+  reputation: {name: 有了名声, desc: 街坊开始提起这家事务所。}
+  far_past: {name: 更远的过去, desc: 够用的能量，足以买通更远的时空。}
+  home: {name: 回家, desc: 能量够了，所长可以回到自己的时空，见家人。}
 stats: {stamina: 体力, skill: 医护手艺, eloquence: 口才, kindness: 善意, stubbornness: 固执度, curiosity: 好奇心, homesick_trait: 思乡度, greed: 贪婪}
 tags:
   medical: 医疗
@@ -366,6 +400,9 @@ eras:
     place_name: 伦敦苏荷区宽街
     tags: [medical, infection, cholera, c19, london, history]
     event_titles: {door_block: 被拒之门外, time_strain: 时间错位, pocket: 顺手牵羊}
+    plots:
+      microscope: {name: 送斯诺一台显微镜, desc: 让他能更清楚地给人看水里的东西。, character: 约翰·斯诺, article: 'people:snow'}
+      germ_theory: {name: 把细菌致病的理论讲给斯诺, desc: 需要微生物学的工艺，这个时代还没有。, character: 约翰·斯诺, article: 'people:snow'}
     blurb: 霍乱，一台水泵，一位还没被人听进去的医生。近，成本低，卫生知识和药物的效果清楚。
     handle_label: 泵柄拆除
     protagonist: 约翰·斯诺
@@ -432,6 +469,9 @@ eras:
     place_name: 维也纳总医院产科病房
     tags: [medical, infection, obstetrics, c19, vienna, history]
     event_titles: {door_block: 被前辈挡回, time_strain: 时间错位, pocket: 顺手牵羊}
+    plots:
+      forceps: {name: 把助产钳的设计交给森梅尔维斯, desc: 难产时能救下更多产妇，现有的工艺做得出来。, character: 伊格纳茨·森梅尔维斯, article: 'people:semmelweis'}
+      germ_theory: {name: 把细菌致病的理论讲给森梅尔维斯, desc: 需要微生物学的工艺，这个时代还没有。, character: 伊格纳茨·森梅尔维斯, article: 'people:semmelweis'}
     blurb: 产褥热，两间产科病房，一位把死亡数字对在一起的年轻医生。要说服的不是病，是一屋子不肯洗手的前辈。
     handle_label: 洗手规定开始
     protagonist: 伊格纳茨·森梅尔维斯

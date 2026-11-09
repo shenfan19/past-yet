@@ -124,6 +124,9 @@ export function compileEra(raw, D, id) {
   for (const grp of Object.values(E.strategies)) for (const opt of Object.values(grp)) for (const t of Object.keys(opt)) if (!known.has(t)) throw new Error(where('strategies') + ' 变量未声明 ' + t);
   E.calendar = raw.metadata.era.calendar;
   E.opt = req(raw, 'optimization', id);
+  E.tech = raw.metadata.era.tech;
+  E.plots = req(raw, 'plots', id);
+  for (const [pid, p] of Object.entries(E.plots)) for (const t of Object.keys(p.bindings)) if (!known.has(t)) throw new Error(where('plots.' + pid) + ' 变量未声明 ' + t);
   return E;
 }
 
@@ -165,6 +168,9 @@ export function validateSpec(E, D, spec, stock) {
   if (t.weight > cap + 1e-9) return 'overweight';
   if (stock) for (const [id, n] of Object.entries(spec.items)) if (n > (stock[id] || 0)) return 'stock';
   for (const [id, n] of Object.entries(spec.items)) if (n > D.get(`items.${id}.max`) || n < 0) return 'item_range';
+  const plots = spec.plots || [];
+  if (plots.length > D.get('config.office.max_plots')) return 'plot_count';
+  for (const pid of plots) if (!E.plots[pid] || E.plots[pid].tech > E.tech) return 'plot_tech';
   return null;
 }
 
@@ -174,6 +180,7 @@ function initVars(E, D, spec, withTraveler) {
   for (const [n, d] of Object.entries(E.vars)) v[n] = d.value;
   const stats = staffStats(D, spec.staffId);
   for (const [n, d] of Object.entries(E.vars)) if (d.from_staff) v[n] = stats[d.from_staff];
+  for (const [n, d] of Object.entries(E.vars)) if (d.from_spec) v[n] = spec[d.from_spec] ?? d.value;
   const apply = (grp, key) => {
     const o = E.strategies[grp][key];
     if (!o) throw new Error('未知策略 ' + grp + '.' + key);
@@ -219,6 +226,9 @@ export function run(E, D, spec, withTraveler) {
       arrivedDay = v.day;
       for (const [item, n] of Object.entries(spec.items)) {
         for (const [target, per] of Object.entries(E.itemBindings[item] || {})) v[target] = clampTo(E, target, v[target] + n * per);
+      }
+      for (const pid of spec.plots || []) {
+        for (const [target, add] of Object.entries(E.plots[pid].bindings)) v[target] = clampTo(E, target, v[target] + add);
       }
       log.push({ t: v.day, kind: 'arrive', id: 'arrive', importance: E.logImportance.arrive, snap: snap() });
     }

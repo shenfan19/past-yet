@@ -100,7 +100,7 @@ export function buildReport(D, E, res) {
   const handleBase = res.base.final[RP.handle];
   const handleBranch = F[RP.handle];
   return {
-    outcomeName: T.outcomes[oid].name, summary, quote, staff,
+    outcomeId: oid, outcomeName: T.outcomes[oid].name, summary, quote, staff,
     timeline: kept, ledger,
     chart: { base: res.base.series, branch: res.branch.series, arrive: res.branch.arrivedDay, leave: res.branch.leftDay, handleBase, handleBranch },
     accounts: { cost: res.cost, funds: res.funds, energy: res.energy, restDays: res.restDays, lives: res.score.lives_saved },

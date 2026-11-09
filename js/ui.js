@@ -4,6 +4,7 @@ import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
 import { createListbox } from './listbox.js';
+import { createOffice } from './office.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const r1 = (x) => (Math.round(x * 10) / 10).toString();
@@ -45,21 +46,16 @@ export function createUI(D, ctx) {
   function newForm(eraId) {
     const e = ctx.era(eraId);
     return {
-      eraId, staffId: hiredIds()[0],
+      eraId, plots: [], staffId: hiredIds()[0],
       items: Object.fromEntries(Object.keys(e.itemBindings).map((k) => [k, 0])),
       seed: Math.floor(Math.random() * 100000) + 1,
     };
   }
 
   // ---------- helpers ----------
-  const staffState = (id) => {
-    const S = ctx.S();
-    if (S.dispatches.some((d) => d.spec.staffId === id && !d.claimed)) return 'away';
-    if ((S.staff[id].restUntil || 0) > ctx.now()) return 'resting';
-    return 'ready';
-  };
+  const staffState = (id) => office.staffState(id);
   const totals = () => sim.itemTotals(D, st.form.items);
-  const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: { ...st.form.items } });
+  const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: { ...st.form.items }, plots: [...st.form.plots] });
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const tagLabel = (tag) => U.report[tag];
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
@@ -69,7 +65,8 @@ export function createUI(D, ctx) {
     const tr = D.get('staff.traits.' + t);
     const mods = Object.entries(tr.mods).map(([k, v]) => `${T.stats[k]} ${v > 0 ? '+' : ''}${v}`).join('、');
     const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}：${T.strategies[grp][key].name}`).join('；');
-    return [T.traits[t], mods, pol].filter(Boolean).join('\n');
+    const pref = tr.prefer ? `${U.office.secretary_pref}：${U.office.aims[tr.prefer]}` : '';
+    return [T.traits[t], mods, pol, pref].filter(Boolean).join('\n');
   }
   function staffTip(id) {
     const stats = sim.staffStats(D, id);
@@ -82,7 +79,9 @@ export function createUI(D, ctx) {
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId }; st.suggest = null; }
   }
-  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip };
+  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip, anchorOf };
+  const office = createOffice(X);
+  const clockEl = document.getElementById('clock');
   X.listbox = createListbox(X);
   const listbox = X.listbox;
   const wiki = createWiki(X);
@@ -92,38 +91,79 @@ export function createUI(D, ctx) {
   st.form = newForm(visibleEras()[0]);
   worldMap.attach(view);
 
+  // ---------- clock ----------
+  function renderClock() {
+    const c = ctx.S().clock;
+    const C = D.get('config.clock');
+    const al = office.alerts();
+    const speeds = C.speeds.map((sp, i) => `<button class="spd ${c.speed === sp ? 'on' : ''}" data-clk="speed" data-i="${i}" title="${sp === 0 ? U.clock.pause : sp + '×'}">${sp === 0 ? '⏸' : sp + '×'}</button>`).join('');
+    clockEl.innerHTML = `<span class="day">${U.clock.day.replace('{n}', String(Math.floor(c.day) + 1))}</span>${speeds}<button class="auto ${c.auto ? 'on' : ''}" data-clk="auto"${tip(U.clock.auto_tip)}>${U.clock.auto}</button>${c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>` : ''}`;
+  }
+  clockEl.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-clk]');
+    if (!b) return;
+    const c = ctx.S().clock;
+    if (b.dataset.clk === 'speed') office.setSpeed(Number(b.dataset.i));
+    else { c.auto = !c.auto; if (c.auto && c.speed === 0) office.setSpeed(1); ctx.save(); }
+    renderClock();
+    renderTabs();
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.code !== 'Space' || /INPUT|TEXTAREA|SELECT/.test(ev.target.tagName)) return;
+    ev.preventDefault();
+    office.togglePause();
+    renderClock();
+  });
+
   // ---------- tabs ----------
   function renderTabs() {
-    tabsEl.innerHTML = Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" class="${st.tab === k && !st.sub ? 'on' : ''}">${esc(label)}</button>`).join('');
+    const al = office.alerts();
+    tabsEl.innerHTML = Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" class="${st.tab === k && !st.sub ? 'on' : ''}">${esc(label)}${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join('');
   }
 
   // ---------- office ----------
   function officeHtml() {
     const S = ctx.S();
-    const now = ctx.now();
+    const today = ctx.S().clock.day;
     const pct = Math.min(100, (S.energy / O.home_cost) * 100);
-    const stateLabel = { ready: U.office.ready, away: U.office.away, resting: U.office.resting };
+    const stateLabel = { ready: U.office.ready, away: U.office.away, resting: U.office.resting, secretary: U.office.secretary_state };
+    const favorCell = (id) => { const f = S.staff[id].favor; return `<span class="favor"${tip(U.office.favor_tip)}>♥ ${Math.round(f * 100)}<span class="fbar"><i style="width:${f * 100}%"></i></span></span>`; };
     const staffRows = Object.keys(D.get('staff.staff')).map((id) => {
       const hired = S.staff[id].hired;
       const mine = reports().filter((d) => d.spec.staffId === id);
-      return { id, hired, name: hired ? staffName(D, id) : U.office.unknown_candidate, state: hired ? staffState(id) : 'recruit', last: mine[0], count: mine.length, cls: hired ? '' : 'dim' };
+      return { id, hired, name: hired ? staffName(D, id) : U.office.unknown_candidate, state: hired ? staffState(id) : 'recruit', favor: hired ? S.staff[id].favor : 0, last: mine[0], count: mine.length, cls: hired ? '' : 'dim' };
     });
     const staffBox = listbox.html({
       id: 'home_staff', rows: staffRows, maxH: 260,
       cols: [
-        { k: 'name', label: U.office.col_staff, w: '24%', val: (r) => r.name, cell: (r) => (r.hired ? staffLink(r.id) : `${r.name}${DEV ? ' ' + hiddenChip() + ' ' + esc(staffName(D, r.id)) : ''}`) },
-        { k: 'traits', label: U.office.col_traits, w: '34%', cell: (r) => (r.hired ? staffTraits(D, r.id).map(traitChip).join('') : `<span class="muted">${U.office.recruit_hint_short}</span>`) },
-        { k: 'state', label: U.office.col_state, w: '14%', val: (r) => r.state, cell: (r) => (r.hired ? `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel[r.state]}</span>` : `<span class="chip warn">${U.office.recruit}</span>`) },
+        { k: 'name', label: U.office.col_staff, w: '17%', val: (r) => r.name, cell: (r) => (r.hired ? staffLink(r.id) : `${r.name}${DEV ? ' ' + hiddenChip() + ' ' + esc(staffName(D, r.id)) : ''}`) },
+        { k: 'traits', label: U.office.col_traits, w: '25%', cell: (r) => (r.hired ? staffTraits(D, r.id).map(traitChip).join('') : `<span class="muted">${U.office.recruit_hint_short}</span>`) },
+        { k: 'state', label: U.office.col_state, w: '10%', val: (r) => r.state, cell: (r) => (r.hired ? `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel[r.state]}</span>` : `<span class="chip warn">${U.office.recruit}</span>`) },
+        { k: 'favor', label: U.office.col_favor, w: '12%', val: (r) => r.favor, cell: (r) => (r.hired ? favorCell(r.id) : '') },
         { k: 'count', label: U.office.col_history, w: '16%', val: (r) => r.count, cell: (r) => (r.last ? `${r.count} · <button class="ghost" data-act="open" data-id="${r.last.id}">${esc(r.last.report.outcomeName)} ›</button>` : (r.hired ? `<span class="muted">${U.office.no_history}</span>` : '')) },
-        { k: 'act', label: '', w: '12%', cls: 'num', cell: (r) => (r.hired ? '' : `<button data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>`) },
+        { k: 'act', label: '', w: '20%', cls: 'num', cell: (r) => (r.hired
+          ? `<button data-act="gift" data-id="${r.id}" ${S.funds < D.get('config.favor.gift_cost') ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button>`
+          : `<button data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>`) },
       ],
     });
+    const pk = office.perks();
+    const perkText = Object.entries(pk).filter(([, v]) => v !== 0).map(([k, v]) => `${U.office.perks[k]} ${k === 'rest_cut' ? '−' : (v > 0 ? '+' : '')}${Math.round(Math.abs(v) * 100)}%`).join(' · ');
+    const secLine = S.secretary
+      ? `<div class="muted">${U.office.secretary}：${staffLink(S.secretary)} · ${perkText || U.enc.edge_none} · ${U.office.secretary_pref}：${U.office.aims[office.secretaryAim()] || U.enc.edge_none}${S.secretaryLast ? ` <span class="chip ${S.secretaryLast.met ? '' : 'warn'}">${S.secretaryLast.met ? U.office.verdict_match : U.office.verdict_miss}</span>` : ''}</div>`
+      : `<div class="muted">${U.office.secretary}：${U.office.no_secretary}</div>`;
+    const stages = D.get('mainline.stages');
+    const sIdx = office.stageIndex();
+    const stageRows = stages.map((g, i) => {
+      const tx = T.mainline[g.id];
+      if (i > sIdx + 1) return `<li class="dim">${U.enc.locked_name}</li>`;
+      return `<li class="${i < sIdx ? 'done' : i === sIdx ? 'cur' : 'dim'}"><b>${esc(tx.name)}</b> <span class="muted">${g.energy} ${U.office.energy} · ${esc(tx.desc)}</span></li>`;
+    }).join('');
     const open = S.dispatches.filter((d) => !d.claimed);
     const openHtml = open.length ? open.map((d) => {
-      const left = Math.max(0, Math.ceil((d.revealAt - now) / 1000));
+      const left = Math.max(0, d.readyDay - today);
       const ready = left === 0;
-      return `<div class="card row sp"><div><b>${staffLink(d.spec.staffId)}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + left + 's'}</div></div>
-        <div class="row">${ready ? `<button class="primary" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>`}</div></div>`;
+      return `<div class="card row sp"><div><b>${staffLink(d.spec.staffId)}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + r1(left) + ' ' + U.report.days}</div></div>
+        <div class="row">${ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>`}</div></div>`;
     }).join('') : `<p class="muted">${U.office.nothing}</p>`;
     const done = reports().slice(0, 8).map((d) => `<tr><td>${staffLink(d.spec.staffId)}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
     return `
@@ -132,7 +172,8 @@ export function createUI(D, ctx) {
         <div class="card"><div class="muted">${U.office.energy}</div><div class="stat">${ri(S.energy)} <span class="muted" style="font-size:13px">/ ${O.home_cost}</span></div>
           <div class="bar ${pct >= 100 ? 'ok' : ''}"><i style="width:${pct}%"></i></div><div class="muted">${U.office.home}${pct >= 100 ? ' · ' + U.office.reached_home : ''}</div></div>
       </div>
-      <div class="sec">${U.office.staff}</div>${staffBox}
+      <div class="sec">${U.office.mainline}</div><ul class="stages">${stageRows}</ul>
+      <div class="sec">${U.office.staff}</div>${secLine}${staffBox}
       <div class="sec">${U.office.transit}</div>${openHtml}
       <div class="sec">${U.office.recent}</div>
       ${done ? `<table><tbody>${done}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}
@@ -173,7 +214,7 @@ export function createUI(D, ctx) {
       cols: [
         { k: 'name', label: U.office.col_staff, w: '30%', val: (r) => r.name, cell: (r) => staffLink(r.id) },
         { k: 'traits', label: U.office.col_traits, w: '40%', cell: (r) => staffTraits(D, r.id).map(traitChip).join('') },
-        { k: 'state', label: U.office.col_state, w: '14%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${({ ready: U.office.ready, away: U.office.away, resting: U.office.resting })[r.state]}</span>` },
+        { k: 'state', label: U.office.col_state, w: '14%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${({ ready: U.office.ready, away: U.office.away, resting: U.office.resting, secretary: U.office.secretary_state })[r.state]}</span>` },
         { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (r.id === f.staffId ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${r.id}" ${r.state === 'ready' ? '' : 'disabled'}>${U.dispatch.pick}</button>`) },
       ],
     });
@@ -187,6 +228,19 @@ export function createUI(D, ctx) {
         { k: 'weight', label: U.dispatch.weight, w: '14%', cls: 'num', val: (r) => r.it.weight, cell: (r) => r.it.weight },
         { k: 'stock', label: U.shop.stock, w: '12%', cls: 'num', val: (r) => r.stock, cell: (r) => r.stock },
         { k: 'qty', label: U.dispatch.carry, w: '32%', cls: 'num', cell: (r) => `<span class="stepper"><button data-act="dec" data-id="${r.id}" ${f.items[r.id] > 0 ? '' : 'disabled'}>−</button><span class="n">${f.items[r.id]}</span><button data-act="inc" data-id="${r.id}" ${f.items[r.id] < Math.min(r.it.max, r.stock) ? '' : 'disabled'}>+</button></span>` },
+      ],
+    });
+    const ET = T.eras[e.id];
+    const plotRows = Object.keys(e.plots).map((pid) => ({ id: pid, name: ET.plots[pid].name, need: e.plots[pid].tech, ok: e.plots[pid].tech <= e.tech, cls: e.plots[pid].tech <= e.tech ? '' : 'dim' }));
+    const plotBox = listbox.html({
+      id: 'plots', maxH: 170, rows: plotRows, pinTitle: U.dispatch.chosen_plots, pinned: (r) => f.plots.includes(r.id),
+      cols: [
+        { k: 'name', label: U.shop.col_name, w: '44%', val: (r) => r.name, cell: (r) => `${esc(r.name)}<div class="oneline muted">${esc(ET.plots[r.id].desc)}</div>` },
+        { k: 'who', label: U.dispatch.character, w: '24%', cell: (r) => wl(ET.plots[r.id].article, ET.plots[r.id].character) },
+        { k: 'tech', label: U.dispatch.tech, w: '14%', cls: 'num', val: (r) => r.need, cell: (r) => `${r.need} / ${e.tech}` },
+        { k: 'act', label: '', w: '18%', cls: 'num', cell: (r) => (r.ok
+          ? `<button data-act="plotpick" data-id="${r.id}" ${!f.plots.includes(r.id) && f.plots.length >= O.max_plots ? 'disabled' : ''}>${f.plots.includes(r.id) ? U.dispatch.drop : U.dispatch.pick}</button>`
+          : `<span class="muted">${U.dispatch.tech_low}</span>`) },
       ],
     });
     let sug = '';
@@ -209,6 +263,7 @@ export function createUI(D, ctx) {
         <div><div class="sec" style="margin-top:0">${U.dispatch.staff}</div>${staffBox}</div>
         <div><div class="sec" style="margin-top:0">${U.dispatch.items}</div>${carryBox}</div>
       </div>
+      <div class="sec">${U.dispatch.plots}</div><p class="muted">${U.dispatch.plots_hint}</p>${plotBox}
       <div class="sec">${U.dispatch.suggest}</div><p class="muted">${U.dispatch.suggest_hint}</p>
       <div class="row"><button data-act="suggest" ${st.searching ? 'disabled' : ''}>${U.dispatch.suggest}</button><button class="ghost" data-act="clear">${U.dispatch.clear}</button></div>${sug}
       ${seedRow}
@@ -262,7 +317,7 @@ export function createUI(D, ctx) {
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${staffLink(spec.staffId)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>
-      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}</div>
+      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join('、') : ''}</div>
       <div class="sec">${U.report.summary}</div>
       <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">“${esc(R.quote)}”<div class="muted" style="font-family:inherit;font-size:12px">—— ${esc(R.staff)}</div></div>
       <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>
@@ -340,43 +395,18 @@ export function createUI(D, ctx) {
   }
 
   function send() {
-    const e = E();
-    const spec = formSpec();
-    const S = ctx.S();
-    const err = sim.validateSpec(e, D, spec, S.inv);
-    if (err || staffState(spec.staffId) !== 'ready') return;
-    const res = sim.runDispatch(e, D, spec);
-    const report = buildReport(D, e, res);
-    for (const [id, n] of Object.entries(spec.items)) S.inv[id] = (S.inv[id] || 0) - n;
-    const anchor = anchorOf(e.id);
-    if (!S.locks.includes(anchor)) S.locks.push(anchor);
-    S.seq += 1;
-    S.dispatches.push({
-      id: 'd' + S.seq, eraId: e.id, spec, report, revealAt: ctx.now() + O.wall_reveal_seconds * 1000, claimed: false,
-      payout: { energy: res.energy, funds: res.funds, restDays: res.restDays },
-    });
-    ctx.save();
+    const d = office.launch(st.form.eraId, formSpec());
+    if (!d) return;
     st.tab = 'home';
     st.sub = null;
+    st.form.plots = [];
+    renderClock();
     render();
   }
 
   function claim(id) {
-    const S = ctx.S();
-    const d = S.dispatches.find((x) => x.id === id);
-    if (!d || d.claimed) return;
-    d.claimed = true;
-    d.claimedAt = ctx.now();
-    S.energy += d.payout.energy;
-    S.funds += d.payout.funds;
-    S.staff[d.spec.staffId].restUntil = ctx.now() + d.payout.restDays * O.rest_seconds_per_day * 1000;
-    S.dispatches.sort((a, b) => (a.claimedAt || Infinity) - (b.claimedAt || Infinity));
-    const closed = S.dispatches.filter((x) => x.claimed);
-    if (closed.length > O.max_archive) {
-      const drop = new Set(closed.slice(0, closed.length - O.max_archive).map((x) => x.id));
-      S.dispatches = S.dispatches.filter((x) => !drop.has(x.id));
-    }
-    ctx.save();
+    const d = office.claim(id);
+    if (!d) return;
     st.sub = id;
     st.back = 'home';
     st.vs = false;
@@ -407,7 +437,10 @@ export function createUI(D, ctx) {
     else if (act === 'use') { Object.assign(st.form.items, st.suggest.front[Number(b.dataset.i)].items); render(); }
     else if (act === 'send') send();
     else if (act === 'claim') claim(id);
-    else if (act === 'ff') { const d = ctx.S().dispatches.find((x) => x.id === id); d.revealAt = ctx.now(); ctx.save(); render(); }
+    else if (act === 'ff') { const d = ctx.S().dispatches.find((x) => x.id === id); d.readyDay = ctx.S().clock.day; ctx.save(); render(); }
+    else if (act === 'gift') { office.gift(id); render(); }
+    else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
+    else if (act === 'plotpick') { const p = st.form.plots; if (p.includes(id)) st.form.plots = p.filter((x) => x !== id); else if (p.length < O.max_plots) p.push(id); st.suggest = null; render(); }
     else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; render(); }
     else if (act === 'hire') { const S = ctx.S(); if (!S.staff[id].hired && S.funds >= O.hire_cost) { S.funds -= O.hire_cost; S.staff[id].hired = true; ctx.save(); } render(); }
     else if (act === 'wiki') { wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
@@ -426,7 +459,7 @@ export function createUI(D, ctx) {
     else if (act === 'again') {
       const d = ctx.S().dispatches.find((x) => x.id === id);
       const fresh = newForm(d.eraId);
-      st.form = { ...fresh, staffId: d.spec.staffId, items: Object.fromEntries(Object.entries(d.spec.items).map(([k, n]) => [k, Math.min(n, ctx.S().inv[k] || 0)])), seed: DEV ? d.spec.seed : fresh.seed };
+      st.form = { ...fresh, plots: [...(d.spec.plots || [])], staffId: d.spec.staffId, items: Object.fromEntries(Object.entries(d.spec.items).map(([k, n]) => [k, Math.min(n, ctx.S().inv[k] || 0)])), seed: DEV ? d.spec.seed : fresh.seed };
       st.suggest = null;
       st.sub = null;
       st.tab = 'dispatch';
@@ -474,5 +507,14 @@ export function createUI(D, ctx) {
     render();
   });
 
-  return { render, tick() { if (st.tab === 'home' && !st.sub && ctx.S().dispatches.some((d) => !d.claimed)) render(); }, state: st };
+  function tick() {
+    const fresh = office.advance(D.get('config.ui.refresh_ms') / 1000);
+    if (ctx.S().clock.auto) office.autoStep();
+    renderClock();
+    renderTabs();
+    const transit = ctx.S().dispatches.some((d) => !d.claimed);
+    if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !st.sub) render();
+  }
+  renderClock();
+  return { render, tick, state: st };
 }

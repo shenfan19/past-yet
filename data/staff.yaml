@@ -1,18 +1,22 @@
 # Employees. Final stats = base + the sum of trait modifiers.
 stats: [stamina, skill, eloquence, kindness, stubbornness, curiosity, homesick_trait, greed]
 default_base: {stamina: 1.0, skill: 0.4, eloquence: 0.4, kindness: 0.2, stubbornness: 0.2, curiosity: 0.2, homesick_trait: 0.2, greed: 0}
+# prefer: what a secretary with this trait wants the office to optimise: funds, lives, energy or safety. Where several traits prefer something,
+# the one with the higher priority wins. When the auto mode brings a result that meets the preference the secretary grows fonder, otherwise less so.
+# secretary: what the employee brings the office when appointed secretary. funds_mult and energy_mult scale every payout, rest_cut shortens
+# rests, favor_gain scales how fast favor rises, all as fractions.
 # A trait carries stat modifiers and, optionally, a behaviour policy for the field. Where several traits set the same policy group,
 # the one with the higher priority wins, then the one listed first. Groups no trait sets fall back to default_habit.
 default_habit: {focus: balanced, on_block: yield}
 traits:
-  kind: {mods: {kindness: 0.4}, policy: {focus: cure}, priority: 1}
+  kind: {mods: {kindness: 0.4}, policy: {focus: cure}, priority: 1, secretary: {favor_gain: 0.5}, prefer: lives}
   stubborn: {mods: {stubbornness: 0.5, eloquence: -0.1}, policy: {on_block: insist}, priority: 2}
-  curious: {mods: {curiosity: 0.4}, policy: {focus: ally}, priority: 1}
-  homesick: {mods: {homesick_trait: 0.5}, policy: {on_block: yield}, priority: 1}
-  studious: {mods: {skill: 0.2}, policy: {focus: prevent}, priority: 2}
-  sturdy: {mods: {stamina: 0.25}, priority: 0}
-  glib: {mods: {eloquence: 0.3}, policy: {focus: ally, on_block: appeal}, priority: 1}
-  greedy: {mods: {greed: 0.6, kindness: -0.1}, policy: {on_block: insist}, priority: 3}
+  curious: {mods: {curiosity: 0.4}, policy: {focus: ally}, priority: 1, secretary: {energy_mult: 0.1}, prefer: energy}
+  homesick: {mods: {homesick_trait: 0.5}, policy: {on_block: yield}, priority: 1, secretary: {favor_gain: -0.3}, prefer: safety}
+  studious: {mods: {skill: 0.2}, policy: {focus: prevent}, priority: 2, secretary: {energy_mult: 0.05}, prefer: lives}
+  sturdy: {mods: {stamina: 0.25}, priority: 0, secretary: {rest_cut: 0.3}, prefer: safety}
+  glib: {mods: {eloquence: 0.3}, policy: {focus: ally, on_block: appeal}, priority: 1, secretary: {funds_mult: 0.05}, prefer: funds}
+  greedy: {mods: {greed: 0.6, kindness: -0.1}, policy: {on_block: insist}, priority: 3, secretary: {funds_mult: 0.15, favor_gain: -0.2}, prefer: funds}
 staff:
   s_ning: {base: {skill: 0.45, eloquence: 0.45}, traits: [kind, stubborn], start_hired: true}
   s_zhou: {base: {stamina: 1.1, skill: 0.5}, traits: [sturdy, glib], start_hired: true}
