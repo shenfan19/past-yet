@@ -60,7 +60,7 @@ Antiques are not sold. Each trip may bring one back. Let the trip go to a place 
 - Reach: `w = exp(-(y0 - y) / tau_years - d / tau_km)`, where `d` is the great circle distance in kilometres from `p0` to `p`.
 - Each candidate is found with chance `k * w`.
 - The trip finds something with chance `min(cap, 1 - product(1 - k * w))`.
-- The antique it finds is drawn from the candidates in proportion to `w`.
+- The antique it finds is drawn from the candidates in proportion to `w`. A key antique to a place the office cannot reach yet counts `new_key_boost` times heavier, 12 for now, so the way on is not buried under the many relics of events that have no model. With the first key not yet held, about one trip in six brings it back.
 
 So what a trip finds is near in space and earlier in time, and the farther it is in either, the less likely. Finding the very place you are at is the most likely single find, and that gives duplicates. The current values are `k` 0.06, `cap` 0.6, `tau_years` 120 and `tau_km` 2500, which put a trip to London 1854 at about 38 percent and a trip to Vienna 1847 at about 32 percent. The roll is seeded by the dispatch, so a replay finds the same thing, and it belongs to the backend. The page shows the chance on the card of each place.
 

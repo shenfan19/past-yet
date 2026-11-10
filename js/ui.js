@@ -47,6 +47,29 @@ export function createUI(D, ctx) {
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
   const st = { tab: 'home', sub: null, share: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
+  // ---------- navigation history ----------
+  // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
+  // Render records the entry, so any way of changing page is covered without each place having to remember it.
+  const nav = { list: [], pos: -1, sid: String(Date.now()) };
+  const navSnap = () => ({ tab: st.tab, sub: st.sub, share: st.share, back: st.back });
+  const navSame = (a, b) => a.tab === b.tab && a.sub === b.sub && a.share === b.share;
+  function navCommit() {
+    const s = navSnap();
+    if (nav.pos < 0) {
+      nav.list = [s]; nav.pos = 0;
+      try { history.replaceState({ n: 0, sid: nav.sid }, ''); } catch (e) { /* history may be blocked */ }
+      return;
+    }
+    if (navSame(nav.list[nav.pos], s)) { nav.list[nav.pos] = s; return; }
+    nav.list = nav.list.slice(0, nav.pos + 1);
+    nav.list.push(s);
+    nav.pos += 1;
+    try { history.pushState({ n: nav.pos, sid: nav.sid }, ''); } catch (e) { /* history may be blocked */ }
+  }
+  function navStep(delta) {
+    if (nav.pos + delta < 0 || nav.pos + delta >= nav.list.length) return;
+    try { history.go(delta); } catch (e) { /* history may be blocked */ }
+  }
   const eraList = () => D.get('config.eras');
   const E = () => ctx.era(st.form.eraId);
 
@@ -100,7 +123,7 @@ export function createUI(D, ctx) {
   }
   const staffLink = (id) => wl('staff:' + id, staffName(D, id), staffTip(id));
   const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
-  const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`;
+  const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`;
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId }; st.suggest = null; }
   }
@@ -201,7 +224,8 @@ export function createUI(D, ctx) {
   function renderTabs() {
     const al = office.alerts();
     const icons = D.get('config.ui.tab_icons');
-    setHtml(tabsEl, Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k && !st.sub ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
+    const arrows = `<span class="navbtns"><button data-nav="-1" title="${esc(U.nav.back)}" aria-label="${esc(U.nav.back)}" ${nav.pos > 0 ? '' : 'disabled'}>◀</button><button data-nav="1" title="${esc(U.nav.forward)}" aria-label="${esc(U.nav.forward)}" ${nav.pos < nav.list.length - 1 ? '' : 'disabled'}>▶</button></span>`;
+    setHtml(tabsEl, arrows + Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k && !st.sub ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
   }
 
   // ---------- home: summary of the office ----------
@@ -224,7 +248,7 @@ export function createUI(D, ctx) {
         { k: 'state', label: U.office.col_state, w: '9%', val: (r) => r.state, cell: (r) => (r.hired ? `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel[r.state]}</span>` : `<span class="chip warn">${U.office.recruit}</span>`) },
         { k: 'favor', label: U.office.col_favor, w: '10%', val: (r) => r.favor, cell: (r) => (r.hired ? favorCell(r.id) : '') },
         { k: 'wage', label: U.office.col_wage, w: '8%', cls: 'num', val: (r) => r.wage, cell: (r) => (r.hired ? r1(r.wage) : '') },
-        { k: 'count', label: U.office.col_history, w: '12%', val: (r) => r.count, cell: (r) => (r.last ? `${r.count} · <button class="ghost" data-act="open" data-id="${r.last.id}">${esc(r.last.report.outcomeName)} ›</button>` : (r.hired ? `<span class="muted">${U.office.no_history}</span>` : '')) },
+        { k: 'count', label: U.office.col_history, w: '12%', val: (r) => r.count, cell: (r) => (r.last ? `${r.count} · <button class="ghost" data-act="open" data-id="${r.last.id}">${U.report.view}</button>` : (r.hired ? `<span class="muted">${U.office.no_history}</span>` : '')) },
         { k: 'act', label: '', w: '26%', cls: 'num', cell: (r) => (r.hired
           ? `${r.id === f.staffId ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${r.id}" ${r.state === 'ready' ? '' : 'disabled'}>${U.dispatch.pick}</button>`} <button data-act="gift" data-id="${r.id}" ${S.funds < D.get('config.favor.gift_cost') ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button>`
           : `<button data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>`) },
@@ -260,7 +284,7 @@ export function createUI(D, ctx) {
       return `<div class="card row sp"><div><b>${staffLink(d.spec.staffId)}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + r1(left) + ' ' + U.report.days}</div></div>
         <div class="row">${ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>`}</div></div>`;
     }).join('') : `<p class="muted">${U.office.nothing}</p>`;
-    const done = reports().slice(0, D.get('config.ui.recent_reports')).map((d) => `<tr><td>${staffLink(d.spec.staffId)}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
+    const done = reports().slice(0, D.get('config.ui.recent_reports')).map((d) => `<tr><td>${staffLink(d.spec.staffId)}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`).join('');
     return `
       <div id="home-stats" class="grid3 statrow">${statsHtml()}</div>
       <div class="sec">${U.office.transit}</div>${openHtml}
@@ -512,6 +536,8 @@ export function createUI(D, ctx) {
     window.scrollTo(0, st.scrollY[key] || 0);
     if (st.sub && st.share) share.draw(share.dispatch(st.sub));
     st.lastKey = key;
+    navCommit();
+    renderTabs();
     if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
   }
 
@@ -646,7 +672,17 @@ export function createUI(D, ctx) {
     if (t.name === 'staff') { if (staffState(t.value) === 'ready') { st.form.staffId = t.value; st.suggest = null; } render(); }
     else if (t.id === 'seed') { st.form.seed = Number(t.value) || 1; st.suggest = null; }
   });
+  window.addEventListener('popstate', (ev) => {
+    const n = ev.state && ev.state.sid === nav.sid ? ev.state.n : null;
+    if (n === null || !nav.list[n]) return;
+    nav.pos = n;
+    const s = nav.list[n];
+    st.tab = s.tab; st.sub = s.sub && ctx.S().dispatches.some((d) => d.id === s.sub) ? s.sub : null; st.share = !!(st.sub && s.share); st.back = s.back;
+    render();
+  });
   tabsEl.addEventListener('click', (ev) => {
+    const nb = ev.target.closest('[data-nav]');
+    if (nb) { navStep(Number(nb.dataset.nav)); return; }
     const b = ev.target.closest('[data-tab]');
     if (!b) return;
     st.tab = b.dataset.tab;

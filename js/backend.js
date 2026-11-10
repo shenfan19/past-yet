@@ -39,12 +39,15 @@ export function createLocalBackend(D) {
     const p = Math.min(AF.cap, 1 - list.reduce((a, x) => a * (1 - AF.k * x.w), 1));
     return { p, list };
   }
-  function findAntique(eraId, seed) {
+  // A key antique to a place the office cannot reach yet is favoured by new_key_boost when it is drawn, so the way on is not buried under the many relics of events that have no model.
+  function findAntique(eraId, seed, held = []) {
     const { p, list } = findOdds(eraId);
     if (!list.length || draw(seed, 'antique_find', eraId) >= p) return null;
-    const total = list.reduce((a, x) => a + x.w, 0);
+    const all = D.get('antiques.antiques');
+    const wt = (x) => x.w * (all[x.id].era && !held.includes(x.id) ? AF.new_key_boost : 1);
+    const total = list.reduce((a, x) => a + wt(x), 0);
     let at = draw(seed, 'antique_pick', eraId) * total;
-    for (const x of list) { at -= x.w; if (at < 0) return x.id; }
+    for (const x of list) { at -= wt(x); if (at < 0) return x.id; }
     return list[list.length - 1].id;
   }
   return {

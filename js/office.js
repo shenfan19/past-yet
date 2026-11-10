@@ -57,7 +57,7 @@ export function createOffice(X) {
     const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready') return null;
     const { res, report } = ctx.backend.dispatch(eraId, full);
-    const antique = ctx.backend.findAntique(eraId, full.seed);
+    const antique = ctx.backend.findAntique(eraId, full.seed, s.antiques);
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     const stay = E.vars[E.roles.stay].value;

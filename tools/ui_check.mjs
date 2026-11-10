@@ -44,6 +44,16 @@ try {
   await page.click('a.wl[data-id="staff:s_ning"] >> nth=0');
   await page.waitForSelector('.wiki');
   ok('staff link opens wiki and expands only its category', (await page.locator('.wcat[open]').count()) === 1);
+  // back and forward walk the pages, the wiki jump from the home page can be undone
+  await page.click('[data-nav="-1"]');
+  await page.waitForFunction(() => document.querySelector('#tabs [data-tab=home]').classList.contains('on'));
+  ok('back returns from a wiki jump to the page it came from', true);
+  await page.click('[data-nav="1"]');
+  await page.waitForSelector('.wiki');
+  ok('forward goes to the wiki again', (await page.locator('#tabs [data-tab=enc]').getAttribute('class')).includes('on'));
+  await page.goBack();
+  await page.waitForFunction(() => document.querySelector('#tabs [data-tab=home]').classList.contains('on'));
+  ok('the browser back button does the same', true);
   await page.click('[data-tab=home]');
   await page.click('[data-tab=enc]');
   ok('wiki keeps its state when you come back', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
@@ -137,6 +147,7 @@ try {
   ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= 0.6 && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_einstein_bern'); }));
   ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= 0.6; }); }));
   ok('some first trips bring something back and some do not', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s)) n++; return n > 80 && n < 280; }));
+  ok('the key to a place not yet held is found often enough to open it', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let k = 1; k <= 400; k++) if (b.findAntique('broad_street_1854', k, ['pump_rust']) === 'clinic_bell') n++; return n > 30; }));
   // spares: sell all but one of each
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques.push('relic_faraday_london', 'relic_faraday_london', 'relic_faraday_london'); window.__game.ui.render(); });
   const fundsC = await page.evaluate(() => window.__game.ctx.S().funds);
@@ -271,7 +282,7 @@ try {
   await page.click('[data-act=sfxtry][data-id=send]');
   await page.screenshot({ path: path.join(outDir, '9_settings.png'), fullPage: true });
   await page.click('[data-tab=home]');
-  ok('guest has five tabs', (await page.locator('#tabs button').count()) === 5);
+  ok('guest has five tabs', (await page.locator('#tabs [data-tab]').count()) === 5);
   await page.click('[data-tab=enc]');
   await page.waitForSelector('.wiki');
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
