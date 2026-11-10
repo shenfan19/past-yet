@@ -24,7 +24,7 @@ export function createListbox(X) {
     const head = `<tr>${spec.cols.map((c) => `<th class="${c.cls || ''}">${c.val ? `<button class="sortbtn" data-act="lsort" data-id="${spec.id}:${c.k}">${esc(c.label)}${ss.k === c.k ? (ss.dir > 0 ? ' ▲' : ' ▼') : ''}</button>` : esc(c.label)}</th>`).join('')}</tr>`;
     const body = (list) => list.map((r) => `<tr class="${r.cls || ''}">${spec.cols.map((c) => `<td class="${c.cls || ''}">${c.cell(r)}</td>`).join('')}</tr>`).join('');
     const pinHtml = pins.length ? `<div class="lpin"><div class="lpintitle">${esc(spec.pinTitle || L.chosen)}</div><table class="ltable">${colgroup}<tbody>${body(pins)}</tbody></table></div>` : '';
-    return `<div class="lbox">${pinHtml}<div class="lscroll" data-keep="${spec.id}" style="max-height:${spec.maxH || 260}px"><table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;
+    return `<div class="lbox">${pinHtml}<div class="lscroll" data-keep="${spec.id}" style="max-height:${spec.maxH}px"><table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;
   }
 
   function sort(idKey) {

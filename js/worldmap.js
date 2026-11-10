@@ -96,19 +96,20 @@ export function createWorldMap(X) {
   function axisHtml() {
     const s = m();
     const A = D.get('map.axis');
-    const Wd = 600, pad = 30, y0 = 36;
+    const TL = D.get('config.ui.timeline');
+    const Wd = TL.w, pad = TL.pad, y0 = TL.y;
     // recent years are spread out, the deep past is compressed: position follows the square root of the years before the end of the range
     const L = (y) => Math.sqrt(Math.max(0, s.to - y));
     const Lmax = L(s.from);
     const x = (yr) => pad + (1 - L(yr) / Lmax) * (Wd - 2 * pad);
-    let g = `<line class="ax" x1="${pad - 20}" x2="${Wd - pad + 20}" y1="${y0}" y2="${y0}"/>`;
+    let g = `<line class="ax" x1="${pad - TL.line_ext}" x2="${Wd - pad + TL.line_ext}" y1="${y0}" y2="${y0}"/>`;
     let ticks = A.ticks.filter((t) => t >= s.from && t <= s.to);
     if (ticks.length < A.min_ticks) {
       const step = niceStep(s.to - s.from);
       ticks = [];
       for (let yr = Math.ceil(s.from / step) * step; yr <= s.to; yr += step) ticks.push(yr);
     }
-    for (const yr of ticks) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - 4}" y2="${y0 + 4}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1)}</text>`;
+    for (const yr of ticks) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - TL.tick_half}" y2="${y0 + TL.tick_half}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1)}</text>`;
     for (const e of filtered()) {
       const i = info(e);
       const on = isSel(e);
@@ -116,7 +117,7 @@ export function createWorldMap(X) {
       const label = !e.catalog || on ? `<text x="0" y="-14" text-anchor="middle">${fmtYear(D, e.year)} ${esc(i.short)}${e.locked ? ' ' + U.dispatch.hidden_mark : ''}</text>` : '';
       g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''} ${e.catalog ? 'cat' : ''}" data-act="mapevent" data-id="${e.id}" data-tip="${esc(tipText)}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="${e.catalog ? -4 : -46}" y="${e.catalog ? -8 : -28}" width="${e.catalog ? 8 : 92}" height="${e.catalog ? 16 : 44}"/><circle class="ring" r="${e.catalog ? 6 : 9}"/><circle class="dot" r="${e.catalog ? 2.6 : 4.5}"/>${label}</g>`;
     }
-    return `<svg class="axis" viewBox="0 0 ${Wd} 70" role="img">${g}</svg>`;
+    return `<svg class="axis" viewBox="0 0 ${Wd} ${TL.h}" role="img">${g}</svg>`;
   }
 
   function eventRows() {

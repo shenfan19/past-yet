@@ -330,7 +330,7 @@ export function runDispatch(E, D, spec) {
   const O = D.get('config.office');
   const henv = { ...branch.final, ...sc };
   for (const [n, x] of Object.entries(base.final)) henv[baseName(n)] = x;
-  const hints = E.hints.filter((h) => h.fn(henv)).map((h) => h.key).slice(0, 2);
+  const hints = E.hints.filter((h) => h.fn(henv)).map((h) => h.key).slice(0, D.get('config.engine.report_hints'));
   const mult = branch.outcomeDef ? branch.outcomeDef.energy_mult : 0;
   const energy = Math.round(sc.change_amount * O.energy_per_change * mult);
   const gifts = branch.outcome === 'stay_and_gifts' ? O.gift_funds : 0;

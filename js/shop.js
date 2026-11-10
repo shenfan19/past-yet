@@ -36,7 +36,7 @@ export function createShop(X) {
     const foot = shopId === 'modern' && Object.keys(cart()).length
       ? `<span>${S_.total} <b>${total}</b></span> <button class="primary" data-act="cartbuy" ${total > S.funds ? 'disabled' : ''}>${S_.confirm}</button> <button class="ghost" data-act="cartclear">${S_.clear_cart}</button>` : '';
     return listbox.html({
-      id: 'shop_' + shopId, rows, maxH: 300, pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
+      id: 'shop_' + shopId, rows, maxH: D.get('config.ui.box_h.shop'), pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
       cols: [
         { k: 'name', label: S_.col_name, w: '36%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, T.items[r.id].desc, itemTip(r.id), !buyable(r.it) && DEV ? ' ' + hiddenChip() : '') },
         { k: 'tags', label: S_.col_tags, w: '22%', cell: (r) => tagChips(r.it.tags) },
@@ -53,7 +53,7 @@ export function createShop(X) {
     const S = ctx.S();
     const rows = Object.keys(D.get('items')).filter((id) => (S.inv[id] || 0) > 0 && tagOk(D.get('items.' + id).tags) && textOk(T.items[id].name, T.items[id].desc)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
     return listbox.html({
-      id: 'inv', rows, maxH: 220, empty: S_.inv_empty,
+      id: 'inv', rows, maxH: D.get('config.ui.box_h.inv'), empty: S_.inv_empty,
       cols: [
         { k: 'name', label: S_.col_name, w: '48%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, T.items[r.id].desc, itemTip(r.id)) },
         { k: 'stock', label: S_.stock, w: '14%', cls: 'num', val: (r) => S.inv[r.id], cell: (r) => S.inv[r.id] },
@@ -71,7 +71,7 @@ export function createShop(X) {
     });
     const rows = ids.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), lock: S.locks.includes(id) }));
     return listbox.html({
-      id: 'ants', rows, maxH: 240,
+      id: 'ants', rows, maxH: D.get('config.ui.box_h.ants'),
       cols: [
         { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
         { k: 'dest', label: U.dispatch.points_to, w: '18%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },

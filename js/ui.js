@@ -34,7 +34,7 @@ export function createUI(D, ctx) {
     u.searchParams.delete('lang');
     location.href = u.toString();
   });
-  document.getElementById('logo').textContent = U.logo;
+  document.getElementById('logo').textContent = D.get('config.meta.logo');
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
@@ -68,7 +68,7 @@ export function createUI(D, ctx) {
     return {
       eraId, plots: [], staffId: hiredIds()[0],
       items: Object.fromEntries(Object.keys(e.itemBindings).map((k) => [k, 0])),
-      seed: Math.floor(Math.random() * 100000) + 1,
+      seed: Math.floor(Math.random() * D.get('config.engine.seed_max')) + 1,
     };
   }
 
@@ -200,7 +200,7 @@ export function createUI(D, ctx) {
       return { id, hired, name: hired ? staffName(D, id) : U.office.unknown_candidate, state: hired ? staffState(id) : 'recruit', favor: hired ? S.staff[id].favor : 0, last: mine[0], count: mine.length, cls: hired ? '' : 'dim' };
     });
     const staffBox = listbox.html({
-      id: 'home_staff', rows: staffRows, maxH: 260,
+      id: 'home_staff', rows: staffRows, maxH: D.get('config.ui.box_h.home_staff'),
       cols: [
         { k: 'name', label: U.office.col_staff, w: '17%', val: (r) => r.name, cell: (r) => (r.hired ? staffLink(r.id) : `${r.name}${DEV ? ' ' + hiddenChip() + ' ' + esc(staffName(D, r.id)) : ''}`) },
         { k: 'traits', label: U.office.col_traits, w: '25%', cell: (r) => (r.hired ? staffTraits(D, r.id).map(traitChip).join('') : `<span class="muted">${U.office.recruit_hint_short}</span>`) },
@@ -231,12 +231,12 @@ export function createUI(D, ctx) {
       return `<div class="card row sp"><div><b>${staffLink(d.spec.staffId)}</b> · ${esc(T.eras[d.eraId].name)}<div class="muted">${ready ? U.office.pending : U.office.eta + ' ' + r1(left) + ' ' + U.report.days}</div></div>
         <div class="row">${ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>`}</div></div>`;
     }).join('') : `<p class="muted">${U.office.nothing}</p>`;
-    const done = reports().slice(0, 8).map((d) => `<tr><td>${staffLink(d.spec.staffId)}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
+    const done = reports().slice(0, D.get('config.ui.recent_reports')).map((d) => `<tr><td>${staffLink(d.spec.staffId)}</td><td>${esc(T.eras[d.eraId].short)}</td><td>${esc(d.report.outcomeName)}</td><td class="num">${r1(d.report.accounts.lives)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">›</button></td></tr>`).join('');
     return `
-      <div class="grid2">
-        <div class="card"><div class="muted">${U.office.funds}</div><div class="stat">${ri(S.funds)}</div></div>
-        <div class="card"><div class="muted">${U.office.energy}</div><div class="stat">${ri(S.energy)} <span class="muted" style="font-size:13px">/ ${O.home_cost}</span></div>
-          <div class="bar ${pct >= 100 ? 'ok' : ''}"><i style="width:${pct}%"></i></div><div class="muted">${U.office.home}${pct >= 100 ? ' · ' + U.office.reached_home : ''}</div></div>
+      <div class="grid2 statrow">
+        <div class="card mini"><span class="muted">${U.office.funds}</span><span class="stat">${ri(S.funds)}</span></div>
+        <div class="card mini"><span class="muted">${U.office.energy}</span><span class="stat">${ri(S.energy)} <span class="muted" style="font-size:13px">/ ${O.home_cost}</span></span>
+          <div class="bar ${pct >= 100 ? 'ok' : ''}" title="${esc(U.office.home)}"><i style="width:${pct}%"></i></div>${pct >= 100 ? `<span class="chip">${U.office.reached_home}</span>` : ''}</div>
       </div>
       <div class="sec">${U.office.mainline}</div><ul class="stages">${stageRows}</ul>
       <div class="sec">${U.office.staff}</div>${secLine}${staffBox}
@@ -288,7 +288,7 @@ export function createUI(D, ctx) {
     const overW = tot.weight > O.weight_capacity + 1e-9;
     const stState = staffState(f.staffId);
     const staffBox = listbox.html({
-      id: 'pick_staff', maxH: 200, pinTitle: U.dispatch.chosen_staff,
+      id: 'pick_staff', maxH: D.get('config.ui.box_h.pick_staff'), pinTitle: U.dispatch.chosen_staff,
       rows: hiredIds().map((id) => ({ id, name: staffName(D, id), state: staffState(id) })),
       pinned: (r) => r.id === f.staffId,
       cols: [
@@ -300,7 +300,7 @@ export function createUI(D, ctx) {
     });
     const carryRows = Object.keys(e.itemBindings).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
     const carryBox = listbox.html({
-      id: 'carry', maxH: 200, rows: carryRows, pinTitle: U.dispatch.carrying, empty: U.dispatch.no_stock,
+      id: 'carry', maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
       foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${O.weight_capacity}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
       cols: [
@@ -313,7 +313,7 @@ export function createUI(D, ctx) {
     const ET = T.eras[e.id];
     const plotRows = Object.keys(e.plots).map((pid) => ({ id: pid, name: ET.plots[pid].name, need: e.plots[pid].tech, ok: e.plots[pid].tech <= e.tech, cls: e.plots[pid].tech <= e.tech ? '' : 'dim' }));
     const plotBox = listbox.html({
-      id: 'plots', maxH: 170, rows: plotRows, pinTitle: U.dispatch.chosen_plots, pinned: (r) => f.plots.includes(r.id),
+      id: 'plots', maxH: D.get('config.ui.box_h.plots'), rows: plotRows, pinTitle: U.dispatch.chosen_plots, pinned: (r) => f.plots.includes(r.id),
       cols: [
         { k: 'name', label: U.shop.col_name, w: '44%', val: (r) => r.name, cell: (r) => `${esc(r.name)}<div class="oneline muted">${esc(ET.plots[r.id].desc)}</div>` },
         { k: 'who', label: U.dispatch.character, w: '24%', cell: (r) => wl(ET.plots[r.id].article, ET.plots[r.id].character) },
@@ -351,17 +351,19 @@ export function createUI(D, ctx) {
   }
 
   // ---------- report ----------
-  function lineChart(series, markers, ymax, W = 520, H = 170) {
-    const m = { l: 36, r: 10, t: 10, b: 22 };
+  function lineChart(series, markers, ymax) {
+    const CH = D.get('config.ui.chart');
+    const W = CH.w, H = CH.h;
+    const m = { l: CH.margin_l, r: CH.margin_r, t: CH.margin_t, b: CH.margin_b };
     const xmax = Math.max(...series.flatMap((s) => s.pts.map((p) => p[0])));
     const x = (v) => m.l + (v / xmax) * (W - m.l - m.r);
     const y = (v) => H - m.b - (v / ymax) * (H - m.t - m.b);
     let g = '';
-    for (let i = 0; i <= 4; i++) {
-      const v = (ymax * i) / 4;
+    for (let i = 0; i <= CH.y_lines; i++) {
+      const v = (ymax * i) / CH.y_lines;
       g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".12"/><text x="${m.l - 4}" y="${y(v) + 3}" text-anchor="end">${ri(v)}</text>`;
     }
-    for (let d = 0; d <= xmax; d += Math.ceil(xmax / 8)) g += `<text x="${x(d)}" y="${H - 6}" text-anchor="middle">${d}</text>`;
+    for (let d = 0; d <= xmax; d += Math.ceil(xmax / CH.x_labels)) g += `<text x="${x(d)}" y="${H - 6}" text-anchor="middle">${d}</text>`;
     for (const mk of markers) if (mk.x !== null && mk.x !== undefined) g += `<line x1="${x(mk.x)}" x2="${x(mk.x)}" y1="${m.t}" y2="${H - m.b}" stroke="${mk.color}" stroke-dasharray="${mk.dash || '3 3'}" opacity=".7"/>`;
     for (const s of series) g += `<polyline fill="none" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ''} points="${s.pts.map((p) => x(p[0]).toFixed(1) + ',' + y(p[1]).toFixed(1)).join(' ')}"/>`;
     return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`;
@@ -383,8 +385,8 @@ export function createUI(D, ctx) {
     };
     const tl = R.timeline.map((t, i) => `<li class="${t.tag || ''}"><div>${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`).join('');
     const C = R.chart;
-    const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * 1.1;
-    const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * 1.1;
+    const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * D.get('config.ui.chart.headroom');
+    const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * D.get('config.ui.chart.headroom');
     const pts = (rows, k) => rows.map((p) => [p.day, p[k]]);
     const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }];
     const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${U.report.legend_handle_hist}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${U.report.legend_handle_branch}</span></div>`;
@@ -439,7 +441,15 @@ export function createUI(D, ctx) {
     const A = U.about;
     const M = D.get('config.meta');
     const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
-    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x) => `<p>${esc(x)}</p>`).join('')}`).join('');
+    // the first mention of a name on this page links to its page
+    const inline = { 'Life Matters': M.links.lm, 'Care for You': M.links.care, 'Fan Shen': M.links.author };
+    const linked = new Set();
+    const para = (x) => {
+      let h = esc(x);
+      for (const [name, href] of Object.entries(inline)) if (!linked.has(name) && h.includes(name)) { linked.add(name); h = h.replace(name, link(href, name)); }
+      return `<p>${h}</p>`;
+    };
+    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map(para).join('')}`).join('');
     const jumps = A.sections.map((sec, i) => `<a class="wl" data-act="aboutjump" data-id="about-${i}">${esc(sec.h)}</a>`).join(' · ');
     const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
     return `<div class="about">
@@ -455,7 +465,6 @@ export function createUI(D, ctx) {
     const sources = Object.keys(refs).filter((id) => refs[id].status === 'pending').map((id) => `<li>${esc(D.get('enc_text.refs.' + id))} <span class="chip warn">${U.enc.pending}</span></li>`).join('');
     const go = Object.entries(H.go).map(([k, g]) => `<button class="gobtn" data-act="go" data-id="${k}"><b>${esc(g.name)}</b><span class="muted">${esc(g.desc)}</span></button>`).join('');
     return `
-      <div class="hero"><span class="logo big">${esc(U.logo)}</span><div><h2>${esc(U.title)}</h2><div class="muted">${esc(U.subtitle)}</div></div></div>
       <p class="lead">${esc(H.lead)}</p>
       <div class="grid2" style="margin-top:12px">${go}</div>
       ${officeHtml()}
@@ -523,7 +532,7 @@ export function createUI(D, ctx) {
       st.suggest = ctx.backend.suggest(e.id, formSpec(), ctx.S().inv);
       st.searching = false;
       render();
-    }, 30);
+    }, D.get('config.ui.search_delay_ms'));
   }
 
   view.addEventListener('click', (ev) => {
@@ -586,10 +595,11 @@ export function createUI(D, ctx) {
   });
   document.addEventListener('mousemove', (ev) => {
     if (tipEl.style.display === 'none') return;
-    const pad = 14;
+    const TT = D.get('config.ui.tooltip');
+    const pad = TT.offset, edge = TT.edge;
     const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
-    tipEl.style.left = Math.max(4, Math.min(window.innerWidth - w - 4, ev.clientX + pad)) + 'px';
-    tipEl.style.top = Math.max(4, Math.min(window.innerHeight - h - 4, ev.clientY + pad)) + 'px';
+    tipEl.style.left = Math.max(edge, Math.min(window.innerWidth - w - edge, ev.clientX + pad)) + 'px';
+    tipEl.style.top = Math.max(edge, Math.min(window.innerHeight - h - edge, ev.clientY + pad)) + 'px';
   });
   view.addEventListener('input', (ev) => {
     const t = ev.target;

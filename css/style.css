@@ -42,9 +42,9 @@ th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line
 th { color: var(--ink2); font-weight: 600; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
-#top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 2px solid var(--ink); background: var(--paper2); }
+#top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--paper2); }
 .brand { display: flex; gap: 12px; align-items: center; }
-.logo { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--stamp); color: var(--stamp); border-radius: 4px; font: 700 22px "Noto Serif SC", serif; transform: rotate(-6deg); }
+.logo { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--stamp); color: var(--stamp); border-radius: 4px; font: 700 32px/0.7 "Noto Serif SC", serif; padding-bottom: 3px; transform: rotate(-6deg); }
 #top h1 { font-size: 20px; }
 #subtitle { font-size: 12px; color: var(--ink2); letter-spacing: .08em; }
 #lang { margin-left: 8px; }
@@ -75,6 +75,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .bar > i { display: block; height: 100%; background: var(--stamp); }
 .bar.ok > i { background: var(--good); }
 .bar.over > i { background: var(--warn); }
+.card.mini { display: flex; align-items: center; gap: 12px; padding: 8px 14px; }
+.card.mini .bar { flex: 1; min-width: 60px; }
+.statrow { margin-top: 12px; }
 .stat { font: 600 22px "Noto Serif SC", serif; }
 .stamp { display: inline-block; border: 3px double var(--stamp); color: var(--stamp); padding: 2px 12px; font: 700 18px "Noto Serif SC", serif; transform: rotate(-3deg); border-radius: 4px; letter-spacing: .1em; }
 .quote { border-left: 3px solid var(--stamp); padding: 2px 12px; font-family: "Noto Serif SC", serif; font-size: 17px; margin: 10px 0; }
@@ -125,8 +128,9 @@ svg.axis text.yr, svg.axis text.edge { fill: var(--ink2); font-size: 11px; }
 @media (max-width: 560px) { #view { padding: 12px; } .item { grid-template-columns: 1fr; } }
 
 .hero { display: flex; gap: 16px; align-items: center; margin: 8px 0 12px; }
-.logo.big { width: 72px; height: 72px; font-size: 40px; }
+.logo.big { width: 72px; height: 72px; font-size: 58px; padding-bottom: 6px; }
 .lead { font: 600 18px/1.7 "Noto Serif SC", "Songti SC", SimSun, serif; margin: 8px 0 4px; }
+#view > .lead:first-child { margin-top: 24px; }
 .gobtn { display: grid; gap: 2px; text-align: left; padding: 12px 14px; }
 .gobtn b { font-family: "Noto Serif SC", serif; font-size: 16px; }
 .refs { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 6px; font-size: 12px; }

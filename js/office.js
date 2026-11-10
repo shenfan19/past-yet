@@ -176,7 +176,7 @@ export function createOffice(X) {
       if (staffState(staffId) !== 'ready') continue;
       const count = (id) => s.dispatches.filter((d) => d.eraId === id).length;
       const eraId = [...eras].sort((a, b) => count(a) - count(b))[0];
-      launch(eraId, { seed: (s.seq + 1) * D.get('config.engine.mc_seed_stride') % 100000 + 1, staffId, items: autoKit(eraId), plots: autoPlots(eraId) }, { auto: true });
+      launch(eraId, { seed: (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, staffId, items: autoKit(eraId), plots: autoPlots(eraId) }, { auto: true });
     }
     ctx.save();
   }

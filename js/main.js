@@ -23,7 +23,7 @@ const D = await loadData(async (p) => {
 }, (t) => window.jsyaml.load(t), pickLang);
 
 document.documentElement.lang = D.lang;
-document.title = D.get('text.ui.title') + ' · ' + D.get('text.ui.subtitle');
+document.title = [D.get('text.ui.title'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');
 
 const backend = createLocalBackend(D);
 

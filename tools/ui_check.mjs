@@ -190,7 +190,7 @@ try {
   // English, language switch and fallback
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
   await page.waitForSelector('.lead');
-  ok('English title', (await page.title()) === 'The Teleporter · Prototype');
+  ok('English title', (await page.title()) === 'The Teleporter');
   ok('English tab label', (await page.locator('#tabs [data-tab=dispatch]').innerText()).includes('Dispatch'));
   await page.click('[data-tab=dispatch]');
   await page.waitForSelector('svg.map');
