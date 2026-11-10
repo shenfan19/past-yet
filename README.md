@@ -54,7 +54,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - `data/catalog.yaml` lists 100 famous events across the world, mostly science, technology, philosophy, art and ideas, each with a place, a year and a field. Names, stories and relics are in the language files under `catalog`.
 - Each event has a relic, made into an antique when the data loads. A relic is found on trips and makes its event readable in the map and the wiki. Two events have a full branch simulation. The others are played as small stories, a trip of the traveller against the event with no kit and no branch, which pays by how it went.
 - The map groups nearby events into one pin, and the grouping radius shrinks as you zoom in. The time axis spreads recent years and compresses the deep past.
-- `data/staff.yaml` has twenty employees with a gender, an age and a job, and thirteen traits. Event summaries are written from general knowledge and unchecked, the wiki marks them so.
+- `data/staff.yaml` has twenty employees with a gender, an age and a job, and six traits. Event summaries are written from general knowledge and unchecked, the wiki marks them so.
 
 ## Engine boundary
 
