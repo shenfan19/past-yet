@@ -1,7 +1,6 @@
 // Office rules without any DOM: the game clock, dispatch lifecycle, secretary and favor, the auto mode and the alerts.
 // The clock is real time scaled by a speed, pausable like a grand strategy game. Everything is in game days.
-import * as sim from './sim.js';
-import { buildReport, staffTraits } from './narrate.js';
+import { staffTraits } from './narrate.js';
 
 export function createOffice(X) {
   const { D, ctx } = X;
@@ -55,10 +54,9 @@ export function createOffice(X) {
     const E = ctx.era(eraId);
     const s = S();
     const full = { ...spec, favor: s.staff[spec.staffId].favor };
-    const err = sim.validateSpec(E, D, full, s.inv);
+    const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready') return null;
-    const res = sim.runDispatch(E, D, full);
-    const report = buildReport(D, E, res);
+    const { res, report } = ctx.backend.dispatch(eraId, full);
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     const anchor = X.anchorOf(eraId);
     if (!s.locks.includes(anchor)) s.locks.push(anchor);

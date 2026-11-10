@@ -1,0 +1,143 @@
+name: Vienna General Hospital 1847
+short: Maternity ward
+place_name: Maternity ward, Vienna General Hospital
+tags:
+  - medical
+  - infection
+  - obstetrics
+  - c19
+  - vienna
+  - history
+event_titles:
+  door_block: Turned back by seniors
+  time_strain: Time slip
+  pocket: Light fingers
+plots:
+  forceps:
+    name: Hand Semmelweis the design of obstetric forceps
+    desc: Saves more mothers in a difficult birth, and the era's craft can make them.
+    character: Ignaz Semmelweis
+    article: people:semmelweis
+  germ_theory:
+    name: Explain germ theory to Semmelweis
+    desc: Needs the craft of microbiology, which this era does not have.
+    character: Ignaz Semmelweis
+    article: people:semmelweis
+blurb: Childbed fever, two maternity wards, and a young doctor who put the death counts side by side. The task is not to beat a disease but to persuade a room of seniors who will not wash their hands.
+handle_label: Washing rule starts
+protagonist: Ignaz Semmelweis
+protagonist_role: Assistant obstetrician who has just found that the dissecting room and the delivery room deaths are linked
+stay: Stay twenty-one days
+items:
+  chlorine_tablet:
+    name: Chlorinated lime tablet
+    desc: One tablet makes a basin of washing solution, enough for dozens of examinations. Cheap, but someone has to wash.
+  handbook:
+    name: Modern nursing handbook
+    desc: Raises skill in caring for mothers. Also a gift for Semmelweis.
+  recall_charm:
+    name: Recall charm
+    desc: Pulls an employee back when they collapse. Without it, all gear is lost.
+strategies:
+  focus:
+    balanced:
+      name: Balanced
+      desc: Care for mothers with fever, teach washing when there is a chance, see Semmelweis when there is time.
+    cure:
+      name: Mothers first
+      desc: Bedside care first, little persuading about washing.
+    prevent:
+      name: Teach washing first
+      desc: Persuade people in the ward one by one and hand out washing solution.
+    ally:
+      name: Work with Semmelweis
+      desc: Spend time helping him organise the numbers and go with him to the people he must see.
+  on_block:
+    yield:
+      name: Yield
+      desc: If a senior turns you back, let it be.
+    insist:
+      name: Insist
+      desc: Stand at the ward door and finish speaking, do not retreat even if the solution is confiscated.
+    appeal:
+      name: Appeal
+      desc: Turn and go to Semmelweis and ask him to step in.
+encyclopedia:
+  history:
+    - text: In 1847 the maternal death rate in the first maternity ward of Vienna General Hospital was clearly higher than in the second.
+      check: true
+    - text: The first ward was staffed by doctors and medical students, who often came straight from dissecting corpses.
+      check: true
+    - text: In mid May 1847 Semmelweis required doctors and students to wash their hands in a chlorinated lime solution before examining mothers.
+      check: true
+    - text: After the rule took effect the death rate fell markedly within a few months.
+      check: true
+    - text: Mainstream colleagues did not accept his explanation, and germ theory had not been established yet.
+      check: true
+  regret:
+    - The numbers are in front of you, and still you wait for the powerful to nod. On the main timeline the washing rule came in mid May.
+    - He never lived to see his colleagues truly accept him.
+events:
+  door_block_stubborn: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and {d.wash_supply:i} portions of washing solution are confiscated.
+  door_block_stubborn_empty: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and is shown out of the ward.
+  door_block_insist: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} stands at the ward door and finishes speaking, and {d.wash_supply:i} portions of washing solution are confiscated.
+  door_block_insist_empty: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} stands at the ward door and finishes speaking, and is shown out.
+  door_block_appeal: A senior doctor keeps {staff} out of the ward. {staff} does not force the way, turns and goes to Semmelweis to ask him to speak up.
+  door_block_yield: A senior doctor keeps {staff} out of the ward. {staff} steps back without a quarrel, and half a day is wasted.
+  time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+  pocket: '{date}: {staff} sees a small object left unattended in the ward and slips it into a pocket. A student saw it and looks at them differently now.'
+milestones:
+  first_treat: '{date}: {staff} sits by the first feverish mother and nurses her until the fever eases a little.'
+  first_protect: '{date}: {staff} persuades the first group of doctors and students to wash their hands in the basin before examining.'
+  met_snow: '{date}: {staff} meets Semmelweis in the corridor. He is going through the death counts of the two wards and looks up: where did you learn these numbers.'
+  snow_trusts: '{date}: Semmelweis starts to treat {staff} as one of his own and brings out his unfinished tables to compare.'
+  snow_convinced: '{date}: Semmelweis no longer merely suspects. He has laid the numbers out in a table nobody can avoid, and he believes the stranger.'
+  board_moves: '{date}: The clinic director starts to give way and says handwashing before examinations might be tried.'
+  handle_off_history: '{date}: The washing rule starts in the first maternity ward. The main timeline does not change.'
+  handle_off_early: '{date}: The washing rule starts {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+  trust_won: '{date}: Nurses and students in the ward no longer avoid {staff}, and some come to ask how to wash.'
+  exhausted: '{date}: {staff} is so tired they cannot stand steady and is forced to rest.'
+  outbreak_fades: '{date}: Few mothers still have a fever.'
+summary:
+  near_death: '{staff} collapses in the maternity ward and is pulled back by the recall charm. Life saved, at a price.'
+  stay_and_gifts: '{staff} finished the task but did not come back. They left a letter saying they want to stay with these mothers a while longer. Gifts will arrive later.'
+  gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+  legend: '{staff} left a legend in the maternity ward. The washing rule started {advance_days:1} days earlier than in history.'
+  perfect: '{staff} completed the task in the maternity ward and came back safe. {base_D:i} mothers died on the main timeline, {D:i} on this branch.'
+  scramble: '{staff} was kept out of the ward by seniors again and again and finally fled back with a joke to tell.'
+  modest: '{staff} spent twenty-one days in the maternity ward, did what was within reach, and came back safe.'
+quotes:
+  near_death:
+    - trait: kind
+      text: At the end I was still thinking about whether anyone was with the mother by the bed.
+    - text: I thought I could hold out a little longer.
+  stay_and_gifts:
+    - trait: kind
+      text: I remember every one of their names. I want to stay a while.
+    - text: They need people here.
+  gave_up:
+    - trait: homesick
+      text: I want to go home. That is all.
+    - text: I am not cut out for this.
+  legend:
+    - text: I only helped him put the numbers in front of the people who needed to see them.
+  perfect:
+    - trait: kind
+      text: I could save these few, not everyone.
+    - trait: curious
+      text: So that is how it is, what is on your hands carries the sickness.
+    - text: Did what had to be done.
+  scramble:
+    - trait: stubborn
+      text: They will understand sooner or later. Just later.
+    - text: Next time I want to go to him first, and persuade the others after.
+  modest:
+    - trait: glib
+      text: I said all I had to say. Whether they believe it is up to them.
+    - text: With one more item I might have saved a few more.
+hints:
+  lost_ors: A lot of washing solution was confiscated. Next time let the employee yield, or go to Semmelweis first.
+  unused_protect: Washing solution was left over. The seniors would not listen, it was not a shortage. Try working with Semmelweis first to lower the resistance.
+  unused_ors: Supplies were left over.
+  ally_gap: Semmelweis's evidence is still thin. The handbook helps him, provided the employee spends time with him.
+  none: Change one thing and send again with the same seed, that makes the comparison clearest.

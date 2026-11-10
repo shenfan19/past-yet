@@ -1,6 +1,5 @@
 // Wiki style encyclopedia: a left list with search and tag filter, a right article with links, a back and forward history.
 // Locked articles show as a question mark for visitors. In dev mode they show in full with a hidden mark, and the model categories appear.
-import * as sim from './sim.js';
 import { staffName, staffTraits, fmtYear, staffProfile } from './narrate.js';
 
 const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
@@ -93,7 +92,7 @@ export function createWiki(X) {
       add({
         id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: { staff: id }, refs: ['game'],
         body: () => {
-          const stats = sim.staffStats(D, id);
+          const stats = ctx.backend.staffStats(id);
           const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
           const traits = staffTraits(D, id).map((t) => a('traits:' + t, T.traits[t])).join(' ');
           return `<div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div>`;

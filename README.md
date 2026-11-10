@@ -22,8 +22,9 @@ Then open http://127.0.0.1:8778/index.html. Any static file server works.
 
 ## How it is built
 
-- `data/eras/*.lm.yaml`: one model file per era, in LM format blocks (variables, equations, simulation, optimization) plus extensions: agents, utility-chosen actions, seeded events, milestones, outcomes, counterfactual scoring, item bindings and per-variable provenance.
-- `data/*.yaml`: office numbers, items, staff, all text. The code reads these files and fails on a missing key. Expressions are compiled without `eval`, and an undeclared variable fails at load.
+- `cards/`: the source of all content, one yaml card per thing, see `cards/README.md`. `data/` is generated from it by `node tools/build_data.mjs`, do not edit `data/` by hand.
+- `cards/eras/<id>/model.lm.yaml` is copied to `data/eras/<id>.lm.yaml`: one model file per era, in LM format blocks (variables, equations, simulation, optimization) plus extensions: agents, utility-chosen actions, seeded events, milestones, outcomes, counterfactual scoring, item bindings and per-variable provenance.
+- `data/*.yaml`: office numbers, items, staff, all text, as built from the cards. The code reads these files and fails on a missing key. Expressions are compiled without `eval`, and an undeclared variable fails at load.
 - `js/sim.js`: generic interpreter. It knows nothing about any era. Same seed and same inputs give the same result, and a random draw depends only on seed, event id and step.
 - `js/narrate.js`: turns the structured log into report text. The only place an optional AI narrator would plug in.
 - `js/ui.js`: the page.
@@ -54,3 +55,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - Each event has a relic, made into an antique when the data loads. Buying a relic puts its event on the map and in the wiki. The events have no simulation model yet, so they can be found and read but not dispatched to.
 - The map groups nearby events into one pin, and the grouping radius shrinks as you zoom in. The time axis spreads recent years and compresses the deep past.
 - `data/staff.yaml` has twenty employees with a gender, an age and a job, and thirteen traits. Event summaries are written from general knowledge and unchecked, the wiki marks them so.
+
+## Engine boundary
+
+The interface in `js/` shows data and sends requests, it does not run the simulation. Everything it needs from the engine goes through `js/backend.js`, and `node tools/check_boundary.mjs` fails if another file imports the engine. A server backend with the same methods could keep the yaml and run the engine on the server, leaving the page to carry data only.

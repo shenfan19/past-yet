@@ -1,5 +1,5 @@
 import { loadData } from './data.js';
-import * as sim from './sim.js';
+import { createLocalBackend } from './backend.js';
 import { createUI } from './ui.js';
 
 // Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
@@ -25,8 +25,7 @@ const D = await loadData(async (p) => {
 document.documentElement.lang = D.lang;
 document.title = D.get('text.ui.title') + ' · ' + D.get('text.ui.subtitle');
 
-const eras = {};
-for (const id of D.get('config.eras')) eras[id] = sim.compileEra(D.get('era_raw.' + id), D, id);
+const backend = createLocalBackend(D);
 
 const KEY = D.get('config.save.key');
 const VERSION = D.get('config.save.version');
@@ -62,7 +61,8 @@ let S = load();
 const ctx = {
   S: () => S,
   now: () => Date.now(),
-  era: (id) => eras[id],
+  backend,
+  era: (id) => backend.eraInfo(id),
   eraSource: (id) => D.get('era_src.' + id),
   save() {
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage may be blocked, the game still runs */ }
@@ -74,6 +74,6 @@ const ctx = {
 };
 
 const ui = createUI(D, ctx);
-window.__game = { D, sim, ctx, ui, eras };
+window.__game = { D, ctx, ui, backend };
 ui.render();
 setInterval(() => ui.tick(), D.get('config.ui.refresh_ms'));

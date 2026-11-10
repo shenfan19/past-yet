@@ -1,0 +1,19 @@
+ui:
+  model:
+    note: The backend model is this one YAML. Every game rule number is in it, the code only interprets it.
+    variables: Variables
+    provenance: Source
+    show_yaml: Show full YAML
+    count: variables
+    ext: Extensions on LM 1.0
+    ext_text:
+      agents: Multi-agent. Each agent has its own state and each step picks the available action with the highest utility, written as a level input.
+      actions: Preconditions and utilities are expressions over declared variables.
+      events: Seeded random events. The draw depends only on the seed, the event id and the occurrence index.
+      milestones: Report sentences that fire once when an expression turns true.
+      outcomes: Ordered end states, the first one that is true applies.
+      scoring: Counterfactual scoring. The same seed is run again without the employee as the comparison.
+      provenance: Every variable and event says where it comes from - historical, LM model, game assumption, calibrated.
+      item_bindings: Items chosen before departure are written to their variables once on arrival.
+      strategies: An employee's field tendencies come from their traits. Whoever is sent uses their tendencies, each option writes some input variables.
+    blocks: Blocks

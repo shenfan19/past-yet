@@ -1,5 +1,4 @@
-import * as sim from './sim.js';
-import { buildReport, diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile } from './narrate.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
@@ -75,7 +74,7 @@ export function createUI(D, ctx) {
 
   // ---------- helpers ----------
   const staffState = (id) => office.staffState(id);
-  const totals = () => sim.itemTotals(D, st.form.items);
+  const totals = () => ctx.backend.itemTotals(st.form.items);
   const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: { ...st.form.items }, plots: [...st.form.plots] });
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const tagLabel = (tag) => U.report[tag];
@@ -90,7 +89,7 @@ export function createUI(D, ctx) {
     return [T.traits[t], mods, pol, pref].filter(Boolean).join('\n');
   }
   function staffTip(id) {
-    const stats = sim.staffStats(D, id);
+    const stats = ctx.backend.staffStats(id);
     const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
     return [staffProfile(D, id), T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
   }
@@ -504,7 +503,7 @@ export function createUI(D, ctx) {
     render();
     setTimeout(() => {
       const e = E();
-      st.suggest = sim.optimize(e, D, { spec: formSpec(), stock: ctx.S().inv });
+      st.suggest = ctx.backend.suggest(e.id, formSpec(), ctx.S().inv);
       st.searching = false;
       render();
     }, 30);

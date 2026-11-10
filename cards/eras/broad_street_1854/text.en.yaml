@@ -1,0 +1,110 @@
+name: Broad Street, London 1854
+short: Broad St.
+place_name: Broad Street, Soho, London
+tags:
+  - medical
+  - infection
+  - cholera
+  - c19
+  - london
+  - history
+event_titles:
+  door_block: Turned away at the door
+  time_strain: Time slip
+  pocket: Light fingers
+plots:
+  microscope:
+    name: Give Snow a microscope
+    desc: Lets him show people what is in the water more clearly.
+    character: John Snow
+    article: people:snow
+  germ_theory:
+    name: Explain germ theory to Snow
+    desc: Needs the craft of microbiology, which this era does not have.
+    character: John Snow
+    article: people:snow
+blurb: Cholera, one pump, and a doctor nobody has listened to yet. Close, cheap, and the effect of hygiene and medicine is clear.
+handle_label: Pump handle removed
+protagonist: John Snow
+protagonist_role: A doctor who has said for three years that cholera comes from drinking water
+stay: Stay seven days
+plan_baseline: Main timeline
+encyclopedia:
+  history:
+    - text: On the night of 31 August 1854, cholera broke out around Broad Street in Soho, London.
+      check: true
+    - text: The popular explanation was miasma, bad air.
+      check: true
+    - text: Snow had already proposed in 1849 that cholera spreads through water. Most colleagues did not accept it.
+      check: true
+    - text: On 8 September the handle of the Broad Street pump was removed.
+      check: true
+    - text: By the time the handle was removed the outbreak was already declining and many residents had left.
+      check: true
+  regret:
+    - You can save today's patients but not tomorrow's. On the main timeline the handle came off on day eight.
+    - Data and maps matter more than medicine, but making people believe data takes time.
+events:
+  door_block_stubborn: A neighbour blocks the door, saying it is miasma and no stranger may touch the patient. {staff} is stubborn, does not give way, is thrown out of one house and loses {d.ors_stock:i} packets of rehydration salts.
+  door_block_stubborn_empty: A neighbour blocks the door, saying it is miasma and no stranger may touch the patient. {staff} is stubborn, does not give way, and is thrown out.
+  door_block_insist_empty: A neighbour blocks the door, saying it is miasma. {staff} stands at the door and finishes speaking, and is pushed out.
+  door_block_insist: A neighbour blocks the door, saying it is miasma. {staff} stands at the door and finishes speaking, is pushed out, and loses {d.ors_stock:i} packets of rehydration salts.
+  door_block_appeal: A neighbour blocks the door, saying it is miasma. {staff} does not force the way, turns and goes to Snow to ask him to speak up.
+  door_block_yield: A neighbour blocks the door, saying it is miasma. {staff} steps back without a quarrel, and half a day is wasted.
+  time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+  pocket: '{date}: {staff} sees a small object left unattended and slips it into a pocket. A neighbour saw it and looks at them differently now.'
+milestones:
+  first_treat: '{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak.'
+  first_protect: '{date}: {staff} hands the first chlorine tablets to a few households willing to listen, and teaches them to boil or treat the water.'
+  met_snow: '{date}: {staff} meets Snow at the street corner. He listens closely but keeps asking one thing: where is the evidence.'
+  snow_trusts: '{date}: Snow starts to treat {staff} as one of his own and brings out the house by house list he has been keeping to compare.'
+  snow_convinced: '{date}: Snow no longer merely suspects the water. He has enough names, and believes what the stranger told him.'
+  board_moves: '{date}: The parish board starts to give way and says the pump might be shut for now.'
+  handle_off_history: '{date}: The pump handle is removed. The main timeline does not change.'
+  handle_off_early: '{date}: The pump handle is removed {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+  trust_won: '{date}: People on the corner no longer keep {staff} out, and some knock on their own.'
+  exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+  outbreak_fades: '{date}: The number of patients falls to around single digits. Many people have left the area.'
+summary:
+  near_death: '{staff} collapses on Broad Street and is pulled back by the recall charm. Life saved, at a price.'
+  stay_and_gifts: '{staff} finished the task but did not come back. They left a letter saying they want to stay with these people a while longer. Gifts will arrive later.'
+  gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+  legend: '{staff} left a legend on Broad Street. The pump handle came off {advance_days:1} days earlier than in history.'
+  perfect: '{staff} completed the task on Broad Street and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+  scramble: '{staff} was turned away at the door again and again and finally fled back with a joke to tell.'
+  modest: '{staff} spent seven days on Broad Street, did what was within reach, and came back safe.'
+quotes:
+  near_death:
+    - trait: kind
+      text: At the end I was still wondering whether anyone was sitting with the patient by the bed.
+    - text: I thought I could hold out a little longer.
+  stay_and_gifts:
+    - trait: kind
+      text: I remember every one of their names. I want to stay a while.
+    - text: They need people here.
+  gave_up:
+    - trait: homesick
+      text: I want to go home. That is all.
+    - text: I am not cut out for this.
+  legend:
+    - text: I only told them what they needed to hear.
+  perfect:
+    - trait: kind
+      text: I could save today's patients, not tomorrow's.
+    - trait: curious
+      text: So that is how it is, water really does carry the sickness away.
+    - text: Did what had to be done.
+  scramble:
+    - trait: stubborn
+      text: They will understand sooner or later. Just later.
+    - text: Next time I want to bring more.
+  modest:
+    - trait: glib
+      text: I said all I had to say. Whether they believe it is up to them.
+    - text: With one more item I might have saved one more household.
+hints:
+  lost_ors: A lot of rehydration salts were lost. Next time let the employee yield, or bring more.
+  unused_protect: Chlorine was left over. The limit was the neighbours' trust, not the tablets. Let the employee help patients first to build trust.
+  unused_ors: Rehydration salts were left over. The employee may have spent time elsewhere, or patients were not let in.
+  ally_gap: Snow's evidence is still thin. The handbook helps him, provided the employee spends time with him.
+  none: Change one thing and send again with the same seed, that makes the comparison clearest.
