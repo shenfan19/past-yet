@@ -38,7 +38,7 @@ try {
   await page.click('[data-tab=home]');
   await page.click('[data-tab=enc]');
   ok('wiki keeps its state when you come back', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
-  await page.click('[data-tab=dispatch]');
+  await page.click('[data-tab=home]');
   await page.waitForSelector('svg.map');
   const vb0 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
   await page.click('[data-act=mapz][data-id=in]');
@@ -101,24 +101,43 @@ try {
   // shop: the used anchor is locked, antiques sell and buy, items buy and sell
   await page.click('[data-tab=shop]');
   await page.waitForSelector('[data-act=antlock]');
-  ok('used anchor is locked and cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
+  ok('anchored antique cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
+  ok('the last open place cannot be released', await page.locator('[data-act=antlock][data-id=pump_rust]').isDisabled());
+  await page.evaluate(() => { window.__game.ctx.S().antiques.push('clinic_bell'); window.__game.ui.render(); });
+  ok('a found antique opens nothing until it is anchored', await page.evaluate(() => !window.__game.ctx.S().locks.includes('clinic_bell')));
+  await page.click('[data-act=antlock][data-id=clinic_bell]');
+  ok('anchoring opens its place', await page.evaluate(() => window.__game.ctx.S().locks.includes('clinic_bell')));
   await page.click('[data-act=antlock][data-id=pump_rust]');
-  ok('unlock then sell possible', !(await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled()));
+  ok('release then sell possible', !(await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled()));
   await page.click('[data-act=antlock][data-id=pump_rust]');
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'clinic_bell'); S.antiques.push('clinic_bell'); window.__game.ui.render(); });
+  ok('the only copy of an anchored antique cannot be sold', await page.locator('[data-act=antsell][data-id=clinic_bell]').isDisabled());
+  await page.evaluate(() => { window.__game.ctx.S().antiques.push('clinic_bell'); window.__game.ui.render(); });
+  const fundsA = await page.evaluate(() => window.__game.ctx.S().funds);
+  await page.click('[data-act=antsell][data-id=clinic_bell]');
+  ok('a spare copy sells for funds and the anchored one stays', await page.evaluate((f) => window.__game.ctx.S().funds > f && window.__game.ctx.S().antiques.filter((x) => x === 'clinic_bell').length === 1 && window.__game.ctx.S().locks.includes('clinic_bell'), fundsA));
+  // time energy buys future goods, funds buy modern ones
+  await page.evaluate(() => { window.__game.ctx.S().energy = 100; window.__game.ui.render(); });
+  const fundsB = await page.evaluate(() => window.__game.ctx.S().funds);
+  await page.click('[data-act=cartinc][data-id=radiation_shield]');
+  await page.click('[data-act=cartbuy][data-id=future]');
+  ok('future goods are paid in time energy', await page.evaluate((f) => window.__game.ctx.S().energy === 20 && window.__game.ctx.S().inv.radiation_shield === 1 && window.__game.ctx.S().funds === f, fundsB));
+  // the antique roll is the backend's, seeded, and the chance falls to a floor
+  ok('antique find is repeatable and its chance runs from 60 percent down to 20', await page.evaluate(() => { const b = window.__game.backend; return b.findAntique('broad_street_1854', 5, 0) === b.findAntique('broad_street_1854', 5, 0) && Math.abs(b.findChance(0) - 0.6) < 1e-9 && Math.abs(b.findChance(9) - 0.2) < 1e-9; }));
+  ok('about half of first trips bring something back', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s, 0)) n++; return n > 200 && n < 280; }));
   await page.click('[data-act=cartinc][data-id=disinfectant]');
   ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=disinfectant]').count()) === 1);
   await page.click('[data-act=cartbuy]');
   ok('bought disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 2);
   await page.click('[data-act=shopsell][data-id=disinfectant]');
   ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
-  ok('future shop items are not buyable', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 0);
+  ok('future goods are buyable but a borrowed design is not', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 1 && (await page.locator('[data-act=cartinc][data-id=bamboo_copter]').count()) === 0);
   await page.fill('#shop-q', '心率');
   ok('shop text filter', (await page.locator('[data-act=cartinc]').count()) === 1);
   await page.fill('#shop-q', '');
   await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
-  await page.click('[data-act=antbuy][data-id=clinic_bell]');
   // second place
-  await page.click('[data-tab=dispatch]');
+  await page.click('[data-tab=home]');
   await page.click('[data-act=mapz][data-id=reset]');
   await page.click('.map [data-id=vienna_general_hospital] .hit', { force: true });
   await page.click('.evrow[data-id=vienna_1847]');
@@ -166,6 +185,21 @@ try {
   const day1 = await page.evaluate(() => window.__game.ctx.S().clock.day);
   await page.waitForTimeout(1200);
   ok('space pauses the clock', (await page.evaluate(() => window.__game.ctx.S().clock.day)) === day1);
+  // wages come out of the funds as time passes, and a short purse leaves them owed
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100; S.wageOwed = 0; });
+  await page.selectOption('[data-clk=speed]', '3');
+  await page.waitForTimeout(1200);
+  ok('wages are drawn from the funds', await page.evaluate(() => window.__game.ctx.S().funds < 100));
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 0; });
+  await page.waitForTimeout(1200);
+  ok('a short purse leaves wages owed', await page.evaluate(() => window.__game.ctx.S().wageOwed > 0));
+  ok('owed wages are shown', (await page.locator('.statrow .chip.warn').count()) >= 1);
+  await page.selectOption('[data-clk=speed]', '0');
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; S.wageOwed = 0; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
+  const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
+  await page.click('[data-act=fire][data-id=s_lin]');
+  ok('an employee can be let go', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === hiredN - 1);
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.staff.s_lin.hired = true; });
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '3');
   const claimedBefore = await page.evaluate(() => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length);
@@ -183,7 +217,7 @@ try {
   await page.waitForSelector('.lead');
   // settings, music and effects
   // the time axis zooms around the pointer and slides when dragged, and its marks are plain dots
-  await page.click('[data-tab=dispatch]');
+  await page.click('[data-tab=home]');
   await page.waitForSelector('svg.axis');
   ok('map and axis marks have no rings', (await page.locator('svg .pt .ring').count()) === 0);
   const axBox = await page.locator('svg.axis').boundingBox();
@@ -218,19 +252,19 @@ try {
   await page.click('[data-act=sfxtry][data-id=send]');
   await page.screenshot({ path: path.join(outDir, '9_settings.png'), fullPage: true });
   await page.click('[data-tab=home]');
-  ok('guest has six tabs', (await page.locator('#tabs button').count()) === 6);
+  ok('guest has five tabs', (await page.locator('#tabs button').count()) === 5);
   await page.click('[data-tab=enc]');
   await page.waitForSelector('.wiki');
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
-  await page.click('[data-tab=dispatch]');
+  await page.click('[data-tab=home]');
   ok('guest map shows only unlocked places', (await page.locator('svg.map .pt').count()) === 2);
   // a catalogue relic reveals its event on the map and in the wiki, but nobody can be sent there
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 5000; window.__game.ctx.save(); });
   await page.click('[data-tab=shop]');
-  await page.click('[data-act=antbuy][data-id=relic_newton_cambridge]');
-  await page.click('[data-tab=dispatch]');
+  await page.evaluate(() => { window.__game.ctx.S().antiques.push('relic_newton_cambridge'); window.__game.ui.render(); });
+  await page.click('[data-tab=home]');
   await page.waitForSelector('svg.map');
   await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 1; m.cx = 180; m.cy = 71; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
@@ -241,13 +275,13 @@ try {
   await page.fill('#wiki-q', '苹果');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
   await page.click('[data-tab=shop]');
-  ok('guest future shop is a locked card', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 0);
+  ok('guest sees the future shop and its goods', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 1);
   // English, language switch and fallback
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
   await page.waitForSelector('.lead');
   ok('English title', (await page.title()) === 'The Teleporter');
-  ok('English tab label', (await page.locator('#tabs [data-tab=dispatch]').textContent()).includes('Dispatch'));
-  await page.click('[data-tab=dispatch]');
+  ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Shop'));
+  await page.click('[data-tab=home]');
   await page.waitForSelector('svg.map');
   await page.fill('#map-from', '-500');
   ok('English BC format', (await page.locator('#map-fromtxt').innerText()) === '500 BC');
@@ -277,7 +311,7 @@ try {
   await page.waitForSelector('.wiki');
   ok('switching language keeps the article', (await page.locator('#wiki-article h2').innerText()).includes('斯诺'));
   ok('switching language keeps the filter text and the open category', (await page.locator('#wiki-q').inputValue()) === 'Snow' && (await page.evaluate(() => window.__game.ui.state.wiki.openCats.people)) === true);
-  ok('switching to Chinese sticks', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh' && (await page.locator('#tabs [data-tab=dispatch]').textContent()).includes('派遣'));
+  ok('switching to Chinese sticks', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh' && (await page.locator('#tabs [data-tab=shop]').textContent()).includes('商店'));
   await page.click('[data-tab=settings]');
   await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'auto')]);
   await page.waitForSelector('.settings');
@@ -286,10 +320,10 @@ try {
   const frPage = await frCtx.newPage();
   await frPage.goto(`http://127.0.0.1:${port}/index.html`);
   await frPage.waitForSelector('.lead');
-  ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=dispatch]').textContent()).includes('Dispatch'));
+  ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Shop'));
   await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=fr`);
   await frPage.waitForSelector('.lead');
-  ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=dispatch]').textContent()).includes('Dispatch'));
+  ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Shop'));
   await frCtx.close();
   // a click that spans several ticks of the clock must still land
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);

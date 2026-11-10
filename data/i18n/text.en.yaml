@@ -215,6 +215,7 @@ ui:
     records_here: Records left here
     no_records_here: Nobody has been here yet
     staff: Who goes
+    find_chance: 'Chance to bring back an antique on the next trip: {p}%'
     items: Kit
     items_hint: More gear costs more and raises the ceiling. Weight and funds are limited.
     weight: Weight
@@ -302,12 +303,9 @@ ui:
     materials_enc: People, events, places, attributes and employees are in the wiki, linked, filterable by tag and text, with sources wherever possible.
     go_title: Where to
     go:
-      dispatch:
-        name: Dispatch
-        desc: Pick a place on the map, an employee and a kit.
       shop:
         name: Shop
-        desc: Buy and sell modern and future goods, sell or lock antiques.
+        desc: Funds buy modern goods, time energy buys future goods. Anchor antiques or sell the spares.
       enc:
         name: Wiki
         desc: Linked, filterable reference pages with sources.
@@ -349,7 +347,6 @@ ui:
     ad: AD {n}
   tabs:
     home: Home
-    dispatch: Dispatch
     shop: Shop
     enc: Wiki
     settings: Settings
@@ -423,6 +420,14 @@ ui:
     recruit_hint: An applicant of unknown background. You learn who they are once hired.
     unknown_candidate: '?'
     hire: Hire
+    col_wage: Wage per day
+    wage_total: Wages per day
+    wage_tip: Cash wage per game day, from skill. It is paid from the funds as time passes.
+    owed: Owed wages
+    owed_tip: The funds ran short. Everyone on the payroll loses favor until it is paid, and it is paid first from the next income.
+    fire: Let go
+    fire_tip: Take them off the payroll. Hiring them again costs the hiring fee again. The last employee and anyone away cannot be let go.
+    pick_hint: Pick who goes on the next trip.
     cost: Cost
     reached_home: Enough energy to go home. The prototype ends here.
   report:
@@ -455,6 +460,9 @@ ui:
     deaths: Deaths
     handle: Pump handle removed
     energy_gain: Time energy
+    antique_gain: Antique brought back
+    antique_dup: a spare, it can be sold
+    antique_none: none this time
     funds_gain: Funds
     spent: Purchase value of gear used
     rest: Employee rest
@@ -551,10 +559,10 @@ ui:
     tag_filter: Tag filter
     modern:
       name: Modern shop
-      desc: Modern medicine, devices and books. Buy into stock, carry from stock when dispatching.
+      desc: Modern medicine, devices and books, paid in funds. Buy into stock, carry from stock when dispatching.
     future:
       name: Future shop
-      desc: Goods and technology from the future. The era that leads there is not built yet.
+      desc: Goods and technology from the future, paid in time energy. The era that leads there is not built yet, so for now they are only kept.
     buy: Buy
     sell: Sell
     stock: Stock
@@ -567,10 +575,13 @@ ui:
     inv_title: Stock
     inv_empty: Stock is empty
     antiques_title: Antiques
-    antiques_hint: Antiques sell for money to run the agency. Lock one so it cannot be sold by mistake. The anchor a dispatch uses is locked automatically.
-    lock: Lock
-    unlock: Unlock
-    locked: Locked
+    antiques_empty: Nothing found yet. Antiques are brought back from trips.
+    copies: Held
+    antiques_hint: Antiques are found on trips, and every trip may bring one back. The first trips to a place find one most often, then less and less, and the same one can come back twice. Anchor an antique to open the place it points to. An anchored one cannot be sold. A spare sells for funds, which pay the wages, so each copy is either money or a door. Release an anchor to sell it, unless someone is away there or it is the last open place.
+    lock: Anchor
+    unlock: Release
+    locked: Anchored
+    keep_one: Someone is away there, or it is the last open place.
     sell_antique: Sell
     not_carried_here: Not usable in this era
     no_funds: Not enough funds

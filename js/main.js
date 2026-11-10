@@ -41,7 +41,10 @@ function fresh() {
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
     secretaryLast: null,
-    locks: [],
+    wageOwed: 0,
+    trips: {},
+    // an antique the office starts with is already anchored, so the first place is open
+    locks: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
     antiques: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
   };
 }
@@ -49,8 +52,11 @@ function fresh() {
 // A save from before content was added lacks the new employees and fields. Fill in what is missing from a fresh save and keep everything the player has.
 function complete(S) {
   const F = fresh();
+  const beforeAnchors = !('trips' in S);
   for (const k of Object.keys(F)) if (!(k in S)) S[k] = F[k];
   S.staff = { ...F.staff, ...S.staff };
+  // a place opens only while its antique is anchored, so a save from before that rule (it has no trip counter yet) keeps the places it could already reach
+  if (beforeAnchors) for (const id of S.antiques) if (D.get('antiques.antiques.' + id).era && !S.locks.includes(id)) S.locks.push(id);
   return S;
 }
 

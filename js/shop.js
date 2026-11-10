@@ -12,7 +12,11 @@ export function createShop(X) {
   const tagChips = (tags) => tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('');
   const hiddenChip = () => `<span class="chip warn">${U.enc.hidden}</span>`;
   const cart = () => st.cart;
-  const cartTotal = () => Object.entries(cart()).reduce((a, [id, n]) => a + D.get(`items.${id}.cost`) * n, 0);
+  // each shop is paid in its own currency, funds for the modern shop and time energy for the future one
+  const curOf = (shopId) => D.get('shops.shops.' + shopId + '.currency');
+  const icon = (c) => D.get('config.ui.currency_icons.' + c);
+  const bal = (c) => (c === 'energy' ? ctx.S().energy : ctx.S().funds);
+  const cartTotal = (shopId) => Object.entries(cart()).reduce((a, [id, n]) => a + (D.get(`items.${id}.shop`) === shopId ? D.get(`items.${id}.cost`) * n : 0), 0);
   const oneLine = firstSentence;
   const COLON = U.fmt.colon, SEP = U.fmt.sep;
 
@@ -32,18 +36,19 @@ export function createShop(X) {
     });
     const rows = ids.map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
     const buyable = (it) => it.playable && sh.playable && !it.ip;
-    const total = cartTotal();
-    const foot = shopId === 'modern' && Object.keys(cart()).length
-      ? `<span>${S_.total} <b>${total}</b></span> <button class="primary" data-act="cartbuy" ${total > S.funds ? 'disabled' : ''}>${S_.confirm}</button> <button class="ghost" data-act="cartclear">${S_.clear_cart}</button>` : '';
+    const total = cartTotal(shopId);
+    const cur = curOf(shopId);
+    const foot = Object.keys(cart()).some((id) => D.get(`items.${id}.shop`) === shopId)
+      ? `<span>${S_.total} <b>${total}</b> ${icon(cur)}</span> <button class="primary" data-act="cartbuy" data-id="${shopId}" ${total > bal(cur) ? 'disabled' : ''}>${S_.confirm}</button> <button class="ghost" data-act="cartclear">${S_.clear_cart}</button>` : '';
     return listbox.html({
       id: 'shop_' + shopId, rows, maxH: D.get('config.ui.box_h.shop'), pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
       cols: [
         { k: 'name', label: S_.col_name, w: '36%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, T.items[r.id].desc, itemTip(r.id), !buyable(r.it) && DEV ? ' ' + hiddenChip() : '') },
         { k: 'tags', label: S_.col_tags, w: '22%', cell: (r) => tagChips(r.it.tags) },
-        { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.it.cost, cell: (r) => r.it.cost },
+        { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.it.cost, cell: (r) => `${r.it.cost} ${icon(cur)}` },
         { k: 'stock', label: S_.stock, w: '10%', cls: 'num', val: (r) => S.inv[r.id] || 0, cell: (r) => S.inv[r.id] || 0 },
         { k: 'qty', label: S_.col_qty, w: '22%', cls: 'num', cell: (r) => (buyable(r.it)
-          ? stepper('cartdec', 'cartinc', r.id, cart()[r.id] || 0, !(cart()[r.id] > 0), total + r.it.cost * r.it.step > S.funds)
+          ? stepper('cartdec', 'cartinc', r.id, cart()[r.id] || 0, !(cart()[r.id] > 0), total + r.it.cost * r.it.step > bal(cur))
           : `<span class="muted">${r.it.ip ? S_.ip_short : S_.planned}</span>`) },
       ],
     });
@@ -57,29 +62,43 @@ export function createShop(X) {
       cols: [
         { k: 'name', label: S_.col_name, w: '48%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, T.items[r.id].desc, itemTip(r.id)) },
         { k: 'stock', label: S_.stock, w: '14%', cls: 'num', val: (r) => S.inv[r.id], cell: (r) => S.inv[r.id] },
-        { k: 'sell', label: S_.sell_price, w: '14%', cls: 'num', val: (r) => sell1(r.id), cell: (r) => sell1(r.id) },
+        { k: 'sell', label: S_.sell_price, w: '14%', cls: 'num', val: (r) => sell1(r.id), cell: (r) => `${sell1(r.id)} ${icon(curOf(r.it.shop))}` },
         { k: 'act', label: '', w: '24%', cls: 'num', cell: (r) => `<button data-act="shopsell" data-id="${r.id}">${S_.sell} ×${Math.min(r.it.step, S.inv[r.id])}</button>` },
       ],
     });
   }
 
+  // An antique opens its place only while it is anchored. It cannot be released while someone is away there,
+  // and the last anchored place cannot be released, so the office always has somewhere to send people.
+  function releasable(id) {
+    const S = ctx.S();
+    const an = D.get('antiques.antiques.' + id);
+    if (!an.era) return true;
+    if (S.dispatches.some((d) => !d.claimed && d.eraId === an.era)) return false;
+    return S.locks.some((x) => x !== id && D.get('antiques.antiques.' + x).era);
+  }
+
+  const copies = (id) => ctx.S().antiques.filter((x) => x === id).length;
+  // a copy that is anchored is not for sale, the rest are
+  const sellable = (id) => copies(id) - (ctx.S().locks.includes(id) ? 1 : 0) > 0;
+
   function antiqueBox() {
     const S = ctx.S();
     const ids = Object.keys(D.get('antiques.antiques')).filter((id) => {
       const an = D.get('antiques.antiques.' + id);
-      return (DEV || an.playable || S.antiques.includes(id)) && tagOk(an.tags) && textOk(T.antiques[id].name, T.antiques[id].desc);
+      return (DEV || S.antiques.includes(id)) && an.playable !== undefined && tagOk(an.tags) && textOk(T.antiques[id].name, T.antiques[id].desc);
     });
-    const rows = ids.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), lock: S.locks.includes(id) }));
+    const rows = ids.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), n: copies(id), lock: S.locks.includes(id) }));
     return listbox.html({
-      id: 'ants', rows, maxH: D.get('config.ui.box_h.ants'),
+      id: 'ants', rows, maxH: D.get('config.ui.box_h.ants'), empty: S_.antiques_empty,
       cols: [
         { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
-        { k: 'dest', label: U.dispatch.points_to, w: '18%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
-        { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.an.price, cell: (r) => r.an.price },
-        { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.sell, cell: (r) => r.an.sell },
+        { k: 'dest', label: U.dispatch.points_to, w: '20%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
+        { k: 'count', label: S_.copies, w: '8%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
+        { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.sell, cell: (r) => `${r.an.sell} ${icon('funds')}` },
         { k: 'act', label: '', w: '28%', cls: 'num', cell: (r) => (r.own
-          ? `<button data-act="antlock" data-id="${r.id}">${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${r.lock ? 'disabled' : ''}>${S_.sell}</button>`
-          : `<button data-act="antbuy" data-id="${r.id}" ${S.funds < r.an.price || !r.an.playable ? 'disabled' : ''}>${S_.buy}</button>`) },
+          ? `<button data-act="antlock" data-id="${r.id}" ${r.lock && !releasable(r.id) ? 'disabled' : ''}${r.lock && !releasable(r.id) ? ' data-tip="' + esc(S_.keep_one) + '"' : ''}>${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${sellable(r.id) ? '' : 'disabled'}>${S_.sell}</button>`
+          : '') },
       ],
     });
   }
@@ -90,12 +109,9 @@ export function createShop(X) {
     for (const id of Object.keys(D.get('items'))) D.get('items.' + id).tags.forEach((t) => present.add(t));
     for (const id of Object.keys(D.get('antiques.antiques'))) D.get('antiques.antiques.' + id).tags.forEach((t) => present.add(t));
     const bar = `<details class="tagfold"><summary>${S_.tag_filter}${s().tag ? COLON + esc(T.tags[s().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${s().tag ? '' : 'on'}" data-act="shoptag" data-id="">${S_.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${s().tag === t ? 'on' : ''}" data-act="shoptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
-    const futureSh = D.get('shops.shops.future');
-    const future = !futureSh.playable && !DEV
-      ? `<div class="lbox"><div class="lfoot muted">${U.enc.locked_name} ${U.enc.locked_text}</div></div>`
-      : `<p class="muted">${esc(S_.future.desc)}${!futureSh.playable ? ' ' + hiddenChip() : ''}</p>${shopBox('future')}`;
+    const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
     return `
-      <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"><span class="stat" style="font-size:18px">${Math.round(S.funds)}</span><span class="muted">${U.office.funds}</span></div>
+      <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"><span class="stat" style="font-size:18px">${Math.round(S.funds)}</span><span class="muted">${icon('funds')} ${U.office.funds}</span><span class="stat" style="font-size:18px">${Math.round(S.energy)}</span><span class="muted">${icon('energy')} ${U.office.energy}</span></div>
       ${bar}
       <div class="sec">${S_.modern.name}</div><p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}
       <div class="grid2" style="margin-top:12px">
@@ -111,38 +127,42 @@ export function createShop(X) {
     if (a === 'cartinc' || a === 'cartdec') {
       const it = D.get('items.' + id);
       const n = (cart()[id] || 0) + (a === 'cartinc' ? it.step : -it.step);
-      if (n <= 0) delete cart()[id]; else if (cartTotal() + it.cost * it.step <= S.funds || a === 'cartdec') cart()[id] = n;
+      if (n <= 0) delete cart()[id]; else if (cartTotal(it.shop) + it.cost * it.step <= bal(curOf(it.shop)) || a === 'cartdec') cart()[id] = n;
       return true;
     }
     if (a === 'cartclear') { st.cart = {}; return true; }
     if (a === 'cartbuy') {
-      if (cartTotal() <= S.funds) {
+      const cur = curOf(id);
+      if (cartTotal(id) <= bal(cur)) {
         for (const [cid, n] of Object.entries(cart())) {
           const it = D.get('items.' + cid);
-          if (it.playable && !it.ip && D.get('shops.shops.' + it.shop).playable) { S.funds -= it.cost * n; S.inv[cid] = (S.inv[cid] || 0) + n; }
+          if (it.shop !== id) continue;
+          if (it.playable && !it.ip && D.get('shops.shops.' + it.shop).playable) {
+            if (cur === 'energy') S.energy -= it.cost * n; else S.funds -= it.cost * n;
+            S.inv[cid] = (S.inv[cid] || 0) + n;
+          }
+          delete cart()[cid];
         }
-        st.cart = {};
         ctx.save();
       }
       return true;
     }
     if (a === 'shopsell') {
       const it = D.get('items.' + id), n = Math.min(it.step, S.inv[id] || 0);
-      if (n > 0) { S.funds += sell1(id) * n; S.inv[id] -= n; ctx.save(); }
-      return true;
-    }
-    if (a === 'antbuy') {
-      const an = D.get('antiques.antiques.' + id);
-      if (an.playable && !S.antiques.includes(id) && S.funds >= an.price) { S.funds -= an.price; S.antiques.push(id); ctx.save(); }
+      if (n > 0) { if (curOf(it.shop) === 'energy') S.energy += sell1(id) * n; else S.funds += sell1(id) * n; S.inv[id] -= n; ctx.save(); }
       return true;
     }
     if (a === 'antsell') {
       const an = D.get('antiques.antiques.' + id);
-      if (S.antiques.includes(id) && !S.locks.includes(id)) { S.funds += an.sell; S.antiques = S.antiques.filter((x) => x !== id); ctx.save(); }
+      if (sellable(id)) { S.funds += an.sell; S.antiques.splice(S.antiques.indexOf(id), 1); ctx.save(); }
       return true;
     }
     if (a === 'antlock') {
-      if (S.antiques.includes(id)) { S.locks = S.locks.includes(id) ? S.locks.filter((x) => x !== id) : [...S.locks, id]; ctx.save(); }
+      if (S.antiques.includes(id)) {
+        if (!S.locks.includes(id)) S.locks.push(id);
+        else if (releasable(id)) S.locks = S.locks.filter((x) => x !== id);
+        ctx.save();
+      }
       return true;
     }
     return false;

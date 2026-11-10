@@ -214,6 +214,7 @@ ui:
     place_file: 地点档案
     records_here: 在这里留下的记录
     no_records_here: 还没有人去过
+    find_chance: 下一趟带回古董的概率：{p}%
     staff: 派谁
     items: 道具分配
     items_hint: 装备越多成本越高，收益上限也越高。重量有上限，资金有上限。
@@ -302,12 +303,9 @@ ui:
     materials_enc: 人物、事件、地区、属性和员工都收在百科里，可以跳转，可以按标签和文字过滤，尽量附出处。
     go_title: 去哪里
     go:
-      dispatch:
-        name: 派遣
-        desc: 在地图上选地点，选员工，配装备。
       shop:
         name: 商店
-        desc: 买卖现代与未来的物品，卖掉或锁定古董。
+        desc: 资金买现代物资，时空能量买未来物品。锚定古董，或卖掉多余的。
       enc:
         name: 百科
         desc: 可跳转可过滤的资料页，附出处。
@@ -332,7 +330,6 @@ ui:
   subtitle: The Teleporter
   tabs:
     home: 首页
-    dispatch: 派遣
     shop: 商店
     enc: 百科
     settings: 设置
@@ -422,6 +419,14 @@ ui:
     col_history: 履历
     recruit_hint: 一位应聘者，来历不明。招募之后才知道他是谁。
     unknown_candidate: ？
+    col_wage: 日薪
+    wage_total: 每日工资
+    wage_tip: 按技能定的现金日薪，随时间从资金里扣。
+    owed: 欠薪
+    owed_tip: 资金不够发工资。欠着的时候所有在册员工好感会下降，下一笔收入先补欠薪。
+    fire: 解雇
+    fire_tip: 移出在册名单。再雇要重新付聘金。最后一名员工和外出的人不能解雇。
+    pick_hint: 选出下一趟出发的人。
     hire: 招募
     cost: 费用
     reached_home: 能量已够回家。这个原型到此为止。
@@ -455,6 +460,9 @@ ui:
     deaths: 死亡
     handle: 泵柄拆除
     energy_gain: 时空能量
+    antique_gain: 带回的古董
+    antique_dup: 重复的一件，可以卖掉
+    antique_none: 这次没有
     funds_gain: 资金
     spent: 消耗装备的购入价值
     rest: 员工休整
@@ -551,10 +559,10 @@ ui:
     tag_filter: 标签过滤
     modern:
       name: 现代商店
-      desc: 现代的药品、器械和书。买来放进库存，派遣时从库存里带。
+      desc: 现代的药品、器械和书，用资金购买。买来放进库存，派遣时从库存里带。
     future:
       name: 未来时空商店
-      desc: 未来时空的物品和技术。通往那里的时空还没有做成。
+      desc: 未来时空的物品和技术，用时空能量购买。通往那里的时空还没有做成，现在只能收藏。
     buy: 买入
     sell: 卖出
     stock: 库存
@@ -567,10 +575,13 @@ ui:
     inv_title: 库存
     inv_empty: 库存是空的
     antiques_title: 古董
-    antiques_hint: 古董可以卖钱，用来运营事务所。锁定后不会被误卖，派遣时用到的锚点会自动锁定。
-    lock: 锁定
-    unlock: 解除锁定
-    locked: 已锁定
+    antiques_empty: 还没有发现。古董要靠派遣带回来。
+    copies: 持有
+    antiques_hint: 古董靠派遣发现，每趟都可能带回一件。刚去的几趟最容易找到，之后越来越少，同一件也会重复带回。锚定一件古董，它指向的地方就开放了，锚定的不能卖。多出来的一件可以卖钱，钱用来发工资，所以每一件要么换钱，要么开一扇门。解除锚定才能卖，有人在那里出差或者它是最后一个开放的地方时不能解除。
+    lock: 锚定
+    unlock: 解除锚定
+    locked: 已锚定
+    keep_one: 有人在那里出差，或者这是最后一个开放的地方。
     sell_antique: 卖出
     not_carried_here: 这个时空用不上
     no_funds: 资金不足

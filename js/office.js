@@ -50,6 +50,15 @@ export function createOffice(X) {
     return 'ready';
   }
 
+  // The roll is the backend's. The office only counts the trips to each place, which sets the chance.
+  const findChance = (eraId) => ctx.backend.findChance(S().trips[eraId] || 0);
+  function findAntique(eraId, seed) {
+    const s = S();
+    const n = s.trips[eraId] || 0;
+    s.trips[eraId] = n + 1;
+    return ctx.backend.findAntique(eraId, seed, n);
+  }
+
   function launch(eraId, spec, opts = {}) {
     const E = ctx.era(eraId);
     const s = S();
@@ -57,12 +66,11 @@ export function createOffice(X) {
     const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready') return null;
     const { res, report } = ctx.backend.dispatch(eraId, full);
+    const antique = findAntique(eraId, full.seed);
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
-    const anchor = X.anchorOf(eraId);
-    if (!s.locks.includes(anchor)) s.locks.push(anchor);
     s.seq += 1;
     const stay = E.vars[E.roles.stay].value;
-    const d = { id: 'd' + s.seq, eraId, spec: full, report, readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: res.energy, funds: res.funds, restDays: res.restDays } };
+    const d = { id: 'd' + s.seq, eraId, spec: full, report, readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: res.energy, funds: res.funds, restDays: res.restDays, antique } };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -78,6 +86,9 @@ export function createOffice(X) {
     d.paid = { energy: Math.round(d.payout.energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.ceil(d.payout.restDays * (1 - p.rest_cut)) };
     s.energy += d.paid.energy;
     s.funds += d.paid.funds;
+    d.paid.antique = d.payout.antique || null;
+    d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
+    if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
     sf.restUntil = day() + d.paid.restDays;
     const delta = F.outcome[d.report.outcomeId];
@@ -110,6 +121,28 @@ export function createOffice(X) {
     return true;
   }
 
+  // ---------- wages ----------
+  // Every hired person draws a cash wage per game day, from their skill. What the funds cannot cover is owed and is paid first from the next income,
+  // and while anything is owed everybody on the payroll loses favor, so a broke office slowly loses goodwill instead of getting stuck.
+  const wageOf = (id) => Math.round((O.wage_base + O.wage_skill * ctx.backend.staffStats(id).skill) * 10) / 10;
+  const wageTotal = () => hiredIds().reduce((a, id) => a + wageOf(id), 0);
+  function payWages(dt) {
+    const s = S();
+    const due = wageTotal() * dt + s.wageOwed;
+    const pay = Math.min(Math.max(s.funds, 0), due);
+    s.funds = Math.round((s.funds - pay) * 100) / 100;
+    s.wageOwed = Math.round((due - pay) * 100) / 100;
+    if (s.wageOwed > 0) for (const id of hiredIds()) s.staff[id].favor = clamp(s.staff[id].favor - O.unpaid_favor_loss * dt, F.min, F.max);
+  }
+  function dismiss(id) {
+    const s = S();
+    if (!s.staff[id].hired || hiredIds().length <= 1 || staffState(id) === 'away') return false;
+    if (s.secretary === id) s.secretary = null;
+    s.staff[id].hired = false;
+    ctx.save();
+    return true;
+  }
+
   function appoint(id) {
     const s = S();
     if (id && (!s.staff[id].hired || staffState(id) === 'away')) return false;
@@ -128,7 +161,11 @@ export function createOffice(X) {
   // Moves the clock and returns the dispatches that just came home. A new report pauses the clock unless the player ticked the box that lets reports pass.
   function advance(seconds) {
     const s = S();
-    if (s.clock.speed > 0) s.clock.day += (s.clock.speed * seconds) / C.sec_per_day;
+    if (s.clock.speed > 0) {
+      const dt = (s.clock.speed * seconds) / C.sec_per_day;
+      s.clock.day += dt;
+      payWages(dt);
+    }
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
     if (fresh.length && ctx.settings.get('pause_on_report')) s.clock.speed = 0;
@@ -183,11 +220,8 @@ export function createOffice(X) {
 
   // ---------- alerts and mainline ----------
   function alerts() {
-    const s = S();
-    const readyReports = s.dispatches.filter((d) => !d.claimed && d.readyDay <= day()).length;
-    const idle = s.clock.auto ? 0 : hiredIds().filter((id) => staffState(id) === 'ready').length;
-    const anchors = X.visibleEras().some((id) => X.eraOpen(id));
-    return { home: readyReports, dispatch: anchors ? idle : 0 };
+    const readyReports = S().dispatches.filter((d) => !d.claimed && d.readyDay <= day()).length;
+    return { home: readyReports };
   }
   function stageIndex() {
     const st = D.get('mainline.stages');
@@ -196,5 +230,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
+  return { findChance, wageOf, wageTotal, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
 }
