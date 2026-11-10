@@ -63,7 +63,7 @@ export function createOffice(X) {
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     const stay = E.vars[E.roles.stay].value;
-    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: ST.outcome[report.outcomeId], baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
+    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -78,8 +78,8 @@ export function createOffice(X) {
     const antique = ctx.backend.findAntique(eventId, seed, s.antiques);
     s.seq += 1;
     const d = {
-      id: 'd' + s.seq, eraId: eventId, light: true, stars: ST.light[r.outcome], baseEnergy: r.energyBase, spec: { seed, staffId, items: {}, plots: [], favor: s.staff[staffId].favor },
-      report: { outcomeId: r.outcome, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
+      id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, baseEnergy: r.energyBase, spec: { seed, staffId, items: {}, plots: [], favor: s.staff[staffId].favor },
+      report: { outcomeId: r.outcome, points: r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })), accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
       startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: r.funds, restDays: r.restDays, antique },
     };
     s.dispatches.push(d);

@@ -77,3 +77,11 @@ if (bad) { console.log(bad + ' problems'); process.exit(1); }
 const energyBases = { ...D.get('config.stars.energy_base'), ...Object.fromEntries(Object.entries(D.get('config.light.pay')).map(([t, p]) => ['light tier ' + t, p.energy])) };
 for (const [k, v] of Object.entries(energyBases)) if (v % 4 !== 0) { console.log(`energy base of ${k} is ${v}, not a multiple of 4`); process.exit(1); }
 console.log('energy bases divide into quarters: ok');
+
+// Every era names three sync points that its milestones can reach, with words in both languages.
+for (const id of D.get('config.eras')) {
+  const E = sim.compileEra(D.get('era_raw.' + id), D, id);
+  if (E.starPoints.length !== 3) { console.log(`${id} has ${E.starPoints.length} sync points, not three`); process.exit(1); }
+  for (const p of E.starPoints) D.get(`text.eras.${id}.star_points.${p.id}`);
+}
+console.log('sync points: ok');

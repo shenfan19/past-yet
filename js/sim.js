@@ -97,6 +97,12 @@ export function compileEra(raw, D, id) {
     when: compile(m.when, known, where(`milestones.${mid}`)),
   }));
 
+  E.starPoints = req(raw, 'star_points', id).map((p) => {
+    const m = E.milestones.find((x) => x.id === p.milestone);
+    if (!m || !m.needsTraveler) throw new Error(where('star_points.' + p.id) + ' needs a milestone that needs the traveller: ' + p.milestone);
+    return p;
+  });
+
   const rc = req(raw, 'recall', id);
   E.recall = {
     when: compile(rc.when, known, where('recall.when')),

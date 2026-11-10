@@ -91,6 +91,8 @@ try {
   ok('ready report puts a badge on the home tab', (await page.locator('#tabs [data-tab=home] .badge').count()) === 1);
   await page.click('[data-act=claim]');
   await page.waitForSelector('.tl');
+  ok('the report lists three sync points and the stars are the ones hit', await page.evaluate(() => { const hit = document.querySelectorAll('.sync li.hit').length; return document.querySelectorAll('.sync li').length === 3 && document.querySelector('.stars') && document.querySelector('.stars').classList.contains('s' + hit); }));
+  ok('the milestone lines of the points are highlighted in the timeline', (await page.locator('.tl li.star').count()) === (await page.locator('.sync li.hit').count()));
   await page.screenshot({ path: path.join(outDir, '4_report.png'), fullPage: true });
   // the share page draws a card with a QR code that reads back as the site address
   await page.click('[data-act=shareopen]');

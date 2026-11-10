@@ -107,9 +107,11 @@ export function createLocalBackend(D) {
     const stats = sim.staffStats(D, staffId);
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k], 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
-    const outcome = margin >= L.cuts.success ? 'success' : margin >= L.cuts.partial ? 'partial' : 'missed';
+    const points = [margin >= L.cuts.reach, margin >= L.cuts.meet, margin >= L.cuts.impress];
+    const stars = points.filter(Boolean).length;
+    const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];
-    return { outcome, funds: Math.round(pay.funds * L.share[outcome]), energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
+    return { outcome, stars, points, funds: Math.round(pay.funds * L.share[outcome]), energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
   }
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {

@@ -435,6 +435,13 @@ milestones:
   exhausted: {when: "traveler.fatigue >= 0.8", importance: 1, tag: param, needs_traveler: true}
   outbreak_fades: {when: "day >= 2 and Iu + It < 12", importance: 2, tag: param, needs_traveler: false}
 
+# Three sync points. A point is hit when its milestone fires in the branch, and all three make three stars.
+# Each is a milestone that needs the traveller, so it cannot be hit by history alone.
+star_points:
+  - {id: convince, milestone: snow_convinced}
+  - {id: trust, milestone: trust_won}
+  - {id: handle, milestone: handle_off_early}
+
 report: {deaths: D, cases: cum_cases, handle: removed_day, treated: treated_total, protected: protected_total, protected_scale: 1}
 
 log_importance: {arrive: 5, leave: 5, recall: 5}

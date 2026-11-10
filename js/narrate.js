@@ -84,11 +84,14 @@ export function buildReport(D, E, res) {
     return { t: e.t, text, tag, source, importance: e.importance, kind: e.kind, id: e.id };
   });
   const max = D.get('config.ui.timeline_max');
+  // the milestone lines of the sync points are never dropped from the timeline, and they are marked
+  const pointIds = new Set(E.starPoints.map((p) => p.milestone));
+  for (const en of entries) en.star = en.kind === 'milestone' && pointIds.has(en.id);
   let kept = entries;
   if (entries.length > max) {
     const ranked = [...entries].sort((a, b) => b.importance - a.importance || a.t - b.t).slice(0, max);
     const set = new Set(ranked);
-    kept = entries.filter((e) => set.has(e));
+    kept = entries.filter((e) => set.has(e) || e.star);
   }
 
   // outcome, summary, quote
@@ -108,8 +111,9 @@ export function buildReport(D, E, res) {
   const handleBase = res.base.final[RP.handle];
   const handleBranch = F[RP.handle];
   return {
-    outcomeId: oid, outcomeName: T.outcomes[oid].name, summary, quote, staff,
+    outcomeId: oid, outcomeName: T.outcomes[oid].name, summary, quote, staff, stars: E.starPoints.filter((p) => res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone)).length,
     timeline: kept, ledger,
+    points: E.starPoints.map((p) => ({ id: p.id, hit: res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone) })),
     chart: { base: res.base.series, branch: res.branch.series, arrive: res.branch.arrivedDay, leave: res.branch.leftDay, handleBase, handleBranch },
     accounts: { cost: res.cost, funds: res.funds, energy: res.energy, restDays: res.restDays, lives: res.score.lives_saved },
     compare: {

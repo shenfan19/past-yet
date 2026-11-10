@@ -130,6 +130,8 @@ export function createUI(D, ctx) {
   // stars: filled and empty marks coloured by the count, bronze, silver and gold
   const STAR_MAX = D.get('config.stars.max');
   const starsHtml = (n) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
+  // the sync points of a trip, hit or not, with the words of the place
+  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}">${p.hit ? '★' : '☆'} ${esc(textOf(p.id))}</li>`).join('')}</ul>`;
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
   const placeName = (d) => (d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name);
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
@@ -468,6 +470,7 @@ export function createUI(D, ctx) {
       <div class="row sp"><h2>${staffLink(cur.spec.staffId)} · ${esc(c.name)}</h2><span class="stamp">${esc(U.light.outcome[o])}</span></div>
       <p style="font-size:16px">${esc(summary)}</p>
       <div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>
+      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => U.light.points[id])}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
@@ -511,7 +514,7 @@ export function createUI(D, ctx) {
       const v = e.vars[name];
       return `${srcLabel(v.source)}${v.note ? COLON + v.note : ''}`;
     };
-    const tl = R.timeline.map((t, i) => `<li class="${t.tag || ''}"><div>${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`).join('');
+    const tl = R.timeline.map((t, i) => `<li class="${t.tag || ''}${t.star ? ' star' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`).join('');
     const C = R.chart;
     const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * D.get('config.ui.chart.headroom');
     const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * D.get('config.ui.chart.headroom');
@@ -530,6 +533,7 @@ export function createUI(D, ctx) {
       <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
       <div class="sec">${U.report.summary}</div>
       <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>
+      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => T.eras[cur.eraId].star_points[id])}
       <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>
       <div class="sec">${U.report.chart}</div>${legend}${charts}
       <div class="sec">${U.report.compare}</div>
