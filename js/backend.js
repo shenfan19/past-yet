@@ -77,12 +77,12 @@ export function createLocalBackend(D) {
       const t = traitIds[Math.min(traitIds.length - 1, Math.floor(draw(serial, 'trait', i) * traitIds.length))];
       if (!traits.includes(t)) traits.push(t);
     }
-    const base = Object.fromEntries(Object.entries(HI.base).map(([k, [lo, hi]]) => [k, range(lo, hi, serial, 'base_' + k)]));
+    const base = Object.fromEntries(Object.entries(HI.base).map(([k, [lo, hi]]) => [k, Math.round(range(lo, hi, serial, 'base_' + k))]));
     const name = (lang) => (lang === 'zh' && region.order === 'zh_family_first' ? family[1] + given[1] : lang === 'zh' ? given[1] + region.join + family[1] : given[0] + ' ' + family[0]);
     return {
       id: 'g' + serial,
       def: {
-        generated: true, gender, age: Math.floor(range(HI.age.min, HI.age.max + 1, serial, 'age')), base, traits, start_hired: false,
+        generated: true, job_id: job.id, gender, age: Math.floor(range(HI.age.min, HI.age.max + 1, serial, 'age')), base, traits, start_hired: false,
         region: region.id, skin: weighted(region.tones, serial, 'skin'),
         text: {
           en: { name: name('en'), job: job.text.en, bio: 'From ' + region.text.en + '.' },
@@ -102,13 +102,67 @@ export function createLocalBackend(D) {
   const L = D.get('config.light');
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => L.stay_by_tier[lightEvent(eventId).tier];
-  function runLight(eventId, staffId, seed) {
+  // A trait is worth something at the sync points. Each point is about one kind of thing, and the traits of the employee add up to a bonus for that kind:
+  // a point that was missed is still reached with the chance of the bonus, and a negative bonus loses a point that was reached. The draw is seeded.
+  const traitBonus = (staffId, kind) => D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).points[kind] || 0), 0);
+  function applyBonus(points, kinds, staffId, seed, key) {
+    return points.map((p, i) => {
+      const b = traitBonus(staffId, kinds[i]);
+      const r = draw(seed, 'bonus_' + key + '_' + p.id, 0);
+      if (!p.hit && b > 0 && r < Math.min(0.9, b)) return { ...p, hit: true, bonus: true };
+      if (p.hit && b < 0 && r < Math.min(0.9, -b)) return { ...p, hit: false, lost: true };
+      return p;
+    });
+  }
+  // A scene has three authored points, each a requirement on the traveller: abilities, traits, the job, being a woman, an item carried, or luck.
+  // Special equipment raises abilities and satisfies item points, but it shows, and a scene can find the traveller out.
+  const SC = D.get('config.scene');
+  function runScene(ev, staffId, seed, items) {
+    const staff = D.get('staff.staff.' + staffId);
+    const stats = { ...sim.staffAttrs(D, staffId) };
+    const carried = Object.entries(items || {}).filter(([id, n]) => n > 0 && D.get('items.' + id).scene).map(([id]) => id);
+    let exposure = 0;
+    for (const id of carried) {
+      const it = D.get('items.' + id);
+      exposure += it.exposure;
+      for (const [k, m] of Object.entries(it.stat_mult || {})) stats[k] *= m;
+    }
+    const meets = (req) => Object.entries(req).every(([k, v]) => {
+      if (k === 'stat') return Object.entries(v).every(([s, min]) => stats[s] >= min);
+      if (k === 'trait') return v.some((t) => staff.traits.includes(t));
+      if (k === 'job') return v.includes(staff.job_id);
+      if (k === 'gender') return staff.gender === v;
+      if (k === 'item') return carried.includes(v);
+      if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < v;
+      if (k === 'any') return v.some(meets);
+      throw new Error('unknown requirement ' + k);
+    });
+    const points = applyBonus(ev.scene.points.map((p) => ({ id: p.id, hit: meets(p.req) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    let stars = points.filter((p) => p.hit).length;
+    // being found out: the more equipment shows and the more suspicious the time, the likelier
+    const chance = Math.min(SC.max_discovery, Math.max(0, exposure) * SC.suspicion_by_tier[ev.tier]);
+    let found = null;
+    if (carried.length && draw(seed, 'scene_found', ev.id) < chance) {
+      const r = draw(seed, 'scene_found_kind', ev.id);
+      found = Object.keys(SC.found).find((k) => r < SC.found[k].at);
+    }
+    const f = found ? SC.found[found] : null;
+    if (f) stars = Math.max(0, stars - f.stars_cost);
+    const pay = L.pay[ev.tier];
+    return { points, stars, found, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
+      funds: Math.round(pay.funds * SC.share[stars]), energyBase: pay.energy, restDays: L.rest_days[stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed'] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
+  }
+  function runLight(eventId, staffId, seed, items) {
     const ev = lightEvent(eventId);
-    const stats = sim.staffStats(D, staffId);
-    const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k], 0);
+    if (ev.scene) {
+      const r = runScene(ev, staffId, seed, items);
+      return { ...r, outcome: r.stars >= 2 ? 'success' : r.stars === 1 ? 'partial' : 'missed' };
+    }
+    const stats = sim.staffAttrs(D, staffId);
+    const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
-    const points = [margin >= L.cuts.reach, margin >= L.cuts.meet, margin >= L.cuts.impress];
-    const stars = points.filter(Boolean).length;
+    const points = applyBonus([margin >= L.cuts.reach, margin >= L.cuts.meet, margin >= L.cuts.impress].map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })), L.kinds, staffId, seed, eventId);
+    const stars = points.filter((p) => p.hit).length;
     const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];
     return { outcome, stars, points, funds: Math.round(pay.funds * L.share[outcome]), energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
@@ -118,7 +172,7 @@ export function createLocalBackend(D) {
     runLight, lightStay, makeCandidate, recallRefused, recallKeeps,
     findOdds, findAntique,
     eraInfo: (id) => info[id],
-    staffStats: (staffId) => sim.staffStats(D, staffId),
+    staffStats: (staffId) => sim.staffAttrs(D, staffId),
     staffHabit: (staffId) => sim.staffHabit(D, staffId),
     itemTotals: (items) => sim.itemTotals(D, items),
     // returns an error code, or null when the dispatch is allowed
@@ -126,7 +180,10 @@ export function createLocalBackend(D) {
     // runs one dispatch and returns the raw result and the written report
     dispatch: (eraId, spec) => {
       const res = sim.runDispatch(eras[eraId], D, spec);
-      return { res, report: buildReport(D, eras[eraId], res) };
+      const report = buildReport(D, eras[eraId], res);
+      report.points = applyBonus(report.points, eras[eraId].starPoints.map((p) => p.kind), spec.staffId, spec.seed, eraId);
+      report.stars = report.points.filter((p) => p.hit).length;
+      return { res, report };
     },
     // searches item sets and returns the Pareto front and the recommended one
     suggest: (eraId, spec, stock) => sim.optimize(eras[eraId], D, { spec, stock }),

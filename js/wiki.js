@@ -96,7 +96,7 @@ export function createWiki(X) {
         id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: D.get('staff.staff.' + id).generated ? 'always' : { staff: id }, refs: ['game'],
         body: () => {
           const stats = ctx.backend.staffStats(id);
-          const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
+          const mini = D.get('staff.attributes').map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
           const traits = staffTraits(D, id).map((t) => a('traits:' + t, T.traits[t])).join(' ');
           return `<div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div>`;
         },
@@ -108,7 +108,7 @@ export function createWiki(X) {
         id: 'traits:' + t, cat: 'traits', title: T.traits[t], tags: [], unlock: { trait: t }, refs: ['game'],
         body: () => {
           const tr = D.get('staff.traits.' + t);
-          const mods = Object.entries(tr.mods).map(([k, v]) => `${esc(T.stats[k])} ${v > 0 ? '+' : ''}${v}`).join(SEP);
+          const mods = Object.entries(tr.points).map(([k, v]) => `${esc(T.point_kinds[k])} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
           const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}${COLON}${esc(T.strategies[grp][key].name)}`).join('${U.fmt.semi}');
           const who = Object.keys(D.get('staff.staff')).filter((id) => known(id) && staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
           const pref = tr.prefer ? `<div>${U.office.secretary_pref}${COLON}${esc(U.office.aims[tr.prefer])}</div>` : '';
@@ -123,7 +123,7 @@ export function createWiki(X) {
       add({
         id: 'stats:' + e.id, cat: 'stats', title: e.name || T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'],
         body: () => {
-          const mods = Object.entries(D.get('staff.traits')).filter(([, tr]) => e.id in tr.mods).map(([t, tr]) => `${esc(T.traits[t])} ${tr.mods[e.id] > 0 ? '+' : ''}${tr.mods[e.id]}`).join(SEP);
+          const mods = '';
           const side = (label, text, inModel) => (inModel || DEV) ? `<div><b>${label}</b>${COLON}${esc(text)}${DEV ? ` <span class="chip ${inModel ? '' : 'warn'}">${inModel ? U.enc.edge_impl : U.enc.edge_pending}</span>` : ''}</div>` : `<div><b>${label}</b>${COLON}${U.enc.edge_none}</div>`;
           const head = e.kind === 'office' ? `<p>${esc(e.text)}</p>` : `<p class="muted">${U.enc.stat_rule}</p><div>${U.enc.base} ${base[e.id]}</div><div>${U.enc.modified_by}${COLON}${esc(mods || U.enc.no_ref)}</div>`;
           return `${head}${side(U.enc.edge_gain, e.gain, e.gain_in_model)}${side(U.enc.edge_cost, e.cost, e.cost_in_model)}`;

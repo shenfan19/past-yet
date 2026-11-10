@@ -50,14 +50,18 @@ outcomes:
   modest:
     name: 平淡完成
 stats:
-  stamina: 体力
-  skill: 医护手艺
-  eloquence: 口才
-  kindness: 善意
-  stubbornness: 固执度
-  curiosity: 好奇心
-  homesick_trait: 思乡度
-  greed: 贪婪
+  constitution: 体质
+  wit: 聪慧
+  finesse: 灵巧
+  will: 意志
+  desire: 欲望
+point_kinds:
+  persuade: 说服
+  trust: 赢得信任
+  notice: 发现
+  hold: 坚持
+  endure: 耐力
+  care: 照护
 strategies:
   focus:
     balanced:
@@ -111,6 +115,7 @@ tags:
   device: 器械
   book: 书
   safety: 安全
+  fantasy: 奇幻
   cyber: 义体
   scifi: 科幻
   neta: 梗
@@ -223,6 +228,9 @@ ui:
     cannot_pick: 现在不能派：在外面、在休息或任秘书。
     nobody: 现在没有可派的人。
     nobody_back: 最早的 {n} 天后回来。
+    scene_hint: 特殊装备可以带进场景。它们很显眼，场景可能把你认出来，所以只带需要的。
+    exposure: 暴露度
+    scene_note: 这个场景还没有完整仿真，先以简版进行：{n} 天。上面三个同步点按旅行者和携带的装备逐条检查。
     story: 故事
     ideas: 可以带上的想法
     era_busy: 已经有人在那个时空
@@ -322,6 +330,10 @@ ui:
       reach: 到达现场
       meet: 见到了人物
       impress: 留下了印象
+    found:
+      reject: 你被识破，遭到排斥，要做的事丢了一部分。
+      jail: 你被识破，被关了起来。古董丢了，其余的也耗了好几天。
+      hunted: 你被识破，遭到追杀。逃了出来，但很勉强。
   map:
     unknown: '?'
     tag_filter: 标签过滤
@@ -603,6 +615,7 @@ ui:
     inv_title: 物品
     inv_empty: 库存是空的
     sell_spares: 一键卖掉重复品
+    locked_tip: 时空能量达到这个数字时解锁。
     antiques_title: 古董
     antiques_empty: 还没有发现。古董要靠派遣带回来。
     copies: 持有
@@ -689,15 +702,33 @@ items:
   heart_monitor:
     name: 心率检测器
     desc: 戴在员工身上，能提前发现过劳，疲劳涨得更慢。
-  bionic_lung:
-    name: 仿生肺义体
-    desc: 未来时空的医疗义体。还没有对应的时空。
   radiation_shield:
     name: 辐射隔离器
     desc: 未来时空的防护装置。还没有对应的时空。
   bamboo_copter:
     name: 竹蜻蜓
     desc: 一个梗。名称借用了别人的作品，核查之前不出售。
+  neural_chip:
+    name: 义体智能芯片
+    desc: 耳后的芯片，能翻译任何语言，加快学习。不容易遮住。
+  cyber_arm:
+    name: 义体手臂
+    desc: 力量远超常人的假肢，很显眼。
+  cyber_lung:
+    name: 义体仿生肺
+    desc: 能撑长时间重活的人造肺，会轻轻嗡鸣。
+  gorilla_arm:
+    name: 义体大猩猩手臂
+    desc: 又大又夸张的怪力手臂，谁看到都会盯着。
+  holo_cloak:
+    name: 全息斗篷
+    desc: 把光线绕开的斗篷，别人会不自觉地看过去。会降低被发现的几率。
+  golden_apple:
+    name: 金苹果
+    desc: 神话里的金苹果，听你说话的人容易被打动，说服力提高 200%。
+  elixir:
+    name: 灵药
+    desc: 一瓶明亮的药水，止痛，恢复体力。
 antiques:
   pump_rust:
     name: 宽街水泵的锈片
@@ -793,64 +824,28 @@ traits:
   kind: 善良
   stubborn: 固执
   curious: 好奇
-  homesick: 思乡
-  studious: 好学
-  sturdy: 结实
   glib: 口才好
-  patient: 耐心
-  bold: 大胆
-  meticulous: 一丝不苟
-  artistic: 有艺术气质
-  wise: 睿智
-  greedy: 贪财
-  hedonist: 享乐
-  loyal: 忠诚
+  sensitive: 敏感
+  bold: 勇敢
 trait_notes:
   kind:
-    pro: 照顾病人，和身边的人处得近。
-    con: 比别人更早想家。
+    pro: 容易赢得信任，照护真诚。
+    con: 容易被敌意所伤，也容易让步。
   stubborn:
-    pro: 在门口不退让，有耐力。
-    con: 不擅长说服别人，也有点冷。
+    pro: 被逼也不松口，不会轻易放弃。
+    con: 死板，不擅长说动别人。
   curious:
-    pro: 被人吸引，总能找到门路。
-    con: 容易分心，也更容易累。
-  homesick:
-    pro: 对遇到的人很温暖。
-    con: 想早点回家，可能中途放弃。
-  studious:
-    pro: 很快学会当地的手艺，少犯错。
-    con: 书呆子气，不会拉近人心。
-  sturdy:
-    pro: 几乎不累，恢复得快。
-    con: 缺少好奇心，不愿尝试新东西。
+    pro: 留意到别人没留意的，敢问别人不问的。
+    con: 容易被别的事分心。
   glib:
-    pro: 靠嘴皮子进得去门，也容易拉到盟友。
-    con: 油滑，有点自私。
-  patient:
-    pro: 沉得住气，能熬过延误和乡愁。
-    con: 开口慢。
+    pro: 靠嘴进得去门，容易说动人。
+    con: 太会说的人不一定被信。
+  sensitive:
+    pro: 容易发现不对劲，也能体会别人的感受。
+    con: 体质较弱，更容易染上疾病。
   bold:
-    pro: 敢于顶住阻力。
-    con: 粗心，爱冒险。
-  meticulous:
-    pro: 细致，精确。
-    con: 慢，容易累。
-  artistic:
-    pro: 敏感，容易吸引人。
-    con: 不务实，也比较脆弱。
-  wise:
-    pro: 判断准，受人信任。
-    con: 更容易疲惫，也固守老习惯。
-  greedy:
-    pro: 带回更多钱，擅长讨价还价。
-    con: 可能私吞东西，对人冷淡。
-  hedonist:
-    pro: 在哪儿都过得开心，容易交朋友。
-    con: 容易累，花钱大手大脚，被召回时可能不肯回来。
-  loyal:
-    pro: 稳重，一召就回。
-    con: 不爱冒险，容易被劝退。
+    pro: 敢顶住阻力和危险。
+    con: 粗心，容易漏掉该留意的。
 mainline:
   open:
     name: 开张
@@ -972,6 +967,10 @@ catalog:
     story: 希帕提娅在亚历山大教数学、天文和哲学，被人记作那座城最有名的女学者。
     relic: 一块星盘的盘面
     relic_desc: 刻着星位的黄铜圆盘，用来找星星和时辰。
+    points:
+      p1: 加入讨论
+      p2: 跟上她的几何
+      p3: 不被察觉地穿过人群（需要全息斗篷）
   fibonacci_pisa:
     name: 印度阿拉伯数字传入欧洲
     place: 比萨
@@ -1000,6 +999,10 @@ catalog:
     story: 古腾堡把活动金属字模、油墨和压印机合在一起，书不再稀罕了。
     relic: 一粒铅字
     relic_desc: 铅锡合金的一个小字，是反着的。
+    points:
+      p1: 帮他调试印刷机（懂手艺的人）
+      p2: 抬起沉重的压印机（需要义体手臂）
+      p3: 让活字对齐
   leonardo_florence:
     name: 画画的人，也画机器
     place: 佛罗伦萨
@@ -1007,6 +1010,10 @@ catalog:
     story: 列奥纳多画了《蒙娜丽莎》，笔记本里却画满了解剖、水流和飞行机器。
     relic: 一页镜像书写的笔记
     relic_desc: 一页反着写的字，要对着镜子才读得出。
+    points:
+      p1: 赢得达芬奇的信任
+      p2: 做他画像的模特（需要女性员工）
+      p3: 点燃他的审美灵感（有艺术气质的员工，或带金苹果）
   copernicus_frombork:
     name: 太阳在中心
     place: 波兰弗龙堡
@@ -1028,6 +1035,10 @@ catalog:
     story: 环球剧场在泰晤士河边开张，戏文从最便宜的站票一直演到最好的座位。
     relic: 一支鹅毛笔
     relic_desc: 削好的羽毛笔，笔尖上还有墨。
+    points:
+      p1: 在环球剧场得到倾听
+      p2: 给他一句他会留下的台词
+      p3: 座无虚席
   galileo_padua:
     name: 木星身边的卫星
     place: 帕多瓦
@@ -1035,6 +1046,10 @@ catalog:
     story: 伽利略把望远镜对准木星，看见四颗小卫星在绕着它转。
     relic: 一片磨制的透镜
     relic_desc: 一片小小的玻璃透镜，是手工磨出来的。
+    points:
+      p1: 和他一起看望远镜
+      p2: 在质疑者面前替他说话
+      p3: 碰上一个晴朗的夜晚
   descartes_leiden:
     name: 把怀疑当作方法
     place: 莱顿
@@ -1056,6 +1071,10 @@ catalog:
     story: 牛顿在《原理》里证明：同一条引力定律，管着落下的东西，也管着行星的轨道。
     relic: 一块玻璃三棱镜
     relic_desc: 一块三角的玻璃，能把白光分成各种颜色。
+    points:
+      p1: 跟上他的数学
+      p2: 用拉丁语和他交谈（需要义体智能芯片）
+      p3: 在争论里守住自己的立场
   bach_leipzig:
     name: 一位乐长为每个礼拜日写曲
     place: 莱比锡
@@ -1105,6 +1124,10 @@ catalog:
     story: 几乎全聋的贝多芬首演了第九交响曲，要有人把他转过身，他才看见掌声。
     relic: 一只助听喇叭
     relic_desc: 世界静下来的时候，他举到耳边的号角。
+    points:
+      p1: 安慰他
+      p2: 听见他脑中的音乐（有艺术气质的员工）
+      p3: 他状态好的一天
   faraday_london:
     name: 从磁里得到电
     place: 伦敦
@@ -1119,6 +1142,10 @@ catalog:
     story: 贝格尔号上的年轻博物学家注意到鸟和龟每座岛都不一样，多年之后他讲清了为什么。
     relic: 一根雀的羽毛
     relic_desc: 来自群岛的一根小小的褐色羽毛。
+    points:
+      p1: 注意到别人没注意到的
+      p2: 熬过远航
+      p3: 帮他整理标本
   lovelace_london:
     name: 第一段程序
     place: 伦敦
@@ -1133,6 +1160,10 @@ catalog:
     story: 在斯库塔里的医院，南丁格尔打扫病房、清点死亡数字，又把数字变成改革的理由。
     relic: 一盏小油灯
     relic_desc: 她夜里查房时用的那盏灯。
+    points:
+      p1: 懂病房的活儿（护士）
+      p2: 安抚伤员
+      p3: 撑过漫长的夜班
   mendel_brno:
     name: 豌豆与遗传的规律
     place: 布尔诺
@@ -1161,6 +1192,10 @@ catalog:
     story: 玛丽和皮埃尔·居里在一间棚屋里，从成吨的矿石中分离出了钋和镭。
     relic: 一管沥青铀矿
     relic_desc: 一支装着黑色矿石的玻璃管，在黑暗里有一点微光。
+    points:
+      p1: 在实验室里跟上进度
+      p2: 熬过尘土飞扬的棚屋（需要义体仿生肺）
+      p3: 耐心等完漫长的提纯
   freud_vienna:
     name: 把梦当作进入内心的路
     place: 维也纳
@@ -1287,6 +1322,10 @@ catalog:
     story: 在开罗写作的伊本·海赛姆，在暗室里检验光是怎么走的，证明我们看见东西，是因为光进了眼睛。
     relic: 一块小孔屏
     relic_desc: 一块暗板，上面只有一个小孔。
+    points:
+      p1: 追问视觉如何发生
+      p2: 帮他造暗室
+      p3: 一个晴朗的日子
   house_of_wisdom:
     name: 学者们翻译天下的书
     place: 巴格达
@@ -1301,6 +1340,10 @@ catalog:
     story: 伊本·西那写完《医典》，这部书从波斯到欧洲被教了好几百年。
     relic: 一只玻璃小瓶
     relic_desc: 医生用的带塞的小瓶。
+    points:
+      p1: 跟上他的医学
+      p2: 读懂阿拉伯文和波斯文（需要义体智能芯片）
+      p3: 读完《医典》
   omar_khayyam_nishapur:
     name: 比我们更精确的历法
     place: 波斯内沙布尔
@@ -1336,6 +1379,10 @@ catalog:
     story: 钦努阿·阿契贝出版了《瓦解》，从伊博村庄的内部讲殖民世界的到来。
     relic: 一页打字稿
     relic_desc: 一页打字稿，上面有几处用墨水改过。
+    points:
+      p1: 听他讲
+      p2: 讲自己的故事
+      p3: 一场好的朗读会
   maathai_nairobi:
     name: 把种树做成一场运动
     place: 内罗毕
@@ -1371,6 +1418,10 @@ catalog:
     story: 蔡伦上报了用树皮、破布和旧渔网造纸的办法，写字又轻又便宜。
     relic: 一张粗纸
     relic_desc: 纸里还看得见纤维的碎屑。
+    points:
+      p1: 和他一起打浆（懂手艺的人）
+      p2: 抄出一张均匀的纸
+      p3: 晾晒的好天气
   zhang_heng_luoyang:
     name: 一台能感知远处地震的仪器
     place: 中国洛阳
@@ -1406,6 +1457,10 @@ catalog:
     story: 李白在长安写下关于月光、酒和远方的诗，至今每个孩子都要背。
     relic: 一只小酒杯
     relic_desc: 杯底画着一弯淡淡的月。
+    points:
+      p1: 陪他喝酒作诗
+      p2: 和他对诗
+      p3: 他兴致正高
   murasaki_kyoto:
     name: 世界上第一部伟大的长篇小说
     place: 京都
@@ -1413,6 +1468,10 @@ catalog:
     story: 平安宫廷里的紫式部写出了《源氏物语》，一部写宫廷生活和人心的长篇小说。
     relic: 一只漆制笔盒
     relic_desc: 一只小盒子，里面有笔、砚和水。
+    points:
+      p1: 被宫廷接纳（需要女性员工）
+      p2: 聊她的故事
+      p3: 混作宫里的人（需要全息斗篷）
   su_song_kaifeng:
     name: 一座水力驱动的大钟楼
     place: 中国开封
@@ -1441,6 +1500,10 @@ catalog:
     story: 世宗大王和学者们设计了谚文，字母的形状模仿口型。
     relic: 一块刻着字母的木板
     relic_desc: 刻着最早几个字母的木板，等着上墨。
+    points:
+      p1: 见到国王
+      p2: 帮着整理字音
+      p3: 第一天就说韩语（需要义体智能芯片）
   li_shizhen_qizhou:
     name: 一千多种药物的汇编
     place: 中国蕲州
@@ -1462,6 +1525,10 @@ catalog:
     story: 年过七十的北斋画出了《神奈川冲浪里》和《富岳三十六景》。
     relic: 一块印刷用的木版
     relic_desc: 一块雕好的樱木版。
+    points:
+      p1: 像他一样看浪
+      p2: 问对问题
+      p3: 扛起巨幅画布（需要义体手臂）
   bose_calcutta:
     name: 会回应的植物
     place: 加尔各答
@@ -1588,6 +1655,10 @@ catalog:
     story: 弗里达·卡罗画了《两个弗里达》和许多自画像，把痛苦和身份画成了她国家最知名的一些画面。
     relic: 一支细画笔
     relic_desc: 笔毛上沾着几丝红色。
+    points:
+      p1: 陪着她
+      p2: 和她的意志相配
+      p3: 缓解她的痛（需要灵药）
   hokulea_honolulu:
     name: 靠星星驶向塔希提
     place: 檀香山
@@ -1595,6 +1666,10 @@ catalog:
     story: 独木舟“星光号”不带任何仪器，从夏威夷驶到塔希提，靠星路和海浪指路，让一种航海传统重新活了起来。
     relic: 一根打了结的椰壳纤维绳
     relic_desc: 一根椰壳纤维编的绳，每天打一个结。
+    points:
+      p1: 轮班划桨
+      p2: 在漫长航行里稳住
+      p3: 夜里也能撑下去（需要义体仿生肺）
   budj_bim_eels:
     name: 熔岩平原上的养鱼
     place: 澳大利亚维多利亚州布吉比姆

@@ -71,15 +71,17 @@ export function createOffice(X) {
 
   // A small story to a catalogue event whose antique is anchored. It has no kit and no branch, only the traveller against the event.
   const LT = D.get('config.light');
-  function launchLight(eventId, staffId, seed, opts = {}) {
+  function launchLight(eventId, staffId, seed, items = {}, opts = {}) {
     const s = S();
     if (!s.locks.includes('relic_' + eventId) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
-    const r = ctx.backend.runLight(eventId, staffId, seed);
-    const antique = ctx.backend.findAntique(eventId, seed, s.antiques);
+    const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && (s.inv[id] || 0) >= n));
+    const r = ctx.backend.runLight(eventId, staffId, seed, kit);
+    const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques);
+    for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
     s.seq += 1;
     const d = {
-      id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, baseEnergy: r.energyBase, spec: { seed, staffId, items: {}, plots: [], favor: s.staff[staffId].favor },
-      report: { outcomeId: r.outcome, points: r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })), accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
+      id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
+      report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
       startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: r.funds, restDays: r.restDays, antique },
     };
     s.dispatches.push(d);
@@ -110,7 +112,7 @@ export function createOffice(X) {
     if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
     sf.restUntil = day() + d.paid.restDays;
-    const delta = d.light ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId];
+    const delta = (d.light ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId]) + (d.report.extraFavor || 0);
     d.favorDelta = delta > 0 ? delta * (1 + p.favor_gain) : delta;
     sf.favor = clamp(sf.favor + d.favorDelta, F.min, F.max);
     const aim = secretaryAim();
@@ -262,7 +264,7 @@ export function createOffice(X) {
   // ---------- wages ----------
   // Every hired person draws a cash wage per game day, from their skill. What the funds cannot cover is owed and is paid first from the next income,
   // and while anything is owed everybody on the payroll loses favor, so a broke office slowly loses goodwill instead of getting stuck.
-  const wageOf = (id) => Math.round((O.wage_base + O.wage_skill * ctx.backend.staffStats(id).skill) * 10) / 10;
+  const wageOf = (id) => Math.round((O.wage_base + O.wage_skill * ctx.backend.staffStats(id).wit) * 10) / 10;
   const wageTotal = () => hiredIds().reduce((a, id) => a + wageOf(id), 0);
   function payWages(dt) {
     const s = S();
@@ -360,7 +362,7 @@ export function createOffice(X) {
       if (!free.length) free = stories.filter((id) => !eraBusy(id));
       if (!free.length) break;
       const eraId = [...free].sort((a, b) => count(a) - count(b))[0];
-      if (stories.includes(eraId)) { launchLight(eraId, staffId, (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, { auto: true }); continue; }
+      if (stories.includes(eraId)) { launchLight(eraId, staffId, (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, {}, { auto: true }); continue; }
       launch(eraId, { seed: (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, staffId, items: autoKit(eraId), }, { auto: true });
     }
     ctx.save();

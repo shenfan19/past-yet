@@ -74,7 +74,7 @@ const traitCards = cards('traits');
 const staffCards = cards('staff');
 const quoteCards = cards('quotes');
 emitYaml('staff.yaml', {
-  stats: staffRules.stats, default_base: staffRules.default_base, default_habit: staffRules.default_habit,
+  attributes: staffRules.attributes, stats: staffRules.stats, derive: staffRules.derive, default_base: staffRules.default_base, default_habit: staffRules.default_habit,
   traits: Object.fromEntries(traitCards.map((c) => [c.id, struct(c)])),
   staff: Object.fromEntries(staffCards.map((c) => [c.id, struct(c)])),
 });

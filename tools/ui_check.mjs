@@ -139,12 +139,31 @@ try {
   const fundsA = await page.evaluate(() => window.__game.ctx.S().funds);
   await page.click('[data-act=antsell][data-id=clinic_bell]');
   ok('a spare copy sells for funds and the anchored one stays', await page.evaluate((f) => window.__game.ctx.S().funds > f && window.__game.ctx.S().antiques.filter((x) => x === 'clinic_bell').length === 1 && window.__game.ctx.S().locks.includes('clinic_bell'), fundsA));
-  // time energy buys future goods, funds buy modern ones
-  await page.evaluate(() => { window.__game.ctx.S().energy = 100; window.__game.ui.render(); });
+  // the time shop is paid in funds, and its goods unlock as the time energy reaches their number
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.energy = 100; S.funds = 1000; window.__game.ui.render(); });
   const fundsB = await page.evaluate(() => window.__game.ctx.S().funds);
   await page.click('[data-act=cartinc][data-id=radiation_shield]');
   await page.click('[data-act=cartbuy][data-id=future]');
-  ok('future goods are paid in time energy', await page.evaluate((f) => window.__game.ctx.S().energy === 20 && window.__game.ctx.S().inv.radiation_shield === 1 && window.__game.ctx.S().funds === f, fundsB));
+  ok('future goods are paid in funds and the energy stays', await page.evaluate((f) => window.__game.ctx.S().energy === 100 && window.__game.ctx.S().inv.radiation_shield === 1 && window.__game.ctx.S().funds === f - 80, fundsB));
+  ok('special equipment is locked until the energy reaches its number', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 0 && (await page.locator('[data-act=cartinc][data-id=neural_chip]').count()) === 1);
+  await page.evaluate(() => { window.__game.ctx.S().energy = 130; window.__game.ui.render(); });
+  ok('it unlocks when the energy gets there', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 1);
+  // scenes: the points are requirements, equipment counts and shows, and a scene can find the traveller out
+  const sc = await page.evaluate(() => {
+    const b = window.__game.backend;
+    const rate = (ev, staff, items, id) => { let n = 0; for (let k = 1; k <= 60; k++) if (b.runLight(ev, staff, k, items).points.find((p) => p.id === id).hit) n++; return n / 60; };
+    let foundGorilla = 0, foundCloak = 0;
+    for (let k = 1; k <= 200; k++) { if (b.runLight('leonardo_florence', 's_ning', k, { gorilla_arm: 1, cyber_arm: 1 }).found) foundGorilla++; if (b.runLight('leonardo_florence', 's_ning', k, { gorilla_arm: 1, cyber_arm: 1, holo_cloak: 1 }).found) foundCloak++; }
+    return {
+      woman: rate('leonardo_florence', 's_ning', {}, 'p2'), man: rate('leonardo_florence', 's_zhou', {}, 'p2'),
+      plain: rate('leonardo_florence', 's_ning', {}, 'p1'), apple: rate('leonardo_florence', 's_ning', { golden_apple: 1 }, 'p1'),
+      chipNeeded: rate('newton_cambridge', 's_ning', {}, 'p2'), chip: rate('newton_cambridge', 's_ning', { neural_chip: 1 }, 'p2'), foundGorilla, foundCloak,
+      noKit: b.runLight('leonardo_florence', 's_ning', 5, {}).found,
+    };
+  });
+  ok('being a woman is a requirement of the portrait', sc.woman > 0.95 && sc.man < 0.2);
+  ok('the golden apple triples persuasion and a chip is the item a point asks for', sc.plain === 0 && sc.apple > 0.7 && sc.chipNeeded === 0 && sc.chip > 0.7);
+  ok('equipment that shows gets the traveller found out, a cloak lowers it, and no equipment is never found out', sc.foundGorilla > 80 && sc.foundCloak < sc.foundGorilla && sc.noKit === null);
   // the antique roll is the backend's, seeded, and the chance falls to a floor
   ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= 0.6 && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_einstein_bern'); }));
   ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= 0.6; }); }));
@@ -161,7 +180,7 @@ try {
   ok('bought disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 2);
   await page.click('[data-act=shopsell][data-id=disinfectant]');
   ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
-  ok('future goods are buyable but a borrowed design is not', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 1 && (await page.locator('[data-act=cartinc][data-id=bamboo_copter]').count()) === 0);
+  ok('future goods are buyable but a borrowed design is not', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1 && (await page.locator('[data-act=cartinc][data-id=bamboo_copter]').count()) === 0);
   await page.fill('#shop-q', '心率');
   ok('shop text filter', (await page.locator('[data-act=cartinc]').count()) === 1);
   await page.fill('#shop-q', '');
@@ -247,20 +266,13 @@ try {
     d.report.outcomeId = 'modest';
     const r = off.recall(d.id);
     const b = g.backend;
-    D_tmp(g);
     const res = { launched: !!d, secondBlocked: second === null, ok: r.ok, share: d.paid && d.paid.share, recalled: d.recalled, favorDown: S.staff.s_ning.favor < fav,
-      stay: b.recallRefused('s_ning', 1, 'stay_and_gifts'), hed: b.recallRefused('tmp_hed', 1, 'modest'), loyal: b.recallRefused('tmp_loyal', 1, 'modest') };
-    delete g.D.o.staff.staff.tmp_hed; delete g.D.o.staff.staff.tmp_loyal;
+      stay: b.recallRefused('s_ning', 1, 'stay_and_gifts'), other: b.recallRefused('s_ning', 1, 'modest') };
     return res;
-    function D_tmp(gg) {
-      const O = gg.D.o.staff.staff;
-      O.tmp_hed = { traits: ['hedonist', 'hedonist'], base: {}, gender: 'f', age: 30 };
-      O.tmp_loyal = { traits: ['loyal', 'loyal'], base: {}, gender: 'f', age: 30 };
-    }
   });
   ok('only one employee can be in a place at a time', rc.launched && rc.secondBlocked);
   ok('a recall brings them home with part of the pay and the story stops', rc.ok && rc.recalled && rc.share > 0 && rc.share < 1 && rc.favorDown);
-  ok('someone who decided to stay, or a hedonist, can refuse, a loyal one does not', rc.stay === true && rc.hed === true && rc.loyal === false);
+  ok('someone who decided to stay refuses a recall and anyone else comes', rc.stay === true && rc.other === false);
   const offerBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).join());
   await page.evaluate(() => { window.__game.ctx.S().clock.day += 8; });
   await page.selectOption('[data-clk=speed]', '1');
@@ -275,6 +287,7 @@ try {
     S.dispatches = S.dispatches.filter((d) => d.claimed);
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     const crew = Object.keys(S.staff).filter((k) => S.staff[k].hired && S.secretary !== k);
+    const keepSecretary = S.secretary; S.secretary = null;
     delete S.stars[era];
     const run = (stars, staff) => {
       const d = off.launch(era, { seed: 11 + stars, staffId: staff, items: {} });
@@ -284,6 +297,7 @@ try {
       return { gain: S.energy - before, best: S.stars[era], newBest: d.newBest };
     };
     const a = run(2, crew[0]); const b = run(2, crew[1]); const c = run(3, crew[2]);
+    S.secretary = keepSecretary;
     return { a, b, c, base: g.D.get('config.stars.energy_base.' + era) };
   });
   ok('two stars pay half of the base energy', sr.a.gain === Math.round(sr.base / 2) && sr.a.best === 2 && sr.a.newBest === true);
@@ -406,10 +420,10 @@ try {
   ok('a small story has its own short report and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('.quote').count()) === 1 && (await page.locator('table').count()) === 1);
   await page.click('[data-act=back]');
   await page.click('[data-tab=enc]');
-  await page.fill('#wiki-q', '苹果');
+  await page.fill('#wiki-q', '月亮');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
   await page.click('[data-tab=shop]');
-  ok('guest sees the future shop and its goods', (await page.locator('[data-act=cartinc][data-id=bionic_lung]').count()) === 1);
+  ok('guest sees the future shop and its goods', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   // English, language switch and fallback
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
   await page.waitForSelector('.lead');

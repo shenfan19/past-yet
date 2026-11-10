@@ -164,13 +164,17 @@ light:
     '2': 6
     '3': 9
   difficulty:
-    base: 0.2
-    per_tier: 0.12
+    base: 0.32
+    per_tier: 0.1
   noise: 0.25
   cuts:
     reach: -0.1
     meet: 0.08
     impress: 0.2
+  kinds:
+    - endure
+    - persuade
+    - trust
   pay:
     '1':
       funds: 40
@@ -195,49 +199,71 @@ light:
     missed: -0.03
   field_weights:
     science:
-      skill: 0.4
-      curiosity: 0.4
-      eloquence: 0.2
+      wit: 0.8
+      finesse: 0.2
     technology:
-      skill: 0.5
-      curiosity: 0.3
-      stamina: 0.2
+      wit: 0.8
+      constitution: 0.2
     literature:
-      eloquence: 0.4
-      curiosity: 0.4
-      kindness: 0.2
+      finesse: 0.5
+      wit: 0.5
     math:
-      skill: 0.5
-      curiosity: 0.4
-      stubbornness: 0.1
+      wit: 0.9
+      will: 0.1
     medicine:
-      skill: 0.4
-      kindness: 0.4
-      stamina: 0.2
+      wit: 0.6
+      constitution: 0.2
+      will: 0.2
     thought:
-      eloquence: 0.5
-      curiosity: 0.3
-      kindness: 0.2
+      finesse: 0.6
+      wit: 0.4
     architecture:
-      skill: 0.4
-      stamina: 0.4
-      curiosity: 0.2
+      wit: 0.6
+      constitution: 0.4
     philosophy:
-      eloquence: 0.4
-      curiosity: 0.3
-      kindness: 0.3
+      finesse: 0.5
+      wit: 0.5
     art:
-      curiosity: 0.4
-      kindness: 0.3
-      eloquence: 0.3
+      wit: 0.4
+      finesse: 0.4
+      will: 0.2
     exploration:
-      stamina: 0.5
-      curiosity: 0.3
-      stubbornness: 0.2
+      constitution: 0.5
+      wit: 0.3
+      will: 0.2
     music:
-      curiosity: 0.3
-      kindness: 0.3
-      eloquence: 0.4
+      wit: 0.4
+      finesse: 0.6
+scene:
+  suspicion_by_tier:
+    '1': 0.6
+    '2': 0.8
+    '3': 1.2
+  max_discovery: 0.9
+  share:
+    '0': 0.15
+    '1': 0.4
+    '2': 0.7
+    '3': 1
+  found:
+    reject:
+      at: 0.6
+      stars_cost: 1
+      rest_days: 1
+      favor: -0.03
+      keep_antique: true
+    jail:
+      at: 0.9
+      stars_cost: 3
+      rest_days: 4
+      favor: -0.05
+      keep_antique: false
+    hunted:
+      at: 1.01
+      stars_cost: 3
+      rest_days: 8
+      favor: -0.15
+      keep_antique: false
 engine:
   mc_seed_stride: 7919
   seed_max: 100000

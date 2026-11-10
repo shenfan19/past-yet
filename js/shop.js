@@ -47,7 +47,7 @@ export function createShop(X) {
         { k: 'tags', label: S_.col_tags, w: '22%', cell: (r) => tagChips(r.it.tags) },
         { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.it.cost, cell: (r) => `${r.it.cost} ${icon(cur)}` },
         { k: 'stock', label: S_.stock, w: '10%', cls: 'num', val: (r) => S.inv[r.id] || 0, cell: (r) => S.inv[r.id] || 0 },
-        { k: 'qty', label: S_.col_qty, w: '22%', cls: 'num', cell: (r) => (buyable(r.it)
+        { k: 'qty', label: S_.col_qty, w: '22%', cls: 'num', cell: (r) => (r.it.unlock_energy > S.energy ? `<span class="muted"${X.tip(S_.locked_tip)}>🔒 ${r.it.unlock_energy} ${icon('energy')}</span>` : buyable(r.it)
           ? stepper('cartdec', 'cartinc', r.id, cart()[r.id] || 0, !(cart()[r.id] > 0), total + r.it.cost * r.it.step > bal(cur))
           : `<span class="muted">${r.it.ip ? S_.ip_short : S_.planned}</span>`) },
       ],
@@ -131,6 +131,7 @@ export function createShop(X) {
     if (a === 'cartinc' || a === 'cartdec') {
       const it = D.get('items.' + id);
       const n = (cart()[id] || 0) + (a === 'cartinc' ? it.step : -it.step);
+      if (it.unlock_energy > S.energy && a === 'cartinc') return true;
       if (n <= 0) delete cart()[id]; else if (cartTotal(it.shop) + it.cost * it.step <= bal(curOf(it.shop)) || a === 'cartdec') cart()[id] = n;
       return true;
     }

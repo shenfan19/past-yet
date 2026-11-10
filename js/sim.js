@@ -98,6 +98,7 @@ export function compileEra(raw, D, id) {
   }));
 
   E.starPoints = req(raw, 'star_points', id).map((p) => {
+    if (!p.kind) throw new Error(where('star_points.' + p.id) + ' needs a kind');
     const m = E.milestones.find((x) => x.id === p.milestone);
     if (!m || !m.needsTraveler) throw new Error(where('star_points.' + p.id) + ' needs a milestone that needs the traveller: ' + p.milestone);
     return p;
@@ -137,17 +138,17 @@ export function compileEra(raw, D, id) {
 }
 
 // ---------- staff and spec ----------
-export function staffStats(D, staffId) {
-  const base = { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
-  for (const t of D.get('staff.staff.' + staffId + '.traits')) {
-    for (const [k, dv] of Object.entries(D.get('staff.traits.' + t + '.mods'))) base[k] += dv;
-  }
-  // a trait can pull a stat down but never below nothing
-  for (const k of Object.keys(base)) base[k] = Math.max(0, base[k]);
-  return base;
+// The five attributes of an employee, from 1 to 10. Traits do not change them.
+export function staffAttrs(D, staffId) {
+  return { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
 }
-
-// The field behaviour an employee brings, derived from the policies of their traits.
+// What the era models read. Every quantity is a plain function of one attribute, set in staff_rules.yaml. A trait can add a weakness of its own, like being hurt or infected.
+export function staffStats(D, staffId) {
+  const a = staffAttrs(D, staffId);
+  const out = Object.fromEntries(Object.entries(D.get('staff.derive')).map(([k, d]) => [k, Math.max(0, d.offset + d.scale * a[d.from])]));
+  for (const t of D.get('staff.staff.' + staffId + '.traits')) for (const [k, v] of Object.entries(D.get('staff.traits.' + t).model || {})) out[k] += v;
+  return out;
+}
 export function staffHabit(D, staffId) {
   const out = { ...D.get('staff.default_habit') };
   const best = {};

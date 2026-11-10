@@ -38,14 +38,14 @@ console.log(JSON.stringify(outcomes));
 
 // Every trait must give something and cost something, and say so in both languages.
 // A stat counts as a gain when it goes up, except the two where less is better.
-const lessIsBetter = new Set(['homesick_trait', 'greed']);
 let bad = 0;
 const T_ = D.get('staff.traits');
 for (const [id, tr] of Object.entries(T_)) {
-  const effects = Object.entries(tr.mods).map(([k, v]) => (lessIsBetter.has(k) ? -v : v));
-  for (const [k, v] of Object.entries(tr.secretary || {})) effects.push(v);
-  if (tr.recall_refuse !== undefined) effects.push(-tr.recall_refuse);
+  // a trait is worth something at some kind of sync point, and costs something at another or in a weakness of its own
+  const effects = Object.values(tr.points).concat(Object.values(tr.model || {}).map((v) => -v));
   if (!effects.some((x) => x > 0) || !effects.some((x) => x < 0)) { console.log(`trait ${id} lacks a gain or a cost`); bad++; }
+  if (tr.mods) { console.log(`trait ${id} must not change attributes`); bad++; }
+  for (const k of Object.keys(tr.points)) D.get('text.point_kinds.' + k);
   const note = D.get('text.trait_notes.' + id);
   if (!note.pro || !note.con) { console.log(`trait ${id} has no gain or cost text`); bad++; }
 }
@@ -59,7 +59,7 @@ for (let serial = 1; serial <= 1000; serial++) {
   const c = B.makeCandidate(serial, []);
   const def = c.def;
   if (!def.text.en.name || !def.text.zh.name || !def.text.en.job || !def.text.zh.job) { console.log('candidate ' + serial + ' lacks a name or job'); bad++; }
-  if (new Set(def.traits).size !== def.traits.length || def.traits.length < 2) { console.log('candidate ' + serial + ' has bad traits'); bad++; }
+  if (new Set(def.traits).size !== def.traits.length || def.traits.length < 1) { console.log('candidate ' + serial + ' has bad traits'); bad++; }
   seenRegion.add(def.region); seenSkin.add(def.skin); names.add(def.text.en.name);
   if (serial <= 60) {
     const { text, ...rest } = def;
@@ -85,3 +85,29 @@ for (const id of D.get('config.eras')) {
   for (const p of E.starPoints) D.get(`text.eras.${id}.star_points.${p.id}`);
 }
 console.log('sync points: ok');
+
+// The scenes: three points each, with words in both languages and requirements the backend understands.
+let scenes = 0;
+const known = new Set(['stat', 'trait', 'job', 'gender', 'item', 'luck', 'any']);
+const checkReq = (req, where) => { for (const [k, v] of Object.entries(req)) { if (!known.has(k)) throw new Error(where + ' unknown requirement ' + k); if (k === 'any') v.forEach((r) => checkReq(r, where)); if (k === 'item') D.get('items.' + v); if (k === 'trait') v.forEach((t) => D.get('staff.traits.' + t)); } };
+for (const ev of D.get('catalog.events')) {
+  if (!ev.scene) continue;
+  scenes++;
+  if (ev.scene.points.length !== 3) throw new Error(ev.id + ' needs three points');
+  for (const p of ev.scene.points) { checkReq(p.req, ev.id + '.' + p.id); if (!D.get('text.catalog.' + ev.id + '.points.' + p.id)) throw new Error(ev.id + ' lacks the words of ' + p.id); }
+}
+for (const [id, it] of Object.entries(D.get('items'))) if (it.scene && !(it.unlock_energy >= 0 && typeof it.exposure === 'number')) throw new Error(id + ' lacks unlock_energy or exposure');
+console.log('scenes with three points:', scenes);
+
+// The two weaknesses must really cost health: a kind employee loses more to hostility, a sensitive one more to disease.
+{
+  const mk = (id, traits) => { D.o.staff.staff[id] = { traits, base: {}, gender: 'f', age: 30 }; D.o.text.staff[id] = { name: id, job: 'x', bio: '' }; };
+  mk('chk_plain', ['curious']); mk('chk_kind', ['kind']); mk('chk_sens', ['sensitive']);
+  const id = D.get('config.eras')[0];
+  const E = sim.compileEra(D.get('era_raw.' + id), D, id);
+  const kit = Object.fromEntries(Object.keys(E.itemBindings).filter((k) => k !== 'recall_charm').map((k) => [k, D.get(`items.${k}.max`)]));
+  const mean = (sid) => { let h = 0; for (let seed = 1; seed <= 30; seed++) h += sim.runDispatch(E, D, { seed, staffId: sid, items: kit }).branch.final['traveler.health']; return h / 30; };
+  const [p, k, s2] = [mean('chk_plain'), mean('chk_kind'), mean('chk_sens')];
+  if (!(k < p && s2 < p)) { console.log(`weaknesses do not cost health: plain ${p}, kind ${k}, sensitive ${s2}`); process.exit(1); }
+  console.log(`weaknesses cost health: plain ${p.toFixed(2)}, kind ${k.toFixed(2)}, sensitive ${s2.toFixed(2)}`);
+}

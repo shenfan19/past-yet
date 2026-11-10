@@ -112,26 +112,36 @@ stars:
   energy_share: {0: 0, 1: 0.25, 2: 0.5, 3: 1}
 light:
   stay_by_tier: {1: 4, 2: 6, 3: 9}
-  difficulty: {base: 0.2, per_tier: 0.12}
+  difficulty: {base: 0.32, per_tier: 0.1}
   noise: 0.25
   # the three points of a small story are reached, met and made a mark, each at a margin of the traveller against the event
   cuts: {reach: -0.1, meet: 0.08, impress: 0.2}
+  kinds: [endure, persuade, trust]
   pay: {1: {funds: 40, energy: 4}, 2: {funds: 70, energy: 8}, 3: {funds: 110, energy: 16}}
   share: {success: 1, partial: 0.55, missed: 0.15}
   rest_days: {success: 1, partial: 1, missed: 2}
   favor: {success: 0.03, partial: 0, missed: -0.03}
   field_weights:
-    science: {skill: 0.4, curiosity: 0.4, eloquence: 0.2}
-    technology: {skill: 0.5, curiosity: 0.3, stamina: 0.2}
-    literature: {eloquence: 0.4, curiosity: 0.4, kindness: 0.2}
-    math: {skill: 0.5, curiosity: 0.4, stubbornness: 0.1}
-    medicine: {skill: 0.4, kindness: 0.4, stamina: 0.2}
-    thought: {eloquence: 0.5, curiosity: 0.3, kindness: 0.2}
-    architecture: {skill: 0.4, stamina: 0.4, curiosity: 0.2}
-    philosophy: {eloquence: 0.4, curiosity: 0.3, kindness: 0.3}
-    art: {curiosity: 0.4, kindness: 0.3, eloquence: 0.3}
-    exploration: {stamina: 0.5, curiosity: 0.3, stubbornness: 0.2}
-    music: {curiosity: 0.3, kindness: 0.3, eloquence: 0.4}
+    science: {"wit": 0.8, "finesse": 0.2}
+    technology: {"wit": 0.8, "constitution": 0.2}
+    literature: {"finesse": 0.5, "wit": 0.5}
+    math: {"wit": 0.9, "will": 0.1}
+    medicine: {"wit": 0.6, "constitution": 0.2, "will": 0.2}
+    thought: {"finesse": 0.6, "wit": 0.4}
+    architecture: {"wit": 0.6, "constitution": 0.4}
+    philosophy: {"finesse": 0.5, "wit": 0.5}
+    art: {"wit": 0.4, "finesse": 0.4, "will": 0.2}
+    exploration: {"constitution": 0.5, "wit": 0.3, "will": 0.2}
+    music: {"wit": 0.4, "finesse": 0.6}
+scene:
+  suspicion_by_tier: {1: 0.6, 2: 0.8, 3: 1.2}
+  max_discovery: 0.9
+  share: {0: 0.15, 1: 0.4, 2: 0.7, 3: 1}
+  # a scene that has been found out: how, the star cost, the days of rest, the favor lost, and whether the antique is lost
+  found:
+    reject: {at: 0.6, stars_cost: 1, rest_days: 1, favor: -0.03, keep_antique: true}
+    jail: {at: 0.9, stars_cost: 3, rest_days: 4, favor: -0.05, keep_antique: false}
+    hunted: {at: 1.01, stars_cost: 3, rest_days: 8, favor: -0.15, keep_antique: false}
 engine:
   mc_seed_stride: 7919
   seed_max: 100000

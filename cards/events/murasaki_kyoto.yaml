@@ -5,6 +5,11 @@ lat: 35.01
 region: asia
 field: literature
 tier: 3
+scene:
+  points:
+    - {id: p1, kind: trust, req: {"gender": "f"}}
+    - {id: p2, kind: persuade, req: {"any": [{"trait": ["sensitive"]}, {"stat": {"wit": 10}}]}}
+    - {id: p3, kind: hold, req: {"item": "holo_cloak"}}
 text:
   en:
     name: The world's first great novel
@@ -13,6 +18,10 @@ text:
     story: A lady at the Heian court, Murasaki Shikibu writes The Tale of Genji, a long novel of court life and its feelings.
     relic: A lacquered brush box
     relic_desc: A small box with brushes, a stone and water.
+    points:
+      p1: "Be received at court (needs a woman)"
+      p2: "Talk about her story"
+      p3: "Pass as one of the court (needs a hologram cloak)"
   zh:
     name: 世界上第一部伟大的长篇小说
     place: 京都
@@ -20,3 +29,7 @@ text:
     story: 平安宫廷里的紫式部写出了《源氏物语》，一部写宫廷生活和人心的长篇小说。
     relic: 一只漆制笔盒
     relic_desc: 一只小盒子，里面有笔、砚和水。
+    points:
+      p1: "被宫廷接纳（需要女性员工）"
+      p2: "聊她的故事"
+      p3: "混作宫里的人（需要全息斗篷）"

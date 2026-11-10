@@ -95,6 +95,9 @@ variables:
   traveler.kindness: {type: parameter, value: 0.3, from_staff: kindness, source: game_assumption}
   traveler.stubbornness: {type: parameter, value: 0.3, from_staff: stubbornness, source: game_assumption}
   traveler.curiosity: {type: parameter, value: 0.3, from_staff: curiosity, source: game_assumption}
+  traveler.hurt_trait: {type: parameter, value: 0, from_staff: hurt, source: game_assumption}
+  traveler.infect_trait: {type: parameter, value: 0, from_staff: infect, source: game_assumption}
+  harm_block: {type: parameter, value: 0.12, unit: fraction, source: game_assumption, note: "Health lost to hostility when turned away, per point of vulnerability."}
   traveler.homesick_trait: {type: parameter, value: 0.2, from_staff: homesick_trait, source: game_assumption}
   # items delivered at arrival
   ors_stock: {type: state, value: 0, unit: pack, bounds: [0, null], source: game_assumption}
@@ -313,7 +316,7 @@ equations:
     priority: 45
     dynamics:
       traveler.fatigue: "traveler.fatigue + (fat_treat * act_treat + fat_protect * act_protect + fat_talk * act_talk + fat_bedside * act_bedside + fat_lobby * act_lobby - fat_rest * act_rest) / traveler.stamina * (1 - monitor_fatigue_cut * has_monitor) * step"
-      traveler.health: "traveler.health - exposure_rate * (contact_treat * act_treat + contact_bedside * act_bedside + contact_protect * act_protect + contact_talk * act_talk) * sick_density * (1 - clamp(traveler.skill * guard_skill, 0, 0.9)) * step + health_recover * act_rest * step"
+      traveler.health: "traveler.health - exposure_rate * (contact_treat * act_treat + contact_bedside * act_bedside + contact_protect * act_protect + contact_talk * act_talk) * sick_density * (1 - clamp(traveler.skill * guard_skill, 0, 0.9)) * (1 + traveler.infect_trait) * step + health_recover * act_rest * step"
 
   traveller_mind:
     priority: 40
@@ -389,6 +392,7 @@ events:
       ors_stock: "max(0, ors_stock - resp_insist * loss_insist - resp_yield * loss_yield)"
       traveler.trust: "traveler.trust - trust_loss_block * (1 + resp_insist) + resp_appeal * 0.03"
       traveler.block_count: "traveler.block_count + 1"
+      traveler.health: "max(0, traveler.health - harm_block * traveler.hurt_trait)"
       traveler.appeal_urge: "traveler.appeal_urge + resp_appeal + 0.3 * resp_yield"
       traveler.satisfaction: "traveler.satisfaction - sat_block * (resp_insist + 0.4)"
       traveler.fatigue: "traveler.fatigue + 0.05"
@@ -438,9 +442,9 @@ milestones:
 # Three sync points. A point is hit when its milestone fires in the branch, and all three make three stars.
 # Each is a milestone that needs the traveller, so it cannot be hit by history alone.
 star_points:
-  - {id: convince, milestone: snow_convinced}
-  - {id: trust, milestone: trust_won}
-  - {id: handle, milestone: handle_off_early}
+  - {id: convince, kind: persuade, milestone: snow_convinced}
+  - {id: trust, kind: trust, milestone: trust_won}
+  - {id: handle, kind: hold, milestone: handle_off_early}
 
 report: {deaths: D, cases: cum_cases, handle: removed_day, treated: treated_total, protected: protected_total, protected_scale: 1}
 

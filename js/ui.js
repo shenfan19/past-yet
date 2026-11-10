@@ -106,15 +106,19 @@ export function createUI(D, ctx) {
   // ---------- helpers ----------
   const staffState = (id) => office.staffState(id);
   const totals = () => ctx.backend.itemTotals(st.form.items);
-  const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: { ...st.form.items } });
+  const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: Object.fromEntries(Object.entries(st.form.items).filter(([k]) => k in E().itemBindings)) });
+  const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && D.get('items.' + k).scene));
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const tagLabel = (tag) => U.report[tag];
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
   const tip = (text) => ` data-tip="${esc(text)}"`;
   const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
+  const statsLine = (stats) => D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
+  // what a trait does at the sync points, as percent per kind of point, for example persuading +35%
+  const pointsText = (tr) => Object.entries(tr.points).map(([k, v]) => `${T.point_kinds[k]} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
   function traitTip(t) {
     const tr = D.get('staff.traits.' + t);
-    const mods = Object.entries(tr.mods).map(([k, v]) => `${T.stats[k]} ${v > 0 ? '+' : ''}${v}`).join(SEP);
+    const mods = pointsText(tr);
     const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}${COLON}${T.strategies[grp][key].name}`).join('${U.fmt.semi}');
     const pref = tr.prefer ? `${U.office.secretary_pref}${COLON}${U.office.aims[tr.prefer]}` : '';
     const note = T.trait_notes[t];
@@ -122,7 +126,7 @@ export function createUI(D, ctx) {
   }
   function staffTip(id) {
     const stats = ctx.backend.staffStats(id);
-    const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
+    const mini = statsLine(stats);
     return [staffProfile(D, id), T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
   }
   const staffLink = (id) => (D.get('staff.staff.' + id).generated && !(id in ctx.S().generated) ? `<span class="wl"${tip(staffTip(id))}>${esc(staffName(D, id))}</span>` : wl('staff:' + id, staffName(D, id), staffTip(id)));
@@ -287,7 +291,7 @@ export function createUI(D, ctx) {
     const id = c.id;
     const def = D.get('staff.staff.' + id);
     const stats = ctx.backend.staffStats(id);
-    const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
+    const mini = statsLine(stats);
     const swatch = def.skin ? `<span class="skin" style="background:${D.get('hiring.skin_tones.' + def.skin)}"></span>` : '';
     const traits = staffTraits(D, id).map((t) => `<div class="traitline"><b>${esc(T.traits[t])}</b> <span class="pro">+ ${esc(T.trait_notes[t].pro)}</span> <span class="con">− ${esc(T.trait_notes[t].con)}</span></div>`).join('');
     return `<div class="card cand">
@@ -349,6 +353,7 @@ export function createUI(D, ctx) {
       <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0)}</div>
       <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
+      <div class="sec">${U.stars.points}</div><ul class="sync">${ctx.era(id).raw.star_points.map((p) => `<li>☆ ${esc(ET.star_points[p.id])}</li>`).join('')}</ul>
       <div class="sec">${U.dispatch.ideas}</div><ul>${ideas}</ul>`;
     if (!done.length) return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p></div></div>`;
     const hist = ET.encyclopedia.history.map((h) => `<li>${esc(h.text)}${h.check ? ` <span class="chip warn">${U.archive.check_pending}</span>` : ''}</li>`).join('');
@@ -369,7 +374,8 @@ export function createUI(D, ctx) {
       <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0)}</div>
       <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
-      <p class="muted" style="margin-top:8px">${U.dispatch.small_story.replace('{n}', String(ctx.backend.lightStay(id)))}</p></div></div>`;
+      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>☆ ${esc(c.points[p.id])}</li>`).join('')}</ul><p class="muted">${U.dispatch.scene_hint}</p>` : ''}
+      <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p></div></div>`;
   }
 
   // ---------- home: the dispatch desk under the map ----------
@@ -391,7 +397,7 @@ export function createUI(D, ctx) {
     const rows = ready.map((id) => {
       const chosen = id === f.staffId;
       const stats = ctx.backend.staffStats(id);
-      const mini = Object.keys(T.stats).map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
+      const mini = statsLine(stats);
       return `<div class="pickrow ${chosen ? 'on' : ''}">
         <div class="pr1"><b>${staffLink(id)}</b><span class="muted pstats">${mini}</span>${chosen ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${id}">${U.dispatch.pick}</button>`}</div>
         <div class="pr2">${staffTraits(D, id).map(traitChip).join('')}<span class="grow"></span><span class="muted">${U.office.col_wage} ${r1(office.wageOf(id))} · ${favorCell(id)}</span></div></div>`;
@@ -416,15 +422,15 @@ export function createUI(D, ctx) {
     const stState = staffState(f.staffId);
     const story = !!st.map.cat;
     // only what can be taken is listed: what is in stock, and anything already chosen
-    const carryRows = story ? [] : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
+    const carryRows = story ? Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
     const carryBox = listbox.html({
       id: 'carry', maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
       foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${O.weight_capacity}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
       cols: [
-        { k: 'name', label: U.shop.col_name, w: '44%', val: (r) => r.name, cell: (r) => { const tx = itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}`)}<div class="oneline muted">${esc(firstSentence(tx.desc))}</div>`; } },
+        { k: 'name', label: U.shop.col_name, w: '44%', val: (r) => r.name, cell: (r) => { const tx = story ? T.items[r.id] : itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}${r.it.scene ? '\n' + U.dispatch.exposure + COLON + r.it.exposure : ''}`)}<div class="oneline muted">${esc(firstSentence(tx.desc))}</div>`; } },
         { k: 'stock', label: U.shop.stock, w: '16%', cls: 'num', val: (r) => r.stock, cell: (r) => r.stock },
-        { k: 'qty', label: U.dispatch.carry, w: '40%', cls: 'num', cell: (r) => `<span class="stepper"><button data-act="dec" data-id="${r.id}" ${f.items[r.id] > 0 ? '' : 'disabled'}>−</button><span class="n">${f.items[r.id]}</span><button data-act="inc" data-id="${r.id}" ${f.items[r.id] < Math.min(r.it.max, r.stock) ? '' : 'disabled'}>+</button></span>` },
+        { k: 'qty', label: U.dispatch.carry, w: '40%', cls: 'num', cell: (r) => `<span class="stepper"><button data-act="dec" data-id="${r.id}" ${(f.items[r.id] || 0) > 0 ? '' : 'disabled'}>−</button><span class="n">${f.items[r.id] || 0}</span><button data-act="inc" data-id="${r.id}" ${(f.items[r.id] || 0) < Math.min(r.it.max, r.stock) ? '' : 'disabled'}>+</button></span>` },
       ],
     });
     const target = story ? st.map.cat : e.id;
@@ -470,7 +476,7 @@ export function createUI(D, ctx) {
       <div class="row sp"><h2>${staffLink(cur.spec.staffId)} · ${esc(c.name)}</h2><span class="stamp">${esc(U.light.outcome[o])}</span></div>
       <p style="font-size:16px">${esc(summary)}</p>
       <div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>
-      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => U.light.points[id])}
+      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (D.get('catalog.events').find((x) => x.id === cur.eraId).scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
@@ -636,12 +642,12 @@ export function createUI(D, ctx) {
   // ---------- actions ----------
   function addItem(id, dir) {
     const it = D.get('items.' + id);
-    const v = st.form.items[id] + dir * it.step;
+    const v = (st.form.items[id] || 0) + dir * it.step;
     st.form.items[id] = Math.min(it.max, ctx.S().inv[id] || 0, Math.max(0, v));
   }
 
   function send() {
-    const d = st.map.cat ? office.launchLight(st.map.cat, st.form.staffId, Number(st.form.seed) || 1) : office.launch(st.form.eraId, formSpec());
+    const d = st.map.cat ? office.launchLight(st.map.cat, st.form.staffId, Number(st.form.seed) || 1, sceneKit()) : office.launch(st.form.eraId, formSpec());
     if (!d) return;
     ctx.audio.sfx('send');
     st.tab = 'home';

@@ -50,14 +50,18 @@ outcomes:
   modest:
     name: Modest result
 stats:
-  stamina: Stamina
-  skill: Medical skill
-  eloquence: Eloquence
-  kindness: Kindness
-  stubbornness: Stubbornness
-  curiosity: Curiosity
-  homesick_trait: Homesickness
-  greed: Greed
+  constitution: Constitution
+  wit: Wit
+  finesse: Finesse
+  will: Will
+  desire: Desire
+point_kinds:
+  persuade: persuading
+  trust: winning trust
+  notice: noticing
+  hold: holding on
+  endure: enduring
+  care: caring
 strategies:
   focus:
     balanced:
@@ -111,6 +115,7 @@ tags:
   device: device
   book: book
   safety: safety
+  fantasy: fantasy
   cyber: cybernetic
   scifi: sci-fi
   neta: meme
@@ -222,6 +227,9 @@ ui:
     cannot_pick: 'Not available: away, resting or the secretary.'
     nobody: Nobody can go now.
     nobody_back: The first is back in {n} days.
+    scene_hint: Special equipment can be taken on scenes. It shows, and a scene may find you out, so bring only what you need.
+    exposure: Exposure
+    scene_note: 'This scene has no full simulation yet and plays in brief: {n} days. The three points above are checked against the traveller and the equipment carried.'
     story: Story
     ideas: Ideas they can bring
     era_busy: Someone is already there
@@ -322,6 +330,10 @@ ui:
       reach: Reached the place
       meet: Met the figure
       impress: Left a mark
+    found:
+      reject: You were found out and turned away. Part of what you came for was lost.
+      jail: You were found out and locked up. The antique was lost and the rest took days.
+      hunted: You were found out and hunted. You got away, but only just.
   map:
     unknown: '?'
     tag_filter: Tag filter
@@ -603,6 +615,7 @@ ui:
     inv_title: Items
     inv_empty: Stock is empty
     sell_spares: Sell all spares
+    locked_tip: Unlocked when the time energy reaches this number.
     antiques_title: Antiques
     antiques_empty: Nothing found yet. Antiques are brought back from trips.
     copies: Held
@@ -689,15 +702,33 @@ items:
   heart_monitor:
     name: Heart rate monitor
     desc: Worn by the employee, it spots overwork early so fatigue builds more slowly.
-  bionic_lung:
-    name: Bionic lung implant
-    desc: A medical implant from the future. No era leads there yet.
   radiation_shield:
     name: Radiation shield
     desc: A protective device from the future. No era leads there yet.
   bamboo_copter:
     name: Bamboo copter
     desc: A meme. The name borrows from someone else's work, not for sale until checked.
+  neural_chip:
+    name: Cyborg neural chip
+    desc: A chip behind the ear that translates any language and speeds up learning. Hard to hide.
+  cyber_arm:
+    name: Cyborg arm
+    desc: A prosthetic arm with far more strength than a person has. It shows.
+  cyber_lung:
+    name: Cyborg bionic lung
+    desc: An artificial lung for long hours of hard work. It hums softly.
+  gorilla_arm:
+    name: Cyborg gorilla arm
+    desc: A huge, absurdly strong arm. Everyone looks.
+  holo_cloak:
+    name: Hologram cloak
+    desc: A cloak that bends light so that people look past you. It lowers the chance of being found out.
+  golden_apple:
+    name: Golden apple
+    desc: A golden apple out of a myth. Whoever hears you out is moved. Your power to persuade is tripled.
+  elixir:
+    name: Elixir
+    desc: A bright potion that eases pain and restores strength.
 antiques:
   pump_rust:
     name: Rust flake from the Broad Street pump
@@ -793,64 +824,28 @@ traits:
   kind: Kind
   stubborn: Stubborn
   curious: Curious
-  homesick: Homesick
-  studious: Studious
-  sturdy: Sturdy
   glib: Silver tongued
-  patient: Patient
+  sensitive: Sensitive
   bold: Bold
-  meticulous: Meticulous
-  artistic: Artistic
-  wise: Wise
-  greedy: Greedy
-  hedonist: Hedonist
-  loyal: Loyal
 trait_notes:
   kind:
-    pro: Cares for the sick and keeps the people around them close.
-    con: Misses home sooner than most.
+    pro: Earns trust and gives care that counts.
+    con: Easily hurt by hostility, and gives way too soon.
   stubborn:
-    pro: Does not give in at the door and has staying power.
-    con: Poor at talking people round, and a little cold.
+    pro: Holds on when pushed and does not give up.
+    con: Rigid, and poor at bringing others round.
   curious:
-    pro: Drawn to people and finds a way in.
-    con: Easily distracted and tires sooner.
-  homesick:
-    pro: Warm with the people they meet.
-    con: Wants to go home early and may give up.
-  studious:
-    pro: Picks up the local craft and avoids mistakes.
-    con: Bookish and poor at winning people over.
-  sturdy:
-    pro: Hardly tires and recovers fast.
-    con: Incurious and slow to try anything new.
+    pro: Notices things and asks what nobody else asks.
+    con: Easily pulled away from what has to be done.
   glib:
-    pro: Talks their way in and wins allies.
-    con: Slick, and a little self serving.
-  patient:
-    pro: Calm, and outlasts delays and homesickness.
-    con: Slow to speak up.
+    pro: Talks their way in and brings people round.
+    con: A smooth tongue is not always trusted.
+  sensitive:
+    pro: Notices what is wrong, and feels what others feel.
+    con: A weak constitution, so disease catches on more easily.
   bold:
-    pro: Pushes through resistance.
-    con: Careless, and takes risks.
-  meticulous:
-    pro: Careful and precise.
-    con: Slow, and tires easily.
-  artistic:
-    pro: Sensitive, and draws people in.
-    con: Impractical and fragile.
-  wise:
-    pro: Judges well and is trusted.
-    con: Worn out sooner and set in their ways.
-  greedy:
-    pro: Brings home more money and bargains well.
-    con: May pocket things, and is cold with people.
-  hedonist:
-    pro: Happy anywhere and makes friends easily.
-    con: Tires, spends freely, and may refuse to come back when recalled.
-  loyal:
-    pro: Steady, and always comes back when called.
-    con: Unadventurous, and easily talked out of a plan.
+    pro: Pushes through resistance and danger.
+    con: Careless, and misses what should have been noticed.
 mainline:
   open:
     name: Opening day
@@ -972,6 +967,10 @@ catalog:
     story: Hypatia teaches mathematics, astronomy and philosophy in Alexandria and is remembered as its best known woman scholar.
     relic: An astrolabe plate
     relic_desc: An engraved brass disc for finding the stars and the hour.
+    points:
+      p1: Join the discussion
+      p2: Follow her geometry
+      p3: Slip through the crowd unseen (needs a hologram cloak)
   fibonacci_pisa:
     name: Hindu-Arabic numerals reach Europe
     place: Pisa
@@ -1000,6 +999,10 @@ catalog:
     story: Gutenberg combines movable metal type, oil based ink and a press, and books stop being rare.
     relic: A lead type sort
     relic_desc: One small letter of lead and tin, backwards.
+    points:
+      p1: Help with the press (a craftsperson)
+      p2: Lift the heavy press (needs a cyborg arm)
+      p3: Get the type to line up
   leonardo_florence:
     name: A painter who drew machines
     place: Florence
@@ -1007,6 +1010,10 @@ catalog:
     story: Leonardo paints the Mona Lisa and fills his notebooks with anatomy, water and flying machines.
     relic: A mirror-written notebook page
     relic_desc: A page of backwards script that needs a mirror to read.
+    points:
+      p1: Win Leonardo's trust
+      p2: Sit for the portrait as the model (needs a woman)
+      p3: Spark his sense of beauty (an artistic employee, or a golden apple)
   copernicus_frombork:
     name: The Sun at the centre
     place: Frombork, Poland
@@ -1028,6 +1035,10 @@ catalog:
     story: The Globe opens on the Thames bank, and its plays reach from the cheapest standing place to the best seats.
     relic: A goose quill
     relic_desc: A feather cut for writing, ink still on the tip.
+    points:
+      p1: Get a hearing at the Globe
+      p2: Offer a line he keeps
+      p3: A full house
   galileo_padua:
     name: Moons around Jupiter
     place: Padua
@@ -1035,6 +1046,10 @@ catalog:
     story: Galileo points a telescope at Jupiter and sees four small moons going round it.
     relic: A ground lens
     relic_desc: A small glass lens, polished by hand.
+    points:
+      p1: Look through the telescope with him
+      p2: Stand by him before the doubters
+      p3: A clear night
   descartes_leiden:
     name: Doubt as a method
     place: Leiden
@@ -1056,6 +1071,10 @@ catalog:
     story: In the Principia Newton shows that the same law of gravity governs falling objects and the orbits of the planets.
     relic: A glass prism
     relic_desc: A triangle of glass that splits white light into colours.
+    points:
+      p1: Follow his mathematics
+      p2: Talk with him in Latin (needs a cyborg neural chip)
+      p3: Hold your ground in the argument
   bach_leipzig:
     name: A cantor writes for every Sunday
     place: Leipzig
@@ -1105,6 +1124,10 @@ catalog:
     story: Beethoven, almost deaf, premieres the Ninth Symphony and has to be turned round to see the applause.
     relic: An ear trumpet
     relic_desc: A horn he held to his ear as the world went quiet.
+    points:
+      p1: Comfort him
+      p2: Hear the music in his head (an artistic employee)
+      p3: A good day for him
   faraday_london:
     name: Electricity from magnetism
     place: London
@@ -1119,6 +1142,10 @@ catalog:
     story: A young naturalist on the Beagle notices how birds and tortoises differ from island to island, and years later explains why.
     relic: A finch feather
     relic_desc: A small brown feather from the islands.
+    points:
+      p1: Notice what others miss
+      p2: Survive the voyage
+      p3: Help him sort the specimens
   lovelace_london:
     name: The first program
     place: London
@@ -1133,6 +1160,10 @@ catalog:
     story: At the Scutari hospital Nightingale cleans the wards, counts the deaths, and turns the counts into a case for reform.
     relic: A small oil lamp
     relic_desc: The lamp from her night rounds.
+    points:
+      p1: Know the ward work (a nurse)
+      p2: Keep the men calm
+      p3: Last the long night shifts
   mendel_brno:
     name: Peas and the rules of heredity
     place: Brno
@@ -1161,6 +1192,10 @@ catalog:
     story: Working in a shed, Marie and Pierre Curie separate polonium and radium from tonnes of ore.
     relic: A tube of pitchblende
     relic_desc: A glass tube of dark ore that left a faint glow in the dark.
+    points:
+      p1: Keep up in the laboratory
+      p2: Endure the dusty shed (needs a cyborg bionic lung)
+      p3: Wait out the long refining
   freud_vienna:
     name: Dreams as a way into the mind
     place: Vienna
@@ -1287,6 +1322,10 @@ catalog:
     story: Ibn al-Haytham, writing in Cairo, tests how light travels in a dark room and shows that we see because light enters the eye.
     relic: A pinhole screen
     relic_desc: A dark board with one small hole.
+    points:
+      p1: Ask how seeing works
+      p2: Help build the dark chamber
+      p3: A bright day
   house_of_wisdom:
     name: Scholars translating the world's books
     place: Baghdad
@@ -1301,6 +1340,10 @@ catalog:
     story: Ibn Sina finishes the Canon of Medicine, which is taught for centuries from Persia to Europe.
     relic: A glass vial
     relic_desc: A small stoppered vial of a physician.
+    points:
+      p1: Follow the medicine
+      p2: Read Arabic and Persian (needs a cyborg neural chip)
+      p3: Work through the Canon
   omar_khayyam_nishapur:
     name: A calendar more exact than ours
     place: Nishapur, Persia
@@ -1336,6 +1379,10 @@ catalog:
     story: Chinua Achebe publishes Things Fall Apart, telling the arrival of the colonial world from within an Igbo village.
     relic: A typed manuscript page
     relic_desc: A page typed with a few corrections in ink.
+    points:
+      p1: Listen to him
+      p2: Tell your own stories
+      p3: A good reading
   maathai_nairobi:
     name: Planting trees as a movement
     place: Nairobi
@@ -1371,6 +1418,10 @@ catalog:
     story: Cai Lun reports a way of making paper from bark, rags and old nets, light and cheap to write on.
     relic: A sheet of coarse paper
     relic_desc: A sheet with bits of fibre still showing.
+    points:
+      p1: Work the pulp with him (a craftsperson)
+      p2: Get an even sheet
+      p3: Good weather for drying
   zhang_heng_luoyang:
     name: An instrument that senses distant earthquakes
     place: Luoyang, China
@@ -1406,6 +1457,10 @@ catalog:
     story: In Chang'an Li Bai writes poems of moonlight, wine and distance that every schoolchild still learns.
     relic: A small wine cup
     relic_desc: A cup with a faint line of moon painted inside.
+    points:
+      p1: Keep him company over a drink
+      p2: Trade verses
+      p3: He is in a good mood
   murasaki_kyoto:
     name: The world's first great novel
     place: Kyoto
@@ -1413,6 +1468,10 @@ catalog:
     story: A lady at the Heian court, Murasaki Shikibu writes The Tale of Genji, a long novel of court life and its feelings.
     relic: A lacquered brush box
     relic_desc: A small box with brushes, a stone and water.
+    points:
+      p1: Be received at court (needs a woman)
+      p2: Talk about her story
+      p3: Pass as one of the court (needs a hologram cloak)
   su_song_kaifeng:
     name: A great water-driven clock tower
     place: Kaifeng, China
@@ -1441,6 +1500,10 @@ catalog:
     story: King Sejong and his scholars design Hangul, an alphabet whose letters copy the shape of the mouth.
     relic: A woodblock of letters
     relic_desc: A block carved with the first letters, ready to ink.
+    points:
+      p1: Reach the king
+      p2: Help sort the sounds
+      p3: Speak Korean from day one (needs a cyborg neural chip)
   li_shizhen_qizhou:
     name: A compendium of a thousand medicines
     place: Qizhou, China
@@ -1462,6 +1525,10 @@ catalog:
     story: Hokusai, in his seventies, makes the Great Wave off Kanagawa and the series of Thirty-six Views of Mount Fuji.
     relic: A woodblock for printing
     relic_desc: A carved plank of cherry wood.
+    points:
+      p1: See the waves as he does
+      p2: Ask the right question
+      p3: Carry the great canvas (needs a cyborg arm)
   bose_calcutta:
     name: Plants that answer back
     place: Calcutta
@@ -1588,6 +1655,10 @@ catalog:
     story: Frida Kahlo paints The Two Fridas and many self portraits, turning pain and identity into some of the best known images of her country.
     relic: A fine paintbrush
     relic_desc: A brush with a few strands of red.
+    points:
+      p1: Sit with her
+      p2: Match her will
+      p3: Ease her pain (needs an elixir)
   hokulea_honolulu:
     name: Sailing to Tahiti by the stars
     place: Honolulu
@@ -1595,6 +1666,10 @@ catalog:
     story: The canoe Hōkūleʻa sails from Hawaiʻi to Tahiti with no instruments, guided by star paths and swells, and revives a navigating tradition.
     relic: A knotted sennit cord
     relic_desc: A cord of coconut fibre with a knot for each day.
+    points:
+      p1: Take your turn at the paddle
+      p2: Hold steady on the long crossing
+      p3: Keep going at night (needs a cyborg bionic lung)
   budj_bim_eels:
     name: Fish farming on a lava plain
     place: Budj Bim, Victoria, Australia

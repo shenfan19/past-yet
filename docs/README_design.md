@@ -31,7 +31,7 @@ Time runs in game days. At 1x one real minute is one game day. The speeds are pa
 
 ## Employees
 
-- Three employees are on the payroll at the start. Each has a gender, an age, a job, base abilities and traits.
+- Three employees are on the payroll at the start. Each has a gender, an age, a job, six attributes and traits. The six attributes are constitution, wit, finesse, will, morality and desire, and there is nothing hidden behind them. Wit covers knowledge and curiosity, finesse covers eloquence and a light hand, will covers stubbornness and its opposite, homesickness, morality covers kindness, and desire covers greed. The era models were written against finer quantities, so each of those is a plain function of one attribute, listed in `staff_rules.yaml`.
 - Wages: each hired employee draws a cash wage per game day, `wage_base + wage_skill * skill`. The three starting employees cost about ten funds a day together. Wages come out of the funds as time passes. When the funds run out, the shortfall is owed, the next income pays it first, and while anything is owed all employees lose favor every day. There is no lockout and nobody quits.
 - Letting someone go removes them from the payroll, and hiring them again costs the fee again. The last employee and anyone who is away cannot be let go.
 - Favor: a bonus raises it, a good trip raises it, failure, giving up and a recall lower it. A high favor makes an employee slower to get homesick and give up.
@@ -40,7 +40,7 @@ Time runs in game days. At 1x one real minute is one game day. The speeds are pa
 
 ### Traits
 
-Every trait gives something and costs something, in its abilities, its habit or its secretary bonus, and says both in words. There are fifteen, among them kind, stubborn, curious, homesick, studious, sturdy, silver tongued, patient, bold, meticulous, artistic, wise, greedy, hedonist and loyal. A trait can pull an ability down but never below nothing. A check fails the build if a trait has only gains or only costs.
+Every trait gives something and costs something, in its abilities, its habit or its secretary bonus, and says both in words. There are sixteen, among them kind, stubborn, curious, homesick, studious, sturdy, silver tongued, patient, bold, meticulous, artistic, wise, greedy, hedonist, loyal and sensitive. Weaknesses are not separate abilities. A weak will means homesickness and being hurt by hostility, and a weak constitution means catching disease more easily, and a sensitive employee notices what is wrong at the price of a weak constitution. A trait can pull an ability down but never below nothing. A check fails the build if a trait has only gains or only costs.
 
 ### Hiring
 
@@ -130,7 +130,19 @@ Full auto collects reports, anchors every found antique that opens a place, sell
 
 ## Stars
 
-Every place keeps its best star count, from zero to three. A full simulation maps its outcome to stars, and a brief scene maps how it went. Time energy is paid only for the stars above the best the place has had, a quarter of the base of the place for one star, half for two and all of it for three, each trip paying the difference to what the best already paid, so a place cannot be farmed for energy. Funds and antiques are paid every time, so waiting at home brings money, antiques and new employees, but not by itself the way home. The best stars show on the map pins and event rows in bronze, silver and gold, the map can be filtered by them, and the log of dispatches shows the stars of each trip with a mark when it beat the best.
+Every place has three sync points, and the stars are how many of them a trip hits, so three stars need all three. A full simulation names its points in its model, `star_points`, and each is a milestone of the model that needs the traveller, so history cannot hit one alone. In London 1854 they are convincing Snow, winning the trust of the street, and having the pump handle removed ahead of history. In Vienna 1847 they are convincing Semmelweis, getting the washing started, and making it a rule ahead of history. A point that the model cannot evaluate cannot be a point. A brief scene has three generic points, reaching the place, meeting the figure and leaving a mark, each a margin of the traveller against the event.
+
+Because the points come from what the traveller does, they depend on the employee's habit and the kit. An employee who works on allies convinces and gets the handle removed, one who works on prevention gets the water or the washing done, and no kit means the points that need supplies cannot be hit.
+
+Every place keeps its best star count. Time energy is paid only for the stars above the best the place has had, a quarter of the base of the place for one star, half for two and all of it for three, each trip paying the difference to what the best already paid, so a place cannot be farmed for energy. Funds and antiques are paid every time, so waiting at home brings money, antiques and new employees, but not by itself the way home. The best stars show on the map pins and event rows in bronze, silver and gold, the map can be filtered by them, the log of dispatches shows the stars of each trip with a mark when it beat the best, and a report lists the points with the ones hit highlighted in the timeline.
+
+## Special equipment and scenes
+
+Time energy is the progress of the game, and it only goes up, so it can unlock things. The time shop sells special equipment for funds, and each piece unlocks when the time energy reaches its number: a cyborg neural chip, a cyborg arm, a cyborg bionic lung, a cyborg gorilla arm, a hologram cloak, and out of myth a golden apple, which triples persuasion, and an elixir. Equipment raises abilities and satisfies the points that ask for an item, so the third star of some scenes cannot be had without it, which locks them behind progress.
+
+The price is being found out. Each piece shows by its exposure, a scene is more suspicious the later its tier, and the chance of being found grows with both, capped at ninety percent. A cloak lowers it, and with no equipment there is nothing to find. Being found out ends in one of three ways, being turned away, which costs a star, being locked up, which costs all stars and the antique and several days, or being hunted, which costs everything and more days and a lot of favor.
+
+Twenty catalogue events are scenes with three authored points, each a requirement on the traveller: an ability, a trait, a job, being a woman, an item, or luck. They are checked directly and are not differential equation simulations like London 1854 and Vienna 1847.
 
 ## Inspirations
 
