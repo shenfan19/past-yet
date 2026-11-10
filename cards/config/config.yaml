@@ -21,7 +21,7 @@ i18n:
     zh: 简体中文
 save:
   key: teleporter_save
-  version: 4
+  version: 5
 eras:
   - broad_street_1854
   - vienna_1847
@@ -36,7 +36,7 @@ office:
   max_plots: 2
   max_archive: 30
   hire_cost: 100
-  antique_find: {start: 0.6, floor: 0.2, step: 0.1, relic_share: 0.5}
+  antique_find: {k: 0.06, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371}
   wage_base: 1
   wage_skill: 4
   unpaid_favor_loss: 0.01
@@ -47,12 +47,14 @@ office:
     handbook: 1
   loot_funds: 25
 clock:
-  sec_per_day: 3
+  sec_per_day: 60
   speeds:
     - 0
     - 1
     - 2
     - 4
+    - 8
+    - 16
 favor:
   start: 0.5
   gift_cost: 60
@@ -69,6 +71,7 @@ favor:
     near_death: -0.1
 auto:
   reserve_funds: 100
+  sell_spares_below: 100
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40
@@ -124,7 +127,7 @@ settings:
     sfx_volume: 0.6
     music_autostart: false
     pause_on_report: true
-    dev_mode: true
+    dev_mode: false
   options:
     theme: [auto, light, dark]
 share:

@@ -9,11 +9,11 @@ export function createWorldMap(X) {
   const m = () => st.map;
 
   // Events are the simulated eras and the catalogue events. A catalogue event shows once its relic is owned, in dev mode always.
-  const eraEvents = () => X.visibleEras().map((id) => {
+  const eraEvents = () => D.get('config.eras').map((id) => {
     const era = ctx.era(id).raw.metadata.era;
     return { id, year: era.year, place: era.place, geo: era.geo, locked: !X.eraOpen(id), catalog: false };
   });
-  const catEvents = () => D.get('catalog.events').filter((e) => DEV || X.owns('relic_' + e.id)).map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.owns('relic_' + e.id), catalog: true, cell: e }));
+  const catEvents = () => D.get('catalog.events').map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.owns('relic_' + e.id), catalog: true, cell: e }));
   // One pin per place. Events within a radius of each other share a pin, and the radius shrinks as you zoom in so the pins part; which takes the name of the simulated era there if there is one.
   const events = () => {
     const all = [...eraEvents(), ...catEvents()];
@@ -28,7 +28,9 @@ export function createWorldMap(X) {
     for (const e of all) e.place = e.cluster.id;
     return all;
   };
+  // Until its antique is anchored or held, an event is only a question mark: no name, no place, no tags, nothing to read.
   const info = (e) => {
+    if (e.locked && !DEV) return { name: M.unknown, short: M.unknown, place: M.unknown, who: M.unknown, tags: [] };
     if (!e.catalog) {
       const ET = T.eras[e.id];
       return { name: ET.name, short: ET.short, place: ET.place_name, who: ET.protagonist, tags: ET.tags };
@@ -291,14 +293,15 @@ export function createWorldMap(X) {
     if (a === 'mapplace') {
       s.place = id;
       const p = places()[id];
-      if (p && p.events.length === 1) { const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } }
+      if (p && p.events.length === 1 && (DEV || !p.events[0].locked)) { const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } }
       return true;
     }
     if (a === 'mapevent') {
       const e = events().find((x) => x.id === id);
       if (!e) return false;
-      if (e.catalog) s.cat = id; else { s.cat = null; X.selectEra(id); }
       s.place = e.place;
+      if (e.locked && !DEV) return true;
+      if (e.catalog) s.cat = id; else { s.cat = null; X.selectEra(id); }
       return true;
     }
     if (a === 'maptag') { s.tag = id; return true; }

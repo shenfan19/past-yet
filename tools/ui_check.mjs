@@ -2,6 +2,7 @@
 // Set PLAYWRIGHT_DIR to a folder that has playwright installed.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
+import net from 'node:net';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -12,9 +13,14 @@ const pwDir = process.env.PLAYWRIGHT_DIR || 'C:/fight/life-matters-reference-eng
 const { chromium } = createRequire(path.join(pwDir, 'x.js'))('playwright');
 const outDir = process.argv[2] || path.join(root, 'temp_screens');
 fs.mkdirSync(outDir, { recursive: true });
-const port = 8792;
+// a free port from the system, a fixed one can be taken by another program
+const port = await new Promise((res) => { const srv = net.createServer(); srv.listen(0, '127.0.0.1', () => { const p = srv.address().port; srv.close(() => res(p)); }); });
 const server = spawn('python', ['-m', 'http.server', String(port), '--bind', '127.0.0.1'], { cwd: root, stdio: 'ignore' });
-await new Promise((r) => setTimeout(r, 1200));
+// wait until the server answers, a slow machine can take longer than a fixed pause
+for (let i = 0; i < 100; i++) {
+  try { if ((await fetch(`http://127.0.0.1:${port}/index.html`)).ok) break; } catch (e) { /* not up yet */ }
+  await new Promise((r) => setTimeout(r, 200));
+}
 const errors = [];
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1100, height: 900 } });
@@ -23,8 +29,11 @@ page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') 
 page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 try {
   const ok = (label, cond) => console.log(label + ':', cond ? 'ok' : 'MISMATCH');
-  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&dev=1`);
   await page.waitForSelector('.lead');
+  // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
+  ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
+  await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
   await page.screenshot({ path: path.join(outDir, '0_home.png'), fullPage: true });
   await page.waitForSelector('.stat');
   await page.screenshot({ path: path.join(outDir, '1_office.png'), fullPage: true });
@@ -96,6 +105,8 @@ try {
   const before = await page.evaluate(() => window.__game.ctx.S().energy);
   await page.reload();
   await page.waitForSelector('.lead');
+  await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
+  await page.waitForSelector('.lead');
   const after = await page.evaluate(() => window.__game.ctx.S().energy);
   ok('energy kept after reload', before === after);
   // shop: the used anchor is locked, antiques sell and buy, items buy and sell
@@ -123,8 +134,14 @@ try {
   await page.click('[data-act=cartbuy][data-id=future]');
   ok('future goods are paid in time energy', await page.evaluate((f) => window.__game.ctx.S().energy === 20 && window.__game.ctx.S().inv.radiation_shield === 1 && window.__game.ctx.S().funds === f, fundsB));
   // the antique roll is the backend's, seeded, and the chance falls to a floor
-  ok('antique find is repeatable and its chance runs from 60 percent down to 20', await page.evaluate(() => { const b = window.__game.backend; return b.findAntique('broad_street_1854', 5, 0) === b.findAntique('broad_street_1854', 5, 0) && Math.abs(b.findChance(0) - 0.6) < 1e-9 && Math.abs(b.findChance(9) - 0.2) < 1e-9; }));
-  ok('about half of first trips bring something back', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s, 0)) n++; return n > 200 && n < 280; }));
+  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= 0.6 && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_einstein_bern'); }));
+  ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= 0.6; }); }));
+  ok('some first trips bring something back and some do not', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s)) n++; return n > 80 && n < 280; }));
+  // spares: sell all but one of each
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques.push('relic_faraday_london', 'relic_faraday_london', 'relic_faraday_london'); window.__game.ui.render(); });
+  const fundsC = await page.evaluate(() => window.__game.ctx.S().funds);
+  await page.click('[data-act=sellspares]');
+  ok('one click sells the spares and keeps one of each', await page.evaluate((f) => { const S = window.__game.ctx.S(); return S.funds > f && S.antiques.filter((x) => x === 'relic_faraday_london').length === 1; }, fundsC));
   await page.click('[data-act=cartinc][data-id=disinfectant]');
   ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=disinfectant]').count()) === 1);
   await page.click('[data-act=cartbuy]');
@@ -200,11 +217,13 @@ try {
   await page.click('[data-act=fire][data-id=s_lin]');
   ok('an employee can be let go', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === hiredN - 1);
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.staff.s_lin.hired = true; });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.locks = S.locks.filter((x) => x !== 'clinic_bell'); if (!S.antiques.includes('clinic_bell')) S.antiques.push('clinic_bell'); S.antiques.push('relic_newton_cambridge', 'relic_newton_cambridge'); S.funds = 50; });
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '3');
   const claimedBefore = await page.evaluate(() => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length);
   await page.waitForFunction((b) => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length > b, claimedBefore, { timeout: 60000 });
   ok('auto mode dispatches and claims by itself', true);
+  ok('auto mode anchors a found antique and sells spares when funds are short', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('clinic_bell') && S.antiques.filter((x) => x === 'relic_newton_cambridge').length === 1; }));
   const sec = await page.evaluate(() => window.__game.ctx.S().secretaryLast);
   ok('secretary verdict recorded after auto results', !!sec && typeof sec.met === 'boolean');
   await page.click('[data-tab=home]');
@@ -259,7 +278,7 @@ try {
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
   await page.click('[data-tab=home]');
-  ok('guest map shows only unlocked places', (await page.locator('svg.map .pt').count()) === 2);
+  ok('guest map shows unknown places as question marks', (await page.locator('svg.map .pt').count()) > 2 && (await page.locator('svg.map .pt.locked text').first().textContent()).includes('?') && !(await page.locator('svg.map').innerHTML()).includes('Newton') && !(await page.locator('svg.map').innerHTML()).includes('牛顿'));
   // a catalogue relic reveals its event on the map and in the wiki, but nobody can be sent there
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 5000; window.__game.ctx.save(); });
   await page.click('[data-tab=shop]');
@@ -336,22 +355,6 @@ try {
   await page.mouse.up();
   ok('a slow click on a tab is not lost to the clock', (await page.locator('#tabs button.on').getAttribute('data-tab')) === 'shop');
   await page.selectOption('[data-clk=speed]', '0');
-  // a save written before employees were added must still open
-  const oldCtx = await browser.newContext({ viewport: { width: 1100, height: 900 } });
-  const oldPage = await oldCtx.newPage();
-  oldPage.on('pageerror', (e) => errors.push('old save pageerror: ' + e.message));
-  await oldPage.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
-  await oldPage.waitForSelector('.lead');
-  await oldPage.evaluate(() => {
-    const S = window.__game.ctx.S();
-    const old = { ...S, staff: Object.fromEntries(['s_ning', 's_zhou', 's_lin', 's_qian'].map((k) => [k, S.staff[k]])) };
-    delete old.locks;
-    localStorage.setItem('teleporter_save', JSON.stringify(old));
-  });
-  await oldPage.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
-  await oldPage.waitForSelector('.lead');
-  ok('an old save with fewer employees opens', (await oldPage.locator('.lead').count()) === 1 && (await oldPage.locator('#view .listbox, #view table').count()) > 0);
-  await oldCtx.close();
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });

@@ -42,22 +42,10 @@ function fresh() {
     secretary: null,
     secretaryLast: null,
     wageOwed: 0,
-    trips: {},
     // an antique the office starts with is already anchored, so the first place is open
     locks: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
     antiques: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
   };
-}
-
-// A save from before content was added lacks the new employees and fields. Fill in what is missing from a fresh save and keep everything the player has.
-function complete(S) {
-  const F = fresh();
-  const beforeAnchors = !('trips' in S);
-  for (const k of Object.keys(F)) if (!(k in S)) S[k] = F[k];
-  S.staff = { ...F.staff, ...S.staff };
-  // a place opens only while its antique is anchored, so a save from before that rule (it has no trip counter yet) keeps the places it could already reach
-  if (beforeAnchors) for (const id of S.antiques) if (D.get('antiques.antiques.' + id).era && !S.locks.includes(id)) S.locks.push(id);
-  return S;
 }
 
 function load() {
@@ -65,7 +53,7 @@ function load() {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const S = JSON.parse(raw);
-      if (S.version === VERSION) return complete(S);
+      if (S.version === VERSION) return S;
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);
@@ -89,7 +77,7 @@ const ctx = {
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
     if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches)) return false;
-    S = complete(obj);
+    S = obj;
     this.save();
     return true;
   },

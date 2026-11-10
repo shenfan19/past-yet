@@ -2,7 +2,7 @@
 import { firstSentence } from './narrate.js';
 
 export function createShop(X) {
-  const { D, ctx, T, U, esc, st, DEV, listbox } = X;
+  const { D, ctx, T, U, esc, st, DEV, listbox, office } = X;
   const S_ = U.shop;
   const O = D.get('config.office');
   const sell1 = (id) => Math.floor(D.get(`items.${id}.cost`) * O.sell_ratio);
@@ -110,15 +110,16 @@ export function createShop(X) {
     for (const id of Object.keys(D.get('antiques.antiques'))) D.get('antiques.antiques.' + id).tags.forEach((t) => present.add(t));
     const bar = `<details class="tagfold"><summary>${S_.tag_filter}${s().tag ? COLON + esc(T.tags[s().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${s().tag ? '' : 'on'}" data-act="shoptag" data-id="">${S_.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${s().tag === t ? 'on' : ''}" data-act="shoptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
     const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
+    const spares = office.spareCount();
+    const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * D.get('antiques.antiques.' + id).sell, 0);
     return `
       <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"><span class="stat" style="font-size:18px">${Math.round(S.funds)}</span><span class="muted">${icon('funds')} ${U.office.funds}</span><span class="stat" style="font-size:18px">${Math.round(S.energy)}</span><span class="muted">${icon('energy')} ${U.office.energy}</span></div>
       ${bar}
+      <div class="sec">${S_.inv_title}</div>${invBox()}
+      <div class="sec">${S_.antiques_title}</div><p class="muted">${S_.antiques_hint}</p>
+      <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}
       <div class="sec">${S_.modern.name}</div><p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}
-      <div class="grid2" style="margin-top:12px">
-        <div><div class="sec" style="margin-top:0">${S_.inv_title}</div>${invBox()}</div>
-        <div><div class="sec" style="margin-top:0">${S_.future.name}</div>${future}</div>
-      </div>
-      <div class="sec">${S_.antiques_title}</div><p class="muted">${S_.antiques_hint}</p>${antiqueBox()}`;
+      <div class="sec">${S_.future.name}</div>${future}`;
   }
 
   function act(a, id) {
@@ -152,6 +153,7 @@ export function createShop(X) {
       if (n > 0) { if (curOf(it.shop) === 'energy') S.energy += sell1(id) * n; else S.funds += sell1(id) * n; S.inv[id] -= n; ctx.save(); }
       return true;
     }
+    if (a === 'sellspares') { if (office.sellSpares()) return true; return false; }
     if (a === 'antsell') {
       const an = D.get('antiques.antiques.' + id);
       if (sellable(id)) { S.funds += an.sell; S.antiques.splice(S.antiques.indexOf(id), 1); ctx.save(); }

@@ -50,15 +50,6 @@ export function createOffice(X) {
     return 'ready';
   }
 
-  // The roll is the backend's. The office only counts the trips to each place, which sets the chance.
-  const findChance = (eraId) => ctx.backend.findChance(S().trips[eraId] || 0);
-  function findAntique(eraId, seed) {
-    const s = S();
-    const n = s.trips[eraId] || 0;
-    s.trips[eraId] = n + 1;
-    return ctx.backend.findAntique(eraId, seed, n);
-  }
-
   function launch(eraId, spec, opts = {}) {
     const E = ctx.era(eraId);
     const s = S();
@@ -66,7 +57,7 @@ export function createOffice(X) {
     const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready') return null;
     const { res, report } = ctx.backend.dispatch(eraId, full);
-    const antique = findAntique(eraId, full.seed);
+    const antique = ctx.backend.findAntique(eraId, full.seed);
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     const stay = E.vars[E.roles.stay].value;
@@ -119,6 +110,27 @@ export function createOffice(X) {
     s.staff[id].favor = clamp(s.staff[id].favor + F.gift_gain, F.min, F.max);
     ctx.save();
     return true;
+  }
+
+  // ---------- antiques ----------
+  // A spare is a copy beyond the first of an antique. The first copy stays, anchored or not.
+  const copies = (id) => S().antiques.filter((x) => x === id).length;
+  const spareCount = () => [...new Set(S().antiques)].reduce((a, id) => a + copies(id) - 1, 0);
+  function sellSpares() {
+    const s = S();
+    let gain = 0;
+    for (const id of new Set(s.antiques)) {
+      const n = copies(id) - 1;
+      if (n > 0) { gain += n * D.get('antiques.antiques.' + id).sell; s.antiques = s.antiques.filter((x, i) => x !== id || s.antiques.indexOf(x) === i); }
+    }
+    s.funds += gain;
+    if (gain) ctx.save();
+    return gain;
+  }
+  // The auto mode anchors every found antique that opens a place.
+  function anchorFound() {
+    const s = S();
+    for (const id of new Set(s.antiques)) if (D.get('antiques.antiques.' + id).era && !s.locks.includes(id)) s.locks.push(id);
   }
 
   // ---------- wages ----------
@@ -206,6 +218,8 @@ export function createOffice(X) {
   function autoStep() {
     const s = S();
     for (const d of s.dispatches.filter((x) => !x.claimed && x.readyDay <= day())) claim(d.id);
+    anchorFound();
+    if (s.funds < A.sell_spares_below) sellSpares();
     restock();
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
     if (!eras.length) return;
@@ -230,5 +244,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { findChance, wageOf, wageTotal, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
+  return { sellSpares, spareCount, anchorFound, wageOf, wageTotal, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
 }

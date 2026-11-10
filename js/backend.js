@@ -11,22 +11,44 @@ export function createLocalBackend(D) {
   // the plain data of an era that the interface may read, no functions
   const plain = (E) => ({ id: E.id, raw: E.raw, vars: E.vars, itemBindings: E.itemBindings, plots: E.plots, tech: E.tech, roles: E.roles, report: E.report, tagSource: E.tagSource, calendar: E.calendar });
   const info = Object.fromEntries(Object.entries(eras).map(([id, E]) => [id, plain(E)]));
-  // Each trip may bring back an antique. The chance starts high and falls with every earlier trip to the same place down to a floor,
-  // and the same antique can come back twice. The roll is seeded by the dispatch, so a replay finds the same thing.
+  // Antique discovery. A trip to an era can bring back an antique from a place near it and from a time before it. Each candidate
+  // has a reach w = exp(-years / tau_years - km / tau_km), where years is how far earlier the candidate lies and km is the great circle
+  // distance, so the farther in time or space, the less likely. A candidate is found with chance k * w. The trip finds something with
+  // chance 1 - the product of (1 - k * w), at most cap, and the one it finds is drawn in proportion to w. The roll is seeded by the dispatch.
   const AF = D.get('config.office.antique_find');
-  const findChance = (trips) => Math.max(AF.floor, AF.start - AF.step * trips);
-  function findAntique(eraId, seed, trips) {
-    if (draw(seed, 'antique_find', eraId) >= findChance(trips)) return null;
+  const rad = (x) => (x * Math.PI) / 180;
+  const km = (a, b) => {
+    const h = Math.sin(rad(b.lat - a.lat) / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lon - a.lon) / 2) ** 2;
+    return 2 * AF.earth_km * Math.asin(Math.min(1, Math.sqrt(h)));
+  };
+  const placeOf = (an) => {
+    if (an.era) { const m = info[an.era].raw.metadata.era; return { year: m.year, geo: m.geo }; }
+    if (an.event) { const e = D.get('catalog.events').find((x) => x.id === an.event); return { year: e.year, geo: { lon: e.lon, lat: e.lat } }; }
+    return null;
+  };
+  function findOdds(eraId) {
+    const here = placeOf({ era: eraId });
     const all = D.get('antiques.antiques');
-    const ids = Object.keys(all).filter((id) => all[id].playable);
-    const keys = ids.filter((id) => all[id].found_in.includes(eraId));
-    const relics = ids.filter((id) => all[id].event);
-    const pool = keys.length && (!relics.length || draw(seed, 'antique_kind', eraId) >= AF.relic_share) ? keys : relics;
-    if (!pool.length) return null;
-    return pool[Math.min(pool.length - 1, Math.floor(draw(seed, 'antique_pick', eraId) * pool.length))];
+    const list = [];
+    for (const [id, an] of Object.entries(all)) {
+      if (!an.playable) continue;
+      const at = placeOf(an);
+      if (!at || at.year > here.year) continue;
+      list.push({ id, w: Math.exp(-(here.year - at.year) / AF.tau_years - km(here.geo, at.geo) / AF.tau_km) });
+    }
+    const p = Math.min(AF.cap, 1 - list.reduce((a, x) => a * (1 - AF.k * x.w), 1));
+    return { p, list };
+  }
+  function findAntique(eraId, seed) {
+    const { p, list } = findOdds(eraId);
+    if (!list.length || draw(seed, 'antique_find', eraId) >= p) return null;
+    const total = list.reduce((a, x) => a + x.w, 0);
+    let at = draw(seed, 'antique_pick', eraId) * total;
+    for (const x of list) { at -= x.w; if (at < 0) return x.id; }
+    return list[list.length - 1].id;
   }
   return {
-    findChance, findAntique,
+    findOdds, findAntique,
     eraInfo: (id) => info[id],
     staffStats: (staffId) => sim.staffStats(D, staffId),
     staffHabit: (staffId) => sim.staffHabit(D, staffId),

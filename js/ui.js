@@ -110,6 +110,7 @@ export function createUI(D, ctx) {
   X.listbox = createListbox(X);
   const listbox = X.listbox;
   const wiki = createWiki(X);
+  X.office = office;
   const shop = createShop(X);
   const worldMap = createWorldMap(X);
   const settingsPage = createSettingsPage(X);
@@ -273,7 +274,7 @@ export function createUI(D, ctx) {
     const ET = T.eras[id];
     const done = reports().filter((d) => d.eraId === id);
     const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
-      <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div><div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findChance(ctx.S().trips[id] || 0) * 100)))}</div>`;
+      <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div><div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>`;
     if (!done.length) return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:200px">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p><div class="muted">${U.dispatch.no_records_here}</div></div></div>`;
     const hist = ET.encyclopedia.history.map((h) => `<li>${esc(h.text)}${h.check ? ` <span class="chip warn">${U.archive.check_pending}</span>` : ''}</li>`).join('');
     const reg = ET.encyclopedia.regret.map((h) => `<li>${esc(h)}</li>`).join('');
@@ -479,20 +480,14 @@ export function createUI(D, ctx) {
   function homeHtml() {
     const H = U.home;
     fixForm();
-    const refs = D.get('encyclopedia.refs');
-    const sources = Object.keys(refs).filter((id) => refs[id].status === 'pending').map((id) => `<li>${esc(D.get('enc_text.refs.' + id))} <span class="chip warn">${U.enc.pending}</span></li>`).join('');
-    const go = Object.entries(H.go).map(([k, g]) => `<button class="gobtn" data-act="go" data-id="${k}"><b>${esc(g.name)}</b><span class="muted">${esc(g.desc)}</span></button>`).join('');
     return `
-      <div class="sec" style="margin-top:0">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
+      <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
+      <ul class="rules">${H.mainline.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="sec">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
       ${worldMap.html()}
       <div style="margin-top:10px">${st.map.cat ? catalogCard(st.map.cat) : placeFile(st.form.eraId)}</div>
       ${officeHtml()}
-      ${deskHtml()}
-      <p class="lead" style="margin-top:24px">${esc(H.lead)}</p>
-      <div class="grid2" style="margin-top:12px">${go}</div>
-      <div class="sec">${H.mainline_title}</div><ul>${H.mainline.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
-      <div class="sec">${H.materials_title}</div>
-      <ul>${sources}<li>${esc(H.materials_model)}</li><li>${esc(H.materials_enc)}</li></ul>`;
+      ${deskHtml()}`;
   }
 
   // ---------- render ----------
@@ -586,7 +581,7 @@ export function createUI(D, ctx) {
     else if (act === 'lsort') { listbox.sort(id); render(); }
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id; st.suggest = null; } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell'].includes(act)) ctx.audio.sfx('coin'); render(); } }
+    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { st.share = true; render(); }
     else if (act === 'shareback') { st.share = false; render(); }

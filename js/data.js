@@ -45,7 +45,7 @@ export async function loadData(readText, parse, pickLang) {
   for (const e of C.events) {
     const id = 'relic_' + e.id;
     const price = C.price[e.tier];
-    o.antiques.antiques[id] = { era: null, event: e.id, kind: 'key', found_in: [], price, sell: Math.floor(price * C.sell_ratio), start_owned: false, playable: true, tags: [e.field, e.region, period(e.year)] };
+    o.antiques.antiques[id] = { era: null, event: e.id, kind: 'key', price, sell: Math.floor(price * C.sell_ratio), start_owned: false, playable: true, tags: [e.field, e.region, period(e.year)] };
     const t = o.text.catalog[e.id];
     o.text.antiques[id] = { name: t.relic, desc: t.relic_desc };
   }
