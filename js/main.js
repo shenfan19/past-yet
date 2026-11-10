@@ -44,12 +44,20 @@ function fresh() {
   };
 }
 
+// A save from before content was added lacks the new employees and fields. Fill in what is missing from a fresh save and keep everything the player has.
+function complete(S) {
+  const F = fresh();
+  for (const k of Object.keys(F)) if (!(k in S)) S[k] = F[k];
+  S.staff = { ...F.staff, ...S.staff };
+  return S;
+}
+
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const S = JSON.parse(raw);
-      if (S.version === VERSION) return S;
+      if (S.version === VERSION) return complete(S);
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);

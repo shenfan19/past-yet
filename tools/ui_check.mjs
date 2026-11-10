@@ -204,6 +204,8 @@ try {
   ok('follow browser is offered and selected by default', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === null && (await page.locator('#lang').inputValue()) === 'en');
   await page.click('[data-tab=about]');
   ok('about page has the disclaimer', (await page.locator('.about h3').allInnerTexts()).includes('Disclaimer'));
+  ok('about page has jump links and no second title', (await page.locator('.about .jumps a').count()) >= 6 && (await page.locator('.about h2').count()) === 0);
+  ok('about release shows the date only', (await page.locator('.about .muted').first().innerText()).includes('2026-11-09') && !(await page.locator('.about .muted').first().innerText()).includes('T00'));
   ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
   await page.click('[data-tab=enc]');
   await page.click('.wcat[data-cat=people] summary');
@@ -228,6 +230,33 @@ try {
   await frPage.waitForSelector('.lead');
   ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=dispatch]').innerText()).includes('Dispatch'));
   await frCtx.close();
+  // a click that spans several ticks of the clock must still land
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
+  await page.waitForSelector('.lead');
+  await page.click('[data-clk=speed][data-i="3"]');
+  const tabBox = await page.locator('#tabs [data-tab=shop]').boundingBox();
+  await page.mouse.move(tabBox.x + tabBox.width / 2, tabBox.y + tabBox.height / 2);
+  await page.mouse.down();
+  await page.waitForTimeout(1300);
+  await page.mouse.up();
+  ok('a slow click on a tab is not lost to the clock', (await page.locator('#tabs button.on').getAttribute('data-tab')) === 'shop');
+  await page.click('[data-clk=speed][data-i="0"]');
+  // a save written before employees were added must still open
+  const oldCtx = await browser.newContext({ viewport: { width: 1100, height: 900 } });
+  const oldPage = await oldCtx.newPage();
+  oldPage.on('pageerror', (e) => errors.push('old save pageerror: ' + e.message));
+  await oldPage.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
+  await oldPage.waitForSelector('.lead');
+  await oldPage.evaluate(() => {
+    const S = window.__game.ctx.S();
+    const old = { ...S, staff: Object.fromEntries(['s_ning', 's_zhou', 's_lin', 's_qian'].map((k) => [k, S.staff[k]])) };
+    delete old.locks;
+    localStorage.setItem('teleporter_save', JSON.stringify(old));
+  });
+  await oldPage.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
+  await oldPage.waitForSelector('.lead');
+  ok('an old save with fewer employees opens', (await oldPage.locator('.lead').count()) === 1 && (await oldPage.locator('#view .listbox, #view table').count()) > 0);
+  await oldCtx.close();
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });

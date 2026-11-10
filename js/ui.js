@@ -146,12 +146,24 @@ export function createUI(D, ctx) {
   }
 
   // ---------- clock ----------
+  // The clock and the tabs are redrawn every tick. Replacing a button between the press and the release loses the click,
+  // so an element is only rewritten when its html really changed, and the tick does not redraw anything while a pointer is held down.
+  const lastHtml = new WeakMap();
+  function setHtml(el, html) {
+    if (lastHtml.get(el) === html) return;
+    lastHtml.set(el, html);
+    el.innerHTML = html;
+  }
+  let pressed = false;
+  document.addEventListener('pointerdown', () => { pressed = true; }, true);
+  for (const type of ['pointerup', 'pointercancel']) document.addEventListener(type, () => { pressed = false; }, true);
+  window.addEventListener('blur', () => { pressed = false; });
   function renderClock() {
     const c = ctx.S().clock;
     const C = D.get('config.clock');
     const al = office.alerts();
     const speeds = C.speeds.map((sp, i) => `<button class="spd ${c.speed === sp ? 'on' : ''}" data-clk="speed" data-i="${i}" title="${sp === 0 ? U.clock.pause : sp + '×'}">${sp === 0 ? '⏸' : sp + '×'}</button>`).join('');
-    clockEl.innerHTML = `<span class="day">${U.clock.day.replace('{n}', String(Math.floor(c.day) + 1))}</span>${speeds}<button class="auto ${c.auto ? 'on' : ''}" data-clk="auto"${tip(U.clock.auto_tip)}>${U.clock.auto}</button>${c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>` : ''}`;
+    setHtml(clockEl, `<span class="day">${U.clock.day.replace('{n}', String(Math.floor(c.day) + 1))}</span>${speeds}<button class="auto ${c.auto ? 'on' : ''}" data-clk="auto"${tip(U.clock.auto_tip)}>${U.clock.auto}</button>${c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>` : ''}`);
   }
   clockEl.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-clk]');
@@ -172,7 +184,7 @@ export function createUI(D, ctx) {
   // ---------- tabs ----------
   function renderTabs() {
     const al = office.alerts();
-    tabsEl.innerHTML = Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" class="${st.tab === k && !st.sub ? 'on' : ''}">${esc(label)}${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join('');
+    setHtml(tabsEl, Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" class="${st.tab === k && !st.sub ? 'on' : ''}">${esc(label)}${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
   }
 
   // ---------- office ----------
@@ -427,10 +439,12 @@ export function createUI(D, ctx) {
     const A = U.about;
     const M = D.get('config.meta');
     const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
-    const secs = A.sections.map((sec) => `<h3>${esc(sec.h)}</h3>${sec.p.map((x) => `<p>${esc(x)}</p>`).join('')}`).join('');
+    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x) => `<p>${esc(x)}</p>`).join('')}`).join('');
+    const jumps = A.sections.map((sec, i) => `<a class="wl" data-act="aboutjump" data-id="about-${i}">${esc(sec.h)}</a>`).join(' · ');
     const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
     return `<div class="about">
-      <div class="hero"><span class="logo big">${esc(U.logo)}</span><div><h2>${esc(A.title)}</h2><div class="muted">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div></div></div>
+      <div class="muted">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div>
+      <p class="jumps">${jumps}</p>
       ${secs}<p>${links}</p></div>`;
   }
 
@@ -451,10 +465,13 @@ export function createUI(D, ctx) {
   }
 
   // ---------- render ----------
-  function render() {
+  let viewHtml = null;
+  function render(fromTick) {
     renderTabs();
     const html = st.sub ? reportHtml() : { home: homeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html, about: aboutHtml }[st.tab]();
     const key = st.sub ? 'sub:' + st.sub : st.tab;
+    if (fromTick === true && html === viewHtml && key === st.lastKey) return;
+    viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
     const keeps = {};
     view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
@@ -535,6 +552,7 @@ export function createUI(D, ctx) {
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id; st.suggest = null; } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
     else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antbuy', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) render(); }
+    else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'go') { st.tab = id; st.sub = null; render(); }
     else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
@@ -595,10 +613,11 @@ export function createUI(D, ctx) {
   function tick() {
     const fresh = office.advance(D.get('config.ui.refresh_ms') / 1000);
     if (ctx.S().clock.auto) office.autoStep();
+    if (pressed) return;
     renderClock();
     renderTabs();
     const transit = ctx.S().dispatches.some((d) => !d.claimed);
-    if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !st.sub) render();
+    if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !st.sub) render(true);
   }
   renderClock();
   return { render, tick, state: st };

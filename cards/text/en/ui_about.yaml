@@ -13,7 +13,7 @@ ui:
       - h: Introduction
         p:
           - You run a time travel agency. Employees go back to historical turning points, try to help, and come home with a report. Nothing needs your constant attention. You can set it to run by itself and just read what happens.
-          - 'This game is made to work alongside Life Matters (LM), as a validating and practical simulation attempt: it puts LM style models and historical data to work in a setting where people can try them and see the results.'
+          - It started from plain curiosity about what would happen if someone from today stood in a famous moment of the past, and it is meant to be fun to poke at and pleasant to watch.
           - This is a personal project, released under the MIT License. It is still being polished, and comments and suggestions are welcome.
       - h: Disclaimer
         p:
@@ -27,11 +27,17 @@ ui:
           - Your save and settings live only in your browser, in local storage on your own device. The page has no accounts, no servers for your data, no analytics, no ads, no cookies and no third party tracking, and it sends your game data nowhere.
           - Your language choice and your place in the interface are stored locally too. The Clear save button on the home page deletes the save and cannot be undone. Clearing your browser data deletes everything as well.
           - The game is meant for adults. If it is ever offered with accounts or cloud features, what is collected and why will be stated first, collection will need your explicit consent, and local data protection law such as the GDPR will be followed.
-      - h: How it is driven
+      - h: Life Matters and how it is driven
         p:
+          - 'This game is made to work alongside Life Matters (LM), as a validating and practical simulation attempt: it puts LM style models and historical data to work in a setting where people can try them and see the results.'
           - Every era is a public YAML model in LM format with a few extensions. Employees and historical figures are agents that pick actions by utility, events are random but seeded, and every run is compared with the same seed run without the employee. The code only interprets the files.
           - 'Each number in a model carries a source tag: historical, LM model, game assumption or calibrated. In developer mode the wiki lists the formulas and variables.'
           - This is a simplified JavaScript version of the approach LM takes. The models in this prototype are not fitted to data.
+      - h: Contribution
+        p:
+          - The 100 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. That is a choice of this first version, not a claim about what matters most in history.
+          - Additions are welcome: events with their relics, employees, traits and translations are all plain yaml cards in the cards folder, and cards/README.md shows how to add one. Corrections to the facts are just as welcome.
+          - Please sign your own cards with a name or a pen name. A signature gives every card someone who stands behind it and someone to talk to if questions come up, and it is also how your work is credited on this page. For now, cards without a signature cannot be included.
       - h: Credits and licence
         p:
           - The interface and logic are static web files with no backend. Data files are YAML, read with js-yaml under the MIT licence. The world map outlines are from Natural Earth, in the public domain.
