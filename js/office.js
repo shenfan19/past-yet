@@ -125,13 +125,13 @@ export function createOffice(X) {
     c.speed = c.speed === 0 ? C.speeds[1] : 0;
     ctx.save();
   }
-  // Moves the clock and returns the dispatches that just came home. A new report pauses the clock unless auto mode runs.
+  // Moves the clock and returns the dispatches that just came home. A new report pauses the clock unless the player ticked the box that lets reports pass.
   function advance(seconds) {
     const s = S();
     if (s.clock.speed > 0) s.clock.day += (s.clock.speed * seconds) / C.sec_per_day;
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
-    if (fresh.length && !s.clock.auto && C.pause_on_report) s.clock.speed = 0;
+    if (fresh.length && ctx.settings.get('pause_on_report')) s.clock.speed = 0;
     if (s.clock.speed > 0 || fresh.length) ctx.save();
     return fresh;
   }

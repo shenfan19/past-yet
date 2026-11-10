@@ -142,6 +142,7 @@ ui:
         p:
           - You run a time travel agency. Employees go back to historical turning points, try to help, and come home with a report. Nothing needs your constant attention. You can set it to run by itself and just read what happens.
           - It started from plain curiosity about what would happen if someone from today stood in a famous moment of the past, and it is meant to be fun to poke at and pleasant to watch.
+          - It is released under the MIT License, is still being polished, and comments and suggestions are welcome.
       - h: Disclaimer
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
@@ -152,29 +153,28 @@ ui:
       - h: Data and privacy
         p:
           - Your save and settings live only in your browser, in local storage on your own device. The page has no accounts, no servers for your data, no analytics, no ads, no cookies and no third party tracking, and it sends your game data nowhere.
-          - Your language choice and your place in the interface are stored locally too. The Clear save button on the home page deletes the save and cannot be undone. Clearing your browser data deletes everything as well.
+          - Your language choice and your place in the interface are stored locally too. The Clear save button in Settings deletes the save and cannot be undone. Clearing your browser data deletes everything as well.
           - The game is meant for adults. If it is ever offered with accounts or cloud features, what is collected and why will be stated first, collection will need your explicit consent, and local data protection law such as the GDPR will be followed.
-      - h: How it is driven
-        p:
-          - 'This game is made to work alongside Life Matters (LM), as a validating and practical simulation attempt: it puts LM style models and historical data to work in a setting where people can try them and see the results.'
-          - Every era is a public YAML model in LM format with a few extensions. Employees and historical figures are agents that pick actions by utility, events are random but seeded, and every run is compared with the same seed run without the employee. The code only interprets the files.
-          - 'Each number in a model carries a source tag: historical, LM model, game assumption or calibrated. In developer mode the wiki lists the formulas and variables.'
-          - This is a simplified JavaScript version of the approach LM takes. The models in this prototype are not fitted to data.
       - h: Contribution
         p:
-          - The 100 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. That is a choice of this first version, not a claim about what matters most in history.
-          - Additions are welcome: events with their relics, employees, traits and translations are all plain yaml cards in the cards folder, and cards/README.md shows how to add one. Corrections to the facts are just as welcome.
-          - Please sign your own cards with a name or a pen name. A signature gives every card someone who stands behind it and someone to talk to if questions come up, and it is also how your work is credited on this page. For now, cards without a signature cannot be included.
+          - The game is released under the MIT License. The interface and logic are static web files with no backend, and the data files are YAML, read with js-yaml, which is also MIT licensed.
+          - 'The 100 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. That is a choice of this first version, not a claim about what matters most in history.'
+          - Suggestions and criticism are very welcome, and so are ideas for new events and employees, and any data or sources that could make them more accurate. Events with their relics, employees, traits and translations are plain yaml cards in the cards folder, and cards/README.md shows how to add one. Corrections to the facts are just as welcome.
+          - Contributions that are adopted are published here under your name, a name or a pen name as you prefer, and the work remains yours. Like the game, they are released under the MIT License, so that others can keep using and improving them. Please add a source to any historical claim, so that it can be checked.
+      - h: Author
+        p:
+          - This is a personal project by Fan Shen.
+          - Every era is a public YAML model. Employees and historical figures are agents that pick actions by utility, events are random but seeded, and every run is compared with the same seed run without the employee. The code only interprets the files. Each number carries a source tag that tells historical facts, models, game assumptions and calibrated values apart, and in developer mode the wiki lists the formulas and variables. The engine is a simplified JavaScript version of an engine improved from the LM backend, and the models in this prototype are not fitted to data.
+          - Life Matters (LM) is an open research project I proposed. It builds the LM format in YAML to bring together findings from parts of medicine, psychology and sociology, and uses dynamical models to describe how the elements of everyday life affect health. The format is open, in the hope that people will use it, build models with it, share them and work together. It is still under development.
+          - Care for You is also a sub-project of LM, a home caregiving game, driven in the same way by an engine improved from the LM backend.
+        links: 0
       - h: Credits and licence
         p:
-          - The interface and logic are static web files with no backend. Data files are YAML, read with js-yaml under the MIT licence. The world map outlines are from Natural Earth, in the public domain.
+          - The world map outlines are from Natural Earth, in the public domain.
+          - The piano pieces are MIDI files by Bernd Krueger from piano-midi.de, licensed CC BY-SA 3.0 DE and kept unchanged in the assets folder. The effects are tones the page makes itself.
           - The historical references are listed in the wiki, each with whether it has been checked.
           - The game was made entirely with vibe coding, from code and text to design. Thanks to AI, I could realise this idea in my spare time.
           - The name and the logo are not licensed under the MIT License.
-      - h: Author
-        p:
-          - This is a personal project by Fan Shen, released under the MIT License. It is still being polished, and comments and suggestions are welcome.
-          - Care for You is also a project of mine. It is driven in the same way, by an engine improved from the LM backend, so the two games share one underlying approach.
   archive:
     history: History
     regret: Regret
@@ -183,7 +183,10 @@ ui:
   clock:
     day: Day {n}
     pause: Pause
+    speed: Speed
     auto: Auto
+    nostop: Keep running on reports
+    nostop_tip: When ticked, the clock keeps running when someone comes back. When not ticked, it pauses at each report so nothing is missed.
     auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses. The secretary has a preference too - if the auto results suit it, favor goes up, otherwise down.
     paused_report: A report is waiting, paused
   dispatch:
@@ -349,6 +352,7 @@ ui:
     dispatch: Dispatch
     shop: Shop
     enc: Wiki
+    settings: Settings
     about: About
   model:
     note: The backend model is this one YAML. Every game rule number is in it, the code only interprets it.
@@ -383,7 +387,6 @@ ui:
     fast_forward: Skip to return
     eta: Back in
     reports: Collected reports
-    reset: Clear save
     history: History
     no_history: No trips yet
     habit: Habit
@@ -421,7 +424,6 @@ ui:
     unknown_candidate: '?'
     hire: Hire
     cost: Cost
-    reset_confirm: Clear the whole save and start over?
     reached_home: Enough energy to go home. The prototype ends here.
   report:
     none: No reports yet. Send someone out first.
@@ -467,6 +469,76 @@ ui:
     legend_visit: Employee present
     legend_handle_hist: Handle removed on the main timeline
     legend_handle_branch: Handle removed on this branch
+  music:
+    label: Music
+    play: Play
+    pause: Pause
+    next: Next piece
+    prev: Previous piece
+    loading: Loading
+    error: The piece could not be loaded
+  settings:
+    appearance:
+      h: Appearance
+      theme: Theme
+      theme_opts:
+        auto: Follow the system
+        light: Light
+        dark: Dark
+      language: Language
+    sound:
+      h: Sound
+      music: Music
+      music_volume: Music volume
+      sfx_volume: Effects volume
+      autostart: Start the music at the first click
+      try: Try the effects
+      sfx:
+        send: Dispatch
+        ready: Report ready
+        back: Return
+        coin: Coin
+      credit: The piano pieces are MIDI files from {source} by {author}, licensed {license}.
+    data:
+      h: Data
+      note: Your save and settings live in this browser only.
+      export: Save to a file
+      import: Load from a file
+      import_ok: The save was loaded.
+      import_bad: This file is not a save of this game.
+      reset: Clear save
+      reset_confirm: Clear the save and start again? This cannot be undone.
+      defaults: Restore default settings
+    advanced:
+      h: Advanced
+      dev: Developer mode
+      dev_note: Shows hidden content with a hidden mark, and lists formulas and variables in the wiki. The page reloads to apply it.
+      backend_h: Backend interface
+      engine: Engine
+      engine_value: Local rules and models, run in this page
+      determinism: Determinism
+      determinism_value: D0, the same inputs and seed always give the same result
+      provider: Backend
+      provider_local: Local
+      provider_remote: Remote service, not available yet
+      provider_note: A remote backend with the same interface is planned. The design is in the Life Matters game notes.
+  share:
+    button: Share
+    back: Back to the report
+    title: Share this trip
+    intro: A card is drawn on this device from the report. Nothing is uploaded.
+    save: Save image
+    copy: Copy text
+    copied: Copied.
+    send: Share
+    result: '{staff} went back to {era}. The outcome was "{outcome}".'
+    lives: In this simulation about {n} more lives were saved.
+    hooks:
+      - What would you bring to a turning point of history? Run a time travel agency of your own.
+      - Send someone back, give them a kit, then read the report they bring home.
+      - Nothing needs your constant attention. Set the agency to run and just read the stories.
+    disclaimer: A game and a simulation. Everything here is fictional, historical facts are for fun, and nothing is medical or historical advice.
+    card_title: The Teleporter
   shop:
     cart: Cart
     total: Total
@@ -697,6 +769,40 @@ mainline:
   home:
     name: Home
     desc: Enough energy. The boss can go back to their own time and see their family.
+quotes:
+  newton:
+    who: Isaac Newton
+    quote: If I have seen further, it is by standing on the shoulders of giants.
+  einstein:
+    who: Albert Einstein
+    quote: The important thing is not to stop questioning.
+  faraday:
+    who: Michael Faraday
+    quote: Nothing is too wonderful to be true, if it be consistent with the laws of nature.
+  feynman:
+    who: Richard Feynman
+    quote: The first principle is that you must not fool yourself, and you are the easiest person to fool.
+  pasteur:
+    who: Louis Pasteur
+    quote: Chance favours only the prepared mind.
+  carr:
+    who: E. H. Carr
+    quote: History is a continuous process of interaction between the historian and his facts, an unending dialogue between the present and the past.
+  santayana:
+    who: George Santayana
+    quote: Those who cannot remember the past are condemned to repeat it.
+  ranke:
+    who: Leopold von Ranke
+    quote: History wants only to show how it actually was.
+  simaqian:
+    who: Sima Qian
+    quote: To examine the relation between heaven and man, to trace the changes from antiquity to the present, and to complete a school of one's own.
+  hippocrates:
+    who: Hippocrates
+    quote: Life is short, the art long.
+  thucydides:
+    who: Thucydides
+    quote: This work was composed as a possession for all time.
 catalog:
   pythagoras_croton:
     name: A school where number is the nature of things

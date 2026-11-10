@@ -11,6 +11,7 @@ meta:
     code: https://github.com/shenfan19/teleporter
     issues: https://github.com/shenfan19/teleporter/issues
     mail: mailto:contact@teleporter.uk
+    music: https://www.piano-midi.de
 i18n:
   fallback: en
   auto: auto
@@ -48,7 +49,6 @@ clock:
     - 1
     - 2
     - 4
-  pause_on_report: true
 favor:
   start: 0.5
   gift_cost: 60
@@ -87,7 +87,8 @@ auto:
     - detox_water
     - heart_monitor
 ui:
-  dev_mode: true
+  tab_icons: {home: '🏠', dispatch: '🧭', shop: '🛒', enc: '📖', settings: '⚙️', about: 'ℹ️'}
+  quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
   refresh_ms: 500
   timeline_max: 9
   recent_reports: 8
@@ -110,3 +111,18 @@ tools:
     - 6
     - 7
     - 8
+settings:
+  storage_key: teleporter_settings
+  defaults:
+    theme: auto
+    music_volume: 0.5
+    sfx_volume: 0.6
+    music_autostart: false
+    pause_on_report: true
+    dev_mode: true
+  options:
+    theme: [auto, light, dark]
+share:
+  file_name: teleporter_share.png
+  colors: {bg: '#f1e8d4', ink: '#2b241b', ink2: '#6b5f4d', stamp: '#b3382c', line: '#cdbf9f', qr_bg: '#f8f2e3'}
+  canvas: {w: 1200, h: 630, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, logo_tilt_deg: -6}

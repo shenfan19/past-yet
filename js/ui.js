@@ -4,6 +4,9 @@ import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
 import { createListbox } from './listbox.js';
 import { createOffice } from './office.js';
+import { createSettingsPage } from './settings_ui.js';
+import { createShare } from './share.js';
+import { createQuotes } from './quotes.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const r1 = (x) => (Math.round(x * 10) / 10).toString();
@@ -16,31 +19,33 @@ export function createUI(D, ctx) {
   const O = D.get('config.office');
   const view = document.getElementById('view');
   const tabsEl = document.getElementById('tabs');
-  const langSel = document.getElementById('lang');
   const I = D.get('config.i18n');
   const UI_KEY = 'teleporter_ui_state';
   let savedLang = null;
   try { savedLang = localStorage.getItem(I.storage_key); } catch (e) { /* storage blocked */ }
   const urlLang = new URLSearchParams(location.search).get('lang');
   const chosen = urlLang && urlLang in I.locales ? urlLang : (savedLang && savedLang in I.locales ? savedLang : I.auto);
-  langSel.setAttribute('aria-label', U.lang.label);
-  langSel.innerHTML = `<option value="${I.auto}" ${chosen === I.auto ? 'selected' : ''}>${esc(U.lang.auto)}</option>` + Object.entries(I.locales).map(([code, name]) => `<option value="${code}" ${chosen === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
-  langSel.addEventListener('change', () => {
+  // The language selector lives on the settings page. It is drawn there and handled here, so a change keeps the page and state.
+  function langHtml() {
+    const opts = `<option value="${I.auto}" ${chosen === I.auto ? 'selected' : ''}>${esc(U.lang.auto)}</option>` + Object.entries(I.locales).map(([code, name]) => `<option value="${code}" ${chosen === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
+    return `<select id="lang" aria-label="${esc(U.lang.label)}">${opts}</select>`;
+  }
+  function changeLang(value) {
     try {
-      if (langSel.value === I.auto) localStorage.removeItem(I.storage_key); else localStorage.setItem(I.storage_key, langSel.value);
+      if (value === I.auto) localStorage.removeItem(I.storage_key); else localStorage.setItem(I.storage_key, value);
     } catch (e) { /* storage blocked */ }
     saveUiState();
     const u = new URL(location.href);
     u.searchParams.delete('lang');
     location.href = u.toString();
-  });
+  }
   document.getElementById('logo').textContent = D.get('config.meta.logo');
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
   const devParam = new URLSearchParams(location.search).get('dev');
-  const DEV = devParam === null ? D.get('config.ui.dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
+  const st = { tab: 'home', sub: null, share: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   const eraList = () => D.get('config.eras');
   const E = () => ctx.era(st.form.eraId);
@@ -99,7 +104,7 @@ export function createUI(D, ctx) {
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId }; st.suggest = null; }
   }
-  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip, anchorOf, owns, catalogTags };
+  const X = { D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, selectEra, wl, tip, anchorOf, owns, catalogTags, saveUiState, langHtml };
   const office = createOffice(X);
   const clockEl = document.getElementById('clock');
   X.listbox = createListbox(X);
@@ -107,6 +112,8 @@ export function createUI(D, ctx) {
   const wiki = createWiki(X);
   const shop = createShop(X);
   const worldMap = createWorldMap(X);
+  const settingsPage = createSettingsPage(X);
+  const share = createShare(X);
   st.map = worldMap.init();
   st.form = newForm(visibleEras()[0]);
   worldMap.attach(view);
@@ -158,19 +165,27 @@ export function createUI(D, ctx) {
   document.addEventListener('pointerdown', () => { pressed = true; }, true);
   for (const type of ['pointerup', 'pointercancel']) document.addEventListener(type, () => { pressed = false; }, true);
   window.addEventListener('blur', () => { pressed = false; });
+  // The clock is three parts so that a ticking day never rebuilds the controls: the day text, the controls and the paused chip.
+  const clockParts = { day: document.createElement('span'), ctl: document.createElement('span'), chip: document.createElement('span') };
+  clockParts.day.className = 'day'; clockParts.ctl.className = 'ctl'; clockParts.chip.className = 'chipwrap';
+  clockEl.append(clockParts.day, clockParts.ctl, clockParts.chip);
   function renderClock() {
     const c = ctx.S().clock;
     const C = D.get('config.clock');
     const al = office.alerts();
-    const speeds = C.speeds.map((sp, i) => `<button class="spd ${c.speed === sp ? 'on' : ''}" data-clk="speed" data-i="${i}" title="${sp === 0 ? U.clock.pause : sp + '×'}">${sp === 0 ? '⏸' : sp + '×'}</button>`).join('');
-    setHtml(clockEl, `<span class="day">${U.clock.day.replace('{n}', String(Math.floor(c.day) + 1))}</span>${speeds}<button class="auto ${c.auto ? 'on' : ''}" data-clk="auto"${tip(U.clock.auto_tip)}>${U.clock.auto}</button>${c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>` : ''}`);
+    clockParts.day.textContent = U.clock.day.replace('{n}', String(Math.floor(c.day) + 1));
+    const speeds = C.speeds.map((sp, i) => `<option value="${i}" ${c.speed === sp ? 'selected' : ''}>${sp === 0 ? '⏸ ' + U.clock.pause : sp + '×'}</option>`).join('');
+    const noStop = !ctx.settings.get('pause_on_report');
+    setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label><label${tip(U.clock.nostop_tip)}><input type="checkbox" data-clk="nostop" ${noStop ? 'checked' : ''}> ${esc(U.clock.nostop)}</label></span>`);
+    setHtml(clockParts.chip, c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>` : '');
   }
-  clockEl.addEventListener('click', (ev) => {
+  clockEl.addEventListener('change', (ev) => {
     const b = ev.target.closest('[data-clk]');
     if (!b) return;
     const c = ctx.S().clock;
-    if (b.dataset.clk === 'speed') office.setSpeed(Number(b.dataset.i));
-    else { c.auto = !c.auto; if (c.auto && c.speed === 0) office.setSpeed(1); ctx.save(); }
+    if (b.dataset.clk === 'speed') office.setSpeed(Number(b.value));
+    else if (b.dataset.clk === 'nostop') ctx.settings.set('pause_on_report', !b.checked);
+    else { c.auto = b.checked; if (c.auto && c.speed === 0) office.setSpeed(1); ctx.save(); }
     renderClock();
     renderTabs();
   });
@@ -184,7 +199,8 @@ export function createUI(D, ctx) {
   // ---------- tabs ----------
   function renderTabs() {
     const al = office.alerts();
-    setHtml(tabsEl, Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" class="${st.tab === k && !st.sub ? 'on' : ''}">${esc(label)}${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
+    const icons = D.get('config.ui.tab_icons');
+    setHtml(tabsEl, Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k && !st.sub ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
   }
 
   // ---------- office ----------
@@ -242,8 +258,7 @@ export function createUI(D, ctx) {
       <div class="sec">${U.office.staff}</div>${secLine}${staffBox}
       <div class="sec">${U.office.transit}</div>${openHtml}
       <div class="sec">${U.office.recent}</div>
-      ${done ? `<table><tbody>${done}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}
-      <p style="margin-top:24px"><button class="ghost danger" data-act="reset">${U.office.reset}</button></p>`;
+      ${done ? `<table><tbody>${done}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
@@ -421,7 +436,7 @@ export function createUI(D, ctx) {
         <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
       </tbody></table>
       ${R.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
-      <div class="row" style="margin:16px 0"><button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="vs">${U.report.vs_prev}</button></div>${vsHtml}
+      <div class="row" style="margin:16px 0"><button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button><button data-act="vs">${U.report.vs_prev}</button></div>${vsHtml}
       <div class="sec">${U.report.footnotes}</div><p class="muted">† ${U.report.drilldown}</p>`;
   }
 
@@ -442,20 +457,20 @@ export function createUI(D, ctx) {
     const M = D.get('config.meta');
     const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
     // the first mention of a name on this page links to its page
-    const inline = { 'Life Matters': M.links.lm, 'Care for You': M.links.care, 'Fan Shen': M.links.author };
+    const inline = { 'Life Matters': M.links.lm, 'Care for You': M.links.care, 'Fan Shen': M.links.author, 'piano-midi.de': M.links.music };
     const linked = new Set();
     const para = (x) => {
       let h = esc(x);
       for (const [name, href] of Object.entries(inline)) if (!linked.has(name) && h.includes(name)) { linked.add(name); h = h.replace(name, link(href, name)); }
       return `<p>${h}</p>`;
     };
-    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map(para).join('')}`).join('');
-    const jumps = A.sections.map((sec, i) => `<a class="wl" data-act="aboutjump" data-id="about-${i}">${esc(sec.h)}</a>`).join(' · ');
     const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
+    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('')}`).join('');
+    const jumps = A.sections.map((sec, i) => `<a class="wl" data-act="aboutjump" data-id="about-${i}">${esc(sec.h)}</a>`).join(' · ');
     return `<div class="about">
       <div class="muted">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div>
       <p class="jumps">${jumps}</p>
-      ${secs}<p>${links}</p></div>`;
+      ${secs}</div>`;
   }
 
   // ---------- home ----------
@@ -477,8 +492,8 @@ export function createUI(D, ctx) {
   let viewHtml = null;
   function render(fromTick) {
     renderTabs();
-    const html = st.sub ? reportHtml() : { home: homeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html, about: aboutHtml }[st.tab]();
-    const key = st.sub ? 'sub:' + st.sub : st.tab;
+    const html = st.sub ? (st.share ? share.html(share.dispatch(st.sub)) : reportHtml()) : { home: homeHtml, dispatch: dispatchHtml, shop: shop.html, enc: wiki.html, settings: settingsPage.html, about: aboutHtml }[st.tab]();
+    const key = st.sub ? 'sub:' + st.sub + (st.share ? ':share' : '') : st.tab;
     if (fromTick === true && html === viewHtml && key === st.lastKey) return;
     viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
@@ -493,6 +508,7 @@ export function createUI(D, ctx) {
       st.pendingKeeps = null;
     }
     window.scrollTo(0, st.scrollY[key] || 0);
+    if (st.sub && st.share) share.draw(share.dispatch(st.sub));
     st.lastKey = key;
     if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
   }
@@ -507,6 +523,7 @@ export function createUI(D, ctx) {
   function send() {
     const d = office.launch(st.form.eraId, formSpec());
     if (!d) return;
+    ctx.audio.sfx('send');
     st.tab = 'home';
     st.sub = null;
     st.form.plots = [];
@@ -517,6 +534,7 @@ export function createUI(D, ctx) {
   function claim(id) {
     const d = office.claim(id);
     if (!d) return;
+    ctx.audio.sfx('back');
     st.sub = id;
     st.back = 'home';
     st.vs = false;
@@ -551,7 +569,7 @@ export function createUI(D, ctx) {
     else if (act === 'gift') { office.gift(id); render(); }
     else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
     else if (act === 'plotpick') { const p = st.form.plots; if (p.includes(id)) st.form.plots = p.filter((x) => x !== id); else if (p.length < O.max_plots) p.push(id); st.suggest = null; render(); }
-    else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; render(); }
+    else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; st.share = false; render(); }
     else if (act === 'hire') { const S = ctx.S(); if (!S.staff[id].hired && S.funds >= O.hire_cost) { S.funds -= O.hire_cost; S.staff[id].hired = true; ctx.save(); } render(); }
     else if (act === 'wiki') { wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
@@ -560,10 +578,19 @@ export function createUI(D, ctx) {
     else if (act === 'lsort') { listbox.sort(id); render(); }
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id; st.suggest = null; } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antbuy', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) render(); }
+    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antbuy', 'antsell', 'antlock'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antbuy', 'antsell'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    else if (act === 'shareopen') { st.share = true; render(); }
+    else if (act === 'shareback') { st.share = false; render(); }
+    else if (act === 'sharesave') share.save();
+    else if (act === 'sharecopy') share.copy(share.dispatch(st.sub));
+    else if (act === 'sharenative') share.send(share.dispatch(st.sub));
+    else if (act === 'musictoggle') ctx.audio.toggle();
+    else if (act === 'sfxtry') ctx.audio.sfx(id);
+    else if (act === 'saveexport') settingsPage.exportSave();
+    else if (act === 'settingsreset') { ctx.settings.reset(); render(); }
     else if (act === 'go') { st.tab = id; st.sub = null; render(); }
-    else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
+    else if (act === 'back') { st.sub = null; st.share = false; st.tab = st.back; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
     else if (act === 'fn') { const k = st.sub + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
@@ -575,7 +602,7 @@ export function createUI(D, ctx) {
       st.sub = null;
       st.tab = 'dispatch';
       render();
-    } else if (act === 'reset') { if (confirm(U.office.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
+    } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
   });
   view.addEventListener('toggle', (ev) => {
     const t = ev.target;
@@ -603,12 +630,16 @@ export function createUI(D, ctx) {
   });
   view.addEventListener('input', (ev) => {
     const t = ev.target;
+    if (settingsPage.onInput(ev)) return;
     if (t.id === 'wiki-q') wiki.onInput(t.value);
     else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
     else if (shop.onInput(t)) render();
   });
   view.addEventListener('change', (ev) => {
     const t = ev.target;
+    if (t.id === 'lang') { changeLang(t.value); return; }
+    if (settingsPage.onInput(ev)) return;
+    if (t.dataset.act === 'saveimport' && t.files && t.files[0]) { settingsPage.importSave(t.files[0]).then((okk) => { if (okk) { st.sub = null; render(); } }); return; }
     if (t.name === 'staff') { if (staffState(t.value) === 'ready') { st.form.staffId = t.value; st.suggest = null; } render(); }
     else if (t.id === 'seed') { st.form.seed = Number(t.value) || 1; st.suggest = null; }
   });
@@ -617,11 +648,13 @@ export function createUI(D, ctx) {
     if (!b) return;
     st.tab = b.dataset.tab;
     st.sub = null;
+    st.share = false;
     render();
   });
 
   function tick() {
     const fresh = office.advance(D.get('config.ui.refresh_ms') / 1000);
+    if (fresh.length) ctx.audio.sfx('ready');
     if (ctx.S().clock.auto) office.autoStep();
     if (pressed) return;
     renderClock();
@@ -629,6 +662,29 @@ export function createUI(D, ctx) {
     const transit = ctx.S().dispatches.some((d) => !d.claimed);
     if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !st.sub) render(true);
   }
+  const quotes = createQuotes(D, document.getElementById('quote'));
+  quotes.start();
+  const musicEl = document.getElementById('music');
+  function renderMusic() {
+    const a = ctx.audio;
+    const t = a.tracks[a.state.index];
+    const label = `${t.composer} · ${t.title}`;
+    setHtml(musicEl, `<button class="ico" data-music="prev" title="${esc(U.music.prev)}" aria-label="${esc(U.music.prev)}">⏮</button><button class="ico" data-music="toggle" title="${esc(a.state.playing ? U.music.pause : U.music.play)}" aria-label="${esc(a.state.playing ? U.music.pause : U.music.play)}">${a.state.playing ? '⏸' : '▶'}</button><button class="ico" data-music="next" title="${esc(U.music.next)}" aria-label="${esc(U.music.next)}">⏭</button><span class="trk" title="${esc(label)}">${esc(a.state.error ? U.music.error : a.state.loading ? U.music.loading : label)}</span>`);
+  }
+  musicEl.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-music]');
+    if (!b) return;
+    const a = ctx.audio;
+    if (b.dataset.music === 'prev') a.prev(); else if (b.dataset.music === 'next') a.next(); else a.toggle();
+  });
+  ctx.audio.onChange(() => { renderMusic(); if (st.tab === 'settings' && !st.sub && !pressed) render(true); });
+  let started = false;
+  document.addEventListener('pointerdown', () => {
+    if (started) return;
+    started = true;
+    if (ctx.settings.get('music_autostart') && !ctx.audio.state.playing) ctx.audio.play(0);
+  }, { once: true });
+  renderMusic();
   renderClock();
   return { render, tick, state: st };
 }

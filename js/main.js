@@ -1,6 +1,8 @@
 import { loadData } from './data.js';
 import { createLocalBackend } from './backend.js';
 import { createUI } from './ui.js';
+import { createSettings } from './settings.js';
+import { createAudio } from './audio.js';
 
 // Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
 function pickLang(I) {
@@ -66,7 +68,10 @@ function load() {
 }
 
 let S = load();
+const settings = createSettings(D);
 const ctx = {
+  settings,
+  audio: createAudio(D, settings),
   S: () => S,
   now: () => Date.now(),
   backend,
@@ -74,6 +79,13 @@ const ctx = {
   eraSource: (id) => D.get('era_src.' + id),
   save() {
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage may be blocked, the game still runs */ }
+  },
+  // replaces the whole game from a loaded save, and says whether the file looked like one
+  replace(obj) {
+    if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches)) return false;
+    S = complete(obj);
+    this.save();
+    return true;
   },
   reset() {
     S = fresh();

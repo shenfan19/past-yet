@@ -57,6 +57,8 @@ const emitCopy = (rel, fromRel) => outputs.set(rel, fs.readFileSync(path.join(CA
 emitYaml('config.yaml', config);
 emitYaml('map.yaml', read('config/map.yaml'));
 emitYaml('shops.yaml', read('config/shops.yaml'));
+emitYaml('audio.yaml', read('config/audio.yaml'));
+emitYaml('share_qr.yaml', read('config/share_qr.yaml'));
 emitCopy('world_land.json', 'world/world_land.json');
 
 // ---------- items, antiques ----------
@@ -69,6 +71,7 @@ emitYaml('antiques.yaml', { antiques: Object.fromEntries(antiqueCards.map((c) =>
 const staffRules = read('config/staff_rules.yaml');
 const traitCards = cards('traits');
 const staffCards = cards('staff');
+const quoteCards = cards('quotes');
 emitYaml('staff.yaml', {
   stats: staffRules.stats, default_base: staffRules.default_base, default_habit: staffRules.default_habit,
   traits: Object.fromEntries(traitCards.map((c) => [c.id, struct(c)])),
@@ -122,6 +125,7 @@ for (const lang of LANGS) {
   put('staff', staffCards, (t) => t);
   put('traits', traitCards, (t) => t.name);
   put('mainline', stageCards, (t) => t);
+  put('quotes', quoteCards, (t) => t);
   put('catalog', eventCards, (t) => t);
   for (const id of config.eras) {
     const rel = `eras/${id}/text.${lang}.yaml`;

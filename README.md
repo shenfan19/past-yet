@@ -59,3 +59,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 ## Engine boundary
 
 The interface in `js/` shows data and sends requests, it does not run the simulation. Everything it needs from the engine goes through `js/backend.js`, and `node tools/check_boundary.mjs` fails if another file imports the engine. A server backend with the same methods could keep the yaml and run the engine on the server, leaving the page to carry data only.
+
+## Music
+
+The piano pieces in `assets/music` are MIDI files by Bernd Krueger from [piano-midi.de](https://www.piano-midi.de), kept unchanged and licensed CC BY-SA 3.0 DE. Anyone redistributing them must keep that licence and the attribution. The rest of the game is MIT licensed. The page plays the files with a small synthesiser built on Web Audio, and the sound effects are tones it makes itself, so there is no sampled audio. Pieces and effects are listed in `cards/config/audio.yaml`.

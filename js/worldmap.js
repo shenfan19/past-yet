@@ -81,7 +81,7 @@ export function createWorldMap(X) {
       const sel = m().place === p.id;
       const lock = p.events.every((e) => e.locked);
       const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
-      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="ring" r="5"/><circle class="dot" r="2.2"/><text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
+      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="dot" r="2.2"/><text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
     }).join('');
     return `<svg class="map ${labelsOn() ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${pins}</svg>`;
   }
@@ -115,9 +115,44 @@ export function createWorldMap(X) {
       const on = isSel(e);
       const tipText = `${fmtYear(D, e.year)} ${i.name}`;
       const label = !e.catalog || on ? `<text x="0" y="-14" text-anchor="middle">${fmtYear(D, e.year)} ${esc(i.short)}${e.locked ? ' ' + U.dispatch.hidden_mark : ''}</text>` : '';
-      g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''} ${e.catalog ? 'cat' : ''}" data-act="mapevent" data-id="${e.id}" data-tip="${esc(tipText)}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="${e.catalog ? -4 : -46}" y="${e.catalog ? -8 : -28}" width="${e.catalog ? 8 : 92}" height="${e.catalog ? 16 : 44}"/><circle class="ring" r="${e.catalog ? 6 : 9}"/><circle class="dot" r="${e.catalog ? 2.6 : 4.5}"/>${label}</g>`;
+      g += `<g class="pt ${on ? 'on' : ''} ${e.locked ? 'locked' : ''} ${e.catalog ? 'cat' : ''}" data-act="mapevent" data-id="${e.id}" data-tip="${esc(tipText)}" transform="translate(${x(e.year).toFixed(1)} ${y0})"><rect class="hit" x="${e.catalog ? -4 : -46}" y="${e.catalog ? -8 : -28}" width="${e.catalog ? 8 : 92}" height="${e.catalog ? 16 : 44}"/><circle class="dot" r="${e.catalog ? 2.6 : 4.5}"/>${label}</g>`;
     }
     return `<svg class="axis" viewBox="0 0 ${Wd} ${TL.h}" role="img">${g}</svg>`;
+  }
+
+  // The axis is a window on the years. The wheel narrows or widens it around the year under the pointer, and dragging slides it.
+  // The scale is a square root, so the year under a screen fraction f of the width satisfies to - year = (1 - f)^2 * span.
+  const axisFrac = (clientX, svg) => {
+    const TL = D.get('config.ui.timeline');
+    const r = svg.getBoundingClientRect();
+    const x = ((clientX - r.left) / r.width) * TL.w;
+    return Math.min(1, Math.max(0, (x - TL.pad) / (TL.w - 2 * TL.pad)));
+  };
+  function setWindow(to, span) {
+    const s = m();
+    const A = D.get('map.axis');
+    const full = A.to - A.from;
+    const sp = Math.min(full, Math.max(A.min_span, span));
+    const t = Math.min(A.to, Math.max(A.from + sp, to));
+    s.to = Math.round(t);
+    s.from = Math.round(t - sp);
+    const fi = document.getElementById('map-from'); if (fi) fi.value = String(s.from);
+    const ti = document.getElementById('map-to'); if (ti) ti.value = String(s.to);
+    const ft = document.getElementById('map-fromtxt'); if (ft) ft.textContent = fmtYear(D, s.from === 0 ? 1 : s.from);
+    const tt = document.getElementById('map-totxt'); if (tt) tt.textContent = fmtYear(D, s.to === 0 ? 1 : s.to);
+    refreshParts();
+  }
+  function axisZoom(factor, f) {
+    const s = m();
+    const A = D.get('map.axis');
+    const span = s.to - s.from;
+    const yc = s.to - (1 - f) ** 2 * span;
+    const sp = Math.min(A.to - A.from, Math.max(A.min_span, span * factor));
+    setWindow(yc + (1 - f) ** 2 * sp, sp);
+  }
+  function axisDrag(d, f) {
+    const span = d.to - d.from;
+    setWindow(d.yc + (1 - f) ** 2 * span, span);
   }
 
   function eventRows() {
@@ -191,6 +226,13 @@ export function createWorldMap(X) {
 
   function attach(root) {
     root.addEventListener('wheel', (ev) => {
+      const ax = ev.target.closest && ev.target.closest('svg.axis');
+      if (ax) {
+        ev.preventDefault();
+        const f = D.get('map.zoom.step');
+        axisZoom(ev.deltaY < 0 ? 1 / f : f, axisFrac(ev.clientX, ax));
+        return;
+      }
       const svg = ev.target.closest && ev.target.closest('svg.map');
       if (!svg) return;
       ev.preventDefault();
@@ -199,12 +241,26 @@ export function createWorldMap(X) {
       zoomAt(ev.deltaY < 0 ? f : 1 / f, (ev.clientX - r.left) / r.width, (ev.clientY - r.top) / r.height);
     }, { passive: false });
     root.addEventListener('pointerdown', (ev) => {
+      const ax = ev.target.closest && ev.target.closest('svg.axis');
+      if (ax) {
+        const f = axisFrac(ev.clientX, ax);
+        const span = m().to - m().from;
+        m().adrag = { x: ev.clientX, box: ax.parentElement, svg: ax, span, to: m().to, from: m().from, yc: m().to - (1 - f) ** 2 * span, moved: false };
+        m().adrag.pid = ev.pointerId;
+        return;
+      }
       const svg = ev.target.closest && ev.target.closest('svg.map');
       if (!svg || ev.target.closest('.pt')) return;
       m().drag = { x: ev.clientX, y: ev.clientY, cx: m().cx, cy: m().cy, moved: false, svg };
       svg.setPointerCapture(ev.pointerId);
     });
     root.addEventListener('pointermove', (ev) => {
+      const a = m().adrag;
+      if (a) {
+        if (!a.moved && Math.abs(ev.clientX - a.x) > D.get('map.zoom.drag_px')) { a.moved = true; a.box.setPointerCapture(a.pid); }
+        if (a.moved) axisDrag(a, axisFrac(ev.clientX, a.box.querySelector('svg.axis') || a.svg));
+        return;
+      }
       const d = m().drag;
       if (!d) return;
       const r = d.svg.getBoundingClientRect();
@@ -216,7 +272,10 @@ export function createWorldMap(X) {
       m().cx = v2.x0 + v2.w / 2; m().cy = v2.y0 + v2.h / 2;
       applyView();
     });
-    const end = () => { const d = m().drag; if (!d) return; m().drag = null; m().justDragged = d.moved; setTimeout(() => { m().justDragged = false; }, 0); };
+    const end = () => {
+      const a = m().adrag;
+      if (a) { m().adrag = null; m().justDragged = a.moved; setTimeout(() => { m().justDragged = false; }, 0); return; }
+      const d = m().drag; if (!d) return; m().drag = null; m().justDragged = d.moved; setTimeout(() => { m().justDragged = false; }, 0); };
     root.addEventListener('pointerup', end);
     root.addEventListener('pointercancel', end);
   }
@@ -259,7 +318,7 @@ export function createWorldMap(X) {
 
   function init() {
     const A = D.get('map.axis');
-    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, from: A.from, to: A.to, place: null, drag: null, justDragged: false };
+    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
   }
   return { html, act, onInput, attach, init };
 }

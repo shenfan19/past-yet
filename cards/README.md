@@ -35,7 +35,7 @@ The file name is the id. A card with `id:` inside must match its file name.
 | `wiki/stats`, `model_events`, `refs` | an attribute with its double edge, a model event, a source | the same |
 | `eras/<id>/` | `model.lm.yaml` the simulation model, `text.<lang>.yaml` the text of the era | `data/eras/<id>.lm.yaml` and the text files |
 | `text/<lang>/` | a piece of interface text, merged by key | `data/i18n/text.<lang>.yaml` |
-| `config/`, `world/` | small shared files, the world coastline | copied |
+| `config/`, `world/` | small shared files, the world coastline, `audio.yaml` pieces and effects, `share_qr.yaml` the QR matrix of the site address | copied |
 
 Languages are the codes in `config/config.yaml` under `i18n.locales`. A language that lacks a key reads English for that key.
 
@@ -49,3 +49,5 @@ After any change run the build, then `node tools/check_i18n.mjs` and `node tools
 ## The engine boundary
 
 The interface in `js/` shows data and sends requests. It does not run the simulation: everything it needs from the engine goes through `js/backend.js`, and `node tools/check_boundary.mjs` fails if another file imports the engine. The local backend calls the engine in the same page. A server backend with the same methods could read the cards, run the engine on the server, and leave the page to carry data only.
+
+The QR matrix is made by `QR_DIR=path node tools/make_share_qr.mjs`, which needs the npm package `qrcode` installed in that folder. Run it again if `meta.links.site` changes.
