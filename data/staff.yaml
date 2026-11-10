@@ -24,6 +24,7 @@ traits:
   kind:
     mods:
       kindness: 0.4
+      homesick_trait: 0.15
     policy:
       focus: cure
     priority: 1
@@ -33,13 +34,16 @@ traits:
   stubborn:
     mods:
       stubbornness: 0.5
-      eloquence: -0.1
+      stamina: 0.1
+      eloquence: -0.2
+      kindness: -0.1
     policy:
       on_block: insist
     priority: 2
   curious:
     mods:
       curiosity: 0.4
+      stamina: -0.1
     policy:
       focus: ally
     priority: 1
@@ -49,6 +53,7 @@ traits:
   homesick:
     mods:
       homesick_trait: 0.5
+      kindness: 0.2
     policy:
       on_block: yield
     priority: 1
@@ -58,6 +63,8 @@ traits:
   studious:
     mods:
       skill: 0.2
+      eloquence: -0.15
+      stamina: -0.05
     policy:
       focus: prevent
     priority: 2
@@ -67,6 +74,7 @@ traits:
   sturdy:
     mods:
       stamina: 0.25
+      curiosity: -0.15
     priority: 0
     secretary:
       rest_cut: 0.3
@@ -74,6 +82,8 @@ traits:
   glib:
     mods:
       eloquence: 0.3
+      kindness: -0.1
+      greed: 0.1
     policy:
       focus: ally
       on_block: appeal
@@ -85,6 +95,7 @@ traits:
     mods:
       stamina: 0.15
       homesick_trait: -0.1
+      eloquence: -0.1
     policy:
       on_block: yield
     priority: 1
@@ -95,6 +106,7 @@ traits:
     mods:
       stubbornness: 0.2
       stamina: 0.1
+      skill: -0.1
     policy:
       on_block: insist
     priority: 1
@@ -104,6 +116,7 @@ traits:
   meticulous:
     mods:
       skill: 0.25
+      stamina: -0.15
     policy:
       focus: prevent
     priority: 1
@@ -114,6 +127,8 @@ traits:
     mods:
       curiosity: 0.2
       eloquence: 0.1
+      skill: -0.1
+      stamina: -0.1
     policy:
       focus: ally
     priority: 1
@@ -125,6 +140,8 @@ traits:
       skill: 0.1
       eloquence: 0.2
       kindness: 0.1
+      stamina: -0.15
+      curiosity: -0.1
     policy:
       focus: ally
       on_block: appeal
@@ -136,6 +153,7 @@ traits:
     mods:
       greed: 0.6
       kindness: -0.1
+      eloquence: 0.15
     policy:
       on_block: insist
     priority: 3
@@ -143,6 +161,33 @@ traits:
       funds_mult: 0.15
       favor_gain: -0.2
     prefer: funds
+  hedonist:
+    mods:
+      eloquence: 0.15
+      curiosity: 0.2
+      homesick_trait: -0.2
+      stamina: -0.1
+      greed: 0.15
+    policy:
+      focus: ally
+    priority: 1
+    secretary:
+      favor_gain: -0.2
+    prefer: funds
+    recall_refuse: 0.5
+  loyal:
+    mods:
+      homesick_trait: -0.15
+      kindness: 0.15
+      curiosity: -0.15
+      stubbornness: -0.1
+    policy:
+      on_block: yield
+    priority: 1
+    secretary:
+      favor_gain: 0.3
+    prefer: safety
+    recall_refuse: -0.3
 staff:
   s_ning:
     gender: f

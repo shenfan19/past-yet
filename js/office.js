@@ -12,8 +12,10 @@ export function createOffice(X) {
   const day = () => S().clock.day;
   const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 
-  const allStaff = () => Object.keys(D.get('staff.staff'));
-  const hiredIds = () => allStaff().filter((id) => S().staff[id].hired);
+  const hiredIds = () => Object.keys(S().staff).filter((id) => S().staff[id].hired);
+  // only one employee can be in a place at a time, the simulation cannot yet hold two travellers in one place
+  const ST = D.get('config.stars');
+  const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
 
   function perks() {
     const out = { funds_mult: 0, energy_mult: 0, rest_cut: 0, favor_gain: 0 };
@@ -53,15 +55,33 @@ export function createOffice(X) {
   function launch(eraId, spec, opts = {}) {
     const E = ctx.era(eraId);
     const s = S();
-    const full = { ...spec, favor: s.staff[spec.staffId].favor };
+    const full = { ...spec, plots: plotsFor(eraId), favor: s.staff[spec.staffId].favor };
     const err = ctx.backend.validate(eraId, full, s.inv);
-    if (err || staffState(full.staffId) !== 'ready') return null;
+    if (err || staffState(full.staffId) !== 'ready' || eraBusy(eraId)) return null;
     const { res, report } = ctx.backend.dispatch(eraId, full);
     const antique = ctx.backend.findAntique(eraId, full.seed, s.antiques);
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     const stay = E.vars[E.roles.stay].value;
-    const d = { id: 'd' + s.seq, eraId, spec: full, report, readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: res.energy, funds: res.funds, restDays: res.restDays, antique } };
+    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: ST.outcome[report.outcomeId], baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
+    s.dispatches.push(d);
+    ctx.save();
+    return d;
+  }
+
+  // A small story to a catalogue event whose antique is anchored. It has no kit and no branch, only the traveller against the event.
+  const LT = D.get('config.light');
+  function launchLight(eventId, staffId, seed, opts = {}) {
+    const s = S();
+    if (!s.locks.includes('relic_' + eventId) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
+    const r = ctx.backend.runLight(eventId, staffId, seed);
+    const antique = ctx.backend.findAntique(eventId, seed, s.antiques);
+    s.seq += 1;
+    const d = {
+      id: 'd' + s.seq, eraId: eventId, light: true, stars: ST.light[r.outcome], baseEnergy: r.energyBase, spec: { seed, staffId, items: {}, plots: [], favor: s.staff[staffId].favor },
+      report: { outcomeId: r.outcome, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
+      startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: r.funds, restDays: r.restDays, antique },
+    };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -73,8 +93,16 @@ export function createOffice(X) {
     if (!d || d.claimed) return null;
     const p = perks();
     d.claimed = true;
+    if (!s.visited.includes(d.eraId)) s.visited.push(d.eraId);
     d.claimedAt = ctx.now();
-    d.paid = { energy: Math.round(d.payout.energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.ceil(d.payout.restDays * (1 - p.rest_cut)) };
+    // Time energy is paid for the stars above the best this place has had: a quarter of the base for one star, half for two, all of it for three,
+    // and each trip pays the difference to what the best already paid, so a place cannot be farmed for energy.
+    // Funds and antiques are paid every time.
+    const best = s.stars[d.eraId] || 0;
+    d.newBest = d.stars > best;
+    const energy = d.newBest ? d.baseEnergy * (ST.energy_share[d.stars] - ST.energy_share[best]) : 0;
+    if (d.newBest) s.stars[d.eraId] = d.stars;
+    d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.ceil(d.payout.restDays * (1 - p.rest_cut)) };
     s.energy += d.paid.energy;
     s.funds += d.paid.funds;
     d.paid.antique = d.payout.antique || null;
@@ -82,7 +110,7 @@ export function createOffice(X) {
     if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
     sf.restUntil = day() + d.paid.restDays;
-    const delta = F.outcome[d.report.outcomeId];
+    const delta = d.light ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId];
     d.favorDelta = delta > 0 ? delta * (1 + p.favor_gain) : delta;
     sf.favor = clamp(sf.favor + d.favorDelta, F.min, F.max);
     const aim = secretaryAim();
@@ -127,10 +155,108 @@ export function createOffice(X) {
     if (gain) ctx.save();
     return gain;
   }
-  // The auto mode anchors every found antique that opens a place.
+  // The auto mode anchors every antique it holds, so each one opens its place or its event.
   function anchorFound() {
     const s = S();
-    for (const id of new Set(s.antiques)) if (D.get('antiques.antiques.' + id).era && !s.locks.includes(id)) s.locks.push(id);
+    for (const id of new Set(s.antiques)) if (!s.locks.includes(id)) s.locks.push(id);
+  }
+
+  // ---------- recall ----------
+  // Calling someone home early is a request. They come at once with a share of what the trip would have paid, in proportion to how far
+  // it had got, and the story stops where it is. Someone who has decided to stay, or whose traits make them unwilling, does not come,
+  // and a refusal is final for that trip.
+  const RC = D.get('hiring.recall');
+  function recall(id) {
+    const s = S();
+    const d = s.dispatches.find((x) => x.id === id);
+    if (!d || d.claimed || d.recallRefused || d.readyDay <= day()) return { ok: false };
+    if (ctx.backend.recallRefused(d.spec.staffId, d.spec.seed, d.report.outcomeId)) {
+      d.recallRefused = true;
+      ctx.save();
+      return { ok: false, refused: true };
+    }
+    const p = perks();
+    const f = clamp((day() - d.startDay) / (d.readyDay - d.startDay), 0, 1);
+    d.claimed = true;
+    d.recalled = true;
+    d.recallDay = day();
+    d.claimedAt = ctx.now();
+    if (!s.visited.includes(d.eraId)) s.visited.push(d.eraId);
+    d.stars = 0;
+    d.paid = { energy: 0, funds: Math.round(d.payout.funds * f * (1 + p.funds_mult)), restDays: Math.ceil(d.payout.restDays * f), share: f };
+    s.energy += d.paid.energy;
+    s.funds += d.paid.funds;
+    d.paid.antique = d.payout.antique && ctx.backend.recallKeeps(d.spec.seed, f) ? d.payout.antique : null;
+    d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
+    if (d.paid.antique) s.antiques.push(d.paid.antique);
+    const sf = s.staff[d.spec.staffId];
+    sf.restUntil = day() + d.paid.restDays;
+    sf.favor = clamp(sf.favor - RC.favor_loss, F.min, F.max);
+    d.favorDelta = -RC.favor_loss;
+    ctx.save();
+    return { ok: true, d };
+  }
+
+  // ---------- hiring pool ----------
+  // Two candidates are on offer. Hiring one brings a new one, and every refresh_days the whole offer is replaced.
+  const HI = D.get('hiring');
+  function register(id, def) {
+    if (id in D.o.staff.staff) return;
+    const { text, ...rest } = def;
+    D.o.staff.staff[id] = rest;
+    D.o.text.staff[id] = text[D.lang] || text.en;
+  }
+  // Every made employee goes into the wiki when they are made. To keep the save from growing without end only the latest wiki_max
+  // are kept, and anyone on offer or ever hired stays.
+  function trimGenerated() {
+    const s = S();
+    const keep = new Set(s.hire.slots.map((x) => x.id));
+    let extra = Object.keys(s.generated).length - HI.wiki_max;
+    for (const id of Object.keys(s.generated)) {
+      if (extra <= 0) break;
+      if (keep.has(id) || s.staff[id]) continue;
+      delete s.generated[id];
+      extra--;
+    }
+  }
+  function addCandidate() {
+    const s = S();
+    const taken = new Set(s.hire.slots.map((x) => x.id));
+    const free = Object.keys(D.get('staff.staff')).filter((id) => !D.get('staff.staff.' + id).generated && !(s.staff[id] && s.staff[id].hired) && !taken.has(id));
+    s.hire.serial += 1;
+    const c = ctx.backend.makeCandidate(s.hire.serial, free);
+    if (c.def) { s.generated[c.id] = c.def; register(c.id, c.def); trimGenerated(); }
+    s.hire.slots.push({ id: c.id });
+  }
+  function ensureHire() {
+    const s = S();
+    for (const [id, def] of Object.entries(s.generated)) register(id, def);
+    if (!s.hire) s.hire = { slots: [], serial: 0, next: day() + HI.refresh_days };
+    while (s.hire.slots.length < HI.slots) addCandidate();
+  }
+  function refreshHire() {
+    const s = S();
+    if (!s.hire || day() < s.hire.next) return;
+    while (day() >= s.hire.next) s.hire.next += HI.refresh_days;
+    s.hire.slots = [];
+    ensureHire();
+    ctx.save();
+  }
+  function hire(id) {
+    const s = S();
+    ensureHire();
+    const slot = s.hire.slots.find((x) => x.id === id);
+    if (!slot || s.funds < O.hire_cost) return false;
+    s.funds -= O.hire_cost;
+    if (s.generated[id]) {
+      s.staff[id] = { restUntil: 0, hired: true, favor: F.start };
+    } else {
+      s.staff[id].hired = true;
+    }
+    s.hire.slots = s.hire.slots.filter((x) => x.id !== id);
+    addCandidate();
+    ctx.save();
+    return true;
   }
 
   // ---------- wages ----------
@@ -178,6 +304,7 @@ export function createOffice(X) {
       s.clock.day += dt;
       payWages(dt);
     }
+    refreshHire();
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
     if (fresh.length && ctx.settings.get('pause_on_report')) s.clock.speed = 0;
@@ -200,7 +327,8 @@ export function createOffice(X) {
     }
     return items;
   }
-  function autoPlots(eraId) {
+  // The plots are the ideas the protagonist of the era can take up, so they are not chosen, the traveller brings all the ones the craft of the era allows.
+  function plotsFor(eraId) {
     const E = ctx.era(eraId);
     return Object.keys(E.plots).filter((p) => E.plots[p].tech <= E.tech).slice(0, O.max_plots);
   }
@@ -222,12 +350,18 @@ export function createOffice(X) {
     if (s.funds < A.sell_spares_below) sellSpares();
     restock();
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
-    if (!eras.length) return;
+    const stories = D.get('catalog.events').map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
+    if (!eras.length && !stories.length) return;
     for (const staffId of hiredIds()) {
       if (staffState(staffId) !== 'ready') continue;
       const count = (id) => s.dispatches.filter((d) => d.eraId === id).length;
-      const eraId = [...eras].sort((a, b) => count(a) - count(b))[0];
-      launch(eraId, { seed: (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, staffId, items: autoKit(eraId), plots: autoPlots(eraId) }, { auto: true });
+      // the places with a full simulation come first, a brief scene only when all of them are taken
+      let free = eras.filter((id) => !eraBusy(id));
+      if (!free.length) free = stories.filter((id) => !eraBusy(id));
+      if (!free.length) break;
+      const eraId = [...free].sort((a, b) => count(a) - count(b))[0];
+      if (stories.includes(eraId)) { launchLight(eraId, staffId, (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, { auto: true }); continue; }
+      launch(eraId, { seed: (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, staffId, items: autoKit(eraId), }, { auto: true });
     }
     ctx.save();
   }
@@ -244,5 +378,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { sellSpares, spareCount, anchorFound, wageOf, wageTotal, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
+  return { launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, wageOf, wageTotal, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
 }

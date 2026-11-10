@@ -58,6 +58,7 @@ emitYaml('config.yaml', config);
 emitYaml('map.yaml', read('config/map.yaml'));
 emitYaml('shops.yaml', read('config/shops.yaml'));
 emitYaml('audio.yaml', read('config/audio.yaml'));
+emitYaml('hiring.yaml', read('config/hiring.yaml'));
 emitYaml('share_qr.yaml', read('config/share_qr.yaml'));
 emitCopy('world_land.json', 'world/world_land.json');
 
@@ -124,6 +125,7 @@ for (const lang of LANGS) {
   put('antiques', antiqueCards, (t) => t);
   put('staff', staffCards, (t) => t);
   put('traits', traitCards, (t) => t.name);
+  put('trait_notes', traitCards, (t) => ({ pro: t.pro, con: t.con }));
   put('mainline', stageCards, (t) => t);
   put('quotes', quoteCards, (t) => t);
   put('catalog', eventCards, (t) => t);

@@ -27,7 +27,7 @@ export function createLocalBackend(D) {
     return null;
   };
   function findOdds(eraId) {
-    const here = placeOf({ era: eraId });
+    const here = info[eraId] ? placeOf({ era: eraId }) : placeOf({ event: eraId });
     const all = D.get('antiques.antiques');
     const list = [];
     for (const [id, an] of Object.entries(all)) {
@@ -39,18 +39,81 @@ export function createLocalBackend(D) {
     const p = Math.min(AF.cap, 1 - list.reduce((a, x) => a * (1 - AF.k * x.w), 1));
     return { p, list };
   }
-  // A key antique to a place the office cannot reach yet is favoured by new_key_boost when it is drawn, so the way on is not buried under the many relics of events that have no model.
+  // An antique that points to a place with a simulation, and is not held yet, is favoured by modelled_place_boost when it is drawn, so the way to a place that can be dispatched to is not buried under the many events that have no model yet.
   function findAntique(eraId, seed, held = []) {
     const { p, list } = findOdds(eraId);
     if (!list.length || draw(seed, 'antique_find', eraId) >= p) return null;
     const all = D.get('antiques.antiques');
-    const wt = (x) => x.w * (all[x.id].era && !held.includes(x.id) ? AF.new_key_boost : 1);
+    const wt = (x) => x.w * (all[x.id].era && !held.includes(x.id) ? AF.modelled_place_boost : 1);
     const total = list.reduce((a, x) => a + wt(x), 0);
     let at = draw(seed, 'antique_pick', eraId) * total;
     for (const x of list) { at -= wt(x); if (at < 0) return x.id; }
     return list[list.length - 1].id;
   }
+  // ---------- hiring pool ----------
+  // A candidate is made from the draws of one serial number: a region and with it a name, a skin tone, a gender, an age, a job,
+  // base abilities, and two or three traits. Every trait has a gain and a cost, so a candidate is a trade off, not a ranking.
+  const HI = D.get('hiring');
+  const pickOf = (arr, serial, key) => arr[Math.min(arr.length - 1, Math.floor(draw(serial, key, 0) * arr.length))];
+  const weighted = (obj, serial, key) => {
+    const total = Object.values(obj).reduce((a, x) => a + x, 0);
+    let at = draw(serial, key, 0) * total;
+    for (const [k, w] of Object.entries(obj)) { at -= w; if (at < 0) return k; }
+    return Object.keys(obj)[0];
+  };
+  const range = (lo, hi, serial, key) => Math.round((lo + draw(serial, key, 0) * (hi - lo)) * 100) / 100;
+  // one candidate: either one of the hand written employees that is still free, or a made one
+  function makeCandidate(serial, freeNamed) {
+    if (freeNamed.length && draw(serial, 'named', 0) < HI.named_share) return { id: pickOf(freeNamed, serial, 'named_pick') };
+    const region = pickOf(HI.regions, serial, 'region');
+    const gender = draw(serial, 'gender', 0) < 0.5 ? 'f' : 'm';
+    const given = pickOf(gender === 'f' ? region.f : region.m, serial, 'given');
+    const family = pickOf(region.family, serial, 'family');
+    const job = pickOf(HI.jobs, serial, 'job');
+    const traitIds = Object.keys(D.get('staff.traits'));
+    const n = HI.traits_per.min + Math.floor(draw(serial, 'trait_n', 0) * (HI.traits_per.max - HI.traits_per.min + 1));
+    const traits = [];
+    for (let i = 0; traits.length < n && i < 50; i++) {
+      const t = traitIds[Math.min(traitIds.length - 1, Math.floor(draw(serial, 'trait', i) * traitIds.length))];
+      if (!traits.includes(t)) traits.push(t);
+    }
+    const base = Object.fromEntries(Object.entries(HI.base).map(([k, [lo, hi]]) => [k, range(lo, hi, serial, 'base_' + k)]));
+    const name = (lang) => (lang === 'zh' && region.order === 'zh_family_first' ? family[1] + given[1] : lang === 'zh' ? given[1] + region.join + family[1] : given[0] + ' ' + family[0]);
+    return {
+      id: 'g' + serial,
+      def: {
+        generated: true, gender, age: Math.floor(range(HI.age.min, HI.age.max + 1, serial, 'age')), base, traits, start_hired: false,
+        region: region.id, skin: weighted(region.tones, serial, 'skin'),
+        text: {
+          en: { name: name('en'), job: job.text.en, bio: 'From ' + region.text.en + '.' },
+          zh: { name: name('zh'), job: job.text.zh, bio: '来自' + region.text.zh + '。' },
+        },
+      },
+    };
+  }
+  // a recall is only a request. Someone who has decided to stay does not come, and a trait can make that more or less likely
+  function recallRefused(staffId, seed, outcomeId) {
+    if (outcomeId === HI.recall.stay_outcome) return true;
+    const sum = D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).recall_refuse || 0), HI.recall.refuse_base);
+    return draw(seed, 'recall_refuse', staffId) < Math.min(1, Math.max(0, sum));
+  }
+  // A small story: a catalogue event with no branch simulation. How the trip goes is the traveller's abilities, weighted by the field of the event,
+  // against a difficulty that rises with its tier, with a little seeded luck. It pays by outcome and brings nothing else.
+  const L = D.get('config.light');
+  const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
+  const lightStay = (eventId) => L.stay_by_tier[lightEvent(eventId).tier];
+  function runLight(eventId, staffId, seed) {
+    const ev = lightEvent(eventId);
+    const stats = sim.staffStats(D, staffId);
+    const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k], 0);
+    const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
+    const outcome = margin >= L.cuts.success ? 'success' : margin >= L.cuts.partial ? 'partial' : 'missed';
+    const pay = L.pay[ev.tier];
+    return { outcome, funds: Math.round(pay.funds * L.share[outcome]), energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
+  }
+  const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
+    runLight, lightStay, makeCandidate, recallRefused, recallKeeps,
     findOdds, findAntique,
     eraInfo: (id) => info[id],
     staffStats: (staffId) => sim.staffStats(D, staffId),

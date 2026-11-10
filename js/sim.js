@@ -136,6 +136,8 @@ export function staffStats(D, staffId) {
   for (const t of D.get('staff.staff.' + staffId + '.traits')) {
     for (const [k, dv] of Object.entries(D.get('staff.traits.' + t + '.mods'))) base[k] += dv;
   }
+  // a trait can pull a stat down but never below nothing
+  for (const k of Object.keys(base)) base[k] = Math.max(0, base[k]);
   return base;
 }
 

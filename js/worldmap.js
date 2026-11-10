@@ -11,12 +11,13 @@ export function createWorldMap(X) {
   // Events are the simulated eras and the catalogue events. A catalogue event shows once its relic is owned, in dev mode always.
   const eraEvents = () => D.get('config.eras').map((id) => {
     const era = ctx.era(id).raw.metadata.era;
-    return { id, year: era.year, place: era.place, geo: era.geo, locked: !X.eraOpen(id), catalog: false };
+    return { id, year: era.year, place: era.place, geo: era.geo, locked: !X.eraOpen(id), unseen: X.eraOpen(id) && !ctx.S().visited.includes(id), catalog: false };
   });
-  const catEvents = () => D.get('catalog.events').map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.owns('relic_' + e.id), catalog: true, cell: e }));
+  const catEvents = () => D.get('catalog.events').map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.anchored('relic_' + e.id), catalog: true, cell: e }));
   // One pin per place. Events within a radius of each other share a pin, and the radius shrinks as you zoom in so the pins part; which takes the name of the simulated era there if there is one.
+  // Only anchored places are drawn. Dev mode draws the rest too.
   const events = () => {
-    const all = [...eraEvents(), ...catEvents()];
+    const all = [...eraEvents(), ...catEvents()].filter((e) => DEV || !e.locked);
     const R = D.get('map.group_radius') / m().z;
     const clusters = [];
     for (const e of all) {
@@ -28,9 +29,9 @@ export function createWorldMap(X) {
     for (const e of all) e.place = e.cluster.id;
     return all;
   };
-  // Until its antique is anchored or held, an event is only a question mark: no name, no place, no tags, nothing to read.
+  // An anchored place nobody has been to yet is a question mark on the map, with no name, place or tags, and it can still be picked and sent to.
   const info = (e) => {
-    if (e.locked && !DEV) return { name: M.unknown, short: M.unknown, place: M.unknown, who: M.unknown, tags: [] };
+    if ((e.locked || e.unseen) && !DEV) return { name: M.unknown, short: M.unknown, place: M.unknown, who: M.unknown, tags: [] };
     if (!e.catalog) {
       const ET = T.eras[e.id];
       return { name: ET.name, short: ET.short, place: ET.place_name, who: ET.protagonist, tags: ET.tags };
@@ -42,8 +43,11 @@ export function createWorldMap(X) {
     const i = info(e);
     return [i.name, i.short, i.place, i.who, e.year, ...i.tags.map((t) => T.tags[t])].join(' ').toLowerCase();
   };
+  const best = (e) => ctx.S().stars[e.id] || 0;
   const passes = (e) => {
     const s = m();
+    if (s.star === 'none' && ctx.S().stars[e.id] !== undefined) return false;
+    if (/^[123]$/.test(s.star) && best(e) < Number(s.star)) return false;
     if (e.year < s.from || e.year > s.to) return false;
     if (s.tag && !info(e).tags.includes(s.tag)) return false;
     const q = s.q.trim().toLowerCase();
@@ -82,8 +86,9 @@ export function createWorldMap(X) {
       const on = p.events.some(isSel);
       const sel = m().place === p.id;
       const lock = p.events.every((e) => e.locked);
+      const bs = Math.max(...p.events.map(best));
       const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
-      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="dot" r="2.2"/><text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
+      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''} star${bs}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="dot" r="2.2"/><text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
     }).join('');
     return `<svg class="map ${labelsOn() ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${pins}</svg>`;
   }
@@ -157,13 +162,17 @@ export function createWorldMap(X) {
     setWindow(d.yc + (1 - f) ** 2 * span, span);
   }
 
+  // The events of a place are rows. The picked one opens to its story, and only one is open at a time. Picking it again closes it.
+  // Before a place is picked the place of the event that is already chosen is shown, so the story is never missing.
   function eventRows() {
     const s = m();
-    const p = s.place ? places()[s.place] : null;
+    const own = events().find(isSel);
+    const p = s.place ? places()[s.place] : own ? places()[own.place] : null;
     if (!p) return `<p class="muted">${M.pick_event}</p>`;
     return `<div class="muted">${M.events_here}</div>` + p.events.sort((a, b) => a.year - b.year).map((e) => {
       const i = info(e);
-      return `<div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${i.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.catalog ? ` <span class="chip">${U.dispatch.not_built_short}</span>` : ''}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
+      const open = isSel(e) && !s.collapsed;
+      return `<div class="evitem"><div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><span class="evcaret">${open ? '▾' : '▸'}</span> <b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e)) : ''} ${i.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>${open ? `<div class="evstory">${X.storyFor(e)}</div>` : ''}</div>`;
     }).join('');
   }
 
@@ -178,11 +187,11 @@ export function createWorldMap(X) {
     return `
       <div class="row" style="margin-bottom:6px"><input id="map-q" type="search" placeholder="${M.events_filter_ph}" value="${esc(s.q)}" style="flex:1;min-width:200px">
         <span class="muted">${M.from}</span><input id="map-from" type="number" value="${s.from}" style="width:80px"><span class="muted" id="map-fromtxt">${fmtYear(D, s.from === 0 ? 1 : s.from)}</span><span class="muted">${M.to}</span><input id="map-to" type="number" value="${s.to}" style="width:80px"><span class="muted" id="map-totxt">${fmtYear(D, s.to === 0 ? 1 : s.to)}</span></div>
+      <div class="row" style="margin-bottom:6px"><span class="muted">${U.stars.filter}</span><select id="map-star"><option value="" ${s.star === '' ? 'selected' : ''}>${U.stars.f_all}</option><option value="none" ${s.star === 'none' ? 'selected' : ''}>${U.stars.f_none}</option><option value="1" ${s.star === '1' ? 'selected' : ''}>★ ${U.stars.f_up}</option><option value="2" ${s.star === '2' ? 'selected' : ''}>★★ ${U.stars.f_up}</option><option value="3" ${s.star === '3' ? 'selected' : ''}>★★★</option></select></div>
       <div id="map-tags">${tagBar()}</div>
       <div class="mapwrap"><div id="map-svg">${svgHtml()}</div><div class="zoombtns"><button data-act="mapz" data-id="in" title="${M.zoom_in}">+</button><button data-act="mapz" data-id="out" title="${M.zoom_out}">−</button><button data-act="mapz" data-id="reset" title="${M.zoom_reset}">⌂</button></div></div>
       <div class="muted">${M.drag_hint}</div>
-      <div id="map-axis">${axisHtml()}</div>
-      <div id="map-events">${eventRows()}</div>`;
+      <div id="map-axis">${axisHtml()}</div>`;
   }
 
   // ---------- interaction ----------
@@ -293,7 +302,8 @@ export function createWorldMap(X) {
     if (a === 'mapplace') {
       s.place = id;
       const p = places()[id];
-      if (p && p.events.length === 1 && (DEV || !p.events[0].locked)) { const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } }
+      if (p && p.events.length === 1 && (DEV || !p.events[0].locked)) {
+        s.collapsed = false; const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } }
       return true;
     }
     if (a === 'mapevent') {
@@ -301,6 +311,8 @@ export function createWorldMap(X) {
       if (!e) return false;
       s.place = e.place;
       if (e.locked && !DEV) return true;
+      if (isSel(e)) { s.collapsed = !s.collapsed; return true; }
+      s.collapsed = false;
       if (e.catalog) s.cat = id; else { s.cat = null; X.selectEra(id); }
       return true;
     }
@@ -310,6 +322,7 @@ export function createWorldMap(X) {
   function onInput(el) {
     const s = m();
     if (el.id === 'map-q') s.q = el.value;
+    else if (el.id === 'map-star') s.star = el.value;
     else if (el.id === 'map-from') { const v = Number(el.value); if (Number.isFinite(v) && v < s.to) s.from = v; }
     else if (el.id === 'map-to') { const v = Number(el.value); if (Number.isFinite(v) && v > s.from) s.to = v; }
     else return false;
@@ -321,7 +334,9 @@ export function createWorldMap(X) {
 
   function init() {
     const A = D.get('map.axis');
-    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
+    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, collapsed: false, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
   }
-  return { html, act, onInput, attach, init };
+  // the events of the picked place, drawn by the page where it wants them
+  const eventsBox = () => `<div id="map-events">${eventRows()}</div>`;
+  return { html, eventsBox, act, onInput, attach, init };
 }

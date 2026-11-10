@@ -11,15 +11,16 @@ The goal is to collect enough time energy to go back to your own time and see yo
 ## Game loop
 
 1. Pick a place and a time on the world map.
-2. Pick an employee, a kit from the stock, and up to two plots, which are ideas or designs the traveller hands to a historical figure.
+2. Pick an employee and a kit from the stock, or press Auto configure for a kit. The traveller also brings the ideas or designs that the protagonist of the place can take up, which are not chosen by hand. Only one employee can be in a place at a time.
 3. Send them out and let the clock run. Nobody has to watch.
 4. When they come home, read the report. It brings funds, time energy and sometimes an antique.
 5. Use antiques to open new places, funds to pay wages and buy supplies, and time energy to buy future goods or to go home.
 
 ## Pages
 
-- Home: the premise and rules, the world map with its time axis, the card of the selected place, the three figures that move with the clock, the trips in transit, the recent reports, the main line, the employee list, the kit, the plots, a search for a good kit, and the send button.
-- Shop: the stock, the antiques, the modern shop and the future shop.
+- Time travel: one sentence of introduction, the world map with its time axis, at full width, and under it the events of the picked place as an accordion, one open at a time, the open one showing its story at full width. Under them are who goes and what they carry, two boxes of one height with the employees as compact two line cards, the buttons Auto configure, Clear and Send, and then one table of dispatches, the ones still out first with Recall and Collect, then the finished ones with their report.
+- The funds, the daily wages and the time energy are icons at the right of the navigation bar on every page, with the wage owed beside them when there is any.
+- Agency: the antiques, the items, the shop, the time shop, the employees and the hiring offer.
 - Encyclopedia: a wiki of people, events, places, items and employees, linked and filterable. Entries not yet encountered show as a question mark.
 - Settings: language, theme, sound and music volume, save export and import, and an advanced section.
 - About: introduction, disclaimer, data and privacy, contribution, author, credits and licence.
@@ -30,12 +31,26 @@ Time runs in game days. At 1x one real minute is one game day. The speeds are pa
 
 ## Employees
 
-- Twenty employees, three of them on the payroll at the start. Each has a gender, an age, a job, a base skill and traits. Applicants show as unknown until they are hired.
+- Three employees are on the payroll at the start. Each has a gender, an age, a job, base abilities and traits.
 - Wages: each hired employee draws a cash wage per game day, `wage_base + wage_skill * skill`. The three starting employees cost about ten funds a day together. Wages come out of the funds as time passes. When the funds run out, the shortfall is owed, the next income pays it first, and while anything is owed all employees lose favor every day. There is no lockout and nobody quits.
-- Hiring costs a fee. Letting someone go removes them from the payroll, and hiring them again costs the fee again. The last employee and anyone who is away cannot be let go.
-- Favor: a bonus raises it, a good trip raises it, failure and giving up lower it. A high favor makes an employee slower to get homesick and give up.
+- Letting someone go removes them from the payroll, and hiring them again costs the fee again. The last employee and anyone who is away cannot be let go.
+- Favor: a bonus raises it, a good trip raises it, failure, giving up and a recall lower it. A high favor makes an employee slower to get homesick and give up.
 - Secretary: one employee can stay at the agency as secretary. They stop travelling and their traits give the agency bonuses to funds income, time energy income, rest time and favor growth. In auto mode the secretary has a preference, and the auto results either suit it or do not.
-- Habits and traits decide field behaviour, for example whether to focus on the task, the people or the goods, and what to do when turned away at the door.
+- Only one employee can be in a place at a time, because the simulation holds one traveller per place.
+
+### Traits
+
+Every trait gives something and costs something, in its abilities, its habit or its secretary bonus, and says both in words. There are fifteen, among them kind, stubborn, curious, homesick, studious, sturdy, silver tongued, patient, bold, meticulous, artistic, wise, greedy, hedonist and loyal. A trait can pull an ability down but never below nothing. A check fails the build if a trait has only gains or only costs.
+
+### Hiring
+
+- Two candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, the wage, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
+- A candidate is made from one serial number. A region sets the name and the likely skin tones, among fourteen regions across the world, then come gender, age, a job from a list of thirty four, abilities within a range, and two or three different traits. The names, jobs, regions and skin tones are rows in `cards/config/hiring.yaml` and can be added to freely, so combinations are in the thousands. A small share of the offers are the hand written employees.
+- Every made employee goes into the encyclopedia the moment they are made, with both language texts in the save, so a switch of language keeps their names. The latest 200 are kept, and anyone on offer or ever hired stays.
+
+### Recall
+
+A trip can be cut short with the Recall button on a trip in transit. It is a request. If the employee agrees they come home at once, the story stops where it is, and they bring back a share of the pay in proportion to how far the trip had got, a chance of keeping the antique in the same proportion, and a loss of favor. They refuse if their outcome was to stay behind, or by a roll that traits move, the hedonist towards refusing and the loyal away from it. A refusal is final for that trip, and they carry on.
 
 ## The simulation of a trip
 
@@ -51,7 +66,7 @@ A report has the story, the ledger by day, the comparison with the baseline, the
 
 ## Antiques, anchors and places
 
-An antique is an anchor. It points at one place and one time, and holding it anchored is what opens that place for dispatch and makes its event readable. Places that are not open show on the map only as question marks, with no name, place, tags or story.
+An antique is an anchor. It points at one place and one time, and holding it anchored is what opens that place for dispatch and makes its event readable. Places that are not anchored are not drawn on the map at all. An anchored place nobody has been to yet is drawn as a question mark, with no name, place or tags, and it can still be picked and sent to. Its name appears on the map after the first trip there comes home. An anchored event that has no simulation shows its name and story at once, since there is nobody to send.
 
 ### Finding antiques
 
@@ -60,11 +75,15 @@ Antiques are not sold. Each trip may bring one back. Let the trip go to a place 
 - Reach: `w = exp(-(y0 - y) / tau_years - d / tau_km)`, where `d` is the great circle distance in kilometres from `p0` to `p`.
 - Each candidate is found with chance `k * w`.
 - The trip finds something with chance `min(cap, 1 - product(1 - k * w))`.
-- The antique it finds is drawn from the candidates in proportion to `w`. A key antique to a place the office cannot reach yet counts `new_key_boost` times heavier, 12 for now, so the way on is not buried under the many relics of events that have no model. With the first key not yet held, about one trip in six brings it back.
+- The antique it finds is drawn from the candidates in proportion to `w`. An antique that points to a place with a simulation and is not held yet counts `modelled_place_boost` times heavier, 12 for now, so the way to a place that can be dispatched to is not buried under the many events that have no model yet. With the first one not yet held, about one trip in six brings it back.
 
 So what a trip finds is near in space and earlier in time, and the farther it is in either, the less likely. Finding the very place you are at is the most likely single find, and that gives duplicates. The current values are `k` 0.06, `cap` 0.6, `tau_years` 120 and `tau_km` 2500, which put a trip to London 1854 at about 38 percent and a trip to Vienna 1847 at about 32 percent. The roll is seeded by the dispatch, so a replay finds the same thing, and it belongs to the backend. The page shows the chance on the card of each place.
 
 Because candidates must be earlier, antiques lead backwards in time. A place is reached from a later one, and the way to an earlier era runs through the antiques of the later ones.
+
+### Small stories
+
+A catalogue event without a model is played as a small story. The traveller's abilities, weighted by the field of the event, are set against a difficulty that rises with its tier, with a little seeded luck, and the margin gives one of three outcomes, met them, a brief encounter, or missed them. The trip takes four to nine days by tier, needs no kit, pays funds and time energy by outcome, and may bring back an antique by the same rule as any trip. It has a short report, not a branch comparison. The numbers are in `config.light`. Full auto also sends people on small stories to places it has anchored.
 
 ### Anchoring and selling
 
@@ -81,11 +100,11 @@ Because candidates must be earlier, antiques lead backwards in time. A place is 
 
 ## Auto mode
 
-Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to the place it has visited least, with a kit and plots chosen by simple rules. It only touches funds, antiques and dispatches. Employees do not die, and a broke office is handled by wages being owed, not by a lockout.
+Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to the free place it has visited least, with a kit chosen by simple rules. It only touches funds, antiques and dispatches. Employees do not die, and a broke office is handled by wages being owed, not by a lockout.
 
 ## Catalogue events
 
-`cards/events` lists 100 famous events across the world. The selection is deliberately tilted toward science, technology, philosophy, art and ideas, and away from politics and war. That is a choice for the first version, not a claim about what mattered more in history. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Holding it makes the event readable. The events have no simulation yet, so they can be found and read but not dispatched to.
+`cards/events` lists 100 famous events across the world. The selection is deliberately tilted toward science, technology, philosophy, art and ideas, and away from politics and war. That is a choice for the first version, not a claim about what mattered more in history. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
 
 ## Data and code
 
@@ -108,6 +127,14 @@ Full auto collects reports, anchors every found antique that opens a place, sell
 - `node tools/check_i18n.mjs` and `node tools/check_boundary.mjs` check the languages and the engine boundary.
 - `node tools/ui_check.mjs` drives the page with Playwright through dispatching, shopping, wages, antiques, auto mode, the map, the axis, themes, languages and the settings page.
 - `node tools/headless.mjs` runs the simulation without a browser and compares kits and staff from the same seeds.
+
+## Stars
+
+Every place keeps its best star count, from zero to three. A full simulation maps its outcome to stars, and a brief scene maps how it went. Time energy is paid only for the stars above the best the place has had, a quarter of the base of the place for one star, half for two and all of it for three, each trip paying the difference to what the best already paid, so a place cannot be farmed for energy. Funds and antiques are paid every time, so waiting at home brings money, antiques and new employees, but not by itself the way home. The best stars show on the map pins and event rows in bronze, silver and gold, the map can be filtered by them, and the log of dispatches shows the stars of each trip with a mark when it beat the best.
+
+## Inspirations
+
+The encyclopedia follows the Civilopedia of Civilization IV, sending someone out and reading what happened follows Assassin's Creed Brotherhood and Travel Frog, hiring follows Heroes of Might and Magic, the clock and the music player follow Stellaris, and the stars and levels follow Plants vs. Zombies and the full synchronisation of Assassin's Creed. They are named as thanks and have no connection to this game.
 
 ## Licence
 

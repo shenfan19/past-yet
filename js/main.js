@@ -42,6 +42,13 @@ function fresh() {
     secretary: null,
     secretaryLast: null,
     wageOwed: 0,
+    // places that have had a trip come back, their names are shown on the map
+    visited: [],
+    // the best star count of each place, time energy is paid only for an improvement on it
+    stars: {},
+    // the hiring pool, and the employees that were made for it
+    hire: null,
+    generated: {},
     // an antique the office starts with is already anchored, so the first place is open
     locks: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
     antiques: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),

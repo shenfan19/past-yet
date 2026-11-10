@@ -142,6 +142,7 @@ ui:
         p:
           - You run a time travel agency. Employees go back to historical turning points, try to help, and come home with a report. Nothing needs your constant attention. You can set it to run by itself and just read what happens.
           - It started from plain curiosity about what would happen if someone from today stood in a famous moment of the past, and it is meant to be fun to poke at and pleasant to watch.
+          - 'History cannot be changed. Everything an employee does lands on a parallel branch and the main timeline stays as it was, and the difference between the two is converted into time energy. The agency stays out of wars and regime changes and does only medicine, technology, documents, daily life and witnessing. Employees do not die: when one is about to, the recall charm pulls them back at a cost, and the story goes on.'
       - h: Disclaimer
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
@@ -170,6 +171,7 @@ ui:
       - h: Credits and licence
         p:
           - Parts of the game, including the code, the text and the design, were made with vibe coding. Thanks to AI, I could realise this idea in my spare time.
+          - 'Other games inspired this one: the encyclopedia follows the Civilopedia of Civilization IV, sending someone out and reading what happened follows Assassin''s Creed Brotherhood and Travel Frog, hiring follows Heroes of Might and Magic, the clock and the music player follow Stellaris, and the stars and levels follow Plants vs. Zombies and the full synchronisation of Assassin''s Creed. They are named as thanks and have no connection to this game.'
           - The world map outlines are from Natural Earth, in the public domain.
           - The piano pieces are MIDI files by Bernd Krueger from piano-midi.de, licensed CC BY-SA 3.0 DE and kept unchanged in the assets folder. The effects are tones the page makes itself.
           - The historical references are listed in the wiki, each with whether it has been checked.
@@ -213,6 +215,18 @@ ui:
     place_file: Place file
     records_here: Records left here
     no_records_here: Nobody has been here yet
+    small_story: 'This scene has no full simulation yet, so it plays in brief: {n} days, no kit needed.'
+    no_kit_needed: Small stories need no kit.
+    not_anchored: You hold its antique. Anchor it on the Agency page to go there.
+    not_found: No antique for this place yet. Antiques are brought back from trips.
+    cannot_pick: 'Not available: away, resting or the secretary.'
+    nobody: Nobody can go now.
+    nobody_back: The first is back in {n} days.
+    story: Story
+    ideas: Ideas they can bring
+    era_busy: Someone is already there
+    autocfg: Auto configure
+    autocfg_tip: Search for the best kit for this traveller and place
     staff: Who goes
     find_chance: 'Chance to bring back an antique on the next trip: {p}%'
     items: Kit
@@ -290,16 +304,20 @@ ui:
     weight: Weight
     max: Limit
   home:
-    lead: You run a time travel agency. Send employees into the past, earn time energy, and save up enough to go back to your own time and see your family.
-    mainline_title: Premise and rules
-    mainline:
-      - Send someone out, wait a while, read the report when they return. You do not have to watch. Reading the report is the reward.
-      - History cannot be changed. Everything an employee does lands on a parallel branch and the main timeline stays as it was. The difference between the branch and the main timeline is converted into time energy.
-      - Agency rules: no wars, no regime changes. Only medicine, technology, documents, daily life and witnessing.
-      - Employees do not die. When one is about to, the recall charm pulls them back at a cost, and the story goes on.
+    lead: 'You run a time travel agency: send employees into the past, earn time energy, and go home to your family once you have enough.'
   lbox:
     chosen: Chosen
     empty: No matching entries
+  light:
+    outcome:
+      success: Met them
+      partial: A brief encounter
+      missed: Missed them
+    summary:
+      success: '{staff} reached {place}, stood where it happened, and met {figure}. It went as it should.'
+      partial: '{staff} reached {place} and caught only a glimpse of {figure}, but it was enough to bring something home.'
+      missed: '{staff} reached {place} too early or too late and missed {figure}. Not much came back.'
+    note: 'This scene has no full simulation yet, so it is played in brief: the traveller against the event, without a branch timeline or a kit, paid by how it went.'
   map:
     unknown: '?'
     tag_filter: Tag filter
@@ -338,8 +356,8 @@ ui:
     bc: '{n} BC'
     ad: AD {n}
   tabs:
-    home: Home
-    shop: Shop
+    home: Time travel
+    shop: Agency
     enc: Wiki
     settings: Settings
     about: About
@@ -411,6 +429,14 @@ ui:
     col_history: History
     recruit_hint: An applicant of unknown background. You learn who they are once hired.
     unknown_candidate: '?'
+    log: Dispatches
+    col_status: Status
+    recall: Recall
+    recall_tip: Ask them to come home now. The story stops where it is and only part of the pay comes back. They may refuse.
+    recall_refused: Refused to come back
+    hire_title: Hiring
+    hire_hint: Two candidates are on offer. Hiring one brings another, and every {n} days the offer changes.
+    hire_next: The offer changes in {n} days.
     hire: Hire
     col_wage: Wage per day
     wage_total: Wages per day
@@ -452,6 +478,11 @@ ui:
     deaths: Deaths
     handle: Pump handle removed
     energy_gain: Time energy
+    recalled: Recalled
+    recalled_text: Recalled on day {day}. The story stopped there and {p} percent of the pay came back.
+    year: Year
+    place: Place
+    lives: Lives saved
     view: View report
     antique_gain: Antique brought back
     antique_dup: a spare, it can be sold
@@ -551,10 +582,10 @@ ui:
     ip_short: Under review
     tag_filter: Tag filter
     modern:
-      name: Modern shop
+      name: Shop
       desc: Modern medicine, devices and books, paid in funds. Buy into stock, carry from stock when dispatching.
     future:
-      name: Future shop
+      name: Time shop
       desc: Goods and technology from the future, paid in time energy. The era that leads there is not built yet, so for now they are only kept.
     buy: Buy
     sell: Sell
@@ -565,7 +596,7 @@ ui:
     ip_unchecked: The name or design borrows from someone else's work, not for sale until checked
     filter_ph: Filter by name or description
     all_tags: All tags
-    inv_title: Stock
+    inv_title: Items
     inv_empty: Stock is empty
     sell_spares: Sell all spares
     antiques_title: Antiques
@@ -580,6 +611,15 @@ ui:
     not_carried_here: Not usable in this era
     no_funds: Not enough funds
     empty_shop: Nothing matches
+  stars:
+    label: '{n} of {m} stars'
+    new_best: New best
+    col: Stars
+    best: Best
+    filter: Stars
+    f_all: All
+    f_none: Not completed
+    f_up: and up
   wiki:
     search_ph: Type to filter
     all_tags: All tags
@@ -665,19 +705,19 @@ antiques:
     desc: A comb with one very long hair caught in its teeth.
 staff:
   s_ning:
-    name: Ning
+    name: Xiaoyu Ning
     job: Nurse
     bio: Used to be a nurse. Stubborn, cannot bear to see a patient with nobody looking after them.
   s_zhou:
-    name: Zhou
+    name: Jianguo Zhou
     job: Builder
     bio: Worked construction. Strong, a talker, does not like going around things.
   s_lin:
-    name: Lin
+    name: Zhiyao Lin
     job: Graduate student
     bio: Reads a lot, wants to understand everything, gets homesick first.
   s_qian:
-    name: Qian
+    name: Shouren Qian
     job: Antique dealer
     bio: Used to trade in second hand goods. Sharp eyes, knows what anything is worth at a glance.
   s_amara:
@@ -758,6 +798,54 @@ traits:
   artistic: Artistic
   wise: Wise
   greedy: Greedy
+  hedonist: Hedonist
+  loyal: Loyal
+trait_notes:
+  kind:
+    pro: Cares for the sick and keeps the people around them close.
+    con: Misses home sooner than most.
+  stubborn:
+    pro: Does not give in at the door and has staying power.
+    con: Poor at talking people round, and a little cold.
+  curious:
+    pro: Drawn to people and finds a way in.
+    con: Easily distracted and tires sooner.
+  homesick:
+    pro: Warm with the people they meet.
+    con: Wants to go home early and may give up.
+  studious:
+    pro: Picks up the local craft and avoids mistakes.
+    con: Bookish and poor at winning people over.
+  sturdy:
+    pro: Hardly tires and recovers fast.
+    con: Incurious and slow to try anything new.
+  glib:
+    pro: Talks their way in and wins allies.
+    con: Slick, and a little self serving.
+  patient:
+    pro: Calm, and outlasts delays and homesickness.
+    con: Slow to speak up.
+  bold:
+    pro: Pushes through resistance.
+    con: Careless, and takes risks.
+  meticulous:
+    pro: Careful and precise.
+    con: Slow, and tires easily.
+  artistic:
+    pro: Sensitive, and draws people in.
+    con: Impractical and fragile.
+  wise:
+    pro: Judges well and is trusted.
+    con: Worn out sooner and set in their ways.
+  greedy:
+    pro: Brings home more money and bargains well.
+    con: May pocket things, and is cold with people.
+  hedonist:
+    pro: Happy anywhere and makes friends easily.
+    con: Tires, spends freely, and may refuse to come back when recalled.
+  loyal:
+    pro: Steady, and always comes back when called.
+    con: Unadventurous, and easily talked out of a plan.
 mainline:
   open:
     name: Opening day

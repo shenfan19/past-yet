@@ -21,7 +21,7 @@ i18n:
     zh: 简体中文
 save:
   key: teleporter_save
-  version: 5
+  version: 8
 eras:
   - broad_street_1854
   - vienna_1847
@@ -36,7 +36,7 @@ office:
   max_plots: 2
   max_archive: 30
   hire_cost: 100
-  antique_find: {k: 0.06, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371, new_key_boost: 12}
+  antique_find: {k: 0.06, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
   wage_base: 1
   wage_skill: 4
   unpaid_favor_loss: 0.01
@@ -94,17 +94,45 @@ auto:
     - detox_water
     - heart_monitor
 ui:
-  currency_icons: {funds: '💰', energy: '⚡'}
+  currency_icons: {funds: '💰', energy: '⚡', wage: '🧾'}
   tab_icons: {home: '🏠', shop: '🛒', enc: '📖', settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
   refresh_ms: 500
   timeline_max: 9
   recent_reports: 8
   search_delay_ms: 30
-  box_h: {home_staff: 260, pick_staff: 200, carry: 200, plots: 170, shop: 300, inv: 220, ants: 240}
+  box_h: {story: 300, home_staff: 260, pick_staff: 520, carry: 200, plots: 170, shop: 300, inv: 220, ants: 240}
   chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
+stars:
+  max: 3
+  outcome: {perfect: 3, legend: 3, modest: 2, stay_and_gifts: 2, scramble: 1, gave_up: 0, near_death: 0}
+  light: {success: 3, partial: 1, missed: 0}
+  energy_base: {broad_street_1854: 60, vienna_1847: 80}
+  # the share of the base paid in total at a star count, so each star above the best pays the difference
+  energy_share: {0: 0, 1: 0.25, 2: 0.5, 3: 1}
+light:
+  stay_by_tier: {1: 4, 2: 6, 3: 9}
+  difficulty: {base: 0.2, per_tier: 0.12}
+  noise: 0.25
+  cuts: {success: 0.08, partial: -0.1}
+  pay: {1: {funds: 40, energy: 4}, 2: {funds: 70, energy: 8}, 3: {funds: 110, energy: 16}}
+  share: {success: 1, partial: 0.55, missed: 0.15}
+  rest_days: {success: 1, partial: 1, missed: 2}
+  favor: {success: 0.03, partial: 0, missed: -0.03}
+  field_weights:
+    science: {skill: 0.4, curiosity: 0.4, eloquence: 0.2}
+    technology: {skill: 0.5, curiosity: 0.3, stamina: 0.2}
+    literature: {eloquence: 0.4, curiosity: 0.4, kindness: 0.2}
+    math: {skill: 0.5, curiosity: 0.4, stubbornness: 0.1}
+    medicine: {skill: 0.4, kindness: 0.4, stamina: 0.2}
+    thought: {eloquence: 0.5, curiosity: 0.3, kindness: 0.2}
+    architecture: {skill: 0.4, stamina: 0.4, curiosity: 0.2}
+    philosophy: {eloquence: 0.4, curiosity: 0.3, kindness: 0.3}
+    art: {curiosity: 0.4, kindness: 0.3, eloquence: 0.3}
+    exploration: {stamina: 0.5, curiosity: 0.3, stubbornness: 0.2}
+    music: {curiosity: 0.3, kindness: 0.3, eloquence: 0.4}
 engine:
   mc_seed_stride: 7919
   seed_max: 100000

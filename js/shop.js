@@ -103,7 +103,8 @@ export function createShop(X) {
     });
   }
 
-  function html() {
+  // The agency page: antiques, items, the two shops, the employees and the hiring offer. The employee blocks come from the page as they are.
+  function html(extra) {
     const S = ctx.S();
     const present = new Set();
     for (const id of Object.keys(D.get('items'))) D.get('items.' + id).tags.forEach((t) => present.add(t));
@@ -113,13 +114,15 @@ export function createShop(X) {
     const spares = office.spareCount();
     const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * D.get('antiques.antiques.' + id).sell, 0);
     return `
-      <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"><span class="stat" style="font-size:18px">${Math.round(S.funds)}</span><span class="muted">${icon('funds')} ${U.office.funds}</span><span class="stat" style="font-size:18px">${Math.round(S.energy)}</span><span class="muted">${icon('energy')} ${U.office.energy}</span></div>
+      <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"></div>
       ${bar}
-      <div class="sec">${S_.inv_title}</div>${invBox()}
       <div class="sec">${S_.antiques_title}</div><p class="muted">${S_.antiques_hint}</p>
       <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}
+      <div class="sec">${S_.inv_title}</div>${invBox()}
       <div class="sec">${S_.modern.name}</div><p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}
-      <div class="sec">${S_.future.name}</div>${future}`;
+      <div class="sec">${S_.future.name}</div>${future}
+      <div class="sec">${U.office.staff}</div>${extra.staff}
+      <div class="sec">${U.office.hire_title}</div>${extra.hire}`;
   }
 
   function act(a, id) {

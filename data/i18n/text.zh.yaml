@@ -142,6 +142,7 @@ ui:
         p:
           - 你经营一家穿越事务所。员工回到历史的转折点，尝试帮上忙，带着一份报告回来。不需要一直盯着，可以让它自己运行，只读发生了什么。
           - 它起于一点单纯的好奇：如果今天的人站在过去某个著名的时刻，会发生什么。希望它好玩，能随手摆弄，也适合安静地看。
+          - 历史不可改变。员工做的一切都落在平行分支上，主时间线保持原样，分支与主时间线的差换算成时空能量。事务所不介入战争和政权更替，只做医疗、技术、文献、民生和见证。员工不会死，濒死时被回收符接回，付出代价，但故事继续。
       - h: 免责声明
         p:
           - 这是一个游戏，也是一次仿真练习，不是医疗、公共卫生或历史研究产品。它不提供诊断、治疗、用药或健康建议，里面的内容不应用来指导任何关于健康或安全的真实决定。
@@ -170,6 +171,7 @@ ui:
       - h: 致谢与许可
         p:
           - 游戏的代码、文字、设计等部分都用 vibe coding 完成。感谢 AI，让我在业余时间实现了这个想法。
+          - 受其他游戏启发：百科参考文明 4 的文明百科，派人出去再读结果参考刺客信条兄弟会和旅行青蛙，雇佣参考英雄无敌，时钟和音乐播放器参考群星，星级和关卡参考植物大战僵尸以及刺客信条的完全同步。点名是为了致谢，与本游戏没有任何关联。
           - 世界地图的轮廓来自 Natural Earth，属于公共领域。
           - 钢琴曲是 Bernd Krueger 在 piano-midi.de 提供的 MIDI 文件，许可 CC BY-SA 3.0 DE，原样放在 assets 文件夹里。音效是页面自己合成的音调。
           - 历史参考文献列在百科里，每一条都标明有没有核对过。
@@ -214,6 +216,18 @@ ui:
     records_here: 在这里留下的记录
     no_records_here: 还没有人去过
     find_chance: 下一趟带回古董的概率：{p}%
+    small_story: 这个场景还没有完整仿真，先以简版进行：{n} 天，不需要装备。
+    no_kit_needed: 小故事不需要装备。
+    not_anchored: 已经有它的古董了，到事务所页锚定后才能进入。
+    not_found: 还没有这个地点的古董，古董要靠派遣带回来。
+    cannot_pick: 现在不能派：在外面、在休息或任秘书。
+    nobody: 现在没有可派的人。
+    nobody_back: 最早的 {n} 天后回来。
+    story: 故事
+    ideas: 可以带上的想法
+    era_busy: 已经有人在那个时空
+    autocfg: 自动配置
+    autocfg_tip: 为这个人和这个地方搜索最合适的装备
     staff: 派谁
     items: 道具分配
     items_hint: 装备越多成本越高，收益上限也越高。重量有上限，资金有上限。
@@ -290,16 +304,20 @@ ui:
     weight: 重量
     max: 上限
   home:
-    lead: 你是穿越事务所的所长。雇员工去古代做事，赚时空能量，攒够了回自己的时空见家人。
-    mainline_title: 设定与规则
-    mainline:
-      - 派出去，等一会儿，读一份归来报告。不盯着也可以，回来读报告是奖励。
-      - 历史不可改变。员工做的一切都落在平行分支上，主时间线保持原样，分支与主时间线的差换算成时空能量。
-      - 事务所守则：不介入战争，不介入政权更替，只做医疗、技术、文献、民生、见证。
-      - 员工不会死。濒死时被回收符接回，付出代价，但不结束。
+    lead: 你是穿越事务所的所长，派员工去古代做事，攒够时空能量就能回自己的时空见家人。
   lbox:
     chosen: 已选
     empty: 没有符合的条目
+  light:
+    outcome:
+      success: 见到了
+      partial: 匆匆一面
+      missed: 错过了
+    summary:
+      success: '{staff}到了{place}，站在事情发生的地方，见到了{figure}。一切如它该有的样子。'
+      partial: '{staff}到了{place}，只瞥见了{figure}一眼，但足够带点东西回来。'
+      missed: '{staff}到{place}时或早或晚，错过了{figure}，没带回多少东西。'
+    note: 这个场景还没有完整仿真，先以简版进行：旅行者对着事件，没有分支时间线和装备，按经过结算报酬。
   map:
     unknown: '?'
     tag_filter: 标签过滤
@@ -318,8 +336,8 @@ ui:
   title: 穿越事务所
   subtitle: The Teleporter
   tabs:
-    home: 首页
-    shop: 商店
+    home: 时空穿越
+    shop: 事务所
     enc: 百科
     settings: 设置
     about: 关于
@@ -419,6 +437,14 @@ ui:
     fire: 解雇
     fire_tip: 移出在册名单。再雇要重新付聘金。最后一名员工和外出的人不能解雇。
     pick_hint: 选出下一趟出发的人。
+    log: 派遣记录
+    col_status: 状态
+    recall: 召回
+    recall_tip: 要求对方现在回来。故事就停在当下，只带回一部分报酬。对方可能拒绝。
+    recall_refused: 拒绝召回
+    hire_title: 雇佣
+    hire_hint: 同时有两位候选人。雇了一位，会再出现一位，每 {n} 天整批刷新。
+    hire_next: '{n} 天后刷新。'
     hire: 招募
     cost: 费用
     reached_home: 能量已够回家。这个原型到此为止。
@@ -452,6 +478,11 @@ ui:
     deaths: 死亡
     handle: 泵柄拆除
     energy_gain: 时空能量
+    recalled: 召回
+    recalled_text: 第 {day} 天被召回，故事停在那里，带回了 {p}% 的报酬。
+    year: 年份
+    place: 地点
+    lives: 救下人数
     view: 查看报告
     antique_gain: 带回的古董
     antique_dup: 重复的一件，可以卖掉
@@ -551,10 +582,10 @@ ui:
     ip_short: 核查中
     tag_filter: 标签过滤
     modern:
-      name: 现代商店
+      name: 商店
       desc: 现代的药品、器械和书，用资金购买。买来放进库存，派遣时从库存里带。
     future:
-      name: 未来时空商店
+      name: 时空商店
       desc: 未来时空的物品和技术，用时空能量购买。通往那里的时空还没有做成，现在只能收藏。
     buy: 买入
     sell: 卖出
@@ -565,7 +596,7 @@ ui:
     ip_unchecked: 名称与设计借用了别人的作品，核查前不出售
     filter_ph: 按名称或说明过滤
     all_tags: 全部标签
-    inv_title: 库存
+    inv_title: 物品
     inv_empty: 库存是空的
     sell_spares: 一键卖掉重复品
     antiques_title: 古董
@@ -580,6 +611,15 @@ ui:
     not_carried_here: 这个时空用不上
     no_funds: 资金不足
     empty_shop: 没有符合的商品
+  stars:
+    label: '{m} 星里的 {n} 星'
+    new_best: 新纪录
+    col: 星级
+    best: 最好成绩
+    filter: 星级
+    f_all: 全部
+    f_none: 没完成过
+    f_up: 以上
   wiki:
     search_ph: 输入文字过滤
     all_tags: 全部标签
@@ -665,19 +705,19 @@ antiques:
     desc: 一把梳子，梳齿间缠着一根很长的头发。
 staff:
   s_ning:
-    name: 阿宁
+    name: 宁晓雨
     job: 护士
     bio: 做过护士，认死理，见不得病人没人管。
   s_zhou:
-    name: 老周
+    name: 周建国
     job: 建筑工人
     bio: 干过工地，身体好，嘴上功夫了得，不爱绕弯。
   s_lin:
-    name: 小林
+    name: 林知遥
     job: 研究生
     bio: 读过很多书，什么都想弄明白，想家想得最早。
   s_qian:
-    name: 老钱
+    name: 钱守仁
     job: 旧货商
     bio: 倒腾过旧货，眼睛毒，什么东西值几个钱一眼就知道。
   s_amara:
@@ -758,6 +798,54 @@ traits:
   artistic: 有艺术气质
   wise: 睿智
   greedy: 贪财
+  hedonist: 享乐
+  loyal: 忠诚
+trait_notes:
+  kind:
+    pro: 照顾病人，和身边的人处得近。
+    con: 比别人更早想家。
+  stubborn:
+    pro: 在门口不退让，有耐力。
+    con: 不擅长说服别人，也有点冷。
+  curious:
+    pro: 被人吸引，总能找到门路。
+    con: 容易分心，也更容易累。
+  homesick:
+    pro: 对遇到的人很温暖。
+    con: 想早点回家，可能中途放弃。
+  studious:
+    pro: 很快学会当地的手艺，少犯错。
+    con: 书呆子气，不会拉近人心。
+  sturdy:
+    pro: 几乎不累，恢复得快。
+    con: 缺少好奇心，不愿尝试新东西。
+  glib:
+    pro: 靠嘴皮子进得去门，也容易拉到盟友。
+    con: 油滑，有点自私。
+  patient:
+    pro: 沉得住气，能熬过延误和乡愁。
+    con: 开口慢。
+  bold:
+    pro: 敢于顶住阻力。
+    con: 粗心，爱冒险。
+  meticulous:
+    pro: 细致，精确。
+    con: 慢，容易累。
+  artistic:
+    pro: 敏感，容易吸引人。
+    con: 不务实，也比较脆弱。
+  wise:
+    pro: 判断准，受人信任。
+    con: 更容易疲惫，也固守老习惯。
+  greedy:
+    pro: 带回更多钱，擅长讨价还价。
+    con: 可能私吞东西，对人冷淡。
+  hedonist:
+    pro: 在哪儿都过得开心，容易交朋友。
+    con: 容易累，花钱大手大脚，被召回时可能不肯回来。
+  loyal:
+    pro: 稳重，一召就回。
+    con: 不爱冒险，容易被劝退。
 mainline:
   open:
     name: 开张

@@ -35,7 +35,7 @@ try {
   ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
   await page.screenshot({ path: path.join(outDir, '0_home.png'), fullPage: true });
-  await page.waitForSelector('.stat');
+  await page.waitForSelector('#res .rv');
   await page.screenshot({ path: path.join(outDir, '1_office.png'), fullPage: true });
   // dispatch through the world map
   // tooltip on a trait chip, and a staff link opens the wiki with only its category expanded
@@ -70,20 +70,19 @@ try {
   await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 12; m.cx = 179.86; m.cy = 32.5; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   await page.click('.evrow[data-id=broad_street_1854]');
+  ok('picking the open event again closes it', (await page.locator('.evitem .evstory').count()) === 0);
+  await page.click('.evrow[data-id=broad_street_1854]');
   await page.fill('#map-q', 'xyz-no-match');
   ok('filter hides all pins', (await page.locator('svg.map .pt').count()) === 0);
   await page.fill('#map-q', '');
   ok('filter restore pins', (await page.locator('svg.map .pt').count()) > 2);
-  await page.click('[data-act=suggest]');
-  await page.waitForSelector('[data-act=use]', { timeout: 60000 });
-  await page.locator('[data-act=use]').last().click();
-  ok('chosen items are pinned in the carry box', (await page.locator('.lpin [data-act=dec]').count()) >= 1);
-  await page.click('[data-act=plotpick][data-id=microscope]');
-  ok('chosen plot is pinned', (await page.locator('.lpin [data-act=plotpick][data-id=microscope]').count()) === 1);
-  ok('plot beyond the era tech cannot be picked', (await page.locator('[data-act=plotpick][data-id=germ_theory]').count()) === 0);
-  await page.click('[data-act=lsort][data-id="carry:weight"]');
+  await page.click('[data-act=autocfg]');
+  await page.waitForSelector('.lpin [data-act=dec]', { timeout: 60000 });
+  ok('auto configure puts a kit in the carry box', true);
+  ok('the open event shows its story under the full width map, one at a time, and who goes and what they carry take a half each', (await page.locator('.evitem .evstory').count()) === 1 && (await page.locator('.cols2.desk > div').count()) === 2);
+  ok('plots are not picked by hand, the story names the ideas', (await page.locator('[data-act=plotpick]').count()) === 0 && (await page.locator('.evstory ul li').count()) >= 1);
   await page.click('[data-act=pickstaff][data-id=s_zhou]');
-  ok('picked staff is pinned', (await page.locator('.lpin a.wl[data-id="staff:s_zhou"]').count()) === 1);
+  ok('picked staff is marked', (await page.locator('.pickrow.on a.wl[data-id="staff:s_zhou"]').count()) === 1);
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
   await page.waitForSelector('[data-act=ff]');
@@ -122,6 +121,7 @@ try {
   // shop: the used anchor is locked, antiques sell and buy, items buy and sell
   await page.click('[data-tab=shop]');
   await page.waitForSelector('[data-act=antlock]');
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'pump_rust'); S.antiques.push('pump_rust'); window.__game.ui.render(); });
   ok('anchored antique cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
   ok('the last open place cannot be released', await page.locator('[data-act=antlock][data-id=pump_rust]').isDisabled());
   await page.evaluate(() => { window.__game.ctx.S().antiques.push('clinic_bell'); window.__game.ui.render(); });
@@ -197,8 +197,11 @@ try {
   await page.locator('#wiki-article a.wl').nth(1).click();
   await page.screenshot({ path: path.join(outDir, '9_wiki.png'), fullPage: true });
   // hire, then guest mode
-  await page.click('[data-tab=home]');
-  await page.click('[data-act=hire]');
+  await page.click('[data-tab=shop]');
+  const slotsBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id));
+  ok('two candidates are on offer, with gains and costs shown', slotsBefore.length === 2 && (await page.locator('.cand .pro').count()) >= 2 && (await page.locator('.cand .con').count()) >= 2);
+  await page.locator('[data-act=hire]').first().click();
+  ok('hiring one brings another so two stay on offer', await page.evaluate((before) => { const h = window.__game.ctx.S().hire.slots; return h.length === 2 && h.some((x) => !before.includes(x.id)); }, slotsBefore));
   // secretary, favor, clock and auto mode
   await page.click('[data-act=appoint][data-id=s_zhou]');
   ok('secretary is appointed', (await page.evaluate(() => window.__game.ctx.S().secretary)) === 's_zhou');
@@ -213,6 +216,82 @@ try {
   const day1 = await page.evaluate(() => window.__game.ctx.S().clock.day);
   await page.waitForTimeout(1200);
   ok('space pauses the clock', (await page.evaluate(() => window.__game.ctx.S().clock.day)) === day1);
+  // every employee has a wiki page once hired, the made ones too
+  // a made employee is in the wiki from the moment they are made, even before hiring
+  const offerId = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).find((id) => window.__game.ctx.S().generated[id]));
+  if (offerId) { await page.click(`.cand a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.click('[data-nav="-1"]'); }
+  const gid = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    for (let i = 0; i < 40 && !S.hire.slots.some((x) => S.generated[x.id]); i++) { S.hire.slots = []; S.hire.serial += 1; off.ensureHire(); }
+    const slot = S.hire.slots.find((x) => S.generated[x.id]);
+    S.funds = Math.max(S.funds, 500);
+    off.hire(slot.id);
+    g.ui.render();
+    return slot.id;
+  });
+  await page.click(`a.wl[data-id="staff:${gid}"]`);
+  await page.waitForSelector('.wiki');
+  ok('a made employee has a wiki page once hired', (await page.locator('#wiki-article h2').count()) === 1);
+  await page.click('[data-nav="-1"]');
+  // a recall stops the trip where it is and pays a share, only one employee can be in a place, and the offer changes every seven days
+  const rc = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    S.staff.s_ning.restUntil = 0; S.staff.s_lin.restUntil = 0;
+    const era = 'broad_street_1854';
+    const d = off.launch(era, { seed: 5, staffId: 's_ning', items: {} });
+    const second = off.launch(era, { seed: 6, staffId: 's_lin', items: {} });
+    S.clock.day += 2;
+    const fav = S.staff.s_ning.favor;
+    d.report.outcomeId = 'modest';
+    const r = off.recall(d.id);
+    const b = g.backend;
+    D_tmp(g);
+    const res = { launched: !!d, secondBlocked: second === null, ok: r.ok, share: d.paid && d.paid.share, recalled: d.recalled, favorDown: S.staff.s_ning.favor < fav,
+      stay: b.recallRefused('s_ning', 1, 'stay_and_gifts'), hed: b.recallRefused('tmp_hed', 1, 'modest'), loyal: b.recallRefused('tmp_loyal', 1, 'modest') };
+    delete g.D.o.staff.staff.tmp_hed; delete g.D.o.staff.staff.tmp_loyal;
+    return res;
+    function D_tmp(gg) {
+      const O = gg.D.o.staff.staff;
+      O.tmp_hed = { traits: ['hedonist', 'hedonist'], base: {}, gender: 'f', age: 30 };
+      O.tmp_loyal = { traits: ['loyal', 'loyal'], base: {}, gender: 'f', age: 30 };
+    }
+  });
+  ok('only one employee can be in a place at a time', rc.launched && rc.secondBlocked);
+  ok('a recall brings them home with part of the pay and the story stops', rc.ok && rc.recalled && rc.share > 0 && rc.share < 1 && rc.favorDown);
+  ok('someone who decided to stay, or a hedonist, can refuse, a loyal one does not', rc.stay === true && rc.hed === true && rc.loyal === false);
+  const offerBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).join());
+  await page.evaluate(() => { window.__game.ctx.S().clock.day += 8; });
+  await page.selectOption('[data-clk=speed]', '1');
+  await page.waitForTimeout(800);
+  await page.selectOption('[data-clk=speed]', '0');
+  ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
+  ok('the funds, the wages and the energy are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 3);
+  // stars: time energy is paid only for stars above the best of the place, funds every time
+  const sr = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    const era = 'vienna_1847';
+    S.dispatches = S.dispatches.filter((d) => d.claimed);
+    for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
+    const crew = Object.keys(S.staff).filter((k) => S.staff[k].hired && S.secretary !== k);
+    delete S.stars[era];
+    const run = (stars, staff) => {
+      const d = off.launch(era, { seed: 11 + stars, staffId: staff, items: {} });
+      d.stars = stars; d.readyDay = S.clock.day;
+      const before = S.energy;
+      off.claim(d.id);
+      return { gain: S.energy - before, best: S.stars[era], newBest: d.newBest };
+    };
+    const a = run(2, crew[0]); const b = run(2, crew[1]); const c = run(3, crew[2]);
+    return { a, b, c, base: g.D.get('config.stars.energy_base.' + era) };
+  });
+  ok('two stars pay half of the base energy', sr.a.gain === Math.round(sr.base / 2) && sr.a.best === 2 && sr.a.newBest === true);
+  ok('the same stars again pay no energy, so a place cannot be farmed', sr.b.gain === 0 && sr.b.newBest === false);
+  ok('the third star pays the other half', sr.c.gain === Math.round(sr.base / 2) && sr.c.best === 3);
+  await page.click('[data-tab=home]');
+  await page.selectOption('#map-star', '3');
+  ok('the star filter keeps only places with that many stars', await page.evaluate(() => [...document.querySelectorAll('svg.map .pt')].length >= 1 && [...document.querySelectorAll('svg.map .pt')].length <= 3));
+  await page.selectOption('#map-star', '');
+  await page.click('[data-tab=shop]');
   // wages come out of the funds as time passes, and a short purse leaves them owed
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100; S.wageOwed = 0; });
   await page.selectOption('[data-clk=speed]', '3');
@@ -221,7 +300,7 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 0; });
   await page.waitForTimeout(1200);
   ok('a short purse leaves wages owed', await page.evaluate(() => window.__game.ctx.S().wageOwed > 0));
-  ok('owed wages are shown', (await page.locator('.statrow .chip.warn').count()) >= 1);
+  ok('owed wages are shown beside the figures on every page', (await page.locator('#res .chip.warn').count()) >= 1);
   await page.selectOption('[data-clk=speed]', '0');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; S.wageOwed = 0; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
@@ -234,15 +313,15 @@ try {
   const claimedBefore = await page.evaluate(() => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length);
   await page.waitForFunction((b) => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length > b, claimedBefore, { timeout: 60000 });
   ok('auto mode dispatches and claims by itself', true);
-  ok('auto mode anchors a found antique and sells spares when funds are short', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('clinic_bell') && S.antiques.filter((x) => x === 'relic_newton_cambridge').length === 1; }));
+  ok('auto mode anchors a found antique and sells spares when funds are short', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('clinic_bell') && S.locks.includes('relic_newton_cambridge') && S.antiques.filter((x) => x === 'relic_newton_cambridge').length === 1; }));
   const sec = await page.evaluate(() => window.__game.ctx.S().secretaryLast);
   ok('secretary verdict recorded after auto results', !!sec && typeof sec.met === 'boolean');
-  await page.click('[data-tab=home]');
+  await page.click('[data-tab=shop]');
   ok('verdict chip shows', (await page.locator('.chip:has-text("他的意")').count()) === 1);
   await page.click('[data-act=appoint][data-id=s_zhou]');
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '0');
-  ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 4);
+  ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 5);
   await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
   await page.waitForSelector('.lead');
   // settings, music and effects
@@ -257,6 +336,7 @@ try {
   await page.waitForTimeout(150);
   const winAfter = await page.evaluate(() => { const m = window.__game.ui.state.map; return m.to - m.from; });
   ok('wheel on the axis narrows the window', winAfter < winBefore);
+  ok('the year fields follow the wheel', await page.evaluate(() => { const m = window.__game.ui.state.map; return Number(document.getElementById('map-from').value) === m.from && Number(document.getElementById('map-to').value) === m.to; }));
   const fromBefore = await page.evaluate(() => window.__game.ui.state.map.from);
   await page.mouse.move(axBox.x + axBox.width * 0.5, axBox.y + axBox.height / 2);
   await page.mouse.down();
@@ -289,18 +369,40 @@ try {
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
   await page.click('[data-tab=home]');
-  ok('guest map shows unknown places as question marks', (await page.locator('svg.map .pt').count()) > 2 && (await page.locator('svg.map .pt.locked text').first().textContent()).includes('?') && !(await page.locator('svg.map').innerHTML()).includes('Newton') && !(await page.locator('svg.map').innerHTML()).includes('牛顿'));
+  ok('guest map draws only anchored places', await page.evaluate(() => { const S = window.__game.ctx.S(); const pins = document.querySelectorAll('svg.map .pt').length; return pins >= 2 && pins <= S.locks.length; }) && !(await page.locator('svg.map').innerHTML()).includes('牛顿'));
+  await page.evaluate(() => { const S = window.__game.ctx.S(); window.__saved_visited = S.visited; S.visited = []; window.__game.ui.render(); });
+  ok('an anchored place nobody has been to is a question mark but can be picked', (await page.locator('svg.map .pt text').first().textContent()).includes('?') && (await page.locator('[data-act=send]').count()) === 1);
+  await page.evaluate(() => { window.__game.ctx.S().visited = window.__saved_visited; window.__game.ui.render(); });
   // a catalogue relic reveals its event on the map and in the wiki, but nobody can be sent there
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 5000; window.__game.ctx.save(); });
   await page.click('[data-tab=shop]');
-  await page.evaluate(() => { window.__game.ctx.S().antiques.push('relic_newton_cambridge'); window.__game.ui.render(); });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques.push('relic_newton_cambridge'); S.locks.push('relic_newton_cambridge'); window.__game.ui.render(); });
   await page.click('[data-tab=home]');
   await page.waitForSelector('svg.map');
   await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 1; m.cx = 180; m.cy = 71; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   ok('a relic puts its event in the list of its place', (await page.locator('.evrow[data-id=newton_cambridge]').count()) === 1);
   await page.click('.evrow[data-id=newton_cambridge]');
-  ok('catalogue event shows its card and cannot be dispatched', (await page.locator('.lbox').filter({ hasText: '牛顿' }).count()) >= 1 && await page.locator('[data-act=send]').isDisabled());
+  // typing in the year box while the clock runs a trip must not be interrupted by the redraw of the page
+  await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0; g.ui.office.launch('broad_street_1854', { seed: 3, staffId: 's_ning', items: {} }); S.clock.speed = 1; g.ui.render(); });
+  await page.click('#map-from', { clickCount: 3 });
+  await page.keyboard.type('1850', { delay: 450 });
+  ok('digits typed in the year box stay in order while the clock runs', (await page.locator('#map-from').inputValue()) === '1850');
+  await page.selectOption('[data-clk=speed]', '0');
+  await page.fill('#map-from', '-5000');
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); window.__game.ui.render(); });
+  await page.click('.map [data-id=london_soho] .hit', { force: true });
+  await page.click('.evrow[data-id=newton_cambridge]');
+  if (!(await page.locator('.evstory').count())) await page.click('.evrow[data-id=newton_cambridge]');
+  ok('an anchored catalogue event shows its card and can be gone to', (await page.locator('.lbox').filter({ hasText: '牛顿' }).count()) >= 1 && !(await page.locator('[data-act=send]').isDisabled()));
+  await page.click('[data-act=send]');
+  await page.waitForSelector('.outrow');
+  await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
+  await page.waitForSelector('[data-act=claim]');
+  await page.click('[data-act=claim]');
+  await page.waitForSelector('.stamp');
+  ok('a small story has its own short report and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('.quote').count()) === 1 && (await page.locator('table').count()) === 1);
+  await page.click('[data-act=back]');
   await page.click('[data-tab=enc]');
   await page.fill('#wiki-q', '苹果');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
@@ -310,7 +412,7 @@ try {
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
   await page.waitForSelector('.lead');
   ok('English title', (await page.title()) === 'The Teleporter');
-  ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Shop'));
+  ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
   await page.click('[data-tab=home]');
   await page.waitForSelector('svg.map');
   await page.fill('#map-from', '-500');
@@ -341,7 +443,7 @@ try {
   await page.waitForSelector('.wiki');
   ok('switching language keeps the article', (await page.locator('#wiki-article h2').innerText()).includes('斯诺'));
   ok('switching language keeps the filter text and the open category', (await page.locator('#wiki-q').inputValue()) === 'Snow' && (await page.evaluate(() => window.__game.ui.state.wiki.openCats.people)) === true);
-  ok('switching to Chinese sticks', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh' && (await page.locator('#tabs [data-tab=shop]').textContent()).includes('商店'));
+  ok('switching to Chinese sticks', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh' && (await page.locator('#tabs [data-tab=shop]').textContent()).includes('事务所'));
   await page.click('[data-tab=settings]');
   await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'auto')]);
   await page.waitForSelector('.settings');
@@ -350,10 +452,10 @@ try {
   const frPage = await frCtx.newPage();
   await frPage.goto(`http://127.0.0.1:${port}/index.html`);
   await frPage.waitForSelector('.lead');
-  ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Shop'));
+  ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
   await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=fr`);
   await frPage.waitForSelector('.lead');
-  ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Shop'));
+  ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
   await frCtx.close();
   // a click that spans several ticks of the clock must still land
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);

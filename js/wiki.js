@@ -44,6 +44,9 @@ export function createWiki(X) {
     return (depCache[eraId] = { eq, ev, varUsers, eqEvents, ids });
   }
 
+  // A made employee has a page from the moment they are made, so the wiki lists everyone who has been on offer, up to the limit kept in the save.
+  const known = (id) => !D.get('staff.staff.' + id).generated || id in ctx.S().generated;
+
   // ---------- article registry ----------
   function buildArticles() {
     const A = [];
@@ -62,8 +65,8 @@ export function createWiki(X) {
       const c = T.catalog[ev.id];
       const relicId = 'relic_' + ev.id;
       add({
-        id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { antique: relicId }, refs: ['catalog'],
-        body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.not_built}</div>`,
+        id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { anchored: relicId }, refs: ['catalog'],
+        body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.small_story.replace('{n}', String(ctx.backend.lightStay(ev.id)))}</div>`,
       });
     }
 
@@ -88,9 +91,9 @@ export function createWiki(X) {
       }
     }
 
-    for (const id of Object.keys(D.get('staff.staff'))) {
+    for (const id of Object.keys(D.get('staff.staff')).filter(known)) {
       add({
-        id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: { staff: id }, refs: ['game'],
+        id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: D.get('staff.staff.' + id).generated ? 'always' : { staff: id }, refs: ['game'],
         body: () => {
           const stats = ctx.backend.staffStats(id);
           const mini = Object.keys(T.stats).map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
@@ -107,9 +110,10 @@ export function createWiki(X) {
           const tr = D.get('staff.traits.' + t);
           const mods = Object.entries(tr.mods).map(([k, v]) => `${esc(T.stats[k])} ${v > 0 ? '+' : ''}${v}`).join(SEP);
           const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}${COLON}${esc(T.strategies[grp][key].name)}`).join('${U.fmt.semi}');
-          const who = Object.keys(D.get('staff.staff')).filter((id) => staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
+          const who = Object.keys(D.get('staff.staff')).filter((id) => known(id) && staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
           const pref = tr.prefer ? `<div>${U.office.secretary_pref}${COLON}${esc(U.office.aims[tr.prefer])}</div>` : '';
-          return `<div>${U.enc.modified_by}${COLON}${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
+          const note = T.trait_notes[t];
+          return `<div class="traitline"><span class="pro">+ ${esc(note.pro)}</span></div><div class="traitline"><span class="con">− ${esc(note.con)}</span></div><div>${U.enc.modified_by}${COLON}${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
         },
       });
     }
@@ -202,8 +206,13 @@ export function createWiki(X) {
     return out + esc(ex.slice(last));
   }
 
-  let cache = null;
-  const articles = () => cache || (cache = buildArticles());
+  // the list of articles is rebuilt when the set of hired made employees changes, so a new hire has a page at once
+  let cache = null, sig = '';
+  const articles = () => {
+    const now = Object.keys(ctx.S().generated).join();
+    if (!cache || now !== sig) { sig = now; cache = buildArticles(); }
+    return cache;
+  };
   const byId = (id) => articles().find((x) => x.id === id);
   const open = (x) => X.isUnlocked(x.unlock);
   const visible = (x) => open(x) || DEV;

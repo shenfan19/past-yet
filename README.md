@@ -35,8 +35,8 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Interface
 
-- Home: the rules, then a zoomable world map (Natural Earth 110m land, public domain) with a time axis. A pin is a place, a place holds events at different times, and a place that is not open yet shows as a question mark. A text filter, tag chips and a time range narrow the events. Below are the selected place, the office figures, trips in transit, reports, employees, kit, plots and the send button.
-- Shop: the stock, the antiques, the modern shop paid in funds and the future shop paid in time energy. Antiques are found on trips and anchored to open places, spares can be sold.
+- Time travel: a one sentence introduction and the figures, then a zoomable world map (Natural Earth 110m land, public domain) with a time axis. A pin is a place, a place holds events at different times, and only anchored places are drawn. An anchored place nobody has been to yet is a question mark. Below the map are three columns, the story of the place, who goes, and what they carry, with the buttons Auto configure, Clear and Send, and then the trips in transit and the recent reports.
+- Agency: the antiques, the items, the shop paid in funds, the time shop paid in time energy, the employees, and the hiring offer. Antiques are found on trips and anchored to open places, spares can be sold.
 - Encyclopedia: a wiki with a left list, search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear, with the formulas and variables each event uses.
 - Dev mode: off by default, a switch on the settings page, overridden by `?dev=1` or `?dev=0` in the address.
 
@@ -52,7 +52,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 ## Catalogue and employees
 
 - `data/catalog.yaml` lists 100 famous events across the world, mostly science, technology, philosophy, art and ideas, each with a place, a year and a field. Names, stories and relics are in the language files under `catalog`.
-- Each event has a relic, made into an antique when the data loads. A relic is found on trips and makes its event readable in the map and the wiki. The events have no simulation model yet, so they can be found and read but not dispatched to.
+- Each event has a relic, made into an antique when the data loads. A relic is found on trips and makes its event readable in the map and the wiki. Two events have a full branch simulation. The others are played as small stories, a trip of the traveller against the event with no kit and no branch, which pays by how it went.
 - The map groups nearby events into one pin, and the grouping radius shrinks as you zoom in. The time axis spreads recent years and compresses the deep past.
 - `data/staff.yaml` has twenty employees with a gender, an age and a job, and thirteen traits. Event summaries are written from general knowledge and unchecked, the wiki marks them so.
 
