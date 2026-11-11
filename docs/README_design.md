@@ -4,7 +4,7 @@ This document describes how the game works and why it is built the way it is. Th
 
 ## Premise
 
-You run a small agency that sends people into the past. History cannot be changed, so every trip happens on a parallel branch and the main timeline stays as it was. The difference between the branch and the main timeline is paid out as time energy. The employees are ordinary people with traits, not heroes. When one of them is about to die, a recall charm pulls them back at a cost, so nobody dies and the story goes on. The agency does not take part in wars or regime changes. It does medicine, technology, documents, daily life and witnessing.
+You run a small agency that sends people into the past. History cannot be changed, so every trip happens on a parallel branch and the main timeline stays as it was. The difference between the branch and the main timeline is paid out as time energy. The employees are ordinary people with traits, not heroes. A recall charm pulls an employee back from a trip that would end in death, so employees do not die. The agency does not take part in wars or regime changes. It does medicine, technology, documents, daily life and witnessing.
 
 The goal is to collect enough time energy to go back to your own time and see your family.
 
@@ -18,12 +18,12 @@ The goal is to collect enough time energy to go back to your own time and see yo
 
 ## Pages
 
-- Time travel: one sentence of introduction, the world map with its time axis, at full width, and under it the events of the picked place as an accordion, one open at a time, the open one showing its story at full width. Under them are who goes and what they carry, two boxes of one height with the employees as compact two line cards, the buttons Auto configure, Clear and Send, and then one table of dispatches, the ones still out first with Recall and Collect, then the finished ones with their report.
+- Time travel: one sentence of introduction, a bar of links to its sections (the places, who goes, the dispatch log), the world map with its time axis, at full width, and under it the events of the picked place as an accordion, one open at a time, the open one showing its story at full width. Under them are who goes and what they carry, two boxes of one height with the employees as compact two line cards, the buttons Auto configure, Clear and Send, and then one table of dispatches, the ones still out first with Recall and Collect, then the finished ones with their report.
 - The funds and the time energy are icons at the right of the navigation bar on every page.
-- Agency: the antiques, the items, the shop, the time shop, the employees and the hiring offer.
+- Agency: a bar of links to its sections, then the antiques, the items, the shop, the time shop, the employees and the hiring offer. The list can be filtered by text and by tag.
 - Encyclopedia: a wiki of people, events, places, items and employees, linked and filterable. Entries not yet encountered show as a question mark.
-- Settings: language, theme, sound and music volume, save export and import, and an advanced section.
-- About: introduction, disclaimer, data and privacy, contribution, author, credits and licence.
+- Settings: language, theme, sound and music volume, save export and import, and an advanced section, with a bar of links to its sections. The advanced section holds dev mode, off by default, which shows hidden entries and a seed field. `?dev=1` or `?dev=0` in the address overrides it.
+- About: introduction, disclaimer, data and privacy, contribution, author, credits and licence, with a bar of links to its sections.
 
 ## Clock and pace
 
@@ -44,7 +44,7 @@ There are six traits: kind, stubborn, curious, silver tongued, sensitive and bol
 ### Hiring
 
 - Two candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
-- A candidate is made from one serial number. A region sets the name and the likely skin tones, among fourteen regions across the world, then come gender, age, a job from a list of thirty four, abilities within a range, and two or three different traits. The names, jobs, regions and skin tones are rows in `cards/config/hiring.yaml` and can be added to freely, so combinations are in the thousands. A small share of the offers are the hand written employees.
+- A candidate is made from one serial number. A region sets the name and the likely skin tones, among fourteen regions across the world, then come gender, age, a job from a list of forty, abilities within a range, and one or two different traits. The names, jobs, regions and skin tones are rows in `cards/config/hiring.yaml` and can be added to freely, so combinations are in the thousands. A small share of the offers are the hand written employees.
 - Every made employee goes into the encyclopedia the moment they are made, with both language texts in the save, so a switch of language keeps their names. The latest 200 are kept, and anyone on offer or ever hired stays.
 
 ### Recall
@@ -69,7 +69,7 @@ An antique is an anchor. It points at one place and one time, and holding it anc
 
 ### Finding antiques
 
-Antiques are not sold. Each trip may bring one back. Let the trip go to a place at year `y0` and position `p0`. Every antique that has a place and a year is a candidate if its year is not later than `y0`. For a candidate at year `y` and position `p`:
+Antiques are not bought in a shop. Each trip may bring one back. Let the trip go to a place at year `y0` and position `p0`. Every antique that has a place and a year is a candidate if its year is not later than `y0`. For a candidate at year `y` and position `p`:
 
 - Reach: `w = exp(-(y0 - y) / tau_years - d / tau_km)`, where `d` is the great circle distance in kilometres from `p0` to `p`.
 - Each candidate is found with chance `k * w`.
@@ -89,14 +89,31 @@ A catalogue event without a model is played as a small story. The traveller's ab
 - An antique that opens a place must be anchored in the stock list of the shop page. Anchoring opens the place. An anchored copy cannot be sold.
 - The same antique can come back more than once. Copies beyond the first are spares. Spares can be sold one by one, or all at once with one button.
 - An anchor cannot be released while someone is away at that place, and the last open place cannot be released.
-- Each copy is therefore either money or a door.
+- A spare sells for the price of the antique. Each copy is therefore either money or a door.
 
 ## Money and energy
 
 - Funds pay the hiring fee and buy modern supplies. They come from trips and from selling spare antiques and goods.
-- Time energy buys future goods and is also what takes you home. Spending it delays going home, which is the trade off between collecting future goods and finishing.
+- Time energy buys future goods and is also the progress toward going home, so spending it lowers the progress.
+- Every item sells at the price it was bought for, in the currency of its shop, at any time and with no loss. Spare antiques sell for their price too.
 - Goods sent on a trip come home with the traveller, unless the story uses them up. Supplies and the handbook are spent. The recall charm is spent only when a trip ends in near death, and the heart monitor is lost then unless a charm was carried. Future goods are never lost.
 - Future goods are only collected for now, because no era can use them yet. A good whose name and design are borrowed from someone else's work is not sold until that is checked.
+
+## Items
+
+Items are bought into stock and carried on a trip. A kit has a weight limit (`weight_capacity`, 20 for now), and each item has a weight, a maximum count and a step. The shop paid in funds sells supplies, a handbook, a recall charm and a heart monitor. The time shop paid in time energy sells future goods.
+
+Each item card may carry a `loss` field that says how a trip uses it. An item with no `loss` always comes home.
+
+- `used`: spent in the story. The supplies (oral rehydration salts, chlorine tablets, disinfectant, detox water) and the handbook.
+- `rescue`: kept unless the outcome is one of `office.fatal_outcomes` (near death), in which case it is spent. The recall charm.
+- `fatal`: lost when the outcome is fatal, unless a `rescue` item was carried. The heart monitor.
+
+A recall before the story ends does not count as fatal. The kit that came home and the kit that was lost are kept on the dispatch as `kit.back` and `kit.lost`.
+
+## Main line and going home
+
+The main line is the time energy the agency holds, in five stages at 0, 80, 240, 440 and 600 (`cards/mainline`). The last is going home. The home cost, `office.home_cost`, is 600, about half of the energy that all places can pay together: 140 from the two full simulations and 1032 from the small stories at their top rank, 1172 in all.
 
 ## Auto mode
 
@@ -111,7 +128,7 @@ It only touches funds, antiques and dispatches. Employees do not die.
 
 ## Catalogue events
 
-`cards/events` lists 100 famous events across the world. The selection is deliberately tilted toward science, technology, philosophy, art and ideas, and away from politics and war. That is a choice for the first version, not a claim about what mattered more in history. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
+`cards/events` lists 100 famous events across the world. The selection leans toward science, technology, philosophy, art and ideas. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
 
 ## Data and code
 
@@ -146,7 +163,7 @@ Every place keeps its best star count. Time energy is paid only for the stars ab
 
 ## Special equipment and scenes
 
-Time energy is the progress of the game, and it unlocks things. The time shop sells special equipment for time energy, and every item sells back at the price it was bought for, in the same currency, at any time and with no loss. Each piece unlocks when the time energy reaches its number: a cyborg neural chip, a cyborg arm, a cyborg bionic lung, a cyborg gorilla arm, a hologram cloak, and out of myth a golden apple, which triples persuasion, and an elixir. Equipment raises abilities and satisfies the points that ask for an item, so the third star of some scenes cannot be had without it, which locks them behind progress.
+Time energy unlocks things. The time shop sells special equipment for time energy. Each piece unlocks when the time energy reaches its number (price in time energy in brackets): a cyborg neural chip at 20 (25), a cyborg arm at 40 (50), a cyborg bionic lung at 60 (75), a cyborg gorilla arm at 80 (100), a hologram cloak at 100 (125), and out of myth a golden apple at 120 (150), which triples persuasion, and an elixir at 150 (190). A radiation shield (20) and a bamboo copter (40, not sold until its name is checked) have no unlock. Equipment raises abilities and satisfies the points that ask for an item, so the third star of some scenes needs it.
 
 The price is being found out. Each piece shows by its exposure, a scene is more suspicious the later its tier, and the chance of being found grows with both, capped at ninety percent. A cloak lowers it, and with no equipment there is nothing to find. Being found out ends in one of three ways, being turned away, which costs a star, being locked up, which costs all stars and the antique and several days, or being hunted, which costs everything and more days and a lot of favor.
 

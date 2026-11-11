@@ -11,7 +11,7 @@ Prototype. Two simulated eras (London 1854, Vienna 1847), twenty employees, a wo
 ## Run
 
 ```
-run.cmd
+run_teleporter.cmd
 ```
 
 Then open http://127.0.0.1:8778/index.html. Any static file server works.
@@ -36,8 +36,8 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Interface
 
-- Time travel: a one sentence introduction and the figures, then a zoomable world map (Natural Earth 110m land, public domain) with a time axis. A pin is a place, a place holds events at different times, and only anchored places are drawn. An anchored place nobody has been to yet is a question mark. Below the map are three columns, the story of the place, who goes, and what they carry, with the buttons Auto configure, Clear and Send, and then the trips in transit and the recent reports.
-- Agency: the antiques, the items, the shop paid in funds, the time shop paid in time energy, the employees, and the hiring offer. Antiques are found on trips and anchored to open places, spares can be sold.
+- Time travel: a one sentence introduction and the figures, then a zoomable world map (Natural Earth 110m land, public domain) with a time axis. A pin is a place, a place holds events at different times, and only anchored places are drawn. An anchored place nobody has been to yet is a question mark. Below the map are the events of the picked place with their story, then who goes and what they carry, with the buttons Auto configure, Clear and Send, and then the trips in transit and the recent reports. Each page opens with a bar of links to its sections.
+- Agency: the antiques, the items, the shop paid in funds, the time shop paid in time energy, the employees, and the hiring offer. Antiques are found on trips and anchored to open places, spares can be sold. Items sell at the price they were bought for.
 - Encyclopedia: a wiki with a left list, search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear, with the formulas and variables each event uses.
 - Dev mode: off by default, a switch on the settings page, overridden by `?dev=1` or `?dev=0` in the address.
 
