@@ -88,8 +88,9 @@ console.log('sync points: ok');
 
 // The scenes: three points each, with words in both languages and requirements the backend understands.
 let scenes = 0;
-const known = new Set(['stat', 'trait', 'job', 'gender', 'item', 'luck', 'any']);
-const checkReq = (req, where) => { for (const [k, v] of Object.entries(req)) { if (!known.has(k)) throw new Error(where + ' unknown requirement ' + k); if (k === 'any') v.forEach((r) => checkReq(r, where)); if (k === 'item') D.get('items.' + v); if (k === 'trait') v.forEach((t) => D.get('staff.traits.' + t)); } };
+const known = new Set(['stat', 'trait', 'job', 'gender', 'item', 'provides', 'luck', 'any']);
+const checkReq = (req, where) => { for (const [k, v] of Object.entries(req)) { if (!known.has(k)) throw new Error(where + ' unknown requirement ' + k); if (k === 'any') v.forEach((r) => checkReq(r, where)); if (k === 'item') D.get('items.' + v);
+   if (k === 'trait') v.forEach((t) => D.get('staff.traits.' + t)); } };
 for (const ev of D.get('catalog.events')) {
   if (!ev.scene) continue;
   scenes++;

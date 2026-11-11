@@ -104,7 +104,7 @@ export function createOffice(X) {
     d.newBest = d.stars > best;
     const energy = d.newBest ? d.baseEnergy * (ST.energy_share[d.stars] - ST.energy_share[best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
-    d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.ceil(d.payout.restDays * (1 - p.rest_cut)) };
+    d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.round(d.payout.restDays * (1 - p.rest_cut)) };
     s.energy += d.paid.energy;
     s.funds += d.paid.funds;
     d.paid.antique = d.payout.antique || null;

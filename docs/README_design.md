@@ -40,7 +40,7 @@ Time runs in game days. At 1x one real minute is one game day. The speeds are pa
 
 ### Traits
 
-There are six traits: kind, stubborn, curious, silver tongued, sensitive and bold. A trait does not change the attributes. It is worth something at the sync points of a place and costs something there. Each sync point is about one kind of thing, persuading, winning trust, noticing, holding on, enduring or caring, and the traits of an employee add up to a bonus for each kind. A point that was missed is still reached with the chance of a positive bonus, and a negative bonus can lose a point that was reached. The draw is seeded. Two traits also carry a weakness of their own: a kind employee is more easily hurt by hostility, and a sensitive one catches disease more easily. A check fails the build if a trait has only gains or only costs, or if it changes an attribute.
+There are six traits: kind, stubborn, curious, silver tongued, sensitive and bold. A trait does not change the attributes. It is worth something at the sync points of a place and costs something there. Each sync point is about one kind of thing, persuading, winning trust, noticing, holding on, enduring or caring, and the traits of an employee add up to a bonus for each kind. A point that was missed is still reached with the chance of a positive bonus, and a negative bonus can lose a point that was reached. The draw is seeded. Two traits also carry a weakness of their own: a kind employee is more easily hurt by hostility, and a sensitive one catches disease more easily. A check fails the build if a trait has only gains or only costs, or if it changes an attribute. A trait may also carry a secretary perk, and the stubborn one cuts the rest days after a hard trip.
 
 ### Hiring
 
@@ -50,7 +50,7 @@ There are six traits: kind, stubborn, curious, silver tongued, sensitive and bol
 
 ### Recall
 
-A trip can be cut short with the Recall button on a trip in transit. It is a request. If the employee agrees they come home at once, the story stops where it is, and they bring back a share of the pay in proportion to how far the trip had got, a chance of keeping the antique in the same proportion, and a loss of favor. They refuse if their outcome was to stay behind, or by a roll that traits move, the hedonist towards refusing and the loyal away from it. A refusal is final for that trip, and they carry on.
+A trip can be cut short with the Recall button on a trip in transit. It is a request. If the employee agrees they come home at once, the story stops where it is, and they bring back a share of the pay in proportion to how far the trip had got, a chance of keeping the antique in the same proportion, and a loss of favor. They refuse if their outcome was to stay behind, or by a roll at a base chance that is zero for now. A refusal is final for that trip, and they carry on.
 
 ## The simulation of a trip
 
@@ -124,6 +124,7 @@ Full auto collects reports, anchors every found antique that opens a place, sell
 ## Checks
 
 - `node tools/check_content.mjs` builds thousands of reports and fails on a missing text key or template variable.
+- `node tools/check_logic.mjs` audits traits, employees, scenes and items: every point kind has a trait that gives it and one that costs it, every scene can be three starred by someone on the roster, and no requirement is gated by equipment the text does not name.
 - `node tools/check_i18n.mjs` and `node tools/check_boundary.mjs` check the languages and the engine boundary.
 - `node tools/ui_check.mjs` drives the page with Playwright through dispatching, shopping, wages, antiques, auto mode, the map, the axis, themes, languages and the settings page.
 - `node tools/headless.mjs` runs the simulation without a browser and compares kits and staff from the same seeds.
@@ -142,7 +143,7 @@ Time energy is the progress of the game, and it only goes up, so it can unlock t
 
 The price is being found out. Each piece shows by its exposure, a scene is more suspicious the later its tier, and the chance of being found grows with both, capped at ninety percent. A cloak lowers it, and with no equipment there is nothing to find. Being found out ends in one of three ways, being turned away, which costs a star, being locked up, which costs all stars and the antique and several days, or being hunted, which costs everything and more days and a lot of favor.
 
-Twenty catalogue events are scenes with three authored points, each a requirement on the traveller: an ability, a trait, a job, being a woman, an item, or luck. They are checked directly and are not differential equation simulations like London 1854 and Vienna 1847.
+Twenty catalogue events are scenes with three authored points, each a requirement on the traveller: an ability, a trait, a job, being a woman, an item, a capability that an item gives such as strength, or luck. A point that names no item must be met by someone on the hand written roster without equipment, so equipment only gates what the text says it gates. They are checked directly and are not differential equation simulations like London 1854 and Vienna 1847.
 
 ## Inspirations
 

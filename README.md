@@ -17,6 +17,7 @@ run.cmd
 Then open http://127.0.0.1:8778/index.html. Any static file server works.
 
 - `node tools/headless.mjs [era] [log] [opt]` runs the simulation without a browser and compares kits and staff from the same seeds.
+- `node tools/check_logic.mjs` audits the traits, employees, scenes and items for dead, missing or unreachable parts.
 - `node tools/check_content.mjs` builds thousands of reports and fails on a missing text key or template variable.
 - `node tools/ui_check.mjs` drives the page with Playwright. Set `PLAYWRIGHT_DIR` to a folder that has `playwright` installed.
 

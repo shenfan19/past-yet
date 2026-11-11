@@ -91,11 +91,10 @@ export function createLocalBackend(D) {
       },
     };
   }
-  // a recall is only a request. Someone who has decided to stay does not come, and a trait can make that more or less likely
+  // a recall is only a request. Someone who has decided to stay does not come, and for anyone else the refusal is a roll at the base chance
   function recallRefused(staffId, seed, outcomeId) {
     if (outcomeId === HI.recall.stay_outcome) return true;
-    const sum = D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).recall_refuse || 0), HI.recall.refuse_base);
-    return draw(seed, 'recall_refuse', staffId) < Math.min(1, Math.max(0, sum));
+    return draw(seed, 'recall_refuse', staffId) < HI.recall.refuse_base;
   }
   // A small story: a catalogue event with no branch simulation. How the trip goes is the traveller's abilities, weighted by the field of the event,
   // against a difficulty that rises with its tier, with a little seeded luck. It pays by outcome and brings nothing else.
@@ -133,6 +132,7 @@ export function createLocalBackend(D) {
       if (k === 'job') return v.includes(staff.job_id);
       if (k === 'gender') return staff.gender === v;
       if (k === 'item') return carried.includes(v);
+      if (k === 'provides') return carried.some((id) => D.get('items.' + id).provides.includes(v));
       if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < v;
       if (k === 'any') return v.some(meets);
       throw new Error('unknown requirement ' + k);
