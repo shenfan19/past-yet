@@ -171,6 +171,9 @@ export function createLocalBackend(D) {
   return {
     runLight, lightStay, makeCandidate, recallRefused, recallKeeps,
     findOdds, findAntique,
+    // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
+    placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
+    pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],
     eraInfo: (id) => info[id],
     staffStats: (staffId) => sim.staffAttrs(D, staffId),
     staffHabit: (staffId) => sim.staffHabit(D, staffId),

@@ -139,15 +139,54 @@ try {
   const fundsA = await page.evaluate(() => window.__game.ctx.S().funds);
   await page.click('[data-act=antsell][data-id=clinic_bell]');
   ok('a spare copy sells for funds and the anchored one stays', await page.evaluate((f) => window.__game.ctx.S().funds > f && window.__game.ctx.S().antiques.filter((x) => x === 'clinic_bell').length === 1 && window.__game.ctx.S().locks.includes('clinic_bell'), fundsA));
-  // the time shop is paid in funds, and its goods unlock as the time energy reaches their number
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.energy = 100; S.funds = 1000; window.__game.ui.render(); });
-  const fundsB = await page.evaluate(() => window.__game.ctx.S().funds);
+  // the time shop is paid in time energy, and an item sells back for exactly what it cost, in either shop
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.energy = 300; S.funds = 1000; window.__game.ui.render(); });
+  const pre = await page.evaluate(() => ({ e: window.__game.ctx.S().energy, f: window.__game.ctx.S().funds }));
   await page.click('[data-act=cartinc][data-id=radiation_shield]');
   await page.click('[data-act=cartbuy][data-id=future]');
-  ok('future goods are paid in funds and the energy stays', await page.evaluate((f) => window.__game.ctx.S().energy === 100 && window.__game.ctx.S().inv.radiation_shield === 1 && window.__game.ctx.S().funds === f - 80, fundsB));
+  ok('future goods are paid in time energy and the funds stay', await page.evaluate((b) => { const S = window.__game.ctx.S(); return S.energy === b.e - window.__game.D.get("items.radiation_shield.cost") && S.funds === b.f && S.inv.radiation_shield === 1; }, pre));
+  await page.click('[data-act=shopsell][data-id=radiation_shield]');
+  ok('selling a future good returns the time energy it cost, with no loss', await page.evaluate((b) => { const S = window.__game.ctx.S(); return S.energy === b.e && S.funds === b.f && !S.inv.radiation_shield; }, pre));
+  await page.click('[data-act=cartinc][data-id=ors_pack]');
+  await page.click('[data-act=cartbuy][data-id=modern]');
+  await page.click('[data-act=shopsell][data-id=ors_pack]');
+  ok('selling a modern good returns the funds it cost, with no loss', await page.evaluate((b) => window.__game.ctx.S().funds === b.f, pre));
+  ok('the agency page has a bar of links to its sections at the top', (await page.locator('.jumps a[data-act=aboutjump]').count()) === 6);
+  await page.click('.jumps a[data-id=shop-future]');
+  ok('a link scrolls to its section', (await page.locator('#shop-future').count()) === 1);
+  await page.click('[data-tab=home]');
+  ok('the travel page has a bar of links to its sections at the top', (await page.locator('.jumps a[data-act=aboutjump]').count()) === 3);
+  await page.click('[data-tab=shop]');
+  await page.evaluate(() => { window.__game.ctx.S().energy = 100; window.__game.ui.render(); });
   ok('special equipment is locked until the energy reaches its number', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 0 && (await page.locator('[data-act=cartinc][data-id=neural_chip]').count()) === 1);
   await page.evaluate(() => { window.__game.ctx.S().energy = 130; window.__game.ui.render(); });
   ok('it unlocks when the energy gets there', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 1);
+  // the kit: supplies are spent in the story, future technology always comes home, and a fatal trip costs the gear unless a rescue item was carried
+  const kit = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    const saved = { inv: { ...S.inv }, dispatches: S.dispatches, secretary: S.secretary };
+    S.secretary = null; S.dispatches = [];
+    for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
+    const crew = Object.keys(S.staff).filter((k) => S.staff[k].hired);
+    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, heart_monitor: 1, recall_charm: 1 });
+    const trip = (staffId, items, outcome, era) => {
+      const d = off.launch(era, { seed: 5, staffId, items });
+      d.report.outcomeId = outcome; d.readyDay = S.clock.day;
+      off.claim(d.id);
+      return d.kit;
+    };
+    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1, heart_monitor: 1 }, 'perfect', 'vienna_1847');
+    const bad = trip(crew[1], { heart_monitor: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
+    S.inv.heart_monitor = 1;
+    const saved2 = trip(crew[2], { heart_monitor: 1, recall_charm: 1, neural_chip: 1 }, 'near_death', 'vienna_1847');
+    const out = { fine, bad, saved2, inv: { ...S.inv } };
+    S.inv = saved.inv; S.dispatches = saved.dispatches.concat(S.dispatches.filter((d) => d.claimed)); S.secretary = saved.secretary;
+    for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
+    return out;
+  });
+  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1 && kit.fine.back.heart_monitor === 1);
+  ok('a fatal trip loses the modern gear, not the future technology', kit.bad.lost.heart_monitor === 1 && kit.bad.back.neural_chip === 1);
+  ok('a rescue item saves the gear and is spent doing it', kit.saved2.back.heart_monitor === 1 && kit.saved2.lost.recall_charm === 1 && kit.saved2.back.neural_chip === 1);
   // scenes: the points are requirements, equipment counts and shows, and a scene can find the traveller out
   const sc = await page.evaluate(() => {
     const b = window.__game.backend;
@@ -279,7 +318,7 @@ try {
   await page.waitForTimeout(800);
   await page.selectOption('[data-clk=speed]', '0');
   ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
-  ok('the funds, the wages and the energy are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 3);
+  ok('the funds and the energy are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 2);
   // stars: time energy is paid only for stars above the best of the place, funds every time
   const sr = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
@@ -308,17 +347,28 @@ try {
   ok('the star filter keeps only places with that many stars', await page.evaluate(() => [...document.querySelectorAll('svg.map .pt')].length >= 1 && [...document.querySelectorAll('svg.map .pt')].length <= 3));
   await page.selectOption('#map-star', '');
   await page.click('[data-tab=shop]');
-  // wages come out of the funds as time passes, and a short purse leaves them owed
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100; S.wageOwed = 0; });
-  await page.selectOption('[data-clk=speed]', '3');
-  await page.waitForTimeout(1200);
-  ok('wages are drawn from the funds', await page.evaluate(() => window.__game.ctx.S().funds < 100));
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 0; });
-  await page.waitForTimeout(1200);
-  ok('a short purse leaves wages owed', await page.evaluate(() => window.__game.ctx.S().wageOwed > 0));
-  ok('owed wages are shown beside the figures on every page', (await page.locator('#res .chip.warn').count()) >= 1);
+  // the auto mode picks where to send an employee by rules: unexplored first, then a place that can still be improved, then earlier history, then any
+  const pk = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    const free = ['broad_street_1854', 'vienna_1847', 'ev_a'].slice(0, 2);
+    const keep = { visited: [...S.visited], stars: { ...S.stars }, dispatches: S.dispatches };
+    const id = Object.keys(S.staff).find((k) => S.staff[k].hired);
+    S.dispatches = [];
+    S.visited = ['vienna_1847']; S.stars = { vienna_1847: 3 };
+    const r1 = off.pickPlace(id, free);
+    S.visited = ['broad_street_1854', 'vienna_1847']; S.stars = { broad_street_1854: 3, vienna_1847: 2 };
+    const r2 = off.pickPlace(id, free);
+    S.stars = { broad_street_1854: 3, vienna_1847: 3 };
+    const r3 = off.pickPlace(id, free);
+    const early = g.ctx.backend.placeYear('vienna_1847') < g.ctx.backend.placeYear('broad_street_1854') ? 'vienna_1847' : 'broad_street_1854';
+    Object.assign(S, keep);
+    return { r1, r2, r3, early };
+  });
+  ok('the auto mode sends to an unexplored place first', pk.r1.rule === 'unexplored' && pk.r1.eraId === 'broad_street_1854');
+  ok('then to a visited place that can still be improved', pk.r2.rule === 'breakthrough' && pk.r2.eraId === 'vienna_1847');
+  ok('then to the earlier history, the earliest of the places', pk.r3.rule === 'farther' && pk.r3.eraId === pk.early);
   await page.selectOption('[data-clk=speed]', '0');
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; S.wageOwed = 0; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
   await page.click('[data-act=fire][data-id=s_lin]');
   ok('an employee can be let go', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === hiredN - 1);

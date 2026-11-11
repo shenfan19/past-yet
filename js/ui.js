@@ -145,7 +145,9 @@ export function createUI(D, ctx) {
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId };  }
   }
-  const X = { starsHtml: (n) => starsHtml(n), storyFor: (e) => (e.catalog ? catalogCard(e.id) : placeFile(e.id)), D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, anchored, selectEra, wl, tip, anchorOf, owns, catalogTags, saveUiState, langHtml };
+  // a row of links to the sections of a page, the same bar the about and settings pages have
+  const jumpBar = (items) => `<p class="jumps">${items.map(([id, label]) => `<a class="wl" data-act="aboutjump" data-id="${id}">${esc(label)}</a>`).join(' · ')}</p>`;
+  const X = { jumpBar, starsHtml: (n) => starsHtml(n), storyFor: (e) => (e.catalog ? catalogCard(e.id) : placeFile(e.id)), D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, anchored, selectEra, wl, tip, anchorOf, owns, catalogTags, saveUiState, langHtml };
   const office = createOffice(X);
   office.ensureHire();
   const clockEl = document.getElementById('clock');
@@ -263,7 +265,7 @@ export function createUI(D, ctx) {
     const S = ctx.S();
     const rows = hiredIds().map((id) => {
       const mine = reports().filter((d) => d.spec.staffId === id);
-      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, wage: office.wageOf(id), last: mine[0], count: mine.length };
+      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, last: mine[0], count: mine.length };
     });
     const pk = office.perks();
     const perkText = Object.entries(pk).filter(([, v]) => v !== 0).map(([k, v]) => `${U.office.perks[k]} ${k === 'rest_cut' ? '−' : (v > 0 ? '+' : '')}${Math.round(Math.abs(v) * 100)}%`).join(' · ');
@@ -274,10 +276,9 @@ export function createUI(D, ctx) {
       id: 'home_staff', rows, maxH: D.get('config.ui.box_h.home_staff'),
       cols: [
         { k: 'name', label: U.office.col_staff, w: '15%', val: (r) => r.name, cell: (r) => staffLink(r.id) },
-        { k: 'traits', label: U.office.col_traits, w: '24%', cell: (r) => staffTraits(D, r.id).map(traitChip).join('') },
+        { k: 'traits', label: U.office.col_traits, w: '32%', cell: (r) => staffTraits(D, r.id).map(traitChip).join('') },
         { k: 'state', label: U.office.col_state, w: '9%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel()[r.state]}</span>` },
         { k: 'favor', label: U.office.col_favor, w: '10%', val: (r) => r.favor, cell: (r) => favorCell(r.id) },
-        { k: 'wage', label: U.office.col_wage, w: '8%', cls: 'num', val: (r) => r.wage, cell: (r) => r1(r.wage) },
         { k: 'count', label: U.office.col_history, w: '12%', val: (r) => r.count, cell: (r) => (r.last ? `${r.count} · <button class="ghost" data-act="open" data-id="${r.last.id}">${U.report.view}</button>` : `<span class="muted">${U.office.no_history}</span>`) },
         { k: 'act', label: '', w: '22%', cls: 'num', cell: (r) => `<button data-act="gift" data-id="${r.id}" ${S.funds < D.get('config.favor.gift_cost') ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button>` },
       ],
@@ -298,7 +299,7 @@ export function createUI(D, ctx) {
       <div class="row sp"><div class="candname">${swatch}<b>${staffLink(id)}</b></div><span class="muted">${esc(staffProfile(D, id))}${def.region ? ' · ' + esc(regionLabel(def.region)) : ''}</span></div>
       ${traits}
       <div class="muted">${mini}</div>
-      <div class="row sp"><span class="muted">${U.office.col_wage}${COLON}${r1(office.wageOf(id))}</span><button class="primary" data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button></div>
+      <div class="row sp"><span></span><button class="primary" data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button></div>
     </div>`;
   }
   function hireHtml() {
@@ -315,10 +316,8 @@ export function createUI(D, ctx) {
   function resHtml() {
     const S = ctx.S();
     const I = D.get('config.ui.currency_icons');
-    const owed = S.wageOwed > 0 ? `<span class="chip warn"${tip(U.office.owed_tip)}>${U.office.owed} ${ri(S.wageOwed)}</span>` : '';
     const home = S.energy >= O.home_cost ? `<span class="chip"${tip(U.office.reached_home)}>🏠</span>` : '';
     return `<span class="rv"${tip(U.office.funds)}>${I.funds} <b>${ri(S.funds)}</b></span>`
-      + `<span class="rv"${tip(U.office.wage_total + COLON + U.office.wage_tip)}>${I.wage} <b>${r1(office.wageTotal())}</b><span class="muted">/ ${U.report.days.split(' ')[0] || ''}</span></span>${owed}`
       + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}`;
   }
 
@@ -339,7 +338,7 @@ export function createUI(D, ctx) {
     const done = reports().slice(0, D.get('config.ui.recent_reports')).map((d) => `<tr><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${starsHtml(d.stars || 0)}${d.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num">${livesOf(d)}</td><td class="num"><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`);
     const rows = out.concat(done).join('');
     return `
-      <div class="sec">${U.office.log}</div>
+      <div class="sec" id="home-log">${U.office.log}</div>
       ${rows ? `<table class="logtable"><thead><tr><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th class="num">${U.report.lives}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
@@ -400,7 +399,7 @@ export function createUI(D, ctx) {
       const mini = statsLine(stats);
       return `<div class="pickrow ${chosen ? 'on' : ''}">
         <div class="pr1"><b>${staffLink(id)}</b><span class="muted pstats">${mini}</span>${chosen ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${id}">${U.dispatch.pick}</button>`}</div>
-        <div class="pr2">${staffTraits(D, id).map(traitChip).join('')}<span class="grow"></span><span class="muted">${U.office.col_wage} ${r1(office.wageOf(id))} · ${favorCell(id)}</span></div></div>`;
+        <div class="pr2">${staffTraits(D, id).map(traitChip).join('')}<span class="grow"></span><span class="muted">${favorCell(id)}</span></div></div>`;
     }).join('');
     // when nobody can go, say when the first one is back
     const back = hiredIds().map((id) => (staffState(id) === 'away' ? Math.max(...S.dispatches.filter((d) => !d.claimed && d.spec.staffId === id).map((d) => d.readyDay - S.clock.day), 0) : staffState(id) === 'resting' ? S.staff[id].restUntil - S.clock.day : Infinity)).filter((x) => x < Infinity);
@@ -439,7 +438,7 @@ export function createUI(D, ctx) {
     const msg = !open ? (holds ? U.dispatch.not_anchored : U.dispatch.not_found) : office.eraBusy(target) ? U.dispatch.era_busy : overW ? U.dispatch.over_weight : stState !== 'ready' ? U.dispatch.busy : '';
     const seedRow = DEV ? `<span class="row"><input id="seed" type="number" value="${f.seed}" style="width:110px" title="${esc(U.dispatch.seed_hint)}"></span>` : '';
     return `
-      <div class="cols2 desk">
+      <div class="cols2 desk" id="home-desk">
         <div><div class="sec" style="margin-top:0">${U.dispatch.staff}</div>${pickHtml()}</div>
         <div><div class="sec" style="margin-top:0">${U.dispatch.items}</div>${carryBox}</div>
       </div>
@@ -604,7 +603,8 @@ export function createUI(D, ctx) {
     fixForm();
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
-      <div class="sec">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
+      ${jumpBar([['home-map', U.dispatch.era], ['home-desk', U.dispatch.staff], ['home-log', U.office.log]])}
+      <div class="sec" id="home-map">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
       ${worldMap.html()}
       ${worldMap.eventsBox()}
       ${deskHtml()}

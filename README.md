@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Prototype. Two simulated eras (London 1854, Vienna 1847), twenty employees with wages, a world map of 100 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
+Prototype. Two simulated eras (London 1854, Vienna 1847), twenty employees, a world map of 100 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
 
 ## Run
 

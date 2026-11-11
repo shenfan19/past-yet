@@ -14,12 +14,12 @@ The goal is to collect enough time energy to go back to your own time and see yo
 2. Pick an employee and a kit from the stock, or press Auto configure for a kit. The traveller also brings the ideas or designs that the protagonist of the place can take up, which are not chosen by hand. Only one employee can be in a place at a time.
 3. Send them out and let the clock run. Nobody has to watch.
 4. When they come home, read the report. It brings funds, time energy and sometimes an antique.
-5. Use antiques to open new places, funds to pay wages and buy supplies, and time energy to buy future goods or to go home.
+5. Use antiques to open new places, funds to buy supplies, and time energy to buy future goods or to go home.
 
 ## Pages
 
 - Time travel: one sentence of introduction, the world map with its time axis, at full width, and under it the events of the picked place as an accordion, one open at a time, the open one showing its story at full width. Under them are who goes and what they carry, two boxes of one height with the employees as compact two line cards, the buttons Auto configure, Clear and Send, and then one table of dispatches, the ones still out first with Recall and Collect, then the finished ones with their report.
-- The funds, the daily wages and the time energy are icons at the right of the navigation bar on every page, with the wage owed beside them when there is any.
+- The funds and the time energy are icons at the right of the navigation bar on every page.
 - Agency: the antiques, the items, the shop, the time shop, the employees and the hiring offer.
 - Encyclopedia: a wiki of people, events, places, items and employees, linked and filterable. Entries not yet encountered show as a question mark.
 - Settings: language, theme, sound and music volume, save export and import, and an advanced section.
@@ -31,9 +31,8 @@ Time runs in game days. At 1x one real minute is one game day. The speeds are pa
 
 ## Employees
 
-- Three employees are on the payroll at the start. Each has a gender, an age, a job, five attributes from 1 to 10 and traits. The five attributes are constitution, wit, finesse, will and desire, and there is nothing hidden behind them. Wit covers knowledge and curiosity, finesse covers eloquence and a light hand, will covers stubbornness and its opposite, homesickness, and desire covers greed and, in reverse, kindness. A weak will means homesickness and being hurt by hostility, a weak constitution means catching disease, and a high desire means greed and less kindness. The era models were written against finer quantities, so each of those is a plain function of one attribute, listed in `staff_rules.yaml`, and at 5 each is what the models always had.
-- Wages: each hired employee draws a cash wage per game day, `wage_base + wage_skill * skill`. The three starting employees cost about ten funds a day together. Wages come out of the funds as time passes. When the funds run out, the shortfall is owed, the next income pays it first, and while anything is owed all employees lose favor every day. There is no lockout and nobody quits.
-- Letting someone go removes them from the payroll, and hiring them again costs the fee again. The last employee and anyone who is away cannot be let go.
+- Three employees are hired at the start. Each has a gender, an age, a job, five attributes from 1 to 10 and traits. The five attributes are constitution, wit, finesse, will and desire, and there is nothing hidden behind them. Wit covers knowledge and curiosity, finesse covers eloquence and a light hand, will covers stubbornness and its opposite, homesickness, and desire covers greed and, in reverse, kindness. A weak will means homesickness and being hurt by hostility, a weak constitution means catching disease, and a high desire means greed and less kindness. The era models were written against finer quantities, so each of those is a plain function of one attribute, listed in `staff_rules.yaml`, and at 5 each is what the models always had.
+- Letting someone go removes them from the staff list, and hiring them again costs the fee again. The last employee and anyone who is away cannot be let go.
 - Favor: a bonus raises it, a good trip raises it, failure, giving up and a recall lower it. A high favor makes an employee slower to get homesick and give up.
 - Secretary: one employee can stay at the agency as secretary. They stop travelling and their traits give the agency bonuses to funds income, time energy income, rest time and favor growth. In auto mode the secretary has a preference, and the auto results either suit it or do not.
 - Only one employee can be in a place at a time, because the simulation holds one traveller per place.
@@ -44,7 +43,7 @@ There are six traits: kind, stubborn, curious, silver tongued, sensitive and bol
 
 ### Hiring
 
-- Two candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, the wage, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
+- Two candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
 - A candidate is made from one serial number. A region sets the name and the likely skin tones, among fourteen regions across the world, then come gender, age, a job from a list of thirty four, abilities within a range, and two or three different traits. The names, jobs, regions and skin tones are rows in `cards/config/hiring.yaml` and can be added to freely, so combinations are in the thousands. A small share of the offers are the hand written employees.
 - Every made employee goes into the encyclopedia the moment they are made, with both language texts in the save, so a switch of language keeps their names. The latest 200 are kept, and anyone on offer or ever hired stays.
 
@@ -94,13 +93,21 @@ A catalogue event without a model is played as a small story. The traveller's ab
 
 ## Money and energy
 
-- Funds pay wages and the hiring fee, and buy modern supplies. They come from trips and from selling spare antiques and goods.
+- Funds pay the hiring fee and buy modern supplies. They come from trips and from selling spare antiques and goods.
 - Time energy buys future goods and is also what takes you home. Spending it delays going home, which is the trade off between collecting future goods and finishing.
+- Goods sent on a trip come home with the traveller, unless the story uses them up. Supplies and the handbook are spent. The recall charm is spent only when a trip ends in near death, and the heart monitor is lost then unless a charm was carried. Future goods are never lost.
 - Future goods are only collected for now, because no era can use them yet. A good whose name and design are borrowed from someone else's work is not sold until that is checked.
 
 ## Auto mode
 
-Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to the free place it has visited least, with a kit chosen by simple rules. It only touches funds, antiques and dispatches. Employees do not die, and a broke office is handled by wages being owed, not by a lockout.
+Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to a free place, with a kit chosen by simple rules. Employees have no wages. The place is chosen by the first of four rules that leaves any candidate, and a seeded draw picks among the candidates:
+
+1. A place nobody has come back from yet.
+2. A visited place whose best result is below three stars, which this employee has tried fewer than three times.
+3. The earliest of the places that lie earlier in history than any this employee has been sent to.
+4. Any free place.
+
+It only touches funds, antiques and dispatches. Employees do not die.
 
 ## Catalogue events
 
@@ -126,7 +133,7 @@ Full auto collects reports, anchors every found antique that opens a place, sell
 - `node tools/check_content.mjs` builds thousands of reports and fails on a missing text key or template variable.
 - `node tools/check_logic.mjs` audits traits, employees, scenes and items: every point kind has a trait that gives it and one that costs it, every scene can be three starred by someone on the roster, and no requirement is gated by equipment the text does not name.
 - `node tools/check_i18n.mjs` and `node tools/check_boundary.mjs` check the languages and the engine boundary.
-- `node tools/ui_check.mjs` drives the page with Playwright through dispatching, shopping, wages, antiques, auto mode, the map, the axis, themes, languages and the settings page.
+- `node tools/ui_check.mjs` drives the page with Playwright through dispatching, shopping, antiques, auto mode, the map, the axis, themes, languages and the settings page.
 - `node tools/headless.mjs` runs the simulation without a browser and compares kits and staff from the same seeds.
 
 ## Stars
@@ -139,7 +146,7 @@ Every place keeps its best star count. Time energy is paid only for the stars ab
 
 ## Special equipment and scenes
 
-Time energy is the progress of the game, and it only goes up, so it can unlock things. The time shop sells special equipment for funds, and each piece unlocks when the time energy reaches its number: a cyborg neural chip, a cyborg arm, a cyborg bionic lung, a cyborg gorilla arm, a hologram cloak, and out of myth a golden apple, which triples persuasion, and an elixir. Equipment raises abilities and satisfies the points that ask for an item, so the third star of some scenes cannot be had without it, which locks them behind progress.
+Time energy is the progress of the game, and it unlocks things. The time shop sells special equipment for time energy, and every item sells back at the price it was bought for, in the same currency, at any time and with no loss. Each piece unlocks when the time energy reaches its number: a cyborg neural chip, a cyborg arm, a cyborg bionic lung, a cyborg gorilla arm, a hologram cloak, and out of myth a golden apple, which triples persuasion, and an elixir. Equipment raises abilities and satisfies the points that ask for an item, so the third star of some scenes cannot be had without it, which locks them behind progress.
 
 The price is being found out. Each piece shows by its exposure, a scene is more suspicious the later its tier, and the chance of being found grows with both, capped at ninety percent. A cloak lowers it, and with no equipment there is nothing to find. Being found out ends in one of three ways, being turned away, which costs a star, being locked up, which costs all stars and the antique and several days, or being hunted, which costs everything and more days and a lot of favor.
 

@@ -4,8 +4,8 @@ import { firstSentence } from './narrate.js';
 export function createShop(X) {
   const { D, ctx, T, U, esc, st, DEV, listbox, office } = X;
   const S_ = U.shop;
-  const O = D.get('config.office');
-  const sell1 = (id) => Math.floor(D.get(`items.${id}.cost`) * O.sell_ratio);
+  // an item sells for exactly what it costs, in the currency of its shop, whenever the player likes
+  const sell1 = (id) => D.get(`items.${id}.cost`);
   const s = () => st.shop;
   const tagOk = (tags) => !s().tag || tags.includes(s().tag);
   const textOk = (name, desc) => { const q = s().q.trim().toLowerCase(); return !q || (name + ' ' + desc).toLowerCase().includes(q); };
@@ -95,7 +95,7 @@ export function createShop(X) {
         { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
         { k: 'dest', label: U.dispatch.points_to, w: '20%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
         { k: 'count', label: S_.copies, w: '8%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
-        { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.sell, cell: (r) => `${r.an.sell} ${icon('funds')}` },
+        { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.price, cell: (r) => `${r.an.price} ${icon('funds')}` },
         { k: 'act', label: '', w: '28%', cls: 'num', cell: (r) => (r.own
           ? `<button data-act="antlock" data-id="${r.id}" ${r.lock && !releasable(r.id) ? 'disabled' : ''}${r.lock && !releasable(r.id) ? ' data-tip="' + esc(S_.keep_one) + '"' : ''}>${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${sellable(r.id) ? '' : 'disabled'}>${S_.sell}</button>`
           : '') },
@@ -112,17 +112,18 @@ export function createShop(X) {
     const bar = `<details class="tagfold"><summary>${S_.tag_filter}${s().tag ? COLON + esc(T.tags[s().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${s().tag ? '' : 'on'}" data-act="shoptag" data-id="">${S_.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${s().tag === t ? 'on' : ''}" data-act="shoptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
     const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
     const spares = office.spareCount();
-    const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * D.get('antiques.antiques.' + id).sell, 0);
+    const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * D.get('antiques.antiques.' + id).price, 0);
     return `
+      ${X.jumpBar([['shop-ants', S_.antiques_title], ['shop-inv', S_.inv_title], ['shop-modern', S_.modern.name], ['shop-future', S_.future.name], ['shop-staff', U.office.staff], ['shop-hire', U.office.hire_title]])}
       <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"></div>
       ${bar}
-      <div class="sec">${S_.antiques_title}</div><p class="muted">${S_.antiques_hint}</p>
+      <div class="sec" id="shop-ants">${S_.antiques_title}</div><p class="muted">${S_.antiques_hint}</p>
       <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}
-      <div class="sec">${S_.inv_title}</div>${invBox()}
-      <div class="sec">${S_.modern.name}</div><p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}
-      <div class="sec">${S_.future.name}</div>${future}
-      <div class="sec">${U.office.staff}</div>${extra.staff}
-      <div class="sec">${U.office.hire_title}</div>${extra.hire}`;
+      <div class="sec" id="shop-inv">${S_.inv_title}</div>${invBox()}
+      <div class="sec" id="shop-modern">${S_.modern.name}</div><p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}
+      <div class="sec" id="shop-future">${S_.future.name}</div>${future}
+      <div class="sec" id="shop-staff">${U.office.staff}</div>${extra.staff}
+      <div class="sec" id="shop-hire">${U.office.hire_title}</div>${extra.hire}`;
   }
 
   function act(a, id) {
@@ -160,7 +161,7 @@ export function createShop(X) {
     if (a === 'sellspares') { if (office.sellSpares()) return true; return false; }
     if (a === 'antsell') {
       const an = D.get('antiques.antiques.' + id);
-      if (sellable(id)) { S.funds += an.sell; S.antiques.splice(S.antiques.indexOf(id), 1); ctx.save(); }
+      if (sellable(id)) { S.funds += an.price; S.antiques.splice(S.antiques.indexOf(id), 1); ctx.save(); }
       return true;
     }
     if (a === 'antlock') {

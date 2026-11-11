@@ -21,14 +21,14 @@ i18n:
     zh: 简体中文
 save:
   key: teleporter_save
-  version: 8
+  version: 9
 eras:
   - broad_street_1854
   - vienna_1847
 office:
   start_funds: 400
   start_energy: 0
-  home_cost: 300
+  home_cost: 600
   weight_capacity: 20
   dispatch_fee: 150
   gift_funds: 120
@@ -36,11 +36,8 @@ office:
   max_plots: 2
   max_archive: 30
   hire_cost: 100
+  fatal_outcomes: [near_death]
   antique_find: {k: 0.06, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
-  wage_base: 1
-  wage_skill: 4
-  unpaid_favor_loss: 0.01
-  sell_ratio: 0.5
   start_stock:
     ors_pack: 40
     chlorine_tablet: 40
@@ -72,6 +69,7 @@ favor:
 auto:
   reserve_funds: 100
   sell_spares_below: 100
+  pick: {breakthrough_tries: 3}
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40
@@ -94,7 +92,7 @@ auto:
     - detox_water
     - heart_monitor
 ui:
-  currency_icons: {funds: '💰', energy: '⚡', wage: '🧾'}
+  currency_icons: {funds: '💰', energy: '⚡'}
   tab_icons: {home: '🏠', shop: '🛒', enc: '📖', settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
   refresh_ms: 500

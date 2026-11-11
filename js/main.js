@@ -41,7 +41,6 @@ function fresh() {
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
     secretaryLast: null,
-    wageOwed: 0,
     // places that have had a trip come back, their names are shown on the map
     visited: [],
     // the best star count of each place, time energy is paid only for an improvement on it

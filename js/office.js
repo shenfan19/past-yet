@@ -89,6 +89,22 @@ export function createOffice(X) {
     return d;
   }
 
+  // What of the kit comes home with the traveller. Anything with no loss rule, which is all the future technology, always comes back.
+  // 'used' is spent in the story. On a fatal outcome 'fatal' gear is lost unless a 'rescue' item was carried, and the rescue item is spent doing it.
+  function kitReturn(d) {
+    const s = S();
+    const kit = Object.entries(d.spec.items || {}).filter(([, n]) => n > 0);
+    const fatal = !d.recalled && O.fatal_outcomes.includes(d.report.outcomeId);
+    const rescued = kit.some(([id]) => D.get('items.' + id).loss === 'rescue');
+    d.kit = { back: {}, lost: {} };
+    for (const [id, n] of kit) {
+      const loss = D.get('items.' + id).loss;
+      const gone = loss === 'used' || (loss === 'rescue' && fatal) || (loss === 'fatal' && fatal && !rescued);
+      d.kit[gone ? 'lost' : 'back'][id] = n;
+      if (!gone) s.inv[id] = (s.inv[id] || 0) + n;
+    }
+  }
+
   function claim(id) {
     const s = S();
     const d = s.dispatches.find((x) => x.id === id);
@@ -96,6 +112,7 @@ export function createOffice(X) {
     const p = perks();
     d.claimed = true;
     if (!s.visited.includes(d.eraId)) s.visited.push(d.eraId);
+    kitReturn(d);
     d.claimedAt = ctx.now();
     // Time energy is paid for the stars above the best this place has had: a quarter of the base for one star, half for two, all of it for three,
     // and each trip pays the difference to what the best already paid, so a place cannot be farmed for energy.
@@ -151,7 +168,7 @@ export function createOffice(X) {
     let gain = 0;
     for (const id of new Set(s.antiques)) {
       const n = copies(id) - 1;
-      if (n > 0) { gain += n * D.get('antiques.antiques.' + id).sell; s.antiques = s.antiques.filter((x, i) => x !== id || s.antiques.indexOf(x) === i); }
+      if (n > 0) { gain += n * D.get('antiques.antiques.' + id).price; s.antiques = s.antiques.filter((x, i) => x !== id || s.antiques.indexOf(x) === i); }
     }
     s.funds += gain;
     if (gain) ctx.save();
@@ -182,6 +199,7 @@ export function createOffice(X) {
     d.claimed = true;
     d.recalled = true;
     d.recallDay = day();
+    kitReturn(d);
     d.claimedAt = ctx.now();
     if (!s.visited.includes(d.eraId)) s.visited.push(d.eraId);
     d.stars = 0;
@@ -261,19 +279,6 @@ export function createOffice(X) {
     return true;
   }
 
-  // ---------- wages ----------
-  // Every hired person draws a cash wage per game day, from their skill. What the funds cannot cover is owed and is paid first from the next income,
-  // and while anything is owed everybody on the payroll loses favor, so a broke office slowly loses goodwill instead of getting stuck.
-  const wageOf = (id) => Math.round((O.wage_base + O.wage_skill * ctx.backend.staffStats(id).wit) * 10) / 10;
-  const wageTotal = () => hiredIds().reduce((a, id) => a + wageOf(id), 0);
-  function payWages(dt) {
-    const s = S();
-    const due = wageTotal() * dt + s.wageOwed;
-    const pay = Math.min(Math.max(s.funds, 0), due);
-    s.funds = Math.round((s.funds - pay) * 100) / 100;
-    s.wageOwed = Math.round((due - pay) * 100) / 100;
-    if (s.wageOwed > 0) for (const id of hiredIds()) s.staff[id].favor = clamp(s.staff[id].favor - O.unpaid_favor_loss * dt, F.min, F.max);
-  }
   function dismiss(id) {
     const s = S();
     if (!s.staff[id].hired || hiredIds().length <= 1 || staffState(id) === 'away') return false;
@@ -304,7 +309,6 @@ export function createOffice(X) {
     if (s.clock.speed > 0) {
       const dt = (s.clock.speed * seconds) / C.sec_per_day;
       s.clock.day += dt;
-      payWages(dt);
     }
     refreshHire();
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
@@ -345,6 +349,35 @@ export function createOffice(X) {
       }
     }
   }
+  // Where the auto mode sends one idle employee, from the free places. The first rule that leaves any candidate decides, and the choice among
+  // the candidates is a seeded draw, so a run can be replayed:
+  //   1. a place nobody has come back from yet
+  //   2. a place already visited whose best is below the top stars, and this employee has tried fewer than A.pick.breakthrough_tries times
+  //   3. a place earlier in history than any this employee has been sent to, the earliest of those
+  //   4. any free place
+  function pickPlace(staffId, free) {
+    const s = S();
+    const roll = (list) => ctx.backend.pick(list, s.seq + 1, 'auto_place|' + staffId);
+    const year = ctx.backend.placeYear;
+    const mine = s.dispatches.filter((d) => d.spec.staffId === staffId);
+    const tries = (id) => mine.filter((d) => d.eraId === id).length;
+    const rules = [
+      ['unexplored', () => free.filter((id) => !s.visited.includes(id))],
+      ['breakthrough', () => free.filter((id) => s.visited.includes(id) && (s.stars[id] || 0) < ST.max && tries(id) < A.pick.breakthrough_tries)],
+      ['farther', () => {
+        const reach = Math.min(Infinity, ...mine.map((d) => year(d.eraId)));
+        const older = free.filter((id) => year(id) < reach);
+        const first = Math.min(...older.map(year));
+        return older.filter((id) => year(id) === first);
+      }],
+      ['random', () => free],
+    ];
+    for (const [rule, pool] of rules) {
+      const list = pool();
+      if (list.length) return { eraId: roll(list), rule };
+    }
+    return null;
+  }
   function autoStep() {
     const s = S();
     for (const d of s.dispatches.filter((x) => !x.claimed && x.readyDay <= day())) claim(d.id);
@@ -353,17 +386,14 @@ export function createOffice(X) {
     restock();
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
     const stories = D.get('catalog.events').map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
-    if (!eras.length && !stories.length) return;
     for (const staffId of hiredIds()) {
       if (staffState(staffId) !== 'ready') continue;
-      const count = (id) => s.dispatches.filter((d) => d.eraId === id).length;
-      // the places with a full simulation come first, a brief scene only when all of them are taken
-      let free = eras.filter((id) => !eraBusy(id));
-      if (!free.length) free = stories.filter((id) => !eraBusy(id));
+      const free = [...eras, ...stories].filter((id) => !eraBusy(id));
       if (!free.length) break;
-      const eraId = [...free].sort((a, b) => count(a) - count(b))[0];
-      if (stories.includes(eraId)) { launchLight(eraId, staffId, (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, {}, { auto: true }); continue; }
-      launch(eraId, { seed: (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1, staffId, items: autoKit(eraId), }, { auto: true });
+      const { eraId } = pickPlace(staffId, free);
+      const seed = (s.seq + 1) * D.get('config.engine.mc_seed_stride') % D.get('config.engine.seed_max') + 1;
+      if (stories.includes(eraId)) { launchLight(eraId, staffId, seed, {}, { auto: true }); continue; }
+      launch(eraId, { seed, staffId, items: autoKit(eraId) }, { auto: true });
     }
     ctx.save();
   }
@@ -380,5 +410,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, wageOf, wageTotal, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, alerts, stageIndex, hiredIds };
+  return { launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }
