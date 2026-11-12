@@ -1,22 +1,22 @@
-# What an employee is: five attributes from 1 to 10 that the player sees, and nothing hidden behind them.
+# What an employee is: five attributes from 1 to 10 that the player sees, and nothing hidden behind them: order, wit, constitution, finesse and will.
 # Traits do not change the attributes. A trait is worth something at the sync points of a place, and costs something there.
 attributes:
-  - constitution
+  - lawful
   - wit
+  - constitution
   - finesse
   - will
-  - desire
 default_base:
-  constitution: 5
+  lawful: 5
   wit: 5
+  constitution: 5
   finesse: 5
   will: 5
-  desire: 5
 default_habit:
   focus: balanced
   on_block: yield
 # The era models were written against finer quantities. Each is a plain function of one attribute, and at 5 each is what the models always had.
-# A weak will means homesickness and being hurt by hostility, a weak constitution means catching disease, and a high desire means greed and little kindness.
+# A weak will means homesickness and being hurt by hostility, a weak constitution means catching disease, and the order of an employee is not a stat of the models: it is how orderly or chaotic they are, and scenes will ask for either end.
 stats:
   - stamina
   - skill
@@ -25,7 +25,6 @@ stats:
   - stubbornness
   - curiosity
   - homesick_trait
-  - greed
   - hurt
   - infect
 derive:
@@ -36,6 +35,5 @@ derive:
   stubbornness: {from: will, scale: 0.04, offset: 0}
   homesick_trait: {from: will, scale: -0.08, offset: 0.6}
   hurt: {from: will, scale: -0.08, offset: 0.6}
-  greed: {from: desire, scale: 0.14, offset: -0.7}
-  kindness: {from: desire, scale: -0.04, offset: 0.4}
+  kindness: {offset: 0.2}
   infect: {from: constitution, scale: -0.2, offset: 1}
