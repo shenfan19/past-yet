@@ -183,6 +183,8 @@ export function createUI(D, ctx) {
   st.form = newForm(visibleEras()[0]);
   worldMap.attach(view);
   restoreUiState();
+  // a new game opens with the welcome, which stays until it has been read
+  if (ctx.S().welcomed === false && !st.modal) st.modal = { kind: 'welcome' };
 
   // ---------- interface state over a language switch ----------
   // The game itself is in localStorage. The page and the filters live here, so a switch of language comes back to the same place.
@@ -192,7 +194,7 @@ export function createUI(D, ctx) {
       view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
       const key = st.sub ? 'sub:' + st.sub : st.tab;
       sessionStorage.setItem(UI_KEY, JSON.stringify({
-        tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
+        tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki', 'welcome'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
         wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
       }));
     } catch (e) { /* storage blocked, the switch just starts fresh */ }
@@ -205,7 +207,7 @@ export function createUI(D, ctx) {
       const o = JSON.parse(raw);
       if (o.tab in U.tabs) st.tab = o.tab;
       if (o.pager) st.pager = o.pager;
-      if (o.modal && ['settings', 'about', 'wiki'].includes(o.modal.kind)) st.modal = o.modal;
+      if (o.modal && ['settings', 'about', 'wiki', 'welcome'].includes(o.modal.kind)) st.modal = o.modal;
       if (o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) { st.sub = o.sub; st.back = o.back in U.tabs ? o.back : 'home'; st.vs = !!o.vs; }
       st.opened = new Set(o.opened || []);
       if (o.filters) st.filters = o.filters;
@@ -704,11 +706,38 @@ export function createUI(D, ctx) {
       <div class="sec" style="clear:both">${U.office.staff_trips}</div>${list}`;
   }
 
+  // ---------- the welcome of a new game ----------
+  // The language, what the game is, how it is played, the places open at the start with a way to draw the random ones again, and the notice about the people in it.
+  function welcomeHtml() {
+    const S = ctx.S();
+    const W = U.welcome;
+    const M = D.get('config.meta');
+    const places = S.locks.map((id) => D.get('antiques.antiques.' + id)).filter((an) => an.era || an.event).map((an) => {
+      const era = !!an.era;
+      const id = era ? an.era : an.event;
+      return `<li><b>${fmtYear(D, yearOfPlace(id, !era))}</b> ${esc(era ? T.eras[id].name : T.catalog[id].name)} <span class="muted">${esc(era ? T.eras[id].place_name : T.catalog[id].place)}</span>${era ? ` <span class="chip">${W.tutorial}</span>` : ''}</li>`;
+    }).join('');
+    const disclaimer = W.disclaimer.split('{issues}');
+    return `<div class="welcome">
+      <h2>${esc(U.title)} · ${esc(W.title)}</h2>
+      <div class="row">${langHtml()}</div>
+      <p>${esc(W.story)}</p>
+      <div class="sec">${W.how_title}</div><ol class="steps">${W.how.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
+      <div class="sec">${W.places_title}</div><p class="muted">${esc(W.places_hint)}</p>
+      <ul class="startplaces">${places}</ul>
+      <p><button class="ghost" data-act="rerollstart" ${S.seq > 0 || !S.startRandom ? 'disabled' : ''}>${W.reroll}</button></p>
+      <div class="sec">${W.disclaimer_title}</div>
+      <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${W.issues}</a>${esc(disclaimer[1] || '')}</p>
+      <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart">${W.begin}</button></p>
+    </div>`;
+  }
+
   // ---------- pop-up ----------
   // One pop-up at a time over the page. The dispatch pop-up holds the story, who goes, what they carry and the send button, so a trip is made
   // in one place and then shows in the log below. The share pop-up holds the card of a trip. A click on the dark ground, the cross or Escape closes it.
   // Closing the wiki gives back the pop-up it was opened from, if there was one, so a chain of links ends where it began.
   function closeModal() {
+    if (st.modal && st.modal.kind === 'welcome') return;
     st.modal = st.modal && st.modal.kind === 'wiki' && st.modalPrev ? st.modalPrev : null;
     st.modalPrev = null;
     render();
@@ -716,6 +745,7 @@ export function createUI(D, ctx) {
   function modalBody() {
     const m = st.modal;
     if (!m) return '';
+    if (m.kind === 'welcome') return `<div class="mbox narrow welcomebox">${welcomeHtml()}</div>`;
     if (m.kind === 'wiki') return `<div class="mbox wide wikibox">${wiki.html()}</div>`;
     if (m.kind === 'settings') return `<div class="mbox narrow">${settingsPage.html()}</div>`;
     if (m.kind === 'about') return `<div class="mbox narrow">${aboutHtml()}</div>`;
@@ -727,7 +757,7 @@ export function createUI(D, ctx) {
   }
   function renderModal() {
     const inner = modalBody();
-    const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
+    const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', st.modal.kind === 'welcome' ? '<div class="mbox' : `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
     document.body.classList.toggle('modal-open', !!html);
     if (html === modalLast) return;
     modalLast = html;
@@ -851,6 +881,8 @@ export function createUI(D, ctx) {
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
     else if (act === 'modalclose') closeModal();
+    else if (act === 'rerollstart') { office.rerollStart(); render(); }
+    else if (act === 'welcomestart') { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
     else if (act === 'modalopen') { st.modalPrev = null; st.modal = { kind: id }; render(); }
     else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; st.modal = { kind: 'staff', id }; render(); }
     else if (act === 'archive') { office.archive([id]); render(); }

@@ -44,7 +44,7 @@ Languages are the codes in `config/config.yaml` under `i18n.locales`. A language
 
 To add:
 - an event: copy a card in `events/`, give it the next `order`, write the text. Its relic becomes an antique when the game loads.
-- an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, one to three jobs, an ethnicity (one short label, not a country plus a descent), and write a short life story that fits the age, the place and the numbers: a high attribute is a gift that shows in the life, a low one is a flaw that shows too. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, that the titles of the jobs match the ids, and that every region and skin tone is used.
+- an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, one to three jobs, an ethnicity (one short label that names a people or a descent, such as Igbo, Han or African descent, never a place and never a country plus a descent such as African American; where the person lives belongs in the story), and write a short life story that fits the age, the place and the numbers: a high attribute is a gift that shows in the life, a low one is a flaw that shows too. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, that the titles of the jobs match the ids, and that every region and skin tone is used.
 - a language: add its code to `i18n.locales`, then add that language under `text:` in the cards you want to translate and add `text/<lang>/` files. Nothing is required, English fills the gaps.
 
 After any change run the build, then `node tools/check_i18n.mjs` and `node tools/ui_check.mjs`.

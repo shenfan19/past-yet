@@ -41,12 +41,14 @@ function startAntiques() {
   const { newest, random } = O.start_scenes;
   const pool = events.slice().sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
   for (const e of pool.splice(0, newest)) out.push('relic_' + e.id);
-  for (let i = 0; i < random && pool.length; i++) out.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
-  return out;
+  const drawn = [];
+  for (let i = 0; i < random && pool.length; i++) drawn.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
+  return { all: [...out, ...drawn], random: drawn };
 }
 
 function fresh() {
-  const start = startAntiques();
+  const begin = startAntiques();
+  const start = begin.all;
   return {
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
     staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
@@ -63,6 +65,9 @@ function fresh() {
     // the antiques the office starts with are already anchored, so those places are open: the first one, the latest event, and a few at random
     locks: [...start],
     antiques: [...start],
+    // the random ones of the start, which can be drawn again until the first trip, and whether the welcome has been read
+    startRandom: begin.random,
+    welcomed: false,
   };
 }
 

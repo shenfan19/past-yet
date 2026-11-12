@@ -245,6 +245,21 @@ export function createOffice(X) {
     return true;
   }
 
+  // Until the first trip goes out the two random places of the start can be drawn again, other than the ones they were.
+  function rerollStart() {
+    const s = S();
+    if (s.seq > 0 || !s.startRandom) return false;
+    const out = new Set(s.startRandom);
+    const pool = D.get('catalog.events').filter((e) => !s.locks.includes('relic_' + e.id));
+    const next = [];
+    for (let i = 0; i < O.start_scenes.random && pool.length; i++) next.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
+    s.locks = s.locks.filter((x) => !out.has(x)).concat(next);
+    s.antiques = s.antiques.filter((x) => !out.has(x)).concat(next);
+    s.startRandom = next;
+    ctx.save();
+    return true;
+  }
+
   // ---------- antiques ----------
   // A spare is a copy beyond the first of an antique. The first copy stays, anchored or not.
   const copies = (id) => S().antiques.filter((x) => x === id).length;
@@ -546,5 +561,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { rerollStart, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

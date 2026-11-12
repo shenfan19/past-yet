@@ -44,6 +44,17 @@ try {
   const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&dev=1`);
   await page.waitForSelector('.lead');
+  // a new game opens with the welcome: it cannot be closed from outside, shows the start places, the notice about the people, and begins on the button
+  await page.waitForSelector('#modal .welcome');
+  ok('a new game opens with the welcome and its notice about the people in the game', (await page.locator('#modal .welcome a[href*=issues]').count()) === 1 && (await page.locator('#modal .welcome .startplaces li').count()) === 4 && (await page.locator('#modal .mclose').count()) === 0);
+  await page.keyboard.press('Escape');
+  await page.mouse.click(5, 5);
+  ok('the welcome does not close on Escape or on a click beside it', (await page.locator('#modal .welcome').count()) === 1);
+  const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
+  await page.click('[data-act=rerollstart]');
+  ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 4);
+  await page.click('[data-act=welcomestart]');
+  ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
   ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
