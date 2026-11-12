@@ -143,7 +143,7 @@ It only touches funds, antiques and dispatches. Employees do not die.
 
 - English is the fallback and must be complete. Simplified Chinese is the second language. Any missing key reads English. `node tools/check_i18n.mjs` checks the files against English.
 - The music is a few piano pieces played by a small Web Audio synthesiser from MIDI files, and the sound effects are tones the page makes itself. There is no sampled audio.
-- A report can be shared as a card with the title, a line about the trip, the address and a QR code, as a picture to save or copy.
+- A trip can be shared from its report. The card opens in a pop-up, not on a page of its own, and closes with a click beside it, the cross or Escape. It tells the story of the trip in a few lines. A simulated place shows its two curves against the mainline, a small story shows its sync points, and there is no table of numbers on it. It has the address and a QR code, as a picture to save or copy.
 - The theme follows the system and can be set to light or dark. Quotes from historians and scientists rotate in the header.
 
 ## Checks
@@ -182,9 +182,13 @@ The game is MIT licensed. The music files are from the Mutopia Project, public d
 
 A catalogue event with `regret: true` is a story history treated unjustly: an early death, a lost work, a stolen credit, a lonely life. It is always a scene with three points, exactly one of them marked `redeem: true`. History cannot be changed, so the traveller never prevents the outcome. The first two stars are company and attention, the redeem star is the thing the traveller can give inside history as it happened. The redeem point is shown as a heart, is never a pure luck roll, and about a third of them need special equipment, which is what the auto mode buys equipment for. A regret carries the tag regret. `node tools/check_logic.mjs` fails a regret without exactly one redeem point.
 
-## Log, archive and the history of a place
+## Log, reports and the history of a place
 
-The log of dispatches scrolls in its own box. A finished trip can be archived, which only hides it from the log, and brought back with Restore or the Show archived box. Nothing is deleted by hand. Full reports are kept for `office.max_archive` finished trips, the archived ones dropped first, and a one line summary of every trip is kept for good up to `office.max_trips`. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome. A report opens from that list while it is still stored.
+The log of dispatches scrolls in its own box and is read from the one line summary of every trip, which is kept for good up to `office.max_trips`, so the log never loses a row. Full reports are kept per place: the best one (most stars, then the newest, `office.keep_best`) and the latest (`office.keep_latest`), so a report that is not among them can no longer be opened, but its line stays. There is nothing to archive or delete by hand. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome.
+
+## Pop-ups and the dispatch desk
+
+Picking an event on the map or in its list does not unfold anything on the page. It opens a pop-up with the story, who goes, what they carry and the send button, so a trip is made in one place. Sending closes the pop-up and the trip shows at the top of the log below. A click on the dark ground, the cross or Escape closes any pop-up.
 
 ## Auto mode and equipment
 

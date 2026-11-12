@@ -162,8 +162,8 @@ export function createWorldMap(X) {
     setWindow(d.yc + (1 - f) ** 2 * span, span);
   }
 
-  // The events of a place are rows. The picked one opens to its story, and only one is open at a time. Picking it again closes it.
-  // Before a place is picked the place of the event that is already chosen is shown, so the story is never missing.
+  // The events of a place are rows. Picking one opens the dispatch pop-up with its story, who goes and what they carry.
+  // Before a place is picked the place of the event that is already chosen is shown, so the list is never missing.
   function eventRows() {
     const s = m();
     const own = events().find(isSel);
@@ -171,8 +171,7 @@ export function createWorldMap(X) {
     if (!p) return `<p class="muted">${M.pick_event}</p>`;
     return `<div class="muted">${M.events_here}</div>` + p.events.sort((a, b) => a.year - b.year).map((e) => {
       const i = info(e);
-      const open = isSel(e) && !s.collapsed;
-      return `<div class="evitem"><div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><span class="evcaret">${open ? '▾' : '▸'}</span> <b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e)) : ''} ${i.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>${open ? `<div class="evstory">${X.storyFor(e)}</div>` : ''}</div>`;
+      return `<div class="evitem"><div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e)) : ''} ${i.tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('')}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div></div>`;
     }).join('');
   }
 
@@ -303,7 +302,7 @@ export function createWorldMap(X) {
       s.place = id;
       const p = places()[id];
       if (p && p.events.length === 1 && (DEV || !p.events[0].locked)) {
-        s.collapsed = false; const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } }
+        const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } X.st.modal = { kind: 'dispatch' }; }
       return true;
     }
     if (a === 'mapevent') {
@@ -311,9 +310,8 @@ export function createWorldMap(X) {
       if (!e) return false;
       s.place = e.place;
       if (e.locked && !DEV) return true;
-      if (isSel(e)) { s.collapsed = !s.collapsed; return true; }
-      s.collapsed = false;
       if (e.catalog) s.cat = id; else { s.cat = null; X.selectEra(id); }
+      X.st.modal = { kind: 'dispatch' };
       return true;
     }
     if (a === 'maptag') { s.tag = id; return true; }
@@ -334,7 +332,7 @@ export function createWorldMap(X) {
 
   function init() {
     const A = D.get('map.axis');
-    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, collapsed: false, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
+    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
   }
   // the events of the picked place, drawn by the page where it wants them
   const eventsBox = () => `<div id="map-events">${eventRows()}</div>`;

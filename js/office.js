@@ -130,16 +130,18 @@ export function createOffice(X) {
   }
   ensureTrips();
   const tripsOf = (placeId) => S().trips.filter((t) => t.place === placeId).reverse();
-  // Archiving only hides a finished trip from the log, nothing is deleted. Old reports are dropped by max_archive, oldest archived first.
-  function archive(ids) {
-    const set = new Set(ids);
-    for (const d of S().dispatches) if (d.claimed && set.has(d.id)) d.archived = true;
-    ctx.save();
-  }
-  function unarchive(ids) {
-    const set = new Set(ids);
-    for (const d of S().dispatches) if (set.has(d.id)) d.archived = false;
-    ctx.save();
+  // Full reports are kept per place, the best one (most stars, then the newest) and the latest. Every other report goes, its summary stays.
+  function pruneReports() {
+    const s = S();
+    const keep = new Set();
+    const byPlace = {};
+    for (const x of s.dispatches.filter((y) => y.claimed)) (byPlace[x.eraId] ||= []).push(x);
+    for (const list of Object.values(byPlace)) {
+      const newest = (a, b) => b.claimedAt - a.claimedAt;
+      list.slice().sort((a, b) => (b.stars || 0) - (a.stars || 0) || newest(a, b)).slice(0, O.keep_best).forEach((x) => keep.add(x.id));
+      list.slice().sort(newest).slice(0, O.keep_latest).forEach((x) => keep.add(x.id));
+    }
+    s.dispatches = s.dispatches.filter((x) => !x.claimed || keep.has(x.id));
   }
 
   function claim(id) {
@@ -179,13 +181,7 @@ export function createOffice(X) {
     }
     record(d);
     s.dispatches.sort((a, b) => (a.claimedAt ?? Infinity) - (b.claimedAt ?? Infinity));
-    const closed = s.dispatches.filter((x) => x.claimed);
-    if (closed.length > O.max_archive) {
-      // the archived ones go first, then the oldest
-      const order = closed.slice().sort((a, b) => (b.archived ? 1 : 0) - (a.archived ? 1 : 0) || a.claimedAt - b.claimedAt);
-      const drop = new Set(order.slice(0, closed.length - O.max_archive).map((x) => x.id));
-      s.dispatches = s.dispatches.filter((x) => !drop.has(x.id));
-    }
+    pruneReports();
     ctx.save();
     return d;
   }
@@ -254,6 +250,7 @@ export function createOffice(X) {
     sf.favor = clamp(sf.favor - RC.favor_loss, F.min, F.max);
     d.favorDelta = -RC.favor_loss;
     record(d);
+    pruneReports();
     ctx.save();
     return { ok: true, d };
   }
@@ -458,7 +455,8 @@ export function createOffice(X) {
     const s = S();
     const roll = (list) => ctx.backend.pick(list, s.seq + 1, 'auto_place|' + staffId);
     const year = ctx.backend.placeYear;
-    const mine = s.dispatches.filter((d) => d.spec.staffId === staffId);
+    // the trips of this person from the summaries that are kept for good, and the one in transit
+    const mine = [...s.trips.filter((t) => t.staffId === staffId).map((t) => ({ eraId: t.place })), ...s.dispatches.filter((d) => !d.claimed && d.spec.staffId === staffId)];
     const tries = (id) => mine.filter((d) => d.eraId === id).length;
     const seed = nextSeed();
     const isStory = (id) => stories.includes(id);
@@ -518,5 +516,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wageOf, planLight, buyItem, tripsOf, archive, unarchive, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { wageOf, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

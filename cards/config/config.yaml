@@ -34,8 +34,9 @@ office:
   gift_funds: 120
   energy_per_change: 6
   max_plots: 2
-  # full reports kept for finished trips; the one line summaries of the trips (max_trips) are kept far longer and feed the history of a place
-  max_archive: 60
+  # Full reports are kept per place: the best result (most stars, then the newest) and the latest. The one line summaries of the trips (max_trips) are kept far longer and feed the log and the history of a place.
+  keep_best: 1
+  keep_latest: 1
   max_trips: 2000
   hire_cost: 100
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
@@ -109,6 +110,7 @@ ui:
   timeline_max: 9
   recent_reports: 8
   search_delay_ms: 30
+  log_rows: 200
   box_h: {log: 320, story: 300, home_staff: 260, pick_staff: 520, carry: 200, plots: 170, shop: 300, inv: 220, ants: 240}
   chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1}
   tooltip: {offset: 14, edge: 4}
@@ -178,4 +180,4 @@ settings:
 share:
   file_name: teleporter_share.png
   colors: {bg: '#f1e8d4', ink: '#2b241b', ink2: '#6b5f4d', stamp: '#b3382c', line: '#cdbf9f', qr_bg: '#f8f2e3'}
-  canvas: {w: 1200, h: 630, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, logo_tilt_deg: -6}
+  canvas: {w: 1200, h: 960, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, logo_tilt_deg: -6}

@@ -311,11 +311,17 @@ ul.stages li.dim { color: var(--ink2); }
 .starmark { color: #d4a017; }
 .warnline { color: var(--stamp); font-weight: 600; }
 
-/* the log of dispatches scrolls inside its box, the head stays in view, archived rows are dimmed */
+/* the log of dispatches scrolls inside its box, the head stays in view */
 .logtable thead th { position: sticky; top: 0; background: var(--paper); z-index: 1; }
-.logtable tr.archived td { opacity: .55; }
-.logbar { gap: 12px; align-items: center; margin: 6px 0; }
-.logbar .check { display: inline-flex; gap: 6px; align-items: center; }
 /* the trips that came home from one place */
 .trips { list-style: none; padding: 0; margin: 4px 0 0; }
 .trips li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 3px 0; border-bottom: 1px dotted var(--line, #cdbf9f); }
+
+/* the pop-up over the page: a click on the dark ground closes it */
+.modalbg { position: fixed; inset: 0; background: #0007; z-index: 60; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 24px 12px; }
+body.modal-open { overflow: hidden; }
+.mwrap { position: relative; width: min(1000px, 100%); }
+.mbox { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.mbox.wide .desk .lbox { height: 300px; }
+.mclose { position: absolute; top: 8px; right: 8px; z-index: 2; }
+.share canvas { width: 100%; max-width: 760px; height: auto; border: 1px solid var(--line); }

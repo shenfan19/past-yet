@@ -39,6 +39,7 @@ try {
   await page.screenshot({ path: path.join(outDir, '1_office.png'), fullPage: true });
   // dispatch through the world map
   // tooltip on a trait chip, and a staff link opens the wiki with only its category expanded
+  await page.evaluate(() => { window.__game.ui.state.modal = { kind: 'dispatch' }; window.__game.ui.render(); });
   await page.hover('a.chip.tr >> nth=0');
   ok('trait tooltip shows', (await page.locator('#tip').isVisible()) && (await page.locator('#tip').innerText()).length > 0);
   await page.click('a.wl[data-id="staff:s_ning"] >> nth=0');
@@ -70,21 +71,27 @@ try {
   await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 12; m.cx = 179.86; m.cy = 32.5; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   await page.click('.evrow[data-id=broad_street_1854]');
-  ok('picking the open event again closes it', (await page.locator('.evitem .evstory').count()) === 0);
+  ok('a click on an event opens a pop-up and nothing unfolds in the list', (await page.locator('#modal .mbox').count()) === 1 && (await page.locator('.evitem .evstory').count()) === 0);
+  await page.mouse.click(5, 5);
+  ok('a click on the dark ground closes the pop-up', (await page.locator('#modal .mbox').count()) === 0);
   await page.click('.evrow[data-id=broad_street_1854]');
+  await page.keyboard.press('Escape');
+  ok('Escape closes it too', (await page.locator('#modal .mbox').count()) === 0);
   await page.fill('#map-q', 'xyz-no-match');
   ok('filter hides all pins', (await page.locator('svg.map .pt').count()) === 0);
   await page.fill('#map-q', '');
   ok('filter restore pins', (await page.locator('svg.map .pt').count()) > 2);
+  await page.click('.evrow[data-id=broad_street_1854]');
   await page.click('[data-act=autocfg]');
   await page.waitForSelector('.lpin [data-act=dec]', { timeout: 60000 });
   ok('auto configure puts a kit in the carry box', true);
-  ok('the open event shows its story under the full width map, one at a time, and who goes and what they carry take a half each', (await page.locator('.evitem .evstory').count()) === 1 && (await page.locator('.cols2.desk > div').count()) === 2);
-  ok('plots are not picked by hand, the story names the ideas', (await page.locator('[data-act=plotpick]').count()) === 0 && (await page.locator('.evstory ul li').count()) >= 1);
+  ok('the pop-up holds the story, who goes and what they carry in a half each, and the send button', (await page.locator('#modal .mbox .lbox').count()) >= 3 && (await page.locator('#modal .cols2.desk > div').count()) === 2 && (await page.locator('#modal [data-act=send]').count()) === 1);
+  ok('plots are not picked by hand, the story names the ideas', (await page.locator('[data-act=plotpick]').count()) === 0 && (await page.locator('#modal .lbox ul li').count()) >= 1);
   await page.click('[data-act=pickstaff][data-id=s_zhou]');
   ok('picked staff is marked', (await page.locator('.pickrow.on a.wl[data-id="staff:s_zhou"]').count()) === 1);
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
+  ok('sending closes the pop-up and the trip shows in the log below', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('.logtable .outrow').count()) >= 1);
   await page.waitForSelector('[data-act=ff]');
   await page.click('[data-act=ff]');
   await page.waitForSelector('[data-act=claim]');
@@ -94,9 +101,9 @@ try {
   ok('the report lists three sync points and the stars are the ones hit', await page.evaluate(() => { const hit = document.querySelectorAll('.sync li.hit').length; return document.querySelectorAll('.sync li').length === 3 && document.querySelector('.stars') && document.querySelector('.stars').classList.contains('s' + hit); }));
   ok('the milestone lines of the points are highlighted in the timeline', (await page.locator('.tl li.star').count()) === (await page.locator('.sync li.hit').count()));
   await page.screenshot({ path: path.join(outDir, '4_report.png'), fullPage: true });
-  // the share page draws a card with a QR code that reads back as the site address
+  // the share pop-up draws a card with a QR code that reads back as the site address
   await page.click('[data-act=shareopen]');
-  await page.waitForSelector('#sharecanvas');
+  await page.waitForSelector('#modal #sharecanvas');
   await page.screenshot({ path: path.join(outDir, '4b_share.png'), fullPage: true });
   const shareUrl = await page.evaluate(() => window.__game.D.get('config.meta.links.site'));
   const png = await page.evaluate(() => document.getElementById('sharecanvas').toDataURL('image/png'));
@@ -109,8 +116,8 @@ try {
     ok('share card QR reads back as the site address', !!found && found.data === shareUrl);
   }
   ok('share page has save and copy', (await page.locator('[data-act=sharesave]').count()) === 1 && (await page.locator('[data-act=sharecopy]').count()) === 1);
-  await page.click('[data-act=shareback]');
-  await page.waitForSelector('.tl');
+  await page.mouse.click(5, 5);
+  ok('the share pop-up closes on a click beside it and the report stays', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('.tl').count()) === 1);
   const inv = await page.evaluate(() => window.__game.ctx.S().inv);
   ok('stock was consumed', inv.chlorine_tablet < 40 || inv.ors_pack < 40 || inv.handbook < 1);
   const before = await page.evaluate(() => window.__game.ctx.S().energy);
@@ -155,7 +162,7 @@ try {
   await page.click('.jumps a[data-id=shop-future]');
   ok('a link scrolls to its section', (await page.locator('#shop-future').count()) === 1);
   await page.click('[data-tab=home]');
-  ok('the travel page has a bar of links to its sections at the top', (await page.locator('.jumps a[data-act=aboutjump]').count()) === 3);
+  ok('the travel page has a bar of links to its sections at the top', (await page.locator('.jumps a[data-act=aboutjump]').count()) === 2);
   await page.click('[data-tab=shop]');
   await page.evaluate(() => { window.__game.ctx.S().energy = 100; window.__game.ui.render(); });
   ok('special equipment is locked until the energy reaches its number', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 0 && (await page.locator('[data-act=cartinc][data-id=neural_chip]').count()) === 1);
@@ -231,6 +238,7 @@ try {
   await page.click('.evrow[data-id=vienna_1847]');
   await page.screenshot({ path: path.join(outDir, '7_dispatch_vienna.png'), fullPage: true });
   ok('vienna sendable after buying its antique', !(await page.locator('[data-act=send]').isDisabled()));
+  await page.keyboard.press('Escape');
   // wiki
   await page.click('[data-tab=enc]');
   await page.waitForSelector('.wiki');
@@ -351,9 +359,9 @@ try {
   const pk = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     const free = ['broad_street_1854', 'vienna_1847', 'ev_a'].slice(0, 2);
-    const keep = { visited: [...S.visited], stars: { ...S.stars }, dispatches: S.dispatches };
+    const keep = { visited: [...S.visited], stars: { ...S.stars }, dispatches: S.dispatches, trips: S.trips };
     const id = Object.keys(S.staff).find((k) => S.staff[k].hired);
-    S.dispatches = [];
+    S.dispatches = []; S.trips = [];
     S.visited = ['vienna_1847']; S.stars = { vienna_1847: 3 };
     const r1 = off.pickPlace(id, free);
     S.visited = ['broad_street_1854', 'vienna_1847']; S.stars = { broad_street_1854: 3, vienna_1847: 2 };
@@ -466,7 +474,8 @@ try {
   await page.click('[data-tab=home]');
   ok('guest map draws only anchored places', await page.evaluate(() => { const S = window.__game.ctx.S(); const pins = document.querySelectorAll('svg.map .pt').length; return pins >= 2 && pins <= S.locks.length; }) && !(await page.locator('svg.map').innerHTML()).includes('牛顿'));
   await page.evaluate(() => { const S = window.__game.ctx.S(); window.__saved_visited = S.visited; S.visited = []; window.__game.ui.render(); });
-  ok('an anchored place nobody has been to is a question mark but can be picked', (await page.locator('svg.map .pt text').first().textContent()).includes('?') && (await page.locator('[data-act=send]').count()) === 1);
+  ok('an anchored place nobody has been to is a question mark but can be picked', (await page.locator('svg.map .pt text').first().textContent()).includes('?') && await page.evaluate(() => { window.__game.ui.state.modal = { kind: 'dispatch' }; window.__game.ui.render(); document.querySelector('#modal'); return 1; }) === 1 && (await page.locator('#modal [data-act=send]').count()) === 1);
+  await page.keyboard.press('Escape');
   await page.evaluate(() => { window.__game.ctx.S().visited = window.__saved_visited; window.__game.ui.render(); });
   // a catalogue relic reveals its event on the map and in the wiki, but nobody can be sent there
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 5000; window.__game.ctx.save(); });
@@ -478,6 +487,7 @@ try {
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   ok('a relic puts its event in the list of its place', (await page.locator('.evrow[data-id=newton_cambridge]').count()) === 1);
   await page.click('.evrow[data-id=newton_cambridge]');
+  await page.keyboard.press('Escape');
   // typing in the year box while the clock runs a trip must not be interrupted by the redraw of the page
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0; g.ui.office.launch('broad_street_1854', { seed: 3, staffId: 's_ning', items: {} }); S.clock.speed = 1; g.ui.render(); });
   await page.click('#map-from', { clickCount: 3 });
@@ -488,7 +498,6 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
   await page.click('.evrow[data-id=newton_cambridge]');
-  if (!(await page.locator('.evstory').count())) await page.click('.evrow[data-id=newton_cambridge]');
   ok('an anchored catalogue event shows its card and can be gone to', (await page.locator('.lbox').filter({ hasText: '牛顿' }).count()) >= 1 && !(await page.locator('[data-act=send]').isDisabled()));
   await page.click('[data-act=send]');
   await page.waitForSelector('.outrow');
@@ -563,25 +572,17 @@ try {
   await page.mouse.up();
   ok('a slow click on a tab is not lost to the clock', (await page.locator('#tabs button.on').getAttribute('data-tab')) === 'shop');
   await page.selectOption('[data-clk=speed]', '0');
-  // the log scrolls, finished trips can be archived and brought back, and a place lists the trips that came home from it
+  // the log scrolls, is read from the kept summaries, and a place lists the trips that came home from it
   await page.click('[data-tab=home]');
   const lg = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S();
     const claimed = S.dispatches.filter((d) => d.claimed);
-    return { claimed: claimed.length, trips: (S.trips || []).length, boxed: !!document.querySelector('#view .lscroll[data-keep=log] table.logtable'), first: claimed.length ? claimed[claimed.length - 1].id : null, place: claimed.length ? claimed[claimed.length - 1].eraId : null };
+    return { claimed: claimed.length, trips: (S.trips || []).length, boxed: !!document.querySelector('#view .lscroll[data-keep=log] table.logtable'), place: claimed.length ? claimed[claimed.length - 1].eraId : null, rows: document.querySelectorAll('.logtable tbody tr').length, gone: document.querySelectorAll('.logtable tbody tr').length, perPlace: Math.max(0, ...Object.values(claimed.reduce((a, d) => ((a[d.eraId] = (a[d.eraId] || 0) + 1), a), {}))) };
   });
   ok('the log sits in a scrolling box', lg.boxed);
   ok('every finished trip has a summary that is kept', lg.claimed > 0 && lg.trips >= lg.claimed);
-  const rowsOf = () => page.evaluate(() => document.querySelectorAll('.logtable tbody tr').length);
-  const r0 = await rowsOf();
-  await page.click(`[data-act=archive][data-id=${lg.first}]`);
-  ok('archiving hides the trip from the log', (await rowsOf()) === r0 - 1);
-  ok('and deletes nothing', await page.evaluate((id) => window.__game.ctx.S().dispatches.some((d) => d.id === id && d.archived), lg.first));
-  await page.check('[data-act=showarchived]');
-  ok('archived trips can be shown again', (await rowsOf()) === r0);
-  await page.click(`[data-act=unarchive][data-id=${lg.first}]`);
-  await page.uncheck('[data-act=showarchived]');
-  ok('and restored', (await rowsOf()) === r0);
+  ok('the log lists every kept summary, not only the stored reports', lg.rows >= lg.claimed);
+  ok('at most the best and the latest report are stored for a place', lg.perPlace <= 2);
   const hist = await page.evaluate((place) => {
     const g = window.__game;
     const ev = g.D.get('catalog.events').find((e) => e.id === place);

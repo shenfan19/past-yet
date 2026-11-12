@@ -45,14 +45,14 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
-  const st = { showArchived: false, tab: 'home', sub: null, share: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', sub: null, modal: null, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
   // Render records the entry, so any way of changing page is covered without each place having to remember it.
   const nav = { list: [], pos: -1, sid: String(Date.now()) };
-  const navSnap = () => ({ tab: st.tab, sub: st.sub, share: st.share, back: st.back });
-  const navSame = (a, b) => a.tab === b.tab && a.sub === b.sub && a.share === b.share;
+  const navSnap = () => ({ tab: st.tab, sub: st.sub, back: st.back });
+  const navSame = (a, b) => a.tab === b.tab && a.sub === b.sub;
   function navCommit() {
     const s = navSnap();
     if (nav.pos < 0) {
@@ -136,6 +136,8 @@ export function createUI(D, ctx) {
   const starsHtml = (n) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
   const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(textOf(p.id))}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>`;
+  const yearOfPlace = (id, light) => (light ? D.get('catalog.events').find((x) => x.id === id).year : ctx.era(id).raw.metadata.era.year);
+  const shortOfPlace = (id, light) => (light ? T.catalog[id].place : T.eras[id].short);
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
   const placeName = (d) => (d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name);
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
@@ -161,6 +163,11 @@ export function createUI(D, ctx) {
   const worldMap = createWorldMap(X);
   const settingsPage = createSettingsPage(X);
   const share = createShare(X);
+  // the pop-up layer, made before anything is drawn
+  const modalEl = document.createElement('div');
+  modalEl.id = 'modal';
+  document.body.appendChild(modalEl);
+  let modalLast = '';
   st.map = worldMap.init();
   st.form = newForm(visibleEras()[0]);
   worldMap.attach(view);
@@ -267,7 +274,7 @@ export function createUI(D, ctx) {
     const S = ctx.S();
     const rows = hiredIds().map((id) => {
       const mine = reports().filter((d) => d.spec.staffId === id);
-      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, last: mine[0], count: mine.length };
+      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, last: mine[0], count: S.trips.filter((x) => x.staffId === id).length };
     });
     const pk = office.perks();
     const perkText = Object.entries(pk).filter(([, v]) => v !== 0).map(([k, v]) => `${U.office.perks[k]} ${k === 'rest_cut' ? '−' : (v > 0 ? '+' : '')}${Math.round(Math.abs(v) * 100)}%`).join(' · ');
@@ -339,16 +346,13 @@ export function createUI(D, ctx) {
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `${recallBtn} ${DEV ? `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>` : ''}`;
       return `<tr class="outrow"><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">${acts}</td></tr>`;
     });
-    const finished = reports();
-    const shown = finished.filter((d) => st.showArchived || !d.archived);
-    const done = shown.map((d) => `<tr${d.archived ? ' class="archived"' : ''}><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${starsHtml(d.stars || 0)}${d.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num"><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button> <button class="ghost" data-act="${d.archived ? 'unarchive' : 'archive'}" data-id="${d.id}">${d.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
+    const keptIds = new Set(ctx.S().dispatches.filter((d) => d.claimed).map((d) => d.id));
+    const trips = ctx.S().trips.slice().reverse().slice(0, D.get('config.ui.log_rows'));
+    const done = trips.map((t) => `<tr><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : ''}</td></tr>`);
     const rows = out.concat(done).join('');
-    const open = finished.filter((d) => !d.archived).length;
-    const bar = finished.length ? `<div class="row logbar"><button class="ghost" data-act="archiveall" ${open ? '' : 'disabled'}>${U.office.archive_all}</button><label class="check"><input type="checkbox" data-act="showarchived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${finished.length - open})</label></div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
-      ${bar}
-      ${rows ? `<div class="lscroll" data-keep="log" style="max-height:${D.get('config.ui.box_h.log')}px"><table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="muted">${finished.length ? U.office.log_empty_hidden : U.report.none}</p>`}`;
+      ${rows ? `<div class="lscroll" data-keep="log" style="max-height:${D.get('config.ui.box_h.log')}px"><table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
@@ -625,22 +629,53 @@ export function createUI(D, ctx) {
     fixForm();
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
-      ${jumpBar([['home-map', U.dispatch.era], ['home-desk', U.dispatch.staff], ['home-log', U.office.log]])}
+      ${jumpBar([['home-map', U.dispatch.era], ['home-log', U.office.log]])}
       <div class="sec" id="home-map">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
       ${worldMap.html()}
       ${worldMap.eventsBox()}
-      ${deskHtml()}
       ${officeHtml()}`;
   }
+
+  // ---------- pop-up ----------
+  // One pop-up at a time over the page. The dispatch pop-up holds the story, who goes, what they carry and the send button, so a trip is made
+  // in one place and then shows in the log below. The share pop-up holds the card of a trip. A click on the dark ground, the cross or Escape closes it.
+  function modalBody() {
+    const m = st.modal;
+    if (!m) return '';
+    if (m.kind === 'dispatch') return `<div class="mbox wide">${storyBoxHtml()}${deskHtml()}</div>`;
+    const d = share.dispatch(m.id);
+    return d ? `<div class="mbox">${share.html(d)}</div>` : '';
+  }
+  function renderModal() {
+    const inner = modalBody();
+    const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
+    document.body.classList.toggle('modal-open', !!html);
+    if (html === modalLast) return;
+    modalLast = html;
+    const keeps = {};
+    modalEl.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
+    const scroll = modalEl.querySelector('.modalbg') ? modalEl.querySelector('.modalbg').scrollTop : 0;
+    modalEl.innerHTML = html;
+    modalEl.querySelectorAll('[data-keep]').forEach((el) => { if (el.dataset.keep in keeps) el.scrollTop = keeps[el.dataset.keep]; });
+    const bg = modalEl.querySelector('.modalbg');
+    if (bg) bg.scrollTop = scroll;
+    if (st.modal && st.modal.kind === 'share') share.draw(share.dispatch(st.modal.id));
+  }
+  modalEl.addEventListener('click', (ev) => {
+    if (ev.target.dataset && ev.target.dataset.bg) { st.modal = null; render(); return; }
+    onClick(ev);
+  });
+  modalEl.addEventListener('change', (ev) => onChange(ev));
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && st.modal) { st.modal = null; render(); } });
 
   // ---------- render ----------
   let viewHtml = null;
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
-    const html = st.sub ? (st.share ? share.html(share.dispatch(st.sub)) : reportHtml()) : { home: homeHtml, shop: () => shop.html({ staff: staffBoxHtml(), hire: hireHtml() }), enc: wiki.html, settings: settingsPage.html, about: aboutHtml }[st.tab]();
-    const key = st.sub ? 'sub:' + st.sub + (st.share ? ':share' : '') : st.tab;
-    if (fromTick === true && html === viewHtml && key === st.lastKey) return;
+    const html = st.sub ? reportHtml() : { home: homeHtml, shop: () => shop.html({ staff: staffBoxHtml(), hire: hireHtml() }), enc: wiki.html, settings: settingsPage.html, about: aboutHtml }[st.tab]();
+    const key = st.sub ? 'sub:' + st.sub : st.tab;
+    if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(); return; }
     viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
     const keeps = {};
@@ -654,10 +689,10 @@ export function createUI(D, ctx) {
       st.pendingKeeps = null;
     }
     window.scrollTo(0, st.scrollY[key] || 0);
-    if (st.sub && st.share) share.draw(share.dispatch(st.sub));
     st.lastKey = key;
     navCommit();
     renderTabs();
+    renderModal();
     if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
   }
 
@@ -674,9 +709,12 @@ export function createUI(D, ctx) {
     ctx.audio.sfx('send');
     st.tab = 'home';
     st.sub = null;
+    st.modal = null;
     st.form.plots = [];
     renderClock();
     render();
+    const lg = document.getElementById('home-log');
+    if (lg) lg.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function claim(id) {
@@ -702,7 +740,7 @@ export function createUI(D, ctx) {
     }, D.get('config.ui.search_delay_ms'));
   }
 
-  view.addEventListener('click', (ev) => {
+  function onClick(ev) {
     const b = ev.target.closest('[data-act]');
     if (!b) return;
     const act = b.dataset.act;
@@ -716,15 +754,11 @@ export function createUI(D, ctx) {
     else if (act === 'ff') { const d = ctx.S().dispatches.find((x) => x.id === id); d.readyDay = ctx.S().clock.day; ctx.save(); render(); }
     else if (act === 'gift') { office.gift(id); render(); }
     else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
-    else if (act === 'recall') { const r = office.recall(id); if (r.ok) { st.back = st.tab; st.sub = id; st.vs = false; st.share = false; } renderClock(); render(); }
-    else if (act === 'showarchived') { st.showArchived = !st.showArchived; render(); }
-    else if (act === 'archive') { office.archive([id]); render(); }
-    else if (act === 'unarchive') { office.unarchive([id]); render(); }
-    else if (act === 'archiveall') { office.archive(reports().filter((d) => !d.archived).map((d) => d.id)); render(); }
-    else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; st.share = false; render(); }
+    else if (act === 'recall') { const r = office.recall(id); if (r.ok) { st.back = st.tab; st.sub = id; st.vs = false; st.modal = null; } renderClock(); render(); }
+    else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; st.modal = null; render(); }
     else if (act === 'fire') { office.dismiss(id); render(); }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
-    else if (act === 'wiki') { wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
+    else if (act === 'wiki') { st.modal = null; wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
     else if (act === 'wikiback') { wiki.move(-1); wiki.refresh(); }
     else if (act === 'wikifwd') { wiki.move(1); wiki.refresh(); }
@@ -733,17 +767,17 @@ export function createUI(D, ctx) {
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
     else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    else if (act === 'shareopen') { st.share = true; render(); }
-    else if (act === 'shareback') { st.share = false; render(); }
+    else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
+    else if (act === 'modalclose') { st.modal = null; render(); }
     else if (act === 'sharesave') share.save();
-    else if (act === 'sharecopy') share.copy(share.dispatch(st.sub));
-    else if (act === 'sharenative') share.send(share.dispatch(st.sub));
+    else if (act === 'sharecopy') share.copy(share.dispatch(st.modal.id));
+    else if (act === 'sharenative') share.send(share.dispatch(st.modal.id));
     else if (act === 'musictoggle') ctx.audio.toggle();
     else if (act === 'sfxtry') ctx.audio.sfx(id);
     else if (act === 'saveexport') settingsPage.exportSave();
     else if (act === 'settingsreset') { ctx.settings.reset(); render(); }
-    else if (act === 'go') { st.tab = id; st.sub = null; render(); }
-    else if (act === 'back') { st.sub = null; st.share = false; st.tab = st.back; render(); }
+    else if (act === 'go') { st.tab = id; st.sub = null; st.modal = null; render(); }
+    else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
     else if (act === 'fn') { const k = st.sub + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
@@ -756,7 +790,8 @@ export function createUI(D, ctx) {
       st.tab = 'home';
       render();
     } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
-  });
+  }
+  view.addEventListener('click', onClick);
   view.addEventListener('toggle', (ev) => {
     const t = ev.target;
     if (!t.matches) return;
@@ -788,7 +823,7 @@ export function createUI(D, ctx) {
     else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
     else if (shop.onInput(t)) render();
   });
-  view.addEventListener('change', (ev) => {
+  function onChange(ev) {
     const t = ev.target;
     if (t.id === 'lang') { changeLang(t.value); return; }
     if (settingsPage.onInput(ev)) return;
@@ -796,13 +831,14 @@ export function createUI(D, ctx) {
     if (t.dataset.act === 'saveimport' && t.files && t.files[0]) { settingsPage.importSave(t.files[0]).then((okk) => { if (okk) { st.sub = null; render(); } }); return; }
     if (t.name === 'staff') { if (staffState(t.value) === 'ready') { st.form.staffId = t.value;  } render(); }
     else if (t.id === 'seed') { st.form.seed = Number(t.value) || 1;  }
-  });
+  }
+  view.addEventListener('change', onChange);
   window.addEventListener('popstate', (ev) => {
     const n = ev.state && ev.state.sid === nav.sid ? ev.state.n : null;
     if (n === null || !nav.list[n]) return;
     nav.pos = n;
     const s = nav.list[n];
-    st.tab = s.tab; st.sub = s.sub && ctx.S().dispatches.some((d) => d.id === s.sub) ? s.sub : null; st.share = !!(st.sub && s.share); st.back = s.back;
+    st.tab = s.tab; st.sub = s.sub && ctx.S().dispatches.some((d) => d.id === s.sub) ? s.sub : null; st.modal = null; st.back = s.back;
     render();
   });
   tabsEl.addEventListener('click', (ev) => {
@@ -812,7 +848,7 @@ export function createUI(D, ctx) {
     if (!b) return;
     st.tab = b.dataset.tab;
     st.sub = null;
-    st.share = false;
+    st.modal = null;
     render();
   });
 
