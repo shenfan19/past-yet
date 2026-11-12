@@ -26,14 +26,12 @@ eras:
   - broad_street_1854
   - vienna_1847
 office:
-  start_funds: 400
+  start_funds: 800
   start_energy: 0
   home_cost: 600
   weight_capacity: 20
   # an employee can wear implants up to this load; a piece takes its own load, the big ones more than one
   implant_load_cap: 2
-  dispatch_fee: 150
-  gift_funds: 120
   energy_per_change: 6
   max_plots: 2
   # Full reports are kept per place: the best result (most stars, then the newest) and the latest. The one line summaries of the trips (max_trips) are kept far longer and feed the log and the history of a place.
@@ -41,12 +39,14 @@ office:
   keep_latest: 1
   max_trips: 2000
   hire_cost: 100
+  # the funds come only from selling antiques, and this scales what they sell for against the price on the card
+  sale_scale: 3
   # every this many three star trips of an employee give one point to a random attribute of theirs, up to 10
   threes_per_point: 3
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
   # An employee earns about 7 funds a day from trips, and the antiques sold add to that as the spares pile up, so the upkeep passes the income near seven or eight people. There is no fixed limit on the staff, the wage bill is the limit.
   # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
-  wage: {base: 3, step: 0.4, unpaid_favor: -0.02}
+  wage: {base: 2.4, step: 0.5, unpaid_favor: -0.02}
   # archived reports are kept, up to this many, the oldest go first and their lines stay
   max_archived_reports: 200
   # luck is a factor on the chances left to chance: base + per_point * luck, so one at luck 4, and no chance goes past max_chance
@@ -102,7 +102,6 @@ auto:
     ors_pack: 40
     chlorine_tablet: 40
   secretary_rules:
-    funds_min: 200
     lives_min: 10
     energy_min: 40
     safety_bad:
@@ -148,8 +147,7 @@ light:
   # the three points of a small story are reached, met and made a mark, each at a margin of the traveller against the event
   cuts: {reach: -0.1, meet: 0.08, impress: 0.2}
   kinds: [endure, persuade, trust]
-  pay: {1: {funds: 40, energy: 4}, 2: {funds: 70, energy: 8}, 3: {funds: 110, energy: 16}}
-  share: {success: 1, partial: 0.55, missed: 0.15}
+  pay: {1: {energy: 4}, 2: {energy: 8}, 3: {energy: 16}}
   rest_days: {success: 1, partial: 1, missed: 2}
   favor: {success: 0.03, partial: 0.01, missed: -0.03}
   field_weights:
@@ -167,7 +165,6 @@ light:
 scene:
   suspicion_by_tier: {1: 0.6, 2: 0.8, 3: 1.2}
   max_discovery: 0.9
-  share: {0: 0.15, 1: 0.4, 2: 0.7, 3: 1}
   # a scene that has been found out: how, the star cost, the days of rest, the favor lost, and whether the antique is lost
   found:
     reject: {at: 0.6, stars_cost: 1, rest_days: 1, favor: -0.03, keep_antique: true}

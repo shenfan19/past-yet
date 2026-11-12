@@ -27,23 +27,22 @@ eras:
   - broad_street_1854
   - vienna_1847
 office:
-  start_funds: 400
+  start_funds: 800
   start_energy: 0
   home_cost: 600
   weight_capacity: 20
   implant_load_cap: 2
-  dispatch_fee: 150
-  gift_funds: 120
   energy_per_change: 6
   max_plots: 2
   keep_best: 1
   keep_latest: 1
   max_trips: 2000
   hire_cost: 100
+  sale_scale: 3
   threes_per_point: 3
   wage:
-    base: 3
-    step: 0.4
+    base: 2.4
+    step: 0.5
     unpaid_favor: -0.02
   max_archived_reports: 200
   luck:
@@ -114,7 +113,6 @@ auto:
     ors_pack: 40
     chlorine_tablet: 40
   secretary_rules:
-    funds_min: 200
     lives_min: 10
     energy_min: 40
     safety_bad:
@@ -212,18 +210,11 @@ light:
     - trust
   pay:
     '1':
-      funds: 40
       energy: 4
     '2':
-      funds: 70
       energy: 8
     '3':
-      funds: 110
       energy: 16
-  share:
-    success: 1
-    partial: 0.55
-    missed: 0.15
   rest_days:
     success: 1
     partial: 1
@@ -275,11 +266,6 @@ scene:
     '2': 0.8
     '3': 1.2
   max_discovery: 0.9
-  share:
-    '0': 0.15
-    '1': 0.4
-    '2': 0.7
-    '3': 1
   found:
     reject:
       at: 0.6

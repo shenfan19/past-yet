@@ -19,7 +19,7 @@ export function createOffice(X) {
   const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
 
   function perks() {
-    const out = { funds_mult: 0, energy_mult: 0, rest_cut: 0, favor_gain: 0 };
+    const out = { sale_mult: 0, energy_mult: 0, rest_cut: 0, favor_gain: 0 };
     const id = S().secretary;
     if (!id) return out;
     for (const t of staffTraits(D, id)) for (const [k, v] of Object.entries(D.get('staff.traits.' + t).secretary || {})) out[k] += v;
@@ -39,7 +39,7 @@ export function createOffice(X) {
   }
   function aimMet(aim, d) {
     const R = A.secretary_rules;
-    if (aim === 'funds') return d.paid.funds >= R.funds_min;
+    if (aim === 'antiques') return !!d.paid.antique;
     if (aim === 'lives') return d.report.accounts.lives >= R.lives_min;
     if (aim === 'energy') return d.paid.energy >= R.energy_min;
     if (aim === 'safety') return !R.safety_bad.includes(d.report.outcomeId);
@@ -85,7 +85,7 @@ export function createOffice(X) {
     const d = {
       id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
       report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
-      startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: r.funds, restDays: r.restDays, antique },
+      startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
     };
     s.dispatches.push(d);
     ctx.save();
@@ -114,7 +114,7 @@ export function createOffice(X) {
     const pts = d.report.points || [];
     return {
       id: d.id, place: d.eraId, light: !!d.light, staffId: d.spec.staffId, day: Math.floor(d.startDay), back: Math.floor(d.recalled ? d.recallDay : d.readyDay),
-      stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, funds: d.paid?.funds || 0, energy: d.paid?.energy || 0,
+      stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, energy: d.paid?.energy || 0,
       antique: d.paid?.antique || null, recalled: !!d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
       redeemed: pts.some((p) => p.redeem && p.hit), archived: false,
     };
@@ -207,9 +207,8 @@ export function createOffice(X) {
     const energy = d.newBest ? d.baseEnergy * (ST.energy_share[d.stars] - ST.energy_share[best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
     const sf0 = s.staff[d.spec.staffId];
-    d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.round(d.payout.restDays * (1 - p.rest_cut)) };
+    d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), restDays: Math.round(d.payout.restDays * (1 - p.rest_cut)) };
     s.energy += d.paid.energy;
-    s.funds += d.paid.funds;
     sf0.tally ||= { 3: 0, 2: 0, 1: 0 };
     if (d.stars > 0) sf0.tally[d.stars] += 1;
     d.paid.grown = d.stars === 3 ? grow(d.spec.staffId, S().seq) : null;
@@ -292,6 +291,8 @@ export function createOffice(X) {
 
   // ---------- antiques ----------
   // A spare is a copy beyond the first of an antique. The first copy stays, anchored or not.
+  // What an antique sells for today: its price, the market of its field, and the sale bonus of the secretary.
+  const salePrice = (id) => Math.round(D.get('antiques.antiques.' + id).price * O.sale_scale * ctx.backend.marketMult(id, day()) * (1 + perks().sale_mult));
   const copies = (id) => S().antiques.filter((x) => x === id).length;
   const spareCount = () => [...new Set(S().antiques)].reduce((a, id) => a + copies(id) - 1, 0);
   function sellSpares() {
@@ -299,7 +300,7 @@ export function createOffice(X) {
     let gain = 0;
     for (const id of new Set(s.antiques)) {
       const n = copies(id) - 1;
-      if (n > 0) { gain += Math.round(n * D.get('antiques.antiques.' + id).price * ctx.backend.marketMult(id, day())); s.antiques = s.antiques.filter((x, i) => x !== id || s.antiques.indexOf(x) === i); }
+      if (n > 0) { gain += n * salePrice(id); s.antiques = s.antiques.filter((x, i) => x !== id || s.antiques.indexOf(x) === i); }
     }
     s.funds += gain;
     if (gain) ctx.save();
@@ -340,9 +341,8 @@ export function createOffice(X) {
     d.claimedAt = ctx.now();
     if (!s.visited.includes(d.eraId)) s.visited.push(d.eraId);
     d.stars = 0;
-    d.paid = { energy: 0, funds: Math.round(d.payout.funds * f * (1 + p.funds_mult)), restDays: Math.ceil(d.payout.restDays * f), share: f };
+    d.paid = { energy: 0, restDays: Math.ceil(d.payout.restDays * f), share: f };
     s.energy += d.paid.energy;
-    s.funds += d.paid.funds;
     d.paid.antique = d.payout.antique && ctx.backend.recallKeeps(d.spec.seed, f) ? d.payout.antique : null;
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
@@ -650,5 +650,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

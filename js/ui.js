@@ -549,7 +549,6 @@ export function createUI(D, ctx) {
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
-        <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(P.funds)}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
@@ -567,7 +566,6 @@ export function createUI(D, ctx) {
       <p style="font-size:16px">${U.report.recalled_text.replace('{day}', String(Math.floor(cur.recallDay) + 1)).replace('{p}', String(Math.round(P.share * 100)))}</p>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
-        <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(P.funds)}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
@@ -626,7 +624,6 @@ export function createUI(D, ctx) {
       <table><tbody>
         <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
-        <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(cur.paid.funds)}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(cur.paid.energy)}</td></tr>
         ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>

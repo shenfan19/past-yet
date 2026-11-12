@@ -1,6 +1,6 @@
 // Economy probe: plays new games in the page with the automatic mode and reports the funds, the staff and the antiques over the days.
 // Two ways of playing: auto leaves it alone, human sells the spares and then the cheapest door that can be let go when the funds run short, and hires when they are rich.
-// Usage: node tools/in_probe_economy.mjs runs days policy [key=value ...]   policy: auto | human   keys: k pay base step hire start (overrides of the config for this run)
+// Usage: node tools/in_probe_economy.mjs runs days policy [key=value ...]   policy: auto | human   keys: k base step hire start scale mindoors cushion (overrides of the config for this run)
 // Needs PLAYWRIGHT_DIR, as ui_check does. A run of 6 games and 120 days takes about three minutes.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
@@ -28,10 +28,10 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
   // overrides of the config, by name
   const AF = D.get('config.office.antique_find'), W = D.get('config.office.wage'), OF = D.get('config.office');
   if (over.k) AF.k = over.k;
-  if (over.pay) for (const t of Object.values(D.get('config.light.pay'))) t.funds = Math.round(t.funds * over.pay);
   if (over.base) W.base = over.base;
   if (over.step !== undefined) W.step = over.step;
   if (over.hire) OF.hire_cost = over.hire;
+  if (over.scale) OF.sale_scale = over.scale;
   if (over.start) OF.start_funds = over.start;
   const out = [];
   for (let r = 0; r < runs; r++) {
@@ -59,7 +59,7 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
         if (S.funds < 2 * wageTotal) {
           const got = o.sellSpares();
           if (got) f.spareSold += 1;
-          if (S.funds < 2 * wageTotal) {
+          if (S.funds < 2 * wageTotal && new Set(S.antiques).size > (over.mindoors ?? 4)) {
             const ids = [...new Set(S.antiques)].filter((id) => releasable(id) && D.get('antiques.antiques.' + id).price > 0).sort((a, b) => D.get('antiques.antiques.' + a).price - D.get('antiques.antiques.' + b).price);
             if (ids.length) {
               const id = ids[0];
@@ -72,7 +72,7 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
         }
         // rich: hire one more, when ten days of the next wage bill are covered
         const n = o.hiredIds().length;
-        if (S.funds > OF.hire_cost + 15 * o.wageOf(n + 1)) {
+        if (S.funds > OF.hire_cost + (over.cushion ?? 25) * o.wageOf(n + 1)) {
           o.ensureHire();
           const slot = S.hire.slots[0];
           if (slot && o.hire(slot.id)) f.hires += 1;

@@ -348,10 +348,9 @@ export function runDispatch(E, D, spec) {
   const hints = E.hints.filter((h) => h.fn(henv)).map((h) => h.key).slice(0, D.get('config.engine.report_hints'));
   const mult = branch.outcomeDef ? branch.outcomeDef.energy_mult : 0;
   const energy = Math.round(sc.change_amount * O.energy_per_change * mult);
-  const gifts = branch.outcome === 'stay_and_gifts' ? O.gift_funds : 0;
   return {
     spec, base, branch, score: sc, cost: tot.cost, weight: tot.weight,
-    energy, funds: O.dispatch_fee + gifts, restDays: branch.outcomeDef ? branch.outcomeDef.rest_days : 0,
+    energy, restDays: branch.outcomeDef ? branch.outcomeDef.rest_days : 0,
     outcome: branch.outcome, hints,
   };
 }

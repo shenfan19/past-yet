@@ -96,7 +96,7 @@ export function createShop(X) {
         { k: 'desc', label: S_.col_desc, w: '26%', cell: (r) => descCell(T.antiques[r.id].desc) },
         { k: 'dest', label: U.dispatch.points_to, w: '16%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
         { k: 'count', label: S_.copies, w: '6%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
-        { k: 'sell', label: S_.sell_price, w: '9%', cls: 'num', val: (r) => r.an.price, cell: (r) => `${r.an.price} ${icon('funds')}` },
+        { k: 'sell', label: S_.sell_price, w: '9%', cls: 'num', val: (r) => office.salePrice(r.id), cell: (r) => `${office.salePrice(r.id)} ${icon('funds')}` },
         { k: 'act', label: '', w: '21%', cls: 'num', cell: (r) => (r.own
           ? `<button data-act="antlock" data-id="${r.id}" ${r.lock && !releasable(r.id) ? 'disabled' : ''}${r.lock && !releasable(r.id) ? ' data-tip="' + esc(S_.keep_one) + '"' : ''}>${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${sellable(r.id) ? '' : 'disabled'}>${S_.sell}</button>`
           : '') },
@@ -160,8 +160,7 @@ export function createShop(X) {
     }
     if (a === 'sellspares') { if (office.sellSpares()) return true; return false; }
     if (a === 'antsell') {
-      const an = D.get('antiques.antiques.' + id);
-      if (sellable(id)) { S.funds += an.price; S.antiques.splice(S.antiques.indexOf(id), 1); if (!S.antiques.includes(id)) S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id); ctx.save(); }
+      if (sellable(id)) { S.funds += office.salePrice(id); S.antiques.splice(S.antiques.indexOf(id), 1); if (!S.antiques.includes(id)) S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id); ctx.save(); }
       return true;
     }
     if (a === 'antlock') {

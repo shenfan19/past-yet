@@ -118,7 +118,7 @@ export function createLocalBackend(D) {
     if (f) stars = Math.max(0, stars - f.stars_cost);
     const pay = L.pay[ev.tier];
     return { points, stars, found, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
-      funds: Math.round(pay.funds * SC.share[stars]), energyBase: pay.energy, restDays: L.rest_days[stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed'] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
+      energyBase: pay.energy, restDays: L.rest_days[stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed'] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
   }
   function runLight(eventId, staffId, seed, items, favor = null) {
     const ev = lightEvent(eventId);
@@ -133,7 +133,7 @@ export function createLocalBackend(D) {
     const stars = points.filter((p) => p.hit).length;
     const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];
-    return { outcome, stars, points, funds: Math.round(pay.funds * L.share[outcome]), energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
+    return { outcome, stars, points, energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
   }
   // The market price factor of an antique on a day: one seeded draw per field and per period, so every antique of a field moves together.
   const MK = D.get('config.office.market');
