@@ -39,8 +39,8 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - Time travel: the trips on the road first, then a slim row of filters and a zoomable world map (Natural Earth 110m land, public domain) with a time axis, then the log of finished trips. A pin is a place and a place holds events at different times; only anchored places are drawn, and an anchored place nobody has been to yet is a question mark. A pin opens a pop-up with its events, an event opens a pop-up with its story, who goes and what they carry, and a Send button.
 - Buy: the shop paid in funds, the time shop paid in time energy, and the hiring offer of five candidates. Items sell at the price they were bought for.
 - Agency: the employees, the goods and the antiques. Antiques are found on trips and anchored to open places, spares can be sold. Each employee has a mood and a tally of three, two and one star trips, and a click opens the record of that person.
-- Wiki: a left list with search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear.
-- Settings and About are pop-ups from the two icons at the right of the bar. Every list is paged, with no scroll bars.
+- Wiki (a pop-up): a left list with search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear.
+- The wiki, Settings and About are pop-ups from the three icons at the right of the bar. Every list is paged, with no scroll bars, and every table has a filter of its own that opens on a click.
 - Dev mode: off by default, a switch in Settings, overridden by `?dev=1` or `?dev=0` in the address.
 
 ## Languages
