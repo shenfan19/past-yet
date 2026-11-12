@@ -740,6 +740,7 @@ export function createUI(D, ctx) {
       <p><button class="ghost" data-act="rerollstart" ${S.seq > 0 || !S.startRandom ? 'disabled' : ''}>${W.reroll}</button></p>
       <div class="sec">${W.disclaimer_title}</div>
       <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${W.issues}</a>${esc(disclaimer[1] || '')}</p>
+      <p>${esc(W.rights)}</p>
       <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart" ${picked.length === need || !S.startStaff ? '' : 'disabled'}>${W.begin}</button></p>
     </div>`;
   }
@@ -1024,6 +1025,7 @@ export function createUI(D, ctx) {
     if (fresh.length) { ctx.audio.sfx('ready'); showReturns(fresh); }
     if (ctx.S().brokeNew) { ctx.S().brokeNew = false; st.modal = { kind: 'broke' }; ctx.save(); render(); }
     if (ctx.S().clock.auto) office.autoStep();
+    worldMap.tickNight(D.get('config.ui.refresh_ms') / 1000);
     if (pressed) return;
     renderClock();
     renderTabs();

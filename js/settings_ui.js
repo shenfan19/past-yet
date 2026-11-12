@@ -15,7 +15,7 @@ export function createSettingsPage(X) {
     const sfxButtons = Object.keys(P.sound.sfx).map((k) => `<button data-act="sfxtry" data-id="${k}">${esc(P.sound.sfx[k])}</button>`).join(' ');
     const cr = ctx.audio.credit;
     const body = {
-      appearance: row(A.language, X.langHtml()) + row(A.theme, `<select data-set="theme">${themeOpts}</select>`),
+      appearance: row(A.language, X.langHtml()) + row(A.theme, `<select data-set="theme">${themeOpts}</select>`) + row(A.daynight, check('map_daynight'), A.daynight_note),
       sound: row(P.sound.music, `<button data-act="musictoggle">${esc(ctx.audio.state.playing ? U.music.pause : U.music.play)}</button> <span class="muted small">${esc(tracks[ctx.audio.state.index].composer + ' · ' + tracks[ctx.audio.state.index].title)}</span>`)
         + row(P.sound.music_volume, slider('music_volume')) + row(P.sound.sfx_volume, slider('sfx_volume'))
         + row(P.sound.autostart, check('music_autostart')) + row(P.sound.try, sfxButtons)

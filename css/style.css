@@ -402,3 +402,8 @@ tr.archived td, li.archived, .archived { opacity: .55; }
 .toast { position: relative; overflow: hidden; pointer-events: auto; background: var(--card, #f8f2e3); border: 1px solid var(--line, #cdbf9f); border-radius: 6px; padding: 7px 10px 9px; box-shadow: 0 2px 8px rgba(0,0,0,.18); font-size: 13px; }
 .toast i { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--stamp); transform-origin: left; animation-name: toastbar; animation-timing-function: linear; animation-fill-mode: forwards; }
 @keyframes toastbar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+/* the night on the map: a soft shade over the land, under the pins, that never catches a click */
+svg.map .night path { fill: #0d1b3d; opacity: .26; pointer-events: none; filter: blur(2.5px); }
+@media (prefers-color-scheme: dark) { svg.map .night path { opacity: .42; } }
+:root[data-theme="dark"] svg.map .night path { opacity: .42; }
+:root[data-theme="light"] svg.map .night path { opacity: .26; }

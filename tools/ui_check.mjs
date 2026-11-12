@@ -53,6 +53,7 @@ try {
   const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
   await page.click('[data-act=rerollstart]');
   ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 4);
+  ok('the welcome tells how to have something removed that infringes rights', (await page.locator('#modal .welcome').innerText()).includes('contact@teleporter.uk'));
   // the first employees: six candidates from six different regions, three picked, swapped by a click, drawn again before the first trip
   const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired) }; });
   const c0 = await crewInfo();
@@ -272,7 +273,7 @@ try {
   ok('the golden apple triples persuasion and a chip is the item a point asks for', sc.plain === 0 && sc.apple > 0.7 && sc.chipNeeded === 0 && sc.chip > 0.7);
   ok('equipment that shows gets the traveller found out, a cloak lowers it, and no equipment is never found out', sc.foundGorilla > 80 && sc.foundCloak < sc.foundGorilla && sc.noKit === null);
   // the antique roll is the backend's, seeded, and the chance falls to a floor
-  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= window.__game.D.get('config.office.antique_find.cap') && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_einstein_bern'); }));
+  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= window.__game.D.get('config.office.antique_find.cap') && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_curie_paris'); }));
   ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= window.__game.D.get('config.office.antique_find.cap'); }); }));
   ok('a trip with no star finds a quarter as often as one with three', await page.evaluate(() => { const b = window.__game.backend; let a = 0, z = 0; for (let s = 1; s <= 2000; s++) { if (b.findAntique('broad_street_1854', s, [], 3)) a++; if (b.findAntique('broad_street_1854', s, [], 0)) z++; } return z > 0 && Math.abs(z / a - 0.25) < 0.08; }));
   ok('some first trips bring something back and some do not', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s)) n++; return n > 80 && n < 400 * window.__game.D.get('config.office.antique_find.cap'); }));
@@ -770,6 +771,21 @@ ok('an unpaid day stops the clock and opens the pop-up', broke.speed === 0 && br
 await page.keyboard.press('Escape');
 const noteN = await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); const before = document.querySelectorAll('#toasts .toast').length; return before; });
 ok('the notes of returns do not pile up', noteN <= 3);
+// the shade of the night on the map follows the clock, and the setting takes it off
+await go('home');
+const night1 = await page.locator('svg.map .night path').getAttribute('d');
+await page.selectOption('[data-clk=speed]', '3');
+await page.waitForTimeout(2200);
+const night2 = await page.locator('svg.map .night path').getAttribute('d');
+await page.selectOption('[data-clk=speed]', '0');
+ok('the night shade is on the map and moves with the clock', !!night1 && night1.startsWith('M') && night1 !== night2);
+await page.evaluate(() => { window.__game.ctx.settings.set('map_daynight', false); window.__game.ui.render(); });
+ok('the setting takes the night shade off the map', (await page.locator('svg.map .night').count()) === 0);
+// a save that names something no longer in the data is not loaded, the game starts again instead of showing an empty page
+await page.evaluate(() => { const S = JSON.parse(localStorage.getItem('teleporter_save')); S.locks.push('relic_removed_event'); localStorage.setItem('teleporter_save', JSON.stringify(S)); });
+await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
+await page.waitForSelector('#tabs button');
+ok('a save that does not fit the data is dropped and the page still opens', (await page.locator('#tabs button[data-tab]').count()) === 3 && !(await page.evaluate(() => window.__game.ctx.S().locks.includes('relic_removed_event'))));
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });

@@ -492,34 +492,6 @@ events:
     region: europe
     field: thought
     tier: 2
-  - id: einstein_bern
-    year: 1905
-    lon: 7.45
-    lat: 46.95
-    region: europe
-    field: science
-    tier: 3
-  - id: fleming_london
-    year: 1928
-    lon: -0.17
-    lat: 51.52
-    region: europe
-    field: medicine
-    tier: 3
-  - id: turing_cambridge
-    year: 1936
-    lon: 0.12
-    lat: 52.2
-    region: europe
-    field: technology
-    tier: 3
-  - id: meitner_stockholm
-    year: 1938
-    lon: 18.07
-    lat: 59.33
-    region: europe
-    field: science
-    tier: 2
   - id: cajal_barcelona
     year: 1889
     lon: 2.17
@@ -956,13 +928,6 @@ events:
     region: americas
     field: medicine
     tier: 2
-  - id: carson_silver_spring
-    year: 1962
-    lon: -77.03
-    lat: 39
-    region: americas
-    field: thought
-    tier: 2
   - id: bell_boston
     year: 1876
     lon: -71.06
@@ -970,37 +935,6 @@ events:
     region: americas
     field: technology
     tier: 2
-  - id: borges_buenos_aires
-    year: 1941
-    lon: -58.38
-    lat: -34.6
-    region: americas
-    field: literature
-    tier: 2
-  - id: frida_mexico_city
-    year: 1939
-    lon: -99.16
-    lat: 19.35
-    region: americas
-    field: art
-    tier: 3
-    scene:
-      points:
-        - id: p1
-          kind: care
-          req:
-            trait:
-              - kind
-        - id: p2
-          kind: hold
-          req:
-            trait:
-              - stubborn
-              - bold
-        - id: p3
-          kind: care
-          req:
-            item: elixir
   - id: budj_bim_eels
     year: -4500
     lon: -141.95
@@ -1193,36 +1127,6 @@ events:
           redeem: true
           req:
             item: holo_cloak
-  - id: rosalind_franklin_london
-    year: 1952
-    lon: -0.12
-    lat: 51.51
-    region: europe
-    field: science
-    tier: 3
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            any:
-              - stat:
-                  wit: 7
-              - job:
-                  - pharmacist
-        - id: p2
-          kind: hold
-          req:
-            trait:
-              - stubborn
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            trait:
-              - kind
-              - sensitive
   - id: wegener_greenland
     year: 1930
     lon: -39.93
@@ -3973,38 +3877,3 @@ events:
               - job:
                   - teacher
                   - student
-  - id: turing_manchester
-    year: 1952
-    lon: -2.24
-    lat: 53.48
-    region: europe
-    field: technology
-    tier: 3
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            any:
-              - stat:
-                  wit: 7
-              - job:
-                  - programmer
-                  - sysadmin
-        - id: p2
-          kind: care
-          req:
-            job:
-              - nurse
-              - physician
-              - doctor
-              - pharmacist
-              - midwife
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            trait:
-              - kind
-              - sensitive

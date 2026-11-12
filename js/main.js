@@ -75,12 +75,27 @@ function fresh() {
   };
 }
 
+// A save fits the data when everything it names still exists. A card removed since the save was written would otherwise break the page,
+// so a save that does not fit is dropped and a new game starts.
+function fits(S) {
+  try {
+    const antiques = D.get('antiques.antiques');
+    const events = new Set(D.get('catalog.events').map((e) => e.id));
+    const places = new Set([...D.get('config.eras'), ...events]);
+    const staff = D.get('staff.staff');
+    return S.locks.every((id) => id in antiques) && S.antiques.every((id) => id in antiques) && S.visited.every((id) => places.has(id))
+      && S.dispatches.every((d) => places.has(d.eraId) && d.spec.staffId in staff)
+      && Object.keys(S.staff).length === Object.keys(staff).length && Object.keys(S.staff).every((id) => id in staff)
+      && (!S.startStaff || S.startStaff.offer.every((id) => id in staff));
+  } catch (e) { return false; }
+}
+
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const S = JSON.parse(raw);
-      if (S.version === VERSION) return S;
+      if (S.version === VERSION && fits(S)) return S;
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);
@@ -103,7 +118,7 @@ const ctx = {
   },
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
-    if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches)) return false;
+    if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches) || !fits(obj)) return false;
     S = obj;
     this.save();
     return true;

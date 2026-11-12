@@ -153,9 +153,10 @@ ui:
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
           - The models are simplified. Their parameters are game assumptions unless a number is marked historical, and no parameter has been fitted to data. Historical facts in the game are placeholders until their sources are checked, and each entry says whether it has been checked. Please do not cite the game as a source.
-          - 'The 188 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Half of them are regrets, lives and works that history treated unjustly or lost. History cannot be changed, so the stars of a regret are what you can give them inside it, and the last one is the redemption. That is a choice of this first version, not a claim about what matters most in history.'
+          - 'The 179 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Half of them are regrets, lives and works that history treated unjustly or lost. History cannot be changed, so the stars of a regret are what you can give them inside it, and the last one is the redemption. That is a choice of this first version, not a claim about what matters most in history.'
           - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. What they say and do in the game is fiction built around the historical record, and does not reflect their real words, views or character. The time travel, the employees, the antiques, the goods and every plot are invented.
           - The fifty employees are invented people, spread over the world roughly as people are. Some of their traits and stories lean on common impressions of a place or a group, and some are written against them, so that no one is only a type, and neither says anything about a real group. The author cannot know every culture well, so the people, their ethnicities and their stories were also checked by an AI for anything that might offend, and that check can be wrong. If something reads as unfair, inaccurate or hurtful, please report it in the Issues of the repository and the author will change it as soon as possible.
+          - The people in the events are real figures from the past, chosen because they have been dead for a long time, and what they say and do in the game is fiction. If anything in the game infringes on someone's rights, or the rights of a family, please write to contact@teleporter.uk or open an issue in the repository, and it will be removed.
           - Products, names and items in the game are fictional. Where a name resembles someone else's work it is a reference, not an affiliation, and anything not yet checked for rights is marked and cannot be bought in the game.
           - The game is provided as is, without warranty of any kind. If you are in a very difficult place, please reach out to someone you trust or to local professional support.
       - h: Data and privacy
@@ -576,6 +577,8 @@ ui:
         auto: Follow the system
         light: Light
         dark: Dark
+      daynight: Day and night on the map
+      daynight_note: A soft shade follows the sun across the map, one turn per game day. Above 4x it stops following the clock.
       language: Language
     sound:
       h: Sound
@@ -706,6 +709,7 @@ ui:
     tutorial: first trip
     disclaimer_title: About the people in the game
     disclaimer: The employees and their stories are invented. Some lean on common impressions of a place or a group, and some are written against them, and neither says anything about a real group. The author cannot know every culture well, so an AI also looked for anything that might offend, and it can be wrong. If something is unfair, inaccurate or hurtful, please report it in the {issues} of the repository and it will be changed as soon as possible.
+    rights: If anything in the game infringes on someone's rights, or the rights of a family, please write to contact@teleporter.uk or open an issue in the repository, and it will be removed.
     issues: Issues
     begin: Begin
   wiki:
@@ -1599,34 +1603,6 @@ catalog:
     story: Freud publishes The Interpretation of Dreams, a book that changes how people talk about the mind.
     relic: A statuette from his study
     relic_desc: One of the small antiquities he kept on his desk.
-  einstein_bern:
-    name: A year that changed physics
-    place: Bern
-    figure: Albert Einstein
-    story: While working in the patent office Einstein publishes papers on light, atoms and relativity within a few months.
-    relic: A patent office stamp
-    relic_desc: A small rubber stamp of the desk where it happened.
-  fleming_london:
-    name: A mould that stops bacteria
-    place: London
-    figure: Alexander Fleming
-    story: Fleming notices that a mould on a forgotten dish has cleared the bacteria around it, and penicillin is named.
-    relic: A mouldy petri dish
-    relic_desc: A glass dish with a clear ring round a green spot.
-  turing_cambridge:
-    name: What can be computed
-    place: Cambridge
-    figure: Alan Turing
-    story: Turing describes an imaginary machine that reads and writes symbols on a tape, and defines what computing means.
-    relic: A strip of paper tape
-    relic_desc: A tape of marks, one symbol at a time.
-  meitner_stockholm:
-    name: Explaining nuclear fission
-    place: Stockholm
-    figure: Lise Meitner
-    story: In exile Lise Meitner and her nephew work out that a uranium nucleus has split, and give it the name fission.
-    relic: A piece of chalk
-    relic_desc: A worn stub of chalk from the walk where it was worked out.
   cajal_barcelona:
     name: Nerve cells as separate units
     place: Barcelona
@@ -1970,13 +1946,6 @@ catalog:
     story: Carlos Finlay proposes that yellow fever is carried by mosquitoes, years before it is confirmed.
     relic: A glass slide of mosquitoes
     relic_desc: A mounted slide with a mosquito wing.
-  carson_silver_spring:
-    name: A spring without birdsong
-    place: Silver Spring, Maryland
-    figure: Rachel Carson
-    story: Rachel Carson publishes Silent Spring, which asks what pesticides do to living things, and starts a movement.
-    relic: A grey feather
-    relic_desc: A single plain feather.
   bell_boston:
     name: The voice on a wire
     place: Boston
@@ -1984,24 +1953,6 @@ catalog:
     story: Bell speaks to his assistant down a wire in the next room, and the telephone is born.
     relic: A telephone receiver
     relic_desc: A wooden handpiece with a thin diaphragm.
-  borges_buenos_aires:
-    name: Libraries and labyrinths in a story
-    place: Buenos Aires
-    figure: Jorge Luis Borges
-    story: Jorge Luis Borges publishes The Garden of Forking Paths, short stories of infinite libraries and branching time.
-    relic: A pair of thick spectacles
-    relic_desc: Glasses for a man whose sight was failing.
-  frida_mexico_city:
-    name: Painting her own life
-    place: Mexico City
-    figure: Frida Kahlo
-    story: Frida Kahlo paints The Two Fridas and many self portraits, turning pain and identity into some of the best known images of her country.
-    relic: A fine paintbrush
-    relic_desc: A brush with a few strands of red.
-    points:
-      p1: Sit with her
-      p2: Match her will
-      p3: Ease her pain (needs an elixir)
   budj_bim_eels:
     name: Fish farming on a lava plain
     place: Budj Bim, Victoria, Australia
@@ -2075,17 +2026,6 @@ catalog:
       p1: Follow the proof
       p2: Speak for her in the corridor
       p3: Sit in her lecture as an ordinary listener (needs a hologram cloak)
-  rosalind_franklin_london:
-    name: Photograph fifty one
-    place: London
-    figure: Rosalind Franklin
-    story: Rosalind Franklin makes the clearest X ray pictures of DNA at King's College. Her data reaches others without her knowing, and she dies of cancer at thirty seven.
-    relic: A glass capillary
-    relic_desc: A thin tube for holding a thread of DNA in the beam.
-    points:
-      p1: Read the diffraction picture (a chemist or sharp wit helps)
-      p2: Stand by her careful method
-      p3: Be the colleague who is plainly on her side
   wegener_greenland:
     name: Across the ice
     place: Greenland ice cap
@@ -3054,17 +2994,6 @@ catalog:
       p1: Follow the four unknowns
       p2: Teach the counting rods to a pupil (a teacher)
       p3: Stay with the lesson to the end (a teacher, a student or a stubborn employee)
-  turing_manchester:
-    name: The trial of 1952
-    place: Manchester
-    figure: Alan Turing
-    story: In 1952 Alan Turing is prosecuted for a relationship with another man, which was a crime in Britain at the time. He accepts hormone treatment instead of prison, loses his security clearance, and dies in 1954 at forty one.
-    relic: A strip of punched tape
-    relic_desc: A strip of paper tape with a row of holes, a program from the early Manchester computer.
-    points:
-      p1: Follow his new work on patterns in living things (sharp wit or computer skills help)
-      p2: See him through the treatment (medical staff)
-      p3: Be the friend who stays plainly on his side
 eras:
   broad_street_1854:
     name: Broad Street, London 1854

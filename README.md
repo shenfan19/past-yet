@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Prototype. Two simulated eras (London 1854, Vienna 1847), fifty employees with their own stories, a world map of 188 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
+Prototype. Two simulated eras (London 1854, Vienna 1847), fifty employees with their own stories, a world map of 179 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
 
 ## Run
 
@@ -54,7 +54,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Catalogue and employees
 
-- `data/catalog.yaml` lists 188 events across the world, half of them regrets, mostly science, technology, philosophy, art and ideas, each with a place, a year and a field. Names, stories and relics are in the language files under `catalog`.
+- `data/catalog.yaml` lists 179 events across the world, half of them regrets, mostly science, technology, philosophy, art and ideas, each with a place, a year and a field. Names, stories and relics are in the language files under `catalog`.
 - Each event has a relic, made into an antique when the data loads. A relic is found on trips and makes its event readable in the map and the wiki. Two events have a full branch simulation. The others are played as small stories, a trip of the traveller against the event with no kit and no branch, which pays by how it went.
 - The map groups nearby events into one pin, and the grouping radius shrinks as you zoom in. The time axis spreads recent years and compresses the deep past.
 - `data/staff.yaml` has fifty employees, each with a gender, an age, a region, a job, five attributes, one or two of six traits and a life story, spread over the world roughly as people are. Event summaries are written from general knowledge and unchecked, the wiki marks them so.

@@ -75,6 +75,38 @@ export function createWorldMap(X) {
   const labelsOn = () => m().z >= D.get('map.zoom.label_z');
   const vbAttr = () => { const v = view(); return `${v.x0.toFixed(2)} ${v.y0.toFixed(2)} ${v.w.toFixed(2)} ${v.h.toFixed(2)}`; };
 
+  // ---------- day and night ----------
+  // The shade is the part of the map where the sun is below the horizon. The sun stands over one longitude that moves west once per game day,
+  // and over a latitude (its declination) that swings through the year. The edge of the night at each longitude has a closed form:
+  // tan(lat) = -cos(lon - sun_lon) / tan(declination), and the night lies on the far side of it from the sun.
+  const DN = () => D.get('map.daynight');
+  let phase = null; // the fraction of the day the picture shows, which stops following the clock above the speed cap
+  const dayFrac = () => { const d = ctx.S().clock.day; return d - Math.floor(d); };
+  function nightPath() {
+    const cfg = DN(), rad = Math.PI / 180;
+    if (phase == null) phase = dayFrac();
+    const year = (ctx.S().clock.day % cfg.year_days) / cfg.year_days;
+    let decl = cfg.tilt_deg * Math.sin(2 * Math.PI * year);
+    if (Math.abs(decl) < cfg.min_decl_deg) decl = decl < 0 ? -cfg.min_decl_deg : cfg.min_decl_deg;
+    const sunLon = 180 - 360 * phase;
+    const pts = [];
+    for (let lon = V().lon_min; lon <= V().lon_max + 1e-9; lon += cfg.step_deg) {
+      const lat = Math.atan(-Math.cos((lon - sunLon) * rad) / Math.tan(decl * rad)) / rad;
+      pts.push(`${px(lon).toFixed(2)},${py(Math.max(V().lat_min, Math.min(V().lat_max, lat))).toFixed(2)}`);
+    }
+    const edge = decl > 0 ? H() : 0;
+    return `M${pts.join(' L')} L${W()},${edge} L0,${edge} Z`;
+  }
+  // called every tick: the picture follows the clock up to the cap, and the shade is redrawn in place
+  function tickNight(dt) {
+    if (!ctx.settings.get('map_daynight')) return;
+    const sp = Math.min(X.office.effectiveSpeed(), DN().speed_cap);
+    if (phase == null) phase = dayFrac();
+    phase = (phase + (sp * dt) / D.get('config.clock').sec_per_day) % 1;
+    const el = document.querySelector('svg.map .night path');
+    if (el) el.setAttribute('d', nightPath());
+  }
+
   function svgHtml() {
     const grid = [];
     const gs = V().grid_step;
@@ -90,7 +122,7 @@ export function createWorldMap(X) {
       const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
       return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''} star${bs}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="dot" r="2.2"/>${m().counts ? `<text class="cnt" x="0" y="-5" text-anchor="middle">${p.events.length}</text>` : ''}<text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${!m().counts && p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
     }).join('');
-    return `<svg class="map ${labelsOn() ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${pins}</svg>`;
+    return `<svg class="map ${labelsOn() ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${ctx.settings.get('map_daynight') ? `<g class="night"><path d="${nightPath()}"/></g>` : ''}${pins}</svg>`;
   }
 
   function niceStep(span) {
@@ -342,5 +374,5 @@ export function createWorldMap(X) {
     const A = D.get('map.axis');
     return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, filterOpen: false, counts: false, cat: null, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
   }
-  return { html, placeHtml, act, onInput, attach, init };
+  return { html, placeHtml, act, onInput, attach, init, tickNight };
 }
