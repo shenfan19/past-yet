@@ -299,9 +299,10 @@ export function createUI(D, ctx) {
     const sec = S.secretary
       ? `<div class="muted">${U.office.secretary}${COLON}${staffLink(S.secretary)} · ${perkText || U.enc.edge_none} · ${U.office.secretary_pref}${COLON}${U.office.aims[office.secretaryAim()] || U.enc.edge_none}${S.secretaryLast ? ` <span class="chip ${S.secretaryLast.met ? '' : 'warn'}">${S.secretaryLast.met ? U.office.verdict_match : U.office.verdict_miss}</span>` : ''}</div>`
       : `<div class="muted">${U.office.secretary}${COLON}${U.office.no_secretary}</div>`;
-    const n = hiredIds().length;
-    const wage = `<div class="muted">${U.office.wage}${COLON}${ri(office.wageOf(n))} ${D.get('config.ui.currency_icons.funds')}${S.funds < office.wageOf(n) ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}</div>`;
-    return sec + wage + listbox.html({
+    const total = office.wageTotal();
+    const wage = `${U.office.wage}${COLON}${ri(total)} ${D.get('config.ui.currency_icons.funds')}${S.funds < total ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}`;
+    const secLine = sec.slice(0, sec.length - '</div>'.length) + ' · ' + wage + '</div>';
+    return secLine + listbox.html({
       id: 'home_staff', tools: listbox.tools('home_staff', traitTags), rows,
       cols: [
         { k: 'name', label: U.office.col_staff, w: '14%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${staffLink(r.id)}</span>` },
@@ -337,11 +338,11 @@ export function createUI(D, ctx) {
         { k: 'profile', label: U.office.col_profile, w: '19%', cell: (r) => `<div class="oneline"${tip(r.profile)}>${esc(r.profile)}</div>` },
         { k: 'stats', label: U.office.col_stats, w: '24%', cell: (r) => `<div class="oneline">${esc(r.stats)}</div>` },
         { k: 'traits', label: U.office.col_traits, w: '17%', cell: (r) => `<span class="nowrap">${r.traits.map(traitChip).join('')}</span>` },
-        { k: 'wage', label: U.office.col_wage, w: '12%', cls: 'num', cell: () => `<span class="nowrap"${tip(U.office.wage_after.replace('{a}', ri(office.wageOf(n))).replace('{b}', ri(office.wageOf(n + 1))))}>+${ri(office.wageOf(n + 1) - office.wageOf(n))} ${icon}</span>` },
+        { k: 'wage', label: U.office.col_wage, w: '12%', cls: 'num', cell: () => `<span class="nowrap"${tip(U.office.wage_after.replace('{a}', ri(office.wageTotal())).replace('{b}', ri(office.wageOf(n + 1))))}>+${ri(office.wageOf(n + 1) - office.wageTotal())} ${icon}</span>` },
         { k: 'act', label: '', w: '14%', cls: 'num', cell: (r) => `<button class="primary" data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>` },
       ],
     });
-    return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))} ${U.office.wage}${COLON}${ri(office.wageOf(n))} → ${ri(office.wageOf(n + 1))} ${icon}</p>
+    return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))} ${U.office.wage}${COLON}${ri(office.wageTotal())} → ${ri(office.wageOf(n + 1))} ${icon}</p>
       ${box}
       <p class="muted" id="hire-next">${U.office.hire_next.replace('{n}', r1(left))}</p>`;
   }
@@ -353,7 +354,8 @@ export function createUI(D, ctx) {
     const I = D.get('config.ui.currency_icons');
     const home = S.energy >= O.home_cost ? `<span class="chip"${tip(U.office.reached_home)}>🏠</span>` : '';
     return `<span class="rv"${tip(U.office.funds)}>${I.funds} <b>${ri(S.funds)}</b></span>`
-      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}`;
+      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}`
+      + `<span class="rv"${tip(U.office.wage_total)}>${I.wage} <b>${ri(office.wageTotal())}</b><span class="muted">${U.office.per_day}</span></span>`;
   }
 
   // One table for the dispatches: the ones still out come first, with what can be done to them, then the finished ones with their report.
@@ -388,7 +390,7 @@ export function createUI(D, ctx) {
     const trips = pg.shown;
     const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
     const rows = done.join('');
-    const bar = S.trips.length ? `<div class="logbar"><span class="logtools"><button class="ghost" data-act="archiverule" data-id="failed"${tip(U.office.archive_tip)}>${U.office.archive_failed}</button><button class="ghost" data-act="archiverule" data-id="notbest"${tip(U.office.archive_tip)}>${U.office.archive_notbest}</button><label class="check"><input type="checkbox" id="log-archived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${nArch})</label></span>${pg.html}</div>` : '';
+    const bar = S.trips.length ? `<div class="logbar"><span class="logtools"><button class="ghost" data-act="archiverule" data-id="notbest"${tip(U.office.archive_tip)}>${U.office.archive_notbest}</button><label class="check"><input type="checkbox" id="log-archived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${nArch})</label></span>${pg.html}</div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
       ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
@@ -693,7 +695,7 @@ export function createUI(D, ctx) {
         { k: 'year', label: U.report.year, w: '16%', cell: (r) => fmtYear(D, yearOfPlace(r.place, r.light)) },
         { k: 'place', label: U.report.place, w: '36%', cell: (r) => `<span class="nowrap${r.archived ? ' archived' : ''}">${esc(shortOfPlace(r.place, r.light))}</span>` },
         { k: 'stars', label: U.stars.col, w: '24%', cell: (r) => `${starsHtml(r.stars || 0)}${r.redeemed ? ' <span class="chip">♥</span>' : ''}` },
-        { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (keptIds.has(r.id) && !r.archived ? `<button class="ghost" data-act="open" data-id="${r.id}">${U.report.view}</button>` : '') },
+        { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (keptIds.has(r.id) ? `<button class="ghost" data-act="open" data-id="${r.id}">${U.report.view}</button>` : '') },
       ],
     });
     return `<h3>${staffLink(id)} <span class="muted">${esc(staffProfile(D, id))}</span></h3>
@@ -716,8 +718,8 @@ export function createUI(D, ctx) {
     const m = st.modal;
     if (!m) return '';
     if (m.kind === 'wiki') return `<div class="mbox wide wikibox">${wiki.html()}</div>`;
-    if (m.kind === 'settings') return `<div class="mbox">${settingsPage.html()}</div>`;
-    if (m.kind === 'about') return `<div class="mbox">${aboutHtml()}</div>`;
+    if (m.kind === 'settings') return `<div class="mbox narrow">${settingsPage.html()}</div>`;
+    if (m.kind === 'about') return `<div class="mbox narrow">${aboutHtml()}</div>`;
     if (m.kind === 'staff') return `<div class="mbox wide">${staffModalHtml(m.id)}</div>`;
     if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
     if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;

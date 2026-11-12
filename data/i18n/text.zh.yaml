@@ -434,18 +434,19 @@ ui:
     appoint: 任命秘书
     dismiss: 解任
     gift: 奖励
-    gift_tip: 花一个月工资奖励他，心情加 50。
-    favor_tip: 心情。成功让它涨，失败和放弃让它掉。所有属性随它变化，心情满时多 20%，见底时少 20%。奖励加 50。
+    favor_tip: 心情。成功让它涨，失败和放弃让它掉。所有属性随它变化，心情满时多 20%，见底时少 20%。奖励加 10。
     mood_mult: 属性乘以 {m}
     tally_tip: 三星、二星、一星的次数。点开看这个人的出差记录。
     staff_trips: 出差记录
     no_trips: 还没派出去过。
     archive: 归档
     restore: 还原
-    archive_failed: 归档未成功的
     archive_notbest: 归档非最高的
     show_archived: 显示已归档
-    archive_tip: 归档只是从记录里隐藏，并放掉那份报告，摘要和星数还在。
+    gift_tip: 花一天的工资奖励他，心情加 10。
+    wage_total: 每日工资合计
+    per_day: / 天
+    archive_tip: 归档只是从记录里隐藏，报告还保留（最多 200 份），摘要和星数都在。
     col_favor: 心情
     aims:
       funds: 资金
@@ -470,7 +471,7 @@ ui:
     prev_page: 上一页
     next_page: 下一页
     on_road: 在途与待领取
-    col_wage: 日薪
+    col_wage: 日薪增加
     wage_after: 雇下后总日薪从 {a} 到 {b}
     col_traits: 特质
     col_state: 状态
@@ -649,7 +650,8 @@ ui:
     antiques_title: 古董
     antiques_empty: 还没有发现。古董要靠派遣带回来。
     copies: 持有
-    antiques_hint: 古董靠派遣发现。去一个地方，可能带回靠近它、时间上更早的古董，时间和空间离得越远，越不容易找到，同一件也会重复带回。锚定一件古董，它指向的地方就开放了，锚定的不能卖。多出来的一件可以卖钱，钱用来买补给，所以每一件要么换钱，要么开一扇门。解除锚定才能卖，有人在那里出差或者它是最后一个开放的地方时不能解除。还没开放的地方只显示为问号。
+    antiques_hint: 古董靠派遣发现，每件指向一个地方。锚定它，那个地方就开放，多出来的可以卖。
+    inv_hint: 库存里的物品。出差时带上，或按买入价卖掉。
     lock: 锚定
     unlock: 解除锚定
     locked: 已锚定
@@ -679,19 +681,22 @@ ui:
     pick: 从左边选一个条目。
     none: 没有符合的条目
     cats:
-      places: 地区
       people: 人物
       events: 事件
-      stories: 故事
-      plots: 剧情
+      virtual: 虚拟故事
       staff: 员工
       traits: 特质
       stats: 属性
-      antiques: 古董
-      items: 物品
+      items_ancient: 古代物品
+      items_modern: 现代物品
+      items_future: 未来物品
       formulas: 公式
       vars: 变量
       models: 模型
+    kinds:
+      ancient: 古代物品：只能获取和出售，能锚定。
+      modern: 现代物品：用资金购买，主要消耗，是今天的科技和医疗手段。
+      future: 未来物品：用时空能量购买，完成特殊剧情用，不消耗。
     tag_filter: 标签过滤
     dev_cats: 开发者
     uses_formulas: 用到的公式

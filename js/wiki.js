@@ -54,10 +54,10 @@ export function createWiki(X) {
     const tagsOfEra = (eraId) => T.eras[eraId].tags;
     const eraTitle = (eraId) => T.eras[eraId].name;
 
-    for (const e of sec('places')) add({ id: 'places:' + e.id, cat: 'places', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
+    for (const e of sec('places')) add({ id: 'places:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
     for (const e of sec('people')) add({ id: 'people:' + e.id, cat: 'people', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
     for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
-    for (const e of sec('stories')) add({ id: 'stories:' + e.id, cat: 'stories', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
+    for (const e of sec('stories')) add({ id: 'stories:' + e.id, cat: 'virtual', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
 
     // the catalogue: famous events with a relic each, readable once the relic is owned
     for (const ev of D.get('catalog.events')) {
@@ -134,7 +134,7 @@ export function createWiki(X) {
       for (const [pid, p] of Object.entries(ctx.era(eraId).plots)) {
         const px = T.eras[eraId].plots[pid];
         add({
-          id: `plots:${eraId}:${pid}`, cat: 'plots', title: px.name, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: ['game'],
+          id: `plots:${eraId}:${pid}`, cat: 'virtual', title: px.name, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: ['game'],
           body: () => `<p>${esc(px.desc)}</p><div>${W.in_era}${COLON}${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div><div>${U.dispatch.character}${COLON}${a(px.article, px.character)}</div><div>${U.dispatch.tech}${COLON}${p.tech} / ${ctx.era(eraId).tech} ${p.tech <= ctx.era(eraId).tech ? '' : '<span class="chip warn">' + U.dispatch.tech_low + '</span>'}</div>`,
         });
       }
@@ -143,16 +143,16 @@ export function createWiki(X) {
     for (const [id, an] of Object.entries(D.get('antiques.antiques'))) {
       const tx = T.antiques[id];
       add({
-        id: 'antiques:' + id, cat: 'antiques', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'],
-        body: () => `<p>${esc(tx.desc)}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : an.event ? a('events:c:' + an.event, T.catalog[an.event].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
+        id: 'antiques:' + id, cat: 'items_ancient', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'],
+        body: () => `<p>${esc(tx.desc)}</p><p class="muted">${W.kinds.ancient}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : an.event ? a('events:c:' + an.event, T.catalog[an.event].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
       });
     }
 
     for (const [id, it] of Object.entries(D.get('items'))) {
       const tx = T.items[id];
       add({
-        id: 'items:' + id, cat: 'items', title: tx.name, tags: it.tags, unlock: { item: id }, refs: ['game'],
-        body: () => `<p>${esc(tx.desc)}</p><div class="muted">${U.enc.cost} ${it.cost} · ${U.enc.weight} ${it.weight} · ${U.enc.max} ${it.max} · ${esc(D.get('shops.shops.' + it.shop).playable ? U.shop[it.shop].name : U.shop[it.shop].name + ' ' + U.shop.planned)}</div>${it.ip ? `<div><span class="chip warn">${U.shop.ip_unchecked}</span></div>` : ''}`,
+        id: 'items:' + id, cat: it.shop === 'future' ? 'items_future' : 'items_modern', title: tx.name, tags: it.tags, unlock: { item: id }, refs: ['game'],
+        body: () => `<p>${esc(tx.desc)}</p><p class="muted">${W.kinds[it.shop === 'future' ? 'future' : 'modern']}</p><div class="muted">${U.enc.cost} ${it.cost} · ${U.enc.weight} ${it.weight} · ${U.enc.max} ${it.max} · ${esc(D.get('shops.shops.' + it.shop).playable ? U.shop[it.shop].name : U.shop[it.shop].name + ' ' + U.shop.planned)}</div>${it.ip ? `<div><span class="chip warn">${U.shop.ip_unchecked}</span></div>` : ''}`,
       });
     }
 

@@ -118,7 +118,7 @@ export function createShop(X) {
       future: () => future,
       hire: () => extra.hire,
       staff: () => extra.staff,
-      inv: () => invBox(),
+      inv: () => `<p class="muted">${S_.inv_hint}</p>${invBox()}`,
       ants: () => `<p class="muted">${S_.antiques_hint}</p><div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}`,
     };
     const names = { modern: S_.modern.name, future: S_.future.name, hire: U.office.hire_title, staff: U.office.staff, inv: S_.inv_title, ants: S_.antiques_title };

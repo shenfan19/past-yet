@@ -363,7 +363,7 @@ try {
   await page.waitForTimeout(800);
   await page.selectOption('[data-clk=speed]', '0');
   ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
-  ok('the funds and the energy are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 2);
+  ok('the funds, the energy and the total wages are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 3);
   // stars: time energy is paid only for stars above the best of the place, funds every time
   const sr = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
@@ -667,14 +667,21 @@ try {
   });
   ok('a favored employee does better than one who is not', fv.high > fv.low);
   ok('three three star trips give one point of one attribute, not before', fv.got[0] === null && fv.got[1] === null && !!fv.got[2] && fv.diff.length === 1 && fv.diff[0] === fv.attr && fv.growth[fv.attr] === 1);
-  // the mood changes every attribute by up to a fifth, and a reward costs a month of wages
+  // the mood changes every attribute by up to a fifth, and a reward costs a day of wages and adds ten to the mood
   const md = await page.evaluate(() => {
-    const g = window.__game, b = g.backend, off = g.ui.office;
+    const g = window.__game, b = g.backend, off = g.ui.office, S = g.ctx.S();
     const lo = b.staffStats('s_ning', 0), mid = b.staffStats('s_ning', 0.5), hi = b.staffStats('s_ning', 1);
-    return { lo: lo.wit / mid.wit, hi: hi.wit / mid.wit, cost: off.giftCost(), n: off.hiredIds().length, wage: off.wageOf(off.hiredIds().length) };
+    const id = off.hiredIds()[0], n = off.hiredIds().length;
+    S.funds = 1000; const f0 = S.staff[id].favor; S.staff[id].favor = 0.5;
+    const cost = off.giftCost();
+    off.gift(id);
+    const r = { lo: lo.wit / mid.wit, hi: hi.wit / mid.wit, cost, paid: 1000 - S.funds, mood: S.staff[id].favor - 0.5, want: Math.round(off.wageOf(n) / n) };
+    S.staff[id].favor = f0;
+    return r;
   });
   ok('full mood adds a fifth to the attributes and none takes a fifth away', Math.abs(md.hi - 1.2) < 1e-9 && Math.abs(md.lo - 0.8) < 1e-9);
-  ok('a reward costs a month of the wages of that person', md.cost === Math.round(30 * md.wage / md.n));
+  ok('a reward costs a day of the wages of that person and adds ten to the mood', md.paid === md.cost && md.cost === md.want && Math.abs(md.mood - 0.1) < 1e-9);
+  ok('the total wages are in the bar at the top', (await page.locator('#res .rv').count()) === 3);
   // the record of one person opens as a pop-up from the tally of stars, and a trip can be archived and brought back
   await go('shop');
   await page.click('.tallylink >> nth=0');
@@ -685,7 +692,8 @@ try {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     const rows = () => document.querySelectorAll('.logtable:not(.pending) tbody tr').length;
     const before = rows();
-    const id = S.trips.filter((x) => !x.archived)[0].id;
+    // a trip whose report is still stored, so that keeping it can be seen
+    const id = S.dispatches.filter((d) => d.claimed && S.trips.some((x) => x.id === d.id && !x.archived))[0].id;
     off.archive([id]); g.ui.render();
     const hidden = rows();
     g.ui.state.showArchived = true; g.ui.render();
@@ -694,18 +702,18 @@ try {
     return { before, hidden, shown, dim, back: rows(), kept: S.dispatches.some((d) => d.id === id) };
   });
   ok('an archived trip leaves the log, shows dimmed on request, and comes back', ar.hidden === ar.before - 1 && ar.shown === ar.before && ar.dim === 1 && ar.back === ar.before);
-  ok('archiving lets go of the stored report', ar.kept === false);
+  ok('archiving keeps the report', ar.kept === true);
   // wages: paid per whole day for everyone hired, rising with the headcount, and an empty purse costs favor
   const wg = await page.evaluate(() => {
     const g = window.__game, o = g.ui.office, S = g.ctx.S();
-    const n = o.hiredIds().length, W = g.D.get('config.office.wage');
     S.funds = 1000; S.wageDay = Math.floor(S.clock.day);
     S.clock.day += 3; o.advance(0);
     const paid = 1000 - S.funds;
     const f0 = o.hiredIds().map((id) => S.staff[id].favor);
     S.funds = 0; S.clock.day += 1; o.advance(0);
     const f1 = o.hiredIds().map((id) => S.staff[id].favor);
-    return { paid, want: 3 * o.wageOf(n), n, rising: o.wageOf(n + 1) - o.wageOf(n) > o.wageOf(n) - o.wageOf(n - 1 || 0), poor: S.funds === 0 && f1.every((v, i) => v < f0[i] || f0[i] === 0), mult: g.ctx.backend.marketMult('relic_faraday_london', 40) };
+    const n = o.hiredIds().length;
+    return { paid, want: 3 * o.wageTotal(), rising: o.wageOf(n + 1) - o.wageOf(n) > o.wageOf(n) - o.wageOf(n - 1), poor: S.funds === 0 && f1.every((v, i) => v < f0[i] || f0[i] === 0), mult: g.ctx.backend.marketMult('relic_faraday_london', 40) };
   });
   ok('wages are paid for every whole day', wg.paid === wg.want);
   ok('each further hire costs more per day than the one before', wg.rising);

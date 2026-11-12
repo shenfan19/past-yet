@@ -434,18 +434,19 @@ ui:
     appoint: Appoint secretary
     dismiss: Dismiss
     gift: Bonus
-    gift_tip: Pay a month of their wages as a reward, mood goes up by 50.
-    favor_tip: Mood. Success raises it, failure and giving up lower it. Every attribute follows it, up to 20% more at full mood and 20% less at none. A reward adds 50.
+    favor_tip: Mood. Success raises it, failure and giving up lower it. Every attribute follows it, up to 20% more at full mood and 20% less at none. A reward adds 10.
     mood_mult: Attributes times {m}
     tally_tip: Trips of three, two and one star. Click for the record of this person.
     staff_trips: Trips
     no_trips: Nobody has been sent yet.
     archive: Archive
     restore: Restore
-    archive_failed: Archive the failed
     archive_notbest: Archive all but the best
     show_archived: Show archived
-    archive_tip: Archiving hides a trip from the log and lets go of its stored report. The line and the stars stay.
+    gift_tip: Pay one day of their wages as a reward, mood goes up by 10.
+    wage_total: Total daily wages
+    per_day: / day
+    archive_tip: Archiving hides a trip from the log. Its report is kept, up to 200 of them, and its line and stars stay.
     col_favor: Mood
     aims:
       funds: funds
@@ -472,7 +473,7 @@ ui:
     prev_page: Previous page
     next_page: Next page
     on_road: On the road
-    col_wage: Wage a day
+    col_wage: Wage added a day
     wage_after: Total daily wages go from {a} to {b} when hired
     col_traits: Traits
     col_state: State
@@ -649,7 +650,8 @@ ui:
     antiques_title: Antiques
     antiques_empty: Nothing found yet. Antiques are brought back from trips.
     copies: Held
-    antiques_hint: Antiques are found on trips. A trip to a place can bring back an antique from a place near it and from a time before it, and the farther in time or space, the less likely. The same one can come back twice. Anchor an antique to open the place it points to. An anchored one cannot be sold. A spare sells for funds, which buy supplies, so each copy is either money or a door. Release an anchor to sell it, unless someone is away there or it is the last open place. Places that are not open yet show only as question marks.
+    antiques_hint: Antiques are found on trips and each points to a place. Anchor one to open that place, and sell the spares.
+    inv_hint: What you hold. Take it on a trip, or sell it at the price you paid.
     lock: Anchor
     unlock: Release
     locked: Anchored
@@ -679,19 +681,22 @@ ui:
     pick: Pick an entry from the left.
     none: No matching entries
     cats:
-      places: Places
       people: People
       events: Events
-      stories: Stories
-      plots: Plots
+      virtual: Virtual stories
       staff: Employees
       traits: Traits
       stats: Attributes
-      antiques: Antiques
-      items: Items
+      items_ancient: Ancient items
+      items_modern: Modern items
+      items_future: Future items
       formulas: Formulas
       vars: Variables
       models: Models
+    kinds:
+      ancient: 'Ancient item: found and sold only, can be anchored.'
+      modern: 'Modern item: bought with funds, mostly used up, today''s science and medicine.'
+      future: 'Future item: bought with time energy, for special stories, never used up.'
     tag_filter: Tag filter
     dev_cats: dev
     uses_formulas: Formulas used

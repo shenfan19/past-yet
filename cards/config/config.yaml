@@ -42,9 +42,11 @@ office:
   # every this many three star trips of an employee give one point to a random attribute of theirs, up to 10
   threes_per_point: 3
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
-  # An employee earns about 5.4 funds a day from the trips alone and about 7.5 when half the antiques found are sold, so the upkeep passes that near four people.
+  # An employee earns about 8 funds a day with the stars and half the antiques sold, so the upkeep passes that near five people.
   # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
   wage: {base: 3, step: 0.25, unpaid_favor: -0.02}
+  # archived reports are kept, up to this many, the oldest go first and their lines stay
+  max_archived_reports: 200
   # Antiques sell at the price on the card times a market factor that is redrawn for each field every period_days, within 1 +- amp.
   market: {period_days: 30, amp: 0.3}
   fatal_outcomes: [near_death]
@@ -68,9 +70,9 @@ favor:
   start: 0.5
   # the mood (favor in the code) changes every attribute by up to this share, up at full mood and down at none, so a trip is run on the attributes of that day
   buff: 0.2
-  # a reward costs this many days of the wages of that person and gives this much mood
-  gift_days: 30
-  gift_gain: 0.5
+  # a reward costs this many days of the wage of that person and gives this much mood
+  gift_days: 1
+  gift_gain: 0.1
   min: 0
   max: 1
   outcome:
@@ -109,7 +111,7 @@ auto:
     - detox_water
     - heart_monitor
 ui:
-  currency_icons: {funds: '💰', energy: '⚡'}
+  currency_icons: {funds: '💰', energy: '⚡', wage: '🧾'}
   tab_icons: {home: '🏠', buy: '🛒', shop: '🗂️'}
   tool_icons: {wiki: '📖', settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}

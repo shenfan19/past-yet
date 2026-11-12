@@ -130,12 +130,11 @@ export function createOffice(X) {
   }
   ensureTrips();
   const tripsOf = (placeId) => S().trips.filter((t) => t.place === placeId).reverse();
-  // Archiving hides a trip from the log and lets go of its stored report, the summary and the tally of stars stay. Nothing is deleted for good.
-  // The rules pick trips the way a person would: the ones that did not succeed, or those that are not the best of their place.
+  // Archiving hides a trip from the log and keeps its report, up to max_archived_reports, the oldest going first. The summary and the tally of stars always stay.
+  // The rule picks trips the way a person would: those that are not the best of their place.
   const live = () => S().trips.filter((t) => !t.archived);
   function archiveRule(rule) {
     const trips = live();
-    if (rule === 'failed') return trips.filter((t) => t.recalled || !t.stars).map((t) => t.id);
     // the best of a place is the newest of its most starred trips, every other trip of the place can go
     const keep = new Set();
     const byPlace = {};
@@ -146,7 +145,7 @@ export function createOffice(X) {
   function archive(ids) {
     const set = new Set(ids);
     for (const t of S().trips) if (set.has(t.id)) t.archived = true;
-    S().dispatches = S().dispatches.filter((d) => !(d.claimed && set.has(d.id)));
+    pruneReports();
     ctx.save();
   }
   function restore(ids) {
@@ -157,14 +156,16 @@ export function createOffice(X) {
   // Full reports are kept per place, the best one (most stars, then the newest) and the latest. Every other report goes, its summary stays.
   function pruneReports() {
     const s = S();
+    const archived = new Set(s.trips.filter((x) => x.archived).map((x) => x.id));
     const keep = new Set();
     const byPlace = {};
-    for (const x of s.dispatches.filter((y) => y.claimed)) (byPlace[x.eraId] ||= []).push(x);
+    for (const x of s.dispatches.filter((y) => y.claimed && !archived.has(y.id))) (byPlace[x.eraId] ||= []).push(x);
     for (const list of Object.values(byPlace)) {
       const newest = (a, b) => b.claimedAt - a.claimedAt;
       list.slice().sort((a, b) => (b.stars || 0) - (a.stars || 0) || newest(a, b)).slice(0, O.keep_best).forEach((x) => keep.add(x.id));
       list.slice().sort(newest).slice(0, O.keep_latest).forEach((x) => keep.add(x.id));
     }
+    s.dispatches.filter((y) => y.claimed && archived.has(y.id)).sort((a, b) => b.claimedAt - a.claimedAt).slice(0, O.max_archived_reports).forEach((x) => keep.add(x.id));
     s.dispatches = s.dispatches.filter((x) => !x.claimed || keep.has(x.id));
   }
 
@@ -232,8 +233,8 @@ export function createOffice(X) {
     return d;
   }
 
-  // A reward costs the wages of F.gift_days days of that person, and lifts the mood by F.gift_gain.
-  const giftCost = () => Math.round(F.gift_days * wageOf(1 + hiredIds().length - 1) / Math.max(1, hiredIds().length));
+  // A reward costs the wage of F.gift_days days of that person, and lifts the mood by F.gift_gain.
+  const giftCost = () => Math.round(F.gift_days * wageOf(hiredIds().length) / Math.max(1, hiredIds().length));
   function gift(id) {
     const s = S();
     const cost = giftCost();
@@ -362,7 +363,9 @@ export function createOffice(X) {
 
   // ---------- wages ----------
   const W = O.wage;
+  // The wage of the whole staff of n people: the more of them, the more each costs, so the upkeep grows faster than the staff.
   const wageOf = (n) => n * W.base * (1 + W.step * (n - 1));
+  const wageTotal = () => wageOf(hiredIds().length);
   // Settles every whole day that has passed since the last payment. What cannot be paid is not owed: the funds go to nothing and the staff lose favor.
   function payWages() {
     const s = S();
@@ -370,7 +373,7 @@ export function createOffice(X) {
     while (Math.floor(day()) > s.wageDay) {
       s.wageDay += 1;
       const ids = hiredIds();
-      const due = wageOf(ids.length);
+      const due = wageTotal();
       if (s.funds >= due) { s.funds -= due; continue; }
       s.funds = 0;
       s.unpaidDays = (s.unpaidDays || 0) + 1;
@@ -543,5 +546,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { grow, giftCost, archiveRule, archive, restore, wageOf, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

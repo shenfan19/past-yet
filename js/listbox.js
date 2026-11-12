@@ -60,8 +60,8 @@ export function createListbox(X) {
     // a list in a pop-up with a fixed height keeps its scroll, every other list is paged
     const pg = spec.scroll ? null : paginate(spec.id, rest);
     const open = spec.scroll ? `<div class="lscroll" data-keep="${spec.id}" style="max-height:min(${spec.maxH}px,75vh)">` : '<div>';
-    const bar = spec.tools || (pg && pg.html) ? `<div class="lbar"><span class="ltools">${spec.tools || ''}</span>${pg ? pg.html : ''}</div>` : '';
-    return `<div class="lbox" id="lb-${spec.id}">${bar}${pinHtml}${open}<table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(pg ? pg.shown : rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;
+    const filterRow = spec.tools ? `<div class="lfilterbar">${spec.tools}</div>` : '';
+    return `${filterRow}<div class="lbox" id="lb-${spec.id}">${pg ? pg.html : ''}${pinHtml}${open}<table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(pg ? pg.shown : rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;
   }
 
   function sort(idKey) {
