@@ -403,7 +403,14 @@ tr.archived td, li.archived, .archived { opacity: .55; }
 .toast i { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--stamp); transform-origin: left; animation-name: toastbar; animation-timing-function: linear; animation-fill-mode: forwards; }
 @keyframes toastbar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 /* the night on the map: a soft shade over the land, under the pins, that never catches a click */
-svg.map .night path { fill: #0d1b3d; opacity: .26; pointer-events: none; filter: blur(2.5px); }
+svg.map .night path { fill: #0d1b3d; opacity: .3; pointer-events: none; filter: blur(16px); }
 @media (prefers-color-scheme: dark) { svg.map .night path { opacity: .42; } }
 :root[data-theme="dark"] svg.map .night path { opacity: .42; }
 :root[data-theme="light"] svg.map .night path { opacity: .26; }
+
+/* the status page of an employee */
+.mbox table.attrs { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+.mbox table.attrs th, .mbox table.attrs td { padding: 2px 6px; }
+.mbox table.gear { width: 100%; border-collapse: collapse; }
+.mbox table.gear td { padding: 3px 6px; border-top: 1px solid var(--line); vertical-align: middle; }
+.mbox b.up { color: var(--ok, #2f7d4a); }

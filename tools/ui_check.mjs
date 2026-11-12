@@ -85,13 +85,19 @@ try {
   await page.evaluate(() => { window.__game.ui.state.modal = { kind: 'dispatch' }; window.__game.ui.render(); });
   await page.hover('a.chip.tr >> nth=0');
   ok('trait tooltip shows', (await page.locator('#tip').isVisible()) && (await page.locator('#tip').innerText()).length > 0);
-  await page.click('a.wl[data-id="staff:s_ning"] >> nth=0');
+  await page.click('a.wl[data-act=staffopen][data-id="s_ning"] >> nth=0');
+  await page.waitForSelector('#modal .radarwrap');
+  ok('a name opens the status page with attributes, implants and records', (await page.locator('#modal table.attrs tbody tr').count()) === 5 && (await page.locator('#modal .sec', { hasText: '义体' }).count()) >= 1);
+  ok('the status page is a pop-up over the dispatch pop-up', (await page.locator('#modal .storyfull').count()) === 0 && (await page.evaluate(() => window.__game.ui.state.modalStack.map((m) => m.kind).join())) === 'dispatch');
+  await page.click('#modal a.wl[data-act=wiki][data-id="staff:s_ning"]');
   await page.waitForSelector('.wiki');
-  ok('staff link opens wiki and expands only its category', (await page.locator('.wcat[open]').count()) === 1);
+  ok('the encyclopedia is one step further and expands only its category', (await page.locator('.wcat[open]').count()) === 1);
   // the wiki opens over the pop-up it was opened from, and closing it gives that pop-up back
-  ok('the wiki is a pop-up over the dispatch pop-up', (await page.locator('#modal .wikibox').count()) === 1);
+  ok('the wiki is a pop-up over the status page', (await page.locator('#modal .wikibox').count()) === 1);
   await page.keyboard.press('Escape');
-  ok('closing the wiki gives back the dispatch pop-up', (await page.locator('#modal .storyfull').count()) === 1 && (await page.locator('#modal .wikibox').count()) === 0);
+  ok('closing the wiki gives back the status page', (await page.locator('#modal .radarwrap').count()) === 1 && (await page.locator('#modal .wikibox').count()) === 0);
+  await page.keyboard.press('Escape');
+  ok('closing the status page gives back the dispatch pop-up', (await page.locator('#modal .storyfull').count()) === 1);
   await page.keyboard.press('Escape');
   await tool('wiki');
   ok('the wiki keeps its state when it is opened again', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
@@ -135,11 +141,12 @@ try {
   // the automatic set-up may already have chosen one of them, so click one that is not chosen yet
   const other = (await page.locator('[data-act=pickstaff][data-id=s_zhou]').count()) ? 's_zhou' : 's_ning';
   await page.click(`[data-act=pickstaff][data-id=${other}]`);
-  ok('picked staff is marked', (await page.locator(`.pickrow.on a.wl[data-id="staff:${other}"]`).count()) === 1);
+  ok('picked staff is marked', (await page.locator(`.pickrow.on a.wl[data-id="${other}"]`).count()) === 1);
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
   ok('sending closes the pop-up and the trip shows at the top, before the map', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('#home-pending').count()) === 1 && (await page.evaluate(() => document.getElementById('home-pending').compareDocumentPosition(document.getElementById('home-map')) & Node.DOCUMENT_POSITION_FOLLOWING)) > 0);
   ok('the first trip starts the clock at 1x', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 1);
+  await page.selectOption('[data-clk=speed]', '0');
   // the trip is made to be home by moving its day, as the clock would
   await page.waitForSelector('.outrow');
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
@@ -360,7 +367,7 @@ try {
   ok('space pauses the clock', (await page.evaluate(() => window.__game.ctx.S().clock.day)) === day1);
   // every employee has a wiki page once hired or on offer
   const offerId = await page.evaluate(() => window.__game.ctx.S().hire.slots[0].id);
-  if (offerId) { await sub('hire'); await page.click(`.ltable a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.keyboard.press('Escape'); }
+  if (offerId) { await sub('hire'); await page.click(`.ltable a.wl[data-act=staffopen][data-id="${offerId}"]`); await page.click(`#modal a.wl[data-act=wiki][data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.keyboard.press('Escape'); }
   const gid = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     const slot = S.hire.slots[0];
@@ -370,7 +377,8 @@ try {
     return slot.id;
   });
   await sub('staff');
-  await page.click(`a.wl[data-id="staff:${gid}"]`);
+  await page.click(`a.wl[data-act=staffopen][data-id="${gid}"]`);
+  await page.click(`#modal a.wl[data-act=wiki][data-id="staff:${gid}"]`);
   await page.waitForSelector('.wiki');
   ok('a hired employee has a wiki page', (await page.locator('#wiki-article h2').count()) === 1);
   await page.keyboard.press('Escape');
@@ -786,6 +794,32 @@ await page.evaluate(() => { const S = JSON.parse(localStorage.getItem('teleporte
 await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
 await page.waitForSelector('#tabs button');
 ok('a save that does not fit the data is dropped and the page still opens', (await page.locator('#tabs button[data-tab]').count()) === 3 && !(await page.evaluate(() => window.__game.ctx.S().locks.includes('relic_removed_event'))));
+// implants: worn up to the load cap, add to the attributes, and come back to the stock when the wearer is let go
+const imp = await page.evaluate(() => {
+  const g = window.__game, o = g.ui.office, S = g.ctx.S();
+  const cap = o.loadCap();
+  const id = o.hiredIds().find((k) => g.ui.office && S.staff[k].hired);
+  const before = g.backend.staffStats(id, null).constitution;
+  for (const k of ['gorilla_arm', 'cyber_arm', 'cyber_lung', 'neural_chip']) S.inv[k] = (S.inv[k] || 0) + 1;
+  S.staff[id].gear = [];
+  const a = o.equip(id, 'gorilla_arm');
+  const afterGorilla = g.backend.staffStats(id, null).constitution;
+  const b = o.equip(id, 'cyber_arm');
+  const c = o.equip(id, 'neural_chip');
+  const stockWhileWorn = S.inv.gorilla_arm;
+  const load = o.loadOf(id);
+  const un = o.unequip(id, 'gorilla_arm');
+  const stockBack = S.inv.gorilla_arm;
+  o.equip(id, 'gorilla_arm');
+  const worn = [...o.staffGear(id)];
+  const other = o.hiredIds().find((k) => k !== id);
+  S.staff[id].restUntil = 0;
+  const left = o.dismiss(id);
+  return { cap, a, afterGorilla: afterGorilla - before, b, c, stockWhileWorn, load, un, stockBack, left, gearAfter: S.staff[id].gear.length, stockAfter: worn.every((k) => S.inv[k] >= 1) };
+});
+ok('a piece is worn while it fits the load cap and adds to the attributes', imp.a === true && imp.afterGorilla === 3 && imp.b === false && imp.load <= imp.cap);
+ok('a worn piece leaves the stock and comes back when taken off', imp.stockWhileWorn === 0 && imp.un === true && imp.stockBack === 1);
+ok('letting someone go takes the implants off first, nothing is lost', imp.left === true && imp.gearAfter === 0 && imp.stockAfter);
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });

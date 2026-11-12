@@ -51,7 +51,10 @@ const subsets = (arr) => arr.reduce((a, x) => a.concat(a.map((s) => [...s, x])),
 const allKits = subsets(sceneItems);
 function metBy(req, who, carried) {
   const stats = { ...who.base };
-  for (const i of carried) for (const [k, m] of Object.entries(items[i].stat_mult || {})) stats[k] *= m;
+  for (const i of carried) {
+    for (const [k, m] of Object.entries(items[i].stat_mult || {})) stats[k] *= m;
+    for (const [k, v] of Object.entries(items[i].stat_add || {})) stats[k] += v;
+  }
   return Object.entries(req).every(([k, v]) => {
     if (k === 'stat') return Object.entries(v).every(([s, min]) => stats[s] >= min);
     if (k === 'trait') return v.some((t) => who.traits.includes(t));

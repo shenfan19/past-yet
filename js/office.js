@@ -56,7 +56,7 @@ export function createOffice(X) {
   function launch(eraId, spec, opts = {}) {
     const E = ctx.era(eraId);
     const s = S();
-    const full = { ...spec, plots: plotsFor(eraId), favor: s.staff[spec.staffId].favor };
+    const full = { ...spec, plots: plotsFor(eraId), favor: s.staff[spec.staffId].favor, gear: staffGear(spec.staffId) };
     const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready' || eraBusy(eraId)) return null;
     const { res, report } = ctx.backend.dispatch(eraId, full);
@@ -76,7 +76,7 @@ export function createOffice(X) {
   function launchLight(eventId, staffId, seed, items = {}, opts = {}) {
     const s = S();
     if (!s.locks.includes('relic_' + eventId) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
-    const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && (s.inv[id] || 0) >= n));
+    const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && !D.get('items.' + id).implant && (s.inv[id] || 0) >= n));
     const r = ctx.backend.runLight(eventId, staffId, seed, kit, s.staff[staffId].favor);
     const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
     for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
@@ -389,9 +389,36 @@ export function createOffice(X) {
     return true;
   }
 
+  // ---------- implants ----------
+  // An implant is bought with time energy and then worn by one employee, up to the load cap. It adds to the attributes while worn and shows on every trip.
+  const staffGear = (id) => S().staff[id].gear || [];
+  const loadOf = (id) => staffGear(id).reduce((a, g) => a + D.get('items.' + g).load, 0);
+  const loadCap = () => O.implant_load_cap;
+  function equip(id, itemId) {
+    const s = S();
+    const it = D.get('items.' + itemId);
+    if (!s.staff[id] || !s.staff[id].hired || !it.implant || staffState(id) === 'away') return false;
+    if ((s.inv[itemId] || 0) < 1 || staffGear(id).includes(itemId) || loadOf(id) + it.load > loadCap()) return false;
+    s.inv[itemId] -= 1;
+    s.staff[id].gear = [...staffGear(id), itemId];
+    ctx.save();
+    return true;
+  }
+  function unequip(id, itemId) {
+    const s = S();
+    if (!s.staff[id] || !staffGear(id).includes(itemId) || staffState(id) === 'away') return false;
+    s.staff[id].gear = staffGear(id).filter((g) => g !== itemId);
+    s.inv[itemId] = (s.inv[itemId] || 0) + 1;
+    ctx.save();
+    return true;
+  }
+
+  // Letting someone go takes their implants off first and puts them back in the stock, so nothing bought with time energy is lost.
   function dismiss(id) {
     const s = S();
     if (!s.staff[id].hired || hiredIds().length <= 1 || staffState(id) === 'away') return false;
+    for (const g of staffGear(id)) s.inv[g] = (s.inv[g] || 0) + 1;
+    s.staff[id].gear = [];
     if (s.secretary === id) s.secretary = null;
     s.staff[id].hired = false;
     ctx.save();
@@ -510,7 +537,7 @@ export function createOffice(X) {
   // The kit for a story, found the way a person would: try every set of the special equipment the office owns, or could buy and still keep
   // its reserve, with the very seed the trip will have, and take the set that earns the most stars, the cheaper and the lighter first.
   // The kit is not a guess, the story is run on it. What is bought is only what the best set needs and the owned sets cannot match.
-  const sceneItems = Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene);
+  const sceneItems = Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && !D.get('items.' + id).implant);
   const nextSeed = () => ((S().seq + 1) * D.get('config.engine.mc_seed_stride')) % D.get('config.engine.seed_max') + 1;
   function planLight(eventId, staffId, seed, canBuy = true) {
     const s = S();
@@ -617,5 +644,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

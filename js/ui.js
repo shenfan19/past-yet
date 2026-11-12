@@ -46,7 +46,7 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, modal: null, modalPrev: null, pager: {}, filters: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', sub: null, modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -113,7 +113,7 @@ export function createUI(D, ctx) {
   const staffState = (id) => office.staffState(id);
   const totals = () => ctx.backend.itemTotals(st.form.items);
   const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: Object.fromEntries(Object.entries(st.form.items).filter(([k]) => k in E().itemBindings)) });
-  const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && D.get('items.' + k).scene));
+  const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && D.get('items.' + k).scene && !D.get('items.' + k).implant));
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const tagLabel = (tag) => U.report[tag];
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
@@ -135,7 +135,7 @@ export function createUI(D, ctx) {
     const mini = statsLine(stats);
     return [staffProfile(D, id), T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
   }
-  const staffLink = (id) => wl('staff:' + id, staffName(D, id), staffTip(id));
+  const staffLink = (id) => `<a class="wl" data-act="staffopen" data-id="${esc(id)}"${tip(staffTip(id))}>${esc(staffName(D, id))}</a>`;
   // a three star trip that earned a point of an attribute says so in the accounts
   const grownRow = (paid) => (paid && paid.grown ? `<tr><td>${U.report.grown}</td><td class="num">${esc(T.stats[paid.grown])} +1</td></tr>` : '');
   // The stars an employee has brought in, as three counts: three stars, two stars, one star. It never grows into a list.
@@ -491,7 +491,7 @@ export function createUI(D, ctx) {
     const stState = staffState(f.staffId);
     const story = !!st.map.cat;
     // only what can be taken is listed: what is in stock, and anything already chosen
-    const carryRows = story ? Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
+    const carryRows = story ? Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && !D.get('items.' + id).implant && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
     const carryBox = listbox.html({
       id: 'carry', scroll: true, maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
@@ -687,10 +687,34 @@ export function createUI(D, ctx) {
   function staffModalHtml(id) {
     const S = ctx.S();
     const sf = S.staff[id];
+    const P = U.staffpage;
+    const attrList = D.get('staff.attributes');
     const eff = ctx.backend.staffStats(id, sf.favor);
-    const attrs = D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(eff[k])}`).join(' · ');
+    const plain = ctx.backend.staffBase(id);
+    const worn = office.staffGear(id);
+    const gearAdd = (k) => worn.reduce((a, g) => a + ((D.get('items.' + g).stat_add || {})[k] || 0), 0);
+    const attrs = attrList.map((k) => `${T.stats[k]} ${r1(eff[k])}`).join(' · ');
     const keptIds = new Set(S.dispatches.filter((d) => d.claimed).map((d) => d.id));
     const rows = S.trips.filter((x) => x.staffId === id).slice().reverse();
+    const grown = sf.growth || {};
+    const threes = O.threes_per_point;
+    const into = (tallyOf(id)[3] || 0) % threes;
+    const attrRows = attrList.map((k) => {
+      const base = plain[k] - gearAdd(k);
+      return `<tr><td>${esc(T.stats[k])}</td><td class="num">${r1(base)}${grown[k] ? ` <span class="muted"${tip(P.grown_tip)}>(+${grown[k]})</span>` : ''}</td><td class="num">${gearAdd(k) ? `<b class="up">+${gearAdd(k)}</b>` : '<span class="muted">0</span>'}</td><td class="num"><b>${r1(eff[k])}</b></td></tr>`;
+    }).join('');
+    const implants = Object.keys(D.get('items')).filter((g) => D.get('items.' + g).implant);
+    const away = staffState(id) === 'away';
+    const bonusText = (it) => Object.entries(it.stat_add || {}).map(([k, v]) => `${T.stats[k]} +${v}`).join(SEP);
+    const used = office.loadOf(id), cap = office.loadCap();
+    const gearRows = implants.filter((g) => worn.includes(g) || (S.inv[g] || 0) > 0).map((g) => {
+      const it = D.get('items.' + g);
+      const on = worn.includes(g);
+      const fits = used + it.load <= cap;
+      const btn = on ? `<button class="ghost" data-act="unequip" data-id="${g}" ${away ? 'disabled' : ''}>${P.unequip}</button>`
+        : `<button data-act="equip" data-id="${g}" ${away || !fits ? 'disabled' : ''}${!fits ? tip(P.too_heavy) : ''}>${P.equip}</button>`;
+      return `<tr><td>${wl('items:' + g, T.items[g].name, T.items[g].desc)}${on ? ` <span class="chip">${P.worn}</span>` : ` <span class="muted">${P.in_stock.replace('{n}', String(S.inv[g] || 0))}</span>`}</td><td class="num">${P.load} ${it.load}</td><td>${esc(bonusText(it))}</td><td class="num">${btn}</td></tr>`;
+    }).join('');
     const list = listbox.html({
       id: 'staff_trips', rows, empty: U.office.no_trips,
       cols: [
@@ -701,11 +725,17 @@ export function createUI(D, ctx) {
         { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (keptIds.has(r.id) ? `<button class="ghost" data-act="open" data-id="${r.id}">${U.report.view}</button>` : '') },
       ],
     });
-    return `<h3>${staffLink(id)} <span class="muted">${esc(staffProfile(D, id))}</span></h3>
-      <div class="radarwrap"${tip(attrs)}>${radarSvg(D, eff)}</div>
-      <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
-      <p>${esc(T.staff[id].story || '')}</p>
+    return `<h3>${esc(staffName(D, id))} <span class="muted">${esc(staffProfile(D, id))}</span> <a class="wl" data-act="wiki" data-id="staff:${esc(id)}">${P.wiki}</a></h3>
+      <p class="muted">${esc(T.staff[id].bio)}</p>
+      <div class="cols2"><div><div class="radarwrap"${tip(attrs)}>${radarSvg(D, eff)}</div></div>
+      <div><table class="plain attrs"><thead><tr><th></th><th class="num">${P.base}</th><th class="num">${P.gear}</th><th class="num">${P.today}</th></tr></thead><tbody>${attrRows}</tbody></table>
       <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span></div>
+      <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(threes))}</div></div></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
+      <div class="sec">${P.gear_title} <span class="muted">${P.load_meter.replace('{a}', String(used)).replace('{b}', String(cap))}</span></div>
+      ${gearRows ? `<table class="plain gear"><tbody>${gearRows}</tbody></table>` : `<p class="muted">${P.no_gear}</p>`}
+      ${away ? `<p class="muted">${P.away_note}</p>` : ''}
+      <div class="sec">${P.story}</div><p>${esc(T.staff[id].story || '')}</p>
       <div class="sec" style="clear:both">${U.office.staff_trips}</div>${list}`;
   }
 
@@ -751,8 +781,9 @@ export function createUI(D, ctx) {
   // Closing the wiki gives back the pop-up it was opened from, if there was one, so a chain of links ends where it began.
   function closeModal() {
     if (st.modal && st.modal.kind === 'welcome') return;
-    st.modal = st.modal && st.modal.kind === 'wiki' && st.modalPrev ? st.modalPrev : null;
-    st.modalPrev = null;
+    // the wiki and the status page open over what is open and give it back, one step at a time
+    st.modal = st.modal && ['wiki', 'staff'].includes(st.modal.kind) && st.modalStack.length ? st.modalStack.pop() : null;
+    if (!st.modal) st.modalStack = [];
     render();
   }
   function modalBody() {
@@ -885,7 +916,7 @@ export function createUI(D, ctx) {
     else if (act === 'open') { st.back = st.tab; leave(); st.sub = id; st.vs = false; render(); }
     else if (act === 'fire') { office.dismiss(id); render(); }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
-    else if (act === 'wiki') { wiki.go(id); if (st.modal && st.modal.kind === 'wiki') wiki.refresh(); else { st.modalPrev = st.modal; st.modal = { kind: 'wiki' }; render(); } }
+    else if (act === 'wiki') { wiki.go(id); if (st.modal && st.modal.kind === 'wiki') wiki.refresh(); else { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'wiki' }; render(); } }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
     else if (act === 'wikiback') { wiki.move(-1); wiki.refresh(); }
     else if (act === 'wikifwd') { wiki.move(1); wiki.refresh(); }
@@ -900,8 +931,10 @@ export function createUI(D, ctx) {
     else if (act === 'rerollstaff') { office.rerollStaff(); render(); }
     else if (act === 'startpick') { office.pickStart(id); render(); }
     else if (act === 'welcomestart') { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
-    else if (act === 'modalopen') { st.modalPrev = null; st.modal = { kind: id }; render(); }
-    else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; st.modal = { kind: 'staff', id }; render(); }
+    else if (act === 'modalopen') { st.modalStack = []; st.modal = { kind: id }; render(); }
+    else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; if (st.modal && st.modal.kind !== 'staff') st.modalStack.push(st.modal); st.modal = { kind: 'staff', id }; render(); }
+    else if (act === 'equip') { if (st.modal && st.modal.kind === 'staff') office.equip(st.modal.id, id); render(); }
+    else if (act === 'unequip') { if (st.modal && st.modal.kind === 'staff') office.unequip(st.modal.id, id); render(); }
     else if (act === 'archive') { office.archive([id]); render(); }
     else if (act === 'restore') { office.restore([id]); render(); }
     else if (act === 'archiverule') { office.archive(office.archiveRule(id)); render(); }
@@ -1025,7 +1058,6 @@ export function createUI(D, ctx) {
     if (fresh.length) { ctx.audio.sfx('ready'); showReturns(fresh); }
     if (ctx.S().brokeNew) { ctx.S().brokeNew = false; st.modal = { kind: 'broke' }; ctx.save(); render(); }
     if (ctx.S().clock.auto) office.autoStep();
-    worldMap.tickNight(D.get('config.ui.refresh_ms') / 1000);
     if (pressed) return;
     renderClock();
     renderTabs();

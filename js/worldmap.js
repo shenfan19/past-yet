@@ -90,14 +90,16 @@ export function createWorldMap(X) {
     if (Math.abs(decl) < cfg.min_decl_deg) decl = decl < 0 ? -cfg.min_decl_deg : cfg.min_decl_deg;
     const sunLon = 180 - 360 * phase;
     const pts = [];
-    for (let lon = V().lon_min; lon <= V().lon_max + 1e-9; lon += cfg.step_deg) {
+    const pad = cfg.pad_deg;
+    for (let lon = V().lon_min - pad; lon <= V().lon_max + pad + 1e-9; lon += cfg.step_deg) {
       const lat = Math.atan(-Math.cos((lon - sunLon) * rad) / Math.tan(decl * rad)) / rad;
-      pts.push(`${px(lon).toFixed(2)},${py(Math.max(V().lat_min, Math.min(V().lat_max, lat))).toFixed(2)}`);
+      pts.push(`${px(lon).toFixed(2)},${py(Math.max(V().lat_min - pad, Math.min(V().lat_max + pad, lat))).toFixed(2)}`);
     }
-    const edge = decl > 0 ? H() : 0;
-    return `M${pts.join(' L')} L${W()},${edge} L0,${edge} Z`;
+    const edge = decl > 0 ? H() + pad : -pad;
+    return `M${pts.join(' L')} L${W() + pad},${edge} L${-pad},${edge} Z`;
   }
   // called every tick: the picture follows the clock up to the cap, and the shade is redrawn in place
+  let lastNight = null;
   function tickNight(dt) {
     if (!ctx.settings.get('map_daynight')) return;
     const sp = Math.min(X.office.effectiveSpeed(), DN().speed_cap);
@@ -106,6 +108,14 @@ export function createWorldMap(X) {
     const el = document.querySelector('svg.map .night path');
     if (el) el.setAttribute('d', nightPath());
   }
+
+  // the shade is redrawn on its own short interval, much more often than the page, so it glides instead of stepping
+  setInterval(() => {
+    const now = performance.now();
+    const dt = lastNight == null ? 0 : Math.min(1, (now - lastNight) / 1000);
+    lastNight = now;
+    tickNight(dt);
+  }, D.get('map.daynight.frame_ms'));
 
   function svgHtml() {
     const grid = [];

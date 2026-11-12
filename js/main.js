@@ -29,6 +29,7 @@ document.documentElement.lang = D.lang;
 document.title = [D.get('text.ui.title'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');
 
 const backend = createLocalBackend(D);
+backend.setGearSource((id) => (S && S.staff[id] && S.staff[id].gear) || []);
 
 const KEY = D.get('config.save.key');
 const VERSION = D.get('config.save.version');
@@ -53,7 +54,7 @@ function fresh() {
   const crew = drawStartStaff(D, O);
   return {
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: crew.pick.includes(id), favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
+    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id), favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,

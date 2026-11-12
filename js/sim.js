@@ -140,15 +140,17 @@ export function compileEra(raw, D, id) {
 // ---------- staff and spec ----------
 // The five attributes of an employee, from 1 to 10. Traits do not change them.
 // With a mood the attributes are the ones of that day: up to buff more at full mood, up to buff less at none. Without it they are the ones on the card.
-export function staffAttrs(D, staffId, mood = null) {
+export function staffAttrs(D, staffId, mood = null, gear = []) {
   const a = { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
+  // an implant adds to the attributes while it is worn
+  for (const id of gear) for (const [k, v] of Object.entries(D.get('items.' + id).stat_add || {})) a[k] += v;
   if (mood === null) return a;
   const f = 1 + D.get('config.favor.buff') * (2 * mood - 1);
   return Object.fromEntries(Object.entries(a).map(([k, v]) => [k, v * f]));
 }
 // What the era models read. Every quantity is a plain function of one attribute, set in staff_rules.yaml. A trait can add a weakness of its own, like being hurt or infected.
-export function staffStats(D, staffId, mood = null) {
-  const a = staffAttrs(D, staffId, mood);
+export function staffStats(D, staffId, mood = null, gear = []) {
+  const a = staffAttrs(D, staffId, mood, gear);
   const out = Object.fromEntries(Object.entries(D.get('staff.derive')).map(([k, d]) => [k, Math.max(0, d.offset + (d.from ? d.scale * a[d.from] : 0))]));
   for (const t of D.get('staff.staff.' + staffId + '.traits')) for (const [k, v] of Object.entries(D.get('staff.traits.' + t).model || {})) out[k] += v;
   return out;
@@ -191,7 +193,7 @@ export function validateSpec(E, D, spec, stock) {
 function initVars(E, D, spec, withTraveler) {
   const v = {};
   for (const [n, d] of Object.entries(E.vars)) v[n] = d.value;
-  const stats = staffStats(D, spec.staffId, spec.favor ?? null);
+  const stats = staffStats(D, spec.staffId, spec.favor ?? null, spec.gear || []);
   for (const [n, d] of Object.entries(E.vars)) if (d.from_staff) v[n] = stats[d.from_staff];
   for (const [n, d] of Object.entries(E.vars)) if (d.from_spec) v[n] = spec[d.from_spec] ?? d.value;
   const apply = (grp, key) => {

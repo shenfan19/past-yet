@@ -18,7 +18,10 @@ export function createLocalBackend(D) {
   const AF = D.get('config.office.antique_find');
   // Luck is read where a point or an antique is left to chance: a factor on the chance, one at luck 4, more above and less below, never past max_chance.
   const LK = D.get('config.office.luck');
-  const luckFactor = (staffId, mood = null) => LK.base + LK.per_point * sim.staffAttrs(D, staffId, mood).luck;
+  // what an employee wears is kept in the game state, so the backend asks for it through a function the page sets
+  let gearSource = () => [];
+  const gearOf = (staffId) => gearSource(staffId) || [];
+  const luckFactor = (staffId, mood = null) => LK.base + LK.per_point * sim.staffAttrs(D, staffId, mood, gearOf(staffId)).luck;
   const rad = (x) => (x * Math.PI) / 180;
   const km = (a, b) => {
     const h = Math.sin(rad(b.lat - a.lat) / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lon - a.lon) / 2) ** 2;
@@ -82,8 +85,9 @@ export function createLocalBackend(D) {
   const SC = D.get('config.scene');
   function runScene(ev, staffId, seed, items, favor = null) {
     const staff = D.get('staff.staff.' + staffId);
-    const stats = { ...sim.staffAttrs(D, staffId, favor) };
-    const carried = Object.entries(items || {}).filter(([id, n]) => n > 0 && D.get('items.' + id).scene).map(([id]) => id);
+    const gear = gearOf(staffId);
+    const stats = { ...sim.staffAttrs(D, staffId, favor, gear) };
+    const carried = [...new Set([...Object.entries(items || {}).filter(([id, n]) => n > 0 && D.get('items.' + id).scene).map(([id]) => id), ...gear])];
     let exposure = 0;
     for (const id of carried) {
       const it = D.get('items.' + id);
@@ -122,7 +126,7 @@ export function createLocalBackend(D) {
       const r = runScene(ev, staffId, seed, items, favor);
       return { ...r, outcome: r.stars >= 2 ? 'success' : r.stars === 1 ? 'partial' : 'missed' };
     }
-    const stats = sim.staffAttrs(D, staffId, favor);
+    const stats = sim.staffAttrs(D, staffId, favor, gearOf(staffId));
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
     const points = applyBonus([margin >= L.cuts.reach, margin >= L.cuts.meet, margin >= L.cuts.impress].map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })), L.kinds, staffId, seed, eventId);
@@ -142,7 +146,9 @@ export function createLocalBackend(D) {
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],
     eraInfo: (id) => info[id],
-    staffStats: (staffId, mood = null) => sim.staffAttrs(D, staffId, mood),
+    staffStats: (staffId, mood = null) => sim.staffAttrs(D, staffId, mood, gearOf(staffId)),
+    staffBase: (staffId) => sim.staffAttrs(D, staffId),
+    setGearSource: (fn) => { gearSource = fn; },
     staffHabit: (staffId) => sim.staffHabit(D, staffId),
     itemTotals: (items) => sim.itemTotals(D, items),
     // returns an error code, or null when the dispatch is allowed
