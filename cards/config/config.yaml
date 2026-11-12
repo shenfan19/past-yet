@@ -44,9 +44,9 @@ office:
   # every this many three star trips of an employee give one point to a random attribute of theirs, up to 10
   threes_per_point: 3
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
-  # An employee earns about 8 funds a day with the stars and half the antiques sold, so the upkeep passes that near five people.
+  # An employee earns about 7 funds a day from trips, and the antiques sold add to that as the spares pile up, so the upkeep passes the income near seven or eight people. There is no fixed limit on the staff, the wage bill is the limit.
   # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
-  wage: {base: 3, step: 0.25, unpaid_favor: -0.02}
+  wage: {base: 3, step: 0.4, unpaid_favor: -0.02}
   # archived reports are kept, up to this many, the oldest go first and their lines stay
   max_archived_reports: 200
   # luck is a factor on the chances left to chance: base + per_point * luck, so one at luck 4, and no chance goes past max_chance
@@ -148,7 +148,7 @@ light:
   # the three points of a small story are reached, met and made a mark, each at a margin of the traveller against the event
   cuts: {reach: -0.1, meet: 0.08, impress: 0.2}
   kinds: [endure, persuade, trust]
-  pay: {1: {funds: 50, energy: 4}, 2: {funds: 90, energy: 8}, 3: {funds: 140, energy: 16}}
+  pay: {1: {funds: 40, energy: 4}, 2: {funds: 70, energy: 8}, 3: {funds: 110, energy: 16}}
   share: {success: 1, partial: 0.55, missed: 0.15}
   rest_days: {success: 1, partial: 1, missed: 2}
   favor: {success: 0.03, partial: 0.01, missed: -0.03}
