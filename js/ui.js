@@ -45,7 +45,7 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, modal: null, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', sub: null, modal: null, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '', sub: 'staff' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -298,27 +298,32 @@ export function createUI(D, ctx) {
 
   // Candidates are shown in full before hiring: who they are, what they can do, and what each trait gives and costs.
   const regionLabel = (id) => { const r = D.get('hiring.regions').find((x) => x.id === id); return r ? (r.text[D.lang] || r.text.en) : ''; };
-  function candidateHtml(c) {
-    const S = ctx.S();
+  // One candidate is one row: who, background, abilities, traits with what each gives and costs in its tooltip, and the hire button.
+  function candidateRow(c) {
     const id = c.id;
     const def = D.get('staff.staff.' + id);
-    const stats = ctx.backend.staffStats(id);
-    const mini = statsLine(stats);
-    const swatch = def.skin ? `<span class="skin" style="background:${D.get('hiring.skin_tones.' + def.skin)}"></span>` : '';
-    const traits = staffTraits(D, id).map((t) => `<div class="traitline"><b>${esc(T.traits[t])}</b> <span class="pro">+ ${esc(T.trait_notes[t].pro)}</span> <span class="con">− ${esc(T.trait_notes[t].con)}</span></div>`).join('');
-    return `<div class="card cand">
-      <div class="row sp"><div class="candname">${swatch}<b>${staffLink(id)}</b></div><span class="muted">${esc(staffProfile(D, id))}${def.region ? ' · ' + esc(regionLabel(def.region)) : ''}</span></div>
-      ${traits}
-      <div class="muted">${mini}</div>
-      <div class="row sp"><span class="muted">${U.office.wage}${COLON}${ri(office.wageOf(hiredIds().length))} → ${ri(office.wageOf(hiredIds().length + 1))}</span><button class="primary" data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button></div>
-    </div>`;
+    const swatch = def.skin ? `<span class="skin" style="background:${D.get('hiring.skin_tones.' + def.skin)}"></span> ` : '';
+    return { id, name: staffName(D, id), swatch, profile: staffProfile(D, id) + (def.region ? ' · ' + regionLabel(def.region) : ''), stats: statsLine(ctx.backend.staffStats(id)), traits: staffTraits(D, id) };
   }
+
   function hireHtml() {
     const S = ctx.S();
     office.ensureHire();
     const left = Math.max(0, S.hire.next - S.clock.day);
-    return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))}</p>
-      <div class="grid2">${S.hire.slots.map(candidateHtml).join('')}</div>
+    const n = hiredIds().length;
+    const icon = D.get('config.ui.currency_icons.funds');
+    const box = listbox.html({
+      id: 'hire', rows: S.hire.slots.map(candidateRow), maxH: D.get('config.ui.box_h.hire'), empty: U.office.hire_none,
+      cols: [
+        { k: 'name', label: U.office.col_staff, w: '15%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${r.swatch}<b>${staffLink(r.id)}</b></span>` },
+        { k: 'profile', label: U.office.col_profile, w: '22%', cell: (r) => `<div class="oneline"${tip(r.profile)}>${esc(r.profile)}</div>` },
+        { k: 'stats', label: U.office.col_stats, w: '27%', cell: (r) => `<div class="oneline">${esc(r.stats)}</div>` },
+        { k: 'traits', label: U.office.col_traits, w: '20%', cell: (r) => `<span class="nowrap">${r.traits.map(traitChip).join('')}</span>` },
+        { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => `<button class="primary" data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>` },
+      ],
+    });
+    return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))} ${U.office.wage}${COLON}${ri(office.wageOf(n))} → ${ri(office.wageOf(n + 1))} ${icon}</p>
+      ${box}
       <p class="muted" id="hire-next">${U.office.hire_next.replace('{n}', r1(left))}</p>`;
   }
 
@@ -333,10 +338,11 @@ export function createUI(D, ctx) {
   }
 
   // One table for the dispatches: the ones still out come first, with what can be done to them, then the finished ones with their report.
-  function officeHtml() {
+  // What needs the player now sits at the top of the home page: trips on the road and trips that are home and wait to be claimed.
+  function pendingHtml() {
     const S = ctx.S();
     const today = S.clock.day;
-    const out = S.dispatches.filter((d) => !d.claimed).map((d) => {
+    const rows = S.dispatches.filter((d) => !d.claimed).map((d) => {
       const left = Math.max(0, d.readyDay - today);
       const ready = left === 0;
       const recallBtn = !ready && !d.recallRefused ? `<button data-act="recall" data-id="${d.id}"${tip(U.office.recall_tip)}>${U.office.recall}</button>` : '';
@@ -346,10 +352,17 @@ export function createUI(D, ctx) {
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `${recallBtn} ${DEV ? `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>` : ''}`;
       return `<tr class="outrow"><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">${acts}</td></tr>`;
     });
+    if (!rows.length) return '';
+    return `<div class="sec" id="home-pending">${U.office.on_road}</div>
+      <table class="logtable pending"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.office.col_status}</th><th></th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+  }
+
+  // The log of finished trips, read from the summaries that are kept for good.
+  function officeHtml() {
     const keptIds = new Set(ctx.S().dispatches.filter((d) => d.claimed).map((d) => d.id));
     const trips = ctx.S().trips.slice().reverse().slice(0, D.get('config.ui.log_rows'));
     const done = trips.map((t) => `<tr><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : ''}</td></tr>`);
-    const rows = out.concat(done).join('');
+    const rows = done.join('');
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
       ${rows ? `<div class="lscroll" data-keep="log" style="max-height:${D.get('config.ui.box_h.log')}px"><table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="muted">${U.report.none}</p>`}`;
@@ -629,7 +642,7 @@ export function createUI(D, ctx) {
     fixForm();
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
-      ${jumpBar([['home-map', U.dispatch.era], ['home-log', U.office.log]])}
+      ${pendingHtml()}
       <div class="sec" id="home-map">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
       ${worldMap.html()}
       ${worldMap.eventsBox()}
@@ -642,7 +655,7 @@ export function createUI(D, ctx) {
   function modalBody() {
     const m = st.modal;
     if (!m) return '';
-    if (m.kind === 'dispatch') return `<div class="mbox wide">${storyBoxHtml()}${deskHtml()}</div>`;
+    if (m.kind === 'dispatch') return `<div class="mbox wide"><div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;
     const d = share.dispatch(m.id);
     return d ? `<div class="mbox">${share.html(d)}</div>` : '';
   }
@@ -713,7 +726,7 @@ export function createUI(D, ctx) {
     st.form.plots = [];
     renderClock();
     render();
-    const lg = document.getElementById('home-log');
+    const lg = document.getElementById('home-pending');
     if (lg) lg.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -765,7 +778,7 @@ export function createUI(D, ctx) {
     else if (act === 'lsort') { listbox.sort(id); render(); }
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id;  } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
+    else if (['shoptag', 'shopsub', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
     else if (act === 'modalclose') { st.modal = null; render(); }
@@ -798,6 +811,7 @@ export function createUI(D, ctx) {
     if (t.matches('details.wcat')) st.wiki.openCats[t.dataset.cat] = t.open;
     else if (t.matches('#wiki-tags details.tagfold')) st.wiki.tagOpen = t.open;
     else if (t.matches('#map-tags details.tagfold')) st.map.tagOpen = t.open;
+    else if (t.matches('details.mapfilter')) st.map.filterOpen = t.open;
   }, true);
   const tipEl = document.createElement('div');
   tipEl.id = 'tip';

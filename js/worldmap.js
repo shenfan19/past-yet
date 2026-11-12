@@ -184,10 +184,13 @@ export function createWorldMap(X) {
   function html() {
     const s = m();
     return `
-      <div class="row" style="margin-bottom:6px"><input id="map-q" type="search" placeholder="${M.events_filter_ph}" value="${esc(s.q)}" style="flex:1;min-width:200px">
+      <div class="row" style="margin-bottom:6px"><input id="map-q" type="search" placeholder="${M.events_filter_ph}" value="${esc(s.q)}" style="flex:1;min-width:200px"></div>
+      <details class="mapfilter" ${s.filterOpen ? 'open' : ''}><summary>${M.more_filters}</summary>
+      <div class="row" style="margin:6px 0">
         <span class="muted">${M.from}</span><input id="map-from" type="number" value="${s.from}" style="width:80px"><span class="muted" id="map-fromtxt">${fmtYear(D, s.from === 0 ? 1 : s.from)}</span><span class="muted">${M.to}</span><input id="map-to" type="number" value="${s.to}" style="width:80px"><span class="muted" id="map-totxt">${fmtYear(D, s.to === 0 ? 1 : s.to)}</span></div>
       <div class="row" style="margin-bottom:6px"><span class="muted">${U.stars.filter}</span><select id="map-star"><option value="" ${s.star === '' ? 'selected' : ''}>${U.stars.f_all}</option><option value="none" ${s.star === 'none' ? 'selected' : ''}>${U.stars.f_none}</option><option value="1" ${s.star === '1' ? 'selected' : ''}>★ ${U.stars.f_up}</option><option value="2" ${s.star === '2' ? 'selected' : ''}>★★ ${U.stars.f_up}</option><option value="3" ${s.star === '3' ? 'selected' : ''}>★★★</option></select></div>
       <div id="map-tags">${tagBar()}</div>
+      </details>
       <div class="mapwrap"><div id="map-svg">${svgHtml()}</div><div class="zoombtns"><button data-act="mapz" data-id="in" title="${M.zoom_in}">+</button><button data-act="mapz" data-id="out" title="${M.zoom_out}">−</button><button data-act="mapz" data-id="reset" title="${M.zoom_reset}">⌂</button></div></div>
       <div class="muted">${M.drag_hint}</div>
       <div id="map-axis">${axisHtml()}</div>`;
@@ -332,7 +335,7 @@ export function createWorldMap(X) {
 
   function init() {
     const A = D.get('map.axis');
-    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, cat: null, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
+    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, filterOpen: false, cat: null, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
   }
   // the events of the picked place, drawn by the page where it wants them
   const eventsBox = () => `<div id="map-events">${eventRows()}</div>`;

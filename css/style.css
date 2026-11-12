@@ -318,10 +318,23 @@ ul.stages li.dim { color: var(--ink2); }
 .trips li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 3px 0; border-bottom: 1px dotted var(--line, #cdbf9f); }
 
 /* the pop-up over the page: a click on the dark ground closes it */
-.modalbg { position: fixed; inset: 0; background: #0007; z-index: 60; overflow: auto; display: flex; justify-content: center; align-items: flex-start; padding: 24px 12px; }
+.modalbg { position: fixed; inset: 0; background: #0007; z-index: 60; overflow: auto; display: flex; padding: 24px 12px; }
 body.modal-open { overflow: hidden; }
-.mwrap { position: relative; width: min(1000px, 100%); }
+.mwrap { position: relative; width: min(1000px, 100%); margin: auto; }
 .mbox { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
 .mbox.wide .desk .lbox { height: 300px; }
 .mclose { position: absolute; top: 8px; right: 8px; z-index: 2; }
 .share canvas { width: 100%; max-width: 760px; height: auto; border: 1px solid var(--line); }
+
+/* one row is one line in the lists, and the two groups of tabs of the agency page */
+.nowrap { white-space: nowrap; }
+.ltable td .oneline { display: block; }
+.subtabs { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 10px 0 12px; }
+.tabgroup { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; background: var(--paper2); border-radius: 6px; }
+.tabgroup .grouplabel { font-size: 12px; color: var(--ink2); margin-right: 4px; }
+.tabgroup button.on { background: var(--stamp); color: #fff; border-color: var(--stamp); }
+/* the story in a pop-up is shown whole, only its history of trips scrolls */
+.storyfull .lscroll { max-height: none !important; overflow: visible; }
+.storyfull .trips { max-height: 180px; overflow: auto; }
+.mapfilter summary { cursor: pointer; color: var(--blue); font-size: 13px; padding: 2px 0; }
+table.pending { width: 100%; }

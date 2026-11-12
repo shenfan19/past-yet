@@ -20,7 +20,9 @@ export function createShop(X) {
   const oneLine = firstSentence;
   const COLON = U.fmt.colon, SEP = U.fmt.sep;
 
-  const nameCell = (kind, id, name, desc, tip, extra = '') => `${X.wl(kind + ':' + id, name, tip)}${extra}<div class="oneline muted">${esc(oneLine(desc))}</div>`;
+  // one row is one line: the name, then the description in a column of its own, cut short with the whole text in the tooltip
+  const nameCell = (kind, id, name, tip, extra = '') => `<span class="nowrap">${X.wl(kind + ':' + id, name, tip)}${extra}</span>`;
+  const descCell = (desc) => `<div class="oneline muted"${X.tip(desc)}>${esc(oneLine(desc))}</div>`;
   const itemTip = (id) => {
     const it = D.get('items.' + id);
     return `${T.items[id].desc}\n${U.enc.weight} ${it.weight} · ${S_.buy_price} ${it.cost} · ${S_.sell_price} ${sell1(id)}\n${it.tags.map((t) => T.tags[t]).join(SEP)}`;
@@ -43,11 +45,12 @@ export function createShop(X) {
     return listbox.html({
       id: 'shop_' + shopId, rows, maxH: D.get('config.ui.box_h.shop'), pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
       cols: [
-        { k: 'name', label: S_.col_name, w: '36%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, T.items[r.id].desc, itemTip(r.id), !buyable(r.it) && DEV ? ' ' + hiddenChip() : '') },
-        { k: 'tags', label: S_.col_tags, w: '22%', cell: (r) => tagChips(r.it.tags) },
-        { k: 'price', label: S_.buy_price, w: '10%', cls: 'num', val: (r) => r.it.cost, cell: (r) => `${r.it.cost} ${icon(cur)}` },
-        { k: 'stock', label: S_.stock, w: '10%', cls: 'num', val: (r) => S.inv[r.id] || 0, cell: (r) => S.inv[r.id] || 0 },
-        { k: 'qty', label: S_.col_qty, w: '22%', cls: 'num', cell: (r) => (r.it.unlock_energy > S.energy ? `<span class="muted"${X.tip(S_.locked_tip)}>🔒 ${r.it.unlock_energy} ${icon('energy')}</span>` : buyable(r.it)
+        { k: 'name', label: S_.col_name, w: '20%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, itemTip(r.id), !buyable(r.it) && DEV ? ' ' + hiddenChip() : '') },
+        { k: 'desc', label: S_.col_desc, w: '28%', cell: (r) => descCell(T.items[r.id].desc) },
+        { k: 'tags', label: S_.col_tags, w: '16%', cell: (r) => `<span class="nowrap">${tagChips(r.it.tags)}</span>` },
+        { k: 'price', label: S_.buy_price, w: '9%', cls: 'num', val: (r) => r.it.cost, cell: (r) => `${r.it.cost} ${icon(cur)}` },
+        { k: 'stock', label: S_.stock, w: '8%', cls: 'num', val: (r) => S.inv[r.id] || 0, cell: (r) => S.inv[r.id] || 0 },
+        { k: 'qty', label: S_.col_qty, w: '19%', cls: 'num', cell: (r) => (r.it.unlock_energy > S.energy ? `<span class="muted"${X.tip(S_.locked_tip)}>🔒 ${r.it.unlock_energy} ${icon('energy')}</span>` : buyable(r.it)
           ? stepper('cartdec', 'cartinc', r.id, cart()[r.id] || 0, !(cart()[r.id] > 0), total + r.it.cost * r.it.step > bal(cur))
           : `<span class="muted">${r.it.ip ? S_.ip_short : S_.planned}</span>`) },
       ],
@@ -60,10 +63,11 @@ export function createShop(X) {
     return listbox.html({
       id: 'inv', rows, maxH: D.get('config.ui.box_h.inv'), empty: S_.inv_empty,
       cols: [
-        { k: 'name', label: S_.col_name, w: '48%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, T.items[r.id].desc, itemTip(r.id)) },
-        { k: 'stock', label: S_.stock, w: '14%', cls: 'num', val: (r) => S.inv[r.id], cell: (r) => S.inv[r.id] },
-        { k: 'sell', label: S_.sell_price, w: '14%', cls: 'num', val: (r) => sell1(r.id), cell: (r) => `${sell1(r.id)} ${icon(curOf(r.it.shop))}` },
-        { k: 'act', label: '', w: '24%', cls: 'num', cell: (r) => `<button data-act="shopsell" data-id="${r.id}">${S_.sell} ×${Math.min(r.it.step, S.inv[r.id])}</button>` },
+        { k: 'name', label: S_.col_name, w: '24%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, itemTip(r.id)) },
+        { k: 'desc', label: S_.col_desc, w: '38%', cell: (r) => descCell(T.items[r.id].desc) },
+        { k: 'stock', label: S_.stock, w: '9%', cls: 'num', val: (r) => S.inv[r.id], cell: (r) => S.inv[r.id] },
+        { k: 'sell', label: S_.sell_price, w: '12%', cls: 'num', val: (r) => sell1(r.id), cell: (r) => `${sell1(r.id)} ${icon(curOf(r.it.shop))}` },
+        { k: 'act', label: '', w: '17%', cls: 'num', cell: (r) => `<button data-act="shopsell" data-id="${r.id}">${S_.sell} ×${Math.min(r.it.step, S.inv[r.id])}</button>` },
       ],
     });
   }
@@ -92,11 +96,12 @@ export function createShop(X) {
     return listbox.html({
       id: 'ants', rows, maxH: D.get('config.ui.box_h.ants'), empty: S_.antiques_empty,
       cols: [
-        { k: 'name', label: S_.col_name, w: '34%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
-        { k: 'dest', label: U.dispatch.points_to, w: '20%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
-        { k: 'count', label: S_.copies, w: '8%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
-        { k: 'sell', label: S_.sell_price, w: '10%', cls: 'num', val: (r) => r.an.price, cell: (r) => `${r.an.price} ${icon('funds')}` },
-        { k: 'act', label: '', w: '28%', cls: 'num', cell: (r) => (r.own
+        { k: 'name', label: S_.col_name, w: '22%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
+        { k: 'desc', label: S_.col_desc, w: '26%', cell: (r) => descCell(T.antiques[r.id].desc) },
+        { k: 'dest', label: U.dispatch.points_to, w: '16%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
+        { k: 'count', label: S_.copies, w: '6%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
+        { k: 'sell', label: S_.sell_price, w: '9%', cls: 'num', val: (r) => r.an.price, cell: (r) => `${r.an.price} ${icon('funds')}` },
+        { k: 'act', label: '', w: '21%', cls: 'num', cell: (r) => (r.own
           ? `<button data-act="antlock" data-id="${r.id}" ${r.lock && !releasable(r.id) ? 'disabled' : ''}${r.lock && !releasable(r.id) ? ' data-tip="' + esc(S_.keep_one) + '"' : ''}>${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${sellable(r.id) ? '' : 'disabled'}>${S_.sell}</button>`
           : '') },
       ],
@@ -113,22 +118,30 @@ export function createShop(X) {
     const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
     const spares = office.spareCount();
     const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * D.get('antiques.antiques.' + id).price, 0);
+    // what comes in (the two shops and the hiring offer) and what is held (employees, goods, antiques), one tab at a time
+    const parts = {
+      modern: () => `<p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}`,
+      future: () => future,
+      hire: () => extra.hire,
+      staff: () => extra.staff,
+      inv: () => invBox(),
+      ants: () => `<p class="muted">${S_.antiques_hint}</p><div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}`,
+    };
+    const names = { modern: S_.modern.name, future: S_.future.name, hire: U.office.hire_title, staff: U.office.staff, inv: S_.inv_title, ants: S_.antiques_title };
+    const groups = [[S_.group_buy, ['modern', 'future', 'hire']], [S_.group_own, ['staff', 'inv', 'ants']]];
+    const sub = s().sub in parts ? s().sub : 'staff';
+    const tabs = `<div class="subtabs">${groups.map(([label, ids]) => `<span class="tabgroup"><span class="grouplabel">${esc(label)}</span>${ids.map((id) => `<button class="${id === sub ? 'on' : ''}" data-act="shopsub" data-id="${id}">${esc(names[id])}</button>`).join('')}</span>`).join('')}</div>`;
+    const filtered = ['modern', 'future', 'inv', 'ants'].includes(sub);
     return `
-      ${X.jumpBar([['shop-ants', S_.antiques_title], ['shop-inv', S_.inv_title], ['shop-modern', S_.modern.name], ['shop-future', S_.future.name], ['shop-staff', U.office.staff], ['shop-hire', U.office.hire_title]])}
-      <div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"></div>
-      ${bar}
-      <div class="sec" id="shop-ants">${S_.antiques_title}</div><p class="muted">${S_.antiques_hint}</p>
-      <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}
-      <div class="sec" id="shop-inv">${S_.inv_title}</div>${invBox()}
-      <div class="sec" id="shop-modern">${S_.modern.name}</div><p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}
-      <div class="sec" id="shop-future">${S_.future.name}</div>${future}
-      <div class="sec" id="shop-staff">${U.office.staff}</div>${extra.staff}
-      <div class="sec" id="shop-hire">${U.office.hire_title}</div>${extra.hire}`;
+      ${tabs}
+      ${filtered ? `<div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"></div>${bar}` : ''}
+      ${parts[sub]()}`;
   }
 
   function act(a, id) {
     const S = ctx.S();
     if (a === 'shoptag') { s().tag = id; return true; }
+    if (a === 'shopsub') { s().sub = id; return true; }
     if (a === 'cartinc' || a === 'cartdec') {
       const it = D.get('items.' + id);
       const n = (cart()[id] || 0) + (a === 'cartinc' ? it.step : -it.step);

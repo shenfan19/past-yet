@@ -29,6 +29,10 @@ page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') 
 page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 try {
   const ok = (label, cond) => console.log(label + ':', cond ? 'ok' : 'MISMATCH');
+  // the agency page shows one tab at a time
+  const sub = (id) => page.click(`[data-act=shopsub][data-id=${id}]`);
+  // the filters of the map are folded away, the test opens them
+  const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&dev=1`);
   await page.waitForSelector('.lead');
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
@@ -36,6 +40,7 @@ try {
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
   await page.screenshot({ path: path.join(outDir, '0_home.png'), fullPage: true });
   await page.waitForSelector('#res .rv');
+  await openFilter();
   await page.screenshot({ path: path.join(outDir, '1_office.png'), fullPage: true });
   // dispatch through the world map
   // tooltip on a trait chip, and a staff link opens the wiki with only its category expanded
@@ -91,7 +96,7 @@ try {
   ok('picked staff is marked', (await page.locator('.pickrow.on a.wl[data-id="staff:s_zhou"]').count()) === 1);
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
-  ok('sending closes the pop-up and the trip shows in the log below', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('.logtable .outrow').count()) >= 1);
+  ok('sending closes the pop-up and the trip shows at the top, before the map', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('#home-pending').count()) === 1 && (await page.evaluate(() => document.getElementById('home-pending').compareDocumentPosition(document.getElementById('home-map')) & Node.DOCUMENT_POSITION_FOLLOWING)) > 0);
   await page.waitForSelector('[data-act=ff]');
   await page.click('[data-act=ff]');
   await page.waitForSelector('[data-act=claim]');
@@ -129,6 +134,7 @@ try {
   ok('energy kept after reload', before === after);
   // shop: the used anchor is locked, antiques sell and buy, items buy and sell
   await page.click('[data-tab=shop]');
+  await sub('ants');
   await page.waitForSelector('[data-act=antlock]');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'pump_rust'); S.antiques.push('pump_rust'); window.__game.ui.render(); });
   ok('anchored antique cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
@@ -149,21 +155,24 @@ try {
   // the time shop is paid in time energy, and an item sells back for exactly what it cost, in either shop
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.energy = 300; S.funds = 1000; window.__game.ui.render(); });
   const pre = await page.evaluate(() => ({ e: window.__game.ctx.S().energy, f: window.__game.ctx.S().funds }));
+  await sub('future');
   await page.click('[data-act=cartinc][data-id=radiation_shield]');
   await page.click('[data-act=cartbuy][data-id=future]');
   ok('future goods are paid in time energy and the funds stay', await page.evaluate((b) => { const S = window.__game.ctx.S(); return S.energy === b.e - window.__game.D.get("items.radiation_shield.cost") && S.funds === b.f && S.inv.radiation_shield === 1; }, pre));
+  await sub('inv');
   await page.click('[data-act=shopsell][data-id=radiation_shield]');
   ok('selling a future good returns the time energy it cost, with no loss', await page.evaluate((b) => { const S = window.__game.ctx.S(); return S.energy === b.e && S.funds === b.f && !S.inv.radiation_shield; }, pre));
+  await sub('modern');
   await page.click('[data-act=cartinc][data-id=ors_pack]');
   await page.click('[data-act=cartbuy][data-id=modern]');
+  await sub('inv');
   await page.click('[data-act=shopsell][data-id=ors_pack]');
   ok('selling a modern good returns the funds it cost, with no loss', await page.evaluate((b) => window.__game.ctx.S().funds === b.f, pre));
-  ok('the agency page has a bar of links to its sections at the top', (await page.locator('.jumps a[data-act=aboutjump]').count()) === 6);
-  await page.click('.jumps a[data-id=shop-future]');
-  ok('a link scrolls to its section', (await page.locator('#shop-future').count()) === 1);
+  ok('the agency page has two groups of three tabs and shows one part at a time', (await page.locator('.subtabs .tabgroup').count()) === 2 && (await page.locator('[data-act=shopsub]').count()) === 6 && (await page.locator('[data-act=antlock]').count()) === 0);
+  await sub('ants');
   await page.click('[data-tab=home]');
-  ok('the travel page has a bar of links to its sections at the top', (await page.locator('.jumps a[data-act=aboutjump]').count()) === 2);
   await page.click('[data-tab=shop]');
+  await sub('future');
   await page.evaluate(() => { window.__game.ctx.S().energy = 100; window.__game.ui.render(); });
   ok('special equipment is locked until the energy reaches its number', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 0 && (await page.locator('[data-act=cartinc][data-id=neural_chip]').count()) === 1);
   await page.evaluate(() => { window.__game.ctx.S().energy = 130; window.__game.ui.render(); });
@@ -218,15 +227,20 @@ try {
   // spares: sell all but one of each
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques.push('relic_faraday_london', 'relic_faraday_london', 'relic_faraday_london'); window.__game.ui.render(); });
   const fundsC = await page.evaluate(() => window.__game.ctx.S().funds);
+  await sub('ants');
   await page.click('[data-act=sellspares]');
   ok('one click sells the spares and keeps one of each', await page.evaluate((f) => { const S = window.__game.ctx.S(); return S.funds > f && S.antiques.filter((x) => x === 'relic_faraday_london').length === 1; }, fundsC));
+  await sub('modern');
   await page.click('[data-act=cartinc][data-id=disinfectant]');
   ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=disinfectant]').count()) === 1);
   await page.click('[data-act=cartbuy]');
   ok('bought disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 2);
+  await sub('inv');
   await page.click('[data-act=shopsell][data-id=disinfectant]');
   ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
+  await sub('future');
   ok('future goods are buyable but a borrowed design is not', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1 && (await page.locator('[data-act=cartinc][data-id=bamboo_copter]').count()) === 0);
+  await sub('modern');
   await page.fill('#shop-q', '心率');
   ok('shop text filter', (await page.locator('[data-act=cartinc]').count()) === 1);
   await page.fill('#shop-q', '');
@@ -266,11 +280,13 @@ try {
   await page.screenshot({ path: path.join(outDir, '9_wiki.png'), fullPage: true });
   // hire, then guest mode
   await page.click('[data-tab=shop]');
+  await sub('hire');
   const slotsBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id));
-  ok('two candidates are on offer, with gains and costs shown', slotsBefore.length === 2 && (await page.locator('.cand .pro').count()) >= 2 && (await page.locator('.cand .con').count()) >= 2);
+  ok('two candidates are on offer, one row each, with their traits', slotsBefore.length === 2 && (await page.locator('[data-act=hire]').count()) === 2 && (await page.locator('#view .ltable tbody tr').count()) === 2 && (await page.locator('#view .ltable a.chip.tr').count()) >= 2);
   await page.locator('[data-act=hire]').first().click();
   ok('hiring one brings another so two stay on offer', await page.evaluate((before) => { const h = window.__game.ctx.S().hire.slots; return h.length === 2 && h.some((x) => !before.includes(x.id)); }, slotsBefore));
   // secretary, favor, clock and auto mode
+  await sub('staff');
   await page.click('[data-act=appoint][data-id=s_zhou]');
   ok('secretary is appointed', (await page.evaluate(() => window.__game.ctx.S().secretary)) === 's_zhou');
   const favor0 = await page.evaluate(() => window.__game.ctx.S().staff.s_ning.favor);
@@ -287,7 +303,7 @@ try {
   // every employee has a wiki page once hired, the made ones too
   // a made employee is in the wiki from the moment they are made, even before hiring
   const offerId = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).find((id) => window.__game.ctx.S().generated[id]));
-  if (offerId) { await page.click(`.cand a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.click('[data-nav="-1"]'); }
+  if (offerId) { await sub('hire'); await page.click(`.ltable a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.click('[data-nav="-1"]'); }
   const gid = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     for (let i = 0; i < 40 && !S.hire.slots.some((x) => S.generated[x.id]); i++) { S.hire.slots = []; S.hire.serial += 1; off.ensureHire(); }
@@ -297,6 +313,7 @@ try {
     g.ui.render();
     return slot.id;
   });
+  await sub('staff');
   await page.click(`a.wl[data-id="staff:${gid}"]`);
   await page.waitForSelector('.wiki');
   ok('a made employee has a wiki page once hired', (await page.locator('#wiki-article h2').count()) === 1);
@@ -351,6 +368,7 @@ try {
   ok('the same stars again pay no energy, so a place cannot be farmed', sr.b.gain === 0 && sr.b.newBest === false);
   ok('the third star pays the other half', sr.c.gain === Math.round(sr.base / 2) && sr.c.best === 3);
   await page.click('[data-tab=home]');
+  await openFilter();
   await page.selectOption('#map-star', '3');
   ok('the star filter keeps only places with that many stars', await page.evaluate(() => [...document.querySelectorAll('svg.map .pt')].length >= 1 && [...document.querySelectorAll('svg.map .pt')].length <= 3));
   await page.selectOption('#map-star', '');
@@ -432,6 +450,7 @@ try {
   await page.click('[data-tab=home]');
   await page.waitForSelector('svg.axis');
   ok('map and axis marks have no rings', (await page.locator('svg .pt .ring').count()) === 0);
+  await page.locator('svg.axis').scrollIntoViewIfNeeded();
   const axBox = await page.locator('svg.axis').boundingBox();
   const winBefore = await page.evaluate(() => { const m = window.__game.ui.state.map; return m.to - m.from; });
   await page.mouse.move(axBox.x + axBox.width * 0.8, axBox.y + axBox.height / 2);
@@ -490,6 +509,7 @@ try {
   await page.keyboard.press('Escape');
   // typing in the year box while the clock runs a trip must not be interrupted by the redraw of the page
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0; g.ui.office.launch('broad_street_1854', { seed: 3, staffId: 's_ning', items: {} }); S.clock.speed = 1; g.ui.render(); });
+  await openFilter();
   await page.click('#map-from', { clickCount: 3 });
   await page.keyboard.type('1850', { delay: 450 });
   ok('digits typed in the year box stay in order while the clock runs', (await page.locator('#map-from').inputValue()) === '1850');
@@ -511,6 +531,7 @@ try {
   await page.fill('#wiki-q', '月亮');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
   await page.click('[data-tab=shop]');
+  await sub('future');
   ok('guest sees the future shop and its goods', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   // English, language switch and fallback
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
@@ -519,6 +540,7 @@ try {
   ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
   await page.click('[data-tab=home]');
   await page.waitForSelector('svg.map');
+  await openFilter();
   await page.fill('#map-from', '-500');
   ok('English BC format', (await page.locator('#map-fromtxt').innerText()) === '500 BC');
   await page.fill('#map-from', '1840');

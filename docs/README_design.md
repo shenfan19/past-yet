@@ -186,9 +186,13 @@ A catalogue event with `regret: true` is a story history treated unjustly: an ea
 
 The log of dispatches scrolls in its own box and is read from the one line summary of every trip, which is kept for good up to `office.max_trips`, so the log never loses a row. Full reports are kept per place: the best one (most stars, then the newest, `office.keep_best`) and the latest (`office.keep_latest`), so a report that is not among them can no longer be opened, but its line stays. There is nothing to archive or delete by hand. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome.
 
+## The agency page
+
+The agency page is one page with two groups of three tabs, shown one at a time. Buy: the modern shop, the future shop and the hiring offer. Held: the employees, the goods and the antiques. In the lists one item or one person is one line, with the description in a column of its own, cut short with the whole text in the tooltip. A candidate on offer is one row with background, abilities and traits, and each trait shows what it gives and costs in its tooltip.
+
 ## Pop-ups and the dispatch desk
 
-Picking an event on the map or in its list does not unfold anything on the page. It opens a pop-up with the story, who goes, what they carry and the send button, so a trip is made in one place. Sending closes the pop-up and the trip shows at the top of the log below. A click on the dark ground, the cross or Escape closes any pop-up.
+The home page puts what needs the player first: the trips on the road and the ones waiting to be claimed, then the map with its search box (the other filters fold away under More filters), the events of the picked place right under it, and the log of finished trips at the bottom. Picking an event on the map or in its list does not unfold anything on the page. It opens a pop-up with the story, who goes, what they carry and the send button, so a trip is made in one place. Sending closes the pop-up and the trip shows at the top of the log below. The story is shown whole and the pop-up sits in the middle of the screen. A click on the dark ground, the cross or Escape closes any pop-up. The lists on the agency page are tall, up to three quarters of the screen.
 
 ## Auto mode and equipment
 
