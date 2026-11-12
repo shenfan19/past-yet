@@ -19,7 +19,7 @@ function pickLang(I) {
 }
 
 const D = await loadData(async (p) => {
-  const res = await fetch(p);
+  const res = await fetch(p, { cache: 'no-cache' }); // always ask the server whether the data changed, so a rebuilt playlist is never hidden by the browser cache
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();
 }, (t) => window.jsyaml.load(t), pickLang);

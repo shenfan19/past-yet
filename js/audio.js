@@ -58,7 +58,7 @@ export function createAudio(D, settings) {
   // ---------- music ----------
   async function load(index) {
     const t = M.tracks[index];
-    const res = await fetch(`${M.folder}/${t.file}`);
+    const res = await fetch(`${M.folder}/${t.file}`, { cache: 'no-cache' });
     if (!res.ok) throw new Error(t.file);
     return parseMidi(await res.arrayBuffer());
   }

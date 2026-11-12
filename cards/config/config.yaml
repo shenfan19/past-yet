@@ -11,7 +11,7 @@ meta:
     code: https://github.com/shenfan19/teleporter
     issues: https://github.com/shenfan19/teleporter/issues
     mail: mailto:contact@teleporter.uk
-    music: https://www.piano-midi.de
+    music: https://www.mutopiaproject.org
 i18n:
   fallback: en
   auto: auto
@@ -34,10 +34,18 @@ office:
   gift_funds: 120
   energy_per_change: 6
   max_plots: 2
-  max_archive: 30
+  # full reports kept for finished trips; the one line summaries of the trips (max_trips) are kept far longer and feed the history of a place
+  max_archive: 60
+  max_trips: 2000
   hire_cost: 100
+  # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
+  # An employee earns about 5.4 funds a day from the trips alone and about 7.5 when half the antiques found are sold, so the upkeep passes that near four people.
+  # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
+  wage: {base: 3, step: 0.25, unpaid_favor: -0.02}
+  # Antiques sell at the price on the card times a market factor that is redrawn for each field every period_days, within 1 +- amp.
+  market: {period_days: 30, amp: 0.3}
   fatal_outcomes: [near_death]
-  antique_find: {k: 0.06, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
+  antique_find: {k: 0.03, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
   start_stock:
     ors_pack: 40
     chlorine_tablet: 40
@@ -70,6 +78,8 @@ auto:
   reserve_funds: 100
   sell_spares_below: 100
   pick: {breakthrough_tries: 3}
+  # the special equipment is paid in time energy, which is also the way home, so a piece is only bought when its price is at most this share of the energy in hand
+  item_buy: {energy_share: 0.5}
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40
@@ -99,7 +109,7 @@ ui:
   timeline_max: 9
   recent_reports: 8
   search_delay_ms: 30
-  box_h: {story: 300, home_staff: 260, pick_staff: 520, carry: 200, plots: 170, shop: 300, inv: 220, ants: 240}
+  box_h: {log: 320, story: 300, home_staff: 260, pick_staff: 520, carry: 200, plots: 170, shop: 300, inv: 220, ants: 240}
   chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}

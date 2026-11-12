@@ -137,7 +137,7 @@ export function createLocalBackend(D) {
       if (k === 'any') return v.some(meets);
       throw new Error('unknown requirement ' + k);
     });
-    const points = applyBonus(ev.scene.points.map((p) => ({ id: p.id, hit: meets(p.req) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    const points = applyBonus(ev.scene.points.map((p) => ({ id: p.id, hit: meets(p.req), ...(p.redeem ? { redeem: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
     let stars = points.filter((p) => p.hit).length;
     // being found out: the more equipment shows and the more suspicious the time, the likelier
     const chance = Math.min(SC.max_discovery, Math.max(0, exposure) * SC.suspicion_by_tier[ev.tier]);
@@ -167,9 +167,12 @@ export function createLocalBackend(D) {
     const pay = L.pay[ev.tier];
     return { outcome, stars, points, funds: Math.round(pay.funds * L.share[outcome]), energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
   }
+  // The market price factor of an antique on a day: one seeded draw per field and per period, so every antique of a field moves together.
+  const MK = D.get('config.office.market');
+  const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
-    runLight, lightStay, makeCandidate, recallRefused, recallKeeps,
+    runLight, lightStay, marketMult, makeCandidate, recallRefused, recallKeeps,
     findOdds, findAntique,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,

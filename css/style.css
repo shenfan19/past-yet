@@ -310,3 +310,12 @@ ul.stages li.dim { color: var(--ink2); }
 .tl li.star { background: rgba(212, 160, 23, 0.14); border-left: 3px solid #d4a017; padding-left: 8px; }
 .starmark { color: #d4a017; }
 .warnline { color: var(--stamp); font-weight: 600; }
+
+/* the log of dispatches scrolls inside its box, the head stays in view, archived rows are dimmed */
+.logtable thead th { position: sticky; top: 0; background: var(--paper); z-index: 1; }
+.logtable tr.archived td { opacity: .55; }
+.logbar { gap: 12px; align-items: center; margin: 6px 0; }
+.logbar .check { display: inline-flex; gap: 6px; align-items: center; }
+/* the trips that came home from one place */
+.trips { list-style: none; padding: 0; margin: 4px 0 0; }
+.trips li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 3px 0; border-bottom: 1px dotted var(--line, #cdbf9f); }

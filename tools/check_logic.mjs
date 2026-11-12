@@ -103,6 +103,7 @@ for (const e of sceneEvents) {
   if (pts.every((p) => 'luck' in p.req)) warn(`scene ${e.id}: all points are luck`);
 }
 for (const [t, n] of Object.entries(traitUse)) if (!n) warn(`trait ${t} is asked by no scene point`);
+{ const ns = Object.values(traitUse).sort((a, b) => a - b); const med = (ns[2] + ns[3]) / 2; for (const [t, n] of Object.entries(traitUse)) if (n > med * 2) warn(`trait ${t} is asked by ${n} scene points, more than twice the median ${med}, so its holders three star far more scenes`); }
 for (const [i, n] of Object.entries(itemUse)) if (!n) warn(`scene item ${i} is asked by no scene point, it only raises abilities`);
 
 // employees
@@ -138,6 +139,16 @@ for (const e of events) {
   if (!e.scene && !fields.has(e.field)) err(`event ${e.id}: field ${e.field} has no weights`);
   if (!cfg.light.pay[e.tier]) err(`event ${e.id}: tier ${e.tier} unpriced`);
   (placeSeen[`${e.year}|${e.lon}|${e.lat}`] ||= []).push(e.id);
+}
+// regret stories: history cannot be changed, so the stars are a redemption. A regret is a scene with exactly one redeem point, and nothing else has one.
+for (const e of events) {
+  if (!(Math.abs(e.lon) <= 180 && Math.abs(e.lat) <= 90)) err(`event ${e.id}: coordinates out of range`);
+  const redeem = (e.scene?.points || []).filter((p) => p.redeem);
+  if (e.regret) {
+    if (!e.scene) err(`regret ${e.id} is not a scene`);
+    else if (redeem.length !== 1) err(`regret ${e.id} needs exactly one redeem point, has ${redeem.length}`);
+    else if (redeem[0].req.luck !== undefined) err(`regret ${e.id}: the redeem point must not be a pure luck roll`);
+  } else if (redeem.length) err(`event ${e.id} has a redeem point but is not a regret`);
 }
 for (const f of fields) if (!events.some((e) => e.field === f)) warn(`field ${f} has weights but no event`);
 for (const [, v] of Object.entries(placeSeen)) if (v.length > 1) warn(`events ${v.join(', ')} share one place and year`);

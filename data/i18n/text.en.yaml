@@ -120,6 +120,7 @@ tags:
   scifi: sci-fi
   neta: meme
   history: history
+  regret: regret
   key: turning point
   story: story
   romance: romance
@@ -152,7 +153,7 @@ ui:
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
           - The models are simplified. Their parameters are game assumptions unless a number is marked historical, and no parameter has been fitted to data. Historical facts in the game are placeholders until their sources are checked, and each entry says whether it has been checked. Please do not cite the game as a source.
-          - 'The 100 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. That is a choice of this first version, not a claim about what matters most in history.'
+          - 'The 200 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Half of them are regrets, lives and works that history treated unjustly or lost. History cannot be changed, so the stars of a regret are what you can give them inside it, and the last one is the redemption. That is a choice of this first version, not a claim about what matters most in history.'
           - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. What they say and do in the game is fiction built around the historical record, and does not reflect their real words, views or character. The time travel, the employees, the antiques, the goods and every plot are invented.
           - Products, names and items in the game are fictional. Where a name resembles someone else's work it is a reference, not an affiliation, and anything not yet checked for rights is marked and cannot be bought in the game.
           - The game is provided as is, without warranty of any kind. If you are in a very difficult place, please reach out to someone you trust or to local professional support.
@@ -178,10 +179,14 @@ ui:
           - Parts of the game, including the code, the text and the design, were made with vibe coding. Thanks to AI, I could realise this idea in my spare time.
           - 'Other games inspired this one: the encyclopedia follows the Civilopedia of Civilization IV, sending someone out and reading what happened follows Assassin''s Creed Brotherhood and Travel Frog, hiring follows Heroes of Might and Magic, the clock and the music player follow Stellaris, and the stars and levels follow Plants vs. Zombies and the full synchronisation of Assassin''s Creed. They are named as thanks and have no connection to this game.'
           - The world map outlines are from Natural Earth, in the public domain.
-          - The piano pieces are MIDI files by Bernd Krueger from piano-midi.de, licensed CC BY-SA 3.0 DE and kept unchanged in the assets folder. The effects are tones the page makes itself.
+          - The music is MIDI files from the Mutopia Project, whose volunteers typeset them from public domain editions of works by Bach, Beethoven, Chopin, Debussy, Grieg, Joplin, Mozart and Satie and of traditional songs from England, Finland and Japan. The header of every piece states Public Domain. The files are kept unchanged in the assets folder. Any file put in that folder joins the playlist when the data is built. The effects are tones the page makes itself.
           - The historical references are listed in the wiki, each with whether it has been checked.
           - The name and the logo are not licensed under the MIT License.
   archive:
+    trips: Trips here
+    trips_none: Nobody has been here yet.
+    trip_gone: report no longer stored
+    trip_day: day {d}
     history: History
     regret: Regret
     check_pending: source unchecked
@@ -440,12 +445,19 @@ ui:
       favor_gain: Favor growth
     recruit_hint_short: Known after hiring
     col_staff: Employee
+    wage: Daily wages
+    wage_unpaid: Wages could not be paid, the staff lose favor
     col_traits: Traits
     col_state: State
     col_history: History
     recruit_hint: An applicant of unknown background. You learn who they are once hired.
     unknown_candidate: '?'
     log: Dispatches
+    archive: Archive
+    archive_all: Archive all finished
+    show_archived: Show archived
+    restore: Restore
+    log_empty_hidden: Everything finished is archived.
     col_status: Status
     recall: Recall
     recall_tip: Ask them to come home now. The story stops where it is and only part of the pay comes back. They may refuse.
@@ -541,7 +553,7 @@ ui:
         ready: Report ready
         back: Return
         coin: Coin
-      credit: The piano pieces are MIDI files from {source} by {author}, licensed {license}.
+      credit: The music is MIDI files from {source}, {license}.
     data:
       h: Data
       note: Your save and settings live in this browser only.
@@ -633,6 +645,8 @@ ui:
     f_none: Not completed
     f_up: and up
     points: Sync points
+    redeem: Redemption
+    regret_note: History cannot be changed. The stars of a regret are what you can give them inside it, and the last one is the redemption.
   wiki:
     search_ph: Type to filter
     all_tags: All tags
@@ -1088,9 +1102,13 @@ catalog:
     name: What reason can and cannot know
     place: Königsberg
     figure: Immanuel Kant
-    story: Kant publishes the Critique of Pure Reason, asking what the mind brings to what it knows.
+    story: After eleven years of silence Kant publishes the Critique of Pure Reason, a book that sells slowly and is first reviewed by people who misread it.
     relic: A walking cane
     relic_desc: The cane of a man whose daily walk was so regular neighbours set clocks by it.
+    points:
+      p1: Share his long dinner table (a kind soul, a teacher, a librarian or a historian)
+      p2: Notice the question beneath the question
+      p3: Write the first review that understands it (needs a cyborg neural chip, or a very fine pen)
   mozart_prague:
     name: An opera Prague loved
     place: Prague
@@ -1672,6 +1690,1106 @@ catalog:
     story: The Gunditjmara shape channels and weirs on a lava flow to trap and keep eels, a system dated to thousands of years ago.
     relic: A woven eel trap
     relic_desc: A long basket with a funnel mouth.
+  galois_paris:
+    name: The night before the duel
+    place: Paris
+    figure: Évariste Galois
+    story: On the night before a duel, Galois writes out his mathematics in a hurried letter to a friend. He dies of his wound the next day, aged twenty.
+    relic: A hurried letter
+    relic_desc: Pages crossed with figures and the words that he had no time.
+    points:
+      p1: Earn his trust at the table
+      p2: Stay awake through the night
+      p3: Read the pages to the end (needs a cyborg neural chip)
+  van_gogh_auvers:
+    name: A summer in Auvers
+    place: Auvers sur Oise
+    figure: Vincent van Gogh
+    story: Van Gogh paints wheat fields and village streets almost every day in Auvers, and in July he dies with his brother Theo beside him. He sold almost none of his work.
+    relic: A tube of chrome yellow
+    relic_desc: A squeezed tin tube of the colour he used for the fields.
+    points:
+      p1: See what the fields are saying (a painter or a curious mind helps)
+      p2: Walk the fields in the heat
+      p3: Stay by his bed through the last night
+  abel_froland:
+    name: The letter that came late
+    place: Froland
+    figure: Niels Henrik Abel
+    story: Abel, who showed that the general equation of the fifth degree cannot be solved by radicals, dies of tuberculosis in Norway at twenty six. A letter offering him a post in Berlin arrives soon after.
+    relic: A sealed letter
+    relic_desc: An unopened offer, tied with a thread.
+    points:
+      p1: Speak up for his proof
+      p2: Keep him company in the cold house (needs a cyborg bionic lung)
+      p3: Keep a clean copy of his papers (an archivist or a stubborn one helps)
+  riemann_selasca:
+    name: The last paper
+    place: Selasca
+    figure: Bernhard Riemann
+    story: Riemann, ill with tuberculosis, spends his last summer by Lake Maggiore working on a paper he does not finish. He dies at thirty nine.
+    relic: A page of notes
+    relic_desc: A page of unfinished formulas in a small hand.
+    points:
+      p1: Follow his unfinished argument
+      p2: Be at ease with him on the terrace
+      p3: Keep his last pages from scattering (a historian, an archivist or a stubborn one helps)
+  du_chatelet_luneville:
+    name: Newton in French
+    place: Lunéville
+    figure: Émilie du Châtelet
+    story: Émilie du Châtelet races to finish her French translation of Newton's Principia with her own commentary. She dies days after giving birth, and the book appears ten years later.
+    relic: An inkwell
+    relic_desc: A small inkwell from a desk worked at through the night.
+    points:
+      p1: Follow her commentary
+      p2: Keep the long hours with her
+      p3: Be the one who checks the last pages (needs a cyborg neural chip)
+  noether_gottingen:
+    name: A lecture under another name
+    place: Göttingen
+    figure: Emmy Noether
+    story: Emmy Noether proves the theorem that ties symmetry to conservation, while the faculty still refuses her a post and her courses are announced under Hilbert's name.
+    relic: A lecture notice
+    relic_desc: A hall notice with Hilbert's name where hers should be.
+    points:
+      p1: Follow the proof
+      p2: Speak for her in the corridor
+      p3: Sit in her lecture as an ordinary listener (needs a hologram cloak)
+  rosalind_franklin_london:
+    name: Photograph fifty one
+    place: London
+    figure: Rosalind Franklin
+    story: Rosalind Franklin makes the clearest X ray pictures of DNA at King's College. Her data reaches others without her knowing, and she dies of cancer at thirty seven.
+    relic: A glass capillary
+    relic_desc: A thin tube for holding a thread of DNA in the beam.
+    points:
+      p1: Read the diffraction picture (a chemist or sharp wit helps)
+      p2: Stand by her careful method
+      p3: Be the colleague who is plainly on her side
+  wegener_greenland:
+    name: Across the ice
+    place: Greenland ice cap
+    figure: Alfred Wegener
+    story: Alfred Wegener, whose drifting continents are still doubted, crosses the Greenland ice with supplies for a winter station, and dies on the way back.
+    relic: A sledge strap
+    relic_desc: A frozen leather strap from a loaded sledge.
+    points:
+      p1: Keep pace in the cold
+      p2: Notice the weather turning
+      p3: Haul the sledge to the end of the march (needs a cyborg arm or a cyborg gorilla arm)
+  boltzmann_duino:
+    name: Atoms by the sea
+    place: Duino
+    figure: Ludwig Boltzmann
+    story: Boltzmann, worn out by illness and by years of arguments over whether atoms are real, spends a late summer holiday at Duino and dies there in September.
+    relic: A chalk stub
+    relic_desc: A worn stub of lecture chalk.
+    points:
+      p1: Take his side in the old argument
+      p2: Walk with him along the shore
+      p3: Be a quiet and steady presence (a physician, a nurse or a kind one helps)
+  cantor_halle:
+    name: Sizes of infinity
+    place: Halle
+    figure: Georg Cantor
+    story: Georg Cantor, mocked by older mathematicians for his work on infinite sets, suffers the first of his breakdowns in Halle.
+    relic: A set of index cards
+    relic_desc: Cards covered with lists that never end.
+    points:
+      p1: See what his sets are doing
+      p2: Answer the mockery in the lecture hall
+      p3: Be the visitor who simply listens
+  tesla_wardenclyffe:
+    name: The unfinished tower
+    place: Shoreham, Long Island
+    figure: Nikola Tesla
+    story: Tesla builds a tall tower at Wardenclyffe to send messages and power through the air. The money runs out and the tower is never finished.
+    relic: A glass insulator
+    relic_desc: A heavy glass insulator from the laboratory wiring.
+    points:
+      p1: Follow the idea behind the tower (an engineer or electrician helps)
+      p2: Make the case to the backers
+      p3: Be the visitor who takes it seriously
+  mozart_requiem_vienna:
+    name: The Requiem unfinished
+    place: Vienna
+    figure: Wolfgang Amadeus Mozart
+    story: Mozart lies ill in Vienna with his Requiem unfinished. He dies in December at thirty five.
+    relic: A page of the Requiem
+    relic_desc: A score page ending mid phrase.
+    points:
+      p1: Sit by him in the sickroom
+      p2: Follow the voices he sketches (a musician or sharp wit helps)
+      p3: Sing the last bars he sketched with him (needs a golden apple)
+  schubert_vienna:
+    name: Songs no one had heard
+    place: Vienna
+    figure: Franz Schubert
+    story: Schubert dies in Vienna aged thirty one at his brother's house, leaving many works he never heard played.
+    relic: A song manuscript
+    relic_desc: A song in a quick hand with the ink still dark.
+    points:
+      p1: Hear what is in the manuscripts (a musician or a sensitive ear helps)
+      p2: Be a friend who comes by the house
+      p3: Play him a song he wrote (a musician, kind or sensitive helps)
+  keats_rome:
+    name: A room by the steps
+    place: Rome
+    figure: John Keats
+    story: Keats, ill with tuberculosis, spends his last months in a small room by the Spanish Steps with his friend Joseph Severn. He dies at twenty five.
+    relic: A pressed violet
+    relic_desc: A dried flower kept in a book.
+    points:
+      p1: Keep him company in the afternoons
+      p2: Share the nights with Severn
+      p3: Ease his last hours (needs an elixir)
+  vermeer_delft:
+    name: The painter in debt
+    place: Delft
+    figure: Johannes Vermeer
+    story: Vermeer, who painted very slowly and sold few pictures, dies in Delft leaving his wife and many children in debt.
+    relic: A pearl earring
+    relic_desc: A small pearl of the kind he painted so often.
+    points:
+      p1: Look at the light the way he does (a painter or curious eye helps)
+      p2: Be a patient visitor to the house
+      p3: Keep his paintings from being scattered (a dealer, an accountant or a stubborn one helps)
+  rembrandt_amsterdam:
+    name: After his son
+    place: Amsterdam
+    figure: Rembrandt van Rijn
+    story: Rembrandt, bankrupt years before and having outlived his son Titus, dies in Amsterdam in modest circumstances. He is still painting his own face.
+    relic: A brush
+    relic_desc: A worn brush with the paint dried in the hairs.
+    points:
+      p1: See how he builds a face (a painter or fine hands help)
+      p2: Sit with him after Titus
+      p3: Stay until the last self portrait is done
+  gaudi_barcelona:
+    name: Struck by a tram
+    place: Barcelona
+    figure: Antoni Gaudí
+    story: Gaudí is hit by a tram on his way to church. In his worn clothes he is not recognised, and he dies three days later with the Sagrada Família unfinished.
+    relic: A plaster model
+    relic_desc: A small hanging model of a vault.
+    points:
+      p1: Read his model of the vault (a builder, a mason, a carpenter or sharp wit helps)
+      p2: Call for help in the street
+      p3: Be the one who stays with him at the hospital
+  kafka_kierling:
+    name: Proofs in the sanatorium
+    place: Kierling
+    figure: Franz Kafka
+    story: Kafka, dying of tuberculosis in a small sanatorium, corrects the proofs of his last stories. He had asked a friend to burn the rest of his work.
+    relic: A page of proofs
+    relic_desc: A galley proof with small corrections in pencil.
+    points:
+      p1: Read the proofs with him (a translator, a librarian or a curious mind helps)
+      p2: Be at his side with Dora
+      p3: Ease the pain of speaking (needs an elixir)
+  dickinson_amherst:
+    name: Poems in a chest
+    place: Amherst
+    figure: Emily Dickinson
+    story: Emily Dickinson dies in her family's house in Amherst. Her sister then finds hundreds of poems in a chest, and almost none had been printed.
+    relic: A sewn booklet
+    relic_desc: A few pages sewn by hand with a poem on each.
+    points:
+      p1: Be a visitor she does not mind
+      p2: Spot the right drawer by chance
+      p3: Be the one who keeps the poems together (a librarian, an archivist or a curious mind helps)
+  poe_baltimore:
+    name: Found on a Baltimore street
+    place: Baltimore
+    figure: Edgar Allan Poe
+    story: Poe is found in distress on a Baltimore street and dies in hospital four days later. His last days have never been explained.
+    relic: A walking cane
+    relic_desc: A plain cane with a worn handle.
+    points:
+      p1: Notice who he is among the crowd
+      p2: Get a carriage to take him in
+      p3: Soothe his last days (needs an elixir)
+  sor_juana_mexico_city:
+    name: The last books given away
+    place: Mexico City
+    figure: Sor Juana Inés de la Cruz
+    story: After church leaders criticised her writing, Sor Juana gives up her books. She dies in 1695 nursing her sisters in an epidemic.
+    relic: A quill pen
+    relic_desc: A quill with a split tip beside an empty shelf.
+    points:
+      p1: Find what she hid in her verse
+      p2: Work beside her in the infirmary
+      p3: Read her verse aloud in the language she wrote it (needs a cyborg neural chip)
+  mary_anning_lyme_regis:
+    name: Bones in the cliff
+    place: Lyme Regis
+    figure: Mary Anning
+    story: Mary Anning, who dug the first great sea reptile skeletons out of the Lyme cliffs, dies of cancer at forty seven. The papers on her finds were mostly written by others.
+    relic: An ammonite
+    relic_desc: A coiled fossil shell split from the blue lias.
+    points:
+      p1: Spot the bone in the rock (a geologist or a curious eye helps)
+      p2: Search the shore after the storm
+      p3: Be a visitor who asks her what she thinks
+  hertz_bonn:
+    name: The waves he found
+    place: Bonn
+    figure: Heinrich Hertz
+    story: Heinrich Hertz, who proved that radio waves exist, dies in Bonn at thirty six after a long painful illness, before their use was seen.
+    relic: A spark gap
+    relic_desc: A small brass spark gap from his experiments.
+    points:
+      p1: Follow the spark across the room (an engineer, an electrician or sharp wit helps)
+      p2: Sit with him through the bad days
+      p3: Take the edge off his pain (needs an elixir)
+  kepler_leonberg:
+    name: His mother on trial
+    place: Leonberg
+    figure: Johannes Kepler
+    story: Kepler's elderly mother Katharina is accused of witchcraft in Leonberg, and he spends months defending her.
+    relic: A table of figures
+    relic_desc: A page of planetary tables he never stopped working on.
+    points:
+      p1: Help him argue the case
+      p2: Stand firm with him through the long hearings
+      p3: Sit with Katharina in the cold cell
+  pushkin_st_petersburg:
+    name: Two days on the Moika
+    place: St Petersburg
+    figure: Alexander Pushkin
+    story: Pushkin is wounded in a duel and spends two days dying in his apartment on the Moika, aged thirty seven, while crowds in the street ask after him.
+    relic: A book of his verse
+    relic_desc: A small book with a pressed leaf at one poem.
+    points:
+      p1: Be a friend he can speak plainly to
+      p2: Hold out through the long night at his door
+      p3: Tend him as well as anyone can (a doctor, a nurse or a kind one helps)
+  chekhov_badenweiler:
+    name: A doctor in the Black Forest
+    place: Badenweiler
+    figure: Anton Chekhov
+    story: Chekhov, himself a doctor dying of tuberculosis, goes to the Black Forest spa of Badenweiler with his wife Olga Knipper, and dies there in July at forty four.
+    relic: A pince nez
+    relic_desc: Small round spectacles on a cord.
+    points:
+      p1: Talk with him as an equal
+      p2: Notice what the doctor in him already knows (a physician, a nurse or a curious mind helps)
+      p3: Ease his breathing in the last night (needs an elixir)
+  puccini_brussels:
+    name: Turandot unfinished
+    place: Brussels
+    figure: Giacomo Puccini
+    story: Puccini, treated for throat cancer in Brussels, leaves Turandot unfinished, the score ending soon after the death of Liù.
+    relic: A sketch page
+    relic_desc: A page of musical sketches in soft pencil.
+    points:
+      p1: Follow the sketches (a musician or sharp wit helps)
+      p2: Be good company in the clinic
+      p3: Keep his last sketches together until they are needed
+  schumann_endenich:
+    name: The asylum at Endenich
+    place: Endenich
+    figure: Robert Schumann
+    story: Robert Schumann has spent two years in an asylum at Endenich near Bonn, visited by few friends, and dies there in July 1856.
+    relic: A tuning fork
+    relic_desc: A small steel fork that gives one clear note.
+    points:
+      p1: Sit with him quietly
+      p2: Hear what he still hums (a musician or a sensitive ear helps)
+      p3: Get past the closed door to visit him (needs a hologram cloak)
+  nietzsche_turin:
+    name: The collapse in Turin
+    place: Turin
+    figure: Friedrich Nietzsche
+    story: In Turin Nietzsche collapses into a mental breakdown, and his friend Franz Overbeck travels from Basel to bring him home. His books were then read by few.
+    relic: A postcard
+    relic_desc: A short card in a wild hand.
+    points:
+      p1: See that something is wrong
+      p2: Be a calm presence in the street
+      p3: Make the landlord understand in the right words (needs a cyborg neural chip)
+  sophie_germain_paris:
+    name: A degree that came too late
+    place: Paris
+    figure: Sophie Germain
+    story: Sophie Germain, who taught herself mathematics from books and once wrote to Gauss under a man's name, dies of cancer in Paris. The honorary degree Göttingen had in mind never reaches her.
+    relic: A letter signed Le Blanc
+    relic_desc: A letter to Gauss in a borrowed name.
+    points:
+      p1: Follow her work on elasticity
+      p2: Hope that a hearing goes her way
+      p3: Sit with her through the last illness
+  bizet_paris:
+    name: A cold premiere
+    place: Paris
+    figure: Georges Bizet
+    story: Carmen opens at the Opéra Comique to a cool reception, and three months later Bizet dies at thirty six without knowing that it would travel the world.
+    relic: A fan
+    relic_desc: A painted paper fan from the stalls.
+    points:
+      p1: Hear what the audience misses (a musician or a sensitive ear helps)
+      p2: Stay in the hall through the cold interval
+      p3: Play him the Habanera at the piano (needs a golden apple)
+  modigliani_paris:
+    name: Portraits no one bought
+    place: Paris
+    figure: Amedeo Modigliani
+    story: Modigliani, poor and ill, dies of tubercular meningitis in a Paris hospital at thirty five. Few had bought his long faced portraits.
+    relic: A charcoal stick
+    relic_desc: A stub of charcoal black to the fingers.
+    points:
+      p1: See what is in the long faces (a painter or curious eye helps)
+      p2: Speak well of him to a dealer
+      p3: Keep him company on the ward
+  boole_ballintemple:
+    name: Wet clothes and a lecture
+    place: Ballintemple, Cork
+    figure: George Boole
+    story: George Boole walks to Queen's College in the rain and lectures in wet clothes. He dies of pneumonia at forty nine, before his logic of true and false found any use.
+    relic: A page of logic
+    relic_desc: A page of equations in which letters stand for yes and no.
+    points:
+      p1: Talk him into resting
+      p2: Walk the rainy road with him
+      p3: Ease the fever that follows (needs an elixir)
+  wallace_ternate:
+    name: An essay from Ternate
+    place: Ternate
+    figure: Alfred Russel Wallace
+    story: Wallace, ill with fever in Ternate, writes out his idea of natural selection in a few days and mails it to Darwin. His name will stand second.
+    relic: A beetle in a pin box
+    relic_desc: A collected beetle in a small tin box.
+    points:
+      p1: Follow the idea as he writes it down
+      p2: Sit through the fever with him
+      p3: Make sure the mail goes out (a translator, a journalist, or a kind soul helps)
+  hooke_london:
+    name: The curator of experiments
+    place: London
+    figure: Robert Hooke
+    story: Robert Hooke, who drew the flea under the microscope and helped rebuild London, dies in his rooms at Gresham College. No certain portrait of him survives.
+    relic: A drawing of a flea
+    relic_desc: A fine engraving of a flea under glass.
+    points:
+      p1: Follow his instruments (an engineer, a mapmaker or sharp wit helps)
+      p2: Speak up for his name at the Society
+      p3: Sit with him in his rooms
+  wu_chienshiung_washington:
+    name: Left and right in the cold
+    place: Washington
+    figure: Chien Shiung Wu
+    story: Chien Shiung Wu runs her cold cobalt experiment at the National Bureau of Standards and shows that nature tells left from right. The Nobel prize that follows goes to the two theorists who proposed it.
+    relic: A cobalt sample
+    relic_desc: A tiny sealed sample on a stand.
+    points:
+      p1: Read the counts as they come in (a chemist or sharp wit helps)
+      p2: Stay through the long cold runs
+      p3: Mount the crystal with steady hands (needs a golden apple)
+  jocelyn_bell_cambridge:
+    name: A scruff on the chart
+    place: Cambridge
+    figure: Jocelyn Bell
+    story: Jocelyn Bell, a student reading miles of chart paper, notices a small regular scruff that others might have taken for interference. The Nobel prize for pulsars later goes to her supervisor.
+    relic: A strip of chart paper
+    relic_desc: A strip with a faint regular mark in the ink.
+    points:
+      p1: Spot the odd mark on the paper
+      p2: Insist that it is not interference
+      p3: Be the one who says it was hers to find
+  leavitt_cambridge_ma:
+    name: A rule for the stars
+    place: Cambridge, Massachusetts
+    figure: Henrietta Leavitt
+    story: Henrietta Leavitt, a human computer at Harvard Observatory, finds that brighter Cepheid stars pulse more slowly, a rule that lets astronomers measure the universe. She is paid a small wage and dies in 1921.
+    relic: A glass plate
+    relic_desc: A photographic plate crowded with tiny stars.
+    points:
+      p1: Follow her tables of stars
+      p2: Keep up the long hours at the plates
+      p3: Be the colleague who asks what she has found
+  cecilia_payne_cambridge_ma:
+    name: The sun is mostly hydrogen
+    place: Cambridge, Massachusetts
+    figure: Cecilia Payne
+    story: Cecilia Payne's thesis shows that stars are made mostly of hydrogen. She is persuaded to call her own result probably not real, and it is confirmed some years later.
+    relic: A page of spectra
+    relic_desc: A page of lines from the spectrum of the sun.
+    points:
+      p1: Follow the reading of the spectra
+      p2: Argue her side in the corridor
+      p3: Stay with her conclusion as she wrote it
+  farnsworth_san_francisco:
+    name: A line on the glass
+    place: San Francisco
+    figure: Philo Farnsworth
+    story: Philo Farnsworth transmits the first electronic television picture, a plain straight line, in a San Francisco laboratory. Years of business fights wear him down and his name fades from the story of television.
+    relic: A glass slide
+    relic_desc: A small glass slide with a painted line.
+    points:
+      p1: Follow the circuit (an engineer, an electrician or sharp wit helps)
+      p2: Hope the next backer takes his call
+      p3: Hold the slide steady in front of the camera (needs a golden apple)
+  bessie_coleman_jacksonville:
+    name: The practice flight
+    place: Jacksonville
+    figure: Bessie Coleman
+    story: Bessie Coleman, who learned to fly in France because no American school would teach her, dies in a practice flight in Jacksonville at thirty four.
+    relic: Flying goggles
+    relic_desc: Leather goggles with a cracked strap.
+    points:
+      p1: Check the plane with her (a pilot, a mechanic or fine hands help)
+      p2: Share her nerve on the field
+      p3: Keep the day as she wanted it (a pilot, a mechanic or a stubborn one helps)
+  scott_last_camp:
+    name: The tent on the ice shelf
+    place: Ross Ice Shelf
+    figure: Robert Falcon Scott
+    story: Scott and his companions turn back from the pole and are caught by cold and storm on the ice shelf, eleven miles from their depot. His diary is found with them months later.
+    relic: A diary
+    relic_desc: A small pencilled diary, stiff with cold.
+    points:
+      p1: Keep going through the cold
+      p2: Look after the weakest of them
+      p3: Drag the sledge so the diary and records come home (needs a cyborg arm or a cyborg gorilla arm)
+  mallory_everest:
+    name: Last seen climbing
+    place: Mount Everest
+    figure: George Mallory
+    story: Mallory and Irvine leave the high camp for the summit of Everest and are last seen climbing high on the mountain. Mallory's body is found seventy five years later.
+    relic: An ice axe
+    relic_desc: A plain wooden ice axe with a worn head.
+    points:
+      p1: Keep pace on the long approach
+      p2: Share the camp and the plan with them
+      p3: Go as high as they do to see them off (needs a cyborg bionic lung)
+  fanny_mendelssohn_berlin:
+    name: The Sunday concert
+    place: Berlin
+    figure: Fanny Mendelssohn Hensel
+    story: Fanny Mendelssohn Hensel composed hundreds of pieces, a few of which appeared under her brother's name. She dies of a stroke in May 1847 while rehearsing a concert at home.
+    relic: A song sheet
+    relic_desc: A handwritten song marked Fanny.
+    points:
+      p1: Hear what is in the songs (a musician or a sensitive ear helps)
+      p2: Be welcome in the family room
+      p3: Play her piano part as she meant it (needs a golden apple)
+  camille_claudel_paris:
+    name: The studio emptied
+    place: Paris
+    figure: Camille Claudel
+    story: Camille Claudel, a sculptor of rare power, is taken from her studio to an asylum eight days after her father's death. She will spend thirty years in institutions.
+    relic: A bronze hand
+    relic_desc: A small bronze study of a hand.
+    points:
+      p1: See the life in her plaster (a painter, a mason or fine hands help)
+      p2: Speak up on the stairs
+      p3: Follow her to the asylum gate unseen (needs a hologram cloak)
+  artemisia_florence:
+    name: The first woman in the academy
+    place: Florence
+    figure: Artemisia Gentileschi
+    story: Artemisia Gentileschi is the first woman admitted to the Florence drawing academy, and paints large canvases while heavy in debt. For centuries many of them are credited to others.
+    relic: A pigment jar
+    relic_desc: A small jar of ground lapis blue.
+    points:
+      p1: See how she builds a figure (a painter or fine hands help)
+      p2: Speak for her to a patron
+      p3: Stand by her work as hers
+  buchner_zurich:
+    name: Woyzeck unfinished
+    place: Zurich
+    figure: Georg Büchner
+    story: Georg Büchner, a young lecturer in natural science and a playwright, dies of typhus in Zurich at twenty three, leaving his play Woyzeck unfinished.
+    relic: A bundle of scenes
+    relic_desc: Loose scenes in a cramped hand, in no fixed order.
+    points:
+      p1: Read the scenes and sense their order
+      p2: Sit with him through the fever
+      p3: Keep the scenes safe for those who will read them (an archivist, a librarian or a stubborn one helps)
+  emily_bronte_haworth:
+    name: The parsonage in winter
+    place: Haworth
+    figure: Emily Brontë
+    story: Emily Brontë, whose only novel Wuthering Heights puzzled reviewers, falls ill at the parsonage in Haworth and dies in December aged thirty.
+    relic: A dog collar
+    relic_desc: A worn leather collar from the parsonage mastiff.
+    points:
+      p1: Spend an hour on the moor with her
+      p2: Gently coax her to rest
+      p3: Sit by her in the last days (a nurse, a physician or a kind one helps)
+  lili_boulanger_paris:
+    name: Dictated to her sister
+    place: Mézy sur Seine
+    figure: Lili Boulanger
+    story: Lili Boulanger, the first woman to win the Prix de Rome for composition, weakens from illness and dictates her last piece to her sister Nadia. She dies at twenty four.
+    relic: A pencil
+    relic_desc: A short pencil beside blank staff paper.
+    points:
+      p1: Hear the piece as she says it (a musician or sharp wit helps)
+      p2: Stay patient through the slow dictation
+      p3: Be a presence that makes the room feel calm
+  henrietta_lacks_baltimore:
+    name: Cells that went on living
+    place: Baltimore
+    figure: Henrietta Lacks
+    story: Henrietta Lacks, a young mother with cervical cancer, is treated at Johns Hopkins, where cells are taken from her tumour without her knowing. She dies in October aged thirty one, and the cells go on living in laboratories around the world.
+    relic: A culture tube
+    relic_desc: A small glass tube labelled with her initials.
+    points:
+      p1: See what is happening in the ward (a nurse, a physician or a curious mind helps)
+      p2: Ask the staff to treat her with respect
+      p3: Be the one who sits with her and learns who she is
+  qu_yuan_miluo:
+    name: Verses by the river
+    place: Miluo River
+    figure: Qu Yuan
+    story: Exiled far from the court he served, the poet Qu Yuan wanders the banks of the Miluo and gives his grief to long poems. Tradition says he died in these waters in 278 BC, and his verses were kept by those who loved them.
+    relic: A bamboo slip of verse
+    relic_desc: A slip of bamboo carrying a few lines of a long poem.
+    points:
+      p1: Hear the verses as he speaks them
+      p2: Walk the river bank with him all day
+      p3: Keep his verses by heart (a record keeper, a student or a determined employee)
+  sima_qian_changan:
+    name: A history written after the sentence
+    place: Chang'an
+    figure: Sima Qian
+    story: Sima Qian is punished by the court for speaking up for a general, and chooses to go on living in order to finish his history of China, the Records of the Grand Historian.
+    relic: A bundle of bamboo slips
+    relic_desc: Slips tied with cord, each carrying a column of characters.
+    points:
+      p1: Sit with him in the days after the sentence
+      p2: Read the old records with him (a record keeper, a journalist or a sharp mind)
+      p3: Stay until the last chapter is written
+  du_fu_xiang_river:
+    name: A poet on a boat
+    place: Xiang River
+    figure: Du Fu
+    story: Poor, ill and moving from town to town along the Xiang River, Du Fu lives on a boat and keeps writing. His poems were little known in his own lifetime, and he died on the river in 770.
+    relic: A boatman's oil lamp
+    relic_desc: A small clay lamp that burned late over a few lines of verse.
+    points:
+      p1: Share a meal with him
+      p2: Listen to the poem he is still revising (a curious employee, a teacher or a journalist)
+      p3: Ease his last winter on the boat (needs an elixir)
+  li_qingzhao_hangzhou:
+    name: The lost collection
+    place: Hangzhou
+    figure: Li Qingzhao
+    story: Widowed and far from her northern home, Li Qingzhao has lost most of the books and inscriptions she and her husband gathered. In Hangzhou she writes poems of memory, and the record of her life ends in these years.
+    relic: A rubbing of an old inscription
+    relic_desc: Ink pressed from a stone, the kind she and her husband collected.
+    points:
+      p1: Listen to her read her poems
+      p2: Find her in a good hour
+      p3: Help her put the catalogue in order (a record keeper, a teacher or a determined employee)
+  su_shi_huangzhou:
+    name: Exile on the Eastern Slope
+    place: Huangzhou
+    figure: Su Shi
+    story: Sent to Huangzhou after a trial over his poems, Su Shi farms a hillside plot, writes some of his best known poems and essays, and visits the Red Cliff.
+    relic: A straw cloak
+    relic_desc: A rough rain cloak of the kind a farmer wore on the slope.
+    points:
+      p1: Cook a meal with him (a chef, a kind employee or a sensitive employee)
+      p2: Dig the field on the slope with him
+      p3: Hear him by the river in the moonlight (a sensitive employee, a painter or a musician)
+  cao_xueqin_beijing:
+    name: A novel left at eighty chapters
+    place: Western Hills, Beijing
+    figure: Cao Xueqin
+    story: Living in poverty on the western edge of Beijing, Cao Xueqin spends years revising Dream of the Red Chamber. He dies leaving it unfinished, and friends copy it out by hand.
+    relic: A hand copied chapter
+    relic_desc: A chapter copied by friends, with comments in red ink in the margin.
+    points:
+      p1: Keep track of the many families in the story
+      p2: Share a meal in the cold hills
+      p3: Be a reader he trusts to the last page he wrote
+  tang_xianzu_linchuan:
+    name: A play on love beyond death
+    place: Linchuan
+    figure: Tang Xianzu
+    story: Tang Xianzu, who has left official life, finishes The Peony Pavilion, a play in which love outlasts death, and later sees troupes cut and rewrite his lines.
+    relic: A printed songbook
+    relic_desc: Printed arias for singers, with the tune named above each.
+    points:
+      p1: Hear the songs of the play (a musician or a sensitive employee)
+      p2: Stand by his lines when the troupe wants to cut them (a stubborn employee or a musician)
+      p3: Praise the play so well that he hears it said (needs a golden apple)
+  ban_zhao_luoyang:
+    name: Finishing her brother's history
+    place: Luoyang
+    figure: Ban Zhao
+    story: When her brother Ban Gu dies with the Book of Han unfinished, Ban Zhao is called to complete it, and much of the finishing, including the tables, is credited to her. She is better remembered for a short book of advice to women.
+    relic: A table of names on silk
+    relic_desc: A strip of silk with a table of titles and names in neat columns.
+    points:
+      p1: Check the tables against the sources (a record keeper or a sharp mind)
+      p2: Defend the unfinished tables to the court scholars (a teacher or a silver tongued employee)
+      p3: Stay with her until the last page is read (a teacher or a stubborn employee)
+  xu_xiake_lijiang:
+    name: The traveller who could no longer walk
+    place: Lijiang
+    figure: Xu Xiake
+    story: After thirty years of travel through China, Xu Xiake falls ill with a leg complaint in the far southwest and is carried home by others. He dies in 1641, and his notes reach us in an incomplete form.
+    relic: A travel notebook
+    relic_desc: Pages of dense notes on caves, rivers and rocks, written at the end of each day.
+    points:
+      p1: Climb the mountain path with him
+      p2: Look at what he stops to record
+      p3: Carry him home on the long road (needs a cyborg arm or a cyborg gorilla arm)
+  song_yingxing_fengxin:
+    name: A book of how things are made
+    place: Jiangxi
+    figure: Song Yingxing
+    story: Song Yingxing, a provincial teacher and official, writes a book on how crops, cloth, salt, iron and paper are made. It was soon almost lost in China and survived in print in Japan.
+    relic: A page of tool drawings
+    relic_desc: A woodblock print of a loom with every part labelled.
+    points:
+      p1: Learn how a loom and a kiln are worked
+      p2: Check the drawings of tools (a craftsperson)
+      p3: Keep a copy on the shelf (a record keeper or a stubborn employee)
+  wang_zhenyi_jinling:
+    name: An eclipse explained with a lamp
+    place: Nanjing
+    figure: Wang Zhenyi
+    story: Wang Zhenyi, a young woman who taught herself astronomy and mathematics, shows with a lamp, a mirror and a round table why a lunar eclipse happens. She died in 1797 aged twenty nine, and her work is little known.
+    relic: A small round mirror
+    relic_desc: The mirror that played the Moon in her model of an eclipse.
+    points:
+      p1: Sit with her among her books
+      p2: Follow her model of the eclipse
+      p3: Hear her argument to the end (a sharp mind, a teacher or a student)
+  jianzhen_nara:
+    name: A monk who never saw the shore
+    place: Nara
+    figure: Jianzhen
+    story: The Chinese monk Jianzhen sets out to teach the monastic rules in Japan, is turned back five times by storms and arrests, and goes blind. He arrives on the sixth try and never sees the country.
+    relic: A bundle of dried herbs
+    relic_desc: Medicinal plants he carried across the sea.
+    points:
+      p1: Walk the last road to the temple at his pace
+      p2: Talk about medicines with him (medical staff)
+      p3: Describe the land to him as you walk
+  hua_tuo_xuchang:
+    name: A physician whose books are gone
+    place: Xuchang
+    figure: Hua Tuo
+    story: Hua Tuo, a physician known for surgery under a wine powder and for exercises based on animal movements, is held by officials at Xuchang. His own writings did not survive, and he is known only through later accounts.
+    relic: A pouch of herb powders
+    relic_desc: A small cloth pouch of ground herbs with a faint bitter smell.
+    points:
+      p1: Watch him examine a patient (medical staff or a curious employee)
+      p2: Sit with a patient through the night (a kind employee, a nurse or a midwife)
+      p3: Write down his methods while he speaks (a record keeper, a journalist or a sharp mind)
+  bi_sheng_printer:
+    name: Type made of clay
+    place: Hangzhou
+    figure: Bi Sheng
+    story: Bi Sheng, a commoner, makes movable type from baked clay and prints with it, as the scholar Shen Kuo later records. The method is not widely taken up, and nothing of his work survives.
+    relic: A clay type character
+    relic_desc: A small baked piece with one reversed character.
+    points:
+      p1: Cut and fire the clay type (a craftsperson or a sensitive employee)
+      p2: Sort the characters by rhyme
+      p3: Believe in the clay type when others see only a trick
+  miyazawa_kenji_hanamaki:
+    name: Stories few had read
+    place: Hanamaki
+    figure: Miyazawa Kenji
+    story: A teacher and farm adviser in northern Japan, Miyazawa Kenji writes stories and poems that almost nobody buys. He dies of illness in 1933 aged 37, and Night on the Galactic Railroad is left unfinished.
+    relic: A pocket notebook
+    relic_desc: A small notebook of poems in pencil.
+    points:
+      p1: Look at the stars with him
+      p2: Work the cold field beside him
+      p3: Sit with him on his last evening (needs an elixir)
+  higuchi_ichiyo_tokyo:
+    name: Fourteen months of stories
+    place: Tokyo
+    figure: Higuchi Ichiyo
+    story: Higuchi Ichiyo supports her mother and sister in poverty and writes a handful of stories in about fourteen months. She dies of tuberculosis in November 1896 aged 24, just as the critics praise her.
+    relic: A pocket diary
+    relic_desc: A diary kept for years in careful brush writing.
+    points:
+      p1: Talk an editor into taking another story
+      p2: Read her diary pages (a curious or sensitive employee, or a journalist)
+      p3: Sit with her on a good afternoon
+  sei_shonagon_kyoto:
+    name: After the court was gone
+    place: Kyoto
+    figure: Sei Shonagon
+    story: After her empress dies in the year 1000, Sei Shonagon is left without her court. Her notebook of lists and small moments, the Pillow Book, is what remains, and her later years are not recorded.
+    relic: A folded list
+    relic_desc: A sheet of lightly written lists of things that please and things that do not.
+    points:
+      p1: Join her list of things that please
+      p2: Catch her in a talkative hour
+      p3: Visit her when the court has gone quiet
+  kabir_maghar:
+    name: Verses carried by singers
+    place: Maghar
+    figure: Kabir
+    story: A weaver who sang short poems against pride and division, Kabir never wrote them down himself. Singers carried them, and they were gathered after his death, traditionally in Maghar in 1518.
+    relic: A weaver's shuttle
+    relic_desc: A worn wooden shuttle, smooth from the hand.
+    points:
+      p1: Hear him sing at the loom
+      p2: Sit among the weavers at a quiet hour
+      p3: Learn the verses by heart (a musician or a sensitive employee)
+  ibn_rushd_lucena:
+    name: Banished with his books
+    place: Lucena
+    figure: Ibn Rushd
+    story: Ibn Rushd, a judge and physician, is banished to Lucena in 1195 and his philosophical books are ordered burned. His commentaries on Aristotle survive mostly in Hebrew and Latin, less in the original Arabic.
+    relic: A page of commentary
+    relic_desc: A page of close Arabic script, with the text of Aristotle in the margin.
+    points:
+      p1: Visit him in the quiet town
+      p2: Follow his commentary on Aristotle
+      p3: Visit him without being noticed (needs a hologram cloak)
+  rumi_konya:
+    name: Poems spoken and written down by friends
+    place: Konya
+    figure: Rumi
+    story: Having lost his friend Shams, Rumi pours his grief into poems that he speaks aloud and others write down, among them the Masnavi. He dies in Konya in December 1273 with the gathering of his poems still going on.
+    relic: A reed flute
+    relic_desc: A plain reed flute, its sound thin and low.
+    points:
+      p1: Hear the flute and the verses (a sensitive employee or a musician)
+      p2: Write the verses down as they are spoken (a record keeper, a student or a journalist)
+      p3: Stay with him on his last night
+  ibn_al_nafis_cairo:
+    name: The blood that passes through the lung
+    place: Cairo
+    figure: Ibn al-Nafis
+    story: In Cairo, Ibn al-Nafis writes that blood passes from the right to the left side of the heart through the lungs and not through the wall between. The account is forgotten and found again only in the twentieth century.
+    relic: A page of anatomy commentary
+    relic_desc: A page of notes on the heart and lungs in small clear script.
+    points:
+      p1: Follow his reasoning about the blood
+      p2: Assist on the hospital ward (medical staff)
+      p3: Be the student who believes his reasoning (a kind employee, a student or a teacher)
+  al_khwarizmi_baghdad:
+    name: The man behind algebra
+    place: Baghdad
+    figure: Al-Khwarizmi
+    story: Al-Khwarizmi writes a short book on solving equations by restoring and balancing, from which algebra takes its name, yet almost nothing is known of his life, not even where he was born.
+    relic: A sheet of worked equations
+    relic_desc: A sheet of sums solved step by step with squares and roots.
+    points:
+      p1: Work the long sums by hand (a record keeper or a determined employee)
+      p2: Explain the balancing method to a merchant (a teacher or a silver tongued employee)
+      p3: Ask where he was born and write the answer down (a curious employee or a journalist)
+  ibn_khaldun_cairo:
+    name: A preface that outgrew its history
+    place: Cairo
+    figure: Ibn Khaldun
+    story: Ibn Khaldun writes a preface to a history that becomes a study of how societies and economies rise and fade. He loses his wife and daughters in a shipwreck in 1384 and teaches on in Cairo until he dies in 1406.
+    relic: A bound volume of lectures
+    relic_desc: A heavy volume of notes written for lectures at the college.
+    points:
+      p1: Sit with a man who has lost his family
+      p2: Follow his idea of why cities grow and fade
+      p3: Carry his idea forward for the readers who come later (a record keeper, a teacher or a student)
+  taqi_al_din_istanbul:
+    name: An observatory pulled down
+    place: Istanbul
+    figure: Taqi al-Din
+    story: Taqi al-Din builds an observatory at Istanbul with instruments of his own design, a great clock among them, and begins observations for new star tables. It is pulled down in 1580, only a few years after it began.
+    relic: A brass sighting instrument
+    relic_desc: A small brass instrument for measuring the height of a star.
+    points:
+      p1: Build the clock and the instruments (a craftsperson or a sharp mind)
+      p2: Take readings through the night
+      p3: Stay with the observers on the last night
+  ahmed_baba_timbuktu:
+    name: A library taken away
+    place: Timbuktu
+    figure: Ahmed Baba
+    story: Ahmed Baba, a scholar of Timbuktu with a library of about sixteen hundred books, is deported to Morocco in 1594. The books are lost, and he is allowed to return only years later.
+    relic: A leather bound manuscript
+    relic_desc: A manuscript in a worn leather cover with a flap.
+    points:
+      p1: Look through his shelves
+      p2: Count the books as they are packed (a record keeper or a sharp mind)
+      p3: Walk beside him on the road unseen (needs a hologram cloak)
+  terence_rome:
+    name: A play the crowd left
+    place: Rome
+    figure: Terence
+    story: A former slave from Carthage, Terence sees his play The Mother in Law abandoned by its audience twice, first for boxers and rope walkers and then for gladiators. It is heard in full only on the third try.
+    relic: A comic mask
+    relic_desc: A linen mask with a raised brow, worn by an actor.
+    points:
+      p1: Talk the noisy crowd back to their seats
+      p2: Follow the plot as the actors speak it
+      p3: Stay in your seat to the last line
+  mohenjo_daro_indus:
+    name: Signs no one can read
+    place: Mohenjo-daro
+    figure: Indus people
+    story: In a planned city of brick houses and covered drains, people press short lines of signs into small stone seals. The script has never been deciphered, and we do not know what the signs said or what language they spoke.
+    relic: A stone seal
+    relic_desc: A small square seal with an animal and a few signs.
+    points:
+      p1: Study the signs on a seal
+      p2: Walk the straight streets and drains (a craftsperson)
+      p3: Read the signs of the seal (needs a cyborg neural chip)
+  knossos_linear_a:
+    name: A script the Minoans left unread
+    place: Knossos
+    figure: Minoan scribes
+    story: A scribe at the palace of Knossos records goods on clay tablets in Linear A, the script of the Minoans. It has never been read, so their language is unknown, while the later Linear B, read in 1952, turned out to write Greek.
+    relic: A clay tablet
+    relic_desc: A flat tablet with rows of signs and small marks for numbers.
+    points:
+      p1: Press the signs into wet clay
+      p2: Compare the signs on the tablets
+      p3: Talk with the scribe in his own tongue (needs a cyborg neural chip)
+  antikythera_rhodes:
+    name: A machine with no maker's name
+    place: Rhodes
+    figure: An unknown maker
+    story: An unknown maker builds a hand cranked device of more than thirty bronze gears that shows the Sun, the Moon and eclipses. It sinks in a wreck near Antikythera and is understood only in the twentieth century, and nobody recorded who made it.
+    relic: A bronze gear
+    relic_desc: A small toothed wheel green with age.
+    points:
+      p1: File the bronze gears (a craftsperson)
+      p2: Follow how the gears model the eclipses
+      p3: Keep the maker company through the long nights
+  sappho_lesbos:
+    name: Songs that survive in scraps
+    place: Mytilene
+    figure: Sappho
+    story: Sappho of Lesbos composes songs for the lyre that were gathered in nine books in antiquity. Apart from one whole poem and a few long pieces, only fragments on scraps of papyrus and quotations remain.
+    relic: A papyrus fragment
+    relic_desc: A torn scrap with a few Greek words in a rounded hand.
+    points:
+      p1: Hear her sing to the lyre (a sensitive employee or a musician)
+      p2: Sit in the circle of her friends
+      p3: Hear every word of her dialect (needs a cyborg neural chip)
+  aristarchus_alexandria:
+    name: The Earth moves, and few listened
+    place: Alexandria
+    figure: Aristarchus
+    story: Aristarchus proposes that the Earth moves around the Sun and measures the sizes of the Sun and the Moon. Almost nobody follows him, and the idea survives in a few lines of Archimedes.
+    relic: A sundial plate
+    relic_desc: A bronze plate with lines for the hours and the seasons.
+    points:
+      p1: Follow his geometry of the Sun and Moon
+      p2: Stand by the idea when the others laugh
+      p3: Make one listener write his idea down (needs a golden apple)
+  hipparchus_rhodes:
+    name: A star list that was lost
+    place: Rhodes
+    figure: Hipparchus
+    story: Working at Rhodes, Hipparchus compiles a catalogue of about eight hundred and fifty stars and finds the slow shift of the equinoxes. His own writings are lost and we know them through Ptolemy.
+    relic: A bronze armillary ring
+    relic_desc: A graduated ring used to measure the position of a star.
+    points:
+      p1: Count the stars with him
+      p2: Keep the night watch at the sighting tube
+      p3: Copy his star list by hand (a record keeper or a student)
+  heron_alexandria:
+    name: The steam ball and the temple doors
+    place: Alexandria
+    figure: Heron
+    story: Heron describes a ball that spins when steam escapes from it, doors that open when a fire is lit and a machine that pours holy water for a coin. They stay marvels for temples and entertainments.
+    relic: A small bronze ball with two bent pipes
+    relic_desc: A hollow ball on a pivot, with two bent pipes for the steam.
+    points:
+      p1: Fit the pipes and the pivot (a craftsperson)
+      p2: Catch him between two demonstrations
+      p3: See where the spinning ball could lead
+  pliny_stabiae:
+    name: The last voyage of a naturalist
+    place: Stabiae
+    figure: Pliny the Elder
+    story: Pliny the Elder, who has finished his huge Natural History in thirty seven books, sails across the bay during the eruption of Vesuvius to look and to help his friends. He dies on the shore, and his nephew writes the account.
+    relic: A wax tablet
+    relic_desc: A wooden tablet with wax for notes, scratched with a stylus.
+    points:
+      p1: Ask about his thirty seven books
+      p2: Sail across the bay as the ash falls
+      p3: Stay beside him on the shore (needs a cyborg bionic lung)
+  galen_rome:
+    name: The shelves that burned
+    place: Rome
+    figure: Galen
+    story: A fire in 192 destroys storehouses and a library near the Temple of Peace, where Galen kept many of his own writings and other books. Many of his works are lost.
+    relic: A charred scroll
+    relic_desc: A scroll blackened at one end, the rest still legible.
+    points:
+      p1: Read his case notes with him
+      p2: Tend the patients at his door (medical staff)
+      p3: Sit with him over the burnt shelves
+  ovid_tomis:
+    name: A poet at the edge of the empire
+    place: Tomis
+    figure: Ovid
+    story: Ovid, banished by the emperor Augustus from Rome to Tomis on the Black Sea for a poem and a mistake that was never named, writes homesick verse letters and asks again and again to return. He dies there.
+    relic: A wax writing tablet
+    relic_desc: A tablet of letters in verse begun on the road to exile.
+    points:
+      p1: Bring him news from Rome
+      p2: Hear the verses he writes on the winter shore
+      p3: Speak with him in the local tongue (needs a cyborg neural chip)
+  empedocles_akragas:
+    name: Four roots, love and strife
+    place: Akragas
+    figure: Empedocles
+    story: Empedocles writes in verse that everything is made of earth, air, fire and water, joined by love and parted by strife. His poems survive only in fragments.
+    relic: A scrap of verse
+    relic_desc: A strip of papyrus with a few lines in hexameter.
+    points:
+      p1: Watch the four roots mixed in a jar
+      p2: Catch the crowd at the right moment
+      p3: Hear the poem through to the end
+  democritus_abdera:
+    name: Atoms in the empty space
+    place: Abdera
+    figure: Democritus
+    story: Democritus teaches that everything is made of tiny indivisible atoms moving in empty space. Of the dozens of books he wrote, none survives, and we know him from quotations by later writers.
+    relic: A pebble and a knife
+    relic_desc: A smooth pebble and a small knife for cutting it, as in a thought experiment.
+    points:
+      p1: Ask what a cut apple is made of
+      p2: Find him in his quiet garden
+      p3: Copy a roll of his writing (a record keeper, a student or a journalist)
+  hildegard_bingen:
+    name: Silence in the convent
+    place: Bingen
+    figure: Hildegard of Bingen
+    story: Hildegard, abbess, composer and writer on medicine and nature, is forbidden with her nuns from singing the liturgy for some months because of a dispute over a burial. She dies in September 1179.
+    relic: A page of chant
+    relic_desc: A page of neumes above Latin words, copied for the nuns.
+    points:
+      p1: Hear her chants (a musician or a sensitive employee)
+      p2: Catch her in a quiet hour
+      p3: Sit with her through the silent months
+  nezahualcoyotl_texcoco:
+    name: A king who wrote songs
+    place: Texcoco
+    figure: Nezahualcoyotl
+    story: Nezahualcoyotl, ruler of Texcoco and a poet, gathers painted books, songs and gardens in his city, and dies in 1472. The archives were later destroyed, and his songs survive in later copies.
+    relic: A bark paper page
+    relic_desc: A page of bark paper with painted signs and a few lines of song.
+    points:
+      p1: Hear his songs under the garden trees
+      p2: Walk the aqueduct he planned (a craftsperson or a curious employee)
+      p3: Copy a song onto a page (a record keeper, a student or a stubborn employee)
+  maya_codices_mani:
+    name: The books of Mani
+    place: Mani
+    figure: Maya scribes
+    story: At Mani in July 1562 the friar Diego de Landa has Maya books and images burned in the square. Only a handful of painted Maya books survive anywhere.
+    relic: A painted bark book
+    relic_desc: A folded book of bark paper with painted signs and figures.
+    points:
+      p1: Look at the painted pages
+      p2: Stand in the plaza through the heat of the day
+      p3: Sit with an old scribe unseen (needs a hologram cloak)
+  rongorongo_rapa_nui:
+    name: Tablets nobody can read
+    place: Rapa Nui
+    figure: Rapa Nui people
+    story: Only about two dozen wooden tablets carved with rongorongo signs survive from Rapa Nui. Nobody can read them today, and the people who could died or were taken away in the 1860s.
+    relic: A carved wooden tablet
+    relic_desc: A flat piece of wood cut with rows of small figures.
+    points:
+      p1: Study the lines of signs
+      p2: Sit with the old people who remember
+      p3: Hear the old chants as they are spoken (needs a cyborg neural chip)
+  dunhuang_library_cave:
+    name: The sealed cave
+    place: Mogao Caves
+    figure: Dunhuang monks
+    story: Around the year 1000 tens of thousands of manuscripts and paintings are walled into a small cave at the Mogao grottoes. No record says why, and the cave is opened again only in 1900.
+    relic: A scroll
+    relic_desc: A rolled sheet of paper with a sutra copied in a steady hand.
+    points:
+      p1: Bundle the scrolls for storing (a record keeper or a journalist)
+      p2: Read the labels on the bundles
+      p3: Stay with the monks while the wall goes up (a kind employee or a record keeper)
+  nalanda_library:
+    name: A great library, later lost
+    place: Nalanda
+    figure: The monks of Nalanda
+    story: For centuries Nalanda was a great place of study, and travellers such as Xuanzang described its libraries. The library was lost within a few years after the 1190s, and almost nothing of its books remains.
+    relic: A palm leaf manuscript
+    relic_desc: Narrow leaves threaded on a cord, written with an iron stylus.
+    points:
+      p1: Walk the halls of the library
+      p2: Help the copyists keep the catalogue (a record keeper, a teacher or a student)
+      p3: Sit among the monks unseen as they copy by lamp (needs a hologram cloak)
+  meroitic_meroe:
+    name: An alphabet without a known language
+    place: Meroe
+    figure: Meroitic scribes
+    story: At Meroe, capital of Kush, scribes write in Meroitic, an alphabet that can be sounded out but whose language is still hardly understood.
+    relic: A stone with carved signs
+    relic_desc: A small block with a line of cursive signs.
+    points:
+      p1: Compare the cursive and the carved signs
+      p2: Watch the stonecutters at work (a craftsperson)
+      p3: Read the inscription on the temple wall (needs a cyborg neural chip)
+  tupaia_tahiti:
+    name: The navigator's chart
+    place: Tahiti
+    figure: Tupaia
+    story: Tupaia, a priest and navigator from Raiatea, joins Captain Cook's ship at Tahiti and draws from memory a chart of some seventy islands across the Pacific. He dies of illness in Batavia in 1770, and his chart was long poorly understood.
+    relic: A sketch of islands
+    relic_desc: A sheet of ink and wash with small island shapes and names.
+    points:
+      p1: Share the cramped cabin on the passage
+      p2: Watch him draw the chart of the islands
+      p3: Learn the island names from him (a seafarer or a kind employee)
+  heo_nanseolheon_hanyang:
+    name: Poems she asked to burn
+    place: Hanyang
+    figure: Heo Nanseolheon
+    story: Heo Nanseolheon, a young poet of Joseon, dies in 1589 aged twenty six and leaves word that her poems be burned. Her brother Heo Gyun kept what he could and had it printed.
+    relic: A sheet of poems
+    relic_desc: A sheet of fine paper with brushed poems on flowers and distant places.
+    points:
+      p1: Read her poems in her room
+      p2: Sit with her on a quiet evening
+      p3: Learn her poems by heart (a record keeper or a student)
+  ghalib_delhi:
+    name: Debts, a pension and a mango
+    place: Delhi
+    figure: Mirza Ghalib
+    story: Ghalib, one of the great Urdu and Persian poets, lives in Delhi in debt on a pension that is disputed, and sees little of his poetry printed. He is praised far more after his death.
+    relic: A page of ghazals
+    relic_desc: A page of Urdu verse in his own hand, with corrections.
+    points:
+      p1: Bargain with the moneylender at the door
+      p2: Hear a ghazal read aloud (a sensitive employee or a musician)
+      p3: Share a mango and a verse with him
+  savitribai_phule_pune:
+    name: A school for girls
+    place: Pune
+    figure: Savitribai Phule
+    story: Savitribai Phule opens a school for girls in Pune in 1848 with her husband Jotirao and teaches there. On the road to it she is insulted and has dirt thrown at her, and she keeps going.
+    relic: A slate
+    relic_desc: A small slate with a first row of letters in chalk.
+    points:
+      p1: Walk with her past the jeering onlookers
+      p2: Talk a family into sending their daughter
+      p3: Teach one lesson beside her (a teacher or a kind employee)
+  zhu_shijie_yangzhou:
+    name: A mathematician whose books went missing
+    place: Yangzhou
+    figure: Zhu Shijie
+    story: Zhu Shijie, a wandering teacher of mathematics, publishes the Jade Mirror of the Four Unknowns in 1303 with methods for equations of several unknowns. His books were lost in China for centuries and one was recovered from a Korean reprint.
+    relic: A set of counting rods
+    relic_desc: Slender rods laid in rows to stand for numbers.
+    points:
+      p1: Follow the four unknowns
+      p2: Teach the counting rods to a pupil (a teacher)
+      p3: Stay with the lesson to the end (a teacher, a student or a stubborn employee)
 eras:
   broad_street_1854:
     name: Broad Street, London 1854

@@ -43,6 +43,7 @@ There are six traits: kind, stubborn, curious, silver tongued, sensitive and bol
 
 ### Hiring
 
+- Everyone hired is paid a daily wage, idle or not: headcount x 3 x (1 + 0.25 x (headcount - 1)), so each further hire costs more than the one before and the office settles at three or four people. A day that cannot be paid empties the funds and costs every employee a little favor. Antiques sell at the card price times a market factor that moves within +-30% every 30 days, per field.
 - Two candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
 - A candidate is made from one serial number. A region sets the name and the likely skin tones, among fourteen regions across the world, then come gender, age, a job from a list of forty, abilities within a range, and one or two different traits. The names, jobs, regions and skin tones are rows in `cards/config/hiring.yaml` and can be added to freely, so combinations are in the thousands. A small share of the offers are the hand written employees.
 - Every made employee goes into the encyclopedia the moment they are made, with both language texts in the save, so a switch of language keeps their names. The latest 200 are kept, and anyone on offer or ever hired stays.
@@ -76,7 +77,7 @@ Antiques are not bought in a shop. Each trip may bring one back. Let the trip go
 - The trip finds something with chance `min(cap, 1 - product(1 - k * w))`.
 - The antique it finds is drawn from the candidates in proportion to `w`. An antique that points to a place with a simulation and is not held yet counts `modelled_place_boost` times heavier, 12 for now, so the way to a place that can be dispatched to is not buried under the many events that have no model yet. With the first one not yet held, about one trip in six brings it back.
 
-So what a trip finds is near in space and earlier in time, and the farther it is in either, the less likely. Finding the very place you are at is the most likely single find, and that gives duplicates. The current values are `k` 0.06, `cap` 0.6, `tau_years` 120 and `tau_km` 2500, which put a trip to London 1854 at about 38 percent and a trip to Vienna 1847 at about 32 percent. The roll is seeded by the dispatch, so a replay finds the same thing, and it belongs to the backend. The page shows the chance on the card of each place.
+So what a trip finds is near in space and earlier in time, and the farther it is in either, the less likely. Finding the very place you are at is the most likely single find, and that gives duplicates. The current values are `k` 0.03, `cap` 0.6, `tau_years` 120 and `tau_km` 2500, which put a trip to London 1854 at about 38 percent and a trip to Vienna 1847 at about 32 percent. The roll is seeded by the dispatch, so a replay finds the same thing, and it belongs to the backend. The page shows the chance on the card of each place.
 
 Because candidates must be earlier, antiques lead backwards in time. A place is reached from a later one, and the way to an earlier era runs through the antiques of the later ones.
 
@@ -117,7 +118,7 @@ The main line is the time energy the agency holds, in five stages at 0, 80, 240,
 
 ## Auto mode
 
-Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to a free place, with a kit chosen by simple rules. Employees have no wages. The place is chosen by the first of four rules that leaves any candidate, and a seeded draw picks among the candidates:
+Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to a free place, with a kit chosen by simple rules. The place is chosen by the first of four rules that leaves any candidate, and a seeded draw picks among the candidates:
 
 1. A place nobody has come back from yet.
 2. A visited place whose best result is below three stars, which this employee has tried fewer than three times.
@@ -128,7 +129,7 @@ It only touches funds, antiques and dispatches. Employees do not die.
 
 ## Catalogue events
 
-`cards/events` lists 100 famous events across the world. The selection leans toward science, technology, philosophy, art and ideas. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
+`cards/events` lists 200 events across the world. The selection leans toward science, technology, philosophy, art and ideas, and more than half are regrets: people and works that history treated unjustly or lost, such as Galois, Hypatia, Sappho or the Indus script. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
 
 ## Data and code
 
@@ -167,7 +168,7 @@ Time energy unlocks things. The time shop sells special equipment for time energ
 
 The price is being found out. Each piece shows by its exposure, a scene is more suspicious the later its tier, and the chance of being found grows with both, capped at ninety percent. A cloak lowers it, and with no equipment there is nothing to find. Being found out ends in one of three ways, being turned away, which costs a star, being locked up, which costs all stars and the antique and several days, or being hunted, which costs everything and more days and a lot of favor.
 
-Twenty catalogue events are scenes with three authored points, each a requirement on the traveller: an ability, a trait, a job, being a woman, an item, a capability that an item gives such as strength, or luck. A point that names no item must be met by someone on the hand written roster without equipment, so equipment only gates what the text says it gates. They are checked directly and are not differential equation simulations like London 1854 and Vienna 1847.
+A hundred and twenty one catalogue events are scenes with three authored points, each a requirement on the traveller: an ability, a trait, a job, being a woman, an item, a capability that an item gives such as strength, or luck. A point that names no item must be met by someone on the hand written roster without equipment, so equipment only gates what the text says it gates. They are checked directly and are not differential equation simulations like London 1854 and Vienna 1847.
 
 ## Inspirations
 
@@ -175,4 +176,16 @@ The encyclopedia follows the Civilopedia of Civilization IV, sending someone out
 
 ## Licence
 
-The game is MIT licensed. The piano files are by Bernd Krueger from piano-midi.de under CC BY-SA 3.0 DE and kept unchanged. See the README for the details.
+The game is MIT licensed. The music files are from the Mutopia Project, public domain and kept unchanged. See the README for the details.
+
+## Regrets and redemption
+
+A catalogue event with `regret: true` is a story history treated unjustly: an early death, a lost work, a stolen credit, a lonely life. It is always a scene with three points, exactly one of them marked `redeem: true`. History cannot be changed, so the traveller never prevents the outcome. The first two stars are company and attention, the redeem star is the thing the traveller can give inside history as it happened. The redeem point is shown as a heart, is never a pure luck roll, and about a third of them need special equipment, which is what the auto mode buys equipment for. A regret carries the tag regret. `node tools/check_logic.mjs` fails a regret without exactly one redeem point.
+
+## Log, archive and the history of a place
+
+The log of dispatches scrolls in its own box. A finished trip can be archived, which only hides it from the log, and brought back with Restore or the Show archived box. Nothing is deleted by hand. Full reports are kept for `office.max_archive` finished trips, the archived ones dropped first, and a one line summary of every trip is kept for good up to `office.max_trips`. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome. A report opens from that list while it is still stored.
+
+## Auto mode and equipment
+
+For a story the auto mode tries every set of the special equipment it owns, or could buy, with the very seed the trip will have, and takes the set that earns the most stars, the cheaper and lighter first. It buys only what that set needs and the owned sets cannot match, and only a piece whose price is at most `auto.item_buy.energy_share` of the energy in hand, because the time shop is paid in the same time energy that takes the boss home. A visited story where the traveller, with the equipment the office has or could buy, would beat the best stars comes before a plain second try.

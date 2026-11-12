@@ -3,14 +3,26 @@ music:
   lookahead_s: 0.6
   tick_ms: 150
   gap_s: 2.5
-  tracks:
-    - {file: elise.mid, composer: Beethoven, title: 'Für Elise'}
-    - {file: ty_juni.mid, composer: Tchaikovsky, title: 'The Seasons, Barcarolle'}
-    - {file: pathetique_2.mid, composer: Beethoven, title: 'Pathétique Sonata, Adagio cantabile'}
-    - {file: mz_545_2.mid, composer: Mozart, title: 'Piano Sonata K 545, Andante'}
-    - {file: ty_oktober.mid, composer: Tchaikovsky, title: 'The Seasons, Autumn Song'}
-    - {file: mond_1.mid, composer: Beethoven, title: 'Moonlight Sonata, Adagio sostenuto'}
-  credit: {source: piano-midi.de, author: Bernd Krueger, license: CC BY-SA 3.0 DE, url: 'https://www.piano-midi.de'}
+  # the playlist is every .mid or .midi file in the folder, found by tools/build_data.mjs. A file listed here gets this name, any other file is named from its file name.
+  names:
+    beethoven_fur_elise.mid: {composer: "Beethoven", title: "Für Elise"}
+    satie_gymnopedie_1.mid: {composer: "Satie", title: "Gymnopédie No. 1"}
+    satie_gymnopedie_2.mid: {composer: "Satie", title: "Gymnopédie No. 2"}
+    satie_gymnopedie_3.mid: {composer: "Satie", title: "Gymnopédie No. 3"}
+    debussy_clair_de_lune.mid: {composer: "Debussy", title: "Clair de lune"}
+    debussy_arabesque_1.mid: {composer: "Debussy", title: "Arabesque No. 1"}
+    bach_wtc1_prelude_1.mid: {composer: "Bach", title: "Prelude in C, BWV 846"}
+    bach_invention_8.mid: {composer: "Bach", title: "Invention No. 8"}
+    chopin_minute_waltz_op64_1.mid: {composer: "Chopin", title: "Minute Waltz"}
+    chopin_etude_op10_1.mid: {composer: "Chopin", title: "Étude Op. 10 No. 1"}
+    turkish_style_mozart_rondo_alla_turca.mid: {composer: "Mozart", title: "Rondo alla Turca"}
+    usa_joplin_the_entertainer.mid: {composer: "Joplin", title: "The Entertainer"}
+    norway_grieg_mountain_king.mid: {composer: "Grieg", title: "In the Hall of the Mountain King"}
+    england_greensleeves.mid: {composer: "England", title: "Greensleeves"}
+    finland_aamulla_varhain.mid: {composer: "Finland", title: "Aamulla varhain"}
+    japan_sakura_miyotote.mid: {composer: "Japan", title: "Sakura"}
+    japan_banzai_bushi.mid: {composer: "Japan", title: "Banzai bushi"}
+  credit: {source: Mutopia Project, license: Public Domain, url: 'https://www.mutopiaproject.org'}
 voice:
   master: 0.5
   attack_s: 0.006

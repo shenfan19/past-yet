@@ -12,7 +12,7 @@ meta:
     code: https://github.com/shenfan19/teleporter
     issues: https://github.com/shenfan19/teleporter/issues
     mail: mailto:contact@teleporter.uk
-    music: https://www.piano-midi.de
+    music: https://www.mutopiaproject.org
 i18n:
   fallback: en
   auto: auto
@@ -35,12 +35,20 @@ office:
   gift_funds: 120
   energy_per_change: 6
   max_plots: 2
-  max_archive: 30
+  max_archive: 60
+  max_trips: 2000
   hire_cost: 100
+  wage:
+    base: 3
+    step: 0.25
+    unpaid_favor: -0.02
+  market:
+    period_days: 30
+    amp: 0.3
   fatal_outcomes:
     - near_death
   antique_find:
-    k: 0.06
+    k: 0.03
     cap: 0.6
     tau_years: 120
     tau_km: 2500
@@ -79,6 +87,8 @@ auto:
   sell_spares_below: 100
   pick:
     breakthrough_tries: 3
+  item_buy:
+    energy_share: 0.5
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40
@@ -119,6 +129,7 @@ ui:
   recent_reports: 8
   search_delay_ms: 30
   box_h:
+    log: 320
     story: 300
     home_staff: 260
     pick_staff: 520

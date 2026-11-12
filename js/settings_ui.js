@@ -19,7 +19,7 @@ export function createSettingsPage(X) {
       sound: row(P.sound.music, `<button data-act="musictoggle">${esc(ctx.audio.state.playing ? U.music.pause : U.music.play)}</button> <span class="muted small">${esc(tracks[ctx.audio.state.index].composer + ' · ' + tracks[ctx.audio.state.index].title)}</span>`)
         + row(P.sound.music_volume, slider('music_volume')) + row(P.sound.sfx_volume, slider('sfx_volume'))
         + row(P.sound.autostart, check('music_autostart')) + row(P.sound.try, sfxButtons)
-        + `<div class="muted small">${esc(P.sound.credit.replace('{source}', cr.source).replace('{author}', cr.author).replace('{license}', cr.license))}</div>`,
+        + `<div class="muted small">${esc(P.sound.credit.replace('{source}', cr.source).replace('{license}', cr.license))}</div>`,
       data: `<div class="muted small">${esc(P.data.note)}</div>`
         + row(P.data.export, `<button data-act="saveexport">${esc(P.data.export)}</button>`)
         + row(P.data.import, `<input type="file" accept="application/json,.json" data-act="saveimport" aria-label="${esc(P.data.import)}">`)

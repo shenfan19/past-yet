@@ -57,7 +57,16 @@ const emitCopy = (rel, fromRel) => outputs.set(rel, fs.readFileSync(path.join(CA
 emitYaml('config.yaml', config);
 emitYaml('map.yaml', read('config/map.yaml'));
 emitYaml('shops.yaml', read('config/shops.yaml'));
-emitYaml('audio.yaml', read('config/audio.yaml'));
+// The playlist is whatever midi files are in the music folder, so adding a piece means dropping the file in and building.
+const audioCfg = read('config/audio.yaml');
+const musicDir = path.join(root, audioCfg.music.folder);
+const musicFiles = fs.existsSync(musicDir) ? fs.readdirSync(musicDir).filter((f) => /.midi?$/i.test(f)).sort() : [];
+if (!musicFiles.length) fail('no midi files in ' + audioCfg.music.folder);
+const nameOf = (f) => { const w = f.replace(/.midi?$/i, '').split('_'); const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1); return { composer: cap(w[0]), title: cap(w.slice(1).join(' ') || w[0]) }; };
+for (const f of Object.keys(audioCfg.music.names || {})) if (!musicFiles.includes(f)) fail('audio.yaml names a music file that is not in the folder: ' + f);
+audioCfg.music.tracks = musicFiles.map((file) => ({ file, ...(audioCfg.music.names?.[file] || nameOf(file)) }));
+delete audioCfg.music.names;
+emitYaml('audio.yaml', audioCfg);
 emitYaml('hiring.yaml', read('config/hiring.yaml'));
 emitYaml('share_qr.yaml', read('config/share_qr.yaml'));
 emitCopy('world_land.json', 'world/world_land.json');

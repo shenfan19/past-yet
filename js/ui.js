@@ -45,7 +45,7 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, share: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { showArchived: false, tab: 'home', sub: null, share: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -135,11 +135,13 @@ export function createUI(D, ctx) {
   const STAR_MAX = D.get('config.stars.max');
   const starsHtml = (n) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
-  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}">${p.hit ? '★' : '☆'} ${esc(textOf(p.id))}</li>`).join('')}</ul>`;
+  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(textOf(p.id))}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>`;
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
   const placeName = (d) => (d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name);
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
   const outcomeOf = (d) => (d.recalled ? U.report.recalled : d.light ? U.light.outcome[d.report.outcomeId] : d.report.outcomeName);
+  // a plain running count of the trips sent out, not a reference to anything
+  const seqOf = (d) => d.id.slice(1);
   const livesOf = (d) => (d.recalled || d.light ? '—' : r1(d.report.accounts.lives));
   const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(placeShort(d))}</td><td>${esc(outcomeOf(d))}</td><td class="num">${livesOf(d)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`;
   function selectEra(id) {
@@ -272,7 +274,9 @@ export function createUI(D, ctx) {
     const sec = S.secretary
       ? `<div class="muted">${U.office.secretary}${COLON}${staffLink(S.secretary)} · ${perkText || U.enc.edge_none} · ${U.office.secretary_pref}${COLON}${U.office.aims[office.secretaryAim()] || U.enc.edge_none}${S.secretaryLast ? ` <span class="chip ${S.secretaryLast.met ? '' : 'warn'}">${S.secretaryLast.met ? U.office.verdict_match : U.office.verdict_miss}</span>` : ''}</div>`
       : `<div class="muted">${U.office.secretary}${COLON}${U.office.no_secretary}</div>`;
-    return sec + listbox.html({
+    const n = hiredIds().length;
+    const wage = `<div class="muted">${U.office.wage}${COLON}${ri(office.wageOf(n))} ${D.get('config.ui.currency_icons.funds')}${S.funds < office.wageOf(n) ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}</div>`;
+    return sec + wage + listbox.html({
       id: 'home_staff', rows, maxH: D.get('config.ui.box_h.home_staff'),
       cols: [
         { k: 'name', label: U.office.col_staff, w: '15%', val: (r) => r.name, cell: (r) => staffLink(r.id) },
@@ -299,7 +303,7 @@ export function createUI(D, ctx) {
       <div class="row sp"><div class="candname">${swatch}<b>${staffLink(id)}</b></div><span class="muted">${esc(staffProfile(D, id))}${def.region ? ' · ' + esc(regionLabel(def.region)) : ''}</span></div>
       ${traits}
       <div class="muted">${mini}</div>
-      <div class="row sp"><span></span><button class="primary" data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button></div>
+      <div class="row sp"><span class="muted">${U.office.wage}${COLON}${ri(office.wageOf(hiredIds().length))} → ${ri(office.wageOf(hiredIds().length + 1))}</span><button class="primary" data-act="hire" data-id="${id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button></div>
     </div>`;
   }
   function hireHtml() {
@@ -333,20 +337,38 @@ export function createUI(D, ctx) {
       // the stars of a trip that is not home yet are not known, so the cell shows the wait
       const status = ready ? `<span class="chip warn pulse">${U.office.pending}</span>` : `<span class="muted">⏳ ${r1(left)} ${U.report.days}</span>${refused}`;
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `${recallBtn} ${DEV ? `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>` : ''}`;
-      return `<tr class="outrow"><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">—</td><td class="num">${acts}</td></tr>`;
+      return `<tr class="outrow"><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">${acts}</td></tr>`;
     });
-    const done = reports().slice(0, D.get('config.ui.recent_reports')).map((d) => `<tr><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${starsHtml(d.stars || 0)}${d.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num">${livesOf(d)}</td><td class="num"><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`);
+    const finished = reports();
+    const shown = finished.filter((d) => st.showArchived || !d.archived);
+    const done = shown.map((d) => `<tr${d.archived ? ' class="archived"' : ''}><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${starsHtml(d.stars || 0)}${d.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num"><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button> <button class="ghost" data-act="${d.archived ? 'unarchive' : 'archive'}" data-id="${d.id}">${d.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
     const rows = out.concat(done).join('');
+    const open = finished.filter((d) => !d.archived).length;
+    const bar = finished.length ? `<div class="row logbar"><button class="ghost" data-act="archiveall" ${open ? '' : 'disabled'}>${U.office.archive_all}</button><label class="check"><input type="checkbox" data-act="showarchived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${finished.length - open})</label></div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
-      ${rows ? `<table class="logtable"><thead><tr><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th class="num">${U.report.lives}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
+      ${bar}
+      ${rows ? `<div class="lscroll" data-keep="log" style="max-height:${D.get('config.ui.box_h.log')}px"><table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="muted">${finished.length ? U.office.log_empty_hidden : U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
+  // Every trip that has come home from a place, newest first, from the summaries that are kept for good. A report opens while it is still stored.
+  function tripsHtml(id) {
+    const trips = office.tripsOf(id);
+    const kept = new Set(ctx.S().dispatches.map((d) => d.id));
+    const body = trips.length
+      ? `<ul class="trips">${trips.map((t) => {
+        const oc = t.recalled ? U.report.recalled : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
+        const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
+        return `<li><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars)}${t.redeemed ? ' <span class="chip" ' + tip(U.stars.redeem) + '>♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
+      }).join('')}</ul>`
+      : `<p class="muted">${U.archive.trips_none}</p>`;
+    return `<div class="sec">${U.archive.trips} (${trips.length})</div>${body}`;
+  }
   // The story of the selected place: who it is about, what the traveller can bring up with them, and what is known of it once someone has been.
   function placeFile(id) {
     const ET = T.eras[id];
-    const done = reports().filter((d) => d.eraId === id);
+    const done = office.tripsOf(id);
     const ideas = office.plotsFor(id).map((pid) => `<li>${esc(ET.plots[pid].name)}${U.fmt.paren.replace('{x}', esc(ET.plots[pid].character))}</li>`).join('');
     const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
       <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
@@ -357,7 +379,7 @@ export function createUI(D, ctx) {
     if (!done.length) return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p></div></div>`;
     const hist = ET.encyclopedia.history.map((h) => `<li>${esc(h.text)}${h.check ? ` <span class="chip warn">${U.archive.check_pending}</span>` : ''}</li>`).join('');
     const reg = ET.encyclopedia.regret.map((h) => `<li>${esc(h)}</li>`).join('');
-    return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">${head}<div class="sec">${U.archive.history}</div><ul>${hist}</ul><div class="sec">${U.archive.regret}</div><ul>${reg}</ul></div></div>`;
+    return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">${head}<div class="sec">${U.archive.history}</div><ul>${hist}</ul><div class="sec">${U.archive.regret}</div><ul>${reg}</ul>${tripsHtml(id)}</div></div>`;
   }
 
   function catalogCard(id) {
@@ -373,8 +395,8 @@ export function createUI(D, ctx) {
       <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0)}</div>
       <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
-      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>☆ ${esc(c.points[p.id])}</li>`).join('')}</ul><p class="muted">${U.dispatch.scene_hint}</p>` : ''}
-      <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p></div></div>`;
+      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
+      <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
 
   // ---------- home: the dispatch desk under the map ----------
@@ -581,7 +603,7 @@ export function createUI(D, ctx) {
     const M = D.get('config.meta');
     const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
     // the first mention of a name on this page links to its page
-    const inline = { 'Life Matters': M.links.lm, 'Care for You': M.links.care, 'Fan Shen': M.links.author, 'piano-midi.de': M.links.music };
+    const inline = { 'Life Matters': M.links.lm, 'Care for You': M.links.care, 'Fan Shen': M.links.author, 'Mutopia Project': M.links.music };
     const linked = new Set();
     const para = (x) => {
       let h = esc(x);
@@ -695,6 +717,10 @@ export function createUI(D, ctx) {
     else if (act === 'gift') { office.gift(id); render(); }
     else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
     else if (act === 'recall') { const r = office.recall(id); if (r.ok) { st.back = st.tab; st.sub = id; st.vs = false; st.share = false; } renderClock(); render(); }
+    else if (act === 'showarchived') { st.showArchived = !st.showArchived; render(); }
+    else if (act === 'archive') { office.archive([id]); render(); }
+    else if (act === 'unarchive') { office.unarchive([id]); render(); }
+    else if (act === 'archiveall') { office.archive(reports().filter((d) => !d.archived).map((d) => d.id)); render(); }
     else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; st.share = false; render(); }
     else if (act === 'fire') { office.dismiss(id); render(); }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
@@ -829,5 +855,5 @@ export function createUI(D, ctx) {
   renderMusic();
   renderClock();
   setHtml(resEl, resHtml());
-  return { render, tick, state: st, office };
+  return { render, tick, state: st, office, X };
 }

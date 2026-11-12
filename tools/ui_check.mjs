@@ -367,6 +367,35 @@ try {
   ok('the auto mode sends to an unexplored place first', pk.r1.rule === 'unexplored' && pk.r1.eraId === 'broad_street_1854');
   ok('then to a visited place that can still be improved', pk.r2.rule === 'breakthrough' && pk.r2.eraId === 'vienna_1847');
   ok('then to the earlier history, the earliest of the places', pk.r3.rule === 'farther' && pk.r3.eraId === pk.early);
+  // the auto mode buys the equipment a story needs, within the share of the energy it may spend, and carries it
+  const eq = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    const scenes = g.D.get('catalog.events').filter((e) => e.scene);
+    const staffIds = Object.keys(S.staff);
+    const keep = { energy: S.energy, inv: { ...S.inv } };
+    let found = null;
+    S.energy = 5000;
+    for (const e of scenes) {
+      for (const sid of staffIds) {
+        const plain = g.ctx.backend.runLight(e.id, sid, 7, {}).stars;
+        const plan = off.planLight(e.id, sid, 7);
+        if (plan.stars > plain && plan.buy.length) { found = { e: e.id, sid, plain, rich: plan.stars, buy: plan.buy, kit: Object.keys(plan.kit) }; break; }
+      }
+      if (found) break;
+    }
+    S.energy = 0;
+    const poor = found ? off.planLight(found.e, found.sid, 7) : null;
+    S.energy = 5000;
+    const before = found ? found.buy.map((id) => S.inv[id] || 0) : [];
+    if (found) for (const id of found.buy) off.buyItem(id);
+    const after = found ? found.buy.map((id) => S.inv[id] || 0) : [];
+    const spent = 5000 - S.energy;
+    Object.assign(S, { energy: keep.energy, inv: keep.inv });
+    return { found, poorBuy: poor ? poor.buy.length : -1, before, after, spent };
+  });
+  ok('some story cannot reach more stars without equipment, and the plan buys it', !!eq.found && eq.found.rich > eq.found.plain);
+  ok('with no energy the plan buys nothing', eq.poorBuy === 0);
+  ok('buying puts the equipment in the stock and takes the energy', eq.found && eq.after.every((n, i) => n === eq.before[i] + 1) && eq.spent > 0);
   await page.selectOption('[data-clk=speed]', '0');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
@@ -534,6 +563,47 @@ try {
   await page.mouse.up();
   ok('a slow click on a tab is not lost to the clock', (await page.locator('#tabs button.on').getAttribute('data-tab')) === 'shop');
   await page.selectOption('[data-clk=speed]', '0');
+  // the log scrolls, finished trips can be archived and brought back, and a place lists the trips that came home from it
+  await page.click('[data-tab=home]');
+  const lg = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S();
+    const claimed = S.dispatches.filter((d) => d.claimed);
+    return { claimed: claimed.length, trips: (S.trips || []).length, boxed: !!document.querySelector('#view .lscroll[data-keep=log] table.logtable'), first: claimed.length ? claimed[claimed.length - 1].id : null, place: claimed.length ? claimed[claimed.length - 1].eraId : null };
+  });
+  ok('the log sits in a scrolling box', lg.boxed);
+  ok('every finished trip has a summary that is kept', lg.claimed > 0 && lg.trips >= lg.claimed);
+  const rowsOf = () => page.evaluate(() => document.querySelectorAll('.logtable tbody tr').length);
+  const r0 = await rowsOf();
+  await page.click(`[data-act=archive][data-id=${lg.first}]`);
+  ok('archiving hides the trip from the log', (await rowsOf()) === r0 - 1);
+  ok('and deletes nothing', await page.evaluate((id) => window.__game.ctx.S().dispatches.some((d) => d.id === id && d.archived), lg.first));
+  await page.check('[data-act=showarchived]');
+  ok('archived trips can be shown again', (await rowsOf()) === r0);
+  await page.click(`[data-act=unarchive][data-id=${lg.first}]`);
+  await page.uncheck('[data-act=showarchived]');
+  ok('and restored', (await rowsOf()) === r0);
+  const hist = await page.evaluate((place) => {
+    const g = window.__game;
+    const ev = g.D.get('catalog.events').find((e) => e.id === place);
+    return { n: g.ui.office.tripsOf(place).length, html: ev ? g.ui.X.storyFor({ catalog: true, id: place }) : g.ui.X.storyFor({ id: place }) };
+  }, lg.place);
+  ok('the story of a place lists the trips that came home from it', hist.n > 0 && hist.html.includes('class="trips"'));
+  // wages: paid per whole day for everyone hired, rising with the headcount, and an empty purse costs favor
+  const wg = await page.evaluate(() => {
+    const g = window.__game, o = g.ui.office, S = g.ctx.S();
+    const n = o.hiredIds().length, W = g.D.get('config.office.wage');
+    S.funds = 1000; S.wageDay = Math.floor(S.clock.day);
+    S.clock.day += 3; o.advance(0);
+    const paid = 1000 - S.funds;
+    const f0 = o.hiredIds().map((id) => S.staff[id].favor);
+    S.funds = 0; S.clock.day += 1; o.advance(0);
+    const f1 = o.hiredIds().map((id) => S.staff[id].favor);
+    return { paid, want: 3 * o.wageOf(n), n, rising: o.wageOf(n + 1) - o.wageOf(n) > o.wageOf(n) - o.wageOf(n - 1 || 0), poor: S.funds === 0 && f1.every((v, i) => v < f0[i] || f0[i] === 0), mult: g.ctx.backend.marketMult('relic_faraday_london', 40) };
+  });
+  ok('wages are paid for every whole day', wg.paid === wg.want);
+  ok('each further hire costs more per day than the one before', wg.rising);
+  ok('an unpaid day empties the funds and costs favor', wg.poor);
+  ok('the market factor stays within its band', wg.mult >= 0.7 && wg.mult <= 1.3);
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });
