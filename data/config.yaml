@@ -22,7 +22,7 @@ i18n:
     zh: 简体中文
 save:
   key: teleporter_save
-  version: 9
+  version: 10
 eras:
   - broad_street_1854
   - vienna_1847
@@ -39,6 +39,7 @@ office:
   keep_latest: 1
   max_trips: 2000
   hire_cost: 100
+  threes_per_point: 3
   wage:
     base: 3
     step: 0.25
@@ -59,7 +60,6 @@ office:
     ors_pack: 40
     chlorine_tablet: 40
     handbook: 1
-  loot_funds: 25
 clock:
   sec_per_day: 60
   speeds:
@@ -71,8 +71,9 @@ clock:
     - 16
 favor:
   start: 0.5
-  gift_cost: 60
-  gift_gain: 0.1
+  buff: 0.2
+  gift_days: 30
+  gift_gain: 0.5
   min: 0
   max: 1
   outcome:
@@ -117,8 +118,10 @@ ui:
     energy: ⚡
   tab_icons:
     home: 🏠
-    shop: 🛒
+    buy: 🛒
+    shop: 🗂️
     enc: 📖
+  tool_icons:
     settings: ⚙️
     about: ℹ️
   quote:
@@ -129,18 +132,16 @@ ui:
   timeline_max: 9
   recent_reports: 8
   search_delay_ms: 30
-  log_rows: 200
+  page_sizes:
+    - 5
+    - 10
+    - 20
+    - 50
   box_h:
-    hire: 200
-    log: 360
     story: 300
-    home_staff: 520
     pick_staff: 520
     carry: 200
     plots: 170
-    shop: 560
-    inv: 560
-    ants: 560
   chart:
     w: 520
     h: 170
@@ -208,7 +209,7 @@ light:
     missed: 2
   favor:
     success: 0.03
-    partial: 0
+    partial: 0.01
     missed: -0.03
   field_weights:
     science:

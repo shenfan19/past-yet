@@ -45,7 +45,6 @@ export function createWiki(X) {
   }
 
   // A made employee has a page from the moment they are made, so the wiki lists everyone who has been on offer, up to the limit kept in the save.
-  const known = (id) => !D.get('staff.staff.' + id).generated || id in ctx.S().generated;
 
   // ---------- article registry ----------
   function buildArticles() {
@@ -91,14 +90,14 @@ export function createWiki(X) {
       }
     }
 
-    for (const id of Object.keys(D.get('staff.staff')).filter(known)) {
+    for (const id of Object.keys(D.get('staff.staff'))) {
       add({
-        id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: D.get('staff.staff.' + id).generated ? 'always' : { staff: id }, refs: ['game'],
+        id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: { staff: id }, refs: ['game'],
         body: () => {
           const stats = ctx.backend.staffStats(id);
           const mini = D.get('staff.attributes').map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
           const traits = staffTraits(D, id).map((t) => a('traits:' + t, T.traits[t])).join(' ');
-          return `<div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><div class="muted">${mini}</div>`;
+          return `<div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><p>${esc(T.staff[id].story || '')}</p><div class="muted">${mini}</div>`;
         },
       });
     }
@@ -206,13 +205,8 @@ export function createWiki(X) {
     return out + esc(ex.slice(last));
   }
 
-  // the list of articles is rebuilt when the set of hired made employees changes, so a new hire has a page at once
-  let cache = null, sig = '';
-  const articles = () => {
-    const now = Object.keys(ctx.S().generated).join();
-    if (!cache || now !== sig) { sig = now; cache = buildArticles(); }
-    return cache;
-  };
+  let cache = null;
+  const articles = () => (cache ||= buildArticles());
   const byId = (id) => articles().find((x) => x.id === id);
   const open = (x) => X.isUnlocked(x.unlock);
   const visible = (x) => open(x) || DEV;

@@ -30,8 +30,17 @@ page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 try {
   const ok = (label, cond) => console.log(label + ':', cond ? 'ok' : 'MISMATCH');
   // the agency page shows one tab at a time
-  const sub = (id) => page.click(`[data-act=shopsub][data-id=${id}]`);
-  // the filters of the map are folded away, the test opens them
+  // a tab click first closes a pop-up that is open, as a person would
+  const go = async (tab) => {
+    if (await page.locator('#modal .modalbg').count()) await page.keyboard.press('Escape');
+    // the lists show five rows by default, the test asks for the longest page so every item is on the first one
+    await page.evaluate(() => { const pg = window.__game.ui.state.pager; for (const id of ['shop_modern', 'shop_future', 'inv', 'ants', 'home_staff', 'hire', 'pending', 'log']) pg[id] = { size: 50, page: 0 }; });
+    await page.click(`#tabs [data-tab=${tab}]`);
+  };
+  const tool = async (id) => { if (await page.locator('#modal .modalbg').count()) await page.keyboard.press('Escape'); await page.click(`#tools [data-act=modalopen][data-id=${id}]`); };
+  const sub = (id) => go(['modern', 'future', 'hire'].includes(id) ? 'buy' : 'shop');
+  // a pin opens the events of its place, a place with one event goes straight to the dispatch pop-up
+  const pick = async (pin, ev) => { await page.click(`.map [data-id=${pin}] .hit`, { force: true }); const row = page.locator(`#modal .evrow[data-id=${ev}]`); if (await row.count()) await row.click(); };
   const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&dev=1`);
   await page.waitForSelector('.lead');
@@ -53,17 +62,18 @@ try {
   // back and forward walk the pages, the wiki jump from the home page can be undone
   await page.click('[data-nav="-1"]');
   await page.waitForFunction(() => document.querySelector('#tabs [data-tab=home]').classList.contains('on'));
-  ok('back returns from a wiki jump to the page it came from', true);
+  ok('back returns from a wiki jump to the page it came from, with the pop-up it left', (await page.locator('#modal .mbox').count()) === 1);
+  await page.keyboard.press('Escape');
   await page.click('[data-nav="1"]');
   await page.waitForSelector('.wiki');
   ok('forward goes to the wiki again', (await page.locator('#tabs [data-tab=enc]').getAttribute('class')).includes('on'));
   await page.goBack();
   await page.waitForFunction(() => document.querySelector('#tabs [data-tab=home]').classList.contains('on'));
   ok('the browser back button does the same', true);
-  await page.click('[data-tab=home]');
-  await page.click('[data-tab=enc]');
+  await go('home');
+  await go('enc');
   ok('wiki keeps its state when you come back', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
-  await page.click('[data-tab=home]');
+  await go('home');
   await page.waitForSelector('svg.map');
   const vb0 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
   await page.click('[data-act=mapz][data-id=in]');
@@ -75,18 +85,25 @@ try {
   await page.fill('#map-from', '1840');
   await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 12; m.cx = 179.86; m.cy = 32.5; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
-  await page.click('.evrow[data-id=broad_street_1854]');
-  ok('a click on an event opens a pop-up and nothing unfolds in the list', (await page.locator('#modal .mbox').count()) === 1 && (await page.locator('.evitem .evstory').count()) === 0);
+  ok('a pin opens the events of its place as a grid in a pop-up, and the page has no list of events', (await page.locator('#modal .evgrid .evrow').count()) > 1 && (await page.locator('#map-events').count()) === 0 && (await page.locator('#view .evrow').count()) === 0);
+  await page.click('#modal .evrow[data-id=broad_street_1854]');
+  ok('an event opens the dispatch pop-up, with a way back to the list', (await page.locator('#modal .storyfull').count()) === 1 && (await page.locator('#modal [data-act=modalplace]').count()) === 1);
+  await page.click('#modal [data-act=modalplace]');
+  ok('the way back shows the list again', (await page.locator('#modal .evgrid').count()) === 1);
   await page.mouse.click(5, 5);
   ok('a click on the dark ground closes the pop-up', (await page.locator('#modal .mbox').count()) === 0);
-  await page.click('.evrow[data-id=broad_street_1854]');
+  await pick('london_soho', 'broad_street_1854');
   await page.keyboard.press('Escape');
   ok('Escape closes it too', (await page.locator('#modal .mbox').count()) === 0);
   await page.fill('#map-q', 'xyz-no-match');
   ok('filter hides all pins', (await page.locator('svg.map .pt').count()) === 0);
   await page.fill('#map-q', '');
   ok('filter restore pins', (await page.locator('svg.map .pt').count()) > 2);
-  await page.click('.evrow[data-id=broad_street_1854]');
+  await page.check('#map-counts');
+  ok('the counts switch puts the number of events on the pins', (await page.locator('svg.map .pt text.cnt').count()) > 2);
+  await page.uncheck('#map-counts');
+  ok('and takes them off', (await page.locator('svg.map .pt text.cnt').count()) === 0);
+  await pick('london_soho', 'broad_street_1854');
   await page.click('[data-act=autocfg]');
   await page.waitForSelector('.lpin [data-act=dec]', { timeout: 60000 });
   ok('auto configure puts a kit in the carry box', true);
@@ -133,7 +150,7 @@ try {
   const after = await page.evaluate(() => window.__game.ctx.S().energy);
   ok('energy kept after reload', before === after);
   // shop: the used anchor is locked, antiques sell and buy, items buy and sell
-  await page.click('[data-tab=shop]');
+  await go('shop');
   await sub('ants');
   await page.waitForSelector('[data-act=antlock]');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'pump_rust'); S.antiques.push('pump_rust'); window.__game.ui.render(); });
@@ -168,10 +185,19 @@ try {
   await sub('inv');
   await page.click('[data-act=shopsell][data-id=ors_pack]');
   ok('selling a modern good returns the funds it cost, with no loss', await page.evaluate((b) => window.__game.ctx.S().funds === b.f, pre));
-  ok('the agency page has two groups of three tabs and shows one part at a time', (await page.locator('.subtabs .tabgroup').count()) === 2 && (await page.locator('[data-act=shopsub]').count()) === 6 && (await page.locator('[data-act=antlock]').count()) === 0);
+  await go('shop');
+  ok('the agency page lists the employees, the goods and the antiques one under the other, with no tabs and no scroll bars', (await page.locator('#lb-home_staff').count()) === 1 && (await page.locator('#lb-inv').count()) === 1 && (await page.locator('#lb-ants').count()) === 1 && (await page.locator('.subtabs').count()) === 0 && (await page.locator('#view .lscroll').count()) === 0);
+  await go('buy');
+  ok('the buying page lists the two shops and the hiring offer one under the other', (await page.locator('#lb-shop_modern').count()) === 1 && (await page.locator('#lb-shop_future').count()) === 1 && (await page.locator('#lb-hire').count()) === 1 && (await page.locator('#view .lscroll').count()) === 0);
+  // a list shows five rows until the player asks for more
+  await page.evaluate(() => { delete window.__game.ui.state.pager.shop_modern; window.__game.ui.render(); });
+  const fiveRows = await page.locator('#lb-shop_modern .ltable tbody tr').count();
+  ok('a list shows five rows by default and has a pager when there are more', fiveRows === 5 && (await page.locator('#lb-shop_modern [data-act=pgpage]').count()) === 2);
+  await page.selectOption('#lb-shop_modern [data-pgsize]', '20');
+  ok('the player can ask for more rows, and the pager stays so the size can be set back', (await page.locator('#lb-shop_modern .ltable tbody tr').count()) > 5 && (await page.locator('#lb-shop_modern [data-act=pgpage]').count()) === 2);
   await sub('ants');
-  await page.click('[data-tab=home]');
-  await page.click('[data-tab=shop]');
+  await go('home');
+  await go('shop');
   await sub('future');
   await page.evaluate(() => { window.__game.ctx.S().energy = 100; window.__game.ui.render(); });
   ok('special equipment is locked until the energy reaches its number', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 0 && (await page.locator('[data-act=cartinc][data-id=neural_chip]').count()) === 1);
@@ -246,15 +272,14 @@ try {
   await page.fill('#shop-q', '');
   await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
   // second place
-  await page.click('[data-tab=home]');
+  await go('home');
   await page.click('[data-act=mapz][data-id=reset]');
-  await page.click('.map [data-id=vienna_general_hospital] .hit', { force: true });
-  await page.click('.evrow[data-id=vienna_1847]');
+  await pick('vienna_general_hospital', 'vienna_1847');
   await page.screenshot({ path: path.join(outDir, '7_dispatch_vienna.png'), fullPage: true });
   ok('vienna sendable after buying its antique', !(await page.locator('[data-act=send]').isDisabled()));
   await page.keyboard.press('Escape');
   // wiki
-  await page.click('[data-tab=enc]');
+  await go('enc');
   await page.waitForSelector('.wiki');
   await page.fill('#wiki-q', '斯诺');
   ok('wiki filter by text', (await page.locator('#wiki-list .wrow:not(.locked)').count()) >= 1);
@@ -279,12 +304,12 @@ try {
   await page.locator('#wiki-article a.wl').nth(1).click();
   await page.screenshot({ path: path.join(outDir, '9_wiki.png'), fullPage: true });
   // hire, then guest mode
-  await page.click('[data-tab=shop]');
+  await go('shop');
   await sub('hire');
   const slotsBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id));
-  ok('two candidates are on offer, one row each, with their traits', slotsBefore.length === 2 && (await page.locator('[data-act=hire]').count()) === 2 && (await page.locator('#view .ltable tbody tr').count()) === 2 && (await page.locator('#view .ltable a.chip.tr').count()) >= 2);
+  ok('five candidates are on offer, one row each, with their traits', slotsBefore.length === 5 && (await page.locator('#lb-hire [data-act=hire]').count()) === 5 && (await page.locator('#lb-hire .ltable tbody tr').count()) === 5 && (await page.locator('#lb-hire .ltable a.chip.tr').count()) >= 2);
   await page.locator('[data-act=hire]').first().click();
-  ok('hiring one brings another so two stay on offer', await page.evaluate((before) => { const h = window.__game.ctx.S().hire.slots; return h.length === 2 && h.some((x) => !before.includes(x.id)); }, slotsBefore));
+  ok('hiring one brings another so five stay on offer', await page.evaluate((before) => { const h = window.__game.ctx.S().hire.slots; return h.length === 5 && h.some((x) => !before.includes(x.id)); }, slotsBefore));
   // secretary, favor, clock and auto mode
   await sub('staff');
   await page.click('[data-act=appoint][data-id=s_zhou]');
@@ -300,14 +325,12 @@ try {
   const day1 = await page.evaluate(() => window.__game.ctx.S().clock.day);
   await page.waitForTimeout(1200);
   ok('space pauses the clock', (await page.evaluate(() => window.__game.ctx.S().clock.day)) === day1);
-  // every employee has a wiki page once hired, the made ones too
-  // a made employee is in the wiki from the moment they are made, even before hiring
-  const offerId = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).find((id) => window.__game.ctx.S().generated[id]));
+  // every employee has a wiki page once hired or on offer
+  const offerId = await page.evaluate(() => window.__game.ctx.S().hire.slots[0].id);
   if (offerId) { await sub('hire'); await page.click(`.ltable a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.click('[data-nav="-1"]'); }
   const gid = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
-    for (let i = 0; i < 40 && !S.hire.slots.some((x) => S.generated[x.id]); i++) { S.hire.slots = []; S.hire.serial += 1; off.ensureHire(); }
-    const slot = S.hire.slots.find((x) => S.generated[x.id]);
+    const slot = S.hire.slots[0];
     S.funds = Math.max(S.funds, 500);
     off.hire(slot.id);
     g.ui.render();
@@ -316,7 +339,7 @@ try {
   await sub('staff');
   await page.click(`a.wl[data-id="staff:${gid}"]`);
   await page.waitForSelector('.wiki');
-  ok('a made employee has a wiki page once hired', (await page.locator('#wiki-article h2').count()) === 1);
+  ok('a hired employee has a wiki page', (await page.locator('#wiki-article h2').count()) === 1);
   await page.click('[data-nav="-1"]');
   // a recall stops the trip where it is and pays a share, only one employee can be in a place, and the offer changes every seven days
   const rc = await page.evaluate(() => {
@@ -367,12 +390,12 @@ try {
   ok('two stars pay half of the base energy', sr.a.gain === Math.round(sr.base / 2) && sr.a.best === 2 && sr.a.newBest === true);
   ok('the same stars again pay no energy, so a place cannot be farmed', sr.b.gain === 0 && sr.b.newBest === false);
   ok('the third star pays the other half', sr.c.gain === Math.round(sr.base / 2) && sr.c.best === 3);
-  await page.click('[data-tab=home]');
+  await go('home');
   await openFilter();
   await page.selectOption('#map-star', '3');
   ok('the star filter keeps only places with that many stars', await page.evaluate(() => [...document.querySelectorAll('svg.map .pt')].length >= 1 && [...document.querySelectorAll('svg.map .pt')].length <= 3));
   await page.selectOption('#map-star', '');
-  await page.click('[data-tab=shop]');
+  await go('shop');
   // the auto mode picks where to send an employee by rules: unexplored first, then a place that can still be improved, then earlier history, then any
   const pk = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
@@ -437,7 +460,7 @@ try {
   ok('auto mode anchors a found antique and sells spares when funds are short', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('clinic_bell') && S.locks.includes('relic_newton_cambridge') && S.antiques.filter((x) => x === 'relic_newton_cambridge').length === 1; }));
   const sec = await page.evaluate(() => window.__game.ctx.S().secretaryLast);
   ok('secretary verdict recorded after auto results', !!sec && typeof sec.met === 'boolean');
-  await page.click('[data-tab=shop]');
+  await go('shop');
   ok('verdict chip shows', (await page.locator('.chip:has-text("他的意")').count()) === 1);
   await page.click('[data-act=appoint][data-id=s_zhou]');
   await page.locator('[data-clk=auto]').click();
@@ -447,9 +470,10 @@ try {
   await page.waitForSelector('.lead');
   // settings, music and effects
   // the time axis zooms around the pointer and slides when dragged, and its marks are plain dots
-  await page.click('[data-tab=home]');
+  await go('home');
   await page.waitForSelector('svg.axis');
   ok('map and axis marks have no rings', (await page.locator('svg .pt .ring').count()) === 0);
+  await openFilter();
   await page.locator('svg.axis').scrollIntoViewIfNeeded();
   const axBox = await page.locator('svg.axis').boundingBox();
   const winBefore = await page.evaluate(() => { const m = window.__game.ui.state.map; return m.to - m.from; });
@@ -465,7 +489,7 @@ try {
   await page.mouse.move(axBox.x + axBox.width * 0.4, axBox.y + axBox.height / 2, { steps: 5 });
   await page.mouse.up();
   ok('dragging the axis slides the window', (await page.evaluate(() => window.__game.ui.state.map.from)) !== fromBefore);
-  await page.click('[data-tab=settings]');
+  await tool('settings');
   ok('settings page has four sections', (await page.locator('.settings h3').count()) === 4);
   await page.selectOption('[data-set=theme]', 'dark');
   ok('dark theme is applied', (await page.evaluate(() => document.documentElement.dataset.theme)) === 'dark');
@@ -473,6 +497,7 @@ try {
   ok('auto theme clears the attribute', (await page.evaluate(() => document.documentElement.dataset.theme)) === undefined);
   await page.locator('[data-set=music_volume]').fill('0.2');
   ok('volume slider is saved', (await page.evaluate(() => window.__game.ctx.settings.get('music_volume'))) === 0.2);
+  await page.keyboard.press('Escape');
   await page.click('[data-music=toggle]');
   await page.waitForFunction(() => window.__game.ctx.audio.state.playing && !window.__game.ctx.audio.state.loading, null, { timeout: 8000 });
   ok('music plays without an error', (await page.evaluate(() => window.__game.ctx.audio.state.error)) === null);
@@ -481,16 +506,17 @@ try {
   ok('next piece loads', (await page.evaluate(() => window.__game.ctx.audio.state.error)) === null);
   await page.click('[data-music=toggle]');
   ok('music pauses', (await page.evaluate(() => window.__game.ctx.audio.state.playing)) === false);
+  await tool('settings');
   await page.click('[data-act=sfxtry][data-id=send]');
   await page.screenshot({ path: path.join(outDir, '9_settings.png'), fullPage: true });
-  await page.click('[data-tab=home]');
-  ok('guest has five tabs', (await page.locator('#tabs [data-tab]').count()) === 5);
-  await page.click('[data-tab=enc]');
+  await go('home');
+  ok('guest has four tabs and two tools', (await page.locator('#tabs [data-tab]').count()) === 4 && (await page.locator('#tools [data-act=modalopen]').count()) === 2);
+  await go('enc');
   await page.waitForSelector('.wiki');
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
-  await page.click('[data-tab=home]');
+  await go('home');
   ok('guest map draws only anchored places', await page.evaluate(() => { const S = window.__game.ctx.S(); const pins = document.querySelectorAll('svg.map .pt').length; return pins >= 2 && pins <= S.locks.length; }) && !(await page.locator('svg.map').innerHTML()).includes('牛顿'));
   await page.evaluate(() => { const S = window.__game.ctx.S(); window.__saved_visited = S.visited; S.visited = []; window.__game.ui.render(); });
   ok('an anchored place nobody has been to is a question mark but can be picked', (await page.locator('svg.map .pt text').first().textContent()).includes('?') && await page.evaluate(() => { window.__game.ui.state.modal = { kind: 'dispatch' }; window.__game.ui.render(); document.querySelector('#modal'); return 1; }) === 1 && (await page.locator('#modal [data-act=send]').count()) === 1);
@@ -498,14 +524,14 @@ try {
   await page.evaluate(() => { window.__game.ctx.S().visited = window.__saved_visited; window.__game.ui.render(); });
   // a catalogue relic reveals its event on the map and in the wiki, but nobody can be sent there
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 5000; window.__game.ctx.save(); });
-  await page.click('[data-tab=shop]');
+  await go('shop');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques.push('relic_newton_cambridge'); S.locks.push('relic_newton_cambridge'); window.__game.ui.render(); });
-  await page.click('[data-tab=home]');
+  await go('home');
   await page.waitForSelector('svg.map');
   await page.evaluate(() => { const m = window.__game.ui.state.map; m.z = 1; m.cx = 180; m.cy = 71; window.__game.ui.render(); });
   await page.click('.map [data-id=london_soho] .hit', { force: true });
-  ok('a relic puts its event in the list of its place', (await page.locator('.evrow[data-id=newton_cambridge]').count()) === 1);
-  await page.click('.evrow[data-id=newton_cambridge]');
+  ok('a relic puts its event in the list of its place', (await page.locator('#modal .evrow[data-id=newton_cambridge]').count()) === 1);
+  await page.click('#modal .evrow[data-id=newton_cambridge]');
   await page.keyboard.press('Escape');
   // typing in the year box while the clock runs a trip must not be interrupted by the redraw of the page
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0; g.ui.office.launch('broad_street_1854', { seed: 3, staffId: 's_ning', items: {} }); S.clock.speed = 1; g.ui.render(); });
@@ -516,8 +542,9 @@ try {
   await page.selectOption('[data-clk=speed]', '0');
   await page.fill('#map-from', '-5000');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); window.__game.ui.render(); });
-  await page.click('.map [data-id=london_soho] .hit', { force: true });
-  await page.click('.evrow[data-id=newton_cambridge]');
+  // the open filter panel lies over a part of the map, so it is folded before a pin is clicked
+  await page.evaluate(() => { window.__game.ui.state.map.filterOpen = false; window.__game.ui.render(); });
+  await pick('london_soho', 'newton_cambridge');
   ok('an anchored catalogue event shows its card and can be gone to', (await page.locator('.lbox').filter({ hasText: '牛顿' }).count()) >= 1 && !(await page.locator('[data-act=send]').isDisabled()));
   await page.click('[data-act=send]');
   await page.waitForSelector('.outrow');
@@ -527,10 +554,10 @@ try {
   await page.waitForSelector('.stamp');
   ok('a small story has its own short report and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('.quote').count()) === 1 && (await page.locator('table').count()) === 1);
   await page.click('[data-act=back]');
-  await page.click('[data-tab=enc]');
+  await go('enc');
   await page.fill('#wiki-q', '月亮');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
-  await page.click('[data-tab=shop]');
+  await go('shop');
   await sub('future');
   ok('guest sees the future shop and its goods', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   // English, language switch and fallback
@@ -538,39 +565,39 @@ try {
   await page.waitForSelector('.lead');
   ok('English title', (await page.title()) === 'The Teleporter');
   ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
-  await page.click('[data-tab=home]');
+  await go('home');
   await page.waitForSelector('svg.map');
   await openFilter();
   await page.fill('#map-from', '-500');
   ok('English BC format', (await page.locator('#map-fromtxt').innerText()) === '500 BC');
   await page.fill('#map-from', '1840');
-  await page.click('[data-tab=enc]');
+  await go('enc');
   await page.waitForSelector('.wiki');
   ok('English wiki lists categories', (await page.locator('.wcat summary').first().innerText()).length > 0);
   // follow browser is the default, a switch keeps the page and the state
-  await page.click('[data-tab=settings]');
+  await tool('settings');
   ok('follow browser is offered and selected by default', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === null && (await page.locator('#lang').inputValue()) === 'en');
   ok('language is the first row of the settings page', (await page.locator('.settings .srow').first().locator('#lang').count()) === 1);
-  await page.click('[data-tab=about]');
+  await tool('about');
   ok('about page has the disclaimer', (await page.locator('.about h3').allInnerTexts()).includes('Disclaimer'));
   ok('about page has jump links and no second title', (await page.locator('.about .jumps a').count()) >= 5 && (await page.locator('.about h2').count()) === 0);
   ok('about release shows the date only', (await page.locator('.about .muted').first().innerText()).includes('2026-11-09') && !(await page.locator('.about .muted').first().innerText()).includes('T00'));
   ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
-  await page.click('[data-tab=enc]');
+  await go('enc');
   await page.click('.wcat[data-cat=people] summary');
   await page.locator('#wiki-list .wrow', { hasText: 'John Snow' }).first().click();
   await page.waitForSelector('#wiki-article h2');
   await page.fill('#wiki-q', 'Snow');
-  await page.click('[data-tab=settings]');
+  await tool('settings');
   await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'zh')]);
   await page.waitForSelector('.settings');
-  ok('switching language keeps the tab', (await page.locator('#tabs [data-tab=settings]').getAttribute('class')).includes('on'));
-  await page.click('[data-tab=enc]');
+  ok('switching language keeps the settings pop-up open', (await page.locator('#modal .settings').count()) === 1);
+  await go('enc');
   await page.waitForSelector('.wiki');
   ok('switching language keeps the article', (await page.locator('#wiki-article h2').innerText()).includes('斯诺'));
   ok('switching language keeps the filter text and the open category', (await page.locator('#wiki-q').inputValue()) === 'Snow' && (await page.evaluate(() => window.__game.ui.state.wiki.openCats.people)) === true);
   ok('switching to Chinese sticks', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === 'zh' && (await page.locator('#tabs [data-tab=shop]').textContent()).includes('事务所'));
-  await page.click('[data-tab=settings]');
+  await tool('settings');
   await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'auto')]);
   await page.waitForSelector('.settings');
   ok('choosing follow browser clears the saved choice', (await page.evaluate(() => localStorage.getItem('teleporter_lang'))) === null && (await page.locator('#lang').inputValue()) === 'auto');
@@ -595,22 +622,82 @@ try {
   ok('a slow click on a tab is not lost to the clock', (await page.locator('#tabs button.on').getAttribute('data-tab')) === 'shop');
   await page.selectOption('[data-clk=speed]', '0');
   // the log scrolls, is read from the kept summaries, and a place lists the trips that came home from it
-  await page.click('[data-tab=home]');
+  await go('home');
   const lg = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S();
     const claimed = S.dispatches.filter((d) => d.claimed);
-    return { claimed: claimed.length, trips: (S.trips || []).length, boxed: !!document.querySelector('#view .lscroll[data-keep=log] table.logtable'), place: claimed.length ? claimed[claimed.length - 1].eraId : null, rows: document.querySelectorAll('.logtable tbody tr').length, gone: document.querySelectorAll('.logtable tbody tr').length, perPlace: Math.max(0, ...Object.values(claimed.reduce((a, d) => ((a[d.eraId] = (a[d.eraId] || 0) + 1), a), {}))) };
+    return { claimed: claimed.length, trips: (S.trips || []).length, paged: !!document.querySelector('#view table.logtable:not(.pending)') && !!document.querySelector('#view [data-act=pgpage]'), size: (window.__game.ui.state.pager.log || {}).size, place: claimed.length ? claimed[claimed.length - 1].eraId : null, rows: document.querySelectorAll('.logtable:not(.pending) tbody tr').length, perPlace: Math.max(0, ...Object.values(claimed.reduce((a, d) => ((a[d.eraId] = (a[d.eraId] || 0) + 1), a), {}))) };
   });
-  ok('the log sits in a scrolling box', lg.boxed);
+  ok('the log is a table with a pager', lg.paged);
   ok('every finished trip has a summary that is kept', lg.claimed > 0 && lg.trips >= lg.claimed);
-  ok('the log lists every kept summary, not only the stored reports', lg.rows >= lg.claimed);
+  ok('the log shows a page of the summaries, not only the stored reports', lg.rows === Math.min(lg.size, lg.trips));
   ok('at most the best and the latest report are stored for a place', lg.perPlace <= 2);
+  // paging: 25 trips make three pages of ten, the last with five
+  const pg = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S();
+    const keep = S.trips;
+    S.trips = Array.from({ length: 25 }, (_, i) => ({ id: 'd' + (900 + i), place: 'broad_street_1854', light: false, staffId: 's_ning', stars: 1, day: i, back: i, outcome: 'success' }));
+    g.ui.state.pager.log = { size: 10, page: 0 }; g.ui.render();
+    const rows = () => document.querySelectorAll('.logtable:not(.pending) tbody tr').length;
+    const out = { first: rows() };
+    document.querySelector('[data-act=pgpage][data-id="log:next"]').click(); out.second = rows();
+    document.querySelector('[data-act=pgpage][data-id="log:next"]').click(); out.third = rows();
+    out.nextOff = document.querySelector('[data-act=pgpage][data-id="log:next"]').disabled;
+    S.trips = keep; g.ui.state.pager.log = { size: 50, page: 0 }; g.ui.render();
+    return out;
+  });
+  ok('the log pages by ten, then ten, then the rest', pg.first === 10 && pg.second === 10 && pg.third === 5 && pg.nextOff);
   const hist = await page.evaluate((place) => {
     const g = window.__game;
     const ev = g.D.get('catalog.events').find((e) => e.id === place);
     return { n: g.ui.office.tripsOf(place).length, html: ev ? g.ui.X.storyFor({ catalog: true, id: place }) : g.ui.X.storyFor({ id: place }) };
   }, lg.place);
   ok('the story of a place lists the trips that came home from it', hist.n > 0 && hist.html.includes('class="trips"'));
+  // favor bends the points of a trip, and three three star trips give a point of a random attribute
+  const fv = await page.evaluate(() => {
+    const g = window.__game, b = g.backend, off = g.ui.office, D = g.D;
+    const ids = D.get('catalog.events').map((e) => e.id).slice(0, 60);
+    const mean = (favor) => { let n = 0, s = 0; for (const e of ids) for (let seed = 1; seed <= 6; seed++) { s += b.runLight(e, 's_ning', seed, {}, favor).stars; n++; } return s / n; };
+    const low = mean(0), high = mean(1);
+    const base = { ...D.get('staff.staff.s_ning.base') };
+    const sf = g.ctx.S().staff.s_ning; sf.tally = { 3: 0, 2: 0, 1: 0 };
+    const got = [11, 12, 13].map((seq) => { sf.tally[3] += 1; return off.grow('s_ning', seq); });
+    const after = D.get('staff.staff.s_ning.base');
+    const diff = Object.keys(after).filter((k) => after[k] !== base[k]);
+    const growth = { ...sf.growth };
+    D.o.staff.staff.s_ning.base = base; sf.growth = {}; sf.tally = { 3: 0, 2: 0, 1: 0 };
+    return { low, high, got, diff, attr: got[2], growth };
+  });
+  ok('a favored employee does better than one who is not', fv.high > fv.low);
+  ok('three three star trips give one point of one attribute, not before', fv.got[0] === null && fv.got[1] === null && !!fv.got[2] && fv.diff.length === 1 && fv.diff[0] === fv.attr && fv.growth[fv.attr] === 1);
+  // the mood changes every attribute by up to a fifth, and a reward costs a month of wages
+  const md = await page.evaluate(() => {
+    const g = window.__game, b = g.backend, off = g.ui.office;
+    const lo = b.staffStats('s_ning', 0), mid = b.staffStats('s_ning', 0.5), hi = b.staffStats('s_ning', 1);
+    return { lo: lo.wit / mid.wit, hi: hi.wit / mid.wit, cost: off.giftCost(), n: off.hiredIds().length, wage: off.wageOf(off.hiredIds().length) };
+  });
+  ok('full mood adds a fifth to the attributes and none takes a fifth away', Math.abs(md.hi - 1.2) < 1e-9 && Math.abs(md.lo - 0.8) < 1e-9);
+  ok('a reward costs a month of the wages of that person', md.cost === Math.round(30 * md.wage / md.n));
+  // the record of one person opens as a pop-up from the tally of stars, and a trip can be archived and brought back
+  await go('shop');
+  await page.click('.tallylink >> nth=0');
+  ok('the tally of stars opens the record of that person in a pop-up', (await page.locator('#modal #lb-staff_trips').count()) === 1 && (await page.locator('#modal .tally').count()) >= 1);
+  await page.keyboard.press('Escape');
+  await go('home');
+  const ar = await page.evaluate(() => {
+    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
+    const rows = () => document.querySelectorAll('.logtable:not(.pending) tbody tr').length;
+    const before = rows();
+    const id = S.trips.filter((x) => !x.archived)[0].id;
+    off.archive([id]); g.ui.render();
+    const hidden = rows();
+    g.ui.state.showArchived = true; g.ui.render();
+    const shown = rows(), dim = document.querySelectorAll('.logtable tr.archived').length;
+    off.restore([id]); g.ui.state.showArchived = false; g.ui.render();
+    return { before, hidden, shown, dim, back: rows(), kept: S.dispatches.some((d) => d.id === id) };
+  });
+  ok('an archived trip leaves the log, shows dimmed on request, and comes back', ar.hidden === ar.before - 1 && ar.shown === ar.before && ar.dim === 1 && ar.back === ar.before);
+  ok('archiving lets go of the stored report', ar.kept === false);
   // wages: paid per whole day for everyone hired, rising with the headcount, and an empty purse costs favor
   const wg = await page.evaluate(() => {
     const g = window.__game, o = g.ui.office, S = g.ctx.S();

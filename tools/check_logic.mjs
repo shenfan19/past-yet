@@ -20,9 +20,8 @@ const traits = D.get('staff.traits');
 const items = D.get('items');
 const events = D.get('catalog.events');
 const cfg = D.get('config');
-const attrs = ['constitution', 'wit', 'finesse', 'will', 'desire'];
-const hiringJobs = new Set(D.get('hiring.jobs').map((j) => (typeof j === 'string' ? j : j.id)));
-const jobs = new Set([...hiringJobs, ...Object.values(staff).map((s) => s.job_id)]);
+const attrs = D.get('staff.attributes');
+const jobs = new Set(Object.values(staff).map((s) => s.job_id));
 
 // point kinds: every kind a scene or an era model asks for, and which traits give or cost it
 const sceneEvents = events.filter((e) => e.scene);

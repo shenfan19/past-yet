@@ -76,8 +76,6 @@ variables:
   traveler.fatigue: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
   traveler.health: {type: state, value: 1, unit: fraction, bounds: [0, 1], source: game_assumption}
   traveler.trust: {type: state, value: 0.15, unit: fraction, bounds: [0, 1], source: game_assumption, note: "Neighbours' trust in the stranger."}
-  traveler.loot_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption, note: "Objects the employee pocketed."}
-  traveler.greed: {type: parameter, value: 0.1, from_staff: greed, source: game_assumption}
   traveler.favor: {type: parameter, value: 0.5, from_spec: favor, source: game_assumption, note: "The employee affection for the office, 0 to 1. 0.5 is neutral."}
   traveler.homesick: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
   traveler.attachment: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
@@ -189,11 +187,7 @@ variables:
   trust_gain_bedside: {type: parameter, value: 0.06, unit: "1/day", source: game_assumption}
   trust_loss_block: {type: parameter, value: 0.03, source: game_assumption}
   block_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
-  pocket_base: {type: parameter, value: 0.8, unit: "1/day", source: game_assumption, note: "Pocketing rate per day at greed 1."}
   favor_calm: {type: parameter, value: 0.6, source: game_assumption, note: "How much affection above 0.5 slows homesickness."}
-  favor_greed: {type: parameter, value: 1.0, source: game_assumption, note: "How much low affection makes pocketing more likely."}
-  pocket_trust_loss: {type: parameter, value: 0.3, source: game_assumption}
-  pocket_rapport_loss: {type: parameter, value: 0.15, source: game_assumption, note: "Rapport the protagonist loses when the employee is caught pocketing."}
   miasma: {type: parameter, value: 0.8, source: historical, note: "Dominant explanation then was foul air."}
   loss_insist: {type: parameter, value: 4, unit: pack, source: game_assumption}
   loss_yield: {type: parameter, value: 0, unit: pack, source: game_assumption}
@@ -414,17 +408,6 @@ events:
       traveler.health: "traveler.health - strain_health"
       traveler.fatigue: "traveler.fatigue + strain_fatigue"
       traveler.strain_count: "traveler.strain_count + 1"
-  pocket:
-    source: game_assumption
-    importance: 2
-    tag: trait
-    when: "arrived == 1"
-    probability: "traveler.greed * pocket_base * (1 + favor_greed * (0.5 - traveler.favor)) * step"
-    cooldown_days: 1.5
-    effects:
-      traveler.trust: "traveler.trust - pocket_trust_loss"
-      traveler.loot_count: "traveler.loot_count + 1"
-      snow.rapport: "max(0, snow.rapport - pocket_rapport_loss)"
 
 milestones:
   first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}

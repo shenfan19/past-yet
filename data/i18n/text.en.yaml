@@ -54,7 +54,7 @@ stats:
   wit: Wit
   finesse: Finesse
   will: Will
-  desire: Desire
+  lawful: Order
 point_kinds:
   persuade: persuading
   trust: winning trust
@@ -198,7 +198,7 @@ ui:
     auto: Auto
     nostop: Keep running on reports
     nostop_tip: When ticked, the clock keeps running when someone comes back. When not ticked, it pauses at each report so nothing is missed.
-    auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses. The secretary has a preference too - if the auto results suit it, favor goes up, otherwise down.
+    auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses. The secretary has a preference too - if the auto results suit it, mood goes up, otherwise down.
     paused_report: A report is waiting, paused
   dispatch:
     era: Era
@@ -340,6 +340,8 @@ ui:
       jail: You were found out and locked up. The antique was lost and the rest took days.
       hunted: You were found out and hunted. You got away, but only just.
   map:
+    counts: Counts
+    back_list: Events here
     more_filters: More filters
     unknown: '?'
     tag_filter: Tag filter
@@ -379,8 +381,10 @@ ui:
     ad: AD {n}
   tabs:
     home: Time travel
+    buy: Buy
     shop: Agency
     enc: Wiki
+  tools:
     settings: Settings
     about: About
   model:
@@ -428,29 +432,43 @@ ui:
     appoint: Appoint secretary
     dismiss: Dismiss
     gift: Bonus
-    gift_tip: Pay a bonus, favor goes up.
-    favor_tip: Favor. When high, an employee is slower to get homesick and give up, and less likely to pocket things. Good trips raise it, failures and giving up lower it.
-    col_favor: Favor
+    gift_tip: Pay a month of their wages as a reward, mood goes up by 50.
+    favor_tip: Mood. Success raises it, failure and giving up lower it. Every attribute follows it, up to 20% more at full mood and 20% less at none. A reward adds 50.
+    mood_mult: Attributes times {m}
+    tally_tip: Trips of three, two and one star. Click for the record of this person.
+    staff_trips: Trips
+    no_trips: Nobody has been sent yet.
+    archive: Archive
+    restore: Restore
+    archive_failed: Archive the failed
+    archive_notbest: Archive all but the best
+    show_archived: Show archived
+    archive_tip: Archiving hides a trip from the log and lets go of its stored report. The line and the stars stay.
+    col_favor: Mood
     aims:
       funds: funds
       lives: lives saved
       energy: time energy
       safety: staff safety
     secretary_pref: Secretary preference
-    verdict_match: The last auto result suited the secretary, favor up
-    verdict_miss: The last auto result did not suit the secretary, favor down
+    verdict_match: The last auto result suited the secretary, mood up
+    verdict_miss: The last auto result did not suit the secretary, mood down
     perks:
       funds_mult: Funds income
       energy_mult: Time energy income
       rest_cut: Rest time
-      favor_gain: Favor growth
+      favor_gain: Mood growth
     recruit_hint_short: Known after hiring
     col_staff: Employee
     wage: Daily wages
-    wage_unpaid: Wages could not be paid, the staff lose favor
+    wage_unpaid: Wages could not be paid, the staff lose mood
     col_profile: Background
     col_stats: Abilities
     hire_none: Nobody is on offer.
+    page_size: Per page
+    page_of: Page {a} of {b}
+    prev_page: Previous page
+    next_page: Next page
     on_road: On the road
     col_traits: Traits
     col_state: State
@@ -463,7 +481,7 @@ ui:
     recall_tip: Ask them to come home now. The story stops where it is and only part of the pay comes back. They may refuse.
     recall_refused: Refused to come back
     hire_title: Hiring
-    hire_hint: Two candidates are on offer. Hiring one brings another, and every {n} days the offer changes.
+    hire_hint: Candidates are on offer. Hiring one brings another, and every {n} days the offer changes.
     hire_next: The offer changes in {n} days.
     hire: Hire
     fire: Let go
@@ -507,6 +525,7 @@ ui:
     place: Place
     lives: Lives saved
     view: View report
+    grown: Attribute point earned
     antique_gain: Antique brought back
     antique_dup: a spare, it can be sold
     antique_none: none this time
@@ -600,8 +619,6 @@ ui:
     clear_cart: Clear
     col_name: Name
     col_desc: Description
-    group_buy: Buy
-    group_own: Held
     col_tags: Tags
     col_qty: Qty
     ip_short: Under review
@@ -755,82 +772,252 @@ staff:
     name: Xiaoyu Ning
     job: Nurse
     bio: Used to be a nurse. Stubborn, cannot bear to see a patient with nobody looking after them.
+    story: Xiaoyu worked eight years on the night shift of a busy city hospital ward, the kind where beds line the corridor. She learned to read a patient's fear from how they hold the blanket. An old man with no family once waited for her every evening to help him finish his rice, and she kept doing it after her shift ended. She left nursing last year, worn out but not at peace with it, and still checks on strangers waiting alone in hospital halls. Her quiet wish is a job where she can sit with people long enough to hear their story to the end.
   s_zhou:
     name: Jianguo Zhou
     job: Builder
     bio: Worked construction. Strong, a talker, does not like going around things.
+    story: Jianguo left a village in Henan at nineteen to lay bricks in a coastal city, and has followed building sites across the country for twenty six years. He has helped raise towers he will never live in, and he points them out to his son on the phone. On site he talks constantly, jokes with the crane drivers, and argues loudly about whose turn it is to carry the heavy sacks. When a young worker once froze on a high beam, Jianguo walked out and talked him down. He wants to go home, build a proper house with two floors for his parents, and finally sleep in a bed that stays in one place.
   s_lin:
     name: Zhiyao Lin
     job: Graduate student
     bio: Reads a lot, wants to understand everything, gets homesick first.
+    story: Zhiyao grew up in a small city in Hunan where her mother kept the books for a shoe shop. She was the first in the family to go to university, and now studies linguistics in a northern city where the winter air hurts her throat. She reads in the library until closing, then calls home and talks about nothing much, the neighbours, the price of pork, the cat. Last month she finally stopped apologising for missing the food. She would like to finish her thesis on how dialects fade, and then record her grandmother telling stories in the old speech.
   s_qian:
     name: Shouren Qian
     job: Antique dealer
     bio: Used to trade in second hand goods. Sharp eyes, knows what anything is worth at a glance.
+    story: Shouren grew up beside the old second hand market in Tianjin, where his father sold bicycles and radios from a cloth on the ground. He learned prices before he learned to read, by watching which buyers lingered. For thirty years he bought, mended and sold what other people threw out, and he can tell a copy from the real thing by the weight in his palm. He once returned a jade bracelet to a seller who did not know its worth, and lost money on purpose. Now he dreams of a small shop with no haggling, where every item has a fair price written on a card.
   s_amara:
     name: Amara Okafor
     job: Midwife
     bio: Has delivered hundreds of babies and stays calm when everyone else panics.
+    story: Amara grew up in Enugu, the eldest of five, and learned to stay steady by minding her little brothers through the rainy season blackouts. She trained as a midwife at twenty two and now works nights in a crowded maternity ward, where she hums under her breath so the mothers can hear that nothing is wrong. One night a mother in her first labour gripped her hand and would not let go until dawn, and Amara found she did not mind. Her quiet wish is a small clinic near her mother's village, with a proper generator and a kettle that is always warm.
   s_kenji:
     name: Kenji Mori
     job: Software engineer
     bio: Debugs for a living and cannot leave a loose end alone.
+    story: Kenji grew up in Sendai and taught himself to code on his father's old laptop, mostly to fix a broken game. Now he works at a logistics company in Tokyo, where he has a reputation for tracing a bug through three systems and writing the note that finally explains it. He often misses the last train and walks home past the closed shops. One evening he stopped to repair the sign of a tiny noodle stall, and the owner fed him for a week. He would like to build something small that old people can use without being afraid of it.
   s_isabella:
     name: Isabella Rossi
     job: Retired teacher
     bio: Forty years of teaching taught her to explain anything twice, and kindly.
+    story: Isabella taught literature to thirteen year olds in a school outside Bologna for forty years, and she can still name most of her classes. She retired two springs ago and found the mornings oddly quiet, so she began tutoring neighbourhood children at her kitchen table, paid in biscuits. A boy who had never finished a book once brought her a battered paperback and asked her to read the ending aloud. She keeps that book on the shelf by the stove. What she wants now is simple, to visit her sister in Sicily every autumn without checking the calendar.
   s_tariq:
     name: Tariq Hassan
     job: Driver
     bio: Knows every back street, and how to talk his way past a closed door.
+    story: Tariq has driven a taxi through Amman for sixteen years, after a short spell selling spare parts with his brother. He knows which hill roads flood in winter and which cafe will give a stranger a glass of tea at four in the morning. A woman once begged him to reach the hospital before her husband's surgery, and he took the back streets and made it with six minutes to spare. He still keeps her note on the dashboard. He saves a little each month so his daughter can study medicine, and tells her the long roads are worth it.
   s_meiling:
     name: Mei-Ling Chen
     job: Art student
     bio: Sketches everything she sees and asks why about the rest.
+    story: Mei-Ling was born in Tainan, where her grandfather painted temple doors and let her mix the red. At nineteen she is in her second year at an art school in Taipei, filling a sketchbook every two weeks with bus stops, old men playing chess, and the rooftop laundry of her dormitory. Her teachers say she draws fast and thinks slowly, and she agrees. She still asks why about everything, including why a line feels wrong. She hopes to paint a whole temple door of her own one day, and to let her grandfather mix the red once more.
   s_lars:
     name: Lars Nilsson
     job: Shipwright
     bio: Builds things to last and does not like to be hurried.
+    story: Lars learned boatbuilding from his uncle on an island in the Stockholm archipelago, and has spent more than thirty years planing oak and pine into hulls that outlast their owners. He measures twice, then waits a day before cutting, which has cost him a few customers and won him many more. Once he refused to launch a boat a day early for an impatient buyer, and a storm that afternoon proved him right. Winter evenings he carves small wooden ducks for the village children. He hopes to build one last boat for himself, no bigger than a rowing skiff, before his hands grow slow.
   s_priya:
     name: Priya Sharma
     job: Pharmacist
     bio: Reads every label twice and counts the dose a third time.
+    story: Priya grew up above her uncle's chemist shop in Pune and spent school holidays labelling bottles in neat capitals. She became a pharmacist at twenty four and now runs the counter of a busy neighbourhood pharmacy, where elderly customers bring bags of mixed tablets and ask her to sort them. Once she caught a double dose on a prescription and phoned the doctor at midnight, and nobody was cross. She keeps a notebook of questions customers were too shy to ask. One day she hopes to open her own shop with a bench outside for people to sit and wait.
   s_diego:
     name: Diego Fernández
     job: Street musician
     bio: Can draw a crowd with one guitar, and misses his mother's cooking.
+    story: Diego left school at seventeen and has played guitar on a corner near the San Telmo market ever since, tango when the tourists linger and rock when students pass. His mother still sends him off with food in plastic tubs, and he still eats it cold on the train. Last winter a retired baker stopped every Thursday just to hear one song, and left a coin and a warm empanada each time. That small habit made Diego feel, for the first time, that the corner was a place he belonged. He hopes to record an album before he turns twenty five, and to play it first in his mother's kitchen.
   s_olga:
     name: Olga Petrova
     job: Retired physician
     bio: Practised for fifty years and trusts her own eyes over any manual.
+    story: Olga qualified as a doctor in Kazan and spent most of fifty years in a district clinic, walking to patients' flats through snow because the bus was never on time. She learned to listen to a cough before she read a chart, and she was often right. Her colleagues called her stubborn, and she took it as praise. After retiring she kept a small bag by the door, and neighbours still knock when a child has a fever. She would like to grow tomatoes on a sunny balcony and watch one summer through without being called away.
   s_samuel:
     name: Samuel Mensah
     job: Journalist
     bio: Asks the question nobody else dares to, and writes the answer down at once.
+    story: Samuel grew up in Kumasi, where his aunt sold newspapers from a roadside table and let him read them before the customers came. He studied journalism in Accra and now writes for a small paper about water, markets and the long queues at government offices. Last year he spent three weeks on a story about a clogged drain that flooded a school, and the council fixed it the week after it ran. He carries a notebook everywhere and writes down what people say before they decide to soften it. Someday he wants to publish a book of ordinary street answers.
   s_minji:
     name: Min-ji Park
     job: Chef
     bio: Feeds everyone first and sits down last.
+    story: Min-ji opened her first kitchen at twenty six in a narrow alley in Busan, serving stew to dock workers at five in the morning. Her mother had run a similar stall, and Min-ji still uses her recipe for the broth, adding one extra hour of simmering that she has never admitted to. Twice the stall nearly closed, and twice the regulars came with their own chairs and filled it. She works fourteen hours a day and eats standing up. Her wish is quieter than it looks, one Sunday a month when someone else cooks and she is only a guest.
   s_jeanluc:
     name: Jean-Luc Moreau
     job: Retired sea captain
     bio: Has weathered worse storms and gives orders without raising his voice.
+    story: Jean-Luc was born in a fishing village on the Brittany coast, went to sea at sixteen on a cargo ship, and made captain at forty. He once pulled a deckhand out of a February sea, and the young man still sends him a card every Christmas. Now retired, he mends nets for the harbour children and teaches them knots on a plank behind his house. His quiet wish is to sail once more along the coast of his childhood at walking speed, with no schedule and no cargo.
   s_fatima:
     name: Fatima Al-Sayed
     job: Archivist
     bio: Finds the one page that matters in a room full of boxes.
+    story: Fatima has spent twenty six years in a Cairo municipal archive, in a basement that smells of dust and cardamom tea. She started as a clerk after her father, a bookbinder, taught her to love paper that had been handled by many hands. Once she spent three weeks finding a single land deed for an old widow, and the widow cried at the counter. Since then she has believed that an orderly shelf is a kind of kindness. In a few years she hopes to teach her niece the filing system, and to leave labels so clear that no one needs to ask her.
   s_tom:
     name: Tom Becker
     job: Apprentice mechanic
     bio: Takes apart every machine he meets, and puts it back together, mostly.
+    story: Tom grew up on the edge of a small town in Ohio, where his grandfather kept a barn full of unfinished engines. He took apart his first lawn mower at nine and finished putting it back together at ten, with two screws left over that never mattered. This year he started as an apprentice at a garage on Main Street, sweeping floors in the morning and holding the light for the older mechanics in the afternoon. Last week his boss let him change a clutch alone. He wants to restore his grandfather's old pickup and drive it, slowly, to the lake.
   s_wanjiru:
     name: Wanjiru Kamau
     job: Data analyst
     bio: Is the first to see the pattern in the numbers.
+    story: Wanjiru grew up in Nyeri, where her father farmed coffee and kept his yields in a school exercise book, year after year. She studied statistics in Nairobi on a scholarship and now works at a mobile payments firm, where she is usually the first to notice when a graph bends the wrong way. Last spring her model flagged a village agent whose numbers had gone strange, and it turned out his shop had been robbed and he was too frightened to say. She calls her father every Sunday and they compare the rain. She hopes to build a simple tool that lets small farmers see their own seasons.
   s_ricardo:
     name: Ricardo Silva
     job: Retired fisherman
     bio: Waits for the tide without hurry and tells long stories while he does.
+    story: Ricardo fished from a wooden boat off the coast of Bahia for more than fifty years, starting at eleven when his father fell ill. He knows the tide by the smell of the wind and the colour of the water near the reef. Three of his grandchildren now live in the city and visit every January, and he tells them the same long story about a fish too big to carry, adding a little each year. His knees no longer allow the boat. He sits on the sand at dawn all the same, mending one net slowly, just to have something in his hands.
+  s_anjali:
+    name: Anjali Nair
+    job: Accountant
+    bio: Accountant from Mumbai who will not let a number go until it adds up.
+    story: Anjali grew up in a Malayali family in Thane and took the suburban train into Mumbai every morning for eleven years, first to college, then to a small firm that audits neighbourhood shops. She once spent three nights finding a missing four hundred rupees in a grocer's books, because she knew it would be his daughter's school fees. Her mother keeps asking when she will marry. Anjali says after the quarter closes, and the quarter never closes. What she really wants is a window seat in a quiet office with a plant on the sill.
+  s_rajesh:
+    name: Rajesh Yadav
+    job: Farmer
+    bio: Wheat and sugarcane farmer from Uttar Pradesh, strong and slow to change his mind.
+    story: Rajesh has farmed four acres outside a village near Azamgarh since his father's knees gave out when he was nineteen. He has outlasted two droughts and one flood, and he once walked into the district office alone to argue about a canal gate that never opened. He lost that argument but the gate was repaired the next spring. He reads slowly and does sums in his head faster than the shopkeeper. His son is in Lucknow studying for exams, and Rajesh quietly hopes the boy will come home one day, but will never say so.
+  s_lakshmi:
+    name: Lakshmi Subramanian
+    job: Tailor
+    bio: Chennai tailor of forty years, talks while she stitches and asks about everything.
+    story: Lakshmi has sat at the same Singer treadle machine in a Triplicane lane since she was twenty-two, and half the street has been measured by her tape. She talks the whole time she sews, about weddings, prices, and whose daughter did what, and somehow the blouses are never late. Her eyes are tired now and her back complains by evening. A granddaughter showed her a video of a fashion school abroad, and she watched it three times. She keeps asking how the machines there are different from hers.
+  s_arjun:
+    name: Arjun Malhotra
+    job: Engineering student
+    bio: Delhi engineering student, quick with ideas and easily bored by finishing them.
+    story: Arjun is in his third year of electronics at a Delhi college and has built a robot arm from scrap that waves at anyone who walks past the hostel. He once climbed onto the roof of a lecture hall to fix a loudspeaker, and nobody has let him forget it. His marks are fine but his projects sit half done in a shared drawer. His father runs a hardware shop in Karol Bagh and wants him to take it over someday. Arjun has not yet found the courage to say he wants to build things nobody has asked for.
+  s_meera:
+    name: Meera Banerjee
+    job: Translator
+    bio: Kolkata translator between Bengali, Hindi and English, who feels every word she carries over.
+    story: Meera translates novels and the occasional legal letter from her flat near College Street, with a pot of tea going cold beside the dictionary. She once spent a week on a single line of a poem because no English word held its smell of rain on tin roofs. Loud rooms tire her and a harsh email can ruin her afternoon. Her father taught her to read in three alphabets before she was ten. She wishes more people could hear the old Bengali songs the way they sounded in his voice.
+  s_vikram:
+    name: Vikram Singh Sandhu
+    job: Electrician
+    bio: Punjab electrician with golden hands, a golden tongue and a flexible idea of the bill.
+    story: Vikram has wired half the farmhouses between Ludhiana and Jalandhar and can find a loose connection by the sound of a humming wall. He charges the rich a little extra and the poor a little less, and keeps the difference as his own sense of justice, though his wife calls it something else. He once rewired a gurdwara kitchen overnight for free and told the story for ten years. His shoulder aches in the cold now. He dreams of a workshop with his name painted on the front.
+  s_xiaoming:
+    name: Wang Xiaoming
+    job: Courier
+    bio: Shenzhen courier who knows every back alley and wants to know what is behind every door.
+    story: Xiaoming came to Shenzhen from a small town in Henan at nineteen and has delivered parcels on an electric scooter for nine years. He knows which building has a broken lift and which security guard likes cigarettes. Every door he knocks on is a small glimpse of a stranger's life, and he wonders about them on the ride home. He once took a night course in electronics and quit when the rent went up. He is saving to open a repair stall, and he has already chosen the corner.
+  s_guilan:
+    name: Li Guilan
+    job: Villager
+    bio: Sichuan villager who feeds anyone at her door and will not be talked out of anything.
+    story: Guilan has lived all her life in the same hill village in Sichuan, raising pigs, peppers and three children, two of whom now work in far cities. She never went past third grade but keeps every letter they send in a biscuit tin. Any stranger passing the gate gets a bowl of noodles whether they want one or not. When the young ones tell her to move to the city, she says her pepper plants would miss her. Her knees are bad and the path to the well is steep, yet she still walks it every morning.
+  s_budi:
+    name: Budi Hasanuddin
+    job: Ferry pilot
+    bio: Ferry pilot out of Makassar, calm in rough water and always ready to take one more passenger.
+    story: Budi grew up in a Bugis fishing family on the coast near Makassar and was steering his uncle's boat before he could swim well. Now he pilots a small ferry between the harbour and the islands, carrying schoolchildren, goats and sacks of rice. In a storm last monsoon he turned back for a stranded fisherman and arrived late for his own daughter's birthday. He has never regretted it. He hopes she will study something that keeps her on dry land, and also secretly hopes she will not.
+  s_linh:
+    name: Nguyen Thuy Linh
+    job: Street food seller
+    bio: Hanoi street food seller, quick with a joke and a bowl, soft on anyone who looks hungry.
+    story: Linh sells bun cha from a plastic stool stand in the Old Quarter, using the grill her aunt left her when she moved south. She learned early that a joke sells more noodles than a sign, and her regulars come as much for the teasing as for the broth. She rounds prices in her own favour, then gives free bowls to the students who count their coins. Evenings she studies English from a battered phone, hoping to run a small restaurant with a menu in two languages.
+  s_maria:
+    name: Maria Santos
+    job: Caregiver
+    bio: Fifteen years of nursing homes and night shifts, gentle with the old, bad at saying no.
+    story: Maria grew up in a Manila neighbourhood where every aunt looked after every other aunt's children. At twenty-six she took a job in a small care home, meant to be temporary, and stayed fifteen years. She knows which resident wants the window open and which one only hums when the radio is low. She sends most of her pay to her sister in Cebu, who raises two nephews. She cries easily at funerals of people she barely knew, and has stopped apologising for it. Her quiet wish is a small bakery where the old ladies could sit for free.
+  s_somchai:
+    name: Somchai Boonmee
+    job: Former Monk
+    bio: Twenty years in a temple, now asks questions about everything, slowly and kindly.
+    story: Somchai was born to rice farmers outside Chiang Mai and ordained at twenty-two because the temple had the only library he could walk to. He stayed twenty years, teaching village children to read and mending the temple roof. When his mother fell ill he left the robes to care for her, and found that the outside world had changed its prices, its phones and its manners. He now fixes bicycles and asks customers what they are reading. He is slow on stairs but never slow to listen, and he still wants to see the sea in a country that has snow.
+  s_hiroshi:
+    name: Hiroshi Tanabe
+    job: Retired Engineer
+    bio: Forty years at a machine tool plant, still corrects other people's drawings.
+    story: Hiroshi joined a machine tool factory in Osaka at eighteen and retired at sixty-five as the man other engineers brought their worst problems to. He remembers the years when the whole street smelled of cutting oil and every apprentice wanted a bench of his own. Since his wife passed, the house has been very quiet, and he fills it by rebuilding old radios on the kitchen table. His knees complain and his hands do not. He will not be told a tolerance is good enough, and he still hopes someone young will ask him how a thing is really made.
+  s_yuna:
+    name: Yuna Kobayashi
+    job: Office Worker
+    bio: Ten years in the same Tokyo office, notices everything, speaks up rarely and then does not back down.
+    story: Yuna studied literature, then joined a mid-sized trading company in Tokyo because the interview was the first one that did not end in silence. Ten years later she still takes the same train at seven forty, and she can tell from the way a colleague puts down a cup whether the day will be bad. She rarely objects in meetings, but when she does, she does not give way. Evenings she writes short stories that nobody has read. Last spring she turned down a promotion without quite knowing why, and she is still working out what she wanted instead.
+  s_rafiq:
+    name: Rafiq Hossain
+    job: Garment Worker
+    bio: Sews faster than anyone on his floor, argues with every supervisor, and has never lost a week's pay.
+    story: Rafiq came to Dhaka from a village in Barisal at sixteen and learned the sewing machine in a month. Fourteen years on, he runs a line of thirty people and can fix a jammed needle by ear. He once walked into the owner's office to demand overdue wages for his whole floor, and got them. He did not finish school, and sends money so his younger sister can. He hums film songs over the noise of the machines. Someday he wants a workshop of his own, with a window that opens.
+  s_nasreen:
+    name: Nasreen Qureshi
+    job: Doctor
+    bio: Physician who treats the poor for what they can pay, and argues with the hospital board about it.
+    story: Nasreen was one of six women in her year at a Lahore medical college, and she remembers every one of them. For twenty-five years she has run a small clinic where fees depend on what the patient can carry, sometimes a bag of lentils. The hospital board has asked her to be more businesslike, and she has answered politely and changed nothing. Her own back aches from long standing, and she has quietly stopped climbing stairs. Her daughter wants her to retire, but she still wants to teach one more class of young doctors.
+  s_reza:
+    name: Reza Moradi
+    job: Bookseller
+    bio: Sells poetry in an Isfahan bazaar, can talk anyone into a book and sometimes into a bargain too.
+    story: Reza inherited his uncle's bookshop under the arches of an Isfahan bazaar, along with eleven thousand unsorted volumes and a talent for conversation. He can quote Hafez to a tourist and a bus timetable to a taxi driver, and he can always find the book you did not know you needed. He is not above rounding a price up when a customer looks rich. Money slips through his hands, and he lends books he never gets back. What he wants most is to find the one lost manuscript his uncle swore was somewhere on the shelves.
+  s_leyla:
+    name: Leyla Yildiz
+    job: Architecture Intern
+    bio: Draws buildings on the back of tram tickets, says yes to everything first and worries afterwards.
+    story: Leyla grew up in a flat above a tea garden in Istanbul, drawing the ferries and the minarets from the balcony. She finished architecture school last summer and now interns at a firm that restores old wooden houses along the Bosphorus. She climbs scaffolds without a second thought and says yes to every site visit, then lies awake wondering whether she is good enough. Her mentor says her sketches are brave and her deadlines are not. She wants to design one small library for a neighbourhood that has none.
+  s_aigerim:
+    name: Aigerim Sultanova
+    job: Geologist
+    bio: Spends months in the steppe with a hammer and a notebook, comes back to Almaty restless.
+    story: Aigerim's grandfather herded sheep on the steppe, and she grew up believing the ground itself was a kind of storyteller. She studied geology in Almaty and has spent half of every year since in the field, camping in dust and wind with a hammer and a notebook. She once drove two hundred kilometres on a flat tyre to reach a core sample before the rain. Cities make her restless, and she is clumsy with small things like jars and zips. She dreams of a map of the old riverbeds nobody has drawn.
+  s_chidi:
+    name: Chidi Okafor
+    job: Civil Engineer
+    bio: Builds bridges around Lagos traffic, knows every official by first name, cuts a corner when nobody is looking.
+    story: Chidi grew up in Surulere, where the road outside his school flooded every July, and he decided early that someone should fix it. He trained as a civil engineer and now works on bridges and drains across Lagos, charming inspectors and suppliers alike. He knows which official to greet and which to avoid. Sometimes he trims a specification to save a week, and tells himself the structure will hold. His mother keeps asking when he will marry, and he keeps saying after the next bridge opens.
+  s_abebe:
+    name: Abebe Tadesse
+    job: Coffee Farmer
+    bio: Grows coffee on a steep hillside near Yirgacheffe and will not sell a bean he is ashamed of.
+    story: Abebe took over his father's hillside plot at twenty two, when some of the coffee trees were already older than he was. In a good year he and his neighbours shared the cost of a pulping machine, and whoever's cherries ripened first used it first. When middlemen pushed prices down and everyone was tempted to mix in the poor beans, he alone kept to the grading rules. People laughed at him for years, but a few buyers began to come back to him every season. His daughter studies agriculture in Addis Ababa and argues with him about pruning each time she visits. He never gives way aloud, yet at night he reads her notes and wonders about trying her way on one slope.
+  s_aisha:
+    name: Aisha Benali
+    job: Tour Guide
+    bio: Walks visitors through the Marrakesh medina and can talk her way into any price, or out of any corner.
+    story: Aisha learned the alleys of the medina as a child, running errands for her uncle's lamp shop, and by sixteen she could tell where a stranger came from just by how they held their map. She picked up French, English and a little Spanish from the people she guided, and she is never short of a story, though she admits the stories get better every season. She does not always tell the whole truth about prices, and she knows it. What she really wants is to read the old manuscripts kept in a library near the Ben Youssef school, which she has only ever seen from outside. She has been saving for lessons in classical Arabic, one tip at a time.
+  s_thabo:
+    name: Thabo Mokoena
+    job: Union Organizer
+    bio: Stands up in front of the factory gate in Johannesburg and says what everyone else is thinking.
+    story: Thabo grew up in Soweto, the son of a bus driver who came home every night too tired to speak. He started on a factory floor at nineteen and was elected shop steward at twenty six, mostly because he was the one who would walk into the manager's office when no one else would. Since then he has sat through hundreds of meetings and lost a few jobs for it. He is not good with paperwork, and his wife keeps his files in order. These days he spends his evenings teaching younger workers to read a contract line by line, because he thinks nobody should sign what they cannot read.
+  s_ngozi:
+    name: Ngozi Mbuyi
+    job: Market Trader
+    bio: Has sold cloth and soap at the same Kinshasa market stall for thirty years and never lost an argument over a price.
+    story: Ngozi took over her aunt's stall at the edge of a Kinshasa market when she was twenty six, selling printed cloth and bars of soap. She raised four children on what she earned and has never told any of them how much it was. She knows every supplier by name, who pays late, and whose scales are a little too kind to the seller, and she has used that knowledge more than once to her own advantage. Her knees are bad now and the morning walk to the stall takes longer. She will not hand the stall to anyone until her youngest finishes university, and she says that day is close.
+  s_carlos:
+    name: Carlos Ramirez
+    job: Baker
+    bio: Gets up at three every morning in Oaxaca to bake bread, and always has a joke ready for the first customer.
+    story: Carlos has baked bread in the same wood fired oven in Oaxaca since he was fifteen, learning the work from a neighbour who never wrote down a single measurement. He is known on his street for two things, the first loaves out at dawn and a joke for whoever walks in first. If a child comes in without enough coins, he somehow always has one extra roll that needs eating. His back aches now, and the oven is getting old. He keeps meaning to write the recipes down for his niece, who wants to take over, but he talks so much while he works that the pages stay blank.
+  s_camila:
+    name: Camila Restrepo
+    job: Biologist
+    bio: Counts frogs and orchids in the cloud forests above Medellin, and forgets to eat while doing it.
+    story: Camila grew up in a flat in Medellin where the mountains were a view, not a place to go. A school trip to a cloud forest at fourteen changed that, and she has spent her adult life studying the frogs and orchids that live there. She can name a species from a single call in the dark, but she often forgets lunch and sometimes the date. Funding for her project runs out every year and every year she writes the grant again, a little less sure of herself. What keeps her going is a village schoolteacher who now brings her pupils along to count frogs, and who sends her their drawings.
+  s_quispe:
+    name: Mariano Quispe
+    job: Shepherd
+    bio: Has herded alpacas on the high ground near Cusco for fifty years and still talks to each one by name.
+    story: Mariano has walked the same high pastures near Cusco since he was twelve, first behind his father and then alone. He knows the weather by the colour of the peaks and every alpaca by its voice, and he talks to them as he would to cousins. When his sons moved to the city for work, he did not argue, but he did not move either. The cold gets into his chest more each winter now. He says little to visitors, yet a wrong word about his animals will hurt him for days. His one wish is for a grandchild to climb the slope with him once, just to hear the wind up there.
+  s_jamal:
+    name: Jamal Whitfield
+    job: Paramedic
+    bio: Drives an ambulance through the night shift in Atlanta and holds the hand of whoever is in the back.
+    story: Jamal grew up in southwest Atlanta, where the ambulance was often late and his grandmother once waited forty minutes for one. He took that personally. He trained as an emergency medical technician at twenty two and became a paramedic at twenty nine, and he still takes the night shift because that is when people need help most. He is quick to run toward trouble, and his partner often has to remind him to wait until the scene is safe. After a hard call he sits in the car for a few minutes before he drives on. At home he is learning to cook, slowly, one dish a week for his daughter.
+  s_emily:
+    name: Emily Tagoona
+    job: Bush Pilot
+    bio: Flies a small plane between northern Canadian settlements and has turned back for weather exactly twice in thirty years.
+    story: Emily grew up in an Inuit family in a small northern town where the only way out in winter was by air. She watched the mail plane land on the ice every week and decided at nine that she would fly it. It took her years to get the licence, and a few people told her it was not a job for a woman from the settlement. She flew medicine, mail and once a whole hockey team over the same frozen lakes. She still checks the sky by eye before she looks at a forecast. Now she is training a young pilot from her own community, and arguing with her about everything.
+  s_tui:
+    name: Tui Fuimaono
+    job: Navigator
+    bio: Learning to cross the open Pacific by stars and swells, and impatient to go farther than anyone in his family has.
+    story: Tui grew up in Apia, where his grandfather told stories of sailing between islands with no instruments, only stars, swells and the flight of birds. At eighteen he joined a canoe crew that was reviving the old routes, and he fell in love with the work at once. He is not yet patient enough to wait for a calm sea, and the older navigators tease him for it. He studies the star paths at night and tests himself on the water by day. His wish is simple. One day he wants to bring a canoe into a harbour far away, guided only by what his grandfather taught him.
 traits:
   kind: Kind
   stubborn: Stubborn
@@ -2807,7 +2994,6 @@ eras:
     event_titles:
       door_block: Turned away at the door
       time_strain: Time slip
-      pocket: Light fingers
     plots:
       microscope:
         name: Give Snow a microscope
@@ -2848,7 +3034,6 @@ eras:
       door_block_appeal: A neighbour blocks the door, saying it is miasma. {staff} does not force the way, turns and goes to Snow to ask him to speak up.
       door_block_yield: A neighbour blocks the door, saying it is miasma. {staff} steps back without a quarrel, and half a day is wasted.
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
-      pocket: '{date}: {staff} sees a small object left unattended and slips it into a pocket. A neighbour saw it and looks at them differently now.'
     star_points:
       convince: Convince Snow
       trust: Win the trust of the street
@@ -2922,7 +3107,6 @@ eras:
     event_titles:
       door_block: Turned back by seniors
       time_strain: Time slip
-      pocket: Light fingers
     plots:
       forceps:
         name: Hand Semmelweis the design of obstetric forceps
@@ -2996,7 +3180,6 @@ eras:
       door_block_appeal: A senior doctor keeps {staff} out of the ward. {staff} does not force the way, turns and goes to Semmelweis to ask him to speak up.
       door_block_yield: A senior doctor keeps {staff} out of the ward. {staff} steps back without a quarrel, and half a day is wasted.
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
-      pocket: '{date}: {staff} sees a small object left unattended in the ward and slips it into a pocket. A student saw it and looks at them differently now.'
     star_points:
       convince: Convince Semmelweis
       protect: Get the washing started

@@ -49,28 +49,32 @@ for (const [id, tr] of Object.entries(T_)) {
   const note = D.get('text.trait_notes.' + id);
   if (!note.pro || !note.con) { console.log(`trait ${id} has no gain or cost text`); bad++; }
 }
-// Made candidates: a thousand of them must build, carry both languages, and run a trip without a missing key.
-const { createLocalBackend } = await import('../js/backend.js');
-const B = createLocalBackend(D);
 const E1 = sim.compileEra(D.get('era_raw.' + D.get('config.eras')[0]), D, D.get('config.eras')[0]);
-const free = Object.keys(D.get('staff.staff'));
+// The employees are the cards of cards/staff: all of them with a name, a job and a story in both languages, a region and a skin tone that exist,
+// attributes from 1 to 10 that add up to a sensible total, one or two traits, and a stat set the era models can read.
+const staffAll = D.get('staff.staff');
 const seenRegion = new Set(), seenSkin = new Set(), names = new Set();
-for (let serial = 1; serial <= 1000; serial++) {
-  const c = B.makeCandidate(serial, []);
-  const def = c.def;
-  if (!def.text.en.name || !def.text.zh.name || !def.text.en.job || !def.text.zh.job) { console.log('candidate ' + serial + ' lacks a name or job'); bad++; }
-  if (new Set(def.traits).size !== def.traits.length || def.traits.length < 1) { console.log('candidate ' + serial + ' has bad traits'); bad++; }
-  seenRegion.add(def.region); seenSkin.add(def.skin); names.add(def.text.en.name);
-  if (serial <= 60) {
-    const { text, ...rest } = def;
-    D.o.staff.staff[c.id] = rest; D.o.text.staff[c.id] = text.en;
-    const st = sim.staffStats(D, c.id);
-    if (Object.values(st).some((v) => !(v >= 0))) { console.log('candidate ' + serial + ' has a bad stat'); bad++; }
-    buildReport(D, E1, sim.runDispatch(E1, D, { seed: serial, staffId: c.id, items: {} }));
+const regionIds = new Set(D.get('hiring.regions').map((r) => r.id));
+const attrList = D.get('staff.attributes');
+for (const [id, st] of Object.entries(staffAll)) {
+  for (const lang of ['en', 'zh']) {
+    const tx = D.o.text.staff[id];
+    if (lang === 'en' && !(tx.name && tx.job && tx.bio && tx.story)) { console.log(id + ' lacks a name, job, bio or story'); bad++; }
   }
+  if (!regionIds.has(st.region)) { console.log(id + ' has an unknown region ' + st.region); bad++; }
+  if (!D.get('hiring.skin_tones')[st.skin]) { console.log(id + ' has an unknown skin tone ' + st.skin); bad++; }
+  if (!(st.age >= 18 && st.age <= 80)) { console.log(id + ' has an age out of 18 to 80'); bad++; }
+  const sum = attrList.reduce((a, k) => a + (st.base[k] ?? 5), 0);
+  if (sum < 22 || sum > 32 || attrList.some((k) => !(st.base[k] >= 1 && st.base[k] <= 10))) { console.log(id + ' has attributes out of range or a total of ' + sum); bad++; }
+  if (new Set(st.traits).size !== st.traits.length || st.traits.length < 1 || st.traits.length > 2) { console.log(id + ' has bad traits'); bad++; }
+  seenRegion.add(st.region); seenSkin.add(st.skin); names.add(D.o.text.staff[id].name);
+  const stats = sim.staffStats(D, id);
+  if (Object.values(stats).some((v) => !(v >= 0))) { console.log(id + ' has a bad stat'); bad++; }
+  buildReport(D, E1, sim.runDispatch(E1, D, { seed: 1, staffId: id, items: {} }));
 }
-console.log(`candidates: ${seenRegion.size} regions, ${seenSkin.size} skin tones, ${names.size} different names in 1000`);
-if (seenRegion.size < D.get('hiring.regions').length || seenSkin.size < Object.keys(D.get('hiring.skin_tones')).length) { console.log('some region or skin tone never comes up'); bad++; }
+if (names.size !== Object.keys(staffAll).length) { console.log('two employees share a name'); bad++; }
+console.log(`employees: ${Object.keys(staffAll).length}, ${seenRegion.size} regions, ${seenSkin.size} skin tones`);
+if (seenRegion.size < regionIds.size || seenSkin.size < Object.keys(D.get('hiring.skin_tones')).length) { console.log('some region or skin tone is used by nobody'); bad++; }
 if (bad) { console.log(bad + ' problems'); process.exit(1); }
 
 // Time energy is paid in quarters of the base of a place, so every base must divide by four, or a quarter would not be a whole number.

@@ -19,6 +19,7 @@ export function createUI(D, ctx) {
   const O = D.get('config.office');
   const view = document.getElementById('view');
   const tabsEl = document.getElementById('tabs');
+  const toolsEl = document.getElementById('tools');
   const I = D.get('config.i18n');
   const UI_KEY = 'teleporter_ui_state';
   let savedLang = null;
@@ -45,13 +46,13 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, modal: null, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '', sub: 'staff' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', sub: null, modal: null, pager: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
   // Render records the entry, so any way of changing page is covered without each place having to remember it.
   const nav = { list: [], pos: -1, sid: String(Date.now()) };
-  const navSnap = () => ({ tab: st.tab, sub: st.sub, back: st.back });
+  const navSnap = () => ({ tab: st.tab, sub: st.sub, back: st.back, modal: st.modal });
   const navSame = (a, b) => a.tab === b.tab && a.sub === b.sub;
   function navCommit() {
     const s = navSnap();
@@ -65,6 +66,11 @@ export function createUI(D, ctx) {
     nav.list.push(s);
     nav.pos += 1;
     try { history.pushState({ n: nav.pos, sid: nav.sid }, ''); } catch (e) { /* history may be blocked */ }
+  }
+  // Going to another page from a pop-up records the pop-up on the page that is left, so Back returns to it.
+  function leave() {
+    if (nav.pos >= 0) nav.list[nav.pos] = navSnap();
+    st.modal = null;
   }
   function navStep(delta) {
     if (nav.pos + delta < 0 || nav.pos + delta >= nav.list.length) return;
@@ -88,7 +94,7 @@ export function createUI(D, ctx) {
     if ('antique' in rule) return owns(rule.antique);
     if ('anchored' in rule) return anchored(rule.anchored);
     if ('trait' in rule) return hiredIds().some((id) => staffTraits(D, id).includes(rule.trait));
-    if ('staff' in rule) return hiredIds().includes(rule.staff);
+    if ('staff' in rule) return hiredIds().includes(rule.staff) || (ctx.S().hire && ctx.S().hire.slots.some((x) => x.id === rule.staff)) || ctx.S().trips.some((x) => x.staffId === rule.staff);
     if ('item' in rule) return D.get('items.' + rule.item + '.playable') || (ctx.S().inv[rule.item] || 0) > 0;
     throw new Error('未知解锁条件');
   }
@@ -129,7 +135,12 @@ export function createUI(D, ctx) {
     const mini = statsLine(stats);
     return [staffProfile(D, id), T.staff[id].bio, staffTraits(D, id).map((t) => T.traits[t]).join(SEP), mini].join('\n');
   }
-  const staffLink = (id) => (D.get('staff.staff.' + id).generated && !(id in ctx.S().generated) ? `<span class="wl"${tip(staffTip(id))}>${esc(staffName(D, id))}</span>` : wl('staff:' + id, staffName(D, id), staffTip(id)));
+  const staffLink = (id) => wl('staff:' + id, staffName(D, id), staffTip(id));
+  // a three star trip that earned a point of an attribute says so in the accounts
+  const grownRow = (paid) => (paid && paid.grown ? `<tr><td>${U.report.grown}</td><td class="num">${esc(T.stats[paid.grown])} +1</td></tr>` : '');
+  // The stars an employee has brought in, as three counts: three stars, two stars, one star. It never grows into a list.
+  const tallyOf = (id) => ctx.S().staff[id].tally || { 3: 0, 2: 0, 1: 0 };
+  const tallyHtml = (id) => { const tl = tallyOf(id); return `<span class="tally"><b class="s3">${tl[3]}</b>/<b class="s2">${tl[2]}</b>/<b class="s1">${tl[1]}</b></span>`; };
   const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
   // stars: filled and empty marks coloured by the count, bronze, silver and gold
   const STAR_MAX = D.get('config.stars.max');
@@ -181,7 +192,7 @@ export function createUI(D, ctx) {
       view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
       const key = st.sub ? 'sub:' + st.sub : st.tab;
       sessionStorage.setItem(UI_KEY, JSON.stringify({
-        tab: st.tab, sub: st.sub, back: st.back, vs: st.vs, opened: [...st.opened], shop: st.shop, cart: st.cart, sort: st.sort,
+        tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], shop: st.shop, cart: st.cart, sort: st.sort,
         wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
       }));
     } catch (e) { /* storage blocked, the switch just starts fresh */ }
@@ -193,6 +204,8 @@ export function createUI(D, ctx) {
     try {
       const o = JSON.parse(raw);
       if (o.tab in U.tabs) st.tab = o.tab;
+      if (o.pager) st.pager = o.pager;
+      if (o.modal && ['settings', 'about'].includes(o.modal.kind)) st.modal = o.modal;
       if (o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) { st.sub = o.sub; st.back = o.back in U.tabs ? o.back : 'home'; st.vs = !!o.vs; }
       st.opened = new Set(o.opened || []);
       Object.assign(st.shop, o.shop);
@@ -255,11 +268,14 @@ export function createUI(D, ctx) {
     const al = office.alerts();
     const icons = D.get('config.ui.tab_icons');
     const arrows = `<span class="navbtns"><button data-nav="-1" title="${esc(U.nav.back)}" aria-label="${esc(U.nav.back)}" ${nav.pos > 0 ? '' : 'disabled'}>◀</button><button data-nav="1" title="${esc(U.nav.forward)}" aria-label="${esc(U.nav.forward)}" ${nav.pos < nav.list.length - 1 ? '' : 'disabled'}>▶</button></span>`;
+    const tools = D.get('config.ui.tool_icons');
+    setHtml(toolsEl, Object.entries(U.tools).map(([k, label]) => `<button class="tool ${st.modal && st.modal.kind === k ? 'on' : ''}" data-act="modalopen" data-id="${k}" title="${esc(label)}" aria-label="${esc(label)}">${tools[k]}</button>`).join(''));
     setHtml(tabsEl, arrows + Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k && !st.sub ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
   }
 
   // ---------- agency: employees and hiring ----------
-  const favorCell = (id) => { const v = ctx.S().staff[id].favor; return `<span class="favor"${tip(U.office.favor_tip)}>♥ ${Math.round(v * 100)}<span class="fbar"><i style="width:${v * 100}%"></i></span></span>`; };
+  const moodMult = (v) => 1 + D.get('config.favor.buff') * (2 * v - 1);
+  const favorCell = (id) => { const v = ctx.S().staff[id].favor; return `<span class="favor"${tip(U.office.favor_tip + ' ' + U.office.mood_mult.replace('{m}', moodMult(v).toFixed(2)))}>♥ ${Math.round(v * 100)}<span class="fbar"><i style="width:${v * 100}%"></i></span></span>`; };
   const stateLabel = () => ({ ready: U.office.ready, away: U.office.away, resting: U.office.resting, secretary: U.office.secretary_state });
   // the state of an employee, with the days left while they are away or resting, so it is plain why they cannot be picked
   function stateText(id) {
@@ -273,8 +289,8 @@ export function createUI(D, ctx) {
   function staffBoxHtml() {
     const S = ctx.S();
     const rows = hiredIds().map((id) => {
-      const mine = reports().filter((d) => d.spec.staffId === id);
-      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, last: mine[0], count: S.trips.filter((x) => x.staffId === id).length };
+      const tl = tallyOf(id);
+      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: tl[3] * 3 + tl[2] * 2 + tl[1] };
     });
     const pk = office.perks();
     const perkText = Object.entries(pk).filter(([, v]) => v !== 0).map(([k, v]) => `${U.office.perks[k]} ${k === 'rest_cut' ? '−' : (v > 0 ? '+' : '')}${Math.round(Math.abs(v) * 100)}%`).join(' · ');
@@ -284,14 +300,14 @@ export function createUI(D, ctx) {
     const n = hiredIds().length;
     const wage = `<div class="muted">${U.office.wage}${COLON}${ri(office.wageOf(n))} ${D.get('config.ui.currency_icons.funds')}${S.funds < office.wageOf(n) ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}</div>`;
     return sec + wage + listbox.html({
-      id: 'home_staff', rows, maxH: D.get('config.ui.box_h.home_staff'),
+      id: 'home_staff', rows,
       cols: [
-        { k: 'name', label: U.office.col_staff, w: '15%', val: (r) => r.name, cell: (r) => staffLink(r.id) },
-        { k: 'traits', label: U.office.col_traits, w: '32%', cell: (r) => staffTraits(D, r.id).map(traitChip).join('') },
+        { k: 'name', label: U.office.col_staff, w: '14%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${staffLink(r.id)}</span>` },
+        { k: 'traits', label: U.office.col_traits, w: '22%', cell: (r) => `<span class="nowrap">${staffTraits(D, r.id).map(traitChip).join('')}</span>` },
         { k: 'state', label: U.office.col_state, w: '9%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel()[r.state]}</span>` },
-        { k: 'favor', label: U.office.col_favor, w: '10%', val: (r) => r.favor, cell: (r) => favorCell(r.id) },
-        { k: 'count', label: U.office.col_history, w: '12%', val: (r) => r.count, cell: (r) => (r.last ? `${r.count} · <button class="ghost" data-act="open" data-id="${r.last.id}">${U.report.view}</button>` : `<span class="muted">${U.office.no_history}</span>`) },
-        { k: 'act', label: '', w: '22%', cls: 'num', cell: (r) => `<button data-act="gift" data-id="${r.id}" ${S.funds < D.get('config.favor.gift_cost') ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button>` },
+        { k: 'favor', label: U.office.col_favor, w: '13%', val: (r) => r.favor, cell: (r) => favorCell(r.id) },
+        { k: 'score', label: U.office.col_history, w: '11%', val: (r) => r.score, cell: (r) => `<a class="tallylink" data-act="staffopen" data-id="${r.id}"${tip(U.office.tally_tip)}>${tallyHtml(r.id)}</a>` },
+        { k: 'act', label: '', w: '31%', cls: 'num', cell: (r) => `<span class="nowrap"><button data-act="gift" data-id="${r.id}" ${S.funds < office.giftCost() ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift} ${office.giftCost()}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button></span>` },
       ],
     });
   }
@@ -313,7 +329,7 @@ export function createUI(D, ctx) {
     const n = hiredIds().length;
     const icon = D.get('config.ui.currency_icons.funds');
     const box = listbox.html({
-      id: 'hire', rows: S.hire.slots.map(candidateRow), maxH: D.get('config.ui.box_h.hire'), empty: U.office.hire_none,
+      id: 'hire', rows: S.hire.slots.map(candidateRow), empty: U.office.hire_none,
       cols: [
         { k: 'name', label: U.office.col_staff, w: '15%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${r.swatch}<b>${staffLink(r.id)}</b></span>` },
         { k: 'profile', label: U.office.col_profile, w: '22%', cell: (r) => `<div class="oneline"${tip(r.profile)}>${esc(r.profile)}</div>` },
@@ -342,7 +358,10 @@ export function createUI(D, ctx) {
   function pendingHtml() {
     const S = ctx.S();
     const today = S.clock.day;
-    const rows = S.dispatches.filter((d) => !d.claimed).map((d) => {
+    const out = S.dispatches.filter((d) => !d.claimed).sort((a, b) => a.readyDay - b.readyDay);
+    if (!out.length) return '';
+    const pg = listbox.paginate('pending', out);
+    const rows = pg.shown.map((d) => {
       const left = Math.max(0, d.readyDay - today);
       const ready = left === 0;
       const recallBtn = !ready && !d.recallRefused ? `<button data-act="recall" data-id="${d.id}"${tip(U.office.recall_tip)}>${U.office.recall}</button>` : '';
@@ -352,20 +371,24 @@ export function createUI(D, ctx) {
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `${recallBtn} ${DEV ? `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>` : ''}`;
       return `<tr class="outrow"><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">${acts}</td></tr>`;
     });
-    if (!rows.length) return '';
-    return `<div class="sec" id="home-pending">${U.office.on_road}</div>
-      <table class="logtable pending"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.office.col_status}</th><th></th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+    return `<div class="sec" id="home-pending">${U.office.on_road} (${out.length})</div>
+      ${pg.html}<table class="logtable pending"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.office.col_status}</th><th></th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
   }
 
-  // The log of finished trips, read from the summaries that are kept for good.
+  // The log of finished trips, read from the summaries that are kept for good, a page at a time. Archived trips are hidden until asked for.
   function officeHtml() {
-    const keptIds = new Set(ctx.S().dispatches.filter((d) => d.claimed).map((d) => d.id));
-    const trips = ctx.S().trips.slice().reverse().slice(0, D.get('config.ui.log_rows'));
-    const done = trips.map((t) => `<tr><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : ''}</td></tr>`);
+    const S = ctx.S();
+    const keptIds = new Set(S.dispatches.filter((d) => d.claimed).map((d) => d.id));
+    const all = S.trips.slice().reverse().filter((x) => st.showArchived || !x.archived);
+    const nArch = S.trips.filter((x) => x.archived).length;
+    const pg = listbox.paginate('log', all);
+    const trips = pg.shown;
+    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
     const rows = done.join('');
+    const bar = S.trips.length ? `<div class="logbar"><span class="logtools"><button class="ghost" data-act="archiverule" data-id="failed"${tip(U.office.archive_tip)}>${U.office.archive_failed}</button><button class="ghost" data-act="archiverule" data-id="notbest"${tip(U.office.archive_tip)}>${U.office.archive_notbest}</button><label class="check"><input type="checkbox" id="log-archived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${nArch})</label></span>${pg.html}</div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
-      ${rows ? `<div class="lscroll" data-keep="log" style="max-height:${D.get('config.ui.box_h.log')}px"><table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p class="muted">${U.report.none}</p>`}`;
+      ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
@@ -377,7 +400,7 @@ export function createUI(D, ctx) {
       ? `<ul class="trips">${trips.map((t) => {
         const oc = t.recalled ? U.report.recalled : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
-        return `<li><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars)}${t.redeemed ? ' <span class="chip" ' + tip(U.stars.redeem) + '>♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
+        return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars)}${t.redeemed ? ' <span class="chip" ' + tip(U.stars.redeem) + '>♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
       }).join('')}</ul>`
       : `<p class="muted">${U.archive.trips_none}</p>`;
     return `<div class="sec">${U.archive.trips} (${trips.length})</div>${body}`;
@@ -462,7 +485,7 @@ export function createUI(D, ctx) {
     // only what can be taken is listed: what is in stock, and anything already chosen
     const carryRows = story ? Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
     const carryBox = listbox.html({
-      id: 'carry', maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
+      id: 'carry', scroll: true, maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
       foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${O.weight_capacity}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
       cols: [
@@ -520,6 +543,7 @@ export function createUI(D, ctx) {
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
         <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(P.funds)}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
+        ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>
@@ -537,6 +561,7 @@ export function createUI(D, ctx) {
       <table><tbody>
         <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(P.funds)}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
+        ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>`;
@@ -595,6 +620,7 @@ export function createUI(D, ctx) {
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
         <tr><td>${U.report.funds_gain}</td><td class="num">+${ri(cur.paid.funds)}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(cur.paid.energy)}</td></tr>
+        ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
       </tbody></table>
@@ -643,10 +669,35 @@ export function createUI(D, ctx) {
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
       ${pendingHtml()}
-      <div class="sec" id="home-map">${U.dispatch.era}</div><p class="muted">${U.dispatch.pick_map}</p>
+      <div class="sec" id="home-map">${U.dispatch.era}</div>
       ${worldMap.html()}
-      ${worldMap.eventsBox()}
       ${officeHtml()}`;
+  }
+
+  // ---------- the record of one person ----------
+  // Name, background, traits, the attributes of the day with the mood in them, the story, the tally of stars, and the trips of this person a page at a time.
+  function staffModalHtml(id) {
+    const S = ctx.S();
+    const sf = S.staff[id];
+    const eff = ctx.backend.staffStats(id, sf.favor);
+    const attrs = D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(eff[k])}`).join(' · ');
+    const keptIds = new Set(S.dispatches.filter((d) => d.claimed).map((d) => d.id));
+    const rows = S.trips.filter((x) => x.staffId === id).slice().reverse();
+    const list = listbox.html({
+      id: 'staff_trips', rows, empty: U.office.no_trips,
+      cols: [
+        { k: 'no', label: '#', w: '8%', cls: 'num', cell: (r) => `<span class="muted">${r.id.slice(1)}</span>` },
+        { k: 'year', label: U.report.year, w: '16%', cell: (r) => fmtYear(D, yearOfPlace(r.place, r.light)) },
+        { k: 'place', label: U.report.place, w: '36%', cell: (r) => `<span class="nowrap${r.archived ? ' archived' : ''}">${esc(shortOfPlace(r.place, r.light))}</span>` },
+        { k: 'stars', label: U.stars.col, w: '24%', cell: (r) => `${starsHtml(r.stars || 0)}${r.redeemed ? ' <span class="chip">♥</span>' : ''}` },
+        { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (keptIds.has(r.id) && !r.archived ? `<button class="ghost" data-act="open" data-id="${r.id}">${U.report.view}</button>` : '') },
+      ],
+    });
+    return `<h3>${staffLink(id)} <span class="muted">${esc(staffProfile(D, id))}</span></h3>
+      <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
+      <p>${esc(T.staff[id].story || '')}</p>
+      <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span> · ${attrs}</div>
+      <div class="sec">${U.office.staff_trips}</div>${list}`;
   }
 
   // ---------- pop-up ----------
@@ -655,7 +706,11 @@ export function createUI(D, ctx) {
   function modalBody() {
     const m = st.modal;
     if (!m) return '';
-    if (m.kind === 'dispatch') return `<div class="mbox wide"><div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;
+    if (m.kind === 'settings') return `<div class="mbox">${settingsPage.html()}</div>`;
+    if (m.kind === 'about') return `<div class="mbox">${aboutHtml()}</div>`;
+    if (m.kind === 'staff') return `<div class="mbox wide">${staffModalHtml(m.id)}</div>`;
+    if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
+    if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;
     const d = share.dispatch(m.id);
     return d ? `<div class="mbox">${share.html(d)}</div>` : '';
   }
@@ -679,6 +734,7 @@ export function createUI(D, ctx) {
     onClick(ev);
   });
   modalEl.addEventListener('change', (ev) => onChange(ev));
+  modalEl.addEventListener('input', (ev) => onInput(ev));
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && st.modal) { st.modal = null; render(); } });
 
   // ---------- render ----------
@@ -686,7 +742,7 @@ export function createUI(D, ctx) {
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
-    const html = st.sub ? reportHtml() : { home: homeHtml, shop: () => shop.html({ staff: staffBoxHtml(), hire: hireHtml() }), enc: wiki.html, settings: settingsPage.html, about: aboutHtml }[st.tab]();
+    const html = st.sub ? reportHtml() : { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop'), enc: wiki.html }[st.tab]();
     const key = st.sub ? 'sub:' + st.sub : st.tab;
     if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(); return; }
     viewHtml = html;
@@ -768,20 +824,27 @@ export function createUI(D, ctx) {
     else if (act === 'gift') { office.gift(id); render(); }
     else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
     else if (act === 'recall') { const r = office.recall(id); if (r.ok) { st.back = st.tab; st.sub = id; st.vs = false; st.modal = null; } renderClock(); render(); }
-    else if (act === 'open') { st.back = st.tab; st.sub = id; st.vs = false; st.modal = null; render(); }
+    else if (act === 'open') { st.back = st.tab; leave(); st.sub = id; st.vs = false; render(); }
     else if (act === 'fire') { office.dismiss(id); render(); }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
-    else if (act === 'wiki') { st.modal = null; wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
+    else if (act === 'wiki') { leave(); wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
     else if (act === 'wikiback') { wiki.move(-1); wiki.refresh(); }
     else if (act === 'wikifwd') { wiki.move(1); wiki.refresh(); }
     else if (act === 'lsort') { listbox.sort(id); render(); }
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id;  } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['shoptag', 'shopsub', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
+    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
     else if (act === 'modalclose') { st.modal = null; render(); }
+    else if (act === 'modalopen') { st.modal = { kind: id }; render(); }
+    else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; st.modal = { kind: 'staff', id }; render(); }
+    else if (act === 'archive') { office.archive([id]); render(); }
+    else if (act === 'restore') { office.restore([id]); render(); }
+    else if (act === 'archiverule') { office.archive(office.archiveRule(id)); render(); }
+    else if (act === 'modalplace') { st.modal = { kind: 'place', place: id }; render(); }
+    else if (act === 'pgpage') { const [pid, dir] = id.split(':'); listbox.turn(pid, dir === 'next' ? 1 : -1); render(); }
     else if (act === 'sharesave') share.save();
     else if (act === 'sharecopy') share.copy(share.dispatch(st.modal.id));
     else if (act === 'sharenative') share.send(share.dispatch(st.modal.id));
@@ -805,13 +868,13 @@ export function createUI(D, ctx) {
     } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
   }
   view.addEventListener('click', onClick);
+  toolsEl.addEventListener('click', onClick);
   view.addEventListener('toggle', (ev) => {
     const t = ev.target;
     if (!t.matches) return;
     if (t.matches('details.wcat')) st.wiki.openCats[t.dataset.cat] = t.open;
     else if (t.matches('#wiki-tags details.tagfold')) st.wiki.tagOpen = t.open;
     else if (t.matches('#map-tags details.tagfold')) st.map.tagOpen = t.open;
-    else if (t.matches('details.mapfilter')) st.map.filterOpen = t.open;
   }, true);
   const tipEl = document.createElement('div');
   tipEl.id = 'tip';
@@ -830,16 +893,19 @@ export function createUI(D, ctx) {
     tipEl.style.left = Math.max(edge, Math.min(window.innerWidth - w - edge, ev.clientX + pad)) + 'px';
     tipEl.style.top = Math.max(edge, Math.min(window.innerHeight - h - edge, ev.clientY + pad)) + 'px';
   });
-  view.addEventListener('input', (ev) => {
+  function onInput(ev) {
     const t = ev.target;
     if (settingsPage.onInput(ev)) return;
     if (t.id === 'wiki-q') wiki.onInput(t.value);
     else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
     else if (shop.onInput(t)) render();
-  });
+  }
+  view.addEventListener('input', onInput);
   function onChange(ev) {
     const t = ev.target;
     if (t.id === 'lang') { changeLang(t.value); return; }
+    if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }
+    if (t.dataset.pgsize) { listbox.setSize(t.dataset.pgsize, Number(t.value)); render(); return; }
     if (settingsPage.onInput(ev)) return;
     if (t.id === 'map-star') { worldMap.onInput(t); render(); return; }
     if (t.dataset.act === 'saveimport' && t.files && t.files[0]) { settingsPage.importSave(t.files[0]).then((okk) => { if (okk) { st.sub = null; render(); } }); return; }
@@ -852,7 +918,7 @@ export function createUI(D, ctx) {
     if (n === null || !nav.list[n]) return;
     nav.pos = n;
     const s = nav.list[n];
-    st.tab = s.tab; st.sub = s.sub && ctx.S().dispatches.some((d) => d.id === s.sub) ? s.sub : null; st.modal = null; st.back = s.back;
+    st.tab = s.tab; st.sub = s.sub && ctx.S().dispatches.some((d) => d.id === s.sub) ? s.sub : null; st.modal = s.modal || null; st.back = s.back;
     render();
   });
   tabsEl.addEventListener('click', (ev) => {
@@ -895,7 +961,7 @@ export function createUI(D, ctx) {
     const a = ctx.audio;
     if (b.dataset.music === 'prev') a.prev(); else if (b.dataset.music === 'next') a.next(); else a.toggle();
   });
-  ctx.audio.onChange(() => { renderMusic(); if (st.tab === 'settings' && !st.sub && !pressed) render(true); });
+  ctx.audio.onChange(() => { renderMusic(); if (st.modal && st.modal.kind === 'settings' && !pressed) render(true); });
   let started = false;
   document.addEventListener('pointerdown', () => {
     if (started) return;

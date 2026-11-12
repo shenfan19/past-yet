@@ -75,7 +75,7 @@ export function createOffice(X) {
     const s = S();
     if (!s.locks.includes('relic_' + eventId) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
     const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && (s.inv[id] || 0) >= n));
-    const r = ctx.backend.runLight(eventId, staffId, seed, kit);
+    const r = ctx.backend.runLight(eventId, staffId, seed, kit, s.staff[staffId].favor);
     const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques);
     for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
     s.seq += 1;
@@ -113,7 +113,7 @@ export function createOffice(X) {
       id: d.id, place: d.eraId, light: !!d.light, staffId: d.spec.staffId, day: Math.floor(d.startDay), back: Math.floor(d.recalled ? d.recallDay : d.readyDay),
       stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, funds: d.paid?.funds || 0, energy: d.paid?.energy || 0,
       antique: d.paid?.antique || null, recalled: !!d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
-      redeemed: pts.some((p) => p.redeem && p.hit),
+      redeemed: pts.some((p) => p.redeem && p.hit), archived: false,
     };
   }
   function record(d) {
@@ -130,6 +130,30 @@ export function createOffice(X) {
   }
   ensureTrips();
   const tripsOf = (placeId) => S().trips.filter((t) => t.place === placeId).reverse();
+  // Archiving hides a trip from the log and lets go of its stored report, the summary and the tally of stars stay. Nothing is deleted for good.
+  // The rules pick trips the way a person would: the ones that did not succeed, or those that are not the best of their place.
+  const live = () => S().trips.filter((t) => !t.archived);
+  function archiveRule(rule) {
+    const trips = live();
+    if (rule === 'failed') return trips.filter((t) => t.recalled || !t.stars).map((t) => t.id);
+    // the best of a place is the newest of its most starred trips, every other trip of the place can go
+    const keep = new Set();
+    const byPlace = {};
+    for (const t of trips) (byPlace[t.place] ||= []).push(t);
+    for (const list of Object.values(byPlace)) keep.add(list.reduce((b, t) => ((t.stars || 0) >= (b.stars || 0) ? t : b)).id);
+    return trips.filter((t) => !keep.has(t.id)).map((t) => t.id);
+  }
+  function archive(ids) {
+    const set = new Set(ids);
+    for (const t of S().trips) if (set.has(t.id)) t.archived = true;
+    S().dispatches = S().dispatches.filter((d) => !(d.claimed && set.has(d.id)));
+    ctx.save();
+  }
+  function restore(ids) {
+    const set = new Set(ids);
+    for (const t of S().trips) if (set.has(t.id)) t.archived = false;
+    ctx.save();
+  }
   // Full reports are kept per place, the best one (most stars, then the newest) and the latest. Every other report goes, its summary stays.
   function pruneReports() {
     const s = S();
@@ -142,6 +166,24 @@ export function createOffice(X) {
       list.slice().sort(newest).slice(0, O.keep_latest).forEach((x) => keep.add(x.id));
     }
     s.dispatches = s.dispatches.filter((x) => !x.claimed || keep.has(x.id));
+  }
+
+  // What an employee has grown is kept in the save and added to their attributes when the game starts, so the cards stay as written.
+  function applyGrowth() {
+    for (const [id, sf] of Object.entries(S().staff)) for (const [a, n] of Object.entries(sf.growth || {})) D.o.staff.staff[id].base[a] = Math.min(10, (D.o.staff.staff[id].base[a] ?? 5) + n);
+  }
+  applyGrowth();
+  // Every threes_per_point three star trips of an employee give one point to a random attribute that is not at 10 yet. Returns the attribute or null.
+  function grow(id, seq) {
+    const sf = S().staff[id];
+    if (!sf.tally[3] || sf.tally[3] % O.threes_per_point) return null;
+    const base = D.get('staff.staff.' + id).base;
+    const open = D.get('staff.attributes').filter((a) => (base[a] ?? 5) < 10);
+    if (!open.length) return null;
+    const a = ctx.backend.pick(open, seq, 'grow|' + id);
+    D.o.staff.staff[id].base[a] = (base[a] ?? 5) + 1;
+    sf.growth = { ...(sf.growth || {}), [a]: ((sf.growth || {})[a] || 0) + 1 };
+    return a;
   }
 
   function claim(id) {
@@ -160,9 +202,13 @@ export function createOffice(X) {
     d.newBest = d.stars > best;
     const energy = d.newBest ? d.baseEnergy * (ST.energy_share[d.stars] - ST.energy_share[best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
+    const sf0 = s.staff[d.spec.staffId];
     d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), funds: Math.round(d.payout.funds * (1 + p.funds_mult)), restDays: Math.round(d.payout.restDays * (1 - p.rest_cut)) };
     s.energy += d.paid.energy;
     s.funds += d.paid.funds;
+    sf0.tally ||= { 3: 0, 2: 0, 1: 0 };
+    if (d.stars > 0) sf0.tally[d.stars] += 1;
+    d.paid.grown = d.stars === 3 ? grow(d.spec.staffId, S().seq) : null;
     d.paid.antique = d.payout.antique || null;
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
@@ -186,10 +232,13 @@ export function createOffice(X) {
     return d;
   }
 
+  // A reward costs the wages of F.gift_days days of that person, and lifts the mood by F.gift_gain.
+  const giftCost = () => Math.round(F.gift_days * wageOf(1 + hiredIds().length - 1) / Math.max(1, hiredIds().length));
   function gift(id) {
     const s = S();
-    if (s.funds < F.gift_cost || !s.staff[id].hired) return false;
-    s.funds -= F.gift_cost;
+    const cost = giftCost();
+    if (s.funds < cost || !s.staff[id].hired) return false;
+    s.funds -= cost;
     s.staff[id].favor = clamp(s.staff[id].favor + F.gift_gain, F.min, F.max);
     ctx.save();
     return true;
@@ -256,41 +305,22 @@ export function createOffice(X) {
   }
 
   // ---------- hiring pool ----------
-  // Two candidates are on offer. Hiring one brings a new one, and every refresh_days the whole offer is replaced.
+  // The candidates are the employees of the cards, the ones not hired and not already on offer, drawn with a seed. Hiring one brings another,
+  // and every refresh_days the whole offer is replaced.
   const HI = D.get('hiring');
-  function register(id, def) {
-    if (id in D.o.staff.staff) return;
-    const { text, ...rest } = def;
-    D.o.staff.staff[id] = rest;
-    D.o.text.staff[id] = text[D.lang] || text.en;
-  }
-  // Every made employee goes into the wiki when they are made. To keep the save from growing without end only the latest wiki_max
-  // are kept, and anyone on offer or ever hired stays.
-  function trimGenerated() {
-    const s = S();
-    const keep = new Set(s.hire.slots.map((x) => x.id));
-    let extra = Object.keys(s.generated).length - HI.wiki_max;
-    for (const id of Object.keys(s.generated)) {
-      if (extra <= 0) break;
-      if (keep.has(id) || s.staff[id]) continue;
-      delete s.generated[id];
-      extra--;
-    }
-  }
   function addCandidate() {
     const s = S();
     const taken = new Set(s.hire.slots.map((x) => x.id));
-    const free = Object.keys(D.get('staff.staff')).filter((id) => !D.get('staff.staff.' + id).generated && !(s.staff[id] && s.staff[id].hired) && !taken.has(id));
+    const free = Object.keys(D.get('staff.staff')).filter((id) => !(s.staff[id] && s.staff[id].hired) && !taken.has(id));
+    if (!free.length) return false;
     s.hire.serial += 1;
-    const c = ctx.backend.makeCandidate(s.hire.serial, free);
-    if (c.def) { s.generated[c.id] = c.def; register(c.id, c.def); trimGenerated(); }
-    s.hire.slots.push({ id: c.id });
+    s.hire.slots.push({ id: ctx.backend.pick(free, s.hire.serial, 'hire') });
+    return true;
   }
   function ensureHire() {
     const s = S();
-    for (const [id, def] of Object.entries(s.generated)) register(id, def);
     if (!s.hire) s.hire = { slots: [], serial: 0, next: day() + HI.refresh_days };
-    while (s.hire.slots.length < HI.slots) addCandidate();
+    while (s.hire.slots.length < HI.slots && addCandidate());
   }
   function refreshHire() {
     const s = S();
@@ -306,11 +336,7 @@ export function createOffice(X) {
     const slot = s.hire.slots.find((x) => x.id === id);
     if (!slot || s.funds < O.hire_cost) return false;
     s.funds -= O.hire_cost;
-    if (s.generated[id]) {
-      s.staff[id] = { restUntil: 0, hired: true, favor: F.start };
-    } else {
-      s.staff[id].hired = true;
-    }
+    s.staff[id].hired = true;
     s.hire.slots = s.hire.slots.filter((x) => x.id !== id);
     addCandidate();
     ctx.save();
@@ -415,7 +441,8 @@ export function createOffice(X) {
   function planLight(eventId, staffId, seed, canBuy = true) {
     const s = S();
     const ev = D.get('catalog.events').find((x) => x.id === eventId);
-    const none = { kit: {}, buy: [], stars: ctx.backend.runLight(eventId, staffId, seed, {}).stars };
+    const favor = s.staff[staffId].favor;
+    const none = { kit: {}, buy: [], stars: ctx.backend.runLight(eventId, staffId, seed, {}, favor).stars };
     if (!ev.scene) return none;
     const owned = sceneItems.filter((id) => (s.inv[id] || 0) > 0);
     const spend = Math.floor(s.energy * A.item_buy.energy_share);
@@ -428,7 +455,7 @@ export function createOffice(X) {
       const cost = buy.reduce((a, id) => a + D.get('items.' + id).cost, 0);
       if (cost > spend) continue;
       const kit = Object.fromEntries(set.map((id) => [id, 1]));
-      const stars = ctx.backend.runLight(eventId, staffId, seed, kit).stars;
+      const stars = ctx.backend.runLight(eventId, staffId, seed, kit, favor).stars;
       const key = [stars, -cost, -set.length];
       if (!best || key[0] > best.key[0] || (key[0] === best.key[0] && (key[1] > best.key[1] || (key[1] === best.key[1] && key[2] > best.key[2])))) best = { key, kit, buy, stars };
     }
@@ -516,5 +543,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wageOf, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { grow, giftCost, archiveRule, archive, restore, wageOf, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

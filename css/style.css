@@ -48,12 +48,12 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.6 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; }
 h1, h2, h3 { font-family: "Noto Serif SC", "Songti SC", SimSun, serif; margin: 0; }
-button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 4px; padding: 5px 12px; }
+button { font: inherit; font-size: 13px; line-height: 1.4; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 4px; padding: 2px 9px; }
 button:hover:not(:disabled) { border-color: var(--stamp); }
 button:disabled { opacity: .45; cursor: default; }
 button.primary { background: var(--stamp); border-color: var(--stamp); color: #fff; }
 button.ghost { background: transparent; }
-input, select { font: inherit; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; }
+input, select { font: inherit; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 2px 7px; }
 table { border-collapse: collapse; width: 100%; font-size: 13px; }
 th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); }
 th { color: var(--ink2); font-weight: 600; }
@@ -85,7 +85,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
 .card.on { border-color: var(--stamp); box-shadow: 0 0 0 1px var(--stamp) inset; }
 .card h3 { font-size: 15px; margin-bottom: 4px; }
-.sec { margin: 20px 0 8px; font-size: 13px; color: var(--ink2); letter-spacing: .1em; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.sec { margin: 24px 0 10px; font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: .06em; border-bottom: 2px solid var(--line); padding-bottom: 4px; }
+.sec::before { content: ''; display: inline-block; width: 4px; height: 1em; background: var(--stamp); margin-right: 8px; vertical-align: -2px; border-radius: 2px; }
 .muted { color: var(--ink2); font-size: 13px; }
 .chip { display: inline-block; font-size: 12px; padding: 0 7px; border-radius: 10px; background: var(--chip); margin-right: 4px; }
 .chip.history { background: #d9c9a2; color: #5a4210; }
@@ -329,12 +330,35 @@ body.modal-open { overflow: hidden; }
 /* one row is one line in the lists, and the two groups of tabs of the agency page */
 .nowrap { white-space: nowrap; }
 .ltable td .oneline { display: block; }
-.subtabs { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 10px 0 12px; }
-.tabgroup { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; background: var(--paper2); border-radius: 6px; }
-.tabgroup .grouplabel { font-size: 12px; color: var(--ink2); margin-right: 4px; }
-.tabgroup button.on { background: var(--stamp); color: #fff; border-color: var(--stamp); }
 /* the story in a pop-up is shown whole, only its history of trips scrolls */
 .storyfull .lscroll { max-height: none !important; overflow: visible; }
 .storyfull .trips { max-height: 180px; overflow: auto; }
-.mapfilter summary { cursor: pointer; color: var(--blue); font-size: 13px; padding: 2px 0; }
 table.pending { width: 100%; }
+
+/* settings and about are pop-ups opened from two icons at the right of the bar */
+#tools { display: flex; gap: 4px; }
+#tools button { border-color: transparent; background: transparent; font-size: 18px; padding: 2px 8px; }
+#tools button:hover { background: var(--card); }
+
+/* the filters are one slim row above the map, the panel of the rest opens in the page, the events of a place fill a grid of columns */
+.mapbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 0 0 6px; }
+.mapbar #map-q { width: 220px; }
+.mapbar .check { font-size: 13px; display: inline-flex; gap: 4px; align-items: center; }
+.fpanel { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: 0 0 6px; padding: 6px 8px; background: var(--paper2); border-radius: 6px; }
+.pager { display: flex; justify-content: flex-end; margin: 2px 0 4px; padding: 0 4px; gap: 8px; align-items: center; font-size: 13px; }
+.helpq { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; cursor: help; }
+svg.map .pt text.cnt { display: block; font-size: 5px; font-weight: 700; }
+.evgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 10px; }
+.evgrid .evrow { margin: 3px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* the tally of stars, three, two, one, in the colours of the stars; archived rows are dimmed; the bar over the log */
+.tally b.s3 { color: #d4a017; }
+.tally b.s2 { color: #8f9aa6; }
+.tally b.s1 { color: #b0783a; }
+a.tallylink { cursor: pointer; text-decoration: none; white-space: nowrap; }
+a.tallylink:hover .tally { text-decoration: underline; }
+tr.archived td, li.archived, .archived { opacity: .55; }
+.logbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 2px 0 4px; }
+.logbar .pager { margin: 0; }
+.logtools { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.logtools .check { font-size: 13px; display: inline-flex; gap: 4px; align-items: center; }

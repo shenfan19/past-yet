@@ -38,16 +38,15 @@ sections:
 model_events:
   door_block: While going door to door to treat people, an employee may be turned away by neighbours or seniors. Whether they yield, insist or appeal is decided by their traits.
   time_strain: When a branch drifts too far from history, the employee feels the time slip, gets more tired, and is more likely to come to harm.
-  pocket: A greedy employee may pocket local objects and turn them into funds, but neighbours may see it and trust drops.
 stats:
   constitution:
     gain: Stands the long days and the sick wards, and recovers faster.
     cost: A weak constitution means catching disease and losing health in proportion.
   favor:
-    name: Favor
-    text: An employee's affection for the agency, 0 to 1, starting at 0.5. Kept up with bonuses and successful trips, lowered by failures and giving up.
-    gain: With high favor an employee is slower to get homesick and give up, and a greedy one is less likely to pocket things.
-    cost: Favor has to be bought with money and success, and falls fast when trips go badly.
+    name: Mood
+    text: An employee's mood, 0 to 100, starting at 50. Every success raises it, every failure and giving up lowers it, and a reward of a month of wages adds 50.
+    gain: Every attribute follows the mood, up to 20% more at full mood, so a good run feeds itself. A high mood also makes an employee slower to get homesick and give up.
+    cost: At the bottom every attribute is 20% down, and a bad run feeds itself too. A reward costs a month of wages.
   wit:
     gain: Learns the craft of the place, treats better and finds what is wrong.
     cost: A quick mind is the first to see what it cannot change.
@@ -57,6 +56,6 @@ stats:
   will:
     gain: Holds on at the door, and homesickness and hostility take less from them.
     cost: A strong will insists when it should give way.
-  desire:
-    gain: Brings back local objects and turns them into extra funds.
-    cost: Greed costs trust when neighbours see it, and a kind heart gets rarer.
+  lawful:
+    gain: 'Not a verdict on a person. A high order is a lean to the orderly: keeps rules, plans and promises, and does what the group expects.'
+    cost: 'A low order is a lean to the chaotic: improvises, defies and acts alone. Some things in history only the second kind could do, and the first finds it hard to bend a rule for them.'

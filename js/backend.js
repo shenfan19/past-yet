@@ -50,47 +50,8 @@ export function createLocalBackend(D) {
     for (const x of list) { at -= wt(x); if (at < 0) return x.id; }
     return list[list.length - 1].id;
   }
-  // ---------- hiring pool ----------
-  // A candidate is made from the draws of one serial number: a region and with it a name, a skin tone, a gender, an age, a job,
-  // base abilities, and two or three traits. Every trait has a gain and a cost, so a candidate is a trade off, not a ranking.
+  // ---------- hiring ----------
   const HI = D.get('hiring');
-  const pickOf = (arr, serial, key) => arr[Math.min(arr.length - 1, Math.floor(draw(serial, key, 0) * arr.length))];
-  const weighted = (obj, serial, key) => {
-    const total = Object.values(obj).reduce((a, x) => a + x, 0);
-    let at = draw(serial, key, 0) * total;
-    for (const [k, w] of Object.entries(obj)) { at -= w; if (at < 0) return k; }
-    return Object.keys(obj)[0];
-  };
-  const range = (lo, hi, serial, key) => Math.round((lo + draw(serial, key, 0) * (hi - lo)) * 100) / 100;
-  // one candidate: either one of the hand written employees that is still free, or a made one
-  function makeCandidate(serial, freeNamed) {
-    if (freeNamed.length && draw(serial, 'named', 0) < HI.named_share) return { id: pickOf(freeNamed, serial, 'named_pick') };
-    const region = pickOf(HI.regions, serial, 'region');
-    const gender = draw(serial, 'gender', 0) < 0.5 ? 'f' : 'm';
-    const given = pickOf(gender === 'f' ? region.f : region.m, serial, 'given');
-    const family = pickOf(region.family, serial, 'family');
-    const job = pickOf(HI.jobs, serial, 'job');
-    const traitIds = Object.keys(D.get('staff.traits'));
-    const n = HI.traits_per.min + Math.floor(draw(serial, 'trait_n', 0) * (HI.traits_per.max - HI.traits_per.min + 1));
-    const traits = [];
-    for (let i = 0; traits.length < n && i < 50; i++) {
-      const t = traitIds[Math.min(traitIds.length - 1, Math.floor(draw(serial, 'trait', i) * traitIds.length))];
-      if (!traits.includes(t)) traits.push(t);
-    }
-    const base = Object.fromEntries(Object.entries(HI.base).map(([k, [lo, hi]]) => [k, Math.round(range(lo, hi, serial, 'base_' + k))]));
-    const name = (lang) => (lang === 'zh' && region.order === 'zh_family_first' ? family[1] + given[1] : lang === 'zh' ? given[1] + region.join + family[1] : given[0] + ' ' + family[0]);
-    return {
-      id: 'g' + serial,
-      def: {
-        generated: true, job_id: job.id, gender, age: Math.floor(range(HI.age.min, HI.age.max + 1, serial, 'age')), base, traits, start_hired: false,
-        region: region.id, skin: weighted(region.tones, serial, 'skin'),
-        text: {
-          en: { name: name('en'), job: job.text.en, bio: 'From ' + region.text.en + '.' },
-          zh: { name: name('zh'), job: job.text.zh, bio: '来自' + region.text.zh + '。' },
-        },
-      },
-    };
-  }
   // a recall is only a request. Someone who has decided to stay does not come, and for anyone else the refusal is a roll at the base chance
   function recallRefused(staffId, seed, outcomeId) {
     if (outcomeId === HI.recall.stay_outcome) return true;
@@ -113,12 +74,11 @@ export function createLocalBackend(D) {
       return p;
     });
   }
-  // A scene has three authored points, each a requirement on the traveller: abilities, traits, the job, being a woman, an item carried, or luck.
-  // Special equipment raises abilities and satisfies item points, but it shows, and a scene can find the traveller out.
+  // A scene: three points the traveller meets or does not by what they are, and what they carry. Being found out costs stars, rest and favor.
   const SC = D.get('config.scene');
-  function runScene(ev, staffId, seed, items) {
+  function runScene(ev, staffId, seed, items, favor = null) {
     const staff = D.get('staff.staff.' + staffId);
-    const stats = { ...sim.staffAttrs(D, staffId) };
+    const stats = { ...sim.staffAttrs(D, staffId, favor) };
     const carried = Object.entries(items || {}).filter(([id, n]) => n > 0 && D.get('items.' + id).scene).map(([id]) => id);
     let exposure = 0;
     for (const id of carried) {
@@ -152,13 +112,13 @@ export function createLocalBackend(D) {
     return { points, stars, found, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
       funds: Math.round(pay.funds * SC.share[stars]), energyBase: pay.energy, restDays: L.rest_days[stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed'] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
   }
-  function runLight(eventId, staffId, seed, items) {
+  function runLight(eventId, staffId, seed, items, favor = null) {
     const ev = lightEvent(eventId);
     if (ev.scene) {
-      const r = runScene(ev, staffId, seed, items);
+      const r = runScene(ev, staffId, seed, items, favor);
       return { ...r, outcome: r.stars >= 2 ? 'success' : r.stars === 1 ? 'partial' : 'missed' };
     }
-    const stats = sim.staffAttrs(D, staffId);
+    const stats = sim.staffAttrs(D, staffId, favor);
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
     const points = applyBonus([margin >= L.cuts.reach, margin >= L.cuts.meet, margin >= L.cuts.impress].map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })), L.kinds, staffId, seed, eventId);
@@ -172,13 +132,13 @@ export function createLocalBackend(D) {
   const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
-    runLight, lightStay, marketMult, makeCandidate, recallRefused, recallKeeps,
+    runLight, lightStay, marketMult, recallRefused, recallKeeps,
     findOdds, findAntique,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],
     eraInfo: (id) => info[id],
-    staffStats: (staffId) => sim.staffAttrs(D, staffId),
+    staffStats: (staffId, mood = null) => sim.staffAttrs(D, staffId, mood),
     staffHabit: (staffId) => sim.staffHabit(D, staffId),
     itemTotals: (items) => sim.itemTotals(D, items),
     // returns an error code, or null when the dispatch is allowed

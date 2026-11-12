@@ -139,13 +139,17 @@ export function compileEra(raw, D, id) {
 
 // ---------- staff and spec ----------
 // The five attributes of an employee, from 1 to 10. Traits do not change them.
-export function staffAttrs(D, staffId) {
-  return { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
+// With a mood the attributes are the ones of that day: up to buff more at full mood, up to buff less at none. Without it they are the ones on the card.
+export function staffAttrs(D, staffId, mood = null) {
+  const a = { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
+  if (mood === null) return a;
+  const f = 1 + D.get('config.favor.buff') * (2 * mood - 1);
+  return Object.fromEntries(Object.entries(a).map(([k, v]) => [k, v * f]));
 }
 // What the era models read. Every quantity is a plain function of one attribute, set in staff_rules.yaml. A trait can add a weakness of its own, like being hurt or infected.
-export function staffStats(D, staffId) {
-  const a = staffAttrs(D, staffId);
-  const out = Object.fromEntries(Object.entries(D.get('staff.derive')).map(([k, d]) => [k, Math.max(0, d.offset + d.scale * a[d.from])]));
+export function staffStats(D, staffId, mood = null) {
+  const a = staffAttrs(D, staffId, mood);
+  const out = Object.fromEntries(Object.entries(D.get('staff.derive')).map(([k, d]) => [k, Math.max(0, d.offset + (d.from ? d.scale * a[d.from] : 0))]));
   for (const t of D.get('staff.staff.' + staffId + '.traits')) for (const [k, v] of Object.entries(D.get('staff.traits.' + t).model || {})) out[k] += v;
   return out;
 }
@@ -187,7 +191,7 @@ export function validateSpec(E, D, spec, stock) {
 function initVars(E, D, spec, withTraveler) {
   const v = {};
   for (const [n, d] of Object.entries(E.vars)) v[n] = d.value;
-  const stats = staffStats(D, spec.staffId);
+  const stats = staffStats(D, spec.staffId, spec.favor ?? null);
   for (const [n, d] of Object.entries(E.vars)) if (d.from_staff) v[n] = stats[d.from_staff];
   for (const [n, d] of Object.entries(E.vars)) if (d.from_spec) v[n] = spec[d.from_spec] ?? d.value;
   const apply = (grp, key) => {
@@ -345,7 +349,7 @@ export function runDispatch(E, D, spec) {
   const gifts = branch.outcome === 'stay_and_gifts' ? O.gift_funds : 0;
   return {
     spec, base, branch, score: sc, cost: tot.cost, weight: tot.weight,
-    energy, funds: O.dispatch_fee + gifts + O.loot_funds * branch.final['traveler.loot_count'], restDays: branch.outcomeDef ? branch.outcomeDef.rest_days : 0,
+    energy, funds: O.dispatch_fee + gifts, restDays: branch.outcomeDef ? branch.outcomeDef.rest_days : 0,
     outcome: branch.outcome, hints,
   };
 }

@@ -21,7 +21,7 @@ i18n:
     zh: 简体中文
 save:
   key: teleporter_save
-  version: 9
+  version: 10
 eras:
   - broad_street_1854
   - vienna_1847
@@ -39,6 +39,8 @@ office:
   keep_latest: 1
   max_trips: 2000
   hire_cost: 100
+  # every this many three star trips of an employee give one point to a random attribute of theirs, up to 10
+  threes_per_point: 3
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
   # An employee earns about 5.4 funds a day from the trips alone and about 7.5 when half the antiques found are sold, so the upkeep passes that near four people.
   # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
@@ -51,7 +53,6 @@ office:
     ors_pack: 40
     chlorine_tablet: 40
     handbook: 1
-  loot_funds: 25
 clock:
   sec_per_day: 60
   speeds:
@@ -63,8 +64,11 @@ clock:
     - 16
 favor:
   start: 0.5
-  gift_cost: 60
-  gift_gain: 0.1
+  # the mood (favor in the code) changes every attribute by up to this share, up at full mood and down at none, so a trip is run on the attributes of that day
+  buff: 0.2
+  # a reward costs this many days of the wages of that person and gives this much mood
+  gift_days: 30
+  gift_gain: 0.5
   min: 0
   max: 1
   outcome:
@@ -104,14 +108,16 @@ auto:
     - heart_monitor
 ui:
   currency_icons: {funds: '💰', energy: '⚡'}
-  tab_icons: {home: '🏠', shop: '🛒', enc: '📖', settings: '⚙️', about: 'ℹ️'}
+  tab_icons: {home: '🏠', buy: '🛒', shop: '🗂️', enc: '📖'}
+  tool_icons: {settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
   refresh_ms: 500
   timeline_max: 9
   recent_reports: 8
   search_delay_ms: 30
-  log_rows: 200
-  box_h: {hire: 200, log: 360, story: 300, home_staff: 520, pick_staff: 520, carry: 200, plots: 170, shop: 560, inv: 560, ants: 560}
+  # every list shows a page of rows, the first size by default, and the player can pick a longer one
+  page_sizes: [5, 10, 20, 50]
+  box_h: {story: 300, pick_staff: 520, carry: 200, plots: 170}
   chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
@@ -130,7 +136,7 @@ light:
   pay: {1: {funds: 40, energy: 4}, 2: {funds: 70, energy: 8}, 3: {funds: 110, energy: 16}}
   share: {success: 1, partial: 0.55, missed: 0.15}
   rest_days: {success: 1, partial: 1, missed: 2}
-  favor: {success: 0.03, partial: 0, missed: -0.03}
+  favor: {success: 0.03, partial: 0.01, missed: -0.03}
   field_weights:
     science: {"wit": 0.8, "finesse": 0.2}
     technology: {"wit": 0.8, "constitution": 0.2}

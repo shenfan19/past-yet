@@ -36,7 +36,7 @@ const O = D.get('config.office');
 function fresh() {
   return {
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired, favor: D.get('config.favor.start') }])),
+    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
@@ -45,9 +45,8 @@ function fresh() {
     visited: [],
     // the best star count of each place, time energy is paid only for an improvement on it
     stars: {},
-    // the hiring pool, and the employees that were made for it
+    // the hiring offer
     hire: null,
-    generated: {},
     // an antique the office starts with is already anchored, so the first place is open
     locks: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
     antiques: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
