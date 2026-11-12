@@ -50,7 +50,8 @@ export function kitText(D, items, eraId) {
 export function staffProfile(D, id) {
   const st = D.get('staff.staff.' + id);
   const U = D.get('text.ui');
-  return [U.gender[st.gender], U.fmt.age.replace('{n}', String(st.age)), D.get('text.staff.' + id + '.job')].join(' · ');
+  const tx = D.get('text.staff.' + id);
+  return [U.gender[st.gender], U.fmt.age.replace('{n}', String(st.age)), tx.ethnicity, tx.jobs.join(U.fmt.sep)].join(' · ');
 }
 
 export function staffName(D, id) { return D.get(`text.staff.${id}.name`); }

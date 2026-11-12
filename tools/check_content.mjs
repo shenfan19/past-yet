@@ -59,7 +59,7 @@ const attrList = D.get('staff.attributes');
 for (const [id, st] of Object.entries(staffAll)) {
   for (const lang of ['en', 'zh']) {
     const tx = D.o.text.staff[id];
-    if (lang === 'en' && !(tx.name && tx.job && tx.bio && tx.story)) { console.log(id + ' lacks a name, job, bio or story'); bad++; }
+    if (lang === 'en' && !(tx.name && tx.ethnicity && tx.bio && tx.story && Array.isArray(tx.jobs) && tx.jobs.length === st.jobs.length)) { console.log(id + ' lacks a name, ethnicity, bio, story or the titles of its jobs'); bad++; }
   }
   if (!regionIds.has(st.region)) { console.log(id + ' has an unknown region ' + st.region); bad++; }
   if (!D.get('hiring.skin_tones')[st.skin]) { console.log(id + ' has an unknown skin tone ' + st.skin); bad++; }
@@ -106,7 +106,7 @@ console.log('scenes with three points:', scenes);
 
 // The two weaknesses must really cost health: a kind employee loses more to hostility, a sensitive one more to disease.
 {
-  const mk = (id, traits) => { D.o.staff.staff[id] = { traits, base: {}, gender: 'f', age: 30 }; D.o.text.staff[id] = { name: id, job: 'x', bio: '' }; };
+  const mk = (id, traits) => { D.o.staff.staff[id] = { traits, base: {}, gender: 'f', age: 30 }; D.o.text.staff[id] = { name: id, ethnicity: 'x', jobs: ['x'], bio: '' }; };
   mk('chk_plain', ['curious']); mk('chk_kind', ['kind']); mk('chk_sens', ['sensitive']);
   const id = D.get('config.eras')[0];
   const E = sim.compileEra(D.get('era_raw.' + id), D, id);

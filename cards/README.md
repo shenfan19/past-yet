@@ -12,17 +12,17 @@ A card holds the structure of a thing and its text in every language, so changin
 ```yaml
 # cards/staff/s_amara.yaml
 order: 5                 # sort order inside the folder, required on every card
-gender: f
+gender: f                # f, m, tf (trans woman), tm (trans man) or x (another gender)
 age: 38
-region: west_africa      # a region named in config/hiring.yaml
+region: west_africa      # a region named in config/hiring.yaml, used to see that the world is covered, not shown
 skin: t6                 # a skin tone named in config/hiring.yaml
-base: {lawful: 5, wit: 7, constitution: 5, finesse: 6, will: 6}   # order, wit, constitution, finesse, will, 1 to 10
-traits: [kind]           # one or two of the traits in traits/
-job_id: midwife
+base: {wit: 3, constitution: 3, finesse: 6, will: 3, luck: 9}   # 1 to 10, the average of the five 4 to 6 by age
+traits: [kind]           # one or two of the traits in traits/, a plain person gets two
+jobs: [midwife, herbalist]   # one to three job ids, the first one is the main one
 start_hired: false
 text:
-  en: {name: Amara Okafor, job: Midwife, bio: ..., story: ...}    # the fallback language, required
-  zh: {name: 阿玛拉·奥卡福, job: 助产士, bio: ..., story: ...}   # any other language, may be left out
+  en: {name: Amara Okafor, ethnicity: Igbo, jobs: [Midwife, Herbalist], bio: ..., story: ...}    # the fallback language, required
+  zh: {name: 阿玛拉·奥卡福, ethnicity: 伊博人, jobs: [助产士, 草药师], bio: ..., story: ...}   # any other language, may be left out
 ```
 
 The file name is the id. A card with `id:` inside must match its file name.
@@ -44,7 +44,7 @@ Languages are the codes in `config/config.yaml` under `i18n.locales`. A language
 
 To add:
 - an event: copy a card in `events/`, give it the next `order`, write the text. Its relic becomes an antique when the game loads.
-- an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, and write a short life story that fits the age and the place. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, and that every region and skin tone is used.
+- an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, one to three jobs, an ethnicity (one short label, not a country plus a descent), and write a short life story that fits the age, the place and the numbers: a high attribute is a gift that shows in the life, a low one is a flaw that shows too. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, that the titles of the jobs match the ids, and that every region and skin tone is used.
 - a language: add its code to `i18n.locales`, then add that language under `text:` in the cards you want to translate and add `text/<lang>/` files. Nothing is required, English fills the gaps.
 
 After any change run the build, then `node tools/check_i18n.mjs` and `node tools/ui_check.mjs`.

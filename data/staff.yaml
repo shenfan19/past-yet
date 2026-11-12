@@ -59,6 +59,12 @@ default_base:
 default_habit:
   focus: balanced
   on_block: yield
+gender_class:
+  f: f
+  m: m
+  tf: f
+  tm: m
+  x: x
 traits:
   kind:
     points:
@@ -136,15 +142,17 @@ staff:
     region: china
     skin: t2
     base:
-      wit: 3
-      constitution: 3
+      wit: 4
+      constitution: 5
       finesse: 4
       will: 5
-      luck: 7
+      luck: 4
     traits:
       - kind
       - stubborn
-    job_id: nurse
+    jobs:
+      - nurse
+      - caregiver
     start_hired: true
   s_zhou:
     gender: m
@@ -152,15 +160,17 @@ staff:
     region: china
     skin: t2
     base:
-      wit: 6
-      constitution: 5
+      wit: 3
+      constitution: 10
       finesse: 3
-      will: 5
-      luck: 5
+      will: 6
+      luck: 3
     traits:
       - bold
       - glib
-    job_id: builder
+    jobs:
+      - builder
+      - scaffolder
     start_hired: true
   s_lin:
     gender: f
@@ -168,15 +178,17 @@ staff:
     region: china
     skin: t1
     base:
-      wit: 5
-      constitution: 3
-      finesse: 4
-      will: 3
-      luck: 6
+      wit: 9
+      constitution: 2
+      finesse: 3
+      will: 4
+      luck: 3
     traits:
       - curious
       - sensitive
-    job_id: student
+    jobs:
+      - student
+      - tutor
     start_hired: true
   s_qian:
     gender: m
@@ -185,13 +197,15 @@ staff:
     skin: t2
     base:
       wit: 5
-      constitution: 5
-      finesse: 8
-      will: 7
-      luck: 1
+      constitution: 2
+      finesse: 7
+      will: 3
+      luck: 9
     traits:
       - glib
-    job_id: antique_dealer
+    jobs:
+      - antique_dealer
+      - restorer
     start_hired: false
   s_amara:
     gender: f
@@ -199,14 +213,16 @@ staff:
     region: west_africa
     skin: t6
     base:
-      wit: 6
-      constitution: 4
-      finesse: 5
-      will: 5
-      luck: 3
+      wit: 3
+      constitution: 3
+      finesse: 6
+      will: 3
+      luck: 9
     traits:
       - kind
-    job_id: midwife
+    jobs:
+      - midwife
+      - nurse
     start_hired: false
   s_kenji:
     gender: m
@@ -214,14 +230,16 @@ staff:
     region: japan
     skin: t2
     base:
-      wit: 5
-      constitution: 3
-      finesse: 3
+      wit: 10
+      constitution: 1
+      finesse: 2
       will: 5
-      luck: 6
+      luck: 4
     traits:
       - curious
-    job_id: programmer
+    jobs:
+      - programmer
+      - sysadmin
     start_hired: false
   s_isabella:
     gender: f
@@ -229,14 +247,17 @@ staff:
     region: europe_west
     skin: t2
     base:
-      wit: 7
-      constitution: 3
-      finesse: 8
-      will: 7
-      luck: 3
+      wit: 8
+      constitution: 1
+      finesse: 9
+      will: 8
+      luck: 2
     traits:
       - glib
-    job_id: teacher
+    jobs:
+      - teacher
+      - tutor
+      - embroiderer
     start_hired: false
   s_tariq:
     gender: m
@@ -246,13 +267,15 @@ staff:
     base:
       wit: 4
       constitution: 5
-      finesse: 4
-      will: 4
-      luck: 7
+      finesse: 5
+      will: 5
+      luck: 5
     traits:
       - bold
       - glib
-    job_id: driver
+    jobs:
+      - driver
+      - mechanic
     start_hired: false
   s_meiling:
     gender: f
@@ -260,15 +283,17 @@ staff:
     region: china
     skin: t1
     base:
-      wit: 2
-      constitution: 5
-      finesse: 6
-      will: 3
-      luck: 4
+      wit: 3
+      constitution: 3
+      finesse: 10
+      will: 2
+      luck: 2
     traits:
       - sensitive
       - curious
-    job_id: painter
+    jobs:
+      - painter
+      - illustrator
     start_hired: false
   s_lars:
     gender: m
@@ -276,15 +301,18 @@ staff:
     region: europe_west
     skin: t1
     base:
-      wit: 5
-      constitution: 6
-      finesse: 5
-      will: 8
-      luck: 3
+      wit: 3
+      constitution: 5
+      finesse: 9
+      will: 9
+      luck: 1
     traits:
       - bold
       - stubborn
-    job_id: carpenter
+    jobs:
+      - carpenter
+      - shipwright
+      - woodcarver
     start_hired: false
   s_priya:
     gender: f
@@ -292,14 +320,17 @@ staff:
     region: india
     skin: t3
     base:
-      wit: 7
+      wit: 5
       constitution: 4
-      finesse: 4
+      finesse: 5
       will: 5
-      luck: 3
+      luck: 4
     traits:
       - curious
-    job_id: pharmacist
+      - kind
+    jobs:
+      - pharmacist
+      - shopkeeper
     start_hired: false
   s_diego:
     gender: m
@@ -307,15 +338,17 @@ staff:
     region: latin_america
     skin: t2
     base:
-      wit: 4
-      constitution: 5
-      finesse: 6
-      will: 2
-      luck: 4
+      wit: 1
+      constitution: 2
+      finesse: 10
+      will: 1
+      luck: 7
     traits:
       - glib
       - sensitive
-    job_id: musician
+    jobs:
+      - musician
+      - dishwasher
     start_hired: false
   s_olga:
     gender: f
@@ -324,14 +357,16 @@ staff:
     skin: t1
     base:
       wit: 10
-      constitution: 2
+      constitution: 1
       finesse: 6
-      will: 8
+      will: 9
       luck: 3
     traits:
       - stubborn
       - glib
-    job_id: physician
+    jobs:
+      - physician
+      - lecturer
     start_hired: false
   s_samuel:
     gender: m
@@ -339,15 +374,17 @@ staff:
     region: west_africa
     skin: t6
     base:
-      wit: 5
-      constitution: 3
-      finesse: 5
-      will: 3
-      luck: 6
+      wit: 6
+      constitution: 2
+      finesse: 3
+      will: 1
+      luck: 10
     traits:
       - curious
       - glib
-    job_id: journalist
+    jobs:
+      - journalist
+      - radio_host
     start_hired: false
   s_minji:
     gender: f
@@ -355,15 +392,17 @@ staff:
     region: korea
     skin: t1
     base:
-      wit: 4
-      constitution: 5
-      finesse: 5
-      will: 5
-      luck: 5
+      wit: 2
+      constitution: 6
+      finesse: 9
+      will: 6
+      luck: 2
     traits:
       - bold
       - kind
-    job_id: chef
+    jobs:
+      - chef
+      - stall_keeper
     start_hired: false
   s_jeanluc:
     gender: m
@@ -373,13 +412,15 @@ staff:
     base:
       wit: 6
       constitution: 4
-      finesse: 6
+      finesse: 5
       will: 10
-      luck: 2
+      luck: 3
     traits:
       - bold
       - stubborn
-    job_id: sailor
+    jobs:
+      - sailor
+      - net_mender
     start_hired: false
   s_fatima:
     gender: f
@@ -387,15 +428,17 @@ staff:
     region: north_africa
     skin: t3
     base:
-      wit: 6
-      constitution: 5
-      finesse: 6
-      will: 5
-      luck: 3
+      wit: 9
+      constitution: 2
+      finesse: 4
+      will: 9
+      luck: 2
     traits:
       - curious
       - glib
-    job_id: archivist
+    jobs:
+      - archivist
+      - translator
     start_hired: false
   s_tom:
     gender: m
@@ -403,15 +446,17 @@ staff:
     region: north_america
     skin: t2
     base:
-      wit: 4
-      constitution: 5
+      wit: 3
+      constitution: 10
       finesse: 3
-      will: 3
-      luck: 5
+      will: 2
+      luck: 2
     traits:
       - curious
       - sensitive
-    job_id: mechanic
+    jobs:
+      - mechanic
+      - farmhand
     start_hired: false
   s_wanjiru:
     gender: f
@@ -419,14 +464,16 @@ staff:
     region: east_africa
     skin: t5
     base:
-      wit: 4
-      constitution: 4
-      finesse: 4
-      will: 5
-      luck: 5
+      wit: 8
+      constitution: 3
+      finesse: 2
+      will: 6
+      luck: 3
     traits:
       - curious
-    job_id: data_analyst
+    jobs:
+      - data_analyst
+      - tutor
     start_hired: false
   s_ricardo:
     gender: m
@@ -434,14 +481,16 @@ staff:
     region: latin_america
     skin: t3
     base:
-      wit: 5
-      constitution: 4
-      finesse: 6
-      will: 9
-      luck: 6
+      wit: 4
+      constitution: 5
+      finesse: 3
+      will: 10
+      luck: 8
     traits:
       - bold
-    job_id: fisher
+    jobs:
+      - fisher
+      - ferryman
     start_hired: false
   s_anjali:
     gender: f
@@ -449,15 +498,17 @@ staff:
     region: india
     skin: t3
     base:
-      wit: 6
-      constitution: 2
-      finesse: 3
-      will: 4
-      luck: 7
+      wit: 5
+      constitution: 4
+      finesse: 4
+      will: 5
+      luck: 4
     traits:
       - stubborn
       - kind
-    job_id: accountant
+    jobs:
+      - accountant
+      - tax_preparer
     start_hired: false
   s_rajesh:
     gender: m
@@ -465,15 +516,17 @@ staff:
     region: india
     skin: t4
     base:
-      wit: 4
+      wit: 2
       constitution: 8
-      finesse: 5
-      will: 7
-      luck: 1
+      finesse: 4
+      will: 9
+      luck: 2
     traits:
       - stubborn
       - bold
-    job_id: farmer
+    jobs:
+      - farmer
+      - dairy_farmer
     start_hired: false
   s_lakshmi:
     gender: f
@@ -481,15 +534,17 @@ staff:
     region: india
     skin: t4
     base:
-      wit: 5
-      constitution: 3
-      finesse: 8
-      will: 5
-      luck: 6
+      wit: 6
+      constitution: 2
+      finesse: 10
+      will: 7
+      luck: 3
     traits:
       - glib
       - curious
-    job_id: tailor
+    jobs:
+      - tailor
+      - sewing_teacher
     start_hired: false
   s_arjun:
     gender: m
@@ -497,15 +552,17 @@ staff:
     region: india
     skin: t3
     base:
-      wit: 6
+      wit: 9
       constitution: 4
       finesse: 3
       will: 1
-      luck: 6
+      luck: 4
     traits:
       - curious
       - bold
-    job_id: engineering_student
+    jobs:
+      - engineering_student
+      - hardware_shop_assistant
     start_hired: false
   s_meera:
     gender: f
@@ -514,14 +571,16 @@ staff:
     skin: t3
     base:
       wit: 8
-      constitution: 4
+      constitution: 3
       finesse: 6
       will: 4
-      luck: 1
+      luck: 3
     traits:
       - sensitive
       - curious
-    job_id: translator
+    jobs:
+      - translator
+      - proofreader
     start_hired: false
   s_vikram:
     gender: m
@@ -531,13 +590,15 @@ staff:
     base:
       wit: 5
       constitution: 5
-      finesse: 7
-      will: 4
+      finesse: 6
+      will: 5
       luck: 5
     traits:
       - glib
       - bold
-    job_id: electrician
+    jobs:
+      - electrician
+      - pump_repairer
     start_hired: false
   s_xiaoming:
     gender: m
@@ -546,14 +607,16 @@ staff:
     skin: t2
     base:
       wit: 2
-      constitution: 6
-      finesse: 4
-      will: 4
-      luck: 6
+      constitution: 9
+      finesse: 2
+      will: 7
+      luck: 3
     traits:
       - bold
       - curious
-    job_id: courier
+    jobs:
+      - courier
+      - warehouse_loader
     start_hired: false
   s_guilan:
     gender: f
@@ -561,15 +624,17 @@ staff:
     region: china
     skin: t2
     base:
-      wit: 4
-      constitution: 4
-      finesse: 6
-      will: 8
-      luck: 6
+      wit: 3
+      constitution: 3
+      finesse: 5
+      will: 10
+      luck: 7
     traits:
       - kind
       - stubborn
-    job_id: villager
+    jobs:
+      - villager
+      - farmer
     start_hired: false
   s_budi:
     gender: m
@@ -577,15 +642,17 @@ staff:
     region: southeast_asia
     skin: t4
     base:
-      wit: 3
-      constitution: 5
-      finesse: 4
-      will: 4
-      luck: 7
+      wit: 2
+      constitution: 8
+      finesse: 5
+      will: 5
+      luck: 4
     traits:
       - bold
       - kind
-    job_id: ferry_pilot
+    jobs:
+      - ferry_pilot
+      - fisherman
     start_hired: false
   s_linh:
     gender: f
@@ -593,15 +660,17 @@ staff:
     region: southeast_asia
     skin: t3
     base:
-      wit: 5
+      wit: 4
       constitution: 4
       finesse: 5
-      will: 2
-      luck: 5
+      will: 4
+      luck: 4
     traits:
       - glib
       - kind
-    job_id: street_food_seller
+    jobs:
+      - street_food_seller
+      - waitress
     start_hired: false
   s_maria:
     gender: f
@@ -609,15 +678,17 @@ staff:
     region: southeast_asia
     skin: t3
     base:
-      wit: 5
-      constitution: 5
-      finesse: 5
+      wit: 1
+      constitution: 4
+      finesse: 3
       will: 6
-      luck: 3
+      luck: 10
     traits:
       - kind
       - sensitive
-    job_id: caregiver
+    jobs:
+      - caregiver
+      - cook
     start_hired: false
   s_somchai:
     gender: m
@@ -625,15 +696,17 @@ staff:
     region: southeast_asia
     skin: t3
     base:
-      wit: 6
-      constitution: 5
-      finesse: 5
+      wit: 7
+      constitution: 1
+      finesse: 1
       will: 8
-      luck: 3
+      luck: 10
     traits:
       - curious
       - kind
-    job_id: former_monk
+    jobs:
+      - former_monk
+      - tutor
     start_hired: false
   s_hiroshi:
     gender: m
@@ -641,30 +714,34 @@ staff:
     region: japan
     skin: t2
     base:
-      wit: 8
-      constitution: 4
+      wit: 10
+      constitution: 1
       finesse: 8
-      will: 6
+      will: 7
       luck: 2
     traits:
       - stubborn
-    job_id: retired_engineer
+    jobs:
+      - retired_engineer
+      - mechanic
     start_hired: false
   s_yuna:
-    gender: f
+    gender: tf
     age: 33
     region: japan
     skin: t1
     base:
-      wit: 6
+      wit: 5
       constitution: 4
       finesse: 5
       will: 5
-      luck: 2
+      luck: 4
     traits:
       - sensitive
       - stubborn
-    job_id: office_worker
+    jobs:
+      - office_worker
+      - writer
     start_hired: false
   s_rafiq:
     gender: m
@@ -672,15 +749,17 @@ staff:
     region: south_asia
     skin: t4
     base:
-      wit: 2
-      constitution: 6
-      finesse: 6
+      wit: 1
+      constitution: 9
+      finesse: 7
       will: 4
-      luck: 4
+      luck: 1
     traits:
       - bold
       - stubborn
-    job_id: garment_worker
+    jobs:
+      - garment_worker
+      - tailor
     start_hired: false
   s_nasreen:
     gender: f
@@ -688,15 +767,17 @@ staff:
     region: south_asia
     skin: t3
     base:
-      wit: 7
-      constitution: 4
+      wit: 9
+      constitution: 2
       finesse: 6
-      will: 4
-      luck: 5
+      will: 8
+      luck: 1
     traits:
       - kind
       - stubborn
-    job_id: doctor
+    jobs:
+      - doctor
+      - medical_teacher
     start_hired: false
   s_reza:
     gender: m
@@ -705,14 +786,16 @@ staff:
     skin: t3
     base:
       wit: 8
-      constitution: 4
-      finesse: 4
-      will: 4
-      luck: 4
+      constitution: 2
+      finesse: 5
+      will: 3
+      luck: 6
     traits:
       - curious
       - glib
-    job_id: bookseller
+    jobs:
+      - bookseller
+      - translator
     start_hired: false
   s_leyla:
     gender: f
@@ -721,14 +804,16 @@ staff:
     skin: t2
     base:
       wit: 5
-      constitution: 5
+      constitution: 4
       finesse: 5
-      will: 2
+      will: 3
       luck: 4
     traits:
       - curious
       - bold
-    job_id: architecture_intern
+    jobs:
+      - architecture_intern
+      - illustrator
     start_hired: false
   s_aigerim:
     gender: f
@@ -736,15 +821,17 @@ staff:
     region: central_asia
     skin: t2
     base:
-      wit: 6
-      constitution: 7
-      finesse: 3
+      wit: 7
+      constitution: 9
+      finesse: 1
       will: 5
       luck: 2
     traits:
       - bold
       - curious
-    job_id: geologist
+    jobs:
+      - geologist
+      - mining_consultant
     start_hired: false
   s_chidi:
     gender: m
@@ -754,13 +841,15 @@ staff:
     base:
       wit: 6
       constitution: 4
-      finesse: 3
-      will: 4
-      luck: 6
+      finesse: 4
+      will: 5
+      luck: 4
     traits:
       - glib
       - bold
-    job_id: civil_engineer
+    jobs:
+      - civil_engineer
+      - site_manager
     start_hired: false
   s_abebe:
     gender: m
@@ -770,13 +859,15 @@ staff:
     base:
       wit: 3
       constitution: 5
-      finesse: 5
-      will: 6
-      luck: 6
+      finesse: 1
+      will: 9
+      luck: 7
     traits:
       - stubborn
       - kind
-    job_id: coffee_farmer
+    jobs:
+      - coffee_farmer
+      - cooperative_member
     start_hired: false
   s_aisha:
     gender: f
@@ -784,15 +875,17 @@ staff:
     region: north_africa
     skin: t3
     base:
-      wit: 6
-      constitution: 4
-      finesse: 4
-      will: 4
-      luck: 4
+      wit: 4
+      constitution: 1
+      finesse: 7
+      will: 1
+      luck: 9
     traits:
       - glib
       - curious
-    job_id: tour_guide
+    jobs:
+      - tour_guide
+      - shop_assistant
     start_hired: false
   s_thabo:
     gender: m
@@ -800,15 +893,17 @@ staff:
     region: southern_africa
     skin: t6
     base:
-      wit: 6
-      constitution: 5
-      finesse: 3
-      will: 7
-      luck: 3
+      wit: 3
+      constitution: 10
+      finesse: 2
+      will: 8
+      luck: 1
     traits:
       - bold
       - kind
-    job_id: union_organizer
+    jobs:
+      - union_organizer
+      - factory_worker
     start_hired: false
   s_ngozi:
     gender: f
@@ -816,15 +911,17 @@ staff:
     region: central_africa
     skin: t6
     base:
-      wit: 5
-      constitution: 3
-      finesse: 4
-      will: 7
-      luck: 7
+      wit: 2
+      constitution: 1
+      finesse: 8
+      will: 6
+      luck: 10
     traits:
       - glib
       - stubborn
-    job_id: market_trader
+    jobs:
+      - market_trader
+      - seamstress
     start_hired: false
   s_carlos:
     gender: m
@@ -832,15 +929,17 @@ staff:
     region: latin_america
     skin: t3
     base:
-      wit: 5
-      constitution: 4
-      finesse: 6
-      will: 4
-      luck: 7
+      wit: 2
+      constitution: 6
+      finesse: 9
+      will: 7
+      luck: 2
     traits:
       - kind
       - glib
-    job_id: baker
+    jobs:
+      - baker
+      - street_vendor
     start_hired: false
   s_camila:
     gender: f
@@ -848,15 +947,17 @@ staff:
     region: latin_america
     skin: t2
     base:
-      wit: 6
+      wit: 9
       constitution: 3
-      finesse: 4
-      will: 2
-      luck: 7
+      finesse: 2
+      will: 1
+      luck: 8
     traits:
       - curious
       - kind
-    job_id: biologist
+    jobs:
+      - biologist
+      - university_lecturer
     start_hired: false
   s_quispe:
     gender: m
@@ -864,15 +965,17 @@ staff:
     region: latin_america
     skin: t4
     base:
-      wit: 5
-      constitution: 5
-      finesse: 6
-      will: 9
-      luck: 3
+      wit: 2
+      constitution: 6
+      finesse: 2
+      will: 10
+      luck: 8
     traits:
       - stubborn
       - sensitive
-    job_id: shepherd
+    jobs:
+      - shepherd
+      - potato_farmer
     start_hired: false
   s_jamal:
     gender: m
@@ -880,15 +983,17 @@ staff:
     region: north_america
     skin: t5
     base:
-      wit: 4
-      constitution: 7
-      finesse: 5
+      wit: 3
+      constitution: 9
+      finesse: 6
       will: 5
-      luck: 2
+      luck: 1
     traits:
       - bold
       - kind
-    job_id: paramedic
+    jobs:
+      - paramedic
+      - rideshare_driver
     start_hired: false
   s_emily:
     gender: f
@@ -896,29 +1001,33 @@ staff:
     region: north_america
     skin: t3
     base:
-      wit: 5
+      wit: 1
       constitution: 5
       finesse: 8
-      will: 7
-      luck: 2
+      will: 9
+      luck: 4
     traits:
       - bold
       - stubborn
-    job_id: bush_pilot
+    jobs:
+      - bush_pilot
+      - flight_instructor
     start_hired: false
   s_tui:
-    gender: m
+    gender: x
     age: 24
     region: pacific
     skin: t4
     base:
-      wit: 2
-      constitution: 6
-      finesse: 4
-      will: 3
-      luck: 6
+      wit: 1
+      constitution: 10
+      finesse: 1
+      will: 5
+      luck: 4
     traits:
       - bold
       - curious
-    job_id: navigator
+    jobs:
+      - navigator
+      - fisher
     start_hired: false

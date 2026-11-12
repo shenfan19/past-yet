@@ -290,7 +290,7 @@ export function createUI(D, ctx) {
     const S = ctx.S();
     const allIds = hiredIds();
     const traitTags = [...new Set(allIds.flatMap((id) => staffTraits(D, id)))].map((x) => ({ id: x, label: T.traits[x] }));
-    const rows = allIds.filter((id) => listbox.match('home_staff', staffName(D, id) + ' ' + T.staff[id].job, staffTraits(D, id))).map((id) => {
+    const rows = allIds.filter((id) => listbox.match('home_staff', staffName(D, id) + ' ' + T.staff[id].jobs.join(' ') + ' ' + T.staff[id].ethnicity, staffTraits(D, id))).map((id) => {
       const tl = tallyOf(id);
       return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: tl[3] * 3 + tl[2] * 2 + tl[1] };
     });
@@ -316,13 +316,12 @@ export function createUI(D, ctx) {
   }
 
   // Candidates are shown in full before hiring: who they are, what they can do, and what each trait gives and costs.
-  const regionLabel = (id) => { const r = D.get('hiring.regions').find((x) => x.id === id); return r ? (r.text[D.lang] || r.text.en) : ''; };
   // One candidate is one row: who, background, abilities, traits with what each gives and costs in its tooltip, and the hire button.
   function candidateRow(c) {
     const id = c.id;
     const def = D.get('staff.staff.' + id);
     const swatch = def.skin ? `<span class="skin" style="background:${D.get('hiring.skin_tones.' + def.skin)}"></span> ` : '';
-    return { id, name: staffName(D, id), swatch, profile: staffProfile(D, id) + (def.region ? ' · ' + regionLabel(def.region) : ''), stats: statsLine(ctx.backend.staffStats(id)), traits: staffTraits(D, id) };
+    return { id, name: staffName(D, id), swatch, profile: staffProfile(D, id), stats: statsLine(ctx.backend.staffStats(id)), traits: staffTraits(D, id) };
   }
 
   function hireHtml() {

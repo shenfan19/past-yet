@@ -93,8 +93,8 @@ export function createLocalBackend(D) {
     const meets = (req) => Object.entries(req).every(([k, v]) => {
       if (k === 'stat') return Object.entries(v).every(([s, min]) => stats[s] >= min);
       if (k === 'trait') return v.some((t) => staff.traits.includes(t));
-      if (k === 'job') return v.includes(staff.job_id);
-      if (k === 'gender') return staff.gender === v;
+      if (k === 'job') return D.get('staff.staff.' + staffId + '.jobs').some((j) => v.includes(j));
+      if (k === 'gender') return D.get('staff.gender_class')[staff.gender] === v;
       if (k === 'item') return carried.includes(v);
       if (k === 'provides') return carried.some((id) => D.get('items.' + id).provides.includes(v));
       if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < Math.min(LK.max_chance, v * (LK.base + LK.per_point * stats.luck));

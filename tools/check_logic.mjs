@@ -21,7 +21,7 @@ const items = D.get('items');
 const events = D.get('catalog.events');
 const cfg = D.get('config');
 const attrs = D.get('staff.attributes');
-const jobs = new Set(Object.values(staff).map((s) => s.job_id));
+const jobs = new Set(Object.values(staff).flatMap((s) => s.jobs));
 
 // point kinds: every kind a scene or an era model asks for, and which traits give or cost it
 const sceneEvents = events.filter((e) => e.scene);
@@ -55,8 +55,8 @@ function metBy(req, who, carried) {
   return Object.entries(req).every(([k, v]) => {
     if (k === 'stat') return Object.entries(v).every(([s, min]) => stats[s] >= min);
     if (k === 'trait') return v.some((t) => who.traits.includes(t));
-    if (k === 'job') return v.includes(who.job_id);
-    if (k === 'gender') return who.gender === v;
+    if (k === 'job') return who.jobs.some((j) => v.includes(j));
+    if (k === 'gender') return D.get('staff.gender_class')[who.gender] === v;
     if (k === 'item') return carried.includes(v);
     if (k === 'provides') return carried.some((i) => items[i].provides.includes(v));
     if (k === 'luck') return true;
@@ -108,14 +108,15 @@ for (const [i, n] of Object.entries(itemUse)) if (!n) warn(`scene item ${i} is a
 // employees
 const traitCount = Object.fromEntries(Object.keys(traits).map((t) => [t, 0]));
 for (const [id, s] of Object.entries(staff)) {
-  if (!jobs.has(s.job_id)) err(`staff ${id}: job ${s.job_id} not in the job list`);
+  if (!(s.jobs.length >= 1 && s.jobs.length <= 3)) err(`staff ${id}: ${s.jobs.length} jobs, not one to three`);
+  if (!['f', 'm', 'tf', 'tm', 'x'].includes(s.gender)) err(`staff ${id}: unknown gender ${s.gender}`);
   for (const t of s.traits) { if (!traits[t]) err(`staff ${id}: unknown trait ${t}`); else traitCount[t]++; }
   if (new Set(s.traits).size !== s.traits.length) err(`staff ${id}: repeated trait`);
   for (const [a, v] of Object.entries(s.base || {})) { if (!attrs.includes(a)) err(`staff ${id}: unknown attribute ${a}`); if (v < 1 || v > 10) err(`staff ${id}: ${a} ${v} out of 1 to 10`); }
 }
 for (const [t, n] of Object.entries(traitCount)) if (!n) err(`trait ${t} is held by no hand written employee`);
 const seen = {};
-for (const [id, s] of Object.entries(staff)) (seen[s.job_id + '|' + [...s.traits].sort().join(',')] ||= []).push(id);
+for (const [id, s] of Object.entries(staff)) (seen[s.jobs.join('+') + '|' + [...s.traits].sort().join(',')] ||= []).push(id);
 for (const [k, v] of Object.entries(seen)) if (v.length > 1) warn(`staff ${v.join(', ')} share job and traits: ${k}`);
 for (const s of handStaff) if (!fullAny[s.id]) warn(`staff ${s.id}: can three star no scene`);
 if (!handStaff.some((s) => s.start_hired)) err('no starting employee');
