@@ -152,3 +152,17 @@ export function firstSentence(text) {
   const m = text.match(/^.*?[。.!?！？]/);
   return m ? m[0] : text;
 }
+
+// The five attributes of a person as a star: one axis for each, from the centre out to 10, the area filled. Pure markup, the colours are in the style sheet.
+export function radarSvg(D, stats, size = 190) {
+  const keys = D.get('staff.attributes');
+  const T = D.get('text.stats');
+  const cx = size / 2, cy = size / 2, R = size * 0.32;
+  const pt = (i, v) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / keys.length; return [cx + R * (v / 10) * Math.cos(a), cy + R * (v / 10) * Math.sin(a)]; };
+  const poly = (f) => keys.map((_, i) => f(i).map((x) => x.toFixed(1)).join(',')).join(' ');
+  const rings = [2, 4, 6, 8, 10].map((r) => `<polygon class="ring" points="${poly((i) => pt(i, r))}"/>`).join('');
+  const axes = keys.map((_, i) => `<line class="axis" x1="${cx}" y1="${cy}" x2="${pt(i, 10)[0].toFixed(1)}" y2="${pt(i, 10)[1].toFixed(1)}"/>`).join('');
+  const area = `<polygon class="area" points="${poly((i) => pt(i, Math.min(10, stats[keys[i]])))}"/>`;
+  const labels = keys.map((k, i) => { const [x, y] = pt(i, 12.6); const anchor = Math.abs(x - cx) < 4 ? 'middle' : x < cx ? 'end' : 'start'; return `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${anchor}">${T[k]} ${Math.round(stats[k] * 10) / 10}</text>`; }).join('');
+  return `<svg class="radar" viewBox="-40 0 ${size + 80} ${size}" width="${size + 80}" height="${size}" role="img">${rings}${axes}${area}${labels}</svg>`;
+}

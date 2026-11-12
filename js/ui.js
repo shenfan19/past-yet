@@ -1,4 +1,4 @@
-import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg } from './narrate.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
@@ -353,9 +353,8 @@ export function createUI(D, ctx) {
     const S = ctx.S();
     const I = D.get('config.ui.currency_icons');
     const home = S.energy >= O.home_cost ? `<span class="chip"${tip(U.office.reached_home)}>🏠</span>` : '';
-    return `<span class="rv"${tip(U.office.funds)}>${I.funds} <b>${ri(S.funds)}</b></span>`
-      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}`
-      + `<span class="rv"${tip(U.office.wage_total)}>${I.wage} <b>${ri(office.wageTotal())}</b><span class="muted">${U.office.per_day}</span></span>`;
+    return `<span class="rv"${tip(U.office.funds + ' · ' + U.office.wage_total)}>${I.funds} <b>${ri(S.funds)}</b><span class="muted"> − ${ri(office.wageTotal())}${U.office.per_day}</span></span>`
+      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}`;
   }
 
   // One table for the dispatches: the ones still out come first, with what can be done to them, then the finished ones with their report.
@@ -374,10 +373,10 @@ export function createUI(D, ctx) {
       // the stars of a trip that is not home yet are not known, so the cell shows the wait
       const status = ready ? `<span class="chip warn pulse">${U.office.pending}</span>` : `<span class="muted">⏳ ${r1(left)} ${U.report.days}</span>${refused}`;
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : recallBtn;
-      return `<tr class="outrow"><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">${acts}</td></tr>`;
+      return `<div class="outrow pend"><span class="muted">${seqOf(d)}</span><b>${placeYear(d)}</b><span class="nowrap">${esc(placeShort(d))}</span><span class="nowrap">${staffLink(d.spec.staffId)}</span><span class="nowrap">${status}</span><span class="grow"></span><span class="nowrap">${acts}</span></div>`;
     });
     return `<div class="sec" id="home-pending">${U.office.on_road} (${out.length})</div>
-      ${pg.html}<table class="logtable pending"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.office.col_status}</th><th></th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+      ${pg.html}<div class="pendgrid">${rows.join('')}</div>`;
   }
 
   // The log of finished trips, read from the summaries that are kept for good, a page at a time. Archived trips are hidden until asked for.
@@ -699,10 +698,11 @@ export function createUI(D, ctx) {
       ],
     });
     return `<h3>${staffLink(id)} <span class="muted">${esc(staffProfile(D, id))}</span></h3>
+      <div class="radarwrap"${tip(attrs)}>${radarSvg(D, eff)}</div>
       <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
       <p>${esc(T.staff[id].story || '')}</p>
-      <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span> · ${attrs}</div>
-      <div class="sec">${U.office.staff_trips}</div>${list}`;
+      <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span></div>
+      <div class="sec" style="clear:both">${U.office.staff_trips}</div>${list}`;
   }
 
   // ---------- pop-up ----------

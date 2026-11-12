@@ -59,7 +59,7 @@ export function createOffice(X) {
     const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready' || eraBusy(eraId)) return null;
     const { res, report } = ctx.backend.dispatch(eraId, full);
-    const antique = ctx.backend.findAntique(eraId, full.seed, s.antiques, report.stars);
+    const antique = ctx.backend.findAntique(eraId, full.seed, s.antiques, report.stars, ctx.backend.luckFactor(full.staffId, s.staff[full.staffId].favor));
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     const stay = E.vars[E.roles.stay].value;
@@ -76,7 +76,7 @@ export function createOffice(X) {
     if (!s.locks.includes('relic_' + eventId) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
     const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && (s.inv[id] || 0) >= n));
     const r = ctx.backend.runLight(eventId, staffId, seed, kit, s.staff[staffId].favor);
-    const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars);
+    const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
     for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
     s.seq += 1;
     const d = {

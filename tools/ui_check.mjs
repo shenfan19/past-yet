@@ -363,7 +363,7 @@ try {
   await page.waitForTimeout(800);
   await page.selectOption('[data-clk=speed]', '0');
   ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
-  ok('the funds, the energy and the total wages are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 3);
+  ok('the funds with the wages a day, and the energy, are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 2 && (await page.locator('#navrow #res .rv').first().innerText()).includes('−'));
   // stars: time energy is paid only for stars above the best of the place, funds every time
   const sr = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
@@ -681,11 +681,10 @@ try {
   });
   ok('full mood adds a fifth to the attributes and none takes a fifth away', Math.abs(md.hi - 1.2) < 1e-9 && Math.abs(md.lo - 0.8) < 1e-9);
   ok('a reward costs a day of the wages of that person and adds ten to the mood', md.paid === md.cost && md.cost === md.want && Math.abs(md.mood - 0.1) < 1e-9);
-  ok('the total wages are in the bar at the top', (await page.locator('#res .rv').count()) === 3);
   // the record of one person opens as a pop-up from the tally of stars, and a trip can be archived and brought back
   await go('shop');
   await page.click('.tallylink >> nth=0');
-  ok('the tally of stars opens the record of that person in a pop-up', (await page.locator('#modal #lb-staff_trips').count()) === 1 && (await page.locator('#modal .tally').count()) >= 1);
+  ok('the tally of stars opens the record of that person in a pop-up, with the star of the five attributes', (await page.locator('#modal #lb-staff_trips').count()) === 1 && (await page.locator('#modal .tally').count()) >= 1 && (await page.locator('#modal svg.radar .area').count()) === 1);
   await page.keyboard.press('Escape');
   await go('home');
   const ar = await page.evaluate(() => {

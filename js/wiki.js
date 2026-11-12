@@ -1,6 +1,6 @@
 // Wiki style encyclopedia: a left list with search and tag filter, a right article with links, a back and forward history.
 // Locked articles show as a question mark for visitors. In dev mode they show in full with a hidden mark, and the model categories appear.
-import { staffName, staffTraits, fmtYear, staffProfile } from './narrate.js';
+import { staffName, staffTraits, fmtYear, staffProfile, radarSvg } from './narrate.js';
 
 const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
 
@@ -97,7 +97,7 @@ export function createWiki(X) {
           const stats = ctx.backend.staffStats(id);
           const mini = D.get('staff.attributes').map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
           const traits = staffTraits(D, id).map((t) => a('traits:' + t, T.traits[t])).join(' ');
-          return `<div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><p>${esc(T.staff[id].story || '')}</p><div class="muted">${mini}</div>`;
+          return `<div class="radarwrap">${radarSvg(D, stats)}</div><div class="muted">${esc(staffProfile(D, id))}</div><div class="wrap">${traits}</div><p>${esc(T.staff[id].bio)}</p><p>${esc(T.staff[id].story || '')}</p><div class="muted">${mini}</div>`;
         },
       });
     }

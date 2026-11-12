@@ -334,7 +334,6 @@ body.modal-open { overflow: hidden; }
 /* the story in a pop-up is shown whole, only its history of trips scrolls */
 .storyfull .lscroll { max-height: none !important; overflow: visible; }
 .storyfull .trips { max-height: 180px; overflow: auto; }
-table.pending { width: 100%; }
 
 /* settings and about are pop-ups opened from two icons at the right of the bar */
 #tools { display: flex; gap: 4px; }
@@ -374,3 +373,15 @@ tr.archived td, li.archived, .archived { opacity: .55; }
 /* the filter of a table is its own row above the table */
 .lfilterbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 4px 0; }
 .lfilterbar .fq { width: 150px; }
+
+/* the star of the five attributes */
+.radarwrap { float: right; margin: 0 0 8px 16px; }
+.radar .ring { fill: none; stroke: var(--line); }
+.radar .axis { stroke: var(--line); }
+.radar .area { fill: color-mix(in srgb, var(--stamp) 28%, transparent); stroke: var(--stamp); stroke-width: 2; }
+.radar text { font-size: 11px; fill: var(--ink2); }
+
+/* the trips on the road in two columns, one line each */
+.pendgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; margin-bottom: 4px; }
+@media (max-width: 760px) { .pendgrid { grid-template-columns: 1fr; } }
+.pend { display: flex; align-items: center; gap: 8px; padding: 4px 8px; background: var(--paper2); border: 1px solid var(--line); border-radius: 6px; min-width: 0; overflow: hidden; }

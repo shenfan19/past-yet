@@ -65,7 +65,7 @@ for (const [id, st] of Object.entries(staffAll)) {
   if (!D.get('hiring.skin_tones')[st.skin]) { console.log(id + ' has an unknown skin tone ' + st.skin); bad++; }
   if (!(st.age >= 18 && st.age <= 80)) { console.log(id + ' has an age out of 18 to 80'); bad++; }
   const sum = attrList.reduce((a, k) => a + (st.base[k] ?? 5), 0);
-  if (sum < 22 || sum > 32 || attrList.some((k) => !(st.base[k] >= 1 && st.base[k] <= 10))) { console.log(id + ' has attributes out of range or a total of ' + sum); bad++; }
+  if (sum < 20 || sum > 30 || attrList.some((k) => !(st.base[k] >= 1 && st.base[k] <= 10))) { console.log(id + ' has attributes out of range or a total of ' + sum); bad++; }
   if (new Set(st.traits).size !== st.traits.length || st.traits.length < 1 || st.traits.length > 2) { console.log(id + ' has bad traits'); bad++; }
   seenRegion.add(st.region); seenSkin.add(st.skin); names.add(D.o.text.staff[id].name);
   const stats = sim.staffStats(D, id);

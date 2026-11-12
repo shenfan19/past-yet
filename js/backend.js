@@ -16,6 +16,9 @@ export function createLocalBackend(D) {
   // distance, so the farther in time or space, the less likely. A candidate is found with chance k * w. The trip finds something with
   // chance 1 - the product of (1 - k * w), at most cap, and the one it finds is drawn in proportion to w. The roll is seeded by the dispatch.
   const AF = D.get('config.office.antique_find');
+  // Luck is read where a point or an antique is left to chance: a factor on the chance, one at luck 4, more above and less below, never past max_chance.
+  const LK = D.get('config.office.luck');
+  const luckFactor = (staffId, mood = null) => LK.base + LK.per_point * sim.staffAttrs(D, staffId, mood).luck;
   const rad = (x) => (x * Math.PI) / 180;
   const km = (a, b) => {
     const h = Math.sin(rad(b.lat - a.lat) / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lon - a.lon) / 2) ** 2;
@@ -41,9 +44,9 @@ export function createLocalBackend(D) {
   }
   // An antique that points to a place with a simulation, and is not held yet, is favoured by modelled_place_boost when it is drawn, so the way to a place that can be dispatched to is not buried under the many events that have no model yet.
   // The chance is scaled by the stars of the trip: a quarter of it with none, half with one, three quarters with two, all of it with three.
-  function findAntique(eraId, seed, held = [], stars = 3) {
+  function findAntique(eraId, seed, held = [], stars = 3, luck = 1) {
     const { p, list } = findOdds(eraId);
-    if (!list.length || draw(seed, 'antique_find', eraId) >= p * AF.star_share[Math.max(0, Math.min(3, stars))]) return null;
+    if (!list.length || draw(seed, 'antique_find', eraId) >= Math.min(LK.max_chance, p * AF.star_share[Math.max(0, Math.min(3, stars))] * luck)) return null;
     const all = D.get('antiques.antiques');
     const wt = (x) => x.w * (all[x.id].era && !held.includes(x.id) ? AF.modelled_place_boost : 1);
     const total = list.reduce((a, x) => a + wt(x), 0);
@@ -94,7 +97,7 @@ export function createLocalBackend(D) {
       if (k === 'gender') return staff.gender === v;
       if (k === 'item') return carried.includes(v);
       if (k === 'provides') return carried.some((id) => D.get('items.' + id).provides.includes(v));
-      if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < v;
+      if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < Math.min(LK.max_chance, v * (LK.base + LK.per_point * stats.luck));
       if (k === 'any') return v.some(meets);
       throw new Error('unknown requirement ' + k);
     });
@@ -133,7 +136,7 @@ export function createLocalBackend(D) {
   const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
-    runLight, lightStay, marketMult, recallRefused, recallKeeps,
+    runLight, lightStay, marketMult, luckFactor, recallRefused, recallKeeps,
     findOdds, findAntique,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
