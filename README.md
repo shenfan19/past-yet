@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Prototype. Two simulated eras (London 1854, Vienna 1847), twenty employees, a world map of 200 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
+Prototype. Two simulated eras (London 1854, Vienna 1847), fifty employees with their own stories, a world map of 200 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
 
 ## Run
 
@@ -36,17 +36,19 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Interface
 
-- Time travel: a one sentence introduction and the figures, then a zoomable world map (Natural Earth 110m land, public domain) with a time axis. A pin is a place, a place holds events at different times, and only anchored places are drawn. An anchored place nobody has been to yet is a question mark. Below the map are the events of the picked place with their story, then who goes and what they carry, with the buttons Auto configure, Clear and Send, and then the trips in transit and the recent reports. Each page opens with a bar of links to its sections.
-- Agency: the antiques, the items, the shop paid in funds, the time shop paid in time energy, the employees, and the hiring offer. Antiques are found on trips and anchored to open places, spares can be sold. Items sell at the price they were bought for.
-- Encyclopedia: a wiki with a left list, search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear, with the formulas and variables each event uses.
-- Dev mode: off by default, a switch on the settings page, overridden by `?dev=1` or `?dev=0` in the address.
+- Time travel: the trips on the road first, then a slim row of filters and a zoomable world map (Natural Earth 110m land, public domain) with a time axis, then the log of finished trips. A pin is a place and a place holds events at different times; only anchored places are drawn, and an anchored place nobody has been to yet is a question mark. A pin opens a pop-up with its events, an event opens a pop-up with its story, who goes and what they carry, and a Send button.
+- Buy: the shop paid in funds, the time shop paid in time energy, and the hiring offer of five candidates. Items sell at the price they were bought for.
+- Agency: the employees, the goods and the antiques. Antiques are found on trips and anchored to open places, spares can be sold. Each employee has a mood and a tally of three, two and one star trips, and a click opens the record of that person.
+- Wiki: a left list with search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear.
+- Settings and About are pop-ups from the two icons at the right of the bar. Every list is paged, with no scroll bars.
+- Dev mode: off by default, a switch in Settings, overridden by `?dev=1` or `?dev=0` in the address.
 
 ## Languages
 
 - Language files are `data/i18n/text.<code>.yaml` and `data/i18n/encyclopedia.<code>.yaml`. The structure of the encyclopedia is language neutral in `data/encyclopedia.yaml`.
 - Supported languages are listed in `config.yaml` under `i18n.locales`. English is the fallback and must be complete. Any key another language lacks, a missing file, or a language that is not configured, reads English.
 - The language is picked from `?lang=`, then the saved choice, then the browser language, then English. The selector on the settings page has Follow browser as its default, which clears the saved choice. Choosing a language saves it and reloads, and the page, filters, wiki article and scroll positions come back as they were.
-- The About tab holds the introduction, disclaimer, privacy, how it is driven and credits, in every language.
+- The About pop-up holds the introduction, disclaimer, privacy, how it is driven and credits, in every language.
 - To add a language: add its code to `i18n.locales`, copy `text.en.yaml` and `encyclopedia.en.yaml` to the new code, translate what you want, leave the rest.
 - `node tools/check_i18n.mjs` compares the files with English (missing keys, stray keys, placeholders that differ) and tests the fallback.
 
@@ -55,7 +57,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - `data/catalog.yaml` lists 200 events across the world, half of them regrets, mostly science, technology, philosophy, art and ideas, each with a place, a year and a field. Names, stories and relics are in the language files under `catalog`.
 - Each event has a relic, made into an antique when the data loads. A relic is found on trips and makes its event readable in the map and the wiki. Two events have a full branch simulation. The others are played as small stories, a trip of the traveller against the event with no kit and no branch, which pays by how it went.
 - The map groups nearby events into one pin, and the grouping radius shrinks as you zoom in. The time axis spreads recent years and compresses the deep past.
-- `data/staff.yaml` has twenty employees with a gender, an age and a job, and six traits. Event summaries are written from general knowledge and unchecked, the wiki marks them so.
+- `data/staff.yaml` has fifty employees, each with a gender, an age, a region, a job, five attributes, one or two of six traits and a life story, spread over the world roughly as people are. Event summaries are written from general knowledge and unchecked, the wiki marks them so.
 
 ## Engine boundary
 

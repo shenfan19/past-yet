@@ -16,14 +16,18 @@ The goal is to collect enough time energy to go back to your own time and see yo
 4. When they come home, read the report. It brings funds, time energy and sometimes an antique.
 5. Use antiques to open new places, funds to buy supplies, and time energy to buy future goods or to go home.
 
-## Pages
+## Pages and pop-ups
 
-- Time travel: one sentence of introduction, a bar of links to its sections (the places, who goes, the dispatch log), the world map with its time axis, at full width, and under it the events of the picked place as an accordion, one open at a time, the open one showing its story at full width. Under them are who goes and what they carry, two boxes of one height with the employees as compact two line cards, the buttons Auto configure, Clear and Send, and then one table of dispatches, the ones still out first with Recall and Collect, then the finished ones with their report.
-- The funds and the time energy are icons at the right of the navigation bar on every page.
-- Agency: a bar of links to its sections, then the antiques, the items, the shop, the time shop, the employees and the hiring offer. The list can be filtered by text and by tag.
-- Encyclopedia: a wiki of people, events, places, items and employees, linked and filterable. Entries not yet encountered show as a question mark.
-- Settings: language, theme, sound and music volume, save export and import, and an advanced section, with a bar of links to its sections. The advanced section holds dev mode, off by default, which shows hidden entries and a seed field. `?dev=1` or `?dev=0` in the address overrides it.
-- About: introduction, disclaimer, data and privacy, contribution, author, credits and licence, with a bar of links to its sections.
+- The bar holds four pages, Time travel, Buy, Agency and Wiki. At its right are the funds and the time energy as icons, and two icons that open the pop-ups Settings and About.
+- Time travel: one sentence of introduction. Then what needs the player first, the trips on the road and the ones waiting to be claimed, as a list, those that are home first. Then one slim row of filters over the map: a search box, More filters (years, stars, tags, which open as a panel in the page and never lie over the map), a Counts switch that puts on each pin the number of events it holds under the filters in force, and a question mark with the hints. Then the world map with its time axis, and at the bottom the log of finished trips. Picking a pin opens a pop-up with the events of that place in a grid of columns, and picking an event there opens the dispatch pop-up with the story shown whole, who goes, what they carry, Auto configure, Clear and Send, and a way back to the list. A place with one event goes straight to the dispatch pop-up. Sending closes the pop-up and the trip shows at the top.
+- Buy: the modern shop paid in funds, the future shop paid in time energy, and the hiring offer, one under the other. Antiques are found, not bought.
+- Agency: the employees, the goods and the antiques, one under the other. Antiques are anchored here and spares sold. Each employee shows the mood and a tally of three, two and one star trips as a/b/c; a click on it opens the record of that person in a pop-up, with the life story, the attributes of the day and every trip, a page at a time.
+- Wiki: people, events, places, items and employees, linked and filterable. Entries not yet encountered show as a question mark. An employee has a page with the life story once on offer or hired.
+- Settings (pop-up): language, theme, sound and music volume, save export and import, and an advanced section with dev mode, off by default, which shows hidden entries and a seed field. `?dev=1` or `?dev=0` in the address overrides it. A language switch reloads the page and the pop-up stays open.
+- About (pop-up): introduction, disclaimer, data and privacy, contribution, author, credits and licence.
+- Lists: there are no scroll bars. Every list, including the trips on the road and the log, shows a page of rows, five by default, and the page size and page number sit at its top right (`ui.page_sizes`: five, ten, twenty or fifty, picked for each list). The pager shows only when a list is longer than the shortest page. One item or one person is one line, with the description in a column of its own, cut short with the whole text in the tooltip. The list of what is carried in the dispatch pop-up is the one exception, a small box of fixed height that scrolls.
+- Pop-ups: one at a time, in the middle of the screen. A click on the dark ground, the cross or Escape closes it. Going to the wiki or to a report from a pop-up records the pop-up on the page that is left, so Back brings it back. Pop-ups hold short tasks and read-only material; what is read for long or linked from everywhere is a page.
+- Looks: section titles are larger and bold with a red bar, and buttons are small, so the columns stay narrow. Two levels of navigation at most, and no tabs inside a page.
 
 ## Clock and pace
 
@@ -31,26 +35,26 @@ Time runs in game days. At 1x one real minute is one game day. The speeds are pa
 
 ## Employees
 
-- Three employees are hired at the start. Each has a gender, an age, a job, five attributes from 1 to 10 and traits. The five attributes are constitution, wit, finesse, will and desire, and there is nothing hidden behind them. Wit covers knowledge and curiosity, finesse covers eloquence and a light hand, will covers stubbornness and its opposite, homesickness, and desire covers greed and, in reverse, kindness. A weak will means homesickness and being hurt by hostility, a weak constitution means catching disease, and a high desire means greed and less kindness. The era models were written against finer quantities, so each of those is a plain function of one attribute, listed in `staff_rules.yaml`, and at 5 each is what the models always had.
+- Three employees are hired at the start. Each has a gender, an age, a region, a job, five attributes from 1 to 10 and traits, and a short life story of their own. The five attributes are order, wit, constitution, finesse and will, and there is nothing hidden behind them. Wit covers knowledge and curiosity, finesse covers eloquence and a light hand, will covers stubbornness and its opposite, homesickness, and constitution covers stamina and catching disease. Order is not a verdict on a person: a high order leans to the orderly, keeping rules, plans and promises, a low order leans to the chaotic, improvising, defying and acting alone, and some things in history only the second kind could do. It is not yet read by the models; scenes will ask for either end of it. A trait is worth something at the sync points of a place and costs something there. Three three star trips of an employee give one point to a random attribute of theirs, up to 10. What an employee has brought in is kept as a tally of three, two and one star trips, shown as a/b/c, and never as a list that grows.
 - Letting someone go removes them from the staff list, and hiring them again costs the fee again. The last employee and anyone who is away cannot be let go.
-- Favor: a bonus raises it, a good trip raises it, failure, giving up and a recall lower it. A high favor makes an employee slower to get homesick and give up.
-- Secretary: one employee can stay at the agency as secretary. They stop travelling and their traits give the agency bonuses to funds income, time energy income, rest time and favor growth. In auto mode the secretary has a preference, and the auto results either suit it or do not.
+- Mood (called favor in the code): it is tied to how the trips go, from 0 to 100, starting at 50. Every success raises it a little, every failure lowers it, and so do giving up and a recall. Every attribute follows it: up to 20% more at full mood and 20% less at none (`favor.buff`), so a trip is run on the attributes of that day. A reward costs a month of that person's wages and adds 50. A high mood also makes an employee slower to get homesick and give up.
+- Secretary: one employee can stay at the agency as secretary. They stop travelling and their traits give the agency bonuses to funds income, time energy income, rest time and mood growth. In auto mode the secretary has a preference, and the auto results either suit it or do not.
 - Only one employee can be in a place at a time, because the simulation holds one traveller per place.
 
 ### Traits
 
-There are six traits: kind, stubborn, curious, silver tongued, sensitive and bold. A trait does not change the attributes. It is worth something at the sync points of a place and costs something there. Each sync point is about one kind of thing, persuading, winning trust, noticing, holding on, enduring or caring, and the traits of an employee add up to a bonus for each kind. A point that was missed is still reached with the chance of a positive bonus, and a negative bonus can lose a point that was reached. The draw is seeded. Two traits also carry a weakness of their own: a kind employee is more easily hurt by hostility, and a sensitive one catches disease more easily. A check fails the build if a trait has only gains or only costs, or if it changes an attribute. A trait may also carry a secretary perk, and the stubborn one cuts the rest days after a hard trip.
+There are six traits: kind, stubborn, curious, silver tongued, sensitive and bold. A trait does not change the attributes. It is worth something at the sync points of a place and costs something there. Each sync point is about one kind of thing, persuading, winning trust, noticing, holding on, enduring or caring, and the traits of an employee add up to a bonus for each kind. A point that was missed is still reached with the chance of a positive bonus, and a negative bonus can lose a point that was reached. The draw is seeded. Two traits also carry a weakness of their own: a kind employee is more easily hurt by hostility, and a sensitive one catches disease more easily. The kind trait also adds kindness, which the models read for bedside manner. A check fails the build if a trait has only gains or only costs, or if it changes an attribute. A trait may also carry a secretary perk, and the stubborn one cuts the rest days after a hard trip.
 
 ### Hiring
 
 - Everyone hired is paid a daily wage, idle or not: headcount x 3 x (1 + 0.25 x (headcount - 1)), so each further hire costs more than the one before and the office settles at three or four people. A day that cannot be paid empties the funds and costs every employee a little favor. Antiques sell at the card price times a market factor that moves within +-30% every 30 days, per field.
-- Two candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
-- A candidate is made from one serial number. A region sets the name and the likely skin tones, among fourteen regions across the world, then come gender, age, a job from a list of forty, abilities within a range, and one or two different traits. The names, jobs, regions and skin tones are rows in `cards/config/hiring.yaml` and can be added to freely, so combinations are in the thousands. A small share of the offers are the hand written employees.
-- Every made employee goes into the encyclopedia the moment they are made, with both language texts in the save, so a switch of language keeps their names. The latest 200 are kept, and anyone on offer or ever hired stays.
+- Five candidates are on offer, like the recruits of a strategy game. Everything is shown before hiring: name, region, skin tone, gender, age, job, abilities, and every trait with what it gives and what it costs. Hiring one brings another, and every seven game days the whole offer is replaced.
+- There are fifty employees in all, each a card of `cards/staff`, spread over the world roughly as people are: more from China and India, and from every region, of every skin tone, gender and age from eighteen to seventy-six. The candidates on offer are drawn with a seed from the ones not hired. The regions and skin tones are rows in `cards/config/hiring.yaml`.
+- Every employee has a page in the encyclopedia with the life story, unlocked once they are on offer or hired.
 
 ### Recall
 
-A trip can be cut short with the Recall button on a trip in transit. It is a request. If the employee agrees they come home at once, the story stops where it is, and they bring back a share of the pay in proportion to how far the trip had got, a chance of keeping the antique in the same proportion, and a loss of favor. They refuse if their outcome was to stay behind, or by a roll at a base chance that is zero for now. A refusal is final for that trip, and they carry on.
+A trip can be cut short with the Recall button on a trip in transit. It is a request. If the employee agrees they come home at once, the story stops where it is, and they bring back a share of the pay in proportion to how far the trip had got, a chance of keeping the antique in the same proportion, and a loss of mood. They refuse if their outcome was to stay behind, or by a roll at a base chance that is zero for now. A refusal is final for that trip, and they carry on.
 
 ## The simulation of a trip
 
@@ -87,14 +91,14 @@ A catalogue event without a model is played as a small story. The traveller's ab
 
 ### Anchoring and selling
 
-- An antique that opens a place must be anchored in the stock list of the shop page. Anchoring opens the place. An anchored copy cannot be sold.
+- An antique that opens a place must be anchored in the antiques list of the Agency page. Anchoring opens the place. An anchored copy cannot be sold.
 - The same antique can come back more than once. Copies beyond the first are spares. Spares can be sold one by one, or all at once with one button.
 - An anchor cannot be released while someone is away at that place, and the last open place cannot be released.
 - A spare sells for the price of the antique. Each copy is therefore either money or a door.
 
 ## Money and energy
 
-- Funds pay the hiring fee and buy modern supplies. They come from trips and from selling spare antiques and goods.
+- Funds pay the hiring fee, the daily wages and the modern supplies. They come from trips and from selling spare antiques and goods.
 - Time energy buys future goods and is also the progress toward going home, so spending it lowers the progress.
 - Every item sells at the price it was bought for, in the currency of its shop, at any time and with no loss. Spare antiques sell for their price too.
 - Goods sent on a trip come home with the traveller, unless the story uses them up. Supplies and the handbook are spent. The recall charm is spent only when a trip ends in near death, and the heart monitor is lost then unless a charm was carried. Future goods are never lost.
@@ -118,12 +122,15 @@ The main line is the time energy the agency holds, in five stages at 0, 80, 240,
 
 ## Auto mode
 
-Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to a free place, with a kit chosen by simple rules. The place is chosen by the first of four rules that leaves any candidate, and a seeded draw picks among the candidates:
+Full auto collects reports, anchors every found antique that opens a place, sells spare antiques when the funds fall below a limit, restocks the supplies it has targets for, and sends every idle employee to a free place, with a kit chosen by simple rules. The place is chosen by the first of five rules that leaves any candidate, and a seeded draw picks among the candidates:
 
 1. A place nobody has come back from yet.
-2. A visited place whose best result is below three stars, which this employee has tried fewer than three times.
-3. The earliest of the places that lie earlier in history than any this employee has been sent to.
-4. Any free place.
+2. A visited story where this employee, with the equipment the office has or could buy, would beat the best stars.
+3. A visited place whose best result is below three stars, which this employee has tried fewer than three times (counted from the lines of the log, which are kept for good).
+4. The earliest of the places that lie earlier in history than any this employee has been sent to.
+5. Any free place.
+
+For a story the auto mode tries every set of the special equipment it owns, or could buy, with the very seed the trip will have, and takes the set that earns the most stars, the cheaper and lighter first. It buys only what that set needs and the owned sets cannot match, and only a piece whose price is at most `auto.item_buy.energy_share` of the energy in hand, because the time shop is paid in the same time energy that takes the boss home.
 
 It only touches funds, antiques and dispatches. Employees do not die.
 
@@ -184,16 +191,7 @@ A catalogue event with `regret: true` is a story history treated unjustly: an ea
 
 ## Log, reports and the history of a place
 
-The log of dispatches scrolls in its own box and is read from the one line summary of every trip, which is kept for good up to `office.max_trips`, so the log never loses a row. Full reports are kept per place: the best one (most stars, then the newest, `office.keep_best`) and the latest (`office.keep_latest`), so a report that is not among them can no longer be opened, but its line stays. There is nothing to archive or delete by hand. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome.
+The log of dispatches is read from the one line summary of every trip, which is kept for good up to `office.max_trips`, so the log never loses a row. Full reports are kept per place: the best one (most stars, then the newest, `office.keep_best`) and the latest (`office.keep_latest`), so a report that is not among them can no longer be opened, but its line stays. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome.
 
-## The agency page
+A trip can be archived, by itself or by a rule: the failed ones, or all but the best of each place. Archiving hides it from the log and lets go of its stored report; the line and the stars stay, and Restore brings the line back. A switch shows the archived ones dimmed. There is no delete, because the lines are small and bounded and the tally of stars must not lose what it counted.
 
-The agency page is one page with two groups of three tabs, shown one at a time. Buy: the modern shop, the future shop and the hiring offer. Held: the employees, the goods and the antiques. In the lists one item or one person is one line, with the description in a column of its own, cut short with the whole text in the tooltip. A candidate on offer is one row with background, abilities and traits, and each trait shows what it gives and costs in its tooltip.
-
-## Pop-ups and the dispatch desk
-
-The home page puts what needs the player first: the trips on the road and the ones waiting to be claimed, then the map with its search box (the other filters fold away under More filters), the events of the picked place right under it, and the log of finished trips at the bottom. Picking an event on the map or in its list does not unfold anything on the page. It opens a pop-up with the story, who goes, what they carry and the send button, so a trip is made in one place. Sending closes the pop-up and the trip shows at the top of the log below. The story is shown whole and the pop-up sits in the middle of the screen. A click on the dark ground, the cross or Escape closes any pop-up. The lists on the agency page are tall, up to three quarters of the screen.
-
-## Auto mode and equipment
-
-For a story the auto mode tries every set of the special equipment it owns, or could buy, with the very seed the trip will have, and takes the set that earns the most stars, the cheaper and lighter first. It buys only what that set needs and the owned sets cannot match, and only a piece whose price is at most `auto.item_buy.energy_share` of the energy in hand, because the time shop is paid in the same time energy that takes the boss home. A visited story where the traveller, with the equipment the office has or could buy, would beat the best stars comes before a plain second try.

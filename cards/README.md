@@ -14,12 +14,15 @@ A card holds the structure of a thing and its text in every language, so changin
 order: 5                 # sort order inside the folder, required on every card
 gender: f
 age: 38
-base: {skill: 0.55}
-traits: [kind, patient]
+region: west_africa      # a region named in config/hiring.yaml
+skin: t6                 # a skin tone named in config/hiring.yaml
+base: {lawful: 5, wit: 7, constitution: 5, finesse: 6, will: 6}   # order, wit, constitution, finesse, will, 1 to 10
+traits: [kind]           # one or two of the traits in traits/
+job_id: midwife
 start_hired: false
 text:
-  en: {name: Amara Okafor, job: Midwife, bio: ...}    # the fallback language, required
-  zh: {name: 阿玛拉·奥卡福, job: 助产士, bio: ...}   # any other language, may be left out
+  en: {name: Amara Okafor, job: Midwife, bio: ..., story: ...}    # the fallback language, required
+  zh: {name: 阿玛拉·奥卡福, job: 助产士, bio: ..., story: ...}   # any other language, may be left out
 ```
 
 The file name is the id. A card with `id:` inside must match its file name.
@@ -41,7 +44,7 @@ Languages are the codes in `config/config.yaml` under `i18n.locales`. A language
 
 To add:
 - an event: copy a card in `events/`, give it the next `order`, write the text. Its relic becomes an antique when the game loads.
-- an employee: copy a card in `staff/`, choose traits from `traits/`.
+- an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, and write a short life story that fits the age and the place. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, and that every region and skin tone is used.
 - a language: add its code to `i18n.locales`, then add that language under `text:` in the cards you want to translate and add `text/<lang>/` files. Nothing is required, English fills the gaps.
 
 After any change run the build, then `node tools/check_i18n.mjs` and `node tools/ui_check.mjs`.
