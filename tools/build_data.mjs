@@ -106,7 +106,7 @@ for (const id of config.eras) {
 for (const id of eraDirs) if (!config.eras.includes(id)) fail(`cards/eras/${id} is not in config.eras`);
 
 // ---------- encyclopedia ----------
-const sectionNames = ['places', 'people', 'events', 'stories'];
+const sectionNames = ['places', 'people', 'events'];
 const refCards = cards('wiki/refs');
 const modelEventCards = cards('wiki/model_events');
 const statCards = cards('wiki/stats');

@@ -55,9 +55,19 @@ export function createWiki(X) {
     const eraTitle = (eraId) => T.eras[eraId].name;
 
     for (const e of sec('places')) add({ id: 'places:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
-    for (const e of sec('people')) add({ id: 'people:' + e.id, cat: 'people', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
+    // a person with `events` is the figure of those catalogue events: the page opens with the first event, takes its tags and links to every one
+    const personOf = {};
+    for (const e of sec('people')) {
+      const evs = e.events || [];
+      for (const ev of evs) personOf[ev] = e.id;
+      add({
+        id: 'people:' + e.id, cat: 'people', title: e.name,
+        tags: evs.length ? D.get('antiques.antiques.relic_' + evs[0] + '.tags') : e.tags,
+        unlock: evs.length ? { anchored: 'relic_' + evs[0] } : e.unlock, refs: evs.length ? ['catalog'] : e.refs,
+        body: () => `<p>${link(e.text)}</p>${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`,
+      });
+    }
     for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
-    for (const e of sec('stories')) add({ id: 'stories:' + e.id, cat: 'virtual', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
 
     // the catalogue: famous events with a relic each, readable once the relic is owned
     for (const ev of D.get('catalog.events')) {
@@ -65,7 +75,7 @@ export function createWiki(X) {
       const relicId = 'relic_' + ev.id;
       add({
         id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { anchored: relicId }, refs: ['catalog'],
-        body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.small_story.replace('{n}', String(ctx.backend.lightStay(ev.id)))}</div>`,
+        body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${personOf[ev.id] && byId('people:' + personOf[ev.id]) && open(byId('people:' + personOf[ev.id])) ? a('people:' + personOf[ev.id], c.figure) : esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.small_story.replace('{n}', String(ctx.backend.lightStay(ev.id)))}</div>`,
       });
     }
 
@@ -130,15 +140,6 @@ export function createWiki(X) {
       });
     }
 
-    for (const eraId of eraIds()) {
-      for (const [pid, p] of Object.entries(ctx.era(eraId).plots)) {
-        const px = T.eras[eraId].plots[pid];
-        add({
-          id: `plots:${eraId}:${pid}`, cat: 'virtual', title: px.name, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: ['game'],
-          body: () => `<p>${esc(px.desc)}</p><div>${W.in_era}${COLON}${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div><div>${U.dispatch.character}${COLON}${a(px.article, px.character)}</div><div>${U.dispatch.tech}${COLON}${p.tech} / ${ctx.era(eraId).tech} ${p.tech <= ctx.era(eraId).tech ? '' : '<span class="chip warn">' + U.dispatch.tech_low + '</span>'}</div>`,
-        });
-      }
-    }
 
     for (const [id, an] of Object.entries(D.get('antiques.antiques'))) {
       const tx = T.antiques[id];

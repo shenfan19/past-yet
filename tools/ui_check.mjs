@@ -329,6 +329,10 @@ try {
   ok('model event lists formulas in dev', (await page.locator('#wiki-article').innerText()).includes('用到的公式'));
   await page.locator('#wiki-article a.wl').nth(1).click();
   await page.screenshot({ path: path.join(outDir, '9_wiki.png'), fullPage: true });
+  // every catalogue event has its figure in the people of the wiki, and there are no virtual stories any more
+  const peopleInfo = await page.evaluate(() => { const D = window.__game.D; const covered = new Set(D.get('encyclopedia.sections.people').flatMap((p) => p.events || [])); return { missing: D.get('catalog.events').filter((e) => !covered.has(e.id)).length, sections: Object.keys(D.get('encyclopedia.sections')).join() }; });
+  ok('every catalogue event has its person in the wiki', peopleInfo.missing === 0);
+  ok('the wiki has no virtual stories', !peopleInfo.sections.includes('stories') && (await page.locator('.wcat[data-cat=virtual]').count()) === 0);
   // hire, then guest mode
   await go('shop');
   await sub('hire');

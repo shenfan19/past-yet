@@ -34,7 +34,7 @@ The file name is the id. A card with `id:` inside must match its file name.
 | `events/` | a famous event with its relic | `data/catalog.yaml` |
 | `staff/`, `traits/` | an employee, a trait | `data/staff.yaml` |
 | `mainline/` | a stage of the main line | `data/mainline.yaml` |
-| `wiki/places`, `people`, `events`, `stories` | a hand written wiki article | `data/encyclopedia.yaml` and its text |
+| `wiki/places`, `people`, `events` | a hand written wiki article; a person card with `events: [ids]` is the figure of those catalogue events and opens, takes its tags and links with them | `data/encyclopedia.yaml` and its text |
 | `wiki/stats`, `model_events`, `refs` | an attribute with its double edge, a model event, a source | the same |
 | `eras/<id>/` | `model.lm.yaml` the simulation model, `text.<lang>.yaml` the text of the era | `data/eras/<id>.lm.yaml` and the text files |
 | `text/<lang>/` | a piece of interface text, merged by key | `data/i18n/text.<lang>.yaml` |
