@@ -63,6 +63,7 @@ export function createOffice(X) {
     const antique = ctx.backend.findAntique(eraId, full.seed, s.antiques, report.stars, ctx.backend.luckFactor(full.staffId, s.staff[full.staffId].favor));
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
+    if (s.seq === 1) startClock();
     const stay = E.vars[E.roles.stay].value;
     const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
     s.dispatches.push(d);
@@ -80,6 +81,7 @@ export function createOffice(X) {
     const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
     for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
     s.seq += 1;
+    if (s.seq === 1) startClock();
     const d = {
       id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
       report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
@@ -425,6 +427,29 @@ export function createOffice(X) {
   }
 
   // ---------- clock ----------
+  // The speed the clock really runs at: when the funds pay fewer than low_funds_days days of wages it is held to low_funds_speed.
+  const lowFunds = () => hiredIds().length > 0 && S().funds < C.low_funds_days * wageTotal();
+  const effectiveSpeed = () => { const sp = S().clock.speed; return lowFunds() ? Math.min(sp, C.low_funds_speed) : sp; };
+  // While a pop-up is open the clock stands still, and the speed that was set comes back when it closes.
+  function holdClock() {
+    const c = S().clock;
+    if (c.resume != null) return;
+    c.resume = c.speed;
+    c.speed = 0;
+    ctx.save();
+  }
+  function releaseClock() {
+    const c = S().clock;
+    if (c.resume == null) return;
+    if (c.speed === 0) c.speed = c.resume;
+    c.resume = null;
+    ctx.save();
+  }
+  // The clock stands still until the first trip goes out, because nothing happens before it and the wages would only run down the funds.
+  function startClock() {
+    const c = S().clock;
+    if (c.resume != null) c.resume = C.speeds[1]; else c.speed = C.speeds[1];
+  }
   function setSpeed(i) { S().clock.speed = C.speeds[i]; ctx.save(); }
   function togglePause() {
     const c = S().clock;
@@ -435,10 +460,13 @@ export function createOffice(X) {
   function advance(seconds) {
     const s = S();
     if (s.clock.speed > 0) {
-      const dt = (s.clock.speed * seconds) / C.sec_per_day;
+      const dt = (effectiveSpeed() * seconds) / C.sec_per_day;
       s.clock.day += dt;
     }
+    const unpaid0 = s.unpaidDays || 0;
     payWages();
+    // an unpaid day stops the clock and asks for a decision
+    if ((s.unpaidDays || 0) > unpaid0) { s.clock.speed = 0; s.brokeNew = true; }
     refreshHire();
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
@@ -589,5 +617,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }
