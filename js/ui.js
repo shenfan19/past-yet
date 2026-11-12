@@ -242,24 +242,27 @@ export function createUI(D, ctx) {
     const c = ctx.S().clock;
     const C = D.get('config.clock');
     const al = office.alerts();
-    clockParts.day.textContent = U.clock.day.replace('{n}', String(Math.floor(c.day) + 1));
+    // a ring that fills once a day, so the passing of time can be seen at any speed
+    const frac = c.day - Math.floor(c.day), circ = 2 * Math.PI * 7;
+    setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg>${esc(U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}`);
     const speeds = C.speeds.map((sp, i) => `<option value="${i}" ${c.speed === sp ? 'selected' : ''}>${sp === 0 ? '⏸ ' + U.clock.pause : sp + '×'}</option>`).join('');
-    const noStop = !ctx.settings.get('pause_on_report');
-    setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label><label${tip(U.clock.nostop_tip)}><input type="checkbox" data-clk="nostop" ${noStop ? 'checked' : ''}> ${esc(U.clock.nostop)}</label></span>`);
-    setHtml(clockParts.chip, c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>` : '');
+    setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label></span>`);
+    const first = ctx.S().seq === 0 && c.speed === 0;
+    setHtml(clockParts.chip, c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>`
+      : first ? `<span class="chip"${tip(U.clock.start_tip)}>${U.clock.start_hint}</span>`
+      : office.lowFunds() && c.speed > office.effectiveSpeed() ? `<span class="chip warn"${tip(U.clock.low_tip)}>${U.clock.low_funds.replace('{n}', String(office.effectiveSpeed()))}</span>` : '');
   }
   clockEl.addEventListener('change', (ev) => {
     const b = ev.target.closest('[data-clk]');
     if (!b) return;
     const c = ctx.S().clock;
     if (b.dataset.clk === 'speed') office.setSpeed(Number(b.value));
-    else if (b.dataset.clk === 'nostop') ctx.settings.set('pause_on_report', !b.checked);
     else { c.auto = b.checked; if (c.auto && c.speed === 0) office.setSpeed(1); ctx.save(); }
     renderClock();
     renderTabs();
   });
   document.addEventListener('keydown', (ev) => {
-    if (ev.code !== 'Space' || /INPUT|TEXTAREA|SELECT/.test(ev.target.tagName)) return;
+    if (ev.code !== 'Space' || st.modal || /INPUT|TEXTAREA|SELECT|BUTTON/.test(ev.target.tagName)) return;
     ev.preventDefault();
     office.togglePause();
     renderClock();
@@ -754,6 +757,7 @@ export function createUI(D, ctx) {
   function modalBody() {
     const m = st.modal;
     if (!m) return '';
+    if (m.kind === 'broke') return `<div class="mbox narrow"><h2>${esc(U.clock.broke_title)}</h2><p>${esc(U.clock.broke_text)}</p><p class="row" style="justify-content:flex-end"><button class="primary" data-act="modalclose">${esc(U.clock.broke_ok)}</button></p></div>`;
     if (m.kind === 'welcome') return `<div class="mbox narrow welcomebox">${welcomeHtml()}</div>`;
     if (m.kind === 'wiki') return `<div class="mbox wide wikibox">${wiki.html()}</div>`;
     if (m.kind === 'settings') return `<div class="mbox narrow">${settingsPage.html()}</div>`;
@@ -766,6 +770,7 @@ export function createUI(D, ctx) {
   }
   function renderModal() {
     const inner = modalBody();
+    if (inner) office.holdClock(); else office.releaseClock();
     const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', st.modal.kind === 'welcome' ? '<div class="mbox' : `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
     document.body.classList.toggle('modal-open', !!html);
     if (html === modalLast) return;
@@ -992,9 +997,32 @@ export function createUI(D, ctx) {
     render();
   });
 
+  // A return shows a note that fades by itself, with the seconds left drawn as a bar, and the reports wait on the home page.
+  const toastEl = document.createElement('div');
+  toastEl.id = 'toasts';
+  document.body.appendChild(toastEl);
+  function showReturns(list) {
+    const names = list.map((d) => staffName(D, d.spec.staffId));
+    const text = names.length > 2 ? U.clock.back_many.replace('{a}', names[0]).replace('{b}', names[1]).replace('{n}', String(names.length - 2)) : names.length === 2 ? U.clock.back_two.replace('{a}', names[0]).replace('{b}', names[1]) : U.clock.back_one.replace('{a}', names[0]);
+    const sec = D.get('config.ui.toast_seconds');
+    const el = document.createElement('div');
+    el.className = 'toast';
+    el.innerHTML = `<span>${esc(text)}</span> <button class="ghost" data-act="toastgo">${esc(U.clock.back_view)}</button><i style="animation-duration:${sec}s"></i>`;
+    toastEl.appendChild(el);
+    while (toastEl.children.length > 3) toastEl.removeChild(toastEl.firstChild);
+    setTimeout(() => el.remove(), sec * 1000);
+  }
+  toastEl.addEventListener('click', (ev) => {
+    if (!ev.target.closest('[data-act=toastgo]')) return;
+    toastEl.innerHTML = '';
+    st.modal = null; st.sub = null; st.tab = 'home';
+    render();
+  });
+
   function tick() {
     const fresh = office.advance(D.get('config.ui.refresh_ms') / 1000);
-    if (fresh.length) ctx.audio.sfx('ready');
+    if (fresh.length) { ctx.audio.sfx('ready'); showReturns(fresh); }
+    if (ctx.S().brokeNew) { ctx.S().brokeNew = false; st.modal = { kind: 'broke' }; ctx.save(); render(); }
     if (ctx.S().clock.auto) office.autoStep();
     if (pressed) return;
     renderClock();

@@ -393,3 +393,12 @@ tr.archived td, li.archived, .archived { opacity: .55; }
 .welcome .startstaff li { margin: 0 0 8px; }
 .welcome .startstaff li button { min-width: 26px; padding: 0 6px; }
 .welcome .startstaff li.on b { color: var(--accent, inherit); }
+
+/* the day ring in the clock, and the notes that show a return */
+#clock .ring { width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
+#clock .ring .rb { fill: none; stroke: var(--line, #cdbf9f); stroke-width: 2; }
+#clock .ring .rf { fill: none; stroke: var(--stamp); stroke-width: 2; stroke-linecap: round; }
+#toasts { position: fixed; right: 14px; bottom: 14px; z-index: 40; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; pointer-events: none; }
+.toast { position: relative; overflow: hidden; pointer-events: auto; background: var(--card, #f8f2e3); border: 1px solid var(--line, #cdbf9f); border-radius: 6px; padding: 7px 10px 9px; box-shadow: 0 2px 8px rgba(0,0,0,.18); font-size: 13px; }
+.toast i { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--stamp); transform-origin: left; animation-name: toastbar; animation-timing-function: linear; animation-fill-mode: forwards; }
+@keyframes toastbar { from { transform: scaleX(1); } to { transform: scaleX(0); } }

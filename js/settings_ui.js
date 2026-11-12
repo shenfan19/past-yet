@@ -3,7 +3,7 @@ export function createSettingsPage(X) {
   const { D, ctx, U, esc, DEV } = X;
   const S = ctx.settings;
   const P = U.settings;
-  const sections = ['appearance', 'sound', 'data', 'advanced'];
+  const sections = ['appearance', 'sound', 'game', 'data', 'advanced'];
   const row = (label, control, note) => `<div class="srow"><div class="slabel">${esc(label)}${note ? `<div class="muted small">${esc(note)}</div>` : ''}</div><div class="sctl">${control}</div></div>`;
   const slider = (key) => `<input type="range" min="0" max="1" step="0.05" value="${S.get(key)}" data-set="${key}" aria-label="${esc(P.sound[key])}"> <span class="muted" data-out="${key}">${Math.round(S.get(key) * 100)}</span>`;
   const check = (key) => `<input type="checkbox" data-set="${key}" ${S.get(key) ? 'checked' : ''}>`;
@@ -20,6 +20,7 @@ export function createSettingsPage(X) {
         + row(P.sound.music_volume, slider('music_volume')) + row(P.sound.sfx_volume, slider('sfx_volume'))
         + row(P.sound.autostart, check('music_autostart')) + row(P.sound.try, sfxButtons)
         + `<div class="muted small">${esc(P.sound.credit.replace('{source}', cr.source).replace('{license}', cr.license))}</div>`,
+      game: row(P.game.pause_on_report, check('pause_on_report'), P.game.pause_on_report_note),
       data: `<div class="muted small">${esc(P.data.note)}</div>`
         + row(P.data.export, `<button data-act="saveexport">${esc(P.data.export)}</button>`)
         + row(P.data.import, `<input type="file" accept="application/json,.json" data-act="saveimport" aria-label="${esc(P.data.import)}">`)

@@ -499,13 +499,6 @@ events:
     region: europe
     field: science
     tier: 3
-  - id: picasso_paris
-    year: 1907
-    lon: 2.34
-    lat: 48.86
-    region: europe
-    field: art
-    tier: 3
   - id: fleming_london
     year: 1928
     lon: -0.17
@@ -526,20 +519,6 @@ events:
     lat: 59.33
     region: europe
     field: science
-    tier: 2
-  - id: franklin_cambridge
-    year: 1953
-    lon: 0.12
-    lat: 52.2
-    region: europe
-    field: science
-    tier: 3
-  - id: berners_lee_geneva
-    year: 1989
-    lon: 6.14
-    lat: 46.2
-    region: europe
-    field: technology
     tier: 2
   - id: cajal_barcelona
     year: 1889
@@ -685,36 +664,6 @@ events:
     lat: 39.65
     region: asia
     field: science
-    tier: 2
-  - id: achebe_lagos
-    year: 1958
-    lon: 3.39
-    lat: 6.52
-    region: africa
-    field: literature
-    tier: 2
-    scene:
-      points:
-        - id: p1
-          kind: care
-          req:
-            trait:
-              - kind
-        - id: p2
-          kind: persuade
-          req:
-            stat:
-              finesse: 6
-        - id: p3
-          kind: trust
-          req:
-            luck: 0.5
-  - id: maathai_nairobi
-    year: 1977
-    lon: 36.82
-    lat: -1.29
-    region: africa
-    field: thought
     tier: 2
   - id: laozi_hangu
     year: -500
@@ -944,13 +893,6 @@ events:
     region: asia
     field: math
     tier: 3
-  - id: raman_calcutta
-    year: 1928
-    lon: 88.36
-    lat: 22.57
-    region: asia
-    field: science
-    tier: 2
   - id: franklin_philadelphia
     year: 1752
     lon: -75.16
@@ -1021,13 +963,6 @@ events:
     region: americas
     field: thought
     tier: 2
-  - id: apollo_cape_canaveral
-    year: 1969
-    lon: -80.6
-    lat: 28.5
-    region: americas
-    field: exploration
-    tier: 3
   - id: bell_boston
     year: 1876
     lon: -71.06
@@ -1066,33 +1001,6 @@ events:
           kind: care
           req:
             item: elixir
-  - id: hokulea_honolulu
-    year: 1976
-    lon: -157.86
-    lat: 21.31
-    region: oceania
-    field: exploration
-    tier: 2
-    scene:
-      points:
-        - id: p1
-          kind: endure
-          req:
-            stat:
-              constitution: 5
-        - id: p2
-          kind: hold
-          req:
-            any:
-              - stat:
-                  wit: 7
-              - job:
-                  - sailor
-                  - fisher
-        - id: p3
-          kind: endure
-          req:
-            item: cyber_lung
   - id: budj_bim_eels
     year: -4500
     lon: -141.95
@@ -2256,77 +2164,6 @@ events:
               - trait:
                   - kind
                   - sensitive
-  - id: wu_chienshiung_washington
-    year: 1957
-    lon: -77.06
-    lat: 38.94
-    region: americas
-    field: science
-    tier: 3
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            any:
-              - stat:
-                  wit: 8
-              - job:
-                  - pharmacist
-        - id: p2
-          kind: endure
-          req:
-            stat:
-              will: 7
-        - id: p3
-          kind: hold
-          redeem: true
-          req:
-            item: golden_apple
-  - id: jocelyn_bell_cambridge
-    year: 1967
-    lon: 0.04
-    lat: 52.16
-    region: europe
-    field: science
-    tier: 2
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            any:
-              - stat:
-                  wit: 6
-              - trait:
-                  - curious
-                  - sensitive
-              - trait:
-                  - curious
-                  - sensitive
-        - id: p2
-          kind: hold
-          req:
-            any:
-              - trait:
-                  - stubborn
-                  - bold
-              - trait:
-                  - stubborn
-                  - bold
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            any:
-              - trait:
-                  - kind
-                  - sensitive
-              - trait:
-                  - kind
-                  - sensitive
   - id: leavitt_cambridge_ma
     year: 1912
     lon: -71.12
@@ -2357,62 +2194,6 @@ events:
             trait:
               - kind
               - sensitive
-  - id: cecilia_payne_cambridge_ma
-    year: 1925
-    lon: -71.12
-    lat: 42.38
-    region: americas
-    field: science
-    tier: 2
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            stat:
-              wit: 8
-        - id: p2
-          kind: persuade
-          req:
-            trait:
-              - glib
-              - bold
-        - id: p3
-          kind: hold
-          redeem: true
-          req:
-            trait:
-              - stubborn
-  - id: farnsworth_san_francisco
-    year: 1927
-    lon: -122.4
-    lat: 37.8
-    region: americas
-    field: technology
-    tier: 2
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            any:
-              - job:
-                  - civil_engineer
-                  - retired_engineer
-                  - electrician
-              - stat:
-                  wit: 7
-        - id: p2
-          kind: persuade
-          req:
-            luck: 0.4
-        - id: p3
-          kind: hold
-          redeem: true
-          req:
-            item: golden_apple
   - id: bessie_coleman_jacksonville
     year: 1926
     lon: -81.66
@@ -2707,49 +2488,6 @@ events:
             trait:
               - kind
               - sensitive
-  - id: henrietta_lacks_baltimore
-    year: 1951
-    lon: -76.59
-    lat: 39.3
-    region: americas
-    field: medicine
-    tier: 2
-    regret: true
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            any:
-              - job:
-                  - nurse
-                  - physician
-              - trait:
-                  - curious
-              - trait:
-                  - curious
-                  - sensitive
-        - id: p2
-          kind: persuade
-          req:
-            any:
-              - trait:
-                  - glib
-                  - bold
-              - trait:
-                  - glib
-                  - bold
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            any:
-              - trait:
-                  - kind
-                  - sensitive
-              - trait:
-                  - kind
-                  - sensitive
   - id: qu_yuan_miluo
     year: -278
     lon: 113
@@ -4235,3 +3973,38 @@ events:
               - job:
                   - teacher
                   - student
+  - id: turing_manchester
+    year: 1952
+    lon: -2.24
+    lat: 53.48
+    region: europe
+    field: technology
+    tier: 3
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - stat:
+                  wit: 7
+              - job:
+                  - programmer
+                  - sysadmin
+        - id: p2
+          kind: care
+          req:
+            job:
+              - nurse
+              - physician
+              - doctor
+              - pharmacist
+              - midwife
+        - id: p3
+          kind: trust
+          redeem: true
+          req:
+            trait:
+              - kind
+              - sensitive

@@ -32,7 +32,7 @@ The goal is to collect enough time energy to go back to your own time and see yo
 
 ## Clock and pace
 
-Time runs in game days. At 1x one real minute is one game day. The speeds are pause, 1x, 2x, 4x, 8x and 16x, and the space key pauses. The days an employee spends in the past pass at the same rate as the days in the agency, so a seven day stay takes seven minutes at 1x. A returning report pauses the clock unless the box "reports do not stop" is ticked. Full auto is a checkbox too.
+Time runs in game days. At 1x one real minute is one game day. The speeds are pause, 1x, 2x, 4x, 8x and 16x, and the space key pauses. The days an employee spends in the past pass at the same rate as the days in the agency, so a seven day stay takes seven minutes at 1x. The clock stands still until the first trip goes out, then runs at 1x, and a ring beside the day fills once a day so the passing of time shows at any speed. Any open pop-up stops the clock and the speed comes back when it closes. The speed depends on the funds: when they pay fewer than three days of wages (`config.clock.low_funds_days`) the clock is held to 4x, and the day a wage goes unpaid it stops and a pop-up asks for a decision, there is no game over. A return shows a note that fades after a few seconds and the reports wait on the home page; the setting "pause when someone comes home" is off by default. Full auto is a checkbox.
 
 ## Employees
 
@@ -119,7 +119,7 @@ A recall before the story ends does not count as fatal. The kit that came home a
 
 ## Main line and going home
 
-The main line is the time energy the agency holds, in five stages at 0, 80, 240, 440 and 600 (`cards/mainline`). The last is going home. The home cost, `office.home_cost`, is 600, about half of the energy that all places can pay together: 140 from the two full simulations and 1032 from the small stories at their top rank, 1172 in all.
+The main line is the time energy the agency holds, in five stages at 0, 80, 240, 440 and 600 (`cards/mainline`). The last is going home. The home cost, `office.home_cost`, is 600, under a third of the most that all places can pay together: 140 from the two full simulations and 1820 from the 188 catalogue events at three stars, 1960 in all.
 
 ## Auto mode
 
@@ -137,7 +137,7 @@ It only touches funds, antiques and dispatches. Employees do not die.
 
 ## Catalogue events
 
-`cards/events` lists 200 events across the world. The selection leans toward science, technology, philosophy, art and ideas, and more than half are regrets: people and works that history treated unjustly or lost, such as Galois, Hypatia, Sappho or the Indus script. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
+`cards/events` lists 188 events across the world. The selection leans toward science, technology, philosophy, art and ideas, and more than half are regrets: people and works that history treated unjustly or lost, such as Galois, Hypatia, Sappho or the Indus script. Each event has a place, a year, a field, a story, a figure and a relic. The relic is an antique that is found on trips. Anchoring it opens the event, and until then the event is only a question mark. Every event can be gone to once its antique is anchored. Two of them have a full simulation, and the rest are small stories.
 
 ## Data and code
 

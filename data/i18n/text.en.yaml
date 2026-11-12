@@ -153,7 +153,7 @@ ui:
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
           - The models are simplified. Their parameters are game assumptions unless a number is marked historical, and no parameter has been fitted to data. Historical facts in the game are placeholders until their sources are checked, and each entry says whether it has been checked. Please do not cite the game as a source.
-          - 'The 200 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Half of them are regrets, lives and works that history treated unjustly or lost. History cannot be changed, so the stars of a regret are what you can give them inside it, and the last one is the redemption. That is a choice of this first version, not a claim about what matters most in history.'
+          - 'The 188 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Half of them are regrets, lives and works that history treated unjustly or lost. History cannot be changed, so the stars of a regret are what you can give them inside it, and the last one is the redemption. That is a choice of this first version, not a claim about what matters most in history.'
           - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. What they say and do in the game is fiction built around the historical record, and does not reflect their real words, views or character. The time travel, the employees, the antiques, the goods and every plot are invented.
           - The fifty employees are invented people, spread over the world roughly as people are. Some of their traits and stories lean on common impressions of a place or a group, and some are written against them, so that no one is only a type, and neither says anything about a real group. The author cannot know every culture well, so the people, their ethnicities and their stories were also checked by an AI for anything that might offend, and that check can be wrong. If something reads as unfair, inaccurate or hurtful, please report it in the Issues of the repository and the author will change it as soon as possible.
           - Products, names and items in the game are fictional. Where a name resembles someone else's work it is a reference, not an affiliation, and anything not yet checked for rights is marked and cannot be bought in the game.
@@ -197,10 +197,19 @@ ui:
     pause: Pause
     speed: Speed
     auto: Auto
-    nostop: Keep running on reports
-    nostop_tip: When ticked, the clock keeps running when someone comes back. When not ticked, it pauses at each report so nothing is missed.
     auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses. The secretary has a preference too - if the auto results suit it, mood goes up, otherwise down.
     paused_report: A report is waiting, paused
+    start_hint: The clock starts at the first trip
+    start_tip: Until the first trip goes out nothing happens, and the wages would only run down the funds, so the clock stands still. Pick a place on the map and send someone.
+    low_funds: Funds low, held to {n}x
+    low_tip: The funds pay fewer than three days of wages, so the clock cannot go faster. Sell a spare antique or send a trip that pays.
+    broke_title: The wages could not be paid
+    broke_text: The funds ran out and a day went unpaid, so the staff lost heart and the clock is paused. Sell a spare antique, let someone go or send a trip that pays, then pick a speed to go on.
+    broke_ok: Understood
+    back_one: '{a} is home'
+    back_two: '{a} and {b} are home'
+    back_many: '{a}, {b} and {n} more are home'
+    back_view: View
   dispatch:
     era: Time travel
     market: Antiques market
@@ -581,6 +590,10 @@ ui:
         back: Return
         coin: Coin
       credit: The music is MIDI files from {source}, {license}.
+    game:
+      h: Game
+      pause_on_report: Pause when someone comes home
+      pause_on_report_note: 'Off by default: a note shows for a few seconds and the reports wait on the home page. A pop-up always pauses the clock.'
     data:
       h: Data
       note: Your save and settings live in this browser only.
@@ -680,7 +693,7 @@ ui:
     story: You run a small agency that sends people into the past. History cannot be changed, so every trip happens on a branch of its own, and how far the branch differs from the main timeline is paid to you as time energy. Collect enough of it and you can go home to your family.
     how_title: How to play
     how:
-      - Pick a place on the map and the time you want there.
+      - Pick a place on the map and the time you want there. The clock starts when the first trip goes out.
       - Choose who goes and what they carry, then send them.
       - Wait for them to come home and read what happened. They bring funds, time energy and sometimes an antique.
       - An antique opens the place it points to, and it only leads to earlier times.
@@ -1593,13 +1606,6 @@ catalog:
     story: While working in the patent office Einstein publishes papers on light, atoms and relativity within a few months.
     relic: A patent office stamp
     relic_desc: A small rubber stamp of the desk where it happened.
-  picasso_paris:
-    name: Breaking the single viewpoint
-    place: Paris
-    figure: Pablo Picasso
-    story: Picasso paints Les Demoiselles d'Avignon, and European painting stops insisting on one point of view.
-    relic: A charcoal stick
-    relic_desc: A stub of charcoal black on the fingers.
   fleming_london:
     name: A mould that stops bacteria
     place: London
@@ -1621,20 +1627,6 @@ catalog:
     story: In exile Lise Meitner and her nephew work out that a uranium nucleus has split, and give it the name fission.
     relic: A piece of chalk
     relic_desc: A worn stub of chalk from the walk where it was worked out.
-  franklin_cambridge:
-    name: The shape of DNA
-    place: Cambridge
-    figure: Rosalind Franklin, James Watson and Francis Crick
-    story: X-ray pictures by Rosalind Franklin and her student help Watson and Crick build the double helix model.
-    relic: A wire helix model
-    relic_desc: A small twisted wire model of two strands.
-  berners_lee_geneva:
-    name: A web of linked pages
-    place: Geneva
-    figure: Tim Berners-Lee
-    story: At CERN Tim Berners-Lee proposes a way of linking documents across computers, which becomes the World Wide Web.
-    relic: A floppy disk
-    relic_desc: A square disk, its label in pencil.
   cajal_barcelona:
     name: Nerve cells as separate units
     place: Barcelona
@@ -1755,24 +1747,6 @@ catalog:
     story: Ulugh Beg builds a great observatory and publishes a star catalogue more exact than any for centuries.
     relic: A fragment of the great arc
     relic_desc: A piece of the stone arc once used to measure the stars.
-  achebe_lagos:
-    name: A story told by the Igbo themselves
-    place: Lagos
-    figure: Chinua Achebe
-    story: Chinua Achebe publishes Things Fall Apart, telling the arrival of the colonial world from within an Igbo village.
-    relic: A typed manuscript page
-    relic_desc: A page typed with a few corrections in ink.
-    points:
-      p1: Listen to him
-      p2: Tell your own stories
-      p3: A good reading
-  maathai_nairobi:
-    name: Planting trees as a movement
-    place: Nairobi
-    figure: Wangari Maathai
-    story: Wangari Maathai starts the Green Belt Movement, asking women to plant trees and mend the land.
-    relic: A tree seedling
-    relic_desc: A small seedling in a rolled leaf.
   laozi_hangu:
     name: Five thousand characters on the Way
     place: Hangu Pass, China
@@ -1933,13 +1907,6 @@ catalog:
     story: A clerk in Madras sends pages of results to G. H. Hardy in England, who sees at once that they are the work of a genius.
     relic: A slate
     relic_desc: A school slate, wiped and written on many times.
-  raman_calcutta:
-    name: Why the sea looks blue, and what light can tell us
-    place: Calcutta
-    figure: C. V. Raman
-    story: Raman and his student find that light scattered by a liquid carries a small change in colour, now called the Raman effect.
-    relic: A spectrograph slit
-    relic_desc: A narrow gap that let in a thread of light.
   franklin_philadelphia:
     name: Lightning is electricity
     place: Philadelphia
@@ -2010,13 +1977,6 @@ catalog:
     story: Rachel Carson publishes Silent Spring, which asks what pesticides do to living things, and starts a movement.
     relic: A grey feather
     relic_desc: A single plain feather.
-  apollo_cape_canaveral:
-    name: People on the Moon
-    place: Cape Canaveral, Florida
-    figure: Neil Armstrong, Buzz Aldrin and the Apollo teams
-    story: Apollo 11 lifts from Florida, and two of its crew walk on the Moon while hundreds of thousands of people on Earth made it possible.
-    relic: A checklist card
-    relic_desc: A card of steps, with a pencil smudge.
   bell_boston:
     name: The voice on a wire
     place: Boston
@@ -2042,17 +2002,6 @@ catalog:
       p1: Sit with her
       p2: Match her will
       p3: Ease her pain (needs an elixir)
-  hokulea_honolulu:
-    name: Sailing to Tahiti by the stars
-    place: Honolulu
-    figure: Mau Piailug and Nainoa Thompson
-    story: The canoe Hōkūleʻa sails from Hawaiʻi to Tahiti with no instruments, guided by star paths and swells, and revives a navigating tradition.
-    relic: A knotted sennit cord
-    relic_desc: A cord of coconut fibre with a knot for each day.
-    points:
-      p1: Take your turn at the paddle
-      p2: Hold steady on the long crossing (a seafarer or a sharp mind)
-      p3: Keep going at night (needs a cyborg bionic lung)
   budj_bim_eels:
     name: Fish farming on a lava plain
     place: Budj Bim, Victoria, Australia
@@ -2445,28 +2394,6 @@ catalog:
       p1: Follow his instruments (an engineer, a mapmaker or sharp wit helps)
       p2: Speak up for his name at the Society
       p3: Sit with him in his rooms
-  wu_chienshiung_washington:
-    name: Left and right in the cold
-    place: Washington
-    figure: Chien Shiung Wu
-    story: Chien Shiung Wu runs her cold cobalt experiment at the National Bureau of Standards and shows that nature tells left from right. The Nobel prize that follows goes to the two theorists who proposed it.
-    relic: A cobalt sample
-    relic_desc: A tiny sealed sample on a stand.
-    points:
-      p1: Read the counts as they come in (a chemist or sharp wit helps)
-      p2: Stay through the long cold runs
-      p3: Mount the crystal with steady hands (needs a golden apple)
-  jocelyn_bell_cambridge:
-    name: A scruff on the chart
-    place: Cambridge
-    figure: Jocelyn Bell
-    story: Jocelyn Bell, a student reading miles of chart paper, notices a small regular scruff that others might have taken for interference. The Nobel prize for pulsars later goes to her supervisor.
-    relic: A strip of chart paper
-    relic_desc: A strip with a faint regular mark in the ink.
-    points:
-      p1: Spot the odd mark on the paper
-      p2: Insist that it is not interference
-      p3: Be the one who says it was hers to find
   leavitt_cambridge_ma:
     name: A rule for the stars
     place: Cambridge, Massachusetts
@@ -2478,28 +2405,6 @@ catalog:
       p1: Follow her tables of stars
       p2: Keep up the long hours at the plates
       p3: Be the colleague who asks what she has found
-  cecilia_payne_cambridge_ma:
-    name: The sun is mostly hydrogen
-    place: Cambridge, Massachusetts
-    figure: Cecilia Payne
-    story: Cecilia Payne's thesis shows that stars are made mostly of hydrogen. She is persuaded to call her own result probably not real, and it is confirmed some years later.
-    relic: A page of spectra
-    relic_desc: A page of lines from the spectrum of the sun.
-    points:
-      p1: Follow the reading of the spectra
-      p2: Argue her side in the corridor
-      p3: Stay with her conclusion as she wrote it
-  farnsworth_san_francisco:
-    name: A line on the glass
-    place: San Francisco
-    figure: Philo Farnsworth
-    story: Philo Farnsworth transmits the first electronic television picture, a plain straight line, in a San Francisco laboratory. Years of business fights wear him down and his name fades from the story of television.
-    relic: A glass slide
-    relic_desc: A small glass slide with a painted line.
-    points:
-      p1: Follow the circuit (an engineer, an electrician or sharp wit helps)
-      p2: Hope the next backer takes his call
-      p3: Hold the slide steady in front of the camera (needs a golden apple)
   bessie_coleman_jacksonville:
     name: The practice flight
     place: Jacksonville
@@ -2599,17 +2504,6 @@ catalog:
       p1: Hear the piece as she says it (a musician or sharp wit helps)
       p2: Stay patient through the slow dictation
       p3: Be a presence that makes the room feel calm
-  henrietta_lacks_baltimore:
-    name: Cells that went on living
-    place: Baltimore
-    figure: Henrietta Lacks
-    story: Henrietta Lacks, a young mother with cervical cancer, is treated at Johns Hopkins, where cells are taken from her tumour without her knowing. She dies in October aged thirty one, and the cells go on living in laboratories around the world.
-    relic: A culture tube
-    relic_desc: A small glass tube labelled with her initials.
-    points:
-      p1: See what is happening in the ward (a nurse, a physician or a curious mind helps)
-      p2: Ask the staff to treat her with respect
-      p3: Be the one who sits with her and learns who she is
   qu_yuan_miluo:
     name: Verses by the river
     place: Miluo River
@@ -3160,6 +3054,17 @@ catalog:
       p1: Follow the four unknowns
       p2: Teach the counting rods to a pupil (a teacher)
       p3: Stay with the lesson to the end (a teacher, a student or a stubborn employee)
+  turing_manchester:
+    name: The trial of 1952
+    place: Manchester
+    figure: Alan Turing
+    story: In 1952 Alan Turing is prosecuted for a relationship with another man, which was a crime in Britain at the time. He accepts hormone treatment instead of prison, loses his security clearance, and dies in 1954 at forty one.
+    relic: A strip of punched tape
+    relic_desc: A strip of paper tape with a row of holes, a program from the early Manchester computer.
+    points:
+      p1: Follow his new work on patterns in living things (sharp wit or computer skills help)
+      p2: See him through the treatment (medical staff)
+      p3: Be the friend who stays plainly on his side
 eras:
   broad_street_1854:
     name: Broad Street, London 1854

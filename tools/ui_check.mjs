@@ -71,6 +71,7 @@ try {
   // the rest of the checks use a known crew
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun'].includes(k); S.hire = null; });
   ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
+  ok('the clock stands still before the first trip, with a hint', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 0 && (await page.locator('#clock .chipwrap .chip').count()) === 1 && (await page.locator('#clock svg.ring').count()) === 1);
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
   ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
@@ -137,6 +138,7 @@ try {
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
   ok('sending closes the pop-up and the trip shows at the top, before the map', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('#home-pending').count()) === 1 && (await page.evaluate(() => document.getElementById('home-pending').compareDocumentPosition(document.getElementById('home-map')) & Node.DOCUMENT_POSITION_FOLLOWING)) > 0);
+  ok('the first trip starts the clock at 1x', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 1);
   // the trip is made to be home by moving its day, as the clock would
   await page.waitForSelector('.outrow');
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
@@ -520,7 +522,7 @@ try {
   await page.mouse.up();
   ok('dragging the axis slides the window', (await page.evaluate(() => window.__game.ui.state.map.from)) !== fromBefore);
   await tool('settings');
-  ok('settings page has four sections', (await page.locator('.settings h3').count()) === 4);
+  ok('settings page has five sections', (await page.locator('.settings h3').count()) === 5);
   await page.selectOption('[data-set=theme]', 'dark');
   ok('dark theme is applied', (await page.evaluate(() => document.documentElement.dataset.theme)) === 'dark');
   await page.selectOption('[data-set=theme]', 'auto');
@@ -751,6 +753,23 @@ try {
   ok('each further hire costs more per day than the one before', wg.rising);
   ok('an unpaid day empties the funds and costs favor', wg.poor);
   ok('the market factor stays within its band', wg.mult >= 0.7 && wg.mult <= 1.3);
+// a pop-up stops the clock and gives the speed back, low funds hold the speed, an unpaid day stops the clock with a pop-up
+await page.evaluate(() => { const S = window.__game.ctx.S(); S.clock.speed = 16; S.clock.resume = null; window.__game.ui.render(); });
+await tool('about');
+const held = await page.evaluate(() => { const c = window.__game.ctx.S().clock; return { speed: c.speed, resume: c.resume }; });
+ok('a pop-up stops the clock and remembers the speed', held.speed === 0 && held.resume === 16);
+await page.keyboard.press('Escape');
+const freed = await page.evaluate(() => { const c = window.__game.ctx.S().clock; return { speed: c.speed, resume: c.resume }; });
+ok('closing the pop-up gives the speed back', freed.speed === 16 && freed.resume == null);
+const low = await page.evaluate(() => { const g = window.__game, o = g.ui.office, S = g.ctx.S(); S.funds = 1; const lo = o.effectiveSpeed(); S.funds = 100000; const hi = o.effectiveSpeed(); return { lo, hi, cap: g.D.get('config.clock.low_funds_speed') }; });
+ok('low funds hold the speed and plenty lets it run', low.lo === low.cap && low.hi === 16);
+await page.evaluate(() => { const g = window.__game, o = g.ui.office, S = g.ctx.S(); S.funds = 0; S.clock.speed = 4; S.clock.day += 1; o.advance(0); });
+await page.waitForSelector('#modal .mbox h2');
+const broke = await page.evaluate(() => ({ speed: window.__game.ctx.S().clock.speed, same: document.querySelector('#modal .mbox h2').textContent === window.__game.D.get('text.ui.clock.broke_title') }));
+ok('an unpaid day stops the clock and opens the pop-up', broke.speed === 0 && broke.same);
+await page.keyboard.press('Escape');
+const noteN = await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); const before = document.querySelectorAll('#toasts .toast').length; return before; });
+ok('the notes of returns do not pile up', noteN <= 3);
 } catch (e) {
   errors.push('script: ' + e.message);
   await page.screenshot({ path: path.join(outDir, 'fail.png'), fullPage: true });
