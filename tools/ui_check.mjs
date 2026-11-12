@@ -108,8 +108,9 @@ try {
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
   ok('sending closes the pop-up and the trip shows at the top, before the map', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('#home-pending').count()) === 1 && (await page.evaluate(() => document.getElementById('home-pending').compareDocumentPosition(document.getElementById('home-map')) & Node.DOCUMENT_POSITION_FOLLOWING)) > 0);
-  await page.waitForSelector('[data-act=ff]');
-  await page.click('[data-act=ff]');
+  // the trip is made to be home by moving its day, as the clock would
+  await page.waitForSelector('.outrow');
+  await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
   await page.waitForSelector('[data-act=claim]');
   ok('ready report puts a badge on the home tab', (await page.locator('#tabs [data-tab=home] .badge').count()) === 1);
   await page.click('[data-act=claim]');

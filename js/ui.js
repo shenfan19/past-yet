@@ -371,7 +371,7 @@ export function createUI(D, ctx) {
       const refused = d.recallRefused && !ready ? ` <span class="chip warn">${U.office.recall_refused}</span>` : '';
       // the stars of a trip that is not home yet are not known, so the cell shows the wait
       const status = ready ? `<span class="chip warn pulse">${U.office.pending}</span>` : `<span class="muted">⏳ ${r1(left)} ${U.report.days}</span>${refused}`;
-      const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : `${recallBtn} ${DEV ? `<button data-act="ff" data-id="${d.id}">${U.office.fast_forward}</button>` : ''}`;
+      const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : recallBtn;
       return `<tr class="outrow"><td class="num muted">${seqOf(d)}</td><td>${placeYear(d)}</td><td>${esc(placeShort(d))}</td><td>${staffLink(d.spec.staffId)}</td><td>${status}</td><td class="num">${acts}</td></tr>`;
     });
     return `<div class="sec" id="home-pending">${U.office.on_road} (${out.length})</div>
@@ -833,7 +833,6 @@ export function createUI(D, ctx) {
     else if (act === 'autocfg') suggest();
     else if (act === 'send') send();
     else if (act === 'claim') claim(id);
-    else if (act === 'ff') { const d = ctx.S().dispatches.find((x) => x.id === id); d.readyDay = ctx.S().clock.day; ctx.save(); render(); }
     else if (act === 'gift') { office.gift(id); render(); }
     else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
     else if (act === 'recall') { const r = office.recall(id); if (r.ok) { st.back = st.tab; st.sub = id; st.vs = false; st.modal = null; } renderClock(); render(); }
