@@ -59,20 +59,14 @@ try {
   await page.click('a.wl[data-id="staff:s_ning"] >> nth=0');
   await page.waitForSelector('.wiki');
   ok('staff link opens wiki and expands only its category', (await page.locator('.wcat[open]').count()) === 1);
-  // back and forward walk the pages, the wiki jump from the home page can be undone
-  await page.click('[data-nav="-1"]');
-  await page.waitForFunction(() => document.querySelector('#tabs [data-tab=home]').classList.contains('on'));
-  ok('back returns from a wiki jump to the page it came from, with the pop-up it left', (await page.locator('#modal .mbox').count()) === 1);
+  // the wiki opens over the pop-up it was opened from, and closing it gives that pop-up back
+  ok('the wiki is a pop-up over the dispatch pop-up', (await page.locator('#modal .wikibox').count()) === 1);
   await page.keyboard.press('Escape');
-  await page.click('[data-nav="1"]');
-  await page.waitForSelector('.wiki');
-  ok('forward goes to the wiki again', (await page.locator('#tabs [data-tab=enc]').getAttribute('class')).includes('on'));
-  await page.goBack();
-  await page.waitForFunction(() => document.querySelector('#tabs [data-tab=home]').classList.contains('on'));
-  ok('the browser back button does the same', true);
+  ok('closing the wiki gives back the dispatch pop-up', (await page.locator('#modal .storyfull').count()) === 1 && (await page.locator('#modal .wikibox').count()) === 0);
+  await page.keyboard.press('Escape');
+  await tool('wiki');
+  ok('the wiki keeps its state when it is opened again', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
   await go('home');
-  await go('enc');
-  ok('wiki keeps its state when you come back', (await page.locator('.wcat[open]').count()) === 1 && (await page.locator('#wiki-article h2').count()) === 1);
   await go('home');
   await page.waitForSelector('svg.map');
   const vb0 = await page.evaluate(() => Number(document.querySelector('svg.map').getAttribute('viewBox').split(' ')[2]));
@@ -246,9 +240,10 @@ try {
   ok('the golden apple triples persuasion and a chip is the item a point asks for', sc.plain === 0 && sc.apple > 0.7 && sc.chipNeeded === 0 && sc.chip > 0.7);
   ok('equipment that shows gets the traveller found out, a cloak lowers it, and no equipment is never found out', sc.foundGorilla > 80 && sc.foundCloak < sc.foundGorilla && sc.noKit === null);
   // the antique roll is the backend's, seeded, and the chance falls to a floor
-  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= 0.6 && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_einstein_bern'); }));
-  ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= 0.6; }); }));
-  ok('some first trips bring something back and some do not', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s)) n++; return n > 80 && n < 280; }));
+  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= window.__game.D.get('config.office.antique_find.cap') && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_einstein_bern'); }));
+  ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= window.__game.D.get('config.office.antique_find.cap'); }); }));
+  ok('a trip with no star finds a quarter as often as one with three', await page.evaluate(() => { const b = window.__game.backend; let a = 0, z = 0; for (let s = 1; s <= 2000; s++) { if (b.findAntique('broad_street_1854', s, [], 3)) a++; if (b.findAntique('broad_street_1854', s, [], 0)) z++; } return z > 0 && Math.abs(z / a - 0.25) < 0.08; }));
+  ok('some first trips bring something back and some do not', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s)) n++; return n > 80 && n < 400 * window.__game.D.get('config.office.antique_find.cap'); }));
   ok('the key to a place not yet held is found often enough to open it', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let k = 1; k <= 400; k++) if (b.findAntique('broad_street_1854', k, ['pump_rust']) === 'clinic_bell') n++; return n > 30; }));
   // spares: sell all but one of each
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques.push('relic_faraday_london', 'relic_faraday_london', 'relic_faraday_london'); window.__game.ui.render(); });
@@ -267,9 +262,10 @@ try {
   await sub('future');
   ok('future goods are buyable but a borrowed design is not', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1 && (await page.locator('[data-act=cartinc][data-id=bamboo_copter]').count()) === 0);
   await sub('modern');
-  await page.fill('#shop-q', '心率');
-  ok('shop text filter', (await page.locator('[data-act=cartinc]').count()) === 1);
-  await page.fill('#shop-q', '');
+  await page.click('[data-act=lfilter][data-id=shop_modern]');
+  await page.fill('#fq-shop_modern', '心率');
+  ok('a table has its own filter, folded until asked for', (await page.locator('#lb-shop_modern [data-act=cartinc]').count()) === 1 && (await page.locator('#lb-shop_future [data-act=cartinc]').count()) > 1);
+  await page.fill('#fq-shop_modern', '');
   await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
   // second place
   await go('home');
@@ -279,7 +275,7 @@ try {
   ok('vienna sendable after buying its antique', !(await page.locator('[data-act=send]').isDisabled()));
   await page.keyboard.press('Escape');
   // wiki
-  await go('enc');
+  await tool('wiki');
   await page.waitForSelector('.wiki');
   await page.fill('#wiki-q', '斯诺');
   ok('wiki filter by text', (await page.locator('#wiki-list .wrow:not(.locked)').count()) >= 1);
@@ -327,7 +323,7 @@ try {
   ok('space pauses the clock', (await page.evaluate(() => window.__game.ctx.S().clock.day)) === day1);
   // every employee has a wiki page once hired or on offer
   const offerId = await page.evaluate(() => window.__game.ctx.S().hire.slots[0].id);
-  if (offerId) { await sub('hire'); await page.click(`.ltable a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.click('[data-nav="-1"]'); }
+  if (offerId) { await sub('hire'); await page.click(`.ltable a.wl[data-id="staff:${offerId}"]`); await page.waitForSelector('.wiki'); ok('a candidate on offer already has a wiki page', (await page.locator('#wiki-article h2').count()) === 1); await page.keyboard.press('Escape'); }
   const gid = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     const slot = S.hire.slots[0];
@@ -340,7 +336,7 @@ try {
   await page.click(`a.wl[data-id="staff:${gid}"]`);
   await page.waitForSelector('.wiki');
   ok('a hired employee has a wiki page', (await page.locator('#wiki-article h2').count()) === 1);
-  await page.click('[data-nav="-1"]');
+  await page.keyboard.press('Escape');
   // a recall stops the trip where it is and pays a share, only one employee can be in a place, and the offer changes every seven days
   const rc = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
@@ -510,8 +506,8 @@ try {
   await page.click('[data-act=sfxtry][data-id=send]');
   await page.screenshot({ path: path.join(outDir, '9_settings.png'), fullPage: true });
   await go('home');
-  ok('guest has four tabs and two tools', (await page.locator('#tabs [data-tab]').count()) === 4 && (await page.locator('#tools [data-act=modalopen]').count()) === 2);
-  await go('enc');
+  ok('guest has three pages and three tools', (await page.locator('#tabs [data-tab]').count()) === 3 && (await page.locator('#tools [data-act=modalopen]').count()) === 3);
+  await tool('wiki');
   await page.waitForSelector('.wiki');
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
@@ -554,7 +550,7 @@ try {
   await page.waitForSelector('.stamp');
   ok('a small story has its own short report and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('.quote').count()) === 1 && (await page.locator('table').count()) === 1);
   await page.click('[data-act=back]');
-  await go('enc');
+  await tool('wiki');
   await page.fill('#wiki-q', '月亮');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);
   await go('shop');
@@ -571,7 +567,7 @@ try {
   await page.fill('#map-from', '-500');
   ok('English BC format', (await page.locator('#map-fromtxt').innerText()) === '500 BC');
   await page.fill('#map-from', '1840');
-  await go('enc');
+  await tool('wiki');
   await page.waitForSelector('.wiki');
   ok('English wiki lists categories', (await page.locator('.wcat summary').first().innerText()).length > 0);
   // follow browser is the default, a switch keeps the page and the state
@@ -583,7 +579,7 @@ try {
   ok('about page has jump links and no second title', (await page.locator('.about .jumps a').count()) >= 5 && (await page.locator('.about h2').count()) === 0);
   ok('about release shows the date only', (await page.locator('.about .muted').first().innerText()).includes('2026-11-09') && !(await page.locator('.about .muted').first().innerText()).includes('T00'));
   ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
-  await go('enc');
+  await tool('wiki');
   await page.click('.wcat[data-cat=people] summary');
   await page.locator('#wiki-list .wrow', { hasText: 'John Snow' }).first().click();
   await page.waitForSelector('#wiki-article h2');
@@ -592,7 +588,7 @@ try {
   await Promise.all([page.waitForNavigation(), page.selectOption('#lang', 'zh')]);
   await page.waitForSelector('.settings');
   ok('switching language keeps the settings pop-up open', (await page.locator('#modal .settings').count()) === 1);
-  await go('enc');
+  await tool('wiki');
   await page.waitForSelector('.wiki');
   ok('switching language keeps the article', (await page.locator('#wiki-article h2').innerText()).includes('斯诺'));
   ok('switching language keeps the filter text and the open category', (await page.locator('#wiki-q').inputValue()) === 'Snow' && (await page.evaluate(() => window.__game.ui.state.wiki.openCats.people)) === true);

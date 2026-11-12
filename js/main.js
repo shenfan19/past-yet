@@ -33,7 +33,20 @@ const KEY = D.get('config.save.key');
 const VERSION = D.get('config.save.version');
 const O = D.get('config.office');
 
+// The latest event of the catalogue goes first, because an antique only leads to earlier times and from the latest one most of the others can be reached.
+// The rest are drawn at random from what is left. Each new game draws its own.
+function startAntiques() {
+  const out = Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id);
+  const events = D.get('catalog.events');
+  const { newest, random } = O.start_scenes;
+  const pool = events.slice().sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
+  for (const e of pool.splice(0, newest)) out.push('relic_' + e.id);
+  for (let i = 0; i < random && pool.length; i++) out.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
+  return out;
+}
+
 function fresh() {
+  const start = startAntiques();
   return {
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
     staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
@@ -47,9 +60,9 @@ function fresh() {
     stars: {},
     // the hiring offer
     hire: null,
-    // an antique the office starts with is already anchored, so the first place is open
-    locks: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
-    antiques: Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id),
+    // the antiques the office starts with are already anchored, so those places are open: the first one, the latest event, and a few at random
+    locks: [...start],
+    antiques: [...start],
   };
 }
 

@@ -4,6 +4,24 @@ export function createListbox(X) {
   const L = U.lbox;
 
   // Every list shows a page of rows, as many as the player picks, the least by default, and turns pages instead of scrolling.
+  // Each list has a filter of its own that is folded away until its button is pressed: a short box for text and a drop-down of the tags that list holds.
+  const fstate = (id) => (st.filters[id] ||= { open: false, q: '', tag: '' });
+  function tools(id, tagOpts) {
+    const f = fstate(id);
+    const on = !!(f.q || f.tag);
+    const btn = `<button class="ghost${on ? ' on' : ''}" data-act="lfilter" data-id="${id}">${esc(L.filter)}${on ? ' ●' : ''} ${f.open ? '▾' : '▸'}</button>`;
+    if (!f.open) return btn;
+    return btn + `<input id="fq-${id}" class="fq" type="search" data-fq="${id}" placeholder="${esc(L.filter_ph)}" value="${esc(f.q)}">`
+      + (tagOpts.length ? `<select data-ftag="${id}"><option value="">${esc(L.all_tags)}</option>${tagOpts.map((o) => `<option value="${esc(o.id)}" ${f.tag === o.id ? 'selected' : ''}>${esc(o.label)}</option>`).join('')}</select>` : '');
+  }
+  function match(id, text, tags) {
+    const f = fstate(id);
+    const q = f.q.trim().toLowerCase();
+    return (!f.tag || tags.includes(f.tag)) && (!q || text.toLowerCase().includes(q));
+  }
+  const toggleFilter = (id) => { fstate(id).open = !fstate(id).open; };
+  const setText = (id, v) => { fstate(id).q = v; if (st.pager[id]) st.pager[id].page = 0; };
+  const setTag = (id, v) => { fstate(id).tag = v; if (st.pager[id]) st.pager[id].page = 0; };
   const pager = (id) => (st.pager[id] ||= { size: D.get('config.ui.page_sizes')[0], page: 0 });
   function paginate(id, rows) {
     const sizes = D.get('config.ui.page_sizes');
@@ -42,7 +60,8 @@ export function createListbox(X) {
     // a list in a pop-up with a fixed height keeps its scroll, every other list is paged
     const pg = spec.scroll ? null : paginate(spec.id, rest);
     const open = spec.scroll ? `<div class="lscroll" data-keep="${spec.id}" style="max-height:min(${spec.maxH}px,75vh)">` : '<div>';
-    return `<div class="lbox" id="lb-${spec.id}">${pg ? pg.html : ''}${pinHtml}${open}<table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(pg ? pg.shown : rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;
+    const bar = spec.tools || (pg && pg.html) ? `<div class="lbar"><span class="ltools">${spec.tools || ''}</span>${pg ? pg.html : ''}</div>` : '';
+    return `<div class="lbox" id="lb-${spec.id}">${bar}${pinHtml}${open}<table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(pg ? pg.shown : rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;
   }
 
   function sort(idKey) {
@@ -50,5 +69,5 @@ export function createListbox(X) {
     const ss = sortOf(id);
     if (ss.k === k) ss.dir = -ss.dir; else { ss.k = k; ss.dir = 1; }
   }
-  return { html, sort, paginate, setSize, turn };
+  return { html, sort, paginate, setSize, turn, tools, match, toggleFilter, setText, setTag };
 }

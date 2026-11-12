@@ -6,9 +6,7 @@ export function createShop(X) {
   const S_ = U.shop;
   // an item sells for exactly what it costs, in the currency of its shop, whenever the player likes
   const sell1 = (id) => D.get(`items.${id}.cost`);
-  const s = () => st.shop;
-  const tagOk = (tags) => !s().tag || tags.includes(s().tag);
-  const textOk = (name, desc) => { const q = s().q.trim().toLowerCase(); return !q || (name + ' ' + desc).toLowerCase().includes(q); };
+  const tagOpts = (tags) => [...new Set(tags)].map((x) => ({ id: x, label: T.tags[x] }));
   const tagChips = (tags) => tags.map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('');
   const hiddenChip = () => `<span class="chip warn">${U.enc.hidden}</span>`;
   const cart = () => st.cart;
@@ -32,10 +30,9 @@ export function createShop(X) {
   function shopBox(shopId) {
     const sh = D.get('shops.shops.' + shopId);
     const S = ctx.S();
-    const ids = Object.keys(D.get('items')).filter((id) => {
-      const it = D.get('items.' + id);
-      return it.shop === shopId && tagOk(it.tags) && textOk(T.items[id].name, T.items[id].desc);
-    });
+    const lid = 'shop_' + shopId;
+    const base = Object.keys(D.get('items')).filter((id) => D.get('items.' + id).shop === shopId);
+    const ids = base.filter((id) => listbox.match(lid, T.items[id].name + ' ' + T.items[id].desc, D.get('items.' + id).tags));
     const rows = ids.map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
     const buyable = (it) => it.playable && sh.playable && !it.ip;
     const total = cartTotal(shopId);
@@ -43,7 +40,7 @@ export function createShop(X) {
     const foot = Object.keys(cart()).some((id) => D.get(`items.${id}.shop`) === shopId)
       ? `<span>${S_.total} <b>${total}</b> ${icon(cur)}</span> <button class="primary" data-act="cartbuy" data-id="${shopId}" ${total > bal(cur) ? 'disabled' : ''}>${S_.confirm}</button> <button class="ghost" data-act="cartclear">${S_.clear_cart}</button>` : '';
     return listbox.html({
-      id: 'shop_' + shopId, rows, pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
+      id: lid, tools: listbox.tools(lid, tagOpts(base.flatMap((id) => D.get('items.' + id).tags))), rows, pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
       cols: [
         { k: 'name', label: S_.col_name, w: '20%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, itemTip(r.id), !buyable(r.it) && DEV ? ' ' + hiddenChip() : '') },
         { k: 'desc', label: S_.col_desc, w: '28%', cell: (r) => descCell(T.items[r.id].desc) },
@@ -59,9 +56,10 @@ export function createShop(X) {
 
   function invBox() {
     const S = ctx.S();
-    const rows = Object.keys(D.get('items')).filter((id) => (S.inv[id] || 0) > 0 && tagOk(D.get('items.' + id).tags) && textOk(T.items[id].name, T.items[id].desc)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
+    const held = Object.keys(D.get('items')).filter((id) => (S.inv[id] || 0) > 0);
+    const rows = held.filter((id) => listbox.match('inv', T.items[id].name + ' ' + T.items[id].desc, D.get('items.' + id).tags)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
     return listbox.html({
-      id: 'inv', rows, empty: S_.inv_empty,
+      id: 'inv', tools: listbox.tools('inv', tagOpts(held.flatMap((id) => D.get('items.' + id).tags))), rows, empty: S_.inv_empty,
       cols: [
         { k: 'name', label: S_.col_name, w: '24%', val: (r) => r.name, cell: (r) => nameCell('items', r.id, r.name, itemTip(r.id)) },
         { k: 'desc', label: S_.col_desc, w: '38%', cell: (r) => descCell(T.items[r.id].desc) },
@@ -88,13 +86,11 @@ export function createShop(X) {
 
   function antiqueBox() {
     const S = ctx.S();
-    const ids = Object.keys(D.get('antiques.antiques')).filter((id) => {
-      const an = D.get('antiques.antiques.' + id);
-      return (DEV || S.antiques.includes(id)) && an.playable !== undefined && tagOk(an.tags) && textOk(T.antiques[id].name, T.antiques[id].desc);
-    });
+    const shown = Object.keys(D.get('antiques.antiques')).filter((id) => (DEV || S.antiques.includes(id)) && D.get('antiques.antiques.' + id).playable !== undefined);
+    const ids = shown.filter((id) => listbox.match('ants', T.antiques[id].name + ' ' + T.antiques[id].desc, D.get('antiques.antiques.' + id).tags));
     const rows = ids.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), n: copies(id), lock: S.locks.includes(id) }));
     return listbox.html({
-      id: 'ants', rows, empty: S_.antiques_empty,
+      id: 'ants', tools: listbox.tools('ants', tagOpts(shown.flatMap((id) => D.get('antiques.antiques.' + id).tags))), rows, empty: S_.antiques_empty,
       cols: [
         { k: 'name', label: S_.col_name, w: '22%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
         { k: 'desc', label: S_.col_desc, w: '26%', cell: (r) => descCell(T.antiques[r.id].desc) },
@@ -113,10 +109,6 @@ export function createShop(X) {
   const GROUPS = { buy: ['modern', 'future', 'hire'], shop: ['staff', 'inv', 'ants'] };
   function html(extra, tab) {
     const S = ctx.S();
-    const present = new Set();
-    for (const id of Object.keys(D.get('items'))) D.get('items.' + id).tags.forEach((t) => present.add(t));
-    for (const id of Object.keys(D.get('antiques.antiques'))) D.get('antiques.antiques.' + id).tags.forEach((t) => present.add(t));
-    const bar = `<details class="tagfold"><summary>${S_.tag_filter}${s().tag ? COLON + esc(T.tags[s().tag]) : ''}</summary><div class="tagbar"><button class="chipbtn ${s().tag ? '' : 'on'}" data-act="shoptag" data-id="">${S_.all_tags}</button>${[...present].map((t) => `<button class="chipbtn ${s().tag === t ? 'on' : ''}" data-act="shoptag" data-id="${t}">${esc(T.tags[t])}</button>`).join('')}</div></details>`;
     const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
     const spares = office.spareCount();
     const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * D.get('antiques.antiques.' + id).price, 0);
@@ -131,15 +123,12 @@ export function createShop(X) {
     };
     const names = { modern: S_.modern.name, future: S_.future.name, hire: U.office.hire_title, staff: U.office.staff, inv: S_.inv_title, ants: S_.antiques_title };
     const ids = GROUPS[tab];
-    const filtered = ids.some((id) => ['modern', 'future', 'inv', 'ants'].includes(id));
     return `
-      ${filtered ? `<div class="row" style="margin-bottom:6px"><input id="shop-q" type="search" placeholder="${S_.filter_ph}" value="${esc(s().q)}" style="flex:1;min-width:200px"></div>${bar}` : ''}
       ${ids.map((id) => `<div class="sec" id="shop-${id}">${names[id]}</div>${parts[id]()}`).join('')}`;
   }
 
   function act(a, id) {
     const S = ctx.S();
-    if (a === 'shoptag') { s().tag = id; return true; }
     if (a === 'cartinc' || a === 'cartdec') {
       const it = D.get('items.' + id);
       const n = (cart()[id] || 0) + (a === 'cartinc' ? it.step : -it.step);
@@ -185,10 +174,5 @@ export function createShop(X) {
     }
     return false;
   }
-  function onInput(el) {
-    if (el.id !== 'shop-q') return false;
-    s().q = el.value;
-    return true;
-  }
-  return { html, act, onInput };
+  return { html, act };
 }

@@ -46,7 +46,7 @@ export function createUI(D, ctx) {
 
   const devParam = new URLSearchParams(location.search).get('dev');
   const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
-  const st = { tab: 'home', sub: null, modal: null, pager: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, shop: { q: '', tag: '' }, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', sub: null, modal: null, modalPrev: null, pager: {}, filters: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -192,7 +192,7 @@ export function createUI(D, ctx) {
       view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
       const key = st.sub ? 'sub:' + st.sub : st.tab;
       sessionStorage.setItem(UI_KEY, JSON.stringify({
-        tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], shop: st.shop, cart: st.cart, sort: st.sort,
+        tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
         wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
       }));
     } catch (e) { /* storage blocked, the switch just starts fresh */ }
@@ -205,10 +205,10 @@ export function createUI(D, ctx) {
       const o = JSON.parse(raw);
       if (o.tab in U.tabs) st.tab = o.tab;
       if (o.pager) st.pager = o.pager;
-      if (o.modal && ['settings', 'about'].includes(o.modal.kind)) st.modal = o.modal;
+      if (o.modal && ['settings', 'about', 'wiki'].includes(o.modal.kind)) st.modal = o.modal;
       if (o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) { st.sub = o.sub; st.back = o.back in U.tabs ? o.back : 'home'; st.vs = !!o.vs; }
       st.opened = new Set(o.opened || []);
-      Object.assign(st.shop, o.shop);
+      if (o.filters) st.filters = o.filters;
       st.cart = o.cart || {};
       st.sort = o.sort || {};
       Object.assign(st.wiki, o.wiki);
@@ -288,7 +288,9 @@ export function createUI(D, ctx) {
   }
   function staffBoxHtml() {
     const S = ctx.S();
-    const rows = hiredIds().map((id) => {
+    const allIds = hiredIds();
+    const traitTags = [...new Set(allIds.flatMap((id) => staffTraits(D, id)))].map((x) => ({ id: x, label: T.traits[x] }));
+    const rows = allIds.filter((id) => listbox.match('home_staff', staffName(D, id) + ' ' + T.staff[id].job, staffTraits(D, id))).map((id) => {
       const tl = tallyOf(id);
       return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: tl[3] * 3 + tl[2] * 2 + tl[1] };
     });
@@ -300,7 +302,7 @@ export function createUI(D, ctx) {
     const n = hiredIds().length;
     const wage = `<div class="muted">${U.office.wage}${COLON}${ri(office.wageOf(n))} ${D.get('config.ui.currency_icons.funds')}${S.funds < office.wageOf(n) ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}</div>`;
     return sec + wage + listbox.html({
-      id: 'home_staff', rows,
+      id: 'home_staff', tools: listbox.tools('home_staff', traitTags), rows,
       cols: [
         { k: 'name', label: U.office.col_staff, w: '14%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${staffLink(r.id)}</span>` },
         { k: 'traits', label: U.office.col_traits, w: '22%', cell: (r) => `<span class="nowrap">${staffTraits(D, r.id).map(traitChip).join('')}</span>` },
@@ -331,11 +333,12 @@ export function createUI(D, ctx) {
     const box = listbox.html({
       id: 'hire', rows: S.hire.slots.map(candidateRow), empty: U.office.hire_none,
       cols: [
-        { k: 'name', label: U.office.col_staff, w: '15%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${r.swatch}<b>${staffLink(r.id)}</b></span>` },
-        { k: 'profile', label: U.office.col_profile, w: '22%', cell: (r) => `<div class="oneline"${tip(r.profile)}>${esc(r.profile)}</div>` },
-        { k: 'stats', label: U.office.col_stats, w: '27%', cell: (r) => `<div class="oneline">${esc(r.stats)}</div>` },
-        { k: 'traits', label: U.office.col_traits, w: '20%', cell: (r) => `<span class="nowrap">${r.traits.map(traitChip).join('')}</span>` },
-        { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => `<button class="primary" data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>` },
+        { k: 'name', label: U.office.col_staff, w: '14%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${r.swatch}<b>${staffLink(r.id)}</b></span>` },
+        { k: 'profile', label: U.office.col_profile, w: '19%', cell: (r) => `<div class="oneline"${tip(r.profile)}>${esc(r.profile)}</div>` },
+        { k: 'stats', label: U.office.col_stats, w: '24%', cell: (r) => `<div class="oneline">${esc(r.stats)}</div>` },
+        { k: 'traits', label: U.office.col_traits, w: '17%', cell: (r) => `<span class="nowrap">${r.traits.map(traitChip).join('')}</span>` },
+        { k: 'wage', label: U.office.col_wage, w: '12%', cls: 'num', cell: () => `<span class="nowrap"${tip(U.office.wage_after.replace('{a}', ri(office.wageOf(n))).replace('{b}', ri(office.wageOf(n + 1))))}>+${ri(office.wageOf(n + 1) - office.wageOf(n))} ${icon}</span>` },
+        { k: 'act', label: '', w: '14%', cls: 'num', cell: (r) => `<button class="primary" data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>` },
       ],
     });
     return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))} ${U.office.wage}${COLON}${ri(office.wageOf(n))} → ${ri(office.wageOf(n + 1))} ${icon}</p>
@@ -703,9 +706,16 @@ export function createUI(D, ctx) {
   // ---------- pop-up ----------
   // One pop-up at a time over the page. The dispatch pop-up holds the story, who goes, what they carry and the send button, so a trip is made
   // in one place and then shows in the log below. The share pop-up holds the card of a trip. A click on the dark ground, the cross or Escape closes it.
+  // Closing the wiki gives back the pop-up it was opened from, if there was one, so a chain of links ends where it began.
+  function closeModal() {
+    st.modal = st.modal && st.modal.kind === 'wiki' && st.modalPrev ? st.modalPrev : null;
+    st.modalPrev = null;
+    render();
+  }
   function modalBody() {
     const m = st.modal;
     if (!m) return '';
+    if (m.kind === 'wiki') return `<div class="mbox wide wikibox">${wiki.html()}</div>`;
     if (m.kind === 'settings') return `<div class="mbox">${settingsPage.html()}</div>`;
     if (m.kind === 'about') return `<div class="mbox">${aboutHtml()}</div>`;
     if (m.kind === 'staff') return `<div class="mbox wide">${staffModalHtml(m.id)}</div>`;
@@ -723,26 +733,29 @@ export function createUI(D, ctx) {
     const keeps = {};
     modalEl.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
     const scroll = modalEl.querySelector('.modalbg') ? modalEl.querySelector('.modalbg').scrollTop : 0;
+    const act = document.activeElement;
+    const keepFocus = act && act.id && modalEl.contains(act) ? { id: act.id, a: act.selectionStart, b: act.selectionEnd } : null;
     modalEl.innerHTML = html;
+    if (keepFocus) { const el = document.getElementById(keepFocus.id); if (el) { el.focus(); try { el.setSelectionRange(keepFocus.a, keepFocus.b); } catch (e) { /* no selection in this kind of input */ } } }
     modalEl.querySelectorAll('[data-keep]').forEach((el) => { if (el.dataset.keep in keeps) el.scrollTop = keeps[el.dataset.keep]; });
     const bg = modalEl.querySelector('.modalbg');
     if (bg) bg.scrollTop = scroll;
     if (st.modal && st.modal.kind === 'share') share.draw(share.dispatch(st.modal.id));
   }
   modalEl.addEventListener('click', (ev) => {
-    if (ev.target.dataset && ev.target.dataset.bg) { st.modal = null; render(); return; }
+    if (ev.target.dataset && ev.target.dataset.bg) { closeModal(); return; }
     onClick(ev);
   });
   modalEl.addEventListener('change', (ev) => onChange(ev));
   modalEl.addEventListener('input', (ev) => onInput(ev));
-  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && st.modal) { st.modal = null; render(); } });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && st.modal) closeModal(); });
 
   // ---------- render ----------
   let viewHtml = null;
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
-    const html = st.sub ? reportHtml() : { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop'), enc: wiki.html }[st.tab]();
+    const html = st.sub ? reportHtml() : { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
     const key = st.sub ? 'sub:' + st.sub : st.tab;
     if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(); return; }
     viewHtml = html;
@@ -827,23 +840,24 @@ export function createUI(D, ctx) {
     else if (act === 'open') { st.back = st.tab; leave(); st.sub = id; st.vs = false; render(); }
     else if (act === 'fire') { office.dismiss(id); render(); }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
-    else if (act === 'wiki') { leave(); wiki.go(id); if (st.tab === 'enc' && !st.sub) wiki.refresh(); else { st.tab = 'enc'; st.sub = null; render(); } }
+    else if (act === 'wiki') { wiki.go(id); if (st.modal && st.modal.kind === 'wiki') wiki.refresh(); else { st.modalPrev = st.modal; st.modal = { kind: 'wiki' }; render(); } }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
     else if (act === 'wikiback') { wiki.move(-1); wiki.refresh(); }
     else if (act === 'wikifwd') { wiki.move(1); wiki.refresh(); }
     else if (act === 'lsort') { listbox.sort(id); render(); }
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id;  } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['shoptag', 'cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
+    else if (['cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
-    else if (act === 'modalclose') { st.modal = null; render(); }
-    else if (act === 'modalopen') { st.modal = { kind: id }; render(); }
+    else if (act === 'modalclose') closeModal();
+    else if (act === 'modalopen') { st.modalPrev = null; st.modal = { kind: id }; render(); }
     else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; st.modal = { kind: 'staff', id }; render(); }
     else if (act === 'archive') { office.archive([id]); render(); }
     else if (act === 'restore') { office.restore([id]); render(); }
     else if (act === 'archiverule') { office.archive(office.archiveRule(id)); render(); }
     else if (act === 'modalplace') { st.modal = { kind: 'place', place: id }; render(); }
+    else if (act === 'lfilter') { listbox.toggleFilter(id); render(); }
     else if (act === 'pgpage') { const [pid, dir] = id.split(':'); listbox.turn(pid, dir === 'next' ? 1 : -1); render(); }
     else if (act === 'sharesave') share.save();
     else if (act === 'sharecopy') share.copy(share.dispatch(st.modal.id));
@@ -869,13 +883,15 @@ export function createUI(D, ctx) {
   }
   view.addEventListener('click', onClick);
   toolsEl.addEventListener('click', onClick);
-  view.addEventListener('toggle', (ev) => {
+  function onToggle(ev) {
     const t = ev.target;
     if (!t.matches) return;
     if (t.matches('details.wcat')) st.wiki.openCats[t.dataset.cat] = t.open;
     else if (t.matches('#wiki-tags details.tagfold')) st.wiki.tagOpen = t.open;
     else if (t.matches('#map-tags details.tagfold')) st.map.tagOpen = t.open;
-  }, true);
+  }
+  view.addEventListener('toggle', onToggle, true);
+  modalEl.addEventListener('toggle', onToggle, true);
   const tipEl = document.createElement('div');
   tipEl.id = 'tip';
   document.body.appendChild(tipEl);
@@ -896,15 +912,16 @@ export function createUI(D, ctx) {
   function onInput(ev) {
     const t = ev.target;
     if (settingsPage.onInput(ev)) return;
+    if (t.dataset.fq !== undefined) { listbox.setText(t.dataset.fq, t.value); render(); return; }
     if (t.id === 'wiki-q') wiki.onInput(t.value);
     else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
-    else if (shop.onInput(t)) render();
   }
   view.addEventListener('input', onInput);
   function onChange(ev) {
     const t = ev.target;
     if (t.id === 'lang') { changeLang(t.value); return; }
     if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }
+    if (t.dataset.ftag !== undefined) { listbox.setTag(t.dataset.ftag, t.value); render(); return; }
     if (t.dataset.pgsize) { listbox.setSize(t.dataset.pgsize, Number(t.value)); render(); return; }
     if (settingsPage.onInput(ev)) return;
     if (t.id === 'map-star') { worldMap.onInput(t); render(); return; }

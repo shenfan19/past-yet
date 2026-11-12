@@ -48,7 +48,9 @@ office:
   # Antiques sell at the price on the card times a market factor that is redrawn for each field every period_days, within 1 +- amp.
   market: {period_days: 30, amp: 0.3}
   fatal_outcomes: [near_death]
-  antique_find: {k: 0.03, cap: 0.6, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
+  antique_find: {star_share: {0: 0.25, 1: 0.5, 2: 0.75, 3: 1}, k: 0.09, cap: 0.8, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
+  # the places open at the start, besides the first one: the latest event of the catalogue, which reaches the farthest back, and some at random
+  start_scenes: {newest: 1, random: 2}
   start_stock:
     ors_pack: 40
     chlorine_tablet: 40
@@ -108,8 +110,8 @@ auto:
     - heart_monitor
 ui:
   currency_icons: {funds: '💰', energy: '⚡'}
-  tab_icons: {home: '🏠', buy: '🛒', shop: '🗂️', enc: '📖'}
-  tool_icons: {settings: '⚙️', about: 'ℹ️'}
+  tab_icons: {home: '🏠', buy: '🛒', shop: '🗂️'}
+  tool_icons: {wiki: '📖', settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
   refresh_ms: 500
   timeline_max: 9

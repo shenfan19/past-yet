@@ -40,9 +40,10 @@ export function createLocalBackend(D) {
     return { p, list };
   }
   // An antique that points to a place with a simulation, and is not held yet, is favoured by modelled_place_boost when it is drawn, so the way to a place that can be dispatched to is not buried under the many events that have no model yet.
-  function findAntique(eraId, seed, held = []) {
+  // The chance is scaled by the stars of the trip: a quarter of it with none, half with one, three quarters with two, all of it with three.
+  function findAntique(eraId, seed, held = [], stars = 3) {
     const { p, list } = findOdds(eraId);
-    if (!list.length || draw(seed, 'antique_find', eraId) >= p) return null;
+    if (!list.length || draw(seed, 'antique_find', eraId) >= p * AF.star_share[Math.max(0, Math.min(3, stars))]) return null;
     const all = D.get('antiques.antiques');
     const wt = (x) => x.w * (all[x.id].era && !held.includes(x.id) ? AF.modelled_place_boost : 1);
     const total = list.reduce((a, x) => a + wt(x), 0);
