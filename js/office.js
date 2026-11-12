@@ -1,6 +1,7 @@
 // Office rules without any DOM: the game clock, dispatch lifecycle, secretary and favor, the auto mode and the alerts.
 // The clock is real time scaled by a speed, pausable like a grand strategy game. Everything is in game days.
 import { staffTraits } from './narrate.js';
+import { drawStartStaff } from './start.js';
 
 export function createOffice(X) {
   const { D, ctx } = X;
@@ -257,6 +258,33 @@ export function createOffice(X) {
     s.antiques = s.antiques.filter((x) => !out.has(x)).concat(next);
     s.startRandom = next;
     ctx.save();
+    return true;
+  }
+
+  // Until the first trip goes out the first employees can be picked from the candidates, or the candidates drawn again.
+  function setStartPick(pick) {
+    const s = S();
+    for (const id of s.startStaff.offer) s.staff[id].hired = pick.includes(id);
+    s.startStaff.pick = pick;
+    s.hire = null;
+    ctx.save();
+  }
+  function pickStart(id) {
+    const s = S();
+    if (s.seq > 0 || !s.startStaff || !s.startStaff.offer.includes(id)) return false;
+    const pick = s.startStaff.pick;
+    if (pick.includes(id)) { if (pick.length <= 1) return false; setStartPick(pick.filter((x) => x !== id)); return true; }
+    if (pick.length >= O.start_staff.pick) return false;
+    setStartPick([...pick, id]);
+    return true;
+  }
+  function rerollStaff() {
+    const s = S();
+    if (s.seq > 0 || !s.startStaff) return false;
+    for (const id of s.startStaff.offer) s.staff[id].hired = false;
+    const next = drawStartStaff(D, O);
+    s.startStaff = next;
+    setStartPick(next.pick);
     return true;
   }
 
@@ -561,5 +589,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { rerollStart, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

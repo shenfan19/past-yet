@@ -53,7 +53,23 @@ try {
   const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
   await page.click('[data-act=rerollstart]');
   ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 4);
+  // the first employees: six candidates from six different regions, three picked, swapped by a click, drawn again before the first trip
+  const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired) }; });
+  const c0 = await crewInfo();
+  ok('the welcome offers six candidates from six regions and three are picked', c0.offer.length === 6 && c0.regions === 6 && c0.pick.length === 3 && c0.hired.length === 3 && (await page.locator('#modal .welcome .startstaff li').count()) === 6);
+  const spare = c0.offer.find((id) => !c0.pick.includes(id));
+  await page.click(`[data-act=startpick][data-id=${c0.pick[0]}]`);
+  const c1 = await crewInfo();
+  ok('the start button waits for the full crew', c1.pick.length === 2 && (await page.locator('[data-act=welcomestart][disabled]').count()) === 1);
+  await page.click(`[data-act=startpick][data-id=${spare}]`);
+  const c2 = await crewInfo();
+  ok('a click swaps the picks and the employees follow', c2.pick.includes(spare) && !c2.pick.includes(c0.pick[0]) && c2.hired.length === 3 && c2.hired.includes(spare));
+  await page.click('[data-act=rerollstaff]');
+  const c3 = await crewInfo();
+  ok('the candidates can be drawn again, still six regions', c3.offer.join() !== c0.offer.join() && c3.regions === 6 && c3.hired.length === 3);
   await page.click('[data-act=welcomestart]');
+  // the rest of the checks use a known crew
+  await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun'].includes(k); S.hire = null; });
   ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
   ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
@@ -114,8 +130,10 @@ try {
   ok('auto configure puts a kit in the carry box', true);
   ok('the pop-up holds the story, who goes and what they carry in a half each, and the send button', (await page.locator('#modal .mbox .lbox').count()) >= 3 && (await page.locator('#modal .cols2.desk > div').count()) === 2 && (await page.locator('#modal [data-act=send]').count()) === 1);
   ok('plots are not picked by hand, the story names the ideas', (await page.locator('[data-act=plotpick]').count()) === 0 && (await page.locator('#modal .lbox ul li').count()) >= 1);
-  await page.click('[data-act=pickstaff][data-id=s_zhou]');
-  ok('picked staff is marked', (await page.locator('.pickrow.on a.wl[data-id="staff:s_zhou"]').count()) === 1);
+  // the automatic set-up may already have chosen one of them, so click one that is not chosen yet
+  const other = (await page.locator('[data-act=pickstaff][data-id=s_zhou]').count()) ? 's_zhou' : 's_ning';
+  await page.click(`[data-act=pickstaff][data-id=${other}]`);
+  ok('picked staff is marked', (await page.locator(`.pickrow.on a.wl[data-id="staff:${other}"]`).count()) === 1);
   await page.screenshot({ path: path.join(outDir, '2_dispatch.png'), fullPage: true });
   await page.click('[data-act=send]');
   ok('sending closes the pop-up and the trip shows at the top, before the map', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('#home-pending').count()) === 1 && (await page.evaluate(() => document.getElementById('home-pending').compareDocumentPosition(document.getElementById('home-map')) & Node.DOCUMENT_POSITION_FOLLOWING)) > 0);
@@ -352,10 +370,10 @@ try {
   // a recall stops the trip where it is and pays a share, only one employee can be in a place, and the offer changes every seven days
   const rc = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
-    S.staff.s_ning.restUntil = 0; S.staff.s_lin.restUntil = 0;
+    S.staff.s_ning.restUntil = 0; S.staff.s_arjun.restUntil = 0;
     const era = 'broad_street_1854';
     const d = off.launch(era, { seed: 5, staffId: 's_ning', items: {} });
-    const second = off.launch(era, { seed: 6, staffId: 's_lin', items: {} });
+    const second = off.launch(era, { seed: 6, staffId: 's_arjun', items: {} });
     S.clock.day += 2;
     const fav = S.staff.s_ning.favor;
     d.report.outcomeId = 'modest';
@@ -456,9 +474,9 @@ try {
   await page.selectOption('[data-clk=speed]', '0');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
-  await page.click('[data-act=fire][data-id=s_lin]');
+  await page.click('[data-act=fire][data-id=s_arjun]');
   ok('an employee can be let go', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === hiredN - 1);
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.staff.s_lin.hired = true; });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.staff.s_arjun.hired = true; });
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.locks = S.locks.filter((x) => x !== 'clinic_bell'); if (!S.antiques.includes('clinic_bell')) S.antiques.push('clinic_bell'); S.antiques.push('relic_newton_cambridge', 'relic_newton_cambridge'); S.funds = 50; });
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '3');

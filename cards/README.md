@@ -19,7 +19,7 @@ skin: t6                 # a skin tone named in config/hiring.yaml
 base: {wit: 3, constitution: 3, finesse: 6, will: 3, luck: 9}   # 1 to 10, the average of the five 4 to 6 by age
 traits: [kind]           # one or two of the traits in traits/, a plain person gets two
 jobs: [midwife, herbalist]   # one to three job ids, the first one is the main one
-start_hired: false
+start_pool: true         # may be one of the candidates offered at the start; at most one candidate per region is offered
 text:
   en: {name: Amara Okafor, ethnicity: Igbo, jobs: [Midwife, Herbalist], bio: ..., story: ...}    # the fallback language, required
   zh: {name: 阿玛拉·奥卡福, ethnicity: 伊博人, jobs: [助产士, 草药师], bio: ..., story: ...}   # any other language, may be left out

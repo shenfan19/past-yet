@@ -717,18 +717,27 @@ export function createUI(D, ctx) {
       const id = era ? an.era : an.event;
       return `<li><b>${fmtYear(D, yearOfPlace(id, !era))}</b> ${esc(era ? T.eras[id].name : T.catalog[id].name)} <span class="muted">${esc(era ? T.eras[id].place_name : T.catalog[id].place)}</span>${era ? ` <span class="chip">${W.tutorial}</span>` : ''}</li>`;
     }).join('');
+    const need = D.get('config.office.start_staff.pick');
+    const picked = S.startStaff ? S.startStaff.pick : [];
+    const crew = (S.startStaff ? S.startStaff.offer : []).map((id) => {
+      const on = picked.includes(id);
+      return `<li class="${on ? 'on' : ''}"><button data-act="startpick" data-id="${esc(id)}" aria-pressed="${on}">${on ? '✓' : '+'}</button> <b>${esc(staffName(D, id))}</b> <span class="muted">${esc(staffProfile(D, id))}</span><div class="muted">${esc(T.staff[id].bio)}</div></li>`;
+    }).join('');
     const disclaimer = W.disclaimer.split('{issues}');
     return `<div class="welcome">
       <h2>${esc(U.title)} · ${esc(W.title)}</h2>
       <div class="row">${langHtml()}</div>
       <p>${esc(W.story)}</p>
       <div class="sec">${W.how_title}</div><ol class="steps">${W.how.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
+      <div class="sec">${W.staff_title}</div><p class="muted">${esc(W.staff_hint.replace('{n}', need))}</p>
+      <ul class="startstaff">${crew}</ul>
+      <p><button class="ghost" data-act="rerollstaff" ${S.seq > 0 || !S.startStaff ? 'disabled' : ''}>${W.reroll_staff}</button></p>
       <div class="sec">${W.places_title}</div><p class="muted">${esc(W.places_hint)}</p>
       <ul class="startplaces">${places}</ul>
       <p><button class="ghost" data-act="rerollstart" ${S.seq > 0 || !S.startRandom ? 'disabled' : ''}>${W.reroll}</button></p>
       <div class="sec">${W.disclaimer_title}</div>
       <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${W.issues}</a>${esc(disclaimer[1] || '')}</p>
-      <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart">${W.begin}</button></p>
+      <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart" ${picked.length === need || !S.startStaff ? '' : 'disabled'}>${W.begin}</button></p>
     </div>`;
   }
 
@@ -882,6 +891,8 @@ export function createUI(D, ctx) {
     else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
     else if (act === 'modalclose') closeModal();
     else if (act === 'rerollstart') { office.rerollStart(); render(); }
+    else if (act === 'rerollstaff') { office.rerollStaff(); render(); }
+    else if (act === 'startpick') { office.pickStart(id); render(); }
     else if (act === 'welcomestart') { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
     else if (act === 'modalopen') { st.modalPrev = null; st.modal = { kind: id }; render(); }
     else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; st.modal = { kind: 'staff', id }; render(); }

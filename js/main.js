@@ -3,6 +3,7 @@ import { createLocalBackend } from './backend.js';
 import { createUI } from './ui.js';
 import { createSettings } from './settings.js';
 import { createAudio } from './audio.js';
+import { drawStartStaff } from './start.js';
 
 // Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
 function pickLang(I) {
@@ -49,9 +50,10 @@ function startAntiques() {
 function fresh() {
   const begin = startAntiques();
   const start = begin.all;
+  const crew = drawStartStaff(D, O);
   return {
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: s.start_hired, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
+    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, hired: crew.pick.includes(id), favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
@@ -67,6 +69,8 @@ function fresh() {
     antiques: [...start],
     // the random ones of the start, which can be drawn again until the first trip, and whether the welcome has been read
     startRandom: begin.random,
+    // the candidates for the first employees and the ones picked, which can be changed until the first trip
+    startStaff: crew,
     welcomed: false,
   };
 }

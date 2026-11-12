@@ -119,7 +119,13 @@ const seen = {};
 for (const [id, s] of Object.entries(staff)) (seen[s.jobs.join('+') + '|' + [...s.traits].sort().join(',')] ||= []).push(id);
 for (const [k, v] of Object.entries(seen)) if (v.length > 1) warn(`staff ${v.join(', ')} share job and traits: ${k}`);
 for (const s of handStaff) if (!fullAny[s.id]) warn(`staff ${s.id}: can three star no scene`);
-if (!handStaff.some((s) => s.start_hired)) err('no starting employee');
+{
+  const pool = handStaff.filter((s) => s.start_pool);
+  const regions = new Set(pool.map((s) => s.region));
+  const O_ = D.get('config.office.start_staff');
+  if (regions.size < O_.offer) err(`the start pool spans ${regions.size} regions, fewer than the ${O_.offer} candidates offered`);
+  if (O_.pick > O_.offer) err('more employees to pick than candidates offered');
+}
 
 // items
 const bindingItems = new Set();
