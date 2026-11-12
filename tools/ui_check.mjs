@@ -779,6 +779,20 @@ ok('an unpaid day stops the clock and opens the pop-up', broke.speed === 0 && br
 await page.keyboard.press('Escape');
 const noteN = await page.evaluate(() => { const g = window.__game, S = g.ctx.S(); const before = document.querySelectorAll('#toasts .toast').length; return before; });
 ok('the notes of returns do not pile up', noteN <= 3);
+// the automatic mode anchors a new piece once and leaves it alone after the player released it
+const au = await page.evaluate(() => {
+  const g = window.__game, o = g.ui.office, S = g.ctx.S();
+  const id = Object.keys(g.D.get('antiques.antiques')).find((k) => k.startsWith('relic_') && !S.antiques.includes(k));
+  S.antiques.push(id);
+  S.locks = S.locks.filter((x) => x !== id);
+  S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id);
+  o.anchorFound();
+  const first = S.locks.includes(id);
+  S.locks = S.locks.filter((x) => x !== id);
+  o.anchorFound(); o.anchorFound();
+  return { first, again: S.locks.includes(id) };
+});
+ok('the automatic mode anchors a new piece once and leaves a released piece alone', au.first === true && au.again === false);
 // the shade of the night on the map follows the clock, and the setting takes it off
 await go('home');
 const night1 = await page.locator('svg.map .night path').getAttribute('d');

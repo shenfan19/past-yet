@@ -82,7 +82,7 @@ Antiques are not bought in a shop. Each trip may bring one back. A new game star
 - The trip finds something with chance `min(cap, 1 - product(1 - k * w))`.
 - The antique it finds is drawn from the candidates in proportion to `w`. An antique that points to a place with a simulation and is not held yet counts `modelled_place_boost` times heavier, 12 for now, so the way to a place that can be dispatched to is not buried under the many events that have no model yet. With the first one not yet held, about one trip in six brings it back.
 
-So what a trip finds is near in space and earlier in time, and the farther it is in either, the less likely. Finding the very place you are at is the most likely single find, and that gives duplicates. The current values are `k` 0.09, `cap` 0.8, `tau_years` 120 and `tau_km` 2500. With the stars an average trip is worth about 42 funds of antiques, against 19 for the old values, which keeps the funds from running short. The roll is seeded by the dispatch, so a replay finds the same thing, and it belongs to the backend. The page shows the chance on the card of each place.
+So what a trip finds is near in space and earlier in time, and the farther it is in either, the less likely. Finding the very place you are at is the most likely single find, and that gives duplicates. The current values are `k` 0.16, `cap` 0.8, `tau_years` 120 and `tau_km` 2500. The chance on the card of a place is this reach chance times the star share, so a place far in time or space, or a trip with no stars, shows a low number: the median place is at 0.41 before the stars, and an average trip finds something about one time in three and brings antiques worth about 63 funds, though only the spare copies can be sold, the rest are doors. A small story pays 50, 90 and 140 funds by tier at full marks (`light.pay`), scaled by the stars. The roll is seeded by the dispatch, so a replay finds the same thing, and it belongs to the backend. The page shows the chance on the card of each place.
 
 Because candidates must be earlier, antiques lead backwards in time. A place is reached from a later one, and the way to an earlier era runs through the antiques of the later ones.
 
@@ -92,7 +92,7 @@ A catalogue event without a model is played as a small story. The traveller's ab
 
 ### Anchoring and selling
 
-- An antique that opens a place must be anchored in the antiques list of the Agency page. Anchoring opens the place. An anchored copy cannot be sold.
+- An antique that opens a place must be anchored in the antiques list of the Agency page. Anchoring opens the place. An anchored copy cannot be sold. The automatic mode anchors a new piece once; a piece the player has released stays released, so it can be sold.
 - The same antique can come back more than once. Copies beyond the first are spares. Spares can be sold one by one, or all at once with one button.
 - An anchor cannot be released while someone is away at that place, and the last open place cannot be released.
 - A spare sells for the price of the antique. Each copy is therefore either money or a door.
