@@ -119,6 +119,20 @@ export function createUI(D, ctx) {
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
   const tip = (text) => ` data-tip="${esc(text)}"`;
   const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
+  // What a sync point asks for, said from its requirement, so the hint can never differ from the rule. All the keys of a requirement must hold, any lists alternatives.
+  const jobNames = (() => { const m = {}; for (const [sid, s] of Object.entries(D.get('staff.staff'))) s.jobs.forEach((j, i) => { m[j] = m[j] || T.staff[sid].jobs[i]; }); return m; })();
+  const reqClauses = (req) => Object.entries(req).map(([k, v]) => {
+    const S_ = U.stars;
+    if (k === 'stat') return Object.entries(v).map(([s, n]) => S_.need_stat.replace('{s}', T.stats[s]).replace('{n}', String(n))).join(S_.need_and);
+    if (k === 'trait') return S_.need_trait.replace('{t}', v.map((x) => T.traits[x]).join(S_.need_or));
+    if (k === 'job') return S_.need_job.replace('{j}', v.map((x) => jobNames[x] || x).join(S_.need_or));
+    if (k === 'gender') return U.gender[v];
+    if (k === 'item') return S_.need_gear.replace('{i}', T.items[v].name);
+    if (k === 'provides') return Object.entries(D.get('items')).filter(([, it]) => it.scene && it.provides.includes(v)).map(([id]) => S_.need_gear.replace('{i}', T.items[id].name)).join(S_.need_or);
+    if (k === 'luck') return S_.need_luck;
+    return v.map((r) => reqClauses(r).join(S_.need_and)).join(S_.need_or);
+  });
+  const reqHint = (req) => { const c = reqClauses(req); return c.length ? ` <span class="muted">${esc(U.stars.need.replace('{x}', c.join(U.stars.need_and)))}</span>` : ''; };
   const statsLine = (stats) => D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
   // what a trait does at the sync points, as percent per kind of point, for example persuading +35%
   const pointsText = (tr) => Object.entries(tr.points).map(([k, v]) => `${T.point_kinds[k]} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
@@ -443,7 +457,7 @@ export function createUI(D, ctx) {
       <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0)}</div>
       <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
-      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
+      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
       <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
 
