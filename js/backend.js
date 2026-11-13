@@ -52,7 +52,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // The chance is scaled by the stars of the trip: a quarter of it with none, half with one, three quarters with two, all of it with three.
   function findAntique(eraId, seed, held = [], stars = 3, luck = 1) {
     const { p, list } = findOdds(eraId);
-    if (!list.length || draw(seed, 'antique_find', eraId) >= Math.min(LK.max_chance, p * AF.star_share[Math.max(0, Math.min(3, stars))] * luck)) return null;
+    if (!list.length || draw(seed, 'antique_find', eraId) >= Math.min(LK.max_chance, p * AF.star_share[maxStars(eraId)][Math.max(0, Math.min(maxStars(eraId), stars))] * luck)) return null;
     const all = D.get('antiques.antiques');
     const wt = (x) => x.w * (all[x.id].era && !held.includes(x.id) ? AF.modelled_place_boost : 1);
     const total = list.reduce((a, x) => a + wt(x), 0);
@@ -70,6 +70,10 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // A small story: a catalogue event with no branch simulation. How the trip goes is the traveller's abilities, weighted by the field of the event,
   // against a difficulty that rises with its tier, with a little seeded luck. It pays by outcome and brings nothing else.
   const L = D.get('config.light');
+  // two thirds of the stars or more is a success, any is a partial, none is missed
+  const outcomeOf = (stars, n) => (stars * 3 >= 2 * n ? 'success' : stars > 0 ? 'partial' : 'missed');
+  // how many stars a place can give: a scene has one per sync point, everything else three
+  const maxStars = (id) => { const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => L.stay_by_tier[lightEvent(eventId).tier];
   // A trait is worth something at the sync points. Each point is about one kind of thing, and the traits of the employee add up to a bonus for that kind:
@@ -118,14 +122,15 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const f = found ? SC.found[found] : null;
     if (f) stars = Math.max(0, stars - f.stars_cost);
     const pay = L.pay[ev.tier];
+    const kind = outcomeOf(stars, points.length);
     return { points, stars, found, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
-      energyBase: pay.energy, restDays: L.rest_days[stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed'] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
+      energyBase: pay.energy, restDays: L.rest_days[kind] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
   }
   function runLight(eventId, staffId, seed, items, favor = null) {
     const ev = lightEvent(eventId);
     if (ev.scene) {
       const r = runScene(ev, staffId, seed, items, favor);
-      return { ...r, outcome: r.stars >= 2 ? 'success' : r.stars === 1 ? 'partial' : 'missed' };
+      return { ...r, outcome: outcomeOf(r.stars, ev.scene.points.length) };
     }
     const stats = sim.staffAttrs(D, staffId, favor, gearOf(staffId));
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
@@ -141,7 +146,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
-    runLight, lightStay, marketMult, luckFactor, recallRefused, recallKeeps,
+    runLight, lightStay, maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
     findOdds, findAntique,

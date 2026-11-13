@@ -92,7 +92,7 @@ const walk = (e, r) => {
 };
 for (const e of sceneEvents) {
   const pts = e.scene.points;
-  if (pts.length !== 3) err(`scene ${e.id} has ${pts.length} points, not 3`);
+  if (!cfg.stars.counts.includes(pts.length)) err(`scene ${e.id} has ${pts.length} points, the star tables know ${cfg.stars.counts}`);
   if (new Set(pts.map((p) => p.id)).size !== pts.length) err(`scene ${e.id}: duplicate point ids`);
   const allKits = kitsFor(e);
   pts.forEach((p) => { walk(e, p.req); kindUse[p.kind] = (kindUse[p.kind] || 0) + 1; });

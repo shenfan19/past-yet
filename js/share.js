@@ -116,7 +116,7 @@ export function createShare(X) {
     g.fillStyle = K.ink; g.font = `700 ${CV.event_px}px ${serif}`;
     for (const l of cut(wrap(g, p.name, colW), 2)) { g.fillText(l, CV.pad, y); y += CV.event_px * CV.line_gap; }
     g.fillStyle = K.stamp; g.font = `700 ${CV.body_px}px ${sans}`;
-    const stars = '★'.repeat(d.stars || 0) + '☆'.repeat(D.get('config.stars.max') - (d.stars || 0));
+    const stars = '★'.repeat(d.stars || 0) + '☆'.repeat((d.max || D.get('config.stars.max')) - (d.stars || 0));
     g.fillText(`${p.outcome}  ${stars}`, CV.pad, y); y += CV.body_px * CV.line_gap + 6;
     g.fillStyle = K.ink; g.font = `400 ${CV.body_px - 2}px ${sans}`;
     const room = Math.floor((CV.vis_y - 50 - y) / ((CV.body_px - 2) * CV.line_gap));

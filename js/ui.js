@@ -159,7 +159,9 @@ export function createUI(D, ctx) {
   const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
   // stars: filled and empty marks coloured by the count, bronze, silver and gold
   const STAR_MAX = D.get('config.stars.max');
-  const starsHtml = (n) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
+  // the stars of a place: how many it has is the number of its sync points, so a place id gives the length of the row
+  const starsHtml = (n, place) => { const m = place ? ctx.backend.maxStars(place) : STAR_MAX; return starRow(n, m); };
+  const starRow = (n, STAR_MAX) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
   const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(textOf(p.id))}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>`;
   const yearOfPlace = (id, light) => (light ? D.get('catalog.events').find((x) => x.id === id).year : ctx.era(id).raw.metadata.era.year);
@@ -177,7 +179,7 @@ export function createUI(D, ctx) {
   }
   // a row of links to the sections of a page, the same bar the about and settings pages have
   const jumpBar = (items) => `<p class="jumps">${items.map(([id, label]) => `<a class="wl" data-act="aboutjump" data-id="${id}">${esc(label)}</a>`).join(' · ')}</p>`;
-  const X = { jumpBar, starsHtml: (n) => starsHtml(n), storyFor: (e) => (e.catalog ? catalogCard(e.id) : placeFile(e.id)), D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, anchored, selectEra, wl, tip, anchorOf, owns, catalogTags, saveUiState, langHtml };
+  const X = { jumpBar, starsHtml: (n, place) => starsHtml(n, place), storyFor: (e) => (e.catalog ? catalogCard(e.id) : placeFile(e.id)), D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, anchored, selectEra, wl, tip, anchorOf, owns, catalogTags, saveUiState, langHtml };
   const office = createOffice(X);
   office.ensureHire();
   const clockEl = document.getElementById('clock');
@@ -195,7 +197,8 @@ export function createUI(D, ctx) {
   document.body.appendChild(modalEl);
   let modalLast = '';
   st.map = worldMap.init();
-  st.form = newForm(visibleEras()[0]);
+  // with no simulated place open yet, which is the case at the start, the form stands on the first one of the list and is made again when the player picks a place
+  st.form = newForm(visibleEras()[0] || eraList()[0]);
   worldMap.attach(view);
   restoreUiState();
   // a new game opens with the welcome, which stays until it has been read
@@ -423,7 +426,7 @@ export function createUI(D, ctx) {
       ? `<ul class="trips">${trips.map((t) => {
         const oc = t.recalled ? U.report.recalled : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
-        return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars)}${t.redeemed ? ' <span class="chip" ' + tip(U.stars.redeem) + '>♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
+        return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place)}${t.redeemed ? ' <span class="chip" ' + tip(U.stars.redeem) + '>♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
       }).join('')}</ul>`
       : `<p class="muted">${U.archive.trips_none}</p>`;
     return `<div class="sec">${U.archive.trips} (${trips.length})</div>${body}`;
@@ -435,7 +438,7 @@ export function createUI(D, ctx) {
     const ideas = office.plotsFor(id).map((pid) => `<li>${esc(ET.plots[pid].name)}${U.fmt.paren.replace('{x}', esc(ET.plots[pid].character))}</li>`).join('');
     const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
       <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
-      <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0)}</div>
+      <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       <div class="sec">${U.stars.points}</div><ul class="sync">${ctx.era(id).raw.star_points.map((p) => `<li>☆ ${esc(ET.star_points[p.id])}</li>`).join('')}</ul>
       <div class="sec">${U.dispatch.ideas}</div><ul>${ideas}</ul>`;
@@ -456,7 +459,7 @@ export function createUI(D, ctx) {
       <div>${tags}</div>
       <p>${esc(c.story)}</p><div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
       <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
-      <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0)}</div>
+      <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}${p.redeem ? ` <span class="chip">${U.stars.redeem}</span>` : ''}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
       <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p>${own ? tripsHtml(id) : ''}</div></div>`;
@@ -464,7 +467,7 @@ export function createUI(D, ctx) {
 
   // ---------- home: the dispatch desk under the map ----------
   function fixForm() {
-    if (!visibleEras().includes(st.form.eraId)) st.form = { ...newForm(visibleEras()[0]), staffId: st.form.staffId };
+    if (visibleEras().length && !visibleEras().includes(st.form.eraId)) st.form = { ...newForm(visibleEras()[0]), staffId: st.form.staffId };
     if (!hiredIds().includes(st.form.staffId)) st.form.staffId = hiredIds()[0];
     const f = st.form;
     if (staffState(f.staffId) !== 'ready') {
@@ -563,7 +566,7 @@ export function createUI(D, ctx) {
       <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (D.get('catalog.events').find((x) => x.id === cur.eraId).scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
-        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
+        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
@@ -638,7 +641,7 @@ export function createUI(D, ctx) {
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
-        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
+        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(cur.paid.energy)}</td></tr>
         ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
@@ -733,7 +736,7 @@ export function createUI(D, ctx) {
         { k: 'no', label: '#', w: '8%', cls: 'num', cell: (r) => `<span class="muted">${r.id.slice(1)}</span>` },
         { k: 'year', label: U.report.year, w: '16%', cell: (r) => fmtYear(D, yearOfPlace(r.place, r.light)) },
         { k: 'place', label: U.report.place, w: '36%', cell: (r) => `<span class="nowrap${r.archived ? ' archived' : ''}">${esc(shortOfPlace(r.place, r.light))}</span>` },
-        { k: 'stars', label: U.stars.col, w: '24%', cell: (r) => `${starsHtml(r.stars || 0)}${r.redeemed ? ' <span class="chip">♥</span>' : ''}` },
+        { k: 'stars', label: U.stars.col, w: '24%', cell: (r) => `${starsHtml(r.stars || 0, r.place)}${r.redeemed ? ' <span class="chip">♥</span>' : ''}` },
         { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (keptIds.has(r.id) ? `<button class="ghost" data-act="open" data-id="${r.id}">${U.report.view}</button>` : '') },
       ],
     });
@@ -783,7 +786,9 @@ export function createUI(D, ctx) {
     const picked = S.startStaff ? S.startStaff.pick : [];
     const crew = (S.startStaff ? S.startStaff.offer : []).map((id) => {
       const on = picked.includes(id);
-      return `<li class="${on ? 'on' : ''}"><button data-act="startpick" data-id="${esc(id)}" aria-pressed="${on}">${on ? '✓' : '+'}</button> <b>${esc(staffName(D, id))}</b> <span class="muted">${esc(staffProfile(D, id))}</span><div class="muted">${esc(T.staff[id].bio)}</div></li>`;
+      const fixed = S.startStaff.offer.length <= need;
+      const toggle = fixed ? '' : `<button data-act="startpick" data-id="${esc(id)}" aria-pressed="${on}">${on ? '✓' : '+'}</button> `;
+      return `<li class="${on ? 'on' : ''}">${toggle}<b>${esc(staffName(D, id))}</b> <span class="muted">${esc(staffProfile(D, id))}</span><div class="muted">${esc(T.staff[id].bio)}</div></li>`;
     }).join('');
     const disclaimer = W.disclaimer.split('{issues}');
     return `<div class="welcome">

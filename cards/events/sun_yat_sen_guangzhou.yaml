@@ -7,31 +7,38 @@ field: thought
 tier: 1
 channels: {H: 1}
 start: true
+regret: true
 scene:
   points:
     - {id: p1, kind: notice, req: {"stat":{"wit":5}}}
-    - {id: p2, kind: trust, req: {"trait":["kind","charismatic","attached","quiet"]}}
-    - {id: p3, kind: hold, req: {"stat":{"will":5}}}
+    - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","charismatic","cosmopolitan"]},{"stat":{"wit":7}}]}}
+    - {id: p3, kind: endure, req: {"any":[{"trait":["hardy"]},{"stat":{"constitution":5}}]}}
+    - {id: p4, kind: trust, req: {"trait":["kind","attached","quiet","charismatic"]}}
+    - {id: p5, kind: care, redeem: true, req: {"provides":"heal"}}
 text:
   en:
-    name: "A university for the country"
+    name: "From the statue to a new university"
     place: "Guangzhou"
     figure: "Sun Yat-sen"
-    story: "In 1924 Sun Yat-sen has the higher schools of Guangzhou joined into one National Guangdong University, and asks it to train people for the country. He dies the next year, and in 1926 the university is renamed National Sun Yat-sen University in his memory."
+    story: "Standing before the statue of Sun Yat-sen at Sun Yat-sen University, you are carried back to Guangzhou in 1924. On 4 February Sun Yat-sen orders three schools joined into National Guangdong University, and its classes begin that autumn. He falls ill within the year and dies in Beijing on 12 March 1925, and in 1926 the university takes his name."
     relic: "A brass school badge"
     relic_desc: "A small badge from the first years of the university."
     points:
-      p1: "Follow how the schools are to be joined"
-      p2: "Earn the trust of the teachers and students"
-      p3: "Stay through the long days of the opening"
+      p1: "Follow how the three schools are to be joined"
+      p2: "Win the heads of the schools over to the merger"
+      p3: "Carry books and equipment across the city for the move"
+      p4: "Earn the trust of the teachers and students on the first day"
+      p5: "Sit with him through his last illness"
   zh:
-    name: "为国家办的一所大学"
+    name: "从铜像到一所新大学"
     place: "广州"
     figure: "孙中山"
-    story: "1924 年，孙中山把广州的几所高等学校合并成一所国立广东大学，希望它为国家培养人才。他第二年去世，1926 年这所大学为纪念他改名为国立中山大学。"
+    story: "你站在中山大学的孙中山像前，被带回 1924 年的广州。2 月 4 日，孙中山下令把三所学校合并成国立广东大学，这年秋天开学。他当年就病倒，1925 年 3 月 12 日在北京去世，1926 年这所大学以他的名字命名。"
     relic: "一枚铜质校徽"
     relic_desc: "这所大学最初几年的一枚小徽章。"
     points:
-      p1: "看懂这些学校是怎样并起来的"
-      p2: "赢得师生的信任"
-      p3: "撑过开办时漫长的日子"
+      p1: "看懂三所学校是怎样并起来的"
+      p2: "说服几所学校的负责人同意合并"
+      p3: "把书和设备搬过全城，完成迁并"
+      p4: "在开学第一天赢得师生的信任"
+      p5: "在他最后的病中陪着他"

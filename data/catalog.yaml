@@ -6691,6 +6691,7 @@ events:
     channels:
       H: 1
     start: true
+    regret: true
     scene:
       points:
         - id: p1
@@ -6699,15 +6700,33 @@ events:
             stat:
               wit: 5
         - id: p2
+          kind: persuade
+          req:
+            any:
+              - trait:
+                  - glib
+                  - charismatic
+                  - cosmopolitan
+              - stat:
+                  wit: 7
+        - id: p3
+          kind: endure
+          req:
+            any:
+              - trait:
+                  - hardy
+              - stat:
+                  constitution: 5
+        - id: p4
           kind: trust
           req:
             trait:
               - kind
-              - charismatic
               - attached
               - quiet
-        - id: p3
-          kind: hold
+              - charismatic
+        - id: p5
+          kind: care
+          redeem: true
           req:
-            stat:
-              will: 5
+            provides: heal

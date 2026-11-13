@@ -212,7 +212,7 @@ export function createWorldMap(X) {
     const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
     const items = p.events.slice().sort((a, b) => a.year - b.year).map((e) => {
       const i = info(e);
-      return `<div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e)) : ''}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
+      return `<div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e), e.id) : ''}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
     }).join('');
     return `<h3>${esc(name)} <span class="muted">· ${p.events.length}</span></h3><div class="evgrid">${items}</div>`;
   }

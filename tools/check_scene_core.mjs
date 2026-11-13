@@ -44,7 +44,7 @@ const kits = (ev) => {
 };
 for (const ev of events) {
   const m = sceneModel(D, ev);
-  if (m.points.length !== 3 || m.points.some((p) => !(p.day >= 1 && p.day <= m.stay))) { console.log('bad model', ev.id); bad++; }
+  if (!D.get('config.stars.counts').includes(m.points.length) || m.points.some((p) => !(p.day >= 1 && p.day <= m.stay))) { console.log('bad model', ev.id); bad++; }
   for (const staffId of Object.keys(D.get('staff.staff'))) {
     for (const carried of kits(ev)) {
       for (const favor of [null, 0.2, 0.9]) {

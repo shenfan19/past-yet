@@ -58,11 +58,12 @@ office:
   # Antiques sell at the price on the card times a market factor that is redrawn for each field every period_days, within 1 +- amp.
   market: {period_days: 30, amp: 0.3}
   fatal_outcomes: [near_death]
-  antique_find: {star_share: {0: 0.25, 1: 0.5, 2: 0.75, 3: 1}, k: 0.16, cap: 0.8, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
-  # the places open at the start, besides the first one: the latest event of the catalogue, which reaches the farthest back, and some at random
-  start_scenes: {newest: 1, random: 2}
+  # the share of the find chance at a star count, for a story with that many stars; a story has 3 stars unless its scene has more points
+  antique_find: {star_share: {3: {0: 0.25, 1: 0.5, 2: 0.75, 3: 1}, 5: {0: 0.25, 1: 0.4, 2: 0.55, 3: 0.75, 4: 0.9, 5: 1}}, k: 0.16, cap: 0.8, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
+  # the places open at the start, besides the events marked start: some of the latest event of the catalogue, which reaches the farthest back, and some at random
+  start_scenes: {newest: 0, random: 2}
   # the employees of the start: this many candidates from different regions are offered and the player picks some of them
-  start_staff: {offer: 6, pick: 2}
+  start_staff: {offer: 2, pick: 2}
   start_stock:
     ors_pack: 40
     chlorine_tablet: 40
@@ -72,14 +73,14 @@ office:
 founder:
   id: s_founder
   age: 30
-  total: 27
+  total: 22
   min: 1
   max: 10
   name_max: 24
   traits_max: 2
   default_gender: x
   default_skin: t3
-  default_base: {wit: 5, constitution: 5, finesse: 5, will: 5, luck: 5}
+  default_base: {wit: 4, constitution: 4, finesse: 4, will: 4, luck: 4}
 clock:
   sec_per_day: 60
   speeds:
@@ -153,10 +154,12 @@ ui:
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
 stars:
+  # a scene has as many stars as sync points, and the counts the tables below know
   max: 3
+  counts: [3, 5]
   energy_base: {broad_street_1854: 60, vienna_1847: 80, scutari_1855: 80, finlay_havana_1881: 80, jenner_berkeley_1796: 80, seacole_balaklava_1855: 80}
   # the share of the base paid in total at a star count, so each star above the best pays the difference
-  energy_share: {0: 0, 1: 0.25, 2: 0.5, 3: 1}
+  energy_share: {3: {0: 0, 1: 0.25, 2: 0.5, 3: 1}, 5: {0: 0, 1: 0.15, 2: 0.3, 3: 0.5, 4: 0.75, 5: 1}}
 light:
   stay_by_tier: {1: 4, 2: 6, 3: 9}
   difficulty: {base: 0.32, per_tier: 0.1}
@@ -181,7 +184,7 @@ light:
     music: {"wit": 0.4, "finesse": 0.6}
 scene:
   # the three sync points sit at these shares of the stay, so a point is met on the attributes of that day, not of the start
-  point_share: [0.25, 0.55, 0.85]
+  point_share: {3: [0.25, 0.55, 0.85], 5: [0.15, 0.3, 0.5, 0.7, 0.9]}
   suspicion_by_tier: {1: 0.6, 2: 0.8, 3: 1.2}
   max_discovery: 0.9
   # a scene that has been found out: how, the star cost, the days of rest, the favor lost, and whether the antique is lost

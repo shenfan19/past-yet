@@ -84,7 +84,7 @@ export function createOffice(X) {
     s.seq += 1;
     if (s.seq === 1) startClock();
     const d = {
-      id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
+      id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, max: ctx.backend.maxStars(eventId), baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
       report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
       startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
     };
@@ -205,14 +205,16 @@ export function createOffice(X) {
     // Funds and antiques are paid every time.
     const best = s.stars[d.eraId] || 0;
     d.newBest = d.stars > best;
-    const energy = d.newBest ? d.baseEnergy * (ST.energy_share[d.stars] - ST.energy_share[best]) : 0;
+    const top = ctx.backend.maxStars(d.eraId);
+    const energy = d.newBest ? d.baseEnergy * (ST.energy_share[top][d.stars] - ST.energy_share[top][best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
     const sf0 = s.staff[d.spec.staffId];
     d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), restDays: Math.round(d.payout.restDays * (1 - p.rest_cut)) };
     s.energy += d.paid.energy;
     sf0.tally ||= { 3: 0, 2: 0, 1: 0 };
-    if (d.stars > 0) sf0.tally[d.stars] += 1;
-    d.paid.grown = d.stars === 3 ? grow(d.spec.staffId, S().seq) : null;
+    // the tally counts in thirds of the stars of the place, so a five star story fills the same three cells
+    if (d.stars > 0) sf0.tally[Math.ceil(d.stars * 3 / top)] += 1;
+    d.paid.grown = d.stars === top ? grow(d.spec.staffId, S().seq) : null;
     d.paid.antique = d.payout.antique || null;
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
@@ -626,8 +628,8 @@ export function createOffice(X) {
     const rules = [
       ['unexplored', () => free.filter((id) => !s.visited.includes(id))],
       // a story already visited where this traveller, with the equipment the office has or can buy, would beat the best stars
-      ['improvable', () => free.filter((id) => isStory(id) && s.visited.includes(id) && (s.stars[id] || 0) < ST.max && planLight(id, staffId, seed).stars > (s.stars[id] || 0))],
-      ['breakthrough', () => free.filter((id) => s.visited.includes(id) && (s.stars[id] || 0) < ST.max && tries(id) < A.pick.breakthrough_tries)],
+      ['improvable', () => free.filter((id) => isStory(id) && s.visited.includes(id) && (s.stars[id] || 0) < ctx.backend.maxStars(id) && planLight(id, staffId, seed).stars > (s.stars[id] || 0))],
+      ['breakthrough', () => free.filter((id) => s.visited.includes(id) && (s.stars[id] || 0) < ctx.backend.maxStars(id) && tries(id) < A.pick.breakthrough_tries)],
       ['farther', () => {
         const reach = Math.min(Infinity, ...mine.map((d) => year(d.eraId)));
         const older = free.filter((id) => year(id) < reach);

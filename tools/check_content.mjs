@@ -98,7 +98,7 @@ const checkReq = (req, where) => { for (const [k, v] of Object.entries(req)) { i
 for (const ev of D.get('catalog.events')) {
   if (!ev.scene) continue;
   scenes++;
-  if (ev.scene.points.length !== 3) throw new Error(ev.id + ' needs three points');
+  if (!D.get('config.stars.counts').includes(ev.scene.points.length)) throw new Error(ev.id + ' has a number of points the star tables do not know');
   for (const p of ev.scene.points) { checkReq(p.req, ev.id + '.' + p.id); if (!D.get('text.catalog.' + ev.id + '.points.' + p.id)) throw new Error(ev.id + ' lacks the words of ' + p.id); }
 }
 for (const [id, it] of Object.entries(D.get('items'))) if (it.scene && !(it.unlock_energy >= 0 && typeof it.exposure === 'number')) throw new Error(id + ' lacks unlock_energy or exposure');
