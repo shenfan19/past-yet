@@ -5,8 +5,10 @@ import * as sim from './sim.js';
 import { buildReport } from './narrate.js';
 import { draw } from './rng.js';
 import { evalScene } from './scene_core.js';
+import { runStay } from './stay.js';
+import { createStubCore } from './stub_core.js';
 
-export function createLocalBackend(D) {
+export function createLocalBackend(D, core = createStubCore(D)) {
   const eras = {};
   for (const id of D.get('config.eras')) eras[id] = sim.compileEra(D.get('era_raw.' + id), D, id);
   // the plain data of an era that the interface may read, no functions
@@ -84,8 +86,8 @@ export function createLocalBackend(D) {
   }
   // A scene: three points the traveller meets or does not by what they are, and what they carry. Being found out costs stars, rest and favor.
   const SC = D.get('config.scene');
-  function runScene(ev, staffId, seed, items, favor = null, body = null) {
-    const staff = D.get('staff.staff.' + staffId);
+  // what the traveller has on in a scene: the attributes after the items, the items that count, and how much of it shows
+  function sceneKit(staffId, items, favor) {
     const gear = gearOf(staffId);
     const stats = { ...sim.staffAttrs(D, staffId, favor, gear) };
     const carried = [...new Set([...Object.entries(items || {}).filter(([id, n]) => n > 0 && D.get('items.' + id).scene).map(([id]) => id), ...gear])];
@@ -95,8 +97,14 @@ export function createLocalBackend(D) {
       exposure += it.exposure;
       for (const [k, m] of Object.entries(it.stat_mult || {})) stats[k] *= m;
     }
-    // the sync points are met by the scene sub core; the attributes of a day can come from the body of the traveller, none given means the attributes do not change in the stay
-    const hits = evalScene(D, ev, { staffId, seed, carried, statsAt: (day) => (body ? body(day, stats) : stats) });
+    return { stats, carried, exposure };
+  }
+  function runScene(ev, staffId, seed, items, favor = null, body = null) {
+    const { stats, carried, exposure } = sceneKit(staffId, items, favor);
+    // the sync points are met by the scene sub core. With the body on, the stay is stepped through the core of the traveller and each point is met on the attributes of its day;
+    // with it off, or when the caller gives its own attributes of the day, the attributes do not change in the stay
+    const hits = !body && D.get('config.body.enabled') ? runStay(D, core, ev, { staffId, seed, carried, stats }).hits
+      : evalScene(D, ev, { staffId, seed, carried, statsAt: (day) => (body ? body(day, stats) : stats) });
     const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
     let stars = points.filter((p) => p.hit).length;
     // being found out: the more equipment shows and the more suspicious the time, the likelier
@@ -133,6 +141,8 @@ export function createLocalBackend(D) {
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
     runLight, lightStay, marketMult, luckFactor, recallRefused, recallKeeps,
+    // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
+    runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
     findOdds, findAntique,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,

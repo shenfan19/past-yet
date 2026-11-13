@@ -511,3 +511,60 @@ body:
     will:
       - psychological_strain
       - loneliness
+  enabled: false
+  step_minutes: 1440
+  incapacity:
+    readouts:
+      - injury_burden
+      - mobility_loss
+      - infection_burden
+      - hydration_deficit
+      - energy_deficit
+      - psychological_strain
+    at: 0.9
+  feedback:
+    miss:
+      psychological_demand: 0.1
+    hit:
+      psychological_demand: -0.05
+    decay: 0.5
+  loneliness:
+    per_level_day: 0.05
+core_stub:
+  name: stub-core
+  rate_per_day: 0.35
+  step_minutes: 1440
+  scale:
+    fluid_intake: 0.8
+    activity_load: 60
+    sleep_duration: 1
+    psychological_demand: 0.5
+    injury_exposure: 0.2
+  context_weight:
+    infection_burden:
+      pathogen_exposure: 1
+  weights:
+    fatigue:
+      activity_load: 0.35
+      sleep_duration: -0.3
+      psychological_demand: 0.2
+    hydration_deficit:
+      fluid_intake: -0.5
+      activity_load: 0.15
+    energy_deficit:
+      activity_load: 0.3
+      sleep_duration: -0.1
+    injury_burden:
+      injury_exposure: 0.4
+      activity_load: 0.1
+    mobility_loss:
+      injury_exposure: 0.25
+      activity_load: 0.2
+    psychological_strain:
+      psychological_demand: 0.7
+      sleep_duration: -0.05
+    oxygen_deficit:
+      activity_load: 0.25
+    nutrient_deficit:
+      activity_load: 0.15
+    infection_burden: {}
