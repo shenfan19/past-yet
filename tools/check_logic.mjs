@@ -184,7 +184,7 @@ for (const [id, it] of Object.entries(items)) {
   }
 }
 for (const c of chIds) {
-  if (chItems[c].length < 3) warn(`channel ${c}: ${chItems[c].length} items work against it, at least 3 are needed (${chItems[c].join(', ')})`);
+  if (chItems[c].length < CH.min_items) warn(`channel ${c}: ${chItems[c].length} items work against it, at least ${CH.min_items} are wanted (${chItems[c].join(', ')})`);
   if (chGear[c].length < 1) err(`channel ${c}: no gear works against it`);
   for (const [h, byLevel] of Object.entries({ ...(CH.list[c].level || {}), ...(CH.list[c].total || {}), ...(CH.list[c].context || {}) })) {
     for (const l of CH.levels) if (!(l in byLevel)) err(`channel ${c}: handle ${h} has no value for level ${l}`);

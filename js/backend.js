@@ -97,13 +97,14 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       exposure += it.exposure;
       for (const [k, m] of Object.entries(it.stat_mult || {})) stats[k] *= m;
     }
-    return { stats, carried, exposure };
+    const props = Object.entries(items || {}).filter(([id, n]) => n > 0 && !D.get('items.' + id).scene).map(([id]) => id);
+    return { stats, carried, exposure, props };
   }
   function runScene(ev, staffId, seed, items, favor = null, body = null) {
-    const { stats, carried, exposure } = sceneKit(staffId, items, favor);
+    const { stats, carried, exposure, props } = sceneKit(staffId, items, favor);
     // the sync points are met by the scene sub core. With the body on, the stay is stepped through the core of the traveller and each point is met on the attributes of its day;
     // with it off, or when the caller gives its own attributes of the day, the attributes do not change in the stay
-    const hits = !body && D.get('config.body.enabled') ? runStay(D, core, ev, { staffId, seed, carried, stats }).hits
+    const hits = !body && D.get('config.body.enabled') ? runStay(D, core, ev, { staffId, seed, carried, props, stats }).hits
       : evalScene(D, ev, { staffId, seed, carried, statsAt: (day) => (body ? body(day, stats) : stats) });
     const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
     let stars = points.filter((p) => p.hit).length;

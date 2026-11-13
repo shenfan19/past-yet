@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { loadData } from '../js/data.js';
 import { evalScene } from '../js/scene_core.js';
-import { runStay } from '../js/stay.js';
+import { runStay, effectiveChannels } from '../js/stay.js';
 import { LMCore } from '../vendor/lm_core/index.js';
 import * as sim from '../js/sim.js';
 
@@ -79,6 +79,22 @@ else {
   const days = heavy.scene.points.map((_, i) => dead.trace.length && i);
   const pd = (await import('../js/scene_core.js')).pointDays(D, heavy);
   pd.forEach((d, i) => { if (d >= dead.trace[first].day && dead.hits[i]) err(`point ${i} was met after the traveller went down`); });
+}
+
+// 5 relief: items, gear and traits take levels off a channel, with the cap on items, and a channel at nothing is gone
+{
+  const items = D.get('items');
+  const withCh = (c, scene) => Object.keys(items).filter((i) => !!items[i].scene === scene && items[i].channels.includes(c));
+  const cap = D.get('config.channels.relief.item_cap');
+  const props = withCh('H', false), gear = withCh('H', true);
+  const raw = { channels: { H: 3, S: 1 } };
+  const wanderer = staffIds.find((s) => D.get('staff.staff.' + s + '.traits').includes('wanderer'));
+  const plain = staffIds.find((s) => !D.get('staff.staff.' + s + '.traits').some((x) => D.get('staff.traits.' + x).resist));
+  if (effectiveChannels(D, raw, plain, [], []).H !== 3) err('a bare traveller does not feel the full level');
+  if (effectiveChannels(D, raw, plain, props, []).H !== 3 - Math.min(cap, props.length)) err('items do not lower the level, or pass the cap');
+  if ((effectiveChannels(D, raw, plain, props, gear).H ?? 0) !== Math.max(0, 3 - Math.min(cap, props.length) - gear.length)) err('gear does not lower the level beyond the items');
+  if ('S' in effectiveChannels(D, raw, wanderer, [], [])) err('a trait that resists a channel does not lower it');
+  if (!(effectiveChannels(D, raw, plain, [], []).S === 1)) err('a traveller without the trait loses the channel');
 }
 
 // the readings a single channel reaches at the end of the stay, for the tuning later

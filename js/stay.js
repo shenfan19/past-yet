@@ -28,8 +28,26 @@ export function dayHandles(D, ev, day, carry, modes) {
   return out;
 }
 
+// The level a channel has for this traveller: the level of the event, less what the items they carry, the gear they wear and their traits take off. A channel at nothing is gone.
+export function effectiveChannels(D, ev, staffId, props, gear) {
+  const R = D.get('config.channels.relief');
+  const field = D.get('config.channels.trait_resist.field');
+  const traits = D.get('staff.staff.' + staffId + '.traits');
+  const out = {};
+  for (const [c, lv] of Object.entries(ev.channels)) {
+    const named = (ids) => ids.filter((id) => D.get('items.' + id).channels.includes(c)).length;
+    const cut = Math.min(R.item_cap, R.item_levels * named(props)) + R.gear_levels * named(gear)
+      + traits.reduce((a, t) => a + (D.get('staff.traits.' + t)[field]?.[c] || 0), 0);
+    const left = Math.max(R.floor, lv - cut);
+    if (left > 0) out[c] = left;
+  }
+  return out;
+}
+
 // runs the stay and says which points were met. ctx: staffId, seed, carried, stats (the attributes on the card after the items)
-export function runStay(D, core, ev, ctx) {
+export function runStay(D, core, ev0, ctx) {
+  // ctx.props are the ids of the plain items carried, ctx.carried the gear and scene items; the pressure of the stay is what is left after them
+  const ev = { ...ev0, channels: effectiveChannels(D, ev0, ctx.staffId, ctx.props || [], (ctx.carried || []).filter((id) => D.get('items.' + id).scene)) };
   const B = D.get('config.body');
   const C = D.get('config.channels');
   const hello = core.hello();

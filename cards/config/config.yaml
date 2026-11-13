@@ -231,7 +231,10 @@ channels:
   # channels switched off for now: the event cards keep them, but the stay ignores them until the core can move the body for them (see the task file of the event system, T4b)
   off: [W, E, A, L, T]
   # items lower the effective level of the channel they name by item_levels each, and all the items together lower one channel by at most item_cap levels, so a level 3 channel cannot be cleared with items alone
-  relief: {item_levels: 1, item_cap: 2, floor: 0}
+  # a piece of gear that names the channel lowers it by gear_levels, outside the cap of the items, so the third level can be cleared with items, gear and traits together
+  relief: {item_levels: 1, item_cap: 2, gear_levels: 1, floor: 0}
+  # how many items should work against a channel; a channel with fewer is only warned about, because not every channel has that many in a believable kit
+  min_items: 2
   # a trait lowers the effective level of a channel by the number in its resist field, summed over the traits of the employee; the trait cards carry that field, a channel they do not name is not touched
   trait_resist: {field: resist}
 # The body factor: the attribute of the day is the card value times (1 - k times the reading that carries it). The carrier of an attribute is the largest of the readings listed.
