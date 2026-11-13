@@ -228,6 +228,8 @@ channels:
   # most channels an event may name, and the levels a channel may have
   per_event_max: 3
   levels: [1, 2, 3]
+  # channels switched off for now: the event cards keep them, but the stay ignores them until the core can move the body for them (see the task file of the event system, T4b)
+  off: [W, E, A, L, T]
   # items lower the effective level of the channel they name by item_levels each, and all the items together lower one channel by at most item_cap levels, so a level 3 channel cannot be cleared with items alone
   relief: {item_levels: 1, item_cap: 2, floor: 0}
   # a trait lowers the effective level of a channel by the number in its resist field, summed over the traits of the employee; the trait cards carry that field, a channel they do not name is not touched

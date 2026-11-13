@@ -7,13 +7,14 @@ import { evalPoint, pointDays } from './scene_core.js';
 // the value of every handle on a day, from the pressure of the channels the event names and what the earlier points wrote back
 export function dayHandles(D, ev, day, carry, modes) {
   const C = D.get('config.channels');
+  const live = Object.entries(ev.channels).filter(([c]) => !C.off.includes(c));
   const ramp = Math.min(1, day / C.ramp_days);
   const out = [];
   for (const h of Object.keys(C.baseline)) {
     const base = C.baseline[h];
     let level = null, extra = 0;
     const mode = modes[h].mode;
-    for (const [c, lv] of Object.entries(ev.channels)) {
+    for (const [c, lv] of live) {
       const spec = C.list[c];
       const v = spec.level?.[h]?.[lv];
       const tv = spec.total?.[h]?.[lv];
@@ -34,7 +35,7 @@ export function runStay(D, core, ev, ctx) {
   const hello = core.hello();
   const id = 'traveler';
   const context = {};
-  for (const c of Object.keys(ev.channels)) for (const [h, byLevel] of Object.entries(C.list[c].context || {})) context[h] = Math.max(context[h] || 0, byLevel[ev.channels[c]]);
+  for (const c of Object.keys(ev.channels).filter((k) => !C.off.includes(k))) for (const [h, byLevel] of Object.entries(C.list[c].context || {})) context[h] = Math.max(context[h] || 0, byLevel[ev.channels[c]]);
   // the reference is the same body for the same days with no pressure at all, so the body factor counts only what the pressure added to a body that is not perfectly at rest
   const ref = 'reference';
   core.init({ v: 1, kind: 'init', vocabulary_version: hello.vocabulary_version, subjects: [{ id, seed: ctx.seed, context }, { id: ref, seed: ctx.seed, context: {} }] });
