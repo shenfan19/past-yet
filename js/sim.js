@@ -170,19 +170,20 @@ export function staffHabit(D, staffId) {
 }
 
 export function itemTotals(D, items) {
-  let cost = 0, weight = 0;
+  let cost = 0, weight = 0, cap = D.get('config.office.weight_capacity');
   for (const [id, n] of Object.entries(items)) {
     cost += D.get(`items.${id}.cost`) * n;
     weight += D.get(`items.${id}.weight`) * n;
+    // a pack frame or an exoskeleton raises what can be carried
+    cap += (D.get(`items.${id}`).carry || 0) * n;
   }
-  return { cost, weight };
+  return { cost, weight, cap };
 }
 
 // spec: { seed, staffId, items:{id:n} }. Focus and on_block come from the staff traits.
 export function validateSpec(E, D, spec, stock) {
   const t = itemTotals(D, spec.items);
-  const cap = D.get('config.office.weight_capacity');
-  if (t.weight > cap + 1e-9) return 'overweight';
+  if (t.weight > t.cap + 1e-9) return 'overweight';
   if (stock) for (const [id, n] of Object.entries(spec.items)) if (n > (stock[id] || 0)) return 'stock';
   for (const [id, n] of Object.entries(spec.items)) if (n > D.get(`items.${id}.max`) || n < 0) return 'item_range';
   const plots = spec.plots || [];
@@ -364,10 +365,9 @@ export function optimize(E, D, ctx) {
   const algo = O.algorithm;
   const mc = O.mc;
   const stride = D.get('config.engine.mc_seed_stride');
-  const cap = D.get('config.office.weight_capacity');
   const evalItems = (items) => {
     const t = itemTotals(D, items);
-    if (t.weight > cap + 1e-9) return null;
+    if (t.weight > t.cap + 1e-9) return null;
     let lives = 0;
     for (let i = 0; i < mc.runs; i++) {
       const spec = { ...ctx.spec, items, seed: mc.seed + i * stride };

@@ -5,6 +5,11 @@ lat: 36.89
 region: europe
 field: medicine
 tier: 2
+scene:
+  points:
+    - {id: p1, kind: notice, req: {"trait":["quiet","wanderer","skeptical"]}}
+    - {id: p2, kind: care, req: {"any":[{"trait":["calm","cheerful","faithful"]},{"job":["nurse","midwife","physician","paramedic","doctor"]}]}}
+    - {id: p3, kind: trust, req: {"trait":["kind","charismatic","sensitive"]}}
 text:
   en:
     name: Medicine as careful observation
@@ -13,6 +18,10 @@ text:
     story: On Kos a physician and his school teach that disease has natural causes and must be watched at the bedside.
     relic: A bronze probe
     relic_desc: A thin tool of a doctor who preferred looking to guessing.
+    points:
+      p1: "Note the course of an illness at the bedside"
+      p2: "Tend the patients in the same room"
+      p3: "Record with the apprentices"
   zh:
     name: 把医学当作细致的观察
     place: 科斯岛
@@ -20,3 +29,7 @@ text:
     story: 在科斯岛，一位医生和他的学派教人：疾病有自然的原因，要守在床边仔细看。
     relic: 一根青铜探针
     relic_desc: 一件细细的器具，属于宁愿多看也不乱猜的医生。
+    points:
+      p1: "在床边记下病程"
+      p2: "照看同屋的病人"
+      p3: "同学徒们一起记录"

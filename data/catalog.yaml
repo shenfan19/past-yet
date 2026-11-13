@@ -20,6 +20,23 @@ events:
     region: europe
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: trust
+          req:
+            trait:
+              - cosmopolitan
+              - sensitive
+        - id: p3
+          kind: hold
+          req:
+            provides: calm
   - id: thales_miletus
     year: -585
     lon: 27.28
@@ -27,6 +44,24 @@ events:
     region: asia
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - ambitious
+              - streetwise
+              - cosmopolitan
+        - id: p3
+          kind: hold
+          req:
+            luck: 0.4
   - id: socrates_athens
     year: -399
     lon: 23.73
@@ -34,6 +69,24 @@ events:
     region: europe
     field: philosophy
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: persuade
+          req:
+            provides: show
+        - id: p2
+          kind: trust
+          req:
+            trait:
+              - artistic
+              - sensitive
+              - attached
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              will: 6
   - id: hippocrates_kos
     year: -400
     lon: 27.09
@@ -41,6 +94,36 @@ events:
     region: europe
     field: medicine
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - quiet
+              - wanderer
+              - skeptical
+        - id: p2
+          kind: care
+          req:
+            any:
+              - trait:
+                  - calm
+                  - cheerful
+                  - faithful
+              - job:
+                  - nurse
+                  - midwife
+                  - physician
+                  - paramedic
+                  - doctor
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - charismatic
+              - sensitive
   - id: plato_academy
     year: -387
     lon: 23.71
@@ -48,6 +131,26 @@ events:
     region: europe
     field: philosophy
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - student
+              - archivist
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - cosmopolitan
+              - scholarly
+              - ambitious
   - id: aristotle_lyceum
     year: -335
     lon: 23.75
@@ -55,6 +158,31 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - handy
+              - curious
+              - sensitive
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - student
+                  - archivist
+              - trait:
+                  - bold
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - attached
+              - artistic
+              - kind
   - id: euclid_alexandria
     year: -300
     lon: 29.92
@@ -62,6 +190,24 @@ events:
     region: africa
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - teacher
+        - id: p3
+          kind: persuade
+          req:
+            job:
+              - teacher
   - id: archimedes_syracuse
     year: -250
     lon: 15.29
@@ -69,6 +215,23 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: persuade
+          req:
+            stat:
+              finesse: 6
+        - id: p3
+          kind: hold
+          req:
+            stat:
+              will: 6
   - id: eratosthenes_alexandria
     year: -240
     lon: 29.9
@@ -76,6 +239,26 @@ events:
     region: africa
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 6
+        - id: p3
+          kind: hold
+          req:
+            any:
+              - stat:
+                  will: 6
+              - trait:
+                  - hardy
   - id: hypatia_alexandria
     year: 400
     lon: 29.93
@@ -106,6 +289,27 @@ events:
     region: europe
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - charismatic
+              - ambitious
+              - glib
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - curious
+              - attached
+              - kind
   - id: giotto_padua
     year: 1305
     lon: 11.88
@@ -113,6 +317,32 @@ events:
     region: europe
     field: art
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - job:
+                  - painter
+              - stat:
+                  finesse: 7
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - carpenter
+                  - builder
+              - trait:
+                  - attached
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - sensitive
+              - kind
+              - attached
   - id: dante_ravenna
     year: 1320
     lon: 12.2
@@ -120,6 +350,25 @@ events:
     region: europe
     field: literature
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - methodical
+              - handy
+        - id: p2
+          kind: trust
+          req:
+            trait:
+              - kind
+              - attached
+              - cosmopolitan
+        - id: p3
+          kind: endure
+          req:
+            provides: clean_water
   - id: gutenberg_mainz
     year: 1450
     lon: 8.27
@@ -181,6 +430,22 @@ events:
     region: europe
     field: science
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            provides: vigil
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              constitution: 5
   - id: vesalius_padua
     year: 1543
     lon: 11.87
@@ -188,6 +453,29 @@ events:
     region: europe
     field: medicine
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: cure
+        - id: p2
+          kind: hold
+          req:
+            stat:
+              finesse: 7
+        - id: p3
+          kind: care
+          req:
+            any:
+              - job:
+                  - nurse
+                  - midwife
+                  - physician
+                  - paramedic
+                  - doctor
+              - trait:
+                  - cheerful
   - id: shakespeare_globe
     year: 1599
     lon: -0.09
@@ -244,6 +532,28 @@ events:
     region: europe
     field: philosophy
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - ambitious
+              - cosmopolitan
+              - glib
+              - streetwise
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - curious
+              - charismatic
+              - sensitive
   - id: leeuwenhoek_delft
     year: 1676
     lon: 4.36
@@ -251,6 +561,24 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - methodical
+              - wanderer
+              - quiet
+        - id: p2
+          kind: hold
+          req:
+            stat:
+              finesse: 7
+        - id: p3
+          kind: trust
+          req:
+            luck: 0.4
   - id: newton_cambridge
     year: 1687
     lon: 0.12
@@ -281,6 +609,33 @@ events:
     region: europe
     field: music
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - trait:
+                  - curious
+                  - methodical
+                  - skeptical
+              - job:
+                  - musician
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - musician
+              - stat:
+                  will: 6
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - artistic
+              - sensitive
   - id: smith_kirkcaldy
     year: 1776
     lon: -3.16
@@ -288,6 +643,24 @@ events:
     region: europe
     field: thought
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: persuade
+          req:
+            provides: show
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - artistic
+              - sensitive
+              - attached
   - id: kant_konigsberg
     year: 1781
     lon: 20.5
@@ -333,6 +706,32 @@ events:
     region: europe
     field: music
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - trait:
+                  - wanderer
+                  - quiet
+                  - curious
+              - job:
+                  - musician
+        - id: p2
+          kind: trust
+          req:
+            any:
+              - trait:
+                  - kind
+                  - artistic
+                  - attached
+              - luck: 0.4
+        - id: p3
+          kind: persuade
+          req:
+            stat:
+              finesse: 6
   - id: lavoisier_paris
     year: 1789
     lon: 2.35
@@ -340,6 +739,25 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: scan
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - pharmacist
+              - mechanic
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - glib
+              - charismatic
+              - scholarly
   - id: jenner_berkeley
     year: 1796
     lon: -2.46
@@ -347,6 +765,29 @@ events:
     region: europe
     field: medicine
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: cure
+        - id: p2
+          kind: care
+          req:
+            job:
+              - nurse
+              - midwife
+              - physician
+              - paramedic
+              - doctor
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - streetwise
+              - ambitious
+              - charismatic
+              - skeptical
   - id: beethoven_vienna
     year: 1824
     lon: 16.37
@@ -384,6 +825,32 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - curious
+              - methodical
+              - handy
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - electrician
+                  - mechanic
+              - trait:
+                  - bold
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - sensitive
+              - artistic
+              - kind
+              - curious
   - id: darwin_galapagos
     year: 1835
     lon: -90.3
@@ -421,6 +888,28 @@ events:
     region: europe
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 8
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - ambitious
+              - cosmopolitan
+              - streetwise
+              - scholarly
+        - id: p3
+          kind: care
+          req:
+            trait:
+              - calm
+              - patient
+              - faithful
   - id: nightingale_scutari
     year: 1854
     lon: 29.02
@@ -457,6 +946,32 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - curious
+              - handy
+              - methodical
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - trait:
+                  - vigil
+                  - bold
+                  - patient
+              - stat:
+                  will: 6
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - sensitive
+              - artistic
+              - kind
   - id: mendeleev_petersburg
     year: 1869
     lon: 30.31
@@ -464,6 +979,25 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            stat:
+              will: 6
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - curious
+              - cosmopolitan
+              - kind
   - id: pasteur_paris
     year: 1885
     lon: 2.34
@@ -471,6 +1005,22 @@ events:
     region: europe
     field: medicine
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: care
+          req:
+            provides: cure
+        - id: p3
+          kind: hold
+          req:
+            stat:
+              will: 6
   - id: curie_paris
     year: 1898
     lon: 2.34
@@ -501,6 +1051,23 @@ events:
     region: europe
     field: thought
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - quiet
+              - curious
+        - id: p2
+          kind: care
+          req:
+            provides: calm
+        - id: p3
+          kind: hold
+          req:
+            stat:
+              will: 6
   - id: cajal_barcelona
     year: 1889
     lon: 2.17
@@ -508,6 +1075,26 @@ events:
     region: europe
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 8
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - painter
+              - stat:
+                  finesse: 7
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              will: 6
   - id: marconi_bologna
     year: 1895
     lon: 11.34
@@ -515,6 +1102,28 @@ events:
     region: europe
     field: technology
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - electrician
+              - trait:
+                  - bold
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - streetwise
+              - scholarly
+              - charismatic
   - id: imhotep_saqqara
     year: -2650
     lon: 31.22
@@ -522,6 +1131,26 @@ events:
     region: africa
     field: architecture
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - job:
+                  - builder
+                  - carpenter
+              - trait:
+                  - hardy
+        - id: p2
+          kind: endure
+          req:
+            provides: warmth
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 7
   - id: enheduanna_ur
     year: -2300
     lon: 46.1
@@ -529,6 +1158,26 @@ events:
     region: asia
     field: literature
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: scan
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - scholarly
+              - ambitious
+              - cosmopolitan
+              - streetwise
+        - id: p3
+          kind: hold
+          req:
+            job:
+              - archivist
+              - student
   - id: hammurabi_babylon
     year: -1754
     lon: 44.42
@@ -536,6 +1185,27 @@ events:
     region: asia
     field: thought
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: scan
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - charismatic
+              - streetwise
+              - scholarly
+        - id: p3
+          kind: hold
+          req:
+            any:
+              - job:
+                  - archivist
+              - trait:
+                  - vigil
   - id: lalibela_rock
     year: 1200
     lon: 39.04
@@ -543,6 +1213,22 @@ events:
     region: africa
     field: architecture
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            provides: strength
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 6
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 6
   - id: ife_bronzes
     year: 1300
     lon: 4.56
@@ -550,6 +1236,26 @@ events:
     region: africa
     field: art
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - stat:
+                  finesse: 7
+              - trait:
+                  - hardy
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 6
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 6
   - id: great_zimbabwe
     year: 1300
     lon: 30.93
@@ -557,6 +1263,22 @@ events:
     region: africa
     field: architecture
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            provides: strength
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 6
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 6
   - id: timbuktu_sankore
     year: 1327
     lon: -3
@@ -564,6 +1286,27 @@ events:
     region: africa
     field: thought
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - curious
+              - wanderer
+              - methodical
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - archivist
+              - trait:
+                  - hardy
+        - id: p3
+          kind: endure
+          req:
+            provides: warmth
   - id: al_haytham_cairo
     year: 1011
     lon: 31.24
@@ -596,6 +1339,29 @@ events:
     region: asia
     field: science
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - translator
+        - id: p3
+          kind: persuade
+          req:
+            any:
+              - trait:
+                  - glib
+                  - streetwise
+                  - cosmopolitan
+              - job:
+                  - teacher
   - id: ibn_sina_hamadan
     year: 1025
     lon: 48.51
@@ -626,6 +1392,27 @@ events:
     region: asia
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 8
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - teacher
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - charismatic
+              - ambitious
+              - glib
+              - scholarly
   - id: al_jazari_diyarbakir
     year: 1206
     lon: 40.22
@@ -633,6 +1420,29 @@ events:
     region: asia
     field: technology
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - job:
+                  - mechanic
+                  - carpenter
+              - trait:
+                  - hardy
+        - id: p2
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - curious
+              - sensitive
+              - artistic
   - id: ibn_battuta_tangier
     year: 1325
     lon: -5.8
@@ -640,6 +1450,25 @@ events:
     region: africa
     field: exploration
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            provides: ration
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - glib
+              - streetwise
+              - ambitious
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - curious
+              - attached
   - id: ulugh_beg_samarkand
     year: 1420
     lon: 66.98
@@ -647,6 +1476,24 @@ events:
     region: asia
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - mechanic
+              - carpenter
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              will: 6
   - id: laozi_hangu
     year: -500
     lon: 110.5
@@ -654,6 +1501,23 @@ events:
     region: asia
     field: philosophy
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: trust
+          req:
+            trait:
+              - curious
+              - artistic
+        - id: p2
+          kind: notice
+          req:
+            provides: scout
+        - id: p3
+          kind: hold
+          req:
+            stat:
+              will: 6
   - id: confucius_qufu
     year: -551
     lon: 117
@@ -661,6 +1525,27 @@ events:
     region: asia
     field: philosophy
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: trust
+          req:
+            any:
+              - trait:
+                  - sensitive
+                  - kind
+                  - attached
+              - job:
+                  - teacher
+        - id: p2
+          kind: persuade
+          req:
+            provides: show
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              constitution: 5
   - id: buddha_sarnath
     year: -528
     lon: 83.02
@@ -668,6 +1553,27 @@ events:
     region: asia
     field: thought
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: trust
+          req:
+            trait:
+              - kind
+              - artistic
+              - sensitive
+        - id: p2
+          kind: notice
+          req:
+            trait:
+              - methodical
+              - handy
+              - vigil
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              constitution: 5
   - id: cai_lun_luoyang
     year: 105
     lon: 112.45
@@ -700,6 +1606,29 @@ events:
     region: asia
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - stat:
+                  wit: 7
+              - trait:
+                  - wanderer
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - mechanic
+              - carpenter
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - glib
+              - ambitious
+              - scholarly
   - id: zu_chongzhi_jiankang
     year: 480
     lon: 118.8
@@ -707,6 +1636,22 @@ events:
     region: asia
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 8
+        - id: p2
+          kind: hold
+          req:
+            provides: vigil
+        - id: p3
+          kind: trust
+          req:
+            job:
+              - teacher
   - id: aryabhata_patna
     year: 499
     lon: 85.14
@@ -714,6 +1659,26 @@ events:
     region: asia
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - teacher
+              - student
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - ambitious
+              - streetwise
+              - charismatic
   - id: brahmagupta_bhillamala
     year: 628
     lon: 72.27
@@ -721,6 +1686,29 @@ events:
     region: asia
     field: math
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: persuade
+          req:
+            any:
+              - trait:
+                  - charismatic
+                  - scholarly
+                  - glib
+              - job:
+                  - teacher
+        - id: p3
+          kind: hold
+          req:
+            job:
+              - archivist
+              - student
   - id: li_bai_changan
     year: 750
     lon: 108.94
@@ -779,6 +1767,27 @@ events:
     region: asia
     field: technology
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - job:
+                  - mechanic
+                  - carpenter
+              - trait:
+                  - hardy
+        - id: p2
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              constitution: 5
   - id: shen_kuo_runzhou
     year: 1088
     lon: 119.45
@@ -786,6 +1795,28 @@ events:
     region: asia
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - methodical
+              - curious
+              - wanderer
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 5
+        - id: p3
+          kind: hold
+          req:
+            any:
+              - job:
+                  - archivist
+              - trait:
+                  - bold
   - id: angkor_wat
     year: 1150
     lon: 103.87
@@ -793,6 +1824,26 @@ events:
     region: asia
     field: architecture
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            provides: warmth
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - builder
+                  - carpenter
+              - trait:
+                  - hardy
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 6
   - id: sejong_hangul
     year: 1443
     lon: 126.98
@@ -823,6 +1874,29 @@ events:
     region: asia
     field: medicine
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            stat:
+              constitution: 6
+        - id: p2
+          kind: notice
+          req:
+            trait:
+              - methodical
+              - skeptical
+              - curious
+        - id: p3
+          kind: hold
+          req:
+            any:
+              - job:
+                  - pharmacist
+                  - archivist
+              - trait:
+                  - hardy
   - id: basho_hiraizumi
     year: 1689
     lon: 141.1
@@ -830,6 +1904,22 @@ events:
     region: asia
     field: literature
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            provides: ration
+        - id: p2
+          kind: notice
+          req:
+            trait:
+              - skeptical
+              - curious
+        - id: p3
+          kind: trust
+          req:
+            luck: 0.5
   - id: hokusai_edo
     year: 1831
     lon: 139.77
@@ -864,6 +1954,28 @@ events:
     region: asia
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - curious
+              - skeptical
+              - handy
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - glib
+              - ambitious
+              - streetwise
+        - id: p3
+          kind: hold
+          req:
+            job:
+              - electrician
+              - mechanic
   - id: tagore_santiniketan
     year: 1913
     lon: 87.68
@@ -871,6 +1983,34 @@ events:
     region: asia
     field: literature
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - trait:
+                  - handy
+                  - curious
+                  - scholarly
+              - job:
+                  - musician
+        - id: p2
+          kind: trust
+          req:
+            trait:
+              - kind
+              - artistic
+              - sensitive
+              - patient
+        - id: p3
+          kind: hold
+          req:
+            any:
+              - job:
+                  - teacher
+              - trait:
+                  - faithful
   - id: ramanujan_madras
     year: 1913
     lon: 80.27
@@ -878,6 +2018,24 @@ events:
     region: asia
     field: math
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 9
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - glib
+              - streetwise
+              - scholarly
+        - id: p3
+          kind: care
+          req:
+            provides: calm
   - id: franklin_philadelphia
     year: 1752
     lon: -75.16
@@ -885,6 +2043,27 @@ events:
     region: americas
     field: science
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: endure
+          req:
+            trait:
+              - bold
+              - calm
+              - hardy
+              - ambitious
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - cosmopolitan
+              - glib
   - id: morse_washington
     year: 1844
     lon: -77.04
@@ -892,6 +2071,28 @@ events:
     region: americas
     field: technology
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - electrician
+              - trait:
+                  - bold
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - scholarly
+              - cosmopolitan
+              - charismatic
   - id: edison_menlo_park
     year: 1879
     lon: -74.33
@@ -899,6 +2100,22 @@ events:
     region: americas
     field: technology
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            provides: vigil
+        - id: p2
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              will: 6
   - id: wright_kitty_hawk
     year: 1903
     lon: -75.7
@@ -906,6 +2123,26 @@ events:
     region: americas
     field: technology
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - mechanic
+              - trait:
+                  - hardy
+        - id: p3
+          kind: endure
+          req:
+            stat:
+              constitution: 5
   - id: tenochtitlan_lake
     year: 1325
     lon: -99.13
@@ -913,6 +2150,28 @@ events:
     region: americas
     field: architecture
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            stat:
+              constitution: 5
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - builder
+              - trait:
+                  - bold
+        - id: p3
+          kind: notice
+          req:
+            trait:
+              - wanderer
+              - skeptical
+              - quiet
   - id: machu_picchu
     year: 1450
     lon: -72.55
@@ -920,6 +2179,22 @@ events:
     region: americas
     field: architecture
     tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            stat:
+              constitution: 6
+        - id: p2
+          kind: hold
+          req:
+            provides: strength
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 6
   - id: maya_venus_tables
     year: 900
     lon: -88.57
@@ -927,6 +2202,23 @@ events:
     region: americas
     field: science
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - student
+        - id: p3
+          kind: endure
+          req:
+            provides: warmth
   - id: sequoyah_syllabary
     year: 1821
     lon: -85
@@ -934,6 +2226,26 @@ events:
     region: americas
     field: literature
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: scan
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - cosmopolitan
+              - streetwise
+              - charismatic
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - artistic
+              - kind
+              - sensitive
   - id: finlay_havana
     year: 1881
     lon: -82.37
@@ -941,6 +2253,31 @@ events:
     region: americas
     field: medicine
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - methodical
+              - skeptical
+              - handy
+        - id: p2
+          kind: care
+          req:
+            any:
+              - job:
+                  - nurse
+                  - midwife
+                  - physician
+                  - paramedic
+                  - doctor
+              - trait:
+                  - calm
+        - id: p3
+          kind: hold
+          req:
+            provides: clean_water
   - id: bell_boston
     year: 1876
     lon: -71.06
@@ -948,6 +2285,29 @@ events:
     region: americas
     field: technology
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - mechanic
+                  - electrician
+              - trait:
+                  - patient
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - ambitious
+              - charismatic
+              - scholarly
   - id: budj_bim_eels
     year: -4500
     lon: -141.95
@@ -955,6 +2315,31 @@ events:
     region: oceania
     field: technology
     tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - job:
+                  - builder
+              - trait:
+                  - bold
+                  - methodical
+        - id: p2
+          kind: notice
+          req:
+            trait:
+              - curious
+              - quiet
+              - skeptical
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - sensitive
+              - curious
   - id: galois_paris
     year: 1832
     lon: 2.35
@@ -971,7 +2356,7 @@ events:
             trait:
               - cosmopolitan
               - attached
-              - sensitive
+              - artistic
         - id: p2
           kind: endure
           req:
@@ -1049,7 +2434,7 @@ events:
           req:
             any:
               - trait:
-                  - bold
+                  - vigil
                   - ambitious
               - job:
                   - archivist
@@ -1082,7 +2467,7 @@ events:
                   - charismatic
                   - kind
               - trait:
-                  - kind
+                  - attached
                   - charismatic
                   - sensitive
         - id: p3
@@ -1094,7 +2479,7 @@ events:
                   - archivist
               - trait:
                   - handy
-                  - bold
+                  - faithful
               - trait:
                   - methodical
                   - bold
@@ -1325,7 +2710,7 @@ events:
               - trait:
                   - cosmopolitan
                   - attached
-                  - sensitive
+                  - artistic
   - id: mozart_requiem_vienna
     year: 1791
     lon: 16.37
@@ -1388,7 +2773,7 @@ events:
                   - charismatic
               - trait:
                   - charismatic
-                  - sensitive
+                  - kind
                   - artistic
         - id: p3
           kind: care
@@ -1402,7 +2787,7 @@ events:
               - job:
                   - musician
               - trait:
-                  - kind
+                  - calm
                   - patient
                   - faithful
   - id: keats_rome
@@ -1419,7 +2804,7 @@ events:
           kind: care
           req:
             trait:
-              - sensitive
+              - cheerful
               - calm
               - patient
         - id: p2
@@ -1463,7 +2848,7 @@ events:
             any:
               - trait:
                   - charismatic
-                  - kind
+                  - sensitive
                   - artistic
               - trait:
                   - attached
@@ -1718,7 +3103,7 @@ events:
             trait:
               - attached
               - charismatic
-              - sensitive
+              - kind
   - id: hertz_bonn
     year: 1894
     lon: 7.1
@@ -1744,7 +3129,7 @@ events:
           req:
             trait:
               - faithful
-              - sensitive
+              - cheerful
               - calm
         - id: p3
           kind: hold
@@ -1790,7 +3175,7 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - kind
                   - charismatic
                   - artistic
               - trait:
@@ -1853,7 +3238,7 @@ events:
             trait:
               - attached
               - artistic
-              - kind
+              - sensitive
         - id: p2
           kind: notice
           req:
@@ -1862,7 +3247,7 @@ events:
                   - physician
                   - nurse
               - trait:
-                  - curious
+                  - quiet
                   - wanderer
         - id: p3
           kind: care
@@ -1950,7 +3335,7 @@ events:
               - trait:
                   - skeptical
                   - wanderer
-                  - curious
+                  - quiet
               - trait:
                   - skeptical
                   - curious
@@ -2032,7 +3417,7 @@ events:
                   will: 6
               - trait:
                   - wanderer
-                  - bold
+                  - cheerful
                   - hardy
         - id: p3
           kind: trust
@@ -2087,7 +3472,7 @@ events:
               - trait:
                   - cheerful
                   - faithful
-                  - sensitive
+                  - calm
   - id: boole_ballintemple
     year: 1864
     lon: -8.45
@@ -2490,7 +3875,7 @@ events:
               - trait:
                   - cosmopolitan
                   - artistic
-                  - kind
+                  - sensitive
               - trait:
                   - attached
                   - charismatic
@@ -2619,7 +4004,7 @@ events:
           req:
             any:
               - trait:
-                  - bold
+                  - patient
                   - vigil
                   - quiet
               - stat:
@@ -2750,7 +4135,7 @@ events:
           redeem: true
           req:
             trait:
-              - kind
+              - attached
               - cosmopolitan
               - sensitive
   - id: tang_xianzu_linchuan
@@ -2821,7 +4206,7 @@ events:
               - job:
                   - teacher
               - trait:
-                  - bold
+                  - faithful
                   - vigil
   - id: xu_xiake_lijiang
     year: 1639
@@ -2968,7 +4353,7 @@ events:
                   - midwife
               - trait:
                   - scholarly
-                  - curious
+                  - skeptical
         - id: p2
           kind: care
           req:
@@ -3073,7 +4458,7 @@ events:
               - trait:
                   - scholarly
                   - quiet
-                  - curious
+                  - skeptical
               - job:
                   - journalist
         - id: p3
@@ -3156,7 +4541,7 @@ events:
           kind: trust
           req:
             trait:
-              - sensitive
+              - kind
               - cosmopolitan
         - id: p2
           kind: notice
@@ -3290,7 +4675,7 @@ events:
             trait:
               - cosmopolitan
               - artistic
-              - kind
+              - sensitive
         - id: p2
           kind: notice
           req:
@@ -3352,7 +4737,7 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - quiet
               - wanderer
         - id: p2
           kind: hold
@@ -3413,7 +4798,7 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - handy
               - skeptical
         - id: p2
           kind: hold
@@ -3719,7 +5104,7 @@ events:
           req:
             trait:
               - charismatic
-              - sensitive
+              - attached
               - wanderer
   - id: democritus_abdera
     year: -400
@@ -3795,7 +5180,7 @@ events:
           req:
             trait:
               - methodical
-              - curious
+              - handy
               - skeptical
         - id: p2
           kind: hold
@@ -3834,13 +5219,13 @@ events:
           req:
             trait:
               - wanderer
-              - curious
+              - handy
         - id: p2
           kind: endure
           req:
             any:
               - trait:
-                  - bold
+                  - calm
                   - hardy
               - stat:
                   will: 6
@@ -3869,7 +5254,7 @@ events:
           kind: care
           req:
             trait:
-              - kind
+              - cheerful
               - patient
               - attached
         - id: p3
@@ -3907,7 +5292,7 @@ events:
             any:
               - trait:
                   - attached
-                  - kind
+                  - artistic
               - job:
                   - archivist
   - id: nalanda_library
@@ -3986,7 +5371,7 @@ events:
           req:
             trait:
               - streetwise
-              - curious
+              - wanderer
               - vigil
         - id: p3
           kind: trust
@@ -3997,7 +5382,7 @@ events:
                   - sailor
                   - fisher
               - trait:
-                  - kind
+                  - attached
                   - cosmopolitan
                   - artistic
   - id: heo_nanseolheon_hanyang
@@ -4015,7 +5400,7 @@ events:
           req:
             trait:
               - artistic
-              - curious
+              - handy
         - id: p2
           kind: care
           req:
@@ -4058,7 +5443,7 @@ events:
           redeem: true
           req:
             trait:
-              - sensitive
+              - faithful
               - cheerful
               - calm
   - id: savitribai_phule_pune
@@ -4127,3 +5512,516 @@ events:
               - job:
                   - teacher
                   - student
+  - id: xuanzang_changan
+    year: 645
+    lon: 108.94
+    lat: 34.27
+    region: asia
+    field: thought
+    tier: 3
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - trait:
+                  - handy
+                  - quiet
+                  - wanderer
+              - stat:
+                  wit: 7
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - translator
+              - archivist
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - glib
+              - scholarly
+              - ambitious
+  - id: jia_sixie_gaoyang
+    year: 540
+    lon: 118.5
+    lat: 36.8
+    region: asia
+    field: technology
+    tier: 1
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - wanderer
+              - methodical
+              - curious
+              - vigil
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 5
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - sensitive
+              - attached
+  - id: qin_jiushao_huzhou
+    year: 1247
+    lon: 120.09
+    lat: 30.89
+    region: asia
+    field: math
+    tier: 1
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 8
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - teacher
+        - id: p3
+          kind: persuade
+          req:
+            trait:
+              - ambitious
+              - streetwise
+              - scholarly
+  - id: al_biruni_ghazna
+    year: 1017
+    lon: 68.4
+    lat: 33.55
+    region: asia
+    field: science
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 5
+        - id: p3
+          kind: persuade
+          req:
+            any:
+              - job:
+                  - translator
+              - provides: translate
+  - id: al_razi_rayy
+    year: 900
+    lon: 51.43
+    lat: 35.6
+    region: asia
+    field: medicine
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - curious
+              - methodical
+              - quiet
+        - id: p2
+          kind: care
+          req:
+            provides: calm
+        - id: p3
+          kind: hold
+          req:
+            any:
+              - job:
+                  - archivist
+                  - journalist
+              - stat:
+                  wit: 7
+  - id: sushruta_varanasi
+    year: -600
+    lon: 83
+    lat: 25.32
+    region: asia
+    field: medicine
+    tier: 1
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - job:
+                  - nurse
+                  - midwife
+                  - physician
+                  - paramedic
+                  - doctor
+              - trait:
+                  - streetwise
+        - id: p2
+          kind: hold
+          req:
+            stat:
+              finesse: 7
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - cosmopolitan
+              - sensitive
+  - id: borobudur_java
+    year: 800
+    lon: 110.2
+    lat: -7.6
+    region: asia
+    field: architecture
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - job:
+                  - builder
+                  - carpenter
+              - trait:
+                  - hardy
+        - id: p2
+          kind: endure
+          req:
+            provides: strength
+        - id: p3
+          kind: notice
+          req:
+            stat:
+              wit: 6
+  - id: zeami_sado
+    year: 1434
+    lon: 138.4
+    lat: 38
+    region: asia
+    field: literature
+    tier: 1
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - trait:
+                  - skeptical
+                  - quiet
+                  - wanderer
+              - job:
+                  - musician
+        - id: p2
+          kind: persuade
+          req:
+            provides: show
+        - id: p3
+          kind: trust
+          redeem: true
+          req:
+            trait:
+              - kind
+              - sensitive
+  - id: ino_tadataka_ezo
+    year: 1800
+    lon: 143
+    lat: 42.8
+    region: asia
+    field: exploration
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            any:
+              - trait:
+                  - cheerful
+                  - bold
+                  - hardy
+              - stat:
+                  constitution: 6
+        - id: p2
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p3
+          kind: hold
+          req:
+            trait:
+              - vigil
+              - patient
+              - bold
+              - hardy
+  - id: djenne_builders
+    year: 1280
+    lon: -4.55
+    lat: 13.9
+    region: africa
+    field: architecture
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - job:
+                  - builder
+              - trait:
+                  - hardy
+        - id: p2
+          kind: endure
+          req:
+            stat:
+              constitution: 5
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - sensitive
+  - id: ahmes_thebes
+    year: -1550
+    lon: 32.65
+    lat: 25.7
+    region: africa
+    field: math
+    tier: 1
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 6
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - teacher
+        - id: p3
+          kind: trust
+          req:
+            luck: 0.4
+  - id: quipu_cusco
+    year: 1450
+    lon: -71.97
+    lat: -13.52
+    region: americas
+    field: thought
+    tier: 1
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            any:
+              - stat:
+                  finesse: 6
+              - stat:
+                  wit: 6
+        - id: p2
+          kind: hold
+          req:
+            job:
+              - archivist
+              - accountant
+        - id: p3
+          kind: trust
+          req:
+            provides: translate
+  - id: humboldt_chimborazo
+    year: 1802
+    lon: -78.82
+    lat: -1.47
+    region: americas
+    field: exploration
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: endure
+          req:
+            any:
+              - stat:
+                  constitution: 6
+              - provides: endurance
+        - id: p2
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p3
+          kind: hold
+          req:
+            trait:
+              - bold
+              - vigil
+  - id: banneker_maryland
+    year: 1791
+    lon: -76.7
+    lat: 39.3
+    region: americas
+    field: science
+    tier: 1
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            provides: scan
+        - id: p2
+          kind: persuade
+          req:
+            any:
+              - trait:
+                  - charismatic
+                  - scholarly
+                  - cosmopolitan
+              - stat:
+                  finesse: 7
+        - id: p3
+          kind: hold
+          redeem: true
+          req:
+            trait:
+              - vigil
+              - faithful
+              - bold
+  - id: seacole_balaklava
+    year: 1855
+    lon: 33.6
+    lat: 44.5
+    region: europe
+    field: medicine
+    tier: 2
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: care
+          req:
+            job:
+              - nurse
+              - midwife
+              - physician
+              - paramedic
+              - doctor
+        - id: p2
+          kind: persuade
+          req:
+            trait:
+              - streetwise
+              - cosmopolitan
+              - charismatic
+              - skeptical
+        - id: p3
+          kind: endure
+          redeem: true
+          req:
+            provides: clean_water
+  - id: mitchell_nantucket
+    year: 1847
+    lon: -70.1
+    lat: 41.28
+    region: americas
+    field: science
+    tier: 2
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 7
+        - id: p2
+          kind: hold
+          req:
+            stat:
+              will: 6
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - sensitive
+  - id: caroline_herschel_slough
+    year: 1786
+    lon: -0.59
+    lat: 51.51
+    region: europe
+    field: science
+    tier: 2
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            trait:
+              - quiet
+              - wanderer
+              - curious
+        - id: p2
+          kind: hold
+          req:
+            provides: vigil
+        - id: p3
+          kind: endure
+          redeem: true
+          req:
+            stat:
+              constitution: 5
+  - id: kovalevskaya_stockholm
+    year: 1888
+    lon: 18.07
+    lat: 59.33
+    region: europe
+    field: math
+    tier: 2
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 8
+        - id: p2
+          kind: persuade
+          req:
+            stat:
+              finesse: 7
+        - id: p3
+          kind: endure
+          redeem: true
+          req:
+            provides: ration

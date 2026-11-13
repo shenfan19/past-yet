@@ -487,7 +487,7 @@ export function createUI(D, ctx) {
     const e = E();
     const tot = totals();
     const S = ctx.S();
-    const overW = tot.weight > O.weight_capacity + 1e-9;
+    const overW = tot.weight > tot.cap + 1e-9;
     const stState = staffState(f.staffId);
     const story = !!st.map.cat;
     // only what can be taken is listed: what is in stock, and anything already chosen
@@ -495,7 +495,7 @@ export function createUI(D, ctx) {
     const carryBox = listbox.html({
       id: 'carry', scroll: true, maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
-      foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${O.weight_capacity}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
+      foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${r1(tot.cap)}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
       cols: [
         { k: 'name', label: U.shop.col_name, w: '44%', val: (r) => r.name, cell: (r) => { const tx = story ? T.items[r.id] : itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}${r.it.scene ? '\n' + U.dispatch.exposure + COLON + r.it.exposure : ''}`)}<div class="oneline muted">${esc(firstSentence(tx.desc))}</div>`; } },
         { k: 'stock', label: U.shop.stock, w: '16%', cls: 'num', val: (r) => r.stock, cell: (r) => r.stock },

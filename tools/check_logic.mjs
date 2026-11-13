@@ -48,7 +48,10 @@ for (const k of kinds) {
 const baseOf = (s) => Object.fromEntries(attrs.map((a) => [a, s.base?.[a] ?? 5]));
 const sceneItems = Object.entries(items).filter(([, it]) => it.scene).map(([id]) => id);
 const subsets = (arr) => arr.reduce((a, x) => a.concat(a.map((s) => [...s, x])), [[]]);
-const allKits = subsets(sceneItems);
+// only the items a scene can use matter to it: those its points name or provide, and those that change attributes. All subsets of every scene item would be far too many.
+const statItems = sceneItems.filter((i) => items[i].stat_mult || items[i].stat_add);
+const namedIn = (r, out) => { for (const [k, v] of Object.entries(r)) { if (k === 'item') out.add(v); if (k === 'provides') sceneItems.filter((i) => items[i].provides.includes(v)).forEach((i) => out.add(i)); if (k === 'any') v.forEach((x) => namedIn(x, out)); } return out; };
+const kitsFor = (e) => { const rel = new Set(statItems); e.scene.points.forEach((p) => namedIn(p.req, rel)); return subsets([...rel]); };
 function metBy(req, who, carried) {
   const stats = { ...who.base };
   for (const i of carried) {
@@ -91,6 +94,7 @@ for (const e of sceneEvents) {
   const pts = e.scene.points;
   if (pts.length !== 3) err(`scene ${e.id} has ${pts.length} points, not 3`);
   if (new Set(pts.map((p) => p.id)).size !== pts.length) err(`scene ${e.id}: duplicate point ids`);
+  const allKits = kitsFor(e);
   pts.forEach((p) => { walk(e, p.req); kindUse[p.kind] = (kindUse[p.kind] || 0) + 1; });
   pts.forEach((p) => { if (!handStaff.some((s) => allKits.some((k) => metBy(p.req, s, k)))) err(`scene ${e.id} point ${p.id} (${p.kind}) cannot be met by any hand written employee with any kit`); });
   // a point that does not name an item or a gender must be reachable with nothing in the kit by someone on the roster

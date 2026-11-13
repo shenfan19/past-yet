@@ -5,6 +5,11 @@ lat: 32.54
 region: asia
 field: thought
 tier: 2
+scene:
+  points:
+    - {id: p1, kind: notice, req: {"provides":"scan"}}
+    - {id: p2, kind: persuade, req: {"trait":["charismatic","streetwise","scholarly"]}}
+    - {id: p3, kind: hold, req: {"any":[{"job":["archivist"]},{"trait":["vigil"]}]}}
 text:
   en:
     name: Law set in stone
@@ -13,6 +18,10 @@ text:
     story: Hammurabi has laws carved on a stone pillar where everyone can read them, so that judges answer to something written.
     relic: A clay cylinder seal
     relic_desc: A small stone cylinder that rolls a signature into clay.
+    points:
+      p1: "Read the cuneiform clauses (needs a ar glasses)"
+      p2: "Explain the clauses in the square"
+      p3: "Check the tablets against the stele"
   zh:
     name: 刻在石头上的法律
     place: 巴比伦
@@ -20,3 +29,7 @@ text:
     story: 汉谟拉比让人把法律刻在一根石柱上，人人都看得见，法官要对写下来的东西负责。
     relic: 一枚泥印滚筒
     relic_desc: 一个小石柱，在泥上一滚就留下签名。
+    points:
+      p1: "读懂楔形文字条文（需要增强现实眼镜）"
+      p2: "在广场上解释条文"
+      p3: "核对泥板与石碑"

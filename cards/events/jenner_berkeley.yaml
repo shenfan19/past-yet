@@ -5,6 +5,11 @@ lat: 51.69
 region: europe
 field: medicine
 tier: 2
+scene:
+  points:
+    - {id: p1, kind: notice, req: {"provides":"cure"}}
+    - {id: p2, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
+    - {id: p3, kind: persuade, req: {"trait":["streetwise","ambitious","charismatic","skeptical"]}}
 text:
   en:
     name: The first vaccine
@@ -13,6 +18,10 @@ text:
     story: Jenner tests that cowpox protects against smallpox, and vaccination begins.
     relic: A glass lancet
     relic_desc: A thin blade for the first small scratch.
+    points:
+      p1: "Hear the milkmaid speak of cowpox (needs a nano medical kit)"
+      p2: "Tend the children after the inoculation"
+      p3: "Persuade a doubtful mother"
   zh:
     name: 第一支疫苗
     place: 英国伯克利
@@ -20,3 +29,7 @@ text:
     story: 詹纳验证了牛痘能防天花，接种由此开始。
     relic: 一把玻璃小刀
     relic_desc: 一片很薄的刀片，划下第一道小口。
+    points:
+      p1: "听挤奶女工说起牛痘（需要纳米医疗箱）"
+      p2: "照看接种后的孩子"
+      p3: "说服疑虑的母亲"

@@ -7,6 +7,9 @@ ors_pack:
   kind: consumable
   shop: modern
   loss: used
+  channels:
+    - E
+    - H
   tags:
     - medical
     - consumable
@@ -20,6 +23,9 @@ chlorine_tablet:
   kind: consumable
   shop: modern
   loss: used
+  channels:
+    - W
+    - E
   tags:
     - medical
     - sterilize
@@ -34,6 +40,8 @@ handbook:
   kind: single
   shop: modern
   loss: used
+  channels:
+    - E
   tags:
     - medical
     - book
@@ -47,6 +55,7 @@ recall_charm:
   kind: single
   shop: modern
   loss: rescue
+  channels: []
   tags:
     - safety
     - device
@@ -60,6 +69,9 @@ detox_water:
   kind: consumable
   shop: modern
   loss: used
+  channels:
+    - T
+    - W
   tags:
     - medical
     - consumable
@@ -73,6 +85,9 @@ disinfectant:
   kind: consumable
   shop: modern
   loss: used
+  channels:
+    - W
+    - E
   tags:
     - medical
     - sterilize
@@ -87,6 +102,8 @@ heart_monitor:
   kind: single
   shop: modern
   loss: fatal
+  channels:
+    - V
   tags:
     - medical
     - device
@@ -99,6 +116,8 @@ radiation_shield:
   step: 1
   kind: single
   shop: future
+  channels:
+    - T
   tags:
     - safety
     - device
@@ -110,6 +129,138 @@ radiation_shield:
   exposure: 0.1
   provides:
     - shield
+antibiotic:
+  cost: 15
+  weight: 0.1
+  max: 40
+  step: 2
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - E
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
+mosquito_net:
+  cost: 12
+  weight: 0.8
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - E
+  tags:
+    - medical
+    - device
+    - modern
+  playable: true
+face_mask:
+  cost: 3
+  weight: 0.02
+  max: 120
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - E
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
+thermometer:
+  cost: 6
+  weight: 0.05
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - E
+  tags:
+    - medical
+    - device
+    - modern
+  playable: true
+sun_hat:
+  cost: 8
+  weight: 0.2
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - H
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
+water_flask:
+  cost: 10
+  weight: 0.5
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - H
+    - C
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
+warm_blanket:
+  cost: 15
+  weight: 0.6
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - C
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
+hand_warmer:
+  cost: 3
+  weight: 0.05
+  max: 60
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - C
+  tags:
+    - safety
+    - consumable
+    - modern
+  playable: true
+energy_bar:
+  cost: 4
+  weight: 0.08
+  max: 80
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - C
+    - 'Y'
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
 neural_chip:
   cost: 25
   weight: 1
@@ -117,6 +268,8 @@ neural_chip:
   step: 1
   kind: single
   shop: future
+  channels:
+    - S
   tags:
     - cyber
     - device
@@ -131,6 +284,36 @@ neural_chip:
   load: 1
   stat_add:
     wit: 2
+oxygen_can:
+  cost: 25
+  weight: 0.6
+  max: 20
+  step: 2
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - A
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
+altitude_pills:
+  cost: 10
+  weight: 0.03
+  max: 40
+  step: 2
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - A
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
 cyber_arm:
   cost: 50
   weight: 1
@@ -138,6 +321,8 @@ cyber_arm:
   step: 1
   kind: single
   shop: future
+  channels:
+    - L
   tags:
     - cyber
     - device
@@ -152,6 +337,20 @@ cyber_arm:
   load: 1
   stat_add:
     constitution: 2
+back_brace:
+  cost: 14
+  weight: 0.4
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - L
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
 cyber_lung:
   cost: 75
   weight: 1
@@ -159,6 +358,10 @@ cyber_lung:
   step: 1
   kind: single
   shop: future
+  channels:
+    - A
+    - T
+    - L
   tags:
     - cyber
     - device
@@ -181,6 +384,8 @@ gorilla_arm:
   step: 1
   kind: single
   shop: future
+  channels:
+    - L
   tags:
     - cyber
     - device
@@ -196,6 +401,22 @@ gorilla_arm:
   load: 2
   stat_add:
     constitution: 3
+painkiller:
+  cost: 6
+  weight: 0.03
+  max: 60
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - L
+    - G
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
 holo_cloak:
   cost: 125
   weight: 1
@@ -203,6 +424,8 @@ holo_cloak:
   step: 1
   kind: single
   shop: future
+  channels:
+    - S
   tags:
     - device
     - scifi
@@ -214,6 +437,36 @@ holo_cloak:
   provides:
     - disguise
   stat_mult: {}
+pack_frame:
+  cost: 20
+  weight: 1
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - L
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
+  carry: 5
+caffeine_tablet:
+  cost: 4
+  weight: 0.02
+  max: 80
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - V
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
 golden_apple:
   cost: 150
   weight: 1
@@ -221,6 +474,8 @@ golden_apple:
   step: 1
   kind: single
   shop: future
+  channels:
+    - S
   tags:
     - fantasy
     - future
@@ -238,6 +493,9 @@ elixir:
   step: 1
   kind: single
   shop: future
+  channels:
+    - G
+    - E
   tags:
     - fantasy
     - medical
@@ -250,3 +508,389 @@ elixir:
     - heal
   stat_mult:
     constitution: 1.4
+headlamp:
+  cost: 9
+  weight: 0.2
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - V
+  tags:
+    - device
+    - modern
+  playable: true
+ear_plugs:
+  cost: 5
+  weight: 0.02
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - V
+  tags:
+    - device
+    - modern
+  playable: true
+thermal_suit:
+  cost: 38
+  weight: 1.5
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - C
+    - H
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 30
+  exposure: 0.2
+  provides:
+    - warmth
+voice_recorder:
+  cost: 22
+  weight: 0.1
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - G
+  tags:
+    - device
+    - modern
+  playable: true
+water_station:
+  cost: 62
+  weight: 2
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - W
+    - E
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 50
+  exposure: 0.15
+  provides:
+    - clean_water
+nutrient_synth:
+  cost: 88
+  weight: 1.5
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - 'Y'
+    - C
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 70
+  exposure: 0.15
+  provides:
+    - ration
+plush_toy:
+  cost: 7
+  weight: 0.15
+  max: 20
+  step: 2
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - G
+  tags:
+    - consumable
+    - modern
+  playable: true
+ar_glasses:
+  cost: 112
+  weight: 0.3
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - S
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 90
+  exposure: 0.3
+  provides:
+    - scan
+period_costume:
+  cost: 30
+  weight: 0.8
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - S
+  tags:
+    - device
+    - modern
+  playable: true
+gift_box:
+  cost: 8
+  weight: 0.3
+  max: 20
+  step: 2
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - S
+  tags:
+    - consumable
+    - modern
+  playable: true
+sleep_regulator:
+  cost: 138
+  weight: 0.4
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - V
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 110
+  exposure: 0.1
+  provides:
+    - vigil
+exoskeleton:
+  cost: 162
+  weight: 3
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - L
+  tags:
+    - device
+    - cyber
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 130
+  exposure: 0.45
+  provides:
+    - strength
+    - carry
+  carry: 10
+magnifier:
+  cost: 6
+  weight: 0.1
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - S
+  tags:
+    - device
+    - modern
+  playable: true
+calm_patch:
+  cost: 175
+  weight: 0.05
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - G
+    - S
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 140
+  exposure: 0.05
+  provides:
+    - calm
+notebook_pen:
+  cost: 4
+  weight: 0.2
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - S
+  tags:
+    - device
+    - modern
+  playable: true
+hologram_projector:
+  cost: 200
+  weight: 1.5
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - S
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 160
+  exposure: 0.5
+  provides:
+    - show
+vitamin_c:
+  cost: 5
+  weight: 0.02
+  max: 60
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - 'Y'
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
+hardtack:
+  cost: 4
+  weight: 0.15
+  max: 80
+  step: 5
+  kind: consumable
+  shop: modern
+  loss: used
+  channels:
+    - 'Y'
+    - C
+  tags:
+    - consumable
+    - modern
+  playable: true
+nano_kit:
+  cost: 225
+  weight: 1
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - E
+  tags:
+    - device
+    - medical
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 180
+  exposure: 0.2
+  provides:
+    - cure
+gas_mask:
+  cost: 35
+  weight: 0.7
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - T
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
+scout_drone:
+  cost: 250
+  weight: 1
+  max: 1
+  step: 1
+  kind: single
+  shop: future
+  channels:
+    - A
+  tags:
+    - device
+    - scifi
+    - future
+  playable: true
+  scene: true
+  unlock_energy: 200
+  exposure: 0.4
+  provides:
+    - scout
+insulated_gloves:
+  cost: 16
+  weight: 0.3
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels:
+    - T
+  tags:
+    - safety
+    - device
+    - modern
+  playable: true
+first_aid_kit:
+  cost: 12
+  weight: 0.5
+  max: 20
+  step: 2
+  kind: consumable
+  shop: modern
+  loss: used
+  channels: []
+  tags:
+    - medical
+    - consumable
+    - modern
+  playable: true
+compass:
+  cost: 8
+  weight: 0.1
+  max: 1
+  step: 1
+  kind: single
+  shop: modern
+  channels: []
+  tags:
+    - device
+    - modern
+  playable: true
