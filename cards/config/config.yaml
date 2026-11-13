@@ -200,3 +200,42 @@ share:
   file_name: teleporter_share.png
   colors: {bg: '#f1e8d4', ink: '#2b241b', ink2: '#6b5f4d', stamp: '#b3382c', line: '#cdbf9f', qr_bg: '#f8f2e3'}
   canvas: {w: 1200, h: 960, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, logo_tilt_deg: -6}
+# The pressure channels of the events, and how they reach the body of the traveller (design: game_事件系统设计 sections 3 and 4 in the home folder).
+# Every number here is an uncalibrated starting value. When the traveller core is connected, the levels are tuned in a batch simulation until a traveller with all attributes 4,
+# no trait and no gear ends a stay with the main readout near target_readout at level 1, 2 and 3.
+channels:
+  target_readout: {1: 0.2, 2: 0.45, 3: 0.75}
+  # what a day is without any pressure, the handle values the coordinator writes when no channel asks for anything else
+  baseline: {fluid_intake: 2.0, activity_load: 60, sleep_duration: 8, psychological_demand: 0.2, injury_exposure: 0.05}
+  # two channels that ask for the same handle: the value farthest from the baseline wins for a level handle, the extra above the baseline adds up for a total handle, a context takes the largest
+  merge: {level: farthest, total: sum_extra, context: max}
+  # the day of the stay on which the effect of a channel is felt in full; before it the effect rises in a straight line from the baseline
+  ramp_days: 1
+  list:
+    W: {pushes: [infection_burden], context: {pathogen_exposure: {1: 0.15, 2: 0.3, 3: 0.5}}}
+    E: {pushes: [infection_burden], context: {pathogen_exposure: {1: 0.2, 2: 0.45, 3: 0.75}}}
+    H: {pushes: [hydration_deficit, fatigue], level: {activity_load: {1: 90, 2: 120, 3: 150}}, total: {fluid_intake: {1: 1.6, 2: 1.2, 3: 0.8}}}
+    C: {pushes: [energy_deficit, fatigue], level: {activity_load: {1: 90, 2: 120, 3: 150}, sleep_duration: {1: 7.5, 2: 7, 3: 6.5}}}
+    A: {pushes: [oxygen_deficit, fatigue], level: {activity_load: {1: 80, 2: 100, 3: 120}}}
+    L: {pushes: [injury_burden, mobility_loss], level: {activity_load: {1: 120, 2: 180, 3: 240}, injury_exposure: {1: 0.15, 2: 0.3, 3: 0.5}}}
+    V: {pushes: [fatigue, psychological_strain], level: {sleep_duration: {1: 6, 2: 4.5, 3: 3}, psychological_demand: {1: 0.3, 2: 0.4, 3: 0.5}}}
+    G: {pushes: [psychological_strain, loneliness], level: {psychological_demand: {1: 0.4, 2: 0.6, 3: 0.8}, sleep_duration: {1: 7.5, 2: 7, 3: 6.5}}}
+    S: {pushes: [psychological_strain, social_recognition], level: {psychological_demand: {1: 0.35, 2: 0.55, 3: 0.75}}}
+    Y: {pushes: [energy_deficit, nutrient_deficit], level: {activity_load: {1: 80, 2: 100, 3: 120}}}
+    T: {pushes: [injury_burden, oxygen_deficit], level: {injury_exposure: {1: 0.2, 2: 0.4, 3: 0.7}}, context: {pathogen_exposure: {1: 0.05, 2: 0.1, 3: 0.15}}}
+  # most channels an event may name, and the levels a channel may have
+  per_event_max: 3
+  levels: [1, 2, 3]
+  # items lower the effective level of the channel they name by item_levels each, and all the items together lower one channel by at most item_cap levels, so a level 3 channel cannot be cleared with items alone
+  relief: {item_levels: 1, item_cap: 2, floor: 0}
+  # a trait lowers the effective level of a channel by the number in its resist field, summed over the traits of the employee; the trait cards carry that field, a channel they do not name is not touched
+  trait_resist: {field: resist}
+# The body factor: the attribute of the day is the card value times (1 - k times the reading that carries it). The carrier of an attribute is the largest of the readings listed.
+# loneliness has no provider in the core, the game computes it from social contact.
+body:
+  k: 0.3
+  carriers:
+    wit: [fatigue, psychological_strain]
+    constitution: [infection_burden, hydration_deficit, energy_deficit]
+    finesse: [injury_burden, mobility_loss]
+    will: [psychological_strain, loneliness]

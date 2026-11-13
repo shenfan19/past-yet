@@ -163,6 +163,35 @@ for (const e of events) {
     else if (redeem[0].req.luck !== undefined) err(`regret ${e.id}: the redeem point must not be a pure luck roll`);
   } else if (redeem.length) err(`event ${e.id} has a redeem point but is not a regret`);
 }
+// pressure channels: each event names at most per_event_max of them at the listed levels, items and gear name the channels they work against
+const CH = cfg.channels;
+const chIds = Object.keys(CH.list);
+for (const e of events) {
+  if (!e.channels) { err(`event ${e.id}: no channels field`); continue; }
+  const ks = Object.keys(e.channels);
+  if (ks.length > CH.per_event_max) err(`event ${e.id}: ${ks.length} channels, at most ${CH.per_event_max}`);
+  for (const [k, v] of Object.entries(e.channels)) {
+    if (!chIds.includes(k)) err(`event ${e.id}: unknown channel ${k}`);
+    if (!CH.levels.includes(v)) err(`event ${e.id}: channel ${k} level ${v} is not one of ${CH.levels}`);
+  }
+}
+const chItems = Object.fromEntries(chIds.map((c) => [c, []]));
+const chGear = Object.fromEntries(chIds.map((c) => [c, []]));
+for (const [id, it] of Object.entries(items)) {
+  for (const c of it.channels || []) {
+    if (!chIds.includes(c)) { err(`item ${id}: unknown channel ${c}`); continue; }
+    (it.scene ? chGear : chItems)[c].push(id);
+  }
+}
+for (const c of chIds) {
+  if (chItems[c].length < 3) warn(`channel ${c}: ${chItems[c].length} items work against it, at least 3 are needed (${chItems[c].join(', ')})`);
+  if (chGear[c].length < 1) err(`channel ${c}: no gear works against it`);
+  for (const [h, byLevel] of Object.entries({ ...(CH.list[c].level || {}), ...(CH.list[c].total || {}), ...(CH.list[c].context || {}) })) {
+    for (const l of CH.levels) if (!(l in byLevel)) err(`channel ${c}: handle ${h} has no value for level ${l}`);
+  }
+}
+for (const [t, tr] of Object.entries(traits)) for (const c of Object.keys(tr[CH.trait_resist.field] || {})) if (!chIds.includes(c)) err(`trait ${t}: resists unknown channel ${c}`);
+for (const [a, list] of Object.entries(D.get('config.body.carriers'))) if (!attrs.includes(a)) err(`body carriers: unknown attribute ${a}`);
 for (const f of fields) if (!events.some((e) => e.field === f)) warn(`field ${f} has weights but no event`);
 for (const [, v] of Object.entries(placeSeen)) if (v.length > 1) warn(`events ${v.join(', ')} share one place and year`);
 
