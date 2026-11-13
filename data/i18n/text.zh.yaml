@@ -4424,3 +4424,221 @@ eras:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  scott_ross_ice_shelf_1912:
+    name: 罗斯冰架 1912
+    short: 罗斯冰架
+    place_name: 南极罗斯冰架
+    tags:
+      - medical
+      - cold
+      - expedition
+      - c20
+      - antarctica
+      - history
+    event_titles:
+      door_block: 被拒绝
+      time_strain: 时间错位
+    plots:
+      field_notes:
+        name: 送斯科特一本野外记录本
+        desc: 让他把天气、日期和物资记成别人能核对的样子。
+        character: 罗伯特·法尔肯·斯科特
+        article: people:scott_last_camp
+      germ_theory:
+        name: 把细菌致病的理论讲给罗伯特·法尔肯·斯科特
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 罗伯特·法尔肯·斯科特
+        article: people:scott_last_camp
+    blurb: 从极点返回、穿过冰架的路上，燃料和食物越来越少。近，成本低，保暖和食物的效果很明显。
+    handle_label: 返程计划被改
+    protagonist: 罗伯特·法尔肯·斯科特
+    protagonist_role: 带队的海军军官，每天都记日记
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1912 年罗伯特·法尔肯·斯科特和四位同伴到达南极点，发现挪威队早已到过。
+          check: true
+        - text: 回程穿过罗斯冰架时，寒冷、饥饿和疲惫一点点拖垮了队伍。
+          check: true
+        - text: 斯科特最后一篇日记写于 1912 年 3 月 29 日，11 月搜救队找到了那顶帐篷。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整段旅程。主时间线上这支队伍没有回来。
+        - 保暖和食物比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      door_block_stubborn: 一位疲惫的队员拦在路上，说计划是早就定好的，外人现在改不了。{staff} 倔强，不肯让路，被推到一边，丢了 {d.ors_stock:i} 份物资。
+      door_block_stubborn_empty: 一位疲惫的队员拦在路上，说计划是早就定好的，外人现在改不了。{staff} 倔强，不肯让路，被推到一边。
+      door_block_insist_empty: 一位疲惫的队员拦在路上，说计划是早就定好的，外人现在改不了。{staff} 站稳把话说完，被请走了。
+      door_block_insist: 一位疲惫的队员拦在路上，说计划是早就定好的，外人现在改不了。{staff} 站稳把话说完，被请走了，丢了 {d.ors_stock:i} 份物资。
+      door_block_appeal: 一位疲惫的队员拦在路上，{staff} 不硬闯，转身去找罗伯特·法尔肯·斯科特，请他支持。
+      door_block_yield: 一位疲惫的队员拦在路上，{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服斯科特
+      trust: 赢得队伍的信任
+      reform: 让返程计划比历史上更早改变
+    milestones:
+      first_treat: '{date}：{staff} 给一个已经不说话的人化好第一锅水、热好食物，他开始开口了。'
+      first_protect: '{date}：{staff} 发下第一批毯子，垒起雪块墙，教其他人照做。'
+      met_scott: '{date}：{staff} 在帐篷里遇到斯科特。他听得很认真，却一再问同一件事：数字是多少。'
+      scott_trusts: '{date}：斯科特开始把 {staff} 当自己人，拿出记着每一天的日记。'
+      scott_convinced: '{date}：斯科特不再只是盼着燃料够用。他有了足够的数字，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：队伍开始松口，说计划也许可以改。'
+      reform_history: '{date}：返程计划被改了。主时间线没有变化。'
+      reform_early: '{date}：返程计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：队员们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
+    summary:
+      near_death: '{staff} 在罗斯冰架倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在罗斯冰架留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在罗斯冰架完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在罗斯冰架待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，保暖和食物才是让一支队伍撑下去的东西。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 罗伯特·法尔肯·斯科特的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  wegener_greenland_1930:
+    name: 格陵兰冰盖 1930
+    short: 格陵兰
+    place_name: 格陵兰冰盖
+    tags:
+      - medical
+      - cold
+      - expedition
+      - c20
+      - greenland
+      - history
+    event_titles:
+      door_block: 被拒绝
+      time_strain: 时间错位
+    plots:
+      field_notes:
+        name: 送魏格纳一本野外记录本
+        desc: 让他把天气和雪橇路程记下来，别人才能核对。
+        character: 阿尔弗雷德·魏格纳
+        article: people:wegener_greenland
+      germ_theory:
+        name: 把细菌致病的理论讲给阿尔弗雷德·魏格纳
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 阿尔弗雷德·魏格纳
+        article: people:wegener_greenland
+    blurb: 黑夜降临前最后几周冰上的一支科学考察队，冰盖中央的站点还缺物资。近，成本低，保暖和食物的效果很明显。
+    handle_label: 补给计划被改
+    protagonist: 阿尔弗雷德·魏格纳
+    protagonist_role: 带队的科学家，正设法把物资及时送到冰盖中央的站点
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1930 年阿尔弗雷德·魏格纳带领一支德国考察队到格陵兰，研究冰盖和天气。
+          check: true
+        - text: 考察队在冰盖中央设了一个站点，入冬前给它送补给既难又晚。
+          check: true
+        - text: 魏格纳 1930 年 11 月在从中央站点返回的路上死在冰上，遗体第二年春天被找到。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整个冬天。主时间线上计划没有及时改变。
+        - 保暖和食物比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      door_block_stubborn: 一位疲惫的雪橇手拦在路上，说冰上不是外人指手画脚的地方。{staff} 倔强，不肯让路，被推到一边，丢了 {d.ors_stock:i} 份物资。
+      door_block_stubborn_empty: 一位疲惫的雪橇手拦在路上，说冰上不是外人指手画脚的地方。{staff} 倔强，不肯让路，被推到一边。
+      door_block_insist_empty: 一位疲惫的雪橇手拦在路上，说冰上不是外人指手画脚的地方。{staff} 站稳把话说完，被请走了。
+      door_block_insist: 一位疲惫的雪橇手拦在路上，说冰上不是外人指手画脚的地方。{staff} 站稳把话说完，被请走了，丢了 {d.ors_stock:i} 份物资。
+      door_block_appeal: 一位疲惫的雪橇手拦在路上，{staff} 不硬闯，转身去找阿尔弗雷德·魏格纳，请他支持。
+      door_block_yield: 一位疲惫的雪橇手拦在路上，{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服魏格纳
+      trust: 赢得队伍的信任
+      reform: 让补给计划比历史上更早改变
+    milestones:
+      first_treat: '{date}：{staff} 给一个已经不说话的人煮好第一杯热饮，他开始开口了。'
+      first_protect: '{date}：{staff} 发下第一批毯子，搭起挡风墙，教雪橇手照做。'
+      met_wegener: '{date}：{staff} 在帐篷里遇到魏格纳。他听得很认真，却一再问同一件事：数字在哪里。'
+      wegener_trusts: '{date}：魏格纳开始把 {staff} 当自己人，拿出他一直在记的雪橇路程笔记。'
+      wegener_convinced: '{date}：魏格纳不再只是担心站点。他有了足够的数字，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：考察委员会开始松口，说计划也许可以改。'
+      reform_history: '{date}：补给计划被改了。主时间线没有变化。'
+      reform_early: '{date}：补给计划比历史上提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：雪橇手们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
+    summary:
+      near_death: '{staff} 在格陵兰倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在格陵兰留下了传说。补给计划比历史上提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在格陵兰完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在格陵兰待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，保暖和食物才是让一支队伍撑下去的东西。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 阿尔弗雷德·魏格纳的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

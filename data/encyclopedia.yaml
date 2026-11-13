@@ -20,6 +20,10 @@ refs:
     status: pending
   seacole1857:
     status: pending
+  wegener1932:
+    status: pending
+  scott1913:
+    status: pending
 sections:
   places:
     - id: broad_street
@@ -125,6 +129,40 @@ sections:
         era: seacole_balaklava_1855
       refs:
         - seacole1857
+        - game
+    - id: greenland_ice_sheet
+      era: wegener_greenland_1930
+      tags:
+        - medical
+        - cold
+        - expedition
+        - c20
+        - greenland
+        - history
+      related:
+        - people:wegener_greenland
+        - events:supply_plan
+      unlock:
+        era: wegener_greenland_1930
+      refs:
+        - wegener1932
+        - game
+    - id: ross_ice_shelf
+      era: scott_ross_ice_shelf_1912
+      tags:
+        - medical
+        - cold
+        - expedition
+        - c20
+        - antarctica
+        - history
+      related:
+        - people:scott_last_camp
+        - events:depot_plan
+      unlock:
+        era: scott_ross_ice_shelf_1912
+      refs:
+        - scott1913
         - game
   people:
     - id: snow
@@ -847,6 +885,38 @@ sections:
         era: seacole_balaklava_1855
       refs:
         - seacole1857
+        - game
+    - id: supply_plan
+      tags:
+        - medical
+        - cold
+        - expedition
+        - c20
+        - greenland
+        - history
+      related:
+        - people:wegener_greenland
+        - places:greenland_ice_sheet
+      unlock:
+        era: wegener_greenland_1930
+      refs:
+        - wegener1932
+        - game
+    - id: depot_plan
+      tags:
+        - medical
+        - cold
+        - expedition
+        - c20
+        - antarctica
+        - history
+      related:
+        - people:scott_last_camp
+        - places:ross_ice_shelf
+      unlock:
+        era: scott_ross_ice_shelf_1912
+      refs:
+        - scott1913
         - game
 model_events:
   door_block:
