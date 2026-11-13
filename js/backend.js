@@ -4,6 +4,7 @@
 import * as sim from './sim.js';
 import { buildReport } from './narrate.js';
 import { draw } from './rng.js';
+import { evalScene } from './scene_core.js';
 
 export function createLocalBackend(D) {
   const eras = {};
@@ -83,7 +84,7 @@ export function createLocalBackend(D) {
   }
   // A scene: three points the traveller meets or does not by what they are, and what they carry. Being found out costs stars, rest and favor.
   const SC = D.get('config.scene');
-  function runScene(ev, staffId, seed, items, favor = null) {
+  function runScene(ev, staffId, seed, items, favor = null, body = null) {
     const staff = D.get('staff.staff.' + staffId);
     const gear = gearOf(staffId);
     const stats = { ...sim.staffAttrs(D, staffId, favor, gear) };
@@ -94,18 +95,9 @@ export function createLocalBackend(D) {
       exposure += it.exposure;
       for (const [k, m] of Object.entries(it.stat_mult || {})) stats[k] *= m;
     }
-    const meets = (req) => Object.entries(req).every(([k, v]) => {
-      if (k === 'stat') return Object.entries(v).every(([s, min]) => stats[s] >= min);
-      if (k === 'trait') return v.some((t) => staff.traits.includes(t));
-      if (k === 'job') return D.get('staff.staff.' + staffId + '.jobs').some((j) => v.includes(j));
-      if (k === 'gender') return D.get('staff.gender_class')[staff.gender] === v;
-      if (k === 'item') return carried.includes(v);
-      if (k === 'provides') return carried.some((id) => D.get('items.' + id).provides.includes(v));
-      if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < Math.min(LK.max_chance, v * (LK.base + LK.per_point * stats.luck));
-      if (k === 'any') return v.some(meets);
-      throw new Error('unknown requirement ' + k);
-    });
-    const points = applyBonus(ev.scene.points.map((p) => ({ id: p.id, hit: meets(p.req), ...(p.redeem ? { redeem: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    // the sync points are met by the scene sub core; the attributes of a day can come from the body of the traveller, none given means the attributes do not change in the stay
+    const hits = evalScene(D, ev, { staffId, seed, carried, statsAt: (day) => (body ? body(day, stats) : stats) });
+    const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
     let stars = points.filter((p) => p.hit).length;
     // being found out: the more equipment shows and the more suspicious the time, the likelier
     const chance = Math.min(SC.max_discovery, Math.max(0, exposure) * SC.suspicion_by_tier[ev.tier]);
