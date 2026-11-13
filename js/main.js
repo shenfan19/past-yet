@@ -4,6 +4,7 @@ import { createUI } from './ui.js';
 import { createSettings } from './settings.js';
 import { createAudio } from './audio.js';
 import { drawStartStaff } from './start.js';
+import { defaultFounder, applyFounder } from './founder.js';
 
 // Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
 function pickLang(I) {
@@ -41,7 +42,8 @@ function startAntiques() {
   const out = Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id);
   const events = D.get('catalog.events');
   const { newest, random } = O.start_scenes;
-  const pool = events.slice().sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
+  // events marked start are already owned from the start, so they are not drawn again
+  const pool = events.filter((e) => !e.start).sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
   for (const e of pool.splice(0, newest)) out.push('relic_' + e.id);
   const drawn = [];
   for (let i = 0; i < random && pool.length; i++) drawn.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
@@ -52,9 +54,13 @@ function fresh() {
   const begin = startAntiques();
   const start = begin.all;
   const crew = drawStartStaff(D, O);
+  // the founder is the player's own character, a staff card of the save that is put into the data before the staff of the save is made
+  const founder = defaultFounder(D);
+  applyFounder(D, founder);
   return {
+    founder,
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id), favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
+    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id) || id === founder.id, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
@@ -82,6 +88,8 @@ function fresh() {
 // so a save that does not fit is dropped and a new game starts.
 function fits(S) {
   try {
+    if (!S.founder) return false;
+    applyFounder(D, S.founder);
     const antiques = D.get('antiques.antiques');
     const events = new Set(D.get('catalog.events').map((e) => e.id));
     const places = new Set([...D.get('config.eras'), ...events]);
@@ -121,7 +129,7 @@ const ctx = {
   },
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
-    if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches) || !fits(obj)) return false;
+    if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches) || !fits(obj)) { if (S && S.founder) applyFounder(D, S.founder); return false; }
     S = obj;
     this.save();
     return true;

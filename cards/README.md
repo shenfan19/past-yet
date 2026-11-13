@@ -31,7 +31,7 @@ The file name is the id. A card with `id:` inside must match its file name.
 |---|---|---|
 | `items/` | a shop item | `data/items.yaml` |
 | `antiques/` | an antique made by hand | `data/antiques.yaml` |
-| `events/` | a famous event with its relic. An optional `era: <model id>` hands the event to a full simulation model in `eras/`: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback | `data/catalog.yaml` |
+| `events/` | a famous event with its relic. An optional `era: <model id>` hands the event to a full simulation model in `eras/`: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. An optional `start: true` makes the relic owned from the start, so the place is open from the first moment, and the event is not drawn again among the random start places | `data/catalog.yaml` |
 | `staff/`, `traits/` | an employee, a trait | `data/staff.yaml` |
 | `mainline/` | a stage of the main line | `data/mainline.yaml` |
 | `wiki/places`, `people`, `events` | a hand written wiki article; a person card with `events: [ids]` is the figure of those catalogue events and opens, takes its tags and links with them | `data/encyclopedia.yaml` and its text |

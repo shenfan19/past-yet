@@ -2,6 +2,7 @@
 // The clock is real time scaled by a speed, pausable like a grand strategy game. Everything is in game days.
 import { staffTraits } from './narrate.js';
 import { drawStartStaff } from './start.js';
+import { applyFounder, pointsLeft } from './founder.js';
 
 export function createOffice(X) {
   const { D, ctx } = X;
@@ -262,6 +263,34 @@ export function createOffice(X) {
     return true;
   }
 
+  // The founder is made and changed until the first trip goes out. Each change keeps the card inside the rules of config.founder and puts it back into the data.
+  const FO = D.get('config.founder');
+  function founderChange(fn) {
+    const s = S();
+    if (s.seq > 0) return false;
+    const f = { ...s.founder, base: { ...s.founder.base }, traits: [...s.founder.traits] };
+    if (fn(f) === false) return false;
+    s.founder = f;
+    applyFounder(D, f);
+    ctx.save();
+    return true;
+  }
+  const founderName = (v) => founderChange((f) => { f.name = String(v).slice(0, FO.name_max); });
+  const founderGender = (g) => founderChange((f) => { if (!(g in D.get('staff.gender_class'))) return false; f.gender = g; });
+  const founderSkin = (k) => founderChange((f) => { if (!(k in D.get('hiring.skin_tones'))) return false; f.skin = k; });
+  const founderAttr = (a, d) => founderChange((f) => {
+    if (!(a in f.base) || !(d === 1 || d === -1)) return false;
+    const v = f.base[a] + d;
+    if (v < FO.min || v > FO.max || (d === 1 && pointsLeft(D, f) <= 0)) return false;
+    f.base[a] = v;
+  });
+  const founderTrait = (id) => founderChange((f) => {
+    if (!(id in D.get('staff.traits'))) return false;
+    if (f.traits.includes(id)) f.traits = f.traits.filter((x) => x !== id);
+    else if (f.traits.length < FO.traits_max) f.traits.push(id);
+    else return false;
+  });
+
   // Until the first trip goes out the first employees can be picked from the candidates, or the candidates drawn again.
   function setStartPick(pick) {
     const s = S();
@@ -422,7 +451,7 @@ export function createOffice(X) {
   // Letting someone go takes their implants off first and puts them back in the stock, so nothing bought with time energy is lost.
   function dismiss(id) {
     const s = S();
-    if (!s.staff[id].hired || hiredIds().length <= 1 || staffState(id) === 'away') return false;
+    if (id === s.founder.id || !s.staff[id].hired || hiredIds().length <= 1 || staffState(id) === 'away') return false;
     for (const g of staffGear(id)) s.inv[g] = (s.inv[g] || 0) + 1;
     s.staff[id].gear = [];
     if (s.secretary === id) s.secretary = null;
@@ -650,5 +679,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

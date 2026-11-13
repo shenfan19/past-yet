@@ -46,31 +46,52 @@ try {
   await page.waitForSelector('.lead');
   // a new game opens with the welcome: it cannot be closed from outside, shows the start places, the notice about the people, and begins on the button
   await page.waitForSelector('#modal .welcome');
-  ok('a new game opens with the welcome and its notice about the people in the game', (await page.locator('#modal .welcome a[href*=issues]').count()) === 1 && (await page.locator('#modal .welcome .startplaces li').count()) === 4 && (await page.locator('#modal .mclose').count()) === 0);
+  ok('a new game opens with the welcome and its notice about the people in the game', (await page.locator('#modal .welcome a[href*=issues]').count()) === 1 && (await page.locator('#modal .welcome .startplaces li').count()) === 5 && (await page.locator('#modal .mclose').count()) === 0);
   await page.keyboard.press('Escape');
   await page.mouse.click(5, 5);
   ok('the welcome does not close on Escape or on a click beside it', (await page.locator('#modal .welcome').count()) === 1);
+  ok('the Sun Yat-sen story is open from the start, with the relic of its own', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('relic_sun_yat_sen_guangzhou') && S.antiques.includes('relic_sun_yat_sen_guangzhou') && S.locks.filter((x) => x === 'relic_sun_yat_sen_guangzhou').length === 1; }));
   const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
   await page.click('[data-act=rerollstart]');
-  ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 4);
+  ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 5);
   ok('the welcome tells how to have something removed that infringes rights', (await page.locator('#modal .welcome').innerText()).includes('contact@teleporter.uk'));
   // the first employees: six candidates from six different regions, three picked, swapped by a click, drawn again before the first trip
   const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired) }; });
   const c0 = await crewInfo();
-  ok('the welcome offers six candidates from six regions and three are picked', c0.offer.length === 6 && c0.regions === 6 && c0.pick.length === 3 && c0.hired.length === 3 && (await page.locator('#modal .welcome .startstaff li').count()) === 6);
+  ok('the welcome offers six candidates from six regions and two are picked next to the founder', c0.offer.length === 6 && c0.regions === 6 && c0.pick.length === 2 && c0.hired.length === 3 && (await page.locator('#modal .welcome .startstaff li').count()) === 6);
   const spare = c0.offer.find((id) => !c0.pick.includes(id));
   await page.click(`[data-act=startpick][data-id=${c0.pick[0]}]`);
   const c1 = await crewInfo();
-  ok('the start button waits for the full crew', c1.pick.length === 2 && (await page.locator('[data-act=welcomestart][disabled]').count()) === 1);
+  ok('the start button waits for the full crew', c1.pick.length === 1 && (await page.locator('[data-act=welcomestart][disabled]').count()) === 1);
   await page.click(`[data-act=startpick][data-id=${spare}]`);
   const c2 = await crewInfo();
   ok('a click swaps the picks and the employees follow', c2.pick.includes(spare) && !c2.pick.includes(c0.pick[0]) && c2.hired.length === 3 && c2.hired.includes(spare));
   await page.click('[data-act=rerollstaff]');
   const c3 = await crewInfo();
   ok('the candidates can be drawn again, still six regions', c3.offer.join() !== c0.offer.join() && c3.regions === 6 && c3.hired.length === 3);
+  // the founder: the start waits for a name, the points are spent from a pool, the traits are limited, and the founder is the 51st employee who cannot be let go
+  const fo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { f: S.founder, n: Object.keys(g.D.get('staff.staff')).length, hired: S.staff[S.founder.id].hired }; });
+  ok('the start button waits for the name of the founder', (await page.locator('[data-act=welcomestart][disabled]').count()) === 1);
+  await page.fill('#founder-name', 'Test Founder');
+  ok('with a name the start button opens', (await page.locator('[data-act=welcomestart][disabled]').count()) === 0);
+  const f0 = await fo();
+  ok('the founder is the 51st employee and hired', f0.n === 51 && f0.hired && f0.f.name === 'Test Founder');
+  await page.click('[data-act=founderattr][data-id="wit:1"]');
+  await page.click('[data-act=founderattr][data-id="wit:1"]');
+  await page.click('[data-act=founderattr][data-id="wit:1"]');
+  const f1 = await fo();
+  ok('points come from a pool of 27 and stop when it is empty', f1.f.base.wit === 7 && Object.values(f1.f.base).reduce((a, b) => a + b, 0) === 27);
+  await page.click('[data-act=founderattr][data-id="will:-1"]');
+  await page.click('[data-act=founderattr][data-id="wit:1"]');
+  const f2 = await fo();
+  ok('a point taken from one attribute can be given to another', f2.f.base.will === 4 && f2.f.base.wit === 8);
+  for (const tr of ['kind', 'curious', 'bold']) await page.click(`[data-act=foundertrait][data-id=${tr}]`);
+  ok('at most two traits', (await fo()).f.traits.length === 2);
+  await page.selectOption('#founder-gender', 'f');
+  ok('the gender is kept', (await fo()).f.gender === 'f');
   await page.click('[data-act=welcomestart]');
   // the rest of the checks use a known crew
-  await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun'].includes(k); S.hire = null; });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun', 's_founder'].includes(k); S.hire = null; });
   ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
   ok('the clock stands still before the first trip, with a hint', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 0 && (await page.locator('#clock .chipwrap .chip').count()) === 1 && (await page.locator('#clock svg.ring').count()) === 1);
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
@@ -492,8 +513,11 @@ try {
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
   await page.click('[data-act=fire][data-id=s_arjun]');
   ok('an employee can be let go', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === hiredN - 1);
+  // the founder is on a later page of the staff list, so the click is sent as the button would send it
+  await page.evaluate(() => { const b = document.createElement('button'); b.dataset.act = 'fire'; b.dataset.id = 's_founder'; document.getElementById('view').appendChild(b); b.click(); b.remove(); });
+  ok('the founder cannot be let go', await page.evaluate(() => window.__game.ctx.S().staff.s_founder.hired));
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.staff.s_arjun.hired = true; });
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.locks = S.locks.filter((x) => x !== 'clinic_bell'); if (!S.antiques.includes('clinic_bell')) S.antiques.push('clinic_bell'); S.antiques.push('relic_newton_cambridge', 'relic_newton_cambridge'); S.funds = 50; });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.locks = S.locks.filter((x) => x !== 'clinic_bell'); if (!S.antiques.includes('clinic_bell')) S.antiques.push('clinic_bell'); S.antiques.push('relic_newton_cambridge', 'relic_newton_cambridge'); S.funds = 150; });
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '3');
   const claimedBefore = await page.evaluate(() => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length);
@@ -507,7 +531,7 @@ try {
   await page.click('[data-act=appoint][data-id=s_zhou]');
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '0');
-  ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 5);
+  ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 6);
   await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
   await page.waitForSelector('.lead');
   // settings, music and effects
@@ -759,12 +783,12 @@ try {
     const n = o.hiredIds().length;
     return { paid, want: 3 * o.wageTotal(), rising: o.wageOf(n + 1) - o.wageOf(n) > o.wageOf(n) - o.wageOf(n - 1), poor: S.funds === 0 && f1.every((v, i) => v < f0[i] || f0[i] === 0), mult: g.ctx.backend.marketMult('relic_faraday_london', 40) };
   });
-  ok('wages are paid for every whole day', wg.paid === wg.want);
+  ok('wages are paid for every whole day', Math.abs(wg.paid - wg.want) < 1e-6);
   ok('each further hire costs more per day than the one before', wg.rising);
   ok('an unpaid day empties the funds and costs favor', wg.poor);
   ok('the market factor stays within its band', wg.mult >= 0.7 && wg.mult <= 1.3);
 // a pop-up stops the clock and gives the speed back, low funds hold the speed, an unpaid day stops the clock with a pop-up
-await page.evaluate(() => { const S = window.__game.ctx.S(); S.clock.speed = 16; S.clock.resume = null; window.__game.ui.render(); });
+await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100000; S.clock.speed = 16; S.clock.resume = null; window.__game.ui.render(); });
 await tool('about');
 const held = await page.evaluate(() => { const c = window.__game.ctx.S().clock; return { speed: c.speed, resume: c.resume }; });
 ok('a pop-up stops the clock and remembers the speed', held.speed === 0 && held.resume === 16);

@@ -1,4 +1,5 @@
 import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg } from './narrate.js';
+import { pointsLeft, founderProblem } from './founder.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
 import { createWorldMap } from './worldmap.js';
@@ -329,7 +330,7 @@ export function createUI(D, ctx) {
         { k: 'state', label: U.office.col_state, w: '9%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel()[r.state]}</span>` },
         { k: 'favor', label: U.office.col_favor, w: '13%', val: (r) => r.favor, cell: (r) => favorCell(r.id) },
         { k: 'score', label: U.office.col_history, w: '11%', val: (r) => r.score, cell: (r) => `<a class="tallylink" data-act="staffopen" data-id="${r.id}"${tip(U.office.tally_tip)}>${tallyHtml(r.id)}</a>` },
-        { k: 'act', label: '', w: '31%', cls: 'num', cell: (r) => `<span class="nowrap"><button data-act="gift" data-id="${r.id}" ${S.funds < office.giftCost() ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift} ${office.giftCost()}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button></span>` },
+        { k: 'act', label: '', w: '31%', cls: 'num', cell: (r) => `<span class="nowrap"><button data-act="gift" data-id="${r.id}" ${S.funds < office.giftCost() ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift} ${office.giftCost()}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 || r.id === ctx.S().founder.id ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button></span>` },
       ],
     });
   }
@@ -752,6 +753,23 @@ export function createUI(D, ctx) {
 
   // ---------- the welcome of a new game ----------
   // The language, what the game is, how it is played, the places open at the start with a way to draw the random ones again, and the notice about the people in it.
+  // The player's own character, made before the first trip: a name, a gender, a skin tone, points over the five attributes and up to two traits.
+  function founderHtml() {
+    const S = ctx.S(), W = U.welcome, F = D.get('config.founder'), f = S.founder, left = pointsLeft(D, f);
+    const locked = S.seq > 0 ? 'disabled' : '';
+    const attrs = D.get('staff.attributes').map((a) => `<li><span class="lab">${esc(T.stats[a])}</span> <button data-act="founderattr" data-id="${a}:-1" ${locked} aria-label="-">−</button> <b>${f.base[a]}</b> <button data-act="founderattr" data-id="${a}:1" ${locked} aria-label="+">+</button></li>`).join('');
+    const skins = Object.entries(D.get('hiring.skin_tones')).map(([k, c]) => `<button class="skinpick ${f.skin === k ? 'on' : ''}" data-act="founderskin" data-id="${k}" aria-pressed="${f.skin === k}" ${locked} style="background:${c}"></button>`).join('');
+    const genders = Object.keys(D.get('staff.gender_class')).map((g) => `<option value="${g}" ${f.gender === g ? 'selected' : ''}>${esc(U.gender[g])}</option>`).join('');
+    const traits = Object.keys(D.get('staff.traits')).map((id) => `<button class="chip ${f.traits.includes(id) ? 'on' : ''}" data-act="foundertrait" data-id="${id}" aria-pressed="${f.traits.includes(id)}" ${locked}${tip(pointsText(D.get('staff.traits.' + id)))}>${esc(T.traits[id])}</button>`).join(' ');
+    return `<div class="sec">${W.founder_title}</div><p class="muted">${esc(W.founder_hint)}</p>
+      <div class="founder">
+        <p class="row"><label>${W.founder_name} <input id="founder-name" type="text" maxlength="${F.name_max}" value="${esc(f.name)}" placeholder="${esc(W.founder_name_ph)}" ${locked}></label>
+        <label>${W.founder_gender} <select id="founder-gender" ${locked}>${genders}</select></label>
+        <span>${W.founder_skin} ${skins}</span></p>
+        <div class="muted">${esc(W.founder_attrs.replace('{n}', String(left)))}</div><ul class="founderattrs">${attrs}</ul>
+        <div class="muted">${esc(W.founder_traits.replace('{n}', String(F.traits_max)))}</div><p>${traits}</p>
+      </div>`;
+  }
   function welcomeHtml() {
     const S = ctx.S();
     const W = U.welcome;
@@ -773,6 +791,7 @@ export function createUI(D, ctx) {
       <div class="row">${langHtml()}</div>
       <p>${esc(W.story)}</p>
       <div class="sec">${W.how_title}</div><ol class="steps">${W.how.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
+      ${founderHtml()}
       <div class="sec">${W.staff_title}</div><p class="muted">${esc(W.staff_hint.replace('{n}', need))}</p>
       <ul class="startstaff">${crew}</ul>
       <p><button class="ghost" data-act="rerollstaff" ${S.seq > 0 || !S.startStaff ? 'disabled' : ''}>${W.reroll_staff}</button></p>
@@ -782,7 +801,7 @@ export function createUI(D, ctx) {
       <div class="sec">${W.disclaimer_title}</div>
       <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${W.issues}</a>${esc(disclaimer[1] || '')}</p>
       <p>${esc(W.rights)}</p>
-      <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart" ${picked.length === need || !S.startStaff ? '' : 'disabled'}>${W.begin}</button></p>
+      <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart" ${(picked.length === need || !S.startStaff) && !founderProblem(D, S.founder) ? '' : 'disabled'}>${W.begin}</button></p>
     </div>`;
   }
 
@@ -941,6 +960,9 @@ export function createUI(D, ctx) {
     else if (act === 'rerollstart') { office.rerollStart(); render(); }
     else if (act === 'rerollstaff') { office.rerollStaff(); render(); }
     else if (act === 'startpick') { office.pickStart(id); render(); }
+    else if (act === 'founderattr') { const [a, d] = id.split(':'); office.founderAttr(a, Number(d)); render(); }
+    else if (act === 'founderskin') { office.founderSkin(id); render(); }
+    else if (act === 'foundertrait') { office.founderTrait(id); render(); }
     else if (act === 'welcomestart') { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
     else if (act === 'modalopen') { st.modalStack = []; st.modal = { kind: id }; render(); }
     else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; if (st.modal && st.modal.kind !== 'staff') st.modalStack.push(st.modal); st.modal = { kind: 'staff', id }; render(); }
@@ -1006,6 +1028,7 @@ export function createUI(D, ctx) {
     const t = ev.target;
     if (settingsPage.onInput(ev)) return;
     if (t.dataset.fq !== undefined) { listbox.setText(t.dataset.fq, t.value); render(); return; }
+    if (t.id === 'founder-name') { office.founderName(t.value); const b = document.querySelector('[data-act=welcomestart]'); if (b) b.disabled = !!founderProblem(D, ctx.S().founder) || (ctx.S().startStaff && ctx.S().startStaff.pick.length !== D.get('config.office.start_staff.pick')); return; }
     if (t.id === 'wiki-q') wiki.onInput(t.value);
     else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
   }
@@ -1013,6 +1036,7 @@ export function createUI(D, ctx) {
   function onChange(ev) {
     const t = ev.target;
     if (t.id === 'lang') { changeLang(t.value); return; }
+    if (t.id === 'founder-gender') { office.founderGender(t.value); render(); return; }
     if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }
     if (t.dataset.ftag !== undefined) { listbox.setTag(t.dataset.ftag, t.value); render(); return; }
     if (t.dataset.pgsize) { listbox.setSize(t.dataset.pgsize, Number(t.value)); render(); return; }

@@ -21,7 +21,7 @@ i18n:
     zh: 简体中文
 save:
   key: teleporter_save
-  version: 11
+  version: 12
 eras:
   - broad_street_1854
   - vienna_1847
@@ -62,11 +62,24 @@ office:
   # the places open at the start, besides the first one: the latest event of the catalogue, which reaches the farthest back, and some at random
   start_scenes: {newest: 1, random: 2}
   # the employees of the start: this many candidates from different regions are offered and the player picks some of them
-  start_staff: {offer: 6, pick: 3}
+  start_staff: {offer: 6, pick: 2}
   start_stock:
     ors_pack: 40
     chlorine_tablet: 40
     handbook: 1
+# The founder is the player's own character, the 51st employee, who is hired from the start and cannot be let go. The player gives the name, the gender and the skin tone and spreads
+# total points over the five attributes, each between min and max. The founder takes one of the places of the first crew, so the cost of wages at the start does not change.
+founder:
+  id: s_founder
+  age: 30
+  total: 27
+  min: 1
+  max: 10
+  name_max: 24
+  traits_max: 2
+  default_gender: x
+  default_skin: t3
+  default_base: {wit: 5, constitution: 5, finesse: 5, will: 5, luck: 5}
 clock:
   sec_per_day: 60
   speeds:
