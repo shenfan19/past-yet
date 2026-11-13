@@ -4071,3 +4071,332 @@ eras:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进病房。
       ally_gap: 南丁格尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  finlay_havana_1881:
+    name: 哈瓦那 1881
+    short: 哈瓦那
+    place_name: 古巴哈瓦那
+    tags:
+      - medical
+      - infection
+      - yellow-fever
+      - c19
+      - havana
+      - history
+    event_titles:
+      door_block: 被拒之门外
+      time_strain: 时间错位
+    plots:
+      microscope:
+        name: 送芬莱一台显微镜
+        desc: 让他能更清楚地给人看蚊子和它带的东西。
+        character: 卡洛斯·芬莱
+        article: people:finlay_havana
+      germ_theory:
+        name: 把细菌致病的理论讲给芬莱
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 卡洛斯·芬莱
+        article: people:finlay_havana
+    blurb: 热带港口的黄热病，和一位在别人听进去之前就说蚊子传病的医生。近，成本低，蚊帐和护理的效果很明显。
+    handle_label: 灭蚊行动开始
+    protagonist: 卡洛斯·芬莱
+    protagonist_role: 一位说蚊子传播黄热病、却还没被人相信的医生
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 炎热的月份里黄热病一再回到哈瓦那，夺走许多人的命，新来的人尤其危险。
+          check: true
+        - text: 1881 年 8 月，卡洛斯·芬莱向哈瓦那科学院宣布，黄热病由一种蚊子传播。
+          check: true
+        - text: 大多数医生不接受这个说法，直到 1900 年以后城市开始灭蚊，它才得到证明。
+          check: true
+      regret:
+        - 你能救今天的病人，救不了明天的。主时间线上城市大约二十年后才对蚊子采取行动。
+        - 一个好想法不够，还要一遍遍给不想听的人看。
+    events:
+      door_block_stubborn: 一位医生拦在门口，说黄热病来自污秽和坏空气，不会听外人的话。{staff} 倔强，不肯让路，被推了出去，丢了 {d.ors_stock:i} 包物资。
+      door_block_stubborn_empty: 一位医生拦在门口，说黄热病来自污秽和坏空气。{staff} 倔强，不肯让路，被推了出去。
+      door_block_insist_empty: 一位医生拦在门口，说是坏空气，不是蚊子。{staff} 站在门口把话说完，被请了出去。
+      door_block_insist: 一位医生拦在门口，说是坏空气，不是蚊子。{staff} 站在门口把话说完，被请了出去，丢了 {d.ors_stock:i} 包物资。
+      door_block_appeal: 一位医生拦在门口。{staff} 不硬闯，转身去找芬莱，请他出面说话。
+      door_block_yield: 一位医生拦在门口。{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服芬莱
+      trust: 赢得街区的信任
+      reform: 让城市比历史上更早对蚊子采取行动
+    milestones:
+      first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
+      first_protect: '{date}：{staff} 给几户愿意听的人家的床挂上第一批蚊帐，教他们怎样把蚊子挡在外面。'
+      met_finlay: '{date}：{staff} 在病床边遇到芬莱。他听得很认真，却一再问同一件事：证据在哪里。'
+      finlay_trusts: '{date}：芬莱开始把 {staff} 当自己人，拿出他一直在记的病例笔记来对比。'
+      finlay_convinced: '{date}：芬莱不再只是怀疑蚊子。他有了足够的病例，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：卫生委员会开始松口，说也许可以查一查蚊子。'
+      reform_history: '{date}：当局开始对蚊子采取行动。主时间线没有变化。'
+      reform_early: '{date}：当局比历史上提前 {advance_days:1} 天开始对蚊子采取行动。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：街区里的人不再把 {staff} 挡在外面，有的还自己来敲门。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：病人数降到了个位数，许多人已经去了山里。'
+    summary:
+      near_death: '{staff} 在哈瓦那街头倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在哈瓦那留下了传说。当局比历史上提前 {advance_days:1} 天开始对蚊子采取行动。'
+      perfect: '{staff} 在哈瓦那完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在哈瓦那待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人陪着那些病人。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他需要听到的话告诉了他。
+      perfect:
+        - trait: kind
+          text: 我能救今天的病人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，真的是蚊子带的。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，信不信由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 蚊帐剩下了。限制不是蚊帐，是街区对你的信任。先让员工帮病人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
+      ally_gap: 芬莱的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  jenner_berkeley_1796:
+    name: 伯克利 1796
+    short: 伯克利
+    place_name: 格洛斯特郡伯克利
+    tags:
+      - medical
+      - infection
+      - smallpox
+      - c18
+      - england
+      - history
+    event_titles:
+      door_block: 被拒之门外
+      time_strain: 时间错位
+    plots:
+      case_book:
+        name: 送詹纳一本印好的病例册
+        desc: 让他把每个病例按同一格式记下来，别人才能核对。
+        character: 爱德华·詹纳
+        article: people:jenner_berkeley
+      germ_theory:
+        name: 把细菌致病的理论讲给詹纳
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 爱德华·詹纳
+        article: people:jenner_berkeley
+    blurb: 乡村里的天花，一个关于挤奶女工的老说法，和一位想试一试的乡村医生。近，成本低，护理和隔离的效果很明显。
+    handle_label: 第一次接种牛痘
+    protagonist: 爱德华·詹纳
+    protagonist_role: 听了多年牛痘能防天花的说法、却还没试过的乡村医生
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 十八世纪英国乡村里天花常见又可怕，得重症的人大约三成会死。
+          check: true
+        - text: 乡下人说，得过牛痘的挤奶女工不会得天花。
+          check: true
+        - text: 1796 年 5 月 14 日，爱德华·詹纳把牛痘疮里的物质接种给一个男孩，后来又试了男孩是否受到保护。
+          check: true
+        - text: 詹纳 1798 年发表了结果，此后几年这种做法传开了。
+          check: true
+      regret:
+        - 你能救今天的病人，救不了明天的。主时间线上第一次接种在 5 月 14 日。
+        - 按今天的标准，那次试验是拿一个孩子做的，现在不会被允许，游戏也不要求你重复它。
+    events:
+      door_block_stubborn: 一位邻居拦在门口，说把牛的病放进人身上是违背自然。{staff} 倔强，不肯让路，被推了出去，丢了 {d.ors_stock:i} 包物资。
+      door_block_stubborn_empty: 一位邻居拦在门口，说牛的病不该放进人身上。{staff} 倔强，不肯让路，被推了出去。
+      door_block_insist_empty: 一位邻居拦在门口，说这是违背自然。{staff} 站在门口把话说完，被请了出去。
+      door_block_insist: 一位邻居拦在门口，说这是违背自然。{staff} 站在门口把话说完，被请了出去，丢了 {d.ors_stock:i} 包物资。
+      door_block_appeal: 一位邻居拦在门口。{staff} 不硬闯，转身去找詹纳，请他出面说话。
+      door_block_yield: 一位邻居拦在门口。{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服詹纳
+      trust: 赢得村子的信任
+      reform: 让第一次接种比历史上更早
+    milestones:
+      first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
+      first_protect: '{date}：{staff} 发下第一批口罩，擦洗了几间屋子，教这家人把病人隔开。'
+      met_jenner: '{date}：{staff} 在出诊路上遇到詹纳。他听得很认真，却一再问同一件事：证据在哪里。'
+      jenner_trusts: '{date}：詹纳开始把 {staff} 当自己人，拿出他一直在记的挤奶女工的笔记来对比。'
+      jenner_convinced: '{date}：詹纳不再只是怀疑牛痘。他有了足够的说法，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：村里开始松口，说也许可以试试牛痘。'
+      reform_history: '{date}：第一次牛痘接种完成。主时间线没有变化。'
+      reform_early: '{date}：第一次牛痘接种比历史上提前 {advance_days:1} 天完成。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：村里的人不再把 {staff} 挡在外面，有的还自己来敲门。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：病人数降到了个位数。'
+    summary:
+      near_death: '{staff} 在村道上倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在伯克利留下了传说。第一次接种比历史上提前 {advance_days:1} 天完成。'
+      perfect: '{staff} 在伯克利完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在伯克利待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人陪着那些病人。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他需要听到的话告诉了他。
+      perfect:
+        - trait: kind
+          text: 我能救今天的病人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，挤奶女工说得没错。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，信不信由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 口罩和清洁用品剩下了。限制不是物资，是村子对你的信任。先让员工帮病人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
+      ally_gap: 詹纳的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  seacole_balaklava_1855:
+    name: 巴拉克拉瓦 1855
+    short: 巴拉克拉瓦
+    place_name: 克里米亚巴拉克拉瓦
+    tags:
+      - medical
+      - infection
+      - dysentery
+      - c19
+      - crimea
+      - history
+    event_titles:
+      door_block: 被拒之门外
+      time_strain: 时间错位
+    plots:
+      medicine_chest:
+        name: 送西科尔一箱药
+        desc: 让她能让来找她的人看到她的药有什么用。
+        character: 玛丽·西科尔
+        article: people:seacole_balaklava
+      germ_theory:
+        name: 把细菌致病的理论讲给西科尔
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 玛丽·西科尔
+        article: people:seacole_balaklava
+    blurb: 战线后方营地里的痢疾和霍乱，和一位自己出钱来照看这些人的女人。近，成本低，干净的水和照护的效果很明显。
+    handle_label: 营地物资向她开放
+    protagonist: 玛丽·西科尔
+    protagonist_role: 被军队拒绝、自己来到营地的护士和商人
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 玛丽·西科尔 1805 年生于牙买加，从母亲和加勒比的经历里学到护理和草药。
+          check: true
+        - text: 她申请去克里米亚当军队护士时被拒绝，于是自费前往。
+          check: true
+        - text: 在巴拉克拉瓦附近，她在营地后方开了一家客栈，照看患痢疾和霍乱的士兵。
+          check: true
+      regret:
+        - 你能救今天的病人，救不了明天的。她得先争取到出现在那里的权利。
+        - 营地物资向她开放的日期没有记录，所以游戏自己定了一天。
+    events:
+      door_block_stubborn: 一位营地军官拦在门口，说阵线里没有外人的位置。{staff} 倔强，不肯让路，被赶了出去，丢了 {d.ors_stock:i} 包物资。
+      door_block_stubborn_empty: 一位营地军官拦在门口，说阵线里没有外人的位置。{staff} 倔强，不肯让路，被赶了出去。
+      door_block_insist_empty: 一位营地军官拦在门口，说病人是军队自己的事。{staff} 站在门口把话说完，被请了出去。
+      door_block_insist: 一位营地军官拦在门口，说病人是军队自己的事。{staff} 站在门口把话说完，被请了出去，丢了 {d.ors_stock:i} 包物资。
+      door_block_appeal: 一位营地军官拦在门口。{staff} 不硬闯，转身去找西科尔，请她出面说话。
+      door_block_yield: 一位营地军官拦在门口。{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服西科尔
+      trust: 赢得营地的信任
+      reform: 让营地物资更早向她开放
+    milestones:
+      first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
+      first_protect: '{date}：{staff} 发下第一批干净的水，擦洗了几顶帐篷，教士兵把喝的水烧开。'
+      met_seacole: '{date}：{staff} 在她的客栈里遇到西科尔。她听得很认真，却一再问同一件事：你能为这些人做什么。'
+      seacole_trusts: '{date}：西科尔开始把 {staff} 当自己人，拿出她留给最重病例的药方。'
+      seacole_convinced: '{date}：西科尔不再只是盼着干净的水有用。她亲眼见了，也信了这位陌生人告诉她的话。'
+      board_moves: '{date}：军需官开始松口，说也许能匀出一箱药。'
+      reform_history: '{date}：营地物资向她开放。主时间线没有变化。'
+      reform_early: '{date}：营地物资比主时间线提前 {advance_days:1} 天向她开放。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：军官们不再把 {staff} 挡在外面，有的还把人送了过来。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：营地里生病的人数降到了个位数。'
+    summary:
+      near_death: '{staff} 在营地里倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在巴拉克拉瓦留下了传说。营地物资比主时间线提前 {advance_days:1} 天向西科尔开放。'
+      perfect: '{staff} 在巴拉克拉瓦完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在巴拉克拉瓦待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人陪着那些病人。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把她需要听到的话告诉了她。
+      perfect:
+        - trait: kind
+          text: 我能救今天的病人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，干净的水和一双稳的手作用这么大。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，信不信由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 氯片剩下了。限制不是物资，是营地对你的信任。先让员工帮病人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
+      ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

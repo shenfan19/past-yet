@@ -23,7 +23,8 @@ export function createWorldMap(X) {
     for (const e of all) {
       let c = clusters.find((k) => Math.hypot(k.geo.lon - e.geo.lon, k.geo.lat - e.geo.lat) < R);
       if (!c) { c = { id: 'cell:' + e.id, geo: e.geo }; clusters.push(c); }
-      if (!e.catalog) c.id = e.place;
+      // the first simulated era in the cluster, in the order of config.eras, gives the pin its name
+      if (!e.catalog && !c.era) { c.id = e.place; c.era = true; }
       e.cluster = c;
     }
     for (const e of all) e.place = e.cluster.id;

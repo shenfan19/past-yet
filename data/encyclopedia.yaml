@@ -8,11 +8,17 @@ refs:
     status: game
   nightingale1858:
     status: pending
+  finlay1881:
+    status: pending
   lm:
     status: game
+  jenner1798:
+    status: pending
   readme:
     status: game
   catalog:
+    status: pending
+  seacole1857:
     status: pending
 sections:
   places:
@@ -68,6 +74,57 @@ sections:
         era: scutari_1855
       refs:
         - nightingale1858
+        - game
+    - id: havana_district
+      era: finlay_havana_1881
+      tags:
+        - medical
+        - infection
+        - yellow-fever
+        - c19
+        - havana
+        - history
+      related:
+        - people:finlay_havana
+        - events:mosquito_idea
+      unlock:
+        era: finlay_havana_1881
+      refs:
+        - finlay1881
+        - game
+    - id: berkeley_vale
+      era: jenner_berkeley_1796
+      tags:
+        - medical
+        - infection
+        - smallpox
+        - c18
+        - england
+        - history
+      related:
+        - people:jenner_berkeley
+        - events:first_inoculation
+      unlock:
+        era: jenner_berkeley_1796
+      refs:
+        - jenner1798
+        - game
+    - id: balaklava_camp
+      era: seacole_balaklava_1855
+      tags:
+        - medical
+        - infection
+        - dysentery
+        - c19
+        - crimea
+        - history
+      related:
+        - people:seacole_balaklava
+        - events:camp_stores
+      unlock:
+        era: seacole_balaklava_1855
+      refs:
+        - seacole1857
         - game
   people:
     - id: snow
@@ -745,6 +802,48 @@ sections:
         era: scutari_1855
       refs:
         - nightingale1858
+        - game
+    - id: mosquito_idea
+      tags:
+        - infection
+        - c19
+        - havana
+        - history
+      related:
+        - people:finlay_havana
+        - places:havana_district
+      unlock:
+        era: finlay_havana_1881
+      refs:
+        - finlay1881
+        - game
+    - id: first_inoculation
+      tags:
+        - infection
+        - c18
+        - england
+        - history
+      related:
+        - people:jenner_berkeley
+        - places:berkeley_vale
+      unlock:
+        era: jenner_berkeley_1796
+      refs:
+        - jenner1798
+        - game
+    - id: camp_stores
+      tags:
+        - infection
+        - c19
+        - crimea
+        - history
+      related:
+        - people:seacole_balaklava
+        - places:balaklava_camp
+      unlock:
+        era: seacole_balaklava_1855
+      refs:
+        - seacole1857
         - game
 model_events:
   door_block:

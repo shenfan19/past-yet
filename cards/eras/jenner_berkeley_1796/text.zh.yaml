@@ -1,0 +1,110 @@
+name: 伯克利 1796
+short: 伯克利
+place_name: 格洛斯特郡伯克利
+tags:
+  - medical
+  - infection
+  - smallpox
+  - c18
+  - england
+  - history
+event_titles:
+  door_block: 被拒之门外
+  time_strain: 时间错位
+plots:
+  case_book:
+    name: 送詹纳一本印好的病例册
+    desc: 让他把每个病例按同一格式记下来，别人才能核对。
+    character: 爱德华·詹纳
+    article: people:jenner_berkeley
+  germ_theory:
+    name: 把细菌致病的理论讲给詹纳
+    desc: 需要微生物学的工艺，这个时代还没有。
+    character: 爱德华·詹纳
+    article: people:jenner_berkeley
+blurb: 乡村里的天花，一个关于挤奶女工的老说法，和一位想试一试的乡村医生。近，成本低，护理和隔离的效果很明显。
+handle_label: 第一次接种牛痘
+protagonist: 爱德华·詹纳
+protagonist_role: 听了多年牛痘能防天花的说法、却还没试过的乡村医生
+stay: 停留七天
+plan_baseline: 主时间线
+encyclopedia:
+  history:
+    - text: 十八世纪英国乡村里天花常见又可怕，得重症的人大约三成会死。
+      check: true
+    - text: 乡下人说，得过牛痘的挤奶女工不会得天花。
+      check: true
+    - text: 1796 年 5 月 14 日，爱德华·詹纳把牛痘疮里的物质接种给一个男孩，后来又试了男孩是否受到保护。
+      check: true
+    - text: 詹纳 1798 年发表了结果，此后几年这种做法传开了。
+      check: true
+  regret:
+    - 你能救今天的病人，救不了明天的。主时间线上第一次接种在 5 月 14 日。
+    - 按今天的标准，那次试验是拿一个孩子做的，现在不会被允许，游戏也不要求你重复它。
+events:
+  door_block_stubborn: 一位邻居拦在门口，说把牛的病放进人身上是违背自然。{staff} 倔强，不肯让路，被推了出去，丢了 {d.ors_stock:i} 包物资。
+  door_block_stubborn_empty: 一位邻居拦在门口，说牛的病不该放进人身上。{staff} 倔强，不肯让路，被推了出去。
+  door_block_insist_empty: 一位邻居拦在门口，说这是违背自然。{staff} 站在门口把话说完，被请了出去。
+  door_block_insist: 一位邻居拦在门口，说这是违背自然。{staff} 站在门口把话说完，被请了出去，丢了 {d.ors_stock:i} 包物资。
+  door_block_appeal: 一位邻居拦在门口。{staff} 不硬闯，转身去找詹纳，请他出面说话。
+  door_block_yield: 一位邻居拦在门口。{staff} 没有争吵，退了一步，半天白白过去。
+  time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+star_points:
+  convince: "说服詹纳"
+  trust: "赢得村子的信任"
+  reform: "让第一次接种比历史上更早"
+milestones:
+  first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
+  first_protect: '{date}：{staff} 发下第一批口罩，擦洗了几间屋子，教这家人把病人隔开。'
+  met_jenner: '{date}：{staff} 在出诊路上遇到詹纳。他听得很认真，却一再问同一件事：证据在哪里。'
+  jenner_trusts: '{date}：詹纳开始把 {staff} 当自己人，拿出他一直在记的挤奶女工的笔记来对比。'
+  jenner_convinced: '{date}：詹纳不再只是怀疑牛痘。他有了足够的说法，也信了这位陌生人告诉他的话。'
+  board_moves: '{date}：村里开始松口，说也许可以试试牛痘。'
+  reform_history: '{date}：第一次牛痘接种完成。主时间线没有变化。'
+  reform_early: '{date}：第一次牛痘接种比历史上提前 {advance_days:1} 天完成。主时间线没有变化，只是这条分支。'
+  trust_won: '{date}：村里的人不再把 {staff} 挡在外面，有的还自己来敲门。'
+  exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+  outbreak_fades: '{date}：病人数降到了个位数。'
+summary:
+  near_death: '{staff} 在村道上倒下，被召回符拉了回来。人救下了，代价不小。'
+  stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+  gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+  legend: '{staff} 在伯克利留下了传说。第一次接种比历史上提前 {advance_days:1} 天完成。'
+  perfect: '{staff} 在伯克利完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+  scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
+  modest: '{staff} 在伯克利待了七天，做了力所能及的事，平安回来。'
+quotes:
+  near_death:
+    - trait: kind
+      text: 到最后我还在想，夜里有没有人陪着那些病人。
+    - text: 我以为还能再撑一会儿。
+  stay_and_gifts:
+    - trait: kind
+      text: 我记得他们每个人的名字。我想再待一阵。
+    - text: 这里需要人。
+  gave_up:
+    - trait: homesick
+      text: 我想回家，就这样。
+    - text: 我不是干这个的料。
+  legend:
+    - text: 我只是把他需要听到的话告诉了他。
+  perfect:
+    - trait: kind
+      text: 我能救今天的病人，救不了明天的。
+    - trait: curious
+      text: 原来是这样，挤奶女工说得没错。
+    - text: 该做的做了。
+  scramble:
+    - trait: methodical
+      text: 他们迟早会明白，只是会晚一些。
+    - text: 下次我想多带点东西。
+  modest:
+    - trait: glib
+      text: 该说的我都说了，信不信由他们。
+    - text: 再多带一件东西，也许还能多救一个人。
+hints:
+  lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+  unused_protect: 口罩和清洁用品剩下了。限制不是物资，是村子对你的信任。先让员工帮病人做事，建立信任。
+  unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
+  ally_gap: 詹纳的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
+  none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
