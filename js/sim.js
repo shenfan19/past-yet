@@ -153,6 +153,8 @@ export function staffStats(D, staffId, mood = null, gear = []) {
   const a = staffAttrs(D, staffId, mood, gear);
   const out = Object.fromEntries(Object.entries(D.get('staff.derive')).map(([k, d]) => [k, Math.max(0, d.offset + (d.from ? d.scale * a[d.from] : 0))]));
   for (const t of D.get('staff.staff.' + staffId + '.traits')) for (const [k, v] of Object.entries(D.get('staff.traits.' + t).model || {})) out[k] += v;
+  // a trait can take a weakness away, but nothing falls below nothing
+  for (const k of Object.keys(out)) out[k] = Math.max(0, out[k]);
   return out;
 }
 export function staffHabit(D, staffId) {

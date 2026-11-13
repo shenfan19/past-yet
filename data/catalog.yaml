@@ -168,7 +168,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - streetwise
+                  - skeptical
               - job:
                   - musician
                   - painter
@@ -206,7 +207,8 @@ events:
           req:
             trait:
               - glib
-              - sensitive
+              - artistic
+              - cosmopolitan
         - id: p3
           kind: hold
           req:
@@ -224,7 +226,8 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - quiet
+              - handy
         - id: p2
           kind: persuade
           req:
@@ -300,7 +303,8 @@ events:
           req:
             any:
               - trait:
-                  - kind
+                  - commoner
+                  - cosmopolitan
               - job:
                   - teacher
                   - archivist
@@ -309,8 +313,9 @@ events:
           req:
             any:
               - trait:
-                  - curious
-                  - sensitive
+                  - handy
+                  - quiet
+                  - skeptical
               - stat:
                   wit: 7
         - id: p3
@@ -355,14 +360,16 @@ events:
           kind: care
           req:
             trait:
-              - kind
-              - sensitive
+              - attached
+              - cheerful
+              - patient
         - id: p2
           kind: notice
           req:
             any:
               - trait:
-                  - sensitive
+                  - quiet
+                  - skeptical
               - job:
                   - musician
                   - painter
@@ -391,7 +398,8 @@ events:
           req:
             trait:
               - curious
-              - sensitive
+              - streetwise
+              - handy
         - id: p2
           kind: endure
           req:
@@ -436,6 +444,7 @@ events:
           req:
             trait:
               - kind
+              - attached
         - id: p3
           kind: endure
           req:
@@ -568,8 +577,9 @@ events:
           kind: notice
           req:
             trait:
-              - curious
-              - sensitive
+              - artistic
+              - methodical
+              - quiet
         - id: p2
           kind: hold
           req:
@@ -724,8 +734,9 @@ events:
           kind: trust
           req:
             trait:
-              - sensitive
+              - kind
               - glib
+              - commoner
         - id: p2
           kind: persuade
           req:
@@ -753,7 +764,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - streetwise
+                  - ambitious
               - stat:
                   wit: 10
         - id: p3
@@ -832,7 +844,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - skeptical
+                  - scholarly
               - job:
                   - painter
         - id: p2
@@ -956,8 +969,9 @@ events:
           kind: trust
           req:
             trait:
+              - cosmopolitan
+              - attached
               - sensitive
-              - kind
         - id: p2
           kind: endure
           req:
@@ -966,6 +980,7 @@ events:
                   will: 6
               - trait:
                   - bold
+                  - hardy
         - id: p3
           kind: notice
           redeem: true
@@ -988,7 +1003,10 @@ events:
               - job:
                   - painter
               - trait:
-                  - curious
+                  - streetwise
+                  - wanderer
+              - trait:
+                  - vigil
         - id: p2
           kind: endure
           req:
@@ -1001,7 +1019,8 @@ events:
             any:
               - trait:
                   - kind
-                  - sensitive
+                  - patient
+                  - faithful
               - job:
                   - nurse
   - id: abel_froland
@@ -1019,6 +1038,7 @@ events:
           req:
             trait:
               - glib
+              - ambitious
         - id: p2
           kind: endure
           req:
@@ -1030,6 +1050,7 @@ events:
             any:
               - trait:
                   - stubborn
+                  - ambitious
               - job:
                   - archivist
   - id: riemann_selasca
@@ -1049,17 +1070,20 @@ events:
               - stat:
                   wit: 6
               - trait:
-                  - curious
-                  - sensitive
+                  - wanderer
+                  - scholarly
+                  - methodical
         - id: p2
           kind: trust
           req:
             any:
               - trait:
-                  - kind
+                  - artistic
+                  - commoner
                   - sensitive
               - trait:
                   - kind
+                  - charismatic
                   - sensitive
         - id: p3
           kind: hold
@@ -1070,9 +1094,13 @@ events:
                   - archivist
               - trait:
                   - stubborn
+                  - bold
               - trait:
                   - stubborn
                   - bold
+                  - vigil
+              - trait:
+                  - vigil
   - id: du_chatelet_luneville
     year: 1749
     lon: 6.49
@@ -1096,6 +1124,7 @@ events:
                   will: 6
               - trait:
                   - stubborn
+                  - hardy
         - id: p3
           kind: notice
           redeem: true
@@ -1122,6 +1151,7 @@ events:
             trait:
               - glib
               - bold
+              - scholarly
         - id: p3
           kind: trust
           redeem: true
@@ -1147,7 +1177,8 @@ events:
           req:
             trait:
               - curious
-              - sensitive
+              - skeptical
+              - wanderer
         - id: p3
           kind: hold
           redeem: true
@@ -1169,19 +1200,23 @@ events:
             any:
               - trait:
                   - glib
+                  - charismatic
               - trait:
                   - glib
-                  - bold
+                  - ambitious
+                  - streetwise
         - id: p2
           kind: trust
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - charismatic
+                  - artistic
+                  - commoner
               - trait:
-                  - kind
-                  - sensitive
+                  - cosmopolitan
+                  - charismatic
+                  - artistic
         - id: p3
           kind: care
           redeem: true
@@ -1191,10 +1226,12 @@ events:
                   - physician
                   - nurse
               - trait:
-                  - kind
+                  - calm
+                  - patient
               - trait:
-                  - kind
-                  - sensitive
+                  - calm
+                  - attached
+                  - cheerful
   - id: cantor_halle
     year: 1884
     lon: 11.97
@@ -1212,28 +1249,35 @@ events:
               - stat:
                   wit: 8
               - trait:
-                  - curious
+                  - wanderer
                   - sensitive
+                  - streetwise
         - id: p2
           kind: persuade
           req:
             any:
               - trait:
                   - glib
+                  - ambitious
               - trait:
                   - glib
-                  - bold
+                  - scholarly
+                  - streetwise
+              - trait:
+                  - streetwise
         - id: p3
           kind: care
           redeem: true
           req:
             any:
               - trait:
-                  - sensitive
-                  - kind
+                  - calm
+                  - cheerful
+                  - patient
               - trait:
                   - kind
-                  - sensitive
+                  - faithful
+                  - attached
   - id: tesla_wardenclyffe
     year: 1901
     lon: -72.9
@@ -1255,28 +1299,33 @@ events:
               - stat:
                   wit: 7
               - trait:
+                  - streetwise
                   - curious
-                  - sensitive
+                  - methodical
         - id: p2
           kind: persuade
           req:
             any:
               - trait:
                   - glib
+                  - ambitious
               - trait:
                   - glib
-                  - bold
+                  - ambitious
+                  - scholarly
         - id: p3
           kind: trust
           redeem: true
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - commoner
+                  - artistic
+                  - cosmopolitan
               - trait:
-                  - kind
-                  - sensitive
+                  - cosmopolitan
+                  - attached
+                  - commoner
   - id: mozart_requiem_vienna
     year: 1791
     lon: 16.37
@@ -1291,8 +1340,9 @@ events:
           kind: care
           req:
             trait:
-              - kind
-              - sensitive
+              - faithful
+              - cheerful
+              - calm
         - id: p2
           kind: notice
           req:
@@ -1323,32 +1373,38 @@ events:
               - job:
                   - musician
               - trait:
-                  - sensitive
+                  - handy
+                  - quiet
               - trait:
+                  - scholarly
                   - curious
-                  - sensitive
+                  - methodical
         - id: p2
           kind: trust
           req:
             any:
               - trait:
-                  - kind
+                  - artistic
+                  - charismatic
               - trait:
-                  - kind
-                  - sensitive
+                  - charismatic
+                  - commoner
+                  - artistic
         - id: p3
           kind: care
           redeem: true
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - faithful
+                  - calm
+                  - cheerful
               - job:
                   - musician
               - trait:
                   - kind
-                  - sensitive
+                  - patient
+                  - faithful
   - id: keats_rome
     year: 1821
     lon: 12.48
@@ -1364,7 +1420,8 @@ events:
           req:
             trait:
               - kind
-              - sensitive
+              - calm
+              - patient
         - id: p2
           kind: endure
           req:
@@ -1394,19 +1451,23 @@ events:
               - job:
                   - painter
               - trait:
-                  - curious
+                  - handy
+                  - skeptical
               - trait:
-                  - curious
-                  - sensitive
+                  - scholarly
+                  - skeptical
+                  - quiet
         - id: p2
           kind: trust
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - charismatic
+                  - commoner
+                  - artistic
               - trait:
-                  - kind
+                  - attached
+                  - charismatic
                   - sensitive
         - id: p3
           kind: hold
@@ -1418,9 +1479,11 @@ events:
                   - accountant
               - trait:
                   - stubborn
+                  - bold
               - trait:
                   - stubborn
-                  - bold
+                  - ambitious
+                  - vigil
   - id: rembrandt_amsterdam
     year: 1669
     lon: 4.89
@@ -1443,8 +1506,9 @@ events:
           kind: care
           req:
             trait:
-              - kind
               - sensitive
+              - cheerful
+              - calm
         - id: p3
           kind: hold
           redeem: true
@@ -1452,6 +1516,8 @@ events:
             trait:
               - stubborn
               - bold
+              - vigil
+              - handy
   - id: gaudi_barcelona
     year: 1926
     lon: 2.17
@@ -1472,8 +1538,11 @@ events:
               - stat:
                   wit: 7
               - trait:
-                  - curious
-                  - sensitive
+                  - handy
+                  - wanderer
+                  - methodical
+              - trait:
+                  - scholarly
         - id: p2
           kind: persuade
           req:
@@ -1481,20 +1550,24 @@ events:
               - trait:
                   - glib
                   - bold
+                  - ambitious
               - trait:
                   - glib
                   - bold
+                  - scholarly
         - id: p3
           kind: care
           redeem: true
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - patient
+                  - faithful
+                  - calm
               - trait:
-                  - kind
-                  - sensitive
+                  - cheerful
+                  - patient
+                  - calm
   - id: kafka_kierling
     year: 1924
     lon: 16.32
@@ -1513,13 +1586,15 @@ events:
                   - translator
                   - archivist
               - trait:
-                  - curious
+                  - skeptical
+                  - sensitive
         - id: p2
           kind: care
           req:
             trait:
-              - kind
               - sensitive
+              - attached
+              - faithful
         - id: p3
           kind: hold
           redeem: true
@@ -1539,8 +1614,9 @@ events:
           kind: trust
           req:
             trait:
-              - sensitive
+              - charismatic
               - kind
+              - commoner
         - id: p2
           kind: notice
           req:
@@ -1553,7 +1629,8 @@ events:
               - job:
                   - archivist
               - trait:
-                  - curious
+                  - ambitious
+                  - vigil
   - id: poe_baltimore
     year: 1849
     lon: -76.61
@@ -1568,13 +1645,15 @@ events:
           kind: notice
           req:
             trait:
-              - curious
-              - sensitive
+              - handy
+              - methodical
+              - skeptical
         - id: p2
           kind: persuade
           req:
             trait:
               - glib
+              - ambitious
         - id: p3
           kind: care
           redeem: true
@@ -1594,7 +1673,8 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - quiet
+              - handy
         - id: p2
           kind: endure
           req:
@@ -1622,7 +1702,10 @@ events:
               - job:
                   - geologist
               - trait:
-                  - curious
+                  - methodical
+                  - quiet
+              - trait:
+                  - artistic
         - id: p2
           kind: endure
           req:
@@ -1633,8 +1716,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
-              - sensitive
+              - attached
+              - charismatic
+              - commoner
   - id: hertz_bonn
     year: 1894
     lon: 7.1
@@ -1659,8 +1743,9 @@ events:
           kind: care
           req:
             trait:
-              - kind
+              - faithful
               - sensitive
+              - calm
         - id: p3
           kind: hold
           redeem: true
@@ -1682,9 +1767,11 @@ events:
             any:
               - trait:
                   - glib
+                  - charismatic
               - trait:
                   - glib
-                  - bold
+                  - scholarly
+                  - ambitious
         - id: p2
           kind: hold
           req:
@@ -1692,9 +1779,11 @@ events:
               - trait:
                   - stubborn
                   - bold
+                  - ambitious
               - trait:
                   - stubborn
                   - bold
+                  - vigil
         - id: p3
           kind: trust
           redeem: true
@@ -1702,10 +1791,14 @@ events:
             any:
               - trait:
                   - kind
-                  - sensitive
+                  - charismatic
+                  - artistic
               - trait:
-                  - kind
-                  - sensitive
+                  - commoner
+                  - artistic
+                  - cosmopolitan
+              - trait:
+                  - attached
   - id: pushkin_st_petersburg
     year: 1837
     lon: 30.32
@@ -1721,7 +1814,8 @@ events:
           req:
             trait:
               - kind
-              - sensitive
+              - charismatic
+              - commoner
         - id: p2
           kind: endure
           req:
@@ -1729,7 +1823,8 @@ events:
               - stat:
                   will: 6
               - trait:
-                  - bold
+                  - calm
+                  - hardy
         - id: p3
           kind: care
           redeem: true
@@ -1740,7 +1835,8 @@ events:
                   - physician
                   - nurse
               - trait:
-                  - kind
+                  - calm
+                  - cheerful
   - id: chekhov_badenweiler
     year: 1904
     lon: 8.21
@@ -1755,7 +1851,8 @@ events:
           kind: trust
           req:
             trait:
-              - kind
+              - attached
+              - artistic
               - sensitive
         - id: p2
           kind: notice
@@ -1766,6 +1863,7 @@ events:
                   - nurse
               - trait:
                   - curious
+                  - wanderer
         - id: p3
           kind: care
           redeem: true
@@ -1789,18 +1887,22 @@ events:
                   - musician
               - stat:
                   wit: 7
+              - trait:
+                  - methodical
         - id: p2
           kind: care
           req:
             trait:
               - kind
-              - sensitive
+              - calm
+              - faithful
         - id: p3
           kind: hold
           redeem: true
           req:
             trait:
               - stubborn
+              - methodical
   - id: schumann_endenich
     year: 1856
     lon: 7.07
@@ -1815,8 +1917,9 @@ events:
           kind: trust
           req:
             trait:
-              - kind
-              - sensitive
+              - artistic
+              - cosmopolitan
+              - commoner
         - id: p2
           kind: notice
           req:
@@ -1824,7 +1927,8 @@ events:
               - job:
                   - musician
               - trait:
-                  - sensitive
+                  - quiet
+                  - wanderer
         - id: p3
           kind: trust
           redeem: true
@@ -1845,20 +1949,24 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - skeptical
+                  - wanderer
                   - curious
               - trait:
+                  - skeptical
                   - curious
-                  - sensitive
+                  - wanderer
         - id: p2
           kind: care
           req:
             any:
               - trait:
-                  - kind
+                  - faithful
+                  - patient
               - trait:
-                  - kind
-                  - sensitive
+                  - calm
+                  - attached
+                  - faithful
         - id: p3
           kind: persuade
           redeem: true
@@ -1889,8 +1997,9 @@ events:
           req:
             any:
               - trait:
-                  - kind
+                  - faithful
                   - sensitive
+                  - cheerful
               - job:
                   - nurse
   - id: bizet_paris
@@ -1910,10 +2019,12 @@ events:
               - job:
                   - musician
               - trait:
-                  - sensitive
+                  - wanderer
+                  - quiet
               - trait:
-                  - curious
-                  - sensitive
+                  - methodical
+                  - handy
+                  - streetwise
         - id: p2
           kind: endure
           req:
@@ -1923,6 +2034,7 @@ events:
               - trait:
                   - bold
                   - stubborn
+                  - hardy
         - id: p3
           kind: trust
           redeem: true
@@ -1945,30 +2057,38 @@ events:
               - job:
                   - painter
               - trait:
-                  - curious
+                  - wanderer
+                  - skeptical
               - trait:
-                  - curious
-                  - sensitive
+                  - skeptical
+                  - scholarly
+                  - streetwise
         - id: p2
           kind: persuade
           req:
             any:
               - trait:
                   - glib
+                  - streetwise
               - trait:
                   - glib
-                  - bold
+                  - scholarly
+                  - ambitious
+              - trait:
+                  - streetwise
         - id: p3
           kind: care
           redeem: true
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - cheerful
+                  - patient
+                  - attached
               - trait:
+                  - cheerful
+                  - faithful
                   - kind
-                  - sensitive
   - id: boole_ballintemple
     year: 1864
     lon: -8.45
@@ -1984,11 +2104,13 @@ events:
           req:
             trait:
               - glib
+              - ambitious
         - id: p2
           kind: endure
           req:
             trait:
-              - bold
+              - hardy
+              - wanderer
         - id: p3
           kind: care
           redeem: true
@@ -2020,11 +2142,14 @@ events:
           req:
             any:
               - trait:
-                  - kind
-                  - sensitive
+                  - handy
+                  - ambitious
+                  - vigil
               - job:
                   - translator
                   - journalist
+              - trait:
+                  - hardy
   - id: hooke_london
     year: 1703
     lon: -0.09
@@ -2046,28 +2171,35 @@ events:
                   - retired_engineer
                   - geologist
               - trait:
-                  - curious
-                  - sensitive
+                  - methodical
+                  - quiet
+                  - skeptical
         - id: p2
           kind: persuade
           req:
             any:
               - trait:
                   - glib
+                  - cosmopolitan
               - trait:
                   - glib
                   - bold
+                  - ambitious
+              - trait:
+                  - ambitious
         - id: p3
           kind: trust
           redeem: true
           req:
             any:
               - trait:
-                  - kind
                   - sensitive
+                  - artistic
+                  - cosmopolitan
               - trait:
-                  - kind
-                  - sensitive
+                  - commoner
+                  - artistic
+                  - cosmopolitan
   - id: leavitt_cambridge_ma
     year: 1912
     lon: -71.12
@@ -2091,13 +2223,15 @@ events:
                   will: 6
               - trait:
                   - stubborn
+                  - hardy
         - id: p3
           kind: trust
           redeem: true
           req:
             trait:
               - kind
-              - sensitive
+              - commoner
+              - cosmopolitan
   - id: bessie_coleman_jacksonville
     year: 1926
     lon: -81.66
@@ -2123,7 +2257,8 @@ events:
           req:
             trait:
               - bold
-              - kind
+              - artistic
+              - charismatic
         - id: p3
           kind: hold
           redeem: true
@@ -2135,6 +2270,7 @@ events:
                   - mechanic
               - trait:
                   - stubborn
+                  - bold
   - id: scott_last_camp
     year: 1912
     lon: 169
@@ -2150,12 +2286,15 @@ events:
           req:
             trait:
               - bold
+              - cheerful
+              - hardy
         - id: p2
           kind: care
           req:
             trait:
-              - kind
-              - sensitive
+              - patient
+              - attached
+              - cheerful
         - id: p3
           kind: hold
           redeem: true
@@ -2180,8 +2319,9 @@ events:
           kind: trust
           req:
             trait:
-              - bold
-              - kind
+              - commoner
+              - cosmopolitan
+              - charismatic
         - id: p3
           kind: endure
           redeem: true
@@ -2204,13 +2344,15 @@ events:
               - job:
                   - musician
               - trait:
-                  - sensitive
+                  - streetwise
+                  - methodical
         - id: p2
           kind: trust
           req:
             trait:
-              - kind
-              - sensitive
+              - commoner
+              - attached
+              - charismatic
         - id: p3
           kind: hold
           redeem: true
@@ -2241,7 +2383,8 @@ events:
           req:
             trait:
               - glib
-              - bold
+              - streetwise
+              - ambitious
         - id: p3
           kind: trust
           redeem: true
@@ -2270,6 +2413,7 @@ events:
           req:
             trait:
               - glib
+              - ambitious
         - id: p3
           kind: hold
           redeem: true
@@ -2277,6 +2421,8 @@ events:
             trait:
               - stubborn
               - bold
+              - vigil
+              - handy
   - id: buchner_zurich
     year: 1837
     lon: 8.55
@@ -2294,20 +2440,26 @@ events:
               - stat:
                   wit: 6
               - trait:
-                  - curious
-                  - sensitive
+                  - methodical
+                  - scholarly
+                  - streetwise
               - trait:
                   - curious
-                  - sensitive
+                  - skeptical
+                  - handy
         - id: p2
           kind: care
           req:
             any:
               - trait:
-                  - kind
+                  - cheerful
+                  - calm
               - trait:
-                  - kind
-                  - sensitive
+                  - calm
+                  - attached
+                  - cheerful
+              - trait:
+                  - cheerful
         - id: p3
           kind: hold
           redeem: true
@@ -2317,9 +2469,11 @@ events:
                   - archivist
               - trait:
                   - stubborn
+                  - vigil
               - trait:
                   - stubborn
                   - bold
+                  - handy
   - id: emily_bronte_haworth
     year: 1848
     lon: -1.95
@@ -2335,20 +2489,24 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
-                  - kind
+                  - cosmopolitan
+                  - artistic
+                  - commoner
               - trait:
-                  - kind
-                  - sensitive
+                  - attached
+                  - charismatic
+                  - cosmopolitan
         - id: p2
           kind: persuade
           req:
             any:
               - trait:
                   - glib
+                  - charismatic
               - trait:
                   - glib
                   - bold
+                  - ambitious
         - id: p3
           kind: care
           redeem: true
@@ -2359,9 +2517,11 @@ events:
                   - physician
               - trait:
                   - kind
+                  - cheerful
               - trait:
-                  - kind
-                  - sensitive
+                  - cheerful
+                  - faithful
+                  - patient
   - id: lili_boulanger_paris
     year: 1918
     lon: 1.8
@@ -2391,7 +2551,8 @@ events:
           req:
             trait:
               - kind
-              - sensitive
+              - cosmopolitan
+              - attached
   - id: qu_yuan_miluo
     year: -278
     lon: 113
@@ -2407,8 +2568,9 @@ events:
           req:
             any:
               - trait:
-                  - curious
-                  - sensitive
+                  - quiet
+                  - scholarly
+                  - methodical
               - stat:
                   wit: 6
         - id: p2
@@ -2440,8 +2602,9 @@ events:
           kind: care
           req:
             trait:
-              - kind
-              - sensitive
+              - attached
+              - cheerful
+              - patient
         - id: p2
           kind: notice
           req:
@@ -2458,6 +2621,7 @@ events:
             any:
               - trait:
                   - stubborn
+                  - vigil
                   - bold
               - stat:
                   will: 6
@@ -2475,14 +2639,16 @@ events:
           kind: care
           req:
             trait:
-              - kind
-              - sensitive
+              - attached
+              - faithful
+              - patient
         - id: p2
           kind: notice
           req:
             any:
               - trait:
-                  - curious
+                  - quiet
+                  - wanderer
               - job:
                   - teacher
                   - journalist
@@ -2505,8 +2671,9 @@ events:
           kind: notice
           req:
             trait:
-              - sensitive
-              - curious
+              - quiet
+              - methodical
+              - skeptical
         - id: p2
           kind: trust
           req:
@@ -2538,8 +2705,9 @@ events:
               - job:
                   - chef
               - trait:
-                  - kind
-                  - sensitive
+                  - faithful
+                  - patient
+                  - attached
         - id: p2
           kind: endure
           req:
@@ -2551,7 +2719,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - handy
+                  - quiet
               - job:
                   - painter
                   - musician
@@ -2575,13 +2744,15 @@ events:
           req:
             trait:
               - kind
-              - sensitive
+              - patient
+              - calm
         - id: p3
           kind: trust
           redeem: true
           req:
             trait:
               - kind
+              - cosmopolitan
               - sensitive
   - id: tang_xianzu_linchuan
     year: 1598
@@ -2598,7 +2769,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - streetwise
+                  - wanderer
               - job:
                   - musician
         - id: p2
@@ -2607,6 +2779,7 @@ events:
             any:
               - trait:
                   - stubborn
+                  - vigil
               - job:
                   - musician
         - id: p3
@@ -2638,6 +2811,7 @@ events:
             any:
               - trait:
                   - glib
+                  - ambitious
               - job:
                   - teacher
         - id: p3
@@ -2649,6 +2823,7 @@ events:
                   - teacher
               - trait:
                   - stubborn
+                  - vigil
   - id: xu_xiake_lijiang
     year: 1639
     lon: 100.23
@@ -2665,13 +2840,15 @@ events:
             any:
               - trait:
                   - bold
+                  - hardy
               - stat:
                   constitution: 6
         - id: p2
           kind: notice
           req:
             trait:
-              - curious
+              - wanderer
+              - quiet
         - id: p3
           kind: hold
           redeem: true
@@ -2708,6 +2885,7 @@ events:
                   - archivist
               - trait:
                   - stubborn
+                  - vigil
   - id: wang_zhenyi_jinling
     year: 1790
     lon: 118.78
@@ -2722,8 +2900,9 @@ events:
           kind: trust
           req:
             trait:
-              - kind
-              - sensitive
+              - cosmopolitan
+              - artistic
+              - charismatic
         - id: p2
           kind: notice
           req:
@@ -2754,7 +2933,8 @@ events:
           req:
             trait:
               - stubborn
-              - bold
+              - vigil
+              - methodical
         - id: p2
           kind: notice
           req:
@@ -2768,7 +2948,8 @@ events:
           req:
             trait:
               - kind
-              - sensitive
+              - commoner
+              - charismatic
   - id: hua_tuo_xuchang
     year: 208
     lon: 113.85
@@ -2788,13 +2969,15 @@ events:
                   - nurse
                   - midwife
               - trait:
+                  - scholarly
                   - curious
         - id: p2
           kind: care
           req:
             any:
               - trait:
-                  - kind
+                  - faithful
+                  - patient
               - job:
                   - nurse
                   - midwife
@@ -2828,6 +3011,7 @@ events:
                   - mechanic
               - trait:
                   - sensitive
+                  - vigil
         - id: p2
           kind: notice
           req:
@@ -2840,6 +3024,7 @@ events:
             trait:
               - kind
               - sensitive
+              - artistic
   - id: miyazawa_kenji_hanamaki
     year: 1933
     lon: 141.12
@@ -2854,8 +3039,9 @@ events:
           kind: notice
           req:
             trait:
-              - curious
-              - sensitive
+              - streetwise
+              - handy
+              - scholarly
         - id: p2
           kind: endure
           req:
@@ -2881,12 +3067,14 @@ events:
           req:
             trait:
               - glib
+              - scholarly
         - id: p2
           kind: notice
           req:
             any:
               - trait:
-                  - curious
+                  - scholarly
+                  - quiet
                   - sensitive
               - job:
                   - journalist
@@ -2895,8 +3083,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
+              - patient
               - sensitive
+              - faithful
   - id: sei_shonagon_kyoto
     year: 1000
     lon: 135.76
@@ -2911,7 +3100,8 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - scholarly
+              - streetwise
         - id: p2
           kind: trust
           req:
@@ -2921,8 +3111,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
-              - sensitive
+              - patient
+              - cheerful
+              - calm
   - id: kabir_maghar
     year: 1518
     lon: 83.07
@@ -2937,7 +3128,8 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - wanderer
+              - methodical
         - id: p2
           kind: trust
           req:
@@ -2950,7 +3142,8 @@ events:
               - job:
                   - musician
               - trait:
-                  - sensitive
+                  - vigil
+                  - methodical
   - id: ibn_rushd_lucena
     year: 1195
     lon: -4.48
@@ -2965,7 +3158,8 @@ events:
           kind: trust
           req:
             trait:
-              - kind
+              - commoner
+              - cosmopolitan
         - id: p2
           kind: notice
           req:
@@ -2991,7 +3185,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - wanderer
+                  - artistic
               - job:
                   - musician
         - id: p2
@@ -3006,8 +3201,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
+              - patient
               - sensitive
+              - calm
   - id: ibn_al_nafis_cairo
     year: 1242
     lon: 31.24
@@ -3039,6 +3235,7 @@ events:
             any:
               - trait:
                   - kind
+                  - cosmopolitan
               - job:
                   - student
                   - teacher
@@ -3066,6 +3263,7 @@ events:
             any:
               - trait:
                   - glib
+                  - streetwise
               - job:
                   - teacher
         - id: p3
@@ -3074,7 +3272,8 @@ events:
           req:
             any:
               - trait:
-                  - curious
+                  - skeptical
+                  - handy
               - job:
                   - journalist
   - id: ibn_khaldun_cairo
@@ -3091,13 +3290,16 @@ events:
           kind: trust
           req:
             trait:
-              - kind
-              - sensitive
+              - cosmopolitan
+              - artistic
+              - commoner
         - id: p2
           kind: notice
           req:
             trait:
               - curious
+              - streetwise
+              - sensitive
         - id: p3
           kind: hold
           redeem: true
@@ -3136,7 +3338,8 @@ events:
           redeem: true
           req:
             trait:
-              - kind
+              - cosmopolitan
+              - charismatic
   - id: ahmed_baba_timbuktu
     year: 1594
     lon: -3
@@ -3152,6 +3355,7 @@ events:
           req:
             trait:
               - curious
+              - wanderer
         - id: p2
           kind: hold
           req:
@@ -3180,6 +3384,8 @@ events:
           req:
             trait:
               - glib
+              - ambitious
+              - scholarly
         - id: p2
           kind: notice
           req:
@@ -3192,6 +3398,7 @@ events:
             any:
               - trait:
                   - stubborn
+                  - vigil
               - stat:
                   will: 7
   - id: mohenjo_daro_indus
@@ -3209,6 +3416,7 @@ events:
           req:
             trait:
               - curious
+              - skeptical
         - id: p2
           kind: hold
           req:
@@ -3240,7 +3448,8 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - quiet
+              - handy
         - id: p3
           kind: trust
           redeem: true
@@ -3259,23 +3468,28 @@ events:
         - id: p1
           kind: hold
           req:
-            job:
-              - mechanic
-              - carpenter
-              - builder
+            any:
+              - job:
+                  - mechanic
+                  - carpenter
+                  - builder
+              - trait:
+                  - faithful
         - id: p2
           kind: notice
           req:
             trait:
               - curious
-              - sensitive
+              - wanderer
+              - skeptical
         - id: p3
           kind: care
           redeem: true
           req:
             trait:
-              - kind
-              - sensitive
+              - patient
+              - cheerful
+              - faithful
   - id: sappho_lesbos
     year: -600
     lon: 26.56
@@ -3291,15 +3505,17 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - methodical
+                  - handy
               - job:
                   - musician
         - id: p2
           kind: care
           req:
             trait:
-              - kind
-              - sensitive
+              - faithful
+              - calm
+              - cheerful
         - id: p3
           kind: trust
           redeem: true
@@ -3325,6 +3541,7 @@ events:
           req:
             trait:
               - stubborn
+              - vigil
         - id: p3
           kind: persuade
           redeem: true
@@ -3345,6 +3562,7 @@ events:
           req:
             trait:
               - curious
+              - quiet
         - id: p2
           kind: hold
           req:
@@ -3383,8 +3601,9 @@ events:
           redeem: true
           req:
             trait:
-              - curious
-              - sensitive
+              - scholarly
+              - methodical
+              - handy
   - id: pliny_stabiae
     year: 79
     lon: 14.48
@@ -3399,13 +3618,15 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - wanderer
+              - streetwise
         - id: p2
           kind: endure
           req:
             any:
               - trait:
                   - bold
+                  - hardy
               - stat:
                   constitution: 6
         - id: p3
@@ -3443,7 +3664,8 @@ events:
           req:
             trait:
               - kind
-              - sensitive
+              - charismatic
+              - cosmopolitan
   - id: ovid_tomis
     year: 9
     lon: 28.65
@@ -3458,14 +3680,16 @@ events:
           kind: care
           req:
             trait:
-              - kind
               - sensitive
+              - attached
+              - patient
         - id: p2
           kind: notice
           req:
             trait:
-              - curious
-              - sensitive
+              - scholarly
+              - skeptical
+              - handy
         - id: p3
           kind: persuade
           redeem: true
@@ -3486,6 +3710,7 @@ events:
           req:
             trait:
               - curious
+              - wanderer
         - id: p2
           kind: persuade
           req:
@@ -3495,8 +3720,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
+              - charismatic
               - sensitive
+              - commoner
   - id: democritus_abdera
     year: -400
     lon: 24.97
@@ -3512,6 +3738,7 @@ events:
           req:
             trait:
               - curious
+              - quiet
         - id: p2
           kind: trust
           req:
@@ -3541,7 +3768,8 @@ events:
               - job:
                   - musician
               - trait:
-                  - sensitive
+                  - quiet
+                  - methodical
         - id: p2
           kind: trust
           req:
@@ -3551,8 +3779,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
-              - sensitive
+              - faithful
+              - calm
+              - attached
   - id: nezahualcoyotl_texcoco
     year: 1472
     lon: -98.88
@@ -3567,8 +3796,9 @@ events:
           kind: notice
           req:
             trait:
-              - sensitive
+              - methodical
               - curious
+              - skeptical
         - id: p2
           kind: hold
           req:
@@ -3578,7 +3808,8 @@ events:
                   - carpenter
                   - mechanic
               - trait:
-                  - curious
+                  - quiet
+                  - vigil
         - id: p3
           kind: hold
           redeem: true
@@ -3589,6 +3820,7 @@ events:
                   - student
               - trait:
                   - stubborn
+                  - vigil
   - id: maya_codices_mani
     year: 1562
     lon: -89.39
@@ -3603,6 +3835,7 @@ events:
           kind: notice
           req:
             trait:
+              - wanderer
               - curious
         - id: p2
           kind: endure
@@ -3610,6 +3843,7 @@ events:
             any:
               - trait:
                   - bold
+                  - hardy
               - stat:
                   will: 6
         - id: p3
@@ -3631,13 +3865,15 @@ events:
           kind: notice
           req:
             trait:
-              - curious
+              - handy
+              - skeptical
         - id: p2
           kind: care
           req:
             trait:
               - kind
-              - sensitive
+              - patient
+              - attached
         - id: p3
           kind: trust
           redeem: true
@@ -3664,13 +3900,16 @@ events:
           req:
             trait:
               - curious
+              - skeptical
+              - scholarly
         - id: p3
           kind: trust
           redeem: true
           req:
             any:
               - trait:
-                  - kind
+                  - sensitive
+                  - commoner
               - job:
                   - archivist
   - id: nalanda_library
@@ -3688,6 +3927,7 @@ events:
           req:
             trait:
               - curious
+              - quiet
         - id: p2
           kind: hold
           req:
@@ -3714,6 +3954,7 @@ events:
           kind: notice
           req:
             trait:
+              - wanderer
               - curious
         - id: p2
           kind: hold
@@ -3746,7 +3987,9 @@ events:
           kind: notice
           req:
             trait:
+              - streetwise
               - curious
+              - vigil
         - id: p3
           kind: trust
           redeem: true
@@ -3757,7 +4000,8 @@ events:
                   - fisher
               - trait:
                   - kind
-                  - sensitive
+                  - cosmopolitan
+                  - artistic
   - id: heo_nanseolheon_hanyang
     year: 1589
     lon: 126.98
@@ -3772,13 +4016,15 @@ events:
           kind: notice
           req:
             trait:
-              - sensitive
+              - artistic
+              - curious
         - id: p2
           kind: care
           req:
             trait:
-              - kind
+              - calm
               - sensitive
+              - cheerful
         - id: p3
           kind: hold
           redeem: true
@@ -3805,7 +4051,8 @@ events:
           req:
             any:
               - trait:
-                  - sensitive
+                  - methodical
+                  - handy
               - job:
                   - musician
         - id: p3
@@ -3813,8 +4060,9 @@ events:
           redeem: true
           req:
             trait:
-              - kind
               - sensitive
+              - cheerful
+              - calm
   - id: savitribai_phule_pune
     year: 1848
     lon: 73.86
@@ -3831,6 +4079,7 @@ events:
             any:
               - trait:
                   - bold
+                  - hardy
               - stat:
                   will: 6
         - id: p2
@@ -3838,6 +4087,7 @@ events:
           req:
             trait:
               - glib
+              - charismatic
         - id: p3
           kind: care
           redeem: true
@@ -3846,7 +4096,8 @@ events:
               - job:
                   - teacher
               - trait:
-                  - kind
+                  - faithful
+                  - patient
   - id: zhu_shijie_yangzhou
     year: 1303
     lon: 119.42
@@ -3874,6 +4125,7 @@ events:
             any:
               - trait:
                   - stubborn
+                  - vigil
               - job:
                   - teacher
                   - student

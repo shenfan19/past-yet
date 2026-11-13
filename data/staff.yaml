@@ -135,6 +135,233 @@ traits:
     secretary:
       energy_mult: 0.05
     prefer: energy
+  patient:
+    points:
+      hold: 0.3
+      care: 0.15
+      notice: -0.2
+    policy:
+      focus: cure
+    priority: 1
+    secretary:
+      rest_cut: 0.2
+    prefer: lives
+  methodical:
+    points:
+      notice: 0.2
+      hold: 0.25
+      endure: -0.2
+    policy:
+      focus: prevent
+    priority: 1
+    secretary:
+      energy_mult: 0.05
+    prefer: safety
+  hardy:
+    points:
+      endure: 0.35
+      hold: 0.1
+      notice: -0.2
+    model:
+      infect: -0.2
+    policy:
+      on_block: insist
+    priority: 1
+    secretary:
+      rest_cut: 0.3
+    prefer: energy
+  charismatic:
+    points:
+      persuade: 0.2
+      trust: 0.2
+      hold: -0.2
+    policy:
+      focus: ally
+      on_block: appeal
+    priority: 2
+    secretary:
+      sale_mult: 0.05
+    prefer: energy
+  quiet:
+    points:
+      notice: 0.2
+      hold: 0.2
+      persuade: -0.25
+    policy:
+      focus: prevent
+    priority: 1
+    secretary:
+      favor_gain: 0.1
+    prefer: safety
+  wanderer:
+    points:
+      endure: 0.25
+      notice: 0.1
+      trust: -0.2
+    model:
+      homesick_trait: -0.25
+    policy:
+      on_block: appeal
+    priority: 1
+    secretary:
+      energy_mult: 0.1
+    prefer: energy
+  attached:
+    points:
+      trust: 0.2
+      care: 0.2
+      hold: 0.1
+      endure: -0.15
+    model:
+      homesick_trait: 0.3
+    policy:
+      focus: ally
+    priority: 1
+    secretary:
+      favor_gain: 0.15
+    prefer: lives
+  streetwise:
+    points:
+      persuade: 0.2
+      notice: 0.15
+      endure: 0.1
+      hold: -0.25
+    policy:
+      on_block: appeal
+    priority: 1
+    secretary:
+      sale_mult: 0.08
+    prefer: antiques
+  scholarly:
+    points:
+      notice: 0.2
+      persuade: 0.2
+      endure: -0.2
+    model:
+      infect: 0.3
+    policy:
+      focus: cure
+    priority: 1
+    secretary:
+      energy_mult: 0.1
+    prefer: energy
+  handy:
+    points:
+      hold: 0.3
+      notice: 0.1
+      persuade: -0.2
+    policy:
+      focus: prevent
+    priority: 1
+    secretary:
+      sale_mult: 0.05
+    prefer: safety
+  artistic:
+    points:
+      notice: 0.25
+      trust: 0.15
+      hold: -0.2
+    model:
+      homesick_trait: 0.1
+    policy:
+      focus: ally
+    priority: 1
+    secretary:
+      favor_gain: 0.1
+    prefer: antiques
+  calm:
+    points:
+      care: 0.25
+      endure: 0.2
+      notice: -0.2
+    policy:
+      focus: cure
+      on_block: insist
+    priority: 1
+    secretary:
+      rest_cut: 0.2
+    prefer: lives
+  cosmopolitan:
+    points:
+      trust: 0.25
+      persuade: 0.1
+      hold: -0.2
+    policy:
+      on_block: appeal
+    priority: 1
+    secretary:
+      sale_mult: 0.1
+    prefer: antiques
+  cheerful:
+    points:
+      care: 0.15
+      endure: 0.15
+      hold: 0.15
+      notice: -0.2
+    model:
+      homesick_trait: -0.15
+    priority: 1
+    secretary:
+      favor_gain: 0.2
+    prefer: lives
+  vigil:
+    points:
+      hold: 0.3
+      notice: 0.1
+      endure: -0.2
+    policy:
+      focus: prevent
+    priority: 1
+    secretary:
+      energy_mult: 0.05
+    prefer: safety
+  faithful:
+    points:
+      hold: 0.25
+      care: 0.15
+      notice: -0.2
+    model:
+      homesick_trait: -0.1
+    policy:
+      focus: cure
+    priority: 1
+    secretary:
+      favor_gain: 0.1
+    prefer: lives
+  commoner:
+    points:
+      endure: 0.2
+      trust: 0.15
+      persuade: -0.25
+    policy:
+      on_block: insist
+    priority: 1
+    secretary:
+      energy_mult: 0.05
+    prefer: energy
+  skeptical:
+    points:
+      notice: 0.25
+      persuade: 0.1
+      trust: -0.25
+    policy:
+      focus: prevent
+      on_block: insist
+    priority: 1
+    secretary:
+      rest_cut: 0.1
+    prefer: safety
+  ambitious:
+    points:
+      hold: 0.2
+      persuade: 0.2
+      care: -0.25
+    policy:
+      on_block: insist
+    priority: 1
+    secretary:
+      energy_mult: 0.1
+    prefer: energy
 staff:
   s_ning:
     gender: f
@@ -148,7 +375,7 @@ staff:
       will: 5
       luck: 4
     traits:
-      - kind
+      - patient
       - stubborn
     jobs:
       - nurse
@@ -166,8 +393,8 @@ staff:
       will: 6
       luck: 3
     traits:
-      - bold
-      - glib
+      - hardy
+      - commoner
     jobs:
       - builder
       - scaffolder
@@ -184,7 +411,8 @@ staff:
       will: 3
       luck: 9
     traits:
-      - glib
+      - skeptical
+      - streetwise
     jobs:
       - antique_dealer
       - restorer
@@ -202,6 +430,7 @@ staff:
       luck: 9
     traits:
       - kind
+      - calm
     jobs:
       - midwife
       - nurse
@@ -218,7 +447,8 @@ staff:
       will: 5
       luck: 4
     traits:
-      - curious
+      - vigil
+      - methodical
     jobs:
       - programmer
       - sysadmin
@@ -235,7 +465,8 @@ staff:
       will: 8
       luck: 2
     traits:
-      - glib
+      - patient
+      - scholarly
     jobs:
       - teacher
       - tutor
@@ -253,7 +484,7 @@ staff:
       will: 5
       luck: 5
     traits:
-      - bold
+      - wanderer
       - glib
     jobs:
       - driver
@@ -271,8 +502,8 @@ staff:
       will: 2
       luck: 2
     traits:
+      - artistic
       - sensitive
-      - curious
     jobs:
       - painter
       - illustrator
@@ -290,7 +521,7 @@ staff:
       will: 9
       luck: 1
     traits:
-      - bold
+      - handy
       - stubborn
     jobs:
       - carpenter
@@ -309,7 +540,7 @@ staff:
       will: 5
       luck: 4
     traits:
-      - curious
+      - methodical
       - kind
     jobs:
       - pharmacist
@@ -327,8 +558,8 @@ staff:
       will: 1
       luck: 7
     traits:
-      - glib
-      - sensitive
+      - artistic
+      - attached
     jobs:
       - musician
       - dishwasher
@@ -345,8 +576,8 @@ staff:
       will: 9
       luck: 3
     traits:
+      - skeptical
       - stubborn
-      - glib
     jobs:
       - physician
       - lecturer
@@ -364,7 +595,7 @@ staff:
       luck: 10
     traits:
       - curious
-      - glib
+      - ambitious
     jobs:
       - journalist
       - radio_host
@@ -381,8 +612,8 @@ staff:
       will: 6
       luck: 2
     traits:
-      - bold
       - kind
+      - hardy
     jobs:
       - chef
       - stall_keeper
@@ -400,7 +631,7 @@ staff:
       luck: 3
     traits:
       - bold
-      - stubborn
+      - charismatic
     jobs:
       - sailor
       - net_mender
@@ -417,8 +648,8 @@ staff:
       will: 9
       luck: 2
     traits:
-      - curious
-      - glib
+      - scholarly
+      - methodical
     jobs:
       - archivist
       - translator
@@ -435,8 +666,8 @@ staff:
       will: 2
       luck: 2
     traits:
+      - handy
       - curious
-      - sensitive
     jobs:
       - mechanic
       - farmhand
@@ -454,6 +685,7 @@ staff:
       luck: 3
     traits:
       - curious
+      - quiet
     jobs:
       - data_analyst
       - tutor
@@ -470,7 +702,8 @@ staff:
       will: 10
       luck: 8
     traits:
-      - bold
+      - patient
+      - charismatic
     jobs:
       - fisher
       - ferryman
@@ -487,8 +720,8 @@ staff:
       will: 5
       luck: 4
     traits:
-      - stubborn
-      - kind
+      - methodical
+      - skeptical
     jobs:
       - accountant
       - tax_preparer
@@ -505,8 +738,8 @@ staff:
       will: 9
       luck: 2
     traits:
+      - hardy
       - stubborn
-      - bold
     jobs:
       - farmer
       - dairy_farmer
@@ -523,8 +756,8 @@ staff:
       will: 7
       luck: 3
     traits:
+      - handy
       - glib
-      - curious
     jobs:
       - tailor
       - sewing_teacher
@@ -542,7 +775,7 @@ staff:
       luck: 4
     traits:
       - curious
-      - bold
+      - streetwise
     jobs:
       - student
       - hardware_shop_assistant
@@ -559,8 +792,8 @@ staff:
       will: 4
       luck: 3
     traits:
+      - scholarly
       - sensitive
-      - curious
     jobs:
       - translator
       - proofreader
@@ -577,8 +810,8 @@ staff:
       will: 5
       luck: 5
     traits:
-      - glib
-      - bold
+      - handy
+      - streetwise
     jobs:
       - electrician
       - pump_repairer
@@ -595,7 +828,7 @@ staff:
       will: 7
       luck: 3
     traits:
-      - bold
+      - hardy
       - curious
     jobs:
       - courier
@@ -631,7 +864,7 @@ staff:
       will: 5
       luck: 4
     traits:
-      - bold
+      - calm
       - kind
     jobs:
       - ferry_pilot
@@ -649,7 +882,7 @@ staff:
       will: 4
       luck: 4
     traits:
-      - glib
+      - streetwise
       - kind
     jobs:
       - street_food_seller
@@ -668,7 +901,7 @@ staff:
       luck: 10
     traits:
       - kind
-      - sensitive
+      - patient
     jobs:
       - caregiver
       - cook
@@ -685,8 +918,8 @@ staff:
       will: 8
       luck: 10
     traits:
+      - faithful
       - curious
-      - kind
     jobs:
       - former_monk
       - tutor
@@ -703,6 +936,7 @@ staff:
       will: 7
       luck: 2
     traits:
+      - handy
       - stubborn
     jobs:
       - retired_engineer
@@ -720,7 +954,7 @@ staff:
       will: 5
       luck: 4
     traits:
-      - sensitive
+      - quiet
       - stubborn
     jobs:
       - office_worker
@@ -738,7 +972,7 @@ staff:
       will: 4
       luck: 1
     traits:
-      - bold
+      - commoner
       - stubborn
     jobs:
       - garment_worker
@@ -757,7 +991,7 @@ staff:
       luck: 1
     traits:
       - kind
-      - stubborn
+      - skeptical
     jobs:
       - doctor
       - medical_teacher
@@ -774,8 +1008,8 @@ staff:
       will: 3
       luck: 6
     traits:
-      - curious
-      - glib
+      - scholarly
+      - cosmopolitan
     jobs:
       - bookseller
       - translator
@@ -792,8 +1026,8 @@ staff:
       will: 3
       luck: 4
     traits:
-      - curious
-      - bold
+      - artistic
+      - cheerful
     jobs:
       - architecture_intern
       - illustrator
@@ -810,7 +1044,7 @@ staff:
       will: 5
       luck: 2
     traits:
-      - bold
+      - hardy
       - curious
     jobs:
       - geologist
@@ -828,8 +1062,8 @@ staff:
       will: 5
       luck: 4
     traits:
+      - ambitious
       - glib
-      - bold
     jobs:
       - civil_engineer
       - site_manager
@@ -846,8 +1080,8 @@ staff:
       will: 9
       luck: 7
     traits:
+      - methodical
       - stubborn
-      - kind
     jobs:
       - coffee_farmer
       - cooperative_member
@@ -864,8 +1098,8 @@ staff:
       will: 1
       luck: 9
     traits:
-      - glib
-      - curious
+      - streetwise
+      - cosmopolitan
     jobs:
       - tour_guide
       - shop_assistant
@@ -882,8 +1116,8 @@ staff:
       will: 8
       luck: 1
     traits:
+      - charismatic
       - bold
-      - kind
     jobs:
       - union_organizer
       - factory_worker
@@ -901,7 +1135,7 @@ staff:
       luck: 10
     traits:
       - glib
-      - stubborn
+      - commoner
     jobs:
       - market_trader
       - seamstress
@@ -918,8 +1152,8 @@ staff:
       will: 7
       luck: 2
     traits:
-      - kind
-      - glib
+      - cheerful
+      - handy
     jobs:
       - baker
       - street_vendor
@@ -936,8 +1170,8 @@ staff:
       will: 1
       luck: 8
     traits:
+      - scholarly
       - curious
-      - kind
     jobs:
       - biologist
       - university_lecturer
@@ -954,8 +1188,8 @@ staff:
       will: 10
       luck: 8
     traits:
-      - stubborn
-      - sensitive
+      - quiet
+      - attached
     jobs:
       - shepherd
       - potato_farmer
@@ -972,7 +1206,7 @@ staff:
       will: 5
       luck: 1
     traits:
-      - bold
+      - vigil
       - kind
     jobs:
       - paramedic
@@ -1009,7 +1243,7 @@ staff:
       luck: 4
     traits:
       - bold
-      - curious
+      - wanderer
     jobs:
       - navigator
       - fisher
