@@ -80,15 +80,6 @@ traits:
     secretary:
       favor_gain: 0.5
     prefer: lives
-  stubborn:
-    points:
-      hold: 0.3
-      persuade: -0.2
-    policy:
-      on_block: insist
-    priority: 2
-    secretary:
-      rest_cut: 0.4
   curious:
     points:
       notice: 0.35
@@ -149,13 +140,16 @@ traits:
   methodical:
     points:
       notice: 0.2
-      hold: 0.25
+      hold: 0.3
       endure: -0.2
+      persuade: -0.15
     policy:
       focus: prevent
-    priority: 1
+      on_block: insist
+    priority: 2
     secretary:
       energy_mult: 0.05
+      rest_cut: 0.2
     prefer: safety
   hardy:
     points:
@@ -197,9 +191,14 @@ traits:
     points:
       endure: 0.25
       notice: 0.1
-      trust: -0.2
+      trust: -0.1
+      persuade: -0.2
     model:
       homesick_trait: -0.25
+      hurt: -0.3
+    resist:
+      S: 1
+      V: 1
     policy:
       on_block: appeal
     priority: 1
@@ -328,17 +327,6 @@ traits:
     secretary:
       favor_gain: 0.1
     prefer: lives
-  commoner:
-    points:
-      endure: 0.2
-      trust: 0.15
-      persuade: -0.25
-    policy:
-      on_block: insist
-    priority: 1
-    secretary:
-      energy_mult: 0.05
-    prefer: energy
   skeptical:
     points:
       notice: 0.25
@@ -376,7 +364,7 @@ staff:
       luck: 4
     traits:
       - patient
-      - stubborn
+      - methodical
     jobs:
       - nurse
       - caregiver
@@ -394,7 +382,7 @@ staff:
       luck: 3
     traits:
       - hardy
-      - commoner
+      - wanderer
     jobs:
       - builder
       - scaffolder
@@ -522,7 +510,7 @@ staff:
       luck: 1
     traits:
       - handy
-      - stubborn
+      - methodical
     jobs:
       - carpenter
       - shipwright
@@ -577,7 +565,7 @@ staff:
       luck: 3
     traits:
       - skeptical
-      - stubborn
+      - methodical
     jobs:
       - physician
       - lecturer
@@ -739,7 +727,7 @@ staff:
       luck: 2
     traits:
       - hardy
-      - stubborn
+      - methodical
     jobs:
       - farmer
       - dairy_farmer
@@ -847,7 +835,7 @@ staff:
       luck: 7
     traits:
       - kind
-      - stubborn
+      - methodical
     jobs:
       - villager
       - farmer
@@ -937,7 +925,7 @@ staff:
       luck: 2
     traits:
       - handy
-      - stubborn
+      - methodical
     jobs:
       - retired_engineer
       - mechanic
@@ -955,7 +943,7 @@ staff:
       luck: 4
     traits:
       - quiet
-      - stubborn
+      - methodical
     jobs:
       - office_worker
       - writer
@@ -972,8 +960,8 @@ staff:
       will: 4
       luck: 1
     traits:
-      - commoner
-      - stubborn
+      - wanderer
+      - methodical
     jobs:
       - garment_worker
       - tailor
@@ -1081,7 +1069,6 @@ staff:
       luck: 7
     traits:
       - methodical
-      - stubborn
     jobs:
       - coffee_farmer
       - cooperative_member
@@ -1135,7 +1122,7 @@ staff:
       luck: 10
     traits:
       - glib
-      - commoner
+      - wanderer
     jobs:
       - market_trader
       - seamstress
@@ -1225,7 +1212,7 @@ staff:
       luck: 4
     traits:
       - bold
-      - stubborn
+      - methodical
     jobs:
       - bush_pilot
       - flight_instructor
@@ -1260,8 +1247,8 @@ staff:
       will: 4
       luck: 6
     traits:
+      - methodical
       - curious
-      - sensitive
     jobs:
       - modelling_scientist
       - game_designer
