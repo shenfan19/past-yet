@@ -128,6 +128,7 @@ try {
   ok('filter hides all pins', (await page.locator('svg.map .pt').count()) === 0);
   await page.fill('#map-q', '');
   ok('filter restore pins', (await page.locator('svg.map .pt').count()) > 2);
+  ok('an event with a full model is one pin, the pin of the model', (await page.locator('svg.map [data-id="scutari_barrack_hospital"]').count()) === 1 && (await page.locator('svg.map [data-id="cell:nightingale_scutari"]').count()) === 0);
   await page.check('#map-counts');
   ok('the counts switch puts the number of events on the pins', (await page.locator('svg.map .pt text.cnt').count()) > 2);
   await page.uncheck('#map-counts');

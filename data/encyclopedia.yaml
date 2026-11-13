@@ -6,6 +6,8 @@ refs:
     status: pending
   game:
     status: game
+  nightingale1858:
+    status: pending
   lm:
     status: game
   readme:
@@ -49,6 +51,23 @@ sections:
         era: vienna_1847
       refs:
         - semmelweis1861
+        - game
+    - id: scutari_barrack
+      era: scutari_1855
+      tags:
+        - medical
+        - infection
+        - hospital
+        - c19
+        - istanbul
+        - history
+      related:
+        - people:nightingale_scutari
+        - events:sanitary_commission
+      unlock:
+        era: scutari_1855
+      refs:
+        - nightingale1858
         - game
   people:
     - id: snow
@@ -712,6 +731,20 @@ sections:
       related: []
       unlock: always
       refs:
+        - game
+    - id: sanitary_commission
+      tags:
+        - infection
+        - c19
+        - istanbul
+        - history
+      related:
+        - people:nightingale_scutari
+        - places:scutari_barrack
+      unlock:
+        era: scutari_1855
+      refs:
+        - nightingale1858
         - game
 model_events:
   door_block:

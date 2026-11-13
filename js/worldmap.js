@@ -13,7 +13,7 @@ export function createWorldMap(X) {
     const era = ctx.era(id).raw.metadata.era;
     return { id, year: era.year, place: era.place, geo: era.geo, locked: !X.eraOpen(id), unseen: X.eraOpen(id) && !ctx.S().visited.includes(id), catalog: false };
   });
-  const catEvents = () => D.get('catalog.events').map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.anchored('relic_' + e.id), catalog: true, cell: e }));
+  const catEvents = () => D.get('catalog.events').filter((e) => !e.era).map((e) => ({ id: e.id, year: e.year, geo: { lon: e.lon, lat: e.lat }, locked: !X.anchored('relic_' + e.id), catalog: true, cell: e }));
   // One pin per place. Events within a radius of each other share a pin, and the radius shrinks as you zoom in so the pins part; which takes the name of the simulated era there if there is one.
   // Only anchored places are drawn. Dev mode draws the rest too.
   const events = () => {

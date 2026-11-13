@@ -116,3 +116,13 @@ console.log('scenes with three points:', scenes);
   if (!(k < p && s2 < p)) { console.log(`weaknesses do not cost health: plain ${p}, kind ${k}, sensitive ${s2}`); process.exit(1); }
   console.log(`weaknesses cost health: plain ${p.toFixed(2)}, kind ${k.toFixed(2)}, sensitive ${s2.toFixed(2)}`);
 }
+
+// an event that names a full model: the model exists, sits where the event sits, and the relic of the event is the anchor of the model
+for (const ev of D.get('catalog.events')) {
+  if (!ev.era) continue;
+  if (!D.get('config.eras').includes(ev.era)) throw new Error(`event ${ev.id} names the model ${ev.era}, which is not in config.eras`);
+  const m = D.get('era_raw.' + ev.era).metadata.era;
+  if (m.year !== ev.year || Math.abs(m.geo.lon - ev.lon) > 0.01 || Math.abs(m.geo.lat - ev.lat) > 0.01) throw new Error(`event ${ev.id} and its model ${ev.era} are not at the same time and place`);
+  if (D.get('antiques.antiques.relic_' + ev.id).era !== ev.era) throw new Error(`the relic of ${ev.id} does not anchor ${ev.era}`);
+}
+console.log('events with a full model sit with their model: ok');

@@ -620,7 +620,7 @@ export function createOffice(X) {
     if (s.funds < A.sell_spares_below) sellSpares();
     restock();
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
-    const stories = D.get('catalog.events').map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
+    const stories = D.get('catalog.events').filter((e) => !e.era).map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
     for (const staffId of hiredIds()) {
       if (staffState(staffId) !== 'ready') continue;
       const free = [...eras, ...stories].filter((id) => !eraBusy(id));

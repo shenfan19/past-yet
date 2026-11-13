@@ -35,7 +35,7 @@ for (const [label, spec] of cases) {
   const outs = {};
   for (const r of rs) outs[r.outcome] = (outs[r.outcome] || 0) + 1;
   console.log(label.padEnd(18), 'baseD', m((r) => r.base.final.D), 'D', m((r) => r.branch.final.D), 'saved', m((r) => r.score.lives_saved),
-    'rmv', m((r) => r.branch.final[E.raw.metadata.era.protagonist === 'snow' ? 'removed_day' : 'mandate_day']), 'adv', m((r) => r.branch.final.advance_days), 'prog', m((r) => r.branch.final['traveler.progress']), JSON.stringify(outs));
+    'rmv', m((r) => r.branch.final[['removed_day', 'reform_day', 'mandate_day'].find((k) => k in r.branch.final)]), 'adv', m((r) => r.branch.final.advance_days), 'prog', m((r) => r.branch.final['traveler.progress']), JSON.stringify(outs));
 }
 const a = sim.runDispatch(E, D, base({ items: kit.mix }));
 const b = sim.runDispatch(E, D, base({ items: kit.mix }));

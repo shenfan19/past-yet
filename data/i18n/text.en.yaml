@@ -3960,3 +3960,114 @@ eras:
       unused_ors: Supplies were left over.
       ally_gap: Semmelweis's evidence is still thin. The handbook helps him, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  scutari_1855:
+    name: Scutari Barrack Hospital, 1855
+    short: Scutari
+    place_name: Barrack Hospital, Scutari
+    tags:
+      - medical
+      - infection
+      - hospital
+      - c19
+      - istanbul
+      - history
+    event_titles:
+      door_block: Turned away at the ward door
+      time_strain: Time slip
+    plots:
+      statistics:
+        name: Give Nightingale printed tables
+        desc: Lets her turn the ward count into a clear table that others can read at a glance.
+        character: Florence Nightingale
+        article: people:nightingale_scutari
+      germ_theory:
+        name: Explain germ theory to Nightingale
+        desc: Needs the craft of microbiology, which this era does not have.
+        character: Florence Nightingale
+        article: people:nightingale_scutari
+    blurb: A military hospital in winter, where more men die of infection than of wounds, and a nurse who keeps counting. Close, cheap, and the effect of cleaning and care is clear.
+    handle_label: Sanitary reform begins
+    protagonist: Florence Nightingale
+    protagonist_role: A nurse who keeps the count of the dead and has not yet proved what is killing them
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: In the winter of 1854 to 1855 many more soldiers died in the hospitals at Scutari of infection than of wounds.
+          check: true
+        - text: Florence Nightingale arrived in November 1854 with a party of nurses, and the army doctors did not all welcome them.
+          check: true
+        - text: In early March 1855 a Sanitary Commission arrived, flushed the sewers and opened the wards to air, and the deaths fell sharply in the following months.
+          check: true
+        - text: Nightingale kept careful records, and after the war she argued that sanitation had done more than any other change.
+          check: true
+      regret:
+        - You can save today's patients but not tomorrow's. On the main timeline the Sanitary Commission came in early March.
+        - Counts and tables matter more than any one pair of hands, but making people believe a count takes time.
+    events:
+      door_block_stubborn: A ward surgeon bars the door, saying the army does not need a stranger. {staff} is stubborn, does not give way, is sent out of one ward and loses {d.ors_stock:i} packets of supplies.
+      door_block_stubborn_empty: A ward surgeon bars the door, saying the army does not need a stranger. {staff} is stubborn, does not give way, and is sent out.
+      door_block_insist_empty: A ward surgeon bars the door, saying hardship and bad air are what kill. {staff} stands at the door and finishes speaking, and is turned away.
+      door_block_insist: A ward surgeon bars the door, saying hardship and bad air are what kill. {staff} stands at the door and finishes speaking, is turned away, and loses {d.ors_stock:i} packets of supplies.
+      door_block_appeal: A ward surgeon bars the door. {staff} does not force the way, turns and goes to Nightingale to ask her to speak up.
+      door_block_yield: A ward surgeon bars the door. {staff} steps back without a quarrel, and half a day is wasted.
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      convince: Convince Nightingale
+      trust: Win the trust of the ward
+      reform: Have the reform begin ahead of history
+    milestones:
+      first_treat: '{date}: {staff} spoons the first cup of clean broth and salts to a feverish man. He starts to speak.'
+      first_protect: '{date}: {staff} hands out the first chlorinated cloths and washes down a few beds, and teaches the orderlies to do the same.'
+      met_nightingale: '{date}: {staff} meets Nightingale on her night round. She listens closely but keeps asking one thing: where are the numbers.'
+      nightingale_trusts: '{date}: Nightingale starts to treat {staff} as one of her own and brings out the ward counts she has been keeping.'
+      nightingale_convinced: '{date}: Nightingale no longer merely suspects the filth in the wards. She has enough figures, and believes what the stranger told her.'
+      board_moves: '{date}: The medical board starts to give way and says a commission might be sent.'
+      reform_history: '{date}: The Sanitary Commission begins its work. The main timeline does not change.'
+      reform_early: '{date}: The Sanitary Commission begins its work {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      trust_won: '{date}: The ward surgeons no longer keep {staff} out, and some ask for help.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of fevered men on the ward falls to single digits.'
+    summary:
+      near_death: '{staff} collapses in the ward corridor and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these men a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend at Scutari. The Sanitary Commission began its work {advance_days:1} days earlier than in history.'
+      perfect: '{staff} completed the task at Scutari and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was turned away at the ward door again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent seven days in the Barrack Hospital, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was sitting with the men at night.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told her what she needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's patients, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, the dirt is what kills them.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they believe it is up to them.
+        - text: With one more item I might have saved one more man.
+    hints:
+      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+      unused_protect: Disinfectant was left over. The limit was the trust of the ward, not the supplies. Let the employee help patients first to build trust.
+      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or patients were not let in.
+      ally_gap: Nightingale's evidence is still thin. The handbook helps her, provided the employee spends time with her.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
