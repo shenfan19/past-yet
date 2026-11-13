@@ -70,6 +70,9 @@ emitYaml('audio.yaml', audioCfg);
 emitYaml('hiring.yaml', read('config/hiring.yaml'));
 emitYaml('share_qr.yaml', read('config/share_qr.yaml'));
 emitCopy('world_land.json', 'world/world_land.json');
+// the traveller core: the flat model and the bridge description exported from the LM game bridge, copied as they are
+emitCopy('core/traveler_stay.lm.json', 'core/traveler_stay.lm.json');
+emitCopy('core/traveler_stay.bridge.json', 'core/traveler_stay.bridge.json');
 
 // ---------- items, antiques ----------
 const itemCards = cards('items');

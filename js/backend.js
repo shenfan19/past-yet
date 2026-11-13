@@ -6,9 +6,9 @@ import { buildReport } from './narrate.js';
 import { draw } from './rng.js';
 import { evalScene } from './scene_core.js';
 import { runStay } from './stay.js';
-import { createStubCore } from './stub_core.js';
+import { LMCore } from '../vendor/lm_core/index.js';
 
-export function createLocalBackend(D, core = createStubCore(D)) {
+export function createLocalBackend(D, core = new LMCore({ model: D.get('core_model'), bridge: D.get('core_bridge') })) {
   const eras = {};
   for (const id of D.get('config.eras')) eras[id] = sim.compileEra(D.get('era_raw.' + id), D, id);
   // the plain data of an era that the interface may read, no functions

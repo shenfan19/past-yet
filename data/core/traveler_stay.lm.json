@@ -1,0 +1,2920 @@
+{
+ "metadata": {
+  "name": "traveler_stay",
+  "version": "1.0",
+  "lm_format_version": "1.0",
+  "generated": true,
+  "source": "Composed by the game bridge from: references/medical/physiology/human_body/nervous_sleep_stress_2026 as \"\", references/medical/physiology/human_body/lifestyle_inputs_2026 as \"\", references/medical/physiology/human_body/digestive_gut_2026 as \"\", references/medical/physiology/human_body/neuroendocrine_axes_2026 as \"\", references/medical/physiology/human_body/glucose_insulin_2026 as \"\", references/medical/physiology/human_body/hepatic_metabolism_2026 as \"\", references/medical/physiology/human_body/lipid_profile_2026 as \"\", references/medical/physiology/human_body/cardiovascular_2026 as \"\", references/medical/physiology/human_body/immune_inflammation_2026 as \"\", references/medical/physiology/human_body/hematology_iron_2026 as \"\", references/medical/physiology/human_body/aging_health_summary_2026 as \"\", references/medical/physiology/human_body/appetite_intake_regulation_2026 as \"\", references/medical/physiology/human_body/infectious_nutritional_disease_2026 as \"\", references/medical/physiology/human_body/renal_fluid_2026 as \"\", references/medical/physiology/human_body/body_composition_energy_2026 as \"\", references/medical/physiology/human_body/musculoskeletal_2026 as \"\", references/medical/physiology/human_body/respiratory_2026 as \"\"",
+  "description": {
+   "problem": "System \"traveler_stay\" composed from 17 model(s).",
+   "method": "Member models renamed with a prefix and joined by wire equations; see bridge.members and bridge.wires.",
+   "limitations": "Inherits every limitation of its members. Ratings are the lowest of the members."
+  },
+  "ratings": {
+   "importance": "0.5 - 虚拟人体仿真的统一输入层，被全部系统组件读取，本身不含机制",
+   "variable": "0.25 - 系数方向依据文献，幅度为经验取值",
+   "equation": "0.0 - 不含方程",
+   "simulation": "0.0 - 纯输入组件，不可单独仿真",
+   "optimization": "0.0 - 组件本身不含决策目标",
+   "confidence": "0.25 - 方向合理但幅度未校准"
+  },
+  "reviewed": "false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed. | false - Drafted with AI assistance, not yet manually reviewed."
+ },
+ "variables": {
+  "sleep_debt": {
+   "description": "有效睡眠债，睡眠时长低于需要量 7.5 小时时上升，有上限，睡眠充足时降为零。",
+   "value": 0.0,
+   "unit": "h",
+   "type": "state",
+   "bounds": [
+    0.0,
+    14.0
+   ],
+   "reference": "Van Dongen HPA et al. (2003) Sleep 26:117-126",
+   "locator": "TODO:LOCATE"
+  },
+  "sympathetic_tone": {
+   "description": "交感神经张力的相对水平，压力、睡眠债、高胰岛素、吸烟、发热和脱水使其升高，体能使其降低。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.5,
+    2.5
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "allostatic_load": {
+   "description": "稳态负荷指数，慢性积累皮质醇与交感张力的超额部分，时间常数 90 天。",
+   "value": 0.1,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.0,
+    3.0
+   ],
+   "reference": "McEwen BS (1998) N Engl J Med 338:171-179",
+   "locator": "TODO:LOCATE"
+  },
+  "depressive_symptoms": {
+   "description": "抑郁症状评分，借用 PHQ 型量表 0 到 27 的量级，压力、睡眠债、炎症、能量不足和甲状腺功能低下使其升高，运动使其降低。",
+   "value": 3.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0.0,
+    27.0
+   ],
+   "reference": "Kroenke K et al. (2001) J Gen Intern Med 16:606-613，PHQ-9 量表的分值范围与严重度分档"
+  },
+  "fatigue_index": {
+   "description": "疲劳指数，0 到 1，睡眠债、抑郁、贫血、甲状腺功能低下、感染和能量不足使其升高，体能使其降低。",
+   "value": 0.15,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.0,
+    1.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "cognitive_performance": {
+   "description": "认知表现的相对水平，1 为参考，睡眠债、脱水、抑郁症状和贫血使其下降。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.2,
+    1.3
+   ],
+   "reference": "Van Dongen HPA et al. (2003) Sleep 26:117-126",
+   "locator": "TODO:LOCATE"
+  },
+  "disease_fatigue": {
+   "description": "疾病直接增加的疲劳指数，默认 0。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "energy_intake": {
+   "description": "每日食物能量摄入水平，不含酒精能量。作为日水平量按 level 方式写入。",
+   "value": 2545.0,
+   "unit": "kcal",
+   "type": "input",
+   "bounds": [
+    0,
+    8000
+   ],
+   "reference": "由参考成年男性的维持能量平衡推出，与 body_composition_energy_2026 的能量消耗和吸收效率一致"
+  },
+  "carb_pct": {
+   "description": "碳水化合物占食物能量的比例，与蛋白质比例之和不得超过 1，剩余部分为脂肪。",
+   "value": 0.5,
+   "unit": "fraction",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "Institute of Medicine (2005) Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids, National Academies Press，可接受宏量营养素分布范围内取值"
+  },
+  "protein_pct": {
+   "description": "蛋白质占食物能量的比例。",
+   "value": 0.17,
+   "unit": "fraction",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "Institute of Medicine (2005) Dietary Reference Intakes for Energy, Carbohydrate, Fiber, Fat, Fatty Acids, Cholesterol, Protein, and Amino Acids, National Academies Press，可接受宏量营养素分布范围内取值"
+  },
+  "fiber_g": {
+   "description": "每日膳食纤维摄入量。",
+   "value": 25.0,
+   "unit": "g",
+   "type": "input",
+   "bounds": [
+    0,
+    100
+   ],
+   "reference": "Reynolds A et al. (2019) Lancet 393:434-445，推荐膳食纤维摄入量的下沿"
+  },
+  "sodium_g": {
+   "description": "每日钠摄入量，1 g 钠约等于 2.5 g 食盐。",
+   "value": 3.4,
+   "unit": "g",
+   "type": "input",
+   "bounds": [
+    0,
+    15
+   ],
+   "reference": "U.S. Department of Agriculture and U.S. Department of Health and Human Services (2020) Dietary Guidelines for Americans, 2020-2025, 9th ed，美国居民平均钠摄入约 3.4 g 每日"
+  },
+  "alcohol_g": {
+   "description": "每日纯酒精摄入量，一个标准杯约 14 g。",
+   "value": 5.0,
+   "unit": "g",
+   "type": "input",
+   "bounds": [
+    0,
+    300
+   ],
+   "reference": "U.S. Department of Agriculture and U.S. Department of Health and Human Services (2020) Dietary Guidelines for Americans, 2020-2025, 9th ed，标准杯含纯酒精 14 g，5 g 每日为本模型设定的轻度饮酒水平"
+  },
+  "water_l": {
+   "description": "每日饮水和饮品的液体摄入量，不含食物自带水分。",
+   "value": 2.4,
+   "unit": "L",
+   "type": "input",
+   "bounds": [
+    0,
+    10
+   ],
+   "reference": "EFSA Panel on Dietetic Products, Nutrition and Allergies (2010) EFSA J 8(3):1459，总水适宜摄入量的参考，本变量不含食物自带水分"
+  },
+  "diet_quality": {
+   "description": "饮食质量综合评分，0 代表精制糖和加工食品为主，1 代表蔬果全谷物和优质蛋白为主，同时影响微量营养素、肠道菌群和炎症。",
+   "value": 0.6,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "aerobic_min": {
+   "description": "日均中高强度有氧运动时间，代谢当量按 6 计。",
+   "value": 20.0,
+   "unit": "min",
+   "type": "input",
+   "bounds": [
+    0,
+    300
+   ],
+   "reference": "Bull FC et al. (2020) Br J Sports Med 54:1451-1462，日均 20 分钟折合每周 140 分钟，接近该指南每周 150 至 300 分钟的下沿"
+  },
+  "resistance_min": {
+   "description": "日均抗阻训练时间，代谢当量按 4 计。",
+   "value": 5.0,
+   "unit": "min",
+   "type": "input",
+   "bounds": [
+    0,
+    120
+   ],
+   "reference": "Bull FC et al. (2020) Br J Sports Med 54:1451-1462，该指南推荐每周至少两天肌肉力量训练，日均 5 分钟为本模型设定的低水平"
+  },
+  "sleep_hours": {
+   "description": "每晚实际睡眠时长。",
+   "value": 7.5,
+   "unit": "h",
+   "type": "input",
+   "bounds": [
+    0,
+    14
+   ],
+   "reference": "Watson NF et al. (2015) Sleep 38:843-844，成年人每晚睡眠 7 小时或以上"
+  },
+  "stress_load": {
+   "description": "心理压力负荷，0 为无压力，1 为持续极端压力，默认 0.3 对应普通工作生活压力。",
+   "value": 0.3,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "smoking_cigs": {
+   "description": "每日吸烟支数。",
+   "value": 0.0,
+   "unit": "cigarettes",
+   "type": "input",
+   "bounds": [
+    0,
+    60
+   ],
+   "reference": "不吸烟为本模型参考成年男性的设定"
+  },
+  "pathogen_challenge": {
+   "description": "每日病原体暴露剂量，1 表示足以引起中等强度感染的接种量，用于设定急性感染发作。",
+   "value": 0.0,
+   "unit": "dose",
+   "type": "input",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "hypothyroid_severity": {
+   "description": "甲状腺功能低下的严重程度，0 为正常，1 为重度。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "iron_loss_extra_mg": {
+   "description": "每日额外铁损失，用于设定月经、消化道慢性出血或反复献血造成的铁丢失，0 表示只有基础损失。",
+   "value": 0.0,
+   "unit": "mg",
+   "type": "input",
+   "bounds": [
+    0,
+    10
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "malabsorption_severity": {
+   "description": "肠道吸收不良的严重程度，0 为正常，1 为重度，用于设定乳糜泻或炎症性肠病一类的吸收障碍。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "sex_female": {
+   "description": "参考个体性别，0 为成年男性参考，1 为成年女性参考，决定参考体成分、血红蛋白、血脂、月经失铁与绝经后效应的取值。",
+   "value": 0.0,
+   "unit": "flag",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的性别开关，数值为 0 或 1"
+  },
+  "water_safety": {
+   "description": "饮水与卫生条件，1 表示现代供水与排污，0 表示水源被粪便污染且无卫生设施，决定肠道感染与寄生虫的暴露。",
+   "value": 1.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "crowding": {
+   "description": "居住拥挤与密切接触程度，0 表示现代分散居住，1 表示多人同室长期共居，决定空气传播慢性感染如结核的暴露。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "vector_exposure": {
+   "description": "蚊媒暴露程度，0 表示无疟区，1 表示高度流行区无防护，决定疟疾暴露。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "vitamin_c_mg": {
+   "description": "每日维生素 C 摄入量，现代成年人推荐量约 90 mg，长期低于 10 mg 会出现坏血病。",
+   "value": 90.0,
+   "unit": "mg",
+   "type": "input",
+   "bounds": [
+    0,
+    400
+   ],
+   "reference": "NIH Office of Dietary Supplements, Vitamin C fact sheet，推荐量男性 90 mg，坏血病见于长期低于约 10 mg"
+  },
+  "medical_era": {
+   "description": "医疗水平，1 表示现代抗菌药、补液与手术，0 表示没有有效药物与护理的古代，决定感染清除速度与病死风险。",
+   "value": 1.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "injury_exposure": {
+   "description": "外伤暴露程度，0 表示现代安全环境，1 表示战争与高危劳作，决定外伤感染暴露。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "epidemic_pressure": {
+   "description": "流行病压力，0 表示无流行，1 表示鼠疫或天花大流行年，决定急性高致死流行病暴露。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的场景输入评分，无对应实测量"
+  },
+  "iodine_ug": {
+   "description": "每日碘摄入量，现代成年人推荐量 150 微克，长期低于约 75 微克出现碘缺乏。",
+   "value": 150.0,
+   "unit": "ug",
+   "type": "input",
+   "bounds": [
+    0,
+    400
+   ],
+   "reference": "NIH Office of Dietary Supplements, Iodine fact sheet，推荐量 150 微克"
+  },
+  "thiamine_mg": {
+   "description": "每日维生素 B1 摄入量，现代成年人推荐量男性 1.2 毫克，长期低于约 0.5 毫克出现脚气病。",
+   "value": 1.2,
+   "unit": "mg",
+   "type": "input",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "NIH Office of Dietary Supplements, Thiamin fact sheet，推荐量男性 1.2 毫克"
+  },
+  "intake_shift_kcal": {
+   "description": "实际摄入相对计划摄入的偏移量，默认 0，即摄入等于输入。导入食欲与摄入调节组件后由其逐日更新，正值表示比计划多吃。",
+   "value": 0.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    -3000,
+    6000
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "diet_quality_shift": {
+   "description": "实际饮食质量相对计划饮食质量的偏移，默认 0。导入食欲与摄入调节组件后，压力和睡眠不足引起的享乐性进食使其为负。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    -0.6,
+    0.3
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "energy_intake_eff": {
+   "description": "有效食物能量摄入，等于计划摄入加偏移量且不小于零，下游各系统统一读取本变量。",
+   "value": 2545.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    0,
+    12000
+   ],
+   "reference": "由 energy_intake 与 intake_shift_kcal 推出"
+  },
+  "diet_quality_eff": {
+   "description": "有效饮食质量，等于计划饮食质量加偏移并限制在 0 到 1，下游各系统统一读取本变量。",
+   "value": 0.6,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "由 diet_quality 与 diet_quality_shift 推出"
+  },
+  "carb_g": {
+   "description": "每日摄入的碳水化合物质量。",
+   "value": 325.0,
+   "unit": "g",
+   "type": "state",
+   "bounds": [
+    0,
+    2000
+   ],
+   "reference": "Atwater 系数，4 kcal/g"
+  },
+  "protein_g": {
+   "description": "每日摄入的蛋白质质量。",
+   "value": 110.5,
+   "unit": "g",
+   "type": "state",
+   "bounds": [
+    0,
+    800
+   ],
+   "reference": "Atwater 系数，4 kcal/g"
+  },
+  "fat_pct": {
+   "description": "脂肪占食物能量的比例，等于 1 减去碳水与蛋白质比例，至少保留 0.02。",
+   "value": 0.33,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "由 carb_pct 与 protein_pct 推出"
+  },
+  "fat_g": {
+   "description": "每日摄入的脂肪质量。",
+   "value": 95.3,
+   "unit": "g",
+   "type": "state",
+   "bounds": [
+    0,
+    800
+   ],
+   "reference": "Atwater 系数，9 kcal/g"
+  },
+  "gut_absorption_efficiency": {
+   "description": "食物能量的表观吸收效率，随纤维摄入、吸收不良和感染腹泻下降。",
+   "value": 0.96,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.3,
+    0.99
+   ],
+   "reference": "Atwater 系数隐含的能量吸收率约 0.95 至 0.97",
+   "locator": "TODO:LOCATE"
+  },
+  "absorbed_energy": {
+   "description": "每日实际吸收的能量，含酒精能量，酒精按 7 kcal/g 计并扣除微粒体乙醇氧化系统的无效消耗。",
+   "value": 2520.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    0,
+    9000
+   ],
+   "reference": "酒精能量密度 7 kcal/g，Atwater 系数"
+  },
+  "absorbed_carb_g": {
+   "description": "每日吸收的碳水化合物质量。",
+   "value": 318.0,
+   "unit": "g",
+   "type": "state",
+   "bounds": [
+    0,
+    2000
+   ],
+   "reference": "由 carb_g 与吸收效率推出"
+  },
+  "absorbed_protein_g": {
+   "description": "每日吸收的蛋白质质量。",
+   "value": 106.0,
+   "unit": "g",
+   "type": "state",
+   "bounds": [
+    0,
+    800
+   ],
+   "reference": "由 protein_g 与吸收效率推出"
+  },
+  "gut_microbiome_diversity": {
+   "description": "肠道菌群多样性的综合指数，1 为满分，参考成年人约 0.7，随纤维和饮食质量上升，随酒精、压力、感染和吸收不良下降。",
+   "value": 0.7,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.05,
+    1.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "gut_barrier_integrity": {
+   "description": "肠屏障完整性，1 为完全完整，随酒精、高脂饮食、压力、菌群失调和吸收不良下降，全身炎症也会削弱屏障。",
+   "value": 0.92,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.2,
+    0.99
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "endotoxemia_index": {
+   "description": "代谢性内毒素血症指数，参考值 1，屏障完整性低于参考值时按比例上升，输入免疫炎症系统。",
+   "value": 1.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.5,
+    15
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "scfa_index": {
+   "description": "短链脂肪酸产量的相对指数，由菌群多样性与纤维摄入共同决定，参考值 1。",
+   "value": 1.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    3
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "gi_transit_time_h": {
+   "description": "胃肠道全程转运时间，纤维和饮水缩短，压力和久坐延长。",
+   "value": 33.0,
+   "unit": "h",
+   "type": "state",
+   "bounds": [
+    10,
+    120
+   ],
+   "reference": "TODO:SOURCE"
+  },
+  "disease_malab": {
+   "description": "传染病与寄生虫引起的吸收不良程度，默认 0。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "malab_eff": {
+   "description": "有效吸收不良程度，等于输入的吸收不良程度加疾病引起的部分，上限 1。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "由 malabsorption_severity 与 disease_malab 推出"
+  },
+  "energy_balance_ma": {
+   "description": "能量平衡的十天滑动平均，作为各激素共同的能量状态信号。",
+   "value": 0.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    -4000,
+    4000
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "t3_level": {
+   "description": "三碘甲状腺原氨酸的相对水平，1 为甲状腺功能正常，饥饿和急性疾病时下降，甲状腺功能低下时进一步下降。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.15,
+    1.2
+   ],
+   "reference": "Rosenbaum M, Leibel RL (2010) Int J Obes 34:S47-S55",
+   "locator": "TODO:LOCATE"
+  },
+  "thyroid_metabolic_factor": {
+   "description": "甲状腺状态对静息代谢率的乘数，三碘甲状腺原氨酸为 1 时取 1。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.4,
+    1.3
+   ],
+   "reference": "Rosenbaum M, Leibel RL (2010) Int J Obes 34:S47-S55",
+   "locator": "TODO:LOCATE"
+  },
+  "adaptive_thermogenesis_kcal": {
+   "description": "甲状腺代谢因子带来的静息代谢偏离量，饥饿时为负值，是适应性产热的度量。",
+   "value": 0.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    -1500,
+    500
+   ],
+   "reference": "Rosenbaum M, Leibel RL (2010) Int J Obes 34:S47-S55",
+   "locator": "TODO:LOCATE"
+  },
+  "neat_factor": {
+   "description": "非运动活动强度的乘数，正能量平衡时上升，负能量平衡和疲劳时下降。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.55,
+    1.6
+   ],
+   "reference": "Levine JA et al. (1999) Science 283:212-214; Keys A et al. (1950) The Biology of Human Starvation",
+   "locator": "TODO:LOCATE"
+  },
+  "cortisol": {
+   "description": "皮质醇的相对水平，1 为参考值，压力、睡眠债、能量不足、感染和肥胖使其升高。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.4,
+    4.0
+   ],
+   "reference": "McEwen BS (1998) N Engl J Med 338:171-179",
+   "locator": "TODO:LOCATE"
+  },
+  "leptin": {
+   "description": "瘦素浓度，静息水平与脂肪量成正比，能量赤字使其快速下降，正平衡使其略升。",
+   "value": 8.0,
+   "unit": "ng/mL",
+   "type": "state",
+   "bounds": [
+    0.3,
+    150.0
+   ],
+   "reference": "Considine RV et al. (1996) N Engl J Med 334:292-295",
+   "locator": "TODO:LOCATE"
+  },
+  "ghrelin": {
+   "description": "胃饥饿素的相对水平，能量赤字和睡眠债使其升高，肥胖使其下降。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.3,
+    3.0
+   ],
+   "reference": "Cummings DE et al. (2002) N Engl J Med 346:1623-1630",
+   "locator": "TODO:LOCATE"
+  },
+  "appetite_drive": {
+   "description": "饥饿驱动指数，由胃饥饿素与瘦素综合决定，1 为参考。仅作输出指标，不反馈改变输入摄入量。",
+   "value": 1.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.2,
+    3.5
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "testosterone": {
+   "description": "睾酮的相对水平，肥胖、能量不足和皮质醇升高使其下降，睡眠充足和抗阻训练使其上升。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.15,
+    1.3
+   ],
+   "reference": "Dandona P, Dhindsa S (2011) J Clin Endocrinol Metab 96:2643-2651",
+   "locator": "TODO:LOCATE"
+  },
+  "igf1": {
+   "description": "胰岛素样生长因子的相对水平，蛋白质摄入和睡眠使其升高，能量赤字使其下降。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.3,
+    1.6
+   ],
+   "reference": "Thissen JP et al. (1994) Endocr Rev 15:80-101，能量与蛋白摄入对胰岛素样生长因子的调节"
+  },
+  "disease_hypothyroid": {
+   "description": "碘缺乏引起的甲状腺功能低下程度，默认 0。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "insulin_sensitivity": {
+   "description": "胰岛素敏感性相对值，1 为参考健康成年人，随内脏脂肪、肝脂肪和炎症下降，随体能和近期运动上升。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.1,
+    1.8
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "exercise_recent": {
+   "description": "近期运动量的指数平滑值，以有氧与半量抗阻分钟数除以 30 折算，用于急性提高胰岛素敏感性，时间常数 1.5 天。",
+   "value": 0.75,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    6
+   ],
+   "reference": "Richter EA, Hargreaves M (2013) Physiol Rev 93:993-1017，运动对胰岛素敏感性的急性提高，指数平滑量为本模型构造"
+  },
+  "beta_cell_function": {
+   "description": "胰岛 β 细胞功能相对值，1 为参考，受糖毒性和脂毒性缓慢侵蚀，部分可逆。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.02,
+    1.2
+   ],
+   "reference": "Topp B et al. (2000) J Theor Biol 206:605-619",
+   "locator": "TODO:LOCATE"
+  },
+  "fasting_insulin": {
+   "description": "日均空腹胰岛素水平，在代偿上限内随所需量上升，碳水摄入低时下降，超过上限后随 β 细胞功能下降。",
+   "value": 8.0,
+   "unit": "uIU/mL",
+   "type": "state",
+   "bounds": [
+    0.5,
+    200.0
+   ],
+   "reference": "Matthews DR et al. (1985) Diabetologia 28:412-419，空腹胰岛素与胰岛素抵抗指数的换算关系"
+  },
+  "fasting_glucose": {
+   "description": "日均空腹血糖，β 细胞不能代偿所需胰岛素时迅速上升，酮症使其略降。",
+   "value": 88.0,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    40.0,
+    400.0
+   ],
+   "reference": "Topp B et al. (2000) J Theor Biol 206:605-619",
+   "locator": "TODO:LOCATE"
+  },
+  "homa_ir": {
+   "description": "稳态模型胰岛素抵抗指数，等于空腹血糖乘空腹胰岛素除以 405。",
+   "value": 1.7,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    200
+   ],
+   "reference": "Matthews DR et al. (1985) Diabetologia 28:412-419",
+   "locator": "TODO:LOCATE"
+  },
+  "hba1c": {
+   "description": "糖化血红蛋白，以约 45 天时间常数跟随平均血糖。",
+   "value": 5.15,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    3.5,
+    18.0
+   ],
+   "reference": "Nathan DM et al. (2008) Diabetes Care 31:1473-1478",
+   "locator": "TODO:LOCATE"
+  },
+  "liver_fat": {
+   "description": "肝脂肪含量，占肝重的百分比，5.5 percent 以上为脂肪肝。",
+   "value": 4.0,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    1.0,
+    45.0
+   ],
+   "reference": "Petersen KF et al. (2005) Diabetes 54:603-608",
+   "locator": "TODO:LOCATE"
+  },
+  "alt": {
+   "description": "丙氨酸氨基转移酶，随肝脂肪、酒精、纤维化和急性感染升高。",
+   "value": 25.0,
+   "unit": "U/L",
+   "type": "state",
+   "bounds": [
+    8.0,
+    800.0
+   ],
+   "reference": "Prati D et al. (2002) Ann Intern Med 137:1-10，男性健康转氨酶范围的上限为 30 U/L"
+  },
+  "liver_fibrosis": {
+   "description": "肝纤维化累积指数，0 为无纤维化，1 为肝硬化，主要不可逆。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.0,
+    1.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "ketone_bodies": {
+   "description": "血酮体浓度，低碳水和热量赤字使其升高，高胰岛素抑制。",
+   "value": 0.1,
+   "unit": "mmol/L",
+   "type": "state",
+   "bounds": [
+    0.05,
+    8.0
+   ],
+   "reference": "Cahill GF (2006) Annu Rev Nutr 26:1-22",
+   "locator": "TODO:LOCATE"
+  },
+  "triglycerides": {
+   "description": "空腹三酰甘油。",
+   "value": 100.0,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    30.0,
+    1500.0
+   ],
+   "reference": "Expert Panel on Detection, Evaluation, and Treatment of High Blood Cholesterol in Adults (2001) JAMA 285:2486-2497，正常范围内取值"
+  },
+  "ldl_c": {
+   "description": "低密度脂蛋白胆固醇。",
+   "value": 110.0,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    30.0,
+    400.0
+   ],
+   "reference": "Mensink RP et al. (2003) Am J Clin Nutr 77:1146-1155",
+   "locator": "TODO:LOCATE"
+  },
+  "hdl_c": {
+   "description": "高密度脂蛋白胆固醇。",
+   "value": 50.0,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    15.0,
+    100.0
+   ],
+   "reference": "Expert Panel on Detection, Evaluation, and Treatment of High Blood Cholesterol in Adults (2001) JAMA 285:2486-2497，正常范围内取值"
+  },
+  "total_cholesterol": {
+   "description": "总胆固醇，由 Friedewald 关系算出。",
+   "value": 180.0,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    60.0,
+    600.0
+   ],
+   "reference": "Friedewald WT et al. (1972) Clin Chem 18:499-502",
+   "locator": "TODO:LOCATE"
+  },
+  "non_hdl_c": {
+   "description": "非高密度脂蛋白胆固醇，等于总胆固醇减高密度胆固醇。",
+   "value": 130.0,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    10.0,
+    600.0
+   ],
+   "reference": "由 total_cholesterol 与 hdl_c 推出"
+  },
+  "tg_x": {
+   "description": "三酰甘油对数目标，软封顶前的值。",
+   "value": 0.0,
+   "unit": "log",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "vo2max_target": {
+   "description": "最大摄氧量绝对值的目标，由训练量、瘦体重、血红蛋白、肺功能、年龄和发热决定。",
+   "value": 3.0,
+   "unit": "L/min",
+   "type": "state",
+   "bounds": [
+    0.8,
+    6.5
+   ],
+   "reference": "Bassett DR, Howley ET (2000) Med Sci Sports Exerc 32:70-84",
+   "locator": "TODO:LOCATE"
+  },
+  "vo2max_abs": {
+   "description": "最大摄氧量绝对值，训练上升较慢，停训下降较快。",
+   "value": 3.0,
+   "unit": "L/min",
+   "type": "state",
+   "bounds": [
+    0.8,
+    6.5
+   ],
+   "reference": "Bassett DR, Howley ET (2000) Med Sci Sports Exerc 32:70-84",
+   "locator": "TODO:LOCATE"
+  },
+  "vo2max_rel": {
+   "description": "单位体重最大摄氧量，体重上升会拉低该值。",
+   "value": 39.3,
+   "unit": "mL/kg/min",
+   "type": "state",
+   "bounds": [
+    8.0,
+    90.0
+   ],
+   "reference": "由 vo2max_abs 与体重推出"
+  },
+  "resting_hr": {
+   "description": "静息心率，随体能上升下降，随交感张力、发热、脱水、贫血和甲状腺功能升高。",
+   "value": 66.0,
+   "unit": "bpm",
+   "type": "state",
+   "bounds": [
+    30.0,
+    160.0
+   ],
+   "reference": "Ostchega Y et al. (2011) National Health Statistics Reports no 41，美国成年人静息脉搏均值约 72 次每分，本模型参考个体取 66 的偏低健康水平"
+  },
+  "systolic_bp": {
+   "description": "收缩压，随体重、细胞外液潴留、酒精、睡眠债、交感张力、胰岛素抵抗、年龄和肾功能下降而升高，随有氧运动下降。",
+   "value": 120.0,
+   "unit": "mmHg",
+   "type": "state",
+   "bounds": [
+    70.0,
+    260.0
+   ],
+   "reference": "Sacks FM et al. (2001) N Engl J Med 344:3-10; Guyton AC (1991) Science 252:813-816",
+   "locator": "TODO:LOCATE"
+  },
+  "diastolic_bp": {
+   "description": "舒张压，由收缩压中扣除年龄部分后偏离参考值的一半加参考舒张压推出，再加随年龄的模式：55 岁前随龄升高，之后随动脉硬化下降。",
+   "value": 78.0,
+   "unit": "mmHg",
+   "type": "state",
+   "bounds": [
+    40.0,
+    160.0
+   ],
+   "reference": "Whelton PK et al. (2018) Hypertension 71:e13-e115，正常血压的定义为收缩压低于 120 且舒张压低于 80 mmHg"
+  },
+  "mean_arterial_pressure": {
+   "description": "平均动脉压，等于舒张压加脉压的三分之一。",
+   "value": 92.0,
+   "unit": "mmHg",
+   "type": "state",
+   "bounds": [
+    50.0,
+    200.0
+   ],
+   "reference": "血流动力学定义"
+  },
+  "plaque_burden": {
+   "description": "动脉粥样硬化负荷指数，以年为尺度累积，风险因子越多累积越快，回退极慢。",
+   "value": 0.1,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.0,
+    5.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "cvd_risk_10y_pct": {
+   "description": "十年心血管事件风险的相对指标，由血压、血脂、年龄、吸烟、血糖、炎症和动脉负荷的指数式构造。",
+   "value": 2.0,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    0.1,
+    100.0
+   ],
+   "reference": "D'Agostino RB et al. (2008) Circulation 117:743-753",
+   "locator": "TODO:LOCATE"
+  },
+  "infection_load": {
+   "description": "感染负荷，0 为无感染，1 约对应中等强度的急性感染，随病原体暴露增加，被免疫清除。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.0,
+    10.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "infection_growth_rate": {
+   "description": "感染负荷的净增长率，病原体自身增长率 0.9 减去免疫清除率，免疫能力低于 0.75 时为正。",
+   "value": -0.3,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    -2.0,
+    1.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "immune_competence": {
+   "description": "免疫能力，1 为参考健康成年人，睡眠债、营养不良、皮质醇升高、高血糖和吸烟使其下降。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.2,
+    1.4
+   ],
+   "reference": "Besedovsky L et al. (2019) Physiol Rev 99:1325-1380，睡眠与免疫功能的关系，相对量以参考健康成年人为 1"
+  },
+  "fever_c": {
+   "description": "体温相对基线的升高值，随感染负荷饱和上升。",
+   "value": 0.0,
+   "unit": "C",
+   "type": "state",
+   "bounds": [
+    0.0,
+    4.0
+   ],
+   "reference": "Kluger MJ (1991) Physiol Rev 71:93-127",
+   "locator": "TODO:LOCATE"
+  },
+  "crp": {
+   "description": "C 反应蛋白，慢性低度炎症与急性期反应的综合指标，参考值 1 mg/L。",
+   "value": 1.0,
+   "unit": "mg/L",
+   "type": "state",
+   "bounds": [
+    0.1,
+    300.0
+   ],
+   "reference": "Ridker PM (2003) Circulation 107:363-369",
+   "locator": "TODO:LOCATE"
+  },
+  "inf_delta": {
+   "description": "感染方程的判别量，带源项逻辑斯谛方程的特征速率。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0.0,
+    20.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "inf_xp": {
+   "description": "感染方程的正平衡点。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "inf_xm": {
+   "description": "感染方程的负平衡点。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "inf_q": {
+   "description": "感染方程解的收缩因子。",
+   "value": 0.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "crp_chronic_x": {
+   "description": "慢性代谢因素决定的 CRP 对数目标，软封顶前的值。",
+   "value": 0.0,
+   "unit": "log mg/L",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "disease_pathogen": {
+   "description": "传染病与寄生虫持续释放的病原剂量，默认 0。",
+   "value": 0.0,
+   "unit": "dose",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "pathogen_dose": {
+   "description": "有效病原剂量，等于输入的暴露剂量加疾病持续释放的部分。",
+   "value": 0.0,
+   "unit": "dose",
+   "type": "state",
+   "bounds": [
+    0,
+    10
+   ],
+   "reference": "由 pathogen_challenge 与 disease_pathogen 推出"
+  },
+  "dietary_iron_mg": {
+   "description": "每日膳食铁摄入量，随能量摄入和饮食质量增加。",
+   "value": 13.8,
+   "unit": "mg",
+   "type": "state",
+   "bounds": [
+    0.0,
+    60.0
+   ],
+   "reference": "National Institutes of Health Office of Dietary Supplements, Iron fact sheet for health professionals，美国成年男性食物铁摄入约 16 至 18 mg 每日，本模型 13.8 mg 为中等质量饮食下的设定值"
+  },
+  "iron_absorption_fraction": {
+   "description": "铁吸收分数，铁储备低时上调，铁储备高时下调，炎症和肠道吸收不良使其下降。",
+   "value": 0.08,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.02,
+    0.25
+   ],
+   "reference": "Hallberg L, Hulthén L (2000) Am J Clin Nutr 71:1147-1160，膳食铁吸收随铁储备调节的算法"
+  },
+  "ferritin": {
+   "description": "血清铁蛋白，反映铁储备，每微克每升约对应 8 毫克储存铁。",
+   "value": 100.0,
+   "unit": "ug/L",
+   "type": "state",
+   "bounds": [
+    1.0,
+    1500.0
+   ],
+   "reference": "Cook JD et al. (1974) Am J Clin Nutr 27:681-687",
+   "locator": "TODO:LOCATE"
+  },
+  "hemoglobin": {
+   "description": "血红蛋白浓度，铁缺乏、肾功能下降、慢性炎症和能量不足使其下降。",
+   "value": 14.8,
+   "unit": "g/dL",
+   "type": "state",
+   "bounds": [
+    4.0,
+    19.0
+   ],
+   "reference": "Beutler E, Waalen J (2006) Blood 107:1747-1750，成年男性血红蛋白下限的定义"
+  },
+  "iron_net_mg": {
+   "description": "每日铁净平衡，吸收量减基础损失与额外损失。",
+   "value": 0.0,
+   "unit": "mg/day",
+   "type": "state",
+   "bounds": [
+    -20.0,
+    20.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "iron_store_mg": {
+   "description": "铁储存相对铁蛋白 1 的毫克数，负值表示储存耗尽后的累计亏空。",
+   "value": 0.0,
+   "unit": "mg",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "iron_deficit_mg": {
+   "description": "储存耗尽后的累计铁亏空，每 174 毫克铁对应全血血红蛋白 1 g/dL。",
+   "value": 0.0,
+   "unit": "mg",
+   "type": "state",
+   "bounds": [
+    0.0,
+    3000.0
+   ],
+   "reference": "Beutler E, Waalen J (2006) Blood 107:1747-1750，铁蛋白与缺铁的关系；血红蛋白铁含量约 3.47 mg/g"
+  },
+  "disease_blood_loss_mg": {
+   "description": "寄生虫失血、溶血与坏血病出血折算的每日额外铁损失，默认 0。",
+   "value": 0.0,
+   "unit": "mg",
+   "type": "state",
+   "bounds": [
+    0,
+    20
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "age_years": {
+   "description": "年龄，随日历时间推进。",
+   "value": 35.0,
+   "unit": "year",
+   "type": "state",
+   "bounds": [
+    18.0,
+    100.0
+   ],
+   "reference": "日历时间"
+  },
+  "biological_age_delta": {
+   "description": "生物学年龄相对日历年龄的偏差，炎症、肥胖、吸烟、高血糖、高血压和稳态负荷使其累积上升，高体能使其下降。",
+   "value": 0.0,
+   "unit": "year",
+   "type": "state",
+   "bounds": [
+    -30.0,
+    60.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "health_score": {
+   "description": "综合健康评分，从 100 起按各系统指标超出健康范围的部分扣分，仅用于方案间比较。",
+   "value": 100.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    0.0,
+    100.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "fat_ref": {
+   "description": "参考脂肪量，男性 17 kg，女性 22 kg",
+   "value": 17.0,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    5.0,
+    60.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "visc_ref": {
+   "description": "参考内脏脂肪，男性 1.9 kg，女性 1.2 kg",
+   "value": 1.9,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    0.3,
+    6.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "vo2_ref": {
+   "description": "参考相对最大摄氧量，男性 39.3，女性 35.5",
+   "value": 39.3,
+   "unit": "mL/kg/min",
+   "type": "state",
+   "bounds": [
+    15.0,
+    60.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "wt_ref": {
+   "description": "参考体重，男性 76.3 kg，女性 64 kg",
+   "value": 76.3,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    30.0,
+    150.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "musc_ref": {
+   "description": "参考肌肉量，男性 28.75 kg，女性 20.5 kg",
+   "value": 28.75,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    8.0,
+    50.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "hb_ref": {
+   "description": "参考血红蛋白，男性 14.8，女性 13.5",
+   "value": 14.8,
+   "unit": "g/dL",
+   "type": "state",
+   "bounds": [
+    8.0,
+    18.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "gfr_ref": {
+   "description": "参考肾小球滤过率，男性 105，女性 98",
+   "value": 105.0,
+   "unit": "mL/min/1.73m2",
+   "type": "state",
+   "bounds": [
+    40.0,
+    140.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "meno": {
+   "description": "绝经进程，女性 48 到 54 岁由 0 线性升到 1，男性恒为 0。",
+   "value": 0.0,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.0,
+    1.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "meno_late": {
+   "description": "绝经后心血管风险追赶进程，女性 52 到 72 岁由 0 线性升到 1，男性恒为 0。",
+   "value": 0.0,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.0,
+    1.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "smoke_hist": {
+   "description": "吸烟暴露记忆，以每天支数计，随时间向当前吸烟量松弛，戒烟后的死亡风险下降由它的衰减表达。",
+   "value": 0.0,
+   "unit": "cigarettes",
+   "type": "state",
+   "bounds": [
+    0.0,
+    60.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "mortality_lnhr": {
+   "description": "全因死亡的对数风险比，相对参考个体，由睡眠、体能、体质指数、吸烟、血压、糖化血红蛋白、酒精、CRP、肾功能共同决定。",
+   "value": 0.0,
+   "unit": "log",
+   "type": "state",
+   "bounds": [
+    -3.0,
+    5.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "annual_hazard": {
+   "description": "年死亡风险率，基础风险按年龄指数上升再乘风险比。",
+   "value": 0.0017,
+   "unit": "1/year",
+   "type": "state",
+   "bounds": [
+    0.0,
+    5.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "survival_prob": {
+   "description": "从起点存活到当前的概率。",
+   "value": 1.0,
+   "unit": "probability",
+   "type": "state",
+   "bounds": [
+    0.0,
+    1.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "disease_hazard": {
+   "description": "传染病与营养缺乏病增加的年死亡风险率，默认 0。",
+   "value": 0.0,
+   "unit": "1/year",
+   "type": "state",
+   "bounds": [
+    0,
+    50
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "appetite_feedback_gain": {
+   "description": "食欲反馈增益，0 表示关闭反馈，摄入严格等于计划，1 表示完整反馈。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "input",
+   "bounds": [
+    0,
+    2
+   ],
+   "reference": "本模型自定义的反馈参数，无对应实测量"
+  },
+  "dietary_restraint": {
+   "description": "饮食克制程度，0 表示完全随食欲进食，1 表示严格遵守计划摄入。",
+   "value": 0.5,
+   "unit": "score",
+   "type": "input",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的反馈参数，无对应实测量"
+  },
+  "homeostatic_hunger": {
+   "description": "稳态饥饿驱动，能量不足和脂肪量低于设定点时为正，持续正能量平衡时为负。",
+   "value": 0.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    -0.3,
+    0.8
+   ],
+   "reference": "Cummings DE et al. (2002) N Engl J Med 346:1623-1630",
+   "locator": "TODO:LOCATE"
+  },
+  "hedonic_eating_drive": {
+   "description": "享乐性进食驱动，睡眠债、疲劳和压力高于参考值的部分相加，等于摄入的相对增量。",
+   "value": 0.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.0,
+    0.6
+   ],
+   "reference": "Al Khatib HK et al. (2017) Eur J Clin Nutr 71:614-624",
+   "locator": "TODO:LOCATE"
+  },
+  "fat_mass_setpoint": {
+   "description": "被防御的脂肪量设定点，向实际脂肪量缓慢移动，上升时间常数 180 天，下降时间常数 1500 天。",
+   "value": 17.0,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    2.0,
+    200.0
+   ],
+   "reference": "Polidori D et al. (2016) Obesity 24:2289-2295",
+   "locator": "TODO:LOCATE"
+  },
+  "illness_anorexia": {
+   "description": "感染引起的食欲下降，为负值，感染负荷为 1 及以上时降低 20 percent 的不受克制摄入。",
+   "value": 0.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    -0.3,
+    0.0
+   ],
+   "reference": "Exton MS (1997) Appetite 29:369-383，感染引起食欲下降的机制，20 percent 的幅度为本模型设定"
+  },
+  "unrestrained_intake": {
+   "description": "不受克制时的摄入，等于维持能量平衡所需摄入乘一加稳态饥饿与感染项，再加参考摄入乘享乐性驱动，平衡所需摄入由上一日能量消耗、酒精能量和吸收效率推出。",
+   "value": 2545.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    0,
+    9000
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "intake_shift_target": {
+   "description": "摄入偏移量的目标，等于反馈增益乘一减去克制程度，再乘不受克制摄入与计划摄入之差。",
+   "value": 0.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    -3000,
+    6000
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "enteric_burden": {
+   "description": "肠道感染负担，霍乱、痢疾与伤寒类的期望负担，0 为无，1 为全部时间处于感染。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "tb_burden": {
+   "description": "结核负担，活动性空气传播慢性感染的期望严重度，0 为无。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "malaria_burden": {
+   "description": "疟疾负担，期望寄生虫血症严重度，0 为无。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "helminth_burden": {
+   "description": "肠道寄生虫负担，蛔虫与钩虫类的期望虫负荷，0 为无。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "vitc_pool": {
+   "description": "维生素 C 库，以现代推荐摄入下的稳态为 1。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0,
+    3
+   ],
+   "reference": "库向摄入除以 90 mg 的目标松弛，时间常数 45 天，坏血病在库长期低于 0.2 时出现"
+  },
+  "scurvy_index": {
+   "description": "坏血病指数，库低于 0.2 后线性上升，0 为无，1 为重症。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "wound_burden": {
+   "description": "外伤感染负担，战争与劳作创伤后化脓与败血症的期望负担，0 为无。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "epidemic_burden": {
+   "description": "流行病负担，鼠疫、天花一类急性高致死流行病的期望负担，0 为无。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "iodine_pool": {
+   "description": "碘库，以现代推荐摄入下的稳态为 1。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0,
+    3
+   ],
+   "reference": "库向摄入除以 150 微克的目标松弛，时间常数 180 天"
+  },
+  "goiter_index": {
+   "description": "碘缺乏指数，库低于 0.5 后线性上升，导致甲状腺功能低下。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "thiamine_pool": {
+   "description": "维生素 B1 库，以现代推荐摄入下的稳态为 1。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0,
+    3
+   ],
+   "reference": "库向摄入除以 1.2 毫克的目标松弛，时间常数 30 天"
+  },
+  "beriberi_index": {
+   "description": "脚气病指数，库低于 0.4 后线性上升，表现为疲劳与心力衰竭风险。",
+   "value": 0.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0,
+    1
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "wnd_a": {
+   "description": "外伤感染的流入率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "wnd_k": {
+   "description": "外伤感染的清除率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "epi_a": {
+   "description": "流行病的流入率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "epi_k": {
+   "description": "流行病的清除率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "ent_a": {
+   "description": "肠道感染的流入率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "ent_k": {
+   "description": "肠道感染的清除率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "tb_a": {
+   "description": "结核的流入率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "tb_k": {
+   "description": "结核的清除率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "mal_a": {
+   "description": "疟疾的流入率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "mal_k": {
+   "description": "疟疾的清除率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "hel_a": {
+   "description": "寄生虫的流入率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "hel_k": {
+   "description": "寄生虫的清除率，每日。",
+   "value": 0.0,
+   "unit": "1/day",
+   "type": "state",
+   "bounds": [
+    0,
+    5
+   ],
+   "reference": "本模型的辅助量"
+  },
+  "water_need_l": {
+   "description": "每日需水量，随体重、运动出汗和发热增加。",
+   "value": 2.7,
+   "unit": "L",
+   "type": "state",
+   "bounds": [
+    0.5,
+    12.0
+   ],
+   "reference": "EFSA Panel on Dietetic Products, Nutrition and Allergies (2010) EFSA J 8(3):1459，总水适宜摄入量的参考"
+  },
+  "hydration_index": {
+   "description": "水合指数，1 为水合正常，低于 1 为脱水，饮水少于需水量时下降。",
+   "value": 1.0,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.6,
+    1.2
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "ecf_excess_l": {
+   "description": "细胞外液潴留量，正值为水肿或钠水潴留，计入体重。",
+   "value": 0.0,
+   "unit": "L",
+   "type": "state",
+   "bounds": [
+    -2.0,
+    12.0
+   ],
+   "reference": "Guyton AC (1991) Science 252:813-816",
+   "locator": "TODO:LOCATE"
+  },
+  "gfr": {
+   "description": "肾小球滤过率的慢性储备，每年基础下降，血压升高、高血糖、吸烟、高尿酸和肥胖加速下降。",
+   "value": 105.0,
+   "unit": "mL/min/1.73m2",
+   "type": "state",
+   "bounds": [
+    5.0,
+    140.0
+   ],
+   "reference": "Levey AS et al. (2009) Ann Intern Med 150:604-612",
+   "locator": "TODO:LOCATE"
+  },
+  "gfr_effective": {
+   "description": "有效肾小球滤过率，在慢性储备基础上计入脱水和感染的急性降低。",
+   "value": 105.0,
+   "unit": "mL/min/1.73m2",
+   "type": "state",
+   "bounds": [
+    3.0,
+    140.0
+   ],
+   "reference": "Levey AS et al. (2009) Ann Intern Med 150:604-612，35 岁男性血肌酐 0.95 mg/dL 按该方程估算的滤过率约 103 mL/min/1.73m2"
+  },
+  "serum_creatinine": {
+   "description": "血肌酐，与肌肉量成正比，与有效滤过率成反比。",
+   "value": 0.95,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    0.3,
+    20.0
+   ],
+   "reference": "Levey AS et al. (2009) Ann Intern Med 150:604-612，血肌酐与滤过率的对应关系"
+  },
+  "uric_acid": {
+   "description": "血尿酸，随体质指数、酒精、酮体、三酰甘油和肾功能下降而升高。",
+   "value": 5.5,
+   "unit": "mg/dL",
+   "type": "state",
+   "bounds": [
+    2.0,
+    14.0
+   ],
+   "reference": "Zhu Y et al. (2011) Arthritis Rheum 63:3136-3141，美国成年男性平均血尿酸 6.14 mg/dL，参考值取正常范围内"
+  },
+  "protein_ma": {
+   "description": "每公斤体重蛋白摄入的 21 天滑动平均，用于蛋白不足性水肿。",
+   "value": 1.4,
+   "unit": "g/kg",
+   "type": "state",
+   "bounds": [
+    0.0,
+    10.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "height_m": {
+   "description": "身高，用于计算体质指数。",
+   "value": 1.75,
+   "unit": "m",
+   "type": "parameter",
+   "bounds": [
+    1.2,
+    2.2
+   ],
+   "reference": "参考成年男性"
+  },
+  "fat_mass": {
+   "description": "脂肪量，包含内脏与皮下脂肪。",
+   "value": 17.0,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    2.0,
+    200.0
+   ],
+   "reference": "Hall KD et al. (2011) Lancet 378:826-837",
+   "locator": "TODO:LOCATE"
+  },
+  "lean_mass": {
+   "description": "去脂质量，不含糖原及其结合水和额外细胞外液。",
+   "value": 57.5,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    25.0,
+    120.0
+   ],
+   "reference": "Hall KD et al. (2011) Lancet 378:826-837",
+   "locator": "TODO:LOCATE"
+  },
+  "glycogen_kg": {
+   "description": "肝糖原与肌糖原总量，每克糖原结合约三克水。",
+   "value": 0.5,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    0.05,
+    1.0
+   ],
+   "reference": "Hall KD (2010) Am J Physiol Endocrinol Metab 298:E449-E466",
+   "locator": "TODO:LOCATE"
+  },
+  "glycogen_delta_kg": {
+   "description": "当日糖原池的变化量，用于从能量平衡中扣除糖原储能。",
+   "value": 0.0,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    -1.0,
+    1.0
+   ],
+   "reference": "由糖原松弛方程算出"
+  },
+  "body_weight": {
+   "description": "体重，等于脂肪量、瘦体重、含水糖原和额外细胞外液之和。",
+   "value": 76.3,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    20.0,
+    350.0
+   ],
+   "reference": "由各组分求和"
+  },
+  "bmi": {
+   "description": "体质指数。",
+   "value": 24.9,
+   "unit": "kg/m2",
+   "type": "state",
+   "bounds": [
+    8.0,
+    80.0
+   ],
+   "reference": "WHO 体质指数定义"
+  },
+  "body_fat_pct": {
+   "description": "体脂率。",
+   "value": 22.3,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    1.0,
+    80.0
+   ],
+   "reference": "由 fat_mass 与 body_weight 推出"
+  },
+  "visceral_fat_kg": {
+   "description": "内脏脂肪量，占脂肪量的比例随总脂肪、皮质醇、运动、胰岛素敏感性和年龄变化。",
+   "value": 1.9,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    0.2,
+    40.0
+   ],
+   "reference": "Shen W et al. (2004) Am J Clin Nutr 80:271-278，健康成年男性内脏脂肪的磁共振测量"
+  },
+  "waist_cm": {
+   "description": "腰围，由体质指数和内脏脂肪估算。",
+   "value": 87.0,
+   "unit": "cm",
+   "type": "state",
+   "bounds": [
+    50.0,
+    220.0
+   ],
+   "reference": "World Health Organization (2011) Waist circumference and waist-hip ratio: report of a WHO expert consultation, Geneva"
+  },
+  "resting_metabolic_rate": {
+   "description": "静息代谢率，由瘦体重和脂肪量线性决定，再乘甲状腺代谢因子和发热因子。",
+   "value": 1620.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    500,
+    5000
+   ],
+   "reference": "Hall KD (2010) Am J Physiol Endocrinol Metab 298:E449-E466",
+   "locator": "TODO:LOCATE"
+  },
+  "neat_kcal": {
+   "description": "非运动活动消耗，与体重成正比，每公斤体重 7.5 kcal，并随能量平衡和疲劳调整，使体重上升时能量消耗随之上升。",
+   "value": 486.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    0,
+    2500
+   ],
+   "reference": "Levine JA et al. (1999) Science 283:212-214",
+   "locator": "TODO:LOCATE"
+  },
+  "exercise_kcal": {
+   "description": "运动净消耗，有氧按代谢当量 6、抗阻按 4 计，另加百分之六的运动后过量氧耗。",
+   "value": 153.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    0,
+    4000
+   ],
+   "reference": "Ainsworth BE et al. (2011) Med Sci Sports Exerc 43:1575-1581",
+   "locator": "TODO:LOCATE"
+  },
+  "tef_kcal": {
+   "description": "食物热效应，蛋白质约 25 percent、碳水约 7.5 percent、脂肪约 2 percent。",
+   "value": 208.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    0,
+    1500
+   ],
+   "reference": "Westerterp KR (2004) Nutr Metab 1:5",
+   "locator": "TODO:LOCATE"
+  },
+  "energy_expenditure": {
+   "description": "每日总能量消耗。",
+   "value": 2520.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    500,
+    9000
+   ],
+   "reference": "各分项求和"
+  },
+  "energy_balance": {
+   "description": "每日能量平衡，吸收能量减总消耗，正值为正平衡。",
+   "value": 0.0,
+   "unit": "kcal/day",
+   "type": "state",
+   "bounds": [
+    -6000,
+    6000
+   ],
+   "reference": "能量守恒"
+  },
+  "tissue_energy_kcal": {
+   "description": "当日实际进入组织的能量，等于能量平衡减去糖原池储能变化，按步长累积。",
+   "value": 0.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    -20000,
+    20000
+   ],
+   "reference": "能量守恒"
+  },
+  "lean_partition_fraction": {
+   "description": "组织能量中分给瘦体重的比例，取 Forbes 关系再乘肌肉骨骼系统给出的乘数。",
+   "value": 0.1,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.0,
+    0.95
+   ],
+   "reference": "Forbes GB (1987) Human Body Composition; Hall KD et al. (2011) Lancet 378:826-837",
+   "locator": "TODO:LOCATE"
+  },
+  "muscle_fraction_seen": {
+   "description": "上一步看到的肌肉占瘦体重比例，用于把肌肉占比变化折算成瘦体重变化。",
+   "value": 0.5,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.3,
+    0.56
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "recomp_kg": {
+   "description": "本步肌肉占比变化折算的瘦体重变化，正为增肌。",
+   "value": 0.0,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "recomp_applied_kg": {
+   "description": "计入脂肪储备限制后实际发生的瘦体重变化，其能量先从组织能量里扣除，剩余能量再按分配比拆给瘦体重与脂肪，因此总组织能量守恒。",
+   "value": 0.0,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    -1000000.0,
+    1000000.0
+   ],
+   "reference": "本模型构造的辅助量"
+  },
+  "disease_energy_kcal": {
+   "description": "慢性感染与发热增加的每日能量消耗，默认 0。",
+   "value": 0.0,
+   "unit": "kcal",
+   "type": "state",
+   "bounds": [
+    0,
+    2000
+   ],
+   "reference": "本模型自定义的钩子状态，默认 0，导入传染病与营养缺乏病组件后由其逐日更新"
+  },
+  "protein_g_per_kg": {
+   "description": "每日吸收蛋白质相对于体重的克数。",
+   "value": 1.4,
+   "unit": "g/kg",
+   "type": "state",
+   "bounds": [
+    0.0,
+    6.0
+   ],
+   "reference": "Morton RW et al. (2018) Br J Sports Med 52:376-384",
+   "locator": "TODO:LOCATE"
+  },
+  "anabolic_score": {
+   "description": "合成代谢评分，正值表示有利于肌肉合成，由抗阻训练、蛋白质、睾酮、胰岛素样生长因子和皮质醇综合。",
+   "value": 0.0,
+   "unit": "score",
+   "type": "state",
+   "bounds": [
+    -2.0,
+    2.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "lean_partition_multiplier": {
+   "description": "传给体成分系统的瘦体重分配比乘数，能量盈余时随评分升高，能量赤字时随评分升高而降低，酮症进一步降低赤字期的瘦体重损失。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.1,
+    3.0
+   ],
+   "reference": "Cahill GF (1970) N Engl J Med 282:668-675",
+   "locator": "TODO:LOCATE"
+  },
+  "muscle_fraction": {
+   "description": "肌肉占瘦体重的比例，训练和蛋白使其上升，久坐、炎症、衰老和能量不足使其下降。",
+   "value": 0.5,
+   "unit": "fraction",
+   "type": "state",
+   "bounds": [
+    0.3,
+    0.56
+   ],
+   "reference": "Janssen I et al. (2000) J Appl Physiol 89:81-88，成年男性骨骼肌约占体重的 38 percent"
+  },
+  "muscle_mass": {
+   "description": "肌肉量，等于瘦体重乘肌肉占比。",
+   "value": 28.75,
+   "unit": "kg",
+   "type": "state",
+   "bounds": [
+    8.0,
+    70.0
+   ],
+   "reference": "由 lean_mass 与 muscle_fraction 推出"
+  },
+  "muscle_strength": {
+   "description": "肌力相对值，随肌肉量的 0.67 次方和神经适应变化，疲劳使其降低。",
+   "value": 1.0,
+   "unit": "ratio",
+   "type": "state",
+   "bounds": [
+    0.2,
+    2.5
+   ],
+   "reference": "Jaric S (2002) Sports Med 32:615-631，肌力随身体尺寸的异速生长标度"
+  },
+  "bone_density": {
+   "description": "骨密度，随负重和抗阻训练升高，随皮质醇、能量不足、吸烟酒精和年龄下降，时间常数约 300 天。",
+   "value": 1.2,
+   "unit": "g/cm2",
+   "type": "state",
+   "bounds": [
+    0.6,
+    1.5
+   ],
+   "reference": "TODO:SOURCE"
+  },
+  "vitamin_d": {
+   "description": "血清 25 羟维生素 D，随饮食质量上升，随肥胖稀释下降。",
+   "value": 30.0,
+   "unit": "ng/mL",
+   "type": "state",
+   "bounds": [
+    5.0,
+    80.0
+   ],
+   "reference": "Holick MF et al. (2011) J Clin Endocrinol Metab 96:1911-1930，血清 25 羟维生素 D 充足的下限为 30 ng/mL"
+  },
+  "lung_reserve_pct": {
+   "description": "肺功能储备，占预计一秒用力呼气量的百分比，长期缓慢下降，基本不可逆。",
+   "value": 100.0,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    10.0,
+    110.0
+   ],
+   "reference": "Fletcher C, Peto R (1977) BMJ 1:1645-1648",
+   "locator": "TODO:LOCATE"
+  },
+  "airway_inflammation": {
+   "description": "气道炎症指数，随吸烟和感染上升，可逆，参考值 0.1。",
+   "value": 0.1,
+   "unit": "index",
+   "type": "state",
+   "bounds": [
+    0.0,
+    3.0
+   ],
+   "reference": "本模型自定义的状态指数，无对应实测量"
+  },
+  "fev1_pct": {
+   "description": "一秒用力呼气量占预计值百分比，等于肺功能储备减去气道炎症项和肥胖限制项。",
+   "value": 100.0,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    10.0,
+    110.0
+   ],
+   "reference": "Fletcher C, Peto R (1977) BMJ 1:1645-1648",
+   "locator": "TODO:LOCATE"
+  },
+  "spo2": {
+   "description": "静息血氧饱和度，随肺功能下降、感染和重度肥胖下降。",
+   "value": 98.0,
+   "unit": "percent",
+   "type": "state",
+   "bounds": [
+    60.0,
+    100.0
+   ],
+   "reference": "Hall JE, Hall ME (2020) Guyton and Hall Textbook of Medical Physiology, 14th ed, Elsevier，正常范围内取值"
+  },
+  "respiratory_rate": {
+   "description": "静息呼吸频率，随发热、肺功能下降和肥胖升高。",
+   "value": 14.0,
+   "unit": "breaths/min",
+   "type": "state",
+   "bounds": [
+    8.0,
+    40.0
+   ],
+   "reference": "Hall JE, Hall ME (2020) Guyton and Hall Textbook of Medical Physiology, 14th ed, Elsevier，正常范围内取值"
+  }
+ },
+ "equations": {
+  "sleep_debt_dynamics": {
+   "description": "睡眠债向由睡眠时长缺口决定的目标松弛，目标为每小时缺口计 3 小时，上限 12，时间常数 4 天。",
+   "step_unit": "day",
+   "reference": "Van Dongen HPA et al. (2003) Sleep 26:117-126",
+   "priority": 20.0,
+   "dynamics": {
+    "sleep_debt": "sleep_debt + (max(0.0, min(12.0, 3.0 * (7.5 - sleep_hours))) - sleep_debt) * (1.0 - exp(-step / 4.0))"
+   }
+  },
+  "autonomic_and_allostatic": {
+   "description": "交感张力向目标松弛，时间常数 5 天，稳态负荷向皮质醇与交感张力超额部分决定的目标松弛，时间常数 90 天。",
+   "step_unit": "day",
+   "reference": "McEwen BS (1998) N Engl J Med 338:171-179",
+   "priority": 19.0,
+   "dynamics": {
+    "sympathetic_tone": "sympathetic_tone + (max(0.5, min(2.5, 1.0 + 0.9 * (stress_load - 0.3) + 0.04 * sleep_debt + 0.01 * min(40.0, fasting_insulin - 8.0) + 0.02 * min(30.0, smoking_cigs) + 0.13 * fever_c + 0.5 * max(0.0, 1.0 - hydration_index) - 0.004 * (vo2max_rel - vo2_ref))) - sympathetic_tone) * (1.0 - exp(-step / 5.0))",
+    "allostatic_load": "allostatic_load + (max(0.0, min(3.0, 0.1 + 0.5 * max(0.0, cortisol - 1.0 + 0.5 * (sympathetic_tone - 1.0)))) - allostatic_load) * (1.0 - exp(-step / 90.0))"
+   }
+  },
+  "mood_fatigue_cognition": {
+   "description": "抑郁症状评分向目标松弛，时间常数 30 天。疲劳指数向目标松弛，时间常数 3 天。认知表现由当前状态直接算出。",
+   "step_unit": "day",
+   "reference": "Pilcher JJ, Huffcutt AI (1996) Sleep 19:318-326；Dantzer R et al. (2008) Nat Rev Neurosci 9:46-56，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 18.0,
+   "dynamics": {
+    "depressive_symptoms": "depressive_symptoms + (max(0.0, min(27.0, 3.0 + 6.0 * (stress_load - 0.3) + 0.5 * sleep_debt + 1.2 * log(max(0.1, crp)) - 0.04 * (aerobic_min - 20.0) + 4.0 * min(1.0, max(0.0, -energy_balance_ma) / 1500.0) + 6.0 * max(0.0, 1.0 - t3_level) + 3.0 * (allostatic_load - 0.1))) - depressive_symptoms) * (1.0 - exp(-step / 30.0))",
+    "fatigue_index": "fatigue_index + (max(0.0, min(1.0, 0.15 + 0.03 * sleep_debt + 0.012 * (depressive_symptoms - 3.0) + 0.04 * (hb_ref - hemoglobin) + 0.15 * (1.0 - t3_level) + 0.3 * min(1.0, infection_load) + disease_fatigue + 0.1 * min(1.0, max(0.0, -energy_balance_ma) / 1500.0) - 0.004 * (vo2max_rel - vo2_ref))) - fatigue_index) * (1.0 - exp(-step / 3.0))",
+    "cognitive_performance": "max(0.2, min(1.3, 1.0 - 0.02 * sleep_debt - 0.1 * max(0.0, 1.0 - hydration_index) / 0.3 - 0.012 * (depressive_symptoms - 3.0) - 0.03 * (hb_ref - hemoglobin) + 0.05 * (min(1.0, aerobic_min / 40.0) - 0.5)))"
+   }
+  },
+  "intake_resolution": {
+   "description": "计划摄入加偏移量得到有效摄入，计划饮食质量加偏移得到有效饮食质量。未导入调节组件时两个偏移都为 0，有效值等于输入。",
+   "reference": "本模型的结构性定义，无对应实测量",
+   "priority": 102.0,
+   "dynamics": {
+    "energy_intake_eff": "max(0.0, energy_intake + intake_shift_kcal)",
+    "diet_quality_eff": "max(0.0, min(1.0, diet_quality + diet_quality_shift))"
+   }
+  },
+  "malab_resolution": {
+   "description": "输入的吸收不良程度加传染病与寄生虫引起的部分得到有效吸收不良程度。未导入疾病组件时 disease_malab 为 0，有效值等于输入。",
+   "reference": "本模型的结构性定义，无对应实测量",
+   "priority": 103.0,
+   "dynamics": {
+    "malab_eff": "min(1.0, malabsorption_severity + disease_malab)"
+   }
+  },
+  "nutrient_flows": {
+   "description": "把能量摄入和宏量营养素比例换算成每日克数。",
+   "reference": "Atwater 系数",
+   "priority": 100.0,
+   "dynamics": {
+    "carb_g": "energy_intake_eff * carb_pct / 4.0",
+    "protein_g": "energy_intake_eff * protein_pct / 4.0",
+    "fat_pct": "max(0.02, 1.0 - carb_pct - protein_pct)",
+    "fat_g": "energy_intake_eff * fat_pct / 9.0"
+   }
+  },
+  "gut_absorption": {
+   "description": "吸收效率取决于纤维、吸收不良严重度和感染腹泻，吸收量为摄入量乘以效率。",
+   "reference": "TODO:SOURCE",
+   "priority": 95.0,
+   "dynamics": {
+    "gut_absorption_efficiency": "max(0.3, min(0.99, 0.975 - 0.0006 * fiber_g - 0.3 * malab_eff - 0.04 * min(1.0, infection_load)))",
+    "absorbed_energy": "energy_intake_eff * gut_absorption_efficiency + 7.0 * alcohol_g * 0.8",
+    "absorbed_carb_g": "carb_g * min(0.995, gut_absorption_efficiency + 0.02)",
+    "absorbed_protein_g": "protein_g * gut_absorption_efficiency"
+   }
+  },
+  "gut_microbiome_dynamics": {
+   "description": "菌群多样性向由饮食质量、纤维、运动、酒精、压力、感染和吸收不良决定的目标松弛，时间常数 21 天。",
+   "step_unit": "day",
+   "reference": "David LA et al. (2014) Nature 505:559-563，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 90.0,
+   "dynamics": {
+    "gut_microbiome_diversity": "gut_microbiome_diversity + (0.7 + 0.3 * (diet_quality_eff - 0.6) + 0.3 * (min(1.0, fiber_g / 35.0) - 0.714) + 0.08 * (min(1.0, aerobic_min / 40.0) - 0.5) - 0.15 * (min(1.0, alcohol_g / 40.0) - 0.125) - 0.1 * (stress_load - 0.3) - 0.15 * malab_eff - 0.1 * min(1.0, infection_load) - gut_microbiome_diversity) * (1.0 - exp(-step / 21.0))"
+   }
+  },
+  "gut_barrier_dynamics": {
+   "description": "肠屏障完整性向目标松弛，时间常数 12 天，酒精、高脂、压力、菌群失调、吸收不良和全身炎症使目标下降。",
+   "step_unit": "day",
+   "reference": "Bischoff SC et al. (2014) BMC Gastroenterol 14:189，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 89.0,
+   "dynamics": {
+    "gut_barrier_integrity": "gut_barrier_integrity + (max(0.3, min(0.98, 0.92 - 0.2 * (min(1.0, alcohol_g / 60.0) - 0.083) - 0.25 * (0.7 - gut_microbiome_diversity) - 0.1 * (stress_load - 0.3) - 0.3 * max(0.0, fat_pct - 0.35) - 0.3 * malab_eff - 0.004 * min(50.0, crp - 1.0))) - gut_barrier_integrity) * (1.0 - exp(-step / 12.0))"
+   }
+  },
+  "gut_derived_indices": {
+   "description": "内毒素指数、短链脂肪酸指数和转运时间由当前屏障、菌群和输入直接算出。",
+   "reference": "本模型自定义的指数构造，无对应实测量",
+   "priority": 88.0,
+   "dynamics": {
+    "endotoxemia_index": "1.0 + 10.0 * max(0.0, 0.92 - gut_barrier_integrity)",
+    "scfa_index": "gut_microbiome_diversity / 0.7 * min(1.6, fiber_g / 25.0)",
+    "gi_transit_time_h": "33.0 - 0.5 * (fiber_g - 25.0) - 5.0 * (min(1.2, water_l / 2.4) - 1.0) - 0.05 * (aerobic_min - 20.0) + 8.0 * (stress_load - 0.3)"
+   }
+  },
+  "energy_signal_smoothing": {
+   "description": "能量平衡的十天滑动平均，作为各激素共同的能量状态信号。",
+   "step_unit": "day",
+   "reference": "本模型的指数平滑构造，时间常数为设定值",
+   "priority": 66.0,
+   "dynamics": {
+    "energy_balance_ma": "energy_balance_ma + (energy_balance - energy_balance_ma) * (1.0 - exp(-step / 10.0))"
+   }
+  },
+  "thyroid_axis": {
+   "description": "三碘甲状腺原氨酸向由能量状态、感染和甲状腺功能低下决定的目标松弛，时间常数 2 天，能量信号取 0.3 倍十日均值加 0.7 倍当日值，脂肪量低于 7 kg 时目标进一步下降，并据此更新代谢因子和适应性产热。",
+   "step_unit": "day",
+   "reference": "Rosenbaum M, Leibel RL (2010) Int J Obes 34:S47-S55",
+   "priority": 65.0,
+   "dynamics": {
+    "t3_level": "t3_level + (max(0.15, (1.0 + 0.00025 * min(0.0, 0.3 * energy_balance_ma + 0.7 * energy_balance) - 0.15 * min(1.0, infection_load)) * (1.0 - 0.75 * min(1.0, hypothyroid_severity + disease_hypothyroid)) * (1.0 - 0.7 * max(0.0, 1.0 - fat_mass / 7.0))) - t3_level) * (1.0 - exp(-step / 2.0))",
+    "thyroid_metabolic_factor": "0.55 + 0.45 * t3_level",
+    "adaptive_thermogenesis_kcal": "(205.0 + 22.0 * lean_mass + 3.2 * fat_mass) * (thyroid_metabolic_factor - 1.0)"
+   }
+  },
+  "neat_regulation": {
+   "description": "非运动活动乘数随十天平均能量平衡和疲劳变化。",
+   "reference": "Levine JA et al. (1999) Science 283:212-214",
+   "priority": 64.0,
+   "dynamics": {
+    "neat_factor": "max(0.55, min(1.6, 1.0 + 0.00035 * energy_balance_ma - 0.25 * (fatigue_index - 0.15)))"
+   }
+  },
+  "adrenal_cortisol_axis": {
+   "description": "皮质醇向由压力、睡眠债、能量不足、感染、肥胖和酒精决定的目标松弛，时间常数 5 天。",
+   "step_unit": "day",
+   "reference": "McEwen BS (1998) N Engl J Med 338:171-179",
+   "priority": 63.0,
+   "dynamics": {
+    "cortisol": "cortisol + (max(0.4, min(4.0, 1.0 + 1.2 * max(0.0, 1.0 - fat_mass / 7.0) + 0.8 * (stress_load - 0.3) + 0.04 * sleep_debt + 0.25 * min(1.0, max(0.0, -energy_balance_ma) / 1000.0) + 0.6 * min(1.0, infection_load) + 0.004 * (fat_mass - fat_ref) + 0.004 * (alcohol_g - 5.0))) - cortisol) * (1.0 - exp(-step / 5.0))"
+   }
+  },
+  "adipokine_appetite_axis": {
+   "description": "瘦素和胃饥饿素向目标松弛，时间常数均为 3 天，饥饿驱动指数由两者综合。",
+   "step_unit": "day",
+   "reference": "Considine RV et al. (1996) N Engl J Med 334:292-295; Cummings DE et al. (2002) N Engl J Med 346:1623-1630",
+   "priority": 62.0,
+   "dynamics": {
+    "leptin": "leptin + (0.47 * (1.0 + 0.9 * sex_female) * fat_mass * exp(0.0006 * min(0.0, energy_balance_ma)) * (1.0 + 0.00015 * max(0.0, energy_balance_ma)) - leptin) * (1.0 - exp(-step / 3.0))",
+    "ghrelin": "ghrelin + (max(0.3, min(3.0, 1.0 + 0.0004 * max(0.0, -energy_balance_ma) - 0.01 * (fat_mass - fat_ref) + 0.03 * sleep_debt)) - ghrelin) * (1.0 - exp(-step / 3.0))",
+    "appetite_drive": "max(0.2, min(3.5, 1.0 + 0.7 * (ghrelin - 1.0) - 0.02 * (leptin - 8.0)))"
+   }
+  },
+  "anabolic_hormones": {
+   "description": "睾酮和胰岛素样生长因子向目标松弛，时间常数分别为 20 天和 10 天。",
+   "step_unit": "day",
+   "reference": "Dandona P, Dhindsa S (2011) J Clin Endocrinol Metab 96:2643-2651",
+   "priority": 61.0,
+   "dynamics": {
+    "testosterone": "testosterone + (max(0.15, min(1.3, 1.0 - 0.012 * (fat_mass - fat_ref) - 0.35 * min(1.0, max(0.0, -energy_balance_ma) / 1500.0) - 0.1 * (cortisol - 1.0) - 0.6 * max(0.0, 1.0 - fat_mass / 7.0) - 0.01 * (age_years - 35.0) + 0.03 * (sleep_hours - 7.5) + 0.05 * (min(1.5, resistance_min / 30.0) - 0.167))) - testosterone) * (1.0 - exp(-step / 20.0))",
+    "igf1": "igf1 + (max(0.3, min(1.6, 1.0 + 0.25 * (min(1.6, protein_g_per_kg) - 1.4) + 0.0002 * min(0.0, energy_balance_ma) + 0.05 * (sleep_hours - 7.5) - 0.008 * (age_years - 35.0))) - igf1) * (1.0 - exp(-step / 10.0))"
+   }
+  },
+  "exercise_memory": {
+   "description": "近期运动量的指数平滑，时间常数 1.5 天。",
+   "step_unit": "day",
+   "reference": "本模型的指数平滑构造，时间常数为设定值",
+   "priority": 60.0,
+   "dynamics": {
+    "exercise_recent": "exercise_recent + ((aerobic_min + 0.5 * resistance_min) / 30.0 - exercise_recent) * (1.0 - exp(-step / 1.5))"
+   }
+  },
+  "insulin_sensitivity_dynamics": {
+   "description": "胰岛素敏感性向目标松弛，时间常数 10 天。目标为参考值乘偏离项的指数，内脏脂肪、肝脂肪、炎症、睡眠债、皮质醇、年龄、高血糖降低敏感性，体能和近期运动提高敏感性。",
+   "step_unit": "day",
+   "reference": "Kahn SE et al. (2006) Nature 444:840-846；Richter EA, Hargreaves M (2013) Physiol Rev 93:993-1017，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 59.0,
+   "dynamics": {
+    "insulin_sensitivity": "insulin_sensitivity + (max(0.1, min(1.8, exp(-0.08 * min(8.0, visceral_fat_kg - visc_ref) - 0.025 * min(25.0, liver_fat - 4.0) - 0.1 * log(max(0.1, crp)) + 0.006 * (vo2max_rel - vo2_ref) - 0.02 * sleep_debt - 0.15 * (cortisol - 1.0) - 0.004 * (age_years - 35.0) - 0.0015 * min(150.0, max(0.0, fasting_glucose - 100.0)) + 0.15 * (exercise_recent - 0.75)))) - insulin_sensitivity) * (1.0 - exp(-step / 10.0))"
+   }
+  },
+  "beta_cell_dynamics": {
+   "description": "β 细胞功能受糖毒性和脂毒性侵蚀，血糖不超过 115 mg/dL 时按较快速率向 1 恢复，高于该值时恢复速率降低。",
+   "step_unit": "day",
+   "reference": "Topp B et al. (2000) J Theor Biol 206:605-619",
+   "priority": 58.0,
+   "dynamics": {
+    "beta_cell_function": "beta_cell_function + (-beta_cell_function * (0.0002 * max(0.0, fasting_glucose - 115.0) / 50.0 + 5e-05 * max(0.0, liver_fat - 8.0) / 8.0) + (1.0 - beta_cell_function) * 0.0008 * (1.0 if fasting_glucose <= 115.0 else 0.2)) * step"
+   }
+  },
+  "glucose_insulin_steady_state": {
+   "description": "空腹胰岛素与血糖在日尺度上取准稳态。所需胰岛素为参考值除以敏感性，可分泌上限为 β 细胞功能乘 4，所需量不超过上限时血糖只随代偿量轻微上升，超过上限后随不足比例饱和上升。低碳水摄入下调胰岛素，酮症、皮质醇调节血糖。",
+   "step_unit": "day",
+   "reference": "Topp B et al. (2000) J Theor Biol 206:605-619; Matthews DR et al. (1985) Diabetologia 28:412-419",
+   "priority": 57.0,
+   "dynamics": {
+    "fasting_insulin": "max(0.5, min(200.0, 8.0 * min(1.0 / insulin_sensitivity, 5.0 * beta_cell_function) * (0.35 + 0.65 * min(1.3, absorbed_carb_g / 318.0))))",
+    "fasting_glucose": "fasting_glucose + (max(40.0, min(400.0, 88.0 + 4.0 * (min(1.0 / insulin_sensitivity, 5.0 * beta_cell_function) - 1.0) + 220.0 * (1.0 - exp(-max(0.0, 1.0 / insulin_sensitivity / (5.0 * beta_cell_function) - 1.0) / 1.9)) + 8.0 * (cortisol - 1.0) - 2.0 * min(3.0, ketone_bodies - 0.1) - 4.0 * max(0.0, 1.0 - absorbed_carb_g / 250.0) + 4.0 * max(0.0, absorbed_carb_g / 250.0 - 1.27))) - fasting_glucose) * (1.0 - exp(-step / 2.0))",
+    "homa_ir": "fasting_glucose * fasting_insulin / 405.0",
+    "hba1c": "hba1c + ((1.1 * fasting_glucose + 4.0 + 46.7) / 28.7 + 0.007 * (age_years - 35.0) - hba1c) * (1.0 - exp(-step / 45.0))"
+   }
+  },
+  "liver_fat_dynamics": {
+   "description": "肝脂肪向目标松弛，时间常数 15 天。内脏脂肪、酒精、精制饮食、胰岛素抵抗和碳水过量抬高目标，运动和热量赤字降低目标。",
+   "step_unit": "day",
+   "reference": "Petersen KF et al. (2005) Diabetes 54:603-608",
+   "priority": 56.0,
+   "dynamics": {
+    "liver_fat": "liver_fat + (max(1.0, min(45.0, 4.0 + 1.1 * min(12.0, visceral_fat_kg - visc_ref) + 0.1 * (alcohol_g - 5.0) + 3.0 * (1.0 - diet_quality_eff - 0.4) + 1.0 * (min(6.0, 1.0 / insulin_sensitivity) - 1.0) + 0.005 * (absorbed_carb_g - 318.0) - 0.03 * (aerobic_min - 20.0) - 0.004 * max(0.0, -energy_balance_ma))) - liver_fat) * (1.0 - exp(-step / 15.0))"
+   }
+  },
+  "liver_enzyme_and_fibrosis": {
+   "description": "转氨酶随肝脂肪、酒精、纤维化和感染上升，时间常数 6 天。纤维化由肝脂肪与酒精超阈部分缓慢累积。",
+   "step_unit": "day",
+   "reference": "Chalasani N et al. (2018) Hepatology 67:328-357，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 55.0,
+   "dynamics": {
+    "alt": "alt + (max(8.0, min(800.0, 25.0 + 1.5 * (liver_fat - 4.0) + 0.5 * (alcohol_g - 5.0) + 25.0 * liver_fibrosis + 8.0 * min(3.0, infection_load))) - alt) * (1.0 - exp(-step / 6.0))",
+    "liver_fibrosis": "liver_fibrosis + (1e-05 * max(0.0, liver_fat - 5.5) + 3e-05 * max(0.0, alcohol_g - 30.0) / 30.0 + 3e-06 * max(0.0, crp - 3.0) - 4e-06 * liver_fibrosis) * step"
+   }
+  },
+  "ketogenesis": {
+   "description": "酮体向由低碳水吸收和能量赤字决定的目标松弛，被高空腹胰岛素抑制，时间常数 2.5 天。",
+   "step_unit": "day",
+   "reference": "Cahill GF (2006) Annu Rev Nutr 26:1-22",
+   "priority": 54.0,
+   "dynamics": {
+    "ketone_bodies": "ketone_bodies + (max(0.05, min(8.0, (0.1 + 2.6 * max(0.0, 1.0 - absorbed_carb_g / 130.0) + 1.5 * max(0.0, min(2.0, -energy_balance_ma / 1000.0))) * max(0.3, min(1.5, 1.6 - 0.075 * fasting_insulin)))) - ketone_bodies) * (1.0 - exp(-step / 2.5))"
+   }
+  },
+  "lipid_dynamics": {
+   "description": "三酰甘油、低密度和高密度胆固醇向各自目标松弛，时间常数分别为 8、12、20 天，总胆固醇和非高密度胆固醇由三项直接算出。",
+   "step_unit": "day",
+   "reference": "Mensink RP et al. (2003) Am J Clin Nutr 77:1146-1155",
+   "priority": 50.0,
+   "dynamics": {
+    "tg_x": "0.03 * min(20.0, liver_fat - 4.0) + 0.18 * (min(6.0, 1.0 / insulin_sensitivity) - 1.0) + 0.006 * (alcohol_g - 5.0) + 0.35 * (1.0 - diet_quality_eff - 0.4) - 0.1 * (exercise_recent - 0.75) + 0.2 * (carb_pct - 0.5)",
+    "triglycerides": "triglycerides + (max(30.0, min(1500.0, 100.0 * exp(min(tg_x, 1.2) + 0.5 * max(0.0, tg_x - 1.2)))) - triglycerides) * (1.0 - exp(-step / 8.0))",
+    "ldl_c": "ldl_c + (max(30.0, min(400.0, 110.0 + 15.0 * meno + 60.0 * (fat_pct - 0.33) - 20.0 * (diet_quality_eff - 0.6) - 0.7 * (fiber_g - 25.0) + 0.9 * (fat_mass - fat_ref) + 60.0 * max(0.0, 1.0 - t3_level) + 6.0 * (cortisol - 1.0))) - ldl_c) * (1.0 - exp(-step / 12.0))",
+    "hdl_c": "hdl_c + (max(15.0, min(100.0, 50.0 + 8.0 * sex_female - 4.0 * meno + 0.1 * (aerobic_min - 20.0) - 0.8 * (visceral_fat_kg - visc_ref) - 0.03 * (triglycerides - 100.0) - min(6.0, 0.3 * smoking_cigs) + 0.15 * min(30.0, alcohol_g - 5.0))) - hdl_c) * (1.0 - exp(-step / 20.0))",
+    "total_cholesterol": "ldl_c + hdl_c + triglycerides / 5.0",
+    "non_hdl_c": "total_cholesterol - hdl_c"
+   }
+  },
+  "aerobic_capacity": {
+   "description": "最大摄氧量目标由训练量、瘦体重、血红蛋白、肺功能、年龄、发热共同决定，训练上升时间常数 45 天，停训下降时间常数 25 天。",
+   "step_unit": "day",
+   "reference": "Bassett DR, Howley ET (2000) Med Sci Sports Exerc 32:70-84",
+   "priority": 40.0,
+   "dynamics": {
+    "vo2max_target": "3.0 * (1.0 + 0.3 * (min(1.5, (aerobic_min + 0.15 * resistance_min) / 45.0) - 0.478) + 0.17 * max(0.0, min(3.0, (aerobic_min + 0.15 * resistance_min) / 45.0) - 1.5)) * (lean_mass / 57.5) ** 0.8 * (hemoglobin / hb_ref) ** 0.6 * (1.0 - 0.005 * (age_years - 35.0)) * (fev1_pct / 100.0) ** 0.3 * (1.0 - 0.05 * fever_c)",
+    "vo2max_abs": "vo2max_abs + (vo2max_target - vo2max_abs) * (1.0 - exp(-step / (45.0 if vo2max_target > vo2max_abs else 25.0)))",
+    "vo2max_rel": "vo2max_abs * 1000.0 / body_weight"
+   }
+  },
+  "blood_pressure_dynamics": {
+   "description": "收缩压向由体重、细胞外液、酒精、运动、睡眠债、交感张力、胰岛素抵抗、年龄、肾功能和吸烟决定的目标松弛，时间常数 14 天。",
+   "step_unit": "day",
+   "reference": "Sacks FM et al. (2001) N Engl J Med 344:3-10; Guyton AC (1991) Science 252:813-816",
+   "priority": 39.0,
+   "dynamics": {
+    "systolic_bp": "systolic_bp + (max(70.0, min(260.0, 120.0 - 6.0 * sex_female + 5.0 * meno + 0.45 * min(30.0, body_weight - wt_ref) + 5.5 * ecf_excess_l + 0.12 * (alcohol_g - 5.0) - 0.15 * (min(90.0, aerobic_min) - 20.0) + 0.4 * sleep_debt + 6.0 * (sympathetic_tone - 1.0) + 0.8 * min(6.0, homa_ir - 1.7) + 0.35 * (age_years - 35.0) + 0.15 * max(0.0, gfr_ref - gfr) + min(6.0, 0.2 * smoking_cigs))) - systolic_bp) * (1.0 - exp(-step / 14.0))",
+    "diastolic_bp": "max(40.0, 78.0 + 0.5 * (systolic_bp - 120.0 - 0.35 * (age_years - 35.0)) + 0.3 * (min(age_years, 55.0) - 35.0) - 0.35 * max(0.0, age_years - 55.0))",
+    "mean_arterial_pressure": "diastolic_bp + (systolic_bp - diastolic_bp) / 3.0"
+   }
+  },
+  "heart_rate_regulation": {
+   "description": "静息心率向由体能、交感张力、三碘甲状腺原氨酸、发热、脱水和贫血决定的目标松弛，时间常数 5 天。",
+   "step_unit": "day",
+   "reference": "Klein I, Ojamaa K (2001) N Engl J Med 344:501-509；Karjalainen J, Viitasalo M (1986) Arch Intern Med 146:1169-1171，体温每升高 1 摄氏度静息心率平均上升 8.5 次每分，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 38.0,
+   "dynamics": {
+    "resting_hr": "resting_hr + (max(30.0, min(160.0, 66.0 - 0.65 * (vo2max_rel - vo2_ref) + 14.0 * (sympathetic_tone - 1.0) + 25.0 * (t3_level - 1.0) + 6.0 * fever_c + 30.0 * max(0.0, 1.0 - hydration_index) + 2.0 * (hb_ref - hemoglobin))) - resting_hr) * (1.0 - exp(-step / 5.0))"
+   }
+  },
+  "atherosclerosis_progression": {
+   "description": "动脉粥样硬化负荷以基线速率每天 0.00008 累积，乘低密度胆固醇、收缩压、吸烟、血糖和炎症的指数风险因子，并有极慢的回退，十年风险为同类因子的指数式。",
+   "step_unit": "day",
+   "reference": "D'Agostino RB et al. (2008) Circulation 117:743-753",
+   "priority": 37.0,
+   "dynamics": {
+    "plaque_burden": "plaque_burden + (8e-05 * exp(0.012 * (ldl_c - 110.0) + 0.02 * (systolic_bp - 120.0) + 0.45 * min(1.0, smoking_cigs / 10.0) + 0.25 * min(4.0, max(0.0, hba1c - 5.7)) + 0.12 * log(max(0.1, crp))) - 2e-06 * plaque_burden) * step",
+    "cvd_risk_10y_pct": "max(0.1, min(100.0, 2.0 * exp(min(3.5, -1.0 * sex_female + 0.3 * meno_late + 0.017 * (systolic_bp - 120.0) + 0.0045 * (ldl_c - 110.0) - 0.02 * (hdl_c - 50.0 - 8.0 * sex_female) + 0.045 * (age_years - 35.0) + 0.55 * min(1.0, smoking_cigs / 10.0) + 0.2 * min(4.5, max(0.0, hba1c - 5.5)) + 0.12 * log(max(0.1, crp)) + 0.25 * (plaque_burden - 0.1)))))"
+   }
+  },
+  "infection_dynamics": {
+   "description": "感染负荷服从带清除的逻辑斯谛方程，净增长率为 0.9 减 1.2 乘免疫能力，承载上限 10，一个步长内取方程的精确解，病原体暴露按步长内的持续源项并入同一方程，取带源项逻辑斯谛方程的一步精确解，因此对任意步长都单调稳定。",
+   "step_unit": "day",
+   "reference": "本模型自定义的逻辑斯谛感染动力学，增长率与清除系数为设定值，逻辑斯谛部分取一步精确解，病原暴露剂量在步长开头注入，剂量部分与步长有关",
+   "priority": 30.0,
+   "dynamics": {
+    "pathogen_dose": "pathogen_challenge + disease_pathogen",
+    "infection_growth_rate": "0.9 - 1.2 * immune_competence + 0.1 * (1.0 - medical_era)",
+    "inf_delta": "sqrt(infection_growth_rate * infection_growth_rate + 0.36 * pathogen_dose)",
+    "inf_xp": "(infection_growth_rate + inf_delta) / 0.18",
+    "inf_xm": "(infection_growth_rate - inf_delta) / 0.18",
+    "inf_q": "(infection_load - inf_xp) / (infection_load - inf_xm) * exp(-inf_delta * step) if pathogen_dose > 1e-09 else 0.0",
+    "infection_load": "(inf_xp - inf_q * inf_xm) / (1.0 - inf_q) if pathogen_dose > 1e-09 else infection_load * exp(infection_growth_rate * step) / (1.0 + 0.09 * infection_load * (exp(infection_growth_rate * step) - 1.0) / infection_growth_rate) if abs(infection_growth_rate) > 1e-06 else infection_load / (1.0 + 0.09 * infection_load * step)"
+   }
+  },
+  "immune_competence_dynamics": {
+   "description": "免疫能力向目标松弛，时间常数 7 天。睡眠债、蛋白与能量不足、皮质醇、高血糖、肥胖、年龄、酒精、吸烟和低体重降低目标，运动和饮食质量提高目标。",
+   "step_unit": "day",
+   "reference": "Besedovsky L et al. (2019) Physiol Rev 99:1325-1380，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 29.0,
+   "dynamics": {
+    "immune_competence": "immune_competence + (max(0.2, min(1.4, 1.0 - 0.02 * sleep_debt - 0.1 * max(0.0, 1.0 - protein_g_per_kg) - 0.4 * max(0.0, -energy_balance_ma - 300.0) / 2000.0 - 0.25 * max(0.0, cortisol - 1.0) + 0.1 * (min(1.0, aerobic_min / 40.0) - 0.5) - 0.04 * max(0.0, fasting_glucose - 110.0) / 20.0 - 0.004 * (fat_mass - fat_ref) - 0.004 * (age_years - 35.0) - 0.004 * max(0.0, alcohol_g - 20.0) - 0.006 * min(20.0, smoking_cigs) + 0.15 * (diet_quality_eff - 0.6) - 0.5 * max(0.0, 18.5 - bmi) / 5.0)) - immune_competence) * (1.0 - exp(-step / 7.0))"
+   }
+  },
+  "fever_and_acute_phase": {
+   "description": "发热随感染负荷饱和上升，C 反应蛋白向由肥胖、内脏脂肪、内毒素、睡眠债、吸烟、胰岛素抵抗、肝脂肪和感染决定的目标松弛，时间常数 2 天。",
+   "step_unit": "day",
+   "reference": "Ridker PM (2003) Circulation 107:363-369",
+   "priority": 28.0,
+   "dynamics": {
+    "fever_c": "3.0 * (1.0 - exp(-0.8 * infection_load))",
+    "crp_chronic_x": "0.025 * min(40.0, fat_mass - fat_ref) + 0.06 * min(10.0, visceral_fat_kg - visc_ref) + 0.18 * (endotoxemia_index - 1.0) - 0.06 * (min(1.5, scfa_index) - 1.0) - 0.008 * (vo2max_rel - vo2_ref) + 0.03 * sleep_debt + 0.02 * min(30.0, smoking_cigs) + 0.03 * min(10.0, homa_ir - 1.7) + 0.012 * min(25.0, liver_fat - 4.0)",
+    "crp": "crp + (max(0.1, min(300.0, exp(min(crp_chronic_x, 1.8) + 0.4 * max(0.0, crp_chronic_x - 1.8) + 4.0 * min(4.0, infection_load)))) - crp) * (1.0 - exp(-step / 2.0))"
+   }
+  },
+  "iron_balance": {
+   "description": "膳食铁与吸收分数决定吸收量，铁蛋白按吸收量减每日基础损失 1.1 毫克再减额外铁损失累积，额外铁损失按血红蛋白比例缩放，女性另计月经失铁，储存耗尽后改记累计铁亏空。",
+   "step_unit": "day",
+   "reference": "Cook JD et al. (1974) Am J Clin Nutr 27:681-687",
+   "priority": 15.0,
+   "dynamics": {
+    "dietary_iron_mg": "5.0 * (energy_intake_eff / 1000.0) * (0.6 + 0.8 * diet_quality_eff)",
+    "iron_absorption_fraction": "max(0.02, min(0.25, 0.08 * (100.0 / ferritin) ** 0.6 / (1.0 + 0.15 * (crp - 1.0)) * (gut_absorption_efficiency / 0.96)))",
+    "iron_net_mg": "dietary_iron_mg * iron_absorption_fraction - 1.1 + 0.2 * sex_female - 1.0 * (sex_female - meno) - (iron_loss_extra_mg + disease_blood_loss_mg) * (hemoglobin / hb_ref)",
+    "iron_store_mg": "8.0 * (ferritin - 1.0) - iron_deficit_mg + iron_net_mg * step",
+    "ferritin": "1.0 + max(0.0, iron_store_mg) / 8.0",
+    "iron_deficit_mg": "max(0.0, -iron_store_mg)"
+   }
+  },
+  "hemoglobin_dynamics": {
+   "description": "血红蛋白向目标松弛，时间常数 30 天。铁蛋白低于 25 时按储备比例最多降低目标 1.2 g/dL，储存耗尽后随累计铁亏空继续降低，每 174 毫克铁对应 1 g/dL，亏空项上限 7 g/dL，肾功能下降、炎症、能量不足和甲状腺功能低下也降低目标。",
+   "step_unit": "day",
+   "reference": "Camaschella C (2015) N Engl J Med 372:1832-1843；Weiss G, Goodnough LT (2005) N Engl J Med 352:1011-1023，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 14.0,
+   "dynamics": {
+    "hemoglobin": "hemoglobin + (max(4.0, min(19.0, hb_ref - (1.2 * max(0.0, 1.0 - ferritin / 25.0) + min(7.0, iron_deficit_mg / 174.0)) - 1.2 * max(0.0, 1.0 - gfr_effective / 45.0) - 0.35 * log(max(0.1, crp)) - 0.6 * max(0.0, -energy_balance_ma - 500.0) / 1500.0 - 0.6 * (1.0 - t3_level) - 2.5 * max(0.0, 1.0 - fat_mass / 7.0))) - hemoglobin) * (1.0 - exp(-step / 30.0))"
+   }
+  },
+  "mortality_layer": {
+   "description": "全因死亡风险层。年死亡风险率等于按年龄指数上升的基础风险乘生活方式与代谢状态给出的风险比，存活概率按风险率连乘。风险比各项取自队列荟萃分析的量级，基础风险按美国男性生命表标定，女性乘 0.67。",
+   "step_unit": "day",
+   "priority": 80.0,
+   "dynamics": {
+    "smoke_hist": "smoke_hist + (smoking_cigs - smoke_hist) * (1.0 - exp(-step / 3000.0))",
+    "mortality_lnhr": "0.35 * log(1.0 + 0.06 * max(0.0, 7.0 - sleep_hours)) + 1.0 * log(1.0 + 0.13 * max(0.0, sleep_hours - 7.0)) - 0.0 - 0.04 * max(-4.0, min(0.5, (vo2max_rel - vo2_ref) / 3.5)) + 0.02 * max(0.0, bmi - 25.0) + 0.07 * max(0.0, 20.0 - bmi) + 0.8 * min(1.0, smoke_hist / 10.0) + 0.006 * max(0.0, systolic_bp - 115.0) + 0.18 * max(0.0, min(9.0, hba1c) - 5.7) + 0.006 * max(0.0, alcohol_g - 25.0) + 0.06 * log(max(0.1, crp)) + 0.01 * max(0.0, 90.0 - gfr_effective) - 0.35 * (1.0 - exp(-(aerobic_min * 5.0 + resistance_min * 3.0) * 7.0 / 60.0 / 2.0) - (1.0 - exp(-13.42 / 2.0))) - 0.4 * sex_female - 0.0299",
+    "annual_hazard": "0.00115 * exp(0.0675 * (age_years - 35.0) + mortality_lnhr) + disease_hazard",
+    "survival_prob": "survival_prob * exp(-annual_hazard * step / 365.25)"
+   }
+  },
+  "sex_reference": {
+   "description": "参考个体的性别相关参考值，由 sex_female 与年龄决定，供各系统读取。",
+   "step_unit": "day",
+   "priority": 5.0,
+   "dynamics": {
+    "fat_ref": "17.0 + 5.0 * sex_female",
+    "visc_ref": "1.9 - 0.7 * sex_female",
+    "vo2_ref": "39.3 - 3.8 * sex_female",
+    "wt_ref": "76.3 - 12.3 * sex_female",
+    "musc_ref": "28.75 - 8.25 * sex_female",
+    "hb_ref": "14.8 - 1.3 * sex_female",
+    "gfr_ref": "105.0 - 7.0 * sex_female",
+    "meno": "sex_female * min(1.0, max(0.0, (age_years - 48.0) / 6.0))",
+    "meno_late": "sex_female * min(1.0, max(0.0, (age_years - 52.0) / 20.0))"
+   }
+  },
+  "aging_clock": {
+   "description": "年龄按日历时间推进，生物学老化偏差按各风险因子决定的速率累积，速率以年每年计。",
+   "step_unit": "day",
+   "reference": "年龄按日历时间推进为定义，生物学老化偏差的累积速率为本模型设定的经验取值",
+   "priority": 10.0,
+   "dynamics": {
+    "age_years": "age_years + step / 365.25",
+    "biological_age_delta": "biological_age_delta + (0.2 * log(max(0.1, crp)) + 0.05 * (bmi - 24.9) + 0.9 * min(1.0, smoking_cigs / 20.0) + 0.15 * max(0.0, hba1c - 5.4) + 0.01 * (systolic_bp - 120.0) + 0.5 * (allostatic_load - 0.1) - 0.03 * (vo2max_rel - vo2_ref)) * step / 365.25"
+   }
+  },
+  "health_score_summary": {
+   "description": "综合健康评分从 100 出发，按各系统指标超出健康范围的部分扣分。",
+   "reference": "本模型自定义的综合评分，无对应实测量",
+   "priority": 9.0,
+   "dynamics": {
+    "health_score": "max(0.0, 100.0 - 2.0 * max(0.0, abs(bmi - 22.0) - 3.0) - 5.0 * max(0.0, 18.5 - bmi) - 6.0 * max(0.0, hba1c - 5.6) - 0.4 * max(0.0, systolic_bp - 120.0) - 0.08 * max(0.0, ldl_c - 100.0) - 3.0 * max(0.0, log(max(0.1, crp))) - 0.5 * max(0.0, 40.0 - vo2max_rel) - 1.0 * max(0.0, liver_fat - 5.5) - 1.0 * max(0.0, depressive_symptoms - 5.0) - 10.0 * max(0.0, fatigue_index - 0.25))"
+   }
+  },
+  "fat_mass_setpoint_dynamics": {
+   "description": "脂肪量设定点向实际脂肪量缓慢移动，脂肪量高于设定点时以 180 天时间常数上升，低于设定点时以 1500 天时间常数下降。",
+   "step_unit": "day",
+   "reference": "Polidori D et al. (2016) Obesity 24:2289-2295",
+   "priority": 105.0,
+   "dynamics": {
+    "fat_mass_setpoint": "fat_mass_setpoint + (fat_mass - fat_mass_setpoint) * (1.0 - exp(-step / (180.0 if fat_mass > fat_mass_setpoint else 1500.0)))"
+   }
+  },
+  "appetite_drives": {
+   "description": "稳态饥饿由胃饥饿素、瘦素缺口、设定点缺口和饱腹反馈决定，享乐性驱动由睡眠债、疲劳和压力叠加，感染使食欲下降。不受克制摄入等于平衡所需摄入乘一加稳态饥饿与感染项，再加参考摄入乘享乐性驱动，摄入偏移量的目标为反馈增益乘一减克制程度再乘该摄入与计划摄入之差。",
+   "reference": "Cummings DE et al. (2002) N Engl J Med 346:1623-1630; Al Khatib HK et al. (2017) Eur J Clin Nutr 71:614-624",
+   "priority": 104.0,
+   "dynamics": {
+    "homeostatic_hunger": "max(-0.3, min(0.8, 0.15 * (ghrelin - 1.0) + 0.15 * max(0.0, 0.47 * (1.0 + 0.9 * sex_female) * fat_mass - leptin) / 8.0 + max(-0.2, min(0.5, 0.0375 * (fat_mass_setpoint - fat_mass))) - 0.1 * min(1.0, max(0.0, energy_balance_ma) / 600.0)))",
+    "hedonic_eating_drive": "max(0.0, min(0.6, 0.012 * sleep_debt + 0.08 * max(0.0, fatigue_index - 0.15) + 0.12 * max(0.0, stress_load - 0.3)))",
+    "illness_anorexia": "-0.2 * min(1.0, infection_load)",
+    "unrestrained_intake": "max(0.0, (energy_expenditure - 5.6 * alcohol_g) / gut_absorption_efficiency * (1.0 + homeostatic_hunger + illness_anorexia) + 2545.0 * hedonic_eating_drive)",
+    "intake_shift_target": "appetite_feedback_gain * (1.0 - dietary_restraint) * (unrestrained_intake - energy_intake)"
+   }
+  },
+  "intake_shift_resolution": {
+   "description": "摄入偏移量等于目标偏移并限制在合理范围，有效饮食质量偏移由享乐性驱动决定，二者随计划切换即时变化。",
+   "reference": "本模型的结构性定义，无对应实测量",
+   "priority": 103.0,
+   "dynamics": {
+    "intake_shift_kcal": "max(-3000.0, min(6000.0, intake_shift_target))",
+    "diet_quality_shift": "max(-0.6, -1.0 * appetite_feedback_gain * (1.0 - dietary_restraint) * hedonic_eating_drive)"
+   }
+  },
+  "burden_rates": {
+   "description": "各疾病的流入率由暴露决定，清除率由免疫能力和医疗水平决定。拥挤与脂肪量低于参考使结核流入增加。",
+   "step_unit": "day",
+   "reference": "本模型自定义的流入清除平衡，方向依据 WHO 全球疾病负担与各疾病自然史，系数为设定值，未校准",
+   "priority": 26.0,
+   "dynamics": {
+    "ent_a": "0.2 * (1.0 - water_safety)",
+    "ent_k": "0.35 * immune_competence * (1.0 + 1.5 * medical_era)",
+    "tb_a": "0.0005 * crowding * (1.0 + 2.0 * max(0.0, (fat_ref - fat_mass) / fat_ref))",
+    "tb_k": "0.002 * immune_competence * (1.0 + 10.0 * medical_era)",
+    "mal_a": "0.05 * vector_exposure",
+    "mal_k": "0.08 * immune_competence * (1.0 + 4.0 * medical_era)",
+    "hel_a": "0.01 * (1.0 - water_safety)",
+    "hel_k": "0.004 * (1.0 + 10.0 * medical_era)",
+    "wnd_a": "0.02 * injury_exposure",
+    "wnd_k": "0.25 * immune_competence * (1.0 + 3.0 * medical_era)",
+    "epi_a": "0.004 * epidemic_pressure",
+    "epi_k": "0.05 * immune_competence * (1.0 + 3.0 * medical_era)"
+   }
+  },
+  "burden_dynamics": {
+   "description": "四个负担指数按线性流入清除平衡推进，取一步精确解，对任意步长稳定。维生素 C 库向摄入折算的目标松弛，坏血病指数在库低于 0.2 后上升。",
+   "step_unit": "day",
+   "reference": "本模型自定义的流入清除平衡，方向依据 WHO 全球疾病负担与各疾病自然史，系数为设定值，未校准",
+   "priority": 25.0,
+   "dynamics": {
+    "enteric_burden": "ent_a / (ent_a + ent_k) + (enteric_burden - ent_a / (ent_a + ent_k)) * exp(-(ent_a + ent_k) * step)",
+    "tb_burden": "tb_a / (tb_a + tb_k) + (tb_burden - tb_a / (tb_a + tb_k)) * exp(-(tb_a + tb_k) * step)",
+    "malaria_burden": "mal_a / (mal_a + mal_k) + (malaria_burden - mal_a / (mal_a + mal_k)) * exp(-(mal_a + mal_k) * step)",
+    "helminth_burden": "hel_a / (hel_a + hel_k) + (helminth_burden - hel_a / (hel_a + hel_k)) * exp(-(hel_a + hel_k) * step)",
+    "vitc_pool": "vitc_pool + (min(3.0, vitamin_c_mg / 90.0) - vitc_pool) * (1.0 - exp(-step / 45.0))",
+    "scurvy_index": "max(0.0, min(1.0, (0.2 - vitc_pool) / 0.2))",
+    "wound_burden": "wnd_a / (wnd_a + wnd_k) + (wound_burden - wnd_a / (wnd_a + wnd_k)) * exp(-(wnd_a + wnd_k) * step)",
+    "epidemic_burden": "epi_a / (epi_a + epi_k) + (epidemic_burden - epi_a / (epi_a + epi_k)) * exp(-(epi_a + epi_k) * step)",
+    "iodine_pool": "iodine_pool + (min(3.0, iodine_ug / 150.0) - iodine_pool) * (1.0 - exp(-step / 180.0))",
+    "goiter_index": "max(0.0, min(1.0, (0.5 - iodine_pool) / 0.5))",
+    "thiamine_pool": "thiamine_pool + (min(3.0, thiamine_mg / 1.2) - thiamine_pool) * (1.0 - exp(-step / 30.0))",
+    "beriberi_index": "max(0.0, min(1.0, (0.4 - thiamine_pool) / 0.4))"
+   }
+  },
+  "disease_effects": {
+   "description": "疾病经预留钩子作用于吸收、能量消耗、铁损失、疲劳、病原剂量和死亡风险。死亡风险率中除坏血病外都随医疗水平下降。",
+   "step_unit": "day",
+   "reference": "本模型自定义的流入清除平衡，方向依据 WHO 全球疾病负担与各疾病自然史，系数为设定值，未校准",
+   "priority": 24.0,
+   "dynamics": {
+    "disease_malab": "min(0.8, 0.7 * enteric_burden + 0.15 * helminth_burden + 0.1 * tb_burden)",
+    "disease_energy_kcal": "400.0 * tb_burden + 150.0 * malaria_burden + 200.0 * epidemic_burden",
+    "disease_blood_loss_mg": "3.0 * malaria_burden + 2.5 * helminth_burden + 4.0 * scurvy_index",
+    "disease_fatigue": "min(0.5, 0.3 * tb_burden + 0.2 * malaria_burden + 0.4 * scurvy_index + 0.2 * wound_burden + 0.3 * beriberi_index)",
+    "disease_pathogen": "0.03 * tb_burden + 0.08 * malaria_burden + 0.02 * enteric_burden + 0.25 * wound_burden + 0.4 * epidemic_burden",
+    "disease_hypothyroid": "0.6 * goiter_index",
+    "disease_hazard": "(1.0 - 0.8 * medical_era) * (0.04 * enteric_burden + 0.06 * tb_burden + 0.03 * malaria_burden + 0.002 * helminth_burden + 0.5 * wound_burden + 1.5 * epidemic_burden) + 1.5 * scurvy_index + 0.3 * beriberi_index"
+   }
+  },
+  "hydration_balance": {
+   "description": "需水量随体重、运动和发热变化，水合指数向由饮水与需水量之差决定的目标松弛，时间常数 1.5 天。",
+   "step_unit": "day",
+   "reference": "Sawka MN et al. (2007) Med Sci Sports Exerc 39:377-390；EFSA Panel on Dietetic Products, Nutrition and Allergies (2010) EFSA J 8(3):1459，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 45.0,
+   "dynamics": {
+    "water_need_l": "0.033 * body_weight + 0.5 * (aerobic_min + 0.5 * resistance_min) / 60.0 + 0.4 * fever_c",
+    "hydration_index": "hydration_index + (max(0.7, min(1.15, 1.0 + 0.35 * (water_l + 0.6 - water_need_l - 0.3) / water_need_l)) - hydration_index) * (1.0 - exp(-step / 1.5))"
+   }
+  },
+  "extracellular_fluid": {
+   "description": "细胞外液潴留量向目标松弛，时间常数 3 天。钠摄入、高胰岛素、肾功能下降、皮质醇、饥饿性水肿和蛋白质不足抬高目标，蛋白不足取 21 天滑动平均，充足水合降低目标。",
+   "step_unit": "day",
+   "reference": "Guyton AC (1991) Science 252:813-816; Keys A et al. (1950) The Biology of Human Starvation",
+   "priority": 44.0,
+   "dynamics": {
+    "protein_ma": "protein_ma + (protein_g_per_kg - protein_ma) * (1.0 - exp(-step / 21.0))",
+    "ecf_excess_l": "ecf_excess_l + (max(-2.0, min(10.0, 0.35 * (sodium_g - 3.4) + 0.02 * (fasting_insulin - 8.0) + 1.2 * max(0.0, 1.0 - gfr / 95.0) + 0.6 * (cortisol - 1.0) - 0.4 * (hydration_index - 1.0) + 1.5 * max(0.0, min(1.0, (-energy_balance_ma - 400.0) / 1000.0)) + 1.5 * max(0.0, 0.8 - protein_ma))) - ecf_excess_l) * (1.0 - exp(-step / 3.0))"
+   }
+  },
+  "glomerular_filtration": {
+   "description": "肾小球滤过率的慢性储备每年基础下降 0.8 mL/min，血压超过 130 mmHg、糖化血红蛋白超过 6.5 percent、吸烟、尿酸超过 8 mg/dL 和体质指数超过 30 各自增加下降速率，有效滤过率计入脱水和感染。",
+   "step_unit": "day",
+   "reference": "Levey AS et al. (2009) Ann Intern Med 150:604-612",
+   "priority": 43.0,
+   "dynamics": {
+    "gfr": "gfr - (0.8 + 0.03 * min(60.0, max(0.0, systolic_bp - 130.0)) + 0.3 * min(6.0, max(0.0, hba1c - 6.5)) + 0.4 * min(1.0, smoking_cigs / 10.0) + 0.3 * max(0.0, uric_acid - 8.0) + 0.5 * max(0.0, bmi - 30.0) / 10.0) / 365.0 * step",
+    "gfr_effective": "gfr * (1.0 + 0.08 * (min(2.5, protein_g_per_kg) - 1.1)) * (0.75 + 0.25 * min(1.0, hydration_index)) * (1.0 - 0.1 * min(1.0, infection_load))"
+   }
+  },
+  "renal_metabolites": {
+   "description": "血肌酐向由肌肉量和有效滤过率决定的目标松弛，时间常数 4 天。尿酸向由体质指数、酒精、酮体、三酰甘油、肾功能和饮食质量决定的目标松弛，时间常数 10 天。",
+   "step_unit": "day",
+   "reference": "Baxmann AC et al. (2008) Clin J Am Soc Nephrol 3:348-354；Choi HK et al. (2004) Lancet 363:1277-1281，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 42.0,
+   "dynamics": {
+    "serum_creatinine": "serum_creatinine + (max(0.3, min(20.0, 0.95 * (1.0 - 0.2 * sex_female) * (muscle_mass / musc_ref) * (gfr_ref / gfr_effective))) - serum_creatinine) * (1.0 - exp(-step / 4.0))",
+    "uric_acid": "uric_acid + (max(2.0, min(14.0, 5.5 - 1.0 * sex_female + 0.7 * meno + 0.25 * (bmi - 24.9) + 0.03 * (alcohol_g - 5.0) + 0.6 * max(0.0, ketone_bodies - 0.5) + 0.005 * (triglycerides - 100.0) + 2.5 * (gfr_ref / gfr_effective - 1.0) - 0.4 * (diet_quality_eff - 0.6))) - uric_acid) * (1.0 - exp(-step / 10.0))"
+   }
+  },
+  "glycogen_dynamics": {
+   "description": "糖原池按碳水吸收量松弛，目标值随碳水摄入饱和上升，运动使目标下降，时间常数 2.5 天。",
+   "step_unit": "day",
+   "reference": "Hall KD (2010) Am J Physiol Endocrinol Metab 298:E449-E466",
+   "priority": 85.0,
+   "dynamics": {
+    "glycogen_delta_kg": "(0.08 + 0.55 * (1.0 - exp(-absorbed_carb_g / 220.0)) - 0.05 * (min(1.0, aerobic_min / 60.0) - 0.33) - glycogen_kg) * (1.0 - exp(-step / 2.5))",
+    "glycogen_kg": "glycogen_kg + glycogen_delta_kg"
+   }
+  },
+  "energy_expenditure_components": {
+   "description": "静息代谢、非运动活动、运动和食物热效应各自计算。",
+   "reference": "Hall KD (2010) Am J Physiol Endocrinol Metab 298:E449-E466",
+   "priority": 80.0,
+   "dynamics": {
+    "resting_metabolic_rate": "(205.0 + 22.0 * lean_mass + 3.2 * fat_mass) * thyroid_metabolic_factor * (1.0 + 0.13 * fever_c)",
+    "neat_kcal": "7.5 * body_weight * neat_factor",
+    "exercise_kcal": "1.06 * (aerobic_min * 5.0 + resistance_min * 3.0) * 3.5 * body_weight / 200.0",
+    "tef_kcal": "absorbed_energy * (0.25 * protein_pct + 0.075 * carb_pct + 0.02 * fat_pct)",
+    "energy_expenditure": "resting_metabolic_rate + neat_kcal + exercise_kcal + tef_kcal + 6.0 * smoking_cigs + disease_energy_kcal",
+    "energy_balance": "absorbed_energy - energy_expenditure"
+   }
+  },
+  "tissue_partition": {
+   "description": "扣除糖原储能和肌肉占比变化折算的瘦体重变化后，组织能量按分配比拆给瘦体重和脂肪，能量守恒，瘦体重能量密度 1800 kcal/kg，脂肪 9400 kcal/kg。",
+   "step_unit": "day",
+   "reference": "Hall KD et al. (2011) Lancet 378:826-837",
+   "priority": 75.0,
+   "dynamics": {
+    "tissue_energy_kcal": "energy_balance * step - 4000.0 * glycogen_delta_kg",
+    "lean_partition_fraction": "max(0.0, min(0.95, 1.99 / (1.99 + fat_mass) * lean_partition_multiplier))",
+    "recomp_kg": "lean_mass * ((1.0 - muscle_fraction_seen) / (1.0 - muscle_fraction) - 1.0)",
+    "recomp_applied_kg": "recomp_kg * min(1.0, max(0.0, (fat_mass - 3.0) / 6.0)) if recomp_kg > 0.0 else recomp_kg",
+    "lean_mass": "lean_mass + recomp_applied_kg + lean_partition_fraction * (tissue_energy_kcal - 1800.0 * recomp_applied_kg) / 1800.0",
+    "fat_mass": "fat_mass + (1.0 - lean_partition_fraction) * (tissue_energy_kcal - 1800.0 * recomp_applied_kg) / 9400.0",
+    "muscle_fraction_seen": "muscle_fraction"
+   }
+  },
+  "body_metrics": {
+   "description": "体重、体质指数、体脂率、腰围由各组分直接算出，内脏脂肪向由总脂肪等决定的目标松弛，时间常数 30 天。",
+   "step_unit": "day",
+   "reference": "World Health Organization 体质指数定义，腰围由体质指数与内脏脂肪估算，估算系数为本模型设定",
+   "priority": 70.0,
+   "dynamics": {
+    "body_weight": "fat_mass + lean_mass + 4.0 * glycogen_kg + ecf_excess_l",
+    "bmi": "body_weight / (height_m * height_m)",
+    "body_fat_pct": "100.0 * fat_mass / body_weight",
+    "visceral_fat_kg": "visceral_fat_kg + (fat_mass * max(0.04, min(0.4, 0.11 - 0.04 * sex_female + 0.015 * meno + 0.0035 * (fat_mass - fat_ref) + 0.05 * (cortisol - 1.0) + 0.003 * (age_years - 35.0) - 0.04 * (min(1.0, aerobic_min / 45.0) - 0.44) + 0.03 * (1.0 - insulin_sensitivity))) - visceral_fat_kg) * (1.0 - exp(-step / 30.0))",
+    "waist_cm": "33.0 + 2.1 * bmi + 0.8 * visceral_fat_kg"
+   }
+  },
+  "protein_and_anabolic_drive": {
+   "description": "蛋白摄入按体重折算，合成代谢评分和分配比乘数据此更新。",
+   "reference": "Cahill GF (1970) N Engl J Med 282:668-675",
+   "priority": 33.0,
+   "dynamics": {
+    "protein_g_per_kg": "absorbed_protein_g / body_weight",
+    "anabolic_score": "max(-2.0, min(2.0, 0.9 * (min(1.5, resistance_min / 30.0) - 0.167) + 0.35 * (min(1.8, protein_g_per_kg) - 1.4) + 0.5 * (testosterone - 1.0) + 0.3 * (igf1 - 1.0) - 0.5 * (cortisol - 1.0)))",
+    "lean_partition_multiplier": "max(0.1, min(3.0, (1.0 + anabolic_score * (2.0 / (1.0 + exp(-energy_balance / 100.0)) - 1.0)) * (1.0 - max(0.0, 1.0 - 2.0 / (1.0 + exp(-energy_balance / 100.0))) * (1.0 - max(0.3, 1.0 - 0.12 * min(3.5, ketone_bodies - 0.1))))))"
+   }
+  },
+  "muscle_dynamics": {
+   "description": "肌肉占比向目标松弛，时间常数 70 天，肌肉量和肌力随之更新。",
+   "step_unit": "day",
+   "reference": "Morton RW et al. (2018) Br J Sports Med 52:376-384，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 32.0,
+   "dynamics": {
+    "muscle_fraction": "muscle_fraction + (max(0.3, min(0.56, 0.5 + 0.035 * (min(1.5, resistance_min / 30.0) - 0.167) + 0.01 * (min(1.6, protein_g_per_kg) - 1.4) + 0.03 * (testosterone - 1.0) + 0.03 * (igf1 - 1.0) - 0.03 * (cortisol - 1.0) - 0.004 * log(max(0.1, crp)) - 0.0007 * (age_years - 35.0) - 0.015 * (max(0.0, 1.0 - (aerobic_min + resistance_min) / 30.0) - 0.167) - 0.03 * max(0.0, -energy_balance_ma - 500.0) / 1500.0)) - muscle_fraction) * (1.0 - exp(-step / 70.0))",
+    "muscle_mass": "lean_mass * muscle_fraction",
+    "muscle_strength": "muscle_strength + (max(0.2, min(2.5, (muscle_mass / musc_ref) ** 0.67 * (1.0 + 0.25 * (min(1.5, resistance_min / 30.0) - 0.167)) * (1.0 - 0.0045 * max(0.0, age_years - 35.0)) * (1.0 - 0.3 * (fatigue_index - 0.15)))) - muscle_strength) * (1.0 - exp(-step / 25.0))"
+   }
+  },
+  "bone_and_vitamin_d": {
+   "description": "骨密度向由负重、抗阻训练、维生素 D、皮质醇、睾酮、能量不足、吸烟酒精和年龄决定的目标松弛，时间常数 300 天，维生素 D 向由饮食质量和肥胖决定的目标松弛，时间常数 30 天。",
+   "step_unit": "day",
+   "reference": "Weaver CM et al. (2016) Osteoporos Int 27:1281-1386；Holick MF et al. (2011) J Clin Endocrinol Metab 96:1911-1930，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 31.0,
+   "dynamics": {
+    "vitamin_d": "vitamin_d + (max(5.0, min(80.0, 30.0 + 8.0 * (diet_quality_eff - 0.6) - 0.5 * (bmi - 24.9))) - vitamin_d) * (1.0 - exp(-step / 30.0))",
+    "bone_density": "bone_density + (max(0.6, min(1.5, 1.2 - 0.12 * sex_female - 0.1 * meno + 0.03 * (min(1.5, resistance_min / 30.0) - 0.167) + 0.02 * (min(1.0, aerobic_min / 60.0) - 0.33) + 0.002 * (body_weight - wt_ref) + 0.05 * (vitamin_d - 30.0) / 30.0 - 0.05 * (cortisol - 1.0) + 0.08 * (testosterone - 1.0) - 0.06 * max(0.0, -energy_balance_ma - 300.0) / 1500.0 - 0.0008 * min(30.0, smoking_cigs) - 0.0008 * max(0.0, alcohol_g - 30.0) - 0.003 * (age_years - 35.0))) - bone_density) * (1.0 - exp(-step / 300.0))"
+   }
+  },
+  "lung_function_decline": {
+   "description": "肺功能储备每年下降 0.70 percent，对应健康成人每年约 25 至 30 mL，吸烟每日 20 支时额外下降 0.7 percent，最多计 3 包。",
+   "step_unit": "day",
+   "reference": "Fletcher C, Peto R (1977) BMJ 1:1645-1648",
+   "priority": 35.0,
+   "dynamics": {
+    "lung_reserve_pct": "lung_reserve_pct - (0.7 + 0.7 * min(3.0, smoking_cigs / 20.0)) / 365.0 * step"
+   }
+  },
+  "airway_and_gas_exchange": {
+   "description": "气道炎症向由吸烟和感染决定的目标松弛，时间常数 14 天，一秒用力呼气量、血氧和呼吸频率由当前状态直接算出。",
+   "step_unit": "day",
+   "reference": "Fletcher C, Peto R (1977) BMJ 1:1645-1648，机制依据，时间常数与系数为设定值，未校准",
+   "priority": 34.0,
+   "dynamics": {
+    "airway_inflammation": "airway_inflammation + (0.1 + 0.9 * min(1.0, smoking_cigs / 20.0) + 0.4 * min(2.0, infection_load) - airway_inflammation) * (1.0 - exp(-step / 14.0))",
+    "fev1_pct": "max(10.0, lung_reserve_pct - 2.5 * (airway_inflammation - 0.1) - 0.6 * max(0.0, bmi - 30.0))",
+    "spo2": "max(60.0, min(100.0, 98.0 - 0.04 * (100.0 - fev1_pct) - 2.5 * min(1.0, infection_load) - 0.05 * max(0.0, bmi - 35.0)))",
+    "respiratory_rate": "max(8.0, min(40.0, 14.0 + 1.0 * fever_c + 0.08 * (100.0 - fev1_pct) + 0.3 * max(0.0, bmi - 30.0)))"
+   }
+  }
+ },
+ "simulation": {
+  "step_size": {
+   "value": 1440,
+   "unit": "minute"
+  },
+  "start_date": "2026-01-01",
+  "end_date": "2027-01-01"
+ }
+}

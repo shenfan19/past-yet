@@ -251,21 +251,3 @@ body:
   feedback: {miss: {psychological_demand: 0.1}, hit: {psychological_demand: -0.05}, decay: 0.5}
   # loneliness has no provider in the core, so the game raises it by this much per level of the grief channel each day, and it never falls inside a stay
   loneliness: {per_level_day: 0.05}
-# The stand-in core. It answers the core interface with simple first order lag toward a target that is a weighted sum of how far each handle is from its baseline, and it is replaced as a whole by the LM core.
-# It knows the concepts of the vocabulary and nothing of the game. Weights are uncalibrated starting values. A reading is 0 with every handle at its baseline.
-core_stub:
-  name: stub-core
-  rate_per_day: 0.35
-  step_minutes: 1440
-  scale: {fluid_intake: 0.8, activity_load: 60, sleep_duration: 1, psychological_demand: 0.5, injury_exposure: 0.2}
-  context_weight: {infection_burden: {pathogen_exposure: 1.0}}
-  weights:
-    fatigue: {activity_load: 0.35, sleep_duration: -0.3, psychological_demand: 0.2}
-    hydration_deficit: {fluid_intake: -0.5, activity_load: 0.15}
-    energy_deficit: {activity_load: 0.3, sleep_duration: -0.1}
-    injury_burden: {injury_exposure: 0.4, activity_load: 0.1}
-    mobility_loss: {injury_exposure: 0.25, activity_load: 0.2}
-    psychological_strain: {psychological_demand: 0.7, sleep_duration: -0.05}
-    oxygen_deficit: {activity_load: 0.25}
-    nutrient_deficit: {activity_load: 0.15}
-    infection_burden: {}

@@ -1,0 +1,147 @@
+{
+  "bridge_version": 1,
+  "system": "traveler_stay",
+  "vocabulary_version": 4,
+  "step_minutes": 1440,
+  "readouts": {
+    "fatigue": {
+      "combine": "max",
+      "sources": [
+        {
+          "var": "fatigue_index",
+          "lo": 0.15,
+          "hi": 1.0
+        }
+      ]
+    },
+    "infection_burden": {
+      "combine": "max",
+      "sources": [
+        {
+          "expr": "max(enteric_burden, tb_burden, malaria_burden, helminth_burden, wound_burden, epidemic_burden)",
+          "lo": 0.0,
+          "hi": 1.0
+        }
+      ]
+    },
+    "hydration_deficit": {
+      "combine": "replace",
+      "sources": [
+        {
+          "var": "hydration_index",
+          "lo": 1.0,
+          "hi": 0.7
+        }
+      ]
+    },
+    "energy_deficit": {
+      "combine": "replace",
+      "sources": [
+        {
+          "var": "energy_balance",
+          "lo": 0.0,
+          "hi": -1500.0
+        }
+      ]
+    },
+    "injury_burden": {
+      "combine": "max",
+      "sources": [
+        {
+          "var": "wound_burden",
+          "lo": 0.0,
+          "hi": 1.0
+        }
+      ]
+    },
+    "mobility_loss": {
+      "combine": "replace",
+      "sources": [
+        {
+          "var": "muscle_strength",
+          "lo": 1.0,
+          "hi": 0.5
+        }
+      ]
+    },
+    "psychological_strain": {
+      "combine": "max",
+      "sources": [
+        {
+          "var": "sympathetic_tone",
+          "lo": 1.0,
+          "hi": 2.0
+        }
+      ]
+    },
+    "oxygen_deficit": {
+      "combine": "max",
+      "sources": [
+        {
+          "var": "spo2",
+          "lo": 98.0,
+          "hi": 85.0
+        }
+      ]
+    },
+    "nutrient_deficit": {
+      "combine": "max",
+      "sources": [
+        {
+          "expr": "max(0.0, 1.0 - min(vitc_pool, thiamine_pool, iodine_pool))",
+          "lo": 0.0,
+          "hi": 1.0
+        }
+      ]
+    }
+  },
+  "handles": {
+    "fluid_intake": [
+      "water_l"
+    ],
+    "activity_load": [
+      "aerobic_min"
+    ],
+    "sleep_duration": [
+      "sleep_hours"
+    ],
+    "psychological_demand": [
+      "stress_load"
+    ],
+    "injury_exposure": [
+      "injury_exposure"
+    ]
+  },
+  "modes": {
+    "fluid_intake": "total",
+    "activity_load": "level",
+    "sleep_duration": "level",
+    "psychological_demand": "level",
+    "injury_exposure": "level"
+  },
+  "context": {
+    "pathogen_exposure": [
+      "epidemic_pressure"
+    ]
+  },
+  "members": {
+    "references/medical/physiology/human_body/nervous_sleep_stress_2026": "",
+    "references/medical/physiology/human_body/lifestyle_inputs_2026": "",
+    "references/medical/physiology/human_body/digestive_gut_2026": "",
+    "references/medical/physiology/human_body/neuroendocrine_axes_2026": "",
+    "references/medical/physiology/human_body/glucose_insulin_2026": "",
+    "references/medical/physiology/human_body/hepatic_metabolism_2026": "",
+    "references/medical/physiology/human_body/lipid_profile_2026": "",
+    "references/medical/physiology/human_body/cardiovascular_2026": "",
+    "references/medical/physiology/human_body/immune_inflammation_2026": "",
+    "references/medical/physiology/human_body/hematology_iron_2026": "",
+    "references/medical/physiology/human_body/aging_health_summary_2026": "",
+    "references/medical/physiology/human_body/appetite_intake_regulation_2026": "",
+    "references/medical/physiology/human_body/infectious_nutritional_disease_2026": "",
+    "references/medical/physiology/human_body/renal_fluid_2026": "",
+    "references/medical/physiology/human_body/body_composition_energy_2026": "",
+    "references/medical/physiology/human_body/musculoskeletal_2026": "",
+    "references/medical/physiology/human_body/respiratory_2026": ""
+  },
+  "wires": []
+}

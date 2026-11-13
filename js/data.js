@@ -50,6 +50,8 @@ export async function loadData(readText, parse, pickLang) {
     o.text.antiques[id] = { name: t.relic, desc: t.relic_desc };
   }
   o.world = JSON.parse(await readText('data/world_land.json'));
+  o.core_model = JSON.parse(await readText('data/core/traveler_stay.lm.json'));
+  o.core_bridge = JSON.parse(await readText('data/core/traveler_stay.bridge.json'));
   o.era_raw = {};
   o.era_src = {};
   for (const id of o.config.eras) {
