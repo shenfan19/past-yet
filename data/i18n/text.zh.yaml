@@ -4424,6 +4424,224 @@ eras:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  humboldt_chimborazo_1802:
+    name: 钦博拉索 1802
+    short: 钦博拉索
+    place_name: 厄瓜多尔钦博拉索
+    tags:
+      - medical
+      - altitude
+      - expedition
+      - c19
+      - andes
+      - history
+    event_titles:
+      door_block: 被拒绝
+      time_strain: 时间错位
+    plots:
+      field_notes:
+        name: 送洪堡一本野外记录本
+        desc: 让他把高度、气温和植物记成别人能核对的样子。
+        character: 亚历山大·冯·洪堡
+        article: people:humboldt_chimborazo
+      germ_theory:
+        name: 把细菌致病的理论讲给亚历山大·冯·洪堡
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 亚历山大·冯·洪堡
+        article: people:humboldt_chimborazo
+    blurb: 带着仪器慢慢爬进稀薄的空气，冷，碎石多。近，成本低，休息和保暖的效果很明显。
+    handle_label: 攀登计划被改
+    protagonist: 亚历山大·冯·洪堡
+    protagonist_role: 一边攀登一边测量的博物学家，想弄清万物怎样连在一起
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1802 年 6 月亚历山大·冯·洪堡和艾梅·邦普朗攀登钦博拉索，当时人们以为它是世界最高的山。
+          check: true
+        - text: 他们一路上在每个高度测量空气、气温和植物。
+          check: true
+        - text: 他们被山脊上一道深裂挡住，在山顶之下折返，那个高度在当时是攀登的纪录。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整次攀登。主时间线上这支队伍在山顶之下折返。
+        - 休息和保暖比任何一个大胆的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      door_block_stubborn: 一位挑夫拦在山路上，说前面的路太难，不该再往上走。{staff} 倔强，不肯让路，被推到一边，丢了 {d.ors_stock:i} 份物资。
+      door_block_stubborn_empty: 一位挑夫拦在山路上，说前面的路太难，不该再往上走。{staff} 倔强，不肯让路，被推到一边。
+      door_block_insist_empty: 一位挑夫拦在山路上，说前面的路太难，不该再往上走。{staff} 站稳把话说完，被请走了。
+      door_block_insist: 一位挑夫拦在山路上，说前面的路太难，不该再往上走。{staff} 站稳把话说完，被请走了，丢了 {d.ors_stock:i} 份物资。
+      door_block_appeal: 一位挑夫拦在山路上，{staff} 不硬闯，转身去找亚历山大·冯·洪堡，请他支持。
+      door_block_yield: 一位挑夫拦在山路上，{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服洪堡
+      trust: 赢得挑夫的信任
+      reform: 让攀登计划比历史上更早改变
+    milestones:
+      first_treat: '{date}：{staff} 给一个头痛欲裂的人喂下第一杯热饮和叶茶，他开始开口了。'
+      first_protect: '{date}：{staff} 发下第一批毯子和一点氧气，教挑夫们使用。'
+      met_humboldt: '{date}：{staff} 在营地遇到洪堡。他听得很认真，却一再问同一件事：仪器上是什么读数。'
+      humboldt_trusts: '{date}：洪堡开始把 {staff} 当自己人，拿出记满测量的本子。'
+      humboldt_convinced: '{date}：洪堡不再只是琢磨速度。他有了足够的数字，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：队伍开始松口，说计划也许可以改。'
+      reform_history: '{date}：攀登计划被改了。主时间线没有变化。'
+      reform_early: '{date}：攀登计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：挑夫们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
+    summary:
+      near_death: '{staff} 在钦博拉索倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在钦博拉索留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在钦博拉索完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在钦博拉索待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，休息和保暖能让一支队伍走得更远。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 毯子剩下了。限制不是物资，是挑夫对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 亚历山大·冯·洪堡的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  mallory_everest_1924:
+    name: 珠穆朗玛峰 1924
+    short: 珠峰
+    place_name: 珠穆朗玛峰北坡
+    tags:
+      - medical
+      - altitude
+      - expedition
+      - c20
+      - himalaya
+      - history
+    event_titles:
+      door_block: 被拒绝
+      time_strain: 时间错位
+    plots:
+      field_notes:
+        name: 送马洛里一本野外记录本
+        desc: 让他把营地、天气和氧气记下来，别人才能核对。
+        character: 乔治·马洛里
+        article: people:mallory_everest
+      germ_theory:
+        name: 把细菌致病的理论讲给乔治·马洛里
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 乔治·马洛里
+        article: people:mallory_everest
+    blurb: 山北坡稀薄空气里的高营地，氧气装置用处不明。近，成本低，氧气和休息的效果很明显。
+    handle_label: 高营地计划被改
+    protagonist: 乔治·马洛里
+    protagonist_role: 曾上过这座山、想登顶的中学教师兼登山家
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1924 年一支英国探险队从北坡攀登珠穆朗玛峰，此前已有 1921 和 1922 年的尝试。
+          check: true
+        - text: 队里带了氧气装置上山，登山者对它帮多大忙、有多重一直意见不一。
+          check: true
+        - text: 乔治·马洛里和安德鲁·欧文 1924 年 6 月 8 日最后一次被人看见时，正在山的高处向上攀登。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整座山。主时间线上计划没有改。
+        - 休息和氧气比任何一个勇敢的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      door_block_stubborn: 一位老山客拦在路上，说计划是在山上定的，外人改不了。{staff} 倔强，不肯让路，被推到一边，丢了 {d.ors_stock:i} 份物资。
+      door_block_stubborn_empty: 一位老山客拦在路上，说计划是在山上定的，外人改不了。{staff} 倔强，不肯让路，被推到一边。
+      door_block_insist_empty: 一位老山客拦在路上，说计划是在山上定的，外人改不了。{staff} 站稳把话说完，被请走了。
+      door_block_insist: 一位老山客拦在路上，说计划是在山上定的，外人改不了。{staff} 站稳把话说完，被请走了，丢了 {d.ors_stock:i} 份物资。
+      door_block_appeal: 一位老山客拦在路上，{staff} 不硬闯，转身去找乔治·马洛里，请他支持。
+      door_block_yield: 一位老山客拦在路上，{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服马洛里
+      trust: 赢得队伍的信任
+      reform: 让高营地计划比历史上更早改变
+    milestones:
+      first_treat: '{date}：{staff} 给一个头痛欲裂的人喂下第一份药和热茶，他开始开口了。'
+      first_protect: '{date}：{staff} 在营地发下第一批氧气和毯子，教挑夫们使用。'
+      met_mallory: '{date}：{staff} 在营地遇到马洛里。他听得很认真，却一再问同一件事：你怎么知道的。'
+      mallory_trusts: '{date}：马洛里开始把 {staff} 当自己人，拿出他一直在记的氧气装置笔记。'
+      mallory_convinced: '{date}：马洛里不再只是怀疑这个计划。他有了足够的数字，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：领队们开始松口，说计划也许可以改。'
+      reform_history: '{date}：高营地计划被改了。主时间线没有变化。'
+      reform_early: '{date}：高营地计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：挑夫们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
+    summary:
+      near_death: '{staff} 在珠峰倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在珠峰留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在珠峰完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在珠峰待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，在那么高的地方，氧气和休息才是让队伍撑住的东西。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 氧气剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 乔治·马洛里的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
   scott_ross_ice_shelf_1912:
     name: 罗斯冰架 1912
     short: 罗斯冰架

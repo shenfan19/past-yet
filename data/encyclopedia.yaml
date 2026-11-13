@@ -24,6 +24,10 @@ refs:
     status: pending
   scott1913:
     status: pending
+  everest1925:
+    status: pending
+  humboldt1807:
+    status: pending
 sections:
   places:
     - id: broad_street
@@ -163,6 +167,40 @@ sections:
         era: scott_ross_ice_shelf_1912
       refs:
         - scott1913
+        - game
+    - id: everest_north_side
+      era: mallory_everest_1924
+      tags:
+        - medical
+        - altitude
+        - expedition
+        - c20
+        - himalaya
+        - history
+      related:
+        - people:mallory_everest
+        - events:oxygen_plan
+      unlock:
+        era: mallory_everest_1924
+      refs:
+        - everest1925
+        - game
+    - id: chimborazo_slope
+      era: humboldt_chimborazo_1802
+      tags:
+        - medical
+        - altitude
+        - expedition
+        - c19
+        - andes
+        - history
+      related:
+        - people:humboldt_chimborazo
+        - events:snow_line
+      unlock:
+        era: humboldt_chimborazo_1802
+      refs:
+        - humboldt1807
         - game
   people:
     - id: snow
@@ -917,6 +955,38 @@ sections:
         era: scott_ross_ice_shelf_1912
       refs:
         - scott1913
+        - game
+    - id: oxygen_plan
+      tags:
+        - medical
+        - altitude
+        - expedition
+        - c20
+        - himalaya
+        - history
+      related:
+        - people:mallory_everest
+        - places:everest_north_side
+      unlock:
+        era: mallory_everest_1924
+      refs:
+        - everest1925
+        - game
+    - id: snow_line
+      tags:
+        - medical
+        - altitude
+        - expedition
+        - c19
+        - andes
+        - history
+      related:
+        - people:humboldt_chimborazo
+        - places:chimborazo_slope
+      unlock:
+        era: humboldt_chimborazo_1802
+      refs:
+        - humboldt1807
         - game
 model_events:
   door_block:
