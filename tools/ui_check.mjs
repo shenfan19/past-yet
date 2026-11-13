@@ -202,7 +202,7 @@ try {
   await go('shop');
   await sub('ants');
   await page.waitForSelector('[data-act=antlock]');
-  await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'pump_rust'); S.antiques.push('pump_rust'); window.__game.ui.render(); });
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'pump_rust'); S.antiques.push('pump_rust'); const A = window.__game.D.get('antiques.antiques'); S.locks = S.locks.filter((x) => !A[x].era); S.locks.push('pump_rust'); window.__game.ui.render(); });
   ok('anchored antique cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
   ok('the last open place cannot be released', await page.locator('[data-act=antlock][data-id=pump_rust]').isDisabled());
   await page.evaluate(() => { window.__game.ctx.S().antiques.push('clinic_bell'); window.__game.ui.render(); });

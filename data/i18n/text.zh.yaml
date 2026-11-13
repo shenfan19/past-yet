@@ -4424,6 +4424,224 @@ eras:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  tupaia_tahiti_1769:
+    name: 塔希提 1769
+    short: 塔希提
+    place_name: 社会群岛塔希提
+    tags:
+      - medical
+      - voyage
+      - scurvy
+      - c18
+      - tahiti
+      - history
+    event_titles:
+      door_block: 被拒绝
+      time_strain: 时间错位
+    plots:
+      chart:
+        name: 送图帕亚一张海图桌
+        desc: 让他把自己熟悉的岛屿摊开，别人才能读懂。
+        character: 图帕亚
+        article: people:tupaia_tahiti
+      germ_theory:
+        name: 把细菌致病的理论讲给图帕亚
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 图帕亚
+        article: people:tupaia_tahiti
+    blurb: 一艘即将横渡太平洋的船，和一位知道岛在哪里的领航员。近，成本低，新鲜食物和干净水的效果很明显。
+    handle_label: 新鲜食物计划被改
+    protagonist: 图帕亚
+    protagonist_role: 熟悉海和塔希提周围岛屿的领航员兼祭司
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 奋进号 1769 年 4 月到达塔希提，停到 7 月。
+          check: true
+        - text: 图帕亚是岛上的领航员兼祭司，他上了船，画下了自己熟悉的那些岛的海图。
+          check: true
+        - text: 他随奋进号航行，1770 年 12 月死于巴达维亚，那里的疾病带走了船上许多人。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整次航行。主时间线上第二年疾病上了船。
+        - 新鲜食物和干净水比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      door_block_stubborn: 一位船上的军官拦在舷梯口，说补给已经装好了，计划不改。{staff} 倔强，不肯让路，被推到一边，丢了 {d.ors_stock:i} 份物资。
+      door_block_stubborn_empty: 一位船上的军官拦在舷梯口，说补给已经装好了，计划不改。{staff} 倔强，不肯让路，被推到一边。
+      door_block_insist_empty: 一位船上的军官拦在舷梯口，说补给已经装好了，计划不改。{staff} 站稳把话说完，被请走了。
+      door_block_insist: 一位船上的军官拦在舷梯口，说补给已经装好了，计划不改。{staff} 站稳把话说完，被请走了，丢了 {d.ors_stock:i} 份物资。
+      door_block_appeal: 一位船上的军官拦在舷梯口，{staff} 不硬闯，转身去找图帕亚，请他支持。
+      door_block_yield: 一位船上的军官拦在舷梯口，{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服图帕亚
+      trust: 赢得船员的信任
+      reform: 让新鲜食物的计划比历史上更早改变
+    milestones:
+      first_treat: '{date}：{staff} 给一个牙龈肿胀的人递上第一杯果汁，他开始开口了。'
+      first_protect: '{date}：{staff} 给干活的人发下第一批帽子和网，教大家使用。'
+      met_tupaia: '{date}：{staff} 在海滩上遇到图帕亚。他听得很认真，却一再问同一件事：这对船上的人有什么用。'
+      tupaia_trusts: '{date}：图帕亚开始把 {staff} 当自己人，指给他看哪些岛上能找到食物。'
+      tupaia_convinced: '{date}：图帕亚不再只是知道食物在哪里。他亲眼见了它的用处，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：船上的军官们开始松口，说计划也许可以改。'
+      reform_history: '{date}：新鲜食物的计划被改了。主时间线没有变化。'
+      reform_early: '{date}：新鲜食物的计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：船员们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了个位数。'
+    summary:
+      near_death: '{staff} 在塔希提倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在塔希提留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在塔希提完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在塔希提待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，新鲜食物和干净的水才让一船人保持健康。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 帽子剩下了。限制不是物资，是船员对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 图帕亚的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+  darwin_galapagos_1835:
+    name: 加拉帕戈斯 1835
+    short: 加拉帕戈斯
+    place_name: 加拉帕戈斯群岛
+    tags:
+      - medical
+      - heat
+      - voyage
+      - c19
+      - galapagos
+      - history
+    event_titles:
+      door_block: 被拒绝
+      time_strain: 时间错位
+    plots:
+      field_notes:
+        name: 送达尔文一本野外记录本
+        desc: 让他把每座岛、每种鸟记下来，别人才能对照。
+        character: 查尔斯·达尔文
+        article: people:darwin_galapagos
+      germ_theory:
+        name: 把细菌致病的理论讲给查尔斯·达尔文
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 查尔斯·达尔文
+        article: people:darwin_galapagos
+    blurb: 岛上干热，满是熔岩，淡水很少，还有一位什么都要记下来的年轻博物学家。近，成本低，水和遮阴的效果很明显。
+    handle_label: 水和食物的计划被改
+    protagonist: 查尔斯·达尔文
+    protagonist_role: 在岛上采集、想弄懂自己所见的年轻博物学家
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1835 年测量船小猎犬号在加拉帕戈斯群岛停留约五周，从 9 月 15 日到 10 月 20 日。
+          check: true
+        - text: 查尔斯·达尔文上了几座岛，在酷热中采集鸟、植物和岩石。
+          check: true
+        - text: 他在那里看到并记下的东西，后来成了他关于物种怎样变化的想法的一部分，但不是立刻的。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整次航行。主时间线上计划没有改。
+        - 水和遮阴比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      door_block_stubborn: 一位船上的军官拦在舷梯口，说没有时间再为上岸的人改计划。{staff} 倔强，不肯让路，被推到一边，丢了 {d.ors_stock:i} 份物资。
+      door_block_stubborn_empty: 一位船上的军官拦在舷梯口，说没有时间再为上岸的人改计划。{staff} 倔强，不肯让路，被推到一边。
+      door_block_insist_empty: 一位船上的军官拦在舷梯口，说没有时间再为上岸的人改计划。{staff} 站稳把话说完，被请走了。
+      door_block_insist: 一位船上的军官拦在舷梯口，说没有时间再为上岸的人改计划。{staff} 站稳把话说完，被请走了，丢了 {d.ors_stock:i} 份物资。
+      door_block_appeal: 一位船上的军官拦在舷梯口，{staff} 不硬闯，转身去找查尔斯·达尔文，请他支持。
+      door_block_yield: 一位船上的军官拦在舷梯口，{staff} 没有争吵，退了一步，半天白白过去。
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: 说服达尔文
+      trust: 赢得船员的信任
+      reform: 让水和食物的计划比历史上更早改变
+    milestones:
+      first_treat: '{date}：{staff} 给一个中暑的人递上第一杯干净的水，他开始开口了。'
+      first_protect: '{date}：{staff} 给上岸的队伍发下第一批帽子和遮阳布，教大家使用。'
+      met_darwin: '{date}：{staff} 在岸上遇到达尔文。他听得很认真，却一再问同一件事：证据在哪里。'
+      darwin_trusts: '{date}：达尔文开始把 {staff} 当自己人，拿出他一直在记的笔记。'
+      darwin_convinced: '{date}：达尔文不再只是琢磨酷热。他有了足够的笔记，也信了这位陌生人告诉他的话。'
+      board_moves: '{date}：船上的军官们开始松口，说计划也许可以改。'
+      reform_history: '{date}：水和食物的计划被改了。主时间线没有变化。'
+      reform_early: '{date}：水和食物的计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：船员们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了个位数。'
+    summary:
+      near_death: '{staff} 在加拉帕戈斯倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在加拉帕戈斯留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在加拉帕戈斯完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在加拉帕戈斯待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，水和遮阴才是让上岸的人保持健康的东西。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 帽子剩下了。限制不是物资，是船员对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 查尔斯·达尔文的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
   humboldt_chimborazo_1802:
     name: 钦博拉索 1802
     short: 钦博拉索

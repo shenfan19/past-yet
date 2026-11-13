@@ -1,0 +1,108 @@
+name: Tahiti, 1769
+short: Tahiti
+place_name: Tahiti, Society Islands
+tags:
+  - medical
+  - voyage
+  - scurvy
+  - c18
+  - tahiti
+  - history
+event_titles:
+  door_block: Turned away
+  time_strain: Time slip
+plots:
+  chart:
+    name: Give Tupaia a chart table
+    desc: Lets him lay out the islands he knows so that others can read them.
+    character: Tupaia
+    article: people:tupaia_tahiti
+  germ_theory:
+    name: Explain germ theory to Tupaia
+    desc: Needs the craft of microbiology, which this era does not have.
+    character: Tupaia
+    article: people:tupaia_tahiti
+blurb: A ship about to cross the Pacific, and a navigator who knows where the islands are. Close, cheap, and the effect of fresh food and clean water is clear.
+handle_label: The plan for fresh food is changed
+protagonist: Tupaia
+protagonist_role: A navigator and priest of the islands who knows the sea and the islands around Tahiti
+stay: Stay seven days
+plan_baseline: Main timeline
+encyclopedia:
+  history:
+    - text: The Endeavour reached Tahiti in April 1769 and stayed until July.
+      check: true
+    - text: Tupaia, a navigator and priest from the islands, joined the ship and drew a chart of the islands he knew.
+      check: true
+    - text: He sailed with the Endeavour, and died at Batavia in December 1770, where sickness took many of the ship's company.
+      check: true
+  regret:
+    - You can save today's people but not the whole voyage. On the main timeline sickness came to the ship the following year.
+    - Fresh food and clean water matter more than any one clever idea, but a plan only changes when someone is heard.
+events:
+  door_block_stubborn: A ship's officer blocks the gangway. He says the provisions are already loaded and the plan stays. {staff} is stubborn, does not give way, is pushed aside and loses {d.ors_stock:i} packs of supplies.
+  door_block_stubborn_empty: A ship's officer blocks the gangway. He says the provisions are already loaded and the plan stays. {staff} is stubborn, does not give way, and is pushed aside.
+  door_block_insist_empty: A ship's officer blocks the gangway. He says the provisions are already loaded and the plan stays. {staff} stands firm and finishes speaking, and is turned away.
+  door_block_insist: A ship's officer blocks the gangway. He says the provisions are already loaded and the plan stays. {staff} stands firm and finishes speaking, is turned away, and loses {d.ors_stock:i} packs of supplies.
+  door_block_appeal: A ship's officer blocks the gangway. {staff} does not force the way, turns and goes to Tupaia to ask for support.
+  door_block_yield: A ship's officer blocks the gangway. {staff} steps back without a quarrel, and half a day is wasted.
+  time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+star_points:
+  convince: 'Convince Tupaia'
+  trust: 'Win the trust of the ship''s company'
+  reform: 'Have the plan for fresh food changed ahead of history'
+milestones:
+  first_treat: '{date}: {staff} brings the first cup of fruit juice to a man with swollen gums. He starts to speak.'
+  first_protect: '{date}: {staff} hands out the first hats and nets to the working parties, and teaches the men to use them.'
+  met_tupaia: '{date}: {staff} meets Tupaia on the beach. He listens closely but keeps asking one thing: what will it do for the men.'
+  tupaia_trusts: '{date}: Tupaia starts to treat {staff} as one of his own and shows the islands where food can be found.'
+  tupaia_convinced: '{date}: Tupaia no longer merely knows where the food is. He has seen what it does, and believes what the stranger told him.'
+  board_moves: '{date}: The ship''s officers start to give way and say the plan might be changed.'
+  reform_history: '{date}: The plan for fresh food is changed. The main timeline does not change.'
+  reform_early: '{date}: The plan for fresh food is changed {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+  trust_won: '{date}: The ship''s company no longer keeps {staff} out, and some ask for help.'
+  exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+  outbreak_fades: '{date}: The number of ailing men falls to single digits.'
+summary:
+  near_death: '{staff} collapses at Tahiti and is pulled back by the recall charm. Life saved, at a price.'
+  stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
+  gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+  legend: '{staff} left a legend at Tahiti. The plan was changed {advance_days:1} days earlier than in the main timeline.'
+  perfect: '{staff} completed the task at Tahiti and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+  scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
+  modest: '{staff} spent seven days at Tahiti, did what was within reach, and came back safe.'
+quotes:
+  near_death:
+    - trait: kind
+      text: At the end I was still wondering whether anyone was keeping watch at night.
+    - text: I thought I could hold out a little longer.
+  stay_and_gifts:
+    - trait: kind
+      text: I remember every one of their names. I want to stay a while.
+    - text: They need people here.
+  gave_up:
+    - trait: homesick
+      text: I want to go home. That is all.
+    - text: I am not cut out for this.
+  legend:
+    - text: I only told them what they needed to hear.
+  perfect:
+    - trait: kind
+      text: I could save today's people, not tomorrow's.
+    - trait: curious
+      text: So that is how it is, fresh food and clean water keep a ship's company well.
+    - text: Did what had to be done.
+  scramble:
+    - trait: methodical
+      text: They will understand sooner or later. Just later.
+    - text: Next time I want to bring more.
+  modest:
+    - trait: glib
+      text: I said all I had to say. Whether they listen is up to them.
+    - text: With one more item I might have saved one more life.
+hints:
+  lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+  unused_protect: Hats were left over. The limit was the trust of the ship's company, not the supplies. Let the employee help people first to build trust.
+  unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
+  ally_gap: Tupaia's evidence is still thin. The handbook helps, provided the employee spends time with him.
+  none: Change one thing and send again with the same seed, that makes the comparison clearest.

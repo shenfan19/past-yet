@@ -28,6 +28,10 @@ refs:
     status: pending
   humboldt1807:
     status: pending
+  darwin1839:
+    status: pending
+  cook1773:
+    status: pending
 sections:
   places:
     - id: broad_street
@@ -201,6 +205,40 @@ sections:
         era: humboldt_chimborazo_1802
       refs:
         - humboldt1807
+        - game
+    - id: galapagos_islands
+      era: darwin_galapagos_1835
+      tags:
+        - medical
+        - heat
+        - voyage
+        - c19
+        - galapagos
+        - history
+      related:
+        - people:darwin_galapagos
+        - events:watering_plan
+      unlock:
+        era: darwin_galapagos_1835
+      refs:
+        - darwin1839
+        - game
+    - id: tahiti_endeavour
+      era: tupaia_tahiti_1769
+      tags:
+        - medical
+        - voyage
+        - scurvy
+        - c18
+        - tahiti
+        - history
+      related:
+        - people:tupaia_tahiti
+        - events:fresh_food_plan
+      unlock:
+        era: tupaia_tahiti_1769
+      refs:
+        - cook1773
         - game
   people:
     - id: snow
@@ -987,6 +1025,38 @@ sections:
         era: humboldt_chimborazo_1802
       refs:
         - humboldt1807
+        - game
+    - id: watering_plan
+      tags:
+        - medical
+        - heat
+        - voyage
+        - c19
+        - galapagos
+        - history
+      related:
+        - people:darwin_galapagos
+        - places:galapagos_islands
+      unlock:
+        era: darwin_galapagos_1835
+      refs:
+        - darwin1839
+        - game
+    - id: fresh_food_plan
+      tags:
+        - medical
+        - voyage
+        - scurvy
+        - c18
+        - tahiti
+        - history
+      related:
+        - people:tupaia_tahiti
+        - places:tahiti_endeavour
+      unlock:
+        era: tupaia_tahiti_1769
+      refs:
+        - cook1773
         - game
 model_events:
   door_block:

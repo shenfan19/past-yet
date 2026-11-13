@@ -1,0 +1,532 @@
+# Galapagos, 1835. One era = one model file.
+# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the Teleporter extensions
+# listed under `extensions`. Every number lives here, the engine in js/ only interprets.
+# Time unit is the day. Day 0 is 15 Sep 1835 00:00, the day the ship reaches the islands.
+# Facts marked source: historical are placeholders awaiting a source check, see README.
+
+metadata:
+  name: darwin_galapagos_1835
+  version: "0.1"
+  lm_format_version: "1.0"
+  extension_version: "teleporter/0.1"
+  tags: [heat, voyage, galapagos, 1835]
+  era:
+    year: 1835
+    tech: 5
+    geo: {lon: -90.3, lat: -0.6}
+    place: galapagos_beagle
+    protagonist: darwin
+    calendar: {month: 9, day0: 15, month_length: 30}
+  description:
+    problem: "The Beagle at the Galapagos in September and October of 1835, with a ship's company working in dry heat on islands that have little fresh water. History says the ship stayed some five weeks and left on 20 October. What can one visitor with limited supplies change for the ship's company, and what does the protagonist do with their help?"
+    method: "Daily-scale difference equations, 6-hour step. One party compartment model (open, protected, ailing untreated, ailing treated, recovered, lost) coupled to two agents: a traveller and the period protagonist."
+    result: "Care saves the people it reaches, shelter and supplies save more per unit carried, and winning the protagonist's trust brings the change of plan earlier, which saves the most but strains the timeline."
+    limitations: "Compartment structure and every rate are game assumptions. No fitted parameters. The party is a group, not named people. Not medical or mountaineering advice."
+
+extensions:
+  agents: "Named actors with their own states. Each step an agent picks the available action with the highest utility and the action writes level inputs."
+  actions: "requires and utility are expressions over declared variables. The pick order is the agent order."
+  events: "Seeded stochastic events. The draw depends on seed, event id and occurrence index only."
+  milestones: "One-shot report lines fired when an expression turns true."
+  outcomes: "Ordered end states, the first true expression wins."
+  scoring: "Counterfactual score. The same seed is run once without the traveller, the baseline supplies base_* values."
+  provenance: "Every variable and event carries source: historical | lm_model | game_assumption | calibrated."
+  item_bindings: "Dispatch inputs. Items chosen before departure are delivered once, at arrival, into the listed variables."
+  strategies: "Staff habits. Each employee carries a habit per group, the option writes input variables when that employee is dispatched."
+
+roles:
+  stay: stay_days
+  horizon: horizon_days
+  arrive: arrive_day
+  recalled: traveler.recalled
+  charm: has_charm
+
+agents:
+  traveler: {label: employee, role: dispatched, order: 1}
+  darwin: {label: protagonist, role: era_protagonist, order: 2}
+
+variables:
+  # ---- ward scale ----
+  S: {type: state, value: 70, unit: person, bounds: [0, null], source: game_assumption, note: "Members of the ship's company who are not yet ailing, includes protected."}
+  P: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption, note: "Susceptible people using treated water."}
+  Iu: {type: state, value: 1, unit: person, bounds: [0, null], source: game_assumption, note: "Ailing, no care."}
+  It: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption, note: "Sick, in the traveller's care."}
+  R: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  D: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  cum_cases: {type: state, value: 1, unit: person, bounds: [0, null], source: game_assumption}
+  treated_flow: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  protect_flow: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  treat_cap: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  protect_cap: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  new_prot: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  flight_flow: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  new_cases: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  death_flow: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  treated_total: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  protected_total: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption}
+  sick_density: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  hazard: {type: state, value: 0, unit: "1/day", bounds: [0, null], source: game_assumption}
+  reform_day: {type: state, value: -1, unit: day, bounds: [-1, null], source: historical, note: "Day the plan for water and fresh food is changed. The date is a game assumption."}
+  reform_done: {type: state, value: 0, unit: flag, bounds: [0, 1], source: historical}
+  advance_days: {type: state, value: 0, unit: day, bounds: [0, null], source: game_assumption, note: "How many days earlier than history the reform began in this branch."}
+  instability: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  access: {type: state, value: 0.4, unit: fraction, bounds: [0, 1], source: game_assumption, note: "Share of doors that open to the traveller."}
+
+  # ---- traveller ----
+  traveler.fatigue: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.health: {type: state, value: 1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.trust: {type: state, value: 0.15, unit: fraction, bounds: [0, 1], source: game_assumption, note: "Neighbours' trust in the stranger."}
+  traveler.favor: {type: parameter, value: 0.5, from_spec: favor, source: game_assumption, note: "The employee affection for the office, 0 to 1. 0.5 is neutral."}
+  traveler.homesick: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.attachment: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.satisfaction: {type: state, value: 0.6, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.progress: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.block_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption}
+  traveler.strain_count: {type: state, value: 0, unit: count, bounds: [0, null], source: game_assumption}
+  traveler.appeal_urge: {type: state, value: 0, unit: fraction, bounds: [0, 2], source: game_assumption}
+  traveler.recalled: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.charm_used: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.lost_all: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.stamina: {type: parameter, value: 1, from_staff: stamina, source: game_assumption}
+  traveler.skill: {type: parameter, value: 0.4, from_staff: skill, source: game_assumption}
+  traveler.eloquence: {type: parameter, value: 0.4, from_staff: eloquence, source: game_assumption}
+  traveler.kindness: {type: parameter, value: 0.3, from_staff: kindness, source: game_assumption}
+  traveler.stubbornness: {type: parameter, value: 0.3, from_staff: stubbornness, source: game_assumption}
+  traveler.curiosity: {type: parameter, value: 0.3, from_staff: curiosity, source: game_assumption}
+  traveler.hurt_trait: {type: parameter, value: 0, from_staff: hurt, source: game_assumption}
+  traveler.infect_trait: {type: parameter, value: 0, from_staff: infect, source: game_assumption}
+  harm_block: {type: parameter, value: 0.12, unit: fraction, source: game_assumption, note: "Health lost to hostility when turned away, per point of vulnerability."}
+  traveler.homesick_trait: {type: parameter, value: 0.2, from_staff: homesick_trait, source: game_assumption}
+  # items delivered at arrival
+  ors_stock: {type: state, value: 0, unit: pack, bounds: [0, null], source: game_assumption}
+  protect_room: {type: state, value: 0, unit: person, bounds: [0, null], source: game_assumption, note: "People the carried water kit can still cover."}
+  has_handbook: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_monitor: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_charm: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+
+  # ---- protagonist ----
+  darwin.belief: {type: state, value: 0.3, unit: fraction, bounds: [0, 1], source: game_assumption, note: "How far he already holds that fresh water and food and shade would keep the shore parties well. He lives on the islands as a collector."}
+  darwin.evidence: {type: state, value: 0.05, unit: fraction, bounds: [0, 1], source: game_assumption}
+  darwin.rapport: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption, note: "His trust in the traveller."}
+  darwin.board_pressure: {type: state, value: 0, unit: fraction, bounds: [0, 1.5], source: calibrated, note: "Pressure on the ship's officers to change the plan for water and fresh food, calibrated so the baseline reaches 1 near the historical date."}
+  darwin.authority: {type: parameter, value: 0.6, unit: fraction, source: game_assumption}
+
+  # ---- action levels, written by agents each step ----
+  act_treat: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_protect: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_talk: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_bedside: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_lobby: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_rest: {type: input, value: 0, delivery: level, source: game_assumption}
+  darwin_act_canvass: {type: input, value: 0, delivery: level, source: game_assumption}
+  darwin_act_petition: {type: input, value: 0, delivery: level, source: game_assumption}
+  darwin_act_meet: {type: input, value: 0, delivery: level, source: game_assumption}
+
+  # ---- pre-departure choices ----
+  arrive_day: {type: input, value: 0.25, unit: day, source: game_assumption}
+  pref_treat: {type: input, value: 1, source: game_assumption}
+  pref_prevent: {type: input, value: 1, source: game_assumption}
+  pref_ally: {type: input, value: 1, source: game_assumption}
+  on_block: {type: input, value: 0, source: game_assumption, note: "0 yield, 1 insist, 2 appeal to the protagonist."}
+  resp_insist: {type: state, value: 0, bounds: [0, 1], source: game_assumption}
+  resp_yield: {type: state, value: 0, bounds: [0, 1], source: game_assumption}
+  resp_appeal: {type: state, value: 0, bounds: [0, 1], source: game_assumption}
+
+  # ---- epidemic parameters ----
+  pop0: {type: parameter, value: 70, unit: person, source: game_assumption}
+  hazard_open: {type: parameter, value: 0.04, unit: "1/day", source: game_assumption}
+  load_decay: {type: parameter, value: 0.004, unit: "1/day", source: game_assumption}
+  load_floor: {type: parameter, value: 0.85, unit: fraction, source: game_assumption}
+  residual: {type: parameter, value: 0.15, unit: fraction, source: game_assumption, note: "Share of hazard left after the reform."}
+  flight_rate: {type: parameter, value: 0.01, unit: "1/day", source: game_assumption, note: "Men who went back aboard and rested, not lost."}
+  flight_start: {type: parameter, value: 1.5, unit: day, source: game_assumption}
+  course_days: {type: parameter, value: 3, unit: day, source: game_assumption}
+  cfr_untreated: {type: parameter, value: 0.25, unit: fraction, source: game_assumption, note: "Heat illness, thirst and fever on the islands with no care."}
+  cfr_treated: {type: parameter, value: 0.15, unit: fraction, source: game_assumption}
+  protect_eff: {type: parameter, value: 0.8, unit: fraction, source: game_assumption}
+  reform_day_hist: {type: parameter, value: 14, unit: day, source: game_assumption, note: "The day the plan changes in the main timeline is not recorded as a decision, so the game assumes one."}
+  stay_days: {type: parameter, value: 7, unit: day, source: game_assumption}
+  horizon_days: {type: parameter, value: 16, unit: day, source: game_assumption}
+  goal_target: {type: parameter, value: 30, unit: score, source: game_assumption}
+  w_treated: {type: parameter, value: 1, source: game_assumption}
+  w_protected: {type: parameter, value: 0.35, source: game_assumption}
+  w_advance: {type: parameter, value: 3, source: game_assumption}
+
+  # ---- traveller capacity and effort ----
+  treat_per_day: {type: parameter, value: 6, unit: "person/day", source: game_assumption}
+  protect_per_day: {type: parameter, value: 24, unit: "person/day", source: game_assumption}
+  ors_per_patient: {type: parameter, value: 1, unit: pack, source: game_assumption}
+  treat_sat: {type: parameter, value: 6, unit: person, source: game_assumption}
+  protect_sat: {type: parameter, value: 40, unit: person, source: game_assumption}
+  access_floor: {type: parameter, value: 0.25, source: game_assumption}
+  skill_gain_handbook: {type: parameter, value: 0.25, source: game_assumption}
+  fatigue_penalty: {type: parameter, value: 0.6, source: game_assumption}
+  tired_limit: {type: parameter, value: 0.85, source: game_assumption}
+  monitor_fatigue_cut: {type: parameter, value: 0.25, source: game_assumption, note: "Share of fatigue growth a heart rate monitor removes."}
+  rest_from: {type: parameter, value: 0.5, source: game_assumption}
+  rest_weight: {type: parameter, value: 6, source: game_assumption}
+  fat_treat: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  fat_protect: {type: parameter, value: 0.35, unit: "1/day", source: game_assumption}
+  fat_talk: {type: parameter, value: 0.15, unit: "1/day", source: game_assumption}
+  fat_bedside: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  fat_lobby: {type: parameter, value: 0.25, unit: "1/day", source: game_assumption}
+  fat_rest: {type: parameter, value: 1.5, unit: "1/day", source: game_assumption}
+  exposure_rate: {type: parameter, value: 0.12, unit: "1/day", source: game_assumption}
+  sick_scale: {type: parameter, value: 0.1, source: game_assumption}
+  contact_treat: {type: parameter, value: 1.0, source: game_assumption}
+  contact_bedside: {type: parameter, value: 1.2, source: game_assumption}
+  contact_protect: {type: parameter, value: 0.4, source: game_assumption}
+  contact_talk: {type: parameter, value: 0.15, source: game_assumption}
+  guard_skill: {type: parameter, value: 0.6, source: game_assumption}
+  health_recover: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  recall_health: {type: parameter, value: 0.2, source: game_assumption}
+
+  # ---- trust, mood ----
+  trust_gain_treat: {type: parameter, value: 0.03, source: game_assumption}
+  trust_gain_protect: {type: parameter, value: 0.003, source: game_assumption}
+  trust_gain_bedside: {type: parameter, value: 0.06, unit: "1/day", source: game_assumption}
+  trust_loss_block: {type: parameter, value: 0.03, source: game_assumption}
+  block_base: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  favor_calm: {type: parameter, value: 0.6, source: game_assumption, note: "How much affection above 0.5 slows homesickness."}
+  miasma: {type: parameter, value: 0.8, source: historical, note: "Many held that the heat and thirst were part of the work and could not be helped."}
+  loss_insist: {type: parameter, value: 4, unit: pack, source: game_assumption}
+  loss_yield: {type: parameter, value: 0, unit: pack, source: game_assumption}
+  yield_override: {type: parameter, value: 0.7, source: game_assumption, note: "Stubbornness at or above this ignores a yield order."}
+  sat_treat: {type: parameter, value: 0.012, source: game_assumption}
+  sat_protect: {type: parameter, value: 0.002, source: game_assumption}
+  sat_death: {type: parameter, value: 0.0015, source: game_assumption}
+  sat_block: {type: parameter, value: 0.04, source: game_assumption}
+  sat_fatigue: {type: parameter, value: 0.2, source: game_assumption}
+  homesick_rate: {type: parameter, value: 0.04, unit: "1/day", source: game_assumption}
+  homesick_mult: {type: parameter, value: 3, source: game_assumption}
+  talk_relief: {type: parameter, value: 0.12, unit: "1/day", source: game_assumption}
+  attach_bedside: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  attach_sick: {type: parameter, value: 0.08, unit: "1/day", source: game_assumption}
+  attach_talk: {type: parameter, value: 0.06, unit: "1/day", source: game_assumption}
+  stay_attach: {type: parameter, value: 0.6, source: game_assumption}
+  give_up_homesick: {type: parameter, value: 0.85, source: game_assumption}
+  give_up_satisfaction: {type: parameter, value: 0.12, source: game_assumption}
+  appeal_decay: {type: parameter, value: 1.2, unit: "1/day", source: game_assumption}
+
+  # ---- protagonist dynamics ----
+  canvass_rate: {type: parameter, value: 0.09, unit: "1/day", source: game_assumption, note: "His own door to door survey."}
+  map_gain: {type: parameter, value: 0.12, source: game_assumption}
+  belief_evidence_rate: {type: parameter, value: 0.4, unit: "1/day", source: game_assumption}
+  belief_talk: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  rapport_base: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  rapport_eloquence: {type: parameter, value: 0.5, unit: "1/day", source: game_assumption}
+  rapport_handbook: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  evidence_handbook: {type: parameter, value: 0.25, unit: "1/day", source: game_assumption}
+  petition_gain: {type: parameter, value: 0.6, unit: "1/day", source: calibrated}
+  lobby_gain: {type: parameter, value: 3.5, unit: "1/day", source: game_assumption}
+  lobby_rapport_min: {type: parameter, value: 0.35, source: game_assumption}
+  lobby_evidence_min: {type: parameter, value: 0.3, source: game_assumption}
+  petition_evidence_min: {type: parameter, value: 0.3, source: game_assumption}
+  petition_belief_min: {type: parameter, value: 0.45, source: game_assumption}
+  talk_base: {type: parameter, value: 0.3, source: game_assumption}
+
+  # ---- instability ----
+  instab_work: {type: parameter, value: 1.5, source: game_assumption}
+  instab_advance: {type: parameter, value: 0.12, source: game_assumption}
+  strain_base: {type: parameter, value: 1.6, unit: "1/day", source: game_assumption}
+  strain_health: {type: parameter, value: 0.12, source: game_assumption}
+  strain_fatigue: {type: parameter, value: 0.15, source: game_assumption}
+
+equations:
+  traveler_response:
+    priority: 95
+    description: "A stubborn employee ignores a yield order."
+    dynamics:
+      resp_insist: "1 if (on_block == 1 or traveler.stubbornness >= yield_override) else 0"
+      resp_yield: "1 if (resp_insist == 0 and on_block == 0) else 0"
+      resp_appeal: "1 if (resp_insist == 0 and on_block == 2) else 0"
+
+  sanitary_reform:
+    priority: 90
+    description: "The plan changes when the officers are persuaded or on the date the game assumes, whichever is first."
+    reference: "The Beagle visited the Galapagos from 15 September to 20 October 1835. The date of the change of plan is a game assumption."
+    dynamics:
+      darwin.board_pressure: "darwin.board_pressure + (darwin_act_petition * darwin.authority * darwin.belief * darwin.evidence * petition_gain + act_lobby * traveler.eloquence * darwin.rapport * darwin.evidence * lobby_gain) * step"
+      reform_day: "reform_day if reform_day >= 0 else (day if (darwin.board_pressure >= 1 or day >= reform_day_hist) else -1)"
+      reform_done: "1 if reform_day >= 0 else 0"
+      advance_days: "max(0, reform_day_hist - reform_day) if reform_day >= 0 else 0"
+
+  water_hazard:
+    priority: 80
+    dynamics:
+      hazard: "hazard_open * max(load_floor, 1 - load_decay * day) * (1 - reform_done * (1 - residual))"
+
+  ward_access:
+    priority: 75
+    dynamics:
+      access: "access_floor + (1 - access_floor) * clamp(traveler.trust, 0, 1)"
+      sick_density: "clamp((Iu + It) / (pop0 * sick_scale), 0, 1)"
+
+  treat_patients:
+    priority: 70
+    dynamics:
+      treat_cap: "act_treat * treat_per_day * (1 - traveler.fatigue * fatigue_penalty) * access * (1 + skill_gain_handbook * has_handbook) * step"
+      treated_flow: "min(Iu, treat_cap, ors_stock / ors_per_patient)"
+      ors_stock: "ors_stock - treated_flow * ors_per_patient"
+      Iu: "Iu - treated_flow"
+      It: "It + treated_flow"
+      treated_total: "treated_total + treated_flow"
+
+  protect_people:
+    priority: 70
+    dynamics:
+      protect_cap: "act_protect * protect_per_day * (1 - traveler.fatigue * fatigue_penalty) * access * step"
+      protect_flow: "max(0, min(S - P, protect_cap, protect_room))"
+      protect_room: "protect_room - protect_flow"
+      P: "P + protect_flow"
+      protected_total: "protected_total + protect_flow"
+
+  epidemic_in:
+    priority: 60
+    dynamics:
+      new_prot: "P * (1 - exp(-hazard * (1 - protect_eff) * step))"
+      new_cases: "(S - P) * (1 - exp(-hazard * step)) + new_prot"
+      flight_flow: "(S - P) * flight_rate * step * (1 if day >= flight_start else 0)"
+      S: "S - new_cases - flight_flow"
+      P: "P - new_prot"
+      Iu: "Iu + new_cases"
+      cum_cases: "cum_cases + new_cases"
+
+  epidemic_out:
+    priority: 59
+    dynamics:
+      death_flow: "(Iu * cfr_untreated + It * cfr_treated * (1 - 0.3 * traveler.skill)) * (1 - exp(-step / course_days))"
+      R: "R + (Iu + It) * (1 - exp(-step / course_days)) - death_flow"
+      D: "D + death_flow"
+      Iu: "Iu * exp(-step / course_days)"
+      It: "It * exp(-step / course_days)"
+
+  traveller_trust:
+    priority: 50
+    dynamics:
+      traveler.trust: "traveler.trust + trust_gain_treat * treated_flow + trust_gain_protect * protect_flow + trust_gain_bedside * traveler.kindness * act_bedside * step"
+
+  traveller_body:
+    priority: 45
+    dynamics:
+      traveler.fatigue: "traveler.fatigue + (fat_treat * act_treat + fat_protect * act_protect + fat_talk * act_talk + fat_bedside * act_bedside + fat_lobby * act_lobby - fat_rest * act_rest) / traveler.stamina * (1 - monitor_fatigue_cut * has_monitor) * step"
+      traveler.health: "traveler.health - exposure_rate * (contact_treat * act_treat + contact_bedside * act_bedside + contact_protect * act_protect + contact_talk * act_talk) * sick_density * (1 - clamp(traveler.skill * guard_skill, 0, 0.9)) * (1 + traveler.infect_trait) * step + health_recover * act_rest * step"
+
+  traveller_mind:
+    priority: 40
+    dynamics:
+      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * darwin.rapport) * step"
+      traveler.attachment: "traveler.attachment + (attach_bedside * act_bedside + attach_sick * sick_density * arrived + attach_talk * act_talk * darwin.rapport) * traveler.kindness * step"
+      traveler.satisfaction: "traveler.satisfaction + arrived * (sat_treat * treated_flow + sat_protect * protect_flow - sat_death * death_flow - sat_fatigue * max(0, traveler.fatigue - 0.7) * step)"
+      traveler.appeal_urge: "max(0, traveler.appeal_urge - appeal_decay * step)"
+      traveler.progress: "(treated_total * w_treated + protected_total * w_protected + advance_days * w_advance) / goal_target"
+
+  protagonist:
+    priority: 55
+    dynamics:
+      darwin.rapport: "darwin.rapport + darwin_act_meet * act_talk * (rapport_base + rapport_eloquence * traveler.eloquence + rapport_handbook * has_handbook) * step"
+      darwin.evidence: "darwin.evidence + (darwin_act_canvass * canvass_rate + map_gain * new_cases / pop0 + darwin_act_meet * act_talk * darwin.rapport * evidence_handbook * has_handbook) * step"
+      darwin.belief: "darwin.belief + (belief_evidence_rate * max(0, darwin.evidence - darwin.belief) + darwin_act_meet * act_talk * darwin.rapport * traveler.eloquence * belief_talk) * step"
+
+  timeline_strain:
+    priority: 35
+    dynamics:
+      instability: "clamp(instab_work * (treated_total + protected_total) / pop0 + instab_advance * advance_days, 0, 1)"
+
+actions:
+  # traveller, one pick per step among those whose `requires` holds
+  traveler:
+    treat:
+      level: act_treat
+      requires: "arrived == 1 and Iu >= 1 and ors_stock >= ors_per_patient and traveler.fatigue < tired_limit"
+      utility: "pref_treat * (0.6 + 1.1 * min(1, Iu / treat_sat)) + traveler.kindness * 0.4 * min(1, Iu / treat_sat)"
+    protect:
+      level: act_protect
+      requires: "arrived == 1 and protect_room >= 1 and (S - P) >= 5 and traveler.fatigue < tired_limit"
+      utility: "pref_prevent * (0.6 + 1.0 * min(1, (S - P) / protect_sat))"
+    talk:
+      level: act_talk
+      requires: "arrived == 1 and darwin.rapport < 1 and traveler.fatigue < tired_limit"
+      utility: "pref_ally * (talk_base + traveler.curiosity * 0.7 + (1 - darwin.rapport) * 0.5 + 0.3 * has_handbook) + traveler.appeal_urge * 1.2 - traveler.kindness * 0.9 * min(1, Iu / treat_sat)"
+    bedside:
+      level: act_bedside
+      requires: "arrived == 1 and Iu >= 1 and ors_stock < ors_per_patient and traveler.fatigue < tired_limit"
+      utility: "traveler.kindness * 1.3 * min(1, Iu / treat_sat)"
+    lobby:
+      level: act_lobby
+      requires: "arrived == 1 and reform_day < 0 and darwin.rapport >= lobby_rapport_min and darwin.evidence >= lobby_evidence_min and traveler.fatigue < tired_limit"
+      utility: "pref_ally * (traveler.eloquence * 1.4 * darwin.rapport + 0.4)"
+    rest:
+      level: act_rest
+      requires: "arrived == 1"
+      utility: "rest_weight * max(0, traveler.fatigue - rest_from) + 0.05"
+  darwin:
+    canvass:
+      level: darwin_act_canvass
+      requires: "1 == 1"
+      utility: "1.1 - darwin.evidence"
+    petition:
+      level: darwin_act_petition
+      requires: "darwin.evidence >= petition_evidence_min and darwin.belief >= petition_belief_min and reform_day < 0"
+      utility: "0.1 + 2.5 * darwin.belief * darwin.evidence"
+    meet:
+      level: darwin_act_meet
+      requires: "act_talk == 1"
+      utility: "3 * (0.4 + darwin.rapport)"
+
+events:
+  door_block:
+    source: game_assumption
+    importance: 2
+    tag: trait
+    when: "(act_treat + act_protect) > 0"
+    probability: "block_base * (1 - access) * (1 + miasma) * step"
+    cooldown_days: 1
+    effects:
+      ors_stock: "max(0, ors_stock - resp_insist * loss_insist - resp_yield * loss_yield)"
+      traveler.trust: "traveler.trust - trust_loss_block * (1 + resp_insist) + resp_appeal * 0.03"
+      traveler.block_count: "traveler.block_count + 1"
+      traveler.health: "max(0, traveler.health - harm_block * traveler.hurt_trait)"
+      traveler.appeal_urge: "traveler.appeal_urge + resp_appeal + 0.3 * resp_yield"
+      traveler.satisfaction: "traveler.satisfaction - sat_block * (resp_insist + 0.4)"
+      traveler.fatigue: "traveler.fatigue + 0.05"
+    variants:
+      - {when: "resp_insist == 1 and on_block != 1 and d_ors_stock == 0", key: door_block_stubborn_empty}
+      - {when: "resp_insist == 1 and d_ors_stock == 0", key: door_block_insist_empty}
+      - {when: "resp_insist == 1 and on_block != 1", key: door_block_stubborn}
+      - {when: "resp_insist == 1", key: door_block_insist}
+      - {when: "resp_appeal == 1", key: door_block_appeal}
+      - {when: "resp_yield == 1", key: door_block_yield}
+  time_strain:
+    source: game_assumption
+    importance: 3
+    tag: param
+    when: "advance_days > 0.2 and arrived == 1"
+    probability: "instability * strain_base * step"
+    cooldown_days: 1.5
+    effects:
+      traveler.health: "traveler.health - strain_health"
+      traveler.fatigue: "traveler.fatigue + strain_fatigue"
+      traveler.strain_count: "traveler.strain_count + 1"
+
+milestones:
+  first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}
+  first_protect: {when: "protected_total >= 1", importance: 3, tag: branch, needs_traveler: true}
+  met_darwin: {when: "darwin_act_meet * act_talk >= 1", importance: 4, tag: branch, needs_traveler: true}
+  darwin_trusts: {when: "darwin.rapport >= 0.5", importance: 3, tag: branch, needs_traveler: true}
+  darwin_convinced: {when: "darwin.belief >= 0.8 and darwin.rapport >= 0.4", importance: 4, tag: branch, needs_traveler: true}
+  board_moves: {when: "darwin.board_pressure >= 0.6", importance: 4, tag: branch, needs_traveler: false}
+  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: history, needs_traveler: false}
+  reform_early: {when: "reform_day >= 0 and advance_days > 0.2", importance: 5, tag: branch, needs_traveler: true}
+  trust_won: {when: "traveler.trust >= 0.5", importance: 2, tag: trait, needs_traveler: true}
+  exhausted: {when: "traveler.fatigue >= 0.8", importance: 1, tag: param, needs_traveler: true}
+  outbreak_fades: {when: "day >= 2 and Iu + It < 12", importance: 2, tag: param, needs_traveler: false}
+
+# Three sync points. A point is hit when its milestone fires in the branch, and all three make three stars.
+# Each is a milestone that needs the traveller, so it cannot be hit by history alone.
+star_points:
+  - {id: convince, kind: persuade, milestone: darwin_convinced}
+  - {id: trust, kind: trust, milestone: trust_won}
+  - {id: reform, kind: hold, milestone: reform_early}
+
+report: {deaths: D, cases: cum_cases, handle: reform_day, treated: treated_total, protected: protected_total, protected_scale: 1}
+
+log_importance: {arrive: 5, leave: 5, recall: 5}
+
+tag_source: {history: historical, branch: game_assumption, trait: game_assumption, param: game_assumption}
+
+hints:
+  - {when: "traveler.block_count >= 2 and resp_insist == 1", key: lost_ors}
+  - {when: "protect_room >= 40 and traveler.progress < 1", key: unused_protect}
+  - {when: "ors_stock >= 20", key: unused_ors}
+  - {when: "darwin.rapport < 0.4 and has_handbook > 0", key: ally_gap}
+  - {when: "1 == 1", key: none}
+
+recall:
+  when: "traveler.health <= recall_health and arrived == 1"
+  with_charm:
+    traveler.charm_used: "1"
+  without_charm:
+    traveler.lost_all: "1"
+    ors_stock: "0"
+    protect_room: "0"
+
+outcomes:
+  - {id: near_death, when: "traveler.recalled == 1", energy_mult: 0.3, rest_days: 3}
+  - {id: stay_and_gifts, when: "traveler.attachment >= stay_attach and traveler.progress >= 0.45", energy_mult: 0.9, rest_days: 0}
+  - {id: gave_up, when: "traveler.homesick >= give_up_homesick or traveler.satisfaction <= give_up_satisfaction", energy_mult: 0.5, rest_days: 1}
+  - {id: legend, when: "traveler.progress >= 0.95 and advance_days >= 2", energy_mult: 1.5, rest_days: 1}
+  - {id: perfect, when: "traveler.progress >= 0.5 and traveler.satisfaction >= 0.3", energy_mult: 1.0, rest_days: 1}
+  - {id: scramble, when: "traveler.block_count >= 2 and traveler.progress < 0.35", energy_mult: 0.4, rest_days: 1}
+  - {id: modest, when: "1 == 1", energy_mult: 0.7, rest_days: 1}
+
+scoring:
+  lives_saved: "base_D - D"
+  cases_prevented: "base_cum_cases - cum_cases"
+  change_amount: "max(0, base_D - D) + max(0, base_cum_cases - cum_cases) * 0.3 + advance_days * 4"
+
+item_bindings:
+  ors_pack: {ors_stock: 1}
+  water_flask: {ors_stock: 2}
+  vitamin_c: {ors_stock: 3}
+  hardtack: {ors_stock: 2}
+  sun_hat: {protect_room: 3}
+  mosquito_net: {protect_room: 4}
+  handbook: {has_handbook: 1}
+  recall_charm: {has_charm: 1}
+  heart_monitor: {has_monitor: 1}
+
+plots:
+  field_notes: {character: darwin, tech: 4, bindings: {darwin.evidence: 0.2}}
+  germ_theory: {character: darwin, tech: 7, bindings: {darwin.evidence: 0.5}}
+
+strategies:
+  focus:
+    cure: {pref_treat: 1.2, pref_prevent: 0.6, pref_ally: 0.5}
+    prevent: {pref_treat: 0.6, pref_prevent: 1.2, pref_ally: 0.5}
+    ally: {pref_treat: 0.7, pref_prevent: 0.7, pref_ally: 1.5}
+    balanced: {pref_treat: 1.0, pref_prevent: 1.0, pref_ally: 0.9}
+  on_block:
+    yield: {on_block: 0}
+    insist: {on_block: 1}
+    appeal: {on_block: 2}
+
+series:
+  - {id: cases, expr: "Iu + It", label: sick}
+  - {id: deaths, expr: "D", label: dead}
+
+simulation:
+  step_size: {value: 0.25, unit: day}
+  start_day: 0
+  output_variables: [S, P, Iu, It, D, hazard, reform_day, traveler.fatigue, traveler.trust, darwin.rapport, darwin.board_pressure]
+  plans:
+    - id: baseline
+      label: "Main timeline, no visitor"
+      regimens: []
+    - id: dispatch
+      label: "Dispatch plan built from the pre-departure sheet"
+      regimens:
+        - {variable: ors_stock, delivery: total, time_start: arrival, from_item: water_flask}
+        - {variable: protect_room, delivery: total, time_start: arrival, from_item: sun_hat}
+
+optimization:
+  method: pareto_sample
+  objectives:
+    - {variable: lives_saved, metric: final, direction: maximize}
+    - {variable: cost, metric: final, direction: minimize}
+  constraints:
+    - {variable: weight, condition: "<= capacity"}
+    - {variable: cost, condition: "<= funds"}
+  algorithm: {samples: 300, refine: 300, max_jump: 4, skip_prob: 0.5, seed: 11}
+  mc: {runs: 4, seed: 7}
+  startpoint:
+    regimens:
+      - {item: ors_pack, variable: ors_stock, delivery: total, optimize: {value: [0, 60], integer: true}}
+      - {item: water_flask, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: vitamin_c, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: hardtack, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: sun_hat, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: mosquito_net, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}
