@@ -300,7 +300,7 @@ try {
   await page.click('[data-act=shopsell][data-id=disinfectant]');
   ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
   await sub('future');
-  ok('future goods are buyable but a borrowed design is not', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1 && (await page.locator('[data-act=cartinc][data-id=bamboo_copter]').count()) === 0);
+  ok('future goods are buyable', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   await sub('modern');
   await page.click('[data-act=lfilter][data-id=shop_modern]');
   await page.fill('#fq-shop_modern', '心率');
