@@ -418,12 +418,12 @@ export function createUI(D, ctx) {
     const nArch = S.trips.filter((x) => x.archived).length;
     const pg = listbox.paginate('log', all);
     const trips = pg.shown;
-    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${protagonistHtml({ eraId: t.place, light: t.light })} · ${esc(shortOfPlace(t.place, t.light))}${staffLine(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
+    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td class="nowrap">${protagonistHtml({ eraId: t.place, light: t.light })}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td class="nowrap">${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
     const rows = done.join('');
     const bar = S.trips.length ? `<div class="logbar"><span class="logtools"><button class="ghost" data-act="archiverule" data-id="notbest"${tip(U.office.archive_tip)}>${U.office.archive_notbest}</button><label class="check"><input type="checkbox" id="log-archived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${nArch})</label></span>${pg.html}</div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
-      ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
+      ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.protagonist}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
