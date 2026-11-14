@@ -376,6 +376,32 @@ actions:
       utility: "3 * (0.4 + sun.rapport)"
 
 events:
+  lin_diploma:
+    source: game_assumption
+    importance: 4
+    tag: branch
+    when: "arrived == 1 and day >= 2 and day < stay_days"
+    probability: "0.5 * step"
+    cooldown_days: 30
+    effects:
+      treated_total: "treated_total + (1 if act_treat == 1 else 0)"
+      D: "D + (0 if act_treat == 1 else 1)"
+      traveler.trust: "traveler.trust + (0.05 if act_treat == 1 else 0)"
+    variants:
+      - {when: "d_treated_total > 0", key: lin_diploma_helped}
+  lost_at_gate:
+    source: game_assumption
+    importance: 3
+    tag: branch
+    when: "arrived == 1 and day >= 1 and day < stay_days"
+    probability: "0.3 * step"
+    cooldown_days: 3
+    effects:
+      protected_total: "protected_total + (1 if act_protect == 1 else 0)"
+      D: "D + (0 if act_protect == 1 else 1)"
+      traveler.trust: "traveler.trust + (0.02 if act_protect == 1 else 0)"
+    variants:
+      - {when: "d_protected_total > 0", key: lost_at_gate_helped}
   time_strain:
     source: game_assumption
     importance: 3

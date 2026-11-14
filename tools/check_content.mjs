@@ -126,3 +126,7 @@ for (const ev of D.get('catalog.events')) {
   if (D.get('antiques.antiques.relic_' + ev.id).era !== ev.era) throw new Error(`the relic of ${ev.id} does not anchor ${ev.era}`);
 }
 console.log('events with a full model sit with their model: ok');
+
+// every random event of an era has a wiki card that explains it, so the wiki page of the era never meets one it does not know
+for (const id of D.get('config.eras')) for (const key of Object.keys(D.get('era_raw.' + id).events)) D.get('encyclopedia.model_events.' + key);
+console.log('events of the eras have their wiki cards: ok');
