@@ -1,6 +1,42 @@
 order: 93
 events:
-- hippocrates_kos
+  hippocrates_kos:
+    order: 4
+    year: -400
+    lon: 27.09
+    lat: 36.89
+    region: europe
+    field: medicine
+    tier: 2
+    channels: {E: 1}
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"trait":["quiet","wanderer","skeptical"]}}
+        - {id: p2, kind: care, req: {"any":[{"trait":["calm","cheerful","faithful"]},{"job":["nurse","midwife","physician","paramedic","doctor"]}]}}
+        - {id: p3, kind: trust, req: {"trait":["kind","charismatic","sensitive"]}}
+    text:
+      en:
+        name: Medicine as careful observation
+        place: Kos
+        figure: Hippocrates
+        story: On Kos a physician and his school teach that disease has natural causes and must be watched at the bedside.
+        relic: A bronze probe
+        relic_desc: A thin tool of a doctor who preferred looking to guessing.
+        points:
+          p1: "Note the course of an illness at the bedside"
+          p2: "Tend the patients in the same room"
+          p3: "Record with the apprentices"
+      zh:
+        name: 把医学当作细致的观察
+        place: 科斯岛
+        figure: 希波克拉底
+        story: 在科斯岛，一位医生和他的学派教人：疾病有自然的原因，要守在床边仔细看。
+        relic: 一根青铜探针
+        relic_desc: 一件细细的器具，属于宁愿多看也不乱猜的医生。
+        points:
+          p1: "在床边记下病程"
+          p2: "照看同屋的病人"
+          p3: "同学徒们一起记录"
 text:
   en:
     name: Hippocrates
@@ -8,3 +44,9 @@ text:
   zh:
     name: 希波克拉底
     text: 科斯岛的希腊医生，约公元前 460 年生，约公元前 370 年去世。以他名义流传的医学文集把疾病看作自然现象而非神意，强调仔细观察病人。
+quotes:
+  hippocrates:
+    order: 10
+    text:
+      en: {who: Hippocrates, quote: "Life is short, the art long."}
+      zh: {who: 希波克拉底, quote: "人生短暂，技艺长久。"}

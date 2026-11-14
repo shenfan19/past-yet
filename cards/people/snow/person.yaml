@@ -19,3 +19,307 @@ text:
   zh:
     name: 约翰·斯诺
     text: 英国医生。1849 年已提出霍乱经水传播，1854 年通过逐户调查把病例与宽街水泵联系起来。游戏里他是员工可以合作的对象。
+wiki:
+  places:
+    broad_street:
+      order: 1
+      era: broad_street_1854
+      tags:
+        - medical
+        - infection
+        - cholera
+        - c19
+        - london
+        - history
+      related:
+        - people:snow
+        - events:pump_handle
+        - antiques:pump_rust
+      unlock:
+        era: broad_street_1854
+      refs:
+        - snow1855
+        - game
+      text:
+        en:
+          name: Broad Street, London, 1854
+          text: A street in Soho, London, with a public water pump at its corner. From the end of August to early September 1854 cholera broke out here. Broad Street in the game is a neighbourhood model of about five hundred people.
+        zh:
+          name: 伦敦宽街，1854
+          text: 伦敦苏荷区的一条街，街口有一台公用水泵。1854 年 8 月底到 9 月初，这一带暴发霍乱。游戏里的宽街是一个约五百人的街区模型。
+  events:
+    pump_handle:
+      order: 1
+      tags:
+        - cholera
+        - c19
+        - london
+        - history
+      related:
+        - people:snow
+        - places:broad_street
+      unlock:
+        era: broad_street_1854
+      refs:
+        - snow1855
+        - game
+      text:
+        en:
+          name: The Broad Street pump handle is removed
+          text: History records the handle being removed on 8 September. The outbreak was already declining by then and many residents had left, so how many lives the removal saved is still debated. In the game an employee can get the handle removed earlier, but only on that branch.
+        zh:
+          name: 宽街泵柄被拆
+          text: 史载 9 月 8 日泵柄被拆走。拆走时疫情已经在下降，很多居民早已离开，所以泵柄被拆能救多少人至今有争论。游戏里员工能让泵柄提前拆走，只在这条分支里成立。
+  refs:
+    snow1855:
+      order: 1
+      status: pending
+      text:
+        en: 'Snow J. On the Mode of Communication of Cholera. 2nd ed. London: John Churchill; 1855.'
+        zh: 'Snow J. On the Mode of Communication of Cholera. 2nd ed. London: John Churchill; 1855.'
+antiques:
+  pump_rust:
+    order: 1
+    era: broad_street_1854
+    kind: key
+    price: 40
+    start_owned: false
+    playable: true
+    tags:
+      - medical
+      - history
+      - key
+    text:
+      en:
+        name: Rust flake from the Broad Street pump
+        desc: A flake of rust scraped off an old pump. Hold it and you can find a street in September.
+      zh:
+        name: 宽街水泵的锈片
+        desc: 从一台旧水泵上刮下来的一片锈。拿着它，能找到一条街的九月。
+era_text:
+  en:
+    name: Broad Street, London 1854
+    short: Broad St.
+    place_name: Broad Street, Soho, London
+    tags:
+      - medical
+      - infection
+      - cholera
+      - c19
+      - london
+      - history
+    event_titles:
+      door_block: Turned away at the door
+      time_strain: Time slip
+    plots:
+      microscope:
+        name: Give Snow a microscope
+        desc: Lets him show people what is in the water more clearly.
+        character: John Snow
+        article: people:snow
+      germ_theory:
+        name: Explain germ theory to Snow
+        desc: Needs the craft of microbiology, which this era does not have.
+        character: John Snow
+        article: people:snow
+    blurb: Cholera, one pump, and a doctor nobody has listened to yet. Close, cheap, and the effect of hygiene and medicine is clear.
+    handle_label: Pump handle removed
+    protagonist: John Snow
+    protagonist_role: A doctor who has said for three years that cholera comes from drinking water
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: On the night of 31 August 1854, cholera broke out around Broad Street in Soho, London.
+          check: true
+        - text: The popular explanation was miasma, bad air.
+          check: true
+        - text: Snow had already proposed in 1849 that cholera spreads through water. Most colleagues did not accept it.
+          check: true
+        - text: On 8 September the handle of the Broad Street pump was removed.
+          check: true
+        - text: By the time the handle was removed the outbreak was already declining and many residents had left.
+          check: true
+      regret:
+        - You can save today's patients but not tomorrow's. On the main timeline the handle came off on day eight.
+        - Data and maps matter more than medicine, but making people believe data takes time.
+    events:
+      door_block_stubborn: A neighbour blocks the door, saying it is miasma and no stranger may touch the patient. {staff} is stubborn, does not give way, is thrown out of one house and loses {d.ors_stock:i} packets of rehydration salts.
+      door_block_stubborn_empty: A neighbour blocks the door, saying it is miasma and no stranger may touch the patient. {staff} is stubborn, does not give way, and is thrown out.
+      door_block_insist_empty: A neighbour blocks the door, saying it is miasma. {staff} stands at the door and finishes speaking, and is pushed out.
+      door_block_insist: A neighbour blocks the door, saying it is miasma. {staff} stands at the door and finishes speaking, is pushed out, and loses {d.ors_stock:i} packets of rehydration salts.
+      door_block_appeal: A neighbour blocks the door, saying it is miasma. {staff} does not force the way, turns and goes to Snow to ask him to speak up.
+      door_block_yield: A neighbour blocks the door, saying it is miasma. {staff} steps back without a quarrel, and half a day is wasted.
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      convince: "Convince Snow"
+      trust: "Win the trust of the street"
+      handle: "Have the pump handle removed ahead of history"
+    milestones:
+      first_treat: '{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak.'
+      first_protect: '{date}: {staff} hands the first chlorine tablets to a few households willing to listen, and teaches them to boil or treat the water.'
+      met_snow: '{date}: {staff} meets Snow at the street corner. He listens closely but keeps asking one thing: where is the evidence.'
+      snow_trusts: '{date}: Snow starts to treat {staff} as one of his own and brings out the house by house list he has been keeping to compare.'
+      snow_convinced: '{date}: Snow no longer merely suspects the water. He has enough names, and believes what the stranger told him.'
+      board_moves: '{date}: The parish board starts to give way and says the pump might be shut for now.'
+      handle_off_history: '{date}: The pump handle is removed. The main timeline does not change.'
+      handle_off_early: '{date}: The pump handle is removed {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      trust_won: '{date}: People on the corner no longer keep {staff} out, and some knock on their own.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of patients falls to around single digits. Many people have left the area.'
+    summary:
+      near_death: '{staff} collapses on Broad Street and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a letter saying they want to stay with these people a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend on Broad Street. The pump handle came off {advance_days:1} days earlier than in history.'
+      perfect: '{staff} completed the task on Broad Street and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was turned away at the door again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent seven days on Broad Street, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was sitting with the patient by the bed.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told them what they needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's patients, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, water really does carry the sickness away.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they believe it is up to them.
+        - text: With one more item I might have saved one more household.
+    hints:
+      lost_ors: A lot of rehydration salts were lost. Next time let the employee yield, or bring more.
+      unused_protect: Chlorine was left over. The limit was the neighbours' trust, not the tablets. Let the employee help patients first to build trust.
+      unused_ors: Rehydration salts were left over. The employee may have spent time elsewhere, or patients were not let in.
+      ally_gap: Snow's evidence is still thin. The handbook helps him, provided the employee spends time with him.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 伦敦宽街 1854
+    short: 宽街
+    place_name: 伦敦苏荷区宽街
+    tags:
+      - medical
+      - infection
+      - cholera
+      - c19
+      - london
+      - history
+    event_titles:
+      door_block: 被拒之门外
+      time_strain: 时间错位
+    plots:
+      microscope:
+        name: 送斯诺一台显微镜
+        desc: 让他能更清楚地给人看水里的东西。
+        character: 约翰·斯诺
+        article: people:snow
+      germ_theory:
+        name: 把细菌致病的理论讲给斯诺
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 约翰·斯诺
+        article: people:snow
+    blurb: 霍乱，一台水泵，一位还没被人听进去的医生。近，成本低，卫生知识和药物的效果清楚。
+    handle_label: 泵柄拆除
+    protagonist: 约翰·斯诺
+    protagonist_role: 医生，三年前就在说霍乱是喝水喝出来的
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1854 年 8 月 31 日夜间，伦敦苏荷区宽街一带暴发霍乱。
+          check: true
+        - text: 当时流行的解释是瘴气，也就是脏空气。
+          check: true
+        - text: 斯诺在 1849 年已经提出霍乱经水传播，多数同行不接受。
+          check: true
+        - text: 9 月 8 日，宽街水泵的手柄被拆走。
+          check: true
+        - text: 拆泵柄时，疫情已经在下降，很多居民早已离开。
+          check: true
+      regret:
+        - 救得了今天的，救不了明天的。主时间线上，泵柄拆在第八天。
+        - 数据与地图比药更重要，但让人相信数据需要时间。
+    events:
+      door_block_stubborn: 邻居拦在门口，说这是瘴气，不能让外人碰病人。{staff}固执，没有退让，被赶出一户，丢了 {d.ors_stock:i} 包补液。
+      door_block_stubborn_empty: 邻居拦在门口，说这是瘴气，不能让外人碰病人。{staff}固执，没有退让，被赶了出来。
+      door_block_insist_empty: 邻居拦在门口，说这是瘴气。{staff}站在门口把话说完，被推了出来。
+      door_block_insist: 邻居拦在门口，说这是瘴气。{staff}站在门口把话说完，被推了出来，丢了 {d.ors_stock:i} 包补液。
+      door_block_appeal: 邻居拦在门口，说这是瘴气。{staff}没有硬闯，转身去找斯诺，请他出面说句话。
+      door_block_yield: 邻居拦在门口，说这是瘴气。{staff}退了一步，没有吵，浪费了半天。
+      time_strain: '{date}，{staff}听见钟声错了半拍。这条分支离史实越来越远，人明显更累了。'
+    star_points:
+      convince: "说服斯诺"
+      trust: "赢得街坊的信任"
+      handle: "比史实更早拆掉水泵手柄"
+    milestones:
+      first_treat: '{date}，{staff}配好了第一杯补液。一个人开始能说话。'
+      first_protect: '{date}，{staff}把第一批氯片分到了愿意听的几户，教他们把水烧开或者加药。'
+      met_snow: '{date}，{staff}在街口见到了斯诺。他听得很认真，但一直在问：证据在哪里。'
+      snow_trusts: '{date}，斯诺开始把{staff}当作自己人，愿意把他挨家挨户记下的名单拿出来对照。'
+      snow_convinced: '{date}，斯诺不再只是怀疑水。他有了足够的名单，也相信了这个陌生人说的话。'
+      board_moves: '{date}，教区委员会的人开始松口，说也许可以先停一下水泵。'
+      handle_off_history: '{date}，水泵手柄被拆走。主时间线不变。'
+      handle_off_early: '{date}，水泵手柄比史实早 {advance_days:1} 天被拆走。主时间线不变，只有这条分支里是这样。'
+      trust_won: '{date}，街角的人不再把{staff}拦在门外，有人主动来敲门。'
+      exhausted: '{date}，{staff}累得手在抖，被迫停下来休息。'
+      outbreak_fades: '{date}，病人数降到了个位数附近。很多人已经离开了这一带。'
+    summary:
+      near_death: '{staff}在宽街倒下，被回收符接了回来。保住了命，付出了代价。'
+      stay_and_gifts: '{staff}完成了任务，却没有回来。离开时留下一封信，说想多陪陪这里的人。以后会有礼物寄来。'
+      gave_up: '{staff}提前放弃，回到了现代。{staff}说，这里不属于自己。'
+      legend: '{staff}在宽街留下了传说，比史实早 {advance_days:1} 天，泵柄被拆走。'
+      perfect: '{staff}在宽街完成任务，平安回来。主时间线 {base_D:i} 人死亡，这条分支 {D:i} 人。'
+      scramble: '{staff}被邻居一次次拦在门外，最后狼狈地逃了回来，带着一个笑话。'
+      modest: '{staff}在宽街待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 我最后还想着，床边的那个人有没有人陪。
+        - text: 我以为我能多撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每一个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家。就是这样。
+        - text: 我不是做这个的料。
+      legend:
+        - text: 我只是把该告诉他们的告诉了。
+      perfect:
+        - trait: kind
+          text: 我救得了今天的，救不了明天的。
+        - trait: curious
+          text: 原来是这样，水真的会带着病走。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们早晚会明白。就是晚了点。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 话我都说了。信不信是他们的事。
+        - text: 如果多带一样东西，也许能多救一户人家。
+    hints:
+      lost_ors: 补液被丢了很多，下一次可以让员工让步，或者多带一点。
+      unused_protect: 氯片没用完。受限于邻居的信任，不是氯片不够，让员工先去帮病人建立信任。
+      unused_ors: 补液没用完。可能是员工把时间花在别处，或者病人没让进门。
+      ally_gap: 斯诺的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
+      none: 换一项配置再派一趟，同一个种子，对照起来最清楚。

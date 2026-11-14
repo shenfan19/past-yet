@@ -1,6 +1,43 @@
 order: 25
 events:
-- ban_zhao_luoyang
+  ban_zhao_luoyang:
+    order: 158
+    year: 92
+    lon: 112.45
+    lat: 34.62
+    region: asia
+    field: literature
+    tier: 2
+    channels: {S: 2, G: 1}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"any":[{"job":["archivist"]},{"stat":{"wit":7}}]}}
+        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","ambitious"]},{"job":["teacher"]}]}}
+        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["teacher"]},{"trait":["faithful","vigil"]}]}}
+    text:
+      en:
+        name: "Finishing her brother's history"
+        place: "Luoyang"
+        figure: "Ban Zhao"
+        story: "When her brother Ban Gu dies with the Book of Han unfinished, Ban Zhao is called to complete it, and much of the finishing, including the tables, is credited to her. She is better remembered for a short book of advice to women."
+        relic: "A table of names on silk"
+        relic_desc: "A strip of silk with a table of titles and names in neat columns."
+        points:
+          p1: "Check the tables against the sources (a record keeper or a sharp mind)"
+          p2: "Defend the unfinished tables to the court scholars (a teacher or a silver tongued employee)"
+          p3: "Stay with her until the last page is read (a teacher or a stubborn employee)"
+      zh:
+        name: "接着兄长写完的史书"
+        place: "洛阳"
+        figure: "班昭"
+        story: "哥哥班固去世时《汉书》还没有写完，班昭受命续成，书里的表大部分都记在她名下。人们记得更多的，却是她那本劝导女子的小书。"
+        relic: "一幅绢上的人名表"
+        relic_desc: "一条绢，上面是整整齐齐排列的官名与人名。"
+        points:
+          p1: "对着史料核对那些表"
+          p2: "向朝中学者辩护那些未完成的表"
+          p3: "陪她到最后一页读完"
 text:
   en:
     name: Ban Zhao

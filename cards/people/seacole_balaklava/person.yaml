@@ -1,6 +1,44 @@
 order: 225
 events:
-- seacole_balaklava
+  seacole_balaklava:
+    order: 215
+    year: 1855
+    lon: 33.6
+    lat: 44.5
+    region: europe
+    field: medicine
+    tier: 2
+    era: seacole_balaklava_1855
+    channels: {E: 3, L: 2, S: 2}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
+        - {id: p2, kind: persuade, req: {"trait":["streetwise","cosmopolitan","charismatic","skeptical"]}}
+        - {id: p3, kind: endure, redeem: true, req: {"provides":"clean_water"}}
+    text:
+      en:
+        name: "The inn she found her own way to"
+        place: "Balaklava"
+        figure: "Mary Seacole"
+        story: "Refused when she asks to nurse for the army, Mary Seacole pays her own way to the Crimea, opens an inn behind the camp, and tends patients with dysentery and cholera."
+        relic: "A medicine chest"
+        relic_desc: "An old wooden chest with compartments for herbs and gauze."
+        points:
+          p1: "Tend the dysentery and cholera patients"
+          p2: "Ask the quartermaster for a chest of medicine"
+          p3: "Get through a whole summer"
+      zh:
+        name: "自己找路去的战地客栈"
+        place: "巴拉克拉瓦"
+        figure: "玛丽·西科尔"
+        story: "玛丽·西科尔申请当军队的护士被拒绝，就自己出钱去了克里米亚，在营地后方开了一家客栈，照看痢疾和霍乱的病人。"
+        relic: "一只药箱"
+        relic_desc: "一只旧木药箱，里面分格放着草药和纱布。"
+        points:
+          p1: "照看痢疾和霍乱病人"
+          p2: "向军需官要一箱药"
+          p3: "撑过一整个夏天"
 text:
   en:
     name: "Mary Seacole"
@@ -8,3 +46,265 @@ text:
   zh:
     name: "玛丽·西科尔"
     text: "牙买加出生的护士和商人，1805 年生，1881 年去世。申请做军队护士被拒绝后自费前往克里米亚，在营地后方照看伤病员。"
+wiki:
+  places:
+    balaklava_camp:
+      order: 6
+      era: seacole_balaklava_1855
+      tags:
+        - medical
+        - infection
+        - dysentery
+        - c19
+        - crimea
+        - history
+      related:
+        - people:seacole_balaklava
+        - events:camp_stores
+      unlock:
+        era: seacole_balaklava_1855
+      refs:
+        - seacole1857
+        - game
+      text:
+        en:
+          name: Balaklava, 1855
+          text: A small harbour on the south coast of the Crimea that served as the British supply base. Balaklava in the game is a camp model of about five hundred people.
+        zh:
+          name: 巴拉克拉瓦，1855
+          text: 克里米亚南岸的一个小港口，是英军的补给基地。游戏里的巴拉克拉瓦是一个约五百人的营地模型。
+  events:
+    camp_stores:
+      order: 7
+      tags:
+        - infection
+        - c19
+        - crimea
+        - history
+      related:
+        - people:seacole_balaklava
+        - places:balaklava_camp
+      unlock:
+        era: seacole_balaklava_1855
+      refs:
+        - seacole1857
+        - game
+      text:
+        en:
+          name: The camp stores
+          text: Mary Seacole bought and carried her own supplies and ran an inn behind the camp. The date on which the army stores were opened to her is not recorded, so the game picks one and lets an employee bring it earlier in this branch.
+        zh:
+          name: 营地物资
+          text: 玛丽·西科尔自己采购、自己运送物资，并在营地后方开了一家客栈。军队物资向她开放的日期没有记录，所以游戏自己定了一天，员工能在这条分支里让它提前。
+  refs:
+    seacole1857:
+      order: 6
+      status: pending
+      text:
+        en: 'Seacole M. Wonderful Adventures of Mrs. Seacole in Many Lands. London: James Blackwood; 1857.'
+        zh: 'Seacole M. Wonderful Adventures of Mrs. Seacole in Many Lands. London: James Blackwood; 1857.'
+era_text:
+  en:
+    name: Balaklava, 1855
+    short: Balaklava
+    place_name: Balaklava, Crimea
+    tags:
+      - medical
+      - infection
+      - dysentery
+      - c19
+      - crimea
+      - history
+    event_titles:
+      time_strain: Time slip
+    plots:
+      medicine_chest:
+        name: Give Seacole a chest of medicine
+        desc: Lets her show what her remedies do for the men who come to her.
+        character: Mary Seacole
+        article: people:seacole_balaklava
+      germ_theory:
+        name: Explain germ theory to Seacole
+        desc: Needs the craft of microbiology, which this era does not have.
+        character: Mary Seacole
+        article: people:seacole_balaklava
+    blurb: Dysentery and cholera in a camp behind the lines, and a woman who paid her own way to nurse the men. Close, cheap, and the effect of clean water and care is clear.
+    handle_label: Camp stores opened
+    protagonist: Mary Seacole
+    protagonist_role: A nurse and businesswoman who was refused by the army and came to the camp on her own
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: Mary Seacole was born in Jamaica in 1805 and learned nursing and herbal medicine from her mother and in the Caribbean.
+          check: true
+        - text: When she asked to go to the Crimea as an army nurse she was refused, and she went at her own cost.
+          check: true
+        - text: Near Balaklava she opened an inn behind the camp and tended soldiers with dysentery and cholera.
+          check: true
+      regret:
+        - You can save today's patients but not tomorrow's. She had to fight for the right to be there at all.
+        - The date on which the stores opened to her is not recorded, so the game picks one.
+    events:
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      convince: "Convince Seacole"
+      trust: "Win the trust of the camp"
+      reform: "Have the camp stores opened sooner"
+    milestones:
+      first_treat: '{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak.'
+      first_protect: '{date}: {staff} hands out the first clean water and washes down a few tents, and teaches the men to boil what they drink.'
+      met_seacole: '{date}: {staff} is received by Seacole.'
+      seacole_trusts: '{date}: Seacole gives {staff} the notes to work from.'
+      seacole_convinced: '{date}: Seacole takes up the plan that {staff} put to her.'
+      board_moves: '{date}: Word goes round that the plan might change.'
+      reform_history: '{date}: The camp stores open to her. The main timeline does not change.'
+      reform_early: '{date}: The camp stores open to her {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      trust_won: '{date}: The officers no longer keep {staff} out, and some send men to them.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of sick men in the camp falls to single digits.'
+    summary:
+      near_death: '{staff} collapses in the camp and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these men a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend at Balaklava. The camp stores opened to Seacole {advance_days:1} days earlier than in the main timeline.'
+      perfect: '{staff} completed the task at Balaklava and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was turned away at the door again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent seven days at Balaklava, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was sitting with the sick at night.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told her what she needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's patients, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, clean water and a steady hand do a great deal.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they believe it is up to them.
+        - text: With one more item I might have saved one more life.
+    hints:
+      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+      unused_protect: Chlorine was left over. The limit was the trust of the camp, not the supplies. Let the employee help patients first to build trust.
+      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or patients were not let in.
+      ally_gap: Seacole's evidence is still thin. The handbook helps her, provided the employee spends time with her.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 巴拉克拉瓦 1855
+    short: 巴拉克拉瓦
+    place_name: 克里米亚巴拉克拉瓦
+    tags:
+      - medical
+      - infection
+      - dysentery
+      - c19
+      - crimea
+      - history
+    event_titles:
+      time_strain: 时间错位
+    plots:
+      medicine_chest:
+        name: 送西科尔一箱药
+        desc: 让她能让来找她的人看到她的药有什么用。
+        character: 玛丽·西科尔
+        article: people:seacole_balaklava
+      germ_theory:
+        name: 把细菌致病的理论讲给西科尔
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 玛丽·西科尔
+        article: people:seacole_balaklava
+    blurb: 战线后方营地里的痢疾和霍乱，和一位自己出钱来照看这些人的女人。近，成本低，干净的水和照护的效果很明显。
+    handle_label: 营地物资向她开放
+    protagonist: 玛丽·西科尔
+    protagonist_role: 被军队拒绝、自己来到营地的护士和商人
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 玛丽·西科尔 1805 年生于牙买加，从母亲和加勒比的经历里学到护理和草药。
+          check: true
+        - text: 她申请去克里米亚当军队护士时被拒绝，于是自费前往。
+          check: true
+        - text: 在巴拉克拉瓦附近，她在营地后方开了一家客栈，照看患痢疾和霍乱的士兵。
+          check: true
+      regret:
+        - 你能救今天的病人，救不了明天的。她得先争取到出现在那里的权利。
+        - 营地物资向她开放的日期没有记录，所以游戏自己定了一天。
+    events:
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: "说服西科尔"
+      trust: "赢得营地的信任"
+      reform: "让营地物资更早向她开放"
+    milestones:
+      first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
+      first_protect: '{date}：{staff} 发下第一批干净的水，擦洗了几顶帐篷，教士兵把喝的水烧开。'
+      met_seacole: '{date}：{staff} 被西科尔接见。'
+      seacole_trusts: '{date}：西科尔把笔记交给 {staff} 用。'
+      seacole_convinced: '{date}：西科尔采纳了 {staff} 提出的办法。'
+      board_moves: '{date}：消息传开，计划也许要改。'
+      reform_history: '{date}：营地物资向她开放。主时间线没有变化。'
+      reform_early: '{date}：营地物资比主时间线提前 {advance_days:1} 天向她开放。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：军官们不再把 {staff} 挡在外面，有的还把人送了过来。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：营地里生病的人数降到了个位数。'
+    summary:
+      near_death: '{staff} 在营地里倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在巴拉克拉瓦留下了传说。营地物资比主时间线提前 {advance_days:1} 天向西科尔开放。'
+      perfect: '{staff} 在巴拉克拉瓦完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在巴拉克拉瓦待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人陪着那些病人。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把她需要听到的话告诉了她。
+      perfect:
+        - trait: kind
+          text: 我能救今天的病人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，干净的水和一双稳的手作用这么大。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，信不信由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 氯片剩下了。限制不是物资，是营地对你的信任。先让员工帮病人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
+      ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

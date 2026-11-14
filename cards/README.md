@@ -39,26 +39,47 @@ The file name is the id. A card with `id:` inside must match its file name.
 
 ## A person is a module
 
-A historical person has one folder, `people/<person>/`, and the folder holds everything about that person. To find the events of a person, or the model, or the sources, open the folder of the person. To add a person, drop a folder in. To take one out, remove the folder. Nothing else has to change.
+A historical person has one folder, `people/<person>/`, and one file in it, `person.yaml`, holds everything written about that person. To find the events of a person, the lines they said, the sources, open the file of the person. To add a person, drop a folder in. To take one out, remove the folder. Nothing else has to change.
 
 ```
 people/<person>/
-  person.yaml                    the wiki article of the person, the id is the folder name; `events: [ids]` lists the events of the person
-  events/<event>.yaml            a catalogue event, one or more
-  era/model.lm.yaml, text.<lang>.yaml    a full simulation model of the person and its text, the id of the era is `metadata.name` of the model
-  wiki/places|events|model_events|refs/<id>.yaml    the wiki cards and sources that only this person uses
-  antiques/<id>.yaml             an antique made by hand
-  images/                        pictures of the person, see the design document of the stories for the names
+  person.yaml            the card of the person, see below
+  era/model.lm.yaml      a full simulation model of the person, when there is one; the id of the era is `metadata.name` of the model
+  images/                pictures of the person, named <kind>.<two digits>.<ext>, such as portrait.01.jpg
 ```
 
-An event card has an optional `era: <model id>` that hands the event to the full model of the person: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. An optional `start: true` makes the relic owned from the start, so the place is open from the first moment, and the event is not drawn again among the random start places. `metadata.status: draft` in a model and `draft: true` on an event keep it out of the published game, see `release` in `config/config.yaml`.
+```yaml
+# people/<person>/person.yaml
+order: 232               # sort order of the article
+text:                    # the wiki article of the person; a card without text is not an article, for example a person who only has a quote
+  en: {name: ..., text: ...}
+events:                  # the events of the person, the episodes, each a full event card under its id, in the order they are listed
+  <event id>:
+    order: ...
+    year: ...
+    ...
+wiki:                    # the wiki cards and sources only this person uses
+  places: {<id>: card}
+  events: {<id>: card}
+  model_events: {<id>: card}
+  refs: {<id>: card}
+antiques: {<id>: card}   # antiques made by hand
+quotes: {<id>: card}     # lines for the header of the page
+era_text:                # the text of the era model, in every language
+  en: ...
+  zh: ...
+```
 
-An id may be used once. The build stops with a message when two files use the same id, and `node tools/build_data.mjs --check` says when `data/` is out of date.
+A card may also stay a file of its own inside the module, in the folder of its kind, `events/<id>.yaml`, `wiki/places/<id>.yaml` and so on, with a list of ids under `events:` in `person.yaml`. Both forms build to the same data.
+
+An event card has these optional fields. `era: <model id>` hands the event to the full model of the person: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. `start: true` makes the relic owned from the start, so the place is open from the first moment. `after: <event id>` makes the event the next episode of the same person: its place opens when a trip to the named event has come back. `stay: <days>` gives the story its own length of stay. `draft: true`, and `metadata.status: draft` in a model, keep it out of the published game, see `release` in `config/config.yaml`.
+
+An id may be used once. The build stops with a message when two cards use the same id, when the events of a module and its card do not match, or when a module holds something a module does not use, and `node tools/build_data.mjs --check` says when `data/` is out of date.
 
 Languages are the codes in `config/config.yaml` under `i18n.locales`. A language that lacks a key reads English for that key.
 
 To add:
-- a person with an event: copy a folder in `people/`, rename it, and write `person.yaml` and `events/<event>.yaml` with the next `order`. The relic of the event becomes an antique when the game loads.
+- a person with an event: copy a folder in `people/`, rename it, and rewrite `person.yaml`, giving the article and the event the next `order`. The relic of the event becomes an antique when the game loads.
 - an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, one to three jobs, an ethnicity (one short label that names a people or a descent, such as Igbo, Han or African descent, never a place and never a country plus a descent such as African American; where the person lives belongs in the story), and write a short life story that fits the age, the place and the numbers: a high attribute is a gift that shows in the life, a low one is a flaw that shows too. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, that the titles of the jobs match the ids, and that every region and skin tone is used.
 - a language: add its code to `i18n.locales`, then add that language under `text:` in the cards you want to translate and add `text/<lang>/` files. Nothing is required, English fills the gaps.
 

@@ -1,6 +1,43 @@
 order: 98
 events:
-- hua_tuo_xuchang
+  hua_tuo_xuchang:
+    order: 163
+    year: 208
+    lon: 113.85
+    lat: 34.03
+    region: asia
+    field: medicine
+    tier: 2
+    channels: {E: 1, T: 1}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"any":[{"job":["physician","nurse","midwife"]},{"trait":["scholarly","skeptical"]}]}}
+        - {id: p2, kind: care, req: {"any":[{"trait":["faithful","patient"]},{"job":["nurse","midwife"]}]}}
+        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist","journalist"]},{"stat":{"wit":7}}]}}
+    text:
+      en:
+        name: "A physician whose books are gone"
+        place: "Xuchang"
+        figure: "Hua Tuo"
+        story: "Hua Tuo, a physician known for surgery under a wine powder and for exercises based on animal movements, is held by officials at Xuchang. His own writings did not survive, and he is known only through later accounts."
+        relic: "A pouch of herb powders"
+        relic_desc: "A small cloth pouch of ground herbs with a faint bitter smell."
+        points:
+          p1: "Watch him examine a patient (medical staff or a curious employee)"
+          p2: "Sit with a patient through the night (a kind employee, a nurse or a midwife)"
+          p3: "Write down his methods while he speaks (a record keeper, a journalist or a sharp mind)"
+      zh:
+        name: "书都不在了的医生"
+        place: "许昌"
+        figure: "华佗"
+        story: "华佗以用麻沸散做外科手术和仿动物动作的导引之法著称，后来被官府关押在许昌。他自己的著作没有留下来，只能从后人的记载中知道他。"
+        relic: "一小袋药粉"
+        relic_desc: "一个小布袋，装着研细的草药，有淡淡的苦味。"
+        points:
+          p1: "看他诊察病人"
+          p2: "陪一位病人熬过一夜"
+          p3: "在他说话时把方法记下来"
 text:
   en:
     name: Hua Tuo

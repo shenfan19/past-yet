@@ -1,6 +1,43 @@
 order: 100
 events:
-- ibn_al_nafis_cairo
+  ibn_al_nafis_cairo:
+    order: 171
+    year: 1242
+    lon: 31.24
+    lat: 30.04
+    region: africa
+    field: medicine
+    tier: 2
+    channels: {E: 2, V: 1}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
+        - {id: p2, kind: hold, req: {"job":["physician","doctor","nurse","pharmacist","midwife"]}}
+        - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","cosmopolitan"]},{"job":["student","teacher"]}]}}
+    text:
+      en:
+        name: "The blood that passes through the lung"
+        place: "Cairo"
+        figure: "Ibn al-Nafis"
+        story: "In Cairo, Ibn al-Nafis writes that blood passes from the right to the left side of the heart through the lungs and not through the wall between. The account is forgotten and found again only in the twentieth century."
+        relic: "A page of anatomy commentary"
+        relic_desc: "A page of notes on the heart and lungs in small clear script."
+        points:
+          p1: "Follow his reasoning about the blood"
+          p2: "Assist on the hospital ward (medical staff)"
+          p3: "Be the student who believes his reasoning (a kind employee, a student or a teacher)"
+      zh:
+        name: "穿过肺的血液"
+        place: "开罗"
+        figure: "伊本·纳菲斯"
+        story: "在开罗，伊本·纳菲斯写道，血液是经过肺从心脏右侧到左侧，而不是穿过中间的隔。这个说法被遗忘，直到二十世纪才被重新发现。"
+        relic: "一页解剖注释"
+        relic_desc: "一页写着心与肺的笔记，字小而清楚。"
+        points:
+          p1: "跟上他关于血液的推理"
+          p2: "在医院病房里帮忙"
+          p3: "做那个相信他推理的学生"
 text:
   en:
     name: Ibn al-Nafis

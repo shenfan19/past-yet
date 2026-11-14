@@ -1,4 +1,4 @@
-// A line from a scientist or a historian in the header, changed at random intervals. The pieces are cards in cards/quotes.
+// A line from a scientist or a historian in the header, changed at random intervals. The pieces are the quotes sections of the person cards in cards/people.
 export function createQuotes(D, el) {
   const Q = D.get('config.ui.quote');
   const list = Object.values(D.get('text.quotes'));

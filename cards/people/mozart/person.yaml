@@ -1,7 +1,80 @@
 order: 142
 events:
-- mozart_prague
-- mozart_requiem_vienna
+  mozart_prague:
+    order: 26
+    year: 1787
+    lon: 14.42
+    lat: 50.09
+    region: europe
+    field: music
+    tier: 2
+    channels: {V: 2}
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"any":[{"trait":["wanderer","quiet","curious"]},{"job":["musician"]}]}}
+        - {id: p2, kind: trust, req: {"any":[{"trait":["kind","artistic","attached"]},{"luck":0.4}]}}
+        - {id: p3, kind: persuade, req: {"stat":{"finesse":6}}}
+    text:
+      en:
+        name: An opera Prague loved
+        place: Prague
+        figure: Wolfgang Amadeus Mozart
+        story: Mozart's Don Giovanni premieres in Prague, a city that had taken his Figaro to heart.
+        relic: A manuscript leaf
+        relic_desc: One page of fast, clean handwriting with almost no corrections.
+        points:
+          p1: "Hear the small jokes in the score"
+          p2: "Be invited backstage"
+          p3: "Speak for him to the theatre"
+      zh:
+        name: 布拉格喜爱的歌剧
+        place: 布拉格
+        figure: 沃尔夫冈·阿马德乌斯·莫扎特
+        story: 莫扎特的《唐璜》在布拉格首演，这座城早已把他的《费加罗》放进了心里。
+        relic: 一页乐谱手稿
+        relic_desc: 字迹又快又干净，几乎没有涂改。
+        points:
+          p1: "听出总谱里的小心思"
+          p2: "被邀进后台"
+          p3: "替他向剧院说话"
+  mozart_requiem_vienna:
+    order: 112
+    year: 1791
+    lon: 16.37
+    lat: 48.21
+    region: europe
+    field: music
+    tier: 3
+    channels: {E: 2, G: 2}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: care, req: {"trait":["faithful","cheerful","calm"]}}
+        - {id: p2, kind: notice, req: {"any":[{"job":["musician"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: hold, redeem: true, req: {"item":"golden_apple"}}
+    text:
+      en:
+        name: "The Requiem unfinished"
+        place: "Vienna"
+        figure: "Wolfgang Amadeus Mozart"
+        story: "Mozart lies ill in Vienna with his Requiem unfinished. He dies in December at thirty five."
+        relic: "A page of the Requiem"
+        relic_desc: "A score page ending mid phrase."
+        points:
+          p1: "Sit by him in the sickroom"
+          p2: "Follow the voices he sketches (a musician or sharp wit helps)"
+          p3: "Sing the last bars he sketched with him"
+      zh:
+        name: "未完成的安魂曲"
+        place: "维也纳"
+        figure: "沃尔夫冈·阿马德乌斯·莫扎特"
+        story: "莫扎特病倒在维也纳，《安魂曲》还没写完。十二月他去世，年仅三十五岁。"
+        relic: "一页安魂曲手稿"
+        relic_desc: "一页乐谱，停在一句的中间。"
+        points:
+          p1: "在病房里陪着他"
+          p2: "跟上他勾勒出的各声部（音乐家或敏锐的头脑更合适）"
+          p3: "和他一起唱他留下的最后几小节"
 text:
   en:
     name: Wolfgang Amadeus Mozart

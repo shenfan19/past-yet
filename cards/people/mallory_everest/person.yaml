@@ -1,6 +1,44 @@
 order: 129
 events:
-- mallory_everest
+  mallory_everest:
+    order: 143
+    year: 1924
+    lon: 86.93
+    lat: 27.99
+    region: asia
+    field: exploration
+    tier: 3
+    era: mallory_everest_1924
+    channels: {A: 3, C: 3}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
+        - {id: p2, kind: trust, req: {"trait":["sensitive","cosmopolitan","charismatic"]}}
+        - {id: p3, kind: endure, redeem: true, req: {"item":"cyber_lung"}}
+    text:
+      en:
+        name: "Last seen climbing"
+        place: "Mount Everest"
+        figure: "George Mallory"
+        story: "Mallory and Irvine leave the high camp for the summit of Everest and are last seen climbing high on the mountain. Mallory's body is found seventy five years later."
+        relic: "An ice axe"
+        relic_desc: "A plain wooden ice axe with a worn head."
+        points:
+          p1: "Keep pace on the long approach"
+          p2: "Share the camp and the plan with them"
+          p3: "Go as high as they do to see them off"
+      zh:
+        name: "最后一次被人看见"
+        place: "珠穆朗玛峰"
+        figure: "乔治·马洛里"
+        story: "马洛里和欧文离开高处营地去登珠峰，最后有人看见他们在高处攀登。七十五年后，人们才找到马洛里的遗体。"
+        relic: "一把冰镐"
+        relic_desc: "一把朴素的木柄冰镐，镐头磨旧了。"
+        points:
+          p1: "在漫长的攀登路上跟上队伍"
+          p2: "和他们一起分享营地与计划"
+          p3: "陪他们爬到足够高处送他们出发"
 text:
   en:
     name: George Mallory
@@ -8,3 +46,267 @@ text:
   zh:
     name: 乔治·马洛里
     text: 英国登山家，1886 年生，1924 年去世。在 1924 年的英国探险中，他与安德鲁·欧文在珠穆朗玛峰高处失踪。1999 年他的遗体被找到，他们是否登顶至今不明。
+wiki:
+  places:
+    everest_north_side:
+      order: 9
+      era: mallory_everest_1924
+      tags:
+        - medical
+        - altitude
+        - expedition
+        - c20
+        - himalaya
+        - history
+      related:
+        - people:mallory_everest
+        - events:oxygen_plan
+      unlock:
+        era: mallory_everest_1924
+      refs:
+        - everest1925
+        - game
+      text:
+        en:
+          name: Mount Everest, north side
+          text: The north face of the highest mountain, with the Rongbuk glacier below and a line of camps strung up to the North Col and beyond. Everest in the game is a party model of about thirty people.
+        zh:
+          name: 珠穆朗玛峰北坡
+          text: 世界最高峰的北坡，山下是绒布冰川，一串营地一直排到北坳和更高处。游戏里的珠峰是一个约三十人的队伍模型。
+  events:
+    oxygen_plan:
+      order: 19
+      tags:
+        - medical
+        - altitude
+        - expedition
+        - c20
+        - himalaya
+        - history
+      related:
+        - people:mallory_everest
+        - places:everest_north_side
+      unlock:
+        era: mallory_everest_1924
+      refs:
+        - everest1925
+        - game
+      text:
+        en:
+          name: The plan for the high camps
+          text: How the high camps were stocked and how far the oxygen sets were used was argued on the mountain. In the game an employee can help bring a change of plan earlier, which holds only in this branch.
+        zh:
+          name: 高营地的计划
+          text: 高营地怎样补给、氧气装置用到什么程度，在山上一直有争论。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
+  refs:
+    everest1925:
+      order: 29
+      status: pending
+      text:
+        en: 'Norton EF, ed. The Fight for Everest 1924. London: Edward Arnold; 1925.'
+        zh: 'Norton EF, ed. The Fight for Everest 1924. London: Edward Arnold; 1925.'
+era_text:
+  en:
+    name: Mount Everest, 1924
+    short: Everest
+    place_name: Mount Everest, north side
+    tags:
+      - medical
+      - altitude
+      - expedition
+      - c20
+      - himalaya
+      - history
+    event_titles:
+      time_strain: Time slip
+    plots:
+      field_notes:
+        name: Give Mallory a field notebook
+        desc: Lets him set down the camps, the weather and the oxygen so that others can check them.
+        character: George Mallory
+        article: people:mallory_everest
+      germ_theory:
+        name: Explain germ theory to George Mallory
+        desc: Needs the craft of microbiology, which this era does not have.
+        character: George Mallory
+        article: people:mallory_everest
+    blurb: High camps in thin air on the north side of the mountain, with oxygen sets of doubtful use. Close, cheap, and the effect of oxygen and rest is clear.
+    handle_label: The plan for the high camps is changed
+    protagonist: George Mallory
+    protagonist_role: A schoolmaster and climber who has been on the mountain before and wants to reach the top
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: In 1924 a British expedition attempted Mount Everest from the north side, after the attempts of 1921 and 1922.
+          check: true
+        - text: Oxygen sets were carried up, and climbers did not agree how much they helped or how heavy they were.
+          check: true
+        - text: George Mallory and Andrew Irvine were last seen climbing high on the mountain on 8 June 1924.
+          check: true
+      regret:
+        - You can save today's people but not the whole mountain. On the main timeline the plan was not changed.
+        - Rest and oxygen matter more than any one brave idea, but a plan only changes when someone is heard.
+    events:
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      convince: 'Convince Mallory'
+      trust: 'Win the trust of the party'
+      reform: 'Have the plan for the high camps changed ahead of history'
+    milestones:
+      first_treat: '{date}: {staff} gives the first dose of medicine and warm tea to a man with a splitting head. He starts to speak.'
+      first_protect: '{date}: {staff} hands out the first oxygen and blankets at the camp, and teaches the porters to use them.'
+      met_mallory: '{date}: {staff} is received by Mallory.'
+      mallory_trusts: '{date}: Mallory gives {staff} the notes to work from.'
+      mallory_convinced: '{date}: Mallory takes up the plan that {staff} put to him.'
+      board_moves: '{date}: Word goes round that the plan might change.'
+      reform_history: '{date}: The plan for the high camps is changed. The main timeline does not change.'
+      reform_early: '{date}: The plan for the high camps is changed {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      trust_won: '{date}: The porters no longer keep {staff} out, and some ask for help.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of ailing men falls to one or none.'
+    summary:
+      near_death: '{staff} collapses at Everest and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend at Everest. The plan was changed {advance_days:1} days earlier than in the main timeline.'
+      perfect: '{staff} completed the task at Everest and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent seven days at Everest, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was keeping watch at night.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told them what they needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's people, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, oxygen and rest are what keep a party going up there.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they listen is up to them.
+        - text: With one more item I might have saved one more life.
+    hints:
+      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+      unused_protect: Oxygen was left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
+      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
+      ally_gap: George Mallory's evidence is still thin. The handbook helps, provided the employee spends time with him.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 珠穆朗玛峰 1924
+    short: 珠峰
+    place_name: 珠穆朗玛峰北坡
+    tags:
+      - medical
+      - altitude
+      - expedition
+      - c20
+      - himalaya
+      - history
+    event_titles:
+      time_strain: 时间错位
+    plots:
+      field_notes:
+        name: 送马洛里一本野外记录本
+        desc: 让他把营地、天气和氧气记下来，别人才能核对。
+        character: 乔治·马洛里
+        article: people:mallory_everest
+      germ_theory:
+        name: 把细菌致病的理论讲给乔治·马洛里
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 乔治·马洛里
+        article: people:mallory_everest
+    blurb: 山北坡稀薄空气里的高营地，氧气装置用处不明。近，成本低，氧气和休息的效果很明显。
+    handle_label: 高营地计划被改
+    protagonist: 乔治·马洛里
+    protagonist_role: 曾上过这座山、想登顶的中学教师兼登山家
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 1924 年一支英国探险队从北坡攀登珠穆朗玛峰，此前已有 1921 和 1922 年的尝试。
+          check: true
+        - text: 队里带了氧气装置上山，登山者对它帮多大忙、有多重一直意见不一。
+          check: true
+        - text: 乔治·马洛里和安德鲁·欧文 1924 年 6 月 8 日最后一次被人看见时，正在山的高处向上攀登。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整座山。主时间线上计划没有改。
+        - 休息和氧气比任何一个勇敢的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: '说服马洛里'
+      trust: '赢得队伍的信任'
+      reform: '让高营地计划比历史上更早改变'
+    milestones:
+      first_treat: '{date}：{staff} 给一个头痛欲裂的人喂下第一份药和热茶，他开始开口了。'
+      first_protect: '{date}：{staff} 在营地发下第一批氧气和毯子，教挑夫们使用。'
+      met_mallory: '{date}：{staff} 被马洛里接见。'
+      mallory_trusts: '{date}：马洛里把笔记交给 {staff} 用。'
+      mallory_convinced: '{date}：马洛里采纳了 {staff} 提出的办法。'
+      board_moves: '{date}：消息传开，计划也许要改。'
+      reform_history: '{date}：高营地计划被改了。主时间线没有变化。'
+      reform_early: '{date}：高营地计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：挑夫们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
+    summary:
+      near_death: '{staff} 在珠峰倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在珠峰留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在珠峰完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在珠峰待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，在那么高的地方，氧气和休息才是让队伍撑住的东西。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 氧气剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 乔治·马洛里的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

@@ -1,8 +1,123 @@
 order: 232
 events:
-- sun_yat_sen_guangzhou
-- sun_yat_sen_beijing_1925
-- sun_yat_sen_university_1926
+  sun_yat_sen_guangzhou:
+    order: 222
+    year: 1924
+    lon: 113.27
+    lat: 23.13
+    region: asia
+    field: thought
+    tier: 1
+    era: sun_yat_sen_1924
+    channels: {H: 1}
+    start: true
+    scene:
+      points:
+        - {id: p1, kind: care, req: {"trait":["kind","patient","attached","quiet"]}}
+        - {id: p2, kind: notice, req: {"stat":{"wit":5}}}
+        - {id: p3, kind: hold, req: {"any":[{"trait":["patient","methodical","vigil"]},{"stat":{"will":6}}]}}
+    text:
+      en:
+        name: "From the statue to a new university"
+        place: "Guangzhou"
+        figure: "Sun Yat-sen"
+        story: "Standing before the statue of Sun Yat-sen at Sun Yat-sen University, you are carried back to Guangzhou on 4 February 1924, the day he orders three schools joined into National Guangdong University and names Zou Lu to prepare it. Classes begin on 19 September, and the founding ceremony is held on 11 November with the motto he wrote. He dies in Beijing on 12 March 1925, and in 1926 the university takes his name."
+        relic: "A brass school badge"
+        relic_desc: "A small badge from the first years of the university."
+        points:
+          p1: "Be of use to the people who come asking"
+          p2: "Put a clear map of the schools in every hand"
+          p3: "Keep the work going until the preparation begins"
+      zh:
+        name: "从铜像到一所新大学"
+        place: "广州"
+        figure: "孙中山"
+        story: "你站在中山大学的孙中山像前，被带回 1924 年 2 月 4 日的广州，这一天他下令把三所学校合并为国立广东大学，派邹鲁筹备。9 月 19 日开学，11 月 11 日举行成立典礼，用的是他写的校训。1925 年 3 月 12 日他在北京去世，1926 年这所大学以他的名字命名。"
+        relic: "一枚铜质校徽"
+        relic_desc: "这所大学最初几年的一枚小徽章。"
+        points:
+          p1: "帮上每一个来问的人"
+          p2: "让清楚的简图人手一份"
+          p3: "把事情一直推到筹备开始"
+  sun_yat_sen_beijing_1925:
+    order: 223
+    year: 1925
+    lon: 116.41
+    lat: 39.92
+    region: asia
+    field: thought
+    tier: 1
+    stay: 7
+    after: sun_yat_sen_guangzhou
+    channels: {C: 1, G: 2}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: hold, req: {"any":[{"trait":["vigil","patient"]},{"stat":{"will":6}}]}}
+        - {id: p2, kind: care, req: {"any":[{"job":["nurse","caregiver","doctor","physician","paramedic","midwife"]},{"trait":["kind","attached"]}]}}
+        - {id: p3, kind: trust, redeem: true, req: {"trait":["attached","faithful","kind","quiet"]}}
+    text:
+      en:
+        name: "The last winter in Beijing"
+        place: "Beijing"
+        figure: "Sun Yat-sen"
+        story: "Sun Yat-sen reaches Beijing on 31 December 1924, already ill. On 26 January 1925 he enters the Peking Union Medical College Hospital and is operated on, and the doctors find cancer. On 18 February he is moved to the residence in Tieshizi Hutong, and he dies there on the morning of 12 March. You can change none of this. You can keep watch."
+        relic: "A watcher's scarf"
+        relic_desc: "A plain wool scarf, worn through the nights of one winter."
+        points:
+          p1: "Keep watch through the long nights in the corridor and at the gate"
+          p2: "Boil water, carry meals and run errands for those who are keeping watch"
+          p3: "Leave a school badge from Guangzhou at the door, as a token of regard"
+      zh:
+        name: "北京的最后一个冬天"
+        place: "北京"
+        figure: "孙中山"
+        story: "1924 年 12 月 31 日孙中山抵达北京，已经带病。1925 年 1 月 26 日他住进协和医院并接受手术，医生发现是癌症。2 月 18 日他移到铁狮子胡同的行馆，3 月 12 日上午在那里去世。这些你一样也改变不了，你能做的是守着。"
+        relic: "一条守夜人的围巾"
+        relic_desc: "一条普通的羊毛围巾，陪人熬过了一个冬天的许多个夜晚。"
+        points:
+          p1: "在走廊里和大门外守过一个个长夜"
+          p2: "替守在这里的人烧水、送饭、跑腿"
+          p3: "把一枚从广州带来的校徽留在门口，作为一份心意"
+  sun_yat_sen_university_1926:
+    order: 224
+    year: 1926
+    lon: 113.27
+    lat: 23.13
+    region: asia
+    field: thought
+    tier: 1
+    stay: 5
+    after: sun_yat_sen_beijing_1925
+    channels: {H: 1}
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"stat":{"wit":5}}}
+        - {id: p2, kind: hold, req: {"any":[{"job":["archivist","proofreader","accountant"]},{"trait":["methodical"]}]}}
+        - {id: p3, kind: trust, req: {"trait":["kind","cheerful","cosmopolitan","patient"]}}
+    text:
+      en:
+        name: "The university takes his name"
+        place: "Guangzhou"
+        figure: "Sun Yat-sen"
+        story: "On 5 August 1926 the school affairs meeting of National Guangdong University resolves to rename the university after Sun Yat-sen and to ask the government to approve it. On 17 August the National Government orders the change, and the university becomes National Sun Yat-sen University. He has been dead for a year and five months. The statue you set out from stands on its campus."
+        relic: "A wooden sign with the new name"
+        relic_desc: "A narrow board, freshly painted, from the first days of the new name."
+        points:
+          p1: "Find the resolution in the record of the meeting"
+          p2: "Sort and file the papers and seals that carry the old name"
+          p3: "Help the new students learn the new name and where to go"
+      zh:
+        name: "这所大学以他的名字命名"
+        place: "广州"
+        figure: "孙中山"
+        story: "1926 年 8 月 5 日，国立广东大学的校务会议决议把学校改名纪念孙中山，并呈请政府批准。8 月 17 日国民政府下令改名，学校成为国立中山大学。这时他已经去世一年零五个月。你出发时面前的那座铜像，就立在这所大学的校园里。"
+        relic: "一块写着新校名的木牌"
+        relic_desc: "一块窄木板，漆还是新的，来自新校名最初的几天。"
+        points:
+          p1: "在会议记录里找到那条决议"
+          p2: "把带着旧校名的文件和印章清点归档"
+          p3: "帮新来的学生认识新校名，知道往哪里去"
 text:
   en:
     name: "Sun Yat-sen"
@@ -10,3 +125,276 @@ text:
   zh:
     name: "孙中山"
     text: "中国革命家和政治领袖，1866 年生，1925 年去世。1924 年 2 月 4 日他下令把国立高等师范学校、广东法科大学和广东农业专门学校合并为国立广东大学，派邹鲁筹备。9 月 19 日开学，11 月 11 日成立典礼上用的校训是他写的。他 1924 年 12 月 31 日抵达北京，1925 年 1 月 26 日因癌症接受手术，3 月 12 日在北京去世。1926 年 8 月 17 日国民政府下令把这所大学改名为国立中山大学。"
+wiki:
+  places:
+    guangdong_university_office:
+      order: 13
+      era: sun_yat_sen_1924
+      tags:
+        - thought
+        - education
+        - university
+        - c20
+        - guangzhou
+        - history
+      related:
+        - people:sun_yat_sen_guangzhou
+        - events:university_order
+      unlock:
+        era: sun_yat_sen_1924
+      refs:
+        - sysu_chronicle
+        - game
+      text:
+        en:
+          name: The office of the university, Guangzhou, 1924
+          text: The rooms in Guangzhou where the three schools were to be joined in 1924, before the new campus was built. The university in the game is a model of about six hundred teachers and students.
+        zh:
+          name: 大学筹备处，广州，1924
+          text: 1924 年新校区建好以前，三所学校要在广州并成一所的那几间屋子。游戏里的大学是一个约六百名师生的模型。
+  events:
+    university_order:
+      order: 23
+      tags:
+        - thought
+        - education
+        - university
+        - c20
+        - guangzhou
+        - history
+      related:
+        - people:sun_yat_sen_guangzhou
+        - places:guangdong_university_office
+      unlock:
+        era: sun_yat_sen_1924
+      refs:
+        - sysu_chronicle
+        - game
+      text:
+        en:
+          name: The order to join the schools
+          text: On 4 February 1924 Sun Yat-sen ordered the three schools joined into one university. In the game an employee can help bring the preparatory work earlier, which holds only in this branch.
+        zh:
+          name: 合并学校的命令
+          text: 1924 年 2 月 4 日孙中山下令把三所学校并成一所大学。游戏里员工能帮着让筹备工作提前，只在这条分支里成立。
+  model_events:
+    lin_diploma:
+      order: 3
+      refs:
+        - game
+      text:
+        en: A made-up student asks what will happen to the diploma of a school that is about to be joined into another. The question is invented for the game. The records only say that the graduation of the students of the three schools was on the agenda of the first preparatory meeting on 3 March 1924. If the employee is helping people settle at that moment the question is taken down, otherwise the student goes away.
+        zh: 一名编出来的学生问，一所就要并入别校的学校，文凭会怎么算。这个问题是为游戏编的，记录里只说三所学校学生的毕业问题列在 1924 年 3 月 3 日第一次筹备会议的议题里。员工那时正在帮人安顿，问题就会被记下来，否则这名学生就走了。
+    lost_at_gate:
+      order: 4
+      refs:
+        - game
+      text:
+        en: A made-up new student stands in a courtyard with a letter and does not know which office to go to. The student is invented for the game. If the employee is handing out the simple map at that moment the student is shown the way, otherwise the student leaves for another school.
+        zh: 一名编出来的新生拿着一封信站在院子里，不知道该去哪个办公室。这名学生是为游戏编的。员工那时正在发简图，他就被指了路，否则他去了别的学校。
+  refs:
+    sysu_chronicle:
+      order: 33
+      status: pending
+      text:
+        en: 'Sun Yat-sen University. Chronicle of events (Daishiji), 1924 to 1926. Guangzhou: Sun Yat-sen University; accessed 2026.'
+        zh: 'Sun Yat-sen University. Chronicle of events (Daishiji), 1924 to 1926. Guangzhou: Sun Yat-sen University; accessed 2026.'
+era_text:
+  en:
+    name: Guangzhou, 1924
+    short: Guangzhou
+    place_name: Guangzhou, the university office
+    tags:
+      - thought
+      - education
+      - university
+      - c20
+      - guangzhou
+      - history
+    event_titles:
+      time_strain: Time slip
+    plots: {}
+    blurb: Three schools, one order to join them, and the weeks before anything is built. Close, cheap, and the effect of care and clear directions is clear. This is where the game begins.
+    handle_label: The preparatory work begins
+    protagonist: Sun Yat-sen
+    protagonist_role: A statesman who has just ordered three schools joined into one university
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: 'On 4 February 1924 Sun Yat-sen ordered the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and named Zou Lu to prepare it.'
+          check: true
+        - text: 'Zou Lu took up the preparation on 21 February. On 24 February he called the students of the three schools together in the hall of the Higher Normal School to announce it, and the first preparatory meeting was held on 3 March, with the graduation of the students of the three schools on its agenda.'
+          check: true
+        - text: 'On 3 June Zou Lu submitted the measures for joining the schools, and they were approved on 6 June. Zou Lu became the president on 9 June.'
+          check: true
+        - text: 'The schools were spread over several places, which made them hard to run, and Sun told Zou Lu to choose a new campus at Shipai on the eastern edge of the city. Land was marked out there in 1924.'
+          check: true
+        - text: 'Classes began on 19 September, and the founding ceremony was held on 11 November with the motto Sun wrote. Sun died in Beijing on 12 March 1925, and in 1926 the university was renamed National Sun Yat-sen University.'
+          check: true
+      regret:
+        - 'You can help today''s people but not tomorrow''s. On the main timeline the preparatory work began on 21 February.'
+        - 'A plan and a place matter more than any one speech, but they only come when someone is heard.'
+    events:
+      lin_diploma_helped: '{date}: Lin, a final-year student (a character invented for the game), asks what will happen to the diploma of a school that is about to be joined into another. {staff} writes the question down and gets it to the clerk who is collecting such questions. Lin goes home with an answer to wait for.'
+      lin_diploma: '{date}: Lin, a final-year student (a character invented for the game), asks what will happen to the diploma of a school that is about to be joined into another. Nobody is free to write it down, and Lin goes away unsure and does not come back.'
+      lost_at_gate_helped: '{date}: A new student, Wen (invented for the game), stands in a courtyard with a letter and no idea which office to go to. {staff} points the way on the map, and within minutes Wen is in the right line.'
+      lost_at_gate: '{date}: A new student, Wen (invented for the game), stands in a courtyard with a letter and no idea which office to go to, and in the end leaves for another school.'
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      settled: 'Be of use to the people who come asking'
+      campus: 'Put a clear map of the schools in every hand'
+      lin: 'Write down the question of the student Lin'
+    milestones:
+      lin_question: '{date}: The question Lin asked is on paper and on its way to the people who collect such questions.'
+      site_known: '{date}: {staff} has the map in every hand. Nobody asks where to go any more.'
+      people_settled: '{date}: {staff} has found a place and a class for everyone who came asking.'
+      first_treat: '{date}: {staff} writes down the first names and finds a teacher and his class a room.'
+      first_protect: '{date}: {staff} draws the first simple map of the schools and their sites and hands it round.'
+      reform_history: '{date}: Zou Lu takes up the preparation, as in history. The main timeline does not change.'
+      trust_won: '{date}: The clerks of the three schools come to {staff} on their own to ask for help.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of people left without a place falls to single digits.'
+      students_told: '{date}: Zou Lu calls the students of the three schools together in the hall of the Higher Normal School and announces the preparation.'
+      first_meeting: '{date}: The first meeting of the preparatory committee is held, with the graduation of the students of the three schools on its agenda.'
+    summary:
+      near_death: '{staff} collapses in a Guangzhou lane and is pulled back by the recall charm, and wakes before the statue. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay and see the university open. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and woke before the statue, saying the offices of 1924 were not for them.'
+      legend: '{staff} woke before the statue with a brass badge in a pocket. The preparation began {advance_days:1} days earlier than in the main timeline.'
+      perfect: '{staff} came back to the statue. On the main timeline {base_D:i} people gave up before classes began, in this branch {D:i}.'
+      scramble: '{staff} was turned away again and again and finally woke before the statue with a joke to tell.'
+      modest: '{staff} spent seven days in the office, did what was within reach, and stood before the statue again.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was keeping watch at night.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told them what they needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's people, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, people stay when they know where to go.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they listen is up to them.
+        - text: With one more item I might have saved one more life.
+    hints:
+      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+      unused_protect: Maps were left over. The limit was the trust of the three schools, not the supplies. Let the employee help people first to build trust.
+      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 广州 1924
+    short: 广州
+    place_name: 广州，大学筹备处
+    tags:
+      - thought
+      - education
+      - university
+      - c20
+      - guangzhou
+      - history
+    event_titles:
+      time_strain: 时间错位
+    plots: {}
+    blurb: 三所学校，四处校址，一道合并的命令。近，成本低，照应和指路的效果很明显。游戏从这里开始。
+    handle_label: 筹备工作开始
+    protagonist: 孙中山
+    protagonist_role: 刚下令把三所学校并成一所大学的政治家
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: '1924 年 2 月 4 日，孙中山下令把国立高等师范学校、广东法科大学和广东农业专门学校合并为国立广东大学，派邹鲁筹备。'
+          check: true
+        - text: '邹鲁 2 月 21 日接手筹备。2 月 24 日他在高等师范的礼堂召集三所学校的学生宣布此事，3 月 3 日开第一次筹备会议，议题里有三所学校学生的毕业问题。'
+          check: true
+        - text: '6 月 3 日邹鲁呈报归并三校的办法，6 月 6 日获批准，6 月 9 日邹鲁出任校长。'
+          check: true
+        - text: '几所学校分散在好几处，不便管理，孙中山让邹鲁在广州东郊选石牌作新校址，1924 年那里划出了土地。'
+          check: true
+        - text: '9 月 19 日开学，11 月 11 日举行成立典礼，用了孙中山写的校训。孙中山 1925 年 3 月 12 日在北京去世，1926 年这所大学改名为国立中山大学。'
+          check: true
+      regret:
+        - '你能帮今天的人，帮不了明天的。主时间线上筹备工作 2 月 21 日开始。'
+        - '一个计划和一个地方比任何一次演讲都重要，但它们只有在有人被听见时才会来。'
+    events:
+      lin_diploma_helped: '{date}：阿林是一名毕业班的学生（游戏里编出来的人物），他问，一所就要并入别校的学校，文凭会怎么算。{staff} 把问题记下来，送到收集这类问题的办事员手里。阿林带着一个要等的答复回家了。'
+      lin_diploma: '{date}：阿林是一名毕业班的学生（游戏里编出来的人物），他问，一所就要并入别校的学校，文凭会怎么算。没有人有空记下来，阿林带着不安走了，没有再回来。'
+      lost_at_gate_helped: '{date}：新生小文（游戏里编出来的人物）拿着一封信站在院子里，不知道该去哪个办公室。{staff} 在简图上给他指了路，几分钟后小文已经排在了对的队里。'
+      lost_at_gate: '{date}：新生小文（游戏里编出来的人物）拿着一封信站在院子里，不知道该去哪个办公室，最后去了别的学校。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      settled: '帮上每一个来问的人'
+      campus: '让清楚的简图人手一份'
+      lin: '记下学生阿林的问题'
+    milestones:
+      lin_question: '{date}：阿林问的问题已经写在纸上，送往收集这类问题的人手里。'
+      site_known: '{date}：简图人手一份，没有人再问往哪里去。'
+      people_settled: '{date}：来问的人，{staff} 都给找到了位置和班级。'
+      first_treat: '{date}：{staff} 记下第一批名字，给一位老师和他的班找到了一间教室。'
+      first_protect: '{date}：{staff} 画出第一张几所学校和校址的简图，发了下去。'
+      reform_history: '{date}：邹鲁接手筹备，和史实一样。主时间线没有变化。'
+      trust_won: '{date}：三所学校的办事员开始主动来找 {staff} 帮忙。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：没有着落的人数降到了个位数。'
+      students_told: '{date}：邹鲁在高等师范的礼堂把三所学校的学生召集到一起，宣布筹备工作。'
+      first_meeting: '{date}：筹备委员会开第一次会，议题里有三所学校学生的毕业问题。'
+    summary:
+      near_death: '{staff} 在广州的一条巷子里倒下，被召回符拉了回来，在铜像前醒来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想留下来看着这所大学开学。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，在铜像前醒来，说 1924 年的办公室不适合自己。'
+      legend: '{staff} 在铜像前醒来，口袋里多了一枚铜质校徽。筹备工作比主时间线提前 {advance_days:1} 天开始。'
+      perfect: '{staff} 回到了铜像前。主时间线上开学前有 {base_D:i} 个人放弃，这条分支里是 {D:i} 个。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话在铜像前醒来。'
+      modest: '{staff} 在办公室待了七天，做了力所能及的事，又站在了铜像前。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，人知道往哪里去，才会留下来。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 简图剩下了。限制不是物资，是三所学校对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

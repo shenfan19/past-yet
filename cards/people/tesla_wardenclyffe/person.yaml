@@ -1,6 +1,43 @@
 order: 191
 events:
-- tesla_wardenclyffe
+  tesla_wardenclyffe:
+    order: 111
+    year: 1901
+    lon: -72.9
+    lat: 40.95
+    region: americas
+    field: technology
+    tier: 2
+    channels: {T: 1, V: 1}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {"any":[{"job":["civil_engineer","retired_engineer","electrician"]},{"stat":{"wit":7}},{"trait":["streetwise","curious","methodical"]}]}}
+        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","ambitious"]},{"trait":["glib","ambitious","scholarly"]}]}}
+        - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","artistic","cosmopolitan"]},{"trait":["cosmopolitan","attached","artistic"]}]}}
+    text:
+      en:
+        name: "The unfinished tower"
+        place: "Shoreham, Long Island"
+        figure: "Nikola Tesla"
+        story: "Tesla builds a tall tower at Wardenclyffe to send messages and power through the air. The money runs out and the tower is never finished."
+        relic: "A glass insulator"
+        relic_desc: "A heavy glass insulator from the laboratory wiring."
+        points:
+          p1: "Follow the idea behind the tower (an engineer or electrician helps)"
+          p2: "Make the case to the backers"
+          p3: "Be the visitor who takes it seriously"
+      zh:
+        name: "没有建成的塔"
+        place: "长岛肖勒姆"
+        figure: "尼古拉·特斯拉"
+        story: "特斯拉在沃登克里弗建起一座高塔，想用空气传送信息和电力。资金耗尽，塔始终没有完工。"
+        relic: "一只玻璃绝缘子"
+        relic_desc: "一只沉重的玻璃绝缘子，来自实验室的线路。"
+        points:
+          p1: "理解这座塔背后的想法（工程师或电工更合适）"
+          p2: "向出资人陈述理由"
+          p3: "做一位认真看待它的来访者"
 text:
   en:
     name: Nikola Tesla

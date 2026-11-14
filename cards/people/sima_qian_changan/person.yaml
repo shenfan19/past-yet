@@ -1,6 +1,43 @@
 order: 178
 events:
-- sima_qian_changan
+  sima_qian_changan:
+    order: 152
+    year: -98
+    lon: 108.95
+    lat: 34.27
+    region: asia
+    field: literature
+    tier: 3
+    channels: {S: 3, G: 2}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: care, req: {"trait":["attached","cheerful","patient"]}}
+        - {id: p2, kind: notice, req: {"any":[{"stat":{"wit":7}},{"job":["archivist","journalist"]}]}}
+        - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["patient","vigil","quiet"]},{"stat":{"will":6}}]}}
+    text:
+      en:
+        name: "A history written after the sentence"
+        place: "Chang'an"
+        figure: "Sima Qian"
+        story: "Sima Qian is punished by the court for speaking up for a general, and chooses to go on living in order to finish his history of China, the Records of the Grand Historian."
+        relic: "A bundle of bamboo slips"
+        relic_desc: "Slips tied with cord, each carrying a column of characters."
+        points:
+          p1: "Sit with him in the days after the sentence"
+          p2: "Read the old records with him (a record keeper, a journalist or a sharp mind)"
+          p3: "Stay until the last chapter is written"
+      zh:
+        name: "受刑之后写成的史书"
+        place: "长安"
+        figure: "司马迁"
+        story: "司马迁因为替一位将军说话而受到朝廷惩罚，他选择活下去，为的是写完那部中国的历史，也就是《史记》。"
+        relic: "一捆竹简"
+        relic_desc: "用绳子编起来的竹简，每一片写着一行字。"
+        points:
+          p1: "在判决之后的日子里陪他坐坐"
+          p2: "和他一起读旧档案"
+          p3: "留到最后一章写完"
 text:
   en:
     name: Sima Qian
@@ -8,3 +45,9 @@ text:
   zh:
     name: 司马迁
     text: 汉代历史学家，约公元前 145 年生，约公元前 86 年去世。他在皇帝面前为一位将军辩护而被处以宫刑，之后完成《史记》，写从传说时代到他当代的历史。
+quotes:
+  simaqian:
+    order: 9
+    text:
+      en: {who: Sima Qian, quote: "To examine the relation between heaven and man, to trace the changes from antiquity to the present, and to complete a school of one's own."}
+      zh: {who: 司马迁, quote: "究天人之际，通古今之变，成一家之言。"}

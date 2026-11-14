@@ -19,3 +19,373 @@ text:
   zh:
     name: 伊格纳茨·森梅尔维斯
     text: 匈牙利出身的产科医生，1847 年发现解剖室与产房的死亡有关，并要求接生前用氯化石灰溶液洗手。游戏里他是员工可以合作的对象。
+wiki:
+  places:
+    vienna_clinic:
+      order: 2
+      era: vienna_1847
+      tags:
+        - medical
+        - infection
+        - obstetrics
+        - c19
+        - vienna
+        - history
+      related:
+        - people:semmelweis
+        - events:handwashing_rule
+        - antiques:clinic_bell
+      unlock:
+        era: vienna_1847
+      refs:
+        - semmelweis1861
+        - game
+      text:
+        en:
+          name: Vienna General Hospital, 1847
+          text: One of the largest hospitals in Europe in the mid nineteenth century, with two maternity wards, one where doctors and students delivered and one where midwives did. The maternal death rates of the two wards differed greatly.
+        zh:
+          name: 维也纳总医院，1847
+          text: 十九世纪中叶欧洲最大的医院之一，设有两间产科病房，一间由医生和学生接生，一间由助产士接生。两间病房的产妇死亡率差别很大。
+  events:
+    handwashing_rule:
+      order: 2
+      tags:
+        - obstetrics
+        - sterilize
+        - c19
+        - vienna
+        - history
+      related:
+        - people:semmelweis
+        - places:vienna_clinic
+      unlock:
+        era: vienna_1847
+      refs:
+        - semmelweis1861
+      text:
+        en:
+          name: The Vienna handwashing rule
+          text: History records that in mid May 1847 Semmelweis required hands to be washed in a chlorinated lime solution before deliveries, and the death rate in the ward then fell. The exact dates and numbers are unchecked.
+        zh:
+          name: 维也纳洗手规定
+          text: 史载 1847 年 5 月中旬，森梅尔维斯要求接生前用氯化石灰溶液洗手，随后产房的死亡率下降。具体日期与数字待核对。
+  refs:
+    semmelweis1861:
+      order: 2
+      status: pending
+      text:
+        en: 'Semmelweis I. Die Aetiologie, der Begriff und die Prophylaxis des Kindbettfiebers. Pest, Wien, Leipzig: C. A. Hartleben; 1861.'
+        zh: 'Semmelweis I. Die Aetiologie, der Begriff und die Prophylaxis des Kindbettfiebers. Pest, Wien, Leipzig: C. A. Hartleben; 1861.'
+antiques:
+  clinic_bell:
+    order: 2
+    era: vienna_1847
+    kind: key
+    price: 150
+    start_owned: false
+    playable: true
+    tags:
+      - medical
+      - history
+      - key
+    text:
+      en:
+        name: Brass bell from the maternity ward
+        desc: A bell with no clapper. Hold it and you can find a ward in spring.
+      zh:
+        name: 产科病房的铜铃
+        desc: 一只铃，铃舌已经没了。拿着它，能找到一间病房的春天。
+era_text:
+  en:
+    name: Vienna General Hospital 1847
+    short: Maternity ward
+    place_name: Maternity ward, Vienna General Hospital
+    tags:
+      - medical
+      - infection
+      - obstetrics
+      - c19
+      - vienna
+      - history
+    event_titles:
+      door_block: Turned back by seniors
+      time_strain: Time slip
+    plots:
+      forceps:
+        name: Hand Semmelweis the design of obstetric forceps
+        desc: Saves more mothers in a difficult birth, and the era's craft can make them.
+        character: Ignaz Semmelweis
+        article: people:semmelweis
+      germ_theory:
+        name: Explain germ theory to Semmelweis
+        desc: Needs the craft of microbiology, which this era does not have.
+        character: Ignaz Semmelweis
+        article: people:semmelweis
+    blurb: Childbed fever, two maternity wards, and a young doctor who put the death counts side by side. The task is not to beat a disease but to persuade a room of seniors who will not wash their hands.
+    handle_label: Washing rule starts
+    protagonist: Ignaz Semmelweis
+    protagonist_role: Assistant obstetrician who has just found that the dissecting room and the delivery room deaths are linked
+    stay: Stay twenty-one days
+    items:
+      chlorine_tablet:
+        name: Chlorinated lime tablet
+        desc: One tablet makes a basin of washing solution, enough for dozens of examinations. Cheap, but someone has to wash.
+      handbook:
+        name: Modern nursing handbook
+        desc: Raises skill in caring for mothers. Also a gift for Semmelweis.
+      recall_charm:
+        name: Recall charm
+        desc: Pulls an employee back when they collapse. Without it, all gear is lost.
+    strategies:
+      focus:
+        balanced:
+          name: Balanced
+          desc: Care for mothers with fever, teach washing when there is a chance, see Semmelweis when there is time.
+        cure:
+          name: Mothers first
+          desc: Bedside care first, little persuading about washing.
+        prevent:
+          name: Teach washing first
+          desc: Persuade people in the ward one by one and hand out washing solution.
+        ally:
+          name: Work with Semmelweis
+          desc: Spend time helping him organise the numbers and go with him to the people he must see.
+      on_block:
+        yield:
+          name: Yield
+          desc: If a senior turns you back, let it be.
+        insist:
+          name: Insist
+          desc: Stand at the ward door and finish speaking, do not retreat even if the solution is confiscated.
+        appeal:
+          name: Appeal
+          desc: Turn and go to Semmelweis and ask him to step in.
+    encyclopedia:
+      history:
+        - text: In 1847 the maternal death rate in the first maternity ward of Vienna General Hospital was clearly higher than in the second.
+          check: true
+        - text: The first ward was staffed by doctors and medical students, who often came straight from dissecting corpses.
+          check: true
+        - text: In mid May 1847 Semmelweis required doctors and students to wash their hands in a chlorinated lime solution before examining mothers.
+          check: true
+        - text: After the rule took effect the death rate fell markedly within a few months.
+          check: true
+        - text: Mainstream colleagues did not accept his explanation, and germ theory had not been established yet.
+          check: true
+      regret:
+        - The numbers are in front of you, and still you wait for the powerful to nod. On the main timeline the washing rule came in mid May.
+        - He never lived to see his colleagues truly accept him.
+    events:
+      door_block_stubborn: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and {d.wash_supply:i} portions of washing solution are confiscated.
+      door_block_stubborn_empty: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and is shown out of the ward.
+      door_block_insist: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} stands at the ward door and finishes speaking, and {d.wash_supply:i} portions of washing solution are confiscated.
+      door_block_insist_empty: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} stands at the ward door and finishes speaking, and is shown out.
+      door_block_appeal: A senior doctor keeps {staff} out of the ward. {staff} does not force the way, turns and goes to Semmelweis to ask him to speak up.
+      door_block_yield: A senior doctor keeps {staff} out of the ward. {staff} steps back without a quarrel, and half a day is wasted.
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      convince: "Convince Semmelweis"
+      protect: "Get the washing started"
+      handle: "Make hand washing a rule ahead of history"
+    milestones:
+      first_treat: '{date}: {staff} sits by the first feverish mother and nurses her until the fever eases a little.'
+      first_protect: '{date}: {staff} persuades the first group of doctors and students to wash their hands in the basin before examining.'
+      met_snow: '{date}: {staff} meets Semmelweis in the corridor. He is going through the death counts of the two wards and looks up: where did you learn these numbers.'
+      snow_trusts: '{date}: Semmelweis starts to treat {staff} as one of his own and brings out his unfinished tables to compare.'
+      snow_convinced: '{date}: Semmelweis no longer merely suspects. He has laid the numbers out in a table nobody can avoid, and he believes the stranger.'
+      board_moves: '{date}: The clinic director starts to give way and says handwashing before examinations might be tried.'
+      handle_off_history: '{date}: The washing rule starts in the first maternity ward. The main timeline does not change.'
+      handle_off_early: '{date}: The washing rule starts {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      trust_won: '{date}: Nurses and students in the ward no longer avoid {staff}, and some come to ask how to wash.'
+      exhausted: '{date}: {staff} is so tired they cannot stand steady and is forced to rest.'
+      outbreak_fades: '{date}: Few mothers still have a fever.'
+    summary:
+      near_death: '{staff} collapses in the maternity ward and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a letter saying they want to stay with these mothers a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend in the maternity ward. The washing rule started {advance_days:1} days earlier than in history.'
+      perfect: '{staff} completed the task in the maternity ward and came back safe. {base_D:i} mothers died on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was kept out of the ward by seniors again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent twenty-one days in the maternity ward, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still thinking about whether anyone was with the mother by the bed.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only helped him put the numbers in front of the people who needed to see them.
+      perfect:
+        - trait: kind
+          text: I could save these few, not everyone.
+        - trait: curious
+          text: So that is how it is, what is on your hands carries the sickness.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to go to him first, and persuade the others after.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they believe it is up to them.
+        - text: With one more item I might have saved a few more.
+    hints:
+      lost_ors: A lot of washing solution was confiscated. Next time let the employee yield, or go to Semmelweis first.
+      unused_protect: Washing solution was left over. The seniors would not listen, it was not a shortage. Try working with Semmelweis first to lower the resistance.
+      unused_ors: Supplies were left over.
+      ally_gap: Semmelweis's evidence is still thin. The handbook helps him, provided the employee spends time with him.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 维也纳总医院 1847
+    short: 产科诊所
+    place_name: 维也纳总医院产科病房
+    tags:
+      - medical
+      - infection
+      - obstetrics
+      - c19
+      - vienna
+      - history
+    event_titles:
+      door_block: 被前辈挡回
+      time_strain: 时间错位
+    plots:
+      forceps:
+        name: 把助产钳的设计交给森梅尔维斯
+        desc: 难产时能救下更多产妇，现有的工艺做得出来。
+        character: 伊格纳茨·森梅尔维斯
+        article: people:semmelweis
+      germ_theory:
+        name: 把细菌致病的理论讲给森梅尔维斯
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 伊格纳茨·森梅尔维斯
+        article: people:semmelweis
+    blurb: 产褥热，两间产科病房，一位把死亡数字对在一起的年轻医生。要说服的不是病，是一屋子不肯洗手的前辈。
+    handle_label: 洗手规定开始
+    protagonist: 伊格纳茨·森梅尔维斯
+    protagonist_role: 产科助理医生，刚刚发现解剖室和产房的死亡有关
+    stay: 停留二十一天
+    items:
+      chlorine_tablet:
+        name: 氯化石灰片
+        desc: 一片能配出一盆洗手液，够几十次检查前用。便宜，但要有人肯洗。
+      handbook:
+        name: 现代护理手册
+        desc: 提高照料产妇的手艺。也是递给森梅尔维斯的见面礼。
+      recall_charm:
+        name: 回收符
+        desc: 倒下时把人接回。没带的话，装备全丢。
+    strategies:
+      focus:
+        balanced:
+          name: 均衡
+          desc: 有产妇发热就照料，有机会就教洗手，有空见森梅尔维斯。
+        cure:
+          name: 先照料产妇
+          desc: 床边照料优先，少去劝人洗手。
+        prevent:
+          name: 先教洗手
+          desc: 在病房里一个个劝，分发洗手液。
+        ally:
+          name: 与森梅尔维斯合作
+          desc: 多花时间帮他整理数字，陪他去见该去的人。
+      on_block:
+        yield:
+          name: 让步
+          desc: 被前辈挡回来就算了。
+        insist:
+          name: 坚持
+          desc: 站在病房门口把话说完，洗手液被没收也不退。
+        appeal:
+          name: 求助
+          desc: 转头去找森梅尔维斯，请他出面。
+    encyclopedia:
+      history:
+        - text: 1847 年，维也纳总医院第一产科病房的产妇死亡率明显高于第二产科病房。
+          check: true
+        - text: 第一病房由医生和医学生接生，他们常常刚做完尸体解剖。
+          check: true
+        - text: 森梅尔维斯在 1847 年 5 月中旬要求医生和学生用含氯石灰溶液洗手后再检查产妇。
+          check: true
+        - text: 规定实行后，死亡率在几个月内明显下降。
+          check: true
+        - text: 当时的主流同行并没有接受他的解释，细菌致病论还没有建立。
+          check: true
+      regret:
+        - 数字摆在眼前，也要等有权力的人点头。主时间线上，洗手规定在五月中旬才到。
+        - 他一生都没有等到同行真正接受他。
+    events:
+      door_block_stubborn: 一位前辈医生说，没有人需要一个外人来教怎么检查产妇。{staff}固执，没有退让，洗手液被没收了 {d.wash_supply:i} 份。
+      door_block_stubborn_empty: 一位前辈医生说，没有人需要一个外人来教怎么检查产妇。{staff}固执，没有退让，被请出了病房。
+      door_block_insist: 一位前辈医生说，没有人需要外人来教怎么检查产妇。{staff}站在病房门口把话说完，洗手液被没收了 {d.wash_supply:i} 份。
+      door_block_insist_empty: 一位前辈医生说，没有人需要外人来教怎么检查产妇。{staff}站在病房门口把话说完，被请了出去。
+      door_block_appeal: 一位前辈医生把{staff}挡在病房外。{staff}没有硬闯，转身去找森梅尔维斯，请他出面说句话。
+      door_block_yield: 一位前辈医生把{staff}挡在病房外。{staff}退了一步，没有吵，浪费了半天。
+      time_strain: '{date}，{staff}听见钟声错了半拍。这条分支离史实越来越远，人明显更累了。'
+    star_points:
+      convince: "说服森梅尔维斯"
+      protect: "让洗手先做起来"
+      handle: "比史实更早把洗手定成规矩"
+    milestones:
+      first_treat: '{date}，{staff}守在第一位发热的产妇床边，把她照料到烧退了一点。'
+      first_protect: '{date}，{staff}劝动了第一批医生和学生，检查前先在盆里洗手。'
+      met_snow: '{date}，{staff}在走廊里见到了森梅尔维斯。他一直在翻两间病房的死亡数字，抬头问：你是从哪里知道这些的。'
+      snow_trusts: '{date}，森梅尔维斯开始把{staff}当作自己人，愿意把没写完的表格拿出来一起对。'
+      snow_convinced: '{date}，森梅尔维斯不再只是怀疑。他把数字排成了一张谁也绕不开的表，也相信了这个陌生人。'
+      board_moves: '{date}，诊所主任开始松口，说也许可以让检查前洗手试一试。'
+      handle_off_history: '{date}，洗手规定在第一产科病房开始实行。主时间线不变。'
+      handle_off_early: '{date}，洗手规定比史实早 {advance_days:1} 天开始实行。主时间线不变，只有这条分支里是这样。'
+      trust_won: '{date}，病房里的护士和学生不再绕开{staff}，有人主动来问怎么洗。'
+      exhausted: '{date}，{staff}累得站不稳，被迫停下来休息。'
+      outbreak_fades: '{date}，发热的产妇已经不多了。'
+    summary:
+      near_death: '{staff}在产科病房倒下，被回收符接了回来。保住了命，付出了代价。'
+      stay_and_gifts: '{staff}完成了任务，却没有回来。离开时留下一封信，说想多陪陪这些产妇。以后会有礼物寄来。'
+      gave_up: '{staff}提前放弃，回到了现代。{staff}说，这里不属于自己。'
+      legend: '{staff}在产科病房留下了传说，洗手规定比史实早 {advance_days:1} 天开始。'
+      perfect: '{staff}在产科病房完成任务，平安回来。主时间线 {base_D:i} 位产妇死亡，这条分支 {D:i} 位。'
+      scramble: '{staff}一次次被前辈挡在病房外，最后狼狈地逃了回来，带着一个笑话。'
+      modest: '{staff}在产科病房待了二十一天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 我最后还惦记着，床边那位产妇有没有人陪。
+        - text: 我以为我能多撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得她们每一个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家。就是这样。
+        - text: 我不是做这个的料。
+      legend:
+        - text: 我只是帮他把数字摆在了该看的人面前。
+      perfect:
+        - trait: kind
+          text: 我救得了这几个，救不了所有人。
+        - trait: curious
+          text: 原来是这样，手上的东西会带着病走。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们早晚会明白。就是晚了点。
+        - text: 下次我想先去找他，再去劝别人。
+      modest:
+        - trait: glib
+          text: 话我都说了。信不信是他们的事。
+        - text: 如果多带一样东西，也许能多救几位。
+    hints:
+      lost_ors: 洗手液被没收了很多，下一次可以让员工让步，或者先去找森梅尔维斯。
+      unused_protect: 洗手液没用完。前辈们不愿意听，不是不够用，试试先和森梅尔维斯合作，把阻力降下来。
+      unused_ors: 物资没用完。
+      ally_gap: 森梅尔维斯的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
+      none: 换一项配置再派一趟，同一个种子，对照起来最清楚。

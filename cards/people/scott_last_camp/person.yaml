@@ -1,6 +1,44 @@
 order: 172
 events:
-- scott_last_camp
+  scott_last_camp:
+    order: 142
+    year: 1912
+    lon: 169
+    lat: -79.67
+    region: oceania
+    field: exploration
+    tier: 3
+    era: scott_ross_ice_shelf_1912
+    channels: {C: 3, Y: 3, L: 3}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: endure, req: {"trait":["bold","cheerful","hardy"]}}
+        - {id: p2, kind: care, req: {"trait":["patient","attached","cheerful"]}}
+        - {id: p3, kind: hold, redeem: true, req: {"provides":"strength"}}
+    text:
+      en:
+        name: "The tent on the ice shelf"
+        place: "Ross Ice Shelf"
+        figure: "Robert Falcon Scott"
+        story: "Scott and his companions turn back from the pole and are caught by cold and storm on the ice shelf, eleven miles from their depot. His diary is found with them months later."
+        relic: "A diary"
+        relic_desc: "A small pencilled diary, stiff with cold."
+        points:
+          p1: "Keep going through the cold"
+          p2: "Look after the weakest of them"
+          p3: "Drag the sledge so the diary and records come home"
+      zh:
+        name: "冰架上的帐篷"
+        place: "罗斯冰架"
+        figure: "罗伯特·法尔肯·斯科特"
+        story: "斯科特和同伴从极点折返，在冰架上被严寒和风暴困住，离补给点只有十一英里。几个月后人们找到了他们，也找到他的日记。"
+        relic: "一本日记"
+        relic_desc: "一本用铅笔写的小日记，被冻得发硬。"
+        points:
+          p1: "在严寒里继续前进"
+          p2: "照顾他们当中最虚弱的人"
+          p3: "拉动雪橇，让日记和记录能带回家"
 text:
   en:
     name: Robert Falcon Scott
@@ -8,3 +46,247 @@ text:
   zh:
     name: 罗伯特·法尔肯·斯科特
     text: 英国海军军官与探险家，1868 年生，1912 年去世。他率领“新地”号探险队前往南极点，1912 年 1 月到达时发现阿蒙森已先到，返程穿越罗斯冰架时与同伴一起去世。
+wiki:
+  places:
+    ross_ice_shelf:
+      order: 8
+      era: scott_ross_ice_shelf_1912
+      tags:
+        - medical
+        - cold
+        - expedition
+        - c20
+        - antarctica
+        - history
+      related:
+        - people:scott_last_camp
+        - events:depot_plan
+      unlock:
+        era: scott_ross_ice_shelf_1912
+      refs:
+        - scott_sources
+        - game
+      text:
+        en:
+          name: Ross Ice Shelf, 1912
+          text: A huge floating sheet of ice on the edge of Antarctica, crossed by the Terra Nova expedition on the way to and from the Pole. Ross Ice Shelf in the game is a party model of about twenty-four people.
+        zh:
+          name: 罗斯冰架，1912
+          text: 南极边缘一大片漂浮的冰，新地号考察队往返极点都穿过这里。游戏里的罗斯冰架是一个约二十四人的队伍模型。
+  events:
+    depot_plan:
+      order: 18
+      tags:
+        - medical
+        - cold
+        - expedition
+        - c20
+        - antarctica
+        - history
+      related:
+        - people:scott_last_camp
+        - places:ross_ice_shelf
+      unlock:
+        era: scott_ross_ice_shelf_1912
+      refs:
+        - scott_sources
+        - game
+      text:
+        en:
+          name: The last diary entry
+          text: Scott's last diary entry is dated 29 March 1912, eleven miles from One Ton Depot. The tent was found by a search party on 12 November. In the game an employee can help the party through these weeks, which holds only in this branch.
+        zh:
+          name: 最后一篇日记
+          text: 斯科特的最后一篇日记写于 1912 年 3 月 29 日，离一吨仓库十一英里。搜救队 11 月 12 日找到帐篷。游戏里员工能帮队伍度过这几周，只在这条分支里成立。
+  refs:
+    scott_sources:
+      order: 30
+      status: checked
+      text:
+        en: 'Earth Magazine. Benchmarks: March 29, 1912: Scott''s South Pole journey ends in death. Smithsonian Magazine. When a search party discovered the frozen body of a British explorer who raced to the South Pole, and lost. Both read 2026.'
+        zh: 'Earth Magazine. Benchmarks: March 29, 1912: Scott''s South Pole journey ends in death. Smithsonian Magazine. When a search party discovered the frozen body of a British explorer who raced to the South Pole, and lost. Both read 2026.'
+era_text:
+  en:
+    name: Ross Ice Shelf, 1912
+    short: Ross Ice Shelf
+    place_name: Ross Ice Shelf, Antarctica
+    tags:
+      - medical
+      - cold
+      - expedition
+      - c20
+      - antarctica
+      - history
+    event_titles:
+      time_strain: Time slip
+    plots: {}
+    blurb: The way back from the Pole across the ice shelf, with the fuel and the food running short. Close, cheap, and the effect of warmth and food is clear.
+    handle_label: Nothing in the record to change
+    protagonist: Robert Falcon Scott
+    protagonist_role: The leader of the polar party, who kept a diary of every day
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: 'In January 1912 Scott and four companions reached the South Pole and found that a Norwegian party had been there before them.'
+          check: true
+        - text: 'Edgar Evans died on 17 February 1912 on the way back, and Captain Oates left the tent and did not return on 17 March.'
+          check: true
+        - text: 'Scott''s last diary entry is dated 29 March 1912. The last camp was eleven miles from One Ton Depot.'
+          check: true
+        - text: 'A search party found the tent on 12 November 1912, with the bodies of Scott, Wilson and Bowers.'
+          check: true
+      regret:
+        - You can save today's people but not the whole journey. On the main timeline the party did not come back.
+        - Warmth and food matter more than any one clever idea, but a plan only changes when someone is heard.
+    events:
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      settled: 'Keep the ailing going'
+      sheltered: 'Get the whole party under cover'
+      through: 'Bring the party through these weeks'
+    milestones:
+      first_treat: '{date}: {staff} melts the first pot of water and hot food for a man who has stopped talking. He starts to speak.'
+      first_protect: '{date}: {staff} hands out the first blankets and builds a wall of snow blocks, and teaches the others to do the same.'
+      trust_won: '{date}: The members of the party no longer keep {staff} out, and some ask for help.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of ailing men falls to one or none.'
+      people_settled: '{date}: {staff} has found a warm place and food for everyone who was ailing.'
+      well_sheltered: '{date}: {staff} has the whole party under cover and out of the wind.'
+      all_through: '{date}: The party is through these weeks with no more than two lost.'
+      oates_leaves: '{date}: Captain Oates, badly frostbitten, leaves the tent in a blizzard and does not come back.'
+      last_entry: '{date}: Scott writes the last entry in his diary and asks that the families of his companions be looked after.'
+    summary:
+      near_death: '{staff} collapses at Ross Ice Shelf and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend at Ross Ice Shelf. The plan was changed {advance_days:1} days earlier than in the main timeline.'
+      perfect: '{staff} completed the task at Ross Ice Shelf and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent seven days at Ross Ice Shelf, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was keeping watch at night.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told them what they needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's people, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, warmth and food are what keep a party going.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they listen is up to them.
+        - text: With one more item I might have saved one more life.
+    hints:
+      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+      unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
+      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 罗斯冰架 1912
+    short: 罗斯冰架
+    place_name: 南极罗斯冰架
+    tags:
+      - medical
+      - cold
+      - expedition
+      - c20
+      - antarctica
+      - history
+    event_titles:
+      time_strain: 时间错位
+    plots: {}
+    blurb: 从极点返回、穿过冰架的路上，燃料和食物越来越少。近，成本低，保暖和食物的效果很明显。
+    handle_label: 史实里没有可改的决定
+    protagonist: 罗伯特·法尔肯·斯科特
+    protagonist_role: 极地小队的领队，每天都写日记
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: '1912 年 1 月，斯科特和四位同伴到达南极点，发现挪威队已经先到。'
+          check: true
+        - text: '埃德加·埃文斯 1912 年 2 月 17 日死于返程途中，3 月 17 日奥茨上尉离开帐篷，没有回来。'
+          check: true
+        - text: '斯科特最后一篇日记写于 1912 年 3 月 29 日。最后的营地离一吨仓库只有十一英里。'
+          check: true
+        - text: '搜救队 1912 年 11 月 12 日找到那顶帐篷，里面是斯科特、威尔逊和鲍尔斯的遗体。'
+          check: true
+      regret:
+        - 你能救今天的人，救不了整段旅程。主时间线上这支队伍没有回来。
+        - 保暖和食物比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      settled: '让病倒的人撑下去'
+      sheltered: '让全队躲进遮蔽处'
+      through: '带队伍度过这几周'
+    milestones:
+      first_treat: '{date}：{staff} 给一个已经不说话的人化好第一锅水、热好食物，他开始开口了。'
+      first_protect: '{date}：{staff} 发下第一批毯子，垒起雪块墙，教其他人照做。'
+      trust_won: '{date}：队员们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
+      people_settled: '{date}：{staff} 给每一个病倒的人都找到了暖和的地方和吃的。'
+      well_sheltered: '{date}：{staff} 让全队都躲进了遮蔽处，避开了风。'
+      all_through: '{date}：队伍度过了这几周，损失不超过两个人。'
+      oates_leaves: '{date}：奥茨上尉冻伤严重，在暴风雪中离开帐篷，再没有回来。'
+      last_entry: '{date}：斯科特写下日记的最后一篇，请求照顾同伴的家人。'
+    summary:
+      near_death: '{staff} 在罗斯冰架倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在罗斯冰架留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在罗斯冰架完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在罗斯冰架待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，保暖和食物才是让一支队伍撑下去的东西。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

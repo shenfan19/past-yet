@@ -1,6 +1,44 @@
 order: 194
 events:
-- tupaia_tahiti
+  tupaia_tahiti:
+    order: 196
+    year: 1769
+    lon: -149.5
+    lat: -17.5
+    region: oceania
+    field: exploration
+    tier: 2
+    era: tupaia_tahiti_1769
+    channels: {Y: 3, E: 2}
+    regret: true
+    scene:
+      points:
+        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
+        - {id: p2, kind: notice, req: {"trait":["streetwise","wanderer","vigil"]}}
+        - {id: p3, kind: trust, redeem: true, req: {"any":[{"job":["sailor","fisher"]},{"trait":["attached","cosmopolitan","artistic"]}]}}
+    text:
+      en:
+        name: "The navigator's chart"
+        place: "Tahiti"
+        figure: "Tupaia"
+        story: "Tupaia, a priest and navigator from Raiatea, joins Captain Cook's ship at Tahiti and draws from memory a chart of some seventy islands across the Pacific. He dies of illness in Batavia in 1770, and his chart was long poorly understood."
+        relic: "A sketch of islands"
+        relic_desc: "A sheet of ink and wash with small island shapes and names."
+        points:
+          p1: "Share the cramped cabin on the passage"
+          p2: "Watch him draw the chart of the islands"
+          p3: "Learn the island names from him (a seafarer or a kind employee)"
+      zh:
+        name: "领航者的海图"
+        place: "塔希提"
+        figure: "图帕亚"
+        story: "来自赖阿特阿岛的祭司兼领航员图帕亚在塔希提登上库克的船，凭记忆画出了横跨太平洋约七十个岛屿的海图。他1770年病逝于巴达维亚，那幅海图长期没有被好好理解。"
+        relic: "一张岛屿草图"
+        relic_desc: "一张墨与淡彩的纸，画着小小的岛形和名字。"
+        points:
+          p1: "在航程中挤着住那间小舱"
+          p2: "看他画那幅群岛海图"
+          p3: "向他学岛的名字"
 text:
   en:
     name: Tupaia
@@ -8,3 +46,267 @@ text:
   zh:
     name: 图帕亚
     text: 来自赖阿特阿岛的领航人与祭司，约 1725 年生，1770 年去世。1769 年他在大溪地登上詹姆斯·库克的船，凭记忆帮忙画出太平洋诸岛的海图。他在巴达维亚病逝。
+wiki:
+  places:
+    tahiti_endeavour:
+      order: 12
+      era: tupaia_tahiti_1769
+      tags:
+        - medical
+        - voyage
+        - scurvy
+        - c18
+        - tahiti
+        - history
+      related:
+        - people:tupaia_tahiti
+        - events:fresh_food_plan
+      unlock:
+        era: tupaia_tahiti_1769
+      refs:
+        - cook1773
+        - game
+      text:
+        en:
+          name: Tahiti, 1769
+          text: The largest of the Society Islands in the Pacific, where the Endeavour anchored in 1769 to observe the transit of Venus. The Endeavour in the game is a ship's company model of about ninety people.
+        zh:
+          name: 塔希提，1769
+          text: 太平洋社会群岛中最大的一座岛，奋进号 1769 年在这里停泊，观测金星凌日。游戏里的奋进号是一个约九十人的船员模型。
+  events:
+    fresh_food_plan:
+      order: 22
+      tags:
+        - medical
+        - voyage
+        - scurvy
+        - c18
+        - tahiti
+        - history
+      related:
+        - people:tupaia_tahiti
+        - places:tahiti_endeavour
+      unlock:
+        era: tupaia_tahiti_1769
+      refs:
+        - cook1773
+        - game
+      text:
+        en:
+          name: The plan for fresh food
+          text: What the ship took on at the islands for the long voyage was the choice of the ship's officers. In the game an employee can help bring a change of plan earlier, which holds only in this branch.
+        zh:
+          name: 新鲜食物的计划
+          text: 船在岛上为长途航行补什么，是船上军官的选择。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
+  refs:
+    cook1773:
+      order: 32
+      status: pending
+      text:
+        en: 'Beaglehole JC, ed. The Journals of Captain James Cook on His Voyages of Discovery, vol. 1. Cambridge: Hakluyt Society; 1955.'
+        zh: 'Beaglehole JC, ed. The Journals of Captain James Cook on His Voyages of Discovery, vol. 1. Cambridge: Hakluyt Society; 1955.'
+era_text:
+  en:
+    name: Tahiti, 1769
+    short: Tahiti
+    place_name: Tahiti, Society Islands
+    tags:
+      - medical
+      - voyage
+      - scurvy
+      - c18
+      - tahiti
+      - history
+    event_titles:
+      time_strain: Time slip
+    plots:
+      chart:
+        name: Give Tupaia a chart table
+        desc: Lets him lay out the islands he knows so that others can read them.
+        character: Tupaia
+        article: people:tupaia_tahiti
+      germ_theory:
+        name: Explain germ theory to Tupaia
+        desc: Needs the craft of microbiology, which this era does not have.
+        character: Tupaia
+        article: people:tupaia_tahiti
+    blurb: A ship about to cross the Pacific, and a navigator who knows where the islands are. Close, cheap, and the effect of fresh food and clean water is clear.
+    handle_label: The plan for fresh food is changed
+    protagonist: Tupaia
+    protagonist_role: A navigator and priest of the islands who knows the sea and the islands around Tahiti
+    stay: Stay seven days
+    plan_baseline: Main timeline
+    encyclopedia:
+      history:
+        - text: The Endeavour reached Tahiti in April 1769 and stayed until July.
+          check: true
+        - text: Tupaia, a navigator and priest from the islands, joined the ship and drew a chart of the islands he knew.
+          check: true
+        - text: He sailed with the Endeavour, and died at Batavia in December 1770, where sickness took many of the ship's company.
+          check: true
+      regret:
+        - You can save today's people but not the whole voyage. On the main timeline sickness came to the ship the following year.
+        - Fresh food and clean water matter more than any one clever idea, but a plan only changes when someone is heard.
+    events:
+      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+    star_points:
+      convince: 'Convince Tupaia'
+      trust: 'Win the trust of the ship''s company'
+      reform: 'Have the plan for fresh food changed ahead of history'
+    milestones:
+      first_treat: '{date}: {staff} brings the first cup of fruit juice to a man with swollen gums. He starts to speak.'
+      first_protect: '{date}: {staff} hands out the first hats and nets to the working parties, and teaches the men to use them.'
+      met_tupaia: '{date}: {staff} is received by Tupaia.'
+      tupaia_trusts: '{date}: Tupaia gives {staff} the notes to work from.'
+      tupaia_convinced: '{date}: Tupaia takes up the plan that {staff} put to him.'
+      board_moves: '{date}: Word goes round that the plan might change.'
+      reform_history: '{date}: The plan for fresh food is changed. The main timeline does not change.'
+      reform_early: '{date}: The plan for fresh food is changed {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      trust_won: '{date}: The ship''s company no longer keeps {staff} out, and some ask for help.'
+      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
+      outbreak_fades: '{date}: The number of ailing men falls to single digits.'
+    summary:
+      near_death: '{staff} collapses at Tahiti and is pulled back by the recall charm. Life saved, at a price.'
+      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
+      gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
+      legend: '{staff} left a legend at Tahiti. The plan was changed {advance_days:1} days earlier than in the main timeline.'
+      perfect: '{staff} completed the task at Tahiti and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
+      modest: '{staff} spent seven days at Tahiti, did what was within reach, and came back safe.'
+    quotes:
+      near_death:
+        - trait: kind
+          text: At the end I was still wondering whether anyone was keeping watch at night.
+        - text: I thought I could hold out a little longer.
+      stay_and_gifts:
+        - trait: kind
+          text: I remember every one of their names. I want to stay a while.
+        - text: They need people here.
+      gave_up:
+        - trait: homesick
+          text: I want to go home. That is all.
+        - text: I am not cut out for this.
+      legend:
+        - text: I only told them what they needed to hear.
+      perfect:
+        - trait: kind
+          text: I could save today's people, not tomorrow's.
+        - trait: curious
+          text: So that is how it is, fresh food and clean water keep a ship's company well.
+        - text: Did what had to be done.
+      scramble:
+        - trait: methodical
+          text: They will understand sooner or later. Just later.
+        - text: Next time I want to bring more.
+      modest:
+        - trait: glib
+          text: I said all I had to say. Whether they listen is up to them.
+        - text: With one more item I might have saved one more life.
+    hints:
+      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
+      unused_protect: Hats were left over. The limit was the trust of the ship's company, not the supplies. Let the employee help people first to build trust.
+      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
+      ally_gap: Tupaia's evidence is still thin. The handbook helps, provided the employee spends time with him.
+      none: Change one thing and send again with the same seed, that makes the comparison clearest.
+  zh:
+    name: 塔希提 1769
+    short: 塔希提
+    place_name: 社会群岛塔希提
+    tags:
+      - medical
+      - voyage
+      - scurvy
+      - c18
+      - tahiti
+      - history
+    event_titles:
+      time_strain: 时间错位
+    plots:
+      chart:
+        name: 送图帕亚一张海图桌
+        desc: 让他把自己熟悉的岛屿摊开，别人才能读懂。
+        character: 图帕亚
+        article: people:tupaia_tahiti
+      germ_theory:
+        name: 把细菌致病的理论讲给图帕亚
+        desc: 需要微生物学的工艺，这个时代还没有。
+        character: 图帕亚
+        article: people:tupaia_tahiti
+    blurb: 一艘即将横渡太平洋的船，和一位知道岛在哪里的领航员。近，成本低，新鲜食物和干净水的效果很明显。
+    handle_label: 新鲜食物计划被改
+    protagonist: 图帕亚
+    protagonist_role: 熟悉海和塔希提周围岛屿的领航员兼祭司
+    stay: 停留七天
+    plan_baseline: 主时间线
+    encyclopedia:
+      history:
+        - text: 奋进号 1769 年 4 月到达塔希提，停到 7 月。
+          check: true
+        - text: 图帕亚是岛上的领航员兼祭司，他上了船，画下了自己熟悉的那些岛的海图。
+          check: true
+        - text: 他随奋进号航行，1770 年 12 月死于巴达维亚，那里的疾病带走了船上许多人。
+          check: true
+      regret:
+        - 你能救今天的人，救不了整次航行。主时间线上第二年疾病上了船。
+        - 新鲜食物和干净水比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
+    events:
+      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+    star_points:
+      convince: '说服图帕亚'
+      trust: '赢得船员的信任'
+      reform: '让新鲜食物的计划比历史上更早改变'
+    milestones:
+      first_treat: '{date}：{staff} 给一个牙龈肿胀的人递上第一杯果汁，他开始开口了。'
+      first_protect: '{date}：{staff} 给干活的人发下第一批帽子和网，教大家使用。'
+      met_tupaia: '{date}：{staff} 被图帕亚接见。'
+      tupaia_trusts: '{date}：图帕亚把笔记交给 {staff} 用。'
+      tupaia_convinced: '{date}：图帕亚采纳了 {staff} 提出的办法。'
+      board_moves: '{date}：消息传开，计划也许要改。'
+      reform_history: '{date}：新鲜食物的计划被改了。主时间线没有变化。'
+      reform_early: '{date}：新鲜食物的计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      trust_won: '{date}：船员们不再把 {staff} 挡在外面，有的还开口求助。'
+      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
+      outbreak_fades: '{date}：生病的人数降到了个位数。'
+    summary:
+      near_death: '{staff} 在塔希提倒下，被召回符拉了回来。人救下了，代价不小。'
+      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
+      gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
+      legend: '{staff} 在塔希提留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在塔希提完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
+      modest: '{staff} 在塔希提待了七天，做了力所能及的事，平安回来。'
+    quotes:
+      near_death:
+        - trait: kind
+          text: 到最后我还在想，夜里有没有人守着。
+        - text: 我以为还能再撑一会儿。
+      stay_and_gifts:
+        - trait: kind
+          text: 我记得他们每个人的名字。我想再待一阵。
+        - text: 这里需要人。
+      gave_up:
+        - trait: homesick
+          text: 我想回家，就这样。
+        - text: 我不是干这个的料。
+      legend:
+        - text: 我只是把他们需要听到的话告诉了他们。
+      perfect:
+        - trait: kind
+          text: 我能救今天的人，救不了明天的。
+        - trait: curious
+          text: 原来是这样，新鲜食物和干净的水才让一船人保持健康。
+        - text: 该做的做了。
+      scramble:
+        - trait: methodical
+          text: 他们迟早会明白，只是会晚一些。
+        - text: 下次我想多带点东西。
+      modest:
+        - trait: glib
+          text: 该说的我都说了，听不听由他们。
+        - text: 再多带一件东西，也许还能多救一个人。
+    hints:
+      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
+      unused_protect: 帽子剩下了。限制不是物资，是船员对你的信任。先让员工帮人做事，建立信任。
+      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      ally_gap: 图帕亚的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
+      none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
