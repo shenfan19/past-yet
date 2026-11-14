@@ -8,6 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import { checkStory, storyReport } from './story_rules.mjs';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
@@ -38,7 +39,7 @@ const moduleNames = exists('people') ? fs.readdirSync(path.join(CARDS, 'people')
 // The card of a module is people/<person>/person.yaml. It is the article of the person, and it may carry the other cards of that person inside it, each kind in its own section:
 // events, wiki (places, events, model_events, refs), antiques, quotes, and era_text with the text of the era in every language. A card may also stay a file of its own in the folder of its kind.
 const moduleCard = Object.fromEntries(moduleNames.map((m) => [m, exists(`people/${m}/person.yaml`) ? read(`people/${m}/person.yaml`) : null]));
-const SECTIONS = ['events', 'wiki', 'antiques', 'quotes', 'era_text', 'facts', 'dialogue', 'bystanders', 'images', 'self_check', 'pack'];
+const SECTIONS = ['events', 'wiki', 'antiques', 'quotes', 'era_text', 'hook', 'facts', 'dialogue', 'bystanders', 'images', 'self_check', 'pack'];
 function embedded(m, dir) {
   const pc = moduleCard[m];
   if (!isObj(pc)) return {};
@@ -237,6 +238,32 @@ for (const lang of LANGS) {
   }
 }
 
+// ---------- the stories are checked against the story standard ----------
+// A person card with a fact sheet is a story made by the new process, and it must meet the rules of tools/story_rules.mjs. The published models that have no fact sheet yet are listed.
+let storyLine = '';
+{
+  const refIds = new Set(refCards.map((c) => c.id));
+  const modelOf = (era) => (era && eraDir[era] ? read(`${eraDir[era]}/model.lm.yaml`) : null);
+  const people = [];
+  for (const m of moduleNames) {
+    const pc = moduleCard[m];
+    if (!isObj(pc)) continue;
+    const evs = embedded(m, 'events');
+    const eraOfEvent = (eid) => (evs[eid] ? modelOf(evs[eid].era) : null);
+    const own = Object.keys(eraDir).filter((id) => eraModule[id] === m);
+    const published = own.some((id) => modelOf(id).metadata.status !== 'draft');
+    people.push({ id: m, hasFacts: isObj(pc.facts), published });
+    if (!isObj(pc.facts)) continue;
+    checkStory(pc, {
+      id: m, langs: LANGS, fallback: config.i18n.fallback, hookMax: config.release.hook_max, refIds,
+      eraOf: eraOfEvent,
+      eraText: (eid, lang) => (isObj(pc.era_text) ? pc.era_text[lang] : (exists(`people/${m}/era/text.${lang}.yaml`) ? read(`people/${m}/era/text.${lang}.yaml`) : null)),
+    }, fail);
+  }
+  const r = storyReport(people);
+  storyLine = `stories with a fact sheet: ${r.done.join(', ') || 'none'}; published models without one: ${r.missing.join(', ') || 'none'}`;
+}
+
 // ---------- write or check ----------
 if (problems.length) {
   console.error(problems.join('\n'));
@@ -263,4 +290,5 @@ for (const rel of walk(OUT)) {
 }
 console.log(`${outputs.size} files from ${entries('items').length + entries('events').length + entries('staff').length + entries('traits').length} item, event, staff and trait cards and more, ${moduleNames.length} person modules`);
 if (check && differs) { console.log(`${differs} files differ, run node tools/build_data.mjs`); process.exit(1); }
+console.log(storyLine);
 if (check) console.log('data is up to date');

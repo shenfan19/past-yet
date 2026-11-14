@@ -195,10 +195,34 @@ wiki:
   refs:
     sysu_chronicle:
       order: 33
-      status: pending
+      status: checked
       text:
         en: 'Sun Yat-sen University. Chronicle of events (Daishiji), 1924 to 1926. Guangzhou: Sun Yat-sen University; accessed 2026.'
         zh: 'Sun Yat-sen University. Chronicle of events (Daishiji), 1924 to 1926. Guangzhou: Sun Yat-sen University; accessed 2026.'
+    sysu_history_articles:
+      order: 31
+      status: checked
+      text:
+        en: 'Sun Yat-sen University. Pages on the history of the university: Sun Yat-sen and Sun Yat-sen University; the first graduation ceremony; President Zou Lu and the Shipai campus. Read 2026.'
+        zh: '中山大学。校史相关页面：孙中山与中山大学；首届毕业典礼；邹鲁校长与石牌校园。2026 年查阅。'
+    chnmuseum_sun_1925:
+      order: 32
+      status: checked
+      text:
+        en: 'National Museum of China. On the death of Sun Yat-sen and the mourning in Beijing. Read 2026.'
+        zh: '中国国家博物馆。孙中山逝世与国民党北京治丧活动述论。2026 年查阅。'
+    people_daily_sun_last_days:
+      order: 33
+      status: checked
+      text:
+        en: 'People''s Daily. The last days of Sun Yat-sen, 1 September 2013. People''s Daily Online. Hospital records and the cause of the death of Sun Yat-sen, 11 November 2013.'
+        zh: '人民日报。孙中山最后的日子，2013 年 9 月 1 日。人民网。协和医院复印件解密孙中山死因，2013 年 11 月 11 日。'
+    wikipedia_sysu_history:
+      order: 34
+      status: checked
+      text:
+        en: 'Wikipedia in Chinese. History of Sun Yat-sen University. Read 2026.'
+        zh: '中文维基百科。中山大学校史。2026 年查阅。'
 era_text:
   en:
     name: Guangzhou, 1924
@@ -226,7 +250,7 @@ era_text:
           check: true
         - text: 'Zou Lu took up the preparation on 21 February. On 24 February he called the students of the three schools together in the hall of the Higher Normal School to announce it, and the first preparatory meeting was held on 3 March, with the graduation of the students of the three schools on its agenda.'
           check: true
-        - text: 'On 3 June Zou Lu submitted the measures for joining the schools, and they were approved on 6 June. Zou Lu became the president on 9 June.'
+        - text: 'On 3 June Zou Lu submitted the measures for joining the schools, and they were approved on 6 June.'
           check: true
         - text: 'The schools were spread over several places, which made them hard to run, and Sun told Zou Lu to choose a new campus at Shipai on the eastern edge of the city. Land was marked out there in 1924.'
           check: true
@@ -325,7 +349,7 @@ era_text:
           check: true
         - text: '邹鲁 2 月 21 日接手筹备。2 月 24 日他在高等师范的礼堂召集三所学校的学生宣布此事，3 月 3 日开第一次筹备会议，议题里有三所学校学生的毕业问题。'
           check: true
-        - text: '6 月 3 日邹鲁呈报归并三校的办法，6 月 6 日获批准，6 月 9 日邹鲁出任校长。'
+        - text: '6 月 3 日邹鲁呈报归并三校的办法，6 月 6 日获批准。'
           check: true
         - text: '几所学校分散在好几处，不便管理，孙中山让邹鲁在广州东郊选石牌作新校址，1924 年那里划出了土地。'
           check: true
@@ -398,3 +422,229 @@ era_text:
       unused_protect: 简图剩下了。限制不是物资，是三所学校对你的信任。先让员工帮人做事，建立信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+hook:
+  en: 'One order, and three schools must become one university'
+  zh: '一道命令，三所学校要成为一所大学'
+# Every fact the story may lean on. checked: two_sources, official_record (the record of the institution itself) or single. level: usable, careful or unused. use: where it appears.
+facts:
+  f01:
+    date: '1924-02-04'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [sysu_chronicle, sysu_history_articles]
+    text:
+      en: 'Sun Yat-sen orders the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and names Zou Lu to prepare it.'
+      zh: '孙中山下令把国立高等师范学校、广东法科大学、广东农业专门学校合并为国立广东大学，派邹鲁筹备。'
+  f02:
+    date: '1924-02-21'
+    checked: official_record
+    level: usable
+    use: [history]
+    sources: [sysu_chronicle]
+    text:
+      en: 'Zou Lu takes up the preparation.'
+      zh: '邹鲁就任筹备主任。'
+  f03:
+    date: '1924-02-24'
+    checked: official_record
+    level: usable
+    use: [history]
+    sources: [sysu_history_articles]
+    text:
+      en: 'Zou Lu calls the students of the three schools together in the hall of the Higher Normal School and announces the preparation.'
+      zh: '邹鲁在高等师范礼堂召集三校学生，宣布筹建并报告进度。'
+  f04:
+    date: '1924-03-03'
+    checked: official_record
+    level: usable
+    use: [history]
+    sources: [sysu_history_articles]
+    text:
+      en: 'The first preparatory meeting is held, and the graduation of the students of the three schools is on its agenda.'
+      zh: '首次筹备会议召开，议题包括三校学生的毕业问题。'
+  f05:
+    date: '1924-06-06'
+    checked: official_record
+    level: usable
+    use: [wiki]
+    sources: [sysu_chronicle]
+    text:
+      en: 'The measures for joining the schools, submitted on 3 June, are approved.'
+      zh: '6 月 3 日呈报的三校归并办法获批准。'
+  f06:
+    date: '1924-06-09'
+    checked: single
+    level: usable
+    use: []
+    sources: []
+    text:
+      en: 'Zou Lu becomes the president.'
+      zh: '邹鲁出任校长。'
+    note: 'Seen in one summary only, so it is not used.'
+  f07:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [wiki]
+    sources: [sysu_history_articles]
+    text:
+      en: 'The schools are spread over several places and hard to run, Sun tells Zou Lu to choose a new campus at Shipai, and land is marked out there.'
+      zh: '各校分散各处，管理不便，孙中山命邹鲁择石牌为新校址，当年划定土地。'
+    note: 'No date inside the year is given.'
+  f08:
+    date: '1924-09-19'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sysu_chronicle]
+    text:
+      en: 'Classes begin.'
+      zh: '正式开学。'
+  f09:
+    date: '1924-11-11'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sysu_chronicle, sysu_history_articles]
+    text:
+      en: 'The founding ceremony is held with the motto Sun wrote. He is not there, and he leaves Guangzhou on 13 November.'
+      zh: '举行成立典礼，用孙中山写的校训。他本人未到场，11 月 13 日离开广州。'
+    note: 'One source gives 12 November for the ceremony.'
+  f10:
+    date: '1924-12-31'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [chnmuseum_sun_1925, people_daily_sun_last_days]
+    text:
+      en: 'Sun reaches Beijing.'
+      zh: '孙中山抵达北京。'
+  f11:
+    date: '1925-01-26'
+    checked: two_sources
+    level: careful
+    use: [story, wiki]
+    sources: [chnmuseum_sun_1925, people_daily_sun_last_days]
+    text:
+      en: 'He enters the Peking Union Medical College Hospital and is operated on, and cancer is found.'
+      zh: '住进协和医院并接受手术，发现癌症。'
+    note: 'Illness: written as a plain fact, with no detail.'
+  f12:
+    date: '1925-02-18'
+    checked: two_sources
+    level: careful
+    use: [story]
+    sources: [chnmuseum_sun_1925, people_daily_sun_last_days]
+    text:
+      en: 'He is moved to the residence in Tieshizi Hutong.'
+      zh: '移居铁狮子胡同行馆。'
+  f13:
+    date: '1925-03-12'
+    checked: two_sources
+    level: careful
+    use: [story, wiki]
+    sources: [chnmuseum_sun_1925, people_daily_sun_last_days]
+    text:
+      en: 'He dies at the residence at half past nine in the morning.'
+      zh: '上午九时三十分在行馆逝世。'
+    note: 'Death: written as a plain fact.'
+  f14:
+    date: '1925'
+    checked: two_sources
+    level: careful
+    use: []
+    sources: [people_daily_sun_last_days]
+    text:
+      en: 'The usual account says liver cancer, the hospital records say cancer of the gallbladder.'
+      zh: '通行说法是肝癌，协和医院的病历记载为胆囊癌。'
+    note: 'The sources disagree, so the game says cancer and no more.'
+  f15:
+    date: '1926-08-05'
+    checked: official_record
+    level: usable
+    use: [story]
+    sources: [sysu_history_articles]
+    text:
+      en: 'The 38th school affairs meeting resolves to rename the university and to ask the government to approve it.'
+      zh: '第 38 次校务会议决议改名为国立中山大学，呈报国民政府批准。'
+  f16:
+    date: '1926-08-17'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [sysu_history_articles, wikipedia_sysu_history]
+    text:
+      en: 'The National Government orders the university renamed National Sun Yat-sen University.'
+      zh: '国民政府下令改国立广东大学为国立中山大学。'
+  f17:
+    date: '1926'
+    checked: single
+    level: unused
+    use: []
+    sources: []
+    text:
+      en: 'Other accounts date the renaming to 17 July 1926, or to a proposal of 1925.'
+      zh: '另有说法称 1926 年 7 月 17 日更名，或 1925 年已有提议并获批准。'
+    note: 'The accounts disagree with the order of 17 August.'
+  f18:
+    date: '1924'
+    checked: single
+    level: unused
+    use: []
+    sources: []
+    text:
+      en: 'Villagers at Shipai objected to the new campus.'
+      zh: '石牌的村民反对新校址。'
+    note: 'Only a heading was seen, no text, so it is not a fact here.'
+  f19:
+    date: '1924'
+    checked: single
+    level: unused
+    use: []
+    sources: []
+    text:
+      en: 'The members of the preparatory committee.'
+      zh: '筹备委员的名单。'
+    note: 'Names of political figures are left out.'
+# What was said. A line of the person is written only when it is recorded, and then it names its fact and its sources. A line of a bystander is invented and says so.
+dialogue:
+  motto:
+    who: sun_yat_sen_guangzhou
+    recorded: true
+    fact: f09
+    sources: [sysu_chronicle, sysu_history_articles]
+    text:
+      en: 'Study widely, enquire carefully, think prudently, discern clearly, practise earnestly.'
+      zh: '博学、审问、慎思、明辨、笃行。'
+  lin_question:
+    who: lin
+    recorded: false
+    text:
+      en: 'What will happen to the diploma of a school that is about to be joined into another?'
+      zh: '一所就要并入别校的学校，文凭会怎么算？'
+# The people who were there and are made up for the game.
+bystanders:
+  lin:
+    invented: true
+    text:
+      en: 'Lin, a final-year student, who asks what will happen to his diploma.'
+      zh: '阿林，毕业班的学生，想知道自己的文凭会怎么算。'
+  wen:
+    invented: true
+    text:
+      en: 'Wen, a new student, who stands in a courtyard with a letter and does not know which office to go to.'
+      zh: '小文，新生，拿着一封信站在院子里，不知道该去哪个办公室。'
+# The written check of the story, for the reviewer.
+self_check:
+  quote_line: '阿林带着一个要等的答复回家了。'
+  fact: f04
+  regret_choice: '先记下阿林的文凭问题，还是先给走错院子的小文指路，同一时刻只能做一件，没做的那个人走了。'
+  bookend: '从校园里的铜像前出发，每个结局都回到铜像前。'
+  share_line: '1924 年，三所学校并成一所大学的头七天，我在场。'
+  share_number: '开学前放弃的人：主时间线 {base_D}，我的分支 {D}'
+pack:
+  author: Fan Shen
+  license: MIT
+  version: 1
+  languages: [en, zh]
