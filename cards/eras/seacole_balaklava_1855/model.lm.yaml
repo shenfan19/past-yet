@@ -375,28 +375,6 @@ actions:
       utility: "3 * (0.4 + seacole.rapport)"
 
 events:
-  door_block:
-    source: game_assumption
-    importance: 2
-    tag: trait
-    when: "(act_treat + act_protect) > 0"
-    probability: "block_base * (1 - access) * (1 + miasma) * step"
-    cooldown_days: 1
-    effects:
-      ors_stock: "max(0, ors_stock - resp_insist * loss_insist - resp_yield * loss_yield)"
-      traveler.trust: "traveler.trust - trust_loss_block * (1 + resp_insist) + resp_appeal * 0.03"
-      traveler.block_count: "traveler.block_count + 1"
-      traveler.health: "max(0, traveler.health - harm_block * traveler.hurt_trait)"
-      traveler.appeal_urge: "traveler.appeal_urge + resp_appeal + 0.3 * resp_yield"
-      traveler.satisfaction: "traveler.satisfaction - sat_block * (resp_insist + 0.4)"
-      traveler.fatigue: "traveler.fatigue + 0.05"
-    variants:
-      - {when: "resp_insist == 1 and on_block != 1 and d_ors_stock == 0", key: door_block_stubborn_empty}
-      - {when: "resp_insist == 1 and d_ors_stock == 0", key: door_block_insist_empty}
-      - {when: "resp_insist == 1 and on_block != 1", key: door_block_stubborn}
-      - {when: "resp_insist == 1", key: door_block_insist}
-      - {when: "resp_appeal == 1", key: door_block_appeal}
-      - {when: "resp_yield == 1", key: door_block_yield}
   time_strain:
     source: game_assumption
     importance: 3
