@@ -32,6 +32,8 @@ refs:
     status: pending
   cook1773:
     status: pending
+  sysu_chronicle:
+    status: pending
 sections:
   places:
     - id: broad_street
@@ -239,6 +241,23 @@ sections:
         era: tupaia_tahiti_1769
       refs:
         - cook1773
+        - game
+    - id: guangdong_university_office
+      era: sun_yat_sen_1924
+      tags:
+        - thought
+        - education
+        - university
+        - c20
+        - guangzhou
+        - history
+      related:
+        - people:sun_yat_sen_guangzhou
+        - events:university_order
+      unlock:
+        era: sun_yat_sen_1924
+      refs:
+        - sysu_chronicle
         - game
   people:
     - id: snow
@@ -1057,6 +1076,22 @@ sections:
         era: tupaia_tahiti_1769
       refs:
         - cook1773
+        - game
+    - id: university_order
+      tags:
+        - thought
+        - education
+        - university
+        - c20
+        - guangzhou
+        - history
+      related:
+        - people:sun_yat_sen_guangzhou
+        - places:guangdong_university_office
+      unlock:
+        era: sun_yat_sen_1924
+      refs:
+        - sysu_chronicle
         - game
 model_events:
   door_block:

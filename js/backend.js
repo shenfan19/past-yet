@@ -73,7 +73,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // two thirds of the stars or more is a success, any is a partial, none is missed
   const outcomeOf = (stars, n) => (stars * 3 >= 2 * n ? 'success' : stars > 0 ? 'partial' : 'missed');
   // how many stars a place can give: a scene has one per sync point, everything else three
-  const maxStars = (id) => { const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
+  const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => L.stay_by_tier[lightEvent(eventId).tier];
   // A trait is worth something at the sync points. Each point is about one kind of thing, and the traits of the employee add up to a bonus for that kind:

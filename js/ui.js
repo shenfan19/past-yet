@@ -439,7 +439,7 @@ export function createUI(D, ctx) {
     const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
       <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
-      <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
+      <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       <div class="sec">${U.stars.points}</div><ul class="sync">${ctx.era(id).raw.star_points.map((p) => `<li>☆ ${esc(ET.star_points[p.id])}</li>`).join('')}</ul>
       <div class="sec">${U.dispatch.ideas}</div><ul>${ideas}</ul>`;
     if (!done.length) return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">${head}<p class="muted" style="margin-top:8px">${U.archive.sealed}</p></div></div>`;
@@ -460,7 +460,7 @@ export function createUI(D, ctx) {
       <p>${esc(c.story)}</p><div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
       <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
-      <div class="muted">${U.dispatch.find_chance.replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
+      <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
       <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
