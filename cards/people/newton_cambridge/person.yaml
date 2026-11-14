@@ -11,32 +11,45 @@ events:
     channels: {V: 2, G: 1}
     scene:
       points:
-        - {id: p1, kind: notice, req: {"stat": {"wit": 7}}}
-        - {id: p2, kind: persuade, req: {"item": "neural_chip"}}
-        - {id: p3, kind: hold, req: {"stat": {"will": 7}}}
+        - {id: p1, kind: notice, req: {stat: {wit: 7}}}
+        - {id: p2, kind: persuade, req: {item: neural_chip}}
+        - {id: p3, kind: hold, req: {stat: {will: 7}}}
+      vignettes:
+        - {id: apple, traits: [bold]}
+        - {id: margin, traits: [methodical, skeptical]}
+        - {id: diagram}
+    refs: [newton_principia_1687, newton_stukeley_ms142]
     text:
       en:
         name: One law for the apple and the Moon
         place: Cambridge
         figure: Isaac Newton
-        story: In the Principia Newton shows that the same law of gravity governs falling objects and the orbits of the planets.
+        story: Newton's Principia appeared in London in 1687. In the third book he brings the Moon and falling bodies under the same account of gravity. Much later, William Stukeley wrote down Newton's recollection of a falling apple prompting a question about gravity. Stukeley says nothing about a blow to the head.
         relic: A glass prism
         relic_desc: A triangle of glass that splits white light into colours.
         points:
-          p1: "Follow his mathematics"
-          p2: "Talk with him in Latin"
-          p3: "Hold your ground in the argument"
+          p1: "Trace the Moon's deflection on the copyist's diagram"
+          p2: "Use the translation chip to ask the copyist about a disputed label"
+          p3: "Finish checking the diagram before the copyist takes it away"
+        vignettes:
+          apple: '“Did the apple hit him on the head?” you ask. The copyist puts down his pen and holds out a scrap of paper. “Suppose it did. Would that tell you what keeps the Moon up?” You draw a second line beside your first.'
+          margin: 'You ask the copyist to show which sentence supports the label in the margin. He stops packing the sheet long enough for you to mark the two passages separately.'
+          diagram: 'The copyist lends you a blunt pencil. You draw the direction the Moon would travel if left alone, then add an arrow for the pull that bends its path.'
       zh:
         name: 苹果与月亮服从同一条定律
         place: 剑桥
         figure: 艾萨克·牛顿
-        story: 牛顿在《原理》里证明：同一条引力定律，管着落下的东西，也管着行星的轨道。
+        story: 牛顿的《自然哲学的数学原理》于 1687 年在伦敦出版。第三卷用引力解释月球的运动与地面物体的下落。多年后，斯图克利记录了牛顿的回忆，苹果落下引出了一个关于引力的问题。这份回忆没有提到苹果砸在头上。
         relic: 一块玻璃三棱镜
         relic_desc: 一块三角的玻璃，能把白光分成各种颜色。
         points:
-          p1: "跟上他的数学"
-          p2: "用拉丁语和他交谈"
-          p3: "在争论里守住自己的立场"
+          p1: "沿着誊写员的图，找出月球轨迹偏转的方向"
+          p2: "用翻译芯片向誊写员问清一处有疑问的标注"
+          p3: "赶在誊写员收走图纸前核对完图上的线"
+        vignettes:
+          apple: '你开口就问：「听说苹果砸到了他的头？」誊写员放下笔，推来一张废纸。「就算砸了，这能解释月亮怎么一直在天上吗？」你在刚画的直线旁又添了一笔。'
+          margin: '你请誊写员指出页边的标注依据哪句话。他把卷到一半的纸摊回来，等你把两段分别标清。'
+          diagram: '誊写员借你一截钝铅笔。你先画下月球若不受力会走的方向，再添一支箭头，标出让它转弯的拉力。'
 text:
   en:
     name: Isaac Newton
@@ -50,3 +63,50 @@ quotes:
     text:
       en: {who: Isaac Newton, quote: "If I have seen further, it is by standing on the shoulders of giants."}
       zh: {who: 牛顿, quote: "如果说我看得更远，那是因为我站在巨人的肩膀上。"}
+hook: {en: Why does the apple fall and the Moon stay up?, zh: 苹果落地，月亮为何还在天上}
+facts:
+  principia:
+    date: '1687'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [newton_principia_1687]
+    text:
+      en: The 1687 London first edition sets out Newton's account of gravity in Book III.
+      zh: 1687 年伦敦初版《原理》第三卷论述引力。
+  apple_recollection:
+    date: '1752'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [newton_stukeley_ms142]
+    note: The date belongs to the memoir. This entry establishes what Stukeley wrote, not what happened in the orchard.
+    text:
+      en: Stukeley's memoir records Newton recalling a falling apple and wondering why it fell towards the ground. It records no strike to the head.
+      zh: 斯图克利的回忆录记下牛顿说自己见苹果落下，便想它为何总朝地面落。书里没写苹果砸到头。
+bystanders:
+  newton_copyist:
+    invented: true
+    text: {en: An unnamed copyist with one last sheet to put away., zh: 一位无名誊写员，手边还有最后一页图纸要收。}
+wiki:
+  refs:
+    newton_principia_1687:
+      order: 110
+      status: checked
+      text:
+        en: 'Isaac Newton, Philosophiae naturalis principia mathematica, London, 1687, Book III. Library of Congress scan. https://www.loc.gov/item/28020872/'
+        zh: '牛顿，《自然哲学的数学原理》，伦敦初版，1687 年，第三卷。美国国会图书馆扫描件。https://www.loc.gov/item/28020872/'
+    newton_stukeley_ms142:
+      order: 111
+      status: checked
+      text:
+        en: 'William Stukeley, Memoirs of Sir Isaac Newton’s Life, 1752, Royal Society MS/142. Newton Project transcription. https://www.newtonproject.ox.ac.uk/view/texts/diplomatic/OTHE00001'
+        zh: '威廉·斯图克利，《艾萨克·牛顿生平回忆录》，1752 年，英国皇家学会 MS/142。牛顿计划转录。https://www.newtonproject.ox.ac.uk/view/texts/diplomatic/OTHE00001'
+self_check:
+  quote_line: '苹果落地了。月亮怎么还在天上？'
+  fact: principia
+  regret_choice: '追问传闻容易把话题带偏，追问图纸则有机会弄清标注。'
+  bookend: '开头问苹果，收尾在同一张纸上画出月球的偏转。'
+  share_line: '苹果落地和月亮绕行，能用同一套引力解释。'
+  share_number: '1687 年'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

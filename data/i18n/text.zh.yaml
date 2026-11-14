@@ -291,6 +291,7 @@ ui:
     none_found: 没有找到可行方案
     kit: 随身
   enc:
+    card_authors: 卡片作者
     person_stars: '{k} 个篇章的星数合计：{n} / {m}'
     sections:
       places: 地区
@@ -337,6 +338,8 @@ ui:
     filter_ph: 名称或说明
     all_tags: 全部标签
   light:
+    sources: 史料出处
+    vignette: 分支演出（虚构）
     outcome:
       success: 见到了
       partial: 匆匆一面
@@ -589,7 +592,7 @@ ui:
       music: 音乐
       music_volume: 音乐音量
       sfx_volume: 音效音量
-      autostart: 第一次点击页面时开始播放音乐
+      autostart: 暂停后，刷新也会保持暂停。
       try: 试听音效
       sfx:
         send: 派出
@@ -613,8 +616,6 @@ ui:
       defaults: 恢复默认设置
     advanced:
       h: 高级
-      dev: 开发者模式
-      dev_note: 显示带隐藏标记的未解锁内容，百科里列出公式和变量。切换后页面会重新载入。
       backend_h: 后端接口
       engine: 引擎
       engine_value: 本地规则与模型，在本页内运行
@@ -688,8 +689,8 @@ ui:
     base: 基础
     gear: 义体
     today: 今日
-    grown_tip: 三星派遣换来的属性点。
-    growth: 距离下一个属性点：三星派遣 {n} / {m}
+    grown_tip: 刷新个人最佳星数获得的属性点。
+    growth: 个人最佳星数累计进度 {n} / {m}，每个场景只计最高成绩。
     gear_title: 义体
     load_meter: 负荷 {a} / {b}
     load: 负荷
@@ -724,6 +725,8 @@ ui:
     lost_by_trait: 因特质失去
   welcome:
     title: 欢迎
+    office_title: 开局设置
+    acknowledge: 我已知晓
     story: 你是一家穿越事务所的所长，派员工去过去做事。历史改变不了，每一趟都发生在自己的分支上，这条分支和主时间线差多少，就换成多少时空能量。攒够了，你就能回去见家人。
     how_title: 怎么玩
     how:
@@ -732,19 +735,30 @@ ui:
       - 等他们回来，读报告。他们会带回时空能量，有时还有一件古董；事务所靠卖古董发工资。
       - 古董能打开它指向的地方，而且只通向更早的时代。
     staff_title: 你的第一批员工
-    staff_hint: 你的创立者，加上 {n} 位来自世界各地的员工。第一趟派遣出发之前可以重抽。
+    staff_hint: 随机抽出 {n} 位来自不同地区的员工。第一趟派遣出发之前可以重抽。
     reroll_staff: 换一批候选
     places_title: 你一开始能去的地方
     places_hint: 三个地点开局就开放：事务所起步的大学，加两个随机的。第一趟派遣出发之前可以重抽。
     reroll: 重抽两个随机地点
     tutorial: 第一趟
-    disclaimer_title: 关于游戏里的人
+    disclaimer_title: 免责声明 · 关于游戏里的人
     disclaimer: 员工和他们的故事都是虚构的。有些贴近人们对某个地方或群体的常见印象，有些故意写成相反的，两种写法都不代表对任何真实群体的看法。作者不可能完全了解每一种文化，所以请 AI 查过有没有可能冒犯的地方，但 AI 也会出错。如果你觉得哪里不公平、不准确或者让人不舒服，请到仓库的 {issues} 反馈，会尽快修改。
+    authorship: 各卡片的署名作者对其提供的内容负责。AI 辅助生成的内容注明 AI，仍由署名的人类作者负责审核和更正。史料核对情况以卡片的出处说明为准。
     rights: 如果游戏里有任何内容侵犯了某个人或某个家庭的权益，请发邮件到 contact@teleporter.uk 或在仓库里提 issue，作者会尽快删除。
     issues: Issues
     begin: 开始
-    founder_title: 你的创立者
-    founder_hint: 事务所是你开的，你就是老板。给创立者起个名字，选性别和肤色，把点数分给五项属性，再选至多两个特质。创立者和其他人一样出差，拿一样的工资，不能被辞退。第一趟派遣出发之前都可以改。
+    start_requirements: 请填写主角姓名、用完属性点，并选至少一个特质。
+    founder_title: 主角
+    reroll_founder: 随机角色
+    founder_names:
+      - 林舟
+      - 江岚
+      - 沈宁
+      - 周远
+      - 顾青
+      - 叶晨
+      - 夏川
+      - 陆遥
     founder_name: 姓名
     founder_name_ph: 输入姓名
     founder_gender: 性别
@@ -1487,36 +1501,69 @@ quotes:
   newton:
     who: 牛顿
     quote: 如果说我看得更远，那是因为我站在巨人的肩膀上。
+    authors:
+      - AI
+      - Fan Shen
   einstein:
     who: 爱因斯坦
     quote: 重要的是不要停止提问。
+    authors:
+      - AI
+      - Fan Shen
   faraday:
     who: 法拉第
     quote: 只要不违背自然规律，再奇妙的事也可能是真的。
+    authors:
+      - AI
+      - Fan Shen
   feynman:
     who: 费曼
     quote: 第一条原则是不要欺骗自己，而你恰恰是最容易被骗的人。
+    authors:
+      - AI
+      - Fan Shen
   pasteur:
     who: 巴斯德
     quote: 机遇只青睐有准备的头脑。
+    authors:
+      - AI
+      - Fan Shen
   carr:
     who: 卡尔
     quote: 历史是历史学家与事实之间不断的互动，是现在与过去之间没有尽头的对话。
+    authors:
+      - AI
+      - Fan Shen
   santayana:
     who: 桑塔亚那
     quote: 不能记住过去的人，注定要重蹈覆辙。
+    authors:
+      - AI
+      - Fan Shen
   ranke:
     who: 兰克
     quote: 历史只想说明事情本来是怎样的。
+    authors:
+      - AI
+      - Fan Shen
   simaqian:
     who: 司马迁
     quote: 究天人之际，通古今之变，成一家之言。
+    authors:
+      - AI
+      - Fan Shen
   hippocrates:
     who: 希波克拉底
     quote: 人生短暂，技艺长久。
+    authors:
+      - AI
+      - Fan Shen
   thucydides:
     who: 修昔底德
     quote: 这部著作是为了成为一份永久的财富。
+    authors:
+      - AI
+      - Fan Shen
 catalog:
   pythagoras_croton:
     name: 以数为万物本质的学派
@@ -1753,13 +1800,17 @@ catalog:
     name: 苹果与月亮服从同一条定律
     place: 剑桥
     figure: 艾萨克·牛顿
-    story: 牛顿在《原理》里证明：同一条引力定律，管着落下的东西，也管着行星的轨道。
+    story: 牛顿的《自然哲学的数学原理》于 1687 年在伦敦出版。第三卷用引力解释月球的运动与地面物体的下落。多年后，斯图克利记录了牛顿的回忆，苹果落下引出了一个关于引力的问题。这份回忆没有提到苹果砸在头上。
     relic: 一块玻璃三棱镜
     relic_desc: 一块三角的玻璃，能把白光分成各种颜色。
     points:
-      p1: 跟上他的数学
-      p2: 用拉丁语和他交谈
-      p3: 在争论里守住自己的立场
+      p1: 沿着誊写员的图，找出月球轨迹偏转的方向
+      p2: 用翻译芯片向誊写员问清一处有疑问的标注
+      p3: 赶在誊写员收走图纸前核对完图上的线
+    vignettes:
+      apple: 你开口就问：「听说苹果砸到了他的头？」誊写员放下笔，推来一张废纸。「就算砸了，这能解释月亮怎么一直在天上吗？」你在刚画的直线旁又添了一笔。
+      margin: 你请誊写员指出页边的标注依据哪句话。他把卷到一半的纸摊回来，等你把两段分别标清。
+      diagram: 誊写员借你一截钝铅笔。你先画下月球若不受力会走的方向，再添一支箭头，标出让它转弯的拉力。
   bach_leipzig:
     name: 一位乐长为每个礼拜日写曲
     place: 莱比锡
@@ -3553,6 +3604,21 @@ catalog:
       p1: 看他怎样处理伤口
       p2: 稳住一次缝合
       p3: 同学徒们一起练习
+  zhuge_liang_longzhong:
+    name: 草庐三访
+    place: 隆中一带
+    figure: 诸葛亮
+    story: 《三国志·诸葛亮传》说刘备三次前往才见到诸葛亮。《前出师表》也提到刘备三顾。裴松之注另引《魏略》，记的是诸葛亮先去见刘备。本篇采用三顾说，以通常采用的 207 年作游戏时间。
+    relic: 访客记事抄页
+    relic_desc: 一张有三处墨记的纸页，为游戏虚构的纪念物。
+    points:
+      p1: 分清哪次来访是听说的，哪次是亲眼所见
+      p2: 问清访客来请教什么
+      p3: 在抄页上标清几段说法从哪里来
+    vignettes:
+      future_novel: 你问书吏，草庐里那位会不会趁江上起雾去借箭。书吏翻回上一页：「来客是来请教的。你上哪儿听来的船？」你在归来报告里把船那段另标为后世小说情节。
+      listen: 书吏为三次来访做了三处墨记，写到末尾停了笔。你问他哪些听人说的、哪些是他亲眼所见。他把下一行空了出来。
+      visits: 你帮书吏把两张纸分开。一张记谁来过，一张记来客想请教什么。
   borobudur_java:
     name: 层层浮雕的石山
     place: 爪哇
@@ -3564,6 +3630,21 @@ catalog:
       p1: 对齐石块
       p2: 在湿热里搬石
       p3: 读懂层层浮雕的次序
+  qin_liangyu_shizhu:
+    name: 秦良玉与石砫账册
+    place: 石砫
+    figure: 秦良玉
+    story: 《明史·秦良玉传》记载，崇祯三年，秦良玉与秦翼明奉诏勤王，秦良玉出家财济饷。《补辑石砫厅新志》也记载了这次奉诏出行。账册、条目和桌边的人都是为本趟故事虚构的。
+    relic: 石砫领物抄单
+    relic_desc: 页边记了一个姓名，包裹旁又写了另一个。抄单为游戏虚构。
+    points:
+      p1: 找出清单上两个写得很像的名字
+      p2: 帮搬货人核对她该领的是哪一包
+      p3: 在收桌前留好两张对得上的单子
+    vignettes:
+      ledger: 两行名字只差一个字，账房顺嘴读成了同一个人。你把那个字圈出来，他把两位领物人都叫回来核对。
+      hands: 搬货人两手托着包裹，腾不出手展开单子。你替她把纸按平，把名字念给她听，她才重新抱紧包裹。
+      copy: 账房念过一行，你就在抄单上对一行。念到最后，你把两张纸并排留在桌上。
   zeami_sado:
     name: 写给后人的能乐秘传
     place: 佐渡岛

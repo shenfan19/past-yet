@@ -33,6 +33,9 @@ function merge(base, over) {
 
 const config = read('config/config.yaml');
 const LANGS = Object.keys(config.i18n.locales);
+const defaultAuthors = config.meta.card_authors;
+const validAuthors = (authors) => Array.isArray(authors) && authors.length > 0 && authors.every((a) => typeof a === 'string' && a.trim());
+if (!validAuthors(defaultAuthors)) fail('config.meta.card_authors must list the default card contributors');
 
 // the modules, one folder per historical person
 const moduleNames = exists('people') ? fs.readdirSync(path.join(CARDS, 'people'), { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort() : [];
@@ -60,9 +63,10 @@ function personArticle(m) {
 function entries(dir) {
   const out = yamlFiles(dir).map((f) => ({ id: f.replace(/\.yaml$/, ''), rel: `${dir}/${f}` }));
   for (const m of moduleNames) {
-    if (dir === 'wiki/people') { if (isObj(moduleCard[m]) && moduleCard[m].text !== undefined) out.push({ id: m, rel: `people/${m}/person.yaml`, card: personArticle(m) }); continue; }
-    for (const f of yamlFiles(`people/${m}/${dir}`)) out.push({ id: f.replace(/\.yaml$/, ''), rel: `people/${m}/${dir}/${f}` });
-    for (const [id, card] of Object.entries(embedded(m, dir))) out.push({ id, rel: `people/${m}/person.yaml ${dir} ${id}`, card });
+    const authors = moduleCard[m]?.authors;
+    if (dir === 'wiki/people') { if (isObj(moduleCard[m]) && moduleCard[m].text !== undefined) out.push({ id: m, rel: `people/${m}/person.yaml`, card: personArticle(m), authors }); continue; }
+    for (const f of yamlFiles(`people/${m}/${dir}`)) out.push({ id: f.replace(/\.yaml$/, ''), rel: `people/${m}/${dir}/${f}`, authors });
+    for (const [id, card] of Object.entries(embedded(m, dir))) out.push({ id, rel: `people/${m}/person.yaml ${dir} ${id}`, card, authors });
   }
   const seen = new Set();
   for (const e of out) { if (seen.has(e.id)) fail(`${dir}: the id ${e.id} is used twice, see ${e.rel}`); seen.add(e.id); }
@@ -70,14 +74,16 @@ function entries(dir) {
 }
 // cards of a kind, ordered by their order field, then by id
 function cards(dir) {
-  const list = entries(dir).map(({ id, rel, card }) => {
+  const list = entries(dir).map(({ id, rel, card, authors }) => {
     const c = card ?? read(rel);
     if (!isObj(c)) { fail(`${rel}: a card must be a mapping`); return null; }
     if (c.id !== undefined && c.id !== id) fail(`${rel}: id ${c.id} does not match the file name`);
     if (typeof c.order !== 'number') fail(`${rel}: missing a numeric order`);
     if (c.text !== undefined) for (const l of Object.keys(c.text)) if (!LANGS.includes(l)) fail(`${rel}: text language ${l} is not in config.i18n.locales`);
     if (c.text === undefined || !(config.i18n.fallback in c.text)) fail(`${rel}: the ${config.i18n.fallback} text is missing`);
-    return { id, ...c };
+    const credited = c.authors ?? authors ?? defaultAuthors;
+    if (!validAuthors(credited)) fail(`${rel}: authors must list one or more credited contributors`);
+    return { id, ...c, authors: credited };
   }).filter(Boolean);
   return list.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 }
@@ -209,7 +215,7 @@ for (const lang of LANGS) {
   put('traits', traitCards, (t) => t.name);
   put('trait_notes', traitCards, (t) => ({ pro: t.pro, con: t.con }));
   put('mainline', stageCards, (t) => t);
-  put('quotes', quoteCards, (t) => t);
+  put('quotes', quoteCards, (t, c) => ({ ...t, authors: c.authors }));
   put('catalog', eventCards, (t) => t);
   for (const id of config.eras) {
     const rel = `${eraDir[id]}/text.${lang}.yaml`;
@@ -268,6 +274,31 @@ for (const lang of LANGS) {
 let storyLine = '';
 {
   const refIds = new Set(refCards.map((c) => c.id));
+  const traitIds = new Set(traitCards.map((c) => c.id));
+  for (const ev of eventCards) {
+    for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
+    const variants = ev.scene?.vignettes;
+    if (variants === undefined) continue;
+    if (!Array.isArray(variants) || !variants.length) {
+      fail(`event ${ev.id} needs a non-empty list of vignettes`);
+      continue;
+    }
+    const ids = new Set();
+    for (const [i, v] of variants.entries()) {
+      if (!isObj(v) || typeof v.id !== 'string' || !v.id || ids.has(v.id)) {
+        fail(`event ${ev.id} has an invalid or duplicate vignette id`);
+        continue;
+      }
+      ids.add(v.id);
+      if (i === variants.length - 1 ? v.traits !== undefined : !Array.isArray(v.traits) || !v.traits.length || v.traits.some((t) => !traitIds.has(t))) {
+        fail(`event ${ev.id} vignette ${v.id} needs known traits, or must be the final unconditional vignette`);
+      }
+      for (const lang of LANGS) {
+        const line = ev.text[lang]?.vignettes?.[v.id];
+        if (typeof line !== 'string' || !line.trim()) fail(`event ${ev.id} vignette ${v.id} is missing ${lang} text`);
+      }
+    }
+  }
   const modelOf = (era) => (era && eraDir[era] ? read(`${eraDir[era]}/model.lm.yaml`) : null);
   const people = [];
   for (const m of moduleNames) {

@@ -54,14 +54,14 @@ export function createWiki(X) {
     const tagsOfEra = (eraId) => T.eras[eraId].tags;
     const eraTitle = (eraId) => T.eras[eraId].name;
 
-    for (const e of sec('places')) add({ id: 'places:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
+    for (const e of sec('places')) add({ id: 'places:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, authors: e.authors, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
     // a person with `events` is the figure of those catalogue events: the page opens with the first event, takes its tags and links to every one
     const personOf = {};
     for (const e of sec('people')) {
       const evs = e.events || [];
       for (const ev of evs) personOf[ev] = e.id;
       add({
-        id: 'people:' + e.id, cat: 'people', title: e.name,
+        id: 'people:' + e.id, cat: 'people', title: e.name, authors: e.authors,
         tags: evs.length ? D.get('antiques.antiques.relic_' + evs[0] + '.tags') : e.tags,
         unlock: evs.length ? { anchored: 'relic_' + evs[0] } : e.unlock, refs: evs.length ? ['catalog'] : e.refs,
         // the stars of a person are the best stars of all the episodes of that person, added up
@@ -76,25 +76,25 @@ export function createWiki(X) {
         },
       });
     }
-    for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
+    for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, authors: e.authors, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
 
     // the catalogue: famous events with a relic each, readable once the relic is owned
     for (const ev of D.get('catalog.events')) {
       const c = T.catalog[ev.id];
       const relicId = 'relic_' + ev.id;
       add({
-        id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { anchored: relicId }, refs: ['catalog'],
+        id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { anchored: relicId }, refs: ev.refs || ['catalog'], authors: ev.authors,
         body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${personOf[ev.id] && byId('people:' + personOf[ev.id]) && open(byId('people:' + personOf[ev.id])) ? a('people:' + personOf[ev.id], c.figure) : esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.small_story.replace('{n}', String(ctx.backend.lightStay(ev.id)))}</div>`,
       });
     }
 
     // events that come out of the models
-    const me = Object.fromEntries(Object.entries(D.get('encyclopedia.model_events')).map(([k, v]) => [k, { refs: v.refs, text: D.get('enc_text.model_events.' + k) }]));
+    const me = Object.fromEntries(Object.entries(D.get('encyclopedia.model_events')).map(([k, v]) => [k, { refs: v.refs, authors: v.authors, text: D.get('enc_text.model_events.' + k) }]));
     for (const eraId of eraIds()) {
       for (const key of Object.keys(ctx.era(eraId).raw.events)) {
         const info = me[key];
         add({
-          id: `events:m:${eraId}:${key}`, cat: 'events', title: `${T.eras[eraId].event_titles[key]}${paren(`${T.eras[eraId].short}`)}`, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: info.refs,
+          id: `events:m:${eraId}:${key}`, cat: 'events', title: `${T.eras[eraId].event_titles[key]}${paren(`${T.eras[eraId].short}`)}`, tags: tagsOfEra(eraId), unlock: { era: eraId }, refs: info.refs, authors: info.authors,
           body: () => {
             let h = `<p>${link(info.text)}</p><div class="muted">${W.in_era}${COLON}${a('places:' + eraPlaceId(eraId), eraTitle(eraId))}</div>`;
             if (DEV) {
@@ -111,7 +111,7 @@ export function createWiki(X) {
 
     for (const id of Object.keys(D.get('staff.staff'))) {
       add({
-        id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: { staff: id }, refs: ['game'],
+        id: 'staff:' + id, cat: 'staff', title: staffName(D, id), tags: [], unlock: { staff: id }, refs: ['game'], authors: D.get('staff.staff.' + id).authors,
         body: () => {
           const stats = ctx.backend.staffStats(id);
           const mini = D.get('staff.attributes').map((k) => `${esc(T.stats[k])} ${r1(stats[k])}`).join(' · ');
@@ -123,7 +123,7 @@ export function createWiki(X) {
 
     for (const t of Object.keys(D.get('staff.traits'))) {
       add({
-        id: 'traits:' + t, cat: 'traits', title: T.traits[t], tags: [], unlock: { trait: t }, refs: ['game'],
+        id: 'traits:' + t, cat: 'traits', title: T.traits[t], tags: [], unlock: { trait: t }, refs: ['game'], authors: D.get('staff.traits.' + t + '.authors'),
         body: () => {
           const tr = D.get('staff.traits.' + t);
           const mods = Object.entries(tr.points).map(([k, v]) => `${esc(T.point_kinds[k])} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
@@ -139,7 +139,7 @@ export function createWiki(X) {
     const base = D.get('staff.default_base');
     for (const e of D.get('encyclopedia.stats').map((x) => ({ ...x, ...D.get('enc_text.stats.' + x.id) }))) {
       add({
-        id: 'stats:' + e.id, cat: 'stats', title: e.name || T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'],
+        id: 'stats:' + e.id, cat: 'stats', title: e.name || T.stats[e.id], tags: [], unlock: e.unlock, refs: ['game'], authors: e.authors,
         body: () => {
           const mods = '';
           const side = (label, text, inModel) => (inModel || DEV) ? `<div><b>${label}</b>${COLON}${esc(text)}${DEV ? ` <span class="chip ${inModel ? '' : 'warn'}">${inModel ? U.enc.edge_impl : U.enc.edge_pending}</span>` : ''}</div>` : `<div><b>${label}</b>${COLON}${U.enc.edge_none}</div>`;
@@ -153,7 +153,7 @@ export function createWiki(X) {
     for (const [id, an] of Object.entries(D.get('antiques.antiques'))) {
       const tx = T.antiques[id];
       add({
-        id: 'antiques:' + id, cat: 'items_ancient', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'],
+        id: 'antiques:' + id, cat: 'items_ancient', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'], authors: an.authors,
         body: () => `<p>${esc(tx.desc)}</p><p class="muted">${W.kinds.ancient}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : an.event ? a('events:c:' + an.event, T.catalog[an.event].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
       });
     }
@@ -161,7 +161,7 @@ export function createWiki(X) {
     for (const [id, it] of Object.entries(D.get('items'))) {
       const tx = T.items[id];
       add({
-        id: 'items:' + id, cat: it.shop === 'future' ? 'items_future' : 'items_modern', title: tx.name, tags: it.tags, unlock: { item: id }, refs: ['game'],
+        id: 'items:' + id, cat: it.shop === 'future' ? 'items_future' : 'items_modern', title: tx.name, tags: it.tags, unlock: { item: id }, refs: ['game'], authors: it.authors,
         body: () => `<p>${esc(tx.desc)}</p><p class="muted">${W.kinds[it.shop === 'future' ? 'future' : 'modern']}</p><div class="muted">${U.enc.cost} ${it.cost} · ${U.enc.weight} ${it.weight} · ${U.enc.max} ${it.max} · ${esc(D.get('shops.shops.' + it.shop).playable ? U.shop[it.shop].name : U.shop[it.shop].name + ' ' + U.shop.planned)}</div>${it.ip ? `<div><span class="chip warn">${U.shop.ip_unchecked}</span></div>` : ''}`,
       });
     }
@@ -283,7 +283,8 @@ export function createWiki(X) {
       if (!(id in D.get('encyclopedia.refs'))) throw new Error('百科引用缺失: ' + id);
       return `<div class="ref">${esc(refCite(id))} ${refStatus(id) === 'pending' ? `<span class="chip warn">${U.enc.pending}</span>` : refStatus(id) === 'game' ? `<span class="chip">${U.enc.game_ref}</span>` : ''}</div>`;
     }).join('');
-    return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}<div class="refs"><span class="muted">${U.enc.refs}</span>${rf}</div>`;
+    const authors = x.authors || D.get('config.meta.card_authors');
+    return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}<div class="refs"><div class="muted">${esc(U.enc.card_authors)}${COLON}${esc(authors.join(', '))}</div><span class="muted">${U.enc.refs}</span>${rf}</div>`;
   }
 
   function navHtml() {

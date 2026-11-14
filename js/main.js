@@ -20,11 +20,12 @@ function pickLang(I) {
   return I.fallback;
 }
 
+const dev = new URLSearchParams(location.search).has('devtools');
 const D = await loadData(async (p) => {
   const res = await fetch(p, { cache: 'no-cache' }); // always ask the server whether the data changed, so a rebuilt playlist is never hidden by the browser cache
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();
-}, (t) => window.jsyaml.load(t), pickLang, { drafts: new URLSearchParams(location.search).get('dev') === '1' ? true : undefined });
+}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev ? true : undefined });
 
 document.documentElement.lang = D.lang;
 document.title = [D.get('text.ui.title'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');
@@ -101,12 +102,21 @@ function fits(S) {
   } catch (e) { return false; }
 }
 
+function updateUnfinishedCrew(save) {
+  if (save.welcomed !== false || save.seq !== 0 || !save.startStaff?.offer.includes('s_fan')) return save;
+  for (const id of save.startStaff.pick) save.staff[id].hired = false;
+  save.startStaff = drawStartStaff(D, O);
+  for (const id of save.startStaff.pick) save.staff[id].hired = true;
+  save.hire = null;
+  return save;
+}
+
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const S = JSON.parse(raw);
-      if (S.version === VERSION && fits(S)) return S;
+      if (S.version === VERSION && fits(S)) return updateUnfinishedCrew(S);
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);
@@ -115,6 +125,7 @@ function load() {
 }
 
 let S = load();
+D.staffGrowth = (id) => S.staff[id]?.growth;
 const settings = createSettings(D);
 const ctx = {
   settings,
@@ -130,7 +141,7 @@ const ctx = {
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
     if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches) || !fits(obj)) { if (S && S.founder) applyFounder(D, S.founder); return false; }
-    S = obj;
+    S = updateUnfinishedCrew(obj);
     this.save();
     return true;
   },
@@ -140,7 +151,7 @@ const ctx = {
   },
 };
 
-const ui = createUI(D, ctx);
+const ui = createUI(D, ctx, dev);
 window.__game = { D, ctx, ui, backend };
 ui.render();
 setInterval(() => ui.tick(), D.get('config.ui.refresh_ms'));

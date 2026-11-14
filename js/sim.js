@@ -140,13 +140,16 @@ export function compileEra(raw, D, id) {
 // ---------- staff and spec ----------
 // The five attributes of an employee, from 1 to 10. Traits do not change them.
 // With a mood the attributes are the ones of that day: up to buff more at full mood, up to buff less at none. Without it they are the ones on the card.
+export const STAFF_ATTR_MAX = 10;
+
 export function staffAttrs(D, staffId, mood = null, gear = []) {
   const a = { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
+  for (const [k, v] of Object.entries(D.staffGrowth?.(staffId) || {})) if (Object.hasOwn(a, k)) a[k] += v;
+  for (const k of Object.keys(a)) a[k] = Math.min(STAFF_ATTR_MAX, a[k]);
   // an implant adds to the attributes while it is worn
   for (const id of gear) for (const [k, v] of Object.entries(D.get('items.' + id).stat_add || {})) a[k] += v;
-  if (mood === null) return a;
-  const f = 1 + D.get('config.favor.buff') * (2 * mood - 1);
-  return Object.fromEntries(Object.entries(a).map(([k, v]) => [k, v * f]));
+  const f = mood === null ? 1 : 1 + D.get('config.favor.buff') * (2 * mood - 1);
+  return Object.fromEntries(Object.entries(a).map(([k, v]) => [k, Math.min(STAFF_ATTR_MAX, v * f)]));
 }
 // What the era models read. Every quantity is a plain function of one attribute, set in staff_rules.yaml. A trait can add a weakness of its own, like being hurt or infected.
 export function staffStats(D, staffId, mood = null, gear = []) {

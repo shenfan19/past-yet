@@ -1,0 +1,111 @@
+order: 234
+events:
+  qin_liangyu_shizhu:
+    order: 207
+    year: 1630
+    lon: 108.11
+    lat: 30.00
+    region: asia
+    field: thought
+    tier: 1
+    channels: {}
+    draft: true
+    refs: [mingshi_qin_liangyu, shizhu_gazetteer_qin]
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {any: [{trait: [methodical, vigil]}, {stat: {wit: 5}}]}}
+        - {id: p2, kind: care, req: {any: [{trait: [kind, calm]}, {stat: {finesse: 6}}]}}
+        - {id: p3, kind: hold, req: {any: [{trait: [patient, methodical]}, {stat: {will: 6}}]}}
+      vignettes:
+        - {id: ledger, traits: [methodical, vigil]}
+        - {id: hands, traits: [kind, calm]}
+        - {id: copy}
+    text:
+      en:
+        name: Qin Liangyu and the supply ledger
+        place: Shizhu
+        figure: Qin Liangyu
+        story: The History of Ming records that in 1630 Qin Liangyu and Qin Yiming answered the summons to aid the capital, and that she used family funds for supplies. The Shizhu gazetteer also records the summons and expedition. The ledger, its entries and the people at the table are invented for this trip.
+        relic: Copy of a Shizhu receipt
+        relic_desc: A fictional receipt with one name in the margin and another beside a bundle.
+        points:
+          p1: Spot two similar names on the clerk's sheet
+          p2: Help the carrier check which bundle is hers to collect
+          p3: Leave two copies that agree before the table is cleared
+        vignettes:
+          ledger: 'Two lines begin with nearly the same name. The clerk has read them as one. You underline the characters that differ, and he calls both bearers back to check.'
+          hands: 'The waiting carrier has both hands on a bundle and cannot open her slip. You hold it flat and read the name back to her before she lifts it again.'
+          copy: 'The clerk reads the entries aloud while you follow the copy. At the last line you turn the two sheets side by side and leave them on the table.'
+      zh:
+        name: 秦良玉与石砫账册
+        place: 石砫
+        figure: 秦良玉
+        story: 《明史·秦良玉传》记载，崇祯三年，秦良玉与秦翼明奉诏勤王，秦良玉出家财济饷。《补辑石砫厅新志》也记载了这次奉诏出行。账册、条目和桌边的人都是为本趟故事虚构的。
+        relic: 石砫领物抄单
+        relic_desc: 页边记了一个姓名，包裹旁又写了另一个。抄单为游戏虚构。
+        points:
+          p1: 找出清单上两个写得很像的名字
+          p2: 帮搬货人核对她该领的是哪一包
+          p3: 在收桌前留好两张对得上的单子
+        vignettes:
+          ledger: '两行名字只差一个字，账房顺嘴读成了同一个人。你把那个字圈出来，他把两位领物人都叫回来核对。'
+          hands: '搬货人两手托着包裹，腾不出手展开单子。你替她把纸按平，把名字念给她听，她才重新抱紧包裹。'
+          copy: '账房念过一行，你就在抄单上对一行。念到最后，你把两张纸并排留在桌上。'
+text:
+  en:
+    name: Qin Liangyu
+    text: A late Ming commander from Zhongzhou who took up Ma Qiancheng's office in Shizhu. Her biography in the History of Ming describes the troops called the White Pole Soldiers and records her use of family funds in 1630.
+  zh:
+    name: 秦良玉
+    text: 明末忠州人，马千乘之后代领石砫之职。《明史》为她立传，记她所部号白杆兵，亦记崇祯三年她出家财济饷。
+hook: {en: Two similar names, two different bundles., zh: 两个名字相近，包裹却不能拿错}
+facts:
+  summons_1630:
+    date: '1630'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mingshi_qin_liangyu, shizhu_gazetteer_qin]
+    note: The official dynastic history records the summons. The later gazetteer gives a parallel account whose independence has not been established.
+    text:
+      en: Qin Liangyu answered the summons to aid the capital in the third year of Chongzhen.
+      zh: 崇祯三年，秦良玉奉诏勤王。
+  family_funds:
+    date: '1630'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mingshi_qin_liangyu]
+    note: This establishes what the official history records. Individual receipts and quantities for the scene are fictional.
+    text:
+      en: The official dynastic history records that Qin Liangyu used family funds for supplies.
+      zh: 官修《明史》记秦良玉出家财济饷。
+bystanders:
+  shizhu_clerk:
+    invented: true
+    text: {en: A fictional clerk making a second copy at the table., zh: 一位虚构的账房，正在桌边誊抄第二份单据。}
+  shizhu_carrier:
+    invented: true
+    text: {en: A fictional carrier waiting to collect a bundle., zh: 一位虚构的搬货人，正等着领走一包东西。}
+wiki:
+  refs:
+    mingshi_qin_liangyu:
+      order: 115
+      status: checked
+      text:
+        en: 'History of Ming, vol. 270, Biography of Qin Liangyu, under Chongzhen 3. https://www.shidianguji.com/zh/book/LS0024/chapter/LS0024_1492'
+        zh: '《明史》卷二百七十《秦良玉传》，崇祯三年条。https://www.shidianguji.com/zh/book/LS0024/chapter/LS0024_1492'
+    shizhu_gazetteer_qin:
+      order: 116
+      status: checked
+      text:
+        en: 'Supplemented New Gazetteer of Shizhu, section 7, Account of the Native Chieftains. https://www.shidianguji.com/zh/book/CADAL11201834/chapter/1l7qwgzczjtpf'
+        zh: '《补辑石砫厅新志·土司志第七》。https://www.shidianguji.com/zh/book/CADAL11201834/chapter/1l7qwgzczjtpf'
+self_check:
+  quote_line: '两行名字只差一个字，却要叫两个人回来。'
+  fact: family_funds
+  regret_choice: '急着收桌会漏掉一次核对领物人姓名的机会。'
+  bookend: '开头是尚未核对的领物单，结束时两张抄单能对上。'
+  share_line: '史书留下一笔济饷，游戏里要把账对到人。'
+  share_number: '1630 年'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

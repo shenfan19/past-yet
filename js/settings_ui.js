@@ -1,6 +1,6 @@
 // The settings page: appearance, sound, game, data and advanced, each a section with a heading rule like the about page.
 export function createSettingsPage(X) {
-  const { D, ctx, U, esc, DEV } = X;
+  const { D, ctx, U, esc } = X;
   const S = ctx.settings;
   const P = U.settings;
   const sections = ['appearance', 'sound', 'game', 'data', 'advanced'];
@@ -16,9 +16,9 @@ export function createSettingsPage(X) {
     const cr = ctx.audio.credit;
     const body = {
       appearance: row(A.language, X.langHtml()) + row(A.theme, `<select data-set="theme">${themeOpts}</select>`) + row(A.daynight, check('map_daynight'), A.daynight_note),
-      sound: row(P.sound.music, `<button data-act="musictoggle">${esc(ctx.audio.state.playing ? U.music.pause : U.music.play)}</button> <span class="muted small">${esc(tracks[ctx.audio.state.index].composer + ' · ' + tracks[ctx.audio.state.index].title)}</span>`)
+      sound: row(P.sound.music, `<button data-act="musictoggle">${esc(ctx.audio.state.playing ? U.music.pause : U.music.play)}</button> <span class="muted small">${esc(tracks[ctx.audio.state.index].composer + ' · ' + tracks[ctx.audio.state.index].title)}</span>`, P.sound.autostart)
         + row(P.sound.music_volume, slider('music_volume')) + row(P.sound.sfx_volume, slider('sfx_volume'))
-        + row(P.sound.autostart, check('music_autostart')) + row(P.sound.try, sfxButtons)
+        + row(P.sound.try, sfxButtons)
         + `<div class="muted small">${esc(P.sound.credit.replace('{source}', cr.source).replace('{license}', cr.license))}</div>`,
       game: row(P.game.pause_on_report, check('pause_on_report'), P.game.pause_on_report_note),
       data: `<div class="muted small">${esc(P.data.note)}</div>`
@@ -26,8 +26,7 @@ export function createSettingsPage(X) {
         + row(P.data.import, `<input type="file" accept="application/json,.json" data-act="saveimport" aria-label="${esc(P.data.import)}">`)
         + row(P.data.defaults, `<button data-act="settingsreset">${esc(P.data.defaults)}</button>`)
         + row(P.data.reset, `<button class="ghost danger" data-act="reset">${esc(P.data.reset)}</button>`),
-      advanced: row(P.advanced.dev, check('dev_mode'), P.advanced.dev_note)
-        + `<h4>${esc(P.advanced.backend_h)}</h4>`
+      advanced: `<h4>${esc(P.advanced.backend_h)}</h4>`
         + row(P.advanced.provider, `<select data-backend disabled><option>${esc(P.advanced.provider_local)}</option><option>${esc(P.advanced.provider_remote)}</option></select>`, P.advanced.provider_note)
         + row(P.advanced.engine, `<span>${esc(P.advanced.engine_value)}</span>`)
         + row(P.advanced.determinism, `<span>${esc(P.advanced.determinism_value)}</span>`),
@@ -47,7 +46,6 @@ export function createSettingsPage(X) {
       if (out) out.textContent = String(Math.round(Number(t.value) * 100));
     } else if (t.type === 'checkbox') {
       S.set(key, t.checked);
-      if (key === 'dev_mode') { X.saveUiState(); location.reload(); }
     } else {
       S.set(key, t.value);
     }
@@ -73,6 +71,5 @@ export function createSettingsPage(X) {
       return false;
     }
   }
-  void DEV;
   return { html, onInput, exportSave, importSave };
 }

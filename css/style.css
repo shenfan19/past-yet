@@ -53,6 +53,8 @@ button:hover:not(:disabled) { border-color: var(--stamp); }
 button:disabled { opacity: .45; cursor: default; }
 button.primary { background: var(--stamp); border-color: var(--stamp); color: #fff; }
 button.ghost { background: transparent; }
+button.danger { border-color: var(--stamp); color: var(--stamp); font-weight: 600; }
+button.danger:hover:not(:disabled) { background: color-mix(in srgb, var(--stamp) 12%, transparent); }
 input, select { font: inherit; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 2px 7px; }
 table { border-collapse: collapse; width: 100%; font-size: 13px; }
 th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); }
@@ -387,12 +389,33 @@ tr.archived td, li.archived, .archived { opacity: .55; }
 .pend { display: flex; align-items: center; gap: 8px; padding: 4px 8px; background: var(--paper2); border: 1px solid var(--line); border-radius: 6px; min-width: 0; overflow: hidden; }
 
 /* the welcome of a new game */
-.welcome .steps { margin: 4px 0 8px 18px; padding: 0; }
-.welcome .startplaces { margin: 4px 0 8px 18px; padding: 0; }
-.welcome .startstaff { list-style: none; margin: 4px 0 8px; padding: 0; }
-.welcome .startstaff li { margin: 0 0 8px; }
+.welcomebox { padding: 0; overflow: hidden; }
+.welcome { display: flex; flex-direction: column; max-height: calc(100dvh - 50px); line-height: 1.45; }
+.welcome > header { padding: 12px 18px 8px; }
+.welcome-content { overflow: auto; padding: 12px 18px; overflow-wrap: anywhere; }
+.welcome-content:focus-visible { outline-offset: -2px; }
+.welcome-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.welcome-office > section + section { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line); }
+.welcome h3 { font-size: 15px; margin-bottom: 5px; }
+.welcome #welcome-title { font-size: 19px; margin-bottom: 10px; }
+.welcome p { margin: 0 0 8px; }
+.welcome p.welcome-how { margin-bottom: 16px; }
+.welcome p:last-child { margin-bottom: 0; }
+.welcome .startplaces { margin: 0 0 8px; padding-inline-start: 1.3em; }
+.welcome .startplaces li + li { margin-top: 4px; }
+.welcome .startstaff { list-style: none; margin: 0 0 8px; padding: 0; }
+.welcome .startstaff li + li { margin-top: 9px; }
 .welcome .startstaff li button { min-width: 26px; padding: 0 6px; }
-.welcome .startstaff li.on b { color: var(--accent, inherit); }
+.welcome-notice { border: 1px solid var(--stamp); border-radius: 6px; background: var(--card); padding: 12px 14px; }
+.welcome-notice a { color: var(--link); }
+.welcome-nav { border-top: 1px solid var(--line); padding: 9px 18px; background: var(--paper2); }
+.welcome-nav button { padding: 5px 14px; }
+.welcome-nav .primary { margin-inline-start: auto; }
+@media (max-width: 600px) {
+  .modalbg:has(.welcomebox) { padding: 8px; }
+  .welcome { max-height: calc(100dvh - 18px); }
+  .welcome-columns { grid-template-columns: 1fr; }
+}
 
 /* the day ring in the clock, and the notes that show a return */
 #clock .ring { width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
@@ -415,13 +438,14 @@ svg.map .night path { fill: #0d1b3d; opacity: .3; pointer-events: none; filter: 
 .mbox table.gear td { padding: 3px 6px; border-top: 1px solid var(--line); vertical-align: middle; }
 .mbox b.up { color: var(--ok, #2f7d4a); }
 
-/* the founder form of the welcome pop-up: compact rows, small buttons, no scrolling inside it */
-.founder .row { flex-wrap: wrap; gap: 8px 14px; align-items: center; }
-.founder input[type=text] { width: 11em; }
+/* the founder form of the welcome pop-up */
+.founder-identity { display: grid; gap: 6px; margin-bottom: 10px; }
+.founder input[type=text] { width: min(11em, 100%); }
 .founder .skinpick { width: 20px; height: 20px; padding: 0; border-radius: 50%; border: 2px solid transparent; margin-right: 3px; vertical-align: middle; }
 .founder .skinpick.on { border-color: var(--ink, #2b241b); }
-.founderattrs { list-style: none; margin: 4px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; }
-.founderattrs .lab { display: inline-block; min-width: 3em; }
+.founderattrs { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 4px; }
+.founderattrs li { display: grid; grid-template-columns: minmax(0, 9em) auto 2ch auto; align-items: center; justify-content: start; gap: 4px; }
+.founderattrs b { text-align: center; }
 .founderattrs button { padding: 0 7px; line-height: 1.3; }
 .founder .chip { border: 0; cursor: pointer; margin-bottom: 4px; }
 .founder .chip.on { background: var(--ink, #2b241b); color: var(--paper, #f1e8d4); }

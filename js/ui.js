@@ -13,7 +13,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const r1 = (x) => (Math.round(x * 10) / 10).toString();
 const ri = (x) => String(Math.round(x));
 
-export function createUI(D, ctx) {
+export function createUI(D, ctx, DEV = false) {
   const T = D.get('text');
   const U = T.ui;
   const COLON = U.fmt.colon, SEP = U.fmt.sep;
@@ -45,8 +45,6 @@ export function createUI(D, ctx) {
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
-  const devParam = new URLSearchParams(location.search).get('dev');
-  const DEV = devParam === null ? ctx.settings.get('dev_mode') : devParam === '1';
   const st = { tab: 'home', sub: null, modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
@@ -195,7 +193,7 @@ export function createUI(D, ctx) {
   }
   // a row of links to the sections of a page, the same bar the about and settings pages have
   const jumpBar = (items) => `<p class="jumps">${items.map(([id, label]) => `<a class="wl" data-act="aboutjump" data-id="${id}">${esc(label)}</a>`).join(' · ')}</p>`;
-  const X = { jumpBar, starsHtml: (n, place) => starsHtml(n, place), storyFor: (e) => (e.catalog ? catalogCard(e.id) : placeFile(e.id)), D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, anchored, selectEra, wl, tip, anchorOf, owns, catalogTags, saveUiState, langHtml };
+  const X = { jumpBar, starsHtml: (n, place) => starsHtml(n, place), storyFor: (e) => (e.catalog ? catalogCard(e.id) : placeFile(e.id)), D, ctx, T, U, O, DEV, st, esc, r1, ri, srcLabel, isUnlocked, visibleEras, eraOpen, anchored, selectEra, wl, tip, anchorOf, owns, catalogTags, langHtml };
   const office = createOffice(X);
   office.ensureHire();
   const clockEl = document.getElementById('clock');
@@ -220,9 +218,9 @@ export function createUI(D, ctx) {
   // a new game opens with the welcome, which stays until it has been read
   if (ctx.S().welcomed === false && !st.modal) st.modal = { kind: 'welcome' };
 
-  // ---------- interface state over a language switch ----------
-  // The game itself is in localStorage. The page and the filters live here, so a switch of language comes back to the same place.
-  function saveUiState() {
+  // ---------- interface state over a reload or language switch ----------
+  let restoringOnNavigation = false;
+  function saveUiState(reloadOnly = false) {
     try {
       const keeps = {};
       view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
@@ -230,8 +228,10 @@ export function createUI(D, ctx) {
       sessionStorage.setItem(UI_KEY, JSON.stringify({
         tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki', 'welcome'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
         wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
+        reloadOnly, modalScroll: modalEl.querySelector('.modalbg')?.scrollTop || 0,
       }));
-    } catch (e) { /* storage blocked, the switch just starts fresh */ }
+      restoringOnNavigation = !reloadOnly;
+    } catch (e) { /* storage blocked, the interface starts fresh */ }
   }
   function restoreUiState() {
     let raw = null;
@@ -239,6 +239,7 @@ export function createUI(D, ctx) {
     if (!raw) return;
     try {
       const o = JSON.parse(raw);
+      if (o.reloadOnly && performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
       if (o.tab in U.tabs) st.tab = o.tab;
       if (o.pager) st.pager = o.pager;
       if (o.modal && ['settings', 'about', 'wiki', 'welcome'].includes(o.modal.kind)) st.modal = o.modal;
@@ -252,8 +253,10 @@ export function createUI(D, ctx) {
       if (o.form && visibleEras().includes(o.form.eraId) && hiredIds().includes(o.form.staffId)) st.form = { ...st.form, ...o.form };
       st.scrollY = o.scrollY || {};
       st.pendingKeeps = o.keeps || {};
+      st.pendingModalScroll = o.modalScroll;
     } catch (e) { console.warn('界面状态恢复失败', e); }
   }
+  window.addEventListener('pagehide', () => { if (!restoringOnNavigation) saveUiState(true); });
 
   // ---------- clock ----------
   // The clock and the tabs are redrawn every tick. Replacing a button between the press and the release loses the click,
@@ -537,7 +540,7 @@ export function createUI(D, ctx) {
       ],
     });
     const target = story ? st.map.cat : e.id;
-    const open = story ? anchored('relic_' + target) : eraOpen(target);
+    const open = office.canDispatchTo(target, story);
     const holds = story ? owns('relic_' + target) : owns(anchorOf(target));
     const msg = !open ? (holds ? U.dispatch.not_anchored : U.dispatch.not_found) : office.eraBusy(target) ? U.dispatch.era_busy : overW ? U.dispatch.over_weight : stState !== 'ready' ? U.dispatch.busy : '';
     const seedRow = DEV ? `<span class="row"><input id="seed" type="number" value="${f.seed}" style="width:110px" title="${esc(U.dispatch.seed_hint)}"></span>` : '';
@@ -571,15 +574,18 @@ export function createUI(D, ctx) {
   // A small story has no branch to compare, so its page is short: how it went, the event itself, and the accounts.
   function lightHtml(cur) {
     const c = T.catalog[cur.eraId];
+    const ev = D.get('catalog.events').find((x) => x.id === cur.eraId);
+    const vignette = c.vignettes?.[cur.report.vignette];
     const P = cur.paid;
     const o = cur.report.outcomeId;
     const summary = U.light.summary[o].replace('{staff}', staffName(D, cur.spec.staffId)).replace('{place}', c.place).replace('{figure}', c.figure);
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2><span class="stamp">${esc(U.light.outcome[o])}</span></div>${staffLine(cur.spec.staffId)}
-      <p style="font-size:16px">${esc(summary)}</p>
-      <div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>
-      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (D.get('catalog.events').find((x) => x.id === cur.eraId).scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2>${ev.scene?.vignettes ? '' : `<span class="stamp">${esc(U.light.outcome[o])}</span>`}</div>${staffLine(cur.spec.staffId)}
+      ${ev.scene?.vignettes ? '' : `<p style="font-size:16px">${esc(summary)}</p>`}
+      ${ev.refs ? `<p>${esc(c.story)} ${wl('events:c:' + ev.id, U.light.sources)}</p>` : `<div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>`}
+      ${vignette ? `<div class="sec">${esc(U.light.vignette)}</div><p>${esc(vignette)}</p>` : ''}
+      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (ev.scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
@@ -733,10 +739,9 @@ export function createUI(D, ctx) {
     const keptIds = new Set(S.dispatches.filter((d) => d.claimed).map((d) => d.id));
     const rows = S.trips.filter((x) => x.staffId === id).slice().reverse();
     const grown = sf.growth || {};
-    const threes = O.threes_per_point;
-    const into = (tallyOf(id)[3] || 0) % threes;
+    const into = office.growthStars(id) % O.stars_per_point;
     const attrRows = attrList.map((k) => {
-      const base = plain[k] - gearAdd(k);
+      const base = plain[k];
       return `<tr><td>${esc(T.stats[k])}</td><td class="num">${r1(base)}${grown[k] ? ` <span class="muted"${tip(P.grown_tip)}>(+${grown[k]})</span>` : ''}</td><td class="num">${gearAdd(k) ? `<b class="up">+${gearAdd(k)}</b>` : '<span class="muted">0</span>'}</td><td class="num"><b>${r1(eff[k])}</b></td></tr>`;
     }).join('');
     const implants = Object.keys(D.get('items')).filter((g) => D.get('items.' + g).implant);
@@ -766,7 +771,7 @@ export function createUI(D, ctx) {
       <div class="cols2"><div><div class="radarwrap"${tip(attrs)}>${radarSvg(D, eff)}</div></div>
       <div><table class="plain attrs"><thead><tr><th></th><th class="num">${P.base}</th><th class="num">${P.gear}</th><th class="num">${P.today}</th></tr></thead><tbody>${attrRows}</tbody></table>
       <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span></div>
-      <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(threes))}</div></div></div>
+      <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(O.stars_per_point))}</div></div></div>
       <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
       <div class="sec">${P.gear_title} <span class="muted">${P.load_meter.replace('{a}', String(used)).replace('{b}', String(cap))}</span></div>
       ${gearRows ? `<table class="plain gear"><tbody>${gearRows}</tbody></table>` : `<p class="muted">${P.no_gear}</p>`}
@@ -785,19 +790,23 @@ export function createUI(D, ctx) {
     const skins = Object.entries(D.get('hiring.skin_tones')).map(([k, c]) => `<button class="skinpick ${f.skin === k ? 'on' : ''}" data-act="founderskin" data-id="${k}" aria-pressed="${f.skin === k}" ${locked} style="background:${c}"></button>`).join('');
     const genders = Object.keys(D.get('staff.gender_class')).map((g) => `<option value="${g}" ${f.gender === g ? 'selected' : ''}>${esc(U.gender[g])}</option>`).join('');
     const traits = Object.keys(D.get('staff.traits')).map((id) => `<button class="chip ${f.traits.includes(id) ? 'on' : ''}" data-act="foundertrait" data-id="${id}" aria-pressed="${f.traits.includes(id)}" ${locked}${tip(pointsText(D.get('staff.traits.' + id)))}>${esc(T.traits[id])}</button>`).join(' ');
-    return `<div class="sec">${W.founder_title}</div><p class="muted">${esc(W.founder_hint)}</p>
-      <div class="founder">
-        <p class="row"><label>${W.founder_name} <input id="founder-name" type="text" maxlength="${F.name_max}" value="${esc(f.name)}" placeholder="${esc(W.founder_name_ph)}" ${locked}></label>
+    return `<section class="founder">
+        <div class="row sp"><h3>${esc(W.founder_title)}</h3><button class="ghost" data-act="rerollfounder" ${locked}>${esc(W.reroll_founder)}</button></div>
+        <div class="founder-identity"><label>${W.founder_name} <input id="founder-name" type="text" maxlength="${F.name_max}" value="${esc(f.name)}" placeholder="${esc(W.founder_name_ph)}" required ${locked}></label>
         <label>${W.founder_gender} <select id="founder-gender" ${locked}>${genders}</select></label>
-        <span>${W.founder_skin} ${skins}</span></p>
-        <div class="muted">${esc(W.founder_attrs.replace('{n}', String(left)))}</div><ul class="founderattrs">${attrs}</ul>
-        <div class="muted">${esc(W.founder_traits.replace('{n}', String(F.traits_max)))}</div><p>${traits}</p>
-      </div>`;
+        <span>${W.founder_skin} ${skins}</span></div>
+        <h3>${esc(W.founder_attrs.replace('{n}', String(left)))}</h3><ul class="founderattrs">${attrs}</ul>
+        <h3>${esc(W.founder_traits.replace('{n}', String(F.traits_max)))}</h3><div>${traits}</div>
+      </section>`;
   }
-  function welcomeHtml() {
+  function welcomeReady() {
+    const S = ctx.S();
+    return !founderProblem(D, S.founder) && pointsLeft(D, S.founder) === 0 && S.founder.traits.length > 0
+      && (!S.startStaff || S.startStaff.pick.length === D.get('config.office.start_staff.pick'));
+  }
+  function welcomeOfficeHtml() {
     const S = ctx.S();
     const W = U.welcome;
-    const M = D.get('config.meta');
     const places = S.locks.map((id) => D.get('antiques.antiques.' + id)).filter((an) => an.era || an.event).map((an) => {
       const era = !!an.era;
       const id = era ? an.era : an.event;
@@ -811,23 +820,40 @@ export function createUI(D, ctx) {
       const toggle = fixed ? '' : `<button data-act="startpick" data-id="${esc(id)}" aria-pressed="${on}">${on ? '✓' : '+'}</button> `;
       return `<li class="${on ? 'on' : ''}">${toggle}<b>${esc(staffName(D, id))}</b> <span class="muted">${esc(staffProfile(D, id))}</span><div class="muted">${esc(T.staff[id].bio)}</div></li>`;
     }).join('');
+    return `<div class="welcome-office">
+      <section><h3>${esc(W.staff_title)}</h3><p class="muted">${esc(W.staff_hint.replace('{n}', need))}</p>
+        <ul class="startstaff">${crew}</ul>
+        <button class="ghost" data-act="rerollstaff" ${S.seq > 0 || !S.startStaff ? 'disabled' : ''}>${esc(W.reroll_staff)}</button></section>
+      <section><h3>${esc(W.places_title)}</h3><p class="muted">${esc(W.places_hint)}</p>
+        <ul class="startplaces">${places}</ul>
+        <button class="ghost" data-act="rerollstart" ${S.seq > 0 || !S.startRandom ? 'disabled' : ''}>${esc(W.reroll)}</button></section>
+    </div>`;
+  }
+  function welcomeIntroHtml() {
+    const W = U.welcome;
+    const M = D.get('config.meta');
     const disclaimer = W.disclaimer.split('{issues}');
-    return `<div class="welcome">
-      <h2>${esc(U.title)} · ${esc(W.title)}</h2>
-      <div class="row">${langHtml()}</div>
-      <p>${esc(W.story)}</p>
-      <div class="sec">${W.how_title}</div><ol class="steps">${W.how.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
-      ${founderHtml()}
-      <div class="sec">${W.staff_title}</div><p class="muted">${esc(W.staff_hint.replace('{n}', need))}</p>
-      <ul class="startstaff">${crew}</ul>
-      <p><button class="ghost" data-act="rerollstaff" ${S.seq > 0 || !S.startStaff ? 'disabled' : ''}>${W.reroll_staff}</button></p>
-      <div class="sec">${W.places_title}</div><p class="muted">${esc(W.places_hint)}</p>
-      <ul class="startplaces">${places}</ul>
-      <p><button class="ghost" data-act="rerollstart" ${S.seq > 0 || !S.startRandom ? 'disabled' : ''}>${W.reroll}</button></p>
-      <div class="sec">${W.disclaimer_title}</div>
-      <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${W.issues}</a>${esc(disclaimer[1] || '')}</p>
+    return `<p>${esc(W.story)}</p><section class="welcome-notice">
+      <h3 id="welcome-title" tabindex="-1">${esc(W.disclaimer_title)}</h3>
+      <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${esc(W.issues)}</a>${esc(disclaimer[1] || '')}</p>
+      <p>${esc(W.authorship)}</p>
       <p>${esc(W.rights)}</p>
-      <p class="row" style="justify-content:flex-end"><button class="primary" data-act="welcomestart" ${(picked.length === need || !S.startStaff) && !founderProblem(D, S.founder) ? '' : 'disabled'}>${W.begin}</button></p>
+    </section>`;
+  }
+  function welcomeHtml() {
+    const W = U.welcome;
+    const acknowledged = ctx.S().welcomeAcknowledged === true;
+    return `<div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <header class="row sp"><h2>${esc(U.title)}</h2>${langHtml()}</header>
+      <div class="welcome-content" data-keep="welcome-${acknowledged}" tabindex="0">
+        ${acknowledged ? `<h3 id="welcome-title" tabindex="-1">${esc(W.office_title)}</h3>
+          <p class="welcome-how"><b>${esc(W.how_title)}</b> · ${esc(W.how.join(' '))}</p>
+          <div class="welcome-columns">${founderHtml()}${welcomeOfficeHtml()}</div>` : welcomeIntroHtml()}
+      </div>
+      <footer class="welcome-nav row">
+        ${acknowledged ? `<span class="small muted">${esc(W.start_requirements)}</span><button class="primary" data-act="welcomestart" ${welcomeReady() ? '' : 'disabled'}>${esc(W.begin)}</button>` :
+          `<button class="primary" data-act="welcomeack">${esc(W.acknowledge)}</button>`}
+      </footer>
     </div>`;
   }
 
@@ -865,7 +891,8 @@ export function createUI(D, ctx) {
     modalLast = html;
     const keeps = {};
     modalEl.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
-    const scroll = modalEl.querySelector('.modalbg') ? modalEl.querySelector('.modalbg').scrollTop : 0;
+    const scroll = st.pendingModalScroll ?? modalEl.querySelector('.modalbg')?.scrollTop ?? 0;
+    st.pendingModalScroll = null;
     const act = document.activeElement;
     const keepFocus = act && act.id && modalEl.contains(act) ? { id: act.id, a: act.selectionStart, b: act.selectionEnd } : null;
     modalEl.innerHTML = html;
@@ -989,7 +1016,14 @@ export function createUI(D, ctx) {
     else if (act === 'founderattr') { const [a, d] = id.split(':'); office.founderAttr(a, Number(d)); render(); }
     else if (act === 'founderskin') { office.founderSkin(id); render(); }
     else if (act === 'foundertrait') { office.founderTrait(id); render(); }
-    else if (act === 'welcomestart') { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
+    else if (act === 'rerollfounder') { office.rerollFounder(); render(); }
+    else if (act === 'welcomeack' && st.modal?.kind === 'welcome') {
+      ctx.S().welcomeAcknowledged = true;
+      ctx.save();
+      render();
+      document.getElementById('welcome-title').focus();
+    }
+    else if (act === 'welcomestart' && ctx.S().welcomeAcknowledged && welcomeReady()) { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
     else if (act === 'modalopen') { st.modalStack = []; st.modal = { kind: id }; render(); }
     else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; if (st.modal && st.modal.kind !== 'staff') st.modalStack.push(st.modal); st.modal = { kind: 'staff', id }; render(); }
     else if (act === 'equip') { if (st.modal && st.modal.kind === 'staff') office.equip(st.modal.id, id); render(); }
@@ -1006,7 +1040,7 @@ export function createUI(D, ctx) {
     else if (act === 'musictoggle') ctx.audio.toggle();
     else if (act === 'sfxtry') ctx.audio.sfx(id);
     else if (act === 'saveexport') settingsPage.exportSave();
-    else if (act === 'settingsreset') { ctx.settings.reset(); render(); }
+    else if (act === 'settingsreset') { ctx.settings.reset(); ctx.audio.setEnabled(ctx.settings.get('music_autostart')); render(); }
     else if (act === 'go') { st.tab = id; st.sub = null; st.modal = null; render(); }
     else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
@@ -1054,7 +1088,12 @@ export function createUI(D, ctx) {
     const t = ev.target;
     if (settingsPage.onInput(ev)) return;
     if (t.dataset.fq !== undefined) { listbox.setText(t.dataset.fq, t.value); render(); return; }
-    if (t.id === 'founder-name') { office.founderName(t.value); const b = document.querySelector('[data-act=welcomestart]'); if (b) b.disabled = !!founderProblem(D, ctx.S().founder) || (ctx.S().startStaff && ctx.S().startStaff.pick.length !== D.get('config.office.start_staff.pick')); return; }
+    if (t.id === 'founder-name') {
+      office.founderName(t.value);
+      const start = modalEl.querySelector('[data-act=welcomestart]');
+      if (start) start.disabled = !welcomeReady();
+      return;
+    }
     if (t.id === 'wiki-q') wiki.onInput(t.value);
     else if (worldMap.onInput(t)) { /* partial refresh done by the map */ }
   }
@@ -1145,11 +1184,9 @@ export function createUI(D, ctx) {
     if (b.dataset.music === 'prev') a.prev(); else if (b.dataset.music === 'next') a.next(); else a.toggle();
   });
   ctx.audio.onChange(() => { renderMusic(); if (st.modal && st.modal.kind === 'settings' && !pressed) render(true); });
-  let started = false;
-  document.addEventListener('pointerdown', () => {
-    if (started) return;
-    started = true;
-    if (ctx.settings.get('music_autostart') && !ctx.audio.state.playing) ctx.audio.play(0);
+  document.addEventListener('click', (ev) => {
+    if (ev.target.closest('[data-music], [data-act="musictoggle"]')) return;
+    if (ctx.settings.get('music_autostart') && !ctx.audio.state.playing) ctx.audio.play();
   }, { once: true });
   renderMusic();
   renderClock();

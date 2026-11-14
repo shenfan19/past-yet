@@ -291,6 +291,7 @@ ui:
     none_found: No feasible plan found
     kit: Kit
   enc:
+    card_authors: Card authors
     person_stars: 'Stars over the {k} episodes: {n} of {m}'
     sections:
       places: Places
@@ -337,6 +338,8 @@ ui:
     filter_ph: Name or text
     all_tags: All tags
   light:
+    sources: Sources
+    vignette: Fictional branch scene
     outcome:
       success: Met them
       partial: A brief encounter
@@ -589,7 +592,7 @@ ui:
       music: Music
       music_volume: Music volume
       sfx_volume: Effects volume
-      autostart: Start the music at the first click
+      autostart: Music stays paused after a refresh.
       try: Try the effects
       sfx:
         send: Dispatch
@@ -613,8 +616,6 @@ ui:
       defaults: Restore default settings
     advanced:
       h: Advanced
-      dev: Developer mode
-      dev_note: Shows hidden content with a hidden mark, and lists formulas and variables in the wiki. The page reloads to apply it.
       backend_h: Backend interface
       engine: Engine
       engine_value: Local rules and models, run in this page
@@ -688,8 +689,8 @@ ui:
     base: Base
     gear: Implants
     today: Today
-    grown_tip: Points gained from three star trips.
-    growth: 'Three star trips toward the next point: {n} of {m}'
+    grown_tip: Attribute points earned from personal bests.
+    growth: 'Personal best stars toward the next point: {n} / {m}. Only the best result per story counts.'
     gear_title: Implants
     load_meter: load {a} of {b}
     load: load
@@ -724,6 +725,8 @@ ui:
     lost_by_trait: lost to a trait
   welcome:
     title: Welcome
+    office_title: Game setup
+    acknowledge: I understand
     story: You run a small agency that sends people into the past. History cannot be changed, so every trip happens on a branch of its own, and how far the branch differs from the main timeline is paid to you as time energy. Collect enough of it and you can go home to your family.
     how_title: How to play
     how:
@@ -732,19 +735,30 @@ ui:
       - Wait for them to come home and read what happened. They bring time energy and sometimes an antique, and antiques are what the agency sells to pay its staff.
       - An antique opens the place it points to, and it only leads to earlier times.
     staff_title: Your first employees
-    staff_hint: Your founder and {n} others, drawn from different parts of the world. You can draw others until the first trip goes out.
+    staff_hint: '{n} employees drawn from different parts of the world. You can draw again until the first trip goes out.'
     reroll_staff: Draw other candidates
     places_title: Your first places
     places_hint: 'Three places are open from the start: the university where the agency began, and two drawn at random. They can be drawn again until the first trip goes out.'
     reroll: Draw the two random ones again
     tutorial: first trip
-    disclaimer_title: About the people in the game
+    disclaimer_title: Disclaimer · About the people in the game
     disclaimer: The employees and their stories are invented. Some lean on common impressions of a place or a group, and some are written against them, and neither says anything about a real group. The author cannot know every culture well, so an AI also looked for anything that might offend, and it can be wrong. If something is unfair, inaccurate or hurtful, please report it in the {issues} of the repository and it will be changed as soon as possible.
+    authorship: The credited contributors are responsible for the content they provide. AI-assisted content is marked AI, and the credited human contributors are responsible for reviewing and correcting it. See each card’s source notes for its verification status.
     rights: If anything in the game infringes on someone's rights, or the rights of a family, please write to contact@teleporter.uk or open an issue in the repository, and it will be removed.
     issues: Issues
     begin: Begin
-    founder_title: Your founder
-    founder_hint: You started this agency and you are its boss. Give your founder a name, a gender and a skin tone, spread the points over the five attributes and pick up to two traits. The founder goes out on trips like the others, draws the same wage and cannot be let go. This can be changed until the first trip goes out.
+    start_requirements: Name your character, spend all attribute points, and choose at least one trait.
+    founder_title: Player character
+    reroll_founder: Randomize character
+    founder_names:
+      - Alex Morgan
+      - Sam Rivera
+      - Jordan Ellis
+      - Robin Hale
+      - Taylor Reed
+      - Casey Park
+      - Avery Quinn
+      - Riley Chen
     founder_name: Name
     founder_name_ph: Enter a name
     founder_gender: Gender
@@ -1487,36 +1501,69 @@ quotes:
   newton:
     who: Isaac Newton
     quote: If I have seen further, it is by standing on the shoulders of giants.
+    authors:
+      - AI
+      - Fan Shen
   einstein:
     who: Albert Einstein
     quote: The important thing is not to stop questioning.
+    authors:
+      - AI
+      - Fan Shen
   faraday:
     who: Michael Faraday
     quote: Nothing is too wonderful to be true, if it be consistent with the laws of nature.
+    authors:
+      - AI
+      - Fan Shen
   feynman:
     who: Richard Feynman
     quote: The first principle is that you must not fool yourself, and you are the easiest person to fool.
+    authors:
+      - AI
+      - Fan Shen
   pasteur:
     who: Louis Pasteur
     quote: Chance favours only the prepared mind.
+    authors:
+      - AI
+      - Fan Shen
   carr:
     who: E. H. Carr
     quote: History is a continuous process of interaction between the historian and his facts, an unending dialogue between the present and the past.
+    authors:
+      - AI
+      - Fan Shen
   santayana:
     who: George Santayana
     quote: Those who cannot remember the past are condemned to repeat it.
+    authors:
+      - AI
+      - Fan Shen
   ranke:
     who: Leopold von Ranke
     quote: History wants only to show how it actually was.
+    authors:
+      - AI
+      - Fan Shen
   simaqian:
     who: Sima Qian
     quote: To examine the relation between heaven and man, to trace the changes from antiquity to the present, and to complete a school of one's own.
+    authors:
+      - AI
+      - Fan Shen
   hippocrates:
     who: Hippocrates
     quote: Life is short, the art long.
+    authors:
+      - AI
+      - Fan Shen
   thucydides:
     who: Thucydides
     quote: This work was composed as a possession for all time.
+    authors:
+      - AI
+      - Fan Shen
 catalog:
   pythagoras_croton:
     name: A school where number is the nature of things
@@ -1753,13 +1800,17 @@ catalog:
     name: One law for the apple and the Moon
     place: Cambridge
     figure: Isaac Newton
-    story: In the Principia Newton shows that the same law of gravity governs falling objects and the orbits of the planets.
+    story: Newton's Principia appeared in London in 1687. In the third book he brings the Moon and falling bodies under the same account of gravity. Much later, William Stukeley wrote down Newton's recollection of a falling apple prompting a question about gravity. Stukeley says nothing about a blow to the head.
     relic: A glass prism
     relic_desc: A triangle of glass that splits white light into colours.
     points:
-      p1: Follow his mathematics
-      p2: Talk with him in Latin
-      p3: Hold your ground in the argument
+      p1: Trace the Moon's deflection on the copyist's diagram
+      p2: Use the translation chip to ask the copyist about a disputed label
+      p3: Finish checking the diagram before the copyist takes it away
+    vignettes:
+      apple: “Did the apple hit him on the head?” you ask. The copyist puts down his pen and holds out a scrap of paper. “Suppose it did. Would that tell you what keeps the Moon up?” You draw a second line beside your first.
+      margin: You ask the copyist to show which sentence supports the label in the margin. He stops packing the sheet long enough for you to mark the two passages separately.
+      diagram: The copyist lends you a blunt pencil. You draw the direction the Moon would travel if left alone, then add an arrow for the pull that bends its path.
   bach_leipzig:
     name: A cantor writes for every Sunday
     place: Leipzig
@@ -3553,6 +3604,21 @@ catalog:
       p1: Watch how he treats a wound
       p2: Hold steady through a suture
       p3: Practise with the apprentices
+  zhuge_liang_longzhong:
+    name: Three visits to the thatched cottage
+    place: Longzhong area
+    figure: Zhuge Liang
+    story: Chen Shou's biography says Liu Bei met Zhuge Liang after three visits. Zhuge Liang also refers to three visits in his later memorial. A different account, quoted in Pei Songzhi's notes, has Zhuge Liang seek Liu Bei out first. The trip uses the first account and the conventional year 207 for its setting.
+    relic: Copy of a visitor's note
+    relic_desc: A fictional keepsake bearing three small ink marks.
+    points:
+      p1: Tell a reported visit from one you saw yourself
+      p2: Ask the scribe what the visitor came to discuss
+      p3: Mark which lines of the copy came from which account
+    vignettes:
+      future_novel: You ask the scribe whether the man in the cottage could borrow arrows from a river fog. He turns the page back. “The visitor asked him for advice. Where did you hear about a boat?” In your report you mark the boat story as an episode from a much later novel.
+      listen: The scribe draws three marks for the visits and pauses at the last. You ask which details he was told and which he saw. He leaves the next line blank.
+      visits: You help the scribe keep two notes apart, one for who came and one for what the visitor wanted to ask.
   borobudur_java:
     name: A mountain of reliefs
     place: Java
@@ -3564,6 +3630,21 @@ catalog:
       p1: Line up the blocks
       p2: Haul stone in the wet heat
       p3: Read the order of the reliefs
+  qin_liangyu_shizhu:
+    name: Qin Liangyu and the supply ledger
+    place: Shizhu
+    figure: Qin Liangyu
+    story: The History of Ming records that in 1630 Qin Liangyu and Qin Yiming answered the summons to aid the capital, and that she used family funds for supplies. The Shizhu gazetteer also records the summons and expedition. The ledger, its entries and the people at the table are invented for this trip.
+    relic: Copy of a Shizhu receipt
+    relic_desc: A fictional receipt with one name in the margin and another beside a bundle.
+    points:
+      p1: Spot two similar names on the clerk's sheet
+      p2: Help the carrier check which bundle is hers to collect
+      p3: Leave two copies that agree before the table is cleared
+    vignettes:
+      ledger: Two lines begin with nearly the same name. The clerk has read them as one. You underline the characters that differ, and he calls both bearers back to check.
+      hands: The waiting carrier has both hands on a bundle and cannot open her slip. You hold it flat and read the name back to her before she lifts it again.
+      copy: The clerk reads the entries aloud while you follow the copy. At the last line you turn the two sheets side by side and leave them on the table.
   zeami_sado:
     name: Secret teachings for those to come
     place: Sado Island

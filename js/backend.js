@@ -123,7 +123,9 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     if (f) stars = Math.max(0, stars - f.stars_cost);
     const pay = L.pay[ev.tier];
     const kind = outcomeOf(stars, points.length);
-    return { points, stars, found, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
+    const traits = D.get('staff.staff.' + staffId + '.traits');
+    const vignette = ev.scene.vignettes?.find((v) => !v.traits || v.traits.some((t) => traits.includes(t)))?.id;
+    return { points, stars, found, vignette, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
       energyBase: pay.energy, restDays: L.rest_days[kind] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
   }
   function runLight(eventId, staffId, seed, items, favor = null) {
@@ -155,6 +157,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],
     eraInfo: (id) => info[id],
     staffStats: (staffId, mood = null) => sim.staffAttrs(D, staffId, mood, gearOf(staffId)),
+    staffAttrMax: sim.STAFF_ATTR_MAX,
     staffBase: (staffId) => sim.staffAttrs(D, staffId),
     setGearSource: (fn) => { gearSource = fn; },
     staffHabit: (staffId) => sim.staffHabit(D, staffId),

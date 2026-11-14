@@ -41,6 +41,8 @@ The file name is the id. A card with `id:` inside must match its file name.
 
 A historical person has one folder, `people/<person>/`, and one file in it, `person.yaml`, holds everything written about that person. To find the events of a person, the lines they said, the sources, open the file of the person. To add a person, drop a folder in. To take one out, remove the folder. Nothing else has to change.
 
+Set `authors: [AI, Fan Shen]` for an explicit credit or list the contributors to that card. Embedded and separate cards in a person module can inherit the module's `authors`. The build uses `meta.card_authors` for the existing first-party cards and writes the resolved credit into every generated content card. Author credits describe the game's card, while sources and image credits identify the underlying material.
+
 ```
 people/<person>/
   person.yaml            the card of the person, see below
@@ -94,6 +96,8 @@ A card may also stay a file of its own inside the module, in the folder of its k
 An event card has these optional fields. `era: <model id>` hands the event to the full model of the person: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. `start: true` makes the relic owned from the start, so the place is open from the first moment. `after: <event id>` makes the event the next episode of the same person: its place opens when a trip to the named event has come back. `stay: <days>` gives the story its own length of stay. `draft: true`, and `metadata.status: draft` in a model, keep it out of the published game, see `release` in `config/config.yaml`.
 
 An id may be used once. The build stops with a message when two cards use the same id, when the events of a module and its card do not match, or when a module holds something a module does not use, and `node tools/build_data.mjs --check` says when `data/` is out of date.
+
+A small scene can add `scene.vignettes`, an ordered list of entries such as `{id: apple, traits: [bold]}`. The first entry matching any of the traveller's listed traits is shown in the return report. The last entry has only an `id` and is the default. Put its prose and the matching prose for each other entry under `text.<language>.vignettes.<id>`. These fictional passages do not change the scene's stars. A catalogue event can also list `refs` from the wiki to make its historical sources available in the report.
 
 Languages are the codes in `config/config.yaml` under `i18n.locales`. A language that lacks a key reads English for that key.
 

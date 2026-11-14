@@ -69,7 +69,7 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
     const id = 'relic_' + e.id;
     const price = C.price[e.tier];
     // the relic of an event with a full model is the anchor of that model, so the model opens and is found like any simulated place
-    o.antiques.antiques[id] = { era: e.era || null, event: e.id, kind: 'key', price, start_owned: !!e.start, playable: true, tags: [e.field, e.region, period(e.year), ...(e.regret ? ['regret'] : [])] };
+    o.antiques.antiques[id] = { era: e.era || null, event: e.id, kind: 'key', price, start_owned: !!e.start, playable: true, authors: e.authors, tags: [e.field, e.region, period(e.year), ...(e.regret ? ['regret'] : [])] };
     const t = o.text.catalog[e.id];
     o.text.antiques[id] = { name: t.relic, desc: t.relic_desc };
   }

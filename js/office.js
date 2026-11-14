@@ -18,6 +18,7 @@ export function createOffice(X) {
   // only one employee can be in a place at a time, the simulation cannot yet hold two travellers in one place
   const ST = D.get('config.stars');
   const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
+  const canDispatchTo = (id, light, auto = false) => (X.DEV && !auto) || (light ? X.anchored('relic_' + id) : X.eraOpen(id));
 
   function perks() {
     const out = { sale_mult: 0, energy_mult: 0, rest_cut: 0, favor_gain: 0 };
@@ -55,6 +56,7 @@ export function createOffice(X) {
   }
 
   function launch(eraId, spec, opts = {}) {
+    if (!canDispatchTo(eraId, false, opts.auto)) return null;
     const E = ctx.era(eraId);
     const s = S();
     const full = { ...spec, plots: plotsFor(eraId), favor: s.staff[spec.staffId].favor, gear: staffGear(spec.staffId) };
@@ -72,11 +74,11 @@ export function createOffice(X) {
     return d;
   }
 
-  // A small story to a catalogue event whose antique is anchored. It has no kit and no branch, only the traveller against the event.
+  // A small story to a catalogue event, with no simulated branch.
   const LT = D.get('config.light');
   function launchLight(eventId, staffId, seed, items = {}, opts = {}) {
     const s = S();
-    if (!s.locks.includes('relic_' + eventId) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
+    if (!canDispatchTo(eventId, true, opts.auto) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
     const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && !D.get('items.' + id).implant && (s.inv[id] || 0) >= n));
     const r = ctx.backend.runLight(eventId, staffId, seed, kit, s.staff[staffId].favor);
     const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
@@ -85,7 +87,7 @@ export function createOffice(X) {
     if (s.seq === 1) startClock();
     const d = {
       id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, max: ctx.backend.maxStars(eventId), baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
-      report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
+      report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, vignette: r.vignette, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
       startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
     };
     s.dispatches.push(d);
@@ -173,20 +175,35 @@ export function createOffice(X) {
     s.dispatches = s.dispatches.filter((x) => !x.claimed || keep.has(x.id));
   }
 
-  // What an employee has grown is kept in the save and added to their attributes when the game starts, so the cards stay as written.
-  function applyGrowth() {
-    for (const [id, sf] of Object.entries(S().staff)) for (const [a, n] of Object.entries(sf.growth || {})) D.o.staff.staff[id].base[a] = Math.min(10, (D.o.staff.staff[id].base[a] ?? 5) + n);
-  }
-  applyGrowth();
-  // Every threes_per_point three star trips of an employee give one point to a random attribute that is not at 10 yet. Returns the attribute or null.
-  function grow(id, seq) {
+  // Backfill personal records from retained history before counting any new results.
+  const storyKey = (id) => D.get('catalog.events').find((e) => e.era === id)?.id || id;
+  function storyBests(id) {
     const sf = S().staff[id];
-    if (!sf.tally[3] || sf.tally[3] % O.threes_per_point) return null;
-    const base = D.get('staff.staff.' + id).base;
-    const open = D.get('staff.attributes').filter((a) => (base[a] ?? 5) < 10);
+    if (sf.storyBests) return sf.storyBests;
+    ensureTrips();
+    const bests = {};
+    for (const t of S().trips) {
+      if (t.staffId !== id || t.recalled) continue;
+      const key = storyKey(t.place);
+      if (t.stars > (bests[key] || 0)) bests[key] = t.stars;
+    }
+    sf.storyBests = bests;
+    return bests;
+  }
+  const growthStars = (id) => Object.values(storyBests(id)).reduce((sum, stars) => sum + stars, 0);
+  function grow(id, place, stars, seq) {
+    const sf = S().staff[id];
+    const bests = storyBests(id);
+    const key = storyKey(place);
+    const previous = bests[key] || 0;
+    if (stars <= previous) return null;
+    const before = growthStars(id);
+    bests[key] = stars;
+    if (Math.floor(before / O.stars_per_point) === Math.floor((before + stars - previous) / O.stars_per_point)) return null;
+    const base = ctx.backend.staffBase(id);
+    const open = D.get('staff.attributes').filter((a) => base[a] < ctx.backend.staffAttrMax);
     if (!open.length) return null;
     const a = ctx.backend.pick(open, seq, 'grow|' + id);
-    D.o.staff.staff[id].base[a] = (base[a] ?? 5) + 1;
     sf.growth = { ...(sf.growth || {}), [a]: ((sf.growth || {})[a] || 0) + 1 };
     return a;
   }
@@ -214,7 +231,7 @@ export function createOffice(X) {
     sf0.tally ||= { 3: 0, 2: 0, 1: 0 };
     // the tally counts in thirds of the stars of the place, so a five star story fills the same three cells
     if (d.stars > 0) sf0.tally[Math.ceil(d.stars * 3 / top)] += 1;
-    d.paid.grown = d.stars === top ? grow(d.spec.staffId, S().seq) : null;
+    d.paid.grown = grow(d.spec.staffId, d.eraId, d.stars, Number(d.id.slice(1)));
     d.paid.antique = d.payout.antique || null;
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
@@ -303,6 +320,27 @@ export function createOffice(X) {
     if (f.traits.includes(id)) f.traits = f.traits.filter((x) => x !== id);
     else if (f.traits.length < FO.traits_max) f.traits.push(id);
     else return false;
+  });
+
+  const randomIndex = (length) => Math.floor(Math.random() * length);
+  const pickRandom = (values) => values[randomIndex(values.length)];
+  const rerollFounder = () => founderChange((f) => {
+    const names = D.get('text.ui.welcome.founder_names');
+    const attrs = D.get('staff.attributes');
+    const traits = Object.keys(D.get('staff.traits'));
+    f.name = pickRandom(names);
+    f.gender = pickRandom(Object.keys(D.get('staff.gender_class')));
+    f.skin = pickRandom(Object.keys(D.get('hiring.skin_tones')));
+    f.base = Object.fromEntries(attrs.map((id) => [id, FO.min]));
+    for (let left = pointsLeft(D, f); left > 0; left--) {
+      const available = attrs.filter((id) => f.base[id] < FO.max);
+      if (!available.length) break;
+      f.base[pickRandom(available)]++;
+    }
+    f.traits = [];
+    while (f.traits.length < FO.traits_max && traits.length) {
+      f.traits.push(...traits.splice(randomIndex(traits.length), 1));
+    }
   });
 
   // Until the first trip goes out the first employees can be picked from the candidates, or the candidates drawn again.
@@ -693,5 +731,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, grow, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

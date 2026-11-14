@@ -16,7 +16,7 @@ export function createAudio(D, settings) {
   let startAt = 0;
   let cursor = 0;
   let timer = null;
-  let nextTimer = null;
+  let playbackRequest = 0;
   const live = new Set();
 
   function context() {
@@ -97,43 +97,56 @@ export function createAudio(D, settings) {
       if (n.start < now - 0.05) continue;
       voice(n, startAt + n.start, n.end - n.start);
     }
-    if (cursor >= song.notes.length && now > song.duration + M.gap_s) next();
+    if (cursor >= song.notes.length && now > song.duration + M.gap_s) start(state.index + 1);
   }
   function silence() {
-    clearInterval(timer); clearTimeout(nextTimer);
-    timer = null; nextTimer = null;
+    clearInterval(timer);
+    timer = null;
     for (const r of live) { try { r.out.gain.cancelScheduledValues(0); r.out.gain.setTargetAtTime(0, ac.currentTime, 0.05); r.oscs.forEach((o) => o.stop(ac.currentTime + 0.3)); } catch (e) { /* already stopped */ } }
   }
   async function start(index) {
-    const ctx = context();
-    if (ctx.state === 'suspended') await ctx.resume();
+    const request = ++playbackRequest;
     silence();
+    song = null;
     state.index = (index + M.tracks.length) % M.tracks.length;
     state.loading = true; state.error = null; state.playing = true;
     notify();
     try {
-      song = await load(state.index);
+      const ctx = context();
+      if (ctx.state === 'suspended') await ctx.resume();
+      if (request !== playbackRequest) return;
+      const loaded = await load(state.index);
+      if (request !== playbackRequest) return;
+      song = loaded;
+      startAt = ctx.currentTime + 0.2;
+      cursor = 0;
+      timer = setInterval(schedule, M.tick_ms);
     } catch (e) {
-      state.error = String(e.message || e); state.playing = false; state.loading = false; notify();
-      return;
+      if (request !== playbackRequest) return;
+      state.error = String(e.message || e);
+      state.playing = false;
     }
     state.loading = false;
-    if (!state.playing) { notify(); return; }
-    startAt = ctx.currentTime + 0.2;
-    cursor = 0;
-    timer = setInterval(schedule, M.tick_ms);
     notify();
   }
-  function next() { start(state.index + 1); }
-  function prev() { start(state.index - 1); }
+  function select(step) {
+    settings.set('music_autostart', true);
+    start(state.index + step);
+  }
   function pause() {
     if (!state.playing) return;
+    playbackRequest++;
     state.playing = false;
+    state.loading = false;
     if (ac) silence();
     song = null;
     notify();
   }
-  function toggle() { if (state.playing) pause(); else start(state.index); }
+  function setEnabled(enabled) {
+    settings.set('music_autostart', enabled);
+    if (!enabled) pause();
+    else if (!state.playing) start(state.index);
+  }
 
   // ---------- effects ----------
   function sfx(name) {
@@ -159,7 +172,9 @@ export function createAudio(D, settings) {
 
   return {
     state, tracks: M.tracks, credit: M.credit,
-    toggle, next, prev, pause, play: (i) => start(i), sfx,
+    toggle: () => setEnabled(!state.playing),
+    next: () => select(1), prev: () => select(-1),
+    setEnabled, play: () => start(state.index), sfx,
     onChange: (fn) => listeners.add(fn),
   };
 }

@@ -3,6 +3,7 @@ meta:
   logo: T
   version: 0.1.0
   released: '2026-11-09'
+  card_authors: [AI, Fan Shen]
   links:
     author: https://github.com/shenfan19
     lm: https://lifematters.dev
@@ -52,8 +53,8 @@ office:
   hire_cost: 100
   # the funds come only from selling antiques, and this scales what they sell for against the price on the card
   sale_scale: 3
-  # every this many three star trips of an employee give one point to a random attribute of theirs, up to 10
-  threes_per_point: 3
+  # Each employee earns a point for this many stars across their personal best results.
+  stars_per_point: 50
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
   # An employee earns about 7 funds a day from trips, and the antiques sold add to that as the spares pile up, so the upkeep passes the income near seven or eight people. There is no fixed limit on the staff, the wage bill is the limit.
   # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
@@ -85,11 +86,11 @@ founder:
   max: 10
   name_max: 24
   traits_max: 2
-  default_gender: x
+  default_gender: m
   default_skin: t3
   default_base: {wit: 4, constitution: 4, finesse: 4, will: 4, luck: 4}
 # What is published. A simulated era whose model says `metadata.status: draft`, and a catalogue event that says `draft: true`, is left out of the game while drafts is false, so unfinished content can sit
-# in the cards and be added step by step. The page shows drafts with ?dev=1, and the tools always check them. See the task about the models for what finished means.
+# in the cards and be added step by step. The page shows drafts with ?devtools, and the tools always check them. See the task about the models for what finished means.
 release:
   drafts: false
   # the hook of a story, the one line that makes a reader want the rest, is at most this many characters in Chinese
@@ -230,10 +231,9 @@ settings:
     theme: auto
     music_volume: 0.5
     sfx_volume: 0.6
-    music_autostart: false
+    music_autostart: true
     pause_on_report: false
     map_daynight: true
-    dev_mode: false
   options:
     theme: [auto, light, dark]
 share:

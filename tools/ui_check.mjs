@@ -42,31 +42,22 @@ try {
   // a pin opens the events of its place, a place with one event goes straight to the dispatch pop-up
   const pick = async (pin, ev) => { await page.click(`.map [data-id=${pin}] .hit`, { force: true }); const row = page.locator(`#modal .evrow[data-id=${ev}]`); if (await row.count()) await row.click(); };
   const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
-  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&dev=1`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&devtools`);
   await page.waitForSelector('.lead');
-  // a new game opens with the welcome: it cannot be closed from outside, shows the start places, the notice about the people, and begins on the button
+  // a new game opens with the disclaimer before the character and agency setup
   await page.waitForSelector('#modal .welcome');
-  ok('a new game opens with the welcome and its notice about the people in the game', (await page.locator('#modal .welcome a[href*=issues]').count()) === 1 && (await page.locator('#modal .welcome .startplaces li').count()) === 3 && (await page.locator('#modal .mclose').count()) === 0);
+  ok('a new game opens with the welcome and its notice about the people in the game', await page.locator('#modal .welcome a[href*=issues]').isVisible() && (await page.locator('#modal .mclose').count()) === 0);
+  ok('the welcome tells how to have something removed that infringes rights', (await page.locator('#modal .welcome').innerText()).includes('contact@teleporter.uk'));
   await page.keyboard.press('Escape');
   await page.mouse.click(5, 5);
   ok('the welcome does not close on Escape or on a click beside it', (await page.locator('#modal .welcome').count()) === 1);
   ok('the Sun Yat-sen story is open from the start, with the relic of its own', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('relic_sun_yat_sen_guangzhou') && S.antiques.includes('relic_sun_yat_sen_guangzhou') && S.locks.filter((x) => x === 'relic_sun_yat_sen_guangzhou').length === 1; }));
-  const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
-  await page.click('[data-act=rerollstart]');
-  ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 3);
-  ok('the welcome tells how to have something removed that infringes rights', (await page.locator('#modal .welcome').innerText()).includes('contact@teleporter.uk'));
-  // the first employees: six candidates from six different regions, three picked, swapped by a click, drawn again before the first trip
-  const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired) }; });
-  const c0 = await crewInfo();
-  ok('the crew is the founder and two drawn from different regions, with nothing to pick', c0.offer.length === 2 && c0.regions === 2 && c0.pick.length === 2 && c0.hired.length === 3 && (await page.locator('#modal .welcome .startstaff li').count()) === 2 && (await page.locator('[data-act=startpick]').count()) === 0);
-  await page.click('[data-act=rerollstaff]');
-  const c3 = await crewInfo();
-  ok('the two can be drawn again, still from two regions', c3.offer.join() !== c0.offer.join() && c3.regions === 2 && c3.hired.length === 3);
-  // the founder: the start waits for a name, the points are spent from a pool, the traits are limited, and the founder is the 51st employee who cannot be let go
+  await page.click('[data-act=welcomeack]');
+  // the founder: a name is required, points are spent from a pool, and the traits are limited
   const fo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { f: S.founder, n: Object.keys(g.D.get('staff.staff')).length, hired: S.staff[S.founder.id].hired }; });
-  ok('the start button waits for the name of the founder', (await page.locator('[data-act=welcomestart][disabled]').count()) === 1);
+  ok('the default character is male and the start button waits for a name', await page.locator('#founder-gender').inputValue() === 'm' && await page.locator('[data-act=welcomestart]').isDisabled());
   await page.fill('#founder-name', 'Test Founder');
-  ok('with a name the start button opens', (await page.locator('[data-act=welcomestart][disabled]').count()) === 0);
+  ok('a name alone is not enough to start', await page.locator('[data-act=welcomestart]').isDisabled());
   const f0 = await fo();
   ok('the founder is the 51st employee and hired', f0.n === 51 && f0.hired && f0.f.name === 'Test Founder');
   await page.click('[data-act=founderattr][data-id="wit:1"]');
@@ -78,10 +69,29 @@ try {
   await page.click('[data-act=founderattr][data-id="wit:1"]');
   const f2 = await fo();
   ok('a point taken from one attribute can be given to another', f2.f.base.will === 3 && f2.f.base.wit === 7);
+  ok('spending all points still requires a trait', await page.locator('[data-act=welcomestart]').isDisabled());
   for (const tr of ['kind', 'curious', 'bold']) await page.click(`[data-act=foundertrait][data-id=${tr}]`);
   ok('at most two traits', (await fo()).f.traits.length === 2);
+  ok('a named character with no points left and at least one trait can start', await page.locator('[data-act=welcomestart]').isEnabled());
   await page.selectOption('#founder-gender', 'f');
   ok('the gender is kept', (await fo()).f.gender === 'f');
+  const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
+  await page.click('[data-act=rerollstart]');
+  ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 3);
+  const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired) }; });
+  const c0 = await crewInfo();
+  ok('the crew is the founder and two drawn from different regions, with nothing to pick', c0.offer.length === 2 && c0.regions === 2 && c0.pick.length === 2 && c0.hired.length === 3 && (await page.locator('#modal .welcome .startstaff li').count()) === 2 && (await page.locator('[data-act=startpick]').count()) === 0);
+  await page.click('[data-act=rerollstaff]');
+  const c3 = await crewInfo();
+  ok('the two can be drawn again, still from two regions', c3.offer.join() !== c0.offer.join() && c3.regions === 2 && c3.hired.length === 3);
+  await page.reload();
+  await page.waitForSelector('#founder-name');
+  ok('refresh keeps the acknowledgement, character and crew', (await page.locator('#founder-name').inputValue()) === 'Test Founder' && (await fo()).f.gender === 'f' && (await crewInfo()).offer.join() === c3.offer.join());
+  await page.click('[data-act=rerollfounder]');
+  ok('randomizing creates a named character with a valid allocation', await page.evaluate(() => {
+    const f = window.__game.ctx.S().founder;
+    return f.name && f.name !== 'Test Founder' && Object.values(f.base).reduce((a, b) => a + b, 0) === 22 && new Set(f.traits).size === 2;
+  }));
   await page.click('[data-act=welcomestart]');
   // the rest of the checks use a known crew
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun', 's_founder'].includes(k); S.hire = null; for (const a of ['pump_rust']) { if (!S.locks.includes(a)) S.locks.push(a); if (!S.antiques.includes(a)) S.antiques.push(a); } });
@@ -206,9 +216,8 @@ try {
   ok('stock was consumed', inv.chlorine_tablet < 40 || inv.ors_pack < 40 || inv.handbook < 1);
   const before = await page.evaluate(() => window.__game.ctx.S().energy);
   await page.reload();
-  await page.waitForSelector('.lead');
+  await page.waitForSelector('.tl');
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
-  await page.waitForSelector('.lead');
   const after = await page.evaluate(() => window.__game.ctx.S().energy);
   ok('energy kept after reload', before === after);
   // shop: the used anchor is locked, antiques sell and buy, items buy and sell
@@ -540,7 +549,7 @@ try {
   ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 6);
   // the game so far was played with the drafts shown, and a page without them does not know their places, so the trips to them are taken out of the save first
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(), D = g.D; const draft = new Set(D.get('config.eras').filter((id) => D.get('era_raw.' + id).metadata.status === 'draft')); S.dispatches = S.dispatches.filter((d) => !draft.has(d.eraId)); S.visited = S.visited.filter((x) => !draft.has(x)); if (S.trips) S.trips = S.trips.filter((x) => !draft.has(x.place)); for (const k of draft) delete S.stars[k]; g.ctx.save(); });
-  await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
   await page.waitForSelector('.lead');
   // settings, music and effects
   // the time axis zooms around the pointer and slides when dragged, and its marks are plain dots
@@ -571,17 +580,25 @@ try {
   ok('auto theme clears the attribute', (await page.evaluate(() => document.documentElement.dataset.theme)) === undefined);
   await page.locator('[data-set=music_volume]').fill('0.2');
   ok('volume slider is saved', (await page.evaluate(() => window.__game.ctx.settings.get('music_volume'))) === 0.2);
+  const resetStyle = await page.locator('.settings [data-act=reset]').evaluate((el) => ({ color: getComputedStyle(el).color, border: getComputedStyle(el).borderTopColor }));
+  ok('clear save has a red label and border', resetStyle.color === 'rgb(179, 56, 44)' && resetStyle.color === resetStyle.border);
   await page.keyboard.press('Escape');
+  if (await page.evaluate(() => window.__game.ctx.audio.state.playing)) await page.click('[data-music=toggle]');
   await page.click('[data-music=toggle]');
   await page.waitForFunction(() => window.__game.ctx.audio.state.playing && !window.__game.ctx.audio.state.loading, null, { timeout: 8000 });
   ok('music plays without an error', (await page.evaluate(() => window.__game.ctx.audio.state.error)) === null);
   await page.click('[data-music=next]');
-  await page.waitForFunction(() => window.__game.ctx.audio.state.index === 1 && !window.__game.ctx.audio.state.loading, null, { timeout: 8000 });
+  await page.waitForFunction(() => !window.__game.ctx.audio.state.loading, null, { timeout: 8000 });
   ok('next piece loads', (await page.evaluate(() => window.__game.ctx.audio.state.error)) === null);
   await page.click('[data-music=toggle]');
   ok('music pauses', (await page.evaluate(() => window.__game.ctx.audio.state.playing)) === false);
   await tool('settings');
+  const beforeReload = await page.evaluate(() => window.__game.ui.state.tab);
+  await page.reload();
+  await page.waitForSelector('.settings');
+  ok('a refresh restores the page and the settings dialog', await page.evaluate(() => window.__game.ui.state.tab) === beforeReload);
   await page.click('[data-act=sfxtry][data-id=send]');
+  ok('paused music stays paused after refresh and a click', await page.evaluate(() => !window.__game.ctx.audio.state.playing && !window.__game.ctx.settings.get('music_autostart') && window.__game.ctx.settings.get('music_volume') === 0.2));
   await page.screenshot({ path: path.join(outDir, '9_settings.png'), fullPage: true });
   await go('home');
   ok('guest has three pages and three tools', (await page.locator('#tabs [data-tab]').count()) === 3 && (await page.locator('#tools [data-act=modalopen]').count()) === 3);
@@ -626,8 +643,17 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
   await page.waitForSelector('[data-act=claim]');
   await page.click('[data-act=claim]');
-  await page.waitForSelector('.stamp');
-  ok('a small story has its own short report and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('.quote').count()) === 1 && (await page.locator('table').count()) === 1);
+  const storySources = page.locator('[data-act=wiki][data-id="events:c:newton_cambridge"]');
+  await storySources.waitFor();
+  ok('the Newton report shows a fictional vignette and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('table').count()) === 1 && await page.evaluate(() => {
+    const { D, ctx, ui } = window.__game;
+    const trip = ctx.S().dispatches.find((d) => d.id === ui.state.sub);
+    const passage = D.get('text.catalog.newton_cambridge.vignettes.' + trip.report.vignette);
+    return document.body.textContent.includes(passage);
+  }));
+  await storySources.click();
+  ok('the Newton report links to its historical sources', await page.getByText(/Royal Society MS\/142|英国皇家学会 MS\/142/).isVisible());
+  await page.keyboard.press('Escape');
   await page.click('[data-act=back]');
   await tool('wiki');
   await page.fill('#wiki-q', '月亮');
@@ -728,23 +754,26 @@ try {
     return { n: g.ui.office.tripsOf(place).length, html: ev ? g.ui.X.storyFor({ catalog: true, id: place }) : g.ui.X.storyFor({ id: place }) };
   }, lg.place);
   ok('the story of a place lists the trips that came home from it', hist.n > 0 && hist.html.includes('class="trips"'));
-  // favor bends the points of a trip, and three three star trips give a point of a random attribute
+  // Favor affects outcomes. Growth counts improvements to personal bests.
   const fv = await page.evaluate(() => {
     const g = window.__game, b = g.backend, off = g.ui.office, D = g.D;
     const ids = D.get('catalog.events').map((e) => e.id).slice(0, 60);
     const mean = (favor) => { let n = 0, s = 0; for (const e of ids) for (let seed = 1; seed <= 6; seed++) { s += b.runLight(e, 's_ning', seed, {}, favor).stars; n++; } return s / n; };
     const low = mean(0), high = mean(1);
-    const base = { ...D.get('staff.staff.s_ning.base') };
-    const sf = g.ctx.S().staff.s_ning; sf.tally = { 3: 0, 2: 0, 1: 0 };
-    const got = [11, 12, 13].map((seq) => { sf.tally[3] += 1; return off.grow('s_ning', seq); });
-    const after = D.get('staff.staff.s_ning.base');
+    const sf = g.ctx.S().staff.s_ning;
+    const previous = { bests: sf.storyBests, growth: sf.growth };
+    sf.storyBests = Object.fromEntries(ids.slice(0, 16).map((id) => [id, 3]));
+    sf.growth = {};
+    const base = b.staffBase('s_ning');
+    const got = [1, 1, 2].map((stars) => off.grow('s_ning', ids[16], stars, 11));
+    const after = b.staffBase('s_ning');
     const diff = Object.keys(after).filter((k) => after[k] !== base[k]);
-    const growth = { ...sf.growth };
-    D.o.staff.staff.s_ning.base = base; sf.growth = {}; sf.tally = { 3: 0, 2: 0, 1: 0 };
+    const growth = sf.growth;
+    sf.storyBests = previous.bests; sf.growth = previous.growth;
     return { low, high, got, diff, attr: got[2], growth };
   });
   ok('a favored employee does better than one who is not', fv.high > fv.low);
-  ok('three three star trips give one point of one attribute, not before', fv.got[0] === null && fv.got[1] === null && !!fv.got[2] && fv.diff.length === 1 && fv.diff[0] === fv.attr && fv.growth[fv.attr] === 1);
+  ok('50 personal best stars give one point and repeated results do not count', fv.got[0] === null && fv.got[1] === null && !!fv.got[2] && fv.diff.length === 1 && fv.diff[0] === fv.attr && fv.growth[fv.attr] === 1);
   // the mood changes every attribute by up to a fifth, and a reward costs a day of wages and adds ten to the mood
   const md = await page.evaluate(() => {
     const g = window.__game, b = g.backend, off = g.ui.office, S = g.ctx.S();
@@ -839,7 +868,7 @@ await page.evaluate(() => { window.__game.ctx.settings.set('map_daynight', false
 ok('the setting takes the night shade off the map', (await page.locator('svg.map .night').count()) === 0);
 // a save that names something no longer in the data is not loaded, the game starts again instead of showing an empty page
 await page.evaluate(() => { const S = JSON.parse(localStorage.getItem('teleporter_save')); S.locks.push('relic_removed_event'); localStorage.setItem('teleporter_save', JSON.stringify(S)); });
-await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
+await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
 await page.waitForSelector('#tabs button');
 ok('a save that does not fit the data is dropped and the page still opens', (await page.locator('#tabs button[data-tab]').count()) === 3 && !(await page.evaluate(() => window.__game.ctx.S().locks.includes('relic_removed_event'))));
 // implants: worn up to the load cap, add to the attributes, and come back to the stock when the wearer is let go

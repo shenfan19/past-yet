@@ -1,0 +1,104 @@
+order: 233
+events:
+  zhuge_liang_longzhong:
+    order: 206
+    year: 207
+    lon: 112.01
+    lat: 31.98
+    region: asia
+    field: literature
+    tier: 1
+    channels: {}
+    draft: true
+    refs: [sanguozhi_zhuge, chushi_biao, sanguo_yanyi_arrows]
+    scene:
+      points:
+        - {id: p1, kind: notice, req: {any: [{trait: [patient, methodical]}, {stat: {wit: 5}}]}}
+        - {id: p2, kind: persuade, req: {any: [{trait: [curious, scholarly]}, {stat: {finesse: 6}}]}}
+        - {id: p3, kind: hold, req: {any: [{trait: [methodical, scholarly]}, {stat: {will: 6}}]}}
+      vignettes:
+        - {id: future_novel, traits: [bold, curious]}
+        - {id: listen, traits: [patient, methodical]}
+        - {id: visits}
+    text:
+      en:
+        name: Three visits to the thatched cottage
+        place: Longzhong area
+        figure: Zhuge Liang
+        story: Chen Shou's biography says Liu Bei met Zhuge Liang after three visits. Zhuge Liang also refers to three visits in his later memorial. A different account, quoted in Pei Songzhi's notes, has Zhuge Liang seek Liu Bei out first. The trip uses the first account and the conventional year 207 for its setting.
+        relic: Copy of a visitor's note
+        relic_desc: A fictional keepsake bearing three small ink marks.
+        points:
+          p1: Tell a reported visit from one you saw yourself
+          p2: Ask the scribe what the visitor came to discuss
+          p3: Mark which lines of the copy came from which account
+        vignettes:
+          future_novel: 'You ask the scribe whether the man in the cottage could borrow arrows from a river fog. He turns the page back. “The visitor asked him for advice. Where did you hear about a boat?” In your report you mark the boat story as an episode from a much later novel.'
+          listen: 'The scribe draws three marks for the visits and pauses at the last. You ask which details he was told and which he saw. He leaves the next line blank.'
+          visits: 'You help the scribe keep two notes apart, one for who came and one for what the visitor wanted to ask.'
+      zh:
+        name: 草庐三访
+        place: 隆中一带
+        figure: 诸葛亮
+        story: 《三国志·诸葛亮传》说刘备三次前往才见到诸葛亮。《前出师表》也提到刘备三顾。裴松之注另引《魏略》，记的是诸葛亮先去见刘备。本篇采用三顾说，以通常采用的 207 年作游戏时间。
+        relic: 访客记事抄页
+        relic_desc: 一张有三处墨记的纸页，为游戏虚构的纪念物。
+        points:
+          p1: 分清哪次来访是听说的，哪次是亲眼所见
+          p2: 问清访客来请教什么
+          p3: 在抄页上标清几段说法从哪里来
+        vignettes:
+          future_novel: '你问书吏，草庐里那位会不会趁江上起雾去借箭。书吏翻回上一页：「来客是来请教的。你上哪儿听来的船？」你在归来报告里把船那段另标为后世小说情节。'
+          listen: '书吏为三次来访做了三处墨记，写到末尾停了笔。你问他哪些听人说的、哪些是他亲眼所见。他把下一行空了出来。'
+          visits: '你帮书吏把两张纸分开。一张记谁来过，一张记来客想请教什么。'
+text:
+  en:
+    name: Zhuge Liang
+    text: An adviser to Liu Bei who later served as chancellor of Shu Han. His biography in the Records of the Three Kingdoms and his own memorial preserve accounts of Liu Bei's visits. The story of Zhuge Liang borrowing arrows with straw boats belongs to chapter 46 of Romance of the Three Kingdoms.
+  zh:
+    name: 诸葛亮
+    text: 刘备的谋臣，后来任蜀汉丞相。陈寿《三国志》和诸葛亮《前出师表》都留下了三顾的说法。诸葛亮草船借箭是《三国演义》第四十六回的情节。
+hook: {en: Who called on whom at the cottage?, zh: 草庐前，究竟是谁去见谁}
+facts:
+  visits:
+    date: '207'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sanguozhi_zhuge, chushi_biao]
+    note: The date is the conventional scenario year. The memorial is Zhuge Liang's own official account, preserved by Chen Shou. The two texts need not be independent. Pei Songzhi preserves a competing account.
+    text:
+      en: Chen Shou describes Liu Bei going three times, and Zhuge Liang's earlier memorial also mentions three visits.
+      zh: 陈寿记刘备三往乃见，诸葛亮此前的《前出师表》也写到三顾。
+bystanders:
+  longzhong_scribe:
+    invented: true
+    text: {en: A fictional scribe making rough notes of the visits., zh: 一位虚构的书吏，正在草记来访的情况。}
+wiki:
+  refs:
+    sanguozhi_zhuge:
+      order: 112
+      status: checked
+      text:
+        en: 'Chen Shou, Records of the Three Kingdoms, vol. 35, Biography of Zhuge Liang, with Pei Songzhi’s annotations. https://zh.wikisource.org/wiki/三國志/卷35'
+        zh: '陈寿，《三国志》卷三十五《诸葛亮传》，含裴松之注。https://zh.wikisource.org/wiki/三國志/卷35'
+    chushi_biao:
+      order: 113
+      status: checked
+      text:
+        en: 'Zhuge Liang, First Memorial on Taking the Field, composed in 227 and preserved in Records of the Three Kingdoms, vol. 35. https://zh.wikisource.org/wiki/前出師表'
+        zh: '诸葛亮，《前出师表》，作于 227 年，载《三国志》卷三十五。https://zh.wikisource.org/wiki/前出師表'
+    sanguo_yanyi_arrows:
+      order: 114
+      status: checked
+      text:
+        en: 'Romance of the Three Kingdoms, chapter 46. Source for the novel episode. https://zh.wikisource.org/wiki/三國演義/第046回'
+        zh: '《三国演义》第四十六回。草船借箭的小说出处。https://zh.wikisource.org/wiki/三國演義/第046回'
+self_check:
+  quote_line: '来客是来请教的。你上哪儿听来的船？'
+  fact: visits
+  regret_choice: '抢着问后世的故事，就少了一次追问眼前来访细节的机会。'
+  bookend: '开场先分谁去见谁，收尾再分眼见、传闻和小说。'
+  share_line: '草庐有三访，借箭另有出处。'
+  share_number: '三次来访'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
