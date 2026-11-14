@@ -68,7 +68,26 @@ quotes: {<id>: card}     # lines for the header of the page
 era_text:                # the text of the era model, in every language
   en: ...
   zh: ...
+hook: {en: ..., zh: ...}  # one line that makes a reader want the rest, at most `release.hook_max` characters in Chinese
+facts:                   # the fact sheet: every fact the story may lean on
+  f01: {date: '1924-02-04', checked: official_record, level: usable, use: [history, story, wiki], sources: [<ref id>], text: {en: ..., zh: ...}, note: ...}
+dialogue:                # what was said: a line of the person only when it is recorded, with its fact and sources; a line of a bystander is invented
+  <id>: {who: <person or bystander id>, recorded: true, fact: f09, sources: [...], text: {...}}
+bystanders:              # the people who were there and are made up for the game
+  <id>: {invented: true, text: {...}}
+images:                  # every picture in images/, with where it comes from and why it may be used
+  portrait.01.jpg: {title: {en: ..., zh: ...}, author: ..., year: ..., source: ..., license: ..., credit: ...}
+self_check:              # the written check of the story, for the reviewer
+  quote_line: ...
+  fact: f04
+  regret_choice: ...
+  bookend: ...
+  share_line: ...
+  share_number: ...
+pack: {author: ..., license: ..., version: 1, languages: [en, zh]}
 ```
+
+A card that has `facts` is a story made by the story process, and the build checks it against `tools/story_rules.mjs`: `checked` is `two_sources`, `official_record` (the record of the institution itself) or `single`; `level` is `usable`, `careful` or `unused`; a fact that is used must not be `single` or `unused` and must name its sources; every episode with a model needs two recorded dates that happen by themselves, a moment with a done and a missed form, stars that are deeds of the traveller and not recorded dates, two bystanders, and an ending that compares the main timeline with the branch. The build prints which published models have no fact sheet yet.
 
 A card may also stay a file of its own inside the module, in the folder of its kind, `events/<id>.yaml`, `wiki/places/<id>.yaml` and so on, with a list of ids under `events:` in `person.yaml`. Both forms build to the same data.
 

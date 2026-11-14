@@ -35,6 +35,7 @@ export function createShare(X) {
       outcome: R.outcomeName,
       text: [R.summary, U.fmt.quote.replace('{x}', R.quote) + ' ' + U.fmt.dash + R.staff],
       chart: R.chart,
+      labels: { ...U.report, ...(T.eras[d.eraId].labels || {}) },
       hook: hookOf(index),
     };
   }
@@ -147,8 +148,8 @@ export function createShare(X) {
     if (p.chart) {
       const w = (CV.w - CV.pad * 2 - CV.chart_gap) / 2;
       const mk = [p.chart.arrive, p.chart.leave];
-      curve(g, K, CV.pad, vy + 24, w, CV.chart_h, U.report.sick, p.chart.base, p.chart.branch, 'cases', mk);
-      curve(g, K, CV.pad + w + CV.chart_gap, vy + 24, w, CV.chart_h, U.report.dead, p.chart.base, p.chart.branch, 'deaths', mk);
+      curve(g, K, CV.pad, vy + 24, w, CV.chart_h, p.labels.sick, p.chart.base, p.chart.branch, 'cases', mk);
+      curve(g, K, CV.pad + w + CV.chart_gap, vy + 24, w, CV.chart_h, p.labels.dead, p.chart.base, p.chart.branch, 'deaths', mk);
       g.fillStyle = K.ink2; g.font = `400 ${CV.small_px}px ${sans}`;
       g.fillText(`- - ${U.report.mainline}      ── ${U.report.this_branch}`, CV.pad, vy + 24 + CV.chart_h + CV.small_px + 14);
     } else {

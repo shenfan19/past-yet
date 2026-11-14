@@ -69,7 +69,10 @@ export function createWiki(X) {
           const keys = evs.map((id) => { const c = D.get('catalog.events').find((x) => x.id === id); return c && c.era ? c.era : id; }).filter((k) => D.get('catalog.events').some((x) => x.id === k || x.era === k));
           const got = keys.reduce((a, k) => a + (ctx.S().stars[k] || 0), 0), all = keys.reduce((a, k) => a + ctx.backend.maxStars(k), 0);
           const total = keys.length > 1 ? `<div class="muted">${esc(U.enc.person_stars.replace('{n}', String(got)).replace('{m}', String(all)).replace('{k}', String(keys.length)))}</div>` : '';
-          return `<p>${link(e.text)}</p>${total}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
+          const pics = D.get('encyclopedia').images ? (D.get('encyclopedia.images')[e.id] || []) : [];
+          const pic = pics.find((x) => x.kind === 'portrait') || pics[0];
+          const fig = pic ? `<figure class="personpic"><img src="data/people/${esc(e.id)}/images/${esc(pic.file)}" alt="${esc(pic.title[D.lang] || pic.title[D.get('config.i18n.fallback')])}"><figcaption class="muted small">${esc(pic.title[D.lang] || pic.title[D.get('config.i18n.fallback')])} · ${esc(pic.credit)} · ${esc(pic.license)}</figcaption></figure>` : '';
+          return `${fig}<p>${link(e.text)}</p>${total}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
         },
       });
     }

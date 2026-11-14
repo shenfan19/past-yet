@@ -616,6 +616,8 @@ export function createUI(D, ctx) {
     if (cur.light) return lightHtml(cur);
     const R = cur.report;
     const e = ctx.era(cur.eraId);
+    // the words for what is counted are those of the model when it has its own: a model about a university does not count the sick and the dead
+    const RL = { ...U.report, ...(T.eras[cur.eraId].labels || {}) };
     const spec = cur.spec;
     const fn = (key, label, text) => {
       const open = st.opened.has(cur.id + key);
@@ -632,8 +634,8 @@ export function createUI(D, ctx) {
     const pts = (rows, k) => rows.map((p) => [p.day, p[k]]);
     const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }];
     const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${U.report.legend_handle_hist}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${U.report.legend_handle_branch}</span></div>`;
-    const charts = `<div class="grid2"><div><div class="muted">${U.report.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
-      <div><div class="muted">${U.report.dead}</div>${lineChart([{ pts: pts(C.base, 'deaths'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'deaths'), color: '#b3382c' }], mk, deadMax)}</div></div>`;
+    const charts = `<div class="grid2"><div><div class="muted">${RL.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
+      <div><div class="muted">${RL.dead}</div>${lineChart([{ pts: pts(C.base, 'deaths'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'deaths'), color: '#b3382c' }], mk, deadMax)}</div></div>`;
     const led = R.ledger.map((l) => `<tr><td>${l.day}</td><td class="num">${ri(l.sick)}</td><td class="num">${ri(l.baseDead)}</td><td class="num">${ri(l.dead)}</td><td class="num">${ri(l.treated)}</td><td class="num">${ri(l.protected)}</td></tr>`).join('');
     const cmp = R.compare;
     const A = R.accounts;
@@ -649,13 +651,13 @@ export function createUI(D, ctx) {
       <div class="sec">${U.report.chart}</div>${legend}${charts}
       <div class="sec">${U.report.compare}</div>
       <table><thead><tr><th></th><th class="num">${U.report.mainline}</th><th class="num">${U.report.this_branch}</th></tr></thead><tbody>
-        <tr><td>${U.report.deaths}${fn('c1', '†', varNote(e.report.deaths))}</td><td class="num">${ri(cmp.deathsBase)}</td><td class="num">${ri(cmp.deathsBranch)}</td></tr>
-        <tr><td>${U.report.sick}${U.report.cumulative}${fn('c2', '†', varNote(e.report.cases))}</td><td class="num">${ri(cmp.casesBase)}</td><td class="num">${ri(cmp.casesBranch)}</td></tr>
+        <tr><td>${RL.deaths}${fn('c1', '†', varNote(e.report.deaths))}</td><td class="num">${ri(cmp.deathsBase)}</td><td class="num">${ri(cmp.deathsBranch)}</td></tr>
+        <tr><td>${RL.sick}${U.report.cumulative}${fn('c2', '†', varNote(e.report.cases))}</td><td class="num">${ri(cmp.casesBase)}</td><td class="num">${ri(cmp.casesBranch)}</td></tr>
         <tr><td>${esc(T.eras[cur.eraId].handle_label)}${fn('c3', '†', varNote(e.report.handle))}</td><td class="num">${esc(cmp.handleBase)}</td><td class="num">${esc(cmp.handleBranch)}</td></tr>
-        <tr><td>${U.report.treated} / ${U.report.protected}${fn('c4', '†', varNote(e.report.treated))}</td><td class="num">—</td><td class="num">${ri(cmp.treated)} / ${ri(cmp.protectedTotal)}</td></tr>
+        <tr><td>${RL.treated} / ${RL.protected}${fn('c4', '†', varNote(e.report.treated))}</td><td class="num">—</td><td class="num">${ri(cmp.treated)} / ${ri(cmp.protectedTotal)}</td></tr>
       </tbody></table>
       <div class="sec">${U.report.ledger}</div>
-      <div class="scroll"><table><thead><tr><th>${U.report.day}</th><th class="num">${U.report.sick}</th><th class="num">${U.report.dead}·${U.report.mainline}</th><th class="num">${U.report.dead}·${U.report.this_branch}</th><th class="num">${U.report.treated}</th><th class="num">${U.report.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
+      <div class="scroll"><table><thead><tr><th>${U.report.day}</th><th class="num">${RL.sick}</th><th class="num">${RL.dead}·${U.report.mainline}</th><th class="num">${RL.dead}·${U.report.this_branch}</th><th class="num">${RL.treated}</th><th class="num">${RL.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>

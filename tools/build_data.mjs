@@ -87,6 +87,8 @@ const struct = (c) => { const { id, order, text, ...rest } = c; return rest; };
 const outputs = new Map();
 const emitYaml = (rel, obj) => outputs.set(rel, HEADER + yaml.dump(obj, { lineWidth: -1, noRefs: true }));
 const emitCopy = (rel, fromRel) => outputs.set(rel, fs.readFileSync(path.join(CARDS, fromRel), 'utf8'));
+// a picture is copied byte for byte
+const emitBinary = (rel, fromRel) => outputs.set(rel, fs.readFileSync(path.join(CARDS, fromRel)));
 
 // ---------- shared small files ----------
 emitYaml('config.yaml', config);
@@ -159,11 +161,34 @@ const refCards = cards('wiki/refs');
 const modelEventCards = cards('wiki/model_events');
 const statCards = cards('wiki/stats');
 const sectionCards = Object.fromEntries(sectionNames.map((s) => [s, cards(`wiki/${s}`)]));
+// The pictures of a person lie in people/<person>/images, named <kind>.<two digits>.<ext>, and each one is entered in the images section of the card with where it comes from and why it may be used.
+// A picture that is not entered, an entry without its picture, or an entry that lacks a field stops the build. The pictures are copied to data/people/<person>/images.
+const IMG = config.release.images;
+const personImages = {};
+for (const m of moduleNames) {
+  const dir = `people/${m}/images`;
+  const files = exists(dir) ? fs.readdirSync(path.join(CARDS, dir)).sort() : [];
+  const entered = isObj(moduleCard[m]) && isObj(moduleCard[m].images) ? moduleCard[m].images : {};
+  for (const f of files) {
+    const mt = /^([a-z]+)\.(\d{2})\.([a-z0-9]+)$/.exec(f);
+    if (!mt || !IMG.kinds.includes(mt[1]) || !IMG.extensions.includes(mt[3])) fail(`${dir}/${f}: a picture is named <kind>.<two digits>.<ext>, the kinds are ${IMG.kinds.join(', ')} and the extensions ${IMG.extensions.join(', ')}`);
+    if (!(f in entered)) fail(`${dir}/${f} is not entered in the images of people/${m}/person.yaml`);
+  }
+  for (const [f, e] of Object.entries(entered)) {
+    if (!files.includes(f)) { fail(`people/${m}/person.yaml enters the picture ${f}, which is not in ${dir}`); continue; }
+    if (!isObj(e)) { fail(`people/${m}/person.yaml: the entry of ${f} must be a mapping`); continue; }
+    for (const k of IMG.fields) if (e[k] === undefined || e[k] === null || String(e[k]).trim() === '') fail(`people/${m}/person.yaml: the picture ${f} has no ${k}`);
+    if (!isObj(e.title) || !(config.i18n.fallback in e.title)) fail(`people/${m}/person.yaml: the picture ${f} needs a title in ${config.i18n.fallback}`);
+    emitBinary(`people/${m}/images/${f}`, `${dir}/${f}`);
+    (personImages[m] = personImages[m] || []).push({ file: f, kind: f.split('.')[0], title: e.title, credit: e.credit, license: e.license, source: e.source });
+  }
+}
 emitYaml('encyclopedia.yaml', {
   refs: Object.fromEntries(refCards.map((c) => [c.id, struct(c)])),
   sections: Object.fromEntries(sectionNames.map((s) => [s, sectionCards[s].map((c) => ({ id: c.id, ...struct(c) }))])),
   model_events: Object.fromEntries(modelEventCards.map((c) => [c.id, struct(c)])),
   stats: statCards.map((c) => ({ id: c.id, ...struct(c) })),
+  ...(Object.keys(personImages).length ? { images: personImages } : {}),
 });
 
 // ---------- text, one file per language ----------
@@ -273,8 +298,9 @@ const generated = new Set(outputs.keys());
 let differs = 0;
 for (const [rel, content] of outputs) {
   const file = path.join(OUT, rel);
-  const current = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
-  if (current === content) continue;
+  const binary = Buffer.isBuffer(content);
+  const current = fs.existsSync(file) ? fs.readFileSync(file, binary ? undefined : 'utf8') : null;
+  if (binary ? (current !== null && current.equals(content)) : current === content) continue;
   differs++;
   if (check) { console.log('differs: data/' + rel); continue; }
   fs.mkdirSync(path.dirname(file), { recursive: true });
