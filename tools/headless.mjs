@@ -9,7 +9,7 @@ import * as sim from '../js/sim.js';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
-const D = await loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => process.env.GAME_LANG || 'en');
+const D = await loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => process.env.GAME_LANG || 'en', { drafts: true });
 const eraId = process.argv[2] && !['log', 'opt'].includes(process.argv[2]) ? process.argv[2] : D.get('config.eras')[0];
 const E = sim.compileEra(D.get('era_raw.' + eraId), D, eraId);
 const seeds = D.get('config.tools.probe_seeds');

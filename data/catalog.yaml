@@ -6698,24 +6698,21 @@ events:
     channels:
       H: 1
     start: true
-    regret: true
     scene:
       points:
         - id: p1
+          kind: care
+          req:
+            trait:
+              - kind
+              - patient
+              - attached
+              - quiet
+        - id: p2
           kind: notice
           req:
             stat:
               wit: 5
-        - id: p2
-          kind: persuade
-          req:
-            any:
-              - trait:
-                  - glib
-                  - charismatic
-                  - cosmopolitan
-              - stat:
-                  wit: 7
         - id: p3
           kind: hold
           req:
@@ -6726,16 +6723,3 @@ events:
                   - vigil
               - stat:
                   will: 6
-        - id: p4
-          kind: trust
-          req:
-            trait:
-              - kind
-              - attached
-              - quiet
-              - charismatic
-        - id: p5
-          kind: care
-          redeem: true
-          req:
-            provides: heal

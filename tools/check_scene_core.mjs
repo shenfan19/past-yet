@@ -11,7 +11,7 @@ import * as sim from '../js/sim.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
-const D = await loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => 'en');
+const D = await loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => 'en', { drafts: true });
 const LK = D.get('config.office.luck');
 const seeds = D.get('config.tools.probe_seeds');
 const events = D.get('catalog.events').filter((e) => e.scene);

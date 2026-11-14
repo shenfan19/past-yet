@@ -88,6 +88,10 @@ founder:
   default_gender: x
   default_skin: t3
   default_base: {wit: 4, constitution: 4, finesse: 4, will: 4, luck: 4}
+# What is published. A simulated era whose model says `metadata.status: draft`, and a catalogue event that says `draft: true`, is left out of the game while drafts is false, so unfinished content can sit
+# in the cards and be added step by step. The page shows drafts with ?dev=1, and the tools always check them. See the task about the models for what finished means.
+release:
+  drafts: false
 clock:
   sec_per_day: 60
   speeds:

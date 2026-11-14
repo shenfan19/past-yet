@@ -26,7 +26,9 @@ export function merge(base, over) {
 }
 
 // pickLang(i18n) returns the language code to use. A code that is not in config.i18n.locales, or a language with no file, falls back.
-export async function loadData(readText, parse, pickLang) {
+// opts.drafts: show what is marked as a draft. A simulated era whose model says `metadata.status: draft` and a catalogue event that says `draft: true` are left out of the game, so
+// content can be added step by step and only the finished part is published. The event of a draft era falls back to its own sync points, and the wiki cards of a draft era are dropped.
+export async function loadData(readText, parse, pickLang, opts = {}) {
   const o = {};
   for (const f of FILES) o[f] = parse(await readText('data/' + f + '.yaml'));
   const I = o.config.i18n;
@@ -39,6 +41,27 @@ export async function loadData(readText, parse, pickLang) {
     const base = await loadLocale(stem, I.fallback);
     o[key] = lang === I.fallback ? base : merge(base, await loadLocale(stem, lang));
   }
+  o.world = JSON.parse(await readText('data/world_land.json'));
+  o.core_model = JSON.parse(await readText('data/core/traveler_stay.lm.json'));
+  o.core_bridge = JSON.parse(await readText('data/core/traveler_stay.bridge.json'));
+  o.era_raw = {};
+  o.era_src = {};
+  for (const id of o.config.eras) {
+    const src = await readText('data/eras/' + id + '.lm.yaml');
+    o.era_src[id] = src;
+    o.era_raw[id] = parse(src);
+  }
+  // what is still a draft is left out unless it was asked for
+  if (!(opts.drafts ?? o.config.release.drafts)) {
+    const drafts = new Set(o.config.eras.filter((id) => o.era_raw[id].metadata.status === 'draft'));
+    o.config.eras = o.config.eras.filter((id) => !drafts.has(id));
+    for (const id of drafts) { delete o.era_raw[id]; delete o.era_src[id]; delete o.config.stars.energy_base[id]; }
+    const gone = new Set(o.catalog.events.filter((e) => e.draft).map((e) => e.id));
+    o.catalog.events = o.catalog.events.filter((e) => !e.draft);
+    for (const e of o.catalog.events) if (drafts.has(e.era)) delete e.era;
+    const hidden = (c) => (c.era && drafts.has(c.era)) || (c.unlock && c.unlock.era && drafts.has(c.unlock.era)) || (c.events && c.events.length && c.events.every((x) => gone.has(x)));
+    for (const k of Object.keys(o.encyclopedia.sections)) o.encyclopedia.sections[k] = o.encyclopedia.sections[k].filter((c) => !hidden(c));
+  }
   // every catalogue event has a relic, which is an antique: it points at the event and sells for money
   const C = o.catalog;
   const period = (y) => C.periods.find((p) => y < p.until).id;
@@ -49,16 +72,6 @@ export async function loadData(readText, parse, pickLang) {
     o.antiques.antiques[id] = { era: e.era || null, event: e.id, kind: 'key', price, start_owned: !!e.start, playable: true, tags: [e.field, e.region, period(e.year), ...(e.regret ? ['regret'] : [])] };
     const t = o.text.catalog[e.id];
     o.text.antiques[id] = { name: t.relic, desc: t.relic_desc };
-  }
-  o.world = JSON.parse(await readText('data/world_land.json'));
-  o.core_model = JSON.parse(await readText('data/core/traveler_stay.lm.json'));
-  o.core_bridge = JSON.parse(await readText('data/core/traveler_stay.bridge.json'));
-  o.era_raw = {};
-  o.era_src = {};
-  for (const id of o.config.eras) {
-    const src = await readText('data/eras/' + id + '.lm.yaml');
-    o.era_src[id] = src;
-    o.era_raw[id] = parse(src);
   }
   const D = new Data(o);
   D.lang = lang;

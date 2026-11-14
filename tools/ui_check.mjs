@@ -525,6 +525,8 @@ try {
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '0');
   ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 6);
+  // the game so far was played with the drafts shown, and a page without them does not know their places, so the trips to them are taken out of the save first
+  await page.evaluate(() => { const g = window.__game, S = g.ctx.S(), D = g.D; const draft = new Set(D.get('config.eras').filter((id) => D.get('era_raw.' + id).metadata.status === 'draft')); S.dispatches = S.dispatches.filter((d) => !draft.has(d.eraId)); S.visited = S.visited.filter((x) => !draft.has(x)); if (S.trips) S.trips = S.trips.filter((x) => !draft.has(x.place)); for (const k of draft) delete S.stars[k]; g.ctx.save(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?dev=0&lang=zh`);
   await page.waitForSelector('.lead');
   // settings, music and effects
@@ -572,6 +574,7 @@ try {
   ok('guest has three pages and three tools', (await page.locator('#tabs [data-tab]').count()) === 3 && (await page.locator('#tools [data-act=modalopen]').count()) === 3);
   await tool('wiki');
   await page.waitForSelector('.wiki');
+  ok('without dev the drafts are left out, and an event of a draft falls back to its own points', await page.evaluate(() => { const D = window.__game.D; return D.get('config.eras').every((id) => D.get('era_raw.' + id).metadata.status !== 'draft') && D.get('catalog.events').every((e) => !e.era || D.get('config.eras').includes(e.era)); }));
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });

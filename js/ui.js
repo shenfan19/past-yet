@@ -168,6 +168,15 @@ export function createUI(D, ctx) {
   const shortOfPlace = (id, light) => (light ? T.catalog[id].place : T.eras[id].short);
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
   const placeName = (d) => (d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name);
+  // The protagonist of a place is who the story is about, and is the more important name of a record: the figure of a catalogue event, or the protagonist of a simulated era, linked to the article about them.
+  const protagonistOf = (d) => {
+    if (d.light) return { name: T.catalog[d.eraId].figure, link: 'people:' + d.eraId };
+    const ET = T.eras[d.eraId];
+    const art = Object.values(ET.plots || {}).map((x) => x.article).find(Boolean);
+    return { name: ET.protagonist, link: art || '' };
+  };
+  const protagonistHtml = (d) => { const p = protagonistOf(d); return p.link ? wl(p.link, p.name) : esc(p.name); };
+  const staffLine = (id) => `<div class="muted small">${U.report.staff_line.replace('{x}', staffLink(id))}</div>`;
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
   const outcomeOf = (d) => (d.recalled ? U.report.recalled : d.light ? U.light.outcome[d.report.outcomeId] : d.report.outcomeName);
   // a plain running count of the trips sent out, not a reference to anything
@@ -395,7 +404,7 @@ export function createUI(D, ctx) {
       // the stars of a trip that is not home yet are not known, so the cell shows the wait
       const status = ready ? `<span class="chip warn pulse">${U.office.pending}</span>` : `<span class="muted">⏳ ${r1(left)} ${U.report.days}</span>${refused}`;
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : recallBtn;
-      return `<div class="outrow pend"><span class="muted">${seqOf(d)}</span><b>${placeYear(d)}</b><span class="nowrap">${esc(placeShort(d))}</span><span class="nowrap">${staffLink(d.spec.staffId)}</span><span class="nowrap">${status}</span><span class="grow"></span><span class="nowrap">${acts}</span></div>`;
+      return `<div class="outrow pend"><span class="muted">${seqOf(d)}</span><b>${placeYear(d)}</b><span class="nowrap">${protagonistHtml(d)} · ${esc(placeShort(d))}</span><span class="nowrap muted">${staffLink(d.spec.staffId)}</span><span class="nowrap">${status}</span><span class="grow"></span><span class="nowrap">${acts}</span></div>`;
     });
     return `<div class="sec" id="home-pending">${U.office.on_road} (${out.length})</div>
       ${pg.html}<div class="pendgrid">${rows.join('')}</div>`;
@@ -409,12 +418,12 @@ export function createUI(D, ctx) {
     const nArch = S.trips.filter((x) => x.archived).length;
     const pg = listbox.paginate('log', all);
     const trips = pg.shown;
-    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
+    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${protagonistHtml({ eraId: t.place, light: t.light })} · ${esc(shortOfPlace(t.place, t.light))}${staffLine(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
     const rows = done.join('');
     const bar = S.trips.length ? `<div class="logbar"><span class="logtools"><button class="ghost" data-act="archiverule" data-id="notbest"${tip(U.office.archive_tip)}>${U.office.archive_notbest}</button><label class="check"><input type="checkbox" id="log-archived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${nArch})</label></span>${pg.html}</div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
-      ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
+      ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
@@ -560,7 +569,7 @@ export function createUI(D, ctx) {
     const summary = U.light.summary[o].replace('{staff}', staffName(D, cur.spec.staffId)).replace('{place}', c.place).replace('{figure}', c.figure);
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${staffLink(cur.spec.staffId)} · ${esc(c.name)}</h2><span class="stamp">${esc(U.light.outcome[o])}</span></div>
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2><span class="stamp">${esc(U.light.outcome[o])}</span></div>${staffLine(cur.spec.staffId)}
       <p style="font-size:16px">${esc(summary)}</p>
       <div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>
       <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (D.get('catalog.events').find((x) => x.id === cur.eraId).scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
@@ -580,7 +589,7 @@ export function createUI(D, ctx) {
     const P = cur.paid;
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${staffLink(cur.spec.staffId)} · ${esc(placeName(cur))}</h2><span class="stamp">${U.report.recalled}</span></div>
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(placeName(cur))}</h2><span class="stamp">${U.report.recalled}</span></div>${staffLine(cur.spec.staffId)}
       <p style="font-size:16px">${U.report.recalled_text.replace('{day}', String(Math.floor(cur.recallDay) + 1)).replace('{p}', String(Math.round(P.share * 100)))}</p>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
@@ -622,7 +631,7 @@ export function createUI(D, ctx) {
     const vsHtml = st.vs ? vsBlock(cur) : '';
     return `
       <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${staffLink(spec.staffId)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>${staffLine(spec.staffId)}
       <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
       <div class="sec">${U.report.summary}</div>
       <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>
