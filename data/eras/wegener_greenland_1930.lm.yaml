@@ -346,18 +346,10 @@ actions:
       level: act_protect
       requires: "arrived == 1 and protect_room >= 1 and (S - P) >= 5 and traveler.fatigue < tired_limit"
       utility: "pref_prevent * (0.6 + 1.0 * min(1, (S - P) / protect_sat))"
-    talk:
-      level: act_talk
-      requires: "arrived == 1 and wegener.rapport < 1 and traveler.fatigue < tired_limit"
-      utility: "pref_ally * (talk_base + traveler.curiosity * 0.7 + (1 - wegener.rapport) * 0.5 + 0.3 * has_handbook) + traveler.appeal_urge * 1.2 - traveler.kindness * 0.9 * min(1, Iu / treat_sat)"
     bedside:
       level: act_bedside
       requires: "arrived == 1 and Iu >= 1 and ors_stock < ors_per_patient and traveler.fatigue < tired_limit"
       utility: "traveler.kindness * 1.3 * min(1, Iu / treat_sat)"
-    lobby:
-      level: act_lobby
-      requires: "arrived == 1 and reform_day < 0 and wegener.rapport >= lobby_rapport_min and wegener.evidence >= lobby_evidence_min and traveler.fatigue < tired_limit"
-      utility: "pref_ally * (traveler.eloquence * 1.4 * wegener.rapport + 0.4)"
     rest:
       level: act_rest
       requires: "arrived == 1"
@@ -392,12 +384,7 @@ events:
 milestones:
   first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   first_protect: {when: "protected_total >= 1", importance: 3, tag: branch, needs_traveler: true}
-  met_wegener: {when: "wegener_act_meet * act_talk >= 1", importance: 4, tag: branch, needs_traveler: true}
-  wegener_trusts: {when: "wegener.rapport >= 0.5", importance: 3, tag: branch, needs_traveler: true}
-  wegener_convinced: {when: "wegener.belief >= 0.8 and wegener.rapport >= 0.4", importance: 4, tag: branch, needs_traveler: true}
-  board_moves: {when: "wegener.board_pressure >= 0.6", importance: 4, tag: branch, needs_traveler: false}
   reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: history, needs_traveler: false}
-  reform_early: {when: "reform_day >= 0 and advance_days > 0.2", importance: 5, tag: branch, needs_traveler: true}
   eismitte_reached: {when: "day >= 10", importance: 5, tag: history, needs_traveler: false}
   left_eismitte: {when: "day >= 12", importance: 5, tag: history, needs_traveler: false}
   last_journey: {when: "day >= 27", importance: 5, tag: history, needs_traveler: false}
@@ -425,7 +412,6 @@ hints:
   - {when: "traveler.block_count >= 2 and resp_insist == 1", key: lost_ors}
   - {when: "protect_room >= 40 and traveler.progress < 1", key: unused_protect}
   - {when: "ors_stock >= 20", key: unused_ors}
-  - {when: "wegener.rapport < 0.4 and has_handbook > 0", key: ally_gap}
   - {when: "1 == 1", key: none}
 
 recall:
@@ -462,9 +448,7 @@ item_bindings:
   recall_charm: {has_charm: 1}
   heart_monitor: {has_monitor: 1}
 
-plots:
-  field_notes: {character: wegener, tech: 4, bindings: {wegener.evidence: 0.2}}
-  germ_theory: {character: wegener, tech: 7, bindings: {wegener.evidence: 0.5}}
+plots: {}
 
 strategies:
   focus:

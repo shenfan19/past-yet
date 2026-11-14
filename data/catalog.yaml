@@ -6723,3 +6723,86 @@ events:
                   - vigil
               - stat:
                   will: 6
+  - id: sun_yat_sen_beijing_1925
+    year: 1925
+    lon: 116.41
+    lat: 39.92
+    region: asia
+    field: thought
+    tier: 1
+    stay: 7
+    after: sun_yat_sen_guangzhou
+    channels:
+      C: 1
+      G: 2
+    regret: true
+    scene:
+      points:
+        - id: p1
+          kind: hold
+          req:
+            any:
+              - trait:
+                  - vigil
+                  - patient
+              - stat:
+                  will: 6
+        - id: p2
+          kind: care
+          req:
+            any:
+              - job:
+                  - nurse
+                  - caregiver
+                  - doctor
+                  - physician
+                  - paramedic
+                  - midwife
+              - trait:
+                  - kind
+                  - attached
+        - id: p3
+          kind: trust
+          redeem: true
+          req:
+            trait:
+              - attached
+              - faithful
+              - kind
+              - quiet
+  - id: sun_yat_sen_university_1926
+    year: 1926
+    lon: 113.27
+    lat: 23.13
+    region: asia
+    field: thought
+    tier: 1
+    stay: 5
+    after: sun_yat_sen_beijing_1925
+    channels:
+      H: 1
+    scene:
+      points:
+        - id: p1
+          kind: notice
+          req:
+            stat:
+              wit: 5
+        - id: p2
+          kind: hold
+          req:
+            any:
+              - job:
+                  - archivist
+                  - proofreader
+                  - accountant
+              - trait:
+                  - methodical
+        - id: p3
+          kind: trust
+          req:
+            trait:
+              - kind
+              - cheerful
+              - cosmopolitan
+              - patient

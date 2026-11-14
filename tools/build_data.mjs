@@ -199,6 +199,7 @@ for (const lang of LANGS) {
     const held = yamlFiles(`people/${m}/events`).map((f) => f.replace(/\.yaml$/, ''));
     for (const e of held) if (!listed.includes(e)) fail(`people/${m}/events/${e}.yaml is not listed in the events of people/${m}/person.yaml`);
     for (const e of listed) if (!held.includes(e)) fail(`people/${m}/person.yaml lists the event ${e}, which is not in people/${m}/events`);
+    for (const e of held) { const a = read(`people/${m}/events/${e}.yaml`).after; if (a && !held.includes(a)) fail(`people/${m}/events/${e}.yaml opens after ${a}, which is not an event of the same person`); }
     for (const e of held) { if (claimed.has(e)) fail(`the event ${e} is in people/${m} and in people/${claimed.get(e)}`); claimed.set(e, m); }
     const stray = fs.readdirSync(path.join(CARDS, 'people', m)).filter((x) => !['person.yaml', 'events', 'era', 'wiki', 'antiques', 'images'].includes(x));
     if (stray.length) fail(`people/${m} holds ${stray.join(', ')}, which a module does not use`);

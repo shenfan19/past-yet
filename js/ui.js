@@ -152,6 +152,7 @@ export function createUI(D, ctx) {
   }
   const staffLink = (id) => `<a class="wl" data-act="staffopen" data-id="${esc(id)}"${tip(staffTip(id))}>${esc(staffName(D, id))}</a>`;
   // a three star trip that earned a point of an attribute says so in the accounts
+  const openedRows = (paid) => ((paid && paid.opened) || []).map((id) => `<tr><td>${U.report.opened}</td><td class="num">${esc(T.catalog[id].name)}</td></tr>`).join('');
   const grownRow = (paid) => (paid && paid.grown ? `<tr><td>${U.report.grown}</td><td class="num">${esc(T.stats[paid.grown])} +1</td></tr>` : '');
   // The stars an employee has brought in, as three counts: three stars, two stars, one star. It never grows into a list.
   const tallyOf = (id) => ctx.S().staff[id].tally || { 3: 0, 2: 0, 1: 0 };
@@ -163,16 +164,22 @@ export function createUI(D, ctx) {
   const starsHtml = (n, place) => { const m = place ? ctx.backend.maxStars(place) : STAR_MAX; return starRow(n, m); };
   const starRow = (n, STAR_MAX) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
-  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(textOf(p.id))}</li>`).join('')}</ul>`;
+  // a point that a trait made up for, or that a trait lost, says so, because the timeline shows what happened and the traits then changed the count
+  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}${p.lost ? ' lost' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}</li>`).join('')}</ul>`;
   const yearOfPlace = (id, light) => (light ? D.get('catalog.events').find((x) => x.id === id).year : ctx.era(id).raw.metadata.era.year);
   const shortOfPlace = (id, light) => (light ? T.catalog[id].place : T.eras[id].short);
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
   const placeName = (d) => (d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name);
   // The protagonist of a place is who the story is about, and is the more important name of a record: the figure of a catalogue event, or the protagonist of a simulated era, linked to the article about them.
+  // which person an event belongs to: a person can have several events, the episodes of that person
+  const personOfEvent = {};
+  for (const p of D.get('encyclopedia.sections.people')) for (const e of p.events || []) personOfEvent[e] = p.id;
   const protagonistOf = (d) => {
-    if (d.light) return { name: T.catalog[d.eraId].figure, link: 'people:' + d.eraId };
+    if (d.light) return { name: T.catalog[d.eraId].figure, link: personOfEvent[d.eraId] ? 'people:' + personOfEvent[d.eraId] : '' };
+    // the person of an era is the figure of the event that hands over to it; the two older eras name theirs in the plots
     const ET = T.eras[d.eraId];
-    const art = Object.values(ET.plots || {}).map((x) => x.article).find(Boolean);
+    const ev = D.get('catalog.events').find((x) => x.era === d.eraId);
+    const art = ev && personOfEvent[ev.id] ? 'people:' + personOfEvent[ev.id] : Object.values(ET.plots || {}).map((x) => x.article).find(Boolean);
     return { name: ET.protagonist, link: art || '' };
   };
   const protagonistHtml = (d) => { const p = protagonistOf(d); return p.link ? wl(p.link, p.name) : esc(p.name); };
@@ -579,6 +586,7 @@ export function createUI(D, ctx) {
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
+        ${openedRows(P)}
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>
       <p class="muted">${U.light.note}</p>`;
@@ -596,6 +604,7 @@ export function createUI(D, ctx) {
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
+        ${openedRows(P)}
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>`;
   }
@@ -654,6 +663,7 @@ export function createUI(D, ctx) {
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(cur.paid.energy)}</td></tr>
         ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
+        ${openedRows(cur.paid)}
         <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
       </tbody></table>
       ${R.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}

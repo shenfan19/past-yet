@@ -64,7 +64,13 @@ export function createWiki(X) {
         id: 'people:' + e.id, cat: 'people', title: e.name,
         tags: evs.length ? D.get('antiques.antiques.relic_' + evs[0] + '.tags') : e.tags,
         unlock: evs.length ? { anchored: 'relic_' + evs[0] } : e.unlock, refs: evs.length ? ['catalog'] : e.refs,
-        body: () => `<p>${link(e.text)}</p>${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`,
+        // the stars of a person are the best stars of all the episodes of that person, added up
+        body: () => {
+          const keys = evs.map((id) => { const c = D.get('catalog.events').find((x) => x.id === id); return c && c.era ? c.era : id; }).filter((k) => D.get('catalog.events').some((x) => x.id === k || x.era === k));
+          const got = keys.reduce((a, k) => a + (ctx.S().stars[k] || 0), 0), all = keys.reduce((a, k) => a + ctx.backend.maxStars(k), 0);
+          const total = keys.length > 1 ? `<div class="muted">${esc(U.enc.person_stars.replace('{n}', String(got)).replace('{m}', String(all)).replace('{k}', String(keys.length)))}</div>` : '';
+          return `<p>${link(e.text)}</p>${total}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
+        },
       });
     }
     for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });

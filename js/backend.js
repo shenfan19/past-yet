@@ -75,7 +75,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // how many stars a place can give: a scene has one per sync point, everything else three
   const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
-  const lightStay = (eventId) => L.stay_by_tier[lightEvent(eventId).tier];
+  const lightStay = (eventId) => { const e = lightEvent(eventId); return e.stay || L.stay_by_tier[e.tier]; };
   // A trait is worth something at the sync points. Each point is about one kind of thing, and the traits of the employee add up to a bonus for that kind:
   // a point that was missed is still reached with the chance of the bonus, and a negative bonus loses a point that was reached. The draw is seeded.
   const traitBonus = (staffId, kind) => D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).points[kind] || 0), 0);

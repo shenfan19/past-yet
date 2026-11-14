@@ -291,6 +291,7 @@ ui:
     none_found: No feasible plan found
     kit: Kit
   enc:
+    person_stars: 'Stars over the {k} episodes: {n} of {m}'
     sections:
       places: Places
       people: People
@@ -510,6 +511,7 @@ ui:
     reached_home: Enough energy to go home. The prototype ends here.
   report:
     protagonist: Protagonist
+    opened: Next episode opens
     staff_line: 'Employee: {x}'
     none: No reports yet. Send someone out first.
     cumulative: ' (cumulative)'
@@ -718,6 +720,8 @@ ui:
     need_job: the job {j}
     need_gear: '{i}'
     need_luck: a little luck
+    by_trait: made up by a trait
+    lost_by_trait: lost to a trait
   welcome:
     title: Welcome
     story: You run a small agency that sends people into the past. History cannot be changed, so every trip happens on a branch of its own, and how far the branch differs from the main timeline is paid to you as time energy. Collect enough of it and you can go home to your family.
@@ -3725,6 +3729,28 @@ catalog:
       p1: Be of use to the people who come asking
       p2: Put a clear map of the schools in every hand
       p3: Keep the work going until the preparation begins
+  sun_yat_sen_beijing_1925:
+    name: The last winter in Beijing
+    place: Beijing
+    figure: Sun Yat-sen
+    story: Sun Yat-sen reaches Beijing on 31 December 1924, already ill. On 26 January 1925 he enters the Peking Union Medical College Hospital and is operated on, and the doctors find cancer. On 18 February he is moved to the residence in Tieshizi Hutong, and he dies there on the morning of 12 March. You can change none of this. You can keep watch.
+    relic: A watcher's scarf
+    relic_desc: A plain wool scarf, worn through the nights of one winter.
+    points:
+      p1: Keep watch through the long nights in the corridor and at the gate
+      p2: Boil water, carry meals and run errands for those who are keeping watch
+      p3: Leave a school badge from Guangzhou at the door, as a token of regard
+  sun_yat_sen_university_1926:
+    name: The university takes his name
+    place: Guangzhou
+    figure: Sun Yat-sen
+    story: On 5 August 1926 the school affairs meeting of National Guangdong University resolves to rename the university after Sun Yat-sen and to ask the government to approve it. On 17 August the National Government orders the change, and the university becomes National Sun Yat-sen University. He has been dead for a year and five months. The statue you set out from stands on its campus.
+    relic: A wooden sign with the new name
+    relic_desc: A narrow board, freshly painted, from the first days of the new name.
+    points:
+      p1: Find the resolution in the record of the meeting
+      p2: Sort and file the papers and seals that carry the old name
+      p3: Help the new students learn the new name and where to go
 eras:
   broad_street_1854:
     name: Broad Street, London 1854
@@ -4424,17 +4450,7 @@ eras:
       - history
     event_titles:
       time_strain: Time slip
-    plots:
-      school_registers:
-        name: Give Sun the registers of the three schools
-        desc: Lets him see the numbers of the teachers and students at a glance.
-        character: Sun Yat-sen
-        article: people:sun_yat_sen_guangzhou
-      germ_theory:
-        name: Explain germ theory to Sun Yat-sen
-        desc: Needs the craft of microbiology, which this era does not have.
-        character: Sun Yat-sen
-        article: people:sun_yat_sen_guangzhou
+    plots: {}
     blurb: Three schools, one order to join them, and the weeks before anything is built. Close, cheap, and the effect of care and clear directions is clear. This is where the game begins.
     handle_label: The preparatory work begins
     protagonist: Sun Yat-sen
@@ -4465,19 +4481,15 @@ eras:
     star_points:
       settled: Be of use to the people who come asking
       campus: Put a clear map of the schools in every hand
-      reform: Have the preparation begin ahead of history
+      lin: Write down the question of the student Lin
     milestones:
+      lin_question: '{date}: The question Lin asked is on paper and on its way to the people who collect such questions.'
       site_known: '{date}: {staff} has the map in every hand. Nobody asks where to go any more.'
       people_settled: '{date}: {staff} has found a place and a class for everyone who came asking.'
       first_treat: '{date}: {staff} writes down the first names and finds a teacher and his class a room.'
       first_protect: '{date}: {staff} draws the first simple map of the schools and their sites and hands it round.'
-      met_sun: '{date}: {staff} is received by Sun Yat-sen.'
-      sun_trusts: '{date}: Sun Yat-sen gives {staff} the lists of the three schools to work from.'
-      sun_convinced: '{date}: Sun Yat-sen takes up the plan that {staff} put to him.'
-      board_moves: '{date}: Word goes round that the preparatory work will begin soon.'
       reform_history: '{date}: Zou Lu takes up the preparation, as in history. The main timeline does not change.'
-      reform_early: '{date}: Zou Lu takes up the preparation {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
-      trust_won: '{date}: The clerks of the three schools no longer keep {staff} out, and some ask for help.'
+      trust_won: '{date}: The clerks of the three schools come to {staff} on their own to ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of people left without a place falls to single digits.'
       students_told: '{date}: Zou Lu calls the students of the three schools together in the hall of the Higher Normal School and announces the preparation.'
@@ -4523,7 +4535,6 @@ eras:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
       unused_protect: Maps were left over. The limit was the trust of the three schools, not the supplies. Let the employee help people first to build trust.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
-      ally_gap: Sun Yat-sen's evidence is still thin. The handbook helps, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   tupaia_tahiti_1769:
     name: Tahiti, 1769
@@ -4946,17 +4957,7 @@ eras:
       - history
     event_titles:
       time_strain: Time slip
-    plots:
-      field_notes:
-        name: Give Scott a field notebook
-        desc: Lets him set down the weather, the days and the stores in a form others can check.
-        character: Robert Falcon Scott
-        article: people:scott_last_camp
-      germ_theory:
-        name: Explain germ theory to Robert Falcon Scott
-        desc: Needs the craft of microbiology, which this era does not have.
-        character: Robert Falcon Scott
-        article: people:scott_last_camp
+    plots: {}
     blurb: The way back from the Pole across the ice shelf, with the fuel and the food running short. Close, cheap, and the effect of warmth and food is clear.
     handle_label: Nothing in the record to change
     protagonist: Robert Falcon Scott
@@ -4985,10 +4986,6 @@ eras:
     milestones:
       first_treat: '{date}: {staff} melts the first pot of water and hot food for a man who has stopped talking. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first blankets and builds a wall of snow blocks, and teaches the others to do the same.'
-      met_scott: '{date}: {staff} is received by Scott.'
-      scott_trusts: '{date}: Scott gives {staff} the notes to work from.'
-      scott_convinced: '{date}: Scott takes up the plan that {staff} put to him.'
-      board_moves: '{date}: Word goes round that the plan might change.'
       trust_won: '{date}: The members of the party no longer keep {staff} out, and some ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of ailing men falls to one or none.'
@@ -5038,7 +5035,6 @@ eras:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
       unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
-      ally_gap: The handbook helps most when the employee spends time with the leader.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   wegener_greenland_1930:
     name: Greenland ice sheet, 1930
@@ -5053,17 +5049,7 @@ eras:
       - history
     event_titles:
       time_strain: Time slip
-    plots:
-      field_notes:
-        name: Give Wegener a field notebook
-        desc: Lets him set down the weather and the sledge runs so that others can check them.
-        character: Alfred Wegener
-        article: people:wegener_greenland
-      germ_theory:
-        name: Explain germ theory to Alfred Wegener
-        desc: Needs the craft of microbiology, which this era does not have.
-        character: Alfred Wegener
-        article: people:wegener_greenland
+    plots: {}
     blurb: A scientific expedition on the ice in the last weeks before the dark, with an inland station still short of supplies. Close, cheap, and the effect of warmth and food is clear.
     handle_label: Nothing in the record to change
     protagonist: Alfred Wegener
@@ -5092,10 +5078,6 @@ eras:
     milestones:
       first_treat: '{date}: {staff} brews the first hot drink for a man who has stopped talking. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first blankets and sets up a windbreak, and teaches the sledge drivers to do the same.'
-      met_wegener: '{date}: {staff} is received by Wegener.'
-      wegener_trusts: '{date}: Wegener gives {staff} the notes to work from.'
-      wegener_convinced: '{date}: Wegener takes up the plan that {staff} put to him.'
-      board_moves: '{date}: Word goes round that the plan might change.'
       trust_won: '{date}: The sledge drivers no longer keep {staff} out, and some ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of ailing men falls to one or none.'
@@ -5146,5 +5128,4 @@ eras:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
       unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
-      ally_gap: The handbook helps most when the employee spends time with the leader.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.

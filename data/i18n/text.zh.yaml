@@ -291,6 +291,7 @@ ui:
     none_found: 没有找到可行方案
     kit: 随身
   enc:
+    person_stars: '{k} 个篇章的星数合计：{n} / {m}'
     sections:
       places: 地区
       people: 人物
@@ -510,6 +511,7 @@ ui:
     reached_home: 能量已够回家。这个原型到此为止。
   report:
     protagonist: 主角
+    opened: 下一个篇章开放
     staff_line: 员工：{x}
     none: 还没有归来报告。先去派一趟。
     cumulative: （累计）
@@ -718,6 +720,8 @@ ui:
     need_job: 职业{j}
     need_gear: '{i}'
     need_luck: 一点运气
+    by_trait: 靠特质补上
+    lost_by_trait: 因特质失去
   welcome:
     title: 欢迎
     story: 你是一家穿越事务所的所长，派员工去过去做事。历史改变不了，每一趟都发生在自己的分支上，这条分支和主时间线差多少，就换成多少时空能量。攒够了，你就能回去见家人。
@@ -3725,6 +3729,28 @@ catalog:
       p1: 帮上每一个来问的人
       p2: 让清楚的简图人手一份
       p3: 把事情一直推到筹备开始
+  sun_yat_sen_beijing_1925:
+    name: 北京的最后一个冬天
+    place: 北京
+    figure: 孙中山
+    story: 1924 年 12 月 31 日孙中山抵达北京，已经带病。1925 年 1 月 26 日他住进协和医院并接受手术，医生发现是癌症。2 月 18 日他移到铁狮子胡同的行馆，3 月 12 日上午在那里去世。这些你一样也改变不了，你能做的是守着。
+    relic: 一条守夜人的围巾
+    relic_desc: 一条普通的羊毛围巾，陪人熬过了一个冬天的许多个夜晚。
+    points:
+      p1: 在走廊里和大门外守过一个个长夜
+      p2: 替守在这里的人烧水、送饭、跑腿
+      p3: 把一枚从广州带来的校徽留在门口，作为一份心意
+  sun_yat_sen_university_1926:
+    name: 这所大学以他的名字命名
+    place: 广州
+    figure: 孙中山
+    story: 1926 年 8 月 5 日，国立广东大学的校务会议决议把学校改名纪念孙中山，并呈请政府批准。8 月 17 日国民政府下令改名，学校成为国立中山大学。这时他已经去世一年零五个月。你出发时面前的那座铜像，就立在这所大学的校园里。
+    relic: 一块写着新校名的木牌
+    relic_desc: 一块窄木板，漆还是新的，来自新校名最初的几天。
+    points:
+      p1: 在会议记录里找到那条决议
+      p2: 把带着旧校名的文件和印章清点归档
+      p3: 帮新来的学生认识新校名，知道往哪里去
 eras:
   broad_street_1854:
     name: 伦敦宽街 1854
@@ -4424,17 +4450,7 @@ eras:
       - history
     event_titles:
       time_strain: 时间错位
-    plots:
-      school_registers:
-        name: 送孙中山三所学校的名册
-        desc: 让他一眼看到师生各有多少人。
-        character: 孙中山
-        article: people:sun_yat_sen_guangzhou
-      germ_theory:
-        name: 把细菌致病的理论讲给孙中山
-        desc: 需要微生物学的工艺，这个时代还没有。
-        character: 孙中山
-        article: people:sun_yat_sen_guangzhou
+    plots: {}
     blurb: 三所学校，四处校址，一道合并的命令。近，成本低，照应和指路的效果很明显。游戏从这里开始。
     handle_label: 筹备工作开始
     protagonist: 孙中山
@@ -4465,19 +4481,15 @@ eras:
     star_points:
       settled: 帮上每一个来问的人
       campus: 让清楚的简图人手一份
-      reform: 让筹备工作比历史上更早开始
+      lin: 记下学生阿林的问题
     milestones:
+      lin_question: '{date}：阿林问的问题已经写在纸上，送往收集这类问题的人手里。'
       site_known: '{date}：简图人手一份，没有人再问往哪里去。'
       people_settled: '{date}：来问的人，{staff} 都给找到了位置和班级。'
       first_treat: '{date}：{staff} 记下第一批名字，给一位老师和他的班找到了一间教室。'
       first_protect: '{date}：{staff} 画出第一张几所学校和校址的简图，发了下去。'
-      met_sun: '{date}：{staff} 被孙中山接见。'
-      sun_trusts: '{date}：孙中山把三所学校的名单交给 {staff} 用。'
-      sun_convinced: '{date}：孙中山采纳了 {staff} 提出的办法。'
-      board_moves: '{date}：消息传开，筹备工作很快要开始了。'
       reform_history: '{date}：邹鲁接手筹备，和史实一样。主时间线没有变化。'
-      reform_early: '{date}：邹鲁比史实提前 {advance_days:1} 天接手筹备。主时间线没有变化，只是这条分支。'
-      trust_won: '{date}：三所学校的办事员不再把 {staff} 挡在外面，有的还来求助。'
+      trust_won: '{date}：三所学校的办事员开始主动来找 {staff} 帮忙。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：没有着落的人数降到了个位数。'
       students_told: '{date}：邹鲁在高等师范的礼堂把三所学校的学生召集到一起，宣布筹备工作。'
@@ -4523,7 +4535,6 @@ eras:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
       unused_protect: 简图剩下了。限制不是物资，是三所学校对你的信任。先让员工帮人做事，建立信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
-      ally_gap: 孙中山的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
   tupaia_tahiti_1769:
     name: 塔希提 1769
@@ -4946,17 +4957,7 @@ eras:
       - history
     event_titles:
       time_strain: 时间错位
-    plots:
-      field_notes:
-        name: 送斯科特一本野外记录本
-        desc: 让他把天气、日期和物资记成别人能核对的样子。
-        character: 罗伯特·法尔肯·斯科特
-        article: people:scott_last_camp
-      germ_theory:
-        name: 把细菌致病的理论讲给罗伯特·法尔肯·斯科特
-        desc: 需要微生物学的工艺，这个时代还没有。
-        character: 罗伯特·法尔肯·斯科特
-        article: people:scott_last_camp
+    plots: {}
     blurb: 从极点返回、穿过冰架的路上，燃料和食物越来越少。近，成本低，保暖和食物的效果很明显。
     handle_label: 史实里没有可改的决定
     protagonist: 罗伯特·法尔肯·斯科特
@@ -4985,10 +4986,6 @@ eras:
     milestones:
       first_treat: '{date}：{staff} 给一个已经不说话的人化好第一锅水、热好食物，他开始开口了。'
       first_protect: '{date}：{staff} 发下第一批毯子，垒起雪块墙，教其他人照做。'
-      met_scott: '{date}：{staff} 被斯科特接见。'
-      scott_trusts: '{date}：斯科特把笔记交给 {staff} 用。'
-      scott_convinced: '{date}：斯科特采纳了 {staff} 提出的办法。'
-      board_moves: '{date}：消息传开，计划也许要改。'
       trust_won: '{date}：队员们不再把 {staff} 挡在外面，有的还开口求助。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
@@ -5038,7 +5035,6 @@ eras:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
       unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
-      ally_gap: 手册在员工花时间和领队在一起时最有用。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
   wegener_greenland_1930:
     name: 格陵兰冰盖 1930
@@ -5053,17 +5049,7 @@ eras:
       - history
     event_titles:
       time_strain: 时间错位
-    plots:
-      field_notes:
-        name: 送魏格纳一本野外记录本
-        desc: 让他把天气和雪橇路程记下来，别人才能核对。
-        character: 阿尔弗雷德·魏格纳
-        article: people:wegener_greenland
-      germ_theory:
-        name: 把细菌致病的理论讲给阿尔弗雷德·魏格纳
-        desc: 需要微生物学的工艺，这个时代还没有。
-        character: 阿尔弗雷德·魏格纳
-        article: people:wegener_greenland
+    plots: {}
     blurb: 黑夜降临前最后几周冰上的一支科学考察队，冰盖中央的站点还缺物资。近，成本低，保暖和食物的效果很明显。
     handle_label: 史实里没有可改的决定
     protagonist: 阿尔弗雷德·魏格纳
@@ -5092,10 +5078,6 @@ eras:
     milestones:
       first_treat: '{date}：{staff} 给一个已经不说话的人煮好第一杯热饮，他开始开口了。'
       first_protect: '{date}：{staff} 发下第一批毯子，搭起挡风墙，教雪橇手照做。'
-      met_wegener: '{date}：{staff} 被魏格纳接见。'
-      wegener_trusts: '{date}：魏格纳把笔记交给 {staff} 用。'
-      wegener_convinced: '{date}：魏格纳采纳了 {staff} 提出的办法。'
-      board_moves: '{date}：消息传开，计划也许要改。'
       trust_won: '{date}：雪橇手们不再把 {staff} 挡在外面，有的还开口求助。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
@@ -5146,5 +5128,4 @@ eras:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
       unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
-      ally_gap: 手册在员工花时间和领队在一起时最有用。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

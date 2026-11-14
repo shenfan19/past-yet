@@ -87,6 +87,19 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun', 's_founder'].includes(k); S.hire = null; for (const a of ['pump_rust']) { if (!S.locks.includes(a)) S.locks.push(a); if (!S.antiques.includes(a)) S.antiques.push(a); } });
   ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
   ok('the clock stands still before the first trip, with a hint', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 0 && (await page.locator('#clock .chipwrap .chip').count()) === 1 && (await page.locator('#clock svg.ring').count()) === 1);
+  // the episodes of a person: a trip to the first one opens the second, and the page of the person adds up the stars of all of them
+  const ep = await page.evaluate(() => {
+    const g = window.__game, o = g.ui.office, S = g.ctx.S();
+    const before = S.locks.includes('relic_sun_yat_sen_beijing_1925');
+    const d = o.launch('sun_yat_sen_1924', { seed: 1, staffId: 's_ning', items: {} });
+    d.readyDay = S.clock.day; o.claim(d.id);
+    const out = { before, opened: d.paid.opened, lock: S.locks.includes('relic_sun_yat_sen_beijing_1925'), third: S.locks.includes('relic_sun_yat_sen_university_1926'), stay: g.ctx.backend.lightStay('sun_yat_sen_university_1926') };
+    // the trip is taken back out so the rest of the checks start from a clean log
+    S.dispatches = S.dispatches.filter((x) => x.id !== d.id); if (S.trips) S.trips = S.trips.filter((x) => x.id !== d.id); S.seq -= 1; S.staff.s_ning.restUntil = 0; S.staff.s_ning.tally = { 3: 0, 2: 0, 1: 0 }; S.visited = S.visited.filter((x) => x !== 'sun_yat_sen_1924'); delete S.stars.sun_yat_sen_1924; S.energy = 0; g.ctx.save(); g.ui.render();
+    return out;
+  });
+  ok('a trip to the first episode of a person opens the next one and no further', !ep.before && ep.opened.join() === 'sun_yat_sen_beijing_1925' && ep.lock && !ep.third);
+  ok('a story can carry its own length of stay', ep.stay === 5);
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
   ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });
@@ -170,7 +183,7 @@ try {
   await page.click('[data-act=claim]');
   await page.waitForSelector('.tl');
   ok('the report lists three sync points and the stars are the ones hit', await page.evaluate(() => { const hit = document.querySelectorAll('.sync li.hit').length; return document.querySelectorAll('.sync li').length === 3 && document.querySelector('.stars') && document.querySelector('.stars').classList.contains('s' + hit); }));
-  ok('the milestone lines of the points are highlighted in the timeline', (await page.locator('.tl li.star').count()) === (await page.locator('.sync li.hit').count()));
+  ok('the milestone lines of the points are highlighted in the timeline', (await page.locator('.tl li.star').count()) === (await page.locator('.sync li.hit:not(.bonus)').count()) + (await page.locator('.sync li.lost').count()));
   await page.screenshot({ path: path.join(outDir, '4_report.png'), fullPage: true });
   // the share pop-up draws a card with a QR code that reads back as the site address
   await page.click('[data-act=shareopen]');
