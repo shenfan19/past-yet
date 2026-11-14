@@ -29,21 +29,36 @@ The file name is the id. A card with `id:` inside must match its file name.
 
 | Folder | One card is | Output |
 |---|---|---|
+| `people/<person>/` | everything about one historical person, as a module, see below | the output of each card inside |
 | `items/` | a shop item | `data/items.yaml` |
-| `antiques/` | an antique made by hand | `data/antiques.yaml` |
-| `events/` | a famous event with its relic. An optional `era: <model id>` hands the event to a full simulation model in `eras/`: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. An optional `start: true` makes the relic owned from the start, so the place is open from the first moment, and the event is not drawn again among the random start places | `data/catalog.yaml` |
 | `staff/`, `traits/` | an employee, a trait | `data/staff.yaml` |
 | `mainline/` | a stage of the main line | `data/mainline.yaml` |
-| `wiki/places`, `people`, `events` | a hand written wiki article; a person card with `events: [ids]` is the figure of those catalogue events and opens, takes its tags and links with them | `data/encyclopedia.yaml` and its text |
-| `wiki/stats`, `model_events`, `refs` | an attribute with its double edge, a model event, a source | the same |
-| `eras/<id>/` | `model.lm.yaml` the simulation model, `text.<lang>.yaml` the text of the era | `data/eras/<id>.lm.yaml` and the text files |
+| `wiki/stats`, `wiki/model_events`, `wiki/refs`, `wiki/events` | what is shared by several people: an attribute with its double edge, a model event that several eras use, a source that several people cite, a wiki event | `data/encyclopedia.yaml` and its text |
 | `text/<lang>/` | a piece of interface text, merged by key | `data/i18n/text.<lang>.yaml` |
 | `config/`, `world/` | small shared files, the world coastline, `audio.yaml` pieces and effects, `share_qr.yaml` the QR matrix of the site address | copied |
+
+## A person is a module
+
+A historical person has one folder, `people/<person>/`, and the folder holds everything about that person. To find the events of a person, or the model, or the sources, open the folder of the person. To add a person, drop a folder in. To take one out, remove the folder. Nothing else has to change.
+
+```
+people/<person>/
+  person.yaml                    the wiki article of the person, the id is the folder name; `events: [ids]` lists the events of the person
+  events/<event>.yaml            a catalogue event, one or more
+  era/model.lm.yaml, text.<lang>.yaml    a full simulation model of the person and its text, the id of the era is `metadata.name` of the model
+  wiki/places|events|model_events|refs/<id>.yaml    the wiki cards and sources that only this person uses
+  antiques/<id>.yaml             an antique made by hand
+  images/                        pictures of the person, see the design document of the stories for the names
+```
+
+An event card has an optional `era: <model id>` that hands the event to the full model of the person: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. An optional `start: true` makes the relic owned from the start, so the place is open from the first moment, and the event is not drawn again among the random start places. `metadata.status: draft` in a model and `draft: true` on an event keep it out of the published game, see `release` in `config/config.yaml`.
+
+An id may be used once. The build stops with a message when two files use the same id, and `node tools/build_data.mjs --check` says when `data/` is out of date.
 
 Languages are the codes in `config/config.yaml` under `i18n.locales`. A language that lacks a key reads English for that key.
 
 To add:
-- an event: copy a card in `events/`, give it the next `order`, write the text. Its relic becomes an antique when the game loads.
+- a person with an event: copy a folder in `people/`, rename it, and write `person.yaml` and `events/<event>.yaml` with the next `order`. The relic of the event becomes an antique when the game loads.
 - an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, one to three jobs, an ethnicity (one short label that names a people or a descent, such as Igbo, Han or African descent, never a place and never a country plus a descent such as African American; where the person lives belongs in the story), and write a short life story that fits the age, the place and the numbers: a high attribute is a gift that shows in the life, a low one is a flaw that shows too. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, that the titles of the jobs match the ids, and that every region and skin tone is used.
 - a language: add its code to `i18n.locales`, then add that language under `text:` in the cards you want to translate and add `text/<lang>/` files. Nothing is required, English fills the gaps.
 

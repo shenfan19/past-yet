@@ -2,7 +2,8 @@
 //   node tools/build_data.mjs           write data/
 //   node tools/build_data.mjs --check   write nothing, exit 1 if data/ differs from what the cards would produce
 // One card is one yaml file. A card holds the structure of a thing and its text in every language, so one thing is changed in one place.
-// See cards/README.md for the layout.
+// A historical person is a module: the folder cards/people/<person>/ holds everything about that person, the person card, the events, the model of an era, the wiki cards,
+// the sources and the antiques, and a folder can be dropped in or taken out whole. See cards/README.md for the layout.
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -32,16 +33,28 @@ function merge(base, over) {
 const config = read('config/config.yaml');
 const LANGS = Object.keys(config.i18n.locales);
 
-// cards in a folder, ordered by their order field, then by id
+// the modules, one folder per historical person
+const moduleNames = exists('people') ? fs.readdirSync(path.join(CARDS, 'people'), { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name).sort() : [];
+// the files of one kind of card: those in the folder of that kind, and those in the same folder inside a module. The person card of a module is person.yaml and takes the name of the module.
+function entries(dir) {
+  const out = yamlFiles(dir).map((f) => ({ id: f.replace(/\.yaml$/, ''), rel: `${dir}/${f}` }));
+  for (const m of moduleNames) {
+    if (dir === 'wiki/people') { if (exists(`people/${m}/person.yaml`)) out.push({ id: m, rel: `people/${m}/person.yaml` }); continue; }
+    for (const f of yamlFiles(`people/${m}/${dir}`)) out.push({ id: f.replace(/\.yaml$/, ''), rel: `people/${m}/${dir}/${f}` });
+  }
+  const seen = new Set();
+  for (const e of out) { if (seen.has(e.id)) fail(`${dir}: the id ${e.id} is used twice, see ${e.rel}`); seen.add(e.id); }
+  return out;
+}
+// cards of a kind, ordered by their order field, then by id
 function cards(dir) {
-  const list = yamlFiles(dir).map((f) => {
-    const id = f.replace(/\.yaml$/, '');
-    const c = read(`${dir}/${f}`);
-    if (!isObj(c)) { fail(`${dir}/${f}: a card must be a mapping`); return null; }
-    if (c.id !== undefined && c.id !== id) fail(`${dir}/${f}: id ${c.id} does not match the file name`);
-    if (typeof c.order !== 'number') fail(`${dir}/${f}: missing a numeric order`);
-    if (c.text !== undefined) for (const l of Object.keys(c.text)) if (!LANGS.includes(l)) fail(`${dir}/${f}: text language ${l} is not in config.i18n.locales`);
-    if (c.text === undefined || !(config.i18n.fallback in c.text)) fail(`${dir}/${f}: the ${config.i18n.fallback} text is missing`);
+  const list = entries(dir).map(({ id, rel }) => {
+    const c = read(rel);
+    if (!isObj(c)) { fail(`${rel}: a card must be a mapping`); return null; }
+    if (c.id !== undefined && c.id !== id) fail(`${rel}: id ${c.id} does not match the file name`);
+    if (typeof c.order !== 'number') fail(`${rel}: missing a numeric order`);
+    if (c.text !== undefined) for (const l of Object.keys(c.text)) if (!LANGS.includes(l)) fail(`${rel}: text language ${l} is not in config.i18n.locales`);
+    if (c.text === undefined || !(config.i18n.fallback in c.text)) fail(`${rel}: the ${config.i18n.fallback} text is missing`);
     return { id, ...c };
   }).filter(Boolean);
   return list.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
@@ -101,12 +114,20 @@ const eventCards = cards('events');
 emitYaml('catalog.yaml', { ...catalogRules, events: eventCards.map((c) => ({ id: c.id, ...struct(c) })) });
 
 // ---------- eras: the model is copied as it is ----------
-const eraDirs = fs.existsSync(path.join(CARDS, 'eras')) ? fs.readdirSync(path.join(CARDS, 'eras')).sort() : [];
-for (const id of config.eras) {
-  if (!eraDirs.includes(id)) { fail(`config.eras lists ${id} but cards/eras/${id} is missing`); continue; }
-  emitCopy(`eras/${id}.lm.yaml`, `eras/${id}/model.lm.yaml`);
+// an era is a folder with its model and its text, either in cards/eras or in the era folder of a module. The id of an era is the name in its model.
+const eraDir = {};
+if (exists('eras')) for (const d of fs.readdirSync(path.join(CARDS, 'eras')).sort()) eraDir[d] = `eras/${d}`;
+for (const m of moduleNames) {
+  if (!exists(`people/${m}/era/model.lm.yaml`)) continue;
+  const id = read(`people/${m}/era/model.lm.yaml`).metadata.name;
+  if (id in eraDir) fail(`the era ${id} is in two places, ${eraDir[id]} and people/${m}/era`);
+  eraDir[id] = `people/${m}/era`;
 }
-for (const id of eraDirs) if (!config.eras.includes(id)) fail(`cards/eras/${id} is not in config.eras`);
+for (const id of config.eras) {
+  if (!(id in eraDir)) { fail(`config.eras lists ${id} but no folder holds its model`); continue; }
+  emitCopy(`eras/${id}.lm.yaml`, `${eraDir[id]}/model.lm.yaml`);
+}
+for (const id of Object.keys(eraDir)) if (!config.eras.includes(id)) fail(`${eraDir[id]} is not in config.eras`);
 
 // ---------- encyclopedia ----------
 const sectionNames = ['places', 'people', 'events'];
@@ -142,7 +163,7 @@ for (const lang of LANGS) {
   put('quotes', quoteCards, (t) => t);
   put('catalog', eventCards, (t) => t);
   for (const id of config.eras) {
-    const rel = `eras/${id}/text.${lang}.yaml`;
+    const rel = `${eraDir[id]}/text.${lang}.yaml`;
     if (exists(rel)) (text.eras = text.eras || {})[id] = read(rel);
   }
   if (Object.keys(text).length) emitYaml(`i18n/text.${lang}.yaml`, text);
@@ -166,6 +187,22 @@ for (const lang of LANGS) {
   putEnc('model_events', modelEventCards, (t) => t);
   putEnc('stats', statCards, (t) => t);
   if (Object.keys(enc).length) emitYaml(`i18n/encyclopedia.${lang}.yaml`, enc);
+}
+
+// ---------- the modules are checked as modules ----------
+// A folder in people/ is the whole of a person. Its person card must exist, the events it holds must be listed in that card, and an event must not be claimed by two people.
+{
+  const claimed = new Map();
+  for (const m of moduleNames) {
+    if (!exists(`people/${m}/person.yaml`)) { fail(`people/${m} has no person.yaml`); continue; }
+    const listed = read(`people/${m}/person.yaml`).events || [];
+    const held = yamlFiles(`people/${m}/events`).map((f) => f.replace(/\.yaml$/, ''));
+    for (const e of held) if (!listed.includes(e)) fail(`people/${m}/events/${e}.yaml is not listed in the events of people/${m}/person.yaml`);
+    for (const e of listed) if (!held.includes(e)) fail(`people/${m}/person.yaml lists the event ${e}, which is not in people/${m}/events`);
+    for (const e of held) { if (claimed.has(e)) fail(`the event ${e} is in people/${m} and in people/${claimed.get(e)}`); claimed.set(e, m); }
+    const stray = fs.readdirSync(path.join(CARDS, 'people', m)).filter((x) => !['person.yaml', 'events', 'era', 'wiki', 'antiques', 'images'].includes(x));
+    if (stray.length) fail(`people/${m} holds ${stray.join(', ')}, which a module does not use`);
+  }
 }
 
 // ---------- write or check ----------
@@ -192,6 +229,6 @@ for (const rel of walk(OUT)) {
   differs++;
   if (check) console.log('stale: data/' + rel); else { fs.unlinkSync(path.join(OUT, rel)); console.log('removed data/' + rel); }
 }
-console.log(`${outputs.size} files from ${yamlFiles('items').length + yamlFiles('events').length + yamlFiles('staff').length + yamlFiles('traits').length} item, event, staff and trait cards and more`);
+console.log(`${outputs.size} files from ${entries('items').length + entries('events').length + entries('staff').length + entries('traits').length} item, event, staff and trait cards and more, ${moduleNames.length} person modules`);
 if (check && differs) { console.log(`${differs} files differ, run node tools/build_data.mjs`); process.exit(1); }
 if (check) console.log('data is up to date');
