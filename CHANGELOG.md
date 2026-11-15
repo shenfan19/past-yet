@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.2, 2026-11-15
+
+- Huangzhou 1082, Su Shi on the Eastern Slope, is rewritten and turned on: six dated facts from the Crow Terrace trial to his leaving, the two odes on their lunar days, three sync points for being taken in on the slope, the boatman before the night on the river and a lamp on the road home, and scenes that name the employee.
+
 ## 0.5.1, 2026-11-15
 
 - A small story can be told on the days of its stay. A fact may name `stay_day`, its day counted from the planned arrival, and a sync point may name `day`, so a story on the lunar calendar or with a known order of events reads in that order without converting dates.

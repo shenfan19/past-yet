@@ -6548,52 +6548,75 @@ events:
     lon: 114.88
     lat: 30.45
     region: asia
+    home:
+      - china
     field: literature
     tier: 3
     channels:
       L: 2
       'Y': 1
     regret: true
+    ready: true
     refs:
       - su_shi_huangzhou_primary
+      - wikipedia_crow_terrace
+      - wikipedia_former_ode
+      - wikisource_later_ode
     scene:
       points:
         - id: p1
-          kind: care
+          kind: trust
+          day: 60
           req:
             any:
+              - trait:
+                  - kind
+                  - cheerful
+                  - attached
               - job:
                   - chef
-              - trait:
-                  - faithful
-                  - patient
-                  - attached
+                  - farmer
+                  - baker
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 6
-        - id: p3
           kind: notice
-          redeem: true
+          day: 12
           req:
             any:
               - trait:
-                  - handy
-                  - quiet
+                  - wanderer
+                  - streetwise
+                  - curious
               - job:
-                  - painter
-                  - musician
+                  - sailor
+                  - fisher
+              - stat:
+                  wit: 6
+        - id: p3
+          kind: hold
+          redeem: true
+          day: 104
+          req:
+            any:
+              - trait:
+                  - vigil
+                  - patient
+                  - faithful
+              - stat:
+                  will: 6
       vignettes:
-        - id: place
+        - id: slope
           traits:
-            - skeptical
-            - curious
-        - id: sound
+            - kind
+            - attached
+            - cheerful
+        - id: lamp
           traits:
-            - artistic
+            - vigil
+            - patient
             - quiet
-        - id: landing
+        - id: ferry
     authors:
       - AI
       - Fan Shen

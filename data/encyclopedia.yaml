@@ -215,7 +215,27 @@ refs:
     authors:
       - AI
       - Fan Shen
+  creature_exile:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   su_shi_huangzhou_primary:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  wikipedia_crow_terrace:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  wikipedia_former_ode:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  wikisource_later_ode:
     status: checked
     authors:
       - AI
@@ -3349,7 +3369,42 @@ stats:
     authors:
       - AI
       - Fan Shen
-event_facts: {}
+event_facts:
+  su_shi_huangzhou:
+    module: su_shi_huangzhou
+    facts:
+      - id: crow_terrace
+        date: '1079'
+        sources:
+          - wikipedia_crow_terrace
+          - creature_exile
+      - id: exile
+        date: '1080'
+        sources:
+          - wikipedia_crow_terrace
+          - creature_exile
+      - id: eastern_slope
+        date: '1081'
+        sources:
+          - wikipedia_crow_terrace
+          - creature_exile
+      - id: red_cliff
+        date: '1082'
+        sources:
+          - su_shi_huangzhou_primary
+          - wikipedia_former_ode
+        stay_day: 15
+      - id: later_ode
+        date: '1082'
+        sources:
+          - wikisource_later_ode
+          - wikipedia_former_ode
+        stay_day: 104
+      - id: leaving
+        date: '1084'
+        sources:
+          - wikipedia_crow_terrace
+          - creature_exile
 fact_sources:
   darwin_galapagos_1835:
     surveying:

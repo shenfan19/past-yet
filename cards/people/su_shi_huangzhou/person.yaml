@@ -6,51 +6,55 @@ events:
     lon: 114.88
     lat: 30.45
     region: asia
+    home: [china]
     field: literature
     tier: 3
     channels: {L: 2, Y: 1}
     regret: true
-    refs: [su_shi_huangzhou_primary]
+    # finished: in the game with release.ready_only. The planned arrival is the first day of the seventh month of the fifth Yuanfeng year;
+    # the facts of that year are placed by their day of the stay, counted on the lunar calendar from that day.
+    ready: true
+    refs: [su_shi_huangzhou_primary, wikipedia_crow_terrace, wikipedia_former_ode, wikisource_later_ode]
     scene:
       points:
-        - {id: p1, kind: care, req: {"any":[{"job":["chef"]},{"trait":["faithful","patient","attached"]}]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p3, kind: notice, redeem: true, req: {"any":[{"trait":["handy","quiet"]},{"job":["painter","musician"]}]}}
+        - {id: p1, kind: trust, day: 60, req: {"any":[{"trait":["kind","cheerful","attached"]},{"job":["chef","farmer","baker"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 12, req: {"any":[{"trait":["wanderer","streetwise","curious"]},{"job":["sailor","fisher"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: hold, redeem: true, day: 104, req: {"any":[{"trait":["vigil","patient","faithful"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: place, traits: [skeptical, curious]}
-        - {id: sound, traits: [artistic, quiet]}
-        - {id: landing}
+        - {id: slope, traits: [kind, attached, cheerful]}
+        - {id: lamp, traits: [vigil, patient, quiet]}
+        - {id: ferry}
     text:
       en:
         name: "Exile on the Eastern Slope"
         place: "Huangzhou"
         figure: "Su Shi"
-        story: 'Su Shi''s Former Ode on the Red Cliff opens with a boat outing in the autumn of the renxu year, 1082. The essay uses the landscape to invoke older stories.'
+        story: 'After the Crow Terrace Poetry Trial of 1079, Su Shi was exiled to Huangzhou, where he farmed a plot on an eastern slope and took its name, Dongpo. In the seventh month of 1082 he went out on the river below the Red Cliff with guests and wrote the Former Ode on the Red Cliff; in the tenth month he walked back from the Snow Hall towards Lingao and wrote the Latter Ode. He left Huangzhou in 1084.'
         relic: "A straw cloak"
         relic_desc: "A rough rain cloak of the kind a farmer wore on the slope."
         points:
-          p1: 'Help a passenger keep a bundle dry'
-          p2: 'Make room at the landing while the boat is being readied'
-          p3: 'Bring back a description of the river that the reader can picture'
+          p1: 'Be taken in by the neighbours on the slope, then bring a meal to the field at harvest'
+          p2: 'Before the night on the river, tell the boatman where the current runs below the cliff'
+          p3: 'On the night of the walk home, keep a lamp lit on the road from the Snow Hall to Lingao'
         vignettes:
-          place: 'You ask the boatman which part of the old story happened on this bank. He points you towards the landing he knows, then asks which book you got the other bank from.'
-          sound: 'A passenger tries to tell you about the river before the boat pushes off. You wait for a lull in the reeds to ask which sound made him turn his head.'
-          landing: 'You hold a small bundle while the boatman frees the rope. When you write down where you went, you mark the landing and the river bend separately.'
+          slope: '{staff} carries water up the slope for the hired hands. At dusk a neighbour, made up for the game, leaves a bowl of cooked beans at the edge of the field and says the newcomer can have the second bowl tomorrow.'
+          lamp: '{staff} sits on a stone by the road with a lamp shaded against the wind. Footsteps come down from the slope long after the third watch; {staff} turns the lamp towards the path and says nothing.'
+          ferry: '{staff} helps a boatman, made up for the game, coil the rope at the landing. He says the water under the cliff is slow on a still night, and that the guests always ask for the far side.'
       zh:
         name: "东坡的流放"
         place: "黄州"
         figure: "苏轼"
-        story: '苏轼《前赤壁赋》开篇记壬戌之秋泛舟赤壁，即 1082 年。赋里由眼前江景联想旧事。'
+        story: '1079 年乌台诗案之后，苏轼被贬到黄州，在城东一块坡地上开荒种地，以地为号，称东坡。1082 年七月，他与客泛舟赤壁之下，写成《赤壁赋》；十月，他从雪堂步行回临皋，写成《后赤壁赋》。1084 年他离开黄州。'
         relic: "一件蓑衣"
         relic_desc: "一件粗糙的雨衣，是农人在坡地上穿的那种。"
         points:
-          p1: '帮乘客把包裹拿离湿处'
-          p2: '开船前帮忙让开渡口'
-          p3: '带回一段让人看得见江景的描述'
+          p1: '先让坡上的邻里认下，再在收成时把饭送到地头'
+          p2: '泛舟那夜之前，告诉船家赤壁下哪段水流平缓'
+          p3: '夜归那晚，在雪堂到临皋的路上守一盏灯'
         vignettes:
-          place: '你问船家，旧故事里哪一段真发生在这边。船家指了指他认得的渡口，反问你，对岸那段是从哪本书里听来的。'
-          sound: '船离岸前，一位乘客急着跟你说江上的见闻。你等芦苇声低下去，才问哪一声让他回过头。'
-          landing: '船家去松缆，你帮他抱住一小包东西。写下这趟去了哪里时，你把渡口和江湾分别记了下来。'
+          slope: '{staff}替雇来的帮工往坡上挑水。天黑时，一位编出来的邻里在地头放下一碗煮豆，说明天第二碗给这个外乡人。'
+          lamp: '{staff}在路边的石头上坐着，手护着一盏灯挡风。三更过了很久，坡上才有脚步声下来。{staff}把灯转向小路，什么也没说。'
+          ferry: '{staff}在渡口帮一位编出来的船家盘缆绳。船家说，无风的夜里崖下的水走得慢，来游的客人总要往对岸去。'
 text:
   en:
     name: Su Shi
@@ -58,21 +62,89 @@ text:
   zh:
     name: 苏轼
     text: 宋代诗人、书法家与官员，1037 年生，1101 年去世。1080 年因一桩政治案件被贬到黄州，他在那里种地，并写出了几篇最有名的诗文。
-hook: {en: 'Which Red Cliff are we talking about?', zh: '江边说的是哪一个赤壁'}
+hook: {en: 'A lamp on the road home', zh: '夜归的路上留一盏灯'}
 facts:
+  crow_terrace:
+    date: '1079'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_crow_terrace, creature_exile]
+    text:
+      en: 'In the summer of 1079 Su Shi was arrested over his poems and held for months in Kaifeng during his trial, the case known as the Crow Terrace Poetry Trial.'
+      zh: '1079 年夏，苏轼因诗文被捕，在开封受审，关押数月，史称乌台诗案。'
+    line:
+      en: 'In the summer of 1079 Su Shi is arrested over his poems and held in Kaifeng.'
+      zh: '元丰二年夏，苏轼因诗文被捕，关进开封的御史台狱。'
+  exile:
+    date: '1080'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_crow_terrace, creature_exile]
+    text:
+      en: 'He was sentenced to exile in Huangzhou, where he stayed from 1080 to 1084.'
+      zh: '他被判贬往黄州，1080 年到 1084 年住在那里。'
+    line:
+      en: 'In 1080 Su Shi comes to Huangzhou in exile.'
+      zh: '元丰三年，苏轼贬到黄州。'
+  eastern_slope:
+    date: '1081'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_crow_terrace, creature_exile]
+    text:
+      en: 'In 1081 he farmed a plot on a slope east of the town, and took his sobriquet Dongpo, Eastern Slope, from it.'
+      zh: '1081 年他在城东一块坡地上耕种，并由此自号东坡。'
+    line:
+      en: 'In 1081 he clears a plot on the slope east of the town and starts to farm it.'
+      zh: '元丰四年，苏轼在城东的坡地上开荒种地，后来以地为号，称东坡。'
   red_cliff:
     date: '1082'
-    checked: official_record
+    stay_day: 15
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [su_shi_huangzhou_primary]
+    use: [story, history, wiki]
+    sources: [su_shi_huangzhou_primary, wikipedia_former_ode]
     text:
-      en: 'Su Shi''s Former Ode on the Red Cliff opens with a boat outing in the autumn of the renxu year, 1082. The essay uses the landscape to invoke older stories.'
-      zh: '苏轼《前赤壁赋》开篇记壬戌之秋泛舟赤壁，即 1082 年。赋里由眼前江景联想旧事。'
+      en: 'The Former Ode on the Red Cliff opens with a boat outing below the Red Cliff with guests on the sixteenth day of the seventh month of the renxu year, 1082.'
+      zh: '《赤壁赋》开篇记壬戌之秋七月既望，即 1082 年农历七月十六，苏轼与客泛舟游于赤壁之下。'
+    line:
+      en: 'The sixteenth day of the seventh month: Su Shi and his guests go out in a boat below the Red Cliff.'
+      zh: '七月既望，苏轼与客泛舟，游于赤壁之下。'
+  later_ode:
+    date: '1082'
+    stay_day: 104
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikisource_later_ode, wikipedia_former_ode]
+    text:
+      en: 'The Latter Ode on the Red Cliff opens on the full moon of the tenth month of the same year, as Su Shi walks from the Snow Hall towards Lingao with two guests.'
+      zh: '《后赤壁赋》开篇记同年十月之望，苏轼从雪堂步行，将回临皋，两位客人同行。'
+    line:
+      en: 'The full moon of the tenth month: Su Shi walks from the Snow Hall towards Lingao, two guests with him.'
+      zh: '十月之望，苏轼从雪堂步行回临皋，两位客人跟着他走过黄泥坂。'
+  leaving:
+    date: '1084'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_crow_terrace, creature_exile]
+    text:
+      en: 'His exile in Huangzhou ended in 1084.'
+      zh: '1084 年，他在黄州的贬居结束。'
+    line:
+      en: 'In 1084 Su Shi leaves Huangzhou.'
+      zh: '元丰七年，苏轼离开黄州。'
 bystanders:
   su_shi_huangzhou_reader:
     invented: true
-    text: {en: 'An invented boatman waiting for the last passenger.', zh: '一位虚构的船家，正在等最后一位乘客。'}
+    text: {en: 'An invented boatman who knows the water below the cliff.', zh: '一位编出来的船家，熟悉崖下的水。'}
+  su_shi_huangzhou_neighbour:
+    invented: true
+    text: {en: 'An invented neighbour on the slope who shares the beans at dusk.', zh: '一位编出来的坡上邻里，黄昏时分出一碗豆子。'}
 wiki:
   refs:
     su_shi_huangzhou_primary:
@@ -80,12 +152,41 @@ wiki:
       status: checked
       text:
         en: 'Su Shi, Former Ode on the Red Cliff, autograph scroll, National Palace Museum. https://digitalarchive.npm.gov.tw/Collection/Detail?dep=P&id=882'
-        zh: 'Su Shi, Former Ode on the Red Cliff, autograph scroll, National Palace Museum. https://digitalarchive.npm.gov.tw/Collection/Detail?dep=P&id=882'
+        zh: '苏轼《前赤壁赋》墨迹卷，台北故宫博物院。https://digitalarchive.npm.gov.tw/Collection/Detail?dep=P&id=882'
+    wikipedia_crow_terrace:
+      order: 130
+      status: checked
+      text:
+        en: 'Wikipedia, Crow Terrace Poetry Trial. https://en.wikipedia.org/wiki/Crow_Terrace_Poetry_Trial'
+        zh: '维基百科，乌台诗案（Crow Terrace Poetry Trial）。https://en.wikipedia.org/wiki/Crow_Terrace_Poetry_Trial'
+    creature_exile:
+      order: 130
+      status: checked
+      text:
+        en: 'Su Shi: The Poetry of Exile. https://creatureandcreator.ca/?p=7353'
+        zh: 'Su Shi: The Poetry of Exile。https://creatureandcreator.ca/?p=7353'
+    wikipedia_former_ode:
+      order: 130
+      status: checked
+      text:
+        en: 'Wikipedia, Former Ode on the Red Cliffs. https://en.wikipedia.org/wiki/Former_Ode_on_the_Red_Cliffs'
+        zh: '维基百科，前赤壁赋（Former Ode on the Red Cliffs）。https://en.wikipedia.org/wiki/Former_Ode_on_the_Red_Cliffs'
+    wikisource_later_ode:
+      order: 130
+      status: checked
+      text:
+        en: 'Su Shi, Latter Ode on the Red Cliff, Wikisource. https://zh.wikisource.org/wiki/後赤壁賦'
+        zh: '苏轼《后赤壁赋》，维基文库。https://zh.wikisource.org/wiki/後赤壁賦'
 self_check:
-  quote_line: '你问船家，旧故事里哪一段真发生在这边。'
-  fact: red_cliff
-  regret_choice: '略过「帮乘客把包裹拿离湿处」，这处细节便留给下一位核对。'
-  bookend: '从「江边说的是哪一个赤壁」开始，以员工留下的观察或更正收尾。'
-  share_line: '江边说的是哪一个赤壁'
+  quote_line: '十月之望，苏轼从雪堂步行回临皋，两位客人跟着他走过黄泥坂。'
+  fact: later_ode
+  regret_choice: '派会做饭、和气的去，坡上的邻里认得下他，夜里却未必坐得住守灯；派守得住夜的去，灯守住了，地头那碗饭未必送得上。'
+  bookend: '从乌台诗案的一纸罪名开始，以夜归路上的一盏灯收尾；他两年后离开黄州。'
+  share_line: '元丰五年，我在黄州的路边替一个夜归的人守过一盏灯。'
   share_number: '1082'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  knowing: 'later_ode'
+  near: 'red_cliff, later_ode'
+  lever: 'p1, p2'
+  missed: 'leaving'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
