@@ -2532,46 +2532,79 @@ events:
       - Fan Shen
   - id: ibn_battuta_tangier
     year: 1325
+    date: '1325-06-01'
+    stay: 1
     lon: -5.8
     lat: 35.78
     region: africa
+    home:
+      - north_africa
+    near:
+      - europe_west
+      - middle_east
+    crossroads: true
     field: exploration
     tier: 2
     channels:
       'Y': 2
       H: 2
       E: 1
+    ready: true
     refs:
       - ibn_battuta_tangier_departure
+      - orias_ibn_battuta
+      - worldhistory_ibn_battuta
     scene:
       points:
         - id: p1
-          kind: endure
+          kind: trust
+          day: 8
           req:
-            provides: ration
+            any:
+              - trait:
+                  - kind
+                  - cheerful
+                  - attached
+              - job:
+                  - cook
+                  - chef
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: persuade
+          kind: notice
+          day: 12
           req:
-            trait:
-              - glib
-              - streetwise
-              - ambitious
+            any:
+              - trait:
+                  - methodical
+                  - scholarly
+                  - wanderer
+              - stat:
+                  wit: 6
         - id: p3
           kind: trust
+          day: 13.2
           req:
-            trait:
-              - curious
-              - attached
+            any:
+              - trait:
+                  - curious
+                  - attached
+                  - faithful
+              - stat:
+                  will: 6
       vignettes:
         - id: distance
           traits:
             - bold
             - curious
+          day: 10
         - id: departure
           traits:
             - methodical
             - scholarly
+          day: 11
         - id: roll
+          day: 13.5
     authors:
       - AI
       - Fan Shen

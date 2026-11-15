@@ -1255,6 +1255,16 @@ refs:
     authors:
       - AI
       - Fan Shen
+  orias_ibn_battuta:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  worldhistory_ibn_battuta:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   ahmed_baba_timbuktu_manuscripts:
     status: checked
     authors:
@@ -3742,6 +3752,25 @@ event_facts:
         sources:
           - ausgeo_hargrave
           - britannica_hargrave
+  ibn_battuta_tangier:
+    module: ibn_battuta_tangier
+    facts:
+      - id: departure
+        date: '1325-06-14'
+        sources:
+          - orias_ibn_battuta
+          - worldhistory_ibn_battuta
+        stay_day: 13
+      - id: alone
+        date: '1325'
+        sources:
+          - ibn_battuta_tangier_departure
+        stay_day: 13.4
+      - id: return
+        date: '1354'
+        sources:
+          - worldhistory_ibn_battuta
+          - orias_ibn_battuta
   ibn_khaldun_cairo:
     module: ibn_khaldun_cairo
     facts:

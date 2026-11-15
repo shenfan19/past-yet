@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.30, 2026-11-15
+
+- Tangier 1325, Ibn Battuta, is rewritten and turned on for one office day from 1 June: his leaving Tangier on 14 June 1325, alone, with neither companion nor caravan, and his coming home some thirty years later to dictate his travels, with sync points for getting the food and water skins ready, writing down the towns of the first stage and walking with him to the gate.
+
 ## 0.5.29, 2026-11-15
 
 - Auvers 1890, Vincent van Gogh, is rewritten and turned on for three office days from 20 May: the room at the Auberge Ravoux, almost a picture a day, the letter of the wheatfields under troubled skies, the shot of 27 July and his death on 29 July with Theo beside him, with sync points for carrying his easel out, holding the canvas in the wind and sitting outside the door in the last two days.
