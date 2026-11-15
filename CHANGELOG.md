@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.29, 2026-11-15
+
+- Auvers 1890, Vincent van Gogh, is rewritten and turned on for three office days from 20 May: the room at the Auberge Ravoux, almost a picture a day, the letter of the wheatfields under troubled skies, the shot of 27 July and his death on 29 July with Theo beside him, with sync points for carrying his easel out, holding the canvas in the wind and sitting outside the door in the last two days.
+
 ## 0.5.28, 2026-11-15
 
 - Madras 1913, Srinivasa Ramanujan, is rewritten and turned on: the clerk's post at the Port Trust from March 1912, the letter to Hardy of Thursday 16 January 1913, England in 1914 and his death in 1920, with sync points for copying the accounts, putting his pages of formulas in order and cooking for him through the weeks of work.

@@ -3,54 +3,60 @@ events:
   van_gogh_auvers:
     order: 102
     year: 1890
+    # three office days from the planned arrival on 20 May 1890, the day he came to Auvers
+    date: '1890-05-20'
+    stay: 3
     lon: 2.17
     lat: 49.07
     region: europe
+    home: [europe_west]
     field: art
     tier: 3
     channels: {H: 2, G: 3}
     regret: true
-    refs: [van_gogh_auvers_primary]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [van_gogh_auvers_primary, van_gogh_museum_final_months, wikipedia_death_van_gogh, collector_gachet]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"trait":["streetwise","wanderer"]},{"trait":["vigil"]}]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["kind","patient","faithful"]},{"job":["nurse"]}]}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"job":["painter"]},{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 51, req: {"any":[{"trait":["quiet","vigil","patient"]},{"job":["painter"]},{"stat":{"will":6}}]}}
+        - {id: p3, kind: care, redeem: true, day: 68.5, req: {"any":[{"trait":["kind","patient","faithful"]},{"job":["nurse","doctor"]}]}}
       vignettes:
-        - {id: sky, traits: [artistic, curious]}
-        - {id: wind, traits: [quiet, vigil]}
-        - {id: path}
+        - {id: sky, traits: [artistic, curious], day: 40}
+        - {id: wind, traits: [quiet, vigil], day: 52}
+        - {id: path, day: 25}
     text:
       en:
         name: "A summer in Auvers"
         place: "Auvers sur Oise"
         figure: "Vincent van Gogh"
-        story: 'In an Auvers letter from July 1890, Van Gogh describes painting broad wheatfields beneath unsettled skies.'
+        story: 'Vincent van Gogh came to Auvers sur Oise on 20 May 1890, lodged at the Auberge Ravoux and often went to see Dr Paul Gachet. He painted almost a work a day. In a letter of about 10 July he wrote of vast fields of wheat under troubled skies. On 27 July he shot himself in the chest, and he died on 29 July with his brother Theo beside him.'
         relic: "A tube of chrome yellow"
         relic_desc: "A squeezed tin tube of the colour he used for the fields."
         points:
-          p1: 'Pick out the changes in the sky above one field'
-          p2: 'Walk far enough to see where the path leads'
-          p3: 'Help the visitor bring a legible sketch back'
+          p1: 'Be taken in at the Auberge Ravoux, then carry his easel and paint box out to the fields'
+          p2: 'By the wheatfield under a stormy sky, hold the canvas down against the wind while he paints'
+          p3: 'In the two days in the room upstairs, sit outside the door and bring water'
         vignettes:
-          sky: 'You ask the visitor to draw the same field twice, first leaving little sky and then leaving much more. They can name one thing the second drawing makes them notice.'
-          wind: 'The visitor thinks the stalks point one way and stays there to draw them. You wait for the next gust. The dark patch moves and neither of you has to rub it out from the first sketch.'
-          path: 'You walk until the visitor can see the end of the path in the field. On the way back, they leave the end out of their drawing and can still explain where it goes.'
+          sky: '{staff} draws the same field twice in a notebook, first with a strip of sky and then with much more, and sees something in the second that the first had hidden.'
+          wind: '{staff} waits for the next gust over the wheat and watches the dark patch move across it, without rubbing out the first look.'
+          path: '{staff} walks along a path between the fields until its end can be seen, and on the way back can tell where it goes.'
       zh:
         name: "奥维尔的夏天"
         place: "奥维尔"
         figure: "文森特·梵高"
-        story: '梵高 1890 年 7 月在奥维尔写信，提到自己画了不安的天空下大片延展的麦田。'
+        story: '1890 年 5 月 20 日，文森特·梵高来到瓦兹河畔奥维尔，住进拉武客栈，常去看保罗·加歇医生。他几乎一天画一幅。约 7 月 10 日的一封信里，他写到不安的天空下大片的麦田。7 月 27 日，他朝自己胸口开了一枪，7 月 29 日去世，弟弟提奥在他身边。'
         relic: "一管铬黄颜料"
         relic_desc: "一支挤瘪的锡管，里面是他画麦田用的那种黄。"
         points:
-          p1: '看同一片田上方的天空怎样变'
-          p2: '走到看得出路通往哪儿的地方'
-          p3: '帮访客带回一张看得明白的草图'
+          p1: '先让拉武客栈的人认下，再替他把画架和颜料箱扛到田里'
+          p2: '暴风雨般的天空下，在麦田边替他按住被风掀动的画布'
+          p3: '他躺在楼上那两天，守在门外，端水进去'
         vignettes:
-          sky: '你请访客把同一片地画两遍，先只留一条天，再多留些。他从第二幅里指出了一件原先没留意的东西。'
-          wind: '访客觉得麦秆全朝一个方向，停下来画。你等到下一阵风，暗下去的一块换了地方，两人就另记一笔，不必擦去第一眼。'
-          path: '你走到访客看得清田路尽头的位置。回去时他没把尽头画进去，却已说得清路通到哪儿。'
+          sky: '{staff}在本子上把同一片田画了两遍，头一遍只留一条天，第二遍留得多，从第二幅里看出了头一幅藏住的东西。'
+          wind: '{staff}等下一阵风吹过麦田，看着那块暗影从田上移过去，没有擦掉头一眼画下的。'
+          path: '{staff}沿着田间小路一直走到看得见尽头的地方，回来时已经说得清它通到哪里。'
 text:
   en:
     name: Vincent van Gogh
@@ -60,19 +66,80 @@ text:
     text: 荷兰画家，1853 年生，1890 年去世。他只画了大约十年，留下两千多件作品，卖出的很少。最后几周他住在瓦兹河畔奥维尔，1890 年 7 月因枪伤去世。
 hook: {en: 'How much sky belongs above the field?', zh: '麦田上方，要留多少天空'}
 facts:
+  arrival:
+    date: '1890-05-20'
+    stay_day: 0
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [van_gogh_museum_final_months, collector_gachet]
+    text:
+      en: 'Van Gogh moved to Auvers sur Oise on 20 May 1890, lodged at the Auberge Ravoux and regularly went to see Dr Paul Gachet.'
+      zh: '梵高 1890 年 5 月 20 日迁居瓦兹河畔奥维尔，住在拉武客栈，常去看保罗·加歇医生。'
+    line:
+      en: '20 May 1890: Vincent van Gogh comes to Auvers and takes a room at the Auberge Ravoux.'
+      zh: '1890 年 5 月 20 日，文森特·梵高来到奥维尔，在拉武客栈住下。'
+  work:
+    date: '1890'
+    stay_day: 20
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [van_gogh_museum_final_months, wikipedia_death_van_gogh]
+    text:
+      en: 'In Auvers he threw himself into painting, completing almost a work a day.'
+      zh: '在奥维尔，他把全部力气都放进画画，几乎一天一幅。'
+    line:
+      en: 'He paints almost a picture a day.'
+      zh: '他几乎一天画一幅。'
   auvers_letter:
     date: '1890-07'
+    stay_day: 51
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [van_gogh_auvers_primary]
     text:
       en: 'In an Auvers letter from July 1890, Van Gogh describes painting broad wheatfields beneath unsettled skies.'
       zh: '梵高 1890 年 7 月在奥维尔写信，提到自己画了不安的天空下大片延展的麦田。'
+    line:
+      en: 'About 10 July: he writes to Theo and Jo of vast fields of wheat under troubled skies.'
+      zh: '7 月 10 日前后，他写信给提奥和乔，说自己画了不安的天空下大片的麦田。'
+  shot:
+    date: '1890-07-27'
+    stay_day: 68
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [van_gogh_museum_final_months, wikipedia_death_van_gogh]
+    text:
+      en: 'On 27 July 1890 Van Gogh shot himself in the chest.'
+      zh: '1890 年 7 月 27 日，梵高朝自己胸口开了一枪。'
+    note: 'A wound to himself: written as a plain fact, nothing more.'
+    line:
+      en: '27 July: Van Gogh shoots himself in the chest.'
+      zh: '7 月 27 日，梵高朝自己胸口开了一枪。'
+  death:
+    date: '1890-07-29'
+    stay_day: 70
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [van_gogh_museum_final_months, wikipedia_death_van_gogh]
+    text:
+      en: 'He died at Auvers on 29 July 1890, with his brother Theo beside him.'
+      zh: '1890 年 7 月 29 日，他在奥维尔去世，弟弟提奥在他身边。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '29 July: Vincent van Gogh dies. His brother Theo is with him.'
+      zh: '7 月 29 日，文森特·梵高去世，弟弟提奥在他身边。'
 bystanders:
   van_gogh_auvers_reader:
     invented: true
-    text: {en: 'An invented visitor who stops on the path to draw the view.', zh: '一位虚构的访客，在路上停下来画眼前的景色。'}
+    text: {en: 'A visitor, made up for the game, who stops on the path to draw the view.', zh: '一位编出来的过路人，在小路上停下来画眼前的景色。'}
+  innkeeper_girl:
+    invented: true
+    text: {en: 'A girl at the inn, made up for the game, who carries the trays upstairs.', zh: '一个编出来的客栈女孩，把托盘端上楼。'}
 wiki:
   refs:
     van_gogh_auvers_primary:
@@ -80,12 +147,35 @@ wiki:
       status: checked
       text:
         en: 'Vincent van Gogh to Theo and Jo van Gogh-Bonger, Auvers-sur-Oise, about 10 July 1890, letter 898. Van Gogh Museum and Huygens ING edition. https://vangoghletters.org/vg/letters/let898/letter.html'
-        zh: 'Vincent van Gogh to Theo and Jo van Gogh-Bonger, Auvers-sur-Oise, about 10 July 1890, letter 898. Van Gogh Museum and Huygens ING edition. https://vangoghletters.org/vg/letters/let898/letter.html'
+        zh: '梵高致提奥与乔·梵高-邦格，瓦兹河畔奥维尔，约 1890 年 7 月 10 日，第 898 封信，梵高博物馆与惠更斯研究所版。https://vangoghletters.org/vg/letters/let898/letter.html'
+    van_gogh_museum_final_months:
+      order: 177
+      status: checked
+      text:
+        en: 'Van Gogh Museum, Vincent''s final months. https://www.vangoghmuseum.nl/en/art-and-stories/vincents-life-1853-1890/vincents-final-months'
+        zh: '梵高博物馆，文森特最后的几个月。https://www.vangoghmuseum.nl/en/art-and-stories/vincents-life-1853-1890/vincents-final-months'
+    wikipedia_death_van_gogh:
+      order: 178
+      status: checked
+      text:
+        en: 'Wikipedia, Death of Vincent van Gogh. https://en.wikipedia.org/wiki/Death_of_Vincent_van_Gogh'
+        zh: '维基百科，文森特·梵高之死。https://en.wikipedia.org/wiki/Death_of_Vincent_van_Gogh'
+    collector_gachet:
+      order: 179
+      status: checked
+      text:
+        en: 'TheCollector, The Tragic Friendship of Vincent van Gogh and Dr. Gachet. https://www.thecollector.com/van-gogh-dr-gachet-friendship/'
+        zh: 'TheCollector，梵高与加歇医生的悲剧友谊。https://www.thecollector.com/van-gogh-dr-gachet-friendship/'
 self_check:
-  quote_line: '你请访客把同一片地画两遍，先只留一条天，再多留些。'
-  fact: auvers_letter
-  regret_choice: '略过「看同一片田上方的天空怎样变」，这处细节便留给下一位核对。'
-  bookend: '从「麦田上方，要留多少天空」开始，以员工留下的观察或更正收尾。'
-  share_line: '麦田上方，要留多少天空'
-  share_number: '1890-07'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: death
+  quote_line: '7 月 29 日，文森特·梵高去世，弟弟提奥在他身边。'
+  regret_choice: '派扛得动的去，画架送得到田里，麦田边的风里却没人按住画布；派守得住的去，楼上那两天门外有人，开头那些日子没人帮他背画具。'
+  bookend: '从他住进拉武客栈的那天开始，以七十天后楼上那个房间收尾。'
+  share_line: '1890 年夏天，我在奥维尔的麦田边替一个画画的人按住过画布。'
+  share_number: '70'
+  knowing: 'death'
+  near: 'arrival, auvers_letter'
+  lever: 'p1, p2'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

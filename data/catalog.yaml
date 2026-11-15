@@ -4261,38 +4261,57 @@ events:
       - Fan Shen
   - id: van_gogh_auvers
     year: 1890
+    date: '1890-05-20'
+    stay: 3
     lon: 2.17
     lat: 49.07
     region: europe
+    home:
+      - europe_west
     field: art
     tier: 3
     channels:
       H: 2
       G: 3
     regret: true
+    ready: true
     refs:
       - van_gogh_auvers_primary
+      - van_gogh_museum_final_months
+      - wikipedia_death_van_gogh
+      - collector_gachet
     scene:
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 10
           req:
             any:
               - job:
                   - painter
               - trait:
-                  - streetwise
-                  - wanderer
-              - trait:
-                  - vigil
+                  - hardy
+                  - cheerful
+                  - kind
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: endure
+          kind: notice
+          day: 51
           req:
-            stat:
-              constitution: 5
+            any:
+              - trait:
+                  - quiet
+                  - vigil
+                  - patient
+              - job:
+                  - painter
+              - stat:
+                  will: 6
         - id: p3
           kind: care
           redeem: true
+          day: 68.5
           req:
             any:
               - trait:
@@ -4301,16 +4320,20 @@ events:
                   - faithful
               - job:
                   - nurse
+                  - doctor
       vignettes:
         - id: sky
           traits:
             - artistic
             - curious
+          day: 40
         - id: wind
           traits:
             - quiet
             - vigil
+          day: 52
         - id: path
+          day: 25
     authors:
       - AI
       - Fan Shen
