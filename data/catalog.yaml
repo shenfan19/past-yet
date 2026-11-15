@@ -5035,45 +5035,80 @@ events:
       - Fan Shen
   - id: sor_juana_mexico_city
     year: 1695
+    date: '1695-01-01'
     lon: -99.13
     lat: 19.43
     region: americas
+    home:
+      - latin_america
     field: literature
     tier: 2
     channels:
       E: 2
       G: 2
     regret: true
+    ready: true
     refs:
       - sor_juana_mexico_city_primary
+      - britannica_sor_juana
+      - poetry_foundation_sor_juana
+      - umass_sor_juana
+      - unl_respuesta
     scene:
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 15
           req:
-            trait:
-              - quiet
-              - handy
+            any:
+              - trait:
+                  - quiet
+                  - kind
+                  - patient
+              - job:
+                  - cook
+                  - chef
+                  - teacher
         - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 5
-        - id: p3
           kind: notice
-          redeem: true
+          day: 40
           req:
-            item: neural_chip
+            any:
+              - trait:
+                  - quiet
+                  - methodical
+                  - handy
+              - stat:
+                  wit: 6
+        - id: p3
+          kind: care
+          redeem: true
+          day: 100
+          req:
+            any:
+              - trait:
+                  - faithful
+                  - vigil
+                  - kind
+              - job:
+                  - nurse
+                  - doctor
+                  - midwife
+              - stat:
+                  will: 6
       vignettes:
-        - id: aristotle
+        - id: kitchen
           traits:
             - curious
             - glib
-        - id: ordinary
+          day: 25
+        - id: shelf
           traits:
             - methodical
             - vigil
-        - id: reply
+          day: 50
+        - id: bells
+          day: 70
     authors:
       - AI
       - Fan Shen

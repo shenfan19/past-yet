@@ -600,7 +600,17 @@ refs:
     authors:
       - AI
       - Fan Shen
+  britannica_sor_juana:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   kafka_kierling_primary:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  poetry_foundation_sor_juana:
     status: checked
     authors:
       - AI
@@ -620,12 +630,22 @@ refs:
     authors:
       - AI
       - Fan Shen
+  umass_sor_juana:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   wordsworth_keats_death:
     status: checked
     authors:
       - AI
       - Fan Shen
   emily_bronte_haworth_primary:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  unl_respuesta:
     status: checked
     authors:
       - AI
@@ -3527,6 +3547,40 @@ event_facts:
         sources:
           - wikipedia_savitribai
           - janata_savitribai
+  sor_juana_mexico_city:
+    module: sor_juana_mexico_city
+    facts:
+      - id: carta
+        date: '1690'
+        sources:
+          - britannica_sor_juana
+          - unl_respuesta
+      - id: respuesta
+        date: '1691-03-01'
+        sources:
+          - sor_juana_mexico_city_primary
+          - unl_respuesta
+      - id: books
+        date: '1693'
+        sources:
+          - umass_sor_juana
+          - britannica_sor_juana
+      - id: vows
+        date: '1694'
+        sources:
+          - umass_sor_juana
+          - britannica_sor_juana
+      - id: death
+        date: '1695-04-17'
+        sources:
+          - britannica_sor_juana
+          - poetry_foundation_sor_juana
+        stay_day: 106
+      - id: printed
+        date: '1700'
+        sources:
+          - unl_respuesta
+          - sor_juana_mexico_city_primary
   su_shi_huangzhou:
     module: su_shi_huangzhou
     facts:

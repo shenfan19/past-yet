@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.10, 2026-11-15
+
+- Mexico City 1695, Sor Juana Inés de la Cruz, is rewritten and turned on: the letter printed without her leave in 1690, her reply of 1 March 1691, the books sold in 1693, the vows of 1694, her death on 17 April 1695 after nursing her sisters, and the reply printed in 1700, with sync points in the convent kitchen, a sheet kept from the empty shelf and a sick sister watched over.
+
 ## 0.5.9, 2026-11-15
 
 - Timbuktu 1594, Ahmad Baba, is rewritten and turned on: the fall of the city in 1591, his deportation to Marrakesh in 1594, his return in 1608 and his death in 1627, with sync points for listing his books, giving some into the keeping of a family in the town and writing down the day he was taken away.
