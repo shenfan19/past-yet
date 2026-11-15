@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.3, 2026-11-15
+
+- A day of the stay may be a fraction, so the things of one day keep their order, and it reads as the day it falls in.
+- A scene may name the day it falls on.
+
 ## 0.5.2, 2026-11-15
 
 - Huangzhou 1082, Su Shi on the Eastern Slope, is rewritten and turned on: six dated facts from the Crow Terrace trial to his leaving, the two odes on their lunar days, three sync points for being taken in on the slope, the boatman before the night on the river and a lamp on the road home, and scenes that name the employee.

@@ -239,7 +239,8 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   const R = T.ui.report;
   const c = T.catalog[ev.id];
   const staff = staffName(D, staffId);
-  const dayWord = (d) => R.light_day.replace('{n}', String(Math.max(1, Math.round(d))));
+  // a day of the stay may be a fraction, to order the things of one day; it reads as the day it falls in
+  const dayWord = (d) => R.light_day.replace('{n}', String(Math.max(1, Math.floor(d))));
   const lines = [];
   const EF = D.get('encyclopedia.event_facts')?.[ev.id];
   if (EF) {
@@ -280,7 +281,9 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   });
   // a scene names the employee with {staff}
   const vignette = r.vignette && c.vignettes ? c.vignettes[r.vignette]?.split('{staff}').join(staff) : null;
-  if (vignette) lines.push({ t: stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
+  // a scene falls in the middle of the stay, or on the day its entry names
+  const vDay = ev.scene?.vignettes?.find((x) => x.id === r.vignette)?.day;
+  if (vignette) lines.push({ t: typeof vDay === 'number' ? vDay : stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
     why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
   lines.push({ t: stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: R.light_leave.replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
   return lines.map((x, i) => [x, i]).sort((a, b) => a[0].t - b[0].t || a[1] - b[1]).map(([x]) => x);
