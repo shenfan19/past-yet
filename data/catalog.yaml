@@ -3935,42 +3935,70 @@ events:
     lon: -85
     lat: 34.5
     region: americas
+    home:
+      - north_america
     field: literature
     tier: 2
     channels:
       S: 2
+    ready: true
     refs:
       - sequoyah_syllabary_primary
+      - encyclopedia_alabama_sequoyah
+      - tennessee_encyclopedia_phoenix
+      - wikipedia_sequoyah
     scene:
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 8
           req:
-            provides: scan
+            any:
+              - trait:
+                  - quiet
+                  - patient
+                  - kind
+              - job:
+                  - teacher
+              - stat:
+                  finesse: 6
         - id: p2
           kind: persuade
+          day: 40
           req:
-            trait:
-              - cosmopolitan
-              - streetwise
-              - charismatic
+            any:
+              - trait:
+                  - cheerful
+                  - charismatic
+                  - patient
+              - job:
+                  - teacher
+              - stat:
+                  will: 6
         - id: p3
           kind: trust
+          day: 60.5
           req:
-            trait:
-              - artistic
-              - kind
-              - sensitive
+            any:
+              - trait:
+                  - methodical
+                  - vigil
+                  - faithful
+              - stat:
+                  wit: 6
       vignettes:
         - id: sound
           traits:
             - patient
             - quiet
+          day: 30
         - id: lookalike
           traits:
             - curious
             - skeptical
+          day: 20
         - id: note
+          day: 61
     authors:
       - AI
       - Fan Shen

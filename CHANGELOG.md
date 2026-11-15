@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.23, 2026-11-15
+
+- Cherokee country 1821, Sequoyah, is rewritten and turned on: the syllabary shown at the Cherokee National Council and accepted, the first Cherokee Phoenix on 21 February 1828 and his death in Mexico in 1843, with sync points for keeping his sheets of signs in order, teaching a neighbour to write her name and carrying a slip across the council ground.
+
 ## 0.5.22, 2026-11-15
 
 - Machu Picchu is rewritten and turned on: the estate of Pachacuti built around 1450, its canal and sixteen stone basins, its abandonment about a century later, the farmer Melchor Arteaga leading Hiram Bingham up on 24 July 1911 and the World Heritage listing of 1983, with sync points for carrying stone up the terraces, following the water down the basins and keeping the channel clear in the rains.

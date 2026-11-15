@@ -6,72 +6,107 @@ events:
     lon: -85
     lat: 34.5
     region: americas
+    home: [north_america]
     field: literature
     tier: 2
     channels: {S: 2}
-    refs: [sequoyah_syllabary_primary]
+    # finished: in the game with release.ready_only. No day of 1821 is recorded for the council, so the stay carries the year only.
+    ready: true
+    refs: [sequoyah_syllabary_primary, encyclopedia_alabama_sequoyah, tennessee_encyclopedia_phoenix, wikipedia_sequoyah]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"provides":"scan"}}
-        - {id: p2, kind: persuade, req: {"trait":["cosmopolitan","streetwise","charismatic"]}}
-        - {id: p3, kind: trust, req: {"trait":["artistic","kind","sensitive"]}}
+        - {id: p1, kind: trust, day: 8, req: {"any":[{"trait":["quiet","patient","kind"]},{"job":["teacher"]},{"stat":{"finesse":6}}]}}
+        - {id: p2, kind: persuade, day: 40, req: {"any":[{"trait":["cheerful","charismatic","patient"]},{"job":["teacher"]},{"stat":{"will":6}}]}}
+        - {id: p3, kind: trust, day: 60.5, req: {"any":[{"trait":["methodical","vigil","faithful"]},{"stat":{"wit":6}}]}}
       vignettes:
-        - {id: sound, traits: [patient, quiet]}
-        - {id: lookalike, traits: [curious, skeptical]}
-        - {id: note}
+        - {id: sound, traits: [patient, quiet], day: 30}
+        - {id: lookalike, traits: [curious, skeptical], day: 20}
+        - {id: note, day: 61}
     text:
       en:
         name: A writing system made by one man
         place: Cherokee country, southeastern United States
         figure: Sequoyah
-        story: 'Sequoyah devised a syllabary for Cherokee, adopted in 1821. Its signs represent syllables.'
+        story: 'Sequoyah, a Cherokee silversmith, made a syllabary of some eighty signs for writing Cherokee. In 1821 he showed at the Cherokee National Council that it worked, and it was accepted. On 21 February 1828 the first issue of the Cherokee Phoenix, the first Native American newspaper, was printed at New Echota in Cherokee and English side by side. Sequoyah died in Mexico in August 1843.'
         relic: A syllabary chart
         relic_desc: A sheet with eighty-odd characters laid out in rows.
         points:
-          p1: 'Match the signs to whole spoken syllables'
-          p2: 'Pass a practice slip to a second reader'
-          p3: 'Check how the second reader sounded out the word'
+          p1: 'Be taken in by his household, then keep his sheets of signs in order'
+          p2: 'Teach a neighbour to write her own name in the new signs'
+          p3: 'On the day of the council, carry a written slip from one side to the other'
         vignettes:
-          sound: 'You wait while the learner says the word at their usual speed, then repeats it more slowly. The reader points to one sign at each syllable until the learner can do it alone.'
-          lookalike: 'A sign reminds you of a letter you already know. The reader has you listen to the whole syllable before you guess again. You cross out the English letter you had penciled in.'
-          note: 'You carry a practice slip across the room. The second learner reads it without having heard you dictate it, and the two of them compare how they said it.'
+          sound: '{staff} listens to a learner say a word at his usual speed and then slowly, and points to one sign for each syllable until he can go on alone.'
+          lookalike: '{staff} catches a sign that looks like an English letter, and crosses out the letter pencilled beside it before it can mislead anyone.'
+          note: '{staff} carries a slip across the council ground to someone who did not hear it spoken, and stands by while it is read out.'
       zh:
         name: 一个人造出来的文字
         place: 美国东南部切罗基地区
         figure: 塞阔雅
-        story: '塞阔雅为切罗基语创制的音节文字于 1821 年获得采用。这套符号表记音节。'
+        story: '切罗基银匠塞阔雅为切罗基语造了一套八十多个符号的音节文字。1821 年，他在切罗基全国议会上演示这套文字确实能用，议会接受了它。1828 年 2 月 21 日，第一份美洲原住民报纸《切罗基凤凰报》在新埃乔塔出了创刊号，切罗基文和英文并排印。1843 年 8 月，塞阔雅在墨西哥去世。'
         relic: 一张音节表
         relic_desc: 一张纸，八十多个字符排成行。
         points:
-          p1: '把字形对回完整的音节'
-          p2: '把练习纸送给另一位读者'
-          p3: '核对另一位读者是怎么念的'
+          p1: '先让他家里的人认下，再替他把写满符号的纸理好'
+          p2: '教一位邻家妇人用这套符号写出自己的名字'
+          p3: '议会那天，把一张写好的纸条从一边送到另一边'
         vignettes:
-          sound: '你等对方先按平常速度念完，再慢慢念一遍。读者一音节指一字，等到对方能自己指着念下去。'
-          lookalike: '有个字形让你想起以前认得的字母。读者请你听完一整个音节再猜。你擦掉了刚才随手标上的英文字母。'
-          note: '你把一张练习纸送到屋子另一边。另一位习字人没听过你口述，却照纸念了出来，两人便对着听自己念得是否一样。'
+          sound: '{staff}听一个学字的人照平常的快慢念一个词，再慢慢念一遍，一个音节指一个符号，直到他自己能指着念下去。'
+          lookalike: '{staff}看出有个符号长得像英文字母，把旁边铅笔标的那个字母划掉了，免得把人带偏。'
+          note: '{staff}捧着一张纸条穿过议会的空地，交给一个没听见口述的人，站在旁边听他念出来。'
 text:
   en:
     name: Sequoyah
-    text: Cherokee silversmith, about 1770 to 1843. Without being able to read English, he devised a syllabary of eighty five characters for Cherokee between 1809 and 1821. Within a few years most Cherokee adults could read it.
+    text: Cherokee silversmith, about 1770 to 1843. Without being able to read English, he devised a syllabary of some eighty signs for Cherokee, finished in 1821.
   zh:
     name: 塞阔雅
-    text: 切罗基银匠，约 1770 年生，1843 年去世。他不识英文，在 1809 至 1821 年间为切罗基语创制了含八十五个字符的音节文字。几年之内，大多数切罗基成年人都学会了读。
+    text: 切罗基银匠，约 1770 年生，1843 年去世。他不识英文，为切罗基语创制了一套八十多个符号的音节文字，1821 年完成。
 hook: {en: 'Can the next reader sound it out?', zh: '下一位读者能念出来吗'}
 facts:
-  syllabary:
+  council:
     date: '1821'
-    checked: official_record
+    stay_day: 60
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [sequoyah_syllabary_primary]
+    use: [story, history, wiki]
+    sources: [encyclopedia_alabama_sequoyah, sequoyah_syllabary_primary]
     text:
-      en: 'Sequoyah devised a syllabary for Cherokee, adopted in 1821. Its signs represent syllables.'
-      zh: '塞阔雅为切罗基语创制的音节文字于 1821 年获得采用。这套符号表记音节。'
+      en: 'At the Cherokee National Council of 1821 Sequoyah demonstrated that his syllabary worked, and it was accepted.'
+      zh: '1821 年的切罗基全国议会上，塞阔雅演示了他的音节文字确实可用，文字得到采纳。'
+    line:
+      en: '1821: at the Cherokee National Council, Sequoyah shows that his signs can carry a message, and the council accepts them.'
+      zh: '1821 年，切罗基全国议会上，塞阔雅演示他的符号能把话传出去，议会接受了这套文字。'
+  phoenix:
+    date: '1828-02-21'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tennessee_encyclopedia_phoenix, wikipedia_sequoyah]
+    text:
+      en: 'The first issue of the Cherokee Phoenix, the first Native American newspaper, was printed at New Echota on 21 February 1828, in Cherokee and English in parallel columns.'
+      zh: '1828 年 2 月 21 日，第一份美洲原住民报纸《切罗基凤凰报》在新埃乔塔出版创刊号，切罗基文和英文分栏并排。'
+    line:
+      en: '21 February 1828: at New Echota the first Cherokee Phoenix comes off the press, Cherokee and English in columns side by side.'
+      zh: '1828 年 2 月 21 日，新埃乔塔印出第一期《切罗基凤凰报》，切罗基文和英文分栏并排。'
+  death:
+    date: '1843'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [encyclopedia_alabama_sequoyah, wikipedia_sequoyah]
+    text:
+      en: 'Sequoyah died in Mexico in August 1843; accounts differ on the exact place.'
+      zh: '塞阔雅于 1843 年 8 月在墨西哥去世，具体地点说法不一。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: 'August 1843: Sequoyah dies in Mexico.'
+      zh: '1843 年 8 月，塞阔雅在墨西哥去世。'
 bystanders:
-  sequoyah_syllabary_reader:
+  learner:
     invented: true
-    text: {en: 'An invented Cherokee reader helping a fellow learner practise.', zh: '一位虚构的切罗基读者，正在帮同伴练习辨读。'}
+    text: {en: 'A learner, made up for the game, who sounds out a word one sign at a time.', zh: '一位编出来的学字人，一个符号一个符号地念。'}
+  neighbour:
+    invented: true
+    text: {en: 'A neighbour, made up for the game, who wants to write her name.', zh: '一位编出来的邻家妇人，想写出自己的名字。'}
 wiki:
   refs:
     sequoyah_syllabary_primary:
@@ -80,11 +115,34 @@ wiki:
       text:
         en: 'Smithsonian National Portrait Gallery, Sequoyah, with notes on adoption in 1821. https://npg.si.edu/learn/classroom-resource/sequoyah-c-1770%E2%80%93c-1843'
         zh: '史密森尼国家肖像馆，塞阔雅条目，附 1821 年采用音节文字的说明。https://npg.si.edu/learn/classroom-resource/sequoyah-c-1770%E2%80%93c-1843'
+    encyclopedia_alabama_sequoyah:
+      order: 139
+      status: checked
+      text:
+        en: 'Encyclopedia of Alabama, Sequoyah. https://encyclopediaofalabama.org/article/sequoyah/'
+        zh: '《阿拉巴马百科》，塞阔雅。https://encyclopediaofalabama.org/article/sequoyah/'
+    tennessee_encyclopedia_phoenix:
+      order: 140
+      status: checked
+      text:
+        en: 'Tennessee Encyclopedia, Cherokee Phoenix. https://tennesseeencyclopedia.net/?p=1563'
+        zh: '《田纳西百科》，切罗基凤凰报。https://tennesseeencyclopedia.net/?p=1563'
+    wikipedia_sequoyah:
+      order: 141
+      status: checked
+      text:
+        en: 'Wikipedia, Sequoyah. https://en.wikipedia.org/wiki/Sequoyah'
+        zh: '维基百科，塞阔雅。https://en.wikipedia.org/wiki/Sequoyah'
 self_check:
-  quote_line: '你等对方先按平常速度念完，再慢慢念一遍。'
-  fact: syllabary
-  regret_choice: '略过「把字形对回完整的音节」，这处细节便留给下一位核对。'
-  bookend: '从「下一位读者能念出来吗」开始，以员工留下的观察或更正收尾。'
-  share_line: '下一位读者能念出来吗'
-  share_number: '1821'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: council
+  quote_line: '塞阔雅演示他的符号能把话传出去，议会接受了这套文字。'
+  regret_choice: '派会教人的去，邻家妇人写得出名字，议会那天却未必挤得到纸条跟前；派细心的去，纸条送到了，教字的事就没人做。'
+  bookend: '从议会接受这套文字开始，以七年后第一份切罗基文报纸收尾。'
+  share_line: '1821 年，我在切罗基议会的空地上替人送过一张纸条。'
+  share_number: '1828'
+  knowing: 'phoenix'
+  near: 'council'
+  lever: 'p2, p3'
+  missed: 'phoenix'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
