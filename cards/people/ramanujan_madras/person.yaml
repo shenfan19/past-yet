@@ -3,53 +3,58 @@ events:
   ramanujan_madras:
     order: 83
     year: 1913
+    # the planned arrival is 1 January 1913, two weeks before the letter to Hardy
+    date: '1913-01-01'
     lon: 80.27
     lat: 13.08
     region: asia
+    home: [india, south_asia]
     field: math
     tier: 3
     channels: {Y: 1, H: 2, G: 1}
-    refs: [ramanujan_madras_letter]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [ramanujan_madras_letter, wolfram_ramanujan, imsc_ramanujan_letter, st_andrews_ramanujan]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":9}}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","streetwise","scholarly"]}}
-        - {id: p3, kind: care, req: {"provides":"calm"}}
+        - {id: p1, kind: trust, day: 8, req: {"any":[{"job":["accountant","archivist"]},{"trait":["methodical","quiet","patient"]},{"stat":{"finesse":6}}]}}
+        - {id: p2, kind: notice, day: 14, req: {"any":[{"trait":["methodical","scholarly","curious"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: care, day: 60, req: {"any":[{"job":["chef","cook","nurse"]},{"trait":["kind","attached","patient"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: sums, traits: [methodical, curious]}
-        - {id: future, traits: [bold, charismatic]}
-        - {id: address}
+        - {id: sums, traits: [methodical, curious], day: 40}
+        - {id: future, traits: [bold, charismatic], day: 15.5}
+        - {id: address, day: 15.2}
     text:
       en:
         name: 'A letter that asks to be checked'
         place: Madras
         figure: Srinivasa Ramanujan
-        story: 'On 16 January 1913, Ramanujan wrote from Madras to G. H. Hardy. The letter introduces his work and mentions his investigation of divergent series. The sample distinguishes ordinary partial sums from other ways of assigning values.'
+        story: 'From March 1912 Srinivasa Ramanujan worked as a clerk in the accounts department of the Madras Port Trust. On Thursday, 16 January 1913, he wrote from there to G. H. Hardy in Cambridge, introducing his work and his study of divergent series. In 1914 he went to England. He died in 1920, after returning to India ill.'
         relic: A slate
         relic_desc: A school slate, wiped and written on many times.
         points:
-          p1: 'Check the first four ordinary partial sums in the exercise'
-          p2: 'Get the clerk to put the covering letter ahead of the practice sheets'
-          p3: 'Keep a separate copy so the first question can be answered later'
+          p1: 'Be taken in by the clerks of the Port Trust, then copy the day''s accounts fair'
+          p2: 'On the eve of the letter, put his pages of formulas in order'
+          p3: 'In the weeks of working day and night, cook for him and see that he eats'
         vignettes:
-          sums: 'The clerk has written a single total beside an unending row of positive integers. You work out 1, 3, 6 and 10 as the first ordinary partial sums. He gives that column its own heading. You leave with a small table while the letter goes to England without you.'
-          future: 'You tell the clerk that the recipient will one day write about this letter. He asks what a man opening it for the first time will understand. You put the covering page before the sample sheet. The packet will be opened where you cannot see the reader’s face.'
-          address: 'You ask the clerk to read the outside address back to you before he ties the packet. On your own slip you keep the date and the question that starts the work. You leave before there can be any reply.'
+          sums: '{staff} works out 1, 3, 6 and 10 as the first sums of a row of whole numbers beside a single total written at the end, and gives the column of sums its own heading.'
+          future: '{staff} knows what will be written of this letter one day, and asks only what a man opening it for the first time will understand, and puts the covering page in front.'
+          address: '{staff} asks the clerk to read the address on the packet aloud before it is tied, and keeps the date on a slip.'
       zh:
         name: '一封请人核算的信'
         place: 马德拉斯
         figure: 斯里尼瓦瑟·拉马努金
-        story: '1913 年 1 月 16 日，拉马努金从马德拉斯给哈代写信，介绍自己的研究，并提到发散级数。算例用来分清普通部分和与赋值方法。'
+        story: '1912 年 3 月起，斯里尼瓦瑟·拉马努金在马德拉斯港务局会计部当职员。1913 年 1 月 16 日，星期四，他从那里给剑桥的 G. H. 哈代写信，介绍自己的研究和对发散级数的探索。1914 年他去了英国，1920 年病重回到印度后去世。'
         relic: 一块石板
         relic_desc: 一块学生用的石板，写了擦、擦了写好多次。
         points:
-          p1: '核算例题的前四个普通部分和'
-          p2: '请帮工把说明信放在练习纸前面'
-          p3: '另抄一份留下，好回头答第一处疑问'
+          p1: '先让港务局的职员们认下，再替他们誊清当天的账目'
+          p2: '写信的前一天，帮他把一页页公式按顺序理好'
+          p3: '他没日没夜演算的那几个星期，给他做饭，看着他吃下去'
         vignettes:
-          sums: '邮务帮工在一排写不完的正整数旁写了一个总数。你按通常加法算出前四个部分和，1、3、6、10。他给这一栏另起了题头。你带走这张表，信却要自己走到英国。'
-          future: '你告诉帮工，收信人日后还会写到这封信。他问头一次拆信的人能看懂什么。你便把介绍页放在练习纸前头。拆信时，你看不到读信人的脸。'
-          address: '帮工捆纸包前，你请他把封套上的地址念一遍。你在自己的条子上留了日期和最先想问的问题。收队时，还来不及有回信。'
+          sums: '一排写不完的正整数旁边只写了一个总数。{staff}算出前几个部分和，1、3、6、10，给这一栏另起了题头。'
+          future: '{staff}知道这封信日后会被人怎样谈起，只问头一回拆信的人能看懂什么，便把说明的那页放在了最前面。'
+          address: '捆纸包前，{staff}请帮工把封套上的地址念一遍，又在自己的纸条上记下日期。'
 text:
   en:
     name: Srinivasa Ramanujan
@@ -59,19 +64,63 @@ text:
     text: 印度数学家，1887 年生，1920 年去世，在马德拉斯的贫困中长大。他基本靠自学，1913 年写信给 G. H. 哈代，附上有关级数和数论的结果，后来前往剑桥，因病早逝。
 hook: {en: 'What fits into the first letter to Hardy?', zh: '寄给哈代的头一封信放什么？'}
 facts:
+  clerk:
+    date: '1912'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wolfram_ramanujan, imsc_ramanujan_letter]
+    text:
+      en: 'From March 1912 Ramanujan held a clerical post in the accounts department of the Madras Port Trust.'
+      zh: '1912 年 3 月起，拉马努金在马德拉斯港务局会计部任职员。'
+    line:
+      en: 'March 1912: Ramanujan takes a clerk''s post in the accounts department of the Madras Port Trust.'
+      zh: '1912 年 3 月，拉马努金在马德拉斯港务局会计部当上了职员。'
   letter:
     date: '1913-01-16'
-    checked: official_record
+    stay_day: 15
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [ramanujan_madras_letter]
+    use: [story, history, wiki]
+    sources: [ramanujan_madras_letter, wolfram_ramanujan]
     text:
-      en: 'The dated letter introduces Ramanujan’s mathematical work and describes his investigation of divergent series.'
-      zh: '这封有日期的信介绍拉马努金的数学工作，提到他研究发散级数。'
+      en: 'The letter of Thursday, 16 January 1913, signed from the accounts department of the Port Trust, introduces Ramanujan’s mathematical work and describes his investigation of divergent series.'
+      zh: '这封 1913 年 1 月 16 日星期四的信，落款是港务局会计部，介绍拉马努金的数学工作，提到他研究发散级数。'
+    line:
+      en: 'Thursday, 16 January 1913: from the Port Trust, Ramanujan writes to G. H. Hardy in Cambridge about his work.'
+      zh: '1913 年 1 月 16 日，星期四，拉马努金从港务局给剑桥的 G. H. 哈代写信，讲自己的研究。'
+  england:
+    date: '1914'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [st_andrews_ramanujan, wolfram_ramanujan]
+    text:
+      en: 'In 1914 Ramanujan went to England to work in Cambridge.'
+      zh: '1914 年，拉马努金前往英国，到剑桥工作。'
+    line:
+      en: '1914: Ramanujan sails for England.'
+      zh: '1914 年，拉马努金去了英国。'
+  death:
+    date: '1920'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [st_andrews_ramanujan, wolfram_ramanujan]
+    text:
+      en: 'He returned to India ill and died in 1920.'
+      zh: '他病重回到印度，1920 年去世。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '1920: back in India and ill, Ramanujan dies.'
+      zh: '1920 年，病重回到印度的拉马努金去世。'
 bystanders:
   mail_clerk:
     invented: true
-    text: {en: 'A fictional clerk assembling a packet of papers for an overseas post.', zh: '虚构的邮务帮工，正在收拢一叠要寄往海外的纸。'}
+    text: {en: 'A clerk, made up for the game, who ties the packets for the overseas post.', zh: '一位编出来的职员，负责捆寄往海外的纸包。'}
+  colleague:
+    invented: true
+    text: {en: 'A colleague in the accounts room, made up for the game, who shares the lamp.', zh: '一位编出来的账房同事，和他合用一盏灯。'}
 wiki:
   refs:
     ramanujan_madras_letter:
@@ -80,16 +129,34 @@ wiki:
       text:
         en: 'Srinivasa Ramanujan, letter to G. H. Hardy, Madras, 16 January 1913, transcription https://onepagepapers.com/ramanujan-letter/read/'
         zh: '拉马努金致哈代，马德拉斯 1913 年 1 月 16 日，书信转录 https://onepagepapers.com/ramanujan-letter/read/'
+    wolfram_ramanujan:
+      order: 543
+      status: checked
+      text:
+        en: 'Stephen Wolfram, Who Was Ramanujan? https://writings.stephenwolfram.com/2016/04/who-was-ramanujan/'
+        zh: '斯蒂芬·沃尔弗拉姆，拉马努金是谁？https://writings.stephenwolfram.com/2016/04/who-was-ramanujan/'
+    imsc_ramanujan_letter:
+      order: 544
+      status: checked
+      text:
+        en: 'Institute of Mathematical Sciences, Chennai, S. Ramanujan to G. H. Hardy. https://www.imsc.res.in/~rao/ramanujan/newnow/ramtohardy1741913.htm'
+        zh: '金奈数学科学研究所，拉马努金致哈代书信。https://www.imsc.res.in/~rao/ramanujan/newnow/ramtohardy1741913.htm'
+    st_andrews_ramanujan:
+      order: 545
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Srinivasa Aiyangar Ramanujan. https://mathshistory.st-andrews.ac.uk/Biographies/Ramanujan'
+        zh: '圣安德鲁斯大学 MacTutor 数学史，拉马努金。https://mathshistory.st-andrews.ac.uk/Biographies/Ramanujan'
 self_check:
   fact: letter
-  quote_line: '你带走这张表，信却要自己走到英国。'
-  regret_choice: '在核算练习和给读者理顺说明页之间花时间。'
-  bookend: '从猜第一封信该先让人看到什么，到纸包封好、回音仍在以后。'
-  share_line: '我算了四个部分和，信还在路上。'
-  share_number: '1、3、6、10'
-  knowing: 'future 知道后来收信人会谈到这封信。'
-  near: 'letter 锚定日期、发信地和发散级数。'
-  lever: '给一个算例分出普通部分和一栏。'
-  missed: '赶不上英国的回信。'
-  brought: '四项部分和的小表。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '1913 年 1 月 16 日，星期四，拉马努金从港务局给剑桥的 G. H. 哈代写信，讲自己的研究。'
+  regret_choice: '派细心的去，公式页理得清，账房里的人却未必认得下；派会照顾人的去，饭送得上，信寄出前的那一夜没人帮他理稿。'
+  bookend: '从港务局的一份职员差事开始，以七年后他回到印度病逝收尾。'
+  share_line: '1913 年 1 月，我在马德拉斯帮一个职员把公式页理好，寄去了剑桥。'
+  share_number: '1913'
+  knowing: 'england'
+  near: 'letter'
+  lever: 'p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

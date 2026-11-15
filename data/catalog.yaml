@@ -3543,45 +3543,80 @@ events:
       - Fan Shen
   - id: ramanujan_madras
     year: 1913
+    date: '1913-01-01'
     lon: 80.27
     lat: 13.08
     region: asia
+    home:
+      - india
+      - south_asia
     field: math
     tier: 3
     channels:
       'Y': 1
       H: 2
       G: 1
+    ready: true
     refs:
       - ramanujan_madras_letter
+      - wolfram_ramanujan
+      - imsc_ramanujan_letter
+      - st_andrews_ramanujan
     scene:
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 8
           req:
-            stat:
-              wit: 9
+            any:
+              - job:
+                  - accountant
+                  - archivist
+              - trait:
+                  - methodical
+                  - quiet
+                  - patient
+              - stat:
+                  finesse: 6
         - id: p2
-          kind: persuade
+          kind: notice
+          day: 14
           req:
-            trait:
-              - glib
-              - streetwise
-              - scholarly
+            any:
+              - trait:
+                  - methodical
+                  - scholarly
+                  - curious
+              - stat:
+                  wit: 7
         - id: p3
           kind: care
+          day: 60
           req:
-            provides: calm
+            any:
+              - job:
+                  - chef
+                  - cook
+                  - nurse
+              - trait:
+                  - kind
+                  - attached
+                  - patient
+              - stat:
+                  will: 6
       vignettes:
         - id: sums
           traits:
             - methodical
             - curious
+          day: 40
         - id: future
           traits:
             - bold
             - charismatic
+          day: 15.5
         - id: address
+          day: 15.2
     authors:
       - AI
       - Fan Shen

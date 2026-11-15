@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.28, 2026-11-15
+
+- Madras 1913, Srinivasa Ramanujan, is rewritten and turned on: the clerk's post at the Port Trust from March 1912, the letter to Hardy of Thursday 16 January 1913, England in 1914 and his death in 1920, with sync points for copying the accounts, putting his pages of formulas in order and cooking for him through the weeks of work.
+
 ## 0.5.27, 2026-11-15
 
 - Tupaia keeps one Chinese spelling of his name throughout.
