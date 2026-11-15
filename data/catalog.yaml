@@ -3098,39 +3098,69 @@ events:
     lon: 126.98
     lat: 37.57
     region: asia
+    home:
+      - korea
     field: literature
     tier: 3
     channels:
       C: 2
       S: 1
+    ready: true
     refs:
       - sejong_hangul_primary
+      - wikipedia_hunminjeongeum
+      - languagelog_choe
+      - languages_numbers_hangul
     scene:
       points:
         - id: p1
-          kind: persuade
-          req:
-            stat:
-              finesse: 6
-        - id: p2
-          kind: notice
-          req:
-            stat:
-              wit: 7
-        - id: p3
           kind: trust
+          day: 10
           req:
-            item: neural_chip
+            any:
+              - trait:
+                  - quiet
+                  - patient
+                  - kind
+              - stat:
+                  finesse: 6
+        - id: p2
+          kind: persuade
+          day: 50
+          req:
+            any:
+              - job:
+                  - teacher
+              - trait:
+                  - patient
+                  - cheerful
+                  - kind
+              - stat:
+                  wit: 7
+        - id: p3
+          kind: hold
+          day: 92
+          req:
+            any:
+              - trait:
+                  - faithful
+                  - methodical
+                  - vigil
+              - stat:
+                  will: 6
       vignettes:
         - id: gesture
           traits:
             - curious
             - scholarly
+          day: 40
         - id: spacing
           traits:
             - methodical
             - artistic
+          day: 60
         - id: lesson
+          day: 70
     authors:
       - AI
       - Fan Shen

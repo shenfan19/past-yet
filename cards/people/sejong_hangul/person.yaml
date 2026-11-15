@@ -6,50 +6,54 @@ events:
     lon: 126.98
     lat: 37.57
     region: asia
+    home: [korea]
     field: literature
     tier: 3
     channels: {C: 2, S: 1}
-    refs: [sejong_hangul_primary]
+    # finished: in the game with release.ready_only. The planned arrival is the first day of the eleventh month of 1443 on the lunar calendar;
+    # the facts of the stay are placed by their month, counted from that day.
+    ready: true
+    refs: [sejong_hangul_primary, wikipedia_hunminjeongeum, languagelog_choe, languages_numbers_hangul]
     scene:
       points:
-        - {id: p1, kind: persuade, req: {"stat": {"finesse": 6}}}
-        - {id: p2, kind: notice, req: {"stat": {"wit": 7}}}
-        - {id: p3, kind: trust, req: {"item": "neural_chip"}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["quiet","patient","kind"]},{"stat":{"finesse":6}}]}}
+        - {id: p2, kind: persuade, day: 50, req: {"any":[{"job":["teacher"]},{"trait":["patient","cheerful","kind"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: hold, day: 92, req: {"any":[{"trait":["faithful","methodical","vigil"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: gesture, traits: [curious, scholarly]}
-        - {id: spacing, traits: [methodical, artistic]}
-        - {id: lesson}
+        - {id: gesture, traits: [curious, scholarly], day: 40}
+        - {id: spacing, traits: [methodical, artistic], day: 60}
+        - {id: lesson, day: 70}
     text:
       en:
         name: An alphabet anyone can learn
         place: Seoul
         figure: King Sejong and the scholars
-        story: 'The Haerye edition promulgated in 1446 explains the writing system completed under Sejong in 1443.'
+        story: 'In 1443 King Sejong of Joseon made twenty eight letters for writing Korean. In the second month of 1444 Choe Manri, of the Hall of Worthies, sent up a memorial with six colleagues raising objections. The new letters were promulgated in 1446 as Hunminjeongeum, the correct sounds for teaching the people. Sejong died in 1450.'
         relic: A woodblock of letters
         relic_desc: A block carved with the first letters, ready to ink.
         points:
-          p1: 'Find the beginning of the spoken syllable'
-          p2: 'Group the marks that belong to one syllable'
-          p3: 'Help the learner read a familiar word back'
+          p1: 'Be taken in by the servants of the Hall of Worthies, then grind the ink and lay out the paper for the scholars'
+          p2: 'Teach a stallholder who cannot read to spell her own name in the new letters'
+          p3: 'In the days of the memorial against them, keep a fair copy of the new letters safe'
         vignettes:
-          gesture: 'You repeat the sound slowly until the learner can describe what the tongue is doing. They return to the written mark and try it again without your voice.'
-          spacing: 'The learner leaves a line of parts in a row. You draw a box around the ones that belong together and ask them to read the group as one syllable.'
-          lesson: 'The learner sounds out a familiar word and leaves a gap for the part they have forgotten. You cover the earlier example and wait until they can fill it from memory.'
+          gesture: '{staff} watches a scholar shape his lips before he draws a letter, and copies the shape of the mouth in the margin beside it.'
+          spacing: '{staff} rules a sheet into squares so that the parts of each syllable sit together in one square, and leaves it on the table without a word.'
+          lesson: '{staff} draws three letters in the dust with a stick for a child at the market, and the child reads them back as a sound before running off.'
       zh:
         name: 人人都学得会的字母
         place: 首尔
         figure: 世宗大王与学者们
-        story: '1446 年刊行的《训民正音》解例本说明了世宗在 1443 年完成的文字。'
+        story: '1443 年，朝鲜世宗亲制二十八个字母，用来书写朝鲜语。1444 年二月，集贤殿的崔万理与六位同僚联名上疏，提出异议。1446 年，新字以《训民正音》之名颁布，意为教百姓的正确字音。世宗于 1450 年去世。'
         relic: 一块刻着字母的木板
         relic_desc: 刻着最早几个字母的木板，等着上墨。
         points:
-          p1: '听出这个音节从哪里起音'
-          p2: '把属于同一音节的字形排在一起'
-          p3: '帮习字人把熟悉的词再读出来'
+          p1: '先让集贤殿的杂役认下，再替学士们研墨铺纸'
+          p2: '教集市上一个不识字的摊主用新字拼出自己的名字'
+          p3: '有人上疏反对的那些天，把新字的誊本收好'
         vignettes:
-          gesture: '你把那个音放慢，直到习字人能说清舌头在哪里。他回到纸上的字形，这次不用你领读就试了一遍。'
-          spacing: '习字人把几部分排成一长行。你用方框圈起属于同一组的几笔，请他合起来读成一个音节。'
-          lesson: '习字人念出一个熟词，忘记的部分空着。你把前面的例字盖上，等他想起来，自己把空处填了。'
+          gesture: '{staff}看见一位学士画一个字母之前先比了比嘴形，便把嘴的样子描在那个字母旁边的页边上。'
+          spacing: '{staff}把一张纸打成方格，让一个音节的几部分落在同一格里，什么也没说，放在了桌上。'
+          lesson: '{staff}在集市上用树枝在土里写了三个字母给一个孩子看，孩子把它们念成一个音，转身跑开了。'
 text:
   en:
     name: King Sejong and the scholars
@@ -59,19 +63,63 @@ text:
     text: 朝鲜国王，1397 年生，1450 年去世。他与集贤殿的学者创制了一套适合朝鲜语的新文字，1446 年颁布，名为《训民正音》，好让百姓学会读写。
 hook: {en: 'Read the syllable from its parts.', zh: '拆开一格，听见一个音节'}
 facts:
-  haerye:
-    date: '1446'
-    checked: official_record
+  created:
+    date: '1443'
+    stay_day: 35
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [sejong_hangul_primary]
+    use: [story, history, wiki]
+    sources: [wikipedia_hunminjeongeum, languages_numbers_hangul]
     text:
-      en: 'The Haerye edition promulgated in 1446 explains the writing system completed under Sejong in 1443.'
-      zh: '1446 年刊行的《训民正音》解例本说明了世宗在 1443 年完成的文字。'
+      en: 'The new script of twenty eight letters was finished in 1443, the twenty fifth year of Sejong.'
+      zh: '新文字二十八个字母于 1443 年，即世宗二十五年制成。'
+    line:
+      en: 'The end of 1443: King Sejong finishes twenty eight letters for writing Korean.'
+      zh: '1443 年岁末，世宗制成二十八个字母，用来书写朝鲜语。'
+  memorial:
+    date: '1444'
+    stay_day: 92
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [languagelog_choe, languages_numbers_hangul]
+    text:
+      en: 'In the second month of 1444 Choe Manri, first counsellor of the Hall of Worthies, sent up a memorial on behalf of himself and six colleagues raising objections; scholars differ on whether it attacked the script itself or Sejong''s wider reform of Sino-Korean pronunciation.'
+      zh: '1444 年二月，集贤殿副提学崔万理代表自己和六位同僚上疏提出异议；学者对此疏反对的是新字本身，还是世宗对汉字音的更大改革，看法不一。'
+    line:
+      en: 'The second month of 1444: Choe Manri and six colleagues of the Hall of Worthies send up a memorial raising objections.'
+      zh: '1444 年二月，集贤殿的崔万理与六位同僚联名上疏，提出异议。'
+  promulgated:
+    date: '1446'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [sejong_hangul_primary, wikipedia_hunminjeongeum]
+    text:
+      en: 'The script was promulgated in 1446 as Hunminjeongeum, with the explanatory edition known as the Haerye.'
+      zh: '1446 年，新字以《训民正音》之名颁布，并有解说本《训民正音解例》。'
+    line:
+      en: '1446: the letters are promulgated as Hunminjeongeum, the correct sounds for teaching the people.'
+      zh: '1446 年，新字以《训民正音》之名颁布，意为教百姓的正确字音。'
+  sejong_dies:
+    date: '1450'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [languages_numbers_hangul, wikipedia_hunminjeongeum]
+    text:
+      en: 'Sejong died in 1450.'
+      zh: '世宗于 1450 年去世。'
+    line:
+      en: '1450: King Sejong dies.'
+      zh: '1450 年，世宗去世。'
 bystanders:
   sejong_hangul_reader:
     invented: true
-    text: {en: 'An invented learner setting down the parts of a syllable.', zh: '一位虚构的习字人，正把一个音节分开写。'}
+    text: {en: 'A stallholder, made up for the game, who has never been able to write her name.', zh: '一位编出来的摊主，从来写不出自己的名字。'}
+  sejong_hangul_servant:
+    invented: true
+    text: {en: 'A servant of the Hall, made up for the game, who keeps the ink stones.', zh: '一位编出来的集贤殿杂役，管着砚台。'}
 wiki:
   refs:
     sejong_hangul_primary:
@@ -79,12 +127,35 @@ wiki:
       status: checked
       text:
         en: 'Hunminjeongum Haerye edition, 1446, UNESCO Memory of the World register. https://www.unesco.org/en/memory-world/hunminjeongum-manuscript?hub=1081'
-        zh: 'Hunminjeongum Haerye edition, 1446, UNESCO Memory of the World register. https://www.unesco.org/en/memory-world/hunminjeongum-manuscript?hub=1081'
+        zh: '《训民正音解例本》，1446 年，联合国教科文组织世界记忆名录。https://www.unesco.org/en/memory-world/hunminjeongum-manuscript?hub=1081'
+    wikipedia_hunminjeongeum:
+      order: 138
+      status: checked
+      text:
+        en: 'Wikipedia, Hunminjeongeum. https://en.wikipedia.org/wiki/Hunminjeongeum'
+        zh: '维基百科，训民正音。https://en.wikipedia.org/wiki/Hunminjeongeum'
+    languagelog_choe:
+      order: 139
+      status: checked
+      text:
+        en: 'Language Log, Ch''oe Manli, anti-Hangul Confucian scholar. https://languagelog.ldc.upenn.edu/nll/?p=69269'
+        zh: 'Language Log，崔万理，反对谚文的儒者。https://languagelog.ldc.upenn.edu/nll/?p=69269'
+    languages_numbers_hangul:
+      order: 140
+      status: checked
+      text:
+        en: 'Languages and Numbers, History of Hangul, the Korean alphabet. https://www.languagesandnumbers.com/articles/en/Hangul-Korean/'
+        zh: 'Languages and Numbers，朝鲜文字的历史。https://www.languagesandnumbers.com/articles/en/Hangul-Korean/'
 self_check:
-  quote_line: '你把那个音放慢，直到习字人能说清舌头在哪里。'
-  fact: haerye
-  regret_choice: '略过「听出这个音节从哪里起音」，这处细节便留给下一位核对。'
-  bookend: '从「拆开一格，听见一个音节」开始，以员工留下的观察或更正收尾。'
-  share_line: '拆开一格，听见一个音节'
-  share_number: '1446'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: memorial
+  quote_line: '1444 年二月，集贤殿的崔万理与六位同僚联名上疏，提出异议。'
+  regret_choice: '派会教人的去，摊主拼得出名字，上疏那几天却未必守得住誊本；派守得住的去，誊本收好了，集市上没人学会新字。'
+  bookend: '从岁末制成的二十八个字母开始，以三年后的颁布和世宗之死收尾。'
+  share_line: '1443 年冬，我在汉城教一个摊主拼出了她的名字。'
+  share_number: '28'
+  knowing: 'promulgated'
+  near: 'created, memorial'
+  lever: 'p2, p3'
+  missed: 'promulgated'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.14, 2026-11-15
+
+- Hanseong 1443, King Sejong and the new letters, is rewritten and turned on: the twenty eight letters finished at the end of 1443, the memorial of Choe Manri and his colleagues in the second month of 1444, the promulgation of 1446 and the death of Sejong in 1450, with sync points for the ink and paper of the Hall of Worthies, a stallholder spelling her name and a fair copy kept safe.
+
 ## 0.5.13, 2026-11-15
 
 - Stanwell Park 1894, Lawrence Hargrave, is rewritten and turned on: the box kite of 1893, the lift on the beach on 12 November 1894, the photograph and his death in 1915, with sync points for stretching the cloth of the kites, calling the height at the winch and holding the line of the fourth kite.
