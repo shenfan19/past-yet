@@ -3821,40 +3821,70 @@ events:
     lon: -72.55
     lat: -13.16
     region: americas
+    home:
+      - latin_america
     field: architecture
     tier: 3
     channels:
-      A: 3
-      L: 3
+      A: 2
+      L: 2
+    ready: true
     refs:
       - machu_picchu_water
       - machu_picchu_series
+      - britannica_machu_picchu
+      - ancient_history_machu_picchu
     scene:
       points:
         - id: p1
-          kind: endure
+          kind: trust
+          day: 10
           req:
-            stat:
-              constitution: 6
+            any:
+              - trait:
+                  - hardy
+                  - cheerful
+                  - handy
+              - job:
+                  - builder
+                  - carpenter
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: hold
-          req:
-            provides: strength
-        - id: p3
           kind: notice
+          day: 80
           req:
-            stat:
-              wit: 6
+            any:
+              - trait:
+                  - methodical
+                  - scholarly
+                  - curious
+              - stat:
+                  wit: 6
+        - id: p3
+          kind: endure
+          day: 150
+          req:
+            any:
+              - trait:
+                  - hardy
+                  - patient
+                  - vigil
+              - stat:
+                  will: 6
       vignettes:
         - id: wet
           traits:
             - methodical
             - scholarly
+          day: 85
         - id: steps
           traits:
             - hardy
             - curious
+          day: 120
         - id: mark
+          day: 40
     authors:
       - AI
       - Fan Shen

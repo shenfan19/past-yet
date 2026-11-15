@@ -6,59 +6,87 @@ events:
     lon: -72.55
     lat: -13.16
     region: americas
+    home: [latin_america]
     field: architecture
     tier: 3
-    channels: {A: 3, L: 3}
-    refs: [machu_picchu_water, machu_picchu_series]
+    channels: {A: 2, L: 2}
+    # finished: in the game with release.ready_only. The year of building is an estimate, so the stay carries no day.
+    ready: true
+    refs: [machu_picchu_water, machu_picchu_series, britannica_machu_picchu, ancient_history_machu_picchu]
     scene:
       points:
-        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p2, kind: hold, req: {"provides":"strength"}}
-        - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","handy"]},{"job":["builder","carpenter"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 80, req: {"any":[{"trait":["methodical","scholarly","curious"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: endure, day: 150, req: {"any":[{"trait":["hardy","patient","vigil"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: wet, traits: [methodical, scholarly]}
-        - {id: steps, traits: [hardy, curious]}
-        - {id: mark}
+        - {id: wet, traits: [methodical, scholarly], day: 85}
+        - {id: steps, traits: [hardy, curious], day: 120}
+        - {id: mark, day: 40}
     text:
       en:
         name: 'Follow the water to the next stone basin'
         place: Machu Picchu, Peru
         figure: The Inca builders
-        story: 'Field studies at Machu Picchu record a canal carrying water from a spring to a stair-stepped series of sixteen fountains in the built area. The map year is an approximate setting.'
+        story: 'Machu Picchu was built around 1450, most likely as an estate of the Inca ruler Pachacuti, and abandoned about a century later, at the time of the Spanish conquest. A canal carried water from a spring to a stepped series of sixteen fountains. On 24 July 1911 Melchor Arteaga, a local farmer, led Hiram Bingham up to the ruins; the site was made a historic sanctuary of Peru in 1981 and a World Heritage site in 1983.'
         relic: A carved stone
         relic_desc: A palm sized stone with a straight, true edge.
         points:
-          p1: 'Walk from the upper outlet to the next one before making a note'
-          p2: 'Keep the upstream and downstream observations in order'
-          p3: 'Mark the last place where you actually saw water'
+          p1: 'Be taken in by the stone workers, then carry stone up the terraces'
+          p2: 'Follow the water from the spring down the sixteen basins, and note where it ran'
+          p3: 'In the rains, keep the channel above the basins clear of mud'
         vignettes:
-          wet: 'The helper has marked every basin wet after seeing water at the first outlet. You walk to the next basin and draw two boxes, one for each observation. His second mark stays blank. You bring back the pair with one unanswered question, and miss whatever the next test finds.'
-          steps: 'You know a later survey will number the outlets in a series. The helper is counting from where he started this morning. You retrace the steps and agree which one is upstream of the other. The sketch can now be read in either direction. You are gone by the time water reaches the lower mark.'
-          mark: 'You copy one wet mark beside the upper basin and follow the channel to the next notch. You leave a small arrow for the helper. The lower basin is still outside the part of the plan you can confirm.'
+          wet: '{staff} walks from one basin to the next before marking it wet, and leaves the second box blank until the water is seen.'
+          steps: '{staff} counts the basins from the top of the stair, as the water runs, and not from where the morning''s work began.'
+          mark: '{staff} cuts a small notch where the channel turns, so the next person to clear it knows where the water bends.'
       zh:
         name: '顺水再走一口石池'
         place: 秘鲁马丘比丘
         figure: 印加的建造者们
-        story: '马丘比丘的现场研究记录了一条从泉眼引水的渠道，以及建筑区沿阶梯排列的十六处水池出水点。'
+        story: '马丘比丘约建于 1450 年，多半是印加统治者帕查库特克的庄园，约一个世纪后、西班牙征服前后被废弃。一条水渠从泉眼引水，沿阶梯流过十六处石池。1911 年 7 月 24 日，当地农民梅尔乔·阿特阿加领着海勒姆·宾厄姆登上遗址；1981 年这里成为秘鲁的历史保护区，1983 年列入世界遗产。'
         relic: 一块切好的石头
         relic_desc: 一块巴掌大的石头，边是直的、正的。
         points:
-          p1: '从上一个出水点走到下一个，再落笔'
-          p2: '把上游和下游的记录按顺序留好'
-          p3: '标出你最后一次亲眼见到水的地方'
+          p1: '先让石匠们认下，再把石料一层层背上梯田'
+          p2: '从泉眼顺着水走过十六口石池，记下水流到了哪里'
+          p3: '雨季里，把石池上方的水渠里的泥清干净'
         vignettes:
-          wet: '帮工在第一处见到水，顺手把下面几处也标成有水。你走到下一口池，改画两个格，各留一次所见。他的第二格仍空着。你带回一对记录和一个问题，下一趟试水的结果没等到。'
-          steps: '你知道后来的测绘会给这些出水点顺次编号，帮工却从自己早上站的地方数起。你沿台阶折回去，和他对准哪一口在上游。这张图从两头读都认得地方。等水到了下一个记号，你已经收队了。'
-          mark: '你抄下上池旁的湿痕，沿水槽走到下一道缺口，再画一个小箭头给帮工。下池的情况不在这一趟能核实的图里。'
+          wet: '{staff}走到下一口池才落笔标“有水”，没见到水之前，第二个格子空着。'
+          steps: '{staff}从台阶顶上顺着水流的方向数石池，不从早上开工的地方数。'
+          mark: '{staff}在水渠拐弯处刻了个小口，下一个来清渠的人就知道水在哪里转弯。'
 text:
   en:
     name: The Inca builders
-    text: The Inca builders of Machu Picchu, a royal estate on a ridge in the Andes built around 1450. The stone walls are fitted without mortar, and the site was abandoned after the Spanish conquest and little known outside the region until 1911.
+    text: The Inca builders of Machu Picchu, a royal estate on a ridge in the Andes built around 1450. The site was abandoned after the Spanish conquest and little known outside the region until 1911.
   zh:
     name: 印加的建造者们
-    text: 马丘比丘的印加建造者。马丘比丘是约 1450 年建在安第斯山脊上的王室庄园，石墙不用灰浆砌合。西班牙征服后遗址被废弃，直到 1911 年才为外界熟知。
+    text: 马丘比丘的印加建造者。马丘比丘是约 1450 年建在安第斯山脊上的王室庄园。西班牙征服后遗址被废弃，直到 1911 年才为外界熟知。
 hook: {en: 'If water appears above, why is the next basin dry?', zh: '上边见水，下边为什么还干着？'}
 facts:
+  built:
+    date: '1450'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [britannica_machu_picchu, ancient_history_machu_picchu]
+    text:
+      en: 'Most archaeologists think the Inca ruler Pachacuti had Machu Picchu built as an estate around 1450.'
+      zh: '多数考古学家认为，马丘比丘是印加统治者帕查库特克约于 1450 年下令修建的庄园。'
+    line:
+      en: 'Around 1450: on a ridge above the river, an estate of the Inca ruler Pachacuti is being built of fitted stone.'
+      zh: '1450 年前后，河谷上方的山脊上，印加统治者帕查库特克的庄园正一块块用石头砌起来。'
+  series:
+    date: '1450'
+    stay_day: 60
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [machu_picchu_series]
+    text:
+      en: 'The survey documents the spring-fed canal and the linked series of sixteen fountains.'
+      zh: '调查记录来自泉水的水渠和串联的十六处出水点。'
+    line:
+      en: 'A canal brings water from a spring down a stair of sixteen stone basins.'
+      zh: '一条水渠从泉眼引水，顺着台阶流过十六口石池。'
   water:
     date: '1450'
     checked: official_record
@@ -68,19 +96,49 @@ facts:
     text:
       en: 'Field research documents Machu Picchu’s water and drainage infrastructure.'
       zh: '现场研究记录马丘比丘的供水与排水设施。'
-  series:
-    date: '1450'
-    checked: official_record
+  abandoned:
+    date: '1550'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [machu_picchu_series]
+    use: [story, history, wiki]
+    sources: [britannica_machu_picchu, ancient_history_machu_picchu]
     text:
-      en: 'The survey documents the spring-fed canal and the linked series of sixteen fountains.'
-      zh: '调查记录来自泉水的水渠和串联的十六处出水点。'
+      en: 'The Incas abandoned the estate about a century after it was built, around the time of the Spanish conquest.'
+      zh: '大约在建成一个世纪后、西班牙征服前后，印加人离开了这处庄园。'
+    line:
+      en: 'About a century later, around the time of the Spanish conquest, the estate is left empty.'
+      zh: '大约一个世纪后，西班牙征服前后，这处庄园空了下来。'
+  bingham:
+    date: '1911-07-24'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [britannica_machu_picchu, ancient_history_machu_picchu]
+    text:
+      en: 'On 24 July 1911 Melchor Arteaga, a local farmer, led Hiram Bingham across the river and up to the ruins. Bingham was long called its discoverer; that he was guided there by local people is now widely pointed out.'
+      zh: '1911 年 7 月 24 日，当地农民梅尔乔·阿特阿加领着海勒姆·宾厄姆过河，登上遗址。宾厄姆长期被称作发现者，如今人们常指出，是当地人把他带到了那里。'
+    line:
+      en: '24 July 1911: a local farmer, Melchor Arteaga, leads the American Hiram Bingham across the river and up to the ruins.'
+      zh: '1911 年 7 月 24 日，当地农民梅尔乔·阿特阿加领着美国人海勒姆·宾厄姆过河，登上了遗址。'
+  heritage:
+    date: '1983'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [britannica_machu_picchu, ancient_history_machu_picchu]
+    text:
+      en: 'Machu Picchu was declared a historic sanctuary of Peru in 1981 and a UNESCO World Heritage site in 1983.'
+      zh: '马丘比丘 1981 年成为秘鲁历史保护区，1983 年列入联合国教科文组织世界遗产。'
+    line:
+      en: '1983: Machu Picchu is inscribed as a World Heritage site.'
+      zh: '1983 年，马丘比丘列入世界遗产。'
 bystanders:
   helper:
     invented: true
-    text: {en: 'A fictional helper comparing readings from two parts of the water route.', zh: '虚构的帮工，要把水路前后两处的记录对起来。'}
+    text: {en: 'A helper, made up for the game, who marks the basins as the water reaches them.', zh: '一位编出来的帮工，水流到哪口池就在哪口池做记号。'}
+  porter:
+    invented: true
+    text: {en: 'A porter, made up for the game, who carries stone up the terraces.', zh: '一位编出来的背夫，把石料背上梯田。'}
 wiki:
   refs:
     machu_picchu_water:
@@ -95,16 +153,28 @@ wiki:
       text:
         en: 'Wright, Kelly and Valencia Zegarra, Machu Picchu: Ancient Hydraulic Engineering https://ascelibrary.com/doi/10.1061/%28ASCE%290733-9429%281997%29123%3A10%28838%29'
         zh: '赖特、凯利与巴伦西亚·塞加拉，《马丘比丘：古代水利工程》 https://ascelibrary.com/doi/10.1061/%28ASCE%290733-9429%281997%29123%3A10%28838%29'
+    britannica_machu_picchu:
+      order: 679
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Machu Picchu. https://www.britannica.com/place/Machu-Picchu'
+        zh: '《不列颠百科全书》，马丘比丘。https://www.britannica.com/place/Machu-Picchu'
+    ancient_history_machu_picchu:
+      order: 680
+      status: checked
+      text:
+        en: 'Ancient History Sites, Machu Picchu: An Inca Royal Estate in Peru. https://www.ancient-history-sites.com/?p=133188'
+        zh: 'Ancient History Sites，马丘比丘：秘鲁的印加王室庄园。https://www.ancient-history-sites.com/?p=133188'
 self_check:
-  fact: water
-  quote_line: '他的第二格仍空着。'
-  regret_choice: '看见上边有水就填完，下面是否出水便没有实测。'
-  bookend: '从上游的第一笔，走到图上的实测边界。'
-  share_line: '我只标了最后一次亲眼见到水的地方。'
-  share_number: '十六处出水点'
-  knowing: 'steps 知道后来的图会把出水点连在一起。'
-  near: 'water 和 series 锚定水路结构。'
-  lever: '分开上下游观察。'
-  missed: '下次试水未赶上。'
-  brought: '一支箭头和两格记录。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: bingham
+  quote_line: '1911 年 7 月 24 日，当地农民梅尔乔·阿特阿加领着美国人海勒姆·宾厄姆过河，登上了遗址。'
+  regret_choice: '派力气大的去，石料背得上梯田，水流到哪里却没人记；派细心的去，十六口池记清了，雨季的渠没人清。'
+  bookend: '从山脊上砌起的第一块石头开始，以四百多年后一位当地农民领人上山收尾。'
+  share_line: '1450 年前后，我在马丘比丘顺着水走过十六口石池。'
+  share_number: '16'
+  knowing: 'bingham'
+  near: 'series'
+  lever: 'p1, p2'
+  missed: 'abandoned'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
