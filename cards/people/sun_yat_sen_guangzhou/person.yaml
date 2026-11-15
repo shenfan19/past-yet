@@ -29,8 +29,8 @@ events:
         place: "Guangzhou"
         figure: "Sun Yat-sen"
         story: "Standing before the statue of Sun Yat-sen at Sun Yat-sen University, you are carried back to Guangzhou on 4 February 1924, the day he orders three schools joined into National Guangdong University and names Zou Lu to prepare it. In the same months he lectures on Sundays in the hall of the Higher Normal School, and the notes of the lectures go back and forth until they are a book. Classes begin on 19 September, and the founding ceremony is held on 11 November with the motto he wrote. He dies in Beijing on 12 March 1925, and in 1926 the university takes his name."
-        relic: "A pamphlet printed in March 1924"
-        relic_desc: "The first of the Sunday lectures in print, with a preface dated 30 March 1924."
+        relic: "The statue of Sun Yat-sen"
+        relic_desc: "The statue on the campus of Sun Yat-sen University. It is the way to Guangzhou in 1924 and is not an antique, so it cannot be sold."
         points:
           p1: "Copy the records of the three schools into one book"
           p2: "Bring home a copy of the book of the lectures"
@@ -44,8 +44,8 @@ events:
         place: "广州"
         figure: "孙中山"
         story: "你站在中山大学的孙中山像前，被带回 1924 年 2 月 4 日的广州，这一天他下令把三所学校合并为国立广东大学，派邹鲁筹备。同一段日子里，他星期天在高等师范的礼堂演讲，讲稿在几个人手里来回走，后来成了一本书。9 月 19 日开学，11 月 11 日举行成立典礼，用的是他写的校训。1925 年 3 月 12 日他在北京去世，1926 年这所大学以他的名字命名。"
-        relic: "一本 1924 年三月印的小册子"
-        relic_desc: "星期天的演讲头一回印成书，序写于 1924 年 3 月 30 日。"
+        relic: "孙中山铜像"
+        relic_desc: "中山大学校园里的孙中山铜像。它是通往 1924 年广州的穿越媒介，不是古董，不能出售。"
         points:
           p1: "把三所学校的名册抄成一本"
           p2: "带回一本演讲印成的书"
@@ -65,7 +65,6 @@ events:
     field: thought
     tier: 1
     stay: 7
-    after: sun_yat_sen_guangzhou
     channels: {C: 1, G: 2}
     regret: true
     refs: [chnmuseum_sun_1925]
@@ -109,60 +108,6 @@ events:
           list: '虚构的值守人把还在等的人和已经离开的人记在同一张名单里。你请他列两个栏头，下一班接手便知道还要叫谁。'
           bench: '门口有人走了很远的路，一有动静便站起来。你在长凳上给他找了个位置，说值守人出来时就叫他。'
           water: '你把水壶搁在夜班能找到的托盘旁。值守人把它移到随手够得着的地方，给下一班留了个字条。'
-  sun_yat_sen_university_1926:
-    order: 224
-    year: 1926
-    lon: 113.27
-    lat: 23.13
-    region: asia
-    home: [china]
-    crossroads: true
-    field: thought
-    tier: 1
-    stay: 5
-    after: sun_yat_sen_beijing_1925
-    channels: {H: 1}
-    refs: [sysu_rename_museum]
-    scene:
-      points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":5}}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["archivist","proofreader","accountant"]},{"trait":["methodical"]}]}}
-        - {id: p3, kind: trust, req: {"trait":["kind","cheerful","cosmopolitan","patient"]}}
-      vignettes:
-        - {id: letter, traits: [methodical, vigil]}
-        - {id: sign, traits: [cosmopolitan, kind]}
-        - {id: copy}
-    text:
-      en:
-        name: "The university takes his name"
-        place: "Guangzhou"
-        figure: "Sun Yat-sen"
-        story: "On 5 August 1926 the school affairs meeting of National Guangdong University resolves to rename the university after Sun Yat-sen and to ask the government to approve it. On 17 August the National Government orders the change, and the university becomes National Sun Yat-sen University. He has been dead for a year and five months. The statue you set out from stands on its campus."
-        relic: "A wooden sign with the new name"
-        relic_desc: "A narrow board, freshly painted, from the first days of the new name."
-        points:
-          p1: "Find the resolution in the record of the meeting"
-          p2: "Sort and file the papers and seals that carry the old name"
-          p3: "Help the new students learn the new name and where to go"
-        vignettes:
-          letter: 'The fictional clerk prepares to mark both papers with the same date. You point out that one records the school''s request and the other announces the order. The papers go into different folders.'
-          sign: 'A new student reads the old name from a letter and thinks they have the wrong gate. You walk them to the new sign so they can see how the address stayed useful after the name changed.'
-          copy: 'You hold down the corner of a notice while the clerk copies the new name. In the space below, you put the old name once, so a visitor starting with older directions can still tell where to go.'
-      zh:
-        name: "这所大学以他的名字命名"
-        place: "广州"
-        figure: "孙中山"
-        story: "1926 年 8 月 5 日，国立广东大学的校务会议决议把学校改名纪念孙中山，并呈请政府批准。8 月 17 日国民政府下令改名，学校成为国立中山大学。这时他已经去世一年零五个月。你出发时面前的那座铜像，就立在这所大学的校园里。"
-        relic: "一块写着新校名的木牌"
-        relic_desc: "一块窄木板，漆还是新的，来自新校名最初的几天。"
-        points:
-          p1: "在会议记录里找到那条决议"
-          p2: "把带着旧校名的文件和印章清点归档"
-          p3: "帮新来的学生认识新校名，知道往哪里去"
-        vignettes:
-          letter: '虚构的书吏准备给两张纸写同一个日期。你指给他看，一张记学校呈请，一张公布命令。两张最后分开归档。'
-          sign: '新生照着信上的旧名念，以为找错了门。你带他到新牌子前，让他看明白校名换了，信上的地址仍找得到地方。'
-          copy: '书吏抄校名时，你按住告示一角。在下面空处，你另写了一遍旧名，好让跟着旧路引来的人还能找到地方。'
 text:
   en:
     name: "Sun Yat-sen"
@@ -420,6 +365,7 @@ era_text:
       last: 'Be there for the last lecture'
     milestones:
       order_given: '{date}: Sun Yat-sen orders the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and names Zou Lu to prepare it. Nobody in the city can yet say where this university is.'
+      lecture_jan27: '{date}: A Sunday. Sun Yat-sen gives the first of his lectures on the Three Principles of the People in the hall of the Higher Normal School.'
       lecture_feb17: '{date}: A Sunday. Sun Yat-sen lectures in the hall of the Higher Normal School. The series began on 27 January and this is the fourth lecture. At the side of the platform a man writes without looking up. That is Huang Changgu, who is there for every one.'
       zou_takes_up: '{date}: Zou Lu takes up the preparation.'
       hall_feb24: '{date}: A Sunday again. The fifth lecture is given in the hall today, and Zou Lu calls the students of the three schools together here to announce the preparation.'
@@ -622,6 +568,7 @@ era_text:
       last: '待到最后一讲'
     milestones:
       order_given: '{date}，孙中山下令把国立高等师范学校、广东法科大学和广东农业专门学校并成国立广东大学，派邹鲁筹备。城里还没有人说得清这所大学在哪里。'
+      lecture_jan27: '{date}，星期天。孙中山在高等师范的礼堂讲三民主义的第一讲。'
       lecture_feb17: '{date}，星期天。孙中山在高等师范的礼堂演讲，这个系列从 1 月 27 日讲起，这一天是第四讲。台侧有人埋头速记，那是黄昌谷，每一讲他都在。'
       zou_takes_up: '{date}，邹鲁就任筹备主任。'
       hall_feb24: '{date}，又是星期天。这一天礼堂里有第五讲，邹鲁也在这里召集三所学校的学生，宣布筹建。'

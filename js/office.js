@@ -263,18 +263,6 @@ export function createOffice(X) {
       sec.favor = clamp(sec.favor + (met ? R.favor_match : R.favor_miss), F.min, F.max);
       s.secretaryLast = { aim, met, dispatchId: d.id };
     }
-    // The next episode of the same person opens when this one has been visited: an event that names this one in `after` has its relic found and anchored.
-    d.paid.opened = [];
-    for (const e of D.get('catalog.events')) {
-      if (d.evacuation || !e.after) continue;
-      const prev = D.get('catalog.events').find((x) => x.id === e.after);
-      if (!prev || (d.eraId !== prev.id && d.eraId !== prev.era)) continue;
-      const relic = 'relic_' + e.id;
-      if (s.antiques.includes(relic)) continue;
-      s.antiques.push(relic);
-      if (!s.locks.includes(relic)) s.locks.push(relic);
-      d.paid.opened.push(e.id);
-    }
     record(d);
     s.dispatches.sort((a, b) => (a.claimedAt ?? Infinity) - (b.claimedAt ?? Infinity));
     pruneReports();
@@ -299,7 +287,7 @@ export function createOffice(X) {
     const s = S();
     if (s.seq > 0 || !s.startRandom) return false;
     const out = new Set(s.startRandom);
-    const pool = D.get('catalog.events').filter((e) => !e.after && !s.locks.includes('relic_' + e.id));
+    const pool = D.get('catalog.events').filter((e) => !s.locks.includes('relic_' + e.id));
     const next = [];
     for (let i = 0; i < O.start_scenes.random && pool.length; i++) next.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
     s.locks = s.locks.filter((x) => !out.has(x)).concat(next);

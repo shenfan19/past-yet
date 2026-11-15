@@ -209,7 +209,7 @@ events:
     importance: 3
     tag: branch
     once: true
-    when: "arrived == 1 and day >= 10"
+    when: "arrived == 1 and day >= arrive_day + 10"
     probability: "0.04 * step"
     effects:
       traveler.trust: "traveler.trust + (0.05 if sites >= 0.5 else 0.01)"
@@ -224,7 +224,7 @@ milestones:
     needs_traveler: true
     variants:
       - {when: "tag.clumsy == 1", key: records_read_aloud}
-  records_shut: {when: "tag.literate == 0 and arrived == 1 and day >= 10", importance: 3, tag: trait, needs_traveler: true, effects: {traveler.trust: "traveler.trust + 0.05"}}
+  records_shut: {when: "tag.literate == 0 and arrived == 1 and day >= arrive_day + 10", importance: 3, tag: trait, needs_traveler: true, effects: {traveler.trust: "traveler.trust + 0.05"}}
   records_done: {when: "records_day >= 0 and records_day < early_day", importance: 4, tag: branch, needs_traveler: true}
   records_late: {when: "records_day >= early_day", importance: 3, tag: branch, needs_traveler: true}
   sites_done: {when: "sites >= 1", importance: 3, tag: branch, needs_traveler: true}

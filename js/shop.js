@@ -86,7 +86,7 @@ export function createShop(X) {
 
   function antiqueBox() {
     const S = ctx.S();
-    const shown = Object.keys(D.get('antiques.antiques')).filter((id) => (DEV || S.antiques.includes(id)) && D.get('antiques.antiques.' + id).playable !== undefined);
+    const shown = Object.keys(D.get('antiques.antiques')).filter((id) => (DEV || S.antiques.includes(id)) && D.get('antiques.antiques.' + id).kind !== 'medium');
     const ids = shown.filter((id) => listbox.match('ants', T.antiques[id].name + ' ' + T.antiques[id].desc, D.get('antiques.antiques.' + id).tags));
     const rows = ids.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), n: copies(id), lock: S.locks.includes(id) }));
     return listbox.html({

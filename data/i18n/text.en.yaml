@@ -32,6 +32,8 @@ day_parts:
 generic:
   arrive: '{date}: {staff} arrives at {era}. Carrying: {kit}.'
   arrive_empty: '{date}: {staff} arrives at {era}, empty handed.'
+  drift_early: ' The crossing is off: {n} days earlier than planned.'
+  drift_late: ' The crossing is off: {n} days later than planned.'
   leave: '{date}: {staff} is recalled.'
   recall_charm: '{date}: {staff} collapses, the recall charm glows and pulls them back. The gear is saved.'
   recall_lost: '{date}: {staff} collapses and is forced back. Without a recall charm the gear is lost and the scare stays.'
@@ -546,7 +548,6 @@ ui:
     reached_home: Enough energy to go home. The prototype ends here.
   report:
     protagonist: Protagonist
-    opened: Next episode opens
     staff_line: 'Employee: {x}'
     none: No reports yet. Send someone out first.
     cumulative: ' (cumulative)'
@@ -617,9 +618,13 @@ ui:
     never: —
     times: This happened {n} times in all.
     segment: Month
-    segment_title: Month {n} of the stay
-    after_leave: After you left
-    after_leave_note: '{staff} was no longer there.'
+    after_leave_note: What follows happened after {staff} had left.
+    line_filter:
+      all: All
+      history: History
+      travel: Crossing
+      star: ★
+    numbers: Numbers and ledger
   music:
     label: Music
     play: Play
@@ -4177,8 +4182,8 @@ catalog:
     place: Guangzhou
     figure: Sun Yat-sen
     story: Standing before the statue of Sun Yat-sen at Sun Yat-sen University, you are carried back to Guangzhou on 4 February 1924, the day he orders three schools joined into National Guangdong University and names Zou Lu to prepare it. In the same months he lectures on Sundays in the hall of the Higher Normal School, and the notes of the lectures go back and forth until they are a book. Classes begin on 19 September, and the founding ceremony is held on 11 November with the motto he wrote. He dies in Beijing on 12 March 1925, and in 1926 the university takes his name.
-    relic: A pamphlet printed in March 1924
-    relic_desc: The first of the Sunday lectures in print, with a preface dated 30 March 1924.
+    relic: The statue of Sun Yat-sen
+    relic_desc: The statue on the campus of Sun Yat-sen University. It is the way to Guangzhou in 1924 and is not an antique, so it cannot be sold.
     points:
       p1: Copy the records of the three schools into one book
       p2: Bring home a copy of the book of the lectures
@@ -4202,21 +4207,6 @@ catalog:
       list: A fictional attendant starts to make one list for people waiting and people who have already gone. You suggest two headings. The next shift knows which names they still need to call.
       bench: Someone at the gate has come a long way and keeps standing up at every sound. You find them a place on the bench and promise to call when the attendant comes out.
       water: You put the kettle next to the tray where the night shift will find it. The attendant moves it within reach and leaves a note for the next person.
-  sun_yat_sen_university_1926:
-    name: The university takes his name
-    place: Guangzhou
-    figure: Sun Yat-sen
-    story: On 5 August 1926 the school affairs meeting of National Guangdong University resolves to rename the university after Sun Yat-sen and to ask the government to approve it. On 17 August the National Government orders the change, and the university becomes National Sun Yat-sen University. He has been dead for a year and five months. The statue you set out from stands on its campus.
-    relic: A wooden sign with the new name
-    relic_desc: A narrow board, freshly painted, from the first days of the new name.
-    points:
-      p1: Find the resolution in the record of the meeting
-      p2: Sort and file the papers and seals that carry the old name
-      p3: Help the new students learn the new name and where to go
-    vignettes:
-      letter: The fictional clerk prepares to mark both papers with the same date. You point out that one records the school's request and the other announces the order. The papers go into different folders.
-      sign: A new student reads the old name from a letter and thinks they have the wrong gate. You walk them to the new sign so they can see how the address stayed useful after the name changed.
-      copy: You hold down the corner of a notice while the clerk copies the new name. In the space below, you put the old name once, so a visitor starting with older directions can still tell where to go.
 eras:
   broad_street_1854:
     vignettes:
@@ -5052,6 +5042,7 @@ eras:
       last: Be there for the last lecture
     milestones:
       order_given: '{date}: Sun Yat-sen orders the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and names Zou Lu to prepare it. Nobody in the city can yet say where this university is.'
+      lecture_jan27: '{date}: A Sunday. Sun Yat-sen gives the first of his lectures on the Three Principles of the People in the hall of the Higher Normal School.'
       lecture_feb17: '{date}: A Sunday. Sun Yat-sen lectures in the hall of the Higher Normal School. The series began on 27 January and this is the fourth lecture. At the side of the platform a man writes without looking up. That is Huang Changgu, who is there for every one.'
       zou_takes_up: '{date}: Zou Lu takes up the preparation.'
       hall_feb24: '{date}: A Sunday again. The fifth lecture is given in the hall today, and Zou Lu calls the students of the three schools together here to announce the preparation.'

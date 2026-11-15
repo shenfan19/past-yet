@@ -155,6 +155,7 @@ export function createWiki(X) {
 
 
     for (const [id, an] of Object.entries(D.get('antiques.antiques'))) {
+      if (an.kind === 'medium') continue;
       const tx = T.antiques[id];
       add({
         id: 'antiques:' + id, cat: 'items_ancient', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'], authors: an.authors,

@@ -292,12 +292,19 @@ function initVars(E, D, spec, withTraveler) {
   for (const [n, d] of Object.entries(E.vars)) if (d.from_staff) v[n] = stats[d.from_staff];
   for (const [n, d] of Object.entries(E.vars)) if (d.from_spec) v[n] = spec[d.from_spec] ?? d.value;
   v[E.roles.stay] = historicalDays(D, v[E.roles.stay]);
+  // The crossing is not exact: the day of arrival moves by up to drift.early days before the planned day and drift.late days after it,
+  // drawn from the seed, in whole days, and never before day 0 of the model.
+  // The horizon covers the latest arrival the drift allows, so the run with the traveller and the one without have the same length.
+  const DR = E.raw.metadata?.era?.drift ?? D.get('config.travel.drift');
+  const planned = v[E.roles.arrive];
+  const lo = -Math.min(DR.early, Math.floor(planned));
+  if (withTraveler) v[E.roles.arrive] = planned + Math.round(lo + draw(spec.seed, 'arrival_drift', 0) * (DR.late - lo));
   v.office_step = E.step / D.get('config.travel.history_days_per_office_day');
   const who = staffTags(D, spec.staffId, E.place || placeOfEra(E.raw));
   for (const t of tagNames(D)) v['tag.' + t] = who.has(t) ? 1 : 0;
   v.ring = spec.identity ? spec.identity.ring : 0;
   v.conspicuous = spec.identity ? spec.identity.conspicuous : 0;
-  v[E.roles.horizon] = Math.max(E.horizon, Math.ceil((v[E.roles.arrive] + v[E.roles.stay]) / E.step) * E.step + E.step);
+  v[E.roles.horizon] = Math.max(E.horizon, Math.ceil((planned + DR.late + v[E.roles.stay]) / E.step) * E.step + E.step);
   const apply = (grp, key) => {
     const o = E.strategies[grp][key];
     if (!o) throw new Error('未知策略 ' + grp + '.' + key);

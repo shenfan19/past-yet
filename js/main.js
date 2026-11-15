@@ -44,7 +44,7 @@ function startAntiques() {
   const events = D.get('catalog.events');
   const { newest, random } = O.start_scenes;
   // events marked start are already owned from the start, so they are not drawn again
-  const pool = events.filter((e) => !e.start && !e.after).sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
+  const pool = events.filter((e) => !e.start).sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
   for (const e of pool.splice(0, newest)) out.push('relic_' + e.id);
   const drawn = [];
   for (let i = 0; i < random && pool.length; i++) drawn.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);

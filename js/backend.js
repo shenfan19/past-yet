@@ -22,7 +22,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // the plain data of an era that the interface may read, no functions
   const plain = (E) => ({ id: E.id, raw: E.raw, vars: E.vars, itemBindings: E.itemBindings, plots: E.plots, tech: E.tech, roles: E.roles, report: E.report, tagSource: E.tagSource, calendar: E.calendar });
   const info = Object.fromEntries(Object.entries(eras).map(([id, E]) => [id, plain(E)]));
-  // Antique discovery. A trip to an era can bring back an antique from a place near it and from a time before it. Each candidate
+  // Antique discovery. A trip to an era can bring back an antique from a place near it and from a year before it, never its own year or later. Each candidate
   // has a reach w = exp(-years / tau_years - km / tau_km), where years is how far earlier the candidate lies and km is the great circle
   // distance, so the farther in time or space, the less likely. A candidate is found with chance k * w. The trip finds something with
   // chance 1 - the product of (1 - k * w), at most cap, and the one it finds is drawn in proportion to w. The roll is seeded by the dispatch.
@@ -50,7 +50,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     for (const [id, an] of Object.entries(all)) {
       if (!an.playable) continue;
       const at = placeOf(an);
-      if (!at || at.year > here.year) continue;
+      if (!at || at.year >= here.year) continue;
       list.push({ id, w: Math.exp(-(here.year - at.year) / AF.tau_years - km(here.geo, at.geo) / AF.tau_km) });
     }
     const p = Math.min(AF.cap, 1 - list.reduce((a, x) => a * (1 - AF.k * x.w), 1));

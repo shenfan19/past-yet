@@ -24,8 +24,11 @@ metadata:
     place: guangdong_university_office
     protagonist: sun
     calendar:
-      month: 2
-      day0: 4
+      month: 1
+      day0: 27
+    drift:
+      early: 7
+      late: 7
     region: asia
     home:
       - china
@@ -368,9 +371,10 @@ variables:
     source: game_assumption
   arrive_day:
     type: input
-    value: 0.25
+    value: 8.25
     unit: day
     source: game_assumption
+    note: 4 February 1924, the day of the order. Fact f01.
   pref_copy:
     type: input
     value: 1
@@ -390,13 +394,13 @@ variables:
     note: Kept for the habit of the employee. Nobody bars a door in this template.
   open_day:
     type: parameter
-    value: 228
+    value: 236
     unit: day
     source: historical
     note: 19 September 1924, classes begin. Fact f08.
   early_day:
     type: parameter
-    value: 28
+    value: 36
     unit: day
     source: historical
     note: 3 March 1924, the first preparatory meeting. Fact f04.
@@ -438,7 +442,7 @@ variables:
     source: game_assumption
   horizon_days:
     type: parameter
-    value: 290
+    value: 298
     unit: day
     source: game_assumption
   copy_rate:
@@ -653,7 +657,7 @@ events:
     importance: 3
     tag: branch
     once: true
-    when: arrived == 1 and day >= 10
+    when: arrived == 1 and day >= arrive_day + 10
     probability: 0.04 * step
     effects:
       traveler.trust: traveler.trust + (0.05 if sites >= 0.5 else 0.01)
@@ -670,7 +674,7 @@ milestones:
       - when: tag.clumsy == 1
         key: records_read_aloud
   records_shut:
-    when: tag.literate == 0 and arrived == 1 and day >= 10
+    when: tag.literate == 0 and arrived == 1 and day >= arrive_day + 10
     importance: 3
     tag: trait
     needs_traveler: true
@@ -701,6 +705,12 @@ milestones:
     importance: 4
     tag: branch
     needs_traveler: true
+  lecture_jan27:
+    date: '1924-01-27'
+    fact: g1
+    importance: 4
+    tag: history
+    needs_traveler: false
   order_given:
     date: '1924-02-04'
     fact: f01
@@ -735,7 +745,7 @@ milestones:
       - when: records >= 1
         key: first_meeting_book
   proofs_travel:
-    when: day >= 38
+    when: day >= 46
     fact: g3
     importance: 4
     tag: history
@@ -765,7 +775,7 @@ milestones:
     tag: history
     needs_traveler: false
   shipai_chosen:
-    when: day >= 150
+    when: day >= 158
     fact: f07
     importance: 3
     tag: history
@@ -799,7 +809,7 @@ milestones:
       - when: tag.steadfast == 1 or tag.class_religious == 1
         key: sunday_sit
   spoiler:
-    when: day >= 40 and arrived == 1
+    when: day >= 48 and arrived == 1
     importance: 4
     tag: trait
     needs_traveler: true
@@ -807,7 +817,7 @@ milestones:
       - when: tag.trait_bold == 1
         key: spoiler_said
   errand:
-    when: day >= 95 and arrived == 1
+    when: day >= 103 and arrived == 1
     importance: 4
     tag: branch
     needs_traveler: true
@@ -839,7 +849,7 @@ milestones:
     tag: trait
     needs_traveler: true
   shipai_walk:
-    when: day >= 160 and arrived == 1
+    when: day >= 168 and arrived == 1
     importance: 4
     tag: branch
     needs_traveler: true

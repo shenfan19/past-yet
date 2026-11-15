@@ -109,7 +109,6 @@ export function createUI(D, ctx, DEV = false) {
   const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: Object.fromEntries(Object.entries(st.form.items).filter(([k]) => k in E().itemBindings)) });
   const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && ctx.backend.lightKitAllowed(st.map.cat, k)));
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
-  const tagLabel = (tag) => U.report[tag];
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
   const tip = (text) => ` data-tip="${esc(text)}"`;
   const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
@@ -145,7 +144,6 @@ export function createUI(D, ctx, DEV = false) {
   }
   const staffLink = (id) => `<a class="wl" data-act="staffopen" data-id="${esc(id)}"${tip(staffTip(id))}>${esc(staffName(D, id))}</a>`;
   // a three star trip that earned a point of an attribute says so in the accounts
-  const openedRows = (paid) => ((paid && paid.opened) || []).map((id) => `<tr><td>${U.report.opened}</td><td class="num">${esc(T.catalog[id].name)}</td></tr>`).join('');
   const grownRow = (paid) => (paid && paid.grown ? `<tr><td>${U.report.grown}</td><td class="num">${esc(T.stats[paid.grown])} +1</td></tr>` : '');
   // The stars an employee has brought in, as three counts: three stars, two stars, one star. It never grows into a list.
   const tallyOf = (id) => ctx.S().staff[id].tally || { 3: 0, 2: 0, 1: 0 };
@@ -481,7 +479,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="row sp"><h3>${esc(c.name)}${own ? '' : ' ' + hiddenChip()}</h3><span class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</span></div>
       <div>${tags}</div>
       <p>${esc(c.story)}</p><div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
-      <div class="muted">${U.dispatch.relic}${COLON}${wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
+      <div class="muted">${U.dispatch.relic}${COLON}${D.get('antiques.antiques.' + relicId).kind === 'medium' ? esc(c.relic) : wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
@@ -600,7 +598,6 @@ export function createUI(D, ctx, DEV = false) {
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
-        ${openedRows(P)}
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>
       <p class="muted">${U.light.note}</p>`;
@@ -618,7 +615,6 @@ export function createUI(D, ctx, DEV = false) {
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
-        ${openedRows(P)}
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>`;
   }
@@ -647,18 +643,16 @@ export function createUI(D, ctx, DEV = false) {
       const v = e.vars[name];
       return `${srcLabel(v.source)}${v.note ? COLON + v.note : ''}`;
     };
-    const tlLine = (t, i) => `<li class="${t.tag || ''}${t.star ? ' star' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`;
-    // the lines of the stay stand under a heading for each segment when the stay has more than one, and what was recorded after the traveller left comes last, under its own heading
+    // The report is a story told in one list, in the order things happened. A line is either history, what is recorded and happens whoever is there,
+    // or the crossing, what the traveller did and met, and a star of the trip is a line of the crossing marked with a star. A thin rule at the left tells the two apart,
+    // and the buttons above the list show all of it, only one of the two, or only the stars. What was recorded after the traveller left follows a single quiet line.
+    const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
+    const tlLine = (t, i) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`;
     const during = R.timeline.map((t, i) => [t, i]).filter(([t]) => !t.after);
     const afterLeave = R.timeline.map((t, i) => [t, i]).filter(([t]) => t.after);
-    const segs = [...new Set(during.map(([t]) => t.seg).filter((x) => x !== null))];
-    let tl = '';
-    let lastSeg = null;
-    for (const [t, i] of during) {
-      if (segs.length > 1 && t.seg !== null && t.seg !== lastSeg) { tl += `<li class="seg"><div class="muted">${esc(U.report.segment_title.replace('{n}', String(t.seg)))}</div></li>`; lastSeg = t.seg; }
-      tl += tlLine(t, i);
-    }
-    const afterHtml = afterLeave.length ? `<div class="sec">${esc(U.report.after_leave)}</div><p class="muted">${esc(U.report.after_leave_note.replace('{staff}', R.staff))}</p><ul class="tl after">${afterLeave.map(([t, i]) => tlLine(t, i)).join('')}</ul>` : '';
+    const tl = during.map(([t, i]) => tlLine(t, i)).join('') + (afterLeave.length ? `<li class="gap"><div class="muted">${esc(U.report.after_leave_note.replace('{staff}', R.staff))}</div></li>${afterLeave.map(([t, i]) => tlLine(t, i)).join('')}` : '');
+    const tlf = st.tlf || 'all';
+    const tlButtons = ['all', 'history', 'travel', 'star'].map((k) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(U.report.line_filter[k])}</button>`).join(' ');
     const C = R.chart;
     const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * D.get('config.ui.chart.headroom');
     const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * D.get('config.ui.chart.headroom');
@@ -681,11 +675,12 @@ export function createUI(D, ctx, DEV = false) {
       <div class="sec">${U.report.summary}</div>
       ${participationHtml(cur)}
       ${R.journey?.accepted === false ? '' : `<p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>`}
+      <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
       ${event?.refs ? `<p>${esc(T.catalog[event.id].story)} ${wl('events:c:' + event.id, U.light.sources)}</p>` : ''}
       ${modelSource ? `<p>${wl('events:' + modelSource, U.light.sources)}</p>` : ''}
       ${vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette])}
       <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => T.eras[cur.eraId].star_points[id])}
-      <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>${afterHtml}
+      <details class="nums"><summary class="sec">${U.report.numbers}</summary>
       <div class="sec">${U.report.chart}</div>${legend}${charts}
       <div class="sec">${U.report.compare}</div>
       <table><thead><tr><th></th><th class="num">${U.report.mainline}</th><th class="num">${U.report.this_branch}</th></tr></thead><tbody>
@@ -696,6 +691,7 @@ export function createUI(D, ctx, DEV = false) {
       </tbody></table>
       <div class="sec">${U.report.ledger}</div>
       <div class="scroll"><table><thead><tr><th>${R.ledgerBySegment ? U.report.segment : U.report.day}</th><th class="num">${RL.sick}</th><th class="num">${RL.dead}·${U.report.mainline}</th><th class="num">${RL.dead}·${U.report.this_branch}</th><th class="num">${RL.treated}</th><th class="num">${RL.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
+      </details>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
@@ -703,7 +699,6 @@ export function createUI(D, ctx, DEV = false) {
         <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(cur.paid.energy)}</td></tr>
         ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
-        ${openedRows(cur.paid)}
         <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
       </tbody></table>
       ${R.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
@@ -1090,6 +1085,7 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'settingsreset') { ctx.settings.reset(); ctx.audio.setEnabled(ctx.settings.get('music_autostart')); render(); }
     else if (act === 'go') { st.tab = id; st.modal = null; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
+    else if (act === 'tlf') { st.tlf = b.dataset.k; render(); }
     else if (act === 'fn') { const k = st.modal.id + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
     else if (act === 'again') {

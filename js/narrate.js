@@ -84,7 +84,11 @@ export function buildReport(D, E, res) {
     for (const [n, x] of Object.entries(res.base.final)) vars['base_' + n.replace(/\./g, '_')] = x;
     const extra = { ...common, date: dateLabel(D, E, e.t, e.kind === 'milestone'), __delta: e.delta };
     let text;
-    if (e.kind === 'arrive') text = fmt(Object.values(spec.items).some((n) => n > 0) ? T.generic.arrive : T.generic.arrive_empty, vars, extra);
+    if (e.kind === 'arrive') {
+      // how far the crossing missed the planned day, in whole days, told after the line of arrival
+      const off = Math.round(e.t - E.vars[E.roles.arrive].value);
+      text = fmt(Object.values(spec.items).some((n) => n > 0) ? T.generic.arrive : T.generic.arrive_empty, vars, extra) + (off ? fmt(T.generic[off < 0 ? 'drift_early' : 'drift_late'], vars, { ...extra, n: String(Math.abs(off)) }) : '');
+    }
     else if (e.kind === 'leave') text = fmt(T.generic.leave, vars, extra);
     else if (e.kind === 'recall') text = fmt(T.generic[e.key], vars, extra);
     else if (e.kind === 'event') text = fmt(ET.events[e.key], vars, extra);

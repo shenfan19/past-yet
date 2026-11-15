@@ -182,6 +182,9 @@ stars:
 travel:
   max_office_days: 7
   history_days_per_office_day: 30
+  # The crossing is not exact. A trip arrives up to early historical days before the planned day or up to late days after it, drawn from the seed of the trip.
+  # A model may set its own in metadata.era.drift. A trip never arrives before day 0 of its model.
+  drift: {early: 7, late: 7}
 light:
   stay_by_tier: {1: 4, 2: 6, 3: 7}
   difficulty: {base: 0.32, per_tier: 0.1}

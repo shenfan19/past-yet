@@ -1,6 +1,7 @@
 # Guangzhou, 1924. A founding: three schools are to become one university, and in the same hall a book is being made from the Sunday lectures.
 # This file is laid over cards/templates/founding.lm.yaml. It holds what is its own: the place, the recorded dates, the moments of the traveller, the stars and the identities.
-# Day 0 is 4 February 1924, the day the order to join the three schools is given. One office day is thirty historical days, so a stay of seven ends on 1 September.
+# Day 0 is 27 January 1924, the first of the Sunday lectures. The traveller is meant to arrive on day 8, 4 February, the day the order to join the three schools is given,
+# and the crossing may bring them up to seven days early or late. One office day is thirty historical days, so a stay of seven ends near 1 September.
 
 template: founding
 
@@ -14,7 +15,9 @@ metadata:
     geo: {lon: 113.27, lat: 23.13}
     place: guangdong_university_office
     protagonist: sun
-    calendar: {month: 2, day0: 4}
+    calendar: {month: 1, day0: 27}
+    # the crossing is not exact: a trip arrives up to this many historical days before or after arrive_day, drawn from its seed
+    drift: {early: 7, late: 7}
     region: asia
     home: [china]
     near: []
@@ -27,12 +30,14 @@ metadata:
 identities: [local_scholar, pen, wanderer, maker, local_hand, far_guest, lodger]
 
 variables:
-  open_day: {value: 228, note: "19 September 1924, classes begin. Fact f08."}
-  early_day: {value: 28, note: "3 March 1924, the first preparatory meeting. Fact f04."}
-  horizon_days: {value: 290}
+  arrive_day: {value: 8.25, note: "4 February 1924, the day of the order. Fact f01."}
+  open_day: {value: 236, note: "19 September 1924, classes begin. Fact f08."}
+  early_day: {value: 36, note: "3 March 1924, the first preparatory meeting. Fact f04."}
+  horizon_days: {value: 298}
 
 milestones:
   # ---- the recorded dates: they write themselves, whoever is there ----
+  lecture_jan27: {date: "1924-01-27", fact: g1, importance: 4, tag: history, needs_traveler: false}
   order_given: {date: "1924-02-04", fact: f01, importance: 5, tag: history, needs_traveler: false}
   lecture_feb17: {date: "1924-02-17", fact: g1, importance: 4, tag: history, needs_traveler: false}
   zou_takes_up: {date: "1924-02-21", fact: f02, importance: 4, tag: history, needs_traveler: false}
@@ -45,12 +50,12 @@ milestones:
     needs_traveler: false
     variants:
       - {when: "records >= 1", key: first_meeting_book}
-  proofs_travel: {when: "day >= 38", fact: g3, importance: 4, tag: history, needs_traveler: false}
+  proofs_travel: {when: "day >= 46", fact: g3, importance: 4, tag: history, needs_traveler: false}
   preface: {date: "1924-03-30", fact: g4, importance: 4, tag: history, needs_traveler: false}
   lecture_apr20: {date: "1924-04-20", fact: g1, importance: 3, tag: history, needs_traveler: false}
   measures_sent: {date: "1924-06-03", fact: f05, importance: 3, tag: history, needs_traveler: false}
   measures_approved: {date: "1924-06-06", fact: f05, importance: 4, tag: history, needs_traveler: false}
-  shipai_chosen: {when: "day >= 150", fact: f07, importance: 3, tag: history, needs_traveler: false}
+  shipai_chosen: {when: "day >= 158", fact: f07, importance: 3, tag: history, needs_traveler: false}
   last_lecture: {date: "1924-08-24", fact: g1, importance: 5, tag: history, needs_traveler: false}
   classes_begin: {date: "1924-09-19", fact: f08, importance: 5, tag: history, needs_traveler: false}
   ceremony: {date: "1924-11-11", fact: f09, importance: 5, tag: history, needs_traveler: false}
@@ -65,14 +70,14 @@ milestones:
       - {when: "tag.class_food == 1 or tag.class_trade == 1", key: sunday_stall}
       - {when: "tag.steadfast == 1 or tag.class_religious == 1", key: sunday_sit}
   spoiler:
-    when: "day >= 40 and arrived == 1"
+    when: "day >= 48 and arrived == 1"
     importance: 4
     tag: trait
     needs_traveler: true
     variants:
       - {when: "tag.trait_bold == 1", key: spoiler_said}
   errand:
-    when: "day >= 95 and arrived == 1"
+    when: "day >= 103 and arrived == 1"
     importance: 4
     tag: branch
     needs_traveler: true
@@ -89,7 +94,7 @@ milestones:
       - {when: "ring_now == 1", key: pamphlet_given, effects: {has_copy: "1"}}
   homesick_may: {date: "1924-05-14", importance: 3, tag: trait, needs_traveler: true}
   shipai_walk:
-    when: "day >= 160 and arrived == 1"
+    when: "day >= 168 and arrived == 1"
     importance: 4
     tag: branch
     needs_traveler: true

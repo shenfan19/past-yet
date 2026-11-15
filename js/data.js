@@ -62,14 +62,15 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
     const hidden = (c) => (c.era && drafts.has(c.era)) || (c.unlock && c.unlock.era && drafts.has(c.unlock.era)) || (c.events && c.events.length && c.events.every((x) => gone.has(x)));
     for (const k of Object.keys(o.encyclopedia.sections)) o.encyclopedia.sections[k] = o.encyclopedia.sections[k].filter((c) => !hidden(c));
   }
-  // every catalogue event has a relic, which is an antique: it points at the event and sells for money
+  // every catalogue event has a relic, which is an antique: it points at the event and sells for money.
+  // The event the game starts from has a medium in its place, such as a statue of today: it opens the place, is not an antique, is never found and never sold.
   const C = o.catalog;
   const period = (y) => C.periods.find((p) => y < p.until).id;
   for (const e of C.events) {
     const id = 'relic_' + e.id;
     const price = C.price[e.tier];
     // the relic of an event with a full model is the anchor of that model, so the model opens and is found like any simulated place
-    o.antiques.antiques[id] = { era: e.era || null, event: e.id, kind: 'key', price, start_owned: !!e.start, playable: true, authors: e.authors, tags: [e.field, e.region, period(e.year), ...(e.regret ? ['regret'] : [])] };
+    o.antiques.antiques[id] = { era: e.era || null, event: e.id, kind: e.start ? 'medium' : 'key', price, start_owned: !!e.start, playable: !e.start, authors: e.authors, tags: [e.field, e.region, period(e.year), ...(e.regret ? ['regret'] : [])] };
     const t = o.text.catalog[e.id];
     o.text.antiques[id] = { name: t.relic, desc: t.relic_desc };
   }

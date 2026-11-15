@@ -115,11 +115,16 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .stepper button { width: 28px; padding: 2px 0; }
 .stepper .n { min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
 .tl { list-style: none; padding: 0; margin: 0; }
-.tl li { padding: 6px 0 6px 18px; border-left: 2px solid var(--line); margin-left: 6px; position: relative; }
-.tl li::before { content: ""; position: absolute; left: -6px; top: 13px; width: 10px; height: 10px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink2); }
-.tl li.history::before { border-color: #8a6a1f; }
-.tl li.branch::before { border-color: var(--blue); }
-.tl li.trait::before { border-color: var(--stamp); }
+/* the report is one list in time order: a thin rule at the left tells history from the crossing, nothing more */
+.tl li { padding: 3px 0 3px 10px; border-left: 2px solid var(--line); margin-left: 2px; }
+.tl li.history { border-left-color: rgba(138, 106, 31, 0.45); }
+.tl li.travel { border-left-color: rgba(47, 79, 111, 0.45); }
+.tl li.gap { border-left-color: transparent; padding-top: 10px; }
+.tl li.after { opacity: 0.8; }
+.tl.f-history li.travel, .tl.f-travel li.history, .tl.f-star li:not(.star) { display: none; }
+.tl.f-star li.gap { display: none; }
+.tlf .chipbtn { font-weight: 400; }
+details.nums > summary { cursor: pointer; }
 .fn { cursor: pointer; color: var(--blue); font-size: 12px; margin-left: 4px; user-select: none; }
 .fntext { font-size: 12px; color: var(--ink2); margin: 2px 0 0; }
 svg.chart { width: 100%; height: auto; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
@@ -316,7 +321,7 @@ ul.stages li.dim { color: var(--ink2); }
 .sync li { padding: 3px 0; }
 .sync li.hit { color: #8a6a00; font-weight: 600; }
 .sync li.miss { color: var(--ink2); }
-.tl li.star { background: rgba(212, 160, 23, 0.14); border-left: 3px solid #d4a017; padding-left: 8px; }
+.tl li.star { border-left-color: #d4a017; }
 .starmark { color: #d4a017; }
 .warnline { color: var(--stamp); font-weight: 600; }
 
@@ -463,6 +468,3 @@ svg.map .night path { fill: #0d1b3d; opacity: .3; pointer-events: none; filter: 
 .personpic { float: right; margin: 0 0 8px 12px; max-width: 34%; }
 .personpic img { width: 100%; height: auto; display: block; border: 1px solid var(--ink2); }
 
-.tl li.seg { border-left-color: transparent; padding: 10px 0 2px 0; font-weight: 600; }
-.tl li.seg::before { display: none; }
-.tl.after li { opacity: 0.85; }

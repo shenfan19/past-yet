@@ -274,7 +274,8 @@ for (const lang of LANGS) {
     const cardOf = (e) => inCard[e] ?? read(`people/${m}/events/${e}.yaml`);
     for (const e of held) if (!listed.includes(e)) fail(`the event ${e} of people/${m} is not listed in the events of its person.yaml`);
     for (const e of listed) if (!held.includes(e)) fail(`people/${m}/person.yaml lists the event ${e}, which the module does not hold`);
-    for (const e of held) { const a = cardOf(e).after; if (a && !held.includes(a)) fail(`the event ${e} of people/${m} opens after ${a}, which is not an event of the same person`); }
+    // the events of a person stand side by side: none waits for another to be visited
+    for (const e of held) if (cardOf(e).after !== undefined) fail(`the event ${e} of people/${m} has after, but the events of a person are not opened one after another`);
     for (const e of held) { if (claimed.has(e)) fail(`the event ${e} is in people/${m} and in people/${claimed.get(e)}`); claimed.set(e, m); }
     for (const k of Object.keys(pc)) if (!['order', 'id', 'text', 'tags', 'related', 'unlock', 'refs', ...SECTIONS].includes(k)) fail(`people/${m}/person.yaml has the key ${k}, which a person card does not use`);
     const stray = fs.readdirSync(path.join(CARDS, 'people', m)).filter((x) => !['person.yaml', 'events', 'era', 'wiki', 'antiques', 'images'].includes(x));
