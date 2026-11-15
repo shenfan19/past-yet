@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.16, 2026-11-15
+
+- Ternate 1858, Alfred Russel Wallace, is rewritten and turned on: the fever and the essay of February 1858, the mail steamer whose month is still argued over, the essay reaching Darwin on 18 June, the reading at the Linnean Society on 1 July with neither author there, and the printing on 20 August, with sync points for pinning the specimens, nursing the fever and seeing the essay aboard. The exposure to infection and heat is lowered from three to two.
+
 ## 0.5.15, 2026-11-15
 
 - Samarkand 1428, Ulugh Beg, is rewritten and turned on: the building of the observatory and its great arc, the catalogue of 1018 stars, his death on 27 October 1449 and the finding of the arc again in 1908, with sync points for carrying bricks for the arc, keeping old and new positions on separate rows and watching a winter night by the arc.

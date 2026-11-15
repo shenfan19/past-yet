@@ -5830,53 +5830,81 @@ events:
       - Fan Shen
   - id: wallace_ternate
     year: 1858
+    date: '1858-02-01'
     lon: 127.38
     lat: 0.79
     region: asia
+    home:
+      - southeast_asia
     field: science
     tier: 2
     channels:
-      E: 3
-      H: 3
+      E: 2
+      H: 2
     regret: true
+    ready: true
     refs:
       - wallace_ternate_primary
+      - wallace_online_s043
+      - mun_darwin_wallace
+      - victorianweb_wallace
     scene:
       points:
         - id: p1
-          kind: notice
-          req:
-            stat:
-              wit: 7
-        - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 5
-        - id: p3
-          kind: hold
-          redeem: true
+          kind: trust
+          day: 6
           req:
             any:
               - trait:
                   - handy
-                  - ambitious
-                  - vigil
+                  - quiet
+                  - patient
               - job:
-                  - translator
-                  - journalist
+                  - farmer
+              - stat:
+                  finesse: 6
+        - id: p2
+          kind: care
+          day: 12
+          req:
+            any:
+              - job:
+                  - nurse
+                  - doctor
+                  - midwife
               - trait:
-                  - hardy
+                  - kind
+                  - vigil
+                  - patient
+              - stat:
+                  will: 6
+        - id: p3
+          kind: hold
+          redeem: true
+          day: 60
+          req:
+            any:
+              - trait:
+                  - handy
+                  - vigil
+                  - methodical
+              - job:
+                  - sailor
+              - stat:
+                  wit: 6
       vignettes:
         - id: places
           traits:
             - methodical
             - vigil
+          day: 25
         - id: claim
           traits:
             - curious
             - skeptical
+          day: 35
         - id: mail
+          day: 59
     authors:
       - AI
       - Fan Shen
