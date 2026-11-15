@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.4, 2026-11-15
+
+- Kitty Hawk 1903 is rewritten and turned on: one office day from 1 December, the failed try of 14 December, the four flights of 17 December, the photograph, the telegram that gave 57 seconds for 59 and the silence of the Dayton papers, with sync points for carrying the rail with the life saving men, standing by the camera and handing the right number to the telegraph.
+
 ## 0.5.3, 2026-11-15
 
 - A day of the stay may be a fraction, so the things of one day keep their order, and it reads as the day it falls in.

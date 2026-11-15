@@ -3551,43 +3551,71 @@ events:
     lon: -75.7
     lat: 36
     region: americas
+    home:
+      - north_america
     field: technology
     tier: 3
+    stay: 1
     channels:
       C: 2
       L: 2
+    ready: true
     refs:
       - wright_kitty_hawk_primary
+      - nps_first_flight
+      - henryford_first_flight
+      - nasm_telegraph_key
+      - loc_today_dec17
     scene:
       points:
         - id: p1
-          kind: notice
-          req:
-            stat:
-              wit: 6
-        - id: p2
-          kind: hold
+          kind: trust
+          day: 6
           req:
             any:
-              - job:
-                  - mechanic
               - trait:
                   - hardy
-        - id: p3
-          kind: endure
+                  - cheerful
+                  - kind
+              - stat:
+                  constitution: 6
+        - id: p2
+          kind: notice
+          day: 16.2
           req:
-            stat:
-              constitution: 5
+            any:
+              - trait:
+                  - curious
+                  - calm
+                  - methodical
+              - stat:
+                  wit: 6
+        - id: p3
+          kind: hold
+          day: 16.6
+          req:
+            any:
+              - trait:
+                  - methodical
+                  - vigil
+                  - patient
+              - job:
+                  - mechanic
+              - stat:
+                  will: 6
       vignettes:
         - id: numbers
           traits:
             - methodical
             - vigil
-        - id: headline
+          day: 16.8
+        - id: sand
           traits:
-            - glib
-            - curious
-        - id: copy
+            - hardy
+            - cheerful
+          day: 10
+        - id: cold
+          day: 12
     authors:
       - AI
       - Fan Shen

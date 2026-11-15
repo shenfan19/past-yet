@@ -310,6 +310,31 @@ refs:
     authors:
       - AI
       - Fan Shen
+  americanheritage_first_fly:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  henryford_first_flight:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  loc_today_dec17:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  nasm_telegraph_key:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  nps_first_flight:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   wright_kitty_hawk_primary:
     status: checked
     authors:
@@ -3405,6 +3430,44 @@ event_facts:
         sources:
           - wikipedia_crow_terrace
           - creature_exile
+  wright_kitty_hawk:
+    module: wright_kitty_hawk
+    facts:
+      - id: camp
+        date: '1903'
+        sources:
+          - henryford_first_flight
+          - nps_first_flight
+      - id: first_try
+        date: '1903-12-14'
+        sources:
+          - nps_first_flight
+          - henryford_first_flight
+        stay_day: 13
+      - id: first_flight
+        date: '1903-12-17'
+        sources:
+          - henryford_first_flight
+          - nps_first_flight
+        stay_day: 16.1
+      - id: fourth_flight
+        date: '1903-12-17'
+        sources:
+          - nps_first_flight
+          - henryford_first_flight
+        stay_day: 16.3
+      - id: telegram
+        date: '1903-12-17'
+        sources:
+          - loc_today_dec17
+          - nasm_telegraph_key
+        stay_day: 16.5
+      - id: dayton
+        date: '1903-12-17'
+        sources:
+          - loc_today_dec17
+          - americanheritage_first_fly
+        stay_day: 16.7
 fact_sources:
   darwin_galapagos_1835:
     surveying:

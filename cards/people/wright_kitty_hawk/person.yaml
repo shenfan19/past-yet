@@ -6,72 +6,148 @@ events:
     lon: -75.7
     lat: 36
     region: americas
+    home: [north_america]
     field: technology
     tier: 3
+    # one office day: the planned arrival is 1 December 1903, and the days of the facts and the points are counted from it
+    stay: 1
     channels: {C: 2, L: 2}
-    refs: [wright_kitty_hawk_primary]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [wright_kitty_hawk_primary, nps_first_flight, henryford_first_flight, nasm_telegraph_key, loc_today_dec17]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["mechanic"]},{"trait":["hardy"]}]}}
-        - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+        - {id: p1, kind: trust, day: 6, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 16.2, req: {"any":[{"trait":["curious","calm","methodical"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: hold, day: 16.6, req: {"any":[{"trait":["methodical","vigil","patient"]},{"job":["mechanic"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: numbers, traits: [methodical, vigil]}
-        - {id: headline, traits: [glib, curious]}
-        - {id: copy}
+        - {id: numbers, traits: [methodical, vigil], day: 16.8}
+        - {id: sand, traits: [hardy, cheerful], day: 10}
+        - {id: cold, day: 12}
     text:
       en:
         name: Twelve seconds in the air
         place: Kitty Hawk, North Carolina
         figure: Orville and Wilbur Wright
-        story: 'Orville Wright''s diary records four flights on 17 December 1903 near Kitty Hawk. A telegram reported the trials to their father afterwards.'
+        story: 'In September 1903 the Wright brothers came back to their camp near Kitty Hawk with a powered machine. Wilbur''s attempt on 14 December failed. On the morning of 17 December they made four flights, the first of twelve seconds and the last of fifty nine. That afternoon they walked to Kitty Hawk and telegraphed their father in Dayton.'
         relic: A propeller blade
         relic_desc: A wooden blade shaped like a twisted wing.
         points:
-          p1: 'Tell the first flight from the later trials'
-          p2: 'Keep the numbers with the right trial'
-          p3: 'Prepare a copy that can be read back without the rough notes'
+          p1: 'Be taken in by the men of the life saving station, then help carry the launching rail up the dune'
+          p2: 'At the first flight, stand by the camera so the shutter is pressed at the right moment'
+          p3: 'At the telegraph, write the duration of the longest flight on a slip and hand it over with the message'
         vignettes:
-          numbers: 'The clerk puts the longest duration next to the first flight. You slide the rough notes back across the table and count the trials with them before the figures go out.'
-          headline: 'You suggest a big claim for the first line. The clerk asks which words can survive being copied into another newspaper. You try again, this time with the date and a place.'
-          copy: 'You hold the rough notes flat while the clerk shortens the message. The details that must reach the family are still legible when the two copies are compared.'
+          numbers: '{staff} copies the four flights into a notebook in the order they were made, the seconds in one column and the feet in the other, and adds them up twice before the light goes.'
+          sand: '{staff} digs the rail out of the drift after the night wind and stamps the sand flat at its foot. A helper from the station, made up for the game, says the wind will drop by morning, and it does not.'
+          cold: '{staff} keeps the stove going in the shed while the engine is warmed. The puddles outside have frozen over, and nobody mentions it.'
       zh:
         name: 在空中的十二秒
         place: 北卡罗来纳基蒂霍克
         figure: 奥维尔和威尔伯·莱特
-        story: '奥维尔·莱特日记记载，1903 年 12 月 17 日在基蒂霍克附近共试飞四次，随后兄弟俩把消息电告父亲。'
+        story: '1903 年九月，莱特兄弟带着一架装了发动机的飞机回到基蒂霍克附近的营地。12 月 14 日威尔伯的尝试没有成功。12 月 17 日上午他们飞了四次，第一次 12 秒，最后一次 59 秒。当天下午，兄弟俩走到基蒂霍克，给代顿的父亲发了电报。'
         relic: 一片螺旋桨叶
         relic_desc: 一片木头叶子，像一只扭过的翅膀。
         points:
-          p1: '分清首次飞行和后面的几次'
-          p2: '把数字对回对应的试飞'
-          p3: '留一份脱离草记仍读得懂的消息'
+          p1: '先让救生站的人认下，再帮着把滑轨抬上沙丘'
+          p2: '第一次飞行时守在相机旁，让快门按在该按的那一刻'
+          p3: '发电报时，把最长一次的秒数写在纸条上，随电文一起递过去'
         vignettes:
-          numbers: '报务员把最长的时长写到了第一次旁边。你把草记推回去，趁数字还没发走，与他重新数一遍四次试飞。'
-          headline: '你一开头就提了个大标题。报务员问，哪几个字给另一份报纸抄过去还说得通？你重写一遍，这回留下了日期和地点。'
-          copy: '报务员删短消息时，你把草记扶平。两张拿来一对，该让家里知道的数字都还看得清。'
+          numbers: '天黑之前，{staff}把四次飞行按先后抄进本子，秒数一栏，英尺一栏，加了两遍。'
+          sand: '夜里风大，{staff}把滑轨从沙里刨出来，在滑轨脚下把沙踩平。一位编出来的救生站帮手说，天亮风就会停。天亮了，风没停。'
+          cold: '发动机预热时，{staff}在棚里守着炉子。外头的水洼结了冰，谁也没提。'
 text:
   en:
     name: Orville and Wilbur Wright
     text: American brothers Wilbur Wright, 1867 to 1912, and Orville Wright, 1871 to 1948, who ran a bicycle shop in Dayton. Using a wind tunnel and their own gliders, they made the first powered, controlled flight at Kitty Hawk on 17 December 1903.
   zh:
     name: 奥维尔和威尔伯·莱特
-    text: 美国的威尔伯·莱特，1867 年生，1912 年去世，以及奥维尔·莱特，1871 年生，1948 年去世，兄弟俩在代顿开自行车铺。他们靠风洞和自制滑翔机，于 1903 年 12 月 17 日在小鹰镇完成了第一次有动力、可操纵的飞行。
-hook: {en: 'Which number belongs to the first flight?', zh: '哪个数才是第一次飞行'}
+    text: 美国的威尔伯·莱特，1867 年生，1912 年去世，以及奥维尔·莱特，1871 年生，1948 年去世，兄弟俩在代顿开自行车铺。他们靠风洞和自制滑翔机，于 1903 年 12 月 17 日在小鹰镇完成了第一次有动力、可操控的飞行。
+hook: {en: 'Fifty nine seconds, telegraphed as fifty seven', zh: '飞了五十九秒，电报上写五十七'}
 facts:
-  four_flights:
-    date: '1903-12-17'
-    checked: official_record
+  camp:
+    date: '1903'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [wright_kitty_hawk_primary]
+    use: [story, history, wiki]
+    sources: [henryford_first_flight, nps_first_flight]
     text:
-      en: 'Orville Wright''s diary records four flights on 17 December 1903 near Kitty Hawk. A telegram reported the trials to their father afterwards.'
-      zh: '奥维尔·莱特日记记载，1903 年 12 月 17 日在基蒂霍克附近共试飞四次，随后兄弟俩把消息电告父亲。'
+      en: 'The brothers came to Kitty Hawk in September 1903, and the first powered attempt was put off again and again by trouble with the machine.'
+      zh: '兄弟俩 1903 年九月来到基蒂霍克，动力试飞因为机器出问题一再推迟。'
+    line:
+      en: 'September: the brothers come back to their camp near Kitty Hawk. The trial is put off again and again by trouble with the machine.'
+      zh: '九月，兄弟俩回到基蒂霍克附近的营地。机器屡出毛病，试飞一推再推。'
+  first_try:
+    date: '1903-12-14'
+    stay_day: 13
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [nps_first_flight, henryford_first_flight]
+    text:
+      en: 'On 14 December Wilbur won the toss of a coin and made the first attempt, which failed.'
+      zh: '12 月 14 日，威尔伯掷硬币赢了，先上去试，没有成功。'
+    line:
+      en: '14 December: Wilbur wins the toss of a coin and goes first. The attempt fails.'
+      zh: '12 月 14 日，威尔伯掷硬币赢了，先上去试，没有飞起来。'
+  first_flight:
+    date: '1903-12-17'
+    stay_day: 16.1
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [henryford_first_flight, nps_first_flight]
+    text:
+      en: 'On the morning of 17 December Orville flew 120 feet in 12 seconds. John T. Daniels of the Kill Devil Hills life saving station took the photograph.'
+      zh: '12 月 17 日上午，奥维尔飞了 12 秒，120 英尺。救生站的约翰·丹尼尔斯拍下了那张照片。'
+    line:
+      en: '17 December, morning: Orville flies 120 feet in 12 seconds. John T. Daniels of the life saving station presses the shutter.'
+      zh: '12 月 17 日上午，奥维尔飞了 12 秒，120 英尺。救生站的约翰·丹尼尔斯按下了快门。'
+  fourth_flight:
+    date: '1903-12-17'
+    stay_day: 16.3
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [nps_first_flight, henryford_first_flight]
+    text:
+      en: 'The fourth flight of the day was the longest, 852 feet in 59 seconds. The machine was badly damaged afterwards and never flew again.'
+      zh: '当天第四次飞行最长，59 秒，852 英尺。之后飞机严重受损，再也没有飞过。'
+    line:
+      en: 'The fourth flight of the day is the longest: 852 feet in 59 seconds. Afterwards the machine is badly damaged and never flies again.'
+      zh: '当天第四次最长，59 秒，852 英尺。之后飞机严重受损，再也没有飞过。'
+  telegram:
+    date: '1903-12-17'
+    stay_day: 16.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [loc_today_dec17, nasm_telegraph_key]
+    text:
+      en: 'That afternoon the brothers walked four miles to Kitty Hawk and telegraphed their father. The message gave the longest flight as 57 seconds instead of 59 and misspelled Orville''s name.'
+      zh: '当天下午，兄弟俩走了四英里到基蒂霍克，给父亲发电报。电文把最长一次写成 57 秒，实际是 59 秒，奥维尔的名字也拼错了。'
+    line:
+      en: 'Afternoon: the brothers walk four miles to Kitty Hawk and telegraph their father. The message says the longest flight was 57 seconds.'
+      zh: '下午，兄弟俩走了四英里到基蒂霍克，给父亲发电报。电文上写着，最长一次 57 秒。'
+  dayton:
+    date: '1903-12-17'
+    stay_day: 16.7
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [loc_today_dec17, americanheritage_first_fly]
+    text:
+      en: 'Milton Wright recorded receiving the telegram in Dayton at about half past five that afternoon. The Dayton papers gave the news little or no notice.'
+      zh: '米尔顿·莱特在日记里记下，当天下午五点半前后在代顿收到电报。代顿的报纸几乎没有登这条消息。'
+    line:
+      en: 'About half past five, in Dayton, their father Milton Wright receives the telegram. The papers of Dayton hardly print a word.'
+      zh: '五点半前后，父亲米尔顿·莱特在代顿收到电报。代顿的报纸几乎一个字也没登。'
 bystanders:
   wright_kitty_hawk_reader:
     invented: true
-    text: {en: 'An invented clerk checking a short message against rough notes.', zh: '一位虚构的报务员，正把一件事从草记压成简短的消息。'}
+    text: {en: 'An invented helper from the life saving station who thinks the wind will drop.', zh: '一位编出来的救生站帮手，总觉得风会停。'}
+  wright_kitty_hawk_clerk:
+    invented: true
+    text: {en: 'An invented clerk at the telegraph table who counts the words of the message.', zh: '一位编出来的电报桌前的帮手，数着电文的字数。'}
 wiki:
   refs:
     wright_kitty_hawk_primary:
@@ -79,12 +155,47 @@ wiki:
       status: checked
       text:
         en: 'Orville Wright diary and Wright brothers'' telegram to Milton Wright, 17 December 1903. Library of Congress. https://www.loc.gov/collections/wilbur-and-orville-wright-papers/articles-and-essays/collection-highlights/first-flight/'
-        zh: 'Orville Wright diary and Wright brothers'' telegram to Milton Wright, 17 December 1903. Library of Congress. https://www.loc.gov/collections/wilbur-and-orville-wright-papers/articles-and-essays/collection-highlights/first-flight/'
+        zh: '奥维尔·莱特日记与莱特兄弟 1903 年 12 月 17 日致米尔顿·莱特的电报，美国国会图书馆。https://www.loc.gov/collections/wilbur-and-orville-wright-papers/articles-and-essays/collection-highlights/first-flight/'
+    nps_first_flight:
+      order: 145
+      status: checked
+      text:
+        en: 'National Park Service, history of the Wright Brothers National Memorial. https://www.nps.gov/parkhistory/online_books/hh/34/hh34m.htm'
+        zh: '美国国家公园管理局，莱特兄弟国家纪念地历史。https://www.nps.gov/parkhistory/online_books/hh/34/hh34m.htm'
+    henryford_first_flight:
+      order: 145
+      status: checked
+      text:
+        en: 'The Henry Ford, First Flight of Wright 1903 Flyer at Kill Devil Hills, North Carolina, December 17, 1903. https://www.thehenryford.org/collections-and-research/digital-collections/artifact/197385'
+        zh: '亨利·福特博物馆，1903 年 12 月 17 日莱特飞行者号在斩魔山首飞。https://www.thehenryford.org/collections-and-research/digital-collections/artifact/197385'
+    nasm_telegraph_key:
+      order: 145
+      status: checked
+      text:
+        en: 'National Air and Space Museum, Telegraph key, Wright 1903 flight. https://airandspace.si.edu/collection-objects/telegraph-key-wright-1903-flight/nasm_A19710854000'
+        zh: '美国国家航空航天博物馆，莱特 1903 年飞行所用电报键。https://airandspace.si.edu/collection-objects/telegraph-key-wright-1903-flight/nasm_A19710854000'
+    loc_today_dec17:
+      order: 145
+      status: checked
+      text:
+        en: 'Library of Congress, Today in History: December 17. https://webarchive.library.unt.edu/eot2008/20080922160124/http:/memory.loc.gov/ammem/today/dec17.html'
+        zh: '美国国会图书馆，历史上的今天：12 月 17 日。https://webarchive.library.unt.edu/eot2008/20080922160124/http:/memory.loc.gov/ammem/today/dec17.html'
+    americanheritage_first_fly:
+      order: 145
+      status: checked
+      text:
+        en: 'American Heritage, First Fly. https://www.americanheritage.com/first-fly'
+        zh: 'American Heritage，First Fly。https://www.americanheritage.com/first-fly'
 self_check:
-  quote_line: '报务员把最长的时长写到了第一次旁边。'
-  fact: four_flights
-  regret_choice: '略过「分清首次飞行和后面的几次」，这处细节便留给下一位核对。'
-  bookend: '从「哪个数才是第一次飞行」开始，以员工留下的观察或更正收尾。'
-  share_line: '哪个数才是第一次飞行'
-  share_number: '1903-12-17'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '电文上写着，最长一次 57 秒。'
+  fact: telegram
+  regret_choice: '派守得住相机的去，快门按在了该按的时候，却未必挤得到电报桌前；派细心的去，秒数核对了，沙丘上的滑轨未必抬得动。'
+  bookend: '从九月一再推迟的试飞开始，以代顿的报纸几乎没登收尾。'
+  share_line: '1903 年 12 月，我在基蒂霍克的沙丘上，看着一架飞机飞了 12 秒。'
+  share_number: '59'
+  knowing: 'telegram'
+  near: 'first_flight, fourth_flight'
+  lever: 'p2, p3'
+  missed: 'dayton'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
