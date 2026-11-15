@@ -285,6 +285,15 @@ export function validateSpec(E, D, spec, stock) {
 }
 
 // ---------- run ----------
+// How many days before and after the planned day a trip may arrive: a share of the stay between min_days and max_days of config.travel.drift,
+// or what the model sets in metadata.era.drift, and never before day 0 of the model. The report reads the same range to say where an arrival came from.
+export function driftRange(E, D, stayDays, planned) {
+  const TD = D.get('config.travel.drift');
+  const span = Math.min(TD.max_days, Math.max(TD.min_days, Math.round(TD.share * stayDays)));
+  const DR = E.raw.metadata?.era?.drift ?? { early: span, late: span };
+  return { early: Math.min(DR.early, Math.floor(planned)), late: DR.late };
+}
+
 function initVars(E, D, spec, withTraveler) {
   const v = {};
   for (const [n, d] of Object.entries(E.vars)) v[n] = d.value;
@@ -296,11 +305,9 @@ function initVars(E, D, spec, withTraveler) {
   // or by the early and late days a model sets in metadata.era.drift,
   // drawn from the seed, in whole days, and never before day 0 of the model.
   // The horizon covers the latest arrival the drift allows, so the run with the traveller and the one without have the same length.
-  const TD = D.get('config.travel.drift');
-  const span = Math.min(TD.max_days, Math.max(TD.min_days, Math.round(TD.share * v[E.roles.stay])));
-  const DR = E.raw.metadata?.era?.drift ?? { early: span, late: span };
   const planned = v[E.roles.arrive];
-  const lo = -Math.min(DR.early, Math.floor(planned));
+  const DR = driftRange(E, D, v[E.roles.stay], planned);
+  const lo = -DR.early;
   if (withTraveler) v[E.roles.arrive] = planned + Math.round(lo + draw(spec.seed, 'arrival_drift', 0) * (DR.late - lo));
   v.office_step = E.step / D.get('config.travel.history_days_per_office_day');
   const who = staffTags(D, spec.staffId, E.place || placeOfEra(E.raw));
@@ -331,6 +338,9 @@ function clampTo(E, name, x) {
 
 export function run(E, D, spec, withTraveler) {
   const v = initVars(E, D, spec, withTraveler);
+  // the planned day and the range of the drift, written with the arrival so the report can say where the day of arrival came from
+  const plannedArrive = E.vars[E.roles.arrive].value;
+  const drift = withTraveler ? driftRange(E, D, v[E.roles.stay], plannedArrive) : null;
   const stay = v[E.roles.stay];
   const steps = Math.ceil(v[E.roles.horizon] / E.step);
   const log = [];
@@ -361,7 +371,7 @@ export function run(E, D, spec, withTraveler) {
     if (inWindow && !delivered) {
       delivered = true;
       arrivedDay = v.day;
-      log.push({ t: v.day, kind: 'arrive', id: 'arrive', importance: E.logImportance.arrive, snap: snap() });
+      log.push({ t: v.day, kind: 'arrive', id: 'arrive', importance: E.logImportance.arrive, planned: plannedArrive, drift, snap: snap() });
     }
     if (v.arrived && !authorized) { authorized = true; supplies(); }
     if (delivered && !inWindow && leftDay === null) {

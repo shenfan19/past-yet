@@ -655,7 +655,7 @@ export function createUI(D, ctx, DEV = false) {
     const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
     const factRefs = (fact) => (fact ? D.get('encyclopedia.fact_sources')?.[cur.eraId]?.[fact] || [] : []);
     const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
-    const tlLine = (t) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${lineKind(t) === 'history' ? sup(factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : ''}</div></li>`;
+    const tlLine = (t) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${lineKind(t) === 'history' ? sup(factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : ''}${DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : ''}</div></li>`;
     const accepted = R.journey?.accepted !== false;
     const summaryNote = accepted ? sup([noteOf('model', U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source))]) : '';
     // The record opens in the year of today with the day of the office and how the crossing began, turns to the year of the place,

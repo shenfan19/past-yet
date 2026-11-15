@@ -11,5 +11,8 @@ export function participation(D, tier, stay, spec, statsAt, drawStage) {
   const chance = (stage) => (drawStage(stage) - 0.5) * 2;
   const reached = approach.wit * 0.45 + approach.will * 0.35 + approach.finesse * 0.2 + idReach + chance('reach') >= 1.8 + tier * 0.25;
   const accepted = reached && recognition.wit * 0.35 + recognition.will * 0.35 + recognition.constitution * 0.3 + prepared + trusted + idAccept + chance('recognition') >= 2.1 + tier * 0.35;
-  return { approachDay, recognitionDay, reached, accepted };
+  // the scores and the bars, kept so the developer mode of the report can show why the door opened or not
+  const reachScore = approach.wit * 0.45 + approach.will * 0.35 + approach.finesse * 0.2 + idReach + chance('reach');
+  const acceptScore = recognition.wit * 0.35 + recognition.will * 0.35 + recognition.constitution * 0.3 + prepared + trusted + idAccept + chance('recognition');
+  return { approachDay, recognitionDay, reached, accepted, why: { reach: { score: reachScore, need: 1.8 + tier * 0.25 }, accept: { score: acceptScore, need: 2.1 + tier * 0.35 } } };
 }

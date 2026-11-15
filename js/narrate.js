@@ -1,6 +1,33 @@
 // Turns a structured dispatch result into report text. It only reads the log, it never changes a result.
 // This is the one place an optional AI narrator could plug in.
 
+// Where a line of the record came from, for the developer mode: the recorded date and fact, the condition that wrote it with the values it read,
+// the chance of an event, the range of the drift, the length of the stay. The interface shows it only in the developer mode.
+const r2 = (x) => Math.round(x * 100) / 100;
+const valsOf = (expr, snap) => (snap ? [...new Set(expr.match(/[A-Za-z_][A-Za-z0-9_.]*/g) || [])].filter((n) => typeof snap[n] === 'number').map((n) => [n, r2(snap[n])]) : []);
+function whyOf(D, E, e, res) {
+  const variantOf = (list) => (list || []).find((x) => x.key === e.key);
+  if (e.kind === 'milestone') {
+    const m = E.raw.milestones?.[e.id];
+    if (!m) return null;
+    if (m.date && m.needs_traveler === false) return { kind: 'date', expr: m.date + (m.fact ? ' · ' + m.fact : '') };
+    const expr = [m.when ?? 'date == ' + m.date, variantOf(m.variants)?.when].filter(Boolean).join(' ; ');
+    return { kind: 'when', expr, vals: valsOf(expr, e.snap) };
+  }
+  if (e.kind === 'event') {
+    const ev = E.raw.events?.[e.id];
+    if (!ev) return null;
+    const expr = [ev.when, ev.probability, variantOf(ev.variants)?.when].filter(Boolean).join(' ; ');
+    return { kind: 'event', expr, vals: valsOf(expr, e.snap) };
+  }
+  if (e.kind === 'arrive') {
+    if (!e.drift) return null;
+    return { kind: 'drift', expr: `${r2(e.planned)} − ${e.drift.early} … ${r2(e.planned)} + ${e.drift.late} → ${r2(e.t)}` };
+  }
+  if (e.kind === 'leave') return { kind: 'stay', expr: `${r2(res.branch.arrivedDay)} + ${r2(e.t - res.branch.arrivedDay)}` };
+  return null;
+}
+
 export function fmt(tpl, vars, extra = {}) {
   return tpl.replace(/\{([A-Za-z_][A-Za-z0-9_.]*)(?::([a-z0-9]+))?\}/g, (m, name, f) => {
     let x;
@@ -111,7 +138,7 @@ export function buildReport(D, E, res) {
     const source = e.source || (tag ? E.tagSource[tag] : null);
     const after = leftAt !== null && e.t >= leftAt && e.kind !== 'leave' && e.kind !== 'recall';
     const seg = arrivedAt === null || after ? null : Math.min(Math.max(1, Math.ceil(stayDaysOf(res) / SEG)), Math.max(1, Math.floor((e.t - Math.floor(arrivedAt)) / SEG) + 1));
-    return { t: e.t, year: dateOf(E, e.t).getUTCFullYear(), text, tag, source, importance: e.importance, kind: e.kind, id: e.id, key: e.key || e.id, fact: e.fact || null, after, seg, own: e.kind === 'milestone' && personal(e.key || e.id) !== undefined };
+    return { t: e.t, year: dateOf(E, e.t).getUTCFullYear(), text, tag, source, importance: e.importance, kind: e.kind, id: e.id, key: e.key || e.id, fact: e.fact || null, after, seg, own: e.kind === 'milestone' && personal(e.key || e.id) !== undefined, why: whyOf(D, E, e, res) };
   });
   // an event that comes again and reads the same is told once, where it first happened, with how many times it came
   {
@@ -138,7 +165,7 @@ export function buildReport(D, E, res) {
   // It is told plainly at the end of the record, after the traveller has gone, and the simulation does not run to it.
   for (const ep of E.raw.epilogue || []) {
     const t = dayOfDate(E, ep.date);
-    kept.push({ t, year: Number(ep.date.slice(0, 4)), text: fmt(ET.milestones[ep.key], {}, { ...common, date: dateLabel(D, E, t, true) }), tag: 'history', source: null, importance: 5, kind: 'milestone', id: ep.key, key: ep.key, fact: ep.fact || null, after: true, seg: null, own: false });
+    kept.push({ t, year: Number(ep.date.slice(0, 4)), text: fmt(ET.milestones[ep.key], {}, { ...common, date: dateLabel(D, E, t, true) }), tag: 'history', source: null, importance: 5, kind: 'milestone', id: ep.key, key: ep.key, fact: ep.fact || null, after: true, seg: null, own: false, why: { kind: 'epilogue', expr: ep.date + (ep.fact ? ' · ' + ep.fact : '') } });
   }
 
   // outcome, summary, quote
@@ -180,20 +207,21 @@ export function buildReport(D, E, res) {
 
 // How the employee got in and the scene of the trip are lines of the record too, told where they happened, so the report is one list in time order.
 // The identity lines fall on the days counted from arrival, and the scene, which has no date of its own, in the middle of the stay.
-export function weaveJourney(D, E, res, report, journey, vignette) {
+export function weaveJourney(D, E, res, report, journey, vignette, vignetteTraits = null) {
   const T = D.get('text');
   const arrivedAt = res.branch.arrivedDay;
   if (arrivedAt === null || !journey) return report;
   const P = T.ui.report.participation;
   const idText = journey.identity ? { ...T.identities[journey.identity], ...(T.eras[E.id]?.identities?.[journey.identity] || {}) } : { name: '', cover: '' };
+  const jw = (stage) => journey.why?.[stage] ? { kind: 'journey', expr: `${r2(journey.why[stage].score)} ≥ ${r2(journey.why[stage].need)}` } : null;
   const say = (key, day) => ({
-    t: arrivedAt + day, kind: 'journey', key, id: 'journey_' + key, tag: null, importance: 5, after: false, seg: 1,
+    t: arrivedAt + day, kind: 'journey', key, id: 'journey_' + key, tag: null, importance: 5, after: false, seg: 1, why: jw(key === 'reached' || key === 'blocked' ? 'reach' : 'accept'),
     text: P['line_' + key].replace('{date}', dateLabel(D, E, arrivedAt + day, true)).replace('{cover}', idText.cover).replace('{identity}', idText.name).replace(/{staff}/g, report.staff),
   });
   const lines = [say(journey.reached ? 'reached' : 'blocked', journey.approachDay)];
   if (journey.reached) lines.push(say(journey.accepted ? 'accepted' : 'declined', journey.recognitionDay));
   const stay = (res.branch.leftDay ?? arrivedAt) - arrivedAt;
-  if (vignette) lines.push({ t: arrivedAt + stay / 2, kind: 'vignette', key: 'vignette', id: 'vignette', tag: null, importance: 4, after: false, seg: null, text: vignette });
+  if (vignette) lines.push({ t: arrivedAt + stay / 2, kind: 'vignette', key: 'vignette', id: 'vignette', tag: null, importance: 4, after: false, seg: null, text: vignette, why: { kind: 'vignette', expr: vignetteTraits && vignetteTraits.length ? 'traits ∋ ' + vignetteTraits.join(' | ') : 'default' } });
   const all = [...report.timeline, ...lines].map((x, i) => [x, i]).sort((a, b) => a[0].t - b[0].t || a[1] - b[1]).map(([x]) => x);
   return { ...report, timeline: all };
 }

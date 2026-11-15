@@ -235,7 +235,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       const res = sim.runDispatch(eras[eraId], D, { ...spec, journey, identity });
       const vignetteId = journey.accepted ? vignetteFor(ev?.scene?.vignettes ?? info[eraId].raw.metadata.vignettes, spec.staffId) : null;
       const vignetteText = vignetteId ? (D.get('text.catalog')[ev?.id]?.vignettes ?? D.get('text.eras')[eraId].vignettes)?.[vignetteId] : null;
-      const report = weaveJourney(D, eras[eraId], res, buildReport(D, eras[eraId], res), journey, vignetteText);
+      const vignetteTraits = vignetteId ? (ev?.scene?.vignettes ?? info[eraId].raw.metadata.vignettes).find((x) => x.id === vignetteId)?.traits : null;
+      const report = weaveJourney(D, eras[eraId], res, buildReport(D, eras[eraId], res), journey, vignetteText, vignetteTraits);
       report.journey = journey;
       report.vignette = vignetteId;
       // the body of the traveller through the stay, as LM reads it, for the part of the report that shows it

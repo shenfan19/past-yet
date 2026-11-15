@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1, 2026-11-15
+
+- In the developer mode each line of the record says where it came from: the recorded date and fact, the condition of a milestone or an event with the values it read, the chance of an event, the planned day and the range of the drift, the score and the bar of getting in, the traits that chose the scene. The normal mode does not show it.
+- The first star of Guangzhou 1924 is a map of the sites handed to the office before the new campus is chosen.
+
 ## 0.2.0, 2026-11-15
 
 The framework for stories is in place. The stories themselves are still being written: Guangzhou 1924 is the first one built on it, and London 1854 and Vienna 1847 still run on their earlier models.
