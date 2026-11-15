@@ -2,85 +2,124 @@ order: 196
 events:
   ulugh_beg_samarkand:
     order: 61
-    year: 1420
+    # the stay falls in 1428, the year the building of the observatory is believed to have begun
+    year: 1428
     lon: 66.98
     lat: 39.65
     region: asia
+    home: [central_asia]
     field: science
     tier: 2
     channels: {C: 2, V: 2}
-    refs: [ulugh_beg_samarkand_observatory, ulugh_beg_samarkand_catalogue]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [ulugh_beg_samarkand_observatory, ulugh_beg_samarkand_catalogue, st_andrews_ulugh_beg, stantrips_observatory]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: hold, req: {"job":["mechanic","carpenter"]}}
-        - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+        - {id: p1, kind: trust, day: 12, req: {"any":[{"job":["mechanic","carpenter","builder"]},{"trait":["handy","hardy","cheerful"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 80, req: {"any":[{"trait":["methodical","scholarly","curious"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: endure, day: 150, req: {"any":[{"trait":["vigil","patient","hardy"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: source, traits: [methodical, scholarly]}
-        - {id: arc, traits: [curious, handy]}
-        - {id: hold}
+        - {id: source, traits: [methodical, scholarly], day: 90}
+        - {id: arc, traits: [curious, handy], day: 40}
+        - {id: hold, day: 120}
     text:
       en:
         name: 'The source column in a star table'
         place: Samarkand
         figure: Ulugh Beg
-        story: 'The observatory at Samarkand associated with Ulugh Beg had a large meridian arc. The astronomical tables compiled by his team include a star catalogue. Most positions were based on new measurements, while some entries drew on older material. The year sets the beginning of the observatory period.'
+        story: 'The observatory of Ulugh Beg at Samarkand, with its great meridian arc, was built in the 1420s; its building is believed to have begun in 1428. The tables made there include a catalogue of 1018 stars, most measured anew and some taken from older work. Ulugh Beg died in Samarkand on 27 October 1449. The site of the observatory was found again by Russian archaeologists in 1908.'
         relic: 'A slip with two sources'
         relic_desc: 'Two marked rows for an older star position and a new observation.'
         points:
-          p1: 'Identify the reading whose source is missing'
-          p2: 'Keep two slips with different origins visible on the stand'
-          p3: 'Wait for a second reading before filling the observation row'
+          p1: 'Be taken in by the masons, then carry bricks for the wall of the great arc'
+          p2: 'Write a star''s old position and tonight''s measured one on two separate rows'
+          p3: 'On a winter night, keep watch by the arc and write down the readings'
         vignettes:
-          source: 'The copyist has entered an older position on the line for tonight’s reading. You add a column for origin and move his label into it. Before the page leaves, both values are still legible. The sky never gives you the second reading before you return.'
-          arc: 'You have seen a later image of the great arc. Tonight the copyist sees only a line of numbers that have come down from it. You put the place of measurement at the head of the slip. He leaves it there with the figures. The catalogue itself will be completed long after your visit.'
-          hold: 'You leave one place for a measured figure and a second for a value taken from the older table. The copyist can now read both without thinking they came from the same observation. You carry the two labels back. The page has yet to be put into the catalogue.'
+          source: '{staff} adds a narrow column headed origin to the copyist''s sheet, so that a position taken from the old table and one measured tonight do not sit on the same line.'
+          arc: '{staff} lays a cord along the curve of the trench for the arc and walks it end to end with the masons, to see that the curve is true.'
+          hold: '{staff} sits by the arc with a brazier and a board, and writes down a reading each time it is called, until the star sinks below the wall.'
       zh:
         name: '星表边上的一栏来源'
         place: 撒马尔罕
         figure: 兀鲁伯
-        story: '兀鲁伯在撒马尔罕的天文台用过大型子午弧。他和团队编订的天文表收入星表，多数位置依据新观测，部分条目采用较早资料。'
+        story: '兀鲁伯在撒马尔罕的天文台建于 1420 年代，台中有巨大的子午弧，一般认为 1428 年动工。那里编成的天文表收有 1018 颗星，多数位置重新测定，一部分取自前人的星表。兀鲁伯于 1449 年 10 月 27 日在撒马尔罕去世。天文台遗址在 1908 年被俄国考古学家重新发现。'
         relic: '一张星表来源签'
         relic_desc: '一行记旧表星位，一行留给新的观测。'
         points:
-          p1: '找出漏写来源的那条读数'
-          p2: '让两张来历不同的记录都留在架上'
-          p3: '再等一次读数，才填实测那一格'
+          p1: '先让石匠们认下，再替他们搬砌大子午弧墙的砖'
+          p2: '把一颗星的旧位置和今夜测得的位置分两行记'
+          p3: '冬夜守在子午弧边，把读数一一记下'
         vignettes:
-          source: '抄写人把旧表的位置填到了今夜实测那一行。你添一栏来历，替他把标签挪过去。纸离开之前，两项数值仍都能读清。天空没来得及给你第二次读数，你便收队了。'
-          arc: '你看过后世留下的大弧图，眼下抄写人只看到抄过来的一排数。你在条子上端写明这项在哪里量到。他把来历和数值一起留好。等星表编成，你早已走了。'
-          hold: '你为实测结果留一处，又为旧表取来的数留了一处。抄写人能把两行分开看，不会当成一回量的。你带回两个题头，这一页还没进星表。'
+          source: '{staff}在抄写人的纸上添了窄窄一栏“来历”，旧表取来的位置和今夜量到的位置就不会挤在同一行里。'
+          arc: '{staff}顺着子午弧的沟槽拉了一根绳，和石匠们从这头走到那头，看弧线正不正。'
+          hold: '{staff}守着一只火盆，坐在子午弧边，膝上搁一块木板，读数报一个记一个，直到那颗星沉到墙后。'
 text:
   en:
     name: Ulugh Beg
-    text: Timurid ruler and astronomer, 1394 to 1449. At Samarkand he built a large observatory and produced a star catalogue of high accuracy. He was killed by order of his own son.
+    text: Timurid ruler and astronomer, 1394 to 1449. At Samarkand he built a large observatory and produced a star catalogue of high accuracy. He died in Samarkand on 27 October 1449.
   zh:
     name: 兀鲁伯
-    text: 帖木儿王朝的统治者与天文学家，1394 年生，1449 年去世。他在撒马尔罕建起大型天文台，编出精度很高的星表。他被亲生儿子下令杀死。
+    text: 帖木儿王朝的统治者与天文学家，1394 年生，1449 年去世。他在撒马尔罕建起大型天文台，编出精度很高的星表。1449 年 10 月 27 日他在撒马尔罕去世。
 hook: {en: 'Which reading came from this night?', zh: '哪一行是今夜亲自量的？'}
 facts:
   observatory:
-    date: '1420'
-    checked: official_record
+    date: '1428'
+    stay_day: 5
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [ulugh_beg_samarkand_observatory]
+    use: [story, history, wiki]
+    sources: [stantrips_observatory, st_andrews_ulugh_beg]
     text:
-      en: 'The exhibit documents the tables prepared at Samarkand and the great meridian arc used there.'
-      zh: '馆藏展览记录撒马尔罕编成的天文表和台中所用的大子午弧。'
+      en: 'The observatory was built in the 1420s, between 1424 and 1429 by one account; its building is believed to have begun in 1428. Its great meridian arc was used to measure the heights of the stars.'
+      zh: '天文台建于 1420 年代，一说在 1424 年至 1429 年间，一般认为 1428 年动工。台中的大子午弧用来测量星体的高度。'
+    line:
+      en: '1428: outside Samarkand, the building of Ulugh Beg''s observatory begins, with a great arc cut into the hill.'
+      zh: '1428 年，撒马尔罕城外，兀鲁伯的天文台动工，一道巨大的弧沿山体开凿下去。'
   catalogue:
-    date: '1420'
-    checked: official_record
+    date: '1437'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [ulugh_beg_samarkand_catalogue]
+    use: [story, history, wiki]
+    sources: [ulugh_beg_samarkand_catalogue, ulugh_beg_samarkand_observatory]
     text:
-      en: 'The analysis compares positions in the catalogue and discusses entries adopted from earlier sources.'
-      zh: '研究分析星表位置及从旧资料取用的条目。'
+      en: 'The tables prepared at Samarkand include a catalogue of 1018 stars. Most positions were measured anew; some were adopted from older work, among them al-Sufi''s.'
+      zh: '撒马尔罕编成的天文表收有 1018 颗星，多数位置重新测定，一部分取自前人的星表，其中包括苏菲的星表。'
+    line:
+      en: 'About 1437: the star catalogue of Samarkand is finished, 1018 stars, most of them measured anew.'
+      zh: '1437 年前后，撒马尔罕的星表编成，收星 1018 颗，多数是重新测定的。'
+  death:
+    date: '1449-10-27'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [st_andrews_ulugh_beg, stantrips_observatory]
+    text:
+      en: 'Ulugh Beg died in Samarkand on 27 October 1449, aged 55.'
+      zh: '兀鲁伯于 1449 年 10 月 27 日在撒马尔罕去世，终年 55 岁。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '27 October 1449: Ulugh Beg dies in Samarkand.'
+      zh: '1449 年 10 月 27 日，兀鲁伯在撒马尔罕去世。'
+  rediscovered:
+    date: '1908'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [stantrips_observatory, st_andrews_ulugh_beg]
+    text:
+      en: 'The site of the observatory was found again by Russian archaeologists in 1908.'
+      zh: '天文台遗址在 1908 年被俄国考古学家重新发现。'
+    line:
+      en: '1908: Russian archaeologists find the arc again under the hill.'
+      zh: '1908 年，俄国考古学家在山下重新找到了那道弧。'
 bystanders:
   copyist:
     invented: true
-    text: {en: 'A fictional copyist with an older position and one new observation.', zh: '虚构的抄写人，手头一份旧位置和一笔新读数。'}
+    text: {en: 'A copyist, made up for the game, with an older position and one new reading.', zh: '一位编出来的抄写人，手头一份旧位置和一笔新读数。'}
+  mason:
+    invented: true
+    text: {en: 'A mason, made up for the game, who lays the bricks of the arc.', zh: '一位编出来的石匠，砌着子午弧的砖。'}
 wiki:
   refs:
     ulugh_beg_samarkand_observatory:
@@ -95,16 +134,28 @@ wiki:
       text:
         en: 'F. Verbunt and R. H. van Gent, The star catalogues of Ptolemaios and Ulugh Beg, Astronomy & Astrophysics 544, A31 https://www.aanda.org/articles/aa/pdf/2012/08/aa19596-12.pdf'
         zh: '费尔本特与范亨特，托勒密与兀鲁伯星表比较，《天文学与天体物理学》544 卷 A31 https://www.aanda.org/articles/aa/pdf/2012/08/aa19596-12.pdf'
+    st_andrews_ulugh_beg:
+      order: 739
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Ulugh Beg. https://mathshistory.st-andrews.ac.uk/SH/ulugh_beg_sh.pdf'
+        zh: '圣安德鲁斯大学 MacTutor 数学史，兀鲁伯。https://mathshistory.st-andrews.ac.uk/SH/ulugh_beg_sh.pdf'
+    stantrips_observatory:
+      order: 740
+      status: checked
+      text:
+        en: 'Stantrips, The Ulugh Beg Astronomical Observatory. https://stantrips.com/en/uzbekistan/sights/ulugh-beg'
+        zh: 'Stantrips，兀鲁伯天文台。https://stantrips.com/en/uzbekistan/sights/ulugh-beg'
 self_check:
-  fact: observatory
-  quote_line: '纸离开之前，两项数值仍都能读清。'
-  regret_choice: '把旧录贴到今夜栏，回头就分不出怎样得数。'
-  bookend: '从混入的一行到两种来源各有题头。'
-  share_line: '我在星表边给读数补了一栏来历。'
-  share_number: '两种来源'
-  knowing: 'arc 见过后世的大弧图。'
-  near: 'observatory 与 catalogue 分别锚定设备和数据。'
-  lever: '区分一笔旧数和一笔实测。'
-  missed: '没有第二次观测。'
-  brought: '两张题头。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: catalogue
+  quote_line: '1437 年前后，撒马尔罕的星表编成，收星 1018 颗，多数是重新测定的。'
+  regret_choice: '派力气大的去，砌弧墙的砖搬得动，却未必分得清旧表和新测；派细心的去，两行分开记了，冬夜的读数却没人守。'
+  bookend: '从天文台动工那年开始，以四百多年后那道弧被重新找到收尾。'
+  share_line: '1428 年，我在撒马尔罕替石匠搬过砌天文台弧墙的砖。'
+  share_number: '1018'
+  knowing: 'catalogue'
+  near: 'observatory'
+  lever: 'p1, p2'
+  missed: 'rediscovered'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

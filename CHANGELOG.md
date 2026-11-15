@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.15, 2026-11-15
+
+- Samarkand 1428, Ulugh Beg, is rewritten and turned on: the building of the observatory and its great arc, the catalogue of 1018 stars, his death on 27 October 1449 and the finding of the arc again in 1908, with sync points for carrying bricks for the arc, keeping old and new positions on separate rows and watching a winter night by the arc.
+
 ## 0.5.14, 2026-11-15
 
 - Hanseong 1443, King Sejong and the new letters, is rewritten and turned on: the twenty eight letters finished at the end of 1443, the memorial of Choe Manri and his colleagues in the second month of 1444, the promulgation of 1446 and the death of Sejong in 1450, with sync points for the ink and paper of the Hall of Worthies, a stallholder spelling her name and a fair copy kept safe.

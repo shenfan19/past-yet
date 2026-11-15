@@ -2464,46 +2464,75 @@ events:
       - AI
       - Fan Shen
   - id: ulugh_beg_samarkand
-    year: 1420
+    year: 1428
     lon: 66.98
     lat: 39.65
     region: asia
+    home:
+      - central_asia
     field: science
     tier: 2
     channels:
       C: 2
       V: 2
+    ready: true
     refs:
       - ulugh_beg_samarkand_observatory
       - ulugh_beg_samarkand_catalogue
+      - st_andrews_ulugh_beg
+      - stantrips_observatory
     scene:
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 12
           req:
-            stat:
-              wit: 7
+            any:
+              - job:
+                  - mechanic
+                  - carpenter
+                  - builder
+              - trait:
+                  - handy
+                  - hardy
+                  - cheerful
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: hold
+          kind: notice
+          day: 80
           req:
-            job:
-              - mechanic
-              - carpenter
+            any:
+              - trait:
+                  - methodical
+                  - scholarly
+                  - curious
+              - stat:
+                  wit: 7
         - id: p3
           kind: endure
+          day: 150
           req:
-            stat:
-              will: 6
+            any:
+              - trait:
+                  - vigil
+                  - patient
+                  - hardy
+              - stat:
+                  will: 6
       vignettes:
         - id: source
           traits:
             - methodical
             - scholarly
+          day: 90
         - id: arc
           traits:
             - curious
             - handy
+          day: 40
         - id: hold
+          day: 120
     authors:
       - AI
       - Fan Shen
