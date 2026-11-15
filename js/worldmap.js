@@ -73,7 +73,6 @@ export function createWorldMap(X) {
     const y0 = Math.min(H() - h, Math.max(0, m().cy - h / 2));
     return { x0, y0, w, h };
   }
-  const labelsOn = () => m().z >= D.get('map.zoom.label_z');
   const vbAttr = () => { const v = view(); return `${v.x0.toFixed(2)} ${v.y0.toFixed(2)} ${v.w.toFixed(2)} ${v.h.toFixed(2)}`; };
 
   // ---------- day and night ----------
@@ -126,14 +125,12 @@ export function createWorldMap(X) {
     const shape = (poly, off) => `<polygon points="${poly.map(([lo, la]) => (px(lo) + off) + ',' + py(la)).join(' ')}"/>`;
     const land = D.get('world').map((poly) => shape(poly, 0) + (Math.min(...poly.map((q) => q[0])) < V().lon_min ? shape(poly, 360) : '')).join('');
     const pins = Object.values(places()).map((p) => {
-      const on = p.events.some(isSel);
-      const sel = m().place === p.id;
       const lock = p.events.every((e) => e.locked);
       const bs = Math.max(...p.events.map(best));
       const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
-      return `<g class="pt ${on ? 'on' : ''} ${sel ? 'sel' : ''} ${lock ? 'locked' : ''} star${bs}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="dot" r="2.2"/>${m().counts ? `<text class="cnt" x="0" y="-5" text-anchor="middle">${p.events.length}</text>` : ''}<text x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}${!m().counts && p.events.length > 1 ? ' ×' + p.events.length : ''}</text></g></g>`;
+      return `<g class="pt ${lock ? 'locked' : ''} star${bs}" data-act="mapplace" data-id="${esc(p.id)}" transform="translate(${px(p.geo.lon).toFixed(2)} ${py(p.geo.lat).toFixed(2)})"><g class="pin" style="transform: scale(var(--inv))"><rect class="hit" x="-3" y="-3" width="6" height="6"/><circle class="dot" r="2.2"/>${m().counts ? `<text class="cnt" x="0" y="-5" text-anchor="middle">${p.events.length}</text>` : ''}<text class="city" x="6" y="1.6">${esc(name)}${lock && DEV ? ' ' + U.dispatch.hidden_mark : ''}</text></g></g>`;
     }).join('');
-    return `<svg class="map ${labelsOn() ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${ctx.settings.get('map_daynight') ? `<g class="night"><path d="${nightPath()}"/></g>` : ''}${pins}</svg>`;
+    return `<svg class="map ${m().cities ? 'labels' : ''}" viewBox="${vbAttr()}" style="--inv:${1 / m().z}" role="img"><g class="grid">${grid.join('')}</g><g class="land">${land}</g>${ctx.settings.get('map_daynight') ? `<g class="night"><path d="${nightPath()}"/></g>` : ''}${pins}</svg>`;
   }
 
   function niceStep(span) {
@@ -233,6 +230,7 @@ export function createWorldMap(X) {
     return `
       <div class="mapbar"><input id="map-q" type="search" placeholder="${M.events_filter_ph}" value="${esc(s.q)}">
         <button class="ghost" data-act="mapfilter">${M.more_filters} ${s.filterOpen ? '▾' : '▸'}</button>
+        <label class="check"><input type="checkbox" id="map-cities" ${s.cities ? 'checked' : ''}> ${M.cities}</label>
         <label class="check"><input type="checkbox" id="map-counts" ${s.counts ? 'checked' : ''}> ${M.counts}</label>
         <span class="helpq" data-tip="${esc(help)}">?</span></div>
       ${panel}
@@ -251,6 +249,7 @@ export function createWorldMap(X) {
     if (!a) return;
     const svg = a.querySelector('svg.map');
     if (!svg) return;
+    svg.classList.toggle('labels', m().cities);
     // swap only the pins and the land stay, so a wheel zoom keeps its pointer
     svg.querySelectorAll('g.pt').forEach((g) => g.remove());
     const tmp = document.createElement('div');
@@ -261,7 +260,6 @@ export function createWorldMap(X) {
     const svg = document.querySelector('svg.map');
     if (!svg) return;
     svg.setAttribute('viewBox', vbAttr());
-    svg.classList.toggle('labels', labelsOn());
     svg.style.setProperty('--inv', String(1 / m().z));
   }
   function zoomAt(factor, fx, fy) {
@@ -346,14 +344,12 @@ export function createWorldMap(X) {
     }
     if (s.justDragged) return false;
     if (a === 'mapplace') {
-      s.place = id;
       X.st.modal = { kind: 'place', place: id };
       return true;
     }
     if (a === 'mapevent') {
       const e = events().find((x) => x.id === id);
       if (!e) return false;
-      s.place = e.place;
       if (e.locked && !DEV) return true;
       const from = X.st.modal && X.st.modal.kind === 'place' ? X.st.modal.place : null;
       if (e.catalog) s.cat = id; else { s.cat = null; X.selectEra(id); }
@@ -368,6 +364,7 @@ export function createWorldMap(X) {
     const s = m();
     if (el.id === 'map-q') s.q = el.value;
     else if (el.id === 'map-star') s.star = el.value;
+    else if (el.id === 'map-cities') s.cities = el.checked;
     else if (el.id === 'map-counts') s.counts = el.checked;
     else if (el.id === 'map-from') { const v = Number(el.value); if (Number.isFinite(v) && v < s.to) s.from = v; }
     else if (el.id === 'map-to') { const v = Number(el.value); if (Number.isFinite(v) && v > s.from) s.to = v; }
@@ -380,7 +377,7 @@ export function createWorldMap(X) {
 
   function init() {
     const A = D.get('map.axis');
-    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, filterOpen: false, counts: false, cat: null, star: '', from: A.from, to: A.to, place: null, drag: null, adrag: null, justDragged: false };
+    return { z: 1, cx: W() / 2, cy: H() / 2, q: '', tag: '', tagOpen: false, filterOpen: false, cities: false, counts: false, cat: null, star: '', from: A.from, to: A.to, drag: null, adrag: null, justDragged: false };
   }
   return { html, placeHtml, act, onInput, attach, init, tickNight };
 }

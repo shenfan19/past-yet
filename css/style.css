@@ -190,8 +190,11 @@ svg.map .pt text { font-size: 5px; }
 svg.map .pt .dot { r: 3px; stroke-width: 1.2px; }
 .evrow { padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; margin: 4px 0; cursor: pointer; background: var(--card); }
 .evrow.on { border-color: var(--stamp); box-shadow: 0 0 0 1px var(--stamp) inset; }
-svg.map .pt text { display: none; }
-svg.map.labels .pt text, svg.map .pt.sel text, svg.map .pt.on text { display: block; }
+svg.map .pt .city { display: none; }
+svg.map.labels .pt .city { display: block; }
+@media (hover: hover) {
+  svg.map .pt:hover .city { display: block; }
+}
 
 svg .pt.sel .dot { fill: var(--stamp); transform: scale(1.25); }
 .lbox { border: 1px solid var(--line); border-radius: 6px; background: var(--card); display: flex; flex-direction: column; overflow: hidden; }

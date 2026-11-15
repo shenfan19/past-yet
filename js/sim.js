@@ -22,7 +22,7 @@ export function staffTags(D, staffId, place = null) {
   const a = staffAttrs(D, staffId);
   const out = new Set();
   for (const [t, rule] of Object.entries(R.tags)) if ((rule.min === undefined || a[rule.stat] >= rule.min) && (rule.max === undefined || a[rule.stat] <= rule.max)) out.add(t);
-  const classes = Object.entries(R.job_classes).filter(([, jobs]) => st.jobs.some((j) => jobs.includes(j))).map(([c]) => c);
+  const classes = Object.entries(R.job_classes).filter(([, jobs]) => (st.jobs || []).some((j) => jobs.includes(j))).map(([c]) => c);
   for (const c of classes) out.add('class_' + c);
   for (const t of st.traits) out.add('trait_' + t);
   const L = R.literacy;
