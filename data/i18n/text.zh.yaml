@@ -232,9 +232,9 @@ ui:
     start_hint: 第一趟派出后时钟开始走
     start_tip: 派出第一趟之前什么也不会发生，工资却会白白扣钱，所以时钟停着。在地图上选个地方，派一个人出去。
     low_funds: 资金不足，限速 {n}x
-    low_tip: 资金不够付三天工资，时钟不能再快了。卖掉多余的古董，或者派一趟能赚钱的。
+    low_tip: 资金不够付三天工资，时钟不能再快了。可向研究所移交多余的古董，领取研究补助。
     broke_title: 工资发不出来了
-    broke_text: 资金用完了，有一天没发工资，员工心情下降，时钟已暂停。卖掉多余的古董、让某个人离开、或者派一趟能赚钱的，然后选个速度继续。
+    broke_text: 资金用完了，有一天没发工资，员工心情下降，时钟已暂停。可向研究所移交多余的古董领取补助，或缩减员工人数，然后选个速度继续。
     broke_ok: 知道了
     back_one: '{a} 回来了'
     back_two: '{a} 和 {b} 回来了'
@@ -506,12 +506,13 @@ ui:
     verdict_match: 上次全自动的结果合他的意，心情上升
     verdict_miss: 上次全自动的结果不合他的意，心情下降
     perks:
-      sale_mult: 古董卖价
+      sale_mult: 研究补助
       energy_mult: 时空能量收入
       rest_cut: 员工休整时间
       favor_gain: 心情增长
     recruit_hint_short: 招募后才知道
     col_staff: 角色
+    col_contact: 互动对象
     col_profile: 背景
     col_stats: 能力
     hire_none: 眼下没有候选人。
@@ -598,7 +599,7 @@ ui:
     view: 查看报告
     grown: 获得的属性点
     antique_gain: 带回的古董
-    antique_dup: 重复的一件，可以卖掉
+    antique_dup: 重复品，可移交研究所领取补助
     antique_none: 这次没有
     spent: 消耗装备的购入价值
     rest: 员工休整
@@ -720,18 +721,19 @@ ui:
     all_tags: 全部标签
     inv_title: 物品
     inv_empty: 库存是空的
-    sell_spares: 一键卖掉重复品
+    sell_spares: 移交全部重复品
     locked_tip: 时空能量达到这个数字时解锁。
     antiques_title: 古董
     antiques_empty: 还没有发现。古董要靠派遣带回来。
     copies: 持有
-    antiques_hint: 古董靠派遣发现，每件指向一个地方。锚定它，那个地方就开放，多出来的可以卖。
+    antiques_hint: 古董靠派遣发现，可以锚定并开放它指向的地点。研究所接收移交的古董，并为事务所提供研究补助。
     inv_hint: 库存里的物品。出差时带上，或按买入价卖掉。
     lock: 锚定
     unlock: 解除锚定
     locked: 已锚定
     keep_one: 有人在那里出差，或者这是最后一个开放的地方。
-    sell_antique: 卖出
+    research_grant: 研究补助
+    sell_antique: 移交研究所
     not_carried_here: 这个时空用不上
     no_funds: 资金不足
     empty_shop: 没有符合的商品
@@ -783,7 +785,7 @@ ui:
     how:
       - 在地图上选一个地方和你想去的年代。第一趟派出后时钟才开始走。
       - 选谁去、带什么，然后派出去。
-      - 等他们回来，读报告。他们会带回时空能量，有时还有一件古董；事务所靠卖古董发工资。
+      - 等员工回来，读报告。他们会带回时空能量，有时也会带回古董。向研究所移交古董可获得研究补助。
       - 古董能打开它指向的地方，而且只通向更早的时代。
     staff_title: 你的第一批员工
     staff_hint: 随机抽出 {n} 位来自不同地区的员工。第一趟派遣出发之前可以重抽。
@@ -841,7 +843,7 @@ ui:
       vars: 变量
       models: 模型
     kinds:
-      ancient: 古董：只能获取和出售，能锚定。
+      ancient: 古董可锚定，符合条件时可移交研究所领取补助。
       modern: 道具：用资金购买，多数用掉，是今天已有的科技和医疗手段。
       future: 装备：用时空能量购买，完成特殊剧情用，不消耗。
     tag_filter: 标签过滤

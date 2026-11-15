@@ -232,9 +232,9 @@ ui:
     start_hint: The clock starts at the first trip
     start_tip: Until the first trip goes out nothing happens, and the wages would only run down the funds, so the clock stands still. Pick a place on the map and send someone.
     low_funds: Funds low, held to {n}x
-    low_tip: The funds pay fewer than three days of wages, so the clock cannot go faster. Sell a spare antique or send a trip that pays.
+    low_tip: The funds cover fewer than three days of wages, so the clock cannot go faster. Transfer spare antiques to the institute for research funding.
     broke_title: The wages could not be paid
-    broke_text: The funds ran out and a day went unpaid, so the staff lost heart and the clock is paused. Sell a spare antique, let someone go or send a trip that pays, then pick a speed to go on.
+    broke_text: The funds ran out and a day went unpaid. Staff lost heart and the clock paused. Transfer spare antiques to the institute for funding or reduce the payroll, then select a speed to continue.
     broke_ok: Understood
     back_one: '{a} is home'
     back_two: '{a} and {b} are home'
@@ -506,12 +506,13 @@ ui:
     verdict_match: The last auto result suited the secretary, mood up
     verdict_miss: The last auto result did not suit the secretary, mood down
     perks:
-      sale_mult: Antique sale prices
+      sale_mult: Research grants
       energy_mult: Time energy income
       rest_cut: Rest time
       favor_gain: Mood growth
     recruit_hint_short: Known after hiring
     col_staff: Employee
+    col_contact: Historical contact
     wage: Daily wages
     wage_unpaid: Wages could not be paid, the staff lose mood
     col_profile: Background
@@ -598,7 +599,7 @@ ui:
     view: View report
     grown: Attribute point earned
     antique_gain: Antique brought back
-    antique_dup: a spare, it can be sold
+    antique_dup: Spare copy eligible for transfer to the institute
     antique_none: none this time
     spent: Purchase value of gear used
     rest: Employee rest
@@ -720,18 +721,19 @@ ui:
     all_tags: All tags
     inv_title: Items
     inv_empty: Stock is empty
-    sell_spares: Sell all spares
+    sell_spares: Transfer all spares
     locked_tip: Unlocked when the time energy reaches this number.
     antiques_title: Antiques
     antiques_empty: Nothing found yet. Antiques are brought back from trips.
     copies: Held
-    antiques_hint: Antiques are found on trips and each points to a place. Anchor one to open that place, and sell the spares.
+    antiques_hint: Antiques found on trips can be anchored to open the places they point to. The institute accepts antiques and provides research funding to the agency.
     inv_hint: What you hold. Take it on a trip, or sell it at the price you paid.
     lock: Anchor
     unlock: Release
     locked: Anchored
     keep_one: Someone is away there, or it is the last open place.
-    sell_antique: Sell
+    research_grant: Research grant
+    sell_antique: Transfer to institute
     not_carried_here: Not usable in this era
     no_funds: Not enough funds
     empty_shop: Nothing matches
@@ -783,7 +785,7 @@ ui:
     how:
       - Pick a place on the map and the time you want there. The clock starts when the first trip goes out.
       - Choose who goes and what they carry, then send them.
-      - Wait for them to come home and read what happened. They bring time energy and sometimes an antique, and antiques are what the agency sells to pay its staff.
+      - Wait for the staff to return and read their reports. They bring back time energy and sometimes antiques. Transfer antiques to the institute to receive research funding.
       - An antique opens the place it points to, and it only leads to earlier times.
     staff_title: Your first employees
     staff_hint: '{n} employees drawn from different parts of the world. You can draw again until the first trip goes out.'
@@ -841,7 +843,7 @@ ui:
       vars: Variables
       models: Models
     kinds:
-      ancient: 'Antique: found and sold only, can be anchored.'
+      ancient: Antiques can be anchored or transferred to the institute for research funding when eligible.
       modern: 'Supply: bought with funds, mostly used up, today''s science and medicine.'
       future: 'Gear: bought with time energy, for special stories, never used up.'
     tag_filter: Tag filter

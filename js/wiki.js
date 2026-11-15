@@ -158,7 +158,7 @@ export function createWiki(X) {
       const tx = T.antiques[id];
       add({
         id: 'antiques:' + id, cat: 'items_ancient', title: tx.name, tags: an.tags, unlock: { antique: id }, refs: ['game'], authors: an.authors,
-        body: () => `<p>${esc(tx.desc)}</p><p class="muted">${W.kinds.ancient}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : an.event ? a('events:c:' + an.event, T.catalog[an.event].name) : U.dispatch.not_ready} · ${U.enc.antique_price} ${an.price} · ${U.shop.sell_price} ${an.sell}</div>`,
+        body: () => `<p>${esc(tx.desc)}</p><p class="muted">${W.kinds.ancient}</p><div class="muted">${U.dispatch.points_to}${COLON}${an.era ? a('places:' + eraPlaceId(an.era), T.eras[an.era].name) : an.event ? a('events:c:' + an.event, T.catalog[an.event].name) : U.dispatch.not_ready} · ${U.shop.research_grant} ${X.office.salePrice(id)}</div>`,
       });
     }
 

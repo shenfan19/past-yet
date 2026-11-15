@@ -180,7 +180,6 @@ export function createUI(D, ctx, DEV = false) {
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
   const outcomeOf = (d) => (d.recalled ? U.report.recalled : d.evacuation ? U.report.evacuated : d.light ? U.light.outcome[d.report.outcomeId] : d.report.outcomeName);
   // a plain running count of the trips sent out, not a reference to anything
-  const seqOf = (d) => d.id.slice(1);
   const livesOf = (d) => (d.recalled || d.evacuation || d.light ? '—' : r1(d.report.accounts.lives));
   const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(placeShort(d))}</td><td>${esc(outcomeOf(d))}</td><td class="num">${livesOf(d)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`;
   function selectEra(id) {
@@ -410,7 +409,10 @@ export function createUI(D, ctx, DEV = false) {
       // the stars of a trip that is not home yet are not known, so the cell shows the wait
       const status = ready ? `<span class="chip warn pulse">${U.office.pending}</span>` : `<span class="muted">⏳ ${r1(left)} ${U.report.days}</span>${refused}`;
       const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : recallBtn;
-      return `<div class="outrow pend"><span class="muted">${seqOf(d)}</span><b>${placeYear(d)}</b><span class="nowrap">${protagonistHtml(d)} · ${esc(placeShort(d))}</span><span class="nowrap muted">${staffLink(d.spec.staffId)}</span><span class="nowrap">${status}</span><span class="grow"></span><span class="nowrap">${acts}</span></div>`;
+      const place = d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].place_name;
+      return `<div class="outrow pend">
+        <b>${placeYear(d)}</b><span class="pend-place" title="${esc(place)}">${esc(place)}</span><span class="pend-staff" title="${esc(staffName(D, d.spec.staffId))}">${staffLink(d.spec.staffId)}</span><span class="pend-status">${status}</span>${acts}
+      </div>`;
     });
     return `<div class="sec" id="home-pending">${U.office.on_road} (${out.length})</div>
       ${pg.html}<div class="pendgrid">${rows.join('')}</div>`;
@@ -424,12 +426,17 @@ export function createUI(D, ctx, DEV = false) {
     const nArch = S.trips.filter((x) => x.archived).length;
     const pg = listbox.paginate('log', all);
     const trips = pg.shown;
-    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}><td class="num muted">${t.id.slice(1)}</td><td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td class="nowrap">${protagonistHtml({ eraId: t.place, light: t.light })}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td class="nowrap">${staffLink(t.staffId)}</td><td>${starsHtml(t.stars || 0)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td><td class="num nowrap">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button> ` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></td></tr>`);
+    const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}>
+      <td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td>
+      <td>${starsHtml(t.stars || 0, t.place)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td>
+      <td>${protagonistHtml({ eraId: t.place, light: t.light })}</td>
+      <td><div class="log-actions">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></div></td>
+    </tr>`);
     const rows = done.join('');
     const bar = S.trips.length ? `<div class="logbar"><span class="logtools"><button class="ghost" data-act="archiverule" data-id="notbest"${tip(U.office.archive_tip)}>${U.office.archive_notbest}</button><label class="check"><input type="checkbox" id="log-archived" ${st.showArchived ? 'checked' : ''}> ${U.office.show_archived} (${nArch})</label></span>${pg.html}</div>` : '';
     return `
       <div class="sec" id="home-log">${U.office.log}</div>
-      ${bar}${rows ? `<table class="logtable"><thead><tr><th class="num">#</th><th>${U.report.year}</th><th>${U.report.protagonist}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
+      ${bar}${rows ? `<table class="logtable"><thead><tr><th>${U.report.year}</th><th>${U.report.place}</th><th>${U.office.col_staff}</th><th>${U.stars.col}</th><th>${U.office.col_contact}</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="muted">${U.report.none}</p>`}`;
   }
 
   // ---------- dispatch ----------
