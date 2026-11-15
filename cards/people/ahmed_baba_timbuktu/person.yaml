@@ -3,54 +3,57 @@ events:
   ahmed_baba_timbuktu:
     order: 175
     year: 1594
-    lon: -3
+    lon: -3.0
     lat: 16.77
     region: africa
+    home: [west_africa]
     field: literature
     tier: 1
     channels: {S: 2, Y: 2}
     regret: true
-    refs: [ahmed_baba_timbuktu_manuscripts]
+    # finished: in the game with release.ready_only. No month of 1594 is recorded for the deportation, so the facts of the stay carry the year only.
+    ready: true
+    refs: [ahmed_baba_timbuktu_manuscripts, britannica_ahmad_baba, btu_ahmad_baba]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"trait":["quiet","wanderer"]}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["archivist"]},{"stat":{"wit":7}}]}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+        - {id: p1, kind: trust, day: 12, req: {"any":[{"trait":["quiet","patient","kind"]},{"job":["archivist","teacher"]}]}}
+        - {id: p2, kind: hold, day: 55, req: {"any":[{"trait":["faithful","methodical","quiet"]},{"job":["archivist"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: trust, redeem: true, day: 60, req: {"any":[{"trait":["vigil","attached","faithful"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: same_name, traits: [methodical, scholarly]}
-        - {id: missing, traits: [curious, quiet]}
-        - {id: slip}
+        - {id: same_name, traits: [methodical, scholarly], day: 30}
+        - {id: courtyard, traits: [curious, quiet], day: 40}
+        - {id: slip, day: 20}
     text:
       en:
         name: 'A name for the supplement'
         place: "Timbuktu"
         figure: "Ahmed Baba"
-        story: 'Manuscript research dates Ahmad Baba’s forced stay in Morocco from 1594. There he compiled biographical dictionaries, including Nayl al-ibtihāj, as supplements to Ibn Farḥūn’s earlier work. The 1594 Timbuktu branch concerns an imagined copyist sorting notes before departure. It does not place the later book on this table.'
+        story: 'After the Moroccan army took Timbuktu in 1591, the scholar Ahmad Baba was accused of resisting the sultan and in 1594 was deported to Marrakesh. There he compiled biographical dictionaries as supplements to Ibn Farhun. He was allowed to return to Timbuktu in 1608 and died there on 22 April 1627.'
         relic: "A leather bound manuscript"
         relic_desc: "A manuscript in a worn leather cover with a flap."
         points:
-          p1: 'Notice two versions of one name before counting the new entries'
-          p2: 'Keep the earlier reference and proposed addition on separate slips'
-          p3: 'Leave the doubtful name where the next reader can find it'
+          p1: 'Be taken in by the household, then help list the volumes one by one'
+          p2: 'Before the departure, give a few volumes into the keeping of a family in the town'
+          p3: 'On the day he is taken away, write down the day and the road, and leave it with his family'
         vignettes:
-          same_name: 'The copyist counts two forms of a name as two people. You set the older reference beside the proposed entry. They point to one life, so he joins the slips without destroying either spelling. You take back that comparison. The dictionary you know will be compiled far from this desk.'
-          missing: 'You know more than one supplement will be written after the departure. The copyist asks whether to enter a doubtful name now. You put the possible addition by itself and note which older page was checked. You leave before the other reference can be found.'
-          slip: 'You write down the heading of the old work and the name on the loose sheet separately. The copyist can tell what belongs to the earlier book and what still needs checking. You take home an index note. The proposed entry has no finished home yet.'
+          same_name: '{staff} finds one name written two ways in two volumes and keeps both spellings on the list, with a mark between them, instead of choosing one.'
+          courtyard: '{staff} sets the volumes out in the shade of the courtyard to air them after the rains, and turns each one at noon so the covers dry evenly.'
+          slip: '{staff} writes the title and the first line of each volume on a narrow slip and tucks it under the leather flap, so the book can be named without opening it.'
       zh:
-        name: '补篇里的人名先别写重'
+        name: '给补编留一个名字'
         place: "廷巴克图"
         figure: "艾哈迈德·巴巴"
-        story: '手稿研究把艾哈迈德·巴巴被迫滞留摩洛哥的起点记在 1594 年。他后来在那里编写《奈勒·伊卜提哈杰》等人物辞书，补充伊本·法尔洪的旧作。'
-        relic: "一册皮面手抄本"
-        relic_desc: "一册皮面磨旧的手抄本，带着翻盖。"
+        story: '1591 年摩洛哥军队攻下廷巴克图。学者艾哈迈德·巴巴被指抗拒苏丹，1594 年被押往马拉喀什，在那里编写人物辞书，补伊本·法尔洪的旧作。1608 年他获准回到廷巴克图，1627 年 4 月 22 日在那里去世。'
+        relic: "一部皮面手稿"
+        relic_desc: "一部手稿，皮面磨旧了，带一片护舌。"
         points:
-          p1: '清点补录条目以前辨出两个名字是否同指一人'
-          p2: '把旧书出处与待补一条分开记'
-          p3: '把有疑问的人名留在下一位能复核的位置'
+          p1: '先让学者家里的人认下，再帮着把书一卷一卷登记'
+          p2: '押走之前，把几卷书托给城里一户人家收着'
+          p3: '押走那天，记下日子和去的路，留给他的家人'
         vignettes:
-          same_name: '抄书人把一个名字的两种写法算成两个人。你把旧出处与预备补的一条摊开，发现说的是同一位。他把两纸收在一起，两种写法都留着。你带回对照，后来那部辞书却要在离这张桌很远的地方编。'
-          missing: '你知道离开以后会陆续编出补书。抄书人问，拿不准的名字要不要现在录进去。你把这条单放一边，记明已经核了旧书哪一页。还没找到另一份出处，你就得收队。'
-          slip: '你把旧书题名与散页上的名字分开写。抄书人能分清哪处是旧书、哪处还待查。你带回来一张索引签，拟补的这个名字还没定放哪儿。'
+          same_name: '{staff}发现两卷书里同一个名字有两种写法，没有挑一种，两种都记在单子上，中间画了个记号。'
+          courtyard: '雨季过后，{staff}把书摊在院子的阴凉里晾，正午翻一次，让封皮干得匀。'
+          slip: '{staff}在窄纸条上写下每卷的书名和头一行，塞在皮面的护舌底下，不用打开也叫得出是哪本书。'
 text:
   en:
     name: Ahmed Baba
@@ -58,8 +61,33 @@ text:
   zh:
     name: 艾哈迈德·巴巴
     text: 廷巴克图学者，1556 年生，1627 年去世。他写过数十部法学与语法著作，并拥有一座规模很大的私人藏书室。1591 年摩洛哥征服之后他被带往马拉喀什，藏书被没收，后来才回到廷巴克图。
-hook: {en: 'Which name in the old book is really missing?', zh: '旧书没收进去的人，怎样留个位置？'}
+hook: {en: 'A list of books before the road north', zh: '北上之前的一张书单'}
 facts:
+  conquest:
+    date: '1591'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [britannica_ahmad_baba, btu_ahmad_baba]
+    text:
+      en: 'In 1591 a Moroccan army took Timbuktu.'
+      zh: '1591 年，摩洛哥军队攻下廷巴克图。'
+    line:
+      en: '1591: a Moroccan army takes Timbuktu.'
+      zh: '1591 年，摩洛哥军队攻下廷巴克图。'
+  deported:
+    date: '1594'
+    stay_day: 60
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [britannica_ahmad_baba, ahmed_baba_timbuktu_manuscripts]
+    text:
+      en: 'Accused of resisting the authority of the sultan, Ahmad Baba was deported to Marrakesh in 1594.'
+      zh: '艾哈迈德·巴巴被指抗拒苏丹，1594 年被押往马拉喀什。'
+    line:
+      en: '1594: accused of resisting the sultan, Ahmad Baba is taken away to Marrakesh.'
+      zh: '1594 年，艾哈迈德·巴巴被指抗拒苏丹，押往马拉喀什。'
   manuscripts:
     date: '1594'
     checked: official_record
@@ -69,10 +97,38 @@ facts:
     text:
       en: 'The archival study dates Ahmad Baba’s forced stay from 1594 and identifies two biographical works compiled in Morocco as supplements to Ibn Farḥūn.'
       zh: '档案研究记艾哈迈德·巴巴自 1594 年被迫滞留摩洛哥，并指出他在那里编的两部人物辞书以伊本·法尔洪的书为补编对象。'
+  return:
+    date: '1608'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [britannica_ahmad_baba, btu_ahmad_baba]
+    text:
+      en: 'He was allowed to return to Timbuktu in 1608.'
+      zh: '1608 年他获准回到廷巴克图。'
+    line:
+      en: '1608: Ahmad Baba is allowed to go home to Timbuktu.'
+      zh: '1608 年，艾哈迈德·巴巴获准回到廷巴克图。'
+  death:
+    date: '1627-04-22'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [britannica_ahmad_baba, btu_ahmad_baba]
+    text:
+      en: 'He died in Timbuktu on 22 April 1627.'
+      zh: '1627 年 4 月 22 日，他在廷巴克图去世。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '22 April 1627: Ahmad Baba dies in Timbuktu.'
+      zh: '1627 年 4 月 22 日，艾哈迈德·巴巴在廷巴克图去世。'
 bystanders:
   copyist:
     invented: true
-    text: {en: 'A fictional copyist sorting spellings and proposed additions before a departure.', zh: '虚构的抄书人，临别前整理人名写法与拟补条目。'}
+    text: {en: 'A copyist, made up for the game, who keeps two spellings of one name.', zh: '一位编出来的抄书人，同一个名字的两种写法都留着。'}
+  neighbour:
+    invented: true
+    text: {en: 'A neighbour, made up for the game, who keeps a chest of books under her bed.', zh: '一位编出来的邻家主妇，把一箱书收在床底下。'}
 wiki:
   refs:
     ahmed_baba_timbuktu_manuscripts:
@@ -81,16 +137,28 @@ wiki:
       text:
         en: 'West Africa Seen from Moroccan Manuscript Archives, History in Africa, section on Aḥmad Bābā https://www.cambridge.org/core/journals/history-in-africa/article/west-africa-seen-from-moroccan-manuscript-archives/50B3C6ADCF4B1783813680B0FB281B9D'
         zh: '《History in Africa》，《从摩洛哥手稿档案看西非》，艾哈迈德·巴巴一节 https://www.cambridge.org/core/journals/history-in-africa/article/west-africa-seen-from-moroccan-manuscript-archives/50B3C6ADCF4B1783813680B0FB281B9D'
+    britannica_ahmad_baba:
+      order: 764
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Aḥmad Bābā. https://www.britannica.com/biography/Ahmad-Baba'
+        zh: '《不列颠百科全书》，艾哈迈德·巴巴。https://www.britannica.com/biography/Ahmad-Baba'
+    btu_ahmad_baba:
+      order: 765
+      status: checked
+      text:
+        en: 'BTU Cottbus, Report 2: Ahmed Baba al-Timbukti (1556 to 1627). https://www-docs.b-tu.de/fg-technik-umwelt-soziologie/public/btu4future/Bilillee/Report_2_Ahmed%20Baba%20al-Timbukti%20(1556%E2%80%931627)_compressed.pdf'
+        zh: '德国勃兰登堡工业大学报告：艾哈迈德·巴巴（1556 至 1627）。https://www-docs.b-tu.de/fg-technik-umwelt-soziologie/public/btu4future/Bilillee/Report_2_Ahmed%20Baba%20al-Timbukti%20(1556%E2%80%931627)_compressed.pdf'
 self_check:
-  fact: manuscripts
-  quote_line: '两种写法都留着。'
-  regret_choice: '把异写当成两个人会多计一条，直接涂掉又丢了原写法。'
-  bookend: '从两张认为不同的人名条，到保留两个写法的一生。'
-  share_line: '我把两张名字条放回一处。'
-  share_number: '两种写法'
-  knowing: 'same_name 员工知道后来的辞书在摩洛哥编成。'
-  near: 'manuscripts 锚定放逐与补编的史料。'
-  lever: '归并一项并保留异写。'
-  missed: '没等到另一出处。'
-  brought: '可以复核的人名索引。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: deported
+  quote_line: '1594 年，艾哈迈德·巴巴被指抗拒苏丹，押往马拉喀什。'
+  regret_choice: '派细心的去，书单登记得清，押走那天未必守在城门外；派守得住的去，记下了去的路，书却还摊在院子里。'
+  bookend: '从城破的 1591 年开始，以他 1627 年回到故乡去世收尾。'
+  share_line: '1594 年，我在廷巴克图替一位学者登记过他的书。'
+  share_number: '1608'
+  knowing: 'return'
+  near: 'deported'
+  lever: 'p1, p2'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

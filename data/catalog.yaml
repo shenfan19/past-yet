@@ -7658,26 +7658,42 @@ events:
     lon: -3
     lat: 16.77
     region: africa
+    home:
+      - west_africa
     field: literature
     tier: 1
     channels:
       S: 2
       'Y': 2
     regret: true
+    ready: true
     refs:
       - ahmed_baba_timbuktu_manuscripts
+      - britannica_ahmad_baba
+      - btu_ahmad_baba
     scene:
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - quiet
-              - wanderer
-        - id: p2
-          kind: hold
+          kind: trust
+          day: 12
           req:
             any:
+              - trait:
+                  - quiet
+                  - patient
+                  - kind
+              - job:
+                  - archivist
+                  - teacher
+        - id: p2
+          kind: hold
+          day: 55
+          req:
+            any:
+              - trait:
+                  - faithful
+                  - methodical
+                  - quiet
               - job:
                   - archivist
               - stat:
@@ -7685,18 +7701,28 @@ events:
         - id: p3
           kind: trust
           redeem: true
+          day: 60
           req:
-            item: holo_cloak
+            any:
+              - trait:
+                  - vigil
+                  - attached
+                  - faithful
+              - stat:
+                  will: 6
       vignettes:
         - id: same_name
           traits:
             - methodical
             - scholarly
-        - id: missing
+          day: 30
+        - id: courtyard
           traits:
             - curious
             - quiet
+          day: 40
         - id: slip
+          day: 20
     authors:
       - AI
       - Fan Shen

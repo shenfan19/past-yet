@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.9, 2026-11-15
+
+- Timbuktu 1594, Ahmad Baba, is rewritten and turned on: the fall of the city in 1591, his deportation to Marrakesh in 1594, his return in 1608 and his death in 1627, with sync points for listing his books, giving some into the keeping of a family in the town and writing down the day he was taken away.
+
 ## 0.5.8, 2026-11-15
 
 - Pune 1848, Savitribai Phule, is rewritten and turned on: the school at Bhide Wada in January 1848, the stones and dung on the road and the spare sari, the head teacher of 1852 and her death of plague in 1897, with sync points for setting out the slates, carrying the bag on the road and staying with a girl until she can write her name.
