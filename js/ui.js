@@ -961,7 +961,8 @@ export function createUI(D, ctx, DEV = false) {
   }
   function renderModal() {
     const inner = modalBody();
-    if (inner) office.holdClock(); else office.releaseClock();
+    // only a pop-up the game forces open stops the clock, see config.clock.hold_modals; one the player opens leaves it running
+    if (inner && D.get('config.clock.hold_modals').includes(st.modal.kind)) office.holdClock(); else office.releaseClock();
     const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', st.modal.kind === 'welcome' ? '<div class="mbox' : `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
     document.body.classList.toggle('modal-open', !!html);
     if (html === modalLast) return;

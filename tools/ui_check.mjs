@@ -842,14 +842,15 @@ try {
   ok('each further hire costs more per day than the one before', wg.rising);
   ok('an unpaid day empties the funds and costs favor', wg.poor);
   ok('the market factor stays within its band', wg.mult >= 0.7 && wg.mult <= 1.3);
-// a pop-up stops the clock and gives the speed back, low funds hold the speed, an unpaid day stops the clock with a pop-up
-await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100000; S.clock.speed = 16; S.clock.resume = null; window.__game.ui.render(); });
+// a pop-up the player opens leaves the clock running, low funds hold the speed, an unpaid day stops the clock with a pop-up
+// the wage check above leaves an unpaid day waiting to open its pop-up on the next tick; it is cleared here so it does not land in the middle of this check
+await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100000; S.brokeNew = false; S.clock.speed = 16; S.clock.resume = null; window.__game.ui.render(); });
 await tool('about');
 const held = await page.evaluate(() => { const c = window.__game.ctx.S().clock; return { speed: c.speed, resume: c.resume }; });
-ok('a pop-up stops the clock and remembers the speed', held.speed === 0 && held.resume === 16);
+ok('a pop-up the player opens leaves the clock running', held.speed === 16 && held.resume == null);
 await page.keyboard.press('Escape');
 const freed = await page.evaluate(() => { const c = window.__game.ctx.S().clock; return { speed: c.speed, resume: c.resume }; });
-ok('closing the pop-up gives the speed back', freed.speed === 16 && freed.resume == null);
+ok('closing it keeps the speed', freed.speed === 16 && freed.resume == null);
 const low = await page.evaluate(() => { const g = window.__game, o = g.ui.office, S = g.ctx.S(); S.funds = 1; const lo = o.effectiveSpeed(); S.funds = 100000; const hi = o.effectiveSpeed(); return { lo, hi, cap: g.D.get('config.clock.low_funds_speed') }; });
 ok('low funds hold the speed and plenty lets it run', low.lo === low.cap && low.hi === 16);
 await page.evaluate(() => { const g = window.__game, o = g.ui.office, S = g.ctx.S(); S.funds = 0; S.clock.speed = 4; S.clock.day += 1; o.advance(0); });

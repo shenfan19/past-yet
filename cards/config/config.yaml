@@ -1,7 +1,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.2.1
+  version: 0.2.2
   released: '2026-11-15'
   card_authors: [AI, Fan Shen]
   links:
@@ -111,6 +111,8 @@ clock:
     - 16
   # when the funds pay fewer than this many days of wages, the clock is held to the speed below, and an unpaid day stops it
   low_funds_days: 3
+  # the pop-ups that stop the clock: only the ones the game forces open. A pop-up the player opens, a report, a page of the wiki, the settings, leaves the clock running.
+  hold_modals: [welcome, broke]
   low_funds_speed: 4
 favor:
   start: 0.5
