@@ -3,53 +3,58 @@ events:
   omar_khayyam_nishapur:
     order: 58
     year: 1079
+    # the planned arrival is thirty days before the new calendar began on 15 March 1079; the date sets only the year of the lines
+    date: '1079-02-13'
     lon: 58.8
     lat: 36.2
     region: asia
+    home: [middle_east, central_asia]
     field: math
     tier: 2
     channels: {C: 1, V: 1}
-    refs: [omar_khayyam_nishapur_reform, omar_khayyam_nishapur_site]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [omar_khayyam_nishapur_reform, omar_khayyam_nishapur_site, st_andrews_khayyam, wikipedia_isfahan_observatory]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: hold, req: {"job":["archivist","teacher"]}}
-        - {id: p3, kind: persuade, req: {"trait":["charismatic","ambitious","glib","scholarly"]}}
+        - {id: p1, kind: trust, day: 8, req: {"any":[{"job":["archivist","teacher"]},{"trait":["quiet","patient","methodical"]},{"stat":{"finesse":6}}]}}
+        - {id: p2, kind: notice, day: 28, req: {"any":[{"trait":["methodical","vigil","scholarly"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: persuade, day: 60, req: {"any":[{"trait":["charismatic","cheerful","patient"]},{"job":["farmer","teacher"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: spring, traits: [methodical, curious, scholarly]}
-        - {id: carry, traits: [faithful, patient, handy]}
-        - {id: future}
+        - {id: spring, traits: [methodical, curious, scholarly], day: 31}
+        - {id: carry, traits: [faithful, patient, handy], day: 45}
+        - {id: future, day: 15}
     text:
       en:
         name: 'The first day of spring'
         place: Nishapur, Persia
         figure: Omar Khayyam
-        story: 'In 1079 the Jalālī reform under Malikshāh aligned the beginning of the solar year with the spring equinox. Sources associate Khayyam with the reform, but accounts of the observing site differ. The scene does not locate the court’s observations there.'
+        story: 'Sultan Malik-Shah had an observatory built at Isfahan in the 1070s, and Omar Khayyam was among the astronomers who worked on reforming the calendar. The new Jalali calendar, named for the sultan, was adopted on 15 March 1079 and set the start of the solar year by the spring equinox. The observatory closed after the sultan died in 1092; the calendar stayed in use for some eight centuries, and forms of it are still used in Iran and Afghanistan.'
         relic: 'A calendar leaf with two headings'
-        relic_desc: 'A fictional comparison sheet made in Nishapur.'
+        relic_desc: 'A comparison sheet with the old and the new new year written side by side.'
         points:
-          p1: 'Find which new-year heading belongs to the equinox reckoning'
-          p2: 'Keep the two reckoning headings visible as the table is carried away'
-          p3: 'Explain which new year the reader means before writing the date'
+          p1: 'Be taken in by the copyists of almanacs in the town, then copy the month table of the new calendar'
+          p2: 'In the days around the equinox, mark each morning where the sun comes up'
+          p3: 'After the new year, persuade an old farmer to write his sowing day in the new calendar'
         vignettes:
-          spring: 'Parvin has copied the heading from the older table onto the new sheet. You put the two together and ask her where each places its year’s beginning. She crosses out the repeated heading and adds the convention beside each date. The table can now be read without guessing which year it means.'
-          carry: 'Farid can carry one sheet folded in his sleeve. The two headings straddle the fold. You help him copy them onto the outside so the reader can see which columns to compare. The sheet leaves by the door, with its original notes still inside.'
-          future: 'You know later tables will give the reform and its date in several reckonings. Parvin just needs a copy that a reader here can use. You leave both headings visible and resist adding a date from a calendar she has never used. The next reader has yet to arrive.'
+          spring: '{staff} lays the old table and the new one side by side and writes against each date which reckoning it belongs to, so that the next reader does not have to guess.'
+          carry: '{staff} copies the two headings of a folded sheet onto its outside, so whoever carries it can see which columns to compare without unfolding it.'
+          future: '{staff} knows how this calendar will be written of later, and keeps the date of the reckoning the copyists use, not one they have never seen.'
       zh:
         name: '春天的第一天'
         place: 波斯内沙布尔
         figure: 欧玛尔·海亚姆
-        story: '1079年，马立克沙治下的贾拉利历改革使太阳年的开端与春分相合。史料把海亚姆与这项改革联系起来，观测地点的记载则有不同说法。'
+        story: '1070 年代，苏丹马立克沙在伊斯法罕建起天文台，欧玛尔·海亚姆是参与修订历法的天文学家之一。以苏丹命名的贾拉利历于 1079 年 3 月 15 日启用，以春分定太阳年的开端。苏丹 1092 年去世后天文台关闭，这部历法却用了约八个世纪，它的变体今天仍在伊朗和阿富汗使用。'
         relic: '一张有两种题头的历表'
-        relic_desc: '内沙布尔历表对照页。'
+        relic_desc: '一张对照表，新旧两种新年并排写着。'
         points:
-          p1: '找到与季节对得上的新年题头'
-          p2: '送走历表时，把两种纪法的题头都留在纸上'
-          p3: '落下日期前，先讲清说的是哪种纪法的新年'
+          p1: '先让城里抄历书的人认下，再替他们抄新历的月份表'
+          p2: '春分前后那些天，每天早上记下太阳从哪里升起'
+          p3: '新年过后，劝一位老农用新历记下播种的日子'
         vignettes:
-          spring: '帕尔温把旧历表的题头照抄到新表上。你把两表放在一起，请她指出每种历法从哪里起年。她划掉重复的题头，给各自的日期标上纪法。现在读表的人不用再猜是哪一种年。'
-          carry: '法里德袖里只能塞一张折好的纸，两栏标题正好分在折痕两边。你帮他把两种题头抄到外面，接手的人一眼就知道要比哪两栏。历表从门口送走，原注还在里头。'
-          future: '你知道后来历表会用几种纪年并写这次改历的日期。帕尔温眼下只要一份当地读者用得上的抄本。你把两种题头都留着，收住口里那个她从没用过的纪年。下一位读者还没来。'
+          spring: '{staff}把旧历表和新历表并排摆好，在每个日期旁写明属于哪种纪法，下一个读表的人不用再猜。'
+          carry: '一张折起来的纸，两栏标题正好分在折痕两边。{staff}把两种题头抄到外面，带着它的人不用打开也知道该比哪两栏。'
+          future: '{staff}知道后人会怎样写这部历法，可落下的日子还是用抄历书的人用惯的纪法，不写他们从没见过的那一种。'
 text:
   en:
     name: Omar Khayyam
@@ -59,15 +64,31 @@ text:
     text: 波斯数学家、天文学家与诗人，1048 年生，1131 年去世，尼沙布尔人。他用几何方法分类并求解三次方程，参与历法改革，在英语世界以《鲁拜集》的四行诗闻名。
 hook: {en: 'When does the new year begin on this copy?', zh: '这份历表把新年记在哪一天？'}
 facts:
+  observatory:
+    date: '1074'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_isfahan_observatory, st_andrews_khayyam]
+    text:
+      en: 'Malik-Shah had an observatory built at Isfahan in the 1070s; one account says it was begun in 1073 and working in 1074. Khayyam was invited to work there and on the reform of the calendar.'
+      zh: '马立克沙在 1070 年代于伊斯法罕建天文台，一说 1073 年动工、1074 年开始运作。海亚姆受邀到那里参与观测和历法修订。'
+    line:
+      en: 'The 1070s: Sultan Malik-Shah has an observatory built at Isfahan and calls Omar Khayyam to work on the calendar.'
+      zh: '1070 年代，苏丹马立克沙在伊斯法罕建起天文台，召欧玛尔·海亚姆去修订历法。'
   reform:
     date: '1079'
-    checked: official_record
+    stay_day: 30
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [omar_khayyam_nishapur_reform]
+    use: [story, history, wiki]
+    sources: [omar_khayyam_nishapur_reform, wikipedia_isfahan_observatory]
     text:
-      en: 'The historical study dates the introduction to 1079 and explains its reference to the equinox and coexistence with older reckoning.'
-      zh: '研究考订此历在1079年实施，解释它与春分的关系，以及同旧纪法并存的情形。'
+      en: 'The Jalali calendar was adopted on 15 March 1079 on the recommendation of a committee that included Khayyam, and set the beginning of the solar year by the spring equinox; it lived alongside the older reckoning.'
+      zh: '贾拉利历按包括海亚姆在内的委员会的建议，于 1079 年 3 月 15 日启用，以春分定太阳年的开端，并与旧纪法并存。'
+    line:
+      en: '15 March 1079: the new calendar of Sultan Malik-Shah begins. From now on the year starts at the spring equinox.'
+      zh: '1079 年 3 月 15 日，苏丹马立克沙的新历在这一天启用。从此，一年从春分开始。'
   site:
     date: '1079'
     checked: official_record
@@ -77,13 +98,37 @@ facts:
     text:
       en: 'The study reviews the sources on Malikshāh’s observations and Khayyam’s involvement, including the evidence about Isfahan.'
       zh: '研究复核马立克沙的观测工程及海亚姆参与的记载，包括关乎伊斯法罕的史料。'
+  closed:
+    date: '1092'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_isfahan_observatory, st_andrews_khayyam]
+    text:
+      en: 'The observatory at Isfahan was shut down in 1092, after the death of Malik-Shah.'
+      zh: '1092 年马立克沙去世后，伊斯法罕天文台关闭。'
+    line:
+      en: '1092: Malik-Shah dies, and the observatory at Isfahan is shut.'
+      zh: '1092 年，马立克沙去世，伊斯法罕的天文台随之关闭。'
+  lasting:
+    date: '1092'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_isfahan_observatory, omar_khayyam_nishapur_reform]
+    text:
+      en: 'The calendar stayed in use for some eight centuries, and forms of it are still used in Iran and Afghanistan.'
+      zh: '这部历法用了约八个世纪，它的变体今天仍在伊朗和阿富汗使用。'
+    line:
+      en: 'The calendar outlives the observatory by some eight hundred years. Forms of it are still in use in Iran and Afghanistan.'
+      zh: '这部历法比天文台多活了约八百年。今天伊朗和阿富汗用的历法，仍是它的变体。'
 bystanders:
   parvin:
     invented: true
-    text: {en: 'A fictional copyist comparing heading conventions.', zh: '虚构抄写员帕尔温，正在比较两套表的题头。'}
+    text: {en: 'A copyist of almanacs, made up for the game, who keeps both headings.', zh: '一位编出来的抄历书的人，两种题头都留着。'}
   farid:
     invented: true
-    text: {en: 'A fictional reader carrying one folded sheet.', zh: '虚构读者法里德，只能带走一张折好的纸。'}
+    text: {en: 'An old farmer, made up for the game, who sows by the old months.', zh: '一位编出来的老农，照旧历的月份下种。'}
 wiki:
   refs:
     omar_khayyam_nishapur_reform:
@@ -98,16 +143,28 @@ wiki:
       text:
         en: 'Mohammad Bagheri, Omar Khayyam as Astronomer, Encyclopaedia Iranica, research on early accounts https://www.iranicaonline.org/articles/khayyam-omar/khayyam-omar-xv-as-astronomer/'
         zh: '穆罕默德·巴盖里，海亚姆的天文学，《伊朗百科全书》，早期记载研究 https://www.iranicaonline.org/articles/khayyam-omar/khayyam-omar-xv-as-astronomer/'
+    st_andrews_khayyam:
+      order: 927
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Khayyam, from the Dictionary of Scientific Biography. https://mathshistory.st-andrews.ac.uk/DSB/Khayyam.pdf'
+        zh: '圣安德鲁斯大学 MacTutor 数学史，海亚姆，《科学家传记辞典》条目。https://mathshistory.st-andrews.ac.uk/DSB/Khayyam.pdf'
+    wikipedia_isfahan_observatory:
+      order: 928
+      status: checked
+      text:
+        en: 'Wikipedia, Isfahan Observatory. https://en.wikipedia.org/wiki/Isfahan_Observatory'
+        zh: '维基百科，伊斯法罕天文台。https://en.wikipedia.org/wiki/Isfahan_Observatory'
 self_check:
   fact: reform
-  quote_line: '现在读表的人不用再猜是哪一种年。'
-  regret_choice: 'future 写上后世纪年会让当时的读者认不出。'
-  bookend: '从问新年在哪列，到两栏都能读懂。'
-  share_line: '同一天，可以有两种写法。'
-  share_number: 'spring 比对两种纪法。'
-  knowing: 'future 知道后世会用更多纪年并写。'
-  near: 'reform 依据1079年改历史料。'
-  lever: 'carry 让两栏标题随表而行。'
-  missed: 'future 看不到接手人。'
-  brought: 'spring 带回虚构历表副页。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '从此，一年从春分开始。'
+  regret_choice: '派细心的去，月份表抄得清，春分前后的日出却没人每天去看；派爱说话的去，老农肯换历，抄书人那边就少一双手。'
+  bookend: '从伊斯法罕的天文台开始，以比它多活八百年的历法收尾。'
+  share_line: '1079 年春分前后，我在内沙布尔每天早上记下太阳从哪里升起。'
+  share_number: '1079'
+  knowing: 'lasting'
+  near: 'reform'
+  lever: 'p1, p3'
+  missed: 'closed'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

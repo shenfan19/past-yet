@@ -1515,6 +1515,16 @@ refs:
     authors:
       - AI
       - Fan Shen
+  st_andrews_khayyam:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  wikipedia_isfahan_observatory:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   hippocrates_kos_record:
     status: checked
     authors:
@@ -3698,6 +3708,30 @@ event_facts:
         sources:
           - romeartlover_keats
           - keats_locations_house
+  omar_khayyam_nishapur:
+    module: omar_khayyam_nishapur
+    facts:
+      - id: observatory
+        date: '1074'
+        sources:
+          - wikipedia_isfahan_observatory
+          - st_andrews_khayyam
+      - id: reform
+        date: '1079'
+        sources:
+          - omar_khayyam_nishapur_reform
+          - wikipedia_isfahan_observatory
+        stay_day: 30
+      - id: closed
+        date: '1092'
+        sources:
+          - wikipedia_isfahan_observatory
+          - st_andrews_khayyam
+      - id: lasting
+        date: '1092'
+        sources:
+          - wikipedia_isfahan_observatory
+          - omar_khayyam_nishapur_reform
   pushkin_st_petersburg:
     module: pushkin_st_petersburg
     facts:

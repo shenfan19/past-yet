@@ -2323,50 +2323,80 @@ events:
       - Fan Shen
   - id: omar_khayyam_nishapur
     year: 1079
+    date: '1079-02-13'
     lon: 58.8
     lat: 36.2
     region: asia
+    home:
+      - middle_east
+      - central_asia
     field: math
     tier: 2
     channels:
       C: 1
       V: 1
+    ready: true
     refs:
       - omar_khayyam_nishapur_reform
       - omar_khayyam_nishapur_site
+      - st_andrews_khayyam
+      - wikipedia_isfahan_observatory
     scene:
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 8
           req:
-            stat:
-              wit: 8
+            any:
+              - job:
+                  - archivist
+                  - teacher
+              - trait:
+                  - quiet
+                  - patient
+                  - methodical
+              - stat:
+                  finesse: 6
         - id: p2
-          kind: hold
+          kind: notice
+          day: 28
           req:
-            job:
-              - archivist
-              - teacher
+            any:
+              - trait:
+                  - methodical
+                  - vigil
+                  - scholarly
+              - stat:
+                  wit: 7
         - id: p3
           kind: persuade
+          day: 60
           req:
-            trait:
-              - charismatic
-              - ambitious
-              - glib
-              - scholarly
+            any:
+              - trait:
+                  - charismatic
+                  - cheerful
+                  - patient
+              - job:
+                  - farmer
+                  - teacher
+              - stat:
+                  will: 6
       vignettes:
         - id: spring
           traits:
             - methodical
             - curious
             - scholarly
+          day: 31
         - id: carry
           traits:
             - faithful
             - patient
             - handy
+          day: 45
         - id: future
+          day: 15
     authors:
       - AI
       - Fan Shen

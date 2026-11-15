@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.19, 2026-11-15
+
+- Nishapur 1079, Omar Khayyam, is rewritten and turned on: the observatory of Malik-Shah at Isfahan, the new calendar beginning on 15 March 1079 with the year set by the spring equinox, the closing of the observatory in 1092 and the calendar that outlived it by eight centuries, with sync points for copying the new month table, watching the sunrise around the equinox and a farmer persuaded to the new calendar.
+
 ## 0.5.18, 2026-11-15
 
 - Ezo 1800, Ino Tadataka, is rewritten and turned on: the party of five setting out from Edo on 11 June 1800, the survey of the southeastern coast, his death in 1818 kept quiet for the sake of the work, and the maps finished in 1821, with sync points for carrying the line, writing down paces and bearings and walking a whole stretch of coast in the autumn wind.
