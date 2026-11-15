@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {S: 2, G: 1}
     regret: true
+    refs: [bizet_paris_premiere]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["wanderer","quiet"]},{"trait":["methodical","handy","streetwise"]}]}}
         - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["wanderer","cheerful","hardy"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"golden_apple"}}
+      vignettes:
+        - {id: future, traits: [bold, charismatic]}
+        - {id: label, traits: [methodical, handy]}
+        - {id: seat}
     text:
       en:
-        name: "A cold premiere"
+        name: 'A programme worth keeping'
         place: "Paris"
         figure: "Georges Bizet"
-        story: "Carmen opens at the Opéra Comique to a cool reception, and three months later Bizet dies at thirty six without knowing that it would travel the world."
+        story: 'Bizet’s Carmen opened at the Opéra-Comique on 3 March 1875. Célestine Galli-Marié created the title role. This branch follows a fictional attendant keeping programmes in order at the theatre.'
         relic: "A fan"
         relic_desc: "A painted paper fan from the stalls."
         points:
-          p1: "Hear what the audience misses (a musician or a sensitive ear helps)"
-          p2: "Stay in the hall through the cold interval"
-          p3: "Play him the Habanera at the piano"
+          p1: 'Identify the first-night programme among the loose sheets'
+          p2: 'Stay by the entrance until the late audience has found its way in'
+          p3: 'Persuade the attendant to keep a dated copy'
+        vignettes:
+          future: 'You tell the attendant that later audiences will know this opera in cities he has never visited. He asks why he should keep an extra programme tonight. You show him where the first night and Galli-Marié’s name are printed. One copy goes into his drawer. You leave before it gets a second reader.'
+          label: 'The attendant has filed two sheets under the same title. You split them by date and mark the first night on a spare wrapper. A later reader can now ask for the right sheet. You miss the audience coming out.'
+          seat: 'You lend a programme to a late visitor and get it back at the door after the visitor has found the seat. You copy one name onto your own slip. By then the music inside has moved on.'
       zh:
-        name: "冷淡的首演"
+        name: '留在架上的《卡门》节目单'
         place: "巴黎"
         figure: "乔治·比才"
-        story: "《卡门》在喜歌剧院首演，反响冷淡，三个月后比才去世，年三十六岁，他不知道这部歌剧后来会传遍世界。"
+        story: '比才的《卡门》于 1875 年 3 月 3 日在巴黎喜歌剧院首演，塞莱斯蒂娜·加利-马里耶首演卡门。本趟由虚构的剧院帮工带你整理节目单。'
         relic: "一把折扇"
         relic_desc: "一把来自池座的彩绘纸扇。"
         points:
-          p1: "听出观众漏掉的东西（音乐家或敏感的耳朵更合适）"
-          p2: "在冷场的幕间留在大厅里"
-          p3: "在钢琴上为他弹哈巴涅拉"
+          p1: '从散页里认出首演那张节目单'
+          p2: '在入口等到迟来的观众找到座位'
+          p3: '请帮工留一张注明日期的节目单'
+        vignettes:
+          future: '你告诉帮工，以后连他没去过的城市也会有人知道这部戏。他问今夜有何必要多留一张。你指给他看首演日期和加利-马里耶的名字。一张节目单收进抽屉。你走时还没有第二个人来翻看。'
+          label: '帮工把两张节目单按同一个剧名收了。你按日期把它们分开，给首演那张单独做了个写有日期的纸套。回头要查的人现在能拿准。只是你赶不上散场了。'
+          seat: '你把节目单借给来迟的观众，等他找到座位再在门边拿回来。你在自己的纸条上抄下一个名字。这时候，里面已经唱过了你原先想听的那一段。'
 text:
   en:
     name: Georges Bizet
@@ -45,3 +58,39 @@ text:
   zh:
     name: 乔治·比才
     text: 法国作曲家，1838 年生，1875 年去世。他的歌剧《卡门》1875 年在巴黎首演，反响冷淡，几个月后他就去世了。后来它成了演出最多的歌剧之一。
+hook: {en: 'What goes on the shelf after opening night?', zh: '首演之后，节目单放哪儿？'}
+facts:
+  premiere:
+    date: '1875-03-03'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bizet_paris_premiere]
+    text:
+      en: 'Carmen premiered at the Opéra-Comique on 3 March 1875, with Célestine Galli-Marié in the title role.'
+      zh: '《卡门》于 1875 年 3 月 3 日在喜歌剧院首演，加利-马里耶首演卡门。'
+bystanders:
+  attendant:
+    invented: true
+    text: {en: 'A fictional theatre attendant filing the loose programmes.', zh: '虚构的剧院帮工，要把散开的节目单收好。'}
+wiki:
+  refs:
+    bizet_paris_premiere:
+      order: 470
+      status: checked
+      text:
+        en: 'Opéra-Comique, premieres and theatre history https://www.opera-comique.com/fr/la-creation-a-l-opera-comique-en-10-dates-cles-0'
+        zh: '巴黎喜歌剧院，剧院首演纪事 https://www.opera-comique.com/fr/la-creation-a-l-opera-comique-en-10-dates-cles-0'
+self_check:
+  fact: premiere
+  quote_line: '一张节目单收进抽屉。你走时还没有第二个人来翻看。'
+  regret_choice: '留下来分节目单，就错过散场的人群。'
+  bookend: '从分不清哪一张到首演节目单进了专用纸套。'
+  share_line: '我替《卡门》首演留了一张节目单。'
+  share_number: '1875 年 3 月 3 日'
+  knowing: 'future 知道这部戏会流传。'
+  near: 'premiere 锚定剧院、日期和演员。'
+  lever: '为一张纸留下可查日期。'
+  missed: '里面已经唱过了。'
+  brought: '纸条上的演员姓名。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

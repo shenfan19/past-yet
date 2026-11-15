@@ -97,20 +97,27 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun', 's_founder'].includes(k); S.hire = null; for (const a of ['pump_rust']) { if (!S.locks.includes(a)) S.locks.push(a); if (!S.antiques.includes(a)) S.antiques.push(a); } });
   ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
   ok('the clock stands still before the first trip, with a hint', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 0 && (await page.locator('#clock .chipwrap .chip').count()) === 1 && (await page.locator('#clock svg.ring').count()) === 1);
-  // the events of a person stand side by side: a trip to one opens no other, and the statue that opens Guangzhou is not an antique
+  // Guangzhou is the only remaining Sun Yat-sen episode, and its statue is a medium.
   const ep = await page.evaluate(() => {
     const g = window.__game, o = g.ui.office, S = g.ctx.S();
-    const before = S.locks.includes('relic_sun_yat_sen_beijing_1925');
     const d = o.launch('sun_yat_sen_1924', { seed: 1, staffId: 's_ning', items: {} });
     d.readyDay = S.clock.day; o.claim(d.id);
     const an = g.D.get('antiques.antiques');
     const odds = g.ctx.backend.findOdds ? g.ctx.backend.findOdds('sun_yat_sen_1924') : null;
-    const out = { before, after: S.locks.includes('relic_sun_yat_sen_beijing_1925'), medium: an.relic_sun_yat_sen_guangzhou.kind === 'medium' && !an.relic_sun_yat_sen_guangzhou.playable, found: d.paid.antique || null, foundYear: d.paid.antique ? (an[d.paid.antique].era ? g.ctx.era(an[d.paid.antique].era).raw.metadata.era.year : g.D.get('catalog.events').find((x) => x.id === an[d.paid.antique].event).year) : null, stay: g.ctx.backend.lightStay('sun_yat_sen_beijing_1925') };
+    const events = g.D.get('catalog.events');
+    const removed = ['sun_yat_sen_beijing_1925', 'sun_yat_sen_university_1926'];
+    const out = {
+      removed: removed.every((id) => !events.some((event) => event.id === id) && !an['relic_' + id]),
+      medium: an.relic_sun_yat_sen_guangzhou.kind === 'medium' && !an.relic_sun_yat_sen_guangzhou.playable,
+      found: d.paid.antique || null,
+      foundYear: d.paid.antique ? (an[d.paid.antique].era ? g.ctx.era(an[d.paid.antique].era).raw.metadata.era.year : events.find((x) => x.id === an[d.paid.antique].event).year) : null,
+      stay: g.ctx.backend.eraStay('sun_yat_sen_1924'),
+    };
     // the trip is taken back out so the rest of the checks start from a clean log
     S.dispatches = S.dispatches.filter((x) => x.id !== d.id); if (S.trips) S.trips = S.trips.filter((x) => x.id !== d.id); S.seq -= 1; S.staff.s_ning.restUntil = 0; S.staff.s_ning.tally = { 3: 0, 2: 0, 1: 0 }; S.visited = S.visited.filter((x) => x !== 'sun_yat_sen_1924'); delete S.stars.sun_yat_sen_1924; S.energy = 0; g.ctx.save(); g.ui.render();
     return out;
   });
-  ok('a trip to one event of a person opens no other event', ep.before === ep.after);
+  ok('the removed Sun Yat-sen episodes and their relics are absent', ep.removed);
   ok('the statue that opens the first place is a medium, not an antique', ep.medium);
   ok('an antique found on a trip is from an earlier year', ep.found === null || ep.foundYear < 1924);
   ok('a story can carry its own length of stay', ep.stay === 7);
@@ -367,14 +374,17 @@ try {
   await page.click('[data-act=wikiback]');
   await page.fill('#wiki-q', '');
   await page.click('#wiki-tags summary');
-  const openBefore = await page.locator('.wcat[open]').count();
+  const openCategories = () => page.locator('#wiki-list .wcat[open]').evaluateAll((rows) => rows.map((row) => row.dataset.cat));
+  const openBefore = await openCategories();
   await page.click('[data-act=wikitag][data-id=obstetrics]');
-  ok('tag click keeps the expanded state', (await page.locator('.wcat[open]').count()) === openBefore);
+  const taggedCategories = await page.locator('#wiki-list .wcat').evaluateAll((rows) => rows.map((row) => row.dataset.cat));
+  ok('tag click keeps the expanded state of visible categories', JSON.stringify(await openCategories()) === JSON.stringify(openBefore.filter((cat) => taggedCategories.includes(cat))));
   ok('wiki tag filter', (await page.locator('#wiki-list .wcat').count()) >= 1);
   await page.fill('#wiki-q', 'zz-none');
-  ok('text filter keeps the expanded state too', (await page.locator('.wcat[open]').count()) === 0 || openBefore > 0);
+  ok('text filter hides every category for an unmatched query', (await page.locator('#wiki-list .wcat').count()) === 0);
   await page.fill('#wiki-q', '');
   await page.click('[data-act=wikitag][data-id=""]');
+  ok('clearing the filters restores all expanded categories', JSON.stringify(await openCategories()) === JSON.stringify(openBefore));
   if ((await page.locator('.wcat[data-cat=events][open]').count()) === 0) await page.click('.wcat[data-cat=events] summary');
   await page.locator('#wiki-list .wrow', { hasText: '被拒之门外' }).first().click();
   ok('model event lists formulas in dev', (await page.locator('#wiki-article').innerText()).includes('用到的公式'));

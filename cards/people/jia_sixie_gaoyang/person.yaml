@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 1
     channels: {L: 2, H: 1}
+    refs: [jia_sixie_gaoyang_tillage]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["wanderer","methodical","curious","vigil"]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: trust, req: {"trait":["kind","sensitive","attached"]}}
+      vignettes:
+        - {id: moisture, traits: [methodical, curious]}
+        - {id: timing, traits: [kind, handy]}
+        - {id: bank}
     text:
       en:
-        name: "An encyclopedia for farmers"
+        name: 'A note for the high field and the low one'
         place: "Gaoyang, Shandong"
         figure: "Jia Sixie"
-        story: "Jia Sixie visits farmers and writes down their methods of tilling, planting, raising animals and brewing, one by one, in a book meant for farmers to use."
+        story: 'In the first volume of Qimin Yaoshu, Jia Sixie discusses ploughing on high and low ground and stresses working at suitable soil moisture. The two plots and the farmer in this scene are invented. The visit year is an approximate setting for the compilation.'
         relic: "A farming book scroll"
         relic_desc: "A hand copied scroll of farming methods, with notes in the margin made out in the fields."
         points:
-          p1: "Ask the farmers why they plant this way"
-          p2: "Follow them into the fields for the whole busy season"
-          p3: "Sit down with the farmers on the bank between fields"
+          p1: 'Read the ground separately in the two fields'
+          p2: 'Walk out to the lower field before the plough is moved'
+          p3: 'Get the farm hand to record a second observation beside the first'
+        vignettes:
+          moisture: 'The farm hand has made one mark on the board for both plots. You walk the bank and hold up two different clods, one sticking to your fingers, one falling apart. He records one observation per plot. You carry that pair back. The crop will ripen after you have left.'
+          timing: 'You know later readers will copy out the rule about moisture. The farm hand asks which patch you mean when you say the ground is ready. You draw a line down the middle of his board and point to the higher plot first. Only one row is filled when you leave.'
+          bank: 'You carry the board to the edge of the lower field. The farm hand writes the name of the plot before adding what he sees. You copy the location beside his mark. When the plough finally reaches the other field you are already gone.'
       zh:
-        name: "写给农人的百科"
+        name: '高田低田，各写一行'
         place: "山东高阳"
         figure: "贾思勰"
-        story: "贾思勰走访农人，把耕作、种植、养畜和酿造的办法一条条记下来，写成一部给农人用的书。"
+        story: '贾思勰《齐民要术》卷一谈高田、低田怎样耕，提到土壤燥湿需合宜。卡里的两块地和农人属于分支演绎，地图年份用于表示成书的大致时代。'
         relic: "一卷农书"
         relic_desc: "一卷手抄的农书，页边留着下田时记的字。"
         points:
-          p1: "问农人为何这样种"
-          p2: "跟着下田一整个农忙"
-          p3: "在田埂上同农人坐下"
+          p1: '分别看看两块地的土况'
+          p2: '挪犁前走一趟低田'
+          p3: '请农人在第一条旁另记一笔所见'
+        vignettes:
+          moisture: '农人把两块地记在板上同一格。你沿田埂走一趟，举起两块土，一块粘手，一块一捏就散。他分开记下两条所见。你带回成对的一笔，庄稼得等你走后才熟。'
+          timing: '你知道后人会抄下关于燥湿的规则。农人问你说能耕的是哪一块。你在板中间划线，先指给他看高田那一边。收队时，板上只填了一行。'
+          bank: '你把记事板带到低田边。农人先写是哪块地，再记眼下看见的。你把地点也抄在记号旁。等犁移到另一块地，你已经离开。'
 text:
   en:
     name: "Jia Sixie"
@@ -44,3 +57,39 @@ text:
   zh:
     name: "贾思勰"
     text: "北魏人，生卒年不详。他写成的《齐民要术》成书约在 6 世纪三四十年代，是中国现存最早的系统农书。"
+hook: {en: 'Can both plots follow the same plan?', zh: '两块地能照一张表耕吗？'}
+facts:
+  tillage:
+    date: '540'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [jia_sixie_gaoyang_tillage]
+    text:
+      en: 'The section distinguishes high and low fields and emphasises suitable soil moisture. The year sets the scenario.'
+      zh: '篇中区分高下田，强调要使燥湿得宜。所标年份用于布置场景。'
+bystanders:
+  farm_hand:
+    invented: true
+    text: {en: 'A fictional farm hand with one board for notes on two plots.', zh: '虚构的农人，用一块板记两块田。'}
+wiki:
+  refs:
+    jia_sixie_gaoyang_tillage:
+      order: 572
+      status: checked
+      text:
+        en: 'Jia Sixie, Qimin Yaoshu, volume 1, Gengtian https://www.shidianguji.com/zh/book/CADAL01025617/chapter/1lmlq95iejgh5'
+        zh: '贾思勰《齐民要术》卷一《耕田》 https://www.shidianguji.com/zh/book/CADAL01025617/chapter/1lmlq95iejgh5'
+self_check:
+  fact: tillage
+  quote_line: '庄稼得等你走后才熟。'
+  regret_choice: '走低田可分记土况，等不到两块田都开犁。'
+  bookend: '从只圈一记改成两地各有一行。'
+  share_line: '两块地不能共用一格。'
+  share_number: '两条土况'
+  knowing: 'timing 知道农书的文字会留下。'
+  near: 'tillage 给出高下田与燥湿。'
+  lever: '给两处地分开记。'
+  missed: '收成在离开之后。'
+  brought: '两块地各自的笔记。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

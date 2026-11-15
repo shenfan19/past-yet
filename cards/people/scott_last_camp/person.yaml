@@ -11,7 +11,7 @@ events:
     era: scott_ross_ice_shelf_1912
     channels: {C: 3, Y: 3, L: 3}
     regret: true
-    refs: [scott_last_diary]
+    refs: [scott_last_diary, scott_archive_final, scott_1912_text]
     scene:
       points:
         - {id: p1, kind: endure, req: {"trait":["bold","cheerful","hardy"]}}
@@ -78,6 +78,7 @@ wiki:
         era: scott_ross_ice_shelf_1912
       refs:
         - scott_sources
+        - scott_archive_final
         - game
       text:
         en:
@@ -102,6 +103,8 @@ wiki:
       unlock:
         era: scott_ross_ice_shelf_1912
       refs:
+        - scott_1912_text
+        - scott_archive_final
         - scott_sources
         - game
       text:
@@ -112,6 +115,18 @@ wiki:
           name: 最后一篇日记
           text: 斯科特的最后一篇日记写于 1912 年 3 月 29 日，离一吨仓库十一英里。搜救队 11 月 12 日找到帐篷。游戏里员工能帮队伍度过这几周，只在这条分支里成立。
   refs:
+    scott_archive_final:
+      order: 998
+      status: checked
+      text:
+        en: 'British Library Archives, Scott diaries Add MS 51024–51035, description of notebook and instructions for finder https://searcharchives.bl.uk/catalog/036-001958842'
+        zh: '大英图书馆档案，斯科特日记 Add MS 51024–51035，末册与给发现者的说明 https://searcharchives.bl.uk/catalog/036-001958842'
+    scott_1912_text:
+      order: 1000
+      status: checked
+      text:
+        en: 'Robert Falcon Scott, Scott’s Last Expedition I, March 1912 diary https://www.gutenberg.org/cache/epub/11579/pg11579.html.utf8'
+        zh: '罗伯特·斯科特，《斯科特最后的远征》第一卷，1912年3月日记 https://www.gutenberg.org/cache/epub/11579/pg11579.html.utf8'
     scott_last_diary:
       order: 167
       status: checked
@@ -138,9 +153,10 @@ era_text:
       - antarctica
       - history
     event_titles:
+      expedition_handoff: 'The copy outside the tent'
       time_strain: Time slip
     plots: {}
-    blurb: The way back from the Pole across the ice shelf, with the fuel and the food running short. Close, cheap, and the effect of warmth and food is clear.
+    blurb: Scott’s dated diary follows the historic polar party. The game’s traveller meets an invented group and handles a record away from the named party.
     handle_label: Nothing in the record to change
     protagonist: Robert Falcon Scott
     protagonist_role: The leader of the polar party, who kept a diary of every day
@@ -150,7 +166,7 @@ era_text:
       history:
         - text: 'In January 1912 Scott and four companions reached the South Pole and found that a Norwegian party had been there before them.'
           check: true
-        - text: 'Edgar Evans died on 17 February 1912 on the way back, and Captain Oates left the tent and did not return on 17 March.'
+        - text: 'Edgar Evans died on 17 February 1912 on the way back, and Scott’s account places Oates’s death around 16–17 March.'
           check: true
         - text: 'Scott''s last diary entry is dated 29 March 1912. The last camp was eleven miles from One Ton Depot.'
           check: true
@@ -160,12 +176,15 @@ era_text:
         - You can save today's people but not the whole journey. On the main timeline the party did not come back.
         - Warmth and food matter more than any one clever idea, but a plan only changes when someone is heard.
     events:
+      expedition_handoff: '{date}: In the fictional records exercise, {staff} asks Alice to finish both lines before passing them to Hale. He can now tell the camp from the depot. The missing departure time stays blank.'
+      expedition_send: '{date}: In the fictional records exercise, {staff} gives Hale the depot label before Alice finishes copying. He has the destination, and a marked space for the distance still to be confirmed.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       settled: 'Keep the ailing going'
       sheltered: 'Get the whole party under cover'
       through: 'Bring the party through these weeks'
     milestones:
+      gale: '{date}: Scott later dates the start of the sustained gale at the last camp to 21 March.'
       first_treat: '{date}: {staff} melts the first pot of water and hot food for a man who has stopped talking. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first blankets and builds a wall of snow blocks, and teaches the others to do the same.'
       trust_won: '{date}: The members of the party no longer keep {staff} out, and some ask for help.'
@@ -174,14 +193,14 @@ era_text:
       people_settled: '{date}: {staff} has found a warm place and food for everyone who was ailing.'
       well_sheltered: '{date}: {staff} has the whole party under cover and out of the wind.'
       all_through: '{date}: The party is through these weeks with no more than two lost.'
-      oates_leaves: '{date}: Captain Oates, badly frostbitten, leaves the tent in a blizzard and does not come back.'
+      oates_leaves: '{date}: Scott’s diary places the loss of Captain Oates around this date.'
       last_entry: '{date}: Scott writes the last entry in his diary and asks that the families of his companions be looked after.'
     summary:
       near_death: '{staff} collapses at Ross Ice Shelf and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend at Ross Ice Shelf. The plan was changed {advance_days:1} days earlier than in the main timeline.'
-      perfect: '{staff} completed the task at Ross Ice Shelf and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      legend: '{staff} left a legend at Ross Ice Shelf. The plan was changed {advance_days:1} days before the model’s baseline.'
+      perfect: '{staff} completed the task at Ross Ice Shelf and came back safe. The simulation records {base_D:i} lost in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days at Ross Ice Shelf, did what was within reach, and came back safe.'
     quotes:
@@ -231,9 +250,10 @@ era_text:
       - antarctica
       - history
     event_titles:
+      expedition_handoff: '留给读稿人的副页'
       time_strain: 时间错位
     plots: {}
-    blurb: 从极点返回、穿过冰架的路上，燃料和食物越来越少。近，成本低，保暖和食物的效果很明显。
+    blurb: 斯科特的日期来自实际极地小队的日记。员工遇到的是虚构队伍，在实际小队之外处理记录。
     handle_label: 史实里没有可改的决定
     protagonist: 罗伯特·法尔肯·斯科特
     protagonist_role: 极地小队的领队，每天都写日记
@@ -243,7 +263,7 @@ era_text:
       history:
         - text: '1912 年 1 月，斯科特和四位同伴到达南极点，发现挪威队已经先到。'
           check: true
-        - text: '埃德加·埃文斯 1912 年 2 月 17 日死于返程途中，3 月 17 日奥茨上尉离开帐篷，没有回来。'
+        - text: '埃德加·埃文斯 1912 年 2 月 17 日死于返程途中，斯科特日记把奥茨去世记在3月16至17日前后。'
           check: true
         - text: '斯科特最后一篇日记写于 1912 年 3 月 29 日。最后的营地离一吨仓库只有十一英里。'
           check: true
@@ -253,12 +273,15 @@ era_text:
         - 你能救今天的人，救不了整段旅程。主时间线上这支队伍没有回来。
         - 保暖和食物比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{date}，在虚构文书差事里，{staff} 等艾丽斯把两行都抄好，再交给黑尔。他分得清营地和补给点了。出发时刻还没核实，先空着。'
+      expedition_send: '{date}，在虚构文书差事里，{staff} 趁艾丽斯还在抄，把补给点题签先递给黑尔。他有了目的地，距离那一格留待核。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       settled: '让病倒的人撑下去'
       sheltered: '让全队躲进遮蔽处'
       through: '带队伍度过这几周'
     milestones:
+      gale: '{date}，斯科特后来在日记里把最后营地持续大风的开始记为3月21日。'
       first_treat: '{date}：{staff} 给一个已经不说话的人化好第一锅水、热好食物，他开始开口了。'
       first_protect: '{date}：{staff} 发下第一批毯子，垒起雪块墙，教其他人照做。'
       trust_won: '{date}：队员们不再把 {staff} 挡在外面，有的还开口求助。'
@@ -267,14 +290,14 @@ era_text:
       people_settled: '{date}：{staff} 给每一个病倒的人都找到了暖和的地方和吃的。'
       well_sheltered: '{date}：{staff} 让全队都躲进了遮蔽处，避开了风。'
       all_through: '{date}：队伍度过了这几周，损失不超过两个人。'
-      oates_leaves: '{date}：奥茨上尉冻伤严重，在暴风雪中离开帐篷，再没有回来。'
+      oates_leaves: '{date}：斯科特日记把奥茨的去世记在这几天。'
       last_entry: '{date}：斯科特写下日记的最后一篇，请求照顾同伴的家人。'
     summary:
       near_death: '{staff} 在罗斯冰架倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在罗斯冰架留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
-      perfect: '{staff} 在罗斯冰架完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      legend: '{staff} 在罗斯冰架留下了传说。计划比模型基准提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在罗斯冰架完成了任务，平安回来。模拟基准损失 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
       modest: '{staff} 在罗斯冰架待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -311,3 +334,44 @@ era_text:
       unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'Does the note say a depot or a camp?', zh: '纸上记的是补给点，还是营地？'}
+facts:
+  gale:
+    date: '1912-03-21'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [scott_1912_text, scott_last_diary]
+    text:
+      en: 'Scott later dates the start of the sustained gale at the last camp to 21 March.'
+      zh: '斯科特后来在日记里把最后营地持续大风的开始记为3月21日。'
+  last_entry:
+    date: '1912-03-29'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [scott_1912_text, scott_last_diary]
+    text:
+      en: 'Scott dates his final diary entry 29 March and asks that those left behind be looked after.'
+      zh: '斯科特最后一次日记写于3月29日，提及照料身后家属。'
+bystanders:
+  alice:
+    invented: true
+    text: {en: 'Alice, a fictional archive assistant working from a copy outside the named polar party.', zh: '虚构档案帮工艾丽斯，在实际极地小队之外整理副本。'}
+  hale:
+    invented: true
+    text: {en: 'Hale, a fictional copy reader checking the depot label, outside the named party.', zh: '虚构读稿人黑尔，核对补给点题签，未列入实际极地小队。'}
+self_check:
+  fact: gale
+  quote_line: '出发时刻还没核实，先空着。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '纸上记的是补给点，还是营地？ 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '纸上记的是补给点，还是营地？'
+  share_number: '3月21日至29日，相隔八天。'
+  knowing: 'last_entry 知道后续有史料记下的日期。'
+  near: 'gale, last_entry'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

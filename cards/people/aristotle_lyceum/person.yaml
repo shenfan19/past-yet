@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {L: 1}
+    refs: [aristotle_lyceum_motion]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["handy","curious","sensitive"]}}
         - {id: p2, kind: hold, req: {"any":[{"job":["student","archivist"]},{"trait":["bold"]}]}}
         - {id: p3, kind: trust, req: {"trait":["attached","artistic","kind"]}}
+      vignettes:
+        - {id: two_columns, traits: [curious, handy, methodical]}
+        - {id: shell, traits: [kind, artistic, attached]}
+        - {id: names}
     text:
       en:
-        name: Sorting the living world
+        name: 'A crab in the wrong column'
         place: Athens
         figure: Aristotle
-        story: At the Lyceum Aristotle and his students describe animals and plants and lay out the first systematic logic.
-        relic: A labelled seashell
-        relic_desc: A shell from a collection where every specimen carries a Greek name.
+        story: 'In History of Animals I, Aristotle distinguishes where an animal lives from how it moves, using the walking crab as one example. A fictional Lyceum exercise brings that distinction to a table of specimens. The workshop and its labels are invented.'
+        relic: 'A shell with a place-label'
+        relic_desc: 'A shell from the imagined exercise, with its findspot on a label.'
         points:
-          p1: "Recognise on the shore the fish he classed"
-          p2: "Sort the specimen boxes"
-          p3: "Walk and argue with his students"
+          p1: 'Compare the crab sketch with the movement column'
+          p2: 'Hold the shell trays while the labels are replaced'
+          p3: 'Ask a witness to describe the movement she saw'
+        vignettes:
+          two_columns: 'Timarete points to a one-column list, with the crab filed among swimmers. You draw a second column and ask her to use the same drawing twice. When she reads it back, sea is where she found the animal, walking is what she actually saw.'
+          shell: 'Damon is about to scrape his shell label clean to fit the new list. You ask him to set the shell on the table and describe where he picked it up. He keeps the older label beside the new one. One records a place and the other an observation.'
+          names: 'You start to tell the table what future books will call these creatures. Timarete asks which animal the new name will help her recognise tomorrow. You spend the remaining light copying the little crab with its legs showing. The ink is still damp when she closes the shutters.'
       zh:
-        name: 给生物世界分类
+        name: '落错栏的螃蟹'
         place: 雅典
         figure: 亚里士多德
-        story: 在吕克昂学园，亚里士多德和学生描述动植物，并写出第一套系统的逻辑。
-        relic: 一枚贴了标签的贝壳
-        relic_desc: 一个标本集里的贝壳，每件都写着希腊文名字。
+        story: '亚里士多德在《动物志》第一卷中区分动物住在哪里和怎样运动，以会走路的螃蟹为例之一。游戏把这层区别搬上吕克昂一张虚构的标本桌，习作和标签都是虚构。'
+        relic: '一枚留着地名的贝壳'
+        relic_desc: '虚构标本习作里的贝壳，旧签写着拾到它的地方。'
         points:
-          p1: "在海岸边认出他分类的鱼"
-          p2: "整理标本箱"
-          p3: "陪学生们边走边辩"
+          p1: '拿螃蟹的图去核对运动一栏'
+          p2: '扶住贝壳盘，等人换过标签'
+          p3: '请亲眼看见的人说说那动作'
+        vignettes:
+          two_columns: '提玛瑞忒拿来一张单列表，把螃蟹归在游泳的动物里。你划出第二栏，请她拿这张图填两遍。再念一遍时，她说海是发现它的地方，走才是亲眼看见的动作。'
+          shell: '达蒙为了配合新表，正打算刮掉贝壳上旧标签的字。你请他把壳搁在桌上，说说是在哪儿拾的。他把旧签留在新签旁。一张记地点，一张记观察。'
+          names: '你忍不住说起后世的书会怎么给这些动物起名。提玛瑞忒问，新名字能帮她明天认出哪一只？你趁还有光，把小蟹的足都画清楚。她关窗时，墨还没干。'
 text:
   en:
     name: Aristotle
@@ -44,3 +57,42 @@ text:
   zh:
     name: 亚里士多德
     text: 希腊哲学家，公元前 384 年生，公元前 322 年去世，柏拉图的学生，亚历山大大帝的老师。他在雅典创办吕克昂学园，著作涉及逻辑、生物、物理、伦理和政治，影响学术数百年。
+hook: {en: 'Where does the walking crab belong?', zh: '螃蟹住水里，该放哪一格？'}
+facts:
+  motion:
+    date: '-350'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [aristotle_lyceum_motion]
+    text:
+      en: 'In this fourth-century BCE work, the text distinguishes swimming from walking and uses the crab for an aquatic creature that moves by walking.'
+      zh: '这部公元前四世纪的著作比较游泳和步行，以螃蟹说明在水中生活的动物也能以步行移动。'
+bystanders:
+  timarete:
+    invented: true
+    text: {en: 'A fictional fish seller who has lent the school a drawing.', zh: '虚构的卖鱼人提玛瑞忒，借了一张图给学园。'}
+  damon:
+    invented: true
+    text: {en: 'A fictional helper who wants to keep the place-name on his shell label.', zh: '虚构的帮工达蒙，想保住贝壳标签上的地名。'}
+wiki:
+  refs:
+    aristotle_lyceum_motion:
+      order: 789
+      status: checked
+      text:
+        en: 'Aristotle, History of Animals I.1, MIT Classics Archive https://classics.mit.edu/Aristotle/history_anim.1.i.html'
+        zh: '亚里士多德《动物志》第一卷第一节，麻省理工古典文库 https://classics.mit.edu/Aristotle/history_anim.1.i.html'
+self_check:
+  fact: motion
+  quote_line: '一张记地点，一张记观察。'
+  regret_choice: 'names 讲后世名目占去重新核对的光线。'
+  bookend: '从螃蟹的归类争议回到它的足。'
+  share_line: '住在哪里，和怎样走路，是两个问题。'
+  share_number: '两栏练习表。'
+  knowing: 'names 知道后世会改用别的名称。'
+  near: 'motion 可对照原书第一卷的螃蟹例子。'
+  lever: 'two_columns 让一栏变两栏。'
+  missed: 'names 关窗了，墨还没干。'
+  brought: 'shell 带回一枚留过地点标签的练习贝壳。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

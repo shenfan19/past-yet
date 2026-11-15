@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {C: 2}
     regret: true
+    refs: [kant_konigsberg_preface, kant_konigsberg_second]
     scene:
       points:
         - {id: p1, kind: trust, req: {"any":[{"trait":["sensitive","cosmopolitan"]},{"job":["teacher","archivist"]}]}}
         - {id: p2, kind: notice, req: {"any":[{"trait":["handy","quiet","skeptical"]},{"stat":{"wit":7}}]}}
         - {id: p3, kind: persuade, redeem: true, req: {"any": [{"item": "neural_chip"}, {"stat": {"finesse": 8}}]}}
+      vignettes:
+        - {id: margin, traits: [sensitive, quiet, scholarly]}
+        - {id: label, traits: [handy, skeptical, methodical]}
+        - {id: editions}
     text:
       en:
-        name: What reason can and cannot know
+        name: 'A question for the margin'
         place: Königsberg
         figure: Immanuel Kant
-        story: After eleven years of silence Kant publishes the Critique of Pure Reason, a book that sells slowly and is first reviewed by people who misread it.
-        relic: A walking cane
-        relic_desc: The cane of a man whose daily walk was so regular neighbours set clocks by it.
+        story: 'Kant’s first edition of the Critique of Pure Reason appeared in 1781. Its preface begins with questions that reason cannot set aside even though it cannot answer them. There would be a revised preface in 1787. The game imagines a bookseller and a reader putting a short label on a copy of the first edition.'
+        relic: 'A bookseller’s label'
+        relic_desc: 'A fictional label with the first edition year in the margin.'
         points:
-          p1: "Share his long dinner table (a kind soul, a teacher, a librarian or a historian)"
-          p2: "Notice the question beneath the question"
-          p3: "Write the first review that understands it"
+          p1: 'Let the reader explain what drew her to the preface'
+          p2: 'Check the summary against the first page before it goes on the shelf'
+          p3: 'Persuade the seller to keep the harder question on the label'
+        vignettes:
+          margin: 'Lotte wants to copy only the part about questions a reader cannot ignore. You ask her to leave room for the limit that follows in the same sentence. She makes the letters smaller and fits both on her slip. The line now gives her a reason to open the book again.'
+          label: 'Otto writes that the book answers the hardest questions. You turn the label over and have him read the first sentence again. He writes a question in place of the boast. A customer can see from the shelf where to start looking.'
+          editions: 'You remember that another preface will appear six years later. Lotte has this copy in front of her and asks which page to mark. You put the date of this edition on her slip. She turns the first leaf just as the shop closes.'
       zh:
-        name: 理性能知道什么，不能知道什么
+        name: '留在页边的问题'
         place: 柯尼斯堡
         figure: 伊曼努尔·康德
-        story: 沉默了十一年之后，康德发表了《纯粹理性批判》。这本书卖得很慢，最早的书评也出自误读它的人。
-        relic: 一根手杖
-        relic_desc: 一个人的手杖，他每天散步准时到邻居拿他对表。
+        story: '康德的《纯粹理性批判》初版在1781年问世。序言从这样的问题说起：理性无法回避它们，也无法回答它们。1787年新版另有修改过的序言。游戏虚构书商和读者为一册初版写题签。'
+        relic: '一张书架题签'
+        relic_desc: '虚构书签，页边写着初版年份。'
         points:
-          p1: "陪他吃漫长的午饭（善良的人，或教师、图书管理员、历史学者）"
-          p2: "留意问题底下的那个问题"
-          p3: "写出第一篇真正读懂它的书评"
+          p1: '请读者说说序言里什么地方引她往下读'
+          p2: '入架前拿摘要去对照序言第一页'
+          p3: '劝书商把难回答的问题留在签上'
+        vignettes:
+          margin: '洛特只想抄读者绕不开问题的那一节。你请她给同一句后面的限制也留地方。她把字写小些，两部分都抄进纸条。这行字让她还想把书再翻开。'
+          label: '奥托在签上写，这本书答透了最难的问题。你把签翻过来，请他从序言开头再读一遍。他用一个问题换掉夸口。客人从架上抽书，就知道从哪儿读起。'
+          editions: '你记得六年后还会有另一篇序言。洛特眼前只有这册书，问该在哪页夹签。你在纸条上写下本版年份。店要关了，她刚翻过第一页。'
 text:
   en:
     name: Immanuel Kant
@@ -45,3 +58,57 @@ text:
   zh:
     name: 伊曼努尔·康德
     text: 德国哲学家，1724 年生，1804 年去世，一生在柯尼斯堡度过。1781 年出版的《纯粹理性批判》考察理性能知道什么以及它的界限。
+hook: {en: 'Will the next reader find the question?', zh: '下一个读者找得到那个问题吗？'}
+facts:
+  preface:
+    date: '1781'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kant_konigsberg_preface]
+    text:
+      en: 'Kant introduces the inquiry with problems reason can neither dismiss nor answer, and discusses the limits of experience.'
+      zh: '康德从理性既无法回避又无法回答的问题引出全书，并谈及经验的界限。'
+  second:
+    date: '1787'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kant_konigsberg_second]
+    text:
+      en: 'The revised preface belongs to the 1787 edition and closes with a date and place, Königsberg, April 1787.'
+      zh: '修改后的序言属于1787年版，末尾署柯尼斯堡、1787年4月。'
+bystanders:
+  lotte:
+    invented: true
+    text: {en: 'A fictional reader trying to fit the opening sentence on a slip.', zh: '虚构读者洛特，想把序言头一句抄到一张纸条上。'}
+  otto:
+    invented: true
+    text: {en: 'A fictional bookseller writing a shelf label.', zh: '虚构书商奥托，要给书架写张题签。'}
+wiki:
+  refs:
+    kant_konigsberg_preface:
+      order: 869
+      status: checked
+      text:
+        en: 'Kant, Critique of Pure Reason, first preface A vii, Norman Kemp Smith translation https://web.stanford.edu/class/history34q/readings/Kant/CritiquePreface.html'
+        zh: '康德《纯粹理性批判》初版序 A vii，诺曼·肯普·史密斯译本 https://web.stanford.edu/class/history34q/readings/Kant/CritiquePreface.html'
+    kant_konigsberg_second:
+      order: 870
+      status: checked
+      text:
+        en: 'Kant, Critique of Pure Reason, second preface, B vii–xliv https://mouseia.org/texts/kant-pure-reason/part-2'
+        zh: '康德《纯粹理性批判》第二版序 B vii—xliv https://mouseia.org/texts/kant-pure-reason/part-2'
+self_check:
+  fact: preface
+  quote_line: '他用一个问题换掉夸口。'
+  regret_choice: 'label 保留原签会给读者一个书没允诺的答案。'
+  bookend: '开头问找不找得到，收尾翻开第一叶。'
+  share_line: '一道问题，留在书架前。'
+  share_number: '两版相隔六年。'
+  knowing: 'editions 知道新版序言将出现。'
+  near: 'preface 读的是初版有据的开头。'
+  lever: 'margin 同张签留住句子的两半。'
+  missed: 'editions 关门前只翻一叶。'
+  brought: 'label 带回复写的虚构题签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

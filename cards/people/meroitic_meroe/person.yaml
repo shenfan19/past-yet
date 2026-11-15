@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {H: 3, L: 1}
     regret: true
+    refs: [meroitic_meroe_script]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["wanderer","curious"]}}
         - {id: p2, kind: hold, req: {"job":["builder","carpenter","mechanic"]}}
         - {id: p3, kind: notice, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: dots, traits: [methodical, scholarly]}
+        - {id: direction, traits: [curious, handy]}
+        - {id: margin}
     text:
       en:
-        name: "An alphabet without a known language"
+        name: 'The dots that keep two groups apart'
         place: "Meroe"
         figure: "Meroitic scribes"
-        story: "At Meroe, capital of Kush, scribes write in Meroitic, an alphabet that can be sounded out but whose language is still hardly understood."
-        relic: "A stone with carved signs"
-        relic_desc: "A small block with a line of cursive signs."
+        story: 'Meroitic was written in cursive and hieroglyphic forms. Cursive inscriptions can mark divisions with vertical dots. Many sign values are known to researchers, while parts of the language remain difficult to interpret. The copy lesson in this branch uses a fictional line of marks. It does not claim to read a surviving inscription.'
+        relic: 'A practice transcription'
+        relic_desc: 'Two groups of marks with a clearly drawn separator.'
         points:
-          p1: "Compare the cursive and the carved signs"
-          p2: "Watch the stonecutters at work (a craftsperson)"
-          p3: "Read the inscription on the temple wall"
+          p1: 'Locate the separation mark before copying the whole row'
+          p2: 'Keep the direction of the model marked on the copy'
+          p3: 'Check an oral explanation against the marks on the exercise'
+        vignettes:
+          dots: 'The copyist joins two groups while transferring them to a narrow slip. You point to the vertical dots on the practice line and put the break back in its old position. The groups can be compared again. You take the copy; a meaning for the entire line still eludes you.'
+          direction: 'You know that later readers will sometimes recover a sign more confidently than a sentence. The copyist asks you to mark where he should start. You add an arrow beyond the right edge, away from the line itself. Its direction will be clear even after you have gone.'
+          margin: 'You copy one whole group, leave the dots visible and give the next group room. The copyist can pick up the exercise without running the items together. You bring back the separated forms. The next lesson is beyond this visit.'
       zh:
-        name: "有字母却没有已知语言"
+        name: '把两组符号分开的点'
         place: "麦罗埃"
         figure: "麦罗埃的书吏"
-        story: "麦罗埃是库施的都城，书吏用麦罗埃文书写，这种字母可以读出音来，但它的语言至今几乎无人能懂。"
-        relic: "一块刻着符号的石头"
-        relic_desc: "一小块石头，上面是一行草体符号。"
+        story: '麦罗埃文字有草写体与象形体。草写铭文可以用竖排的小点作分隔。不少符号的读音已为研究者所知，语言仍有难以解释之处。卡里的摹写课用一行虚构练习记号，未译读存世铭文。'
+        relic: '一张分组习作'
+        relic_desc: '两组练习记号，分隔点清楚可见。'
         points:
-          p1: "比较草体与刻写的符号"
-          p2: "看石匠干活"
-          p3: "读出神庙墙上的铭文"
+          p1: '抄整行以前先找出分隔记号'
+          p2: '在副本上记下原图的方向'
+          p3: '把口述说明和练习上的记号对照'
+        vignettes:
+          dots: '抄写人往窄纸上转写时，把两组记号接成一组。你指着练习行上竖排的小点，把分隔放回原位。两组现在还能各自核对。你带走副本，整行的意思仍没弄明白。'
+          direction: '你知道后来的读者有时认得一处记号，却解释不了一句。抄写人问从哪边起，你在右端行外添一支箭头，与原行分开。等你走后，方向还认得清。'
+          margin: '你抄完一组，保留那几个点，再给下一组留地方。抄写人接过来，还能看出两组没有连在一处。你带回分列的形状，下一堂没有赶上。'
 text:
   en:
     name: Meroitic scribes
@@ -45,3 +58,39 @@ text:
   zh:
     name: 麦罗埃的书吏
     text: 苏丹境内尼罗河畔麦罗埃王国的书吏。他们使用的麦罗埃文字从约公元前二世纪起通行，读音已能辨认，但语言本身大体上仍未被理解。
+hook: {en: 'Can you keep the breaks without translating the line?', zh: '认得分隔点，能读出整行吗？'}
+facts:
+  script:
+    date: '-100'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [meroitic_meroe_script]
+    text:
+      en: 'The reference records right-to-left cursive writing and the use of two or three vertical dots as a separator. The exercise uses those conventions without inventing a historical text.'
+      zh: '资料记草写体自右向左，以及用两三个竖排小点分隔的写法。卡里只借此做练习，未编造一篇历史铭文。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist who has nearly joined two groups of practice marks.', zh: '虚构的抄写人，差一点把两组练习记号连在一起。'}
+wiki:
+  refs:
+    meroitic_meroe_script:
+      order: 771
+      status: checked
+      text:
+        en: 'Scuola Normale Superiore, Mnamon, Meroitic Cursive and Hieroglyphs https://mnamon.sns.it/index.php?id=69&lang=en&page=Scrittura'
+        zh: '比萨高等师范学校 Mnamon 古文字资源，麦罗埃草写体与象形体 https://mnamon.sns.it/index.php?id=69&lang=en&page=Scrittura'
+self_check:
+  fact: script
+  quote_line: '两组现在还能各自核对。'
+  regret_choice: '为了挤进一张窄纸丢掉分隔点，回头便无法分组。'
+  bookend: '从挤成一组的记号，到分隔和方向都可复查。'
+  share_line: '我带回了两组记号和两组之间的点。'
+  share_number: '两组'
+  knowing: 'direction 想到后世辨字形与理解句义的差距。'
+  near: 'script 锚定分隔点与方向。'
+  lever: '补回一处分隔。'
+  missed: '没赶上下次课。'
+  brought: '一张带分隔的练习摹本。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,7 +10,7 @@ events:
     tier: 2
     era: scutari_1855
     channels: {E: 3, G: 2, L: 2}
-    refs: [nightingale_army_report]
+    refs: [nightingale_army_report, scutari_commission_report]
     scene:
       points:
         - {id: p1, kind: care, req: {"job": ["nurse", "midwife", "physician", "paramedic", "doctor"]}}
@@ -99,6 +99,7 @@ wiki:
       unlock:
         era: scutari_1855
       refs:
+        - scutari_commission_report
         - nightingale1858
         - game
       text:
@@ -109,6 +110,12 @@ wiki:
           name: 斯库塔里的卫生委员会
           text: 1855 年 3 月初，英国派出的卫生委员会到达斯库塔里，冲洗了下水道，让病房通了风。此后几个月医院里的死亡数大幅下降。游戏里员工能帮着让这项工作提前，只在这条分支里成立。
   refs:
+    scutari_commission_report:
+      order: 1006
+      status: checked
+      text:
+        en: 'Report of the Sanitary Commission, 1855–56, p. 6, digitised by Wellcome https://wellcomecollection.org/works/gfy47p8d'
+        zh: '《卫生委员会工作报告（1855—1856）》，第6页，惠康馆藏 https://wellcomecollection.org/works/gfy47p8d'
     nightingale_army_report:
       order: 172
       status: checked
@@ -134,6 +141,7 @@ era_text:
       - istanbul
       - history
     event_titles:
+      expedition_handoff: 'Two wards, one bundle of slips'
       door_block: Turned away at the ward door
       time_strain: Time slip
     plots:
@@ -167,6 +175,8 @@ era_text:
         - You can save today's patients but not tomorrow's. On the main timeline the Sanitary Commission came in early March.
         - Counts and tables matter more than any one pair of hands, but making people believe a count takes time.
     events:
+      expedition_handoff: '{staff} and Agnes trace two requests back to separate wards. Both go on the stores list, but Emil has left and they will be delivered together on the next round.'
+      expedition_send: '{staff} gives Emil the signed request first. Agnes clips the unsigned one to the ward book for a second signature.'
       door_block_stubborn: A ward surgeon bars the door, saying the army does not need a stranger. {staff} is stubborn, does not give way, is sent out of one ward and loses {d.ors_stock:i} packets of supplies.
       door_block_stubborn_empty: A ward surgeon bars the door, saying the army does not need a stranger. {staff} is stubborn, does not give way, and is sent out.
       door_block_insist_empty: A ward surgeon bars the door, saying hardship and bad air are what kill. {staff} stands at the door and finishes speaking, and is turned away.
@@ -177,16 +187,18 @@ era_text:
     star_points:
       convince: "Convince Nightingale"
       trust: "Win the trust of the ward"
-      reform: "Have the reform begin ahead of history"
+      reform: 'Advance the simulated schedule'
     milestones:
+      commission_leaves: '{date}: According to the commissioners’ report, they and their officers leave London.'
+      commission_examines: '{date}: The commissioners reach Constantinople and begin examining the Scutari hospitals that afternoon.'
       first_treat: '{date}: {staff} spoons the first cup of clean broth and salts to a feverish man. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first chlorinated cloths and washes down a few beds, and teaches the orderlies to do the same.'
       met_nightingale: '{date}: {staff} meets Nightingale on her night round. She listens closely but keeps asking one thing: where are the numbers.'
       nightingale_trusts: '{date}: Nightingale starts to treat {staff} as one of her own and brings out the ward counts she has been keeping.'
       nightingale_convinced: '{date}: Nightingale no longer merely suspects the filth in the wards. She has enough figures, and believes what the stranger told her.'
       board_moves: '{date}: The medical board starts to give way and says a commission might be sent.'
-      reform_history: '{date}: The Sanitary Commission begins its work. The main timeline does not change.'
-      reform_early: '{date}: The Sanitary Commission begins its work {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulation sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The simulated ward changes its delivery schedule {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: The ward surgeons no longer keep {staff} out, and some ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of fevered men on the ward falls to single digits.'
@@ -194,8 +206,8 @@ era_text:
       near_death: '{staff} collapses in the ward corridor and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these men a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend at Scutari. The Sanitary Commission began its work {advance_days:1} days earlier than in history.'
-      perfect: '{staff} completed the task at Scutari and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      legend: '{staff} brought the simulated schedule forward by {advance_days:1} days in this branch.'
+      perfect: '{staff} completed the task at Scutari and came back safe. The simulation records {base_D:i} deaths in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away at the ward door again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days in the Barrack Hospital, did what was within reach, and came back safe.'
     quotes:
@@ -245,6 +257,7 @@ era_text:
       - istanbul
       - history
     event_titles:
+      expedition_handoff: '两间病房，一捆单子'
       door_block: 被拒之病房门外
       time_strain: 时间错位
     plots:
@@ -278,26 +291,30 @@ era_text:
         - 你能救今天的病人，救不了明天的。主时间线上卫生委员会在三月初到来。
         - 数目和表格比任何一双手都重要，但让人相信一个数目需要时间。
     events:
+      expedition_handoff: '{staff} 和艾格尼丝查清两张单子分别来自哪间病房。两笔都入库房清单，埃米尔已经离开，要等下一轮一起送。'
+      expedition_send: '{staff} 先把签过字的单子递给埃米尔。艾格尼丝把没签字的那张夹在病房账里，等人补签。'
       door_block_stubborn: 一位病房军医拦在门口，说军队不需要外人。{staff} 倔强，不肯让路，被赶出一间病房，丢了 {d.ors_stock:i} 包物资。
       door_block_stubborn_empty: 一位病房军医拦在门口，说军队不需要外人。{staff} 倔强，不肯让路，被赶了出去。
       door_block_insist_empty: 一位病房军医拦在门口，说致命的是艰苦和坏空气。{staff} 站在门口把话说完，被请了出去。
       door_block_insist: 一位病房军医拦在门口，说致命的是艰苦和坏空气。{staff} 站在门口把话说完，被请了出去，丢了 {d.ors_stock:i} 包物资。
       door_block_appeal: 一位病房军医拦在门口。{staff} 不硬闯，转身去找南丁格尔，请她出面说话。
       door_block_yield: 一位病房军医拦在门口。{staff} 没有争吵，退了一步，半天白白过去。
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: "说服南丁格尔"
       trust: "赢得病房的信任"
-      reform: "让改革比历史上更早开始"
+      reform: '提前模拟中的安排'
     milestones:
+      commission_leaves: '{date}，据委员会报告，委员及随行人员离开伦敦。'
+      commission_examines: '{date}，委员会抵达君士坦丁堡，当天下午开始查看斯库塔里各医院。'
       first_treat: '{date}：{staff} 给一个发烧的人喂下第一勺干净的肉汤和盐水，他开始说话了。'
       first_protect: '{date}：{staff} 发下第一批氯水浸过的布，擦洗了几张床，并教勤务兵照做。'
       met_nightingale: '{date}：{staff} 在夜巡时遇到南丁格尔。她听得很认真，却一再问同一件事：数目在哪里。'
       nightingale_trusts: '{date}：南丁格尔开始把 {staff} 当自己人，拿出她一直在记的病房数目。'
       nightingale_convinced: '{date}：南丁格尔不再只是怀疑病房里的污秽。她有了足够的数字，也信了这位陌生人告诉她的话。'
       board_moves: '{date}：军医委员会开始松口，说也许可以派一个委员会来。'
-      reform_history: '{date}：卫生委员会开始工作。主时间线没有变化。'
-      reform_early: '{date}：卫生委员会比历史上提前 {advance_days:1} 天开始工作。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟按模型基准日调整安排。'
+      reform_early: '{date}，模拟中的病房调整送货安排，比模型基准提前 {advance_days:1} 天。'
       trust_won: '{date}：病房军医不再把 {staff} 拦在外面，有的还开口求助。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：病房里发烧的人数降到了个位数。'
@@ -305,8 +322,8 @@ era_text:
       near_death: '{staff} 在病房走廊倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在斯库塔里留下了传说。卫生委员会比历史上提前 {advance_days:1} 天开始工作。'
-      perfect: '{staff} 在斯库塔里完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      legend: '{staff} 在这条虚构分支中把模拟安排提前了 {advance_days:1} 天。'
+      perfect: '{staff} 在斯库塔里完成了任务，平安回来。模拟基准死亡 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒之病房门外，最后带着一个笑话逃了回来。'
       modest: '{staff} 在兵营医院待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -344,3 +361,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进病房。
       ally_gap: 南丁格尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'Two requests reach the same desk. Which ward did each come from?', zh: '两张单子，各是哪间病房的？'}
+facts:
+  commission_leaves:
+    date: '1855-02-22'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [scutari_commission_report, nightingale_army_report]
+    text:
+      en: 'According to the commissioners’ report, they and their officers leave London.'
+      zh: '据委员会报告，委员及随行人员离开伦敦。'
+  commission_examines:
+    date: '1855-03-06'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [scutari_commission_report, nightingale_army_report]
+    text:
+      en: 'The commissioners reach Constantinople and begin examining the Scutari hospitals that afternoon.'
+      zh: '委员会抵达君士坦丁堡，当天下午开始查看斯库塔里各医院。'
+bystanders:
+  agnes:
+    invented: true
+    text: {en: 'Agnes, an invented night attendant, distinguishes requests by ward and time.', zh: '艾格尼丝是虚构的夜班护理员，按病房和时间区分请领单。'}
+  emil:
+    invented: true
+    text: {en: 'Emil, an invented stores messenger, carries the day’s ward slips to the stores desk.', zh: '埃米尔是虚构的库房信使，把当天的病房单据交到库房。'}
+self_check:
+  fact: commission_leaves
+  quote_line: '写上病房号。签字也得找对人。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '两张单子，各是哪间病房的？ 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '两张单子，各是哪间病房的？'
+  share_number: '2月22日离开伦敦，3月6日查看医院'
+  knowing: 'commission_examines 知道后续有史料记下的日期。'
+  near: 'commission_leaves, commission_examines'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

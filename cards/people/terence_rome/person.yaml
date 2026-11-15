@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {S: 1}
     regret: true
+    refs: [terence_rome_prologues]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"trait":["glib","ambitious","scholarly"]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["bold","vigil"]},{"stat":{"will":7}}]}}
+      vignettes:
+        - {id: warning, traits: [bold, charismatic]}
+        - {id: audibility, traits: [methodical, curious]}
+        - {id: bench}
     text:
       en:
-        name: "A play the crowd left"
+        name: 'An audience that keeps leaving'
         place: "Rome"
         figure: "Terence"
-        story: "A former slave from Carthage, Terence sees his play The Mother in Law abandoned by its audience twice, first for boxers and rope walkers and then for gladiators. It is heard in full only on the third try."
+        story: 'The prologues to Terence’s Hecyra describe interruptions. They recall the draw of boxing and a tightrope performer, then a crowd rushing in when gladiators were announced. Your work at a rehearsal is fictional. The map year locates the early productions, while the second prologue looks back on them.'
         relic: "A comic mask"
         relic_desc: "A linen mask with a raised brow, worn by an actor."
         points:
-          p1: "Talk the noisy crowd back to their seats"
-          p2: "Follow the plot as the actors speak it"
-          p3: "Stay in your seat to the last line"
+          p1: 'Get a few passers-by to wait through a complete exchange'
+          p2: 'Find the line that disappears when the doorway gets loud'
+          p3: 'Keep the entrance usable until the rehearsal reaches its end'
+        vignettes:
+          warning: 'You tell a stagehand that people will still read how the crowd left, two thousand years after it happened. He asks whether they will know what the actors were saying when they left. You stay for the rehearsal and write down the last line you could hear. The rehearsal ends with one more listener than it began with. The public performance is still ahead of you.'
+          audibility: 'You listen from beside the entrance and miss the reply to a line you heard clearly. The stagehand moves one bench and asks you to listen again. This time you hear both halves. You take home a sketch of the bench’s two positions. The street has grown too loud for you to hear the ending from outside.'
+          bench: 'You help the stagehand set one bench back from the doorway. A latecomer sits down without making a whole row stand. You mark the clear space on a scrap of wood. You leave with the rehearsal still sounding through the doorway.'
       zh:
-        name: "观众离场的那出戏"
+        name: '留不住的观众'
         place: "罗马"
         figure: "泰伦提乌斯"
-        story: "泰伦提乌斯是来自迦太基的前奴隶，他的喜剧《婆母》两次被观众抛下，先是为了拳击手和走绳艺人，后来为了角斗士。直到第三次才被完整地听完。"
+        story: '泰伦提乌斯的《婆母》序言回顾演出受扰的经过，先提拳击和走绳的吸引力，再写角斗表演的消息引得人群涌来。你在排戏时做的活为虚构。地图年份对应早期演出，第二篇序言是回顾。'
         relic: "一副喜剧面具"
         relic_desc: "一副亚麻面具，眉毛高挑，演员戴的。"
         points:
-          p1: "把吵闹的人群劝回座位"
-          p2: "跟上演员们说出的情节"
-          p3: "留在座位上，听到最后一句"
+          p1: '请几个路过的人听完一来一回两句台词'
+          p2: '找出门口一吵就会听漏的那句'
+          p3: '守住排练场的入口，直到最后一句'
+        vignettes:
+          warning: '你告诉虚构的舞台帮工，两千年后还有人读到观众离场这件事。他问后人知不知道观众走时演员说到哪儿。你留下听排练，记下最后一句听清的话。排练结束时比开头多了你这一个听众，正式演出还没到。'
+          audibility: '你靠门听，听清了一句，却漏掉了接它的那句。帮工挪了一条长凳，请你再听一遍。这回你把两句都听到了。你带回画着长凳两个位置的草图。等你退到街上，末尾的话已被街声盖住。'
+          bench: '你帮舞台帮工把一条长凳从门口挪开。来迟的人终于能坐下，不用叫整排人都站起来。你在木片上记下空出来的地方。临走时，门里还传着排练的声音。'
 text:
   en:
     name: Terence
@@ -45,3 +58,39 @@ text:
   zh:
     name: 泰伦提乌斯
     text: 罗马剧作家，约公元前 195 年生，约公元前 159 年去世。据说他作为奴隶从北非被带到罗马，写了六部改编自希腊戏剧的喜剧，全部留存至今。
+hook: {en: 'Will anyone hear the ending?', zh: '今天能演到最后一句吗？'}
+facts:
+  prologues:
+    date: '-160'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [terence_rome_prologues]
+    text:
+      en: 'The prologues describe distraction by a tightrope walker, and a public rushing in at the announcement of gladiators. The report’s rehearsal takes place in the game''s branch.'
+      zh: '序言写到走绳吸引观众，以及人群闻知有角斗演出后涌来。报告中排练为分支演绎。'
+bystanders:
+  stagehand:
+    invented: true
+    text: {en: 'An invented stagehand trying to keep a clear entry through a noisy rehearsal.', zh: '虚构的舞台帮工，排练时一直在疏通入口。'}
+wiki:
+  refs:
+    terence_rome_prologues:
+      order: 416
+      status: checked
+      text:
+        en: 'Terence, Hecyra, Prologues I and II, Latin text https://thelatinlibrary.com/ter.hecyra.html'
+        zh: '泰伦提乌斯《婆母》第一、第二序言拉丁文 https://thelatinlibrary.com/ter.hecyra.html'
+self_check:
+  fact: prologues
+  quote_line: '他问后人知不知道观众走时演员说到哪儿。'
+  regret_choice: '守入口能帮迟到的观众落座，离席去查声响会漏听结尾。'
+  bookend: '从观众为何走到自己究竟听到了哪句。'
+  share_line: '这轮排练结束时多了我这一个听众。'
+  share_number: '一条长凳'
+  foreknowledge: 'warning 把序言将来被读到的事说给虚构帮工。'
+  proximity: 'prologues 给排练的观众难题提供原文依据。'
+  leverage: '帮工挪一条长凳，员工试听之后能听全一来一回。'
+  missed: '正式演出在后，员工已走。'
+  takeaway: '长凳前后两个位置的草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

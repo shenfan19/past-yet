@@ -9,34 +9,47 @@ events:
     field: medicine
     tier: 2
     channels: {E: 2, G: 1}
+    refs: [al_razi_rayy_doubt]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","methodical","quiet"]}}
         - {id: p2, kind: care, req: {"provides":"calm"}}
         - {id: p3, kind: hold, req: {"any":[{"job":["archivist","journalist"]},{"stat":{"wit":7}}]}}
+      vignettes:
+        - {id: columns, traits: [methodical, curious, quiet]}
+        - {id: doubt, traits: [calm, patient, kind]}
+        - {id: edition}
     text:
       en:
-        name: "Telling smallpox from measles"
+        name: 'A heading for a doubt'
         place: "Rayy"
         figure: "Al-Razi"
-        story: "On the wards of a hospital Al-Razi compares patient after patient, writes down the course of smallpox and of measles, and shows that they are two diseases."
-        relic: "A page of case notes"
-        relic_desc: "A page of case notes covered with fever readings and dates."
+        story: 'In Doubts about Galen, al-Razi puts claims in Galen’s writings alongside his own observations and marks occasions on which he withheld judgment. This visit imagines two people in Rayy sorting reading notes around 900. Neither the exchange nor the notes are from the treatise.'
+        relic: 'A margin note under two headings'
+        relic_desc: 'An invented reading note with a source and a separate question.'
         points:
-          p1: "Compare the course of two fevers"
-          p2: "Tend the patients on the ward"
-          p3: "Write the cases down one by one"
+          p1: 'Check whether the margin describes an observation or a conclusion'
+          p2: 'Give the reader time to say what she still doubts'
+          p3: 'Keep the observation with its source as the notes are handed over'
+        vignettes:
+          columns: 'Layla has copied two lines under Galen’s name. The first is a claim she can find in the book. The second is what a reader said after putting it down. You ask her to leave the name with the first line and give the other its own heading. A new reader can now see where a question began.'
+          doubt: 'Farhad wants to finish the page with a verdict. Layla is still trying to recall what the observer actually said. You slow the reading and give her the last line. She writes what she can remember, then follows it with a question that can be carried to the next reader.'
+          edition: 'You have seen a later copy of the book that records these kinds of doubts. Farhad only has this leaf and asks what to call the open line. You help him mark it as awaiting a comparison. The lamp is removed before the next copy arrives.'
       zh:
-        name: "把天花与麻疹分开"
+        name: '给存疑处另作题头'
         place: "雷伊"
         figure: "拉齐"
-        story: "拉齐在医院的病房里一个个比对病人，写下天花和麻疹各自的病程，说明它们是两种病。"
-        relic: "一页病例笔记"
-        relic_desc: "一页写满了热度和日期的病例笔记。"
+        story: '拉齐在《质疑盖伦》中，把盖伦书里的主张与自己的观察并看，也记下他曾在什么情况下暂缓判断。游戏在约900年的雷伊虚构两人整理读书笔记。对话和笔记均为虚构。'
+        relic: '一张分了两栏的页边记'
+        relic_desc: '虚构读书记，分列出处与读者疑问。'
         points:
-          p1: "对比两种热病的过程"
-          p2: "照看病房里的病人"
-          p3: "把病例逐条记下"
+          p1: '核对页边写的是观察，还是判断'
+          p2: '留点时间，等读者把疑处说完'
+          p3: '交接时，让观察记录和出处一并交出去'
+        vignettes:
+          columns: '莱拉把两行都记在盖伦名下。第一行在书里找得到，第二行是有人放下书之后说的。你请她把书名留给第一行，给另一行另作题头。新来的人能看懂疑问从哪里开始。'
+          doubt: '法尔哈德想用一句判断收尾。莱拉还在回想做观察的人到底说了什么。你放慢读的速度，把最后一行留给她。她把记得的写下来，再跟一个问题，留给接手的读者。'
+          edition: '你见过后世传本会记下这样的疑问。法尔哈德手里只有这张纸，问最后没定下的一行该怎么写。你帮他标作待对照。下一份抄本还没来，灯就撤走了。'
 text:
   en:
     name: "Al-Razi"
@@ -44,3 +57,42 @@ text:
   zh:
     name: "拉齐"
     text: "波斯医生，约 865 年生，925 年去世。他在雷伊和巴格达行医，留下大量病例记录，在一部专著里把天花与麻疹区分开来。"
+hook: {en: 'Who wrote the conclusion in the margin?', zh: '页边那句判断，是谁写的？'}
+facts:
+  doubt:
+    date: '900'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [al_razi_rayy_doubt]
+    text:
+      en: 'In the excerpt al-Razi explains that he refrained from announcing a conclusion when the situation was unclear. The year and the particular scene in Rayy are approximate and invented respectively.'
+      zh: '节录中，拉齐说明遇到情形尚不明确时，他暂不作出判断。游戏用约略年份，雷伊的具体场景为虚构。'
+bystanders:
+  layla:
+    invented: true
+    text: {en: 'A fictional reader checking which line is from the book.', zh: '虚构读者莱拉，要核对哪一行能在书里找到。'}
+  farhad:
+    invented: true
+    text: {en: 'A fictional scribe who wants an ending before the lamp goes.', zh: '虚构抄写员法尔哈德，撤灯前想收住这一页。'}
+wiki:
+  refs:
+    al_razi_rayy_doubt:
+      order: 965
+      status: checked
+      text:
+        en: 'Al-Razi, Doubts about Galen, excerpt and translation, James Lind Library https://www.jameslindlibrary.org/al-razi-10th-century-ce/'
+        zh: '拉齐《质疑盖伦》节录与英译，詹姆斯·林德文献库 https://www.jameslindlibrary.org/al-razi-10th-century-ce/'
+self_check:
+  fact: doubt
+  quote_line: '下一份抄本还没来，灯就撤走了。'
+  regret_choice: 'doubt 抢先给定论会盖掉观察人的原话。'
+  bookend: '从谁写的判断，回到给不能确认的一行留题。'
+  share_line: '一句出自书，一句出自读者。'
+  share_number: 'columns 的两行虚构读书记。'
+  knowing: 'edition 知道后世仍有记下这些质疑的传本。'
+  near: 'doubt 从原文节录取历史切口。'
+  lever: 'columns 给二者各留来处。'
+  missed: 'edition 等不到另一份抄本。'
+  brought: 'columns 带回虚构归类页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

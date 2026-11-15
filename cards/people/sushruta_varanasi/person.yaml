@@ -9,34 +9,47 @@ events:
     field: medicine
     tier: 1
     channels: {E: 1, L: 1}
+    refs: [sushruta_varanasi_model]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"]},{"trait":["streetwise"]}]}}
         - {id: p2, kind: hold, req: {"stat":{"finesse":7}}}
         - {id: p3, kind: trust, req: {"trait":["kind","cosmopolitan","sensitive"]}}
+      vignettes:
+        - {id: cloth, traits: [handy, methodical, streetwise]}
+        - {id: turn, traits: [kind, patient, sensitive]}
+        - {id: text}
     text:
       en:
-        name: "An old manual of surgery"
+        name: 'The cloth before the lesson'
         place: "Varanasi"
         figure: "Sushruta"
-        story: "The physician Sushruta, known by tradition, sets out in his manual surgery, instruments and plastic repair, and ways for apprentices to practise on models."
-        relic: "A bronze scalpel"
-        relic_desc: "A narrow bronze blade ground very thin."
+        story: 'The Suśruta Saṃhitā describes learners practising on models, including cloth. The text has a long transmission history. This game scene uses Varanasi and a traditional early date as a setting. It imagines a lesson between two apprentices working with practice cloths.'
+        relic: 'A marked practice cloth'
+        relic_desc: 'A fictional piece kept to compare two attempts.'
         points:
-          p1: "Watch how he treats a wound"
-          p2: "Hold steady through a suture"
-          p3: "Practise with the apprentices"
+          p1: 'Find which piece of cloth was kept to show the earlier attempt'
+          p2: 'Hold the practice pieces in place while the apprentice compares them'
+          p3: 'Help the next learner look over both attempts'
+        vignettes:
+          cloth: 'Mira is about to put the rougher piece in the scrap pile. You show her where Ananda marked his first try. She compares the marks with the piece he made later and leaves both on the bench. Ananda can now point to the one difference he worked on.'
+          turn: 'Ananda keeps explaining his own cloth while Mira waits to touch it. You put both pieces on the table where she can reach them and ask him to let her point first. Her question is about a part he had skipped. They keep the piece at the bench for the next learner.'
+          text: 'You know later readers will find a chapter about practice models. Mira only has a piece of cloth and a small mark she cannot place. You listen while she finds the earlier piece for herself. By the time the next lesson starts, you have already left.'
       zh:
-        name: "外科与整形的老手册"
+        name: '课前那块练习布'
         place: "瓦拉纳西"
         figure: "妙闻"
-        story: "传说中的医者妙闻在他的手册里讲述外科手术、器械和整形，给学徒在模型上练习的办法。"
-        relic: "一把青铜手术刀"
-        relic_desc: "一把窄窄的青铜刀，刃口磨得很薄。"
+        story: '《妙闻集》记述用模型习作，并举到布片。文本经历了长期传承。游戏借用瓦拉纳西和传统的早期年代，虚构两位学徒拿布片练习的课堂。'
+        relic: '一片标记过的练习布'
+        relic_desc: '游戏里的虚构练习样布，保留下来供比较。'
         points:
-          p1: "看他怎样处理伤口"
-          p2: "稳住一次缝合"
-          p3: "同学徒们一起练习"
+          p1: '找出哪块布留着给人看最初那次练习'
+          p2: '学徒比较时，把练习布按在原处'
+          p3: '帮下一名学徒把两次练习都看一遍'
+        vignettes:
+          cloth: '米拉正要把粗糙些的那片丢进碎布堆。你指出阿难给第一回留下的记号。她拿来同后来那片比，把两块都留在台上。阿难现在可以指明自己哪儿做了改动。'
+          turn: '阿难不停讲自己的那片，米拉等着上手摸。你把两片摆到她够得着的地方，请阿难先看她指哪儿。她问的正是他刚才跳过的一角。那片布便留在台边，给下一人看。'
+          text: '你知道后世能读到一章讲模型习作。米拉手里只有片布，上面的一个小记号她认不出。你听着她自己找回早一块来对照。下一堂开始时，你已经走了。'
 text:
   en:
     name: "Sushruta"
@@ -44,3 +57,42 @@ text:
   zh:
     name: "妙闻"
     text: "古印度医者，传统上被认为是《妙闻集》的作者，书中有外科手术、器械和整形的内容。他生活的年代和是否为同一个人都有争议。"
+hook: {en: 'The next learner has only the practice cloth.', zh: '下一名学徒，手边只剩练习布。'}
+facts:
+  model:
+    date: '-600'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sushruta_varanasi_model]
+    text:
+      en: 'The received text describes practice on models, including pieces of cloth. The early date is a conventional game setting and does not date the surviving text or a particular lesson.'
+      zh: '传世文本列出模型习作，材料包括布片。卡片沿用古代约略场景，未将此年定为现存文本成书或真实课堂的时间。'
+bystanders:
+  mira:
+    invented: true
+    text: {en: 'A fictional apprentice sorting sample cloths.', zh: '虚构学徒米拉，负责整理样布。'}
+  ananda:
+    invented: true
+    text: {en: 'A fictional apprentice trying to show the difference between two practice pieces.', zh: '虚构学徒阿难，想说明两块练习布之间的差别。'}
+wiki:
+  refs:
+    sushruta_varanasi_model:
+      order: 969
+      status: checked
+      text:
+        en: 'Suśruta Saṃhitā, Sūtrasthāna IX, Kunja Lal Bhishagratna translation, Tamil Digital Library https://tamildigitallibrary.in/assets/docs/uploads/primary_files/book/TVA_BOK_0046466/TVA_BOK_0046466_English_translation_of_the_sushruta_samhita.pdf'
+        zh: '《妙闻集·经部》第九章，昆贾·拉尔·比沙格拉特纳英译，泰米尔数字图书馆 https://tamildigitallibrary.in/assets/docs/uploads/primary_files/book/TVA_BOK_0046466/TVA_BOK_0046466_English_translation_of_the_sushruta_samhita.pdf'
+self_check:
+  fact: model
+  quote_line: '她问的正是他刚才跳过的一角。'
+  regret_choice: 'cloth 抛掉第一片就无法实际比较。'
+  bookend: '从只剩一片，到给下一名学徒留着两片。'
+  share_line: '一个记号，两次练习。'
+  share_number: 'cloth 有两片虚构练习布。'
+  knowing: 'text 知道后世传本文字。'
+  near: 'model 模型习作出自传世文本。'
+  lever: 'turn 让等着的人先提出问题。'
+  missed: 'text 看不到下堂课。'
+  brought: 'cloth 带回虚构练习样布。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

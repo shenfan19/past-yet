@@ -11,7 +11,7 @@ events:
     era: seacole_balaklava_1855
     channels: {E: 3, L: 2, S: 2}
     regret: true
-    refs: [seacole_memoir_hotel]
+    refs: [seacole_memoir_hotel, seacole_memoir_june]
     scene:
       points:
         - {id: p1, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
@@ -100,6 +100,7 @@ wiki:
       unlock:
         era: seacole_balaklava_1855
       refs:
+        - seacole_memoir_june
         - seacole1857
         - game
       text:
@@ -110,6 +111,12 @@ wiki:
           name: 营地物资
           text: 玛丽·西科尔自己采购、自己运送物资，并在营地后方开了一家客栈。军队物资向她开放的日期没有记录，所以游戏自己定了一天，员工能在这条分支里让它提前。
   refs:
+    seacole_memoir_june:
+      order: 1003
+      status: checked
+      text:
+        en: 'Mary Seacole, Wonderful Adventures, chapter XVI (17–18 June) https://www.gutenberg.org/cache/epub/23031/pg23031-images.html'
+        zh: '玛丽·西科尔《西科尔夫人在许多地方的奇妙历险》第十六章（6月17至18日） https://www.gutenberg.org/cache/epub/23031/pg23031-images.html'
     seacole_memoir_hotel:
       order: 168
       status: checked
@@ -135,6 +142,7 @@ era_text:
       - crimea
       - history
     event_titles:
+      expedition_handoff: 'The parcel with two entries'
       time_strain: Time slip
     plots:
       medicine_chest:
@@ -165,20 +173,24 @@ era_text:
         - You can save today's patients but not tomorrow's. She had to fight for the right to be there at all.
         - The date on which the stores opened to her is not recorded, so the game picks one.
     events:
+      expedition_handoff: '{staff} and Louisa trace two entries for the same parcel and cross out the sale. Owen has gone, so the corrected bundle waits by the door.'
+      expedition_send: 'Before Owen leaves, {staff} hands him the parcel and tells Louisa to mark the receipt pending. The pickup table gets its bundle first.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       convince: "Convince Seacole"
       trust: "Win the trust of the camp"
-      reform: "Have the camp stores opened sooner"
+      reform: "Bring forward the simulated collection schedule"
     milestones:
+      cathcart_evening: '{date}: Seacole recalls leaving the British Hotel after dark for Cathcart’s Hill and returning after midnight.'
+      wounded_road: '{date}: Seacole describes setting out from Spring Hill and helping wounded people near the temporary hospital by the Woronzoff Road.'
       first_treat: '{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak.'
       first_protect: '{date}: {staff} hands out the first clean water and washes down a few tents, and teaches the men to boil what they drink.'
       met_seacole: '{date}: {staff} is received by Seacole.'
       seacole_trusts: '{date}: Seacole gives {staff} the notes to work from.'
       seacole_convinced: '{date}: Seacole takes up the plan that {staff} put to her.'
       board_moves: '{date}: Word goes round that the plan might change.'
-      reform_history: '{date}: The camp stores open to her. The main timeline does not change.'
-      reform_early: '{date}: The camp stores open to her {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulation sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The simulated parcel collection starts {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: The officers no longer keep {staff} out, and some send men to them.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of sick men in the camp falls to single digits.'
@@ -186,8 +198,8 @@ era_text:
       near_death: '{staff} collapses in the camp and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these men a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend at Balaklava. The camp stores opened to Seacole {advance_days:1} days earlier than in the main timeline.'
-      perfect: '{staff} completed the task at Balaklava and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      legend: '{staff} left a legend at Balaklava. The camp stores opened to Seacole {advance_days:1} days before the model’s baseline.'
+      perfect: '{staff} completed the task at Balaklava and came back safe. The simulation records {base_D:i} deaths in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away at the door again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days at Balaklava, did what was within reach, and came back safe.'
     quotes:
@@ -237,6 +249,7 @@ era_text:
       - crimea
       - history
     event_titles:
+      expedition_handoff: '记了两次的包裹'
       time_strain: 时间错位
     plots:
       medicine_chest:
@@ -267,20 +280,24 @@ era_text:
         - 你能救今天的病人，救不了明天的。她得先争取到出现在那里的权利。
         - 营地物资向她开放的日期没有记录，所以游戏自己定了一天。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{staff} 和路易莎查出同一包裹有两笔记录，划掉销售那笔。欧文已经走了，改正过的包裹放在门口等下一趟。'
+      expedition_send: '欧文离开前，{staff} 递上包裹，请路易莎标明「回执待补」。交接桌先收到了这捆东西。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: "说服西科尔"
       trust: "赢得营地的信任"
-      reform: "让营地物资更早向她开放"
+      reform: "提前模拟中的包裹领取安排"
     milestones:
+      cathcart_evening: '{date}，西科尔回忆，入夜后她离开英国旅馆前往卡思卡特山，于午夜过后回来。'
+      wounded_road: '{date}，西科尔记述自己从春山出发，在沃龙佐夫路旁的临时医院附近帮助伤员。'
       first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
       first_protect: '{date}：{staff} 发下第一批干净的水，擦洗了几顶帐篷，教士兵把喝的水烧开。'
       met_seacole: '{date}：{staff} 被西科尔接见。'
       seacole_trusts: '{date}：西科尔把笔记交给 {staff} 用。'
       seacole_convinced: '{date}：西科尔采纳了 {staff} 提出的办法。'
       board_moves: '{date}：消息传开，计划也许要改。'
-      reform_history: '{date}：营地物资向她开放。主时间线没有变化。'
-      reform_early: '{date}：营地物资比主时间线提前 {advance_days:1} 天向她开放。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟按模型基准日调整安排。'
+      reform_early: '{date}：模拟中的包裹比模型基准提前 {advance_days:1} 天可领取。'
       trust_won: '{date}：军官们不再把 {staff} 挡在外面，有的还把人送了过来。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：营地里生病的人数降到了个位数。'
@@ -288,8 +305,8 @@ era_text:
       near_death: '{staff} 在营地里倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在巴拉克拉瓦留下了传说。营地物资比主时间线提前 {advance_days:1} 天向西科尔开放。'
-      perfect: '{staff} 在巴拉克拉瓦完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      legend: '{staff} 在巴拉克拉瓦留下了传说。营地物资比模型基准提前 {advance_days:1} 天向西科尔开放。'
+      perfect: '{staff} 在巴拉克拉瓦完成了任务，平安回来。模拟基准死亡 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
       modest: '{staff} 在巴拉克拉瓦待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -327,3 +344,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'When the parcel leaves Spring Hill, someone has to mark the right column.', zh: '包裹一离开春山，就得有人记在对的那一栏。'}
+facts:
+  cathcart_evening:
+    date: '1855-06-17'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [seacole_memoir_june, seacole_memoir_hotel]
+    text:
+      en: 'Seacole recalls leaving the British Hotel after dark for Cathcart’s Hill and returning after midnight.'
+      zh: '西科尔回忆，入夜后她离开英国旅馆前往卡思卡特山，于午夜过后回来。'
+  wounded_road:
+    date: '1855-06-18'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [seacole_memoir_june, seacole_memoir_hotel]
+    text:
+      en: 'Seacole describes setting out from Spring Hill and helping wounded people near the temporary hospital by the Woronzoff Road.'
+      zh: '西科尔记述自己从春山出发，在沃龙佐夫路旁的临时医院附近帮助伤员。'
+bystanders:
+  louisa:
+    invented: true
+    text: {en: 'Louisa, an invented storeroom helper, keeps separate lists for parcels sold and parcels given away.', zh: '路易莎是虚构的库房帮手，分别登记售出和送出的包裹。'}
+  owen:
+    invented: true
+    text: {en: 'Owen, an invented porter, takes the next bundle to the pickup table.', zh: '欧文是虚构的搬运工，把下一捆包裹带到交接桌。'}
+self_check:
+  fact: cathcart_evening
+  quote_line: '先看交接单，那包是送出的。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '包裹一离开春山，就得有人记在对的那一栏。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '包裹一离开春山，就得有人记在对的那一栏。'
+  share_number: '6月17日夜上山，6月18日出发'
+  knowing: 'wounded_road 知道后续有史料记下的日期。'
+  near: 'cathcart_evening, wounded_road'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

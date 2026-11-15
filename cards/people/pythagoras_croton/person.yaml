@@ -9,38 +9,90 @@ events:
     field: math
     tier: 2
     channels: {S: 1, V: 1}
+    refs: [pythagoras_croton_ratios]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: trust, req: {"trait":["cosmopolitan","sensitive"]}}
         - {id: p3, kind: hold, req: {"provides":"calm"}}
+      vignettes:
+        - {id: octave, traits: [methodical, curious, handy]}
+        - {id: ear, traits: [sensitive, cosmopolitan, artistic]}
+        - {id: credit}
     text:
       en:
-        name: A school where number is the nature of things
+        name: 'The second string'
         place: Croton, southern Italy
         figure: Pythagoras
-        story: In Croton a community studies mathematics, music and living as one discipline, and ratios become the key to harmony.
-        relic: A monochord string
-        relic_desc: A single taut string that can be stopped at simple ratios.
+        story: 'Aristotle later describes the people he calls Pythagoreans relating the intervals of a musical scale to number. In the imagined Croton workshop, two learners use marked strings to compare an octave. The sources here give no record of Pythagoras conducting this particular lesson.'
+        relic: A string with two ink marks
+        relic_desc: A practice string from the imagined workshop, marked first from memory and then by length.
         points:
-          p1: "Hear the ratios of the string lengths"
-          p2: "Be admitted to listen to the school"
-          p3: "Listen in silence through the first years"
+          p1: 'Compare the full and half lengths on the same string'
+          p2: 'Ask the maker to let a second person try the mark'
+          p3: 'Keep a steady beat while the two apprentices take turns'
+        vignettes:
+          octave: 'Melas has made an ink mark where he remembers his teacher’s finger. You double back a spare length of string and show him where the middle actually falls. He makes a second mark and hears the octave this time. His first mark stays beside it so that the next apprentice can hear the difference.'
+          ear: 'Lysis can match the sound by ear but was never shown where to put his hand. You keep the beat while he listens to Melas and tries the string himself. When the shutters come down, Lysis can get the interval again from the mark without anyone singing it first.'
+          credit: 'Looking ahead, you can almost see one famous name printed over every exercise. Melas asks whose mark he should put on the spare string. You mark which stretch he tested and let him sign his own handiwork. The next lesson will start while you are already home.'
       zh:
-        name: 以数为万物本质的学派
+        name: '第二根弦'
         place: 意大利南部克罗顿
         figure: 毕达哥拉斯
-        story: 在克罗顿，一个团体把数学、音乐和生活当作同一门功课来学，比例成了和谐的钥匙。
-        relic: 单弦琴的弦
-        relic_desc: 一根绷紧的弦，按在简单的比例上能发出和谐的音。
+        story: '亚里士多德后来记述，他所称的毕达哥拉斯派把音阶中的音程同数联系起来。游戏在克罗顿虚构一间工坊，两位学徒拿带记号的弦比较八度。现有出处没有记下毕达哥拉斯亲自上过这样一课。'
+        relic: 两处点过墨的弦
+        relic_desc: 虚构工坊用来练习的弦，一处是凭记忆点的，另一处是量过弦长才点的。
         points:
-          p1: "听出弦长的比例"
-          p2: "被学派接纳旁听"
-          p3: "沉默听满前几年"
+          p1: '在同一根弦上比较整段与半段'
+          p2: '请做琴的人让另一个人试用记号'
+          p3: '稳住拍子，让两个学徒轮流拨弦'
+        vignettes:
+          octave: '墨拉斯凭记忆在老师按过手指的地方点了墨。你把备用弦折成两段，指出中点到底在哪儿。他补了第二个记号，这次听到了八度。头一个点也留着，下一个学徒还可以拨出两处的差别。'
+          ear: '吕西斯能听声跟上，却没人给他看过手该按哪儿。你敲着拍子，让他听墨拉斯拨一次，再自己试。窗板合上时，吕西斯照着记号就能拨出这个音程，用不着先有人唱给他听。'
+          credit: '你几乎能看见后世把一个名人印在每道习题上。墨拉斯问备用弦该署谁的名。你记下他试的是哪一段，留他给自己的活署名。下一堂习作开始时，你已经回去了。'
 text:
   en:
     name: Pythagoras
-    text: Greek philosopher from Samos, about 570 BC to about 495 BC, who founded a community at Croton in southern Italy. He and his followers held that number underlies nature and music. The theorem named after him was known earlier in other cultures.
+    text: Greek thinker from Samos, traditionally dated to about 570–495 BCE and associated with a community at Croton. Aristotle writes of the Pythagoreans as a group that related musical intervals to numerical ratios.
   zh:
     name: 毕达哥拉斯
-    text: 萨摩斯的希腊哲学家，约公元前 570 年生，约公元前 495 年去世，在意大利南部的克罗顿创立团体。他和追随者认为数是自然与音乐的根本。以他命名的定理在其他文化里更早就已为人所知。
+    text: 萨摩斯的希腊思想家，传统生卒年约为公元前570至前495年，与克罗顿的一个团体有关。亚里士多德记述，毕达哥拉斯派把音程与数的比例联系起来。
+hook: {en: 'Can they hear the same note tomorrow?', zh: '明天还能拨出同一个音吗？'}
+facts:
+  ratios:
+    date: '-350'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [pythagoras_croton_ratios]
+    text:
+      en: 'In this fourth-century BCE text Aristotle associates musical ratios with the Pythagoreans collectively.'
+      zh: '这部公元前四世纪著作把音程之比同毕达哥拉斯派联系起来，叙述的主体是这一群体。'
+bystanders:
+  melas:
+    invented: true
+    text: {en: 'A fictional apprentice who marks a string by memory.', zh: '虚构学徒墨拉斯，凭记忆给弦长做记号。'}
+  lysis:
+    invented: true
+    text: {en: 'A fictional listener who wants to reproduce the interval without his instructor.', zh: '虚构学徒吕西斯，想在老师不在时也能拨出这个音程。'}
+wiki:
+  refs:
+    pythagoras_croton_ratios:
+      order: 813
+      status: checked
+      text:
+        en: 'Aristotle, Metaphysics I.5, MIT Classics Archive https://classics.mit.edu/Aristotle/metaphysics.1.i.html'
+        zh: '亚里士多德《形而上学》第一卷第五节，麻省理工古典文库 https://classics.mit.edu/Aristotle/metaphysics.1.i.html'
+self_check:
+  fact: ratios
+  quote_line: '头一个点也留着。'
+  regret_choice: 'credit 署上名人会抹去实际操作的人。'
+  bookend: '从能否再弹一次，到关窗前独自复现。'
+  share_line: '一根弦，两个按处。'
+  share_number: 'octave 同一根弦的全长和半长。'
+  knowing: 'credit 后世习惯归功一人。'
+  near: 'ratios 依据学派的音程记载。'
+  lever: 'ear 让另一人第一次独自复现。'
+  missed: 'credit 赶不上下一课。'
+  brought: 'octave 带回带两处试验记号的弦。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {C: 2, V: 3, S: 1}
     regret: true
+    refs: [kovalevskaya_stockholm_rotation]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: persuade, req: {"stat":{"finesse":7}}}
         - {id: p3, kind: endure, redeem: true, req: {"provides":"ration"}}
+      vignettes:
+        - {id: conditions, traits: [methodical, scholarly]}
+        - {id: diagram, traits: [curious, handy]}
+        - {id: clip}
     text:
       en:
-        name: "The spinning top that won a prize"
+        name: 'The conditions on the first page'
         place: "Stockholm"
         figure: "Sofia Kovalevskaya"
-        story: "In the Stockholm winter Kovalevskaya works out a new result for a hard problem of a spinning rigid body, and writes it up for a prize."
+        story: 'Kovalevskaya’s paper on rotation about a fixed point appeared in Acta Mathematica in 1889. The work identifies an integrable case with particular conditions on the moments of inertia and the position of the centre of mass. The Stockholm visit in 1888 is a fictional copying session before that publication.'
         relic: "A top model"
         relic_desc: "A brass spinning top with a number cut into its axis."
         points:
-          p1: "Follow the equations of rotation"
-          p2: "Explain the paper to the examiners"
-          p3: "Bear the Nordic winter"
+          p1: 'Locate where the body’s symmetry enters the argument'
+          p2: 'Get the proofreader to retain both qualifying conditions'
+          p3: 'Keep the assumptions with the clean copy until it is finished'
+        vignettes:
+          conditions: 'The shorthand on a practice sheet says ‘a rotating body’. You use the first page to restore two qualifications, one for inertia and one for where the centre of mass sits. The proofreader copies both onto his slip. You can take the correction away, but the journal issue is still in the future.'
+          diagram: 'The proofreader wants to try a toy top. You sketch a point that stays fixed and mark the separate point that represents the centre of mass. He can point out which is which on the next copy. The toy still spins when your time is up, and it has not proved the paper.'
+          clip: 'You put the assumptions on the outside of the exercise and fold its loose diagram into it. The next reader will see the conditions before the result. You bring home the outline of a top and leave the proof on the desk.'
       zh:
-        name: "得奖的旋转陀螺"
+        name: '写在首页的前提'
         place: "斯德哥尔摩"
         figure: "索菲娅·柯瓦列夫斯卡娅"
-        story: "柯瓦列夫斯卡娅在斯德哥尔摩的冬天里，把一个旋转刚体的难题算出了新的结果，写成论文去参加评奖。"
+        story: '柯瓦列夫斯卡娅关于刚体绕定点转动的论文发表于 1889 年的《数学学报》。她找到一种可积分的情形，对转动惯量与质心位置有特定要求。卡里 1888 年在斯德哥尔摩的誊稿工作为虚构，发生于刊出之前。'
         relic: "一只陀螺模型"
         relic_desc: "一只铜陀螺，轴上刻着编号。"
         points:
-          p1: "跟上旋转的方程"
-          p2: "向评审说明论文"
-          p3: "北欧的冬天"
+          p1: '找出论证从哪里用到刚体的对称条件'
+          p2: '请校对人把两类前提都保留下来'
+          p3: '等到誊清完成，确认前提与正文在一起'
+        vignettes:
+          conditions: '练习纸上省写成了「一个转动的刚体」。你照首页补回两类条件，一类管转动惯量，一类管质心在哪儿。校对人把两条都誊上纸条。你能抄走这两条更正，刊物还没有印出来。'
+          diagram: '校对人想拿一只陀螺试。你画了一个固定不动的点，再标出代表质心的另一个点。他拿到下一张图就能分清两个地方。收队时陀螺仍在转，这一转证明不了论文。'
+          clip: '你把前提折在练习纸外头，又把散开的图纸夹在里面。下一个人会先看见条件，再看到结论。你带回陀螺的轮廓，证明还留在桌上。'
 text:
   en:
     name: "Sofia Kovalevskaya"
@@ -45,3 +58,39 @@ text:
   zh:
     name: "索菲娅·柯瓦列夫斯卡娅"
     text: "俄国数学家，1850 年生，1891 年去世。她在斯德哥尔摩任教授，1888 年因对刚体旋转问题的研究获得法国科学院的奖。"
+hook: {en: 'Do the same equations describe every top?', zh: '谁把「某一种」抄成了「所有」？'}
+facts:
+  rotation:
+    date: '1889'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kovalevskaya_stockholm_rotation]
+    text:
+      en: 'The paper treats a particular integrable case for a rotating rigid body with a fixed point and specifies its conditions.'
+      zh: '论文研究刚体绕定点转动的一个可积分情形，并写明适用前提。'
+bystanders:
+  proofreader:
+    invented: true
+    text: {en: 'A fictional proofreader working with a loose diagram and a short exercise sheet.', zh: '虚构的校对人，手头有一张散图和一道短练习。'}
+wiki:
+  refs:
+    kovalevskaya_stockholm_rotation:
+      order: 546
+      status: checked
+      text:
+        en: 'Sophie Kowalevski, Sur le problème de la rotation d’un corps solide autour d’un point fixe, Acta Mathematica 12 https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/4909-11511_2007_Article_BF02592182.pdf'
+        zh: '柯瓦列夫斯卡娅，《论刚体绕定点的转动》，《数学学报》第 12 卷 https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/4909-11511_2007_Article_BF02592182.pdf'
+self_check:
+  fact: rotation
+  quote_line: '收队时陀螺仍在转，这一转证明不了论文。'
+  regret_choice: '试用实物讲图就没法等到刊物出来。'
+  bookend: '从省掉条件的标题，到将前提放在答案前。'
+  share_line: '我替一只陀螺保住了两类前提。'
+  share_number: '1889 年刊出'
+  knowing: '知道眼前所标的条件会出现在后来的论文中。'
+  near: 'rotation 给出刚体绕定点和特定可积分条件。'
+  lever: 'conditions 补回两类限制，diagram 区分两个点。'
+  missed: '刊物在收队后才出。'
+  brought: '陀螺示意图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

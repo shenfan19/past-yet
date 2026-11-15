@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {C: 2, G: 2}
     regret: true
+    refs: [hildegard_bingen_interdict, hildegard_bingen_letter]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["quiet","methodical"]}]}}
         - {id: p2, kind: trust, req: {"luck":0.4}}
         - {id: p3, kind: care, redeem: true, req: {"trait":["faithful","calm","attached"]}}
+      vignettes:
+        - {id: opening, traits: [methodical, quiet, artistic]}
+        - {id: wait, traits: [faithful, calm, attached]}
+        - {id: return}
     text:
       en:
-        name: "Silence in the convent"
+        name: 'The unvoiced opening'
         place: "Bingen"
         figure: "Hildegard of Bingen"
-        story: "Hildegard, abbess, composer and writer on medicine and nature, is forbidden with her nuns from singing the liturgy for some months because of a dispute over a burial. She dies in September 1179."
-        relic: "A page of chant"
-        relic_desc: "A page of neumes above Latin words, copied for the nuns."
+        story: 'Hildegard’s letter to the Mainz prelates protests a restriction on her community’s worship during a dispute over a burial. Another letter in the Mainz regesta concerns the dispute in 1179. This episode imagines two members of the Rupertsberg community preserving a cue on a practice page while they wait.'
+        relic: 'A chant practice page'
+        relic_desc: 'An invented page with a thread marking its opening.'
         points:
-          p1: "Hear her chants (a musician or a sensitive employee)"
-          p2: "Catch her in a quiet hour"
-          p3: "Sit with her through the silent months"
+          p1: 'Identify the first line by the marks on the practice page'
+          p2: 'Get permission to compare the worn page with a spare copy'
+          p3: 'Help the next reader find the starting place without singing it'
+        vignettes:
+          opening: 'Agnes can still find the first word but no longer reads the damaged mark above it. You ask her to compare the spare page with the line she knows. She sets a thread by the right place. Now the next person can open straight to the same beginning.'
+          wait: 'Adelheid has the words by heart and is about to file the damaged sheet away. You hold it where Agnes can trace the line once more. Adelheid copies the opening onto a spare leaf, then keeps the old page beside it. The next reader will have both.'
+          return: 'You know the community will sing again, but Adelheid has a page to put away today. You help her show the starting place without giving voice to it. When the door closes, you can see the thread between the pages. You leave before there is singing in this room again.'
       zh:
-        name: "修道院里的静默"
+        name: '没唱出声的开头'
         place: "宾根"
         figure: "宾根的希尔德加德"
-        story: "希尔德加德是女修道院长，作曲，也写医学和自然。因为一场关于安葬的争执，她和修女们被禁止唱礼仪歌好几个月。1179年9月她去世。"
-        relic: "一页圣咏"
-        relic_desc: "一页拉丁词句上方标着纽姆谱的纸，抄给修女们用。"
+        story: '希尔德加德致美因茨教长的信，抗议当局因安葬争议限制修院礼仪。美因茨文书目录还收有1179年关乎这一争议的另一封信。游戏虚构鲁珀茨贝格修院的两名成员在等待期间，把起唱提示留到练习纸上。'
+        relic: '一页圣咏练习稿'
+        relic_desc: '虚构练习页，一根夹线标明起句。'
         points:
-          p1: "听她的圣咏"
-          p2: "碰上她安静的时候"
-          p3: "陪她度过静默的那几个月"
+          p1: '依练习纸上的记号辨认第一句'
+          p2: '得到同意，把磨损的纸与另一份抄本对照'
+          p3: '帮接手的人从谱上找到起句，暂且不唱出声'
+        vignettes:
+          opening: '阿格内斯还认得出第一个词，词上方磨坏的记号却看不清。你请她把知道的那句与备用纸对一遍。她夹一根线在对应处。下一个人翻开，也能找到同一个开头。'
+          wait: '阿德尔海德背得出词，正要把损坏的那页收起来。你托住纸，让阿格内斯沿着那行再走一遍。阿德尔海德把开头抄到备用页上，旧纸放在旁边。下一个人来时，两份都还在。'
+          return: '你知道修院日后还会唱起来，可阿德尔海德现在得收好那一页。你帮她指明开头，先不唱出来。门合上时，纸页间还看得见那根线。等这屋里再有人唱，你已离开了。'
 text:
   en:
     name: Hildegard of Bingen
@@ -45,3 +58,57 @@ text:
   zh:
     name: 宾根的希尔德加德
     text: 德国女修道院长，1098 年生，1179 年去世，在莱茵河畔的宾根。她写幻象神学、医学与博物学著作，还作了大量圣咏，是中世纪个人留存作品最多的作曲家之一。
+hook: {en: 'How do you pass on a chant in silence?', zh: '不能唱的时候，圣咏怎样传下去？'}
+facts:
+  interdict:
+    date: '1178'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hildegard_bingen_interdict]
+    text:
+      en: 'The letter objects to a ban that interrupts the community’s singing and argues for its place in worship.'
+      zh: '信中反对妨碍修院歌唱的禁令，并申明歌唱在礼仪中的地位。'
+  letter:
+    date: '1179'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hildegard_bingen_letter]
+    text:
+      en: 'The regesta record correspondence with Archbishop Christian over the burial and the interdict.'
+      zh: '文书纪要收录她就安葬争议和禁令写给大主教克里斯蒂安的书信。'
+bystanders:
+  agnes:
+    invented: true
+    text: {en: 'A fictional member of the community reading a damaged page.', zh: '虚构修院成员阿格内斯，要辨认磨损纸页。'}
+  adelheid:
+    invented: true
+    text: {en: 'A fictional member of the community who memorised the words.', zh: '虚构修院成员阿德尔海德，记得圣咏的词。'}
+wiki:
+  refs:
+    hildegard_bingen_interdict:
+      order: 941
+      status: checked
+      text:
+        en: 'Hildegard to the Mainz prelates, Baird and Ehrman translation excerpted in Katherine Scahill’s Wesleyan thesis https://citeseerx.ist.psu.edu/document?doi=ecc8047fc78dfdf6f200b3426c32954c8ae70919&repid=rep1&type=pdf'
+        zh: '希尔德加德致美因茨教长，贝尔德与厄尔曼英译，凯瑟琳·斯卡希尔论文引录 https://citeseerx.ist.psu.edu/document?doi=ecc8047fc78dfdf6f200b3426c32954c8ae70919&repid=rep1&type=pdf'
+    hildegard_bingen_letter:
+      order: 942
+      status: checked
+      text:
+        en: 'Mainz regesta, Hildegard of Rupertsberg to Archbishop Christian https://www.ingrossaturbuecher.de/index.php?cHash=3da9a9e2449be026d72b78dfaa15dd99&id=286&tx_hisodat_sources%5Baction%5D=show&tx_hisodat_sources%5BascDesc%5D=10&tx_hisodat_sources%5Bcontroller%5D=Sources&tx_hisodat_sources%5Bsource%5D=14803'
+        zh: '美因茨文书纪要，鲁珀茨贝格的希尔德加德致大主教克里斯蒂安 https://www.ingrossaturbuecher.de/index.php?cHash=3da9a9e2449be026d72b78dfaa15dd99&id=286&tx_hisodat_sources%5Baction%5D=show&tx_hisodat_sources%5BascDesc%5D=10&tx_hisodat_sources%5Bcontroller%5D=Sources&tx_hisodat_sources%5Bsource%5D=14803'
+self_check:
+  fact: interdict
+  quote_line: '纸页间还看得见那根线。'
+  regret_choice: 'wait 把旧页直接收走，接手人就少了一样可核对的东西。'
+  bookend: '从找不到开头到关门时还看到夹线。'
+  share_line: '今日无歌，起句还在。'
+  share_number: 'wait 旧页和副页两份。'
+  knowing: 'return 知道禁令不会一直持续。'
+  near: 'interdict 以当事人书信为据。'
+  lever: 'opening 让接手者一次翻到开头。'
+  missed: 'return 没等到重开歌声。'
+  brought: 'opening 带回虚构的夹线谱页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,38 +9,87 @@ events:
     field: exploration
     tier: 2
     channels: {Y: 2, H: 2, E: 1}
+    refs: [ibn_battuta_tangier_departure]
     scene:
       points:
         - {id: p1, kind: endure, req: {"provides":"ration"}}
         - {id: p2, kind: persuade, req: {"trait":["glib","streetwise","ambitious"]}}
         - {id: p3, kind: trust, req: {"trait":["curious","attached"]}}
+      vignettes:
+        - {id: distance, traits: [bold, curious]}
+        - {id: departure, traits: [methodical, scholarly]}
+        - {id: roll}
     text:
       en:
-        name: A journey of thirty years
+        name: 'Before the road grows long'
         place: Tangier, Morocco
         figure: Ibn Battuta
-        story: Ibn Battuta leaves Tangier for a pilgrimage and keeps going for about three decades, across much of the known world.
+        story: 'In the Rihla as compiled much later, Ibn Battuta recalls leaving Tangier in 1325 intending to make the pilgrimage. The opening distinguishes that purpose from the journey that followed. This branch imagines a porter helping to make two notes for the departure. The porter does not travel in the documented party.'
         relic: A travel-worn sandal
         relic_desc: A leather sandal resoled many times.
         points:
-          p1: "Cross a stretch of desert with a caravan"
-          p2: "Introduce yourself at a foreign court"
-          p3: "Hear his stories at the inn"
+          p1: 'Carry a first-stop note together with the departure supplies'
+          p2: 'Get the porter to separate tonight’s stop from the final destination'
+          p3: 'Keep the note from before departure so the later account can be compared'
+        vignettes:
+          distance: 'You tell the porter that later readers will follow this journey for years on a map. He asks whether that helps him find a place to rest this evening. You leave the far destination on one slip and the next stop on another. From Tangier you can see only the start of the road.'
+          departure: 'The porter has written a destination on his packing list and called it a route. You leave the heading but mark one blank beneath it for where the traveller actually stops. You take home the copy dated at departure. It does not yet carry a return date.'
+          roll: 'You keep two little slips rolled together, the intention and the first stage. At the edge of town you return the one a porter could use that day and keep the other. You carry a beginning back to the office. The rest of the story has barely started.'
       zh:
-        name: 三十年的旅程
+        name: '长途还只有第一站'
         place: 摩洛哥丹吉尔
         figure: 伊本·白图泰
-        story: 伊本·白图泰离开丹吉尔去朝圣，一路走了大约三十年，几乎走遍当时已知的世界。
+        story: '伊本·白图泰在晚年编成的《游记》里回忆，1325 年他离开丹吉尔，原意是去朝圣。开篇所写的出发目的和后来走过的行程并非一回事。卡里搬运帮工整理两张启程纸条，属于虚构。'
         relic: 一只走旧的凉鞋
         relic_desc: 一只补过很多次底的皮凉鞋。
         points:
-          p1: "随商队走一段沙漠"
-          p2: "在异乡的宫廷里自我介绍"
-          p3: "在客栈里听他讲故事"
+          p1: '把第一站的纸条与启程用的补给一起带好'
+          p2: '请搬运帮工把今夜落脚处与远方目的地分写'
+          p3: '保留出发前的纸条，日后可与回忆对读'
+        vignettes:
+          distance: '你告诉帮工，后来的读者会在图上追着这趟路走好多年。他问这个消息能不能帮他找到今夜歇脚的地方。你把远方目的地留在一张，下一站另写一张。从丹吉尔能看见的，只是路的起头。'
+          departure: '帮工在装行李的单上写了目的地，就说那是走过的路。你留住题头，下面空一处给真正落脚的地方。你带回写有出发日期的副本，上头还填不了哪天回来。'
+          roll: '你把目的和第一段路各写一条，卷在一起。出城处你把帮工当天用得上的那张递过去，自己留另一张。带回事务所的是一个起头，后面的故事刚刚开始。'
 text:
   en:
     name: Ibn Battuta
-    text: Moroccan traveller from Tangier, 1304 to about 1369. Over nearly thirty years he travelled through North Africa, Arabia, India, China and West Africa, and dictated his Rihla on his return.
+    text: Moroccan traveller from Tangier, 1304 to about 1369. His Rihla, compiled after his return, describes journeys through North Africa, Arabia, India, China and West Africa over nearly three decades.
   zh:
     name: 伊本·白图泰
-    text: 摩洛哥旅行家，丹吉尔人，1304 年生，约 1369 年去世。近三十年间他走过北非、阿拉伯、印度、中国和西非，回来后口述了《游记》。
+    text: 摩洛哥旅行家，丹吉尔人，1304 年生，约 1369 年去世。他的《游记》在归来后编成，记有近三十年间在北非、阿拉伯、印度、中国和西非的见闻。
+hook: {en: 'Which road do you write down before leaving home?', zh: '临出门，该写下一站还是最后想去的地方？'}
+facts:
+  departure:
+    date: '1325'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_battuta_tangier_departure]
+    text:
+      en: 'The first-person account recalls leaving Tangier in 1325 with the intention of pilgrimage. It is a later account of departure, not a diary entry taken on the road.'
+      zh: '第一人称叙事回忆 1325 年离开丹吉尔时有意朝圣。它是后出的出发回忆，未当作路上当天所记的日记。'
+bystanders:
+  porter:
+    invented: true
+    text: {en: 'A fictional porter who can help with the first stretch and has no knowledge of the later journey.', zh: '虚构的搬运帮工，只照料启程这一程，不知道往后会走到哪儿。'}
+wiki:
+  refs:
+    ibn_battuta_tangier_departure:
+      order: 759
+      status: checked
+      text:
+        en: 'Ibn Battuta, Rihla, opening, H. A. R. Gibb translation, Fordham Internet History Sourcebooks https://sourcebooks.fordham.edu/source/1354-ibnbattuta.asp'
+        zh: '伊本·白图泰《游记》开篇，H. A. R. 吉布英译，福特汉姆大学史料选编 https://sourcebooks.fordham.edu/source/1354-ibnbattuta.asp'
+self_check:
+  fact: departure
+  quote_line: '从丹吉尔能看见的，只是路的起头。'
+  regret_choice: '只写遥远的目标，帮工仍不知道今晚在哪歇。'
+  bookend: '从把目的写成长路，到两条条件各自交回。'
+  share_line: '三十年的路，在这里还只有第一站。'
+  share_number: '1325 年'
+  knowing: 'distance 知道后世地图上的长途。'
+  near: 'departure 保留启程地点及实际文字。'
+  lever: '分写出发想去的地方与当日可走的一段。'
+  missed: '没等到回程。'
+  brought: '一张有出发日期的纸条。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

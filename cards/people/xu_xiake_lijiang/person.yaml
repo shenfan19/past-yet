@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {L: 3, A: 2, E: 1}
     regret: true
+    refs: [xu_xiake_lijiang_diary]
     scene:
       points:
         - {id: p1, kind: endure, req: {"any":[{"trait":["bold","hardy"]},{"stat":{"constitution":6}}]}}
         - {id: p2, kind: notice, req: {"trait":["wanderer","quiet"]}}
         - {id: p3, kind: hold, redeem: true, req: {"provides":"strength"}}
+      vignettes:
+        - {id: view, traits: [methodical, scholarly]}
+        - {id: trail, traits: [hardy, curious]}
+        - {id: slope}
     text:
       en:
-        name: "The traveller who could no longer walk"
+        name: 'The direction of the view'
         place: "Lijiang"
         figure: "Xu Xiake"
-        story: "After thirty years of travel through China, Xu Xiake falls ill with a leg complaint in the far southwest and is carried home by others. He dies in 1641, and his notes reach us in an incomplete form."
+        story: 'Xu Xiake’s Travel Diaries describe Jietuo Lin on a slope during his 1639 stay in Lijiang, noting how the site faces the landscape. The route-copying exercise below is fictional. It asks the traveller to separate the place from the view recorded there.'
         relic: "A travel notebook"
         relic_desc: "Pages of dense notes on caves, rivers and rocks, written at the end of each day."
         points:
-          p1: "Climb the mountain path with him"
-          p2: "Look at what he stops to record"
-          p3: "Carry him home on the long road"
+          p1: 'Reach the slope before the guide starts down'
+          p2: 'Separate a view from a leg of the walk on your sketch'
+          p3: 'Carry both the route and the landscape note back without mixing them'
+        vignettes:
+          view: 'The guide turns the east-facing view into an arrow for where you walked. You draw the place where your feet stopped, then add a short line for what you could see from it. He keeps both marks. By the time you return downhill, the view itself is out of sight.'
+          trail: 'At Jietuo Lin the guide tells you about a distant mountain called Gugang. You recall that Xu also described learning about it from a wall picture here. On the sheet you distinguish a place drawn on the wall from a stretch you have actually walked. When you leave, the path to Gugang is still only a question in the margin.'
+          slope: 'You copy the location before copying what faces it. On one slip there is a point on the slope and an arrow that begins at the point. It is enough to reconstruct what you meant. Beyond that arrow the diary goes on without you.'
       zh:
-        name: "再也走不动的旅行家"
+        name: '一路脚印，一处朝向'
         place: "丽江"
         figure: "徐霞客"
-        story: "走了三十年之后，徐霞客在西南边远处腿疾发作，被人抬着送回家。他于1641年去世，留下的游记并不完整。"
+        story: '1639 年徐霞客在丽江停留，《徐霞客游记》写到山腰的解脱林，并记下它面向的景色。卡里的抄路练习为虚构，要员工分清到过哪里与从那里朝哪边望。'
         relic: "一本旅行笔记"
         relic_desc: "密密麻麻的笔记，写着洞穴、河流和岩石，每天夜里写成。"
         points:
-          p1: "陪他爬山路"
-          p2: "看看他停下来记录什么"
-          p3: "背着他走完回家的长路"
+          p1: '在带路人下坡前走到山腰'
+          p2: '在草图上区分一处面向和一段行程'
+          p3: '带回路线和景物记注，别抄混'
+        vignettes:
+          view: '带路人把朝东的景色画成往东走的箭头。你先落笔画下脚停在哪里，再添一道短线标从那里看见什么。他把两种记号都留下。你一下坡，山腰那处景已经望不见了。'
+          trail: '带路人在解脱林说起远处的古冈。你想起徐霞客的游记也写过，他是从这里的一幅壁图得知那处景致的。你把画上看见的远山和脚下走过的路分开记，在古冈旁只留一个问号。等你收队，那条路还没走。'
+          slope: '你先抄地点，再抄它朝向什么。一个点留在山腰，箭头从那一点起笔，这张条子就够你回来后认出原意。再往后的游程，你没跟上。'
 text:
   en:
     name: Xu Xiake
@@ -45,3 +58,39 @@ text:
   zh:
     name: 徐霞客
     text: 明代旅行家，1587 年生，1641 年去世。约三十年里他徒步走过中国的山川和洞穴，笔记后来被整理为《徐霞客游记》，对岩溶地貌有细致描述。
+hook: {en: 'Is the direction in the diary where he looked or where he walked?', zh: '游记写向东，是走还是望？'}
+facts:
+  diary:
+    date: '1639'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [xu_xiake_lijiang_diary]
+    text:
+      en: 'The entries for the sixth and seventh days describe Jietuo Lin facing east on the hillside and mention a wall picture showing Gugang. The game’s guide is invented.'
+      zh: '初六及初七日条写解脱林在山半，面东，以翠屏相对。徐霞客说他在后轩壁图上得知古冈的景致。卡里的带路人是虚构角色。'
+bystanders:
+  guide:
+    invented: true
+    text: {en: 'A fictional guide working out which mark on a route sketch means what.', zh: '虚构的带路人，要在路线草图上分清不同记号。'}
+wiki:
+  refs:
+    xu_xiake_lijiang_diary:
+      order: 646
+      status: checked
+      text:
+        en: 'Xu Xiake, Travel Diaries, Yunnan diary VII, sixth and seventh days of the second lunar month https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
+        zh: '徐霞客《徐霞客游记·滇游日记七》，崇祯十二年二月初六、初七日条 https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
+self_check:
+  fact: diary
+  quote_line: '一个点留在山腰，箭头从那一点起笔。'
+  regret_choice: '只抄朝向会把看到的方位误画成走过的路。'
+  bookend: '从一个含混朝向，改成脚下地点与望向两种记号。'
+  share_line: '我画了去过的地方，也画了站在那里看见的方向。'
+  share_number: '1639 年'
+  knowing: 'trail 员工知道日记里有关古冈的见闻来自壁图。'
+  near: 'diary 给出解脱林位置和朝向。'
+  lever: '补一个地点点与望向。'
+  missed: '望不见原来那一处景，后续游程也赶不上。'
+  brought: '点和箭头兼有的短图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {G: 2, S: 2}
     regret: true
+    refs: [ibn_khaldun_cairo_method]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["cosmopolitan","artistic","sensitive"]}}
         - {id: p2, kind: notice, req: {"trait":["curious","streetwise","artistic"]}}
         - {id: p3, kind: hold, redeem: true, req: {"job":["archivist","teacher","student"]}}
+      vignettes:
+        - {id: gate, traits: [curious, methodical, skeptical]}
+        - {id: two, traits: [sensitive, artistic, cosmopolitan]}
+        - {id: later}
     text:
       en:
-        name: "A preface that outgrew its history"
+        name: 'How long the gate was open'
         place: "Cairo"
         figure: "Ibn Khaldun"
-        story: "Ibn Khaldun writes a preface to a history that becomes a study of how societies and economies rise and fade. He loses his wife and daughters in a shipwreck in 1384 and teaches on in Cairo until he dies in 1406."
-        relic: "A bound volume of lectures"
-        relic_desc: "A heavy volume of notes written for lectures at the college."
+        story: 'In the Muqaddimah, Ibn Khaldun asks historians to test accounts against what could happen in the society they describe. The game sets an imagined reading in Cairo near the end of his life in 1406. Two fictional readers try the idea on a gatekeeper’s report.'
+        relic: 'A checked practice report'
+        relic_desc: 'A fictional report with the observer’s position added.'
         points:
-          p1: "Sit with a man who has lost his family"
-          p2: "Follow his idea of why cities grow and fade"
-          p3: "Carry his idea forward for the readers who come later (a record keeper, a teacher or a student)"
+          p1: 'Ask the witness how long the gate was open'
+          p2: 'Compare the copied total with what the counter actually watched'
+          p3: 'Keep the two readings together until the next traveller arrives'
+        vignettes:
+          gate: 'Hamid has heard that the procession filed through a single gate in the time between two calls. You ask him to walk that interval back from what he remembers. He watched only the first line of people. On the sheet he changes a total to an estimate and writes down where he stood.'
+          two: 'Samira has the account from across the street, crammed into the margin of Hamid’s. You make room for hers on a separate leaf and ask where her view stopped. Her account still differs from his, and both have enough detail for the next reader to ask why.'
+          later: 'You know how often later readers will repeat a famous example about implausible numbers. Hamid needs a way to test this number today. You leave him with the length of the interval and the place he watched. The second traveller is still on the road when you leave.'
       zh:
-        name: "比史书更大的序言"
+        name: '城门开了多久'
         place: "开罗"
         figure: "伊本·赫勒敦"
-        story: "伊本·赫勒敦为一部史书写的序言，成了一部研究社会与经济如何兴衰的著作。1384年他的妻女在海难中去世，此后他在开罗继续教书，直到1406年去世。"
-        relic: "一册装订好的讲稿"
-        relic_desc: "一册厚厚的笔记，是为学院讲课写的。"
+        story: '伊本·赫勒敦在《历史绪论》中提出，史家要用所写社会中可能发生的事情检验传闻。游戏在他生命将尽的1406年虚构一次开罗读书会，两名虚构读者拿一份守门记录试这个办法。'
+        relic: '一页核对过的练习记录'
+        relic_desc: '虚构观察记录，后来注明了观察者所站的位置。'
         points:
-          p1: "陪一位失去家人的人坐坐"
-          p2: "跟上他对城市为何兴起又衰落的想法"
-          p3: "把他的想法传给以后的读者"
+          p1: '请在场人说说城门开了多久'
+          p2: '比较抄下的总数与点数人实际看见的范围'
+          p3: '把两份读法放在一起，等下一位知情者来'
+        vignettes:
+          gate: '哈米德听说，整队人在两次呼声之间穿过了同一座门。你请他照记忆把这段时间捋一遍。他亲眼只见到最前一列，就把纸上的总数改成估算，添上自己当时站的位置。'
+          two: '萨米拉站在街对面，笔记却挤在哈米德那张纸边上。你替她另腾一页，请她说清视线能到哪里。她的说法仍和他不同，两份都保有足够细节，下一个读者还可以接着追问。'
+          later: '你知道后人会反复转述一个关于离谱数字的著名例子。哈米德眼下要检验的是这个数字。你留给他亲自核过的一段时间和看过的位置。你走时，第二位知情人还在路上。'
 text:
   en:
     name: Ibn Khaldun
@@ -45,3 +58,42 @@ text:
   zh:
     name: 伊本·赫勒敦
     text: 阿拉伯历史学家与政治家，1332 年生，1406 年去世，生于突尼斯。他的《历史绪论》分析王朝的兴衰和群体凝聚力的作用，被视为社会科学的早期著作。他在开罗去世。
+hook: {en: 'A large number sounds right. Can it fit?', zh: '数字听着可信，可城门容得下吗？'}
+facts:
+  method:
+    date: '1406'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_khaldun_cairo_method]
+    text:
+      en: 'The introduction describes testing historical reports for possibility in the society they concern. The scene’s year is the end-of-life setting, rather than the date of initial composition.'
+      zh: '绪论讨论依据相关社会中的可能性检验历史叙述。场景采用其生命末年的年份，并非这部书初次成文的时间。'
+bystanders:
+  hamid:
+    invented: true
+    text: {en: 'A fictional reader who watched only part of a procession.', zh: '虚构读者哈米德，只看见队伍的一部分。'}
+  samira:
+    invented: true
+    text: {en: 'A fictional reader with a different view across the street.', zh: '虚构读者萨米拉，在街对面看到另一段。'}
+wiki:
+  refs:
+    ibn_khaldun_cairo_method:
+      order: 917
+      status: checked
+      text:
+        en: 'Ibn Khaldun, Muqaddimah, introductory selections, Carnegie Mellon University in Qatar https://web2.qatar.cmu.edu/~breilly2/world/Ibn%20Khaldun.htm'
+        zh: '伊本·赫勒敦《历史绪论》开篇选段，卡内基梅隆大学卡塔尔校区 https://web2.qatar.cmu.edu/~breilly2/world/Ibn%20Khaldun.htm'
+self_check:
+  fact: method
+  quote_line: '他把纸上的总数改成估算。'
+  regret_choice: 'gate 若把估计抄成确定人数，就遮掉了观察范围。'
+  bookend: '从传闻数字回到站在街上的位置。'
+  share_line: '两个人，两段看见的队伍。'
+  share_number: 'two 两份虚构笔记。'
+  knowing: 'later 知道后来读者常讲这类例子。'
+  near: 'method 核对绪论提出的查证思路。'
+  lever: 'two 保住独立记录。'
+  missed: 'later 第二位知情人还在路上。'
+  brought: 'gate 带回注明位置的练习页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 2
     channels: {H: 3, L: 3}
+    refs: [imhotep_saqqara_base, imhotep_saqqara_pyramid]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["builder","carpenter"]},{"trait":["hardy"]}]}}
         - {id: p2, kind: endure, req: {"provides":"warmth"}}
         - {id: p3, kind: notice, req: {"stat":{"wit":7}}}
+      vignettes:
+        - {id: rock, traits: [handy, methodical]}
+        - {id: turn, traits: [hardy, patient, kind]}
+        - {id: name}
     text:
       en:
-        name: The first great stone pyramid
+        name: 'The working edge'
         place: Saqqara, Egypt
         figure: Imhotep
-        story: Imhotep, the architect of King Djoser, is credited with the step pyramid, one of the first large buildings of cut stone.
-        relic: A mason's mallet
-        relic_desc: A wooden mallet worn smooth by many hands.
+        story: 'A statue base from Djoser’s complex at Saqqara bears Imhotep’s name and titles. Museums credit him with designing the Step Pyramid. The card uses a broad Third Dynasty date and imagines a workshop testing two practice blocks. Its workers and their measurements are fictional.'
+        relic: 'A joining-edge rubbing'
+        relic_desc: 'A fictional rubbing from the practice bench.'
         points:
-          p1: "Measure and set the stones"
-          p2: "Haul stone under the blazing sun"
-          p3: "Understand the stepped design"
+          p1: 'Support the practice block while the mason tries the edge'
+          p2: 'Stay at the bench until both surfaces can be checked'
+          p3: 'Find the part of the joint that catches before the pieces are moved'
+        vignettes:
+          rock: 'Mut sees a flat face and reaches for the next block. You ask her to rock this one gently on the bench first. One corner taps the wood while the other stays clear. She marks the high spot so the person on the next shift can find it under a different light.'
+          turn: 'Hori can carry the two pieces away or keep the heavier one in place until Mut checks it. You hold the lighter block while he waits. Mut marks the mating edge on both faces. When the pieces are taken away, the marks go with them.'
+          name: 'You know which name later viewers will look for on the statue base. Hori wants to know which of the two trial blocks belongs with the one in his hands. You show him the matching mark. The statue and its inscription are still beyond the corner of the workshop you can visit.'
       zh:
-        name: 第一座大型石头金字塔
+        name: '试过的那条边'
         place: 埃及萨卡拉
         figure: 伊姆霍特普
-        story: 国王左塞尔的建筑师伊姆霍特普被认为设计了阶梯金字塔，那是最早的大型切石建筑之一。
-        relic: 石匠的木槌
-        relic_desc: 被许多只手磨得光滑的木槌。
+        story: '萨卡拉左塞尔建筑群出土的雕像底座刻有伊姆霍特普的姓名和头衔。博物馆将阶梯金字塔的设计归于他。游戏用第三王朝的约略年份，虚构工坊用两块练习石试拼；帮工和读数均为虚构。'
+        relic: '一张接边记号拓片'
+        relic_desc: '虚构工台上的接边记号拓片。'
         points:
-          p1: "量石定位"
-          p2: "在烈日下拉石"
-          p3: "看懂阶梯式的设计"
+          p1: '石工试接边时扶稳练习石'
+          p2: '留在台边，等两面都查过再走'
+          p3: '搬石块前找出接缝卡在哪儿'
+        vignettes:
+          rock: '穆特见石面平整，就要去拿下一块。你请她先在台面轻轻摇一下这块。一角敲着木面，另一角没沾上。她在高点做记号，换个人、换个光线也找得着。'
+          turn: '霍里可以现在搬走两块练习石，也可以留着沉的那块，等穆特来查。你扶住轻的那块，陪他等。穆特在两块石头相接的面上各做记号。石头搬走时，记号也跟着带走。'
+          name: '你知道后世看雕像底座时会找谁的名字。霍里只想知道哪块试石该跟手里这块配。你指给他看那个能对上的记号。造像和刻字的地方，还在你这趟能走到的工坊外。'
 text:
   en:
     name: Imhotep
@@ -44,3 +57,57 @@ text:
   zh:
     name: 伊姆霍特普
     text: 古埃及第三王朝的官员与建筑师，活跃于公元前 2650 年前后。相传他设计了萨卡拉的左塞尔阶梯金字塔，这是最早的大型石构建筑之一，后来他被奉为医药之神。
+hook: {en: 'The face that looks even still rocks.', zh: '看着很平，怎么还会晃？'}
+facts:
+  base:
+    date: '-2650'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [imhotep_saqqara_base]
+    text:
+      en: 'The museum displays a base bearing Imhotep’s name and titles. The named year is an approximate game setting.'
+      zh: '博物馆陈列刻有伊姆霍特普姓名与头衔的底座。年份是游戏采用的约数。'
+  pyramid:
+    date: '-2650'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [imhotep_saqqara_pyramid]
+    text:
+      en: 'The museum credits Imhotep with the design of the Step Pyramid; its statuette is a later object.'
+      zh: '馆方将阶梯金字塔的设计归于伊姆霍特普。该馆坐像属于更晚时期。'
+bystanders:
+  mut:
+    invented: true
+    text: {en: 'A fictional craft worker checking whether a face fits.', zh: '虚构工匠穆特，检查石面贴得平不平。'}
+  hori:
+    invented: true
+    text: {en: 'A fictional worker carrying practice blocks between benches.', zh: '虚构工人霍里，在工台间搬动练习石。'}
+wiki:
+  refs:
+    imhotep_saqqara_base:
+      order: 897
+      status: checked
+      text:
+        en: 'Egypt State Information Service, Imhotep Museum, Djoser statue base https://sis.gov.eg/en/egypt/tourism/cultural-tourism/museums/imhotep-museum-in-saqqara/'
+        zh: '埃及国家信息署，伊姆霍特普博物馆，左塞尔雕像底座 https://sis.gov.eg/en/egypt/tourism/cultural-tourism/museums/imhotep-museum-in-saqqara/'
+    imhotep_saqqara_pyramid:
+      order: 898
+      status: checked
+      text:
+        en: 'Metropolitan Museum of Art, Statuette of Imhotep, object 551301 https://www.metmuseum.org/art/collection/search/551301'
+        zh: '大都会艺术博物馆，伊姆霍特普坐像，馆藏条目551301 https://www.metmuseum.org/art/collection/search/551301'
+self_check:
+  fact: base
+  quote_line: '一角敲着木面，另一角没沾上。'
+  regret_choice: 'turn 若先收走，下一班无从知道两块哪边相接。'
+  bookend: '开头看石面，收尾靠两处记号认出配对。'
+  share_line: '两块石头，各有一处接边记号。'
+  share_number: 'turn 两块虚构试石。'
+  knowing: 'name 知道后来还有一块带名石座。'
+  near: 'base 地点与姓名有出土物证。'
+  lever: 'rock 找到一处接触高点。'
+  missed: 'name 没有走进刻字的地方。'
+  brought: 'turn 带回虚构试石表面的记号摹片。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

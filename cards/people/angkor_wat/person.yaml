@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 2
     channels: {H: 3, L: 3, E: 1}
+    refs: [angkor_wat_site, angkor_wat_causeway]
     scene:
       points:
         - {id: p1, kind: endure, req: {"provides":"warmth"}}
         - {id: p2, kind: hold, req: {"any":[{"job":["builder","carpenter"]},{"trait":["hardy"]}]}}
         - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+      vignettes:
+        - {id: route, traits: [methodical, scholarly]}
+        - {id: load, traits: [hardy, curious]}
+        - {id: edge}
     text:
       en:
-        name: A temple the size of a city
+        name: 'The path marked on two sheets'
         place: Angkor, Cambodia
         figure: The Khmer builders
-        story: Khmer builders raise the vast temple of Angkor Wat, with miles of carved reliefs on its galleries.
-        relic: A sandstone apsara fragment
-        relic_desc: A carved face the size of a hand.
+        story: 'The APSARA National Authority records Angkor Wat as a twelfth-century monument with a sandstone causeway and galleries with carved reliefs. The work crew’s wayfinding check below is invented. The map year places the visit in the building period.'
+        relic: 'A route sketch'
+        relic_desc: 'A drawing marking the sandstone crossing and the start of the gallery.'
         points:
-          p1: "Haul stone in the wet heat"
-          p2: "Line up the blocks"
-          p3: "Read the order of the reliefs"
+          p1: 'Walk the crossing and mark which side of the moat you are on'
+          p2: 'Hold the sketch in the same direction while the helper points out the turn'
+          p3: 'Give the next crew separate marks for the crossing and the gallery'
+        vignettes:
+          route: 'The works helper has drawn the crossing and the gallery as one continuous edge. You face the sheet towards the approach and mark where the two lines stop matching. He can now indicate the handover point with one finger. You take the corrected sketch. The next crew has not yet tested it.'
+          load: 'You know later visitors will describe the reliefs long after this path is forgotten. The helper asks where someone carrying a drawing should pause without blocking the crossing. You walk back to the turn and mark one place on the sketch. You leave before a second carrier tries it.'
+          edge: 'You copy the edge of the moat onto one sheet and the first stretch of the gallery onto another. The helper places the two together where the path turns. You bring away the outline. You never see the whole gallery from this one spot.'
       zh:
-        name: 一座城那么大的庙
+        name: '分两张记下的进场路线'
         place: 柬埔寨吴哥
         figure: 高棉的建造者们
-        story: 高棉的建造者们建起了巨大的吴哥窟，回廊上有长长的石雕浮雕。
-        relic: 一块砂岩飞天碎片
-        relic_desc: 一张巴掌大的雕刻脸。
+        story: '柬埔寨吴哥遗址管理机构 APSARA 记载，吴哥窟为十二世纪建筑，有砂岩堤道和带浮雕的回廊。卡中工班核对进场路线的差事是虚构的，年份取营建时期。'
+        relic: '一张进场路线图'
+        relic_desc: '标出砂岩堤道与回廊起点的草图。'
         points:
-          p1: "在湿热里搬石"
-          p2: "对齐石块"
-          p3: "读懂浮雕的次序"
+          p1: '走过堤道，标明自己站在护城河哪一侧'
+          p2: '帮工指转弯处时，把图朝同一方向举稳'
+          p3: '分别标出过河段与回廊，留给下一班'
+        vignettes:
+          route: '工场帮工把堤道和回廊接成同一条边。你把纸转向来路，圈出两条线从哪儿对不上。他现在能用一根手指点出该在哪里交接。你把订正图记下，下一班还没来试走。'
+          load: '你知道后来的访客会反复写到浮雕，今天这条送图的路却未必有人记得。帮工问拿图的人在哪儿停才不挡路。你走回转弯处，在图上补一点。还没等另一个人照着走，你就收队了。'
+          edge: '你在一张纸上抄下河沿，另一张抄回廊头一段。帮工把两纸在转弯处对齐。你带走这一小段轮廓，在这里怎么转头也看不见整条回廊。'
 text:
   en:
     name: The Khmer builders
@@ -44,3 +57,54 @@ text:
   zh:
     name: 高棉的建造者们
     text: 吴哥窟寺庙群的建造者，建于十二世纪上半叶，在高棉国王苏利耶跋摩二世治下。设计仿照世界中心的须弥山，围墙上刻有长卷浮雕。建筑师的名字没有留下。
+hook: {en: 'Where does the crossing end and the gallery begin?', zh: '过桥以后，回廊从哪儿算起？'}
+facts:
+  site:
+    date: '1150'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [angkor_wat_site]
+    text:
+      en: 'APSARA describes Angkor Wat and its galleries. The game year places the visit approximately in the twelfth century.'
+      zh: 'APSARA 记载吴哥窟及回廊。卡里年份用于定位十二世纪的故事窗口。'
+  causeway:
+    date: '1150'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [angkor_wat_causeway]
+    text:
+      en: 'The conservation record identifies sandstone paving along the causeway. It documents modern work, not the fictional handover.'
+      zh: '保护记录载有堤道的砂岩铺面，记的是现代工程，卡里的交接为虚构。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'An invented works helper trying to hand off a route drawing to the next crew.', zh: '虚构的工场帮工，需要把进场路线交给下一班。'}
+wiki:
+  refs:
+    angkor_wat_site:
+      order: 665
+      status: checked
+      text:
+        en: 'APSARA National Authority, Angkor Wat, site description https://apsaraauthority.gov.kh/2021/06/14/angkor-wat/'
+        zh: 'APSARA 吴哥遗址管理机构，吴哥窟建筑说明 https://apsaraauthority.gov.kh/2021/06/14/angkor-wat/'
+    angkor_wat_causeway:
+      order: 666
+      status: checked
+      text:
+        en: 'APSARA National Authority, conservation record for Angkor Wat’s sandstone causeway https://apsaraauthority.gov.kh/2022/11/15/fill-the-mortar-at-angkor-wats-causeway/'
+        zh: 'APSARA 吴哥遗址管理机构，吴哥窟砂岩堤道保护记录 https://apsaraauthority.gov.kh/2022/11/15/fill-the-mortar-at-angkor-wats-causeway/'
+self_check:
+  fact: site
+  quote_line: '他现在能用一根手指点出该在哪里交接。'
+  regret_choice: '把两条边画成一直线，交接位置就没处可指。'
+  bookend: '从贴不上的两张图，到能在转弯处对齐。'
+  share_line: '从堤道到回廊，差在一处转弯。'
+  share_number: '两段路线'
+  knowing: 'load 知道回廊浮雕会受后来的人关注。'
+  near: 'site 与 causeway 给出遗址结构。'
+  lever: '补一处可指认的交接点。'
+  missed: '错过下一班试走。'
+  brought: '路线订正图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

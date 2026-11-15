@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {H: 2}
+    refs: [brahmagupta_bhillamala_rules]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["charismatic","scholarly","glib"]},{"job":["teacher"]}]}}
         - {id: p3, kind: hold, req: {"job":["archivist","student"]}}
+      vignettes:
+        - {id: debt, traits: [methodical, scholarly]}
+        - {id: limit, traits: [curious, skeptical]}
+        - {id: token}
     text:
       en:
-        name: Zero as a number
+        name: 'A debt on the other side'
         place: Bhillamala, India
         figure: Brahmagupta
-        story: Brahmagupta gives rules for working with zero and negative numbers, as numbers like any others.
+        story: 'Brahmagupta’s Brāhmasphuṭasiddhānta gives arithmetic rules for debts, fortunes and zero. In those rules, subtracting a debt from a fortune increases it. The rules in the text for division by zero differ from modern arithmetic. The account sheet and its keeper are fictional.'
         relic: A palm-leaf with a small circle
         relic_desc: A leaf with a small round mark for nothing.
         points:
-          p1: "Accept that zero is also a number"
-          p2: "Explain to merchants that a negative number is a debt"
-          p3: "Copy the rules into verse"
+          p1: 'Work out the new balance when a debt of three is removed'
+          p2: 'Explain why subtracting a debt differs from subtracting money in hand'
+          p3: 'Save the instruction beside the example before the account is erased'
+        vignettes:
+          debt: 'The bookkeeper has taken three away from a balance of five, though the entry he crossed out was a debt. You put the old entry at the head of the example. The new balance is eight. He closes the board before there is time to ask how his teacher handled division by zero.'
+          limit: 'You know a modern classroom treats division by zero differently. Beside the bookkeeper’s examples you mark which ones are about addition and subtraction. The example he needs today stays on the board. You take the list home but leave before the next lesson.'
+          token: 'You place five counters for what is held and a separate marker for the debt. The bookkeeper checks which entry his pen is crossing off. You take a note of the two columns home. The next account is already being opened as you leave.'
       zh:
-        name: 零也是一个数
+        name: '账上的另一栏'
         place: 印度比拉马拉
         figure: 婆罗摩笈多
-        story: 婆罗摩笈多给出了用零和负数做运算的规则，把它们当作和别的数一样的数。
+        story: '婆罗摩笈多的《婆罗摩历算全书》列出负债、财产与零的运算规则。从财产中减去一笔债，会使账上的数增加。书中关于除以零的规定与现代算术有别。账页和管账人都属于分支演绎。'
         relic: 一片画着小圆圈的棕榈叶
         relic_desc: 一片叶子，上面有个代表“没有”的小圆圈。
         points:
-          p1: "接受零也是一个数"
-          p2: "向商人解释负数就是债"
-          p3: "把规则抄成偈颂"
+          p1: '算清移掉三份欠款后的余额'
+          p2: '说明减去欠款和减去到手的钱有什么区别'
+          p3: '擦账前把算例和规则抄在同一张纸上'
+        vignettes:
+          debt: '管账人从五里面减了三，可他划掉的原是一笔欠款。你把原账项抄在算例上头，算出的余额是八。还没来得及问他老师怎么处理除以零，他就合上了账板。'
+          limit: '你知道现在的课堂对除以零有不同处理。你在管账人的例题旁画记号，标出哪些属于加减。今天要用的那道题仍留在板上。你把这份清单记走，下一堂没赶上。'
+          token: '你放下五枚筹子表有的钱，另放一枚标那笔债。管账人看清笔下划掉的是哪一栏。你带回两栏各管什么的笔记。临走时，下一本账已翻开。'
 text:
   en:
     name: Brahmagupta
@@ -44,3 +57,39 @@ text:
   zh:
     name: 婆罗摩笈多
     text: 印度数学家与天文学家，598 年生，约 668 年去世。他 628 年的著作把零当作一个数，给出它和负数的运算规则，还给出解二次方程的方法。
+hook: {en: 'What happens when a debt is taken away?', zh: '抹去一笔欠账，数往哪儿走？'}
+facts:
+  rules:
+    date: '628'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [brahmagupta_bhillamala_rules]
+    text:
+      en: 'Chapter XVIII sets out operations with debts, fortunes and zero. The fictional account illustrates the subtraction rule.'
+      zh: '第十八章列出负债、财产和零的运算。卡中账页为演示减法规则所编。'
+bystanders:
+  bookkeeper:
+    invented: true
+    text: {en: 'A fictional bookkeeper who wants to correct the balance before closing his account board.', zh: '虚构的管账人，合账板前还要改一处余额。'}
+wiki:
+  refs:
+    brahmagupta_bhillamala_rules:
+      order: 538
+      status: checked
+      text:
+        en: 'Brahmagupta, Brāhmasphuṭasiddhānta, chapter XVIII, §§30–35, H. T. Colebrooke, 1817 https://zenodo.org/records/7882650'
+        zh: '婆罗摩笈多《婆罗摩历算全书》第十八章第 30–35 节，科尔布鲁克 1817 年译本 https://zenodo.org/records/7882650'
+self_check:
+  fact: rules
+  quote_line: '你把原账项抄在算例上头，算出的余额是八。'
+  regret_choice: '帮忙核完旧账，就错过下一堂。'
+  bookend: '从划错一栏开始，到能说清划掉的是哪一栏。'
+  share_line: '划掉一笔债，账上从五变成八。'
+  share_number: '八'
+  knowing: 'limit 员工知道现代除以零的处理不同。'
+  near: 'rules 锚定账页采用的运算。'
+  lever: '补回原账项并改一个余额。'
+  missed: '下一堂收队后才开始。'
+  brought: '一份可重算的账例。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

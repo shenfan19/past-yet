@@ -11,7 +11,7 @@ events:
     era: mallory_everest_1924
     channels: {A: 3, C: 3}
     regret: true
-    refs: [mallory_letters_1924]
+    refs: [mallory_letters_1924, mallory_magdalene_timeline]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
@@ -102,6 +102,7 @@ wiki:
       unlock:
         era: mallory_everest_1924
       refs:
+        - mallory_magdalene_timeline
         - everest1925
         - game
       text:
@@ -112,6 +113,12 @@ wiki:
           name: 高营地的计划
           text: 高营地怎样补给、氧气装置用到什么程度，在山上一直有争论。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
   refs:
+    mallory_magdalene_timeline:
+      order: 1002
+      status: checked
+      text:
+        en: 'Magdalene College Archives, Mallory collection chronology (5 and 8 June 1924) https://magdalene.maxarchiveservices.co.uk/index.php/informationobject/browse?page=128&sf_culture=nl&showAdvanced=1&sort=startDate&sortDir=asc&topLod=0&view=table'
+        zh: '剑桥大学麦格达伦学院档案，马洛里馆藏时间线（1924年6月5日与8日） https://magdalene.maxarchiveservices.co.uk/index.php/informationobject/browse?page=128&sf_culture=nl&showAdvanced=1&sort=startDate&sortDir=asc&topLod=0&view=table'
     mallory_letters_1924:
       order: 170
       status: checked
@@ -137,6 +144,7 @@ era_text:
       - himalaya
       - history
     event_titles:
+      expedition_handoff: 'The blank on the climbing sheet'
       time_strain: Time slip
     plots:
       field_notes:
@@ -167,20 +175,24 @@ era_text:
         - You can save today's people but not the whole mountain. On the main timeline the plan was not changed.
         - Rest and oxygen matter more than any one brave idea, but a plan only changes when someone is heard.
     events:
+      expedition_handoff: '{staff} and Edith reconcile two camp numbers before sealing the packet. Dawa has already gone with the first load, so Edith logs a later dispatch.'
+      expedition_send: '{staff} sends Dawa with the dated sheet and writes ‘sighting pending’ in the blank. Edith keeps a duplicate for later reports.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       convince: 'Convince Mallory'
       trust: 'Win the trust of the party'
-      reform: 'Have the plan for the high camps changed ahead of history'
+      reform: 'Have the plan for the high camps changed ahead of the model’s baseline'
     milestones:
+      camp_iv: '{date}: George Mallory and Andrew Irvine are at Camp IV.'
+      odell_sighting: '{date}: Noel Odell reports seeing two climbers he identifies as Mallory and Irvine. Their subsequent progress is unresolved.'
       first_treat: '{date}: {staff} gives the first dose of medicine and warm tea to a man with a splitting head. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first oxygen and blankets at the camp, and teaches the porters to use them.'
       met_mallory: '{date}: {staff} is received by Mallory.'
       mallory_trusts: '{date}: Mallory gives {staff} the notes to work from.'
       mallory_convinced: '{date}: Mallory takes up the plan that {staff} put to him.'
       board_moves: '{date}: Word goes round that the plan might change.'
-      reform_history: '{date}: The plan for the high camps is changed. The main timeline does not change.'
-      reform_early: '{date}: The plan for the high camps is changed {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulation sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The plan for the high camps is changed {advance_days:1} days before the model’s baseline. The main timeline does not change, only this branch.'
       trust_won: '{date}: The porters no longer keep {staff} out, and some ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of ailing men falls to one or none.'
@@ -188,8 +200,8 @@ era_text:
       near_death: '{staff} collapses at Everest and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend at Everest. The plan was changed {advance_days:1} days earlier than in the main timeline.'
-      perfect: '{staff} completed the task at Everest and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      legend: '{staff} left a legend at Everest. The plan was changed {advance_days:1} days before the model’s baseline.'
+      perfect: '{staff} completed the task at Everest and came back safe. The simulation records {base_D:i} lost in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days at Everest, did what was within reach, and came back safe.'
     quotes:
@@ -239,6 +251,7 @@ era_text:
       - himalaya
       - history
     event_titles:
+      expedition_handoff: '登山记录表的空格'
       time_strain: 时间错位
     plots:
       field_notes:
@@ -269,20 +282,24 @@ era_text:
         - 你能救今天的人，救不了整座山。主时间线上计划没有改。
         - 休息和氧气比任何一个勇敢的主意都重要，但计划只有在有人被听见时才会改。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{staff} 和伊迪丝核对两处营地编号后才封包。达瓦已随第一批物资出发，伊迪丝把这封登记为下一趟。'
+      expedition_send: '{staff} 请达瓦带走注明日期的记录，在空格写上「待补目击」。伊迪丝把副本留给后来送到的消息。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: '说服马洛里'
       trust: '赢得队伍的信任'
-      reform: '让高营地计划比历史上更早改变'
+      reform: '让高营地计划比模型基准更早改变'
     milestones:
+      camp_iv: '{date}，乔治·马洛里和安德鲁·欧文在四号营地。'
+      odell_sighting: '{date}，诺埃尔·奥德尔报告看见两名登山者，认作马洛里与欧文。两人此后到达何处仍有疑问。'
       first_treat: '{date}：{staff} 给一个头痛欲裂的人喂下第一份药和热茶，他开始开口了。'
       first_protect: '{date}：{staff} 在营地发下第一批氧气和毯子，教挑夫们使用。'
       met_mallory: '{date}：{staff} 被马洛里接见。'
       mallory_trusts: '{date}：马洛里把笔记交给 {staff} 用。'
       mallory_convinced: '{date}：马洛里采纳了 {staff} 提出的办法。'
       board_moves: '{date}：消息传开，计划也许要改。'
-      reform_history: '{date}：高营地计划被改了。主时间线没有变化。'
-      reform_early: '{date}：高营地计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟按模型基准日调整安排。'
+      reform_early: '{date}：高营地计划比模型基准提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
       trust_won: '{date}：挑夫们不再把 {staff} 挡在外面，有的还开口求助。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
@@ -290,8 +307,8 @@ era_text:
       near_death: '{staff} 在珠峰倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在珠峰留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
-      perfect: '{staff} 在珠峰完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      legend: '{staff} 在珠峰留下了传说。计划比模型基准提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在珠峰完成了任务，平安回来。模拟基准损失 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
       modest: '{staff} 在珠峰待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -329,3 +346,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 乔治·马洛里的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'A sighting has a place on the sheet. So does a gap.', zh: '目击有地方可写，没看到的也留一格。'}
+facts:
+  camp_iv:
+    date: '1924-06-05'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [mallory_magdalene_timeline, mallory_letters_1924]
+    text:
+      en: 'George Mallory and Andrew Irvine are at Camp IV.'
+      zh: '乔治·马洛里和安德鲁·欧文在四号营地。'
+  odell_sighting:
+    date: '1924-06-08'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [mallory_magdalene_timeline, mallory_letters_1924]
+    text:
+      en: 'Noel Odell reports seeing two climbers he identifies as Mallory and Irvine. Their subsequent progress is unresolved.'
+      zh: '诺埃尔·奥德尔报告看见两名登山者，认作马洛里与欧文。两人此后到达何处仍有疑问。'
+bystanders:
+  dawa:
+    invented: true
+    text: {en: 'Dawa, an invented dispatch aide, takes a liftable packet with the outgoing load.', zh: '达瓦是虚构的传递员，随出发的一批物资带走公文。'}
+  edith:
+    invented: true
+    text: {en: 'Edith, an invented dispatch clerk, wants each sighting copied with its own place and date.', zh: '伊迪丝是虚构的文书员，坚持让每一条目击都带上自己的地点和日期。'}
+self_check:
+  fact: camp_iv
+  quote_line: '空格写「待补」，别替目击者填上去。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '目击有地方可写，没看到的也留一格。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '目击有地方可写，没看到的也留一格。'
+  share_number: '6月5日四号营地，6月8日最后目击'
+  knowing: 'odell_sighting 知道后续有史料记下的日期。'
+  near: 'camp_iv, odell_sighting'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: science
     tier: 3
     channels: {V: 1}
+    refs: [al_haytham_cairo_aperture]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["artistic","methodical","quiet"]}}
         - {id: p2, kind: hold, req: {"stat": {"wit": 7}}}
         - {id: p3, kind: endure, req: {"luck": 0.5}}
+      vignettes:
+        - {id: slit, traits: [methodical, artistic, quiet]}
+        - {id: cover, traits: [patient, handy, kind]}
+        - {id: term}
     text:
       en:
-        name: Light, tested by experiment
+        name: 'One slit of light'
         place: Cairo
         figure: Ibn al-Haytham
-        story: Ibn al-Haytham, writing in Cairo, tests how light travels in a dark room and shows that we see because light enters the eye.
-        relic: A pinhole screen
-        relic_desc: A dark board with one small hole.
+        story: 'In the Book of Optics, Ibn al-Haytham discusses seeing parts of an object through an aperture as the object is moved. The game imagines a Cairo workshop using that observation. The year is approximate, and the boards, room and helpers are fictional.'
+        relic: 'A practice aperture screen'
+        relic_desc: 'An imagined screen used to compare two positions.'
         points:
-          p1: "Ask how seeing works"
-          p2: "Help build the dark chamber"
-          p3: "A bright day"
+          p1: 'Match the visible mark to the one on the moving board'
+          p2: 'Hold the screen still while the board moves'
+          p3: 'Stay to watch the trial with one mark covered'
+        vignettes:
+          slit: 'Maryam sees the dark edge and records the whole stripe. You ask Yusuf to slide the board until a different strip shows through. She draws both positions next to the one opening. She can now tell a change in the board’s position from a change in the slit.'
+          cover: 'Yusuf wants to swing the lamp round for a better view. You keep it where it is and let him cover one mark on the board. Maryam calls out when that mark disappears. By the time the door is opened, she has tried one change she can make again.'
+          term: 'You know the name later readers will give to experiments with small openings. Maryam has time for one observation before the room must be shared again. You ask her to say which mark she actually sees. The room brightens before anyone can repeat it.'
       zh:
-        name: 用实验检验光
+        name: '窄缝里的一线光'
         place: 开罗
         figure: 伊本·海赛姆
-        story: 在开罗写作的伊本·海赛姆，在暗室里检验光是怎么走的，证明我们看见东西，是因为光进了眼睛。
-        relic: 一块小孔屏
-        relic_desc: 一块暗板，上面只有一个小孔。
+        story: '伊本·海赛姆在《光学书》中讨论移动物体时，观察者怎样透过小孔依次看到物体的各部分。游戏把这个观察办法放进一间虚构的开罗工坊。年份为约数，练习板、屋子与帮工都是虚构。'
+        relic: '一块练习用的小孔屏'
+        relic_desc: '虚构工坊用来比较两个位置的小孔屏。'
         points:
-          p1: "追问视觉如何发生"
-          p2: "帮他造暗室"
-          p3: "一个晴朗的日子"
+          p1: '把孔里看见的记号与移动板上的记号对上'
+          p2: '板在移动时，把小孔屏扶稳'
+          p3: '再等等，看遮住一处记号后怎样'
+        vignettes:
+          slit: '玛丽亚姆看见暗边，就把整条画进了记录。你请优素福挪动练习板，让隔着小孔换见另一条。她在同一个孔边画下两个位置，分得清是板在动，还是孔在动。'
+          cover: '优素福想转动灯让人看得清些。你让灯留在原处，请他遮住板上一道记号。那道记号一消失，玛丽亚姆马上出声。等人开门时，她已经试过一次自己还能重做的变化。'
+          term: '你知道后世怎样称呼小孔实验。屋子马上要腾给别人，玛丽亚姆只来得及看一次。你请她说清自己到底看见了哪一道。屋里亮起来时，已经来不及再试。'
 text:
   en:
     name: Ibn al-Haytham
@@ -44,3 +57,42 @@ text:
   zh:
     name: 伊本·海赛姆
     text: 阿拉伯数学家与光学家，约 965 年生，约 1040 年去世，在开罗工作。他的《光学书》提出视觉来自进入眼睛的光，并依靠实验论证，被视为实验方法的早期代表。
+hook: {en: 'Which mark can you see through the hole?', zh: '隔着小孔，你究竟看到了哪一道？'}
+facts:
+  aperture:
+    date: '1011'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [al_haytham_cairo_aperture]
+    text:
+      en: 'The text describes seeing the part of a moving object that aligns with an aperture. The game year does not date this passage.'
+      zh: '书中讨论物体移动时所见部分如何与小孔位置相合。游戏的年份不是此段成文的日期。'
+bystanders:
+  maryam:
+    invented: true
+    text: {en: 'A fictional observer drawing what is visible through the opening.', zh: '虚构观察者玛丽亚姆，画下透过小孔看到的部分。'}
+  yusuf:
+    invented: true
+    text: {en: 'A fictional helper who moves the marked board.', zh: '虚构帮工优素福，负责挪动记过号的板。'}
+wiki:
+  refs:
+    al_haytham_cairo_aperture:
+      order: 905
+      status: checked
+      text:
+        en: 'Ibn al-Haytham, Book of Optics I, A. I. Sabra translation, Warburg Institute https://resources.warburg.sas.ac.uk/pdf/ffh360b2205460.pdf'
+        zh: '伊本·海赛姆《光学书》第一卷，A. I. 萨布拉译，瓦尔堡研究所 https://resources.warburg.sas.ac.uk/pdf/ffh360b2205460.pdf'
+self_check:
+  fact: aperture
+  quote_line: '屋里亮起来时，已经来不及再试。'
+  regret_choice: 'cover 同时挪灯就少了一次容易解释的试验。'
+  bookend: '从小孔开始，到开门时失去观测条件。'
+  share_line: '一道小孔，两次看见。'
+  share_number: 'slit 两个练习位置。'
+  knowing: 'term 知道后来的实验名称。'
+  near: 'aperture 对照书中小孔观测。'
+  lever: 'cover 留下一次能再做的单项变化。'
+  missed: 'term 房间亮起，离开前无法复验。'
+  brought: 'slit 带回记有两个位置的虚构图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

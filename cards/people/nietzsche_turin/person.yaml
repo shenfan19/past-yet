@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 2, S: 2}
     regret: true
+    refs: [nietzsche_turin_letter, nietzsche_turin_journey]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["skeptical","wanderer","quiet"]},{"trait":["skeptical","curious","wanderer"]}]}}
         - {id: p2, kind: care, req: {"any":[{"trait":["faithful","patient"]},{"trait":["calm","attached","faithful"]}]}}
         - {id: p3, kind: persuade, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: address, traits: [skeptical, quiet, methodical]}
+        - {id: privacy, traits: [faithful, patient, attached]}
+        - {id: horse}
     text:
       en:
-        name: "The collapse in Turin"
+        name: 'The address on the back'
         place: "Turin"
         figure: "Friedrich Nietzsche"
-        story: "In Turin Nietzsche collapses into a mental breakdown, and his friend Franz Overbeck travels from Basel to bring him home. His books were then read by few."
-        relic: "A postcard"
-        relic_desc: "A short card in a wild hand."
+        story: 'The Basel University Library holds a letter from Nietzsche to Franz and Ida Overbeck, signed Dionysus and dated approximately 4 January 1889 in Turin. Overbeck travelled to Turin after hearing from him. The story imagines two people preparing a bag of papers. The famous account involving a horse is treated as an anecdote of uncertain detail.'
+        relic: 'A duplicate luggage label'
+        relic_desc: 'A fictional label copied without reproducing private correspondence.'
         points:
-          p1: "See that something is wrong"
-          p2: "Be a calm presence in the street"
-          p3: "Make the landlord understand in the right words"
+          p1: 'Ask the porter to distinguish an address from the signature'
+          p2: 'Give the attendant time to finish wrapping private papers'
+          p3: 'Help the caretaker read the travel label without opening the letter'
+        vignettes:
+          address: 'Pietro has copied the name Dionysus into the destination line of his inventory. You turn the practice slip and show him the line that names the recipients. He corrects the inventory without writing an explanation of the signature. It is enough to tell him who should be handed the packet.'
+          privacy: 'Lucia asks you to hold the bag while she covers the papers. Someone on the stairs wants to know what they say. You leave the outside label visible so she can give directions without opening it. The bag reaches the landing with only the intended name on show.'
+          horse: 'Pietro asks whether you know the account people will tell about a horse. You have heard the story many times. When you ask who here saw it, he points to no one. He leaves that line out of the inventory. You hear footsteps on the stairs as the bag is closed.'
       zh:
-        name: "都灵的崩溃"
+        name: '纸背上的收件人'
         place: "都灵"
         figure: "弗里德里希·尼采"
-        story: "尼采在都灵精神崩溃，朋友弗兰茨·奥弗贝克从巴塞尔赶来接他回去。那时读他书的人还很少。"
-        relic: "一张明信片"
-        relic_desc: "一张字迹狂乱的短笺。"
+        story: '巴塞尔大学图书馆藏有尼采致弗兰茨与伊达·奥弗贝克的信，署名狄俄尼索斯，馆方定在约1889年1月4日，地点为都灵。奥弗贝克接到他的消息后赶到都灵。游戏虚构两个人收拾一袋文书，抱马故事作为细节存疑的轶闻出现。'
+        relic: '一张留底的行李签'
+        relic_desc: '虚构留底签，抄写时保留了私信内容的隐私。'
         points:
-          p1: "看出他不对劲"
-          p2: "在街上做一个平静的存在"
-          p3: "用恰当的话让房东明白事情"
+          p1: '请搬运工分清收件地址与署名'
+          p2: '给帮工留出时间，把私人的文书包好'
+          p3: '帮照料人识别行李签，把信封原样留着'
+        vignettes:
+          address: '彼得罗把狄俄尼索斯抄进了登记的去向栏。你翻过练习纸，指给他看写着收件人的一行。他改好登记，没有解说这个署名。知道该把信包递给谁，就够了。'
+          privacy: '露琪亚请你扶着提包，她好把文书遮起来。楼梯上有人问里头写了什么。你把包外的签露出来，她不用开包也能说明送到哪里。到了楼梯平台，旁人只看得见应该收包的名字。'
+          horse: '彼得罗问，你知不知道人们后来会讲起的那匹马。这故事你听过许多遍。你问在场谁看见了，他一个也指不出来。登记里便空着那一行。提包合上时，楼梯上传来了脚步声。'
 text:
   en:
     name: Friedrich Nietzsche
@@ -45,3 +58,57 @@ text:
   zh:
     name: 弗里德里希·尼采
     text: 德国哲学家，1844 年生，1900 年去世。他写了《查拉图斯特拉如是说》，批判道德与宗教。1889 年 1 月他在都灵崩溃，再也没有恢复心智，晚年由母亲和妹妹照料。
+hook: {en: 'A rumour is moving faster than the letter.', zh: '传闻比那封信先到了门口。'}
+facts:
+  letter:
+    date: '1889-01'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [nietzsche_turin_letter]
+    text:
+      en: 'The catalogue assigns the letter to Turin around 4 January 1889 and identifies the signature and recipients separately.'
+      zh: '馆藏目录把信定在都灵、约1889年1月4日，分列署名与收件人。'
+  journey:
+    date: '1889-01-08'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [nietzsche_turin_journey]
+    text:
+      en: 'The research gives 8 January for Overbeck’s arrival and recounts the reported horse episode with qualification.'
+      zh: '研究列1月8日为奥弗贝克抵达日，对马的轶闻采用有保留的讲法。'
+bystanders:
+  pietro:
+    invented: true
+    text: {en: 'A fictional porter preparing an inventory from a practice slip.', zh: '虚构搬运工彼得罗，照练习纸登记。'}
+  lucia:
+    invented: true
+    text: {en: 'A fictional attendant covering papers for the journey.', zh: '虚构帮工露琪亚，负责把旅途要带的文书包好。'}
+wiki:
+  refs:
+    nietzsche_turin_letter:
+      order: 877
+      status: checked
+      text:
+        en: 'Basel University Library, Nietzsche to Franz and Ida Overbeck, UBH NL 53 B I 248, 226 https://www.e-manuscripta.ch/bau/content/titleinfo/2395155'
+        zh: '巴塞尔大学图书馆，尼采致弗兰茨及伊达·奥弗贝克，UBH NL 53 B I 248, 226 https://www.e-manuscripta.ch/bau/content/titleinfo/2395155'
+    nietzsche_turin_journey:
+      order: 878
+      status: checked
+      text:
+        en: 'Adam Lecznar, Dionysus after Nietzsche, Cambridge University Press, prologue https://assets.cambridge.org/97811084/82561/excerpt/9781108482561_excerpt.pdf'
+        zh: '亚当·莱奇纳《尼采之后的狄俄尼索斯》序章，剑桥大学出版社 https://assets.cambridge.org/97811084/82561/excerpt/9781108482561_excerpt.pdf'
+self_check:
+  fact: letter
+  quote_line: '知道该把信包递给谁，就够了。'
+  regret_choice: 'horse 听过许多次也不能在登记里当成亲见。'
+  bookend: '从传闻跑到门口，收尾听到还未认出的人。'
+  share_line: '一张签，收件人与署名各归其处。'
+  share_number: '信上有两位收件人。'
+  knowing: 'horse 员工知道后世版本。'
+  near: 'letter 以现存信件的收件人与署名为依据。'
+  lever: 'privacy 让人带得走包而不揭开私信。'
+  missed: 'horse 赶不上看到脚步主人。'
+  brought: 'address 带回标过收件位置的虚构副签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

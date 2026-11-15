@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {S: 3}
     regret: true
+    refs: [ibn_rushd_lucena_exile, ibn_rushd_lucena_reasoning]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["kind","cosmopolitan"]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+      vignettes:
+        - {id: premise, traits: [methodical, curious, scholarly]}
+        - {id: together, traits: [kind, cosmopolitan, patient]}
+        - {id: language}
     text:
       en:
-        name: "Banished with his books"
+        name: 'The step between two lines'
         place: "Lucena"
         figure: "Ibn Rushd"
-        story: "Ibn Rushd, a judge and physician, is banished to Lucena in 1195 and his philosophical books are ordered burned. His commentaries on Aristotle survive mostly in Hebrew and Latin, less in the original Arabic."
-        relic: "A page of commentary"
-        relic_desc: "A page of close Arabic script, with the text of Aristotle in the margin."
+        story: 'A later account by Ibn Abī Uṣaybiʿa describes Ibn Rushd’s exile to Lucena under al-Manṣūr. The earlier Decisive Treatise distinguishes demonstrative argument from other kinds of reasoning. The encounter imagines a reader’s exercise in Lucena during the exile, with two fictional helpers.'
+        relic: 'A reader’s practice extract'
+        relic_desc: 'An invented extract with space added for a premise.'
         points:
-          p1: "Visit him in the quiet town"
-          p2: "Follow his commentary on Aristotle"
-          p3: "Visit him without being noticed"
+          p1: 'Ask the reader to say the missing step before copying the conclusion'
+          p2: 'Compare the two explanations in the margin'
+          p3: 'Keep the working page with the book it comments on'
+        vignettes:
+          premise: 'Mariam has copied a conclusion in careful letters. Yusuf can follow it only by assuming something she has left unstated. You ask him where he stopped and leave space before the conclusion. Mariam writes her assumption in that space, where Yusuf can question it.'
+          together: 'Yusuf wants to return the book and keep a single line for his own use. You give him time to copy the step that goes with it. At the door Mariam asks for the conclusion aloud, and he can now give her the reason as well.'
+          language: 'You recognise a term that later readers will meet in another language. Mariam just wants to know whether she has copied the premise as it stands. You hold the page flat while she checks it. The question she writes beside it will go to a reader you will not meet.'
       zh:
-        name: "连同书一起被放逐"
+        name: '两行中间那一步'
         place: "卢塞纳"
         figure: "伊本·鲁世德"
-        story: "法官兼医生伊本·鲁世德于1195年被放逐到卢塞纳，他的哲学书被下令烧毁。他对亚里士多德的注释主要靠希伯来文和拉丁文译本保存，阿拉伯文原本留下得较少。"
-        relic: "一页注释"
-        relic_desc: "一页紧凑的阿拉伯文，页边是亚里士多德的原文。"
+        story: '伊本·艾比·乌赛比阿的后世传记谈到曼苏尔将伊本·鲁世德放逐卢塞纳。早先的《决定论》区分论证推理和其他说理方式。游戏把虚构的读书练习放在流放期间的卢塞纳，两位帮工均为虚构。'
+        relic: '一页读书练习摘录'
+        relic_desc: '虚构摘录，为前提另留一处。'
         points:
-          p1: "去那座安静的小镇看他"
-          p2: "跟上他对亚里士多德的注释"
-          p3: "不引人注意地去看他"
+          p1: '抄结语前，请读者先说出漏掉的一步'
+          p2: '对照页边的两种解释'
+          p3: '把练习页与它所读的书放在一处'
+        vignettes:
+          premise: '玛丽娅姆把结论抄得很工整。优素福要读通，却得先替她猜一个没写出来的前提。你问他读到哪儿卡住，在结论前留出地方。玛丽娅姆把前提写进去，优素福终于能就它发问。'
+          together: '优素福想把书还了，只给自己留一句。你给他留点时间，把旁边那一步也抄走。到了门口，玛丽娅姆请他复述结论，他如今也说得出理由。'
+          language: '你认得一个后来会在译本里出现的术语。玛丽娅姆只想核对前提有没有照原样抄下。你帮她把纸铺平，陪她查。她在边上写的问题，会交给这趟见不到的人。'
 text:
   en:
     name: Ibn Rushd
@@ -45,3 +58,57 @@ text:
   zh:
     name: 伊本·鲁世德
     text: 安达卢斯的哲学家与医生，1126 年生，1198 年去世，拉丁名阿威罗伊。他为亚里士多德作的注释在欧洲广为流传，曾任科尔多瓦和塞维利亚的法官，一度被流放到卢塞纳。
+hook: {en: 'Can the reader find the step you skipped?', zh: '读者找得出跳过去的那一步吗？'}
+facts:
+  exile:
+    date: '1195'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_rushd_lucena_exile]
+    text:
+      en: 'The later biographer records the exile to Lucena under al-Manṣūr. The date is the game’s setting around the beginning of the exile, and the exercise is invented.'
+      zh: '后出传记记曼苏尔下令放逐至卢塞纳。游戏取流放开始前后的年份，读书练习由游戏虚构。'
+  reasoning:
+    date: '1180'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_rushd_lucena_reasoning]
+    text:
+      en: 'The treatise discusses demonstration, other styles of inference and the premises needed for a syllogism. The approximate date describes the earlier work, not a Lucena composition.'
+      zh: '书中论及论证、其他推理方式和三段论所需前提。所列约年指这部较早的著作。'
+bystanders:
+  mariam:
+    invented: true
+    text: {en: 'A fictional copyist whose conclusion is clear but lacks a premise.', zh: '虚构抄写员玛丽娅姆，结语写得清楚，却没写出一个前提。'}
+  yusuf:
+    invented: true
+    text: {en: 'A fictional reader taking a working extract home.', zh: '虚构读者优素福，要带一段摘录回去。'}
+wiki:
+  refs:
+    ibn_rushd_lucena_exile:
+      order: 957
+      status: checked
+      text:
+        en: 'Ibn Abī Uṣaybiʿa, A Literary History of Medicine, biography of Ibn Rushd https://www.ncbi.nlm.nih.gov/books/NBK621357/'
+        zh: '伊本·艾比·乌赛比阿，《医家列传》，伊本·鲁世德传 https://www.ncbi.nlm.nih.gov/books/NBK621357/'
+    ibn_rushd_lucena_reasoning:
+      order: 958
+      status: checked
+      text:
+        en: 'Ibn Rushd, Decisive Treatise §§3–4, Charles Butterworth translation https://iberian-connections.yale.edu/wp-content/uploads/2019/08/Averroes-DecisiveTreatise.pdf'
+        zh: '伊本·鲁世德《决定论》第3至4节，查尔斯·巴特沃思译本 https://iberian-connections.yale.edu/wp-content/uploads/2019/08/Averroes-DecisiveTreatise.pdf'
+self_check:
+  fact: exile
+  quote_line: '他如今也说得出理由。'
+  regret_choice: 'premise 猜着补前提，接手人便无从追问。'
+  bookend: '从跳过一步，到出门前讲得出理由。'
+  share_line: '结论拿走之前，理由也抄上。'
+  share_number: '一处虚构前提。'
+  knowing: 'language 知道后世有异语译本。'
+  near: 'exile 由后出传记定位。'
+  lever: 'premise 使省略的前提可核对。'
+  missed: 'language 没见到下一个读者。'
+  brought: 'together 带回留有理由的练习页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

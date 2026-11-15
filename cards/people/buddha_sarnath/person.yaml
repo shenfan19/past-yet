@@ -9,34 +9,47 @@ events:
     field: thought
     tier: 3
     channels: {L: 1, H: 1}
+    refs: [buddha_sarnath_discourse]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["kind","artistic","sensitive"]}}
         - {id: p2, kind: notice, req: {"trait":["methodical","handy","vigil"]}}
         - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+      vignettes:
+        - {id: middle, traits: [kind, sensitive, artistic]}
+        - {id: pause, traits: [methodical, handy, vigil]}
+        - {id: retell}
     text:
       en:
-        name: The first teaching
+        name: 'What the listener carries'
         place: Sarnath, India
         figure: Siddhartha Gautama
-        story: In the Deer Park at Sarnath the Buddha gives his first teaching, on suffering and the path out of it.
-        relic: A pressed bodhi leaf
-        relic_desc: A leaf with its veins like a map.
+        story: 'The Buddhist discourse preserved as Saṃyutta Nikāya 56.11 places the teaching in the Deer Park at Isipatana near Varanasi, traditionally identified with Sarnath. It introduces a middle way and the four noble truths. The card uses a conventional ancient setting and imagines two local listeners discussing a retelling of the teaching. The scene is not a dated transcript.'
+        relic: 'A listener’s plain cord'
+        relic_desc: 'A fictional keepsake from the walk to the Deer Park.'
         points:
-          p1: "Listen to the first sermon"
-          p2: "Watch the faces of the five companions"
-          p3: "Walk the road with them to its end"
+          p1: 'Listen while the other person tries to recall the opening'
+          p2: 'Separate what one person heard from what the other repeated'
+          p3: 'Stay to hear the part the first listener missed'
+        vignettes:
+          middle: 'Nanda has remembered the rejection of two extremes but thinks the speaker stopped there. You wait while Sona recalls that a path was described next. Nanda tries the sequence aloud for the person she will meet later. This time she gets as far as the description of the path.'
+          pause: 'Sona repeats three parts in a rush and hesitates on the fourth. You ask where she stopped hearing the speaker and started relying on Nanda. They try the retelling in turns. After that, each knows which part to ask the other about.'
+          retell: 'You know later versions of the discourse will travel far. Nanda has to leave to meet someone and wants a short account she can remember on the walk. You listen to her try it once. You leave the park before hearing how the next person receives it.'
       zh:
-        name: 第一次说法
+        name: '听众带走的话'
         place: 印度鹿野苑
         figure: 悉达多·乔达摩
-        story: 在鹿野苑，佛陀第一次说法，讲苦，也讲走出苦的路。
-        relic: 一片压平的菩提叶
-        relic_desc: 叶脉像一张地图。
+        story: '《相应部》56.11把这次说法置于波罗奈附近的仙人住处鹿野苑，传统上认作今鹿野苑。经中讲中道和四圣谛。游戏沿用古代约略背景，虚构两名当地听众谈起刚听来的转述。经文与游戏年份各有各的来源。'
+        relic: '一段听众留下的素绳'
+        relic_desc: '游戏虚构的路上纪念物。'
         points:
-          p1: "听第一次说法"
-          p2: "留意五位同伴脸上的变化"
-          p3: "陪着走完一段路"
+          p1: '听另一人怎样回想开头'
+          p2: '分清一人亲耳所听与另一人转述'
+          p3: '再留一会儿，听完先走的人漏掉的那一段'
+        vignettes:
+          middle: '难陀只记住两端都不可取，以为说法就停在这儿。你等索那慢慢想起，后头其实还说了一条路。难陀练着照次序讲给晚点才会来的人听。这回她讲到了那条路。'
+          pause: '索那一口气重述了三部分，到第四部分卡住了。你问她从哪儿开始是靠难陀转述，而非在场听见。两人轮流试着讲一遍，讲完都知道哪一段还要问对方。'
+          retell: '你知道这段说法的传本会传得很远。难陀得去见个人，想要一段走在路上也记得住的讲法。你听她试了一遍。后来那个人怎么听，你离开鹿野苑时还不知道。'
 text:
   en:
     name: Siddhartha Gautama
@@ -44,3 +57,42 @@ text:
   zh:
     name: 悉达多·乔达摩
     text: 悉达多·乔达摩，即佛陀，生活在公元前五世纪前后的印度北部。传说他经多年修行于菩提伽耶觉悟，并在鹿野苑作了第一次说法，讲苦以及超越苦的道路。
+hook: {en: 'One listener will have to tell it again.', zh: '有一个听众得再讲给别人听。'}
+facts:
+  discourse:
+    date: '-528'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [buddha_sarnath_discourse]
+    text:
+      en: 'The received discourse places the teaching at the Deer Park and presents the middle way and four noble truths. It does not give the calendar year used by the game.'
+      zh: '经传把说法地点置于鹿野苑，讲到中道与四圣谛。经中未给出游戏用的公历纪年。'
+bystanders:
+  nanda_listener:
+    invented: true
+    text: {en: 'A fictional listener preparing a short retelling.', zh: '虚构听众难陀，准备把听到的内容说给别人。'}
+  sona_listener:
+    invented: true
+    text: {en: 'A fictional listener who missed part of the delivery.', zh: '虚构听众索那，有一部分没有听到。'}
+wiki:
+  refs:
+    buddha_sarnath_discourse:
+      order: 889
+      status: checked
+      text:
+        en: 'Saṃyutta Nikāya 56.11, Dhammacakkappavattana Sutta, Thanissaro translation https://www.dhammatalks.org/suttas/SN/SN56_11.html'
+        zh: '《相应部》56.11《转法轮经》，坦尼沙罗译本 https://www.dhammatalks.org/suttas/SN/SN56_11.html'
+self_check:
+  fact: discourse
+  quote_line: '这回她讲到了那条路。'
+  regret_choice: 'pause 两人都抢着补话，就分不清各自听到哪里。'
+  bookend: '从当场怎么听，到为下一个听众练一次。'
+  share_line: '不能只记得两端，还要记得中间的路。'
+  share_number: '四圣谛是经中所列。'
+  knowing: 'retell 知道后来会流传不同传本。'
+  near: 'discourse 鹿野苑地点来自经传。'
+  lever: 'pause 两人能互补没听见的部分。'
+  missed: 'retell 不在下一次转述现场。'
+  brought: 'middle 带回虚构的听讲路标。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

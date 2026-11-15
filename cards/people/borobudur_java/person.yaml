@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 2
     channels: {L: 3, H: 2, W: 1}
+    refs: [borobudur_java_tiers]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["builder","carpenter"]},{"trait":["hardy"]}]}}
         - {id: p2, kind: endure, req: {"provides":"strength"}}
         - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+      vignettes:
+        - {id: corner, traits: [methodical, scholarly]}
+        - {id: stair, traits: [hardy, curious]}
+        - {id: layers}
     text:
       en:
-        name: "A mountain of reliefs"
+        name: 'From squares to circles'
         place: "Java"
         figure: "The builders of Borobudur"
-        story: "On volcanic ground in Java, builders stack stone upon stone, level after level, into a great monument carved with reliefs."
-        relic: "A fragment of relief"
-        relic_desc: "A flake of stone carved with the folds of a robe."
+        story: 'Borobudur in central Java was built in the eighth and ninth centuries. UNESCO’s listing describes its square terraces below and three circular platforms above. The invented work helper in this visit is checking a drawing of the change in plan. The year marks the building period approximately.'
+        relic: 'A pair of terrace outlines'
+        relic_desc: 'Two work sketches of the change from a square terrace to a circular platform.'
         points:
-          p1: "Line up the blocks"
-          p2: "Haul stone in the wet heat"
-          p3: "Read the order of the reliefs"
+          p1: 'Hold the practice sheets together at their shared stair'
+          p2: 'Carry the plan to the change from square to circular platforms'
+          p3: 'Catch an extra corner in the circular part of the sketch'
+        vignettes:
+          corner: 'The drawing helper has repeated the shape of the lower sheet on the upper one. You trace the turn on the square plan, then follow the curved edge on the other. He removes one false corner. You take both outlines back. The highest point is still beyond the part of the route you covered.'
+          stair: 'You have seen a later plan of the tiers from above. The helper on the ground sees only the next stair. You keep the stair marked on both pieces of paper so he can tell where the shape changes after the climb. You leave before he makes the upper circuit.'
+          layers: 'You mark a square edge below the stair and a curved edge above it. The helper asks you to keep the marks on separate sheets while he checks the plan. You take the two outlines home. The whole monument will not fit on either sheet alone.'
       zh:
-        name: "层层浮雕的石山"
+        name: '方台走到圆台'
         place: "爪哇"
         figure: "婆罗浮屠的建造者们"
-        story: "爪哇的建造者们在火山灰地上，一层一层把石块垒成一座带着浮雕的大塔。"
-        relic: "一块浮雕残片"
-        relic_desc: "一块刻着人物衣褶的石片。"
+        story: '爪哇中部的婆罗浮屠建于八至九世纪。联合国教科文组织的遗产档案记有下部的方形台层和上部三层圆台。卡里虚构的帮工要核对平面形状从哪里开始变化，年份用于定位营建时期。'
+        relic: '两张台层轮廓图'
+        relic_desc: '两张方台与圆台交界的工作草图。'
         points:
-          p1: "对齐石块"
-          p2: "在湿热里搬石"
-          p3: "读懂层层浮雕的次序"
+          p1: '让两张练习图纸在共用的台阶处对齐'
+          p2: '把平面图带到方台转为圆台的位置'
+          p3: '在圆台草图上找出多画的一处拐角'
+        vignettes:
+          corner: '画图帮工把下图的形状又画进上图。你先顺着方台图走一处直角，再沿另一张的弧边描过去。他擦掉多出的一角。你带回两个轮廓，走到的地方还没有抵达最高处。'
+          stair: '你看过后世从上往下画的平面图，站在下面的帮工却只见眼前的台阶。你在两纸都画出这段阶，好叫他登上去能看懂哪里改了形。等他绕圆台一周，你早已走了。'
+          layers: '你在阶下标出一条直边，又在阶上描一小段弧。帮工核图时请你把两个记号分别留着。你带回两种轮廓，哪一张都画不下整座建筑。'
 text:
   en:
     name: "The builders of Borobudur"
@@ -44,3 +57,39 @@ text:
   zh:
     name: "婆罗浮屠的建造者们"
     text: "8 至 9 世纪在爪哇中部建造婆罗浮屠的工匠和劳工，姓名没有留下。建造的确切年代范围有不同说法。"
+hook: {en: 'Did you count a corner where the path curves?', zh: '哪一级开始数不到角？'}
+facts:
+  tiers:
+    date: '800'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [borobudur_java_tiers]
+    text:
+      en: 'The site record describes the square terraces and three circular platforms, and dates construction to the eighth and ninth centuries.'
+      zh: '遗产档案记录方形台层与三层圆台，建造时间跨八至九世纪。'
+bystanders:
+  drawer:
+    invented: true
+    text: {en: 'A fictional drawing helper who has carried one square too far up the plan.', zh: '虚构的画图帮工，把低处的方台形状抄到高处。'}
+wiki:
+  refs:
+    borobudur_java_tiers:
+      order: 669
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Borobudur Temple Compounds, description https://whc.unesco.org/en/list/592/'
+        zh: '联合国教科文组织世界遗产中心，婆罗浮屠寺庙群建筑说明 https://whc.unesco.org/en/list/592/'
+self_check:
+  fact: tiers
+  quote_line: '他擦掉多出的一角。'
+  regret_choice: '只按下层平面往上抄，圆台就会留出不存在的角。'
+  bookend: '同一段台阶定位出两种平面。'
+  share_line: '那层台没有拐角，我把图上的一个擦掉了。'
+  share_number: '三层圆台'
+  knowing: 'stair 员工看过从上往下的平面图。'
+  near: 'tiers 提供真实形状。'
+  lever: '改一处画错的角。'
+  missed: '下一圈圆台没赶上。'
+  brought: '两层轮廓草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

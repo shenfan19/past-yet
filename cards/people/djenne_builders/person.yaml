@@ -9,38 +9,87 @@ events:
     field: architecture
     tier: 2
     channels: {H: 2, L: 2}
+    refs: [djenne_builders_earth]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["builder"]},{"trait":["hardy"]}]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: trust, req: {"trait":["kind","sensitive"]}}
+      vignettes:
+        - {id: mark, traits: [methodical, hardy]}
+        - {id: time, traits: [curious, kind]}
+        - {id: shade}
     text:
       en:
-        name: "A wall replastered every year"
+        name: 'A patch at the edge of the yard'
         place: "Djenne"
         figure: "The mud brick builders of Djenne"
-        story: "The people of Djenne raise a tall mosque out of mud brick, and every year before the rains they plaster its wall again together."
+        story: 'Djenné is known for earthen architecture. The Great Mosque visible today was rebuilt in 1907. The 1280 visit imagines a crew practising on a small earthen wall, with its own fictional tools and work routine. It does not stage the rebuilding or a present-day ceremony.'
         relic: "A mud brick"
         relic_desc: "A hard sun dried brick with bits of rice husk showing where it is broken."
         points:
-          p1: "Plaster the mud wall"
-          p2: "Carry mud in the blazing sun"
-          p3: "Mend the wall with the neighbours"
+          p1: 'Keep the practice board instead of letting it slip into the fresh coat'
+          p2: 'Carry a second small batch to the other face of the trial wall'
+          p3: 'Agree with the helper on which patch will be checked again'
+        vignettes:
+          mark: 'The yard helper has tried two small patches and forgotten which came from each bowl. You set out two scraps with names rather than mark the wall. Each test now has a record. You leave before the sun reaches the other face.'
+          time: 'You know the building visitors will see centuries later has its own history of rebuilding. Today the helper wants to spread one bowl across the test wall. You ask for a small patch first and give him a spot to check after it dries. You leave knowing where he will look, and not what he will find.'
+          shade: 'You draw the trial patch and the line between sunlight and shadow. The helper takes the sketch to the bench so he can check the same place later. Your copy has one patch on it. The whole wall is still to do.'
       zh:
-        name: "每年重抹一次的泥墙"
+        name: '院边一小块试抹的墙'
         place: "杰内"
         figure: "杰内的泥砖建造者们"
-        story: "杰内的街坊们用泥砖垒起高大的清真寺，每年雨季前一起把墙重新抹一遍。"
+        story: '杰内以土构建筑著称。今日可见的大清真寺于 1907 年重建。卡里 1280 年的工班在一截练习土墙上试抹，工具与作业情节为虚构，场景在日常工地。'
         relic: "一块泥砖"
         relic_desc: "一块晒得很硬的泥砖，掰开能看到里面的稻壳。"
         points:
-          p1: "抹泥墙"
-          p2: "烈日下搬泥浆"
-          p3: "同街坊一起修墙"
+          p1: '扶住练习板，别蹭到新抹上的一层'
+          p2: '带第二小份材料到练习墙另一面'
+          p3: '与帮工约定下回先回来看哪一块'
+        vignettes:
+          mark: '院里帮工试抹两块，却记不清各是哪碗来的。你在墙边摆两张另记的纸条，两块试抹都有了自己的记录。另一面还没轮到晒太阳，你就收队了。'
+          time: '你知道几个世纪后人们所见的建筑还有重建的历史。眼下帮工只想把这一碗铺满试墙，你请他先抹一小块，留一个干后可再查的位置。你带回的是下回该看哪处，结果还没出来。'
+          shade: '你把试抹的那块和阳光照到的边界画下来。帮工把图拿回工台，好下回对同一处。你的副本上只有一小块，整墙还没抹。'
 text:
   en:
     name: "The mud brick builders of Djenne"
-    text: "The craftsmen and townspeople of Djenne in West Africa who built and kept up the great mosque in mud brick. Dates and details of the building are given differently, and the community still replasters the wall every year."
+    text: "The builders of Djenné in West Africa developed traditions of earthen construction and maintenance. The present Great Mosque was rebuilt in 1907, and its earthen surfaces are renewed by the local community."
   zh:
     name: "杰内的泥砖建造者们"
-    text: "西非杰内的工匠和街坊，用泥砖修建和维护城里的大清真寺。年代与建造的细节有不同说法，当地社区至今仍每年重抹墙面。"
+    text: "西非杰内的工匠和街坊有用泥土建屋和维护土墙的传统。现存大清真寺在 1907 年重建，当地社区至今仍定期重抹墙面。"
+hook: {en: 'What can a small patch tell you about the whole wall?', zh: '先补一小块，能看出什么？'}
+facts:
+  earth:
+    date: '1280'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [djenne_builders_earth]
+    text:
+      en: 'The atlas documents Djenné’s earthen buildings and dates the rebuilding of the present Great Mosque to 1907. The year on the card is the fictional visit’s setting.'
+      zh: '资料记载杰内的土构建筑和现存大清真寺于 1907 年重建。卡里年份为分支到访设定。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional works-yard helper checking two small patches during a shift.', zh: '虚构的工场帮工，交接前要核两块试抹。'}
+wiki:
+  refs:
+    djenne_builders_earth:
+      order: 703
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Urban Heritage Atlas, Old Towns of Djenné https://whc.unesco.org/en/urban-heritage-atlas/djenne/'
+        zh: '联合国教科文组织世界遗产中心，杰内古城建筑遗产图册 https://whc.unesco.org/en/urban-heritage-atlas/djenne/'
+self_check:
+  fact: earth
+  quote_line: '你带回的是下回该看哪处，结果还没出来。'
+  regret_choice: '一次抹满整墙，就没有一小块能对照。'
+  bookend: '从两碗泥浆，到一幅能找到试抹部位的图。'
+  share_line: '我只留了一小块，整墙还没开始。'
+  share_number: '两块试抹'
+  knowing: 'time 知道后来的现存建筑经过重建。'
+  near: 'earth 给出土构建筑及重建纪年。'
+  lever: '用两张签把试抹和来源相配。'
+  missed: '没等到干后复查。'
+  brought: '试抹位置草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

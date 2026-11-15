@@ -9,34 +9,47 @@ events:
     field: medicine
     tier: 2
     channels: {E: 1, L: 2, T: 1}
+    refs: [li_shizhen_qizhou_draft, li_shizhen_qizhou_edition]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p2, kind: notice, req: {"trait":["methodical","skeptical","curious"]}}
         - {id: p3, kind: hold, req: {"any":[{"job":["pharmacist","archivist"]},{"trait":["hardy"]}]}}
+      vignettes:
+        - {id: names, traits: [methodical, skeptical, curious]}
+        - {id: wrap, traits: [hardy, faithful, handy]}
+        - {id: print}
     text:
       en:
-        name: A compendium of a thousand medicines
+        name: 'Which name goes with the entry'
         place: Qizhou, China
         figure: Li Shizhen
-        story: After decades of fieldwork Li Shizhen completes the Compendium of Materia Medica, describing nearly two thousand substances.
-        relic: A herbalist's mortar
-        relic_desc: A small stone mortar with a stain of green.
+        story: 'Li Shizhen completed a draft of the Bencao Gangmu in 1578. Early printed editions came later and included illustrations and editorial apparatus. This visit imagines two people in Qizhou comparing labels for dried study specimens. The labels and their problem are invented.'
+        relic: 'A copied specimen label'
+        relic_desc: 'A fictional work label with a place left for an alternate name.'
         points:
-          p1: "Climb the mountain to gather herbs"
-          p2: "Check the names of the drugs"
-          p3: "Copy out the catalogue"
+          p1: 'Bring both labels back before the study table is cleared'
+          p2: 'Check whether the two names came from the same place'
+          p3: 'Keep the alternate name and its source with the entry'
+        vignettes:
+          names: 'Alin has written the name she heard at market beside the one on the specimen wrapper. You ask which vendor called it that. She remembers the stall but not the district. The entry keeps both names and identifies only the source she can actually place.'
+          wrap: 'Ahe has time to carry one wrapped sample before the room closes. You put its tag inside the wrapper and copy it onto a scrap before he takes it. When the table is cleared, Alin can still see which name travelled with that sample.'
+          print: 'You remember a printed illustration of the entry. Alin wants to know whether she can use it to settle the name on her own wrapper. You leave the name with the source she can describe. The later woodcut will not be ready on this visit.'
       zh:
-        name: 一千多种药物的汇编
+        name: '哪个名字归在哪一条'
         place: 中国蕲州
         figure: 李时珍
-        story: 李时珍多年野外调查，完成《本草纲目》，记载了近两千种药物。
-        relic: 一只药臼
-        relic_desc: 一只带着一点绿渍的小石臼。
+        story: '李时珍于1578年完成《本草纲目》初稿，带编排体例和插图的早期印本问世在后。游戏虚构蕲州两人拿干样本对照标签，样本标签和辨认上的麻烦都是虚构。'
+        relic: '一张抄留的样本签'
+        relic_desc: '虚构的工作标签，给另一种叫法留有位置。'
         points:
-          p1: "上山采药"
-          p2: "核对药名"
-          p3: "抄编目"
+          p1: '清桌前把两张签都找回来'
+          p2: '核对两个名字是不是在同一地听来的'
+          p3: '把异名和它的来处一并留在条目旁'
+        vignettes:
+          names: '阿林把集市上听来的名字写在样本包纸的名字旁。你问是哪一摊这样叫。她记得摊子，说不上是哪一乡的叫法。条目留住两个名字，只注明她还指得出的来处。'
+          wrap: '屋子要关，阿禾只来得及送一包样本。你把签一并放入包内，交给他前另抄在纸头上。桌子清出来后，阿林还查得到哪一个名字随样本送去了。'
+          print: '你记得后世印本里这条的图。阿林问，照那幅图能不能断定自己包纸上的名字。你把名字和她说得清的来处一起留在纸上。后来那块刻图的木版，这一趟等不到。'
 text:
   en:
     name: Li Shizhen
@@ -44,3 +57,57 @@ text:
   zh:
     name: 李时珍
     text: 明代医生，1518 年生，1593 年去世。他花了近三十年写成《本草纲目》，记载约一千九百种药物，书在他去世后刊行。
+hook: {en: 'Two names have slipped onto the same label.', zh: '两个名字，怎么都贴到这一份上？'}
+facts:
+  draft:
+    date: '1578'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [li_shizhen_qizhou_draft]
+    text:
+      en: 'The study dates completion of the compilation to 1578 and distinguishes later printed editions and illustrations.'
+      zh: '研究把编成时间定在1578年，并区分后来的版本及其插图。'
+  edition:
+    date: '1603'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [li_shizhen_qizhou_edition]
+    text:
+      en: 'The digitized early edition includes editorial front matter, contents and illustrations, with a reprint preface dated 1603.'
+      zh: '数字化早期刻本包括卷首体例、目录和插图，并见1603年重刻序。'
+bystanders:
+  alin:
+    invented: true
+    text: {en: 'A fictional helper who remembers different names for a study specimen.', zh: '虚构帮工阿林，记得一个练习样本的不同叫法。'}
+  ahe:
+    invented: true
+    text: {en: 'A fictional runner collecting one wrapped sample before closing.', zh: '虚构送件人阿禾，关门前要送走一包样本。'}
+wiki:
+  refs:
+    li_shizhen_qizhou_draft:
+      order: 945
+      status: checked
+      text:
+        en: 'National Institute of Japanese Literature, Matthias Hayek, publication history of the Bencao Gangmu https://kokubunken.repo.nii.ac.jp/record/4208/files/PW0405.pdf'
+        zh: '日本国文学研究资料馆，马蒂亚斯·阿耶克，《本草纲目》刊行史研究 https://kokubunken.repo.nii.ac.jp/record/4208/files/PW0405.pdf'
+    li_shizhen_qizhou_edition:
+      order: 946
+      status: checked
+      text:
+        en: 'Library of Congress, Bencao Gangmu, digitized early edition https://www.loc.gov/item/2021666452/'
+        zh: '美国国会图书馆，《本草纲目》早期刻本影像 https://www.loc.gov/item/2021666452/'
+self_check:
+  fact: draft
+  quote_line: '条目留住两个名字，只注明她还指得出的来处。'
+  regret_choice: 'print 用后世图画硬断当下地名会误写出处。'
+  bookend: '从两名挤一签，到留有来路的条目。'
+  share_line: '一个样本，两个记下的叫法。'
+  share_number: 'names 两种虚构叫法。'
+  knowing: 'print 知道后来的刻本有图。'
+  near: 'draft 区分初稿与印本。'
+  lever: 'wrap 清桌后仍能知道样本随哪张签走。'
+  missed: 'print 此行等不到后来刻图。'
+  brought: 'wrap 带回复写的练习样本签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

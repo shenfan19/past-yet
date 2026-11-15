@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {G: 1, S: 1}
     regret: true
+    refs: [sei_shonagon_kyoto_opening]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["scholarly","streetwise"]}}
         - {id: p2, kind: trust, req: {"luck":0.5}}
         - {id: p3, kind: care, redeem: true, req: {"trait":["patient","cheerful","calm"]}}
+      vignettes:
+        - {id: compare, traits: [scholarly, skeptical, methodical]}
+        - {id: colour, traits: [artistic, curious, kind]}
+        - {id: listen}
     text:
       en:
-        name: "After the court was gone"
+        name: 'A list beginning before sunrise'
         place: "Kyoto"
         figure: "Sei Shonagon"
-        story: "After her empress dies in the year 1000, Sei Shonagon is left without her court. Her notebook of lists and small moments, the Pillow Book, is what remains, and her later years are not recorded."
+        story: 'The opening of The Pillow Book begins spring at dawn. The mountain edge brightens first, with slender purple clouds trailing above it. The visits and copyist below are imagined. The map year is a setting for the encounter.'
         relic: "A folded list"
         relic_desc: "A sheet of lightly written lists of things that please and things that do not."
         points:
-          p1: "Join her list of things that please"
-          p2: "Catch her in a talkative hour"
-          p3: "Visit her when the court has gone quiet"
+          p1: 'Pick out the first change of light in the opening'
+          p2: 'Get the copyist to show where the first entry ends'
+          p3: 'Wait at the opening and record one detail of your own at dawn'
+        vignettes:
+          compare: 'You recognise the opening from a future edition. The copyist has skipped the edge of the mountain while reciting it. You ask where the light first shows, and the omitted place returns to the practice copy. You save the correction on a folded list. From this doorway the mountain itself stays out of sight.'
+          colour: 'The painter’s purple you remember is too dark for that sky. The copyist lets you use an offcut. You put a thin grey line over a small patch of violet, and the two of you wait for the paper to dry. By then the colour outside has gone.'
+          listen: 'From the doorway you hear the copyist read the opening twice. At dawn you make a list of one thing, the roof tiles that turn pale before the yard does. You take the fold of paper home. You never learn what the writer would have made of your entry.'
       zh:
-        name: "宫廷散去之后"
+        name: '从天亮前写起的清单'
         place: "京都"
         figure: "清少纳言"
-        story: "皇后在1000年去世后，清少纳言失去了她所在的宫廷。她那本记录清单与小瞬间的笔记，也就是《枕草子》，是留下来的东西，她晚年的情形没有记载。"
+        story: '《枕草子》开篇从春日破晓写起，山际渐渐发白，天上拖着细细的紫云。卡里的造访和抄写人属于分支演绎，地图年份用于设置场景。'
         relic: "一张折起来的清单"
         relic_desc: "一张轻轻写着喜欢和不喜欢的事的单子。"
         points:
-          p1: "加入她那份令人喜欢的事的清单"
-          p2: "碰上她爱聊天的时候"
-          p3: "在宫里冷清下来之后去看她"
+          p1: '在开篇找出天色最先变在哪里'
+          p2: '请抄写人指出开头一段在哪里收笔'
+          p3: '守在门边，天亮时亲手记下一样细节'
+        vignettes:
+          compare: '你认出后世版本的开头。抄写人念漏了山际，你问光最先从哪里出来，他把漏掉的地方补到练习纸上。你把这处订正记进折起来的清单。从这扇门望出去，山本身却被挡着。'
+          colour: '你印象里的紫颜料太深了。抄写人分你一张纸边，你在淡紫上压了一笔细灰。两人等纸干，再往门外望，天上已不是那个颜色。'
+          listen: '你在门边听抄写人念了两遍开头。破晓时你也列了一张清单，只有一样东西，院子还黑着，瓦片先白了。你叠起纸带回去。作者若读到这一条会怎么想，你没有机会问。'
 text:
   en:
     name: Sei Shonagon
@@ -45,3 +58,39 @@ text:
   zh:
     name: 清少纳言
     text: 平安时代的日本宫廷女官，约 966 年生。她的《枕草子》收集了京都宫廷生活的清单、观察和轶事，口吻犀利而机智。
+hook: {en: 'When does spring begin on a page?', zh: '春天从哪一刻写起？'}
+facts:
+  opening:
+    date: '1000'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sei_shonagon_kyoto_opening]
+    text:
+      en: 'The opening places spring at dawn and describes the brightening mountain edge and slender purplish clouds. The event year does not date a particular manuscript.'
+      zh: '开篇写春日破晓，山际渐明，有细细的紫云。卡上的年份不是某一手稿的定年。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist practising the opening on an offcut of paper.', zh: '虚构的抄写人，用裁剩的纸边练开头几行。'}
+wiki:
+  refs:
+    sei_shonagon_kyoto_opening:
+      order: 412
+      status: checked
+      text:
+        en: 'Sei Shōnagon, The Pillow Book, opening passage reproduced by the National Diet Library https://dl.ndl.go.jp/view/download/digidepo_999380_po_127.pdf?contentNo=1'
+        zh: '日本国立国会图书馆展览资料所载《枕草子》开篇 https://dl.ndl.go.jp/view/download/digidepo_999380_po_127.pdf?contentNo=1'
+self_check:
+  fact: opening
+  quote_line: '院子还黑着，瓦片先白了。'
+  regret_choice: '在室内改抄本能补回一处遗漏，却看不见山。'
+  bookend: '从纸上哪儿先亮，到你眼前哪儿先亮。'
+  share_line: '我也列了一张只有一样东西的清单。'
+  share_number: '一行破晓见闻'
+  foreknowledge: 'compare 先认出后世流传的开篇。'
+  proximity: 'opening 锚定实际原文，抄写现场为虚构。'
+  leverage: 'compare 补一处漏抄，colour 留一张色样。'
+  missed: '收队时没能问到作者。'
+  takeaway: '折起来的一行清单。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {H: 2, L: 1}
+    refs: [archimedes_syracuse_floating, archimedes_syracuse_bath]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: persuade, req: {"stat":{"finesse":6}}}
         - {id: p3, kind: hold, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: load, traits: [methodical, curious, handy]}
+        - {id: settle, traits: [patient, kind, quiet]}
+        - {id: crown}
     text:
       en:
-        name: Buoyancy and the lever
+        name: 'Two boats, one basin'
         place: Syracuse, Sicily
         figure: Archimedes
-        story: Archimedes works out why things float, and tradition says the answer came to him in a bath.
-        relic: A bath sponge
-        relic_desc: A humble sponge from the story of the bath.
+        story: 'In On Floating Bodies, Archimedes relates the weight of a floating body to that of the liquid it displaces. Vitruvius much later tells the bath and crown story. In this fictional Syracuse workshop, two toy boats and a narrow basin give the visitor something to test.'
+        relic: 'A marked toy hull'
+        relic_desc: 'A practice hull from the fictional workshop.'
         points:
-          p1: "Keep up with the lever ratios"
-          p2: "Explain to the court how buoyancy tests real gold"
-          p3: "Wait by the sand tray until he finishes drawing"
+          p1: 'Compare the floating boats at equal load'
+          p2: 'Talk the maker into repeating the trial after the water settles'
+          p3: 'Hold the catch bowl level while the floating boat settles'
+        vignettes:
+          load: 'Tyche expects the wide boat to send more water over the rim. You give both boats equal total weight. The wider hull sits shallower and the two catches balance. She keeps both boats instead of cutting down the larger one to match the smaller.'
+          settle: 'Nikon has to return the basin before the workshop closes. He starts the second trial while the first catch is still sloshing. You send Tyche to return the weights and use the time to let the bowl settle. Nikon weighs the water again. He leaves with a second reading and still gets the basin back.'
+          crown: 'You ask Nikon whether Archimedes ever tested a king’s crown in a bath. He looks down at the two toy boats and asks whose crown you could put on the scale. You have the tale a Roman author will tell long after this workshop. You leave with the mark from the trial you can actually repeat.'
       zh:
-        name: 浮力与杠杆
+        name: '两只小舟，一盆水'
         place: 西西里锡拉库扎
         figure: 阿基米德
-        story: 阿基米德弄清了东西为什么会浮起来，传说答案是在浴缸里想到的。
-        relic: 一块浴室海绵
-        relic_desc: 来自浴缸故事里的一块朴素海绵。
+        story: '阿基米德在《论浮体》中讨论浮体和它排开的液体之间的重量关系。浴池与王冠的故事见于晚得多的维特鲁威。游戏在叙拉古虚构一间工坊，让访客拿两只小舟和一盆水亲手试。'
+        relic: '留着吃水线的小舟'
+        relic_desc: '虚构工坊里拿来练习的小舟。'
         points:
-          p1: "跟上杠杆的比例"
-          p2: "向宫里的人解释浮力怎样验出真金"
-          p3: "在沙盘前守到他画完"
+          p1: '比较载重相同的两只小舟'
+          p2: '说服做船的人，等水静下来再试一次'
+          p3: '扶平接水碗，等小舟浮稳'
+        vignettes:
+          load: '堤刻以为宽舟会挤出更多水。你把两只舟配到同样重。宽舟吃水浅一些，接到的两份水却一样重。她把两只舟都留下了，原本还想把大的削成小的那样。'
+          settle: '尼孔关坊前得还水盆，头一回接的水还在晃，就要做第二回。你请堤刻先去还砝码，趁空等水静下来。尼孔又称了一次，走时多带走一次读数，水盆也赶得及还。'
+          crown: '你问尼孔，阿基米德是不是在浴池里验过国王的冠。他低头看看两只小舟，问你有哪一顶冠可以拿来上秤。你知道的是很久以后罗马人会讲的故事。带走的，是这盆水还能重做一遍的刻痕。'
 text:
   en:
     name: Archimedes
@@ -44,3 +57,57 @@ text:
   zh:
     name: 阿基米德
     text: 叙拉古的希腊数学家与发明家，约公元前 287 年生，公元前 212 年去世。他求出了球体积，提出浮力原理和杠杆定律。罗马军队攻陷叙拉古时他被杀。
+hook: {en: 'Which boat can carry the last weight?', zh: '最后一枚砝码，该放哪条船？'}
+facts:
+  floating:
+    date: '-250'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [archimedes_syracuse_floating]
+    text:
+      en: 'For a floating body at rest, the displaced liquid has the same weight as the whole body. The year is an approximate game setting.'
+      zh: '浮体静止时排开液体的重量与整个浮体相等。所列年份是游戏采用的约略时间。'
+  bath:
+    date: '-25'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [archimedes_syracuse_bath]
+    text:
+      en: 'The Roman author tells the bath anecdote in connection with a crown commissioned by Hiero, long after Archimedes lived.'
+      zh: '罗马作者把浴池轶事与希耶罗命人制作的王冠联系起来，成文远晚于阿基米德生活的年代。'
+bystanders:
+  tyche:
+    invented: true
+    text: {en: 'A fictional toy-boat maker weighing two models.', zh: '虚构的小舟制作者堤刻，正在给两只模型配重。'}
+  nikon:
+    invented: true
+    text: {en: 'A fictional attendant with a basin to return before closing.', zh: '虚构帮工尼孔，关坊前要把水盆还回去。'}
+wiki:
+  refs:
+    archimedes_syracuse_floating:
+      order: 809
+      status: checked
+      text:
+        en: 'Archimedes, On Floating Bodies I.5, Henry Mendell translation https://web.calstatela.edu/faculty/hmendel/Ancient%20Mathematics/Archimedes/Floating%20Bodies/FB_I_5/FB_I_5.html'
+        zh: '阿基米德《论浮体》第一卷命题5，亨利·门德尔译 https://web.calstatela.edu/faculty/hmendel/Ancient%20Mathematics/Archimedes/Floating%20Bodies/FB_I_5/FB_I_5.html'
+    archimedes_syracuse_bath:
+      order: 810
+      status: checked
+      text:
+        en: 'Vitruvius, On Architecture IX, preface 9–12 https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Vitruvius/9%2A.html'
+        zh: '维特鲁威《建筑十书》第九书序言9—12 https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Vitruvius/9%2A.html'
+self_check:
+  fact: floating
+  quote_line: '两份接到的水一样重。'
+  regret_choice: 'crown 追问王冠会错过称当场的水。'
+  bookend: '两只舟最后都留下。'
+  share_line: '一深一浅，一样重。'
+  share_number: 'load 两份等重的水。'
+  knowing: 'crown 读过后世关于王冠的传说。'
+  near: 'floating 对照真实命题，工坊试验为虚构。'
+  lever: 'settle 留出时间让读数多一次。'
+  missed: 'crown 手里没有王冠可验。'
+  brought: 'load 带回记着吃水位置的小舟。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

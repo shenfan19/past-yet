@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {E: 2, G: 1}
     regret: true
+    refs: [buchner_zurich_fragments]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":6}},{"trait":["methodical","scholarly","streetwise"]},{"trait":["curious","skeptical","handy"]}]}}
         - {id: p2, kind: care, req: {"any":[{"trait":["cheerful","calm"]},{"trait":["calm","attached","cheerful"]},{"trait":["cheerful"]}]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["bold","vigil"]},{"trait":["bold","ambitious","handy"]}]}}
+      vignettes:
+        - {id: order, traits: [methodical, scholarly]}
+        - {id: pause, traits: [bold, artistic]}
+        - {id: gap}
     text:
       en:
-        name: "Woyzeck unfinished"
+        name: 'Two drafts on the rehearsal table'
         place: "Zurich"
         figure: "Georg Büchner"
-        story: "Georg Büchner, a young lecturer in natural science and a playwright, dies of typhus in Zurich at twenty three, leaving his play Woyzeck unfinished."
+        story: 'Georg Büchner left Woyzeck unfinished. The Klassik Stiftung Weimar holds and digitises the manuscript fragments, which preserve different stages of the play. The 1837 Zürich exercise uses invented practice copies and a reader. It makes no claim to recover Büchner’s intended final scene order.'
         relic: "A bundle of scenes"
         relic_desc: "Loose scenes in a cramped hand, in no fixed order."
         points:
-          p1: "Read the scenes and sense their order"
-          p2: "Sit with him through the fever"
-          p3: "Keep the scenes safe for those who will read them (an archivist, a librarian or a stubborn one helps)"
+          p1: 'Identify which exercise page belongs to which draft'
+          p2: 'Help a reader try both orders without discarding a page'
+          p3: 'Keep the interruption visible in the reading copy'
+        vignettes:
+          order: 'The reader has put the two copies together and numbered the scenes in ink. You add a separate label to each source and write the proposed order on a removable slip. The next reader can undo it. You bring home that slip; you still do not have a final order.'
+          pause: 'You know future theatres will have to decide what goes next. The reader asks if your answer is the author’s. You try both beginnings aloud and mark where they leave different questions. You can take two pauses home, and no finished script.'
+          gap: 'You ask the reader to stop the moment the page stops. Neither of you supplies the missing line. On your copy you leave a space wide enough to notice at a glance. That space is what you remember when you get back.'
       zh:
-        name: "未完成的沃伊采克"
+        name: '排练桌上的两份残稿'
         place: "苏黎世"
         figure: "格奥尔格·毕希纳"
-        story: "格奥尔格·毕希纳是年轻的自然科学讲师和剧作家，二十三岁死于苏黎世的伤寒，剧本《沃伊采克》没有写完。"
+        story: '格奥尔格·毕希纳留下未完成的《沃伊采克》。魏玛古典基金会保存并数字化了手稿残篇，其中有不同阶段的文字。卡里 1837 年苏黎世的试读用的是虚构的练习抄件，也没有替作者定出最后的场序。'
         relic: "一叠零散的场景稿"
         relic_desc: "字迹局促的散页，没有固定的顺序。"
         points:
-          p1: "读着这些场景，感觉它们的次序"
-          p2: "在高烧中陪着他"
-          p3: "把稿子妥善保管，留给将来的读者（档案员、图书管理员或固执的人更合适）"
+          p1: '辨认练习纸各属哪一稿'
+          p2: '让试读的人把两种顺序都读一遍，保留每一页'
+          p3: '让试读本看得出文字在哪里断开'
+        vignettes:
+          order: '试读人把两份拢在一起，用墨写好了场次。你为两份抄件各补一张出处签，把试排的顺序另写在能取下的纸上。下一个人还可以改排。你带回纸条，仍没有拿到定稿的场序。'
+          pause: '你知道后来的剧院也得选下一场怎么接。试读人问你这是不是作者定的。你把两个起头各念一遍，标明它们各把什么问题留给台下。带回的是两个停顿，没有一本完整剧本。'
+          gap: '纸上的字断在哪里，你就请试读人停在哪里。谁也没补那句空着的话。你让副本上的空白大到一眼就能认出。回来以后，你记得的正是那处停顿。'
 text:
   en:
     name: Georg Büchner
@@ -45,3 +58,39 @@ text:
   zh:
     name: 格奥尔格·毕希纳
     text: 德国作家与革命者，1813 年生，1837 年去世。他写了《丹东之死》和《沃伊采克》，因一份号召起义的传单逃往苏黎世。他二十三岁死于伤寒。
+hook: {en: 'Which scene belongs next if there is no final copy?', zh: '没定稿，下一场敢排在哪儿？'}
+facts:
+  fragments:
+    date: '1837'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [buchner_zurich_fragments]
+    text:
+      en: 'The collection preserves Woyzeck in manuscript fragments from different stages of work. The order proposed in the game belongs only to the exercise.'
+      zh: '馆藏保存《沃伊采克》不同写作阶段的残稿。游戏试排的顺序仅用于练习。'
+bystanders:
+  reader:
+    invented: true
+    text: {en: 'An invented reader who wants one order for a fragmented script.', zh: '虚构的试读人，想给支离的场次排出一个读法。'}
+wiki:
+  refs:
+    buchner_zurich_fragments:
+      order: 620
+      status: checked
+      text:
+        en: 'Klassik Stiftung Weimar, Georg Büchner, Woyzeck-Fragmente (1836/1837), collection record https://100schaetze.klassik-stiftung.de/objekt/georg-buechner-woyzeck-fragmente-1836/1837/'
+        zh: '魏玛古典基金会，《沃伊采克》1836–1837 年手稿残篇馆藏条目 https://100schaetze.klassik-stiftung.de/objekt/georg-buechner-woyzeck-fragmente-1836/1837/'
+self_check:
+  fact: fragments
+  quote_line: '回来以后，你记得的正是那处停顿。'
+  regret_choice: '忙着试读一套顺序，要给另一套留下可还原的材料。'
+  bookend: '从急着给场次编号，到主动留下一个空位。'
+  share_line: '我带回一个剧本没写完的停顿。'
+  share_number: '两份试读顺序'
+  knowing: 'pause 知道后世改编还得面对场序。'
+  near: 'fragments 锚定残稿实物。'
+  lever: '把试排顺序改为可取下的签。'
+  missed: '等不到定稿。'
+  brought: '能换回去的排次纸。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

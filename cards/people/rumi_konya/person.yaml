@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {G: 2}
     regret: true
+    refs: [rumi_konya_reed, rumi_konya_copy]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["wanderer","artistic"]},{"job":["musician"]}]}}
         - {id: p2, kind: hold, req: {"job":["archivist","student","journalist"]}}
         - {id: p3, kind: care, redeem: true, req: {"trait":["patient","sensitive","calm"]}}
+      vignettes:
+        - {id: reed, traits: [artistic, wanderer, curious]}
+        - {id: hand, traits: [patient, sensitive, calm]}
+        - {id: manuscript}
     text:
       en:
-        name: "Poems spoken and written down by friends"
+        name: 'The voice at the opening'
         place: "Konya"
         figure: "Rumi"
-        story: "Having lost his friend Shams, Rumi pours his grief into poems that he speaks aloud and others write down, among them the Masnavi. He dies in Konya in December 1273 with the gathering of his poems still going on."
-        relic: "A reed flute"
-        relic_desc: "A plain reed flute, its sound thin and low."
+        story: 'The opening of Rumi’s Masnavi asks the listener to hear a reed speaking of separation. Konya’s Mevlana Museum holds a six-book manuscript copied in 1278, after Rumi’s death in 1273. The game imagines two readers in Konya comparing ways to perform the opening with their practice sheets.'
+        relic: 'A reader’s opening leaf'
+        relic_desc: 'An imagined reading sheet marking the opening of a verse.'
         points:
-          p1: "Hear the flute and the verses (a sensitive employee or a musician)"
-          p2: "Write the verses down as they are spoken (a record keeper, a student or a journalist)"
-          p3: "Stay with him on his last night"
+          p1: 'Listen for the moment when the reed takes the speaking part'
+          p2: 'Keep a place for the second reader when the page is handed over'
+          p3: 'Give the reader a second attempt before the room closes'
+        vignettes:
+          reed: 'Narin has performed both parts with the same voice. You ask where the reed first speaks as itself. She lets the next line begin after a breath. When Hasan listens with his eyes shut, he can hear the moment the reed takes over.'
+          hand: 'Hasan has to leave the reading bench, and Narin reaches for his page while he is still speaking. You hold its corner until he completes the couplet and can put his finger on the next line. She begins there when it is her turn. The passage has passed between them without a gap.'
+          manuscript: 'You have seen the later six-book manuscript. Narin asks if it will show where Hasan took a breath. You point to the line they practised and let her decide where to pause. The door closes before they read the next couplet aloud.'
       zh:
-        name: "由友人听写下来的诗"
+        name: '开篇是谁在说'
         place: "科尼亚"
         figure: "鲁米"
-        story: "失去朋友沙姆斯之后，鲁米把悲伤写成诗，他口述，别人记录，《玛斯纳维》就是其中之一。1273年12月他在科尼亚去世，诗稿的汇集工作仍在继续。"
-        relic: "一支芦笛"
-        relic_desc: "一支朴素的芦笛，声音细而低。"
+        story: '鲁米《玛斯纳维》开篇请人听芦管诉说离别。科尼亚梅夫拉纳博物馆藏有六卷全本，抄于1278年，晚于鲁米1273年去世。游戏虚构科尼亚两名读者拿练习稿比较开头怎样读。'
+        relic: '一张起句练习稿'
+        relic_desc: '虚构的读书页，在起句处做了记号。'
         points:
-          p1: "听笛声和诗句"
-          p2: "在他念诗时记下来"
-          p3: "最后一夜陪着他"
+          p1: '听清从哪里轮到芦管说话'
+          p2: '递稿时给接读的人留好位置'
+          p3: '关屋前再给读者一次开口的机会'
+        vignettes:
+          reed: '娜琳把两处用同一种声音读过去。你问，芦管从哪里开始用自己的口吻说话。她换过一口气，才念下一句。哈桑闭着眼，也听得出哪里换成了芦管。'
+          hand: '哈桑得离开读书凳，还没念完，娜琳手已够到那页。你按住纸角，等他把一联念完，手指落到下一行。轮到她时，她从那儿起句，一段诗从一人手里递到了另一人。'
+          manuscript: '你见过后来的六卷抄本。娜琳问，上面能不能看出哈桑在哪里换气。你指着刚练过的那行，让她自己定在哪里停。门关上时，他们还没念到下一联。'
 text:
   en:
     name: Rumi
@@ -45,3 +58,57 @@ text:
   zh:
     name: 鲁米
     text: 波斯诗人与导师，1207 年生，1273 年去世，住在科尼亚。他的《玛斯纳维》和抒情诗是苏菲文学中读者最多的作品之一，追随者创立了梅芙莱维教团。
+hook: {en: 'The reed speaks before the singer does.', zh: '先开口的是芦管，还是歌者？'}
+facts:
+  reed:
+    date: '1273'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [rumi_konya_reed]
+    text:
+      en: 'The opening gives the reed a voice and connects its lament to separation. The year sets the fictional reading rather than dating the composition of the opening.'
+      zh: '开篇让芦管发声，把它的哀诉与离别相连。年份用于虚构读书场景，并非开篇写定的年份。'
+  copy:
+    date: '1278'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [rumi_konya_copy]
+    text:
+      en: 'The museum manuscript is recorded as a copy from 1278 comprising six books.'
+      zh: '馆藏文书记载抄本抄于1278年，全六卷。'
+bystanders:
+  narin:
+    invented: true
+    text: {en: 'A fictional reader trying to distinguish the opening voices.', zh: '虚构读者娜琳，要读出开头的不同声音。'}
+  hasan:
+    invented: true
+    text: {en: 'A fictional reader who has to leave before the next couplet.', zh: '虚构读者哈桑，下一联到来前得离开。'}
+wiki:
+  refs:
+    rumi_konya_reed:
+      order: 985
+      status: checked
+      text:
+        en: 'Rumi, Masnavi I.1–10, Persian text and Nicholson translation https://masnavi.net/3/10/eng/1/1/'
+        zh: '鲁米《玛斯纳维》第一卷第1至10联，波斯文及尼科尔森英译 https://masnavi.net/3/10/eng/1/1/'
+    rumi_konya_copy:
+      order: 986
+      status: checked
+      text:
+        en: 'UNESCO Memory of the World, Rumi manuscripts nomination, Konya Mevlana Museum MS 51 https://media.unesco.org/sites/default/files/webform/mow001/08_135%252B.pdf'
+        zh: '联合国教科文组织世界记忆，鲁米手稿申报文书，科尼亚梅夫拉纳博物馆51号写本 https://media.unesco.org/sites/default/files/webform/mow001/08_135%252B.pdf'
+self_check:
+  fact: reed
+  quote_line: '哈桑闭着眼，也听得出哪里换成了芦管。'
+  regret_choice: 'hand 句没念完就拿走纸，接读的人会漏掉一截。'
+  bookend: '先辨认谁开口，再接住下一声。'
+  share_line: '一口气之后，换了一种声音。'
+  share_number: '馆藏后出全本六卷。'
+  knowing: 'manuscript 员工看过1278年的抄本。'
+  near: 'reed 原文开篇的说话者可对照。'
+  lever: 'hand 两个人读完一段而不漏句。'
+  missed: 'manuscript 没听到下一联。'
+  brought: 'reed 带回虚构起句练习页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

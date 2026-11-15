@@ -9,38 +9,90 @@ events:
     field: science
     tier: 3
     channels: {V: 1}
+    refs: [house_of_wisdom_epistle]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["archivist","translator"]}}
         - {id: p3, kind: persuade, req: {"any":[{"trait":["glib","streetwise","cosmopolitan"]},{"job":["teacher"]}]}}
+      vignettes:
+        - {id: line, traits: [methodical, skeptical, curious]}
+        - {id: versions, traits: [scholarly, faithful, quiet]}
+        - {id: gloss}
     text:
       en:
-        name: Scholars translating the world's books
+        name: 'The missing line in Baghdad'
         place: Baghdad
         figure: Al-Khwarizmi and the House of Wisdom
-        story: In Baghdad scholars translate Greek, Persian and Indian works and go further, and al-Khwarizmi gives algebra its name.
-        relic: A brass inkwell
-        relic_desc: A small lidded well for ink.
+        story: 'In a letter compiled around 855–856, Ḥunayn ibn Isḥāq describes obtaining and comparing manuscripts for Syriac and Arabic translations of Galen. The House of Wisdom card imagines an earlier Baghdad copying table, with two fictional workers. The later letter illustrates a practice; the game does not place its writing or this job in a documented House of Wisdom room.'
+        relic: 'A practice copy with a missing line'
+        relic_desc: 'A fictional copy from the imagined Baghdad desk.'
         points:
-          p1: "Follow the terms of the translation"
-          p2: "Proofread the translated text"
-          p3: "Explain to the patron why translation is worth it"
+          p1: 'Check where the two copies stop agreeing'
+          p2: 'Preserve the gap and its source as the stack is carried away'
+          p3: 'Agree on a wording the translator can mark as provisional'
+        vignettes:
+          line: 'Salma runs her finger down a neat copy and misses the place where two lines ran together. You read from the rougher sheet while she follows the clean one. She hears what did not survive in her copy and marks exactly where it fell away.'
+          versions: 'Ilyas must carry a version to the translator before the door is shut. He can take the clear copy alone or carry its troublesome companion too. You tie them so that the disputed place opens first. The translator can decide with both sheets in hand.'
+          gloss: 'You recognise a term by the form later books will use. Salma can point to a lacuna in the source but has nothing to fill it from. You give her a margin note indicating a possible reading. Nothing in the running text has changed when the packet leaves.'
       zh:
-        name: 学者们翻译天下的书
+        name: '巴格达抄本上的缺行'
         place: 巴格达
         figure: 花拉子米与智慧宫
-        story: 在巴格达，学者们翻译希腊、波斯和印度的著作，并往前走得更远，花拉子米给代数起了名字。
-        relic: 一只黄铜墨水瓶
-        relic_desc: 一个带盖的小墨池。
+        story: '侯奈因·伊本·伊斯哈格在约855至856年写成的书信里，谈到搜寻、比对盖伦手稿以供叙利亚语和阿拉伯语翻译。智慧宫卡虚构更早的巴格达抄写桌及两名经手人。晚出的书信用来说明译者怎样工作，不能给这张桌子定址。'
+        relic: '一页标出缺行的练习抄本'
+        relic_desc: '来自虚构巴格达抄写桌的一份练习抄页。'
         points:
-          p1: "跟上翻译的术语"
-          p2: "校对译本"
-          p3: "向赞助人解释翻译的价值"
+          p1: '找出两份抄本从哪儿开始不同'
+          p2: '交接文稿时保住缺行的位置和出处'
+          p3: '商定怎样标出暂时无法定下的译文'
+        vignettes:
+          line: '萨尔玛顺着整齐的抄本读，滑过了原本两行挤成一行的位置。你照字迹较乱的纸朗读，她用整齐那份对着听。她听到自己这份少掉的内容，在脱漏处做了记号。'
+          versions: '门要关了，伊利亚斯得先送一份给译者。他可以只送整齐那份，也可以把难读的那份带上。你捆好两份，让人一翻就能看到分歧。译者拿到纸页，可以同时拿两份来判断。'
+          gloss: '你认得后世书里常用的术语。萨尔玛指给你看原文缺在哪儿，可手头没有字可补。你只给她一条页边备选说法。信包送走时，正文一字没补。'
 text:
   en:
     name: Al-Khwarizmi and the House of Wisdom
-    text: Al-Khwarizmi and the scholars of the House of Wisdom in Baghdad, a centre of translation and research under the Abbasid caliphs in the ninth century. Texts from Greek, Persian, Syriac and Sanskrit were translated into Arabic and extended there.
+    text: The House of Wisdom was associated with Abbasid court book culture in Baghdad. The wider ninth-century translation movement also involved scholars and patrons working in several settings. Ḥunayn’s letter records the work of seeking out and comparing copies.
   zh:
     name: 花拉子米与智慧宫
-    text: 花拉子米与巴格达智慧宫的学者们。智慧宫是九世纪阿拔斯哈里发治下的翻译与研究中心，希腊文、波斯文、叙利亚文和梵文的典籍在那里被译成阿拉伯文并有所发展。
+    text: 智慧宫与巴格达阿拔斯宫廷的藏书传统有关。九世纪的翻译活动遍及多处，由不同的学者和赞助人推动。侯奈因在书信中记录了译者搜寻和比勘底本的工作。
+hook: {en: 'The smoothest copy has lost a line.', zh: '最顺的一份抄本，少了一行。'}
+facts:
+  epistle:
+    date: '855'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [house_of_wisdom_epistle]
+    text:
+      en: 'The translated letter gives examples of finding, comparing and correcting source copies. The editors place its first composition around 855–856, after the episode’s setting.'
+      zh: '译文举出译者寻找、比勘与订正底本的例子。编者将书信初次成文定在约855至856年，晚于卡片故事的设置。'
+bystanders:
+  salma:
+    invented: true
+    text: {en: 'A fictional Baghdad copyist checking two sheets.', zh: '虚构抄写员萨尔玛，在巴格达比对两页。'}
+  ilyas:
+    invented: true
+    text: {en: 'A fictional messenger carrying sheets to a translator.', zh: '虚构送件人伊利亚斯，要把纸页带给译者。'}
+wiki:
+  refs:
+    house_of_wisdom_epistle:
+      order: 909
+      status: checked
+      text:
+        en: 'Uwe Vagelpohl and Isabel Sánchez, Arabic Sources on Translation, Ḥunayn’s Epistle on Galen https://brill.com/downloadpdf/display/book/edcoll/9789004472648/BP000005.pdf'
+        zh: '乌韦·福格波尔、伊莎贝尔·桑切斯编译，侯奈因《论盖伦译作书信》 https://brill.com/downloadpdf/display/book/edcoll/9789004472648/BP000005.pdf'
+self_check:
+  fact: epistle
+  quote_line: '信包送走时，正文一字没补。'
+  regret_choice: 'gloss 直接补译会把后见线索误写成底本的字。'
+  bookend: '从顺滑的缺行开始，到明白哪儿还空。'
+  share_line: '两份底本，一处缺行。'
+  share_number: 'line 虚构的两份抄本。'
+  knowing: 'gloss 员工认得后世常用术语。'
+  near: 'epistle 译者回顾提供历史实践。'
+  lever: 'versions 同时交出两份供比对。'
+  missed: 'gloss 来不及找到缺文。'
+  brought: 'line 带回标出脱漏处的虚构抄页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

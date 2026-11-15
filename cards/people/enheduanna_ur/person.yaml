@@ -9,38 +9,102 @@ events:
     field: literature
     tier: 2
     channels: {H: 2, S: 1}
+    refs: [enheduanna_ur_disc, enheduanna_ur_hymn]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"scan"}}
         - {id: p2, kind: persuade, req: {"trait":["scholarly","ambitious","cosmopolitan","streetwise"]}}
         - {id: p3, kind: hold, req: {"job":["archivist","student"]}}
+      vignettes:
+        - {id: inscription, traits: [methodical, scholarly]}
+        - {id: support, traits: [handy, kind]}
+        - {id: edge}
     text:
       en:
-        name: The first named author
+        name: 'Turn over the disc'
         place: Ur, Mesopotamia
         figure: Enheduanna
-        story: Enheduanna, a priestess of Ur, writes hymns to the goddess Inanna and signs them, the earliest author we know by name.
-        relic: An alabaster disc
+        story: 'A calcite disc from Ur bears a ritual relief on one face and names Enheduanna on the other. Much later surviving copies of The Exaltation of Inana also name her in the voice of the poem. The attribution of the ancient poem is discussed, and your encounter with a workshop is fictional.'
+        relic: A carved calcite disc
         relic_desc: A carved disc showing a priestess at an offering.
         points:
-          p1: "Hear her sing the hymn to the goddess"
-          p2: "Be admitted to the temple"
-          p3: "Copy the tablets"
+          p1: 'Record the inscription face separately from the relief face'
+          p2: 'Ask the stoneworker to show which face carries the name'
+          p3: 'Leave a drawing that lets a future copyist match the two faces'
+        vignettes:
+          inscription: 'You remember that the museum will catalogue both faces. The stoneworker has set the disc down with the inscription against the bench. You draw the relief while he works, then get a second drawing when he turns it over. You can take home two views. They do not say who first composed the hymn.'
+          support: 'The stoneworker asks you to steady a pad beside the disc. With both hands on it you miss the first glimpse of the inscription. He leaves enough time for you to mark on your sketch which side you missed. The name itself will have to wait for another visit.'
+          edge: 'The two sides fill the stoneworker’s account of the disc. On your sketch you also mark how thick the edge is, so you can tell which two drawings belong to the same object. You leave with one sketch and no copy of the hymn.'
       zh:
-        name: 第一位留名的作者
+        name: '翻过圆盘再看'
         place: 美索不达米亚乌尔
         figure: 恩赫杜安娜
-        story: 乌尔的女祭司恩赫杜安娜给女神伊南娜写下赞歌，并署了名，是我们所知最早留名的作者。
-        relic: 一块雪花石膏圆盘
+        story: '乌尔出土的方解石圆盘一面刻着仪式浮雕，另一面刻有恩赫杜安娜的名字。现存年代更晚的《伊南娜颂》抄本里，诗中人也自称恩赫杜安娜。诗作是否由她本人写成仍有讨论，卡里的作坊差事为分支演绎。'
+        relic: 一块方解石圆盘
         relic_desc: 圆盘上刻着一位女祭司在献祭。
         points:
-          p1: "听她吟唱给神的赞美诗"
-          p2: "获准进入神庙"
-          p3: "把泥板抄下来"
+          p1: '把刻字面与浮雕面分开记录'
+          p2: '请石工指出哪一面刻着名字'
+          p3: '留一张让后来的抄写人认得正反两面的图'
+        vignettes:
+          inscription: '你记得后世博物馆会登记正反两面。石工把刻字一面朝下搁在木台上。你趁他干活先画下浮雕，翻面后又补了一张。两幅图都能带回去，最先写那首诗的人是谁，图上答不出来。'
+          support: '石工请你扶稳圆盘旁的垫子。你腾不出手来，错过了刻字面刚翻起的时候。收工前，他留了点时间让你在草图上圈出漏看的那一面。上面的人名只能下趟再来核对。'
+          edge: '石工记了圆盘的正反面。你又在草图上添了边缘的厚薄，好认出哪两幅画的是同一件东西。收队时手里有一张图，那首诗的抄本却没带回来。'
 text:
   en:
     name: Enheduanna
-    text: High priestess of the moon god at Ur, daughter of Sargon of Akkad, around 2300 BC. Hymns signed with her name are among the earliest known works by a named author.
+    text: High priestess of the moon god at Ur, daughter of Sargon of Akkad, around 2300 BC. Several early works in Sumerian are traditionally attributed to her. The surviving manuscript copies are later.
   zh:
     name: 恩赫杜安娜
-    text: 乌尔月神的大祭司，阿卡德萨尔贡之女，活跃于公元前 2300 年前后。署有她名字的赞美诗是已知最早的署名作者作品之一。
+    text: 乌尔月神的大祭司，阿卡德萨尔贡之女，活跃于公元前 2300 年前后。几篇用苏美尔语写成的早期作品传统上归于她名下。存世抄本年代较晚。
+hook: {en: 'A name on stone and in a hymn', zh: '圆盘背面刻了谁？'}
+facts:
+  disc:
+    date: '-2300'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [enheduanna_ur_disc]
+    text:
+      en: 'The museum dates the disc to around 2300 BCE and describes the relief and the inscription naming Enheduanna.'
+      zh: '馆藏将圆盘定在约公元前 2300 年，记载了仪式浮雕和刻有恩赫杜安娜名字的另一面。'
+  hymn:
+    date: '-2300'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [enheduanna_ur_hymn]
+    text:
+      en: 'The poem names Enheduanna in the first person. The catalogue-event year represents the setting and does not date the surviving copies.'
+      zh: '诗中以第一人称称自己为恩赫杜安娜。卡上年份表示场景时期，不能据此给现存抄本定年。'
+bystanders:
+  stoneworker:
+    invented: true
+    text: {en: 'A fictional stoneworker responsible for keeping both sides of the disc intact.', zh: '虚构的石工，负责翻转圆盘而不碰坏任何一面。'}
+wiki:
+  refs:
+    enheduanna_ur_disc:
+      order: 430
+      status: checked
+      text:
+        en: 'Penn Museum, Disc of Enheduanna, B16665 https://collections.penn.museum/collections/object/293415'
+        zh: '宾夕法尼亚大学博物馆，恩赫杜安娜圆盘 B16665 https://collections.penn.museum/collections/object/293415'
+    enheduanna_ur_hymn:
+      order: 431
+      status: checked
+      text:
+        en: 'University of Oxford, ETCSL, The Exaltation of Inana, lines 66–73 https://etcsl.orinst.ox.ac.uk/section4/tr4072.htm'
+        zh: '牛津大学苏美尔文学电子语料库，《伊南娜颂》第 66–73 行 https://etcsl.orinst.ox.ac.uk/section4/tr4072.htm'
+self_check:
+  fact: disc
+  quote_line: '两幅图都能带回去，最先写那首诗的人是谁，图上答不出来。'
+  regret_choice: '腾手画两面可以留下两个视角，扶垫子则会漏看刻字。'
+  bookend: '从猜名字在哪一面到用两张图正确对应圆盘。'
+  share_line: '一块圆盘得翻过来才知道是谁。'
+  share_number: '两面'
+  foreknowledge: '员工见过现代馆藏的双面记录。'
+  proximity: 'disc 与 hymn 分别锚定文物与传世文本，石工作坊为虚构。'
+  leverage: '补画刻字面，或留下可靠的漏记标记。'
+  missed: '圆盘给不出诗的定稿人与时刻。'
+  takeaway: '圆盘草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

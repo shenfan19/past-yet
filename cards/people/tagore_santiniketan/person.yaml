@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 2
     channels: {H: 1}
+    refs: [tagore_santiniketan_translation, tagore_santiniketan_award]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["handy","curious","scholarly"]},{"job":["musician"]}]}}
         - {id: p2, kind: trust, req: {"trait":["kind","artistic","sensitive","patient"]}}
         - {id: p3, kind: hold, req: {"any":[{"job":["teacher"]},{"trait":["faithful"]}]}}
+      vignettes:
+        - {id: headline, traits: [bold, charismatic]}
+        - {id: pause, traits: [methodical, artistic]}
+        - {id: sheets}
     text:
       en:
-        name: The first Nobel for literature in Asia
+        name: 'One poem, two readings'
         place: Santiniketan, India
         figure: Rabindranath Tagore
-        story: Tagore, poet, songwriter and school founder, is awarded the Nobel Prize in Literature.
+        story: 'The English Gitanjali presents Tagore’s own prose translations from Bengali. In 1913 the Swedish Academy awarded him the Nobel Prize in Literature. The reading circle in Santiniketan below is fictional.'
         relic: A hand-copied songbook
         relic_desc: A small book of songs in his own hand.
         points:
-          p1: "Hear the class under the tree"
-          p2: "Sit with the students"
-          p3: "Finish the lesson"
+          p1: 'Check which handout is Tagore’s English rendering'
+          p2: 'Make room for a second reading in the other language'
+          p3: 'Keep the two reading sheets together for the next class'
+        vignettes:
+          headline: 'You tell a student helping with the reading that the prize will bring readers who know only the English. The student asks which sheet they will reach for first. You leave both on the desk and label the English as the author’s rendering. You have time to hear only the first reading.'
+          pause: 'The student keeps stopping at the ends of the printed lines. You read a sentence aloud and mark one pause that comes earlier. The next reader gets through the whole thought. You keep a copy of the marked sheet, but leave before you can hear how the other version sounds.'
+          sheets: 'You pin two loose sheets together after the reading and mark which is which. The student can now hand both to whoever comes next. You take home the one pause you remember. The room is empty by the time you try it again.'
       zh:
-        name: 亚洲第一个文学诺贝尔奖
+        name: '一首诗，读两遍'
         place: 印度圣蒂尼克坦
         figure: 罗宾德拉纳特·泰戈尔
-        story: 诗人、词曲作者、办学者泰戈尔获得诺贝尔文学奖。
+        story: '英文版《吉檀迦利》收入泰戈尔本人从孟加拉语译写的散文诗。1913 年，瑞典学院把诺贝尔文学奖授予泰戈尔。卡里圣蒂尼克坦的读诗小组属于分支演绎。'
         relic: 一本手抄的歌集
         relic_desc: 一本小小的歌本，是他的亲笔。
         points:
-          p1: "听树下的课"
-          p2: "同学生们一起坐"
-          p3: "把课讲完"
+          p1: '确定哪张讲义是泰戈尔本人译写的英文'
+          p2: '请读诗小组用另一种语言再读一遍'
+          p3: '把两份朗读稿留给下一班'
+        vignettes:
+          headline: '你告诉管朗读的学生，奖项会带来只读得懂英文的新读者。学生问他们会先拿哪张。你把两张都留在桌上，给英文那张标明是作者自己译写。轮到第二遍时，你已得收队。'
+          pause: '学生每到印刷行尾就停。你念了一整句，把该停的一处标在更前面。下一位朗读的人念完了整句的意思。你留了一份带停顿记号的纸，但没能听到另一种语言的读法。'
+          sheets: '读完后，你把散开的两张稿夹在一起，标明各是哪一种语言。下一个人来了，学生可以把两张一起交给他。你只带回一个记得住的停顿，再念一遍时，教室已经空了。'
 text:
   en:
     name: Rabindranath Tagore
@@ -44,3 +57,54 @@ text:
   zh:
     name: 罗宾德拉纳特·泰戈尔
     text: 孟加拉诗人与教育家，1861 年生，1941 年去世。他写诗、歌曲、戏剧和小说，在圣蒂尼克坦创办学校，1913 年成为第一位获得诺贝尔文学奖的非欧洲人。
+hook: {en: 'Can the next reader hear both versions?', zh: '译成英文之后，怎么读？'}
+facts:
+  translation:
+    date: '1912'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tagore_santiniketan_translation]
+    text:
+      en: 'The title page identifies the English book as the author''s own prose translations from Bengali.'
+      zh: '英文版题名页注明收入作者自己从孟加拉语译写的散文诗。'
+  award:
+    date: '1913'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tagore_santiniketan_award]
+    text:
+      en: 'The release notes Tagore’s Nobel Prize in 1913 and describes the manuscript kept at Houghton Library.'
+      zh: '发布记录载有泰戈尔 1913 年获诺贝尔奖一事，并介绍霍顿图书馆保存的手稿。'
+bystanders:
+  reader:
+    invented: true
+    text: {en: 'A fictional student setting out the sheets for both languages.', zh: '虚构的学生，负责为两种语言的朗读摆讲义。'}
+wiki:
+  refs:
+    tagore_santiniketan_translation:
+      order: 450
+      status: checked
+      text:
+        en: 'Rabindranath Tagore, Gitanjali, title page of the English edition https://www.gutenberg.org/cache/epub/7164/pg7164-images.html'
+        zh: '泰戈尔《吉檀迦利》英文版题名页 https://www.gutenberg.org/cache/epub/7164/pg7164-images.html'
+    tagore_santiniketan_award:
+      order: 451
+      status: checked
+      text:
+        en: 'Press Information Bureau, Government of India, Gitanjali facsimile release https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=81587'
+        zh: '印度政府新闻信息局，《吉檀迦利》手稿影印本发布记录 https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=81587'
+self_check:
+  fact: translation
+  quote_line: '轮到第二遍时，你已得收队。'
+  regret_choice: '留下两种文字供下一班读，自己却只能听到一遍。'
+  bookend: '开头问该读哪一稿，结尾给后来的人留下两张。'
+  share_line: '两张读诗稿一起留在桌上。'
+  share_number: '1913'
+  knowing: 'headline 知道英文读者会随获奖增加。'
+  near: 'translation 与 award 定出处；读诗小组为虚构。'
+  lever: 'pause 改一处可听见的停顿，sheets 留两份成对讲义。'
+  missed: '收队时第二遍还没听到。'
+  brought: '抄下的停顿与两种读本的信息。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

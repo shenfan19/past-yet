@@ -11,7 +11,7 @@ events:
     era: wegener_greenland_1930
     channels: {C: 3, L: 3}
     regret: true
-    refs: [wegener_eismitte_archive]
+    refs: [wegener_eismitte_archive, wegener_nasa_expedition]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
@@ -102,6 +102,7 @@ wiki:
       unlock:
         era: wegener_greenland_1930
       refs:
+        - wegener_nasa_expedition
         - wegener_sources
         - game
       text:
@@ -112,6 +113,12 @@ wiki:
           name: 从艾斯米特返回的路
           text: 魏格纳 1930 年 11 月 1 日和拉斯穆斯·维卢姆森从艾斯米特出发，被认为在 11 月 16 日前后去世。搜寻队 1931 年 5 月 12 日找到他的墓。游戏里员工能帮队伍度过这几周，只在这条分支里成立。
   refs:
+    wegener_nasa_expedition:
+      order: 1001
+      status: checked
+      text:
+        en: 'NASA Earth Observatory, Alfred Wegener, expedition timeline and dated image https://science.nasa.gov/earth/earth-observatory/alfred-wegener/'
+        zh: 'NASA地球观测站，魏格纳远征时间线与注明日期的照片 https://science.nasa.gov/earth/earth-observatory/alfred-wegener/'
     wegener_eismitte_archive:
       order: 171
       status: checked
@@ -138,6 +145,7 @@ era_text:
       - greenland
       - history
     event_titles:
+      expedition_handoff: 'Which way was the sled going?'
       time_strain: Time slip
     plots: {}
     blurb: A scientific expedition on the ice in the last weeks before the dark, with an inland station still short of supplies. Close, cheap, and the effect of warmth and food is clear.
@@ -160,12 +168,16 @@ era_text:
         - You can save today's people but not the whole winter. On the main timeline the plan was not changed in time.
         - Warmth and food matter more than any one clever idea, but a plan only changes when someone is heard.
     events:
+      expedition_handoff: '{staff} waits with Ulla to match the names against the incoming row. Jakob leaves, so the two dated rows go into the folder for the next handoff.'
+      expedition_send: '{staff} puts the westbound sheet into Jakob’s hand before he leaves and circles a missing name for Ulla to check.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       settled: 'Keep the ailing going'
       sheltered: 'Get the whole party under cover'
       through: 'Bring the party through these weeks'
     milestones:
+      eismitte_reached: '{date}: Alfred Wegener, Fritz Loewe and Rasmus Villumsen reach the Eismitte station after forty days of travel.'
+      left_eismitte: '{date}: A photograph records Wegener and Villumsen setting out from Eismitte for the west coast.'
       first_treat: '{date}: {staff} brews the first hot drink for a man who has stopped talking. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first blankets and sets up a windbreak, and teaches the sledge drivers to do the same.'
       trust_won: '{date}: The sledge drivers no longer keep {staff} out, and some ask for help.'
@@ -174,15 +186,13 @@ era_text:
       people_settled: '{date}: {staff} has found a warm place and food for everyone who was ailing.'
       well_sheltered: '{date}: {staff} has the whole party under cover and out of the wind.'
       all_through: '{date}: The party is through these weeks with no more than two lost.'
-      eismitte_reached: '{date}: Wegener, Loewe and Villumsen reach the Eismitte station in the middle of the ice sheet.'
-      left_eismitte: '{date}: On his fiftieth birthday Wegener sets out from Eismitte with Rasmus Villumsen to return to the west coast.'
       last_journey: '{date}: Wegener is thought to have died on the way back about this time. The date is an estimate, and Villumsen was never found.'
     summary:
       near_death: '{staff} collapses at Greenland and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
       legend: '{staff} left a legend at Greenland. The supply plan was changed {advance_days:1} days earlier than in history.'
-      perfect: '{staff} completed the task at Greenland and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      perfect: '{staff} completed the task at Greenland and came back safe. The simulation records {base_D:i} lost in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days at Greenland, did what was within reach, and came back safe.'
     quotes:
@@ -232,6 +242,7 @@ era_text:
       - greenland
       - history
     event_titles:
+      expedition_handoff: '雪橇往哪边走？'
       time_strain: 时间错位
     plots: {}
     blurb: 黑夜降临前最后几周冰上的一支科学考察队，冰盖中央的站点还缺物资。近，成本低，保暖和食物的效果很明显。
@@ -254,12 +265,16 @@ era_text:
         - 你能救今天的人，救不了整个冬天。主时间线上计划没有及时改变。
         - 保暖和食物比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{staff} 和乌拉对照进站一行核对姓名。雅各布已走，两行带日期的记录放进夹子，等下一趟再交接。'
+      expedition_send: '雅各布出门前，{staff} 把注明向西的那页递给他，圈出一个缺失的姓名请乌拉随后核对。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       settled: '让病倒的人撑下去'
       sheltered: '让全队躲进遮蔽处'
       through: '带队伍度过这几周'
     milestones:
+      eismitte_reached: '{date}，历经四十天，阿尔弗雷德·魏格纳、弗里茨·勒韦和拉斯穆斯·维卢姆森抵达艾斯米特站。'
+      left_eismitte: '{date}，照片记录了魏格纳与维卢姆森离开艾斯米特、返回西海岸的情景。'
       first_treat: '{date}：{staff} 给一个已经不说话的人煮好第一杯热饮，他开始开口了。'
       first_protect: '{date}：{staff} 发下第一批毯子，搭起挡风墙，教雪橇手照做。'
       trust_won: '{date}：雪橇手们不再把 {staff} 挡在外面，有的还开口求助。'
@@ -268,15 +283,13 @@ era_text:
       people_settled: '{date}：{staff} 给每一个病倒的人都找到了暖和的地方和吃的。'
       well_sheltered: '{date}：{staff} 让全队都躲进了遮蔽处，避开了风。'
       all_through: '{date}：队伍度过了这几周，损失不超过两个人。'
-      eismitte_reached: '{date}：魏格纳、勒韦和维卢姆森到达冰盖中央的艾斯米特站。'
-      left_eismitte: '{date}：魏格纳五十岁生日这天，他和拉斯穆斯·维卢姆森从艾斯米特出发，回西海岸。'
       last_journey: '{date}：魏格纳被认为在这前后死于返程途中。这个日期是估计，维卢姆森一直没有找到。'
     summary:
       near_death: '{staff} 在格陵兰倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
       legend: '{staff} 在格陵兰留下了传说。补给计划比历史上提前 {advance_days:1} 天改变。'
-      perfect: '{staff} 在格陵兰完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      perfect: '{staff} 在格陵兰完成了任务，平安回来。模拟基准损失 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
       modest: '{staff} 在格陵兰待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -313,3 +326,44 @@ era_text:
       unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'The next person to open the ledger needs to know which way the sled went.', zh: '下一位翻开账簿的人，得知道雪橇往哪边走。'}
+facts:
+  eismitte_reached:
+    date: '1930-10-30'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [wegener_nasa_expedition, wegener_eismitte_archive]
+    text:
+      en: 'Alfred Wegener, Fritz Loewe and Rasmus Villumsen reach the Eismitte station after forty days of travel.'
+      zh: '历经四十天，阿尔弗雷德·魏格纳、弗里茨·勒韦和拉斯穆斯·维卢姆森抵达艾斯米特站。'
+  left_eismitte:
+    date: '1930-11-01'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [wegener_nasa_expedition, wegener_eismitte_archive]
+    text:
+      en: 'A photograph records Wegener and Villumsen setting out from Eismitte for the west coast.'
+      zh: '照片记录了魏格纳与维卢姆森离开艾斯米特、返回西海岸的情景。'
+bystanders:
+  ulla:
+    invented: true
+    text: {en: 'Ulla, an invented keeper of a supply ledger, has separate rows for the incoming and outgoing parties.', zh: '乌拉是虚构的物资账簿管理员，她给进站和出站人员各留一行。'}
+  jakob:
+    invented: true
+    text: {en: 'Jakob, an invented station aide, carries a copy back to the reception desk.', zh: '雅各布是虚构的站务帮手，负责把副本送回接待桌。'}
+self_check:
+  fact: eismitte_reached
+  quote_line: '往西。先写清楚方向。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '下一位翻开账簿的人，得知道雪橇往哪边走。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '下一位翻开账簿的人，得知道雪橇往哪边走。'
+  share_number: '10月30日到站，11月1日离站'
+  knowing: 'left_eismitte 知道后续有史料记下的日期。'
+  near: 'eismitte_reached, left_eismitte'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

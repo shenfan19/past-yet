@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 2
     channels: {A: 1, L: 3}
+    refs: [lalibela_rock_drainage]
     scene:
       points:
         - {id: p1, kind: hold, req: {"provides":"strength"}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+      vignettes:
+        - {id: outlet, traits: [methodical, scholarly]}
+        - {id: rain, traits: [hardy, curious]}
+        - {id: bend}
     text:
       en:
-        name: Churches carved down into the rock
+        name: 'Look for the outlet in the rock'
         place: Lalibela, Ethiopia
         figure: Lalibela and the stonecutters
-        story: Stonecutters carve a set of churches downwards out of the living rock, with no stone laid on stone.
+        story: 'UNESCO’s site record describes the rock-hewn churches of Lalibela and their ditches, trenches and passages. This branch focuses on an invented check of a drainage sketch outside the buildings. The year is an approximate setting, without assigning a year to a particular cut.'
         relic: A stonecutter's chisel
         relic_desc: An iron chisel, the edge ground thin.
         points:
-          p1: "Chisel the wall downward"
-          p2: "Work day and night on the highland"
-          p3: "Understand the drainage design"
+          p1: 'Keep the paper clear and steady while the channel is traced'
+          p2: 'Walk as far as the end visible from the trench'
+          p3: 'Separate the passage line from the drainage line'
+        vignettes:
+          outlet: 'The works helper has taken a line for footsteps and extended it down the water channel. You ask where the channel itself breaks out of the rock. He can point only as far as the bend. You put an unfinished end on his plan. You leave before anyone traces beyond it.'
+          rain: 'You know the surviving site will have ditches as well as paths. Here there are dry marks that could be either. You carry the sketch to the lower bend and add a separate mark for the channel lip. The rock has not seen rain again when you leave.'
+          bend: 'You follow the helper down one side of the trench and draw a notch at the turn. He can find your place without taking every line on the sheet for a route. You keep the little notch. The next section is beyond what you saw.'
       zh:
-        name: 向下凿进岩石的教堂
+        name: '沿岩沟找出口'
         place: 埃塞俄比亚拉利贝拉
         figure: 拉利贝拉与石匠们
-        story: 石匠们从整块岩石里向下凿出一组教堂，没有一块石头是垒上去的。
+        story: '联合国教科文组织的遗址档案记录拉利贝拉的岩凿教堂及沟渠、深槽和通道。卡里只写建筑外一段虚构的排水草图核对差事，年份用于设定时代，未给某一道凿痕定年。'
         relic: 石匠的凿子
         relic_desc: 一把铁凿子，刃口磨得很薄。
         points:
-          p1: "向下凿墙"
-          p2: "高原上日夜劳作"
-          p3: "看懂排水的设计"
+          p1: '沿沟查线时，把纸避开泥水并拿稳'
+          p2: '沿深槽走到看得见的尽头'
+          p3: '把供人通行的线与水沟线分开'
+        vignettes:
+          outlet: '帮工把供人走的线一直延进水沟。你问水沟究竟在哪里出了岩壁。他只能指到弯处。你在图上记下这里尚未走完。还没等人绕过去看，你便收队。'
+          rain: '你知道以后留得下来的，除了路还有沟。眼下岩面是干的，几道线单看都分不清。你带图走到低处的弯，在沟边另做一记。收队前，岩面没有再等到一场雨。'
+          bend: '你跟着帮工沿深槽一边走，在转弯处画个缺口。他照着就能认出你画的是哪儿，不会把纸上每条线都当成路。你带回这个小缺口，下一段没有亲眼见到。'
 text:
   en:
     name: Lalibela and the stonecutters
@@ -44,3 +57,39 @@ text:
   zh:
     name: 拉利贝拉与石匠们
     text: 拉利贝拉与埃塞俄比亚扎格韦王朝的石匠。十二世纪末到十三世纪初，以他命名的城镇周围，十一座教堂从岩石中向下凿出。
+hook: {en: 'Does the rock channel lead out or stop?', zh: '凿出的水沟通出去了吗？'}
+facts:
+  drainage:
+    date: '1200'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [lalibela_rock_drainage]
+    text:
+      en: 'The property includes churches hewn from rock and an extensive system of drainage ditches, trenches and passages.'
+      zh: '遗址包括从岩石中凿出的教堂，以及排水沟、深槽和通道。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional helper checking a work sketch outside the buildings.', zh: '虚构的帮工，在建筑外核对线条。'}
+wiki:
+  refs:
+    lalibela_rock_drainage:
+      order: 681
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Rock-Hewn Churches, Lalibela, site description https://whc.unesco.org/en/list/18'
+        zh: '联合国教科文组织世界遗产中心，拉利贝拉岩凿教堂遗产说明 https://whc.unesco.org/en/list/18'
+self_check:
+  fact: drainage
+  quote_line: '你在图上记下这里尚未走完。'
+  regret_choice: '如果顺着同一条线延伸，纸上就会把过人路线引进水沟。'
+  bookend: '从含混的一条线，记到一个明确的待核端点。'
+  share_line: '弯后没查到，我让那条线断在了弯前。'
+  share_number: '两种线'
+  knowing: 'rain 知道遗址有不同类的岩凿通道。'
+  near: 'drainage 给出沟渠与通路的现场依据。'
+  lever: '把一条线拆成两种可复核记号。'
+  missed: '没赶上再下雨。'
+  brought: '低处一弯的缺口图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 2}
     regret: true
+    refs: [puccini_brussels_catalogue, puccini_brussels_completion]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"stat":{"wit":7}},{"trait":["methodical"]}]}}
         - {id: p2, kind: care, req: {"trait":["patient","calm","faithful"]}}
         - {id: p3, kind: hold, redeem: true, req: {"trait":["methodical"]}}
+      vignettes:
+        - {id: divider, traits: [methodical, handy]}
+        - {id: future, traits: [bold, charismatic]}
+        - {id: pin}
     text:
       en:
-        name: "Turandot unfinished"
+        name: 'A divider for the unfinished score'
         place: "Brussels"
         figure: "Giacomo Puccini"
-        story: "Puccini, treated for throat cancer in Brussels, leaves Turandot unfinished, the score ending soon after the death of Liù."
+        story: 'Puccini left Turandot incomplete. The Puccini Study Centre distinguishes the surviving drafts and scores and credits Franco Alfano with completing the duet and final scene. The sorting of copies in Brussels in this branch is fictional.'
         relic: "A sketch page"
         relic_desc: "A page of musical sketches in soft pencil."
         points:
-          p1: "Follow the sketches (a musician or sharp wit helps)"
-          p2: "Be good company in the clinic"
-          p3: "Keep his last sketches together until they are needed"
+          p1: 'Distinguish the working drafts from the clean score'
+          p2: 'Keep two versions of the same passage in view while they are checked'
+          p3: 'Place a divider before the unfinished passage'
+        vignettes:
+          divider: 'The copyist has laid a sketch after a clean score page as if they belong to one continuous copy. You insert a divider and label each side. He can now retrieve either without mistaking it for the other. The missing stage ending will be someone else’s task.'
+          future: 'You almost tell the copyist how the opera will end. He asks which sheet you are reading that from. You put the later ending out of your own notes and write down what is actually in front of you. There are two packets and no final page you can copy.'
+          pin: 'A loose sheet lifts when the copyist opens the packet. You keep it where he can find it and draw a little sign on the wrapper. You carry the position away in your notebook. You will not be there when the missing music is supplied.'
       zh:
-        name: "未完成的图兰朵"
+        name: '给未完稿夹一张分隔纸'
         place: "布鲁塞尔"
         figure: "贾科莫·普契尼"
-        story: "普契尼在布鲁塞尔治疗喉癌，《图兰朵》没有写完，总谱停在柳儿之死不久之后。"
+        story: '普契尼未完成《图兰朵》。普契尼研究中心区分留下的草稿与总谱，并把补完二重唱及最后一场的工作归于弗兰科·阿尔法诺。卡里在布鲁塞尔整理谱页的差事为虚构。'
         relic: "一页草稿"
         relic_desc: "一页用软铅笔写的乐谱草稿。"
         points:
-          p1: "看懂那些草稿（音乐家或敏锐的头脑更合适）"
-          p2: "在诊所里做个好伙伴"
-          p3: "把他最后的草稿收在一起，等到用得上的时候"
+          p1: '把正在改的稿页与写好的总谱分开'
+          p2: '核对同一段的两种写法时，让两页都摊在眼前'
+          p3: '在尚未完成的一段前插入分隔纸'
+        vignettes:
+          divider: '抄谱人把一页草稿接在誊清谱后头，好像它们属于一份连贯的谱。你插进分隔纸，分别标了两边。往后两份都找得到，也不必认错。舞台上缺的结尾，要留给后来的人。'
+          future: '你差点把后来演出时的结尾告诉抄谱人。他问你是照哪张读的。你从自己的便笺里划去那个未来的结尾，改记眼前的东西。手上是两叠纸，里面没有一张能让你照抄成末页。'
+          pin: '抄谱人解开纸包，一页松动的稿子翘起来。你把它扶回原处，在外包纸上画一个小记号，好让他再找得到。你在笔记里带走它的位置。等缺的音乐补上，你早就离开了。'
 text:
   en:
     name: Giacomo Puccini
@@ -45,3 +58,54 @@ text:
   zh:
     name: 贾科莫·普契尼
     text: 意大利作曲家，1858 年生，1924 年去世，作有《波希米亚人》《托斯卡》《蝴蝶夫人》等歌剧。他因喉癌在布鲁塞尔治疗期间去世，《图兰朵》尚未写完。
+hook: {en: 'Where does the finished music give way to drafts?', zh: '总谱在哪一页变成草稿？'}
+facts:
+  catalogue:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [puccini_brussels_catalogue]
+    text:
+      en: 'The catalogue separately describes sketches, drafts and score sources for the opera.'
+      zh: '该目录分别记载歌剧的草图、草稿与总谱资料。'
+  completion:
+    date: '1926-04-25'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [puccini_brussels_completion]
+    text:
+      en: 'The work catalogue credits Alfano with the completion of the duet and final scene, and dates the première to 25 April 1926.'
+      zh: '作品目录记载阿尔法诺补写二重唱与最后一场，首演日期为 1926 年 4 月 25 日。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'An invented music copyist with a clean packet and a packet still being sorted.', zh: '虚构的抄谱人，手头一叠已誊清，一叠仍待理顺。'}
+wiki:
+  refs:
+    puccini_brussels_catalogue:
+      order: 508
+      status: checked
+      text:
+        en: 'Centro Studi Giacomo Puccini, Turandot, catalogue of musical sources https://catalog.puccini.it/works/turandot/sources/91.C.1'
+        zh: '普契尼研究中心，《图兰朵》乐谱来源目录 https://catalog.puccini.it/works/turandot/sources/91.C.1'
+    puccini_brussels_completion:
+      order: 509
+      status: checked
+      text:
+        en: 'Centro Studi Giacomo Puccini, Turandot SC91, works catalogue https://puccini.it/opera/turandot/'
+        zh: '普契尼研究中心，《图兰朵》SC91 作品目录 https://puccini.it/opera/turandot/'
+self_check:
+  fact: catalogue
+  quote_line: '手上是两叠纸，里面没有一张能让你照抄成末页。'
+  regret_choice: '把时间用来核对两叠谱，就只能把最后一页留空。'
+  bookend: '从看似接得上的谱页，到用分隔纸承认缺的是哪一段。'
+  share_line: '给未完成的总谱留了一张分隔纸。'
+  share_number: '1926 年首演'
+  knowing: 'future 员工知道后来有补写的结尾。'
+  near: 'catalogue 锚定不同类型谱源。'
+  lever: '插入一处分隔，稿与总谱可分别取出。'
+  missed: '走后才补完并演出。'
+  brought: '草页位置的记号。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

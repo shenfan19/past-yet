@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {C: 2, G: 2, S: 1}
     regret: true
+    refs: [zeami_sado_island, zeami_sado_mask_tradition]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["skeptical","quiet","wanderer"]},{"job":["musician"]}]}}
         - {id: p2, kind: persuade, req: {"provides":"show"}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","sensitive"]}}
+      vignettes:
+        - {id: later, traits: [bold, curious]}
+        - {id: mask, traits: [handy, artistic]}
+        - {id: wind}
     text:
       en:
-        name: "Secret teachings for those to come"
+        name: 'The island on the page'
         place: "Sado Island"
         figure: "Zeami"
-        story: "The aged Zeami is exiled to Sado Island and goes on writing his views on Noh and on the flower, for the actors who will come after him."
+        story: 'Sado City records that Zeami was exiled to Sado in 1434. In Kintōsho, written during his time on the island, he calls Sado an island of gold. The practice reading below is fictional. The mask associated with him in local tradition is not identified as an object he wore in this scene.'
         relic: "A Noh mask"
         relic_desc: "A small wooden mask with a fine line of lacquer between the brows."
         points:
-          p1: "Hear him speak about the flower"
-          p2: "Speak up for Noh at the shogun's house"
-          p3: "Sit with him on Sado"
+          p1: 'Hear where the reader pauses on the island’s name'
+          p2: 'Demonstrate two readings of the same line'
+          p3: 'Keep one reading slip dry until the lesson ends'
+        vignettes:
+          later: 'You tell the reader that people will still use the name in books about Sado. He tries the words as a place name, then as something a person longs for. You mark both pauses on a slip. The boat that brought Zeami to Sado has already gone.'
+          mask: 'The reader holds up a practice mask and loses his place when he lowers it. You mark the start of the line on a loose slip and prop it where he can find it again. The mask goes back on its peg. You miss the reading after yours.'
+          wind: 'A draught scatters the reading slips. You help the reader recover one from under the bench and hold it down with a pebble. He reads that line once more. When you leave, the paper stays under the stone and you carry the pause away in your notes.'
       zh:
-        name: "写给后人的能乐秘传"
+        name: '纸上的金岛'
         place: "佐渡岛"
         figure: "世阿弥"
-        story: "年迈的世阿弥被流放到佐渡岛，仍然在写他对能乐和花的看法，写给将来的演员。"
+        story: '佐渡市资料记载，世阿弥于 1434 年流放佐渡，居岛期间所写的《金岛书》称佐渡为金之岛。本趟练念文本的场景为虚构。当地有能面与他相关的传说，卡里出现的是排练道具。'
         relic: "一张能面"
         relic_desc: "一张小小的木面，眉间有细细的漆痕。"
         points:
-          p1: "听他谈花"
-          p2: "替能乐在将军府说话"
-          p3: "在佐渡陪他坐坐"
+          p1: '听清念到岛名时停在哪儿'
+          p2: '把同一行试念两遍，让人听出区别'
+          p3: '在练习结束前护好一张没受潮的念词纸'
+        vignettes:
+          later: '你告诉虚构的念词人，后来写佐渡的书还会提到这个名字。他先像念地名一样试一遍，再念得像一个人对着远处想什么。你记下两个停顿。载世阿弥来岛的船，你已经赶不上了。'
+          mask: '念词人举起练习用的面具，放下时找不到念到哪儿。你拿一张散纸标出那行的起头，立在他伸手就能找见的位置。面具挂回钩上，下一轮念词你没能留下听。'
+          wind: '风把念词纸吹散。你从长凳底下拾回一张，用小石子压住。念词人把那一行又念了一遍。你走时纸还压在石头下，记下来的只有那一处停顿。'
 text:
   en:
     name: "Zeami"
@@ -45,3 +58,54 @@ text:
   zh:
     name: "世阿弥"
     text: "日本能乐演员和剧作家，约 1363 年生，约 1443 年去世。他留下多部关于能乐的论著，1434 年被流放到佐渡岛。"
+hook: {en: 'What would a reader hear in the island’s name?', zh: '金岛两个字怎么念？'}
+facts:
+  island:
+    date: '1434'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [zeami_sado_island]
+    text:
+      en: 'Zeami was exiled to Sado in 1434. The city’s plan identifies Kintōsho as an island-period text and cites its description of Sado as an island of gold.'
+      zh: '世阿弥于 1434 年被流放佐渡。市政府资料指出《金岛书》写于居岛期间，并引述书中对金之岛佐渡的称呼。'
+  mask_tradition:
+    date: '1434'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [zeami_sado_mask_tradition]
+    text:
+      en: 'The city''s property record attributes the association of a particular mask with Zeami to local tradition. It does not establish his use of the game’s prop.'
+      zh: '市政府文物档案把某面具与世阿弥的关联记作当地传说。游戏排练道具并非该文物。'
+bystanders:
+  reader:
+    invented: true
+    text: {en: 'A fictional performer who has just begun practising a line without losing his place.', zh: '虚构的念词人，正在练怎样把一行完整念下来。'}
+wiki:
+  refs:
+    zeami_sado_island:
+      order: 454
+      status: checked
+      text:
+        en: 'Sado City, Historical Landscape Conservation Plan, chapter 1, on Zeami and Kintōsho https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf'
+        zh: '佐渡市历史风貌计划第一章，世阿弥与《金岛书》 https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf'
+    zeami_sado_mask_tradition:
+      order: 455
+      status: checked
+      text:
+        en: 'Sado City, cultural-property record for the Shinjimen Beshimi mask https://www.city.sado.niigata.jp/site/bunkazai/4996.html'
+        zh: '佐渡市有形文化财记录，神事面べしみ https://www.city.sado.niigata.jp/site/bunkazai/4996.html'
+self_check:
+  fact: island
+  quote_line: '你记下两个停顿。载世阿弥来岛的船，你已经赶不上了。'
+  regret_choice: '赶着记下两种读法就听不到下一轮。'
+  bookend: '从金岛两个字开场，以纸留在岛上、停顿带回收尾。'
+  share_line: '同一行，我在岛上听了两遍。'
+  share_number: '两个停顿'
+  knowing: 'later 将这个名称在后世流传说给虚构念词人。'
+  near: 'island 锚定流放和所写文本。'
+  lever: '补一处起行标记或救回一张念词纸。'
+  missed: '船已离去，下一轮也没赶上。'
+  brought: '两种念法的停顿记号。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

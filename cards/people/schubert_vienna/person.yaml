@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {W: 2, G: 1}
     regret: true
+    refs: [schubert_vienna_programme]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["handy","quiet"]},{"trait":["scholarly","skeptical","methodical"]}]}}
         - {id: p2, kind: trust, req: {"any":[{"trait":["artistic","charismatic"]},{"trait":["charismatic","kind","artistic"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["faithful","calm","cheerful"]},{"job":["musician"]},{"trait":["calm","patient","faithful"]}]}}
+      vignettes:
+        - {id: timing, traits: [methodical, quiet]}
+        - {id: memory, traits: [bold, charismatic]}
+        - {id: chairs}
     text:
       en:
-        name: "Songs no one had heard"
+        name: 'The March programme'
         place: "Vienna"
         figure: "Franz Schubert"
-        story: "Schubert dies in Vienna aged thirty one at his brother's house, leaving many works he never heard played."
+        story: 'Schubert gave a concert of his own works in Vienna on 26 March 1828. Eduard von Bauernfeld’s account reproduces the invitation, with the programme and the rooms of the Gesellschaft der Musikfreunde. The attendance arrangements below are fictional.'
         relic: "A song manuscript"
         relic_desc: "A song in a quick hand with the ink still dark."
         points:
-          p1: "Hear what is in the manuscripts (a musician or a sensitive ear helps)"
-          p2: "Be a friend who comes by the house"
-          p3: "Play him a song he wrote (a musician, kind or sensitive helps)"
+          p1: 'Read the printed programme and mark where the next piece starts'
+          p2: 'Guide a late arrival to a seat without stopping the music'
+          p3: 'Stay for the last piece and return the seat list'
+        vignettes:
+          timing: 'The usher wants to open the door as soon as the visitor comes. You count the pieces on the programme and ask them both to wait for the next pause. One person finds a seat and the musicians play on. You hear the ending from the corridor.'
+          memory: 'You tell the usher that people will look for this invitation long after the chairs are gone. He asks you to keep a clean copy away from the door. You put it aside and pencil the date on your own note. By the time you return, you have missed the opening.'
+          chairs: 'You make a small mark beside one empty chair on the usher’s list. When a late arrival appears, he doesn’t need to ask the whole row to move. You take home the date and the mark. You never see whether the visitor stayed to the end.'
       zh:
-        name: "没人听过的歌"
+        name: '三月那场音乐会的节目单'
         place: "维也纳"
         figure: "弗朗茨·舒伯特"
-        story: "舒伯特在维也纳哥哥的家里去世，年仅三十一岁，许多作品他生前从未听人演奏过。"
+        story: '1828 年 3 月 26 日，舒伯特在维也纳举行演奏自己作品的音乐会。爱德华·冯·鲍恩费尔德的回忆录载有请柬，上面写着曲目与音乐之友协会的会场。本趟引座差事为虚构。'
         relic: "一份歌曲手稿"
         relic_desc: "一首运笔很快的歌，墨迹还很深。"
         points:
-          p1: "听出手稿里的东西（音乐家或敏感的耳朵更合适）"
-          p2: "做一位上门来的朋友"
-          p3: "给他弹一首他自己写的歌（音乐家、善良或敏感的人更合适）"
+          p1: '读懂节目单，标出下一首从哪儿开始'
+          p2: '不打断演奏，把迟到的听众领到座位'
+          p3: '留到最后一首，把座位纸交回'
+        vignettes:
+          timing: '引座人见客人一到就想开门。你照节目单数过曲目，请两人等到下一次停顿。迟到的人找到座位，台上接着演。末尾那一段，你站在走廊里听完。'
+          memory: '你告诉虚构的引座人，多年后人们还会找这张请柬，到时这些椅子早就不在了。他请你留一张没折的。你收到一边，在自己的纸条上记下日期。回来时，开场已经过去。'
+          chairs: '你在引座人的座位纸上给一把空椅子做了个记号。有人来迟时，他不用请整排人都挪动。你带回日期和那个记号。至于那位听众有没有听到最后，你没能看到。'
 text:
   en:
     name: Franz Schubert
@@ -45,3 +58,39 @@ text:
   zh:
     name: 弗朗茨·舒伯特
     text: 奥地利作曲家，1797 年生，1828 年去世，生于维也纳。他写了六百多首歌曲，以及交响曲和室内乐，大部分在他生前没有出版或广泛演出。他三十一岁去世。
+hook: {en: 'Can someone still find a seat after the first piece?', zh: '迟到的人从哪儿进？'}
+facts:
+  programme:
+    date: '1828-03-26'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [schubert_vienna_programme]
+    text:
+      en: 'The invitation gives the date as 26 March 1828, the venue as the rooms of the Gesellschaft der Musikfreunde and the works as Schubert’s own.'
+      zh: '请柬写明 1828 年 3 月 26 日在音乐之友协会会场演出，曲目均为舒伯特所作。'
+bystanders:
+  usher:
+    invented: true
+    text: {en: 'A fictional usher with one empty chair marked on the seat list.', zh: '虚构的引座人，座位纸上还有一把椅子待安排。'}
+wiki:
+  refs:
+    schubert_vienna_programme:
+      order: 478
+      status: checked
+      text:
+        en: 'Eduard von Bauernfeld, Aus Alt- und Neu-Wien, chapter 4, Schubert’s invitation https://projekt-gutenberg.org/authors/eduard-bauernfeld/books/eduard-bauernfeld-aus-alt-und-neu-wien/chapter/4/'
+        zh: '鲍恩费尔德回忆录第四章，所载舒伯特音乐会请柬 https://projekt-gutenberg.org/authors/eduard-bauernfeld/books/eduard-bauernfeld-aus-alt-und-neu-wien/chapter/4/'
+self_check:
+  fact: programme
+  quote_line: '末尾那一段，你站在走廊里听完。'
+  regret_choice: '替迟到的听众守门，自己要在走廊听。'
+  bookend: '由一张印着曲目的请柬起，到一处标在座位纸上的停顿。'
+  share_line: '我替一位迟到的听众留了一把椅子。'
+  share_number: '一把空椅子'
+  knowing: 'memory 知道后来有人会找这张请柬。'
+  near: 'programme 给出真实日期和地点。'
+  lever: '一个标记让一个人不必惊动整排才入座。'
+  missed: '帮忙期间漏听一段。'
+  brought: '节目日期和一处记号。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

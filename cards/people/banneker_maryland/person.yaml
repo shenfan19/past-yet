@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {V: 2, S: 2}
     regret: true
+    refs: [banneker_maryland_letter, banneker_maryland_reply]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"scan"}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["charismatic","scholarly","cosmopolitan"]},{"stat":{"finesse":7}}]}}
         - {id: p3, kind: hold, redeem: true, req: {"trait":["vigil","faithful","bold"]}}
+      vignettes:
+        - {id: packet, traits: [methodical, scholarly]}
+        - {id: handoff, traits: [faithful, vigil, patient]}
+        - {id: reply}
     text:
       en:
-        name: "An almanac he worked out himself"
+        name: 'Two things in the packet'
         place: "Maryland"
         figure: "Benjamin Banneker"
-        story: "The self taught Banneker works out eclipses and tides at night from star charts and tables, and by day meets other people's prejudice, until he completes an almanac of his own."
-        relic: "A handwritten almanac"
-        relic_desc: "A handwritten almanac with sums filling the margins."
+        story: 'On 19 August 1791, Benjamin Banneker wrote to Thomas Jefferson, sent a manuscript of his almanac for the following year, and challenged racial prejudice and slavery. The packing table and its two helpers are imagined. Players can protect the connection between the letter and the work it accompanies.'
+        relic: 'A duplicate wrapper label'
+        relic_desc: 'A fictional copy naming the almanac and its accompanying letter.'
         points:
-          p1: "Check the eclipse calculation"
-          p2: "Get the almanac to the printer for him"
-          p3: "Calculate through the night until dawn"
+          p1: 'Check the addressed copy against the workshop copy'
+          p2: 'Persuade the carrier to keep the letter with the manuscript'
+          p3: 'Wait for the handoff and check that both parts go with it'
+        vignettes:
+          packet: 'Rachel sees the months on the first page and begins a label for a book of calculations. You set the letter beside it and ask her to finish the label after reading the address. She threads one tie through both wrappers. The tables will travel under the sender’s name and with his argument still attached.'
+          handoff: 'Isaac has room in the satchel for one flat packet. The wax on the letter is still soft. You hold the wrapper open while he slips in a folded guard to keep the letter from sticking to the tables. He leaves with both. You stay long enough to watch the empty square the packet left on the table.'
+          reply: 'You know a reply will come swiftly. Isaac asks whether that settles what the letter has raised. You copy the date on the outgoing packet and leave the space for a reply as you found it. The packet is on its way. No promise has come back through the door.'
       zh:
-        name: "自己算出来的历书"
+        name: '要一起寄出的两件东西'
         place: "马里兰"
         figure: "本杰明·班纳克"
-        story: "自学成才的班纳克夜里用星图和算表推算日食和潮汐，白天还要面对别人的偏见，终于编出了自己的历书。"
-        relic: "一册手抄历书"
-        relic_desc: "一册手抄的历书，页边写满了算式。"
+        story: '1791年8月19日，本杰明·班纳克致信托马斯·杰斐逊，随信送去下一年的历书手稿，质问种族偏见与奴隶制度。打包的桌子与两名帮工是虚构的。员工可以想办法把信和它随附的历书一起交出去。'
+        relic: '一张留底的信包签'
+        relic_desc: '虚构的留底签，写明里头有历书，也有随附的信。'
         points:
-          p1: "核对日食推算"
-          p2: "替他把历书送到印刷商手里"
-          p3: "整夜算到天亮"
+          p1: '把寄出的副本与桌上留底核对'
+          p2: '劝送信人把信和手稿放在同一包'
+          p3: '等人来接，确认两件都交了出去'
+        vignettes:
+          packet: '蕾切尔看见首页排着月份，就要给包裹写上算表。你把信搁在边上，请她读过收件地址，再把签写完。她用一根线把两件包在一起。表随寄件人署名上路，他要说的话也跟着去。'
+          handoff: '艾萨克的挎包还能塞进一个薄信包，信上的封蜡还软着。你撑开包纸，让他插一片折纸，把信和表隔开。他两件都带上了。你多站了一会儿，看桌上信包留下的一小块空地。'
+          reply: '你知道很快会有回信。艾萨克问，这样信里说的事就能解决吗？你抄下寄出日期，把回信那格照原样留空。信包已经上路，还没有任何承诺回来。'
 text:
   en:
     name: "Benjamin Banneker"
@@ -45,3 +58,57 @@ text:
   zh:
     name: "本杰明·班纳克"
     text: "美国自学成才的天文学家和农夫，1731 年生，1806 年去世。1791 年他协助测绘华盛顿特区，1792 年起出版历书。"
+hook: {en: 'Can the argument travel with the tables?', zh: '历书寄出时，那封信也带上吗？'}
+facts:
+  letter:
+    date: '1791-08-19'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [banneker_maryland_letter]
+    text:
+      en: 'Banneker refers to the manuscript almanac he is enclosing and insists that Jefferson confront the denial of liberty to Black people.'
+      zh: '班纳克提到随信送出的历书手稿，要求杰斐逊正视黑人被剥夺自由的现实。'
+  reply:
+    date: '1791-08-30'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [banneker_maryland_reply]
+    text:
+      en: 'Jefferson’s 30 August reply acknowledges both the letter and the almanac. Its inventory helps distinguish an acknowledgement from the changes Banneker sought.'
+      zh: '杰斐逊在8月30日的回信里确认收到信与历书。确认收到，与班纳克要求的改变，是两回事。'
+bystanders:
+  rachel:
+    invented: true
+    text: {en: 'A fictional workshop helper preparing the wrapper.', zh: '虚构帮工蕾切尔，负责准备包纸。'}
+  isaac:
+    invented: true
+    text: {en: 'A fictional carrier with room for one flat packet.', zh: '虚构送件人艾萨克，包里只剩一个薄信包的位置。'}
+wiki:
+  refs:
+    banneker_maryland_letter:
+      order: 833
+      status: checked
+      text:
+        en: 'Benjamin Banneker to Thomas Jefferson, 19 August 1791, manuscript transcript https://encyclopediavirginia.org/primary-documents/letter-from-benjamin-banneker-to-thomas-jefferson-august-19-1791/'
+        zh: '本杰明·班纳克致托马斯·杰斐逊，1791年8月19日，手稿转录 https://encyclopediavirginia.org/primary-documents/letter-from-benjamin-banneker-to-thomas-jefferson-august-19-1791/'
+    banneker_maryland_reply:
+      order: 834
+      status: checked
+      text:
+        en: 'U.S. National Park Service, the Banneker–Jefferson correspondence https://home.nps.gov/articles/000/inde-bbanneker-letters-tjefferson-1791.htm'
+        zh: '美国国家公园管理局，班纳克与杰斐逊往来书信 https://home.nps.gov/articles/000/inde-bbanneker-letters-tjefferson-1791.htm'
+self_check:
+  fact: letter
+  quote_line: '表随寄件人署名上路，他要说的话也跟着去。'
+  regret_choice: 'reply 若把回信当承诺，就答错了送件人的问题。'
+  bookend: '先找两件，收尾看见桌上留空。'
+  share_line: '一份历书，一封质问。'
+  share_number: '两件随寄，回信相隔十一日。'
+  knowing: 'reply 知道杰斐逊随后回信。'
+  near: 'letter 有日期与写信人可核对。'
+  lever: 'handoff 保护信和表同寄。'
+  missed: 'reply 等不到诉求兑现。'
+  brought: 'packet 带回虚构的包纸副签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

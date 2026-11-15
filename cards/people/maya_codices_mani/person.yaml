@@ -10,38 +10,120 @@ events:
     tier: 3
     channels: {S: 3, H: 2}
     regret: true
+    refs: [maya_codices_mani_mani, maya_codices_mani_account, maya_codices_mani_codex]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["wanderer","handy"]}}
         - {id: p2, kind: endure, req: {"any":[{"trait":["calm","hardy"]},{"stat":{"will":6}}]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+      vignettes:
+        - {id: fold, traits: [handy, wanderer, methodical]}
+        - {id: listen, traits: [calm, patient, kind]}
+        - {id: survive}
     text:
       en:
-        name: "The books of Mani"
+        name: 'The fold remembered'
         place: "Mani"
         figure: "Maya scribes"
-        story: "At Mani in July 1562 the friar Diego de Landa has Maya books and images burned in the square. Only a handful of painted Maya books survive anywhere."
-        relic: "A painted bark book"
-        relic_desc: "A folded book of bark paper with painted signs and figures."
+        story: 'At Maní on 12 July 1562, an auto de fe led by Diego de Landa destroyed Maya books and sacred objects. Landa’s later account describes burning books. Maya knowledge and communities continued, and some Maya codices survive. The game imagines two Maya-speaking residents who choose how to pass on a memory of a book under threat.'
+        relic: 'A blank practice fold'
+        relic_desc: 'A fictional fold offered by its keeper.'
         points:
-          p1: "Look at the painted pages"
-          p2: "Stand in the plaza through the heat of the day"
-          p3: "Sit with an old scribe unseen"
+          p1: 'Look where the keeper indicates before the practice fold is put away'
+          p2: 'Stay to listen to a second account of the missing fold'
+          p3: 'Earn the keeper’s trust and carry only the rehearsal sheet they offer'
+        vignettes:
+          fold: 'The keeper lays two blank folds on a bench and asks her neighbour which one opened first in the book he remembers. You hold the paper while they compare. He cannot place the second fold. She keeps the first and leaves the other loose for the next time they talk.'
+          listen: 'The neighbour starts to retell the part the keeper lost, but they remember the order differently. You listen while each finishes. They agree on the first fold and leave the second undecided. The keeper asks you to leave her the copy that carries both accounts.'
+          survive: 'You have seen a surviving Maya codex in a later collection. The keeper asks whether you can say which book her neighbour remembers. You can name the collection but cannot connect its pages to this room. She hands you a blank practice fold for the walk back. The book they were remembering remains with their account of it.'
       zh:
-        name: "马尼的那些书"
+        name: '记住书页怎样折'
         place: "马尼"
         figure: "玛雅书吏"
-        story: "1562年7月，在马尼，修士迭戈·德·兰达下令在广场上烧掉玛雅人的书和图像。如今整个世界只剩下寥寥几部彩绘的玛雅书。"
-        relic: "一册彩绘树皮书"
-        relic_desc: "一册折叠的树皮纸书，上面是彩绘的符号和人像。"
+        story: '1562年7月12日，迭戈·德·兰达主持的马尼宗教审判仪式焚毁了玛雅书籍和宗教物件。兰达自己后来也写到毁书。玛雅社群与知识仍在延续，也有玛雅抄本存世。游戏虚构两名说玛雅语的当地人，让他们决定怎样传下对一本书的记忆。'
+        relic: '一张空白练习折页'
+        relic_desc: '虚构的守书人自愿交给员工的练习折页。'
         points:
-          p1: "看那些彩绘的书页"
-          p2: "在白天的酷热里站在广场上"
-          p3: "不被察觉地坐到一位老书吏身旁"
+          p1: '练习折页收起前，看清守书人指出的位置'
+          p2: '留下再听一遍遗失那折的讲法'
+          p3: '取得守书人信任，只带走对方愿意交给你的练习纸'
+        vignettes:
+          fold: '守书人把两张空折页放在凳上，问邻居记得那本书从哪一折先打开。你扶住纸，让他们比对。他说不准第二折在哪里。她把第一折收好，第二折不合上，等下次两人再谈。'
+          listen: '邻居说起守书人记不清的那段，两人记得的次序却不一样。你听他们各自讲完。他们同意第一折，第二折先不定。守书人请你把两种说法都在的那份留给她。'
+          survive: '你在后世馆藏里看过一部存世玛雅抄本。守书人问，你能不能说出邻居记的是哪一本。你能说出藏在哪儿，却对不上这一屋人记得的页。她给你一张空白练习折页带走。那本书留在了他们的讲述里。'
 text:
   en:
     name: Maya scribes
-    text: The Maya scribes of the Yucatan, whose books were folded bark paper manuscripts. In 1562 at Maní the Spanish friar Diego de Landa burned a large number of them. Only four Maya codices are known to survive.
+    text: Maya scribes in Yucatán made folded manuscripts. At Maní in 1562, an auto de fe led by Diego de Landa destroyed books and religious objects. Surviving manuscripts such as the Códice Maya de México preserve evidence of the book tradition.
   zh:
     name: 玛雅书吏
-    text: 尤卡坦的玛雅书吏，他们的书是折叠的树皮纸写本。1562 年在马尼，西班牙修士迭戈·德·兰达烧毁了大量书籍。已知留存的玛雅抄本只有四部。
+    text: 尤卡坦的玛雅书吏制作折页写本。1562年，迭戈·德·兰达主持的马尼宗教审判仪式毁去书籍和宗教物件。《墨西哥玛雅抄本》等存世写本保存了这一制书传统的实物证据。
+hook: {en: 'What can the keeper still pass on?', zh: '守书的人还能留下些什么？'}
+facts:
+  mani:
+    date: '1562-07-12'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [maya_codices_mani_mani]
+    text:
+      en: 'The research dates the auto de fe at Maní to 12 July 1562 and discusses the destruction associated with it.'
+      zh: '研究把马尼的宗教审判仪式定于1562年7月12日，并讨论相关的毁书毁物。'
+  account:
+    date: '1566'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [maya_codices_mani_account]
+    text:
+      en: 'The transmitted account has Landa describe burning books. His description gives the persecutor’s justification rather than the keepers’ perspective.'
+      zh: '传世文本里有兰达关于焚书的叙述，记录的是施害方为自己辩护的话。'
+  codex:
+    date: '1021'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [maya_codices_mani_codex]
+    text:
+      en: 'INAH dates the manuscript’s manufacture to 1021–1152 CE. It is a surviving Maya codex with no asserted link to the fictional book in the Maní scene.'
+      zh: '研究所将抄本制作年代定于公元1021至1152年。它是存世玛雅抄本，游戏里的那本书没有据此被指认为这件。'
+bystanders:
+  keeper:
+    invented: true
+    text: {en: 'A fictional Maya-speaking resident who keeps the practice folds.', zh: '虚构的玛雅语居民，收着练习折页。'}
+  neighbour:
+    invented: true
+    text: {en: 'A fictional Maya-speaking resident who remembers an order of pages.', zh: '虚构的玛雅语居民，记得自己见过的折页次序。'}
+wiki:
+  refs:
+    maya_codices_mani_mani:
+      order: 901
+      status: checked
+      text:
+        en: 'María de Guadalupe Suárez Castro, INAH Boletín de Monumentos Históricos, Maní convent study https://revistas.inah.gob.mx/index.php/boletinmonumentos/article/download/11115/11893/21358'
+        zh: '玛丽亚·德瓜达卢佩·苏亚雷斯·卡斯特罗，墨西哥国家人类学与历史研究所，马尼修道院研究 https://revistas.inah.gob.mx/index.php/boletinmonumentos/article/download/11115/11893/21358'
+    maya_codices_mani_account:
+      order: 902
+      status: checked
+      text:
+        en: 'Diego de Landa, Relación de las cosas de Yucatán, § XLI, 1864 edition p. 316 https://kloss.sourcelibrary.org/es/book/relation-des-choses-de-yucatan-de-diego-de-landa-ed'
+        zh: '迭戈·德·兰达《尤卡坦纪事》第41节，1864年版第316页 https://kloss.sourcelibrary.org/es/book/relation-des-choses-de-yucatan-de-diego-de-landa-ed'
+    maya_codices_mani_codex:
+      order: 903
+      status: checked
+      text:
+        en: 'INAH, Códice Maya de México, institutional research and digital exhibit https://www.codicemayademexico.inah.gob.mx/'
+        zh: '墨西哥国家人类学与历史研究所，《墨西哥玛雅抄本》研究与数字展 https://www.codicemayademexico.inah.gob.mx/'
+self_check:
+  fact: mani
+  quote_line: '他们同意第一折，第二折先不定。'
+  regret_choice: 'survive 猜是哪一本会错认别人的记忆。'
+  bookend: '从折页哪头先开，到只带走获准交出的空白折页。'
+  share_line: '第一折有共识，第二折下回再谈。'
+  share_number: 'listen 的两段虚构口述。'
+  knowing: 'survive 知道玛雅抄本在后世有存世实物。'
+  near: 'mani 日期地点有档案研究支撑。'
+  lever: 'listen 两种说法可以由守书人一起留下。'
+  missed: 'survive 不知道这本书的实际下落。'
+  brought: 'survive 带回对方自愿交出的虚构空折页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

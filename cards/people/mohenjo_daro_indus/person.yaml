@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {H: 3, W: 1}
     regret: true
+    refs: [mohenjo_daro_indus_seal, mohenjo_daro_indus_impression]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["handy","skeptical"]}}
         - {id: p2, kind: hold, req: {"job":["builder","carpenter","mechanic"]}}
         - {id: p3, kind: notice, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: mirror, traits: [methodical, scholarly]}
+        - {id: lift, traits: [handy, curious]}
+        - {id: pair}
     text:
       en:
-        name: "Signs no one can read"
+        name: 'Two sides of one impression'
         place: "Mohenjo-daro"
         figure: "Indus people"
-        story: "In a planned city of brick houses and covered drains, people press short lines of signs into small stone seals. The script has never been deciphered, and we do not know what the signs said or what language they spoke."
-        relic: "A stone seal"
-        relic_desc: "A small square seal with an animal and a few signs."
+        story: 'Recorded finds at Mohenjo-daro include carved seals bearing Indus signs. An impression and the carved seal face reverse each other. The game’s workbench compares prints from a new practice stamp with a simple asymmetric design. The practice design has no claim to read the Indus script.'
+        relic: 'A practice impression'
+        relic_desc: 'A test impression made from a stamp with one asymmetric mark.'
         points:
-          p1: "Study the signs on a seal"
-          p2: "Walk the straight streets and drains (a craftsperson)"
-          p3: "Read the signs of the seal"
+          p1: 'Identify which view came from an impression'
+          p2: 'Hold the practice tablet still while the helper lifts the stamp'
+          p3: 'Ask the helper about the spoken label while preserving the drawing'
+        vignettes:
+          mirror: 'The helper copies the cut face and files it as the impression. You lay down a fresh practice print and find the small notch on the other side. He writes a new label on the slip. You keep both views. They tell you which way a mark faces, and give you no reading of an ancient line.'
+          lift: 'You have seen museum images of seals and impressions side by side. On the bench the helper wants to tell which he is holding before lifting it. You ask him to keep both positions marked until the stamp comes away. The comparison stays with him. You leave before he makes a third copy.'
+          pair: 'You write ‘cut face’ beneath one drawing and ‘impression’ beneath the other. The helper has no need to guess which to compare. You bring back the small practice print. The real signs remain outside what you can read.'
       zh:
-        name: "无人能读的符号"
+        name: '印面和印痕，朝向各一张'
         place: "摩亨佐·达罗"
         figure: "印度河流域的居民"
-        story: "在一座规划整齐的城市里，有砖砌的房子和有盖的排水沟，人们把短短几行符号压在小小的石印章上。这种文字至今没有被释读，我们不知道符号说了什么，也不知道他们说什么语言。"
-        relic: "一枚石印章"
-        relic_desc: "一枚方形小印章，上面有一只动物和几个符号。"
+        story: '摩亨佐－达罗有刻着印度河符号的印章出土。印痕与刻制印面方向相反。卡里工台用新做的练习印和一个不对称纹样作比较，练习纹样不作印度河文字的译读。'
+        relic: '一块练习印痕'
+        relic_desc: '用带不对称纹样的练习印压出的小样。'
         points:
-          p1: "研究印章上的符号"
-          p2: "走过笔直的街道和排水沟"
-          p3: "读出印章上的符号"
+          p1: '辨出哪一张描的是印痕'
+          p2: '帮工提起练习印时，稳住底面'
+          p3: '请帮工口头说明标签，同时保留草图'
+        vignettes:
+          mirror: '帮工把刻面抄进纸上，却当成了印痕。你放上一份新印的练习件，发现小缺口落在另一侧。他在纸签上重写了标签。你留下两面图，能说明一个记号朝哪儿，却没读出一句古文字。'
+          lift: '你见过馆里把印章和印痕并列的图。工台上，帮工在抬印前想辨清手里是哪个面。你请他等提起后再动两边的标签。对照留给他，第三回试印你没等到。'
+          pair: '你在一幅图下注「刻面」，另一幅下注「印痕」。帮工可以直接取对的那幅。你带回小小的练习印痕，真的符号仍然读不出。'
 text:
   en:
     name: Indus people
@@ -45,3 +58,54 @@ text:
   zh:
     name: 印度河流域的居民
     text: 印度河流域文明的居民，约公元前 2500 年建起摩亨佐·达罗这样的城市，街道规整，有排水系统和砖房。他们留下刻有文字的印章，这种文字至今没有破译。
+hook: {en: 'Which way will the mark face when you lift the seal?', zh: '印章抬起来，纹样朝哪边？'}
+facts:
+  seal:
+    date: '-2200'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mohenjo_daro_indus_seal]
+    text:
+      en: 'The object record shows a seal with signs found at Mohenjo-daro. The event date gives the approximate setting.'
+      zh: '实物资料显示摩亨佐－达罗出土带符号的印章。卡里年份是大致场景设定。'
+  impression:
+    date: '-2200'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mohenjo_daro_indus_impression]
+    text:
+      en: 'The documentation examines seals alongside sealing practices and their material traces. The practice stamp used in the scene is invented.'
+      zh: '资料以实物记录印章、印封及其使用痕迹。卡里的练习印为虚构。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional workbench helper who has two labels and a small practice stamp.', zh: '虚构的工台帮工，手里有两张签和一枚小练习印。'}
+wiki:
+  refs:
+    mohenjo_daro_indus_seal:
+      order: 711
+      status: checked
+      text:
+        en: 'Harappa, Seal, Mohenjo-daro, excavation object photograph https://www.harappa.com/slide/seal-mohenjo-daro-1'
+        zh: 'Harappa 考古资料库，摩亨佐－达罗出土印章实物照片 https://www.harappa.com/slide/seal-mohenjo-daro-1'
+    mohenjo_daro_indus_impression:
+      order: 712
+      status: checked
+      text:
+        en: 'Harappa, Seals and sealing, archaeological object documentation https://www.harappa.com/slide/seals-and-sealing'
+        zh: 'Harappa 考古资料库，印章与印封实物记录 https://www.harappa.com/slide/seals-and-sealing'
+self_check:
+  fact: seal
+  quote_line: '你放上一份新印的练习件，发现小缺口落在另一侧。'
+  regret_choice: '把刻面当成印痕收存，下一位照图拿到的是反方向。'
+  bookend: '从哪一张朝向正确，到两张都能按各自来历查。'
+  share_line: '抬起印，那个缺口换了一边。'
+  share_number: '两种朝向'
+  knowing: 'lift 知道后来的馆藏会把两者并排。'
+  near: 'seal 和 impression 锚定两类材料。'
+  lever: '给一个方向误标换签。'
+  missed: '无法译读真实符号。'
+  brought: '练习印痕。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 1}
     regret: true
+    refs: [sappho_lesbos_papyrus]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["methodical","handy"]},{"job":["musician"]}]}}
         - {id: p2, kind: care, req: {"trait":["faithful","calm","cheerful"]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: breath, traits: [methodical, handy, artistic]}
+        - {id: repeat, traits: [faithful, calm, cheerful]}
+        - {id: blank}
     text:
       en:
-        name: "Songs that survive in scraps"
+        name: 'Before the next breath'
         place: "Mytilene"
         figure: "Sappho"
-        story: "Sappho of Lesbos composes songs for the lyre that were gathered in nine books in antiquity. Apart from one whole poem and a few long pieces, only fragments on scraps of papyrus and quotations remain."
-        relic: "A papyrus fragment"
-        relic_desc: "A torn scrap with a few Greek words in a rounded hand."
+        story: 'A much later papyrus preserved by the British Library carries part of a poem attributed to Sappho about her brother. The game imagines a rehearsal on Lesbos around her lifetime, with two fictional listeners. The modern fragment supplies part of the theme. Its missing words and the sound of the song remain unknown.'
+        relic: 'A rehearsal scrap'
+        relic_desc: 'A prop from the imagined rehearsal, with one pause marked.'
         points:
-          p1: "Hear her sing to the lyre (a sensitive employee or a musician)"
-          p2: "Sit in the circle of her friends"
-          p3: "Hear every word of her dialect"
+          p1: 'Find where the listener stopped to breathe'
+          p2: 'Give the hesitant singer a second entrance before the lamp goes out'
+          p3: 'Separate the missing words from the sounds you could follow'
+        vignettes:
+          breath: 'Phile has written one long run of words and keeps losing her breath halfway through. You tap the table when she actually stops. She marks that place and tries the line again. Centuries later there will be scraps of the words. You have caught a pause that a scrap could never contain.'
+          repeat: 'Myrto mouths the entrance twice without making a sound. Phile is about to take the lamp away. You tap the opening beat from beside her and she finally joins in. For one line there are two voices at the table. The second voice is the thing she had come to find.'
+          blank: 'Someone asks what the returning brother does after the last words you remember from the future fragment. You could give them an ending on the spot. Instead you mark the place where your memory of the words runs out. When the lamp goes, the unfinished space is still there.'
       zh:
-        name: "只剩碎片的歌"
+        name: '下一口气之前'
         place: "米蒂利尼"
         figure: "萨福"
-        story: "莱斯博斯岛的萨福为里拉琴作歌，古时被收成九卷。除了一首完整的诗和几段较长的篇章，如今只剩写在纸莎草碎片上的残句和后人的引文。"
-        relic: "一片纸莎草残片"
-        relic_desc: "一片撕裂的碎纸，上面有几个圆润字体的希腊词。"
+        story: '大英图书馆藏有一片晚出许多世纪的纸莎草，上面留着一首归于萨福、写及兄长的诗的部分文字。游戏在她生活的时代附近安排一次虚构的莱斯博斯习唱，两名听众是虚构的。残片提供了部分题材，缺失的诗句和歌声依然无从听见。'
+        relic: '一片习唱用的纸莎草'
+        relic_desc: '虚构习唱中的道具，标过一处换气。'
         points:
-          p1: "听她伴着里拉琴唱"
-          p2: "坐进她朋友们的圈子"
-          p3: "听懂她方言里的每一个词"
+          p1: '找出听者在哪里停下来换气'
+          p2: '熄灯前再给犹豫的人一次起唱的机会'
+          p3: '把没听清的字和能跟上的声音分开'
+        vignettes:
+          breath: '菲勒把词全串成一行，念到一半总要换气。她一停，你就在桌上轻敲一下。她记住那处停顿，又试了一遍。几个世纪后还会有残存的字迹，你听见的这口气，却留不进残片里。'
+          repeat: '米尔托两次张嘴，都没唱出声。菲勒已经要把灯拿走。你在米尔托身边敲出开头一拍，她终于唱了进来。有一行，桌边有两个人的声音。她今天来，就是为了跟上这一行。'
+          blank: '有人问，唱到你记得的那几句以后，归来的兄长又做了什么。你原可以当场接一个结尾。你只在记忆断掉的地方做了记号。灯灭时，那一段空处依然留着。'
 text:
   en:
     name: Sappho
@@ -45,3 +58,42 @@ text:
   zh:
     name: 萨福
     text: 莱斯博斯的希腊诗人，活跃于公元前 600 年前后。她写关于渴望与失去的抒情诗，古代汇编成九卷，如今只留下一首完整的诗和一些残片。
+hook: {en: 'A voice stops before the words do.', zh: '声音停了，词还来不及写完。'}
+facts:
+  papyrus:
+    date: '250'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sappho_lesbos_papyrus]
+    text:
+      en: 'The catalogue identifies the surviving piece as fragment 5 of a poem about Sappho’s brother Charaxus. The catalogue dates the manuscript to the third century CE.'
+      zh: '馆藏目录将现存片段列为萨福书写兄长卡拉克索斯的第5号残篇，目录将这份传抄本定为公元三世纪。'
+bystanders:
+  phile:
+    invented: true
+    text: {en: 'A fictional listener who has one lamp left for rehearsal.', zh: '虚构听众菲勒，只剩一盏灯可供习唱。'}
+  myrto:
+    invented: true
+    text: {en: 'A fictional singer trying to join for a single line.', zh: '虚构歌者米尔托，想跟上其中一行。'}
+wiki:
+  refs:
+    sappho_lesbos_papyrus:
+      order: 801
+      status: checked
+      text:
+        en: 'British Library, Papyrus 739, fragment 5 https://searcharchives.bl.uk/catalog/040-002105127'
+        zh: '大英图书馆，纸莎草文书739号，萨福残篇第5号 https://searcharchives.bl.uk/catalog/040-002105127'
+self_check:
+  fact: papyrus
+  quote_line: '你听见的这口气，却留不进残片里。'
+  regret_choice: 'blank 补一句能解围，也会把虚构混成听见的歌词。'
+  bookend: '出声前的停顿与熄灯留下的空处呼应。'
+  share_line: '一行里，桌边有两个人的声音。'
+  share_number: 'repeat 的两把嗓音，取自虚构习唱。'
+  knowing: 'blank 只记得后世残片保留的字。'
+  near: 'papyrus 支持诗歌题材；习唱的日期无法从馆藏推出。'
+  lever: 'repeat 让一人唱变成两人合唱。'
+  missed: 'blank 离开前没听到残篇之后。'
+  brought: 'breath 记下字里留不住的停顿。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

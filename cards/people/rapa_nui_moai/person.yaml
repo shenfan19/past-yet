@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 2
     channels: {L: 3, H: 1}
+    refs: [rapa_nui_moai_quarry]
     scene:
       points:
         - {id: p1, kind: hold, req: {"job":["builder","scaffolder","carpenter","woodcarver"]}}
         - {id: p2, kind: endure, req: {"any":[{"stat":{"constitution":6}},{"provides":"strength"}]}}
         - {id: p3, kind: notice, req: {"any":[{"stat":{"wit":6}},{"trait":["curious","methodical"]}]}}
+      vignettes:
+        - {id: pair, traits: [methodical, scholarly]}
+        - {id: surface, traits: [hardy, curious]}
+        - {id: height}
     text:
       en:
-        name: "A statue that walks to the sea"
+        name: 'Two views of the same quarry face'
         place: "Rapa Nui, Rano Raraku"
         figure: "The Rapa Nui carvers"
-        story: "At the Rano Raraku quarry on Rapa Nui, carvers cut statues called moai from the volcanic rock and move them across the island to stand on stone platforms facing inland. Today the quarry and its park are cared for by the Rapa Nui people themselves."
+        story: 'The Rapa Nui community organisation Ma’u Henua identifies the volcanic quarry at Rano Raraku as the source of most mōai, sculpted directly from volcanic tuff. The game’s quarry helper traces two views of an invented practice block. The story leaves the transport of the actual mōai outside this exercise.'
         relic: "A stone adze"
         relic_desc: "A hand sized blade of dark basalt, ground to a clean edge."
         points:
-          p1: "Cut the outline of a statue from the rock face"
-          p2: "Haul the statue down the slope"
-          p3: "Make out the order the statues were cut in"
+          p1: 'Keep the top mark in the same position on the front and side studies'
+          p2: 'Walk to the other side of the practice block before the helper goes'
+          p3: 'Distinguish a ridge in the rock from the edge drawn on the sheet'
+        vignettes:
+          pair: 'The quarry helper has drawn an edge as though it were visible from both sides of the practice block. You label the two sketches before comparing them. A mark that looks like an outer edge from the front lies inside the outline from the side. You keep the two views. You never see a statue leave the quarry.'
+          surface: 'You know later photographs will make the quarry look flat on a page. The helper asks which side you saw. You walk back to your first spot and add one arrow to the drawing. He can check your ridge from there. What happened farther down the route remains beyond the sketch.'
+          height: 'You draw the top once from the front and once from the side. The helper aligns his slips at the same point. You bring home the change of outline. There is nothing in those lines about how any of the stone figures moved.'
       zh:
-        name: "走向海边的石像"
+        name: '采石场的一前一侧'
         place: "拉帕努伊岛，拉诺拉拉库"
         figure: "拉帕努伊的石像匠人"
-        story: "在拉帕努伊岛的拉诺拉拉库采石场，匠人们从火山岩上凿出叫摩艾的石像，再把它们运过全岛，立在面朝内陆的石台上。今天这片采石场和它所在的公园由拉帕努伊人自己照管。"
+        story: '拉帕努伊社区组织 Ma’u Henua 记载，多数摩艾来自拉诺拉拉库火山采石场，直接取火山凝灰岩雕成。卡里帮工画的是一块虚构练习石的两个角度，实际摩艾如何搬运留在这场练习之外。'
         relic: "一把石斧"
         relic_desc: "一片手掌大的深色玄武岩刃，磨出了干净的刃口。"
         points:
-          p1: "在岩壁上凿出石像的轮廓"
-          p2: "把石像沿山坡拉下来"
-          p3: "看懂石像是按什么次序凿的"
+          p1: '让正面图和侧面图的顶端标记对在一起'
+          p2: '帮工离开前，绕到练习石的另一侧看一遍'
+          p3: '分清石上的凸脊和纸上的轮廓线'
+        vignettes:
+          pair: '帮工画了一道边，以为练习石两侧都能看到一样的轮廓。你先标哪面是哪面，再把图并着看。正面像外缘的一道线，从侧面看落在轮廓里面。你带回两张图，没见到石像怎样离开采石场。'
+          surface: '你知道后来的照片会把采石场摊成平平一页。帮工问你是在哪一侧看见的。你走回第一处站位，在图上补一支箭头。他从那儿就能复核你说的凸脊。石场以外的路，这张图还画不来。'
+          height: '你先从正面描一遍顶部，再绕去侧面描一遍。帮工让两张纸条在同一处对齐。你带回的是变过的轮廓，从这些线还看不出石像怎样移动。'
 text:
   en:
     name: "The Rapa Nui carvers"
@@ -44,3 +57,39 @@ text:
   zh:
     name: "拉帕努伊的石像匠人"
     text: "凿刻并立起摩艾的拉帕努伊人，大多在十三到十六世纪。他们的后裔今天仍生活在岛上，并照管着包含采石场的公园。"
+hook: {en: 'What changes in the drawing when you walk around the stone?', zh: '绕到另一面，草图还一样吗？'}
+facts:
+  quarry:
+    date: '1500'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [rapa_nui_moai_quarry]
+    text:
+      en: 'Ma’u Henua describes Rano Raraku as the source of most mōai, carved from volcanic tuff. The game year does not date a particular figure.'
+      zh: 'Ma’u Henua 记载，多数摩艾取自拉诺拉拉库的火山凝灰岩。卡里年份未用于给某一座摩艾定年。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional quarry helper comparing two sketches of a practice stone.', zh: '虚构的石场帮工，比对练习石的正侧草图。'}
+wiki:
+  refs:
+    rapa_nui_moai_quarry:
+      order: 685
+      status: checked
+      text:
+        en: 'Ma’u Henua, Rano Raraku, community account of the quarry https://mauhenuarapanui.com/producto/rano-raraku/'
+        zh: 'Ma’u Henua，拉诺拉拉库采石场社区介绍 https://mauhenuarapanui.com/producto/rano-raraku/'
+self_check:
+  fact: quarry
+  quote_line: '正面像外缘的一道线，从侧面看落在轮廓里面。'
+  regret_choice: '只在原处画一面，就会把凸脊画成外缘。'
+  bookend: '从同一道线辨不出方位，到两稿并放可以复看。'
+  share_line: '只绕了半步，线就在石块里面了。'
+  share_number: '两个视角'
+  knowing: 'surface 想到后世的平面照片。'
+  near: 'quarry 锚定当地组织记载的石场。'
+  lever: '标出一次观察的站位。'
+  missed: '不见实物运输。'
+  brought: '同一练习石的两份草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

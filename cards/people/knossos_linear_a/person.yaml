@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {H: 2}
     regret: true
+    refs: [knossos_linear_a_tablet]
     scene:
       points:
         - {id: p1, kind: hold, req: {"stat":{"finesse":7}}}
         - {id: p2, kind: notice, req: {"trait":["quiet","handy"]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: stroke, traits: [methodical, scholarly]}
+        - {id: heard, traits: [curious, handy]}
+        - {id: margin}
     text:
       en:
-        name: "A script the Minoans left unread"
+        name: 'Leave the uncertain stroke in the margin'
         place: "Knossos"
         figure: "Minoan scribes"
-        story: "A scribe at the palace of Knossos records goods on clay tablets in Linear A, the script of the Minoans. It has never been read, so their language is unknown, while the later Linear B, read in 1952, turned out to write Greek."
+        story: 'The INSCRIBE project records KN 1 as a clay tablet in Linear A from Knossos. Linear A remains undeciphered. The scribe in this branch uses a fictional practice tablet. The map date sets the period approximately.'
         relic: "A clay tablet"
         relic_desc: "A flat tablet with rows of signs and small marks for numbers."
         points:
-          p1: "Press the signs into wet clay"
-          p2: "Compare the signs on the tablets"
-          p3: "Talk with the scribe in his own tongue"
+          p1: 'Hold the practice copy steady while checking one doubtful stroke'
+          p2: 'Notice whether the light changes what appears to be a sign'
+          p3: 'Use the translation chip to compare the attendant’s spoken labels'
+        vignettes:
+          stroke: 'A storeroom attendant reads a scrape as another mark in the row. You change where the light falls and draw the scraped line outside the transcription so it can be checked again. You take home the difference between the drawings. The tablet has given you no translation.'
+          heard: 'You know this script will become hard to read. The attendant calls out what one of the practice trays contains. You record his label on a different slip from the marks you see. At departure you can say who told you about the goods, and still cannot match them to a real inscription.'
+          margin: 'You copy the clear strokes, then put a dot in the margin where the uncertain one falls. The next person knows exactly where to look again. You keep a sketch of that dot and leave every guessed word at the bench.'
       zh:
-        name: "米诺斯人没有留下读法的文字"
+        name: '辨不清的一划，先记在页边'
         place: "克诺索斯"
         figure: "米诺斯的书吏"
-        story: "克诺索斯王宫里的书吏用线形文字A把货物记在泥板上，那是米诺斯人的文字。它至今没有被读通，所以他们的语言不为人知；而后来的线形文字B在1952年被读出，记的是希腊语。"
+        story: 'INSCRIBE 项目登记克诺索斯出土的 KN 1 为线形文字 A 泥板。线形文字 A 仍未被读通。卡里书吏用的是虚构练习泥板。地图年代是约略的场景设置。'
         relic: "一块泥板"
         relic_desc: "一块扁平的泥板，上面是一行行符号和表示数目的小记号。"
         points:
-          p1: "把符号压进湿泥里"
-          p2: "比较各块泥板上的符号"
-          p3: "用他自己的语言和书吏交谈"
+          p1: '稳住练习抄板，核对一处辨不清的笔划'
+          p2: '观察换一个照光方向后，那一划还像不像字'
+          p3: '让翻译芯片帮忙对照帮工口述的标签'
+        vignettes:
+          stroke: '仓房帮工把一道刮痕也抄进了那行记号里。你换个角度照光，把这道划痕另描在字列外，回头还能复核。你带回两幅图的区别，板上的话仍没翻出来。'
+          heard: '你知道以后这套文字不好读。帮工报了一只练习托盘里有什么。你把他口头报的标签另记一张，与目见的笔划分开。收队时你说得清货名是谁告诉你的，却还不能把它配进任何真实铭文。'
+          margin: '你先抄看清的笔划，再在边上用一点标出那处犹疑。下一位知道要重看哪里。归来只带那一个点的草图，把猜的字都留在台边。'
 text:
   en:
     name: Minoan scribes
@@ -45,3 +58,39 @@ text:
   zh:
     name: 米诺斯的书吏
     text: 米诺斯克里特的书吏，约公元前 1500 年在克诺索斯记账。用来书写米诺斯语的线形文字甲至今没有破译。它的后继者线形文字乙在 1952 年被读出，写的是希腊语。
+hook: {en: 'When do you copy a scratch as a sign?', zh: '划痕该不该抄成一个字？'}
+facts:
+  tablet:
+    date: '-1500'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [knossos_linear_a_tablet]
+    text:
+      en: 'The collection and digitisation record identifies this clay object from Knossos as a Linear A tablet. The game year is the scenario setting.'
+      zh: '数字化记录认定这件克诺索斯出土的泥质实物为线形文字 A 泥板。卡里年份用于布置场景。'
+bystanders:
+  attendant:
+    invented: true
+    text: {en: 'A fictional storeroom attendant using a practice tablet.', zh: '虚构的仓房帮工，手头有一块练习泥板。'}
+wiki:
+  refs:
+    knossos_linear_a_tablet:
+      order: 650
+      status: checked
+      text:
+        en: 'INSCRIBE, Clay Tablet KN 1, Heraklion Archaeological Museum inventory Π-N 1267 https://www.inscribercproject.com/Clay_tablet_KN_1.php'
+        zh: 'INSCRIBE，克诺索斯线形文字 A 泥板 KN 1，伊拉克利翁考古博物馆藏 Π-N 1267 https://www.inscribercproject.com/Clay_tablet_KN_1.php'
+self_check:
+  fact: tablet
+  quote_line: '下一位知道要重看哪里。'
+  regret_choice: '把划痕当成一个字抄进去，后来的人就不知道哪里还有疑问。'
+  bookend: '从有待辨清的一划，到一个明确可复核的位置。'
+  share_line: '我抄回一块板上最难定的一划。'
+  share_number: 'KN 1'
+  knowing: 'heard 知道将来的文字解读仍有困难。'
+  near: 'tablet 给出克诺索斯实物。'
+  lever: '把待核笔划从确定记号中分开。'
+  missed: '无法译读这套文字。'
+  brought: '一幅注明疑处的图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

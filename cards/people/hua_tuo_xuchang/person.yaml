@@ -10,38 +10,90 @@ events:
     tier: 2
     channels: {E: 1, T: 1}
     regret: true
+    refs: [hua_tuo_xuchang_account]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["physician","nurse","midwife"]},{"trait":["scholarly","skeptical"]}]}}
         - {id: p2, kind: care, req: {"any":[{"trait":["faithful","patient"]},{"job":["nurse","midwife"]}]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist","journalist"]},{"stat":{"wit":7}}]}}
+      vignettes:
+        - {id: notice, traits: [scholarly, skeptical, methodical]}
+        - {id: shift, traits: [faithful, patient, kind]}
+        - {id: later}
     text:
       en:
-        name: "A physician whose books are gone"
+        name: 'The book the account remembers'
         place: "Xuchang"
         figure: "Hua Tuo"
-        story: "Hua Tuo, a physician known for surgery under a wine powder and for exercises based on animal movements, is held by officials at Xuchang. His own writings did not survive, and he is known only through later accounts."
-        relic: "A pouch of herb powders"
-        relic_desc: "A small cloth pouch of ground herbs with a faint bitter smell."
+        story: 'The later Sanguozhi says that Hua Tuo was confined at Xu and recounts a failed attempt to pass on a book from prison. The game uses 208 as an approximate setting. Its two fictional clerks handle their own register and do not see the book described in the biography.'
+        relic: 'A copy of the practice register'
+        relic_desc: 'An invented register leaf that distinguishes a report from a delivery.'
         points:
-          p1: "Watch him examine a patient (medical staff or a curious employee)"
-          p2: "Sit with a patient through the night (a kind employee, a nurse or a midwife)"
-          p3: "Write down his methods while he speaks (a record keeper, a journalist or a sharp mind)"
+          p1: 'Ask whether the clerk saw a volume or only heard about one'
+          p2: 'Help check the register before the room closes'
+          p3: 'Preserve the distinction between the report and the item delivered'
+        vignettes:
+          notice: 'Ajin heard there was a volume and has written it under items received. You ask her to touch the shelf where it would go. She moves the line to a report column, leaves the space on the shelf empty and keeps the source of the report beside it.'
+          shift: 'Achang wants to close the book before calling the next keeper. You ask him to read the entries aloud one time. When he reaches the unwitnessed delivery, they agree to leave that line waiting. The next keeper can see what has yet to be confirmed.'
+          later: 'You know a historian will tell a story about a book. Ajin wants to know if a real volume has come through this room. You show her where a confirmed delivery would be written. The page leaves her desk with that place still open.'
       zh:
-        name: "书都不在了的医生"
+        name: '史书提到的那一卷'
         place: "许昌"
         figure: "华佗"
-        story: "华佗以用麻沸散做外科手术和仿动物动作的导引之法著称，后来被官府关押在许昌。他自己的著作没有留下来，只能从后人的记载中知道他。"
-        relic: "一小袋药粉"
-        relic_desc: "一个小布袋，装着研细的草药，有淡淡的苦味。"
+        story: '晚出的《三国志》说华佗被关入许狱，并记他试图从狱中交出一卷书而未成。游戏以208年为约略背景。两名虚构书吏只经手自己的登记簿，没见到传记里写的那卷书。'
+        relic: '一页练习登记簿的副本'
+        relic_desc: '虚构的登记副页，区分传闻与实际交接。'
         points:
-          p1: "看他诊察病人"
-          p2: "陪一位病人熬过一夜"
-          p3: "在他说话时把方法记下来"
+          p1: '问书吏是见到一卷书，还是只听说过'
+          p2: '关屋前帮着核一遍登记'
+          p3: '把听到的说法和实物交接分开记'
+        vignettes:
+          notice: '阿瑾听说有一卷书，便写进已收物件。你请她指给你看书该搁在哪层。她把那一行移到传闻栏，架上仍留空，话是谁说的也记在旁边。'
+          shift: '阿长想合上登记簿，再叫下一班来。你请他先把这几行念一遍。念到没人亲见的交接，两人商量把那一栏先挂着。接手人看得见还有哪一笔没核实。'
+          later: '你知道后来史书会说起一卷书。阿瑾问，有没有真书从这屋交出去过。你指给她看若真有交接该记在哪儿。纸离开她的桌子时，那一栏仍空着。'
 text:
   en:
     name: Hua Tuo
-    text: Chinese physician at the end of the Han, about 140 to 208. He is recorded as using a herbal anaesthetic for surgery and teaching exercises modelled on animal movements. He was executed by the warlord Cao Cao.
+    text: Physician of the late Han. A later biography in the Sanguozhi describes his medical work, attributes the Five Animals exercise to him, and recounts his confinement and death under Cao Cao.
   zh:
     name: 华佗
-    text: 汉末医生，约 140 年生，208 年去世。史书记载他用草药麻醉做外科手术，并传授模仿动物动作的导引。他被曹操处死。
+    text: 汉末医生。《三国志》的后出传记叙述其行医经过，把五禽戏归于他，也记下他因曹操下令而被关押、遇害。
+hook: {en: 'There is still a name for the lost book.', zh: '书已不在，名字还能怎么写？'}
+facts:
+  account:
+    date: '208'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hua_tuo_xuchang_account]
+    text:
+      en: 'The biography recounts confinement at Xu and a book offered to a prison official. It is a later narrative and supplies no exact date for the imagined scene.'
+      zh: '传记叙述华佗被关进许狱，以及向狱吏交付一卷书的故事。文本成于事后，没有给这一游戏场景提供确切日期。'
+bystanders:
+  ajin:
+    invented: true
+    text: {en: 'A fictional clerk maintaining a register of things received.', zh: '虚构书吏阿瑾，负责登记收到的物件。'}
+  achang:
+    invented: true
+    text: {en: 'A fictional shift keeper handing over a book of entries.', zh: '虚构值守人阿长，要把登记簿交给下一班。'}
+wiki:
+  refs:
+    hua_tuo_xuchang_account:
+      order: 949
+      status: checked
+      text:
+        en: 'Chen Shou, Sanguozhi 29, biography of Hua Tuo https://chinesebooks.github.io/shishu/sanguozhi/211722.html'
+        zh: '陈寿《三国志》卷二十九《方技传·华佗》 https://chinesebooks.github.io/shishu/sanguozhi/211722.html'
+self_check:
+  fact: account
+  quote_line: '架上仍留空，话是谁说的也记在旁边。'
+  regret_choice: 'notice 写成已经收到，就在档里凭空多了一本。'
+  bookend: '从架上找书，到交接时保留空处。'
+  share_line: '一条传闻还在，一卷书没有收到。'
+  share_number: 'notice 区分两栏。'
+  knowing: 'later 知道后来的传记叙述。'
+  near: 'account 以晚出史书记载为锚。'
+  lever: 'shift 下一班知道有一笔待核。'
+  missed: 'later 没有看到书卷交出。'
+  brought: 'notice 带回虚构的登记副页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

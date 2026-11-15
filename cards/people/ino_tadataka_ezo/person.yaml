@@ -9,34 +9,47 @@ events:
     field: exploration
     tier: 2
     channels: {C: 2, L: 3, Y: 1}
+    refs: [ino_tadataka_ezo_survey, ino_tadataka_ezo_notes]
     scene:
       points:
         - {id: p1, kind: endure, req: {"any":[{"trait":["cheerful","bold","hardy"]},{"stat":{"constitution":6}}]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: hold, req: {"trait":["vigil","patient","bold","hardy"]}}
+      vignettes:
+        - {id: bend, traits: [methodical, scholarly]}
+        - {id: repeat, traits: [hardy, curious]}
+        - {id: sketch}
     text:
       en:
-        name: "Measuring Japan on foot after fifty"
+        name: 'The bend left out of the line'
         place: "Hokkaido"
         figure: "Ino Tadataka"
-        story: "Ino Tadataka takes up astronomy in his fifties and, from the south coast of Hokkaido, measures the shoreline step by step, mapping Japan on foot."
+        story: 'The Inō Tadataka Museum dates Inō’s first survey, through northeastern Honshū and southern Hokkaidō, to 1800. His team recorded distances and directions. The finished national maps were presented in 1821, after his death. The crew helper and the route used to check the notes are fictional.'
         relic: "A measuring staff"
         relic_desc: "A thin staff for measuring paces, marked with a scale."
         points:
-          p1: "Walk the length of a stretch of coast"
-          p2: "Fix the latitude by the pole star"
-          p3: "Finish counting the steps of the day"
+          p1: 'Carry the distance notes as far as the next turning point'
+          p2: 'Check the change of bearing before joining two stretches'
+          p3: 'Keep the segments in order until they are transferred to the sketch'
+        vignettes:
+          bend: 'The survey helper has added the lengths of three stretches and drawn a single line. You copy each bearing beside its length. Once the turns are restored, the last mark sits off to the side. You take two sketches home. The national map is still years away.'
+          repeat: 'You go back to the turn where the note was taken and ask the helper to face the next stretch again. He had read from the direction of return. You mark an arrow at the bend and correct his direction. You are not there for the next survey season.'
+          sketch: 'You put the length and direction of each stretch on the same line. The helper can redraw the walk when the coast is no longer in sight. You carry the little bend home. The finished map will need many more such sheets.'
       zh:
-        name: "五十岁后用脚量出日本"
+        name: '被直线吞掉的转弯'
         place: "北海道"
         figure: "伊能忠敬"
-        story: "伊能忠敬五十多岁开始学天文，从北海道南岸起一步一步量海岸线，用脚丈量出了日本的地图。"
+        story: '伊能忠敬纪念馆的年表记载，伊能队 1800 年首次测量，走过本州东北和北海道南部。队伍记录距离与方位。全国地图到他去世后的 1821 年才完成呈交。卡里的测量帮手和核对路线是虚构的。'
         relic: "一根测杖"
         relic_desc: "一根量步距用的细杖，上面刻着尺度。"
         points:
-          p1: "走完一段海岸"
-          p2: "用北极星定纬度"
-          p3: "把一天的步数记完"
+          p1: '把测距的记录带到下一个转折点'
+          p2: '接两段路前先核对偏转了哪个方向'
+          p3: '誊到草图上以前，按顺序看住各段记录'
+        vignettes:
+          bend: '帮手把三段路的长度加起来，画成一条直线。你给每段长度旁补上方位。转弯画回来，最后一个点落在偏侧。你带回两张对照图，全国地图还要等许多年。'
+          repeat: '你回到记数的路口，请帮手再面向下一段。他方才照回头的方向记了。你在拐处画个箭头，把方位改回来。下一季出门测量时，你就不在了。'
+          sketch: '你把每段路的长度和方向写到同一行。看不见海岸时，帮手还能照条子画出走过的路。你把这一处拐弯带回去，要成图还得许多页。'
 text:
   en:
     name: "Ino Tadataka"
@@ -44,3 +57,54 @@ text:
   zh:
     name: "伊能忠敬"
     text: "日本的测量家，1745 年生，1818 年去世。50 岁以后学习天文和测量，1800 年起走遍日本海岸，主持绘制了精度很高的全国地图。"
+hook: {en: 'Do three stretches of road make one straight coast?', zh: '拐过两回，还能画成一条直线吗？'}
+facts:
+  survey:
+    date: '1800'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ino_tadataka_ezo_survey]
+    text:
+      en: 'The museum dates the first survey through northeastern Japan and southern Hokkaidō to 1800 and the completion of the national map to 1821.'
+      zh: '馆方年表载，1800 年首次测量本州东北及北海道南部，1821 年完成日本全图。'
+  notes:
+    date: '1800'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ino_tadataka_ezo_notes]
+    text:
+      en: 'The guide explains that the survey party collected measured distances and directions. The length-and-bearing mistake below is invented.'
+      zh: '资料介绍测量队采集距离与方位。卡里的线路误记为虚构。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional survey helper combining three consecutive stretches on a draft.', zh: '虚构的测量帮手，要把连续三段路接进一张草图。'}
+wiki:
+  refs:
+    ino_tadataka_ezo_survey:
+      order: 642
+      status: checked
+      text:
+        en: 'Inō Tadataka Museum, Katori City, biography and first survey chronology https://www.city.katori.lg.jp/sightseeing/museum/tadataka.html'
+        zh: '香取市伊能忠敬纪念馆，伊能忠敬生平与首次测量年表 https://www.city.katori.lg.jp/sightseeing/museum/tadataka.html'
+    ino_tadataka_ezo_notes:
+      order: 643
+      status: checked
+      text:
+        en: 'Inō Tadataka Museum, Katori City, survey methods and tools guide https://www.city.katori.lg.jp/sightseeing/museum/guide.files/kinenkan2.pdf'
+        zh: '香取市伊能忠敬纪念馆，测量方法与器具资料 https://www.city.katori.lg.jp/sightseeing/museum/guide.files/kinenkan2.pdf'
+self_check:
+  fact: survey
+  quote_line: '转弯画回来，最后一个点落在偏侧。'
+  regret_choice: '只加路长会漏掉两处转弯。'
+  bookend: '从总长度画成直线，到转弯能复画。'
+  share_line: '三段路各带一个方向，才能画回我走过的海岸。'
+  share_number: '1800 年首次测量'
+  knowing: '员工知道全国地图将来才完成。'
+  near: 'survey 锚定 1800 年的范围，notes 是操作依据。'
+  lever: '补三项方位，校正一路口的箭头。'
+  missed: '最终呈交晚于这趟。'
+  brought: '一处拐弯的前后对照。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

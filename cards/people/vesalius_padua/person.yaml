@@ -9,34 +9,47 @@ events:
     field: medicine
     tier: 2
     channels: {E: 1, L: 1}
+    refs: [vesalius_padua_print]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"cure"}}
         - {id: p2, kind: hold, req: {"stat":{"finesse":7}}}
         - {id: p3, kind: care, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"]},{"trait":["cheerful"]}]}}
+      vignettes:
+        - {id: letter, traits: [methodical, curious, skeptical]}
+        - {id: hold, traits: [handy, patient, kind]}
+        - {id: credit}
     text:
       en:
-        name: Anatomy drawn from the body
+        name: 'The letter under the figure'
         place: Padua
         figure: Andreas Vesalius
-        story: Vesalius publishes the Fabrica, a book of the human body drawn from dissection rather than from old authority.
-        relic: A dissection knife
-        relic_desc: A narrow blade for looking before believing.
+        story: 'Vesalius prepared the Fabrica while teaching in Padua. The woodblocks were sent from Venice to Johannes Oporinus, and the book appeared in Basel in 1543. In Padua the game imagines two readers checking a practice figure against the printed work. The workshop and error are invented.'
+        relic: 'A checked teaching figure'
+        relic_desc: 'A fictional reader’s copy with a corrected figure reference.'
         points:
-          p1: "Compare the drawing with the body"
-          p2: "Hold the scalpel steady"
-          p3: "Tidy up before and after the dissection"
+          p1: 'Compare the figure letter with the corresponding text'
+          p2: 'Hold the two copies in place while the mismatched letter is marked'
+          p3: 'Help the next reader retrace the correction'
+        vignettes:
+          letter: 'Lucia puts her finger on the letter in the margin. Marco points to a different place on the figure. You move the practice sheet against the open book until both can see where the copy drifted. Lucia changes the reference and leaves the displaced one legible in the margin.'
+          hold: 'The borrowed book has to go back and Marco still needs the figure. You hold the book open until he can mark both the image and its letter on a sheet of his own. When the owner takes the book, there is still something he can check at his desk.'
+          credit: 'You know later readers will try to name the people who made the illustrations. Lucia asks whether to put an artist’s name at the top of her practice copy. You can point to the printed figure but cannot settle who drew it. She leaves a line for a source, then closes the book.'
       zh:
-        name: 照着人体画出来的解剖学
+        name: '图下那个字母'
         place: 帕多瓦
         figure: 维萨里
-        story: 维萨里出版《人体构造》，书里的人体是照着解剖画的，而不是照着旧权威写的。
-        relic: 一把解剖刀
-        relic_desc: 一片窄窄的刀刃，先看再信。
+        story: '维萨里在帕多瓦任教时筹备《人体构造》，木刻版从威尼斯送交约翰内斯·奥波里努斯，1543年在巴塞尔刊印。游戏虚构帕多瓦两名读者拿练习图对读印本；校图过程和错处都为虚构。'
+        relic: '一页校过的习作图'
+        relic_desc: '虚构读者拿来习作的一页，图文对应的记号已经订正。'
         points:
-          p1: "对照图与尸体"
-          p2: "稳住手术刀"
-          p3: "解剖前后的善后"
+          p1: '核对图上字母与正文说的是否同一处'
+          p2: '两份图放在一处，等人标出对不上的字母'
+          p3: '帮接手的读者看清改动是从哪里来的'
+        vignettes:
+          letter: '露琪亚用手指点住页边一个字母，马可却指到图上另一处。你把练习纸移到打开的书旁，让两人看清符号从哪儿抄偏了。露琪亚改好索引，页边还认得出原来那个错位的标记。'
+          hold: '借来的印本得还，马可还要看图。你帮他撑开书，等他在自己的纸上记下图的位置和字母。书主取走之后，他回到桌前还能查到一份。'
+          credit: '你知道后人会试图认出制图者。露琪亚问练习页上要不要署画工名字。你找得到印本里的图，却定不了谁画的。她留一行待写来处，合上了书。'
 text:
   en:
     name: Andreas Vesalius
@@ -44,3 +57,42 @@ text:
   zh:
     name: 维萨里
     text: 佛兰德解剖学家，1514 年生，1564 年去世，曾在帕多瓦任教。他 1543 年的《人体构造》配有取自亲自解剖的细致插图，纠正了盖伦的许多说法。
+hook: {en: 'The letter under the picture points elsewhere.', zh: '图下的字母，指到了别处。'}
+facts:
+  print:
+    date: '1543'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [vesalius_padua_print]
+    text:
+      en: 'The museum describes preparation at Padua, transport of blocks from Venice to Basel, and the 1543 printing. It notes that the packing correspondence does not name the artists.'
+      zh: '馆方记述帕多瓦的筹备、木刻版从威尼斯运到巴塞尔及1543年刊印，也指出相关通信未列画工姓名。'
+bystanders:
+  lucia:
+    invented: true
+    text: {en: 'A fictional reader checking the figure reference.', zh: '虚构读者露琪亚，在校图中文字的指向。'}
+  marco:
+    invented: true
+    text: {en: 'A fictional student working with a borrowed book.', zh: '虚构学生马可，要用借来的书核对图。'}
+wiki:
+  refs:
+    vesalius_padua_print:
+      order: 933
+      status: checked
+      text:
+        en: 'U.S. National Library of Medicine, Illustrating De Fabrica, early printed figures and correspondence https://circulatingnow.nlm.nih.gov/2014/07/08/illustrating-de-fabrica/amp/'
+        zh: '美国国家医学图书馆，《人体构造》的插图，早期印图与通信 https://circulatingnow.nlm.nih.gov/2014/07/08/illustrating-de-fabrica/amp/'
+self_check:
+  fact: print
+  quote_line: '她留一行待写来处，合上了书。'
+  regret_choice: 'credit 猜名会留下没法核实的署名。'
+  bookend: '从字母错位，到给来处留行。'
+  share_line: '图和字母要对得上。'
+  share_number: 'letter 图与文的两处标记。'
+  knowing: 'credit 员工知道后世会探究画工。'
+  near: 'print 区分帕多瓦准备和巴塞尔出版。'
+  lever: 'hold 让借书归还后仍有可核对内容。'
+  missed: 'credit 此行无法确认执笔的人。'
+  brought: 'letter 带回虚构的对照页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

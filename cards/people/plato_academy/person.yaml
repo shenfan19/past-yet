@@ -9,34 +9,47 @@ events:
     field: philosophy
     tier: 2
     channels: {V: 1}
+    refs: [plato_academy_academy, plato_academy_double_square]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["student","archivist"]}}
         - {id: p3, kind: persuade, req: {"trait":["cosmopolitan","scholarly","ambitious"]}}
+      vignettes:
+        - {id: diagonal, traits: [methodical, curious]}
+        - {id: squares, traits: [kind, patient]}
+        - {id: reveal}
     text:
       en:
-        name: The first school of its kind
+        name: 'The unanswered square'
         place: Athens
         figure: Plato
-        story: Plato founds the Academy in a grove outside Athens, a place to study mathematics and philosophy together.
-        relic: A wax writing tablet
-        relic_desc: A wooden tablet whose notes can be smoothed away and rewritten.
+        story: 'A later biography places Plato in the Academy outside Athens. In Plato’s Meno, the side of a square with twice the area is the diagonal of the original square. The game sets a fictional exercise at the Academy; its date and participants are imagined.'
+        relic: 'A borrowed wax tablet'
+        relic_desc: 'The practice tablet has a corrected diagram on the reverse.'
         points:
-          p1: "Follow the argument in the Academy"
-          p2: "Write the dialogues up as text"
-          p3: "Speak up for the topic at the Academy gate"
+          p1: 'Count the fourfold area before answering the student'
+          p2: 'Copy the false start alongside the corrected figure'
+          p3: 'Ask the bystanders to cover the new figure with half-squares'
+        vignettes:
+          diagonal: 'Mikon has doubled the side on his wax tablet and asks you to read off the area. You slide the stylus around the four little squares he has made. He used to rub out mistakes at once. This time he keeps the four where they are and starts the next figure on the other leaf.'
+          squares: 'Doro has to take the wax tablet home before the lamp goes out. You hold it level while she scores a corner-to-corner line. Four of her half-squares fit the new figure. The apprentice who comes tomorrow will have something he can count without you.'
+          reveal: 'You give away the diagonal before Mikon has tried his longer side. He can repeat the answer but cannot draw the new square. You wipe away your answer and leave him two starting corners. The second attempt will have to wait for the next lamp.'
       zh:
-        name: 最早的学园
+        name: '没有抹平的方格'
         place: 雅典
         figure: 柏拉图
-        story: 柏拉图在雅典城外的树林里办起学园，一个把数学和哲学放在一起学习的地方。
-        relic: 一块蜡板
-        relic_desc: 木板上的字迹可以抹平，再写一遍。
+        story: '后世传记把柏拉图与雅典城外的学园联系起来。《美诺篇》中，原方形的对角线成了面积加倍的新方形的边。游戏借此安排一场习作，日期和练习的人物均为虚构。'
+        relic: '一块借来的蜡板'
+        relic_desc: '习作蜡板的另一面留着修改过的图。'
         points:
-          p1: "跟上学园里的论证"
-          p2: "把对话整理成文"
-          p3: "在学园门口替这个话题说话"
+          p1: '先数出四倍的面积，再回答学生'
+          p2: '把第一笔错图和改过的图画在一起'
+          p3: '请围观的人用半个方格拼出新图形'
+        vignettes:
+          diagonal: '米孔把边画长了一倍，请你看面积。你用笔尖沿他画出来的四个小方格走了一圈。他从前一错就抹平蜡面，这回留下了四格，在另一面另起一图。'
+          squares: '灯油快尽了，多萝得把蜡板带回家。你扶稳板，她从一角划到对角。四块半格刚好拼成新图。明天来学的人，就是你不在，也能亲手数一遍。'
+          reveal: '米孔还没试过加长的边，你就抢先说了对角线。他能复述答案，却画不出新方形。你抹掉自己的答案，只给他留下起笔的两个角。再试一遍，要等下一盏灯。'
 text:
   en:
     name: Plato
@@ -44,3 +57,57 @@ text:
   zh:
     name: 柏拉图
     text: 希腊哲学家，约公元前 428 年生，约公元前 348 年去世，苏格拉底的学生。他在雅典创办学园，写下关于正义、知识和灵魂的对话，主要发言者是苏格拉底。
+hook: {en: 'Can a square double without a longer side twice its length?', zh: '方形翻一倍，边也要翻倍吗？'}
+facts:
+  academy:
+    date: '-387'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [plato_academy_academy]
+    text:
+      en: 'The biography places Plato in the Academy, a gymnasium outside the walls. The passage gives no opening day.'
+      zh: '传记说柏拉图回雅典后住在城墙外名为学园的体育场一带。这一节没有记开学日。'
+  double_square:
+    date: '-380'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [plato_academy_double_square]
+    text:
+      en: 'The exercise reaches double the area by making the original diagonal the side of a new square.'
+      zh: '篇中以原方形的对角线作新方形的边，得到两倍面积。'
+bystanders:
+  mikon:
+    invented: true
+    text: {en: 'A fictional learner whose first line is twice as long as it should be for the intended comparison.', zh: '虚构的学生米孔，为比较面积，第一笔就把边画长了一倍。'}
+  doro:
+    invented: true
+    text: {en: 'A fictional keeper of a borrowed wax tablet, due to return it at dusk.', zh: '虚构的多萝借来蜡板，入夜前得归还。'}
+wiki:
+  refs:
+    plato_academy_academy:
+      order: 785
+      status: checked
+      text:
+        en: 'Diogenes Laertius, Lives 3.7, Perseus https://beta.perseus.tufts.edu/urn%3Acts%3AGreekLit%3Atlg0004.tlg001.perseus-eng2%3A3.1/'
+        zh: '第欧根尼·拉尔修《名哲言行录》3.7，珀尔修斯 https://beta.perseus.tufts.edu/urn%3Acts%3AGreekLit%3Atlg0004.tlg001.perseus-eng2%3A3.1/'
+    plato_academy_double_square:
+      order: 786
+      status: checked
+      text:
+        en: 'Plato, Meno 82b–85b, MIT Classics Archive https://classics.mit.edu/Plato/meno.html'
+        zh: '柏拉图《美诺篇》82b—85b，麻省理工古典文库 https://classics.mit.edu/Plato/meno.html'
+self_check:
+  fact: academy
+  quote_line: '明天来学的人，就是你不在，也能亲手数一遍。'
+  regret_choice: 'reveal 抢答换来时间，却没让米孔弄懂图形。'
+  bookend: '同一块蜡板从错了就擦，变成保留错图。'
+  share_line: '边长翻倍，面积变成四倍。'
+  share_number: '四倍面积，可从习作图直接数出。'
+  knowing: 'reveal 知道《美诺篇》的解法。'
+  near: 'academy 以晚出传记所记地点为场景。'
+  lever: 'diagonal 留下第一幅错图。'
+  missed: 'reveal 等不到下一盏灯。'
+  brought: 'squares 带回蜡板习作的图样。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

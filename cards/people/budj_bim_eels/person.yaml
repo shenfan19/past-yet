@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 2
     channels: {H: 2, W: 1, L: 1}
+    refs: [budj_bim_eels_channels]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["builder"]},{"trait":["bold","methodical"]}]}}
         - {id: p2, kind: notice, req: {"trait":["curious","quiet","skeptical"]}}
         - {id: p3, kind: trust, req: {"trait":["kind","sensitive","curious"]}}
+      vignettes:
+        - {id: level, traits: [methodical, scholarly]}
+        - {id: return, traits: [curious, kind]}
+        - {id: bend}
     text:
       en:
-        name: Fish farming on a lava plain
+        name: 'Where the high water reached'
         place: Budj Bim, Victoria, Australia
         figure: The Gunditjmara people
-        story: The Gunditjmara shape channels and weirs on a lava flow to trap and keep eels, a system dated to thousands of years ago.
+        story: 'Gunditjmara accounts of the Budj Bim cultural landscape describe a long history of using volcanic rock to manage water with channels and weirs, including for kooyang, the short-finned eel. The event date sets a period in that long history. The game’s inspection of a practice channel is an imagined scene.'
         relic: A woven eel trap
         relic_desc: A long basket with a funnel mouth.
         points:
-          p1: "Stack the stone weirs that guide the water"
-          p2: "Watch how the water level is managed"
-          p3: "Be allowed to stand by and watch the eels kept"
+          p1: 'Keep the drawing oriented along the practice channel'
+          p2: 'Identify a wet mark without treating it as a current reading'
+          p3: 'Agree with the helper on a point to look at again'
+        vignettes:
+          level: 'The helper circles a wet stripe and calls it today’s waterline. You crouch where the leaf is still drifting and put a second mark below the first. Now the sketch carries both the trace and the moving water. You leave before the two levels meet again.'
+          return: 'You know people will still read the channels as parts of a connected system. The helper has room for just one mark. You choose a rock beside the bend and agree to compare from that same spot on the next visit. You keep the agreed position. The reading after the next rain is still to come.'
+          bend: 'You draw where the water goes out of sight and stop the line there. The helper leaves the rest of the paper clear for a later walk. You bring home one bend of a channel and not its whole course.'
       zh:
-        name: 熔岩平原上的养鱼
+        name: '水曾经到过哪块黑石'
         place: 澳大利亚维多利亚州布吉比姆
         figure: 贡迪玛拉人
-        story: 贡迪玛拉人在熔岩流上修出水渠和堰，把鳗鱼拦住养起来，这套系统的年代可追到几千年前。
+        story: '贡迪特马拉人介绍布吉比姆文化景观时，记述他们长期利用火山岩修渠筑堰、调节水流，其中包括管理短鳍鳗 kooyang。卡上年份取这段漫长历史里的一个时期。核对一段练习水道的场面为虚构。'
         relic: 一只编织的鳗鱼笼
         relic_desc: 一只长筐，口像漏斗。
         points:
-          p1: "垒起引水石堰"
-          p2: "看水位怎样被调节"
-          p3: "被允许在一旁看养鳗"
+          p1: '沿练习水道朝向稳住草图'
+          p2: '辨出湿痕，别把它当成眼下的水位'
+          p3: '与帮工约好一个能再复看的位置'
+        vignettes:
+          level: '帮工圈了一道湿痕，说水现在就到那儿。你蹲到一片还在漂的叶子旁，在第一记下头再画一记。图里既留着旧痕，也留着眼下流到哪里。等水再涨到旧痕，你早已走了。'
+          return: '你知道后世仍会把这些水道连起来看。帮工只够留一个记号，你们挑了弯边一块黑石，约定下回从同一处看。你带走这处站位，下场雨后的那笔还写不出。'
+          bend: '你画到水转弯看不见的地方，就把线停在那里。帮工留下余纸，等以后再走。你带回水道的一处弯，全程还留在图外。'
 text:
   en:
     name: The Gunditjmara people
@@ -44,3 +57,39 @@ text:
   zh:
     name: 贡迪玛拉人
     text: 澳大利亚维多利亚州西南部的贡迪玛拉人。数千年间，他们在布吉比姆用火山岩修建水渠、堰和池塘来捕捉和养殖鳗鱼，是已知最古老的水产养殖系统之一。
+hook: {en: 'What can you tell from a wet mark on lava?', zh: '水退了，那道湿痕能证明什么？'}
+facts:
+  channels:
+    date: '-4500'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [budj_bim_eels_channels]
+    text:
+      en: 'The site account describes at least 6,600 years of Gunditjmara water management, using volcanic rock for channels, weirs and dams. The map year does not date a given wall.'
+      zh: '景观资料说明贡迪特马拉人至少 6600 年来利用火山岩修渠、筑堰与设坝。地图年份未用来给某段墙定年。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional helper recording where the surface of the water can actually be seen.', zh: '虚构的帮工，要记下哪一段能直接看见水面。'}
+wiki:
+  refs:
+    budj_bim_eels_channels:
+      order: 695
+      status: checked
+      text:
+        en: 'Gunditjmara, Budj Bim Cultural Landscape, World Heritage statement https://www.budjbim.com.au/about-us/world-heritage/'
+        zh: '贡迪特马拉社区，布吉比姆文化景观世界遗产说明 https://www.budjbim.com.au/about-us/world-heritage/'
+self_check:
+  fact: channels
+  quote_line: '图里既留着旧痕，也留着眼下流到哪里。'
+  regret_choice: '把旧湿痕当作现时水线，会漏掉眼下的变化。'
+  bookend: '从一条未分来源的水线到两处水平记录。'
+  share_line: '叶子还在漂，湿痕却在它上边。'
+  share_number: '两处水位'
+  knowing: 'return 知道水道长期组成关联的水网。'
+  near: 'channels 来自贡迪特马拉社区的公开资料。'
+  lever: '给现在所见另留一记。'
+  missed: '下一次涨水没赶上。'
+  brought: '一处可回看的站位。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

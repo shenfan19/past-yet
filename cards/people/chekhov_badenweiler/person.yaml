@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 3, G: 2}
     regret: true
+    refs: [chekhov_badenweiler_letter]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["attached","artistic","sensitive"]}}
         - {id: p2, kind: notice, req: {"any":[{"job":["physician","nurse"]},{"trait":["quiet","wanderer"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: address, traits: [methodical, handy]}
+        - {id: garden, traits: [kind, charismatic]}
+        - {id: post}
     text:
       en:
-        name: "A doctor in the Black Forest"
+        name: 'A reply to Villa Fredericke'
         place: "Badenweiler"
         figure: "Anton Chekhov"
-        story: "Chekhov, himself a doctor dying of tuberculosis, goes to the Black Forest spa of Badenweiler with his wife Olga Knipper, and dies there in July at forty four."
+        story: 'In a June 1904 letter from Badenweiler, Chekhov gives Villa Fredericke as his address and describes a sunny garden and a writing table. A visit to the boarding house and the errands below are fictional.'
         relic: "A pince nez"
         relic_desc: "Small round spectacles on a cord."
         points:
-          p1: "Talk with him as an equal"
-          p2: "Notice what the doctor in him already knows (a physician, a nurse or a curious mind helps)"
-          p3: "Ease his breathing in the last night"
+          p1: 'Get a second copy of the return address onto the envelope'
+          p2: 'Find which path from the garden reaches the letter box'
+          p3: 'Prepare the quiet room while the family keeps the writing table free'
+        vignettes:
+          address: 'The house assistant has copied the town but left off the villa. You put the two slips side by side and catch the missing line before the post goes. You take home a blank address slip with the route sketched on the back. The reply itself is still on its way when you leave.'
+          garden: 'The house assistant starts to carry the writing table out to make room. You find a dry place for the spare chair instead. The letter can finish where it began. On your own slip you draw the corner of the table. You will never see the person who opens that envelope.'
+          post: 'You ask the assistant which way the post goes and walk it once before the letter is ready. By evening you can draw the route from the villa without turning the paper. You bring that sketch back. What went inside the envelope stays with its writer.'
       zh:
-        name: "黑森林里的医生"
+        name: '寄往弗雷德里克别墅的回信'
         place: "巴登魏勒"
         figure: "安东·契诃夫"
-        story: "契诃夫自己是医生，却患着肺结核，他和妻子奥尔加·克尼佩尔来到黑森林的温泉疗养地巴登魏勒，七月在那里去世，年四十四岁。"
+        story: '1904 年 6 月，契诃夫从巴登魏勒寄信，把弗雷德里克别墅写作回信地址，还写到晒得到太阳的花园和屋里的写字桌。本趟在别墅跑的差事属于分支演绎。'
         relic: "一副夹鼻眼镜"
         relic_desc: "一副系着细绳的小圆眼镜。"
         points:
-          p1: "像平等的人一样和他交谈"
-          p2: "留意他身上医生已经知道的事（医生、护士或好奇的人更合适）"
-          p3: "让他在最后一夜呼吸轻松些"
+          p1: '在信封上再抄一份可供核对的回邮地址'
+          p2: '从花园走一遍到邮筒的路'
+          p3: '替家属打点安静的房间，腾出写字桌'
+        vignettes:
+          address: '别墅帮工只抄了镇名，漏掉别墅名。你把两份纸条并在一起，在邮差走前补上一行。你带回一张空白地址条，背面画着投信的路线。直到收队，回信还在路上。'
+          garden: '帮工想搬走写字桌腾地方。你替那把多出来的椅子找了个干燥的角落，桌上的信得以在原处写完。你在自己的便笺上画下一个桌角。收信的人，你没能见到。'
+          post: '你问帮工邮差走哪条路，趁信还没写好先走了一遍。傍晚，你已经能一口气画出别墅到邮筒的路线。你带回这张小图。信封里写了什么，留给写信的人。'
 text:
   en:
     name: Anton Chekhov
@@ -45,3 +58,39 @@ text:
   zh:
     name: 安东·契诃夫
     text: 俄国作家与医生，1860 年生，1904 年去世。他写短篇小说，也写了《海鸥》《万尼亚舅舅》《三姐妹》《樱桃园》。他在巴登维勒的疗养地死于肺结核。
+hook: {en: 'What goes on the return address?', zh: '回信寄到哪一栋？'}
+facts:
+  letter:
+    date: '1904-06'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [chekhov_badenweiler_letter]
+    text:
+      en: 'Chekhov identifies Villa Fredericke as his address and describes the garden and the writing table in his lodging.'
+      zh: '契诃夫在信中写下弗雷德里克别墅的地址，提到住处的花园与写字桌。'
+bystanders:
+  house_assistant:
+    invented: true
+    text: {en: 'The boarding-house assistant, carrying ordinary post on a crowded round.', zh: '虚构的别墅帮工，正把旅客寄出的家信凑在一起去投邮。'}
+wiki:
+  refs:
+    chekhov_badenweiler_letter:
+      order: 400
+      status: checked
+      text:
+        en: 'Chekhov, Letters, Badenweiler, June 12, translated by Constance Garnett https://www.gutenberg.org/cache/epub/6408/pg6408.html'
+        zh: '契诃夫书信，巴登魏勒 6 月 12 日，康斯坦斯·加内特英译 https://www.gutenberg.org/cache/epub/6408/pg6408.html'
+self_check:
+  fact: letter
+  quote_line: '你在自己的便笺上画下一个桌角。'
+  regret_choice: '核信封能补一行地址，腾地方能保住写字桌，收队时都等不到回信。'
+  bookend: '从回信地址开始，从能寄到哪里与仍未收到的信收尾。'
+  share_line: '我替一封信补上了别墅名。'
+  share_number: '一行回邮地址'
+  foreknowledge: '员工从 1904 年书信知道应写哪栋别墅。'
+  proximity: 'letter 记下别墅住址与写字桌。'
+  leverage: 'address 在分支里补全一行邮址。'
+  missed: 'address 寄出的信来不及等回音。'
+  takeaway: '邮路草图和一行可辨认的地址。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

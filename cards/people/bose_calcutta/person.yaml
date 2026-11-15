@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {H: 2}
+    refs: [bose_calcutta_polarisation]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","skeptical","handy"]}}
         - {id: p2, kind: persuade, req: {"trait":["glib","ambitious","streetwise"]}}
         - {id: p3, kind: hold, req: {"job":["electrician","mechanic"]}}
+      vignettes:
+        - {id: return, traits: [methodical, skeptical]}
+        - {id: mark, traits: [curious, handy]}
+        - {id: reading}
     text:
       en:
-        name: Plants that answer back
+        name: 'Turn the book a quarter turn'
         place: Calcutta
         figure: Jagadish Chandra Bose
-        story: Bose builds instruments so fine that they show plants responding to touch and light, and works on radio waves.
+        story: 'In a paper read on 28 January 1897, Jagadis Chunder Bose reports that a bound book placed in a beam of electric rays transmitted the radiation much more readily after a quarter turn. The 1901 visit is an invented reprise with a workshop mechanic.'
         relic: A crescograph part
         relic_desc: A lever that magnified a plant's growth ten thousand times.
         points:
-          p1: "Watch the mimosa leaf move under the needle"
-          p2: "Demonstrate before the English scholars"
-          p3: "Calibrate the recorder"
+          p1: 'Read the detector before changing the book’s orientation'
+          p2: 'Persuade the mechanic to try the first orientation again'
+          p3: 'Mark the starting orientation on the apparatus sketch'
+        vignettes:
+          return: 'The mechanic turns the book and the response drops. You ask him to turn it back instead of packing away the apparatus. The response returns on this run. Now both changes go in the record. There is no time to try a second material.'
+          mark: 'The mechanic says he can remember which way the pages faced. You make one orientation mark on the drawing and one corresponding mark on the holder. He can return to the starting angle without guessing. The next comparison belongs to his shift.'
+          reading: 'You copy the reading beside a sketch of the book before touching anything. After the turn, you put the second reading on a fresh line. You bring home the pair. From two readings alone, the question of drift stays open.'
       zh:
-        name: 会回应的植物
+        name: '把书转回原来的方向'
         place: 加尔各答
         figure: 贾格迪什·钱德拉·博斯
-        story: 博斯造出极精细的仪器，能显示植物对触碰和光的反应，他还研究无线电波。
+        story: '博斯在 1897 年 1 月 28 日宣读的论文中记载，把一本装订好的书置于电波束中，转过四分之一圈，电波便更容易通过。卡里 1901 年和工场帮工一起复验的过程为分支演绎。'
         relic: 一个植物生长记录仪的部件
         relic_desc: 一根把植物的生长放大一万倍的杠杆。
         points:
-          p1: "看含羞草的叶子在电针下动"
-          p2: "在英国学者面前展示"
-          p3: "校准记录仪"
+          p1: '转动书本前先读一次检波结果'
+          p2: '请工场帮工转回第一个方向复验'
+          p3: '在装置草图上标出起始方向'
+        vignettes:
+          return: '帮工转过那本书，读数变弱了。你请他先别收，把书转回原位。这次读数也跟着回来了。表里写下了两次变化，第二种材料还来不及试。'
+          mark: '帮工说原来朝哪边他自己记得。你在图上做一个记号，又在夹架上找到与它相合的位置标出来。他回到起始方向便不用靠猜。下一轮对照轮到他自己做。'
+          reading: '碰装置之前，你先画下书页朝哪边，再把读数写在旁边。转过书，在新的一行记第二个读数。两行都能带回去。仅凭这两下，还分不清有没有漂移。'
 text:
   en:
     name: Jagadish Chandra Bose
@@ -44,3 +57,39 @@ text:
   zh:
     name: 贾格迪什·钱德拉·博斯
     text: 印度物理学家与生物学家，1858 年生，1937 年去世，在加尔各答工作。他制造并探测毫米波无线电，后来用灵敏仪器测量植物的反应。
+hook: {en: 'Did the orientation change or did the detector drift?', zh: '转了方向，还是读数自己变了？'}
+facts:
+  polarisation:
+    date: '1897-01-28'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bose_calcutta_polarisation]
+    text:
+      en: 'Bose describes experiments in which the selective transmission of electric radiation depends on orientation. One example uses a bound book and repeats the test with its edge turned by 90 degrees.'
+      zh: '博斯报告电辐射通过材料的程度与材料取向有关。其中一个例子使用装订好的书，改变书边的取向九十度后重新测试。'
+bystanders:
+  mechanic:
+    invented: true
+    text: {en: 'A fictional workshop mechanic who has turned the book once and is ready to move on.', zh: '虚构的工场帮工，已经转了一回那本书，想往下试。'}
+wiki:
+  refs:
+    bose_calcutta_polarisation:
+      order: 616
+      status: checked
+      text:
+        en: 'J. C. Bose, On the Selective Conductivity exhibited by certain Polarising Substances, Proceedings of the Royal Society of London, vol. 60 https://en.wikisource.org/wiki/Proceedings_of_the_Royal_Society_of_London/Volume_60/On_the_Selective_Conductivity_exhibited_by_certain_Polarising_Substances'
+        zh: '博斯，《若干偏振物质的选择性导电》，《伦敦皇家学会会刊》第 60 卷 https://en.wikisource.org/wiki/Proceedings_of_the_Royal_Society_of_London/Volume_60/On_the_Selective_Conductivity_exhibited_by_certain_Polarising_Substances'
+self_check:
+  fact: polarisation
+  quote_line: '仅凭这两下，还分不清有没有漂移。'
+  regret_choice: '只转过去就收工，留下的两项读数不能回答是否漂移。'
+  bookend: '从改变方向到回到原来位置。'
+  share_line: '我让那本书转了回去。'
+  share_number: '三次读数'
+  knowing: '后来仍要靠回到基线分清装置漂移。'
+  near: 'polarisation 锚定材料取向与透过信号。'
+  lever: '复验第三次读数。'
+  missed: '未试第二种材料。'
+  brought: '带位置标记的读数。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

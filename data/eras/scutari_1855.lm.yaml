@@ -377,6 +377,16 @@ actions:
       utility: "3 * (0.4 + nightingale.rapport)"
 
 events:
+  expedition_handoff:
+    source: game_assumption
+    importance: 5
+    tag: branch
+    when: "arrived == 1 and day >= arrive_day + 1"
+    probability: "1"
+    once: true
+    effects: {}
+    variants:
+      - {when: "resp_insist == 1", key: expedition_send}
   door_block:
     source: game_assumption
     importance: 2
@@ -412,13 +422,15 @@ events:
       traveler.strain_count: "traveler.strain_count + 1"
 
 milestones:
+  commission_leaves: {date: '1855-02-22', fact: commission_leaves, importance: 5, tag: history, needs_traveler: false}
+  commission_examines: {date: '1855-03-06', fact: commission_examines, importance: 5, tag: history, needs_traveler: false}
   first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   first_protect: {when: "protected_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   met_nightingale: {when: "nightingale_act_meet * act_talk >= 1", importance: 4, tag: branch, needs_traveler: true}
   nightingale_trusts: {when: "nightingale.rapport >= 0.5", importance: 3, tag: branch, needs_traveler: true}
   nightingale_convinced: {when: "nightingale.belief >= 0.8 and nightingale.rapport >= 0.4", importance: 4, tag: branch, needs_traveler: true}
   board_moves: {when: "nightingale.board_pressure >= 0.6", importance: 4, tag: branch, needs_traveler: false}
-  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: history, needs_traveler: false}
+  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: param, needs_traveler: false}
   reform_early: {when: "reform_day >= 0 and advance_days > 0.2", importance: 5, tag: branch, needs_traveler: true}
   trust_won: {when: "traveler.trust >= 0.5", importance: 2, tag: trait, needs_traveler: true}
   exhausted: {when: "traveler.fatigue >= 0.8", importance: 1, tag: param, needs_traveler: true}

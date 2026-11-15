@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {T: 1, H: 2}
     regret: true
+    refs: [heron_alexandria_doors]
     scene:
       points:
         - {id: p1, kind: hold, req: {"job":["mechanic","carpenter","builder"]}}
         - {id: p2, kind: trust, req: {"luck":0.4}}
         - {id: p3, kind: notice, redeem: true, req: {"trait":["scholarly","methodical","handy"]}}
+      vignettes:
+        - {id: threshold, traits: [handy, methodical]}
+        - {id: audience, traits: [charismatic, kind, patient]}
+        - {id: future}
     text:
       en:
-        name: "The steam ball and the temple doors"
+        name: 'The second movement'
         place: "Alexandria"
         figure: "Heron"
-        story: "Heron describes a ball that spins when steam escapes from it, doors that open when a fire is lit and a machine that pours holy water for a coin. They stay marvels for temples and entertainments."
-        relic: "A small bronze ball with two bent pipes"
-        relic_desc: "A hollow ball on a pivot, with two bent pipes for the steam."
+        story: 'In the Pneumatics, Hero of Alexandria describes doors that open when a fire is kindled and shut when it goes out. The book gives a design. The miniature doors, fault and workshop helpers in this Alexandrian rehearsal are imagined, with 62 CE used as a setting.'
+        relic: 'A marked model threshold'
+        relic_desc: 'A piece from the fictional workshop model, with a nick where the door rubbed.'
         points:
-          p1: "Fit the pipes and the pivot (a craftsperson)"
-          p2: "Catch him between two demonstrations"
-          p3: "See where the spinning ball could lead"
+          p1: 'Steady the miniature doorway so it can complete its motion'
+          p2: 'Get the waiting client to stay long enough to see the return'
+          p3: 'Watch the moving threshold and flag where the return stalls'
+        vignettes:
+          threshold: 'Nikanor fits the miniature door to the bench and the return stops a finger’s width short. You mark the spot where it rubs. A flat lentil husk has caught under the model; he brushes it out. Once the door shuts, he asks you to leave the mark so he can find the spot again.'
+          audience: 'Berenikē has already seen the swing that opens the door and reaches for her cloak. You ask her to watch the far edge for one more count. When it returns she spots a sliver of light that Nikanor missed. He keeps the model on the bench for a second trial instead of sending it out.'
+          future: 'You could tell Nikanor how distant readers will put these pages beside pictures of machines. He is watching his doorway settle with a faint click. You listen with him. When you leave, he is calling the customer back to see the one motion she missed.'
       zh:
-        name: "蒸汽球与神庙的门"
+        name: '门的第二个动作'
         place: "亚历山大"
         figure: "希罗"
-        story: "希罗描述了一只蒸汽喷出就会转动的球，火一点燃就会开启的门，和一台投币出圣水的机器。这些东西只留作神庙和娱乐用的奇物。"
-        relic: "一只带两根弯管的小铜球"
-        relic_desc: "一只装在枢轴上的空心球，有两根弯管用来出汽。"
+        story: '亚历山大的希罗在《气动装置》中描述一种点火时开启、熄火后关闭的门。书留下的是设计。亚历山大工坊的模型门、故障和帮工都是虚构，游戏把试演放在公元62年。'
+        relic: '标过的模型门槛'
+        relic_desc: '虚构工坊的模型零件，在门曾蹭到的位置留了一道刻痕。'
         points:
-          p1: "装好管子和枢轴"
-          p2: "趁他两次演示之间找他"
-          p3: "看出这只旋转的球可能通向哪里"
+          p1: '扶稳模型门框，让门做完开合'
+          p2: '请等候的客人留下来看门关回去'
+          p3: '盯住会动的门槛，标出回程卡住的地方'
+        vignettes:
+          threshold: '尼卡诺尔把模型架上台，门往回收时差一指宽闭合。你标出摩擦的地方。模型底下卡了片扁豆皮，他把它扫出来。门终于关严，他请你留住记号，好叫他下次认得出这处。'
+          audience: '贝勒尼刻看见门往外打开，已经去拿披风。你请她再等一会儿，盯紧远侧的边。门回来时，她看见尼卡诺尔漏掉的一线亮光。他把模型留在台上再试一次，没急着交货。'
+          future: '你可以告诉尼卡诺尔，后世读者会把这几页同机器的图画摆在一起。他正等模型门咔哒一响，轻轻落定。你跟他一起听。离开时，他正叫客人回来看她错过的那一下。'
 text:
   en:
     name: Heron
@@ -45,3 +58,42 @@ text:
   zh:
     name: 希罗
     text: 公元一世纪在亚历山大工作的希腊工程师。他描述了汽转球、自动门和投币售水装置，也写过几何学与土地测量的著作。
+hook: {en: 'The door opens. Will it close again?', zh: '门开了，还关得上吗？'}
+facts:
+  doors:
+    date: '62'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [heron_alexandria_doors]
+    text:
+      en: 'The book explains how a door can open after a fire is kindled and close after the fire is extinguished. The named year sets the game scene.'
+      zh: '著作描述点火后开门、熄火后关门的设计。所列年份是游戏设定。'
+bystanders:
+  nikanor:
+    invented: true
+    text: {en: 'A fictional maker trying to complete a trial before delivery.', zh: '虚构工匠尼卡诺尔，交货前要试完一遍。'}
+  berenike:
+    invented: true
+    text: {en: 'A fictional customer who has seen only the opening motion.', zh: '虚构客人贝勒尼刻，一开始只看到了开门。'}
+wiki:
+  refs:
+    heron_alexandria_doors:
+      order: 825
+      status: checked
+      text:
+        en: 'Hero, Pneumatics §37, Bennet Woodcroft translation https://www.gutenberg.org/files/77400/77400-h/77400-h.htm'
+        zh: '希罗《气动装置》第37节，贝内特·伍德克罗夫特译 https://www.gutenberg.org/files/77400/77400-h/77400-h.htm'
+self_check:
+  fact: doors
+  quote_line: '他请你留住记号，好叫他下次认得出这处。'
+  regret_choice: 'future 讲后世用途会错过关上的轻响。'
+  bookend: '开门之后一定还有一次合门。'
+  share_line: '门转回去，还有一道亮光。'
+  share_number: 'threshold 差一指宽的模型门。'
+  knowing: 'future 员工知道后世会讨论这页。'
+  near: 'doors 从原文重现开和关两个动作。'
+  lever: 'audience 留住客人多做一次检查。'
+  missed: 'future 客人看第二次时员工已走。'
+  brought: 'threshold 带回标过摩擦处的样片。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

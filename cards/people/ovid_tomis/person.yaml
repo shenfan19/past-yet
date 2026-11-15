@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {C: 3, S: 2, G: 3}
     regret: true
+    refs: [ovid_tomis_tristia]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["calm","attached","patient"]}}
         - {id: p2, kind: notice, req: {"trait":["scholarly","skeptical","handy"]}}
         - {id: p3, kind: persuade, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: rumor, traits: [bold, charismatic]}
+        - {id: verify, traits: [methodical, skeptical]}
+        - {id: wrap}
     text:
       en:
-        name: "A poet at the edge of the empire"
+        name: 'A poem and an empty line'
         place: "Tomis"
         figure: "Ovid"
-        story: "Ovid, banished by the emperor Augustus from Rome to Tomis on the Black Sea for a poem and a mistake that was never named, writes homesick verse letters and asks again and again to return. He dies there."
+        story: 'In Book II of Tristia, Ovid describes his offences as a poem and an error, and declines to explain the latter. The copy leaving Tomis in this scene is invented. The event year sets the visit during exile.'
         relic: "A wax writing tablet"
         relic_desc: "A tablet of letters in verse begun on the road to exile."
         points:
-          p1: "Bring him news from Rome"
-          p2: "Hear the verses he writes on the winter shore"
-          p3: "Speak with him in the local tongue"
+          p1: 'Keep the copied sheets in order until the carrier returns'
+          p2: 'Mark the passage where the writer passes over the error'
+          p3: 'Use the translation chip to check the Latin before sealing the packet'
+        vignettes:
+          rumor: 'You tell the carrier that readers centuries from now will still ask what the error was. He points to an open place on the spare sheet and asks what he should put there. You add the destination on the wrapper and leave the space in the copy. The packet leaves with its uncertainty intact.'
+          verify: 'The carrier remembers a version with an extra name. You ask to see which sheet it came from. He can point to the poem and the error, and the passage ends there. You mark that line on your own wax tablet. You still have no name when the packet goes.'
+          wrap: 'Wind lifts the outer sheet just as the carrier reaches for the packet. You number the loose sheets and put them back in order. Your wax tablet holds one reminder: leave the unexplained line as it stands. You miss what the recipient makes of it.'
       zh:
-        name: "帝国边缘的诗人"
+        name: '诗与空着的一行'
         place: "托米"
         figure: "奥维德"
-        story: "奥维德因为一首诗和一个从未说明的过错，被皇帝奥古斯都从罗马放逐到黑海边的托米。他写下充满乡愁的书信体诗，一再请求回去，最后死在那里。"
+        story: '奥维德在《哀歌》第二卷把获罪的缘由写成一首诗和一个过失，接着避谈那个过失。本趟从托米送走抄本的差事为虚构，地图年份表示流放时期。'
         relic: "一块写字蜡板"
         relic_desc: "一块板，上面是流放路上起笔的诗体书信。"
         points:
-          p1: "给他带来罗马的消息"
-          p2: "听他在冬天的海岸上写的诗"
-          p3: "用当地话和他交谈"
+          p1: '在行人回来前按顺序看住抄好的诗页'
+          p2: '圈出作者避谈过失的那一段'
+          p3: '封包前用翻译芯片核对拉丁文'
+        vignettes:
+          rumor: '你告诉捎信人，几个世纪以后还有人追问那个过失。他指指抄本空出来的地方，问该写些什么。你把目的地添在封套上，把空处留在正文里。人带着这份说不清的稿子走了。'
+          verify: '捎信人记得一个多了人名的版本。你请他指出是哪张纸上的。他能指出那首诗和那个过失，往后便指不出什么了。你在自己的蜡板上记下断在这里。抄本启程时，你仍然没得到那个名字。'
+          wrap: '捎信人伸手时，风掀起外面一页。你给散页编上号，照原样收好。蜡板上只给自己留了一句提醒，那行没解释的照原样抄。收信人读到这里是什么反应，你没能看见。'
 text:
   en:
     name: Ovid
@@ -45,3 +58,39 @@ text:
   zh:
     name: 奥维德
     text: 罗马诗人，公元前 43 年生，约公元 17 年去世。他写了《变形记》和爱情诗。公元 8 年，奥古斯都皇帝把他流放到黑海边的托米斯，他死在那里。
+hook: {en: 'What did Ovid leave unnamed?', zh: '哪一行他没写？'}
+facts:
+  tristia:
+    date: '9'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ovid_tomis_tristia]
+    text:
+      en: 'Book II describes a poem and an error, then passes over the second charge. The scenario year is a game setting, rather than a precise date for the writing of these lines.'
+      zh: '第二卷提到一首诗和一个过失，并避谈第二项指控。卡上的年份用于设定穿越时期，未用来给诗句定年。'
+bystanders:
+  carrier:
+    invented: true
+    text: {en: 'A fictional carrier with space for one more packet.', zh: '虚构的捎信人，行囊里勉强还能多塞一份稿。'}
+wiki:
+  refs:
+    ovid_tomis_tristia:
+      order: 404
+      status: checked
+      text:
+        en: 'Ovid, Tristia II, 207–208, translated by A. S. Kline https://www.poetryintranslation.com/PITBR/Latin/OvidTristiaBkTwo.php'
+        zh: '奥维德《哀歌》第二卷第 207–208 行，A. S. Kline 英译 https://www.poetryintranslation.com/PITBR/Latin/OvidTristiaBkTwo.php'
+self_check:
+  fact: tristia
+  quote_line: '人带着这份说不清的稿子走了。'
+  regret_choice: '追问传言便要错过整理散页的工夫。'
+  bookend: '从空出来的一行开始，原样送出那行。'
+  share_line: '捎走一份解释不了的抄本。'
+  share_number: '两项指控'
+  foreknowledge: '大胆分支用后世始终追问的过失开场。'
+  proximity: 'tristia 是诗稿的依据，送稿是分支演绎。'
+  leverage: '员工核对一段或把散页编回原顺序。'
+  missed: '稿离开托米，员工未见收信人的反应。'
+  takeaway: '蜡板记下两项指控及停笔处。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

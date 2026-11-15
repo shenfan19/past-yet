@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {H: 2, A: 1, L: 1}
+    refs: [al_biruni_ghazna_coordinates, al_biruni_ghazna_horizon]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: persuade, req: {"any":[{"job":["translator"]},{"provides":"translate"}]}}
+      vignettes:
+        - {id: angle, traits: [methodical, scholarly]}
+        - {id: height, traits: [hardy, curious]}
+        - {id: fold}
     text:
       en:
-        name: "Measuring the earth from a mountaintop"
+        name: 'Two lines above the plain'
         place: "Ghazna"
         figure: "Al-Biruni"
-        story: "Al-Biruni climbs a mountain and measures how far the horizon dips, and from the height of the mountain works out the radius of the earth."
+        story: 'In his Determination of Coordinates, al-Biruni reports using a mountain near Nandana to estimate the size of Earth. The height of the mountain and the dip of the visible horizon below the horizontal are separate measurements. The game dates the Ghaznavid setting approximately. The sketch and the survey helper are fictional.'
         relic: "An astrolabe"
         relic_desc: "A brass astrolabe with its scale polished by fingers."
         points:
-          p1: "Follow the angle measuring on the summit"
-          p2: "Climb the mountain in the blazing heat"
-          p3: "Talk with the scholars in Sanskrit"
+          p1: 'Identify the horizon line and the horizontal line on the sketch'
+          p2: 'Reach the observation spot with a complete height record'
+          p3: 'Explain why the slope of the mountain is a separate quantity'
+        vignettes:
+          angle: 'The survey helper has drawn his angle along the slope of the mountain. You extend a horizontal line from the point where he stands, then draw the lower sightline towards the horizon. The mark moves to a different wedge. You carry home the corrected diagram, but the final figure is still being worked on.'
+          height: 'You know the book will keep both a height and an angle. At the top the survey helper calls out only the angle. You bring up the slip for the height and have him add it to the other reading. When the plain disappears into haze, the two records are already side by side. You will not see the next clear horizon.'
+          fold: 'You fold one slip around the other and mark which came from the mountain and which from looking across the plain. The survey helper can find them again without guessing. You take home the names of two measurements, and no finished radius.'
       zh:
-        name: "从山顶量出地球的大小"
+        name: '平原上方的两条线'
         place: "加兹尼"
         figure: "比鲁尼"
-        story: "比鲁尼爬上山顶，量出地平线低下去的角度，用一座山的高度算出了地球的半径。"
+        story: '比鲁尼在《确定地点坐标》中记述曾用南达纳附近一座山估算地球大小。山高与地平线低于水平线的角度是两项不同的量。地图定位伽色尼时代的大致窗口，卡里的草图和测量帮手是虚构的。'
         relic: "一件星盘"
         relic_desc: "一只铜星盘，刻度被手指磨亮。"
         points:
-          p1: "跟上山顶测角"
-          p2: "顶着酷热爬上山"
-          p3: "用梵语同学者交谈"
+          p1: '在草图上区分水平线与望见的地平线'
+          p2: '带着完整的山高记录到观测点'
+          p3: '说清山坡坡度为何是另一个量'
+        vignettes:
+          angle: '测量帮手把角标在山坡那一侧。你从他站的点画出水平线，再画望向地平线的较低视线。角的记号得挪到另一处。你带回改过的图，最后的数字还在算。'
+          height: '你知道后来的书会同时留下山高和角度。到了山顶，帮手只报了角度。你把记山高的条子送上来，请他把两项并着收。等平原没入薄雾，两个读数已经挨在一起。下一回地平线放晴你等不到。'
+          fold: '你用一张纸条裹住另一张，标明哪项是量山所得，哪项是平望所得。帮手再翻时不用猜。你带回两个量的名字，半径还没算完。'
 text:
   en:
     name: "Al-Biruni"
@@ -44,3 +57,54 @@ text:
   zh:
     name: "比鲁尼"
     text: "中亚学者，973 年生，约 1050 年后去世。他通晓天文、数学、地理和多种语言，曾用山的高度和地平线的俯角估算地球半径，并留下关于印度的详细著作。"
+hook: {en: 'Which line is level at the summit?', zh: '到了山顶，哪条才算水平？'}
+facts:
+  coordinates:
+    date: '1025'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [al_biruni_ghazna_coordinates, al_biruni_ghazna_horizon]
+    text:
+      en: 'This is the English translation of al-Biruni’s account. The date 1025 belongs to the work, not an exact date of the observation.'
+      zh: '此书为比鲁尼相关自述的英译本。1025 年是著作纪年，并非观测的准确日期。'
+  horizon:
+    date: '1025'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [al_biruni_ghazna_coordinates, al_biruni_ghazna_horizon]
+    text:
+      en: 'The cited passage describes the mountain near Nandana, the measured height and the horizon’s dip from the summit.'
+      zh: '所引原文记南达纳附近的山、量得的山高及山顶所见的地平线俯角。'
+bystanders:
+  survey_helper:
+    invented: true
+    text: {en: 'A fictional survey helper keeping the mountain height and the horizon angle on separate slips.', zh: '虚构的测量帮手，手头各有一张记山高、记角度的纸条。'}
+wiki:
+  refs:
+    al_biruni_ghazna_coordinates:
+      order: 576
+      status: checked
+      text:
+        en: 'Al-Biruni, The Determination of the Coordinates of Positions, trans. Jamil Ali, 1967, pp. 183–189, Smithsonian Libraries catalogue https://www.si.edu/object/determination-coordinates-positions-correction-distances-between-cities-translation-arabic-kitab%3Asiris_sil_12338'
+        zh: '比鲁尼《确定地点坐标》，贾米勒·阿里 1967 年英译本，第 183–189 页，史密森尼学会图书馆书目 https://www.si.edu/object/determination-coordinates-positions-correction-distances-between-cities-translation-arabic-kitab%3Asiris_sil_12338'
+    al_biruni_ghazna_horizon:
+      order: 577
+      status: checked
+      text:
+        en: 'Sergei Maslikov, Biruni’s Method of Measuring the Earth, Geodesy and Cartography 80(7), 2019, pp. 57–64 https://doi.org/10.22389/0016-7126-2019-949-7-57-64'
+        zh: '谢尔盖·马斯利科夫，《比鲁尼测量地球的方法》，《大地测量与制图》2019 年第 7 期，第 57–64 页 https://doi.org/10.22389/0016-7126-2019-949-7-57-64'
+self_check:
+  fact: coordinates
+  quote_line: '角的记号得挪到另一处。'
+  regret_choice: '登顶将两项读数配齐，却等不到下一次晴天复测。'
+  bookend: '从错认坡面到留下同一起点的两条线。'
+  share_line: '量的是地平线俯角，不是这座山有多陡。'
+  share_number: '两项读数'
+  knowing: 'height 知道原书留有两项数据。'
+  near: 'coordinates 与 horizon 给出地点与原理。'
+  lever: '校正标角的两条线。'
+  missed: '还没见到最后的半径。'
+  brought: '一张标明两条线的图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

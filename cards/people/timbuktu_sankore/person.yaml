@@ -9,34 +9,47 @@ events:
     field: thought
     tier: 2
     channels: {H: 3}
+    refs: [timbuktu_sankore_year, timbuktu_sankore_astronomy]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","wanderer","methodical"]}}
         - {id: p2, kind: hold, req: {"any":[{"job":["archivist"]},{"trait":["hardy"]}]}}
         - {id: p3, kind: endure, req: {"provides":"warmth"}}
+      vignettes:
+        - {id: title, traits: [curious, methodical, wanderer]}
+        - {id: wind, traits: [hardy, handy, patient]}
+        - {id: collection}
     text:
       en:
-        name: A city of manuscripts
+        name: 'A page by the mosque'
         place: Timbuktu, Mali
         figure: Mansa Musa and the scholars of Sankore
-        story: Timbuktu grows into a centre where scholars copy and collect books on law, astronomy and medicine.
-        relic: A gold-flecked manuscript leaf
-        relic_desc: A page with a border of gold dust.
+        story: 'Timbuktu’s monuments and manuscript collections document a long history of learning, especially in later centuries. A heritage survey associates the date 1327 with Djingareyber. The game uses that date for an imagined early reading near Sankore. The surviving 1733 astronomy manuscript in the source notes belongs to a much later time.'
+        relic: 'A reader’s marker'
+        relic_desc: 'A fictional marker for finding one line on a loose page.'
         points:
-          p1: "Leaf through the manuscripts"
-          p2: "Mend the manuscripts"
-          p3: "Bear the dry heat at the edge of the Sahara"
+          p1: 'See whether the heading on the loose practice leaf still makes sense'
+          p2: 'Hold the standing reader’s place while the writing is gathered'
+          p3: 'Wait through the second reading to catch which heading is hers'
+        vignettes:
+          title: 'Aminata finds a practice leaf under a board. Its top line identifies the topic but leaves out who copied it. You walk it back to the reading bench before the seats are cleared. She recognises the hand, and the borrowed sheet goes back to the person who lent it.'
+          wind: 'Musa has gathered the loose pages and is ready to close the door. Aminata is still at the middle of a line. You hold a spare scrap at the place she indicates while he lifts the pages. When she comes back, the one place she wants to find is still marked.'
+          collection: 'You have seen photographs of a much later Timbuktu astronomy manuscript. Musa points to his neighbour’s loose exercise and asks how to describe it. You take its heading from the page in his hands. The later book will be copied generations after you leave.'
       zh:
-        name: 一座手稿之城
+        name: '清真寺旁的一页纸'
         place: 马里廷巴克图
         figure: 曼萨·穆萨与桑科雷的学者们
-        story: 廷巴克图成了学者们抄写、收藏法律、天文和医学书的中心。
-        relic: 一页点金的手稿
-        relic_desc: 页边有一圈金粉。
+        story: '廷巴克图的建筑和藏书留下长期讲学与读书的痕迹，后世材料尤丰。遗产调查把1327年与金加雷贝尔清真寺联系起来，游戏借这个年份虚构桑科雷附近一次早期读书活动。出处中1733年的存世天文抄本远晚于这一场景。'
+        relic: '一张读书人留下的夹纸'
+        relic_desc: '游戏虚构的夹纸，用来指出散页上的一行。'
         points:
-          p1: "翻看手稿"
-          p2: "修补手稿"
-          p3: "撒哈拉边缘的干热"
+          p1: '看脱开的一页，题头还读不读得通'
+          p2: '收纸时帮站着读的人保住读到的位置'
+          p3: '再听她读一遍，记清那页应归哪个题头'
+        vignettes:
+          title: '阿米娜塔在板下找到一张练习纸，第一行写了题目，却没写谁抄的。板凳收走前，你拿回读书的地方。她认出笔迹，借来的那页便回到原主手里。'
+          wind: '穆萨收拢散纸，准备关门。阿米娜塔还读到一行中间。搬纸前你照她指的地方夹一张废纸。她下回回来，要找的那一处还在。'
+          collection: '你看过一部远晚于此时的廷巴克图天文抄本的照片。穆萨指着邻居那页散纸，问该怎样记它。你照他手里这页写题名。后世那部书，还要过许多代人才会抄成。'
 text:
   en:
     name: Mansa Musa and the scholars of Sankore
@@ -44,3 +57,57 @@ text:
   zh:
     name: 曼萨·穆萨与桑科雷的学者们
     text: 马里皇帝曼萨·穆萨与桑科雷的学者们。据说穆萨在 1324 至 1325 年到麦加朝觐后带回了学者和建筑师，此后数百年里，廷巴克图的清真寺及其学校成为学术中心。
+hook: {en: 'A heading has to stay with the page.', zh: '借出去的纸，得知道从哪儿来的。'}
+facts:
+  year:
+    date: '1327'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [timbuktu_sankore_year]
+    text:
+      en: 'The survey associates 1327 with Djingareyber through a reported inscription. This date does not place the fictional reading at a documented Sankore lesson.'
+      zh: '调查据所记铭文把1327年与金加雷贝尔联系起来。这个年份不能证明桑科雷发生过游戏中的读书活动。'
+  astronomy:
+    date: '1733'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [timbuktu_sankore_astronomy]
+    text:
+      en: 'The exhibition reproduces an astronomical manuscript that was copied in Timbuktu in 1733. The late manuscript is a comparative source.'
+      zh: '展览呈现一份1733年抄于廷巴克图的天文手稿。晚出的抄本仅供对照。'
+bystanders:
+  aminata:
+    invented: true
+    text: {en: 'A fictional reader who wants to return a borrowed practice leaf.', zh: '虚构读者阿米娜塔，要把借来的练习纸还给人。'}
+  musa:
+    invented: true
+    text: {en: 'A fictional keeper closing the room after a reading.', zh: '虚构帮工穆萨，读完后负责关屋。'}
+wiki:
+  refs:
+    timbuktu_sankore_year:
+      order: 913
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Timbuktu monument survey, Djingareyber https://whc.unesco.org/document/131113'
+        zh: '联合国教科文组织世界遗产中心，廷巴克图建筑调查，金加雷贝尔 https://whc.unesco.org/document/131113'
+    timbuktu_sankore_astronomy:
+      order: 914
+      status: checked
+      text:
+        en: 'Library of Congress, Ancient Manuscripts from the Desert Libraries of Timbuktu, exhibition https://www.loc.gov/exhibits/mali/mali-exhibit.html'
+        zh: '美国国会图书馆，廷巴克图手稿展 https://www.loc.gov/exhibits/mali/mali-exhibit.html'
+self_check:
+  fact: year
+  quote_line: '借来的那页便回到原主手里。'
+  regret_choice: 'collection 认成后世馆藏会交错人。'
+  bookend: '从来路不清的一页，到还给原来的读者。'
+  share_line: '一页练习纸，有人等它回来。'
+  share_number: '1733抄本的纪年来自馆方。'
+  knowing: 'collection 看过后世馆藏。'
+  near: 'year 用有文献依据的城中背景。'
+  lever: 'title 把一页交还实际借出的人。'
+  missed: 'collection 后世抄本还没有出现。'
+  brought: 'wind 带回自用的虚构标记纸。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

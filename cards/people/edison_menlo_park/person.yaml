@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 3
     channels: {V: 3, L: 1}
+    refs: [edison_menlo_park_entry]
     scene:
       points:
         - {id: p1, kind: hold, req: {"provides":"vigil"}}
         - {id: p2, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: log, traits: [methodical, handy]}
+        - {id: future, traits: [bold, curious]}
+        - {id: tag}
     text:
       en:
-        name: A lamp that lasts
+        name: 'The clock beside the lamp'
         place: Menlo Park, New Jersey
         figure: Thomas Edison
-        story: In Menlo Park Edison's team tests a carbonised thread in a glass bulb that glows for hours, and goes on to build a whole system.
+        story: 'Charles Batchelor’s Menlo Park notebook entry of 22 October 1879 records early tests with carbon made from cotton thread, including the light observed and a change in resistance. The watch and logging exercise below are fictional. Its figures are practice observations for this branch.'
         relic: A carbon filament bulb
         relic_desc: A glass bulb with one hair thin loop inside.
         points:
-          p1: "Tend the vacuum pump"
-          p2: "Pick the filament that will burn long"
-          p3: "Stay up with him through the testing"
+          p1: 'Keep watch through one handover and write down its time'
+          p2: 'Match the lamp material to its own readings'
+          p3: 'Stay until two observations can be told apart on the page'
+        vignettes:
+          log: 'The workshop assistant writes that the lamp was still lit, but leaves off the time. You ask him to copy the clock reading into the next line before handing over. The next watch can tell how far apart the two observations are. The bulb is still lit when you go. Its full lifetime is not in your notes.'
+          future: 'You know electric lights will light whole streets. The workshop assistant wants to mark this lamp as ready on the strength of its first glow. You put a line in the log for a second observation. The lamp can stay on watch for another shift. You miss what the next material does.'
+          tag: 'Two slips are loose. You pair the one that names cotton thread with the readings from that bulb, then hand the pair to the next watch. You keep the handover time. The lamp is in someone else’s care when it finally goes out.'
       zh:
-        name: 一盏能一直亮着的灯
+        name: '灯旁那块钟'
         place: 新泽西门洛帕克
         figure: 托马斯·爱迪生
-        story: 在门洛帕克，爱迪生的团队试验了玻璃泡里的一根炭化细丝，能亮好几个小时，之后又建起了一整套系统。
+        story: '查尔斯·巴彻勒在 1879 年 10 月 22 日的门洛帕克实验笔记里，记下用棉线制成炭丝的早期试验，包括发出的光和电阻的变化。卡里值夜和填表的差事为虚构，所记结果属于这一分支。'
         relic: 一只炭丝灯泡
         relic_desc: 玻璃泡里有一根头发丝细的圈。
         points:
-          p1: "守着真空泵"
-          p2: "挑出能烧得久的灯丝"
-          p3: "陪他不睡地试验"
+          p1: '守过一次换班，写明是哪一刻交接'
+          p2: '把灯丝材料与这一盏灯的读数对上'
+          p3: '守到同页两次读数各有时间可查'
+        vignettes:
+          log: '工场帮工写了「灯仍然亮」，漏记了钟点。你请他交班前把看钟的结果添到下一行。接班的人于是分得清两次观察隔了多久。你走时灯还亮着，整盏灯到底撑了多久，笔记里没有。'
+          future: '你知道以后电灯会照亮整条街。工场帮工看见这盏灯一亮，就想标作已经试好。你给第二次观察留了一行，灯可以交给下一班接着看。换了下一种材料的结果，你没赶上。'
+          tag: '两张纸条散着。你把写棉线的那张与这只玻璃泡的读数配好，交给接班的人。你带回交接钟点。灯最后熄灭时，已是别人守着。'
 text:
   en:
     name: Thomas Edison
@@ -44,3 +57,39 @@ text:
   zh:
     name: 托马斯·爱迪生
     text: 美国发明家，1847 年生，1931 年去世。他在门洛帕克的实验室带领团队，于 1879 年做出耐用的电灯泡以及配套供电系统，持有一千多项专利。
+hook: {en: 'What goes in the notebook while the light is on?', zh: '灯亮的时候，该记下什么？'}
+facts:
+  entry:
+    date: '1879-10-22'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [edison_menlo_park_entry]
+    text:
+      en: 'The notebook describes early tests with straight carbons made from cotton thread and records light and resistance observations for an experimental bulb.'
+      zh: '笔记记棉线制直形炭丝的早期试验，并记一盏试验灯的光与电阻读数。'
+bystanders:
+  watch:
+    invented: true
+    text: {en: 'A fictional workshop assistant keeping the lamp log between two shifts.', zh: '虚构的工场帮工，要把观察表交给下一班。'}
+wiki:
+  refs:
+    edison_menlo_park_entry:
+      order: 604
+      status: checked
+      text:
+        en: 'Charles Batchelor, Electric Lamp, laboratory notebook entry, Thomas A. Edison Papers document 1831 https://edison.rutgers.edu/images/innovations/TAEBdocs/Doc1831_EL_10-22-79_linked.pdf'
+        zh: '查尔斯·巴彻勒《电灯》实验笔记，爱迪生文献档案第 1831 号 https://edison.rutgers.edu/images/innovations/TAEBdocs/Doc1831_EL_10-22-79_linked.pdf'
+self_check:
+  fact: entry
+  quote_line: '你走时灯还亮着，整盏灯到底撑了多久，笔记里没有。'
+  regret_choice: '记第一次亮起就走，后来的人分不清试了多久。'
+  bookend: '从灯亮的一刻到交班时把继续试的条件留齐。'
+  share_line: '我守到换班，灯还没有熄。'
+  share_number: '两次观察'
+  knowing: 'future 员工知道电灯会走出工场。'
+  near: 'entry 锚定留存原始实验记录。'
+  lever: '给一次读数补上时间。'
+  missed: '错过熄灯。'
+  brought: '换班时刻与棉线标签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

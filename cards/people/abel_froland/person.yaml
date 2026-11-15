@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 2, C: 3, G: 2}
     regret: true
+    refs: [abel_froland_quintic, abel_froland_berlin]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"trait":["glib","ambitious"]}}
         - {id: p2, kind: endure, req: {"item":"cyber_lung"}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["vigil","ambitious"]},{"job":["archivist"]}]}}
+      vignettes:
+        - {id: example, traits: [methodical, scholarly]}
+        - {id: job, traits: [bold, charismatic]}
+        - {id: margin}
     text:
       en:
-        name: "The letter that came late"
+        name: 'The example and the claim'
         place: "Froland"
         figure: "Niels Henrik Abel"
-        story: "Abel, who showed that the general equation of the fifth degree cannot be solved by radicals, dies of tuberculosis in Norway at twenty six. A letter offering him a post in Berlin arrives soon after."
+        story: 'Abel’s 1824 paper proves that there is no general solution by radicals for equations of degree five. Particular equations can still be solved that way. Abel died in Froland on 6 April 1829. On 8 April, unaware of his death, Crelle wrote from Berlin with news of a permanent post. The papers you handle in this scene are fictional practice copies.'
         relic: "A sealed letter"
         relic_desc: "An unopened offer, tied with a thread."
         points:
-          p1: "Speak up for his proof"
-          p2: "Keep him company in the cold house"
-          p3: "Keep a clean copy of his papers (an archivist or a stubborn one helps)"
+          p1: 'Explain why a soluble example leaves the general question open'
+          p2: 'Stay long enough to check the copied example by substitution'
+          p3: 'File the worked example alongside the statement it illustrates'
+        vignettes:
+          example: 'On the practice sheet a copyist has set a fifth power equal to 32. You substitute 2 and get 32, then underline the word ‘general’ on the separate slip about Abel’s result. The copyist files the two together. You can bring back the checked example. The news from Berlin has yet to be written.'
+          job: 'Knowing the date of Crelle’s letter, you ask the copyist to leave a place in the file for Berlin. He asks whether to label it as news already received. You leave the pocket empty and write down why. The letter will be written two days after Abel dies.'
+          margin: 'You copy a worked example on the back of a spare slip and put the more general statement on the front. A reader can turn it over instead of searching for a second sheet. The space for Berlin remains blank when you leave.'
       zh:
-        name: "来得太晚的信"
+        name: '一道算得出的五次方程'
         place: "弗罗兰"
         figure: "尼尔斯·亨里克·阿贝尔"
-        story: "阿贝尔证明了一般五次方程无法用根式求解，二十六岁死于肺结核。柏林邀他任职的信随后才到。"
+        story: '阿贝尔于 1824 年证明，一般五次方程没有根式解法。某些具体的五次方程仍可用根式求解。1829 年 4 月 6 日，阿贝尔在弗罗兰去世。4 月 8 日，尚不知情的克雷勒从柏林寄信告知他有一份长期教职。本趟经手的是虚构的练习抄件。'
         relic: "一封封着的信"
         relic_desc: "一封没拆开的聘书，用细线系着。"
         points:
-          p1: "替他的证明说话"
-          p2: "陪他待在寒冷的屋子里"
-          p3: "替他留一份干净的手稿（档案员或固执的人更合适）"
+          p1: '说清一道能解的例题为何不能回答一般情形'
+          p2: '留到能把例题答案代回原式核算'
+          p3: '把算例与它所说明的命题放在一起'
+        vignettes:
+          example: '抄写人练习纸上有一道五次幂等于 32 的题。你代入 2 得到 32，又在写着阿贝尔结论的另一张纸上划出「一般」二字。抄写人把两张收在一起。你带回这道验过的例题。此时，柏林那封信还没有写。'
+          job: '你知道克雷勒哪天写信，便请抄写人在夹里给柏林留一处。他问该不该写成消息已到。你把那一格空着，另记原因。那封信要等到阿贝尔去世两天后才写。'
+          margin: '你把一道算好的例题抄在纸条背面，正面留下那条一般结论。后来的人把纸翻面就能对照。离开时，留给柏林消息的地方仍空着。'
 text:
   en:
     name: Niels Henrik Abel
@@ -45,3 +58,54 @@ text:
   zh:
     name: 尼尔斯·亨里克·阿贝尔
     text: 挪威数学家，1802 年生，1829 年去世。他证明了一般五次方程不能用根式求解，并在椭圆函数上取得早期进展。他二十六岁死于肺结核，不久之后他的工作才获得承认。
+hook: {en: 'Can a simple fifth power fool you?', zh: '解得出一道，就能解出全部？'}
+facts:
+  quintic:
+    date: '1824'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [abel_froland_quintic]
+    text:
+      en: 'Abel proves the absence of a general radical solution for equations of degree five. The example used in the game is illustrative.'
+      zh: '阿贝尔证明一般五次方程不能用根式求解。卡里的具体算例是演示。'
+  berlin:
+    date: '1829-04-08'
+    checked: official_record
+    level: careful
+    use: [story, wiki]
+    sources: [abel_froland_berlin]
+    text:
+      en: 'Abel died on 6 April. Crelle wrote from Berlin on 8 April with news of a guaranteed post.'
+      zh: '阿贝尔于 4 月 6 日去世。4 月 8 日，克雷勒从柏林写信报告职位已落实。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist binding worked exercises together with short statements.', zh: '虚构的抄写人，正把算例与短命题归在一起。'}
+wiki:
+  refs:
+    abel_froland_quintic:
+      order: 530
+      status: checked
+      text:
+        en: 'Niels Henrik Abel, Mémoire sur les équations algébriques, reprinted in Œuvres complètes https://www.ibr.cs.tu-bs.de/courses/ws2223/ag/papers/Ch7/oeuvres_completes_de_abel_nouv_ed_1_kap03_opt.pdf'
+        zh: '阿贝尔，1824 年论一般五次方程的论文，全集重印本 https://www.ibr.cs.tu-bs.de/courses/ws2223/ag/papers/Ch7/oeuvres_completes_de_abel_nouv_ed_1_kap03_opt.pdf'
+    abel_froland_berlin:
+      order: 531
+      status: checked
+      text:
+        en: 'The Abel Prize, biography, His last years https://abelprize.no/page/biography-niels-henrik-abel-his-last-years'
+        zh: '阿贝尔奖官网，阿贝尔传记·最后几年 https://abelprize.no/page/biography-niels-henrik-abel-his-last-years'
+self_check:
+  fact: quintic
+  quote_line: '你把那一格空着，另记原因。'
+  regret_choice: '在对照算例和收存来信的时间差之间取舍。'
+  bookend: '纸的正反面对照命题和例题，另一格留给还没写的信。'
+  share_line: '我算对了一道五次方程，却留了一格空白。'
+  share_number: '两天'
+  knowing: 'job 知道克雷勒写信比阿贝尔去世晚两天。'
+  near: 'quintic 原论文和 berlin 的书信日期。'
+  lever: 'example 把一道验过的例题和一般命题并列。'
+  missed: '信写得太晚。'
+  brought: '一张正反可读的练习纸。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

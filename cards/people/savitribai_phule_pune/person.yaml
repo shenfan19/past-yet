@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {S: 3, L: 1}
     regret: true
+    refs: [savitribai_phule_pune_early, savitribai_phule_pune_records]
     scene:
       points:
         - {id: p1, kind: endure, req: {"any":[{"trait":["wanderer","hardy"]},{"stat":{"will":6}}]}}
         - {id: p2, kind: persuade, req: {"trait":["glib","charismatic"]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["teacher"]},{"trait":["faithful","patient"]}]}}
+      vignettes:
+        - {id: slate, traits: [faithful, patient, kind]}
+        - {id: home, traits: [wanderer, hardy, vigil]}
+        - {id: register}
     text:
       en:
-        name: "A school for girls"
+        name: 'Leave room for another name'
         place: "Pune"
         figure: "Savitribai Phule"
-        story: "Savitribai Phule opens a school for girls in Pune in 1848 with her husband Jotirao and teaches there. On the road to it she is insulted and has dirt thrown at her, and she keeps going."
+        story: 'Early newspaper accounts reproduced in an NCERT historical lecture trace Jotirao and Savitribai Phule’s educational work in Pune to 1848. A report on the later school network names Savitribai as a head teacher. This visit imagines a lesson in the early school and follows two fictional pupils, with a slate shared between them.'
         relic: "A slate"
         relic_desc: "A small slate with a first row of letters in chalk."
         points:
-          p1: "Walk with her past the jeering onlookers"
-          p2: "Talk a family into sending their daughter"
-          p3: "Teach one lesson beside her (a teacher or a kind employee)"
+          p1: 'Make the trip back for a slate before class ends'
+          p2: 'Ask the pupil who finished first to leave space for the next hand'
+          p3: 'Show each pupil how to make room for the other’s letters'
+        vignettes:
+          slate: 'Gauri can write the first stroke but stops as soon as Janki reaches for the slate. You turn it sideways and Janki takes one end. By the time they are called home, each has made a mark that the other can point to. They agree which end each will use when the slate comes back.'
+          home: 'Janki has to take the slate home in a bag with her other things. Gauri will come on a different day and worries she will find it wiped. You show Janki how to tuck the cloth over the smaller practice mark. The board she carries has one half cleared and one half left for Gauri to read.'
+          register: 'You have seen the later report with neatly ruled totals. Gauri wants to know whether the name she has just written can stay up until her family sees it. You point out its place on the slate to Janki. The bell sounds before you can see who comes to read it.'
       zh:
-        name: "一所女子学校"
+        name: '给另一个名字留地方'
         place: "浦那"
         figure: "萨维特里白·普勒"
-        story: "萨维特里白·普勒1848年和丈夫乔蒂拉奥在浦那开办女子学校，并在那里教书。去学校的路上她遭到辱骂，有人朝她扔脏东西，她仍然走下去。"
+        story: '印度国家教育研究与培训委员会刊印的史料讲座引录早期报纸，把乔蒂拉奥与萨维特里白·普勒在浦那开展教育的时间追溯至1848年。后来的办学记录记萨维特里白担任校长。游戏虚构早期学校的一堂课，两位虚构学生合用一块石板。'
         relic: "一块石板"
         relic_desc: "一块小石板，上面用粉笔写着第一排字母。"
         points:
-          p1: "陪她走过嘲笑的围观者"
-          p2: "劝说一户人家把女儿送来"
-          p3: "在她身边教一堂课"
+          p1: '下课前跑一趟，把石板取回来'
+          p2: '请先写完的学生给另一只手留地方'
+          p3: '教两名学生给对方的字留出地方'
+        vignettes:
+          slate: '高莉能写第一笔，一见詹基来够石板就停了。你把石板横过来，詹基扶住另一头。喊她们回家时，两人都留了一道笔迹，彼此都指得出是谁写的。她们约好下回石板拿来各用哪一端。'
+          home: '詹基得把石板和别的东西装在同一个袋里带回家。高莉隔天才来，怕字早被擦了。你帮詹基用布遮好较小的那笔。她带走的石板上，一半已经擦净，一半还留给高莉看。'
+          register: '你见过后来的报告，表上把人数归得齐齐整整。高莉问，她刚写的名字能不能留到家里人看见。你把字在石板上的位置指给詹基。钟声一响，后来谁来读它，你就不在场了。'
 text:
   en:
     name: Savitribai Phule
@@ -45,3 +58,57 @@ text:
   zh:
     name: 萨维特里白·普勒
     text: 印度教师与诗人，1831 年生，1897 年去世。1848 年她与丈夫乔蒂拉奥·普勒在浦那开办女校，为此遭到敌视，后来又开设寡妇之家，并照顾鼠疫病人。
+hook: {en: 'Two pupils have one slate before dismissal.', zh: '放学前，两名学生只剩一块石板。'}
+facts:
+  early:
+    date: '1848'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [savitribai_phule_pune_early]
+    text:
+      en: 'The lecture reproduces the 1851 account linking the start of the Phules’ educational work to 1848 and describing Savitribai’s role and training.'
+      zh: '讲座引录1851年报纸，把普勒夫妇开始办学的时间追溯到1848年，并记述萨维特里白的参与和受训经过。'
+  records:
+    date: '1852-02-05'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [savitribai_phule_pune_records]
+    text:
+      en: 'The lecture discusses the 5 February 1852 application for aid and accompanying records of later girls’ schools. These describe Savitribai as headmistress in the first of the schools in that series.'
+      zh: '讲座讨论1852年2月5日申请资助的文书及相关女子学校记录，后者指出萨维特里白是该批学校中第一所的校长。'
+bystanders:
+  gauri:
+    invented: true
+    text: {en: 'A fictional pupil practising her name.', zh: '虚构学生高莉，正在练习写自己的名字。'}
+  janki:
+    invented: true
+    text: {en: 'A fictional pupil who has to take the shared slate home.', zh: '虚构学生詹基，得把合用的石板带回家。'}
+wiki:
+  refs:
+    savitribai_phule_pune_early:
+      order: 853
+      status: checked
+      text:
+        en: 'NCERT, Savitribai Phule memorial lecture, p. 12, 1851 Bombay Guardian account https://www.ncert.nic.in/pdf/publication/otherpublications/Memorial-Lectures-Series/FINAL%20COVER%20OF%20SAVIRTIBAI%20PHULE.pdf'
+        zh: '印度国家教育研究与培训委员会，纪念讲座第12页，引《孟买卫报》1851年记载 https://www.ncert.nic.in/pdf/publication/otherpublications/Memorial-Lectures-Series/FINAL%20COVER%20OF%20SAVIRTIBAI%20PHULE.pdf'
+    savitribai_phule_pune_records:
+      order: 854
+      status: checked
+      text:
+        en: 'NCERT, Savitribai Phule memorial lecture, pp. 12–13, government assistance records https://www.ncert.nic.in/pdf/publication/otherpublications/Memorial-Lectures-Series/FINAL%20COVER%20OF%20SAVIRTIBAI%20PHULE.pdf'
+        zh: '印度国家教育研究与培训委员会，纪念讲座第12至13页，引政府资助档案 https://www.ncert.nic.in/pdf/publication/otherpublications/Memorial-Lectures-Series/FINAL%20COVER%20OF%20SAVIRTIBAI%20PHULE.pdf'
+self_check:
+  fact: early
+  quote_line: '两人都留了一道笔迹，彼此都指得出是谁写的。'
+  regret_choice: 'register 若去讲后来的校况，石板上的字可能被擦。'
+  bookend: '从一块不够分的石板，到两人各有一头。'
+  share_line: '一块石板，两个人写过。'
+  share_number: 'slate 的两名虚构学生。'
+  knowing: 'register 知道后来记录会清点人数。'
+  near: 'early 对照早期办学的报纸记载。'
+  lever: 'slate 让等待的学生也落笔。'
+  missed: 'register 钟响后无法知道家人是否看了字。'
+  brought: 'home 带回虚构练习石板。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {E: 1, G: 2}
     regret: true
+    refs: [lili_boulanger_paris_score]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"stat":{"wit":7}}]}}
         - {id: p2, kind: endure, req: {"stat":{"will":6}}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","cosmopolitan","attached"]}}
+      vignettes:
+        - {id: entry, traits: [methodical, curious]}
+        - {id: visitor, traits: [kind, charismatic]}
+        - {id: stand}
     text:
       en:
-        name: "Dictated to her sister"
+        name: 'Parts spread across the table'
         place: "Mézy sur Seine"
         figure: "Lili Boulanger"
-        story: "Lili Boulanger, the first woman to win the Prix de Rome for composition, weakens from illness and dictates her last piece to her sister Nadia. She dies at twenty four."
+        story: 'The Bibliothèque nationale de France catalogues Lili Boulanger’s Pie Jesu with the composition note Rome–Mézy 1918 and specifies voice, string quartet, harp and organ. Our Paris-area visit follows a fictional copyist laying out rehearsal parts.'
         relic: "A pencil"
         relic_desc: "A short pencil beside blank staff paper."
         points:
-          p1: "Hear the piece as she says it (a musician or sharp wit helps)"
-          p2: "Stay patient through the slow dictation"
-          p3: "Be a presence that makes the room feel calm"
+          p1: 'Identify the singing line in the score'
+          p2: 'Wait until the copyist has checked the quiet entrance'
+          p3: 'Return the marked parts to the people who will read them'
+        vignettes:
+          entry: 'The copyist has marked the singer’s entry on an instrumental part. You lay that sheet next to the full score and ask him to point to the voice. He moves one mark. You take a scrap with both places on it. The rehearsal begins after your return.'
+          visitor: 'You tell the copyist that future readers will come looking for every part listed for the work. He sets the organ pages aside so they won’t be mistaken for a spare voice copy. You help him tie them separately. You never get to hear those two parts together.'
+          stand: 'You give the copyist space to lay out the voice, the quartet, the harp and the organ without overlapping them. He returns the harp sheet to its own pile. You copy the list of parts into your notebook. By the time the stands are ready, your own place is empty.'
       zh:
-        name: "口述给姐姐的曲子"
+        name: '桌上摊着几份声部谱'
         place: "梅齐"
         figure: "莉莉·布朗热"
-        story: "莉莉·布朗热是第一位获得罗马大奖作曲奖的女性，病重后把最后一首曲子口述给姐姐娜迪娅。她死时二十四岁。"
+        story: '法国国家图书馆将莉莉·布朗热的《Pie Jesu》记作 1918 年罗马至梅济时期的作品，编制为人声、弦乐四重奏、竖琴和管风琴。本趟去巴黎一带，跟随虚构的抄谱人准备排练用谱。'
         relic: "一支铅笔"
         relic_desc: "一支短铅笔，旁边是空白的五线谱纸。"
         points:
-          p1: "听出她口述的曲子（音乐家或敏锐的头脑更合适）"
-          p2: "耐心陪完缓慢的口述"
-          p3: "做一个让房间安宁下来的人"
+          p1: '在总谱里找出人声那一行'
+          p2: '等抄谱人核完轻声进入的地方'
+          p3: '把标记过的分谱交给接下来要看的人'
+        vignettes:
+          entry: '抄谱人把歌声进来的记号划在了一张器乐分谱上。你把它跟总谱并排搁好，请他指出人声那一行。他挪了一个记号。你带走写着两处位置的纸角。真正的排练在你回去之后才开始。'
+          visitor: '你告诉抄谱人，后来的读者会照着编制来找各声部。他另收好管风琴谱，省得有人当成多出一份声乐谱。你帮他单独系住那一叠。这两份谱合起来响是什么样，你始终没听到。'
+          stand: '你腾出桌面，让抄谱人把人声、弦乐四重奏、竖琴和管风琴分开放。他把竖琴谱放回该去的那一叠。你把编制抄进簿子。等谱架摆好，你站过的地方已经空了。'
 text:
   en:
     name: Lili Boulanger
@@ -45,3 +58,39 @@ text:
   zh:
     name: 莉莉·布朗热
     text: 法国作曲家，1893 年生，1918 年去世。1913 年她成为第一位获得罗马大奖作曲奖的女性。她一生体弱，二十四岁去世。
+hook: {en: 'Where did the singing voice go?', zh: '第一页的歌声在哪一行？'}
+facts:
+  score:
+    date: '1918'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [lili_boulanger_paris_score]
+    text:
+      en: 'The catalogue specifies voice, string quartet, harp and organ and records the composition note Rome–Mézy 1918.'
+      zh: '目录列出人声、弦乐四重奏、竖琴、管风琴，并记录作曲注记「罗马—梅济，1918」。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist with more pages than clear space on the table.', zh: '虚构的抄谱人，桌子摆不下要分清的谱。'}
+wiki:
+  refs:
+    lili_boulanger_paris_score:
+      order: 490
+      status: checked
+      text:
+        en: 'Bibliothèque nationale de France, Lili Boulanger, Pie Jesu, catalogue record https://catalogue.bnf.fr/ark:/12148/cb39749643r'
+        zh: '法国国家图书馆，莉莉·布朗热《Pie Jesu》乐谱目录 https://catalogue.bnf.fr/ark:/12148/cb39749643r'
+self_check:
+  fact: score
+  quote_line: '等谱架摆好，你站过的地方已经空了。'
+  regret_choice: '核对一处进声就顾不上等合奏。'
+  bookend: '从找不到人声到按编制排好每一叠。'
+  share_line: '我赶在排练前把人声找回到谱上。'
+  share_number: '1918 年'
+  knowing: 'visitor 想到后世会按编制寻找分谱。'
+  near: 'score 为日期和编制提供实物目录。'
+  lever: '一处进声记号换到正确位置。'
+  missed: '收队早于排练。'
+  brought: '四类编制的记事。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

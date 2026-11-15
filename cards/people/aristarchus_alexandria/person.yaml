@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {S: 2, V: 1}
     regret: true
+    refs: [aristarchus_alexandria_sun_moon]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"trait":["bold","vigil"]}}
         - {id: p3, kind: persuade, redeem: true, req: {"item":"golden_apple"}}
+      vignettes:
+        - {id: angle, traits: [methodical, scholarly]}
+        - {id: limit, traits: [bold, curious]}
+        - {id: page}
     text:
       en:
-        name: "The Earth moves, and few listened"
+        name: 'Three degrees on the page'
         place: "Alexandria"
         figure: "Aristarchus"
-        story: "Aristarchus proposes that the Earth moves around the Sun and measures the sizes of the Sun and the Moon. Almost nobody follows him, and the idea survives in a few lines of Archimedes."
+        story: 'In On the Sizes and Distances of the Sun and Moon, Aristarchus assumes that at half Moon the apparent angle between Moon and Sun is three degrees short of a right angle. His Proposition 7 derives a bound of eighteen to twenty times for the ratio of their distances from Earth. This is a result of the historical premise. The game’s drawing lesson is fictional.'
         relic: "A sundial plate"
         relic_desc: "A bronze plate with lines for the hours and the seasons."
         points:
-          p1: "Follow his geometry of the Sun and Moon"
-          p2: "Stand by the idea when the others laugh"
-          p3: "Make one listener write his idea down"
+          p1: 'Identify the observer’s angle before tracing the triangle'
+          p2: 'Keep the two rays on the same sheet until the comparison is finished'
+          p3: 'Explain which part of the result depends on the assumed angle'
+        vignettes:
+          angle: 'A learner has drawn a right angle at the observer. You mark the ray towards the half Moon and the one towards the Sun, then restore the three-degree difference at that point. The diagram and its premise agree again. You take both back, knowing neither is a modern distance measurement.'
+          limit: 'You know how much the estimate will matter when the angle is almost a right angle. The learner asks why his answer changes when he nudges one ray. You draw the second version separately and keep the first. You leave before either sheet can be checked against the sky.'
+          page: 'You write the assumption beside the result before folding the page. The learner can read what the estimate begins with. Your own copy has room for the angle but no note from the next half Moon.'
       zh:
-        name: "地球在动，少有人听"
+        name: '纸上的三度差'
         place: "亚历山大"
         figure: "阿利斯塔克斯"
-        story: "阿利斯塔克斯提出地球绕着太阳转，并测量了太阳和月亮的大小。几乎没有人跟随他，这个想法只在阿基米德的几行文字里留了下来。"
+        story: '阿里斯塔克斯在《论日月的大小与距离》中，取半月时所见日月夹角比直角少三度。第七命题由此推得日地距离介于月地距离的十八与二十倍之间。这是按原书前提推出的结果，卡里的画图练习为虚构。'
         relic: "一块日晷板"
         relic_desc: "一块青铜板，刻着时辰和节气的线。"
         points:
-          p1: "跟上他关于太阳和月亮的几何"
-          p2: "别人嘲笑时守住这个想法"
-          p3: "让一位听众把他的想法记下来"
+          p1: '描三角形前先辨清观测者所在的角'
+          p2: '对照完成前，让两条视线一直留在同一张纸上'
+          p3: '说清结果的哪一处依赖所取的角度'
+        vignettes:
+          angle: '学算人把观测者所在的角画成了直角。你标出望向半月和太阳的两条线，在这个角上补回差的三度。图与它用的前提终于对上。你两样都记走，却不能把它们当成今天量得的距离。'
+          limit: '你知道夹角越接近直角，那一点估计就越要紧。学算人问他只挪一道线，怎么答案就变了。你另画一张，先前那张也留着。还没能把图拿去跟天象对照，你便收队。'
+          page: '你把前提写在结果旁才折纸。学算人还能看出这个估计从哪一笔起。你自己的副本留好了角度，下一回半月却没留下实测。'
 text:
   en:
     name: Aristarchus
@@ -45,3 +58,39 @@ text:
   zh:
     name: 阿利斯塔克斯
     text: 希腊天文学家，约公元前 310 年生，约公元前 230 年去世。现存著作估算了太阳与月亮的大小和距离，后世作者记载他提出过日心说，当时几乎没人接受。
+hook: {en: 'How much can the drawing change near a right angle?', zh: '离直角只差一点，结果会差多少？'}
+facts:
+  sun_moon:
+    date: '-270'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [aristarchus_alexandria_sun_moon]
+    text:
+      en: 'The text assumes an angle of 87 degrees at the observer at half Moon and derives a distance ratio strictly between eighteen and twenty.'
+      zh: '原书取半月时在观测者处的夹角为 87 度，据此推得距离比大于十八且小于二十。'
+bystanders:
+  learner:
+    invented: true
+    text: {en: 'A fictional learner whose second drawing is almost a right angle.', zh: '虚构的学算人，第二张图只差一点就是直角。'}
+wiki:
+  refs:
+    aristarchus_alexandria_sun_moon:
+      order: 729
+      status: checked
+      text:
+        en: 'Aristarchus, On the Sizes and Distances of the Sun and Moon, hypothesis 4 and proposition 7, trans. Thomas Heath https://www.gutenberg.org/files/58498/58498-h/58498-h.htm'
+        zh: '阿里斯塔克斯《论日月的大小与距离》，假设四、命题七，托马斯·希思英译 https://www.gutenberg.org/files/58498/58498-h/58498-h.htm'
+self_check:
+  fact: sun_moon
+  quote_line: '他只挪一道线，怎么答案就变了。'
+  regret_choice: '把原图擦去，就看不出挪了哪条线。'
+  bookend: '从忘写的三度，回到每个结论都挨着前提的纸。'
+  share_line: '一张图里，少写三度，结果就变了。'
+  share_number: '87 度'
+  knowing: 'limit 知道近直角时估算对角度误差很敏感。'
+  near: 'sun_moon 能查到具体假设与命题。'
+  lever: '保留两个可互查的画法。'
+  missed: '没赶上下次半月。'
+  brought: '标出前提的日月草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

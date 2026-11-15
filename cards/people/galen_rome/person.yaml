@@ -10,38 +10,90 @@ events:
     tier: 3
     channels: {E: 1, T: 1}
     regret: true
+    refs: [galen_rome_fire]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: care, req: {"job":["nurse","physician","doctor","pharmacist","midwife"]}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","charismatic","cosmopolitan"]}}
+      vignettes:
+        - {id: list, traits: [methodical, curious, quiet]}
+        - {id: borrow, traits: [cosmopolitan, kind, charismatic]}
+        - {id: survival}
     text:
       en:
-        name: "The shelves that burned"
+        name: 'Names left after the fire'
         place: "Rome"
         figure: "Galen"
-        story: "A fire in 192 destroys storehouses and a library near the Temple of Peace, where Galen kept many of his own writings and other books. Many of his works are lost."
-        relic: "A charred scroll"
-        relic_desc: "A scroll blackened at one end, the rest still legible."
+        story: 'In On Avoiding Distress, Galen describes losing books and other possessions in Rome’s fire of 192. He distinguishes his missing copies from works he believed he could no longer recover. This episode imagines two workers restoring an inventory after the fire. Their list is fictional.'
+        relic: 'An inventory leaf'
+        relic_desc: 'A fictional inventory with one surviving title and an empty copy column.'
         points:
-          p1: "Read his case notes with him"
-          p2: "Tend the patients at his door (medical staff)"
-          p3: "Sit with him over the burnt shelves"
+          p1: 'Separate the titles still on the list from the volumes on the table'
+          p2: 'Help the keeper resume counting after she leaves the smoke behind'
+          p3: 'Ask around for a copy before marking a title as lost'
+        vignettes:
+          list: 'Tertia calls three names from a list and counts three books. You ask her to touch the volumes that go with them. There are two. Together you leave the third title readable and put an empty mark in the copy column.'
+          borrow: 'Dion remembers lending a copy but cannot name the recipient. Tertia wants to strike the title before the list goes out. You help him recall the doorway where he handed it over. She keeps one place on the list open for a reply from that street.'
+          survival: 'You have read a work about this very loss in a copy that will resurface long after the fire. Dion asks which title he can put on tomorrow’s desk. You leave the names in the inventory and show him the two actual volumes. The missing one has not been found when you leave.'
       zh:
-        name: "烧掉的书架"
+        name: '火后还在的书名'
         place: "罗马"
         figure: "盖伦"
-        story: "192年的一场大火毁掉了和平神殿附近的仓库与图书室，盖伦在那里存放着他许多著作和其他书籍。他的很多作品从此失传。"
-        relic: "一卷烧焦的卷轴"
-        relic_desc: "一卷一头烧黑的卷轴，其余的字仍能读。"
+        story: '盖伦在《论免于忧苦》中叙述罗马192年火灾给自己的藏书和物品带来的损失，也叙说哪些书在他看来已经无从补回。游戏虚构两名帮工火后重理书目，他们的清单属于故事。'
+        relic: '一页书目'
+        relic_desc: '虚构书目，有个书名依然可读，存卷一栏留空。'
         points:
-          p1: "和他一起读病例记录"
-          p2: "照看他门口的病人"
-          p3: "陪他坐在烧毁的书架旁"
+          p1: '分清书目里还记着的标题和桌上实际有的卷册'
+          p2: '等管册人离开烟气后，陪她重新清点'
+          p3: '给书名画上失落记号前，先问问是否还有抄本'
+        vignettes:
+          list: '特尔提娅念了三个书名，就记下有三卷。你请她在桌上一本本摸到相应的卷，只摸到两卷。你们把第三个书名留着，在存卷一栏做了个空记。'
+          borrow: '狄翁记得借出过一份，却想不起借给了谁。特尔提娅想趁清单还没送走，把书名划掉。你帮他想起交书的那扇门。她在清单里留了一处空位，等那条街传来回话。'
+          survival: '你读过一部写这场损失的书，传本在很久以后才重新被认出来。狄翁只问，明天桌上能放哪本。你留着书目里的名字，把现有两卷指给他看。你走时，还没找到缺掉的那卷。'
 text:
   en:
     name: Galen
-    text: Greek physician, 129 to about 216, who served gladiators and emperors in Rome. He wrote on anatomy and medicine from animal dissection and his works dominated European and Islamic medicine for over a thousand years.
+    text: Greek physician from Pergamum, born in 129, who later practised in Rome. His many writings include works on anatomy and medicine and an account of his losses in the fire of 192.
   zh:
     name: 盖伦
-    text: 希腊医生，129 年生，约 216 年去世，在罗马为角斗士和皇帝治病。他通过动物解剖写出解剖与医学著作，影响欧洲和伊斯兰医学一千多年。
+    text: 来自佩加蒙的希腊医生，129年生，后来在罗马行医。他留下多部解剖学与医学著作，也写到自己在192年火灾中的损失。
+hook: {en: 'The title survived. Did a copy survive too?', zh: '书名还在，书也还在吗？'}
+facts:
+  fire:
+    date: '192'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [galen_rome_fire]
+    text:
+      en: 'Galen describes losing writings, instruments and books in the fire and explains why some textual losses could not be replaced from nearby libraries.'
+      zh: '盖伦叙述火灾中损失的著作、器物和藏书，以及为何有些书无法用附近藏本补回。'
+bystanders:
+  tertia:
+    invented: true
+    text: {en: 'A fictional inventory keeper counting the actual volumes.', zh: '虚构管册人特尔提娅，要点清实际还在的卷。'}
+  dion:
+    invented: true
+    text: {en: 'A fictional reader trying to remember where he handed over a borrowed copy.', zh: '虚构读者狄翁，要想起之前在哪里把抄本借给了人。'}
+wiki:
+  refs:
+    galen_rome_fire:
+      order: 937
+      status: checked
+      text:
+        en: 'Galen, On Avoiding Distress, English translation, NCBI Bookshelf https://www.ncbi.nlm.nih.gov/books/NBK613950/?report=printable'
+        zh: '盖伦《论免于忧苦》英译，美国国家医学图书馆书库 https://www.ncbi.nlm.nih.gov/books/NBK613950/?report=printable'
+self_check:
+  fact: fire
+  quote_line: '狄翁只问，明天桌上能放哪本。'
+  regret_choice: 'borrow 划掉书名会少一次寻找外借本的机会。'
+  bookend: '从报出三个书名，到桌上只拿出两卷。'
+  share_line: '三个书名，两卷在手。'
+  share_number: 'list 三和二属于虚构清点。'
+  knowing: 'survival 员工读过后世找到的传本。'
+  near: 'fire 有当事人回顾。'
+  lever: 'borrow 留一处等回话。'
+  missed: 'survival 走时仍未找到目标卷。'
+  brought: 'list 带回虚构的书目副页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

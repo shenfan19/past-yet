@@ -10,38 +10,90 @@ events:
     tier: 2
     channels: {E: 2, V: 1}
     regret: true
+    refs: [ibn_al_nafis_cairo_transit]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["physician","doctor","nurse","pharmacist","midwife"]}}
         - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","cosmopolitan"]},{"job":["student","teacher"]}]}}
+      vignettes:
+        - {id: trace, traits: [methodical, curious, scholarly]}
+        - {id: layer, traits: [kind, cosmopolitan, patient]}
+        - {id: name}
     text:
       en:
-        name: "The blood that passes through the lung"
+        name: 'The route in the margin'
         place: "Cairo"
         figure: "Ibn al-Nafis"
-        story: "In Cairo, Ibn al-Nafis writes that blood passes from the right to the left side of the heart through the lungs and not through the wall between. The account is forgotten and found again only in the twentieth century."
-        relic: "A page of anatomy commentary"
-        relic_desc: "A page of notes on the heart and lungs in small clear script."
+        story: 'In his thirteenth-century anatomical commentary on Ibn Sina’s Canon, Ibn al-Nafis says blood passes from the right side of the heart to the left through the lungs and rejects a direct passage through the partition. The Cairo scene is an imagined comparison of text and practice diagrams, with 1242 used as a conventional setting.'
+        relic: 'Two practice diagrams'
+        relic_desc: 'An imagined pair kept for comparing two descriptions.'
         points:
-          p1: "Follow his reasoning about the blood"
-          p2: "Assist on the hospital ward (medical staff)"
-          p3: "Be the student who believes his reasoning (a kind employee, a student or a teacher)"
+          p1: 'Compare the diagram with the passage the student is reading'
+          p2: 'Keep the earlier outline available while the new one is traced'
+          p3: 'Help the next reader tell the two drawn routes apart'
+        vignettes:
+          trace: 'Hassan’s hand goes straight across the middle of the copy. Salma taps the line she has just read. You ask him to trace the route again while she follows the text. He redraws it via the lungs and marks the earlier line as a separate reading.'
+          layer: 'Salma is ready to rub out the older outline so that only one explanation remains. You slide a clean leaf underneath and let Hassan trace the second route there. A new reader can now lay the two together and ask what has changed.'
+          name: 'You know the later label for this part of the journey of the blood. Hassan wants to know where the commentator’s objection appears. You bracket that line instead of giving him a new title for his picture. The copy leaves the room before you hear whether his teacher accepts it.'
       zh:
-        name: "穿过肺的血液"
+        name: '画在页边的路径'
         place: "开罗"
         figure: "伊本·纳菲斯"
-        story: "在开罗，伊本·纳菲斯写道，血液是经过肺从心脏右侧到左侧，而不是穿过中间的隔。这个说法被遗忘，直到二十世纪才被重新发现。"
-        relic: "一页解剖注释"
-        relic_desc: "一页写着心与肺的笔记，字小而清楚。"
+        story: '伊本·纳菲斯在十三世纪为伊本·西那《医典》作的解剖注释中，认为血由心脏右侧经肺到左侧，反对它直接穿过中隔的说法。游戏采用约略的1242年，在开罗虚构一次正文与习作图的对读。'
+        relic: '两张解剖注释练习图'
+        relic_desc: '虚构练习图，两张一并留下对照说法。'
         points:
-          p1: "跟上他关于血液的推理"
-          p2: "在医院病房里帮忙"
-          p3: "做那个相信他推理的学生"
+          p1: '用学生正在读的一段核对图'
+          p2: '另描新图时，把旧轮廓留在手边'
+          p3: '帮接手的人认出两条画出的路径'
+        vignettes:
+          trace: '哈桑一笔穿过练习图正中。萨尔玛点了点自己刚读的一行。你请他照她读的内容再划一遍。他重画路线，让它经过肺，并标清早先一笔对应另一种说法。'
+          layer: '萨尔玛准备擦掉旧轮廓，桌上只留下一个讲法。你在底下垫一张干净的纸，让哈桑把第二条路线描在那里。新读者可以把两张叠看，自己问哪里变了。'
+          name: '你知道后世怎样称呼血液走的这一程。哈桑问的是注释到底在哪儿提出异议。你框住那句，让他照原文查。图已经带出屋子，老师是否认可，你走前还听不到。'
 text:
   en:
     name: Ibn al-Nafis
-    text: Arab physician, about 1213 to 1288, who worked in Damascus and Cairo. He described the pulmonary circulation, blood passing from the right side of the heart to the lungs and back, centuries before it was known in Europe.
+    text: Thirteenth-century physician who studied in Damascus and worked in Cairo. His anatomical commentary on Ibn Sina’s Canon argues that blood travels from the right side of the heart through the lungs to the left.
   zh:
     name: 伊本·纳菲斯
-    text: 阿拉伯医生，约 1213 年生，1288 年去世，在大马士革和开罗工作。他描述了肺循环，即血液由心脏右侧到肺再回来，比欧洲人知道此事早了几百年。
+    text: 十三世纪的医生，在大马士革求学，后来在开罗行医。他为伊本·西那《医典》所作的解剖注释认为，血液从心脏右侧经肺到达左侧。
+hook: {en: 'Which arrow came from the commentary?', zh: '哪一笔箭头出自注释？'}
+facts:
+  transit:
+    date: '1242'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_al_nafis_cairo_transit]
+    text:
+      en: 'The research discusses the anatomical commentary’s claim about passage through the lungs and later readers of medieval commentaries. The year in the game is approximate.'
+      zh: '研究讨论解剖注释所说的经肺通路，也谈及后来阅读中世纪医学注释的人；游戏年份为约数。'
+bystanders:
+  hassan:
+    invented: true
+    text: {en: 'A fictional student drawing a route he must check against the text.', zh: '虚构学生哈桑，自己画出一条路，还需与正文核对。'}
+  salma:
+    invented: true
+    text: {en: 'A fictional reader holding the commentary open.', zh: '虚构读者萨尔玛，翻着注释那页。'}
+wiki:
+  refs:
+    ibn_al_nafis_cairo_transit:
+      order: 961
+      status: checked
+      text:
+        en: 'Qatar Digital Library, Nahyan Fancy, Ibn al-Nafīs and Pulmonary Transit https://www.qdl.qa/en/ibn-al-naf%C4%ABs-and-pulmonary-transit'
+        zh: '卡塔尔数字图书馆，纳赫扬·范西，《伊本·纳菲斯与肺部通路》 https://www.qdl.qa/en/ibn-al-naf%C4%ABs-and-pulmonary-transit'
+self_check:
+  fact: transit
+  quote_line: '新读者可以把两张叠看，自己问哪里变了。'
+  regret_choice: 'layer 擦掉旧图便看不出两种说法差在哪里。'
+  bookend: '先过中间，后从另一处绕行。'
+  share_line: '两张图，一段可核对的注释。'
+  share_number: 'layer 两张虚构练习图。'
+  knowing: 'name 知道后世的术语。'
+  near: 'transit 路径差异有十三世纪注释为据。'
+  lever: 'layer 让后来人能把两图叠看。'
+  missed: 'name 来不及听老师判断。'
+  brought: 'layer 带回虚构的对照图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

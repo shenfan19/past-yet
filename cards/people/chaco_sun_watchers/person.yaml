@@ -9,38 +9,102 @@ events:
     field: science
     tier: 2
     channels: {A: 1, C: 2, H: 1}
+    refs: [chaco_sun_watchers_light, chaco_sun_watchers_measurement]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious"]}}
         - {id: p2, kind: hold, req: {"any":[{"trait":["methodical"]},{"stat":{"will":6}}]}}
         - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+      vignettes:
+        - {id: two, traits: [methodical, scholarly]}
+        - {id: sky, traits: [curious, quiet]}
+        - {id: wait}
     text:
       en:
-        name: "Light on a spiral at the solstice"
+        name: 'A second mark on a portable board'
         place: "Chaco Canyon, New Mexico"
         figure: "The people of Chaco Canyon"
-        story: "In the high desert of Chaco Canyon, people of the canyon place stone and mark rock so that, at the summer solstice, a blade of morning light falls across a spiral carved on a cliff. The canyon remains a living landscape of the Pueblo and other peoples who descend from them, and this story keeps to what is publicly recorded."
-        relic: "A painted potsherd"
-        relic_desc: "A palm sized piece of pottery with a thin black line pattern."
+        story: 'Published measurements at Fajada Butte in Chaco Canyon record sunlight falling across spiral rock markings near midday at particular times of year. The game sets its visit around the year 1000 and uses an invented portable board elsewhere in the canyon. The lesson does not date the real markings or assign an original purpose to them.'
+        relic: 'A sketch of two shadow edges'
+        relic_desc: 'A sketch of two traces made from the same board position.'
         points:
-          p1: "Spot the gap in the rock where the light will come"
-          p2: "Wait out the last dark minutes before sunrise"
-          p3: "Get through the cold of the early morning"
+          p1: 'Notice the change at the edge of the shadow'
+          p2: 'Keep the board in the same place for a second mark'
+          p3: 'Stay at the mark while the helper walks back to check it'
+        vignettes:
+          two: 'The helper has turned the board to face you, and now the two lines seem to disagree. You set its foot back at the first mark and ask for a new trace. You can compare the two positions this time. Next season is outside the length of your visit.'
+          sky: 'You know researchers will later study how light falls on the rock. The helper wants to give a name to the shadow on this small board. You ask him first to draw the place where the board stood. You leave with a drawing of the setup, and miss the second clear observation.'
+          wait: 'You put down a loose pebble beside the board, then wait for a second outline before lifting it. Two marks on the paper now share one position. You bring those marks home. You did not stay long enough to say how they change across the year.'
       zh:
-        name: "夏至日落在螺旋上的光"
+        name: '木板上的第二道影'
         place: "新墨西哥州查科峡谷"
         figure: "查科峡谷的人们"
-        story: "在查科峡谷的高原荒漠里，峡谷里的人们垒石、在岩壁上做记号，使夏至那天早晨一道窄窄的光落在崖壁的一个螺旋刻纹上。这片峡谷至今是普韦布洛人和他们的后裔等族群生活着的圣地，这个故事只写公开记录过的内容。"
-        relic: "一片绘纹陶片"
-        relic_desc: "巴掌大的一片陶片，上面是细细的黑线花纹。"
+        story: '公开发表的查科峡谷法哈达孤丘测量记录记下，在一年中的特定时候，接近正午的光会落到螺旋岩刻上。卡里以约 1000 年为背景，在峡谷另一处用虚构的便携木板演示。这段练习不给真实的刻纹定年，也不判定其原始用途。'
+        relic: '一张双影线草图'
+        relic_desc: '同一块木板摆在原地时描的两道影。'
         points:
-          p1: "找到光会穿过的那道岩缝"
-          p2: "等过日出前最后几分钟的黑暗"
-          p3: "熬过清晨的寒冷"
+          p1: '看出影边在哪儿移了一点'
+          p2: '木板不挪位置，再描一次影边'
+          p3: '帮工折回来复核时留在标记处'
+        vignettes:
+          two: '帮工把木板转向你，两道线却没法互相对照。你让板脚回到第一记，请他重新描一遍。这回两刻的影边能放在一起看了。下一个季节已经超出你能待的时间。'
+          sky: '你知道后人还会研究光怎样落到岩面。帮工想先给小板上的影起个名字，你请他先画下板摆在哪里。你带走的是摆放位置图，第二回天清时的影子没赶上。'
+          wait: '你把一粒小石子搁在木板旁，等能描第二道影，再抬起板。纸上两道线共有一个站位，你都带了回来。只待这么久，还说不清过一年会怎么变。'
 text:
   en:
     name: "The people of Chaco Canyon"
-    text: "The people who built the great houses of Chaco Canyon and aligned stone and rock to the sun and moon, from about the ninth to the twelfth century. Pueblo peoples and other nations regard the canyon as ancestral and sacred, and care for its meaning today."
+    text: "Ancestral communities built the great houses of Chaco Canyon. At Fajada Butte, researchers documented patterns of light on rock markings. The canyon remains an ancestral and sacred place to Pueblo peoples and other nations."
   zh:
     name: "查科峡谷的人们"
-    text: "大约九到十二世纪建起查科峡谷的大型石屋、并让石头与岩壁对准太阳和月亮的人们。普韦布洛人和其他族群视这片峡谷为祖先之地与圣地，至今守护着它的意义。"
+    text: "先民在查科峡谷建起大型石屋。研究者在法哈达孤丘记录了岩刻上的光影变化。这片峡谷至今是普韦布洛人和其他族群的祖先之地与圣地。"
+hook: {en: 'Did the light move or did you move the drawing?', zh: '是日影走了，还是纸挪了？'}
+facts:
+  light:
+    date: '1000'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [chaco_sun_watchers_light]
+    text:
+      en: 'Park material describes documented sunlight effects at Fajada Butte. The portable-board illustration does not reproduce the site’s arrangement.'
+      zh: '公园资料记录法哈达孤丘的照光现象。卡里的便携木板仅作演示，未复造遗址的布置。'
+  measurement:
+    date: '1000'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [chaco_sun_watchers_measurement]
+    text:
+      en: 'The study records a midday light pattern on the Fajada Butte spirals. Its original use and the relative timing of the stones and markings are separate questions.'
+      zh: '研究记有法哈达孤丘螺旋刻纹上的正午光影。原始用途以及刻纹与石板的先后，是另外的问题。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional observer working with a portable board on open ground.', zh: '虚构的观察帮工，在空地上摆一块便携木板。'}
+wiki:
+  refs:
+    chaco_sun_watchers_light:
+      order: 699
+      status: checked
+      text:
+        en: 'U.S. National Park Service, Archeoastronomy in Stone, Chaco Culture National Historical Park https://www.nps.gov/articles/000/archeoastronomy-in-stone.htm'
+        zh: '美国国家公园管理局，查科文化国家历史公园《石上考古天文学》 https://www.nps.gov/articles/000/archeoastronomy-in-stone.htm'
+    chaco_sun_watchers_measurement:
+      order: 700
+      status: checked
+      text:
+        en: 'E. B. Newman, R. K. Mark and R. Vivian, Science 217, measured light pattern, USGS publication record https://pubs.usgs.gov/publication/70011456'
+        zh: '纽曼、马克与维维安，《Science》第 217 卷，光影研究，美国地质调查局出版记录 https://pubs.usgs.gov/publication/70011456'
+self_check:
+  fact: light
+  quote_line: '纸上两道线共有一个站位。'
+  regret_choice: '木板一转，先后两道影就失去了共同的基准。'
+  bookend: '从两条对不上的线，到共同站位的两次所见。'
+  share_line: '我让木板回到原处才画第二笔。'
+  share_number: '两道影'
+  knowing: 'sky 记得后世会研究岩面受光。'
+  near: 'light 是公开的现场记录。'
+  lever: '在同一位置补一次对照。'
+  missed: '等不到季节变化。'
+  brought: '板的位置与两道线。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,38 +10,102 @@ events:
     tier: 1
     channels: {S: 3, G: 3}
     regret: true
+    refs: [heo_nanseolheon_hanyang_edition, heo_nanseolheon_hanyang_collection]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["artistic","handy"]}}
         - {id: p2, kind: care, req: {"trait":["calm","sensitive","cheerful"]}}
         - {id: p3, kind: hold, redeem: true, req: {"job":["archivist","student"]}}
+      vignettes:
+        - {id: binding, traits: [methodical, handy]}
+        - {id: name, traits: [kind, curious]}
+        - {id: fold}
     text:
       en:
-        name: "Poems she asked to burn"
+        name: 'A sleeve of separate poems'
         place: "Hanyang"
         figure: "Heo Nanseolheon"
-        story: "Heo Nanseolheon, a young poet of Joseon, dies in 1589 aged twenty six and leaves word that her poems be burned. Her brother Heo Gyun kept what he could and had it printed."
+        story: 'Heo Gyun compiled surviving work by his sister Heo Nanseolheon after her death. A Joseon woodblock edition of her collected works survives from 1608. The copying room below is an invented scene set before that edition.'
         relic: "A sheet of poems"
         relic_desc: "A sheet of fine paper with brushed poems on flowers and distant places."
         points:
-          p1: "Read her poems in her room"
-          p2: "Sit with her on a quiet evening"
-          p3: "Learn her poems by heart (a record keeper or a student)"
+          p1: 'Read the names and titles on two loose poetry sheets'
+          p2: 'Keep the working copies separate from the originals'
+          p3: 'Copy the heading together with the poem'
+        vignettes:
+          binding: 'The copyist has mixed a practice page in with the other sheets. You compare the two headings and fold a second sleeve for the exercises. One ambiguous page stays loose for him to check. You leave before any of the poems reaches a printed book.'
+          name: 'You know some of these poems will be read far from this house. The copyist is about to pass on a practice sheet with no heading. You ask him to copy the heading as well, and one more sheet leaves with a name. You keep your place with a blank strip of paper. The woodblock edition lies years ahead.'
+          fold: 'You help wrap the loose pages without creasing the brushwork. On the spare wrapper you mark that a title is missing. What you take away is the warning, not the page. The later collection will be put together after you are gone.'
       zh:
-        name: "她要人烧掉的诗"
+        name: '装着散诗的纸套'
         place: "汉阳"
         figure: "许兰雪轩"
-        story: "朝鲜时代的年轻女诗人许兰雪轩于1589年去世，年仅二十六岁，留话要把她的诗烧掉。她的弟弟许筠尽力保存下来，并付印出版。"
+        story: '许兰雪轩去世后，弟弟许筠整理了她留存的作品，现存刊本中有 1608 年的朝鲜木刻本。卡里的抄诗房为分支演绎，发生在编集刊行之前。'
         relic: "一页诗稿"
         relic_desc: "一页细纸，用毛笔写着写花和远方的诗。"
         points:
-          p1: "在她的房间里读她的诗"
-          p2: "在安静的傍晚陪她坐坐"
-          p3: "把她的诗背下来"
+          p1: '核对两张散诗页的署名和标题'
+          p2: '把练抄的稿纸与原来那叠分开'
+          p3: '把题头跟诗一道誊下'
+        vignettes:
+          binding: '抄写人把练笔的纸夹在其他页里。你对过两个题头，另折了一个纸套装练抄稿。还有一页看不准，留散着让他再查。哪首诗最后印进了书，你在这趟看不到。'
+          name: '你知道有些诗以后会传到离这户人家很远的地方。抄写人要递出去一张没题头的练抄稿，你请他把题头一同誊下。送出门的纸多了一张带署名的。你用空白纸条夹住自己读到的位置，木刻本还要等许多年。'
+          fold: '你把散页套起来，没让折痕压到字，再在多出的纸套上标记有一页还缺题目。带走的是这条提醒，诗页留在屋里。你离开以后，那部诗集才会编成。'
 text:
   en:
     name: Heo Nanseolheon
-    text: Korean poet of the Joseon, 1563 to 1589. She wrote about three hundred poems in classical Chinese, and died at twenty six. Her brother gathered her poems and had them published after her death.
+    text: Korean poet of Joseon, 1563 to 1589. She wrote in classical Chinese. Her brother Heo Gyun collected her work after her death.
   zh:
     name: 许兰雪轩
-    text: 朝鲜时代的诗人，1563 年生，1589 年去世。她用汉文写了约三百首诗，二十六岁去世。她的弟弟在她死后收集诗稿并刊行。
+    text: 朝鲜时代的诗人，1563 年生，1589 年去世，以汉文写诗。弟弟许筠在她去世后收集她的作品。
+hook: {en: 'Which name belongs at the head of the copy?', zh: '这页的署名写在哪里？'}
+facts:
+  edition:
+    date: '1608'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [heo_nanseolheon_hanyang_edition, heo_nanseolheon_hanyang_collection]
+    text:
+      en: 'A study of Heo Gyun’s selection compares the 1597 selection and the extant 1608 Joseon woodblock edition.'
+      zh: '选本研究比较了许筠 1597 年所编选本与现存的 1608 年朝鲜刻本。'
+  collection:
+    date: '1692'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [heo_nanseolheon_hanyang_edition, heo_nanseolheon_hanyang_collection]
+    text:
+      en: 'The catalogue describes Heo Gyun''s posthumous compilation and lists the verse and prose in a later edition.'
+      zh: '条目载有许筠在姐姐去世后整理文稿一事，并列出较晚刊本里的诗文。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist handling a practice pile and a set of papers intended for safekeeping.', zh: '虚构的抄写人，手头一叠是练笔，一叠待收存。'}
+wiki:
+  refs:
+    heo_nanseolheon_hanyang_edition:
+      order: 458
+      status: checked
+      text:
+        en: 'Research on Heo Gyun’s 1597 selection and the 1608 Joseon woodblock edition, Korea Citation Index https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002088569'
+        zh: '韩国学术期刊引文索引，许筠 1597 年选本与 1608 年朝鲜刻本研究 https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002088569'
+    heo_nanseolheon_hanyang_collection:
+      order: 459
+      status: checked
+      text:
+        en: 'Academy of Korean Studies, collection catalogue for Nanseolheonjip https://encykorea.aks.ac.kr/Article/E0011704'
+        zh: '韩国学中央研究院，《兰雪轩集》馆藏条目 https://encykorea.aks.ac.kr/Article/E0011704'
+self_check:
+  fact: edition
+  quote_line: '送出门的纸多了一张带署名的。'
+  regret_choice: '忙着另折纸套便会漏掉一页署名；先抄题头就顾不上核完散页。'
+  bookend: '从不知道散页属于哪里，到知道哪张需要补题头。'
+  share_line: '一张诗页出门时多带了一个名字。'
+  share_number: '1608 年有木刻本'
+  knowing: 'name 员工知道部分稿子会流传。'
+  near: 'edition 和 collection 确定编集过程，抄诗房为虚构。'
+  lever: '理开两叠或留下一个题头。'
+  missed: '收队早于编集和刊行。'
+  brought: '夹过读到哪儿的纸条。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

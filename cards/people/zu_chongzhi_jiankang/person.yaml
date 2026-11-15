@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {V: 2}
+    refs: [zu_chongzhi_jiankang_bounds]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: hold, req: {"provides":"vigil"}}
         - {id: p3, kind: trust, req: {"job":["teacher"]}}
+      vignettes:
+        - {id: compare, traits: [methodical, scholarly]}
+        - {id: digit, traits: [curious, handy]}
+        - {id: ratio}
     text:
       en:
-        name: Pi to seven places
+        name: 'Two bounds and a handy fraction'
         place: Jiankang, China
         figure: Zu Chongzhi
-        story: Zu Chongzhi calculates pi between 3.1415926 and 3.1415927, a record that stands for about nine centuries.
+        story: 'The Treatise on Pitch and Calendar in the Book of Sui records Zu Chongzhi’s lower and upper bounds for π, equivalent to 3.1415926 and 3.1415927. It lists the close fraction 355/113 separately. The game year sets an imagined checking session. The surviving record does not give the full computation that produced the bounds.'
         relic: A set of counting rods
         relic_desc: A bundle of slim rods that are numbers when laid out.
         points:
-          p1: "Follow the method of cutting the circle"
-          p2: "Cut the circle again and again"
-          p3: "Teach the method to students"
+          p1: 'Identify the upper and lower bounds on the copied table'
+          p2: 'Stay to check the two bounds without losing the last place'
+          p3: 'Teach the difference between a bound and a convenient fraction'
+        vignettes:
+          compare: 'A copyist has pencilled the fraction into the box meant for the upper bound. You compare 355 with 113 times 3.1415927. The product falls just short of 355, so the fraction goes on a line of its own. You keep the check. The steps that led to the two bounds are beyond your visit.'
+          digit: 'You know later readers will remember seven digits after the point, but the copyist is about to drop the last place of the lower bound. You mark where the two bounds first differ and have him read both again. You can copy the result. There is no time to reconstruct the calculation behind it.'
+          ratio: 'You make three spaces on one slip: lower, upper and handy ratio. The copyist can place all three entries without overwriting any of them. You bring back the slip. The complete calculation is still a blank in your notes.'
       zh:
-        name: 圆周率精确到七位
+        name: '两个界限，一条密率'
         place: 中国建康
         figure: 祖冲之
-        story: 祖冲之算出圆周率介于 3.1415926 和 3.1415927 之间，这个纪录保持了大约九个世纪。
+        story: '《隋书·律历志》记载祖冲之的圆周率下界和上界，换算成现代小数为 3.1415926 与 3.1415927，还另列密率 355/113。卡里核算为分支演绎，年份用于设定场景。现有记载没有给出求得上下界的完整算法。'
         relic: 一束算筹
         relic_desc: 一捆细细的小棍，摆开就是数字。
         points:
-          p1: "跟上割圆术"
-          p2: "反复割圆"
-          p3: "把算法讲给学生"
+          p1: '在抄表上认出上界与下界'
+          p2: '守着核对两个界限，别抄漏末位'
+          p3: '给学算的人讲清界限与近似分数的区别'
+        vignettes:
+          compare: '抄写人把密率填进了上界那一格。你把 355 和 113 乘 3.1415927 的积相比，发现乘积比 355 略小，便给密率另列一行。你带走这道验算，求出上下界的过程却没赶上。'
+          digit: '你知道后人会记得小数点后七位，可抄写人快把下界末位抄丢。你标出两个界限在哪一位不同，请他把两行重读一遍。你来得及抄下结果，来不及重做背后的计算。'
+          ratio: '你把纸条空出三处，分别给下界、上界和便于用算的密率。抄写人有地方放三个数，不必挤掉其中一个。你把纸条带回来，完整的算法在笔记里还是一处空白。'
 text:
   en:
     name: Zu Chongzhi
@@ -44,3 +57,39 @@ text:
   zh:
     name: 祖冲之
     text: 中国数学家与天文学家，429 年生，500 年去世。他算出圆周率介于 3.1415926 和 3.1415927 之间，这个精度近千年无人超过，还编制了大明历。
+hook: {en: 'Which of these numbers is the bound?', zh: '密率能填进盈数那一格吗？'}
+facts:
+  bounds:
+    date: '480'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [zu_chongzhi_jiankang_bounds]
+    text:
+      en: 'The treatise records two bounds, equivalent to 3.1415926 and 3.1415927, separately from 355/113. The year dates the setting, not the treatise’s compilation.'
+      zh: '志书记两限，换算为 3.1415926 与 3.1415927，并另记密率 355/113。所标年份是场景年代，不是志书成书年代。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist leaving enough room on the sheet for the bounds and the separate ratio.', zh: '虚构的抄写人，要在纸上分别留出上下界和密率的位置。'}
+wiki:
+  refs:
+    zu_chongzhi_jiankang_bounds:
+      order: 550
+      status: checked
+      text:
+        en: 'Book of Sui, Treatise on Pitch and Calendar, part one, account of Zu Chongzhi https://www.shidianguji.com/book/LS0013/chapter/LS0013_31'
+        zh: '《隋书·律历志上》祖冲之盈朒二限、密率条 https://www.shidianguji.com/book/LS0013/chapter/LS0013_31'
+self_check:
+  fact: bounds
+  quote_line: '你带走这道验算，求出上下界的过程却没赶上。'
+  regret_choice: '只抄三个结果会错过核对密率为何不能当成上界。'
+  bookend: '从错栏开始，带回分列的三项结果。'
+  share_line: '密率另列一行，不能挤掉上界。'
+  share_number: '355/113'
+  knowing: 'digit 知道后世按小数位记住界限。'
+  near: 'bounds 锚定二限、密率。'
+  lever: '把密率从错误一格挪到自己的行。'
+  missed: '没赶上求界限的全套过程。'
+  brought: '三栏及一道比较大小的验算。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

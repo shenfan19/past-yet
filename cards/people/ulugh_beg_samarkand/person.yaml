@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {C: 2, V: 2}
+    refs: [ulugh_beg_samarkand_observatory, ulugh_beg_samarkand_catalogue]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["mechanic","carpenter"]}}
         - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: source, traits: [methodical, scholarly]}
+        - {id: arc, traits: [curious, handy]}
+        - {id: hold}
     text:
       en:
-        name: An observatory and a star catalogue
+        name: 'The source column in a star table'
         place: Samarkand
         figure: Ulugh Beg
-        story: Ulugh Beg builds a great observatory and publishes a star catalogue more exact than any for centuries.
-        relic: A fragment of the great arc
-        relic_desc: A piece of the stone arc once used to measure the stars.
+        story: 'The observatory at Samarkand associated with Ulugh Beg had a large meridian arc. The astronomical tables compiled by his team include a star catalogue. Most positions were based on new measurements, while some entries drew on older material. The year sets the beginning of the observatory period. The game’s copyist and practice table are fictional.'
+        relic: 'A slip with two sources'
+        relic_desc: 'Two marked rows for an older star position and a new observation.'
         points:
-          p1: "Check the star table"
-          p2: "Calibrate the sextant"
-          p3: "Bear the cold night on the high platform"
+          p1: 'Identify the reading whose source is missing'
+          p2: 'Keep two slips with different origins visible on the stand'
+          p3: 'Wait for a second reading before filling the observation row'
+        vignettes:
+          source: 'The copyist has entered an older position on the line for tonight’s reading. You add a column for origin and move his label into it. Before the page leaves, both values are still legible. The sky never gives you the second reading before you return.'
+          arc: 'You have seen a later image of the great arc. Tonight the copyist sees only a line of numbers that have come down from it. You put the place of measurement at the head of the slip. He leaves it there with the figures. The catalogue itself will be completed long after your visit.'
+          hold: 'You leave one place for a measured figure and a second for a value taken from the older table. The copyist can now read both without thinking they came from the same observation. You carry the two labels back. The page has yet to be put into the catalogue.'
       zh:
-        name: 一座天文台和一份星表
+        name: '星表边上的一栏来源'
         place: 撒马尔罕
         figure: 兀鲁伯
-        story: 兀鲁伯建了一座大天文台，发表的星表在好几个世纪里没有谁比它更精确。
-        relic: 大弧的一块碎片
-        relic_desc: 曾用来测星的石弧的一块残片。
+        story: '兀鲁伯在撒马尔罕的天文台用过大型子午弧。他和团队编订的天文表收入星表，多数位置依据新观测，部分条目采用较早资料。卡里年份取天文台的早期，抄写人和练习表均为虚构。'
+        relic: '一张星表来源签'
+        relic_desc: '一行记旧表星位，一行留给新的观测。'
         points:
-          p1: "核对星表"
-          p2: "校准六分仪"
-          p3: "高台上的寒夜"
+          p1: '找出漏写来源的那条读数'
+          p2: '让两张来历不同的记录都留在架上'
+          p3: '再等一次读数，才填实测那一格'
+        vignettes:
+          source: '抄写人把旧表的位置填到了今夜实测那一行。你添一栏来历，替他把标签挪过去。纸离开之前，两项数值仍都能读清。天空没来得及给你第二次读数，你便收队了。'
+          arc: '你看过后世留下的大弧图，眼下抄写人只看到抄过来的一排数。你在条子上端写明这项在哪里量到。他把来历和数值一起留好。等星表编成，你早已走了。'
+          hold: '你为实测结果留一处，又为旧表取来的数留了一处。抄写人能把两行分开看，不会当成一回量的。你带回两个题头，这一页还没进星表。'
 text:
   en:
     name: Ulugh Beg
@@ -44,3 +57,54 @@ text:
   zh:
     name: 兀鲁伯
     text: 帖木儿王朝的统治者与天文学家，1394 年生，1449 年去世。他在撒马尔罕建起大型天文台，编出精度很高的星表。他被亲生儿子下令杀死。
+hook: {en: 'Which reading came from this night?', zh: '哪一行是今夜亲自量的？'}
+facts:
+  observatory:
+    date: '1420'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ulugh_beg_samarkand_observatory]
+    text:
+      en: 'The exhibit documents the tables prepared at Samarkand and the great meridian arc used there.'
+      zh: '馆藏展览记录撒马尔罕编成的天文表和台中所用的大子午弧。'
+  catalogue:
+    date: '1420'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ulugh_beg_samarkand_catalogue]
+    text:
+      en: 'The analysis compares positions in the catalogue and discusses entries adopted from earlier sources. The game year is the setting, rather than a date for the finished catalogue.'
+      zh: '研究分析星表位置及从旧资料取用的条目。卡里年份用于设定场景，未作为星表完成时间。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist with an older position and one new observation.', zh: '虚构的抄写人，手头一份旧位置和一笔新读数。'}
+wiki:
+  refs:
+    ulugh_beg_samarkand_observatory:
+      order: 737
+      status: checked
+      text:
+        en: 'University of Michigan, Early Astronomy collections, Zīj of Ulugh Beg https://www.early-astronomy-um.org/islamic_ulugh-beg.php'
+        zh: '密歇根大学早期天文学馆藏，兀鲁伯天文表 https://www.early-astronomy-um.org/islamic_ulugh-beg.php'
+    ulugh_beg_samarkand_catalogue:
+      order: 738
+      status: checked
+      text:
+        en: 'F. Verbunt and R. H. van Gent, The star catalogues of Ptolemaios and Ulugh Beg, Astronomy & Astrophysics 544, A31 https://www.aanda.org/articles/aa/pdf/2012/08/aa19596-12.pdf'
+        zh: '费尔本特与范亨特，托勒密与兀鲁伯星表比较，《天文学与天体物理学》544 卷 A31 https://www.aanda.org/articles/aa/pdf/2012/08/aa19596-12.pdf'
+self_check:
+  fact: observatory
+  quote_line: '纸离开之前，两项数值仍都能读清。'
+  regret_choice: '把旧录贴到今夜栏，回头就分不出怎样得数。'
+  bookend: '从混入的一行到两种来源各有题头。'
+  share_line: '我在星表边给读数补了一栏来历。'
+  share_number: '两种来源'
+  knowing: 'arc 见过后世的大弧图。'
+  near: 'observatory 与 catalogue 分别锚定设备和数据。'
+  lever: '区分一笔旧数和一笔实测。'
+  missed: '没有第二次观测。'
+  brought: '两张题头。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,38 +10,90 @@ events:
     tier: 1
     channels: {S: 2, L: 1}
     regret: true
+    refs: [kabir_maghar_hymn]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["wanderer","methodical"]}}
         - {id: p2, kind: trust, req: {"luck":0.5}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["musician"]},{"trait":["vigil","methodical"]}]}}
+      vignettes:
+        - {id: towns, traits: [methodical, wanderer, curious]}
+        - {id: beat, traits: [artistic, vigil, patient]}
+        - {id: collection}
     text:
       en:
-        name: "Verses carried by singers"
+        name: 'Two names in a song'
         place: "Maghar"
         figure: "Kabir"
-        story: "A weaver who sang short poems against pride and division, Kabir never wrote them down himself. Singers carried them, and they were gathered after his death, traditionally in Maghar in 1518."
-        relic: "A weaver's shuttle"
-        relic_desc: "A worn wooden shuttle, smooth from the hand."
+        story: 'A hymn attributed to Kabir in the Guru Granth Sahib names Benares and Maghar and questions what difference the place makes to devotion. The game sets a fictional exchange in Maghar in the conventional year 1518. It treats Kabir’s death year as traditional and invents the singers and their practice.'
+        relic: 'A practice shuttle'
+        relic_desc: 'An invented keepsake used to mark the singers’ cue.'
         points:
-          p1: "Hear him sing at the loom"
-          p2: "Sit among the weavers at a quiet hour"
-          p3: "Learn the verses by heart (a musician or a sensitive employee)"
+          p1: 'Notice where the two singers recall a different place name'
+          p2: 'Ask each singer to finish a version before correcting it'
+          p3: 'Keep the two town names audible in the retelling'
+        vignettes:
+          towns: 'Paro comes in on Benares and Salim answers with Maghar. You ask them to take turns instead of singing over each other. The listeners hear both towns and can tell where the question comes in. Paro gives the next singer the start without taking the answer away.'
+          beat: 'Salim gets to the name of the second town before Paro has finished the first. You use the shuttle on her bench to tap one beat on the wood. This time he waits and is heard. At the end, Paro hands him the shuttle and asks him to keep time for the next voice.'
+          collection: 'You have read a later collection with both towns on the page. Paro asks whether a friend who was away would recognise her opening. You listen to her try it once without supplying the later version. The friend has not arrived when you leave.'
       zh:
-        name: "由歌者传下的诗句"
+        name: '一首歌里两个地名'
         place: "马格哈尔"
         figure: "迦比尔"
-        story: "迦比尔是个织工，用短诗唱出对骄傲与分裂的反对，他自己从没把诗写下来。歌者把诗传了下来，在他身后才被收集，传统上说他于1518年在马格哈尔去世。"
-        relic: "一把织梭"
-        relic_desc: "一把用旧了的木梭，被手磨得光滑。"
+        story: '《古鲁·格兰特·萨希卜》中归于迦比尔的一首诗，提及贝拿勒斯和马格哈尔，问地点对虔敬何异。游戏采用传统所说的1518年，在马格哈尔虚构一次对唱。年份来自传统，歌者及练习均为虚构。'
+        relic: '一把练习打拍用的梭'
+        relic_desc: '游戏里的虚构纪念物，用来给接唱打拍。'
         points:
-          p1: "听他在织机旁唱"
-          p2: "在安静的时候坐在织工们中间"
-          p3: "把诗句背下来"
+          p1: '留意两名歌者在哪儿想起了不同地名'
+          p2: '先听两人各唱完一遍，再纠正'
+          p3: '转唱时，让听众还能听见两个地名'
+        vignettes:
+          towns: '帕萝从贝拿勒斯唱起，萨利姆接马格哈尔。你请他们轮流唱，别让一句压过另一句。听众听清两个地名，也听出哪里转成问句。帕萝把开头交给下一个人，仍把答句留给对方。'
+          beat: '帕萝还没唱完头一处，萨利姆已唱到第二个地名。你用她凳边的梭在木头上敲一下拍子。这回他等住了，开口便有人听见。唱完，帕萝把梭递给他，请他替下一个声音打拍子。'
+          collection: '你读过后来的传本，两个地名都在纸上。帕萝问，没来的朋友听她起第一声，会不会认得。你听她试了一遍，没替她唱后世那一版。你离开时，她的朋友还没到。'
 text:
   en:
     name: Kabir
-    text: Poet and mystic of north India, about 1440 to about 1518. His short verses in the language of ordinary people reject caste and empty ritual, and are claimed by Hindus, Muslims and Sikhs alike.
+    text: North Indian devotional poet. The details of his life vary across traditions. Songs attributed to Kabir circulated widely, and some are preserved in the Guru Granth Sahib.
   zh:
     name: 迦比尔
-    text: 北印度诗人与神秘主义者，约 1440 年生，约 1518 年去世。他用百姓的语言写短诗，否定种姓和空洞的仪式，印度教徒、穆斯林和锡克教徒都奉他为自己人。
+    text: 北印度虔敬诗人。有关他生平的细节，各传承记载有异。归于迦比尔的诗歌流传广泛，有些保存在《古鲁·格兰特·萨希卜》中。
+hook: {en: 'One listener starts with a different town.', zh: '听同一句，有人先说了另一个地名。'}
+facts:
+  hymn:
+    date: '1518'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kabir_maghar_hymn]
+    text:
+      en: 'The hymn asks what difference Benares and Maghar make when the divine dwells in the heart. The passage does not date a meeting or the poet’s death.'
+      zh: '诗中问，心有神明时，贝拿勒斯与马格哈尔有何分别。诗句没有给会面或诗人去世定下年月。'
+bystanders:
+  paro:
+    invented: true
+    text: {en: 'A fictional singer passing an opening to someone else.', zh: '虚构歌者帕萝，要把开头教给下一人。'}
+  salim:
+    invented: true
+    text: {en: 'A fictional singer who comes in too soon.', zh: '虚构歌者萨利姆，总是接唱得太快。'}
+wiki:
+  refs:
+    kabir_maghar_hymn:
+      order: 981
+      status: checked
+      text:
+        en: 'Guru Granth Sahib, Ang 692, Bhagat Kabir in Rāg Dhanāsarī, Gurmukhi and translation https://gurdwaras.com/scriptures/sggs/692'
+        zh: '《古鲁·格兰特·萨希卜》第692页，迦比尔诗，古木基文与译文 https://gurdwaras.com/scriptures/sggs/692'
+self_check:
+  fact: hymn
+  quote_line: '帕萝把开头交给下一个人，仍把答句留给对方。'
+  regret_choice: 'towns 抢着唱会漏听第二个地名。'
+  bookend: '从地名相撞，到留好接唱的时机。'
+  share_line: '两处地名，都唱得清。'
+  share_number: '经文中的两个地名。'
+  knowing: 'collection 知道后来传本还保有两名。'
+  near: 'hymn 借助原文的地名与诗意。'
+  lever: 'beat 给第二声留出位置。'
+  missed: 'collection 等不到那位朋友来听。'
+  brought: 'beat 带回虚构的打拍用小梭。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

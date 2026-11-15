@@ -9,38 +9,87 @@ events:
     field: science
     tier: 2
     channels: {C: 1, V: 2}
+    refs: [mitchell_nantucket_comet]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"stat":{"will":6}}}
         - {id: p3, kind: trust, req: {"trait":["kind","sensitive"]}}
+      vignettes:
+        - {id: field, traits: [methodical, scholarly]}
+        - {id: post, traits: [curious, kind]}
+        - {id: cloud}
     text:
       en:
-        name: "A comet found from a rooftop"
+        name: 'Mark the field before the cloud'
         place: "Nantucket"
         figure: "Maria Mitchell"
-        story: "Maria Mitchell sweeps the sky with a telescope from the roof of her home at night, and in the sea wind finds a new comet."
+        story: 'A letter reproduced in Maria Mitchell: Life, Letters, and Journals reports that Mitchell discovered a telescopic comet at Nantucket on 1 October 1847. Her father noted the discovery and wrote to the Harvard observatory’s director by the first mail to the mainland. The game’s practice field and helper are fictional.'
         relic: "A small telescope"
         relic_desc: "A small brass telescope with a trace of sea salt on the tube."
         points:
-          p1: "Recognise the comet by the rooftop telescope"
-          p2: "Sweep the sky all night"
-          p3: "Be the neighbour she consults"
+          p1: 'Mark two ordinary stars before circling the faint object'
+          p2: 'Keep the first field sketch until a second view is possible'
+          p3: 'Help prepare a dated account for the next reader'
+        vignettes:
+          field: 'The helper has drawn the faint spot by itself. You ask what he would use to point the instrument back to it. He adds two stars and a direction before the cloud comes over. You copy those marks. You still do not have a later position to compare.'
+          post: 'You know word will have to travel off the island. The helper wants to record a discovery before he has described what was seen. You put the date and the field on a separate slip and leave the next line for verification. It remains blank when the packet goes down to the shore.'
+          cloud: 'You wait with the drawing in hand while cloud covers the faint mark. Before folding it you circle a star you expect to find even if the faint object is gone. You bring back a position that can be sought again. No one sees it a second time before your return.'
       zh:
-        name: "屋顶上发现的彗星"
+        name: '云过来以前，先标下这块天'
         place: "楠塔基特"
         figure: "玛丽亚·米切尔"
-        story: "玛丽亚·米切尔夜里在家里的屋顶上用望远镜扫天，在海边的风里发现了一颗新彗星。"
+        story: '《玛丽亚·米切尔生平、书信与日记》所录的书信记载，她在 1847 年 10 月 1 日于楠塔基特发现一颗需用望远镜观测的彗星。父亲记下发现，并托首班去大陆的邮船寄信给哈佛天文台主任。卡里的练习星野与帮工是虚构的。'
         relic: "一架小望远镜"
         relic_desc: "一架小小的黄铜望远镜，镜筒上有海盐的痕迹。"
         points:
-          p1: "在屋顶望远镜旁认出彗星"
-          p2: "整夜扫天"
-          p3: "做她请教的邻居"
+          p1: '先标两颗参照星，再圈出暗目标'
+          p2: '留住第一次的星野图，等能再看一遍'
+          p3: '帮下一位读记录的人补好日期和所见'
+        vignettes:
+          field: '帮工只画了一个淡点。你问他下次靠什么把镜头转回这里。云遮上来前，他补了两颗星和一个方向。你把这些抄走，还没有第二次位置可以对照。'
+          post: '你知道消息得送出海岛。帮工还没写清看见的东西，就想把发现先记上去。你把日期和星野另写一张，留下一行等复核。纸包送去岸边时，那一行仍空着。'
+          cloud: '云挡住淡点时，你在原地拿着草图等。折纸前你圈一颗熟星，即使淡点不见了，也能从它找回这片天。你带回一个可以再找的位置，收队前仍没人看见第二次。'
 text:
   en:
     name: "Maria Mitchell"
     text: "American astronomer, born 1818, died 1889. She discovered a comet in 1847 and later became one of the first women to teach astronomy as a professor in the United States."
   zh:
     name: "玛丽亚·米切尔"
-    text: "美国天文学家，1818 年生，1889 年去世。1847 年发现一颗彗星，后来成为美国第一位女性教授天文学的人。"
+    text: "美国天文学家，1818 年生，1889 年去世。1847 年发现一颗彗星，后来在美国担任天文学教授。"
+hook: {en: 'How do you find the same patch of sky twice?', zh: '第二次抬起望远镜，怎样找回同一块天？'}
+facts:
+  comet:
+    date: '1847-10-01'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mitchell_nantucket_comet]
+    text:
+      en: 'The letter gives the date and place of the discovery and reports that a notice was sent to W. C. Bond. It does not record the game’s extra observer or test.'
+      zh: '书信给出发现日期和地点，写到给 W. C. 邦德寄信。卡里另编的帮工与练习不见于此记录。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional assistant whose first drawing has no stars to anchor the faint spot.', zh: '虚构的帮工，第一张图只画暗点，还找不到参照星。'}
+wiki:
+  refs:
+    mitchell_nantucket_comet:
+      order: 745
+      status: checked
+      text:
+        en: 'Maria Mitchell: Life, Letters, and Journals, appendix, Edward Everett’s letter on the discovery https://www.gutenberg.org/cache/epub/10202/pg10202.html'
+        zh: '《玛丽亚·米切尔生平、书信与日记》附录，爱德华·埃弗里特关于发现彗星的信 https://www.gutenberg.org/cache/epub/10202/pg10202.html'
+self_check:
+  fact: comet
+  quote_line: '你带回一个可以再找的位置。'
+  regret_choice: '只写发现名称，没留下让下一个观测者找回的位置。'
+  bookend: '从孤立的一点到能复看的带日期星图。'
+  share_line: '我记了两颗参照星，云来前只够这一笔。'
+  share_number: '1847 年 10 月 1 日'
+  knowing: 'post 知道消息后来需要送出岛。'
+  near: 'comet 保留日期、地点与寄信的记录。'
+  lever: '给淡点补参照与方向。'
+  missed: '没赶上第二次位置。'
+  brought: '能再找到的星野记号。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {C: 2, G: 2, L: 1}
     regret: true
+    refs: [pushkin_st_petersburg_address, pushkin_st_petersburg_apartment]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["kind","charismatic","artistic"]}}
         - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["calm","hardy"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["doctor","physician","nurse"]},{"trait":["calm","cheerful"]}]}}
+      vignettes:
+        - {id: number, traits: [bold, curious]}
+        - {id: queue, traits: [methodical, kind]}
+        - {id: river}
     text:
       en:
-        name: "Two days on the Moika"
+        name: 'A place before its house number'
         place: "St Petersburg"
         figure: "Alexander Pushkin"
-        story: "Pushkin is wounded in a duel and spends two days dying in his apartment on the Moika, aged thirty seven, while crowds in the street ask after him."
+        story: 'The Pushkin Apartment Museum records Pushkin''s death in this apartment in February 1837 and reproduces his description of the address near the Konyushenny Bridge, in Princess Volkonskaya’s house. The familiar number 12 dates to 1880. Your work by the entry is a fictional branch.'
         relic: "A book of his verse"
         relic_desc: "A small book with a pressed leaf at one poem."
         points:
-          p1: "Be a friend he can speak plainly to"
-          p2: "Hold out through the long night at his door"
-          p3: "Tend him as well as anyone can (a doctor, a nurse or a kind one helps)"
+          p1: 'Earn the door attendant’s trust so you can pass on directions'
+          p2: 'Stay by the bridge until a late visitor finds the right entry'
+          p3: 'Keep the corridor quiet for those who need to go upstairs'
+        vignettes:
+          number: 'You nearly give the visitor the number you remember from the museum. The door attendant asks which house you mean. You cross out the number and draw the bridge on the slip. The visitor finds the door. You will be long gone when the number you first wrote is put up.'
+          queue: 'The door attendant can answer one visitor at a time. You write the same directions twice so the next two can stop asking separately. You keep the draft on which you worked out the turn from the bridge. You still have no word from the room when you go.'
+          river: 'You walk from the bridge with the door attendant and count which turns belong in the directions. Before you go, one person uses your little map without needing to hear a house number. What happens beyond the entrance stays on the other side of the door.'
       zh:
-        name: "莫伊卡河畔的两天"
+        name: '门牌号尚未出现的那户人家'
         place: "圣彼得堡"
         figure: "亚历山大·普希金"
-        story: "普希金在决斗中受伤，在莫伊卡河畔的寓所里度过了生命的最后两天，死时三十七岁，街上聚着许多人打听他的情况。"
+        story: '普希金故居博物馆记载，普希金于 1837 年 2 月在这间寓所去世。他曾给父亲写过住处，在莫伊卡河畔、科纽申内桥旁的沃尔孔斯卡娅公爵夫人府邸。今天熟悉的 12 号门牌要到 1880 年才固定。本趟门口的差事为分支演绎。'
         relic: "一本诗集"
         relic_desc: "一本小书，某首诗里夹着一片压干的叶子。"
         points:
-          p1: "做一位他可以直说心里话的朋友"
-          p2: "在他门外熬过漫长的夜"
-          p3: "尽量好好照料他（医生、护士或善良的人更合适）"
+          p1: '让看门人放心把指路的差事交给你'
+          p2: '在桥边守到来迟的访客找对门口'
+          p3: '给必须上楼的人留一段安静的走廊'
+        vignettes:
+          number: '你险些顺口说出在博物馆见过的门牌号。看门人问你指的是哪栋。你划掉数字，在纸条上画出那座桥。访客总算找到了门口。等最初写下的号码真正挂上，你早已不在这里。'
+          queue: '看门人一次只能答一位访客。你把同一条路抄了两份，让后来的两个人各拿一张，省去再问。你留下最早试画转弯处的那张草纸。临走时，房里还是没有消息传给你。'
+          river: '你跟看门人从桥边走一遍，数清哪些弯得画进指路图。临走前，有个人照小图找到了门口，没问门牌。门里面后来发生什么，仍旧隔在那扇门后。'
 text:
   en:
     name: Alexander Pushkin
@@ -45,3 +58,54 @@ text:
   zh:
     name: 亚历山大·普希金
     text: 俄国诗人，1799 年生，1837 年去世，常被视为现代俄国文学的奠基人。他用诗体写了《叶甫盖尼·奥涅金》。1837 年他在圣彼得堡决斗中受伤，两天后去世。
+hook: {en: 'Would you still call this Moika 12?', zh: '这时还不能写莫伊卡十二号'}
+facts:
+  address:
+    date: '1836-10'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [pushkin_st_petersburg_address]
+    text:
+      en: 'Pushkin described the apartment by the bridge and the owner of the house. The museum dates the current street number to 1880.'
+      zh: '普希金以桥和房主指明住处，博物馆记载现用门牌于 1880 年固定。'
+  apartment:
+    date: '1837-02-10'
+    checked: official_record
+    level: careful
+    use: [story, wiki]
+    sources: [pushkin_st_petersburg_apartment]
+    text:
+      en: 'Pushkin died in this apartment on February 10, 1837, or January 29 by the old calendar.'
+      zh: '普希金于 1837 年 2 月 10 日在该寓所去世，按当时俄历为 1 月 29 日。'
+bystanders:
+  attendant:
+    invented: true
+    text: {en: 'An invented door attendant who has to answer everyone asking for the apartment.', zh: '虚构的看门人，来打听寓所的人都来找他问路。'}
+wiki:
+  refs:
+    pushkin_st_petersburg_address:
+      order: 434
+      status: checked
+      text:
+        en: 'All-Russian Pushkin Museum, history of the Memorial Apartment https://www.museumpushkin.ru/vserossijskij_muzej_a._s._pushkina/muzej-kvartira_a.s.pushkina/memorialnyj_muzej-kvartira_pushkina._istoriya.html'
+        zh: '全俄普希金博物馆，故居沿革与 1836 年 10 月书信地址 https://www.museumpushkin.ru/vserossijskij_muzej_a._s._pushkina/muzej-kvartira_a.s.pushkina/memorialnyj_muzej-kvartira_pushkina._istoriya.html'
+    pushkin_st_petersburg_apartment:
+      order: 435
+      status: checked
+      text:
+        en: 'All-Russian Pushkin Museum, The Pushkin Apartment Museum https://www.museumpushkin.ru/vserossijskij_muzej_a._s._pushkina/muzej-kvartira_a.s.pushkina/the_pushkin_apartment_museum.html'
+        zh: '全俄普希金博物馆，普希金故居 https://www.museumpushkin.ru/vserossijskij_muzej_a._s._pushkina/muzej-kvartira_a.s.pushkina/the_pushkin_apartment_museum.html'
+self_check:
+  fact: address
+  quote_line: '你划掉数字，在纸条上画出那座桥。'
+  regret_choice: '抄出两张路条就没工夫等房里传话。'
+  bookend: '从一个记错时代的门牌开始，到访客沿着小图真正找对门。'
+  share_line: '莫伊卡河畔，那时还不能写 12 号。'
+  share_number: '门牌到 1880 年才固定'
+  foreknowledge: 'number 从现代门牌知道未来地址，却要适配当时。'
+  proximity: 'apartment 与 address 固定寓所与日期。'
+  leverage: '划掉一个时代错误，补一张桥边转弯图。'
+  missed: '员工没进房内。'
+  takeaway: '指路图与 1880 年门牌年代。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

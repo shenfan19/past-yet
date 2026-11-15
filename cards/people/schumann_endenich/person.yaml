@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 3, S: 1}
     regret: true
+    refs: [schumann_endenich_papillon]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["artistic","cosmopolitan","kind"]}}
         - {id: p2, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["quiet","wanderer"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+      vignettes:
+        - {id: key, traits: [artistic, curious, scholarly]}
+        - {id: envelope, traits: [kind, quiet, attached]}
+        - {id: gift}
     text:
       en:
-        name: "The asylum at Endenich"
+        name: 'The tune in another key'
         place: "Endenich"
         figure: "Robert Schumann"
-        story: "Robert Schumann has spent two years in an asylum at Endenich near Bonn, visited by few friends, and dies there in July 1856."
-        relic: "A tuning fork"
-        relic_desc: "A small steel fork that gives one clear note."
+        story: 'The Library of Congress dates a copy of Schumann’s Papillon no. 10 to his stay at Endenich, 1854–1856, and identifies it as a transposition from C to B-flat major. This visit imagines two people comparing practice copies at a keyboard in 1856. The handoff and its helpers are fictional.'
+        relic: 'A labelled practice score'
+        relic_desc: 'A fictional page marked for a comparison of keys.'
         points:
-          p1: "Sit with him quietly"
-          p2: "Hear what he still hums (a musician or a sensitive ear helps)"
-          p3: "Get past the closed door to visit him"
+          p1: 'Ask the helper to play the opening on the other key'
+          p2: 'Compare the two starting notes and mark both headings'
+          p3: 'Keep the second version apart from the sheet already taken downstairs'
+        vignettes:
+          key: 'Lina thinks the first note was copied wrong. You ask her to start each version on its own note and play a few bars. She can hear the tune go the same way from a different pitch. Instead of rubbing either page out, she writes the key above each.'
+          envelope: 'Emil has an envelope ready for only one page. You fold a wider wrapper so he can carry both without covering Lina’s headings. At the door he reads the two key names back to her. She can put the keyboard cover down without wondering which copy went away.'
+          gift: 'You remember that a manuscript will eventually be given to Schumann’s daughter Marie. Lina has only the practice pages and wants to know which she should keep by the instrument. You help her put the keys on their sleeves. The history of the actual manuscript will continue beyond the room.'
       zh:
-        name: "恩德尼希的疗养院"
+        name: '换了调的曲子'
         place: "恩德尼希"
         figure: "罗伯特·舒曼"
-        story: "罗伯特·舒曼在波恩附近的恩德尼希疗养院住了两年，很少有朋友来看他，1856年7月他在那里去世。"
-        relic: "一支音叉"
-        relic_desc: "一支小钢叉，发出一个清楚的音。"
+        story: '美国国会图书馆记载，舒曼在1854至1856年住在恩德尼希期间抄写过《蝴蝶》第10首，将它从C大调移到降B大调。游戏虚构1856年的一次琴边比谱，由两个人对照练习副本。交接和帮工都是虚构的。'
+        relic: '一页写明调号的练习谱'
+        relic_desc: '虚构练习谱，标明了对照用的调号。'
         points:
-          p1: "安静地陪他坐着"
-          p2: "听出他还在哼的是什么（音乐家或敏感的耳朵更合适）"
-          p3: "越过紧闭的门去看他"
+          p1: '请帮工换个调起头弹一遍'
+          p2: '比较两份谱的起音，给两页都写好题头'
+          p3: '把第二个版本留好，与已经送下楼的那份分开'
+        vignettes:
+          key: '莉娜以为起音抄错了。你请她照两份谱各自写的起音，弹几小节。她听出起音不同，旋律的走向却一样。两页都不必擦，她在各自上面标了调。'
+          envelope: '埃米尔备好的信封只能放一页。你另折了张宽一点的包纸，他把两份都带走，莉娜的题头也不用折进去。到门口他把两个调名念给她听。她可以安心盖好琴盖了。'
+          gift: '你记得一份手稿日后会交给舒曼的女儿玛丽。莉娜只有练习页，想知道琴边该留哪一张。你帮她把两个调名写上各自的纸套。真正的手稿后来怎样流传，你在这屋里看不到了。'
 text:
   en:
     name: Robert Schumann
@@ -45,3 +58,42 @@ text:
   zh:
     name: 罗伯特·舒曼
     text: 德国作曲家，1810 年生，1856 年去世。1854 年精神崩溃并试图自尽后，他住进波恩附近恩登尼希的私人疗养院，两年后在那里去世。他的妻子克拉拉·舒曼是著名的钢琴家与作曲家。
+hook: {en: 'The same melody starts on a different key.', zh: '同一段曲子，怎么换了起音？'}
+facts:
+  papillon:
+    date: '1856'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [schumann_endenich_papillon]
+    text:
+      en: 'The archive dates this copy to Schumann’s Endenich stay and notes its B-flat major transposition and later gift to Marie. The card uses 1856 within that stay; the copy is not dated to that exact year here.'
+      zh: '馆方把抄本归于舒曼在恩德尼希居住期间，提及降B大调移调和后来赠给玛丽。游戏采用这段时期的1856年；馆方没有把抄本确切定在这一年。'
+bystanders:
+  lina:
+    invented: true
+    text: {en: 'A fictional reader comparing two practice copies.', zh: '虚构读谱者莉娜，要比较两份练习谱。'}
+  emil:
+    invented: true
+    text: {en: 'A fictional messenger with an envelope that is too small.', zh: '虚构送件人埃米尔，带来的信封不够大。'}
+wiki:
+  refs:
+    schumann_endenich_papillon:
+      order: 873
+      status: checked
+      text:
+        en: 'Library of Congress, Robert Schumann music manuscript guide, Papillon no. 10 https://guides.loc.gov/robert-schumann/music-manuscripts'
+        zh: '美国国会图书馆，舒曼音乐手稿指南，《蝴蝶》第10首 https://guides.loc.gov/robert-schumann/music-manuscripts'
+self_check:
+  fact: papillon
+  quote_line: '她听出起音不同，旋律的走向却一样。'
+  regret_choice: 'key 擦掉看着错的开头会丢掉另一个调。'
+  bookend: '问起音为何不同，最后携带两个调。'
+  share_line: '两页谱，从两个音起。'
+  share_number: 'C与降B两种调。'
+  knowing: 'gift 知道实物日后交给玛丽。'
+  near: 'papillon 两调差异有馆藏依据。'
+  lever: 'envelope 让两页一起带走。'
+  missed: 'gift 实物归属在后来。'
+  brought: 'key 留下写明调号的虚构练习谱。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

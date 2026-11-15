@@ -10,38 +10,105 @@ events:
     tier: 2
     channels: {Y: 3, E: 1}
     regret: true
+    refs: [jianzhen_nara_arrival, jianzhen_nara_foundation]
     scene:
       points:
         - {id: p1, kind: hold, req: {"trait":["methodical","vigil"]}}
         - {id: p2, kind: notice, req: {"job":["nurse","pharmacist","physician"]}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","cosmopolitan","charismatic"]}}
+      vignettes:
+        - {id: sound, traits: [kind, charismatic, cosmopolitan]}
+        - {id: tie, traits: [methodical, vigil, handy]}
+        - {id: temple}
     text:
       en:
-        name: "A monk who never saw the shore"
+        name: 'The shelf at Tōdai-ji'
         place: "Nara"
         figure: "Jianzhen"
-        story: "The Chinese monk Jianzhen sets out to teach the monastic rules in Japan, is turned back five times by storms and arrests, and goes blind. He arrives on the sixth try and never sees the country."
-        relic: "A bundle of dried herbs"
-        relic_desc: "Medicinal plants he carried across the sea."
+        story: 'After leaving China in 753, Jianzhen reached Nara in 754. He transmitted Buddhist precepts at Tōdai-ji, and Tōshōdai-ji came later. This episode imagines two temple helpers preparing texts for a reading at Tōdai-ji, with the book handling and dialogue invented.'
+        relic: 'A practice wrapper label'
+        relic_desc: 'An invented label used by the fictional temple helpers.'
         points:
-          p1: "Walk the last road to the temple at his pace"
-          p2: "Talk about medicines with him (medical staff)"
-          p3: "Describe the land to him as you walk"
+          p1: 'Hold the reading bundle steady while the order is checked'
+          p2: 'Ask the attendant which bundle was prepared for this reading'
+          p3: 'Help the next reader learn where the passage begins'
+        vignettes:
+          sound: 'Chiyo points to the right bundle from across the room. Jun still cannot tell which one she means on the crowded shelf. You ask her to read the opening aloud instead. Jun finds the matching words on the wrapper and sets the bundle down for the next reader.'
+          tie: 'Jun starts to retie a loose wrapper before checking the order. You hold the bundle as Chiyo reads the first line of each part in turn. He puts one misplaced part back. The bundle will now open in the order in which they practised it.'
+          temple: 'You know the name of the temple that will be founded in 759. Chiyo only needs to mark where to take this reading in the morning. You help her write Tōdai-ji on the wrapper. The other temple still belongs to a future you will not see on this visit.'
       zh:
-        name: "没能看见海岸的僧人"
+        name: '东大寺里的一层架'
         place: "奈良"
         figure: "鉴真"
-        story: "中国僧人鉴真想去日本传授戒律，五次被风浪和阻挠挡回，还双目失明。第六次他终于到达，却再没能看见那个国家。"
-        relic: "一捆干草药"
-        relic_desc: "他漂洋过海带去的药草。"
+        story: '鉴真于753年离开中国，754年抵达奈良。他在东大寺传授戒律，后来才有唐招提寺。游戏虚构东大寺两名帮工为一次读诵准备文本，经卷交接与对话为虚构。'
+        relic: '一张练习用的卷签'
+        relic_desc: '故事中的帮工使用的虚构经卷签。'
         points:
-          p1: "按他的步子走完去寺院的最后一段路"
-          p2: "和他谈药"
-          p3: "边走边给他描述眼前的土地"
+          p1: '核对经卷次序时扶稳经卷'
+          p2: '问帮工，哪一束是为这次读诵备下的'
+          p3: '帮接读的人找到从哪儿念起'
+        vignettes:
+          sound: '千代隔着屋子指给人看，可架上摆得太满，准还是分不清她指哪束。你请她念出开头。准听着去对包纸上的字，找到那一束，给接读的人摆了出来。'
+          tie: '准想先把松开的包纸捆上，还没核对里面的次序。你扶着那束经卷，千代挨个念每部分的头一句。准把放错的一份放了回去。下次打开时，次序就是他们练过的那样。'
+          temple: '你知道759年还会有一座寺。千代只要写清明早这束经往哪里送。你帮她在包纸上写东大寺。另一座寺还在未来，这趟见不到。'
 text:
   en:
     name: Jianzhen
-    text: Chinese Buddhist monk, 688 to 763. After five failed attempts and the loss of his sight, he reached Japan in 754, taught monastic rules and founded Toshodaiji temple at Nara.
+    text: Chinese Buddhist monk, 688 to 763. He sailed in 753 and reached Nara in 754. He taught the Buddhist precepts at Tōdai-ji, and Tōshōdai-ji was established in 759.
   zh:
     name: 鉴真
-    text: 中国僧人，688 年生，763 年去世。五次东渡失败并双目失明之后，他在 754 年抵达日本，传授戒律，并在奈良创建唐招提寺。
+    text: 中国僧人，688年生，763年去世。他于753年起航，754年抵达奈良，在东大寺传戒。唐招提寺创建于759年。
+hook: {en: 'A bundle must be ready before the lesson.', zh: '开讲前，还得找齐一束经卷。'}
+facts:
+  arrival:
+    date: '754'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [jianzhen_nara_arrival]
+    text:
+      en: 'The exhibition documents the journey to Japan and the Nara transmission of the Buddhist precepts associated with Jianzhen.'
+      zh: '展览记述鉴真赴日经历，以及他在奈良传授佛教戒律。'
+  foundation:
+    date: '759'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [jianzhen_nara_foundation]
+    text:
+      en: 'The temple places its establishment on a site granted in 759, after the arrival at Nara.'
+      zh: '寺方记载，鉴真抵达奈良之后，759年获赐地创建唐招提寺。'
+bystanders:
+  chiyo:
+    invented: true
+    text: {en: 'A fictional temple helper who can read the opening aloud.', zh: '虚构帮工千代，能把开头念给人听。'}
+  jun:
+    invented: true
+    text: {en: 'A fictional helper bundling the texts for the next reader.', zh: '虚构帮工准，要为接读的人把经卷收好。'}
+wiki:
+  refs:
+    jianzhen_nara_arrival:
+      order: 893
+      status: checked
+      text:
+        en: 'Kyoto National Museum, The Buddhist Legacy of Jianzhen and His Successors https://www.kyohaku.go.jp/old/eng/special/koremade/kairitsu_2021.html'
+        zh: '京都国立博物馆，鉴真与其后继者特展 https://www.kyohaku.go.jp/old/eng/special/koremade/kairitsu_2021.html'
+    jianzhen_nara_foundation:
+      order: 894
+      status: checked
+      text:
+        en: 'Tōshōdai-ji, temple history and foundation https://www.toshodaiji.jp/s/about-eng.html'
+        zh: '唐招提寺，寺院沿革与创建 https://www.toshodaiji.jp/s/about-eng.html'
+self_check:
+  fact: arrival
+  quote_line: '准听着去对包纸上的字。'
+  regret_choice: 'temple 把后来的寺名写在眼下的包纸上，就送错了地方。'
+  bookend: '从要找的一束开始，到给次日写好眼前地址。'
+  share_line: '念出开头，接读的人就找到那一束。'
+  share_number: '754年抵奈良与759年受赐地相隔五年。'
+  knowing: 'temple 知道759年还会创建唐招提寺。'
+  near: 'arrival 抵奈良与传戒有馆方资料。'
+  lever: 'tie 一份错位的卷回到原位。'
+  missed: 'temple 看不到后来的新寺。'
+  brought: 'sound 带回复写的包纸签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

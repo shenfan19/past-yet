@@ -9,34 +9,47 @@ events:
     field: philosophy
     tier: 2
     channels: {S: 2, G: 1}
+    refs: [socrates_athens_apology]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"provides":"show"}}
         - {id: p2, kind: trust, req: {"trait":["artistic","sensitive","attached"]}}
         - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: handoff, traits: [artistic, sensitive, attached]}
+        - {id: charges, traits: [scholarly, skeptical, quiet]}
+        - {id: verdict}
     text:
       en:
-        name: A life of questions
+        name: 'What the court heard'
         place: Athens
         figure: Socrates
-        story: Socrates spends his life asking what justice and virtue are, and at his trial chooses his questions over his safety.
-        relic: A plain clay cup
-        relic_desc: An ordinary cup, kept because of what the last evening was.
+        story: 'In Plato’s Apology, Socrates distinguishes long-standing rumours about him from the charges at his trial, which include corrupting the young. The event follows two fictional listeners outside the court in 399 BCE. Their notes are imagined; Plato’s account is a later literary source.'
+        relic: 'The listener’s clay cup'
+        relic_desc: 'A cup from the fictional pottery seller’s stall.'
         points:
-          p1: "Talk with him without being cornered"
-          p2: "Be a familiar he does not tire of in the square"
-          p3: "Stand through the afternoon of the trial"
+          p1: 'Ask the message carrier which words he actually heard read'
+          p2: 'Help the listener reconstruct her unfinished account'
+          p3: 'Stay until he explains the difference between the two sets of accusations'
+        vignettes:
+          handoff: 'Kleio has to leave for her pottery stall before she can hear the speech through. You find her at the gate and let her recount the opening in her own order. She leaves a space for the portion she missed. Her brother will hear where she had to stop.'
+          charges: 'Pheidon has put a market rumour at the top of his report as if it had been read to the court. You ask him to name its speaker. He can point to one man in the market and one voice inside. The report leaves their words on separate lines.'
+          verdict: 'You know how this trial ends. Pheidon wants to hurry the news to someone who could not come. If you tell him now, he will repeat it as something the court has already decided. You give him only what has been heard so far. You will miss the moment he delivers it.'
       zh:
-        name: 一生都在发问
+        name: '散庭后还剩哪句话'
         place: 雅典
         figure: 苏格拉底
-        story: 苏格拉底一生都在追问正义和美德是什么，受审时他选择守住提问，而不是保全自己。
-        relic: 一只朴素的陶杯
-        relic_desc: 一只普通的杯子，被留下来，是因为那个最后的夜晚。
+        story: '柏拉图的《申辩篇》区分针对苏格拉底的旧传闻和庭上的正式控告，后者包括败坏青年。游戏跟随公元前399年法庭外的两位虚构听众。他们的笔记为虚构，《申辩篇》是后来写成的文学文本。'
+        relic: '听众的陶杯'
+        relic_desc: '虚构卖陶器人的摊上留下的一只杯子。'
         points:
-          p1: "与他对话而不被问倒"
-          p2: "在广场上做他不嫌烦的熟人"
-          p3: "站完整个审判的下午"
+          p1: '请传话人说出他确实听到有人宣读的话'
+          p2: '帮听众捋清没听全的说法'
+          p3: '再听一段，等他解释两类指责的区别'
+        vignettes:
+          handoff: '克莱奥急着回陶器摊，听不到辩词结束。你在门边找到她，请她照自己的次序说开头。她把没听见的那一段空了下来，弟弟听她复述时，会知道她听到哪儿就走了。'
+          charges: '费冬把集市听来的闲话写在最上方，仿佛有人在庭上宣读过。你请他认一认证人。他指得出集市上的一个人，也说得出庭里听到的一把嗓音。两人的话分成两行才带走。'
+          verdict: '你知道这场审判怎么收场。费冬急着把消息送给来不了的人。现在告诉他结局，他就会当成已经宣判去传。你只说到眼前听过的那一段，之后他怎样转述，你已赶不上了。'
 text:
   en:
     name: Socrates
@@ -44,3 +57,42 @@ text:
   zh:
     name: 苏格拉底
     text: 雅典的希腊哲学家，公元前 470 年生，公元前 399 年去世。他自己没有留下著作，后人通过柏拉图和色诺芬了解他。他向同胞追问美德，被控不敬神和败坏青年，饮毒芹汁而死。
+hook: {en: 'What will you repeat when the court empties?', zh: '散庭后，你会复述哪一句？'}
+facts:
+  apology:
+    date: '-399'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [socrates_athens_apology]
+    text:
+      en: 'Plato’s account has Socrates address the older accusers before turning to the affidavit led by Meletus.'
+      zh: '柏拉图笔下，苏格拉底先回应旧指责，随后才谈以墨勒托为首的控告。'
+bystanders:
+  kleio:
+    invented: true
+    text: {en: 'A fictional pottery seller with a stall to reopen before the speech ends.', zh: '虚构的卖陶器人克莱奥，辩词讲完前得回去开摊。'}
+  pheidon:
+    invented: true
+    text: {en: 'A fictional messenger taking news to someone who could not attend.', zh: '虚构的传话人费冬，要把消息带给一位没到场的人。'}
+wiki:
+  refs:
+    socrates_athens_apology:
+      order: 793
+      status: checked
+      text:
+        en: 'Plato, Apology 18a–19b and 24b–c, Harvard Center for Hellenic Studies https://chs.harvard.edu/primary-source/plato-the-apology-of-socrates-sb/'
+        zh: '柏拉图《申辩篇》18a—19b、24b—c，哈佛大学希腊研究中心 https://chs.harvard.edu/primary-source/plato-the-apology-of-socrates-sb/'
+self_check:
+  fact: apology
+  quote_line: '两人的话分成两行才带走。'
+  regret_choice: 'verdict 若抢先讲判决，费冬会当即时消息带走。'
+  bookend: '问的是散庭后复述什么，结局留下复述者的两行。'
+  share_line: '一句街谈，一条庭上指控。'
+  share_number: '两种不同的说法。'
+  knowing: 'verdict 知道审判结局。'
+  near: 'apology 可在记载的审判中听到区分。'
+  lever: 'charges 让同一行变成两行。'
+  missed: 'verdict 未看到费冬送达消息。'
+  brought: 'handoff 留下未听完处的记录。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

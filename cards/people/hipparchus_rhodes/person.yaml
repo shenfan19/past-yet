@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {V: 2, C: 1}
     regret: true
+    refs: [hipparchus_rhodes_palimpsest, hipparchus_rhodes_debate]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","quiet"]}}
         - {id: p2, kind: hold, req: {"stat":{"wit":7}}}
         - {id: p3, kind: hold, redeem: true, req: {"job":["archivist","student"]}}
+      vignettes:
+        - {id: edges, traits: [methodical, scholarly]}
+        - {id: copy, traits: [curious, quiet]}
+        - {id: outline}
     text:
       en:
-        name: "A star list that was lost"
+        name: 'The four edges of a star group'
         place: "Rhodes"
         figure: "Hipparchus"
-        story: "Working at Rhodes, Hipparchus compiles a catalogue of about eight hundred and fifty stars and finds the slow shift of the equinoxes. His own writings are lost and we know them through Ptolemy."
+        story: 'Multispectral images of the Codex Climaci Rescriptus have revealed erased Greek astronomical writing, including numerical limits for Corona Borealis. A 2022 study attributed the passage to Hipparchus’ catalogue; that attribution has been debated. The game uses an imagined practice drawing and does not reconstruct a lost complete catalogue.'
         relic: "A bronze armillary ring"
         relic_desc: "A graduated ring used to measure the position of a star."
         points:
-          p1: "Count the stars with him"
-          p2: "Keep the night watch at the sighting tube"
-          p3: "Copy his star list by hand (a record keeper or a student)"
+          p1: 'Find the marked extremity of a star group on the drawing'
+          p2: 'Keep the two axes distinct while comparing the marks'
+          p3: 'Copy the extent and the stars that establish it together'
+        vignettes:
+          edges: 'The observer has chosen the brightest mark as the edge of the group. You show him the dimmer point farther along the row. He moves one boundary tick and names the point in the margin. You take that revision home. The sheet does not tell you who will write the full catalogue.'
+          copy: 'You recall that later readers will have only a few limits left to compare. The observer has written a span but left out which way he measured it. You name the axis before he calls the number a second time. Your copy now has both. The other axis is still waiting when you go.'
+          outline: 'You copy the two ends of the marked span before the observer tidies the page. The helper can redraw the limits even if the sketch moves. You bring back two ticks and a direction. The next group is still waiting to be marked.'
       zh:
-        name: "丢失的星表"
+        name: '星群的四处边界'
         place: "罗得岛"
         figure: "喜帕恰斯"
-        story: "喜帕恰斯在罗得岛编出一份约八百五十颗星的星表，并发现了二分点的缓慢移动。他自己的著作已经失传，是靠托勒密的转述才知道的。"
+        story: '《阶梯抄本》的多光谱影像显出被擦去的希腊天文文字，其中有北冕座范围的数值。2022 年有研究将这一段归于喜帕恰斯星表，但归属仍有讨论。卡里用虚构练习图演示怎样记范围，未补造一部失传的完整星表。'
         relic: "一只青铜浑仪环"
         relic_desc: "一只带刻度的环，用来量星的位置。"
         points:
-          p1: "陪他数星星"
-          p2: "在观测筒旁值夜"
-          p3: "亲手抄下他的星表"
+          p1: '在练习图上找出所标的星群边界'
+          p2: '对照标记时，把两个方向分开'
+          p3: '把范围和用来界定它的星一同抄下'
+        vignettes:
+          edges: '观察帮工用最亮的那点当边界。你指给他看，同一方向还有个暗些的点伸得更远。他挪一格边界，在页边记下所取的那颗。你把订正带回去，整部星表究竟会由谁写定，这张图答不出。'
+          copy: '你想起后世能拿来对照的边界数只剩几处。帮工写了一个跨度，却漏写沿哪个方向量。等他重报数字前，你先补上是哪一轴。副本上这两项都齐了，你走时另一轴还没核。'
+          outline: '观察帮工收纸前，你把标出的跨度两端抄好。草图移了，他还能再标出范围。你带回来两个刻记和一个方向，下一组星还没开始标。'
 text:
   en:
     name: Hipparchus
@@ -45,3 +58,54 @@ text:
   zh:
     name: 喜帕恰斯
     text: 希腊天文学家，约公元前 190 年生，约公元前 120 年去世，在罗得岛观测。他编制星表，发现岁差，并为天文学发展了三角学。
+hook: {en: 'Which stars set the edges of the group?', zh: '这组星的边界由谁来定？'}
+facts:
+  palimpsest:
+    date: '-130'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hipparchus_rhodes_palimpsest]
+    text:
+      en: 'The study transcribes a passage on the boundaries of Corona Borealis from the erased writing and argues for attribution to Hipparchus.'
+      zh: '研究转录了被擦去的北冕座界限，并提出归于喜帕恰斯的解释。'
+  debate:
+    date: '-130'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hipparchus_rhodes_debate]
+    text:
+      en: 'A later astronomical analysis questions the proposed attribution. Neither study dates the game’s invented exercise.'
+      zh: '后续天文数据分析质疑该归属；两项研究均不是卡里虚构练习的纪年依据。'
+bystanders:
+  observer:
+    invented: true
+    text: {en: 'A fictional assistant checking the boundary of a practice star group.', zh: '虚构的观察帮工，需要核对练习图上星群的一个边界。'}
+wiki:
+  refs:
+    hipparchus_rhodes_palimpsest:
+      order: 733
+      status: checked
+      text:
+        en: 'V. Gysembergh, P. J. Williams and E. Zingg, New evidence for Hipparchus’ Star Catalogue, Journal for the History of Astronomy, 2022 https://doi.org/10.1177/00218286221128289'
+        zh: '吉森贝格、威廉斯与青格，喜帕恰斯星表新证据，《天文学史杂志》，2022 https://doi.org/10.1177/00218286221128289'
+    hipparchus_rhodes_debate:
+      order: 734
+      status: checked
+      text:
+        en: 'An astronomical analysis of the data in the pseudo-Hipparchus palimpsest in the Codex Climaci Rescriptus, Journal for the History of Astronomy, 2024 https://doi.org/10.1177/00218286241256345'
+        zh: '《阶梯抄本》重写底本文字的天文数据分析，《天文学史杂志》，2024 https://doi.org/10.1177/00218286241256345'
+self_check:
+  fact: palimpsest
+  quote_line: '同一方向还有个暗些的点伸得更远。'
+  regret_choice: '拿最亮的一点当边界，图的范围就被画小了。'
+  bookend: '从一个亮点到写清两端的跨度。'
+  share_line: '边界由伸得最远的点定。'
+  share_number: '两个刻记'
+  knowing: 'copy 员工知道后世留下的是零碎数值。'
+  near: 'palimpsest 给出北冕座残存的数据，debate 标明归属争论。'
+  lever: '补方向或挪一个边界。'
+  missed: '收队时另一个方向还没有核。'
+  brought: '带两个端点的抄图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

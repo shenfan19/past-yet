@@ -10,38 +10,105 @@ events:
     tier: 2
     channels: {T: 1, V: 1}
     regret: true
+    refs: [tesla_wardenclyffe_white, tesla_wardenclyffe_site]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["civil_engineer","retired_engineer","electrician"]},{"stat":{"wit":7}},{"trait":["streetwise","curious","methodical"]}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","ambitious"]},{"trait":["glib","ambitious","scholarly"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","artistic","cosmopolitan"]},{"trait":["cosmopolitan","attached","artistic"]}]}}
+      vignettes:
+        - {id: revision, traits: [methodical, handy, curious]}
+        - {id: print, traits: [ambitious, glib, scholarly]}
+        - {id: empty}
     text:
       en:
-        name: "The unfinished tower"
+        name: 'The line marked proposed'
         place: "Shoreham, Long Island"
         figure: "Nikola Tesla"
-        story: "Tesla builds a tall tower at Wardenclyffe to send messages and power through the air. The money runs out and the tower is never finished."
-        relic: "A glass insulator"
-        relic_desc: "A heavy glass insulator from the laboratory wiring."
+        story: 'Tesla’s 1901 correspondence with architect Stanford White concerns the Wardenclyffe buildings. The site was intended for a wireless system for communications and energy. This story imagines a construction office sorting drawings and a notice before the laboratory opens. The notice and its two workers are fictional.'
+        relic: 'A retained drawing copy'
+        relic_desc: 'A fictional copy filed during the Wardenclyffe works.'
         points:
-          p1: "Follow the idea behind the tower (an engineer or electrician helps)"
-          p2: "Make the case to the backers"
-          p3: "Be the visitor who takes it seriously"
+          p1: 'Find the plan revision that the foreman actually received'
+          p2: 'Persuade the clerk to stamp proposed before the notice goes out'
+          p3: 'Keep the rejected version so the next shift can compare it'
+        vignettes:
+          revision: 'The foreman has a page that says to use the latest drawing. Mabel lays two drawings on the desk; both bear the same heading. You find the pencilled date under a fold and send the newer copy to the yard. You mark the older one as superseded before anyone can collect it by mistake.'
+          print: 'Joe has set a line saying power is being sent from the site. He needs a full line to keep the notice balanced. You give him a sentence about what the site is being built to test. He reads the notice aloud, once as it was and once as it will go out, and keeps the new line.'
+          empty: 'You remember what will later remain of the tower. Mabel wants a place to file the result that nobody has brought from the yard. You make a folder for the proposed building and leave its results sleeve empty. You will not be there if the next shift brings anything to put in it.'
       zh:
-        name: "没有建成的塔"
+        name: '那一行写着拟建'
         place: "长岛肖勒姆"
         figure: "尼古拉·特斯拉"
-        story: "特斯拉在沃登克里弗建起一座高塔，想用空气传送信息和电力。资金耗尽，塔始终没有完工。"
-        relic: "一只玻璃绝缘子"
-        relic_desc: "一只沉重的玻璃绝缘子，来自实验室的线路。"
+        story: '特斯拉1901年与建筑师斯坦福·怀特的通信涉及沃登克里弗的建筑工程。这个场地为计划中的无线通信与传能系统而建。游戏虚构一间工地办公室，在实验室启用前整理图纸和一则告示。告示及其两名经手人均为虚构。'
+        relic: '一份留底的图纸'
+        relic_desc: '游戏虚构的沃登克里弗工地图纸副本。'
         points:
-          p1: "理解这座塔背后的想法（工程师或电工更合适）"
-          p2: "向出资人陈述理由"
-          p3: "做一位认真看待它的来访者"
+          p1: '找出工头实际收到的是哪一版图'
+          p2: '劝文员在告示发出前盖上拟建印记'
+          p3: '留下退回的那一版，交给下一班对照'
+        vignettes:
+          revision: '工头那一页写着按新图施工。梅布尔在桌上摊开两份图，抬头一模一样。你掀开折角，找到铅笔写的日期，把较新的那张送去场上，并在旧图上标出作废，免得有人拿错。'
+          print: '乔已经排了一行，说场地正在把电能送出去。他需要一整行来撑住版面。你给他一句话，写场地建起来准备试什么。他把原句和要印出的句子各念一遍，最后留下新的一行。'
+          empty: '你记得后来塔会剩下什么。梅布尔想找个地方放试验结果，可场上还没人送来。你替拟建工程建了一册档，结果袋留空。下一班若真有人拿来东西，你已不在。'
 text:
   en:
     name: Nikola Tesla
     text: Serbian American inventor, 1856 to 1943. He developed alternating current systems and the induction motor. In 1901 he began a large tower at Wardenclyffe on Long Island for wireless transmission, and the project ran out of funds.
   zh:
     name: 尼古拉·特斯拉
-    text: 塞尔维亚裔美国发明家，1856 年生，1943 年去世。他发展了交流电系统和感应电动机。1901 年他在长岛沃登克里夫开始建造一座用于无线传输的大塔，项目后来因资金耗尽而中止。
+    text: 塞尔维亚裔美国发明家，1856 年生，1943 年去世。他发展了交流电系统和感应电动机。1901 年他在长岛沃登克里弗开始建造一座用于无线传输的大塔，项目后来因资金耗尽而中止。
+hook: {en: 'One stamp will send a promise to print.', zh: '盖一下章，承诺就要付印。'}
+facts:
+  white:
+    date: '1901'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tesla_wardenclyffe_white]
+    text:
+      en: 'The archival finding aid lists three 1901 letters to Stanford White about the construction of the Wardenclyffe tower and building.'
+      zh: '档案指南列有三封1901年致斯坦福·怀特、涉及沃登克里弗塔和实验楼施工的信。'
+  site:
+    date: '1902'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tesla_wardenclyffe_site]
+    text:
+      en: 'The laboratory and tower site survive. The Register account describes the proposed wireless delivery of power and communications and lists the use of the laboratory from 1902 to 1906.'
+      zh: '实验室与塔址尚存。遗址资料记载拟议中的无线供能和通信系统，也列出实验室在1902至1906年间的使用。'
+bystanders:
+  mabel:
+    invented: true
+    text: {en: 'A fictional clerk routing plan sheets to the yard.', zh: '虚构文员梅布尔，把图纸送到工地。'}
+  joe:
+    invented: true
+    text: {en: 'A fictional compositor who needs a replacement line before the print goes out.', zh: '虚构排字工乔，开印前还缺一句替换句。'}
+wiki:
+  refs:
+    tesla_wardenclyffe_white:
+      order: 849
+      status: checked
+      text:
+        en: 'New York Public Library, Nikola Tesla letters finding aid, Stanford White correspondence https://nyplorg-data-archives.s3.amazonaws.com/uploads/collection/generated_finding_aids/mss4641.pdf'
+        zh: '纽约公共图书馆，特斯拉书信档案指南，致斯坦福·怀特通信 https://nyplorg-data-archives.s3.amazonaws.com/uploads/collection/generated_finding_aids/mss4641.pdf'
+    tesla_wardenclyffe_site:
+      order: 850
+      status: checked
+      text:
+        en: 'U.S. National Park Service, Wardenclyffe Laboratory historic site https://www.nps.gov/places/wardenclyffe-laboratory.htm'
+        zh: '美国国家公园管理局，沃登克里弗实验室遗址 https://www.nps.gov/places/wardenclyffe-laboratory.htm'
+self_check:
+  fact: white
+  quote_line: '结果袋留空。'
+  regret_choice: 'print 保住好看的整行，可能把目标印成业绩。'
+  bookend: '从一行印字到一只等报告的袋子。'
+  share_line: '拟建是一行字，试验结果还没到。'
+  share_number: 'revision 两版图，保留一版执行。'
+  knowing: 'empty 知道后世只剩塔址。'
+  near: 'white 年份与工地在馆藏档案中有据。'
+  lever: 'revision 让工头收到正确图。'
+  missed: 'empty 看不到下一班送来的结果。'
+  brought: 'revision 带回一页虚构的图纸副本。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

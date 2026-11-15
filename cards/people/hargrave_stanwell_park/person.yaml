@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 2
     channels: {L: 1, H: 1}
+    refs: [hargrave_stanwell_park_beach, hargrave_stanwell_park_photo]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: trust, req: {"trait":["handy"]}}
         - {id: p3, kind: hold, req: {"any":[{"trait":["patient"]},{"stat":{"will":6}}]}}
+      vignettes:
+        - {id: four, traits: [methodical, curious, scholarly]}
+        - {id: tag, traits: [handy, patient, vigil]}
+        - {id: lift}
     text:
       en:
-        name: "Four kites and a seat"
+        name: 'The fourth kite'
         place: "Stanwell Park, Australia"
         figure: "Lawrence Hargrave"
-        story: "On the cliffs at Stanwell Park, Lawrence Hargrave links four of his box kites into one train and lets the sea wind lift him a few metres off the ground. He never patents his designs and publishes them freely for anyone to use."
-        relic: "A box kite frame"
-        relic_desc: "A light lattice of thin wood, cloth torn from one end."
+        story: 'On 12 November 1894 at Stanwell Park beach, Lawrence Hargrave rose from the ground in an experiment with four linked box kites. A photograph held by the State Library of New South Wales shows Hargrave, James Swaine and equipment from the test. The beach ledger and the two helpers in this visit are fictional.'
+        relic: 'A spare box-kite tag'
+        relic_desc: 'A spare label from the fictional tally table.'
         points:
-          p1: "Watch how the box shape holds the wind"
-          p2: "Help him tie the lines and spars"
-          p3: "Wait on the cliff for the wind to rise"
+          p1: 'Count the kites laid out before the lift'
+          p2: 'Keep the frame labels readable while they are carried off the sand'
+          p3: 'Wait until the seat leaves the beach before marking the trial'
+        vignettes:
+          four: 'Ada has crossed one kite off because she saw its frame carried down in two pieces. You go back with her and count the assembled kites once. All four go onto the page. She draws a small bracket around them so the next reader knows they belong to the same lift.'
+          tag: 'Ned finds a tag torn loose as he carries the frames off the beach. You follow back along the wet sand while he keeps the other three frames apart. There is just enough of the mark left to match the loose tag. When he shuts the store, he can still tell the last frame from the first.'
+          lift: 'The number you remember from a future display almost goes into the height column. Ada has seen the seat stir but is waiting to see daylight between it and the sand. You watch for that first gap with her. The visit ends before you can check what height was entered into the ledger.'
       zh:
-        name: "四只风筝和一把座椅"
+        name: '第四只风筝'
         place: "澳大利亚斯坦韦尔公园"
         figure: "劳伦斯·哈格雷夫"
-        story: "在斯坦韦尔公园的海崖上，劳伦斯·哈格雷夫把四只箱式风筝连成一串，让海风把他托离地面几米。他从不为自己的设计申请专利，而是把它们公开发表，谁都可以用。"
-        relic: "一副箱式风筝骨架"
-        relic_desc: "一副轻巧的细木格架，一端的布已经撕破。"
+        story: '1894年11月12日，劳伦斯·哈格雷夫在斯坦韦尔公园海滩用四只相连的箱式风筝试验，被风筝托离地面。新南威尔士州立图书馆藏照有哈格雷夫、詹姆斯·斯韦恩和试验装备。游戏里的海滩记事簿和两位帮工均为虚构。'
+        relic: '一片箱式风筝的备用签'
+        relic_desc: '虚构记事桌上留的一片备用签。'
         points:
-          p1: "看箱形怎样兜住风"
-          p2: "帮他绑好绳子和杆"
-          p3: "在海崖上等风起来"
+          p1: '试验前数清铺开的风筝'
+          p2: '搬离沙滩时，让风筝骨架上的签还能看清'
+          p3: '等座椅真正离地再给这一趟做记号'
+        vignettes:
+          four: '艾达看见一只风筝的骨架拆成两截搬下来，就把那只划掉了。你陪她回去，把拼好的风筝重新数一遍。四只都入了簿。她用括号把它们圈在一起，提醒下一个人读的是同一次试验。'
+          tag: '内德往岸上搬骨架时，发现一张签被扯脱了。你沿湿沙往回找，他把另外三副骨架分开摆着。掉下来的签上还剩一点笔迹，刚够认出是哪一副。关库门时，他仍分得清最后一副与第一副。'
+          lift: '你差点把后世展牌上的数字填进高度栏。艾达看见座椅动了，还在等座椅和沙地中间露出一点亮。你和她一起等到那道空隙。还没来得及核实簿上最后填了多高，你已经要走了。'
 text:
   en:
     name: "Lawrence Hargrave"
@@ -44,3 +57,57 @@ text:
   zh:
     name: "劳伦斯·哈格雷夫"
     text: "出生在英国、生活在澳大利亚的工程师和发明家，1850 年生，1915 年去世。他发明了箱式风筝，并把飞行研究公开发表，不申请专利。"
+hook: {en: 'The wind eases. Which number do you keep?', zh: '风一停，你留下哪个数字？'}
+facts:
+  beach:
+    date: '1894-11-12'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hargrave_stanwell_park_beach]
+    text:
+      en: 'The museum dates the linked four-kite lift on Stanwell Park beach to 12 November 1894.'
+      zh: '馆方记载，1894年11月12日的斯坦韦尔公园海滩升空试验连用了四只风筝。'
+  photo:
+    date: '1894-11-12'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hargrave_stanwell_park_photo]
+    text:
+      en: 'The library identifies the beach photograph with Hargrave and James Swaine and equipment from the kite-lift experiment.'
+      zh: '图书馆把海滩照片与升空试验联系起来，并认出其中的哈格雷夫、詹姆斯·斯韦恩及试验器材。'
+bystanders:
+  ada:
+    invented: true
+    text: {en: 'A fictional tally keeper who wants an unambiguous count.', zh: '虚构记录员艾达，要留下数得明白的那一笔。'}
+  ned:
+    invented: true
+    text: {en: 'A fictional store helper collecting labelled frames before the store closes.', zh: '虚构库房帮工内德，关门前要收好带签的骨架。'}
+wiki:
+  refs:
+    hargrave_stanwell_park_beach:
+      order: 841
+      status: checked
+      text:
+        en: 'National Museum of Australia, Lawrence Hargrave’s first flight https://www.nma.gov.au/defining-moments/resources/lawrence-hargraves-first-flight'
+        zh: '澳大利亚国家博物馆，哈格雷夫的首次升空 https://www.nma.gov.au/defining-moments/resources/lawrence-hargraves-first-flight'
+    hargrave_stanwell_park_photo:
+      order: 842
+      status: checked
+      text:
+        en: 'State Library of New South Wales, Hargrave’s flying machines and the beach photograph https://www.sl.nsw.gov.au/stories/hargraves-flying-machines'
+        zh: '新南威尔士州立图书馆，哈格雷夫飞行器专题与海滩照片 https://www.sl.nsw.gov.au/stories/hargraves-flying-machines'
+self_check:
+  fact: beach
+  quote_line: '四只都入了簿。'
+  regret_choice: 'lift 若默写后世高度，就错过现场判断是否离地。'
+  bookend: '先数骨架，最后看座椅与地面的空隙。'
+  share_line: '四只风筝，一次升空。'
+  share_number: '四只是馆方记载的实数。'
+  knowing: 'lift 记得后世的展牌读数。'
+  near: 'beach 在有日有地的试验近旁观察。'
+  lever: 'tag 保住一副骨架的标识。'
+  missed: 'lift 离开前赶不上读数复核。'
+  brought: 'tag 带回虚构的备用骨架签。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

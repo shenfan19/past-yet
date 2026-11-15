@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {H: 2}
+    refs: [aryabhata_patna_circle]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["teacher","student"]}}
         - {id: p3, kind: persuade, req: {"trait":["ambitious","streetwise","charismatic"]}}
+      vignettes:
+        - {id: scale, traits: [methodical, scholarly]}
+        - {id: measure, traits: [handy, curious]}
+        - {id: copy}
     text:
       en:
-        name: A turning Earth and a table of sines
+        name: 'The circle in three steps'
         place: Kusumapura, India
         figure: Aryabhata
-        story: Aryabhata writes a short work giving a table of sines, a good value of pi, and the idea that the Earth turns.
+        story: 'In the mathematics section of the Āryabhaṭīya, Āryabhaṭa gives a rule for the approximate circumference of a circle of diameter 20,000. Adding 4 to 100, multiplying by 8 and adding 62,000 gives 62,832. The workshop using the verse is fictional. The map locates the visit in the period associated with the treatise.'
         relic: A palm-leaf of verses
         relic_desc: A thin leaf with verses scratched in.
         points:
-          p1: "Follow the algorithm of the sine table"
-          p2: "Recite a stanza of verse algorithm"
-          p3: "Explain to astronomers that the earth turns"
+          p1: 'Reproduce all three operations in their order'
+          p2: 'Explain the starting diameter before passing on the result'
+          p3: 'Give the rope maker a worked example for a circle twice as wide'
+        vignettes:
+          scale: 'The rope maker writes two diameters on the board but gives them the same circumference. You pair 20,000 with 62,832 and show him what scales when the diameter doubles. He changes one line. You take home the two pairs. The rope is still being measured when you go.'
+          measure: 'You know the rule will outlast everyone in the workshop. The rope maker wants to know how to remember it while working. You write the three steps in separate lines. He gets the next trial right without asking which addition comes last. The rope itself is left for another day.'
+          copy: 'You copy both the diameter and the approximate circumference before the board is wiped. The rope maker sees why he needs two numbers. You keep the pair on one slip and leave before seeing the rope laid around a circle.'
       zh:
-        name: 转动的地球与正弦表
+        name: '三步算出一圈的长度'
         place: 印度库苏马普拉
         figure: 阿耶波多
-        story: 阿耶波多写了一部短书，里面有正弦表、一个很好的圆周率，还有地球在转动的想法。
+        story: '《阿耶波多历数书》的数学篇写了一条求近似圆周的口诀，以 20,000 为直径。100 加 4，乘 8，再加 62,000，得 62,832。按口诀干活的作坊是虚构场景，地图年份用于定位这部书的时代。'
         relic: 一片棕榈叶经文
         relic_desc: 一片薄叶，上面刻着诗句。
         points:
-          p1: "跟上正弦表的算法"
-          p2: "背诵并复述一节诗体算法"
-          p3: "向天文学家解释地球自转"
+          p1: '按顺序算完三步'
+          p2: '传下结果之前说清直径取多少'
+          p3: '给制绳人做一道直径加倍的算例'
+        vignettes:
+          scale: '制绳人在板上写了两个直径，配的却是同一个圆周。你把 20,000 和 62,832 配在一行，再指给他看直径加倍时该把哪个数也翻倍。他改了一行，你把两组数字记下来。你走时，绳子还在量。'
+          measure: '你知道这条口诀会比作坊里的人流传得久。制绳人问做活时该怎么记，你把三步各写一行。他重算一遍，没再问最后该加哪一个数。真正的绳子得留到另一天。'
+          copy: '板擦掉之前，你把直径和近似圆周都抄了下来。制绳人这才看出为什么得留两个数。你带走写在同一张条上的数，没等到绳子绕上圆周。'
 text:
   en:
     name: Aryabhata
@@ -44,3 +57,39 @@ text:
   zh:
     name: 阿耶波多
     text: 印度数学家与天文学家，476 年生。他 499 年在库苏马普拉写成的著作给出接近 3.1416 的圆周率，用影子解释日月食，并论及地球自转。
+hook: {en: 'What if you double the circle?', zh: '直径翻倍，算式往哪儿改？'}
+facts:
+  circle:
+    date: '499'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [aryabhata_patna_circle]
+    text:
+      en: 'Verse 10 gives an approximate circumference for a diameter of 20,000, computed as 62,000 plus eight times 104.'
+      zh: '第 10 颂针对直径 20,000 给出近似圆周算法，62,000 加 104 的八倍。'
+bystanders:
+  rope_maker:
+    invented: true
+    text: {en: 'A fictional rope maker needing the numbers in a form he can check at work.', zh: '虚构的制绳人，希望能边干活边核算。'}
+wiki:
+  refs:
+    aryabhata_patna_circle:
+      order: 534
+      status: checked
+      text:
+        en: 'Āryabhaṭa, Āryabhaṭīya, Gaṇitapāda 10, Sanskrit and English https://ganita.souravkulkarni.com/aryabhatiya/content/chapter_02.html'
+        zh: '阿耶波多《阿耶波多历数书》数学篇第 10 颂，梵英对照 https://ganita.souravkulkarni.com/aryabhatiya/content/chapter_02.html'
+self_check:
+  fact: circle
+  quote_line: '你把直径和近似圆周都抄了下来。'
+  regret_choice: '留在板前核算，便看不到拉绳围圆。'
+  bookend: '从直径与圆周配错到带回成对的数字。'
+  share_line: '我记住三个步骤和两个数。'
+  share_number: '62,832'
+  knowing: 'measure 员工知道口诀会流传。'
+  near: 'circle 是练习所用的原式。'
+  lever: 'scale 改正一个直径加倍的算例。'
+  missed: '来不及看绳子绕圆。'
+  brought: '原式对应的直径与近似周长。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

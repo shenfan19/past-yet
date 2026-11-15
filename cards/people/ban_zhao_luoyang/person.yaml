@@ -10,38 +10,87 @@ events:
     tier: 2
     channels: {S: 2, G: 1}
     regret: true
+    refs: [ban_zhao_luoyang_tables]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["archivist"]},{"stat":{"wit":7}}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","ambitious"]},{"job":["teacher"]}]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["teacher"]},{"trait":["faithful","vigil"]}]}}
+      vignettes:
+        - {id: column, traits: [methodical, scholarly]}
+        - {id: later, traits: [curious, kind]}
+        - {id: fold}
     text:
       en:
-        name: "Finishing her brother's history"
+        name: 'A place left in the Han tables'
         place: "Luoyang"
         figure: "Ban Zhao"
-        story: "When her brother Ban Gu dies with the Book of Han unfinished, Ban Zhao is called to complete it, and much of the finishing, including the tables, is credited to her. She is better remembered for a short book of advice to women."
+        story: 'The Book of the Later Han says that Ban Gu died before finishing eight tables and the astronomical treatise of the Book of Han, and that Ban Zhao was ordered to continue the work at the Eastern Pavilion library. It also names Ma Xu as a later contributor. The 92 setting and the practice sheets in this visit do not date each stage of completion.'
         relic: "A table of names on silk"
         relic_desc: "A strip of silk with a table of titles and names in neat columns."
         points:
-          p1: "Check the tables against the sources (a record keeper or a sharp mind)"
-          p2: "Defend the unfinished tables to the court scholars (a teacher or a silver tongued employee)"
-          p3: "Stay with her until the last page is read (a teacher or a stubborn employee)"
+          p1: 'Keep a row of names lined up with the reference sheet'
+          p2: 'Explain why one space is being left for another record'
+          p3: 'Keep the unfinished row visible when a copy is given to the next reader'
+        vignettes:
+          column: 'The copyist has moved the next name up into an empty place. You lay the register alongside the table and show that it belongs one line lower. He moves it back and marks the empty place for checking. You bring back one aligned row. There is still no entry for the other place.'
+          later: 'You know later readers will see the work as a whole. The copyist cannot tell which part of his practice sheet is finished today. Together you fold a narrow slip around the one row that still needs checking. It will open first for the next reader. You leave before another register arrives.'
+          fold: 'You copy the name and its line number together, then leave an empty space above. The copyist can see that you meant to leave it. You take one copy back. Someone else will have to decide what belongs there.'
       zh:
-        name: "接着兄长写完的史书"
+        name: '给《汉书》表留一处待核'
         place: "洛阳"
         figure: "班昭"
-        story: "哥哥班固去世时《汉书》还没有写完，班昭受命续成，书里的表大部分都记在她名下。人们记得更多的，却是她那本劝导女子的小书。"
+        story: '《后汉书》说，班固去世时《汉书》八表及《天文志》未完，班昭奉诏到东观藏书阁续成，后又有马续参与。卡里采用 92 年的背景，练习表为虚构，未给各篇定出完成日期。'
         relic: "一幅绢上的人名表"
         relic_desc: "一条绢，上面是整整齐齐排列的官名与人名。"
         points:
-          p1: "对着史料核对那些表"
-          p2: "向朝中学者辩护那些未完成的表"
-          p3: "陪她到最后一页读完"
+          p1: '把一行人名与供查的纸对齐'
+          p2: '说清那一格为何要留待另一份记录'
+          p3: '交给下一位看时，保留那处未核的空格'
+        vignettes:
+          column: '抄表人把后一行的人名移进了空格。你把底册摊到旁边，指给他看这个名字原在下面一行。他把名字移回去，另标上面待核。你带回来已对齐的一行，上面的空格仍没有填。'
+          later: '你知道后人会把整部书放在一起读。抄表人眼下还分不清这张练习表哪行算做完。你和他用一条窄纸夹出仍待核的地方，下一位一翻就能找到。另一份底册送来前，你得收队。'
+          fold: '你把名字和它所在的行一同抄下，上头仍留一格。抄表人看得出这是特地留下的。你带回一份抄件，那格该写什么还要等别人来核。'
 text:
   en:
     name: Ban Zhao
-    text: Chinese historian and writer of the Han, about 45 to about 117. She completed the Book of Han after the death of her brother Ban Gu, and served at court as a teacher to the empress and her ladies.
+    text: Chinese historian and writer of the Han, about 45 to about 117. After the death of Ban Gu she continued work on the Book of Han. The Book of the Later Han also names Ma Xu as a subsequent contributor.
   zh:
     name: 班昭
-    text: 汉代历史学家与作家，约 45 年生，约 117 年去世。兄长班固去世后，她续成《汉书》，并在宫中做皇后与宫女们的老师。
+    text: 汉代历史学家与作家，约 45 年生，约 117 年去世。班固去世后，她奉诏续修《汉书》。《后汉书》也记载马续后来参与此事。
+hook: {en: 'Does an empty entry mean there was nobody?', zh: '表里空一格，是无人还是没查？'}
+facts:
+  tables:
+    date: '92'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ban_zhao_luoyang_tables]
+    text:
+      en: 'The biography places Ban Zhao in the Eastern Pavilion library continuing the unfinished Book of Han, and records a subsequent order for Ma Xu to continue the work. The card''s date is the story setting.'
+      zh: '传记载班昭奉诏赴东观藏书阁续《汉书》，并载又诏马续继成。卡上年份是场景背景。'
+bystanders:
+  copyist:
+    invented: true
+    text: {en: 'A fictional copyist trying to align a practice register with the table.', zh: '虚构的抄表人，要把一份练习底册与表格对齐。'}
+wiki:
+  refs:
+    ban_zhao_luoyang_tables:
+      order: 755
+      status: checked
+      text:
+        en: 'Book of the Later Han, vol. 84, Biography of Ban Zhao https://zh.wikisource.org/wiki/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B784#%E7%8F%AD%E6%98%AD'
+        zh: '《后汉书》卷八十四《列女传·班昭》 https://zh.wikisource.org/wiki/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B784#%E7%8F%AD%E6%98%AD'
+self_check:
+  fact: tables
+  quote_line: '他把名字移回去，另标上面待核。'
+  regret_choice: '为了填满空格把下一行人名提上去，便写错所属。'
+  bookend: '从一格含混的留白，到可交给下一位再查。'
+  share_line: '我替一行人名保住了它的位置。'
+  share_number: '八表未竟见于传记'
+  knowing: 'later 知道后人阅读的是一部续成的书。'
+  near: 'tables 锚定东观及编纂经过。'
+  lever: '把错移的一笔归回原行。'
+  missed: '没等到另一份底册。'
+  brought: '可复核的一行。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

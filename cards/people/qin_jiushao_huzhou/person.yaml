@@ -9,34 +9,47 @@ events:
     field: math
     tier: 1
     channels: {V: 1}
+    refs: [qin_jiushao_huzhou_remainders]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: hold, req: {"job":["archivist","teacher"]}}
         - {id: p3, kind: persuade, req: {"trait":["ambitious","streetwise","scholarly"]}}
+      vignettes:
+        - {id: witness, traits: [methodical, scholarly]}
+        - {id: rows, traits: [curious, handy]}
+        - {id: counters}
     text:
       en:
-        name: "Mathematical Treatise in Nine Sections"
+        name: 'The answer must pass both rows'
         place: "Huzhou"
         figure: "Qin Jiushao"
-        story: "Qin Jiushao gathers the problems of fields, taxes and army supplies into a book, whose method of the great extension solves sets of congruences."
+        story: 'The first volume of Qin Jiushao’s Mathematical Treatise in Nine Sections sets out the Great Expansion procedures for problems involving remainders. The two small remainder tests below are invented for the game. The event year is the traditional date associated with the book.'
         relic: "A counting rod"
         relic_desc: "A bamboo counting rod worn smooth."
         points:
-          p1: "Follow the solution of the congruences"
-          p2: "Copy out the problems"
-          p3: "Explain the method for fields to a local official"
+          p1: 'Check the same pile against both remainder rules'
+          p2: 'Preserve the divisors beside their own remainders'
+          p3: 'Explain why a candidate that fails one row must be rejected'
+        vignettes:
+          witness: 'The learner puts five counters down. Groups of three leave two, just as requested, but groups of five leave none. You ask him to test eight. That leaves two in the first row and three in the second. He crosses out one answer. You leave before they start a problem with a third row.'
+          rows: 'You know the procedure will be studied long after the learner forgets this exercise. He asks why two remainders cannot be written in one box. You have him label the one for groups of three and the one for groups of five. He can now test the next answer on his own. That next answer is still out of reach when you go.'
+          counters: 'You make eight counters into groups of three and then into groups of five. Each time you record only the left-over counters before rebuilding the pile. You bring home two checked rows. The larger problem stays on the table.'
       zh:
-        name: "数书九章"
+        name: '一份答案要过两行'
         place: "湖州"
         figure: "秦九韶"
-        story: "秦九韶把田亩、赋税、军需里遇到的算题收成一部书，其中的大衍求一术能解一组一组的同余方程。"
+        story: '秦九韶《数书九章》卷一大衍类详列处理余数问题的方法。卡里两道小余数验算是虚构的练习，年份取该书的通行纪年。'
         relic: "一枚算筹"
         relic_desc: "一根磨得发亮的竹算筹。"
         points:
-          p1: "跟上同余式的解法"
-          p2: "抄录算题"
-          p3: "向地方官说明田亩算法"
+          p1: '把同一堆筹按两条规则分别验算'
+          p2: '抄表时让除数紧挨对应的余数'
+          p3: '说清为什么只过一行也得重算'
+        vignettes:
+          witness: '学算人摆了五根筹。三根一组的确剩二，但五根一组剩零。你请他试八，第一行剩二，第二行剩三。他划去一个答案。再加第三行的题，你没等到。'
+          rows: '你知道以后还有人研究这套算法，学算人却只想知道两个余数能不能填进同一格。你请他分别标明按三分组与按五分组的两行。他下次能自己验了，那个新答案你仍没赶上。'
+          counters: '你把八根筹先按三根分，再按五根分。每回重摆之前，先记下没分进组的筹。你带回验过的两行，桌上还有一道更大的题。'
 text:
   en:
     name: "Qin Jiushao"
@@ -44,3 +57,39 @@ text:
   zh:
     name: "秦九韶"
     text: "南宋数学家，约 1202 年生，约 1261 年去世。1247 年写成《数书九章》，其中的大衍求一术相当于解一次同余方程组，即后来所说的中国剩余定理。"
+hook: {en: 'Can one count leave two different remainders?', zh: '同一堆筹，怎样剩两种余数？'}
+facts:
+  remainders:
+    date: '1247'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [qin_jiushao_huzhou_remainders]
+    text:
+      en: 'The opening volume presents Great Expansion procedures that combine several remainder conditions. The small numbers in the game are illustrative.'
+      zh: '卷一列出合并多项余数条件的大衍诸术。卡里的小数字为演示所用。'
+bystanders:
+  learner:
+    invented: true
+    text: {en: 'A fictional learner who checked one row and stopped too soon.', zh: '虚构的学算人，只验一行便收了筹。'}
+wiki:
+  refs:
+    qin_jiushao_huzhou_remainders:
+      order: 564
+      status: checked
+      text:
+        en: 'Qin Jiushao, Shushu Jiuzhang, volume 1, Dayan procedures https://www.shidianguji.com/zh/book/GJ093/chapter/1l40c2hxsn38k'
+        zh: '秦九韶《数书九章》卷一大衍类 https://www.shidianguji.com/zh/book/GJ093/chapter/1l40c2hxsn38k'
+self_check:
+  fact: remainders
+  quote_line: '再加第三行的题，你没等到。'
+  regret_choice: '只检验一行，就会把五当作答案。'
+  bookend: '同一堆筹摆两遍，前后各留一对除数和余数。'
+  share_line: '五只过了一行，八才过了两行。'
+  share_number: '8'
+  knowing: 'rows 知道此法会流传。'
+  near: 'remainders 给出真实算法语境。'
+  lever: '补上第二项检验。'
+  missed: '收队后才会开始第三项。'
+  brought: '验过的两行。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

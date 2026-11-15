@@ -9,34 +9,47 @@ events:
     field: math
     tier: 1
     channels: {H: 2, V: 1}
+    refs: [ahmes_thebes_field, ahmes_thebes_roll]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: hold, req: {"job":["archivist","teacher"]}}
         - {id: p3, kind: trust, req: {"luck":0.4}}
+      vignettes:
+        - {id: table, traits: [methodical, scholarly]}
+        - {id: outline, traits: [curious, handy]}
+        - {id: roll}
     text:
       en:
-        name: "A papyrus of problems copied from an older one"
+        name: 'The round field on the papyrus'
         place: "Thebes"
         figure: "Ahmes"
-        story: "The scribe Ahmes copies the problems of an older text onto papyrus, with methods for fractions, for areas, and for dividing loaves."
+        story: 'Problem 50 of the Rhind Mathematical Papyrus asks for the area of a round field of diameter nine. Its rule removes one ninth of the diameter and squares the remainder, giving 64. The scribe Ahmose copied the surviving roll from earlier material. The measuring lesson and its assistant are fictional.'
         relic: "A scrap of papyrus"
         relic_desc: "A small scrap of papyrus written in red and black."
         points:
-          p1: "Understand the method for fractions"
-          p2: "Copy out a column of fractions"
-          p3: "Be allowed to see the old copy"
+          p1: 'Work out the length that remains before squaring'
+          p2: 'Keep the rule and its worked example together'
+          p3: 'Show the assistant why the square is drawn with a side of eight'
+        vignettes:
+          table: 'The assistant has written 81 in the answer box, having squared the whole diameter. You put the removed ninth beside his nine, then square the remaining eight. He corrects one entry to 64. You take home both lines. No one has measured a real field during your visit.'
+          outline: 'You know later readers will compare the rule with a modern formula. The assistant asks where the number eight comes from. You sketch the diameter and cross off one of nine equal marks. The drawing stays with his exercise. You leave before he tries the rule on a different field.'
+          roll: 'You copy the diameter, the missing ninth and the remaining length before the roll is closed. The assistant can square the right number after you leave. You carry the three numbers away, without learning how much seed the field would need.'
       zh:
-        name: "一卷抄自旧本的算题纸草"
+        name: '纸草上的圆田'
         place: "底比斯"
         figure: "阿赫摩斯"
-        story: "书吏阿赫摩斯把一卷旧本上的算题抄在纸草上，里面有分数的算法，也有面积和面包的分配。"
+        story: '莱因德数学纸草第 50 题问直径为九的圆田有多大。题中从直径减去九分之一，再把余下的数平方，得六十四。现存纸草由书吏阿赫摩斯据旧本抄写。卡里的丈量练习和帮工为虚构。'
         relic: "一卷纸草残片"
         relic_desc: "一小片写着红黑两色字的纸草。"
         points:
-          p1: "看懂分数的算法"
-          p2: "抄写一栏分数"
-          p3: "被允许看旧本"
+          p1: '算出平方之前剩下的长度'
+          p2: '把规则和算例抄在一起'
+          p3: '指给帮工看，正方形边长为何用八'
+        vignettes:
+          table: '帮工把整个直径平方，在答案处写了八十一。你在九旁边写明先减去它的九分之一，再把剩下的八平方。他把答案改成六十四。两行你都抄走了，这趟却还没丈量过一块真的田。'
+          outline: '你知道后人会把这个法子与现代公式一起算。帮工只想知道八从哪来，你便给直径画了九个等分，划掉其中一份。他把图留在题旁。等他拿另一块田来试，你就不在了。'
+          roll: '纸草收起来之前，你把直径、减去的九分之一和余下的长度抄下来。帮工等你走后也能照着求平方。你只带回三个数，这块田究竟要下多少种，还不知道。'
 text:
   en:
     name: "Ahmes"
@@ -44,3 +57,54 @@ text:
   zh:
     name: "阿赫摩斯"
     text: "古埃及书吏，约公元前 16 世纪在底比斯一带抄写了今天所说的莱因德纸草，是现存最重要的古埃及数学文献之一。"
+hook: {en: 'What is left when you take away one ninth?', zh: '直径减去九分之一之后呢？'}
+facts:
+  field:
+    date: '-1550'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ahmes_thebes_field]
+    text:
+      en: 'The problem gives a circular field of diameter nine and takes the square of eight as its area.'
+      zh: '题中圆田直径为九，取八的平方为田积。'
+  roll:
+    date: '-1550'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ahmes_thebes_roll]
+    text:
+      en: 'The opening inscription identifies Ahmose and says he copied material from earlier writings.'
+      zh: '卷首题记记阿赫摩斯据更早的文字抄写此本。'
+bystanders:
+  assistant:
+    invented: true
+    text: {en: 'A fictional assistant trying to put the area in the right place before rolling the papyrus.', zh: '虚构的帮工，收卷前想把田积算对。'}
+wiki:
+  refs:
+    ahmes_thebes_field:
+      order: 560
+      status: checked
+      text:
+        en: 'The Rhind Mathematical Papyrus, problem 50, in Arnold Buffum Chace’s edition, volume 1 https://archive.org/details/TheRhindPapyrusVolume1'
+        zh: '《莱因德数学纸草》第 50 题，阿诺德·蔡斯校译本第一卷 https://archive.org/details/TheRhindPapyrusVolume1'
+    ahmes_thebes_roll:
+      order: 561
+      status: checked
+      text:
+        en: 'T. Eric Peet, The Rhind Mathematical Papyrus, opening inscription, 1923 https://archive.org/details/Peet_1923'
+        zh: 'T. E. 皮特《莱因德数学纸草》校译本，1923 年，卷首题记 https://archive.org/details/Peet_1923'
+self_check:
+  fact: field
+  quote_line: '两行你都抄走了，这趟却还没丈量过一块真的田。'
+  regret_choice: '校正一处算例时就错过下一次上田。'
+  bookend: '从九到八，再从八到六十四。'
+  share_line: '我把圆田的面积从八十一改回六十四。'
+  share_number: '64'
+  knowing: 'outline 知道后世会拿此法与现代算法比较。'
+  near: 'field 给出纸草原题。'
+  lever: '改正一格结果，另留可检查步骤。'
+  missed: '来不及量真田。'
+  brought: '关于九与八的草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -93,7 +93,7 @@ A card that has `facts` is a story made by the story process, and the build chec
 
 A card may also stay a file of its own inside the module, in the folder of its kind, `events/<id>.yaml`, `wiki/places/<id>.yaml` and so on, with a list of ids under `events:` in `person.yaml`. Both forms build to the same data.
 
-An event card has these optional fields. `era: <model id>` hands the event to the full model of the person: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. `start: true` makes the relic owned from the start, so the place is open from the first moment. `after: <event id>` makes the event the next episode of the same person: its place opens when a trip to the named event has come back. `stay: <days>` gives the story its own length of stay. `draft: true`, and `metadata.status: draft` in a model, keep it out of the published game, see `release` in `config/config.yaml`.
+An event card has these optional fields. `era: <model id>` hands the event to the full model of the person: the model then stands at the event on the map, the relic of the event is its anchor, and the sync points of the card are the fallback. `start: true` makes the event the place the game starts from. Its relic is then a medium of today, such as a statue, and not an antique: it is held from the start, opens the place, is never found on a trip and is never sold. `stay: <days>` gives the story its own length of stay. The events of a person stand side by side, none waits for another to be visited, and the build stops at an event card with `after`. `draft: true`, and `metadata.status: draft` in a model, keep it out of the published game, see `release` in `config/config.yaml`.
 
 An id may be used once. The build stops with a message when two cards use the same id, when the events of a module and its card do not match, or when a module holds something a module does not use, and `node tools/build_data.mjs --check` says when `data/` is out of date.
 
@@ -112,7 +112,11 @@ After any change run the build, then `node tools/check_i18n.mjs`, `node tools/ch
 
 ## Time
 
-One office day is thirty historical days, `travel.history_days_per_office_day` in `config/config.yaml`. A stay is one to seven office days. A model counts in historical days, and what wears on the traveller at the pace of the office, such as homesickness, is written with `office_step`. Dates are counted on the real calendar from `metadata.era.calendar`, which gives the month and the day of day 0. A report of a stay longer than one office day is told in segments, one for each office day, and what is recorded after the traveller has left is told last under its own heading.
+One office day is thirty historical days, `travel.history_days_per_office_day` in `config/config.yaml`. A stay is one to seven office days. A model counts in historical days, and what wears on the traveller at the pace of the office, such as homesickness, is written with `office_step`. Dates are counted on the real calendar from `metadata.era.calendar`, which gives the month and the day of day 0. The crossing is not exact: a trip arrives up to `travel.drift.early` historical days before the planned day or `travel.drift.late` days after it, drawn from the seed of the trip, never before day 0 of the model. A model may set its own in `metadata.era.drift`, and a model that wants early arrivals begins a few days before the planned day, as Guangzhou 1924 begins on 27 January for an arrival on 4 February.
+
+A report is a story told as one list in time order, one short line to a thing. A line is history, what is recorded and happens whoever is there, or the crossing, what the traveller did and met. A line of the crossing that won a star is marked with a star, and the reader can show all lines, only one of the two kinds or only the stars. What is recorded after the traveller has left follows at the end. The numbers, the chart and the ledger are folded away under the list. The ledger of a stay longer than one office day has one row for each office day.
+
+A trip may bring back one antique, and only from a year before the year of the place it went to. The nearer the antique lies in time and space, the likelier it is found, see `office.antique_find` in `config/config.yaml`.
 
 ## Templates
 

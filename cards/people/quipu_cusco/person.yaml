@@ -9,34 +9,47 @@ events:
     field: thought
     tier: 1
     channels: {A: 2}
+    refs: [quipu_cusco_comparison]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"finesse":6}},{"stat":{"wit":6}}]}}
         - {id: p2, kind: hold, req: {"job":["archivist","accountant"]}}
         - {id: p3, kind: trust, req: {"provides":"translate"}}
+      vignettes:
+        - {id: places, traits: [methodical, scholarly]}
+        - {id: copies, traits: [curious, handy]}
+        - {id: tag}
     text:
       en:
-        name: "A ledger without writing"
+        name: 'The cord you count twice'
         place: "Cusco"
         figure: "The keepers of the knotted cords"
-        story: "In the counting houses of Cusco, bundles of coloured knotted cords record the harvest, the people and what is in the storehouses, and only those who can read them understand."
+        story: 'The study Khipu Archives identifies sets of Inka knotted-cord records with matching numerical data and discusses duplicate accounting. Many numerical khipu use decimal place value. This Cusco branch imagines a keeper comparing two practice cords. It does not assign meanings to undeciphered signs.'
         relic: "A bundle of knotted cords"
         relic_desc: "A bundle of cords of different lengths, tied with knots of different sizes."
         points:
-          p1: "Understand where the knots sit"
-          p2: "Check a bundle of account cords"
-          p3: "Understand what the clerk says"
+          p1: 'Tell the places apart before reading the practice value'
+          p2: 'Read the matching bundle separately before comparing the two'
+          p3: 'Have the keeper preserve the mismatch until it can be checked'
+        vignettes:
+          places: 'The keeper reads the same total from two cords at a glance. You separate tens from units on the practice slips and find 23 on one and 32 on the other. He tags the pair for another count. You take the comparison home. It will not tell you which total is right.'
+          copies: 'You know that later researchers will compare matching cords. The keeper is about to set one of these aside without its partner. You put the two readings in separate rows and mark the place where their readings part company. Both cords stay together. The next keeper’s answer is still to come.'
+          tag: 'You follow the keeper in counting one practice cord from its free end. Before the two are tied away you mark which number belongs to which cord. That is all you take back. The kind of goods the exercise stands for remains unlabelled.'
       zh:
-        name: "不用文字的账本"
+        name: '要数两遍的绳'
         place: "库斯科"
         figure: "结绳记事的人"
-        story: "库斯科的账房用一束束彩色的绳结记下收成、人口和仓库里的东西，只有会读的人才看得懂。"
+        story: '《结绳档案》研究识别出若干记录相同数字的印加结绳，并讨论一笔账如何保存副本。许多数值结绳采用十进位。卡里的库斯科记账人拿两条练习绳核对，未给尚未解读的记号定含义。'
         relic: "一束彩色结绳"
         relic_desc: "一束长短不一的绳子，打着大小不同的结。"
         points:
-          p1: "看懂绳结的位置"
-          p2: "核对一束账绳"
-          p3: "听懂账房的话"
+          p1: '先分清结的位置，再读练习数'
+          p2: '先独立读另一束，再把两份并到一起'
+          p3: '请记账人留住两份之间的差异，等复核'
+        vignettes:
+          places: '记账人一眼把两条练习绳读成同一个数。你在纸上把十位和个位拆开，一条是二十三，一条是三十二。他给这对绳加了待复核的签。你带得走这处差异，却还辨不出哪一个数才对。'
+          copies: '你知道后来的研究者会找能互相对照的绳。记账人正要把两条中的一条单独搁开。你把两条读数分列两行，用记号标出哪一位开始对不上。两条绳一块收好，下一位复核的人还没来。'
+          tag: '你跟记账人从绳的自由端辨认一条练习绳。收绳前，你标明每个数各来自哪条。归来时就只带回这些。原例拿什么货物做比方，始终没人写。'
 text:
   en:
     name: "The keepers of the knotted cords"
@@ -44,3 +57,39 @@ text:
   zh:
     name: "结绳记事的人"
     text: "印加社会里用结绳记录数目的账房人员。绳结的读法有许多至今未解，百科只写已知的部分。"
+hook: {en: 'How can one cord check another?', zh: '两束绳为什么记了同一笔数？'}
+facts:
+  comparison:
+    date: '1450'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [quipu_cusco_comparison]
+    text:
+      en: 'The study compares khipu surviving in matching sets and describes decimal position in numerical records. The game year dates the setting, not a particular piece.'
+      zh: '原始研究比较成组的结绳实物，并介绍数值结绳用位置表示十进位。卡上年份是场景设定，未用于一件具体藏品定年。'
+bystanders:
+  keeper:
+    invented: true
+    text: {en: 'A fictional keeper trying to compare two practice cords before the end of a shift.', zh: '虚构的记账人，交接前要把两条练习绳核对一遍。'}
+wiki:
+  refs:
+    quipu_cusco_comparison:
+      order: 638
+      status: checked
+      text:
+        en: 'Gary Urton, Khipu Archives: Duplicate Accounts and Identity Labels in the Inka Knotted String Records, Latin American Antiquity 16(2), 2005 https://doi.org/10.2307/30042809'
+        zh: '加里·厄顿，《结绳档案：印加结绳记录中的副本账目与识别标签》，《Latin American Antiquity》2005 年第 2 期 https://doi.org/10.2307/30042809'
+self_check:
+  fact: comparison
+  quote_line: '你带得走这处差异，却还辨不出哪一个数才对。'
+  regret_choice: '一眼当成同一笔，就漏掉了十位和个位的错换。'
+  bookend: '看似同数的绳，收队时以一对待核读数作结。'
+  share_line: '两条绳一起收好，待核的数也留下来。'
+  share_number: '23 与 32'
+  knowing: 'copies 知道现代学者会成组对照。'
+  near: 'comparison 锚定成组结绳研究。'
+  lever: '记出一位差异并保存成对。'
+  missed: '待复核，无法判正误。'
+  brought: '两条对应读数和标记。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

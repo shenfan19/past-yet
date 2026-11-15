@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {S: 3, G: 2}
     regret: true
+    refs: [kepler_leonberg_arrest, kepler_leonberg_released]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"any":[{"trait":["glib","charismatic"]},{"trait":["glib","scholarly","ambitious"]}]}}
         - {id: p2, kind: hold, req: {"any":[{"trait":["bold","faithful","ambitious"]},{"trait":["cheerful","bold","vigil"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","charismatic","artistic"]},{"trait":["sensitive","artistic","cosmopolitan"]},{"trait":["attached"]}]}}
+      vignettes:
+        - {id: heard, traits: [skeptical, methodical, scholarly]}
+        - {id: compare, traits: [bold, faithful, vigil]}
+        - {id: release}
     text:
       en:
-        name: "His mother on trial"
+        name: 'What the witness saw'
         place: "Leonberg"
         figure: "Johannes Kepler"
-        story: "Kepler's elderly mother Katharina is accused of witchcraft in Leonberg, and he spends months defending her."
-        relic: "A table of figures"
-        relic_desc: "A page of planetary tables he never stopped working on."
+        story: 'In his defence of his mother Katharina, Johannes Kepler dated her arrest to 7 August 1620 and set out the delays in the proceedings at Güglingen. This visit starts among her papers in Leonberg. The copying exercise is invented and makes no claim to reproduce witness testimony.'
+        relic: 'A checked defence copy'
+        relic_desc: 'A fictional copying sheet with one corrected date.'
         points:
-          p1: "Help him argue the case"
-          p2: "Stand firm with him through the long hearings"
-          p3: "Sit with Katharina in the cold cell"
+          p1: 'Ask the scribe to keep an allegation with the name of its speaker'
+          p2: 'Keep the two copies together until they can be compared'
+          p3: 'Earn enough trust to read back what the messenger actually heard'
+        vignettes:
+          heard: 'Margarete has written that a neighbour saw something. When you ask which neighbour, she can only name the man who repeated it at the door. She copies the two claims onto separate lines and leaves a place for a first-hand account if one comes.'
+          compare: 'Matthias wants to send the first copy now and keep the second at the desk. You read one against the other and find that a date has lost a digit. He waits while Margarete checks the original. The messenger takes the corrected copy as the bells finish striking.'
+          release: 'You know Katharina will eventually be released. Margarete asks what should go on the packet she has in her hands today. You write the day of dispatch and help her dry the ink. The date of release still lies beyond this visit.'
       zh:
-        name: "母亲受审"
+        name: '证人亲眼看见的事'
         place: "莱昂贝格"
         figure: "约翰内斯·开普勒"
-        story: "开普勒年迈的母亲卡塔琳娜在莱昂贝格被指控为女巫，他花了几个月为她辩护。"
-        relic: "一页数表"
-        relic_desc: "一页行星运行数表，他一直没有停下算。"
+        story: '约翰内斯·开普勒为母亲卡塔琳娜辩护时，把她被捕的日子记为1620年8月7日，也逐一写下居格林根诉讼的拖延。游戏从莱昂贝格整理文书开始。抄写差事是虚构的，其中的说法并非当时的证言。'
+        relic: '一页核对过的辩护文书练习稿'
+        relic_desc: '虚构的抄写练习，有一处改过日期。'
         points:
-          p1: "帮他把案子说清楚"
-          p2: "陪他熬过漫长的审讯"
-          p3: "在冰冷的牢房里陪卡塔琳娜坐一会"
+          p1: '请抄写员把指控和说出它的人记在一处'
+          p2: '把两份抄本放在一起，等人核对'
+          p3: '取得信任，把送件人亲耳听到的话念回给他'
+        vignettes:
+          heard: '玛格丽特写着有邻居亲眼看见。你问是哪位邻居，她只叫得出在门边转述的那个人。她把两种说法分成两行，又给可能收到的亲历说法留个位置。'
+          compare: '马蒂亚斯想先送出一份，另一份留桌上。你照着念了两遍，发现有个日期漏了一位数字。他等玛格丽特找原稿核对。钟声刚停，送件人带着改好的副本走了。'
+          release: '你知道卡塔琳娜终会获释。玛格丽特问，今天手里这包纸该写什么。你写上送出的日期，帮她等墨晾干。获释的日子这趟还等不到。'
 text:
   en:
     name: Johannes Kepler
@@ -45,3 +58,57 @@ text:
   zh:
     name: 约翰内斯·开普勒
     text: 德国天文学家，1571 年生，1630 年去世。他根据第谷·布拉赫的观测归纳出行星运动三定律。1620 年他的母亲在莱昂贝格因巫术受审，他协助辩护。
+hook: {en: 'Who actually saw what the statement describes?', zh: '这句话写的事，谁亲眼看见？'}
+facts:
+  arrest:
+    date: '1620-08-07'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kepler_leonberg_arrest]
+    text:
+      en: 'The defence dates the arrest to 7 August 1620, distinguishes later steps taken at Güglingen and records the defence’s complaints about delay.'
+      zh: '辩护文书将被捕日记为1620年8月7日，分别列出后来在居格林根的诉讼步骤，并陈述辩方对拖延的异议。'
+  released:
+    date: '1621'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kepler_leonberg_released]
+    text:
+      en: 'Rublack’s archival research places Katharina’s release in the autumn of 1621.'
+      zh: '鲁布拉克据档案研究将卡塔琳娜获释定在1621年秋。'
+bystanders:
+  margarete:
+    invented: true
+    text: {en: 'A fictional scribe whose copy has to distinguish two kinds of statement.', zh: '虚构抄写员玛格丽特，得在抄本里分清两种说法。'}
+  matthias:
+    invented: true
+    text: {en: 'A fictional courier about to leave with the first copy he is handed.', zh: '虚构送件人马蒂亚斯，拿到第一份纸就准备走。'}
+wiki:
+  refs:
+    kepler_leonberg_arrest:
+      order: 865
+      status: checked
+      text:
+        en: 'Johannes Kepler, extracts from the defence of Katharina Kepler, Cambridge translation https://keplers-trial.hist.cam.ac.uk/keplers-defence.pdf'
+        zh: '约翰内斯·开普勒为卡塔琳娜辩护的文书节录，剑桥译本 https://keplers-trial.hist.cam.ac.uk/keplers-defence.pdf'
+    kepler_leonberg_released:
+      order: 866
+      status: checked
+      text:
+        en: 'Ulinka Rublack, archival research on the Kepler trial, University of Cambridge https://www.cam.ac.uk/research/news/the-astronomer-and-the-witch-how-kepler-saved-his-mother-from-the-stake'
+        zh: '乌琳卡·鲁布拉克，开普勒案档案研究，剑桥大学 https://www.cam.ac.uk/research/news/the-astronomer-and-the-witch-how-kepler-saved-his-mother-from-the-stake'
+self_check:
+  fact: arrest
+  quote_line: '她把两种说法分成两行，又给可能收到的亲历说法留个位置。'
+  regret_choice: 'compare 先送可能递错日子。'
+  bookend: '先核对看见与转述，收尾只写亲历的送出日期。'
+  share_line: '两份抄本等一个日期。'
+  share_number: 'compare 两份虚构文书。'
+  knowing: 'release 知道来年获释。'
+  near: 'arrest 有辩护文书的日期。'
+  lever: 'heard 两行各留出处。'
+  missed: 'release 获释在这趟之后。'
+  brought: 'compare 留下虚构的校对页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {V: 1}
     regret: true
+    refs: [wang_zhenyi_jinling_diagram]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["cosmopolitan","artistic","charismatic"]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"stat":{"wit":8}},{"job":["teacher","student"]}]}}
+      vignettes:
+        - {id: one_change, traits: [methodical, scholarly]}
+        - {id: shadow, traits: [curious, handy]}
+        - {id: outline}
     text:
       en:
-        name: "An eclipse explained with a lamp"
+        name: 'A mirror below the table'
         place: "Nanjing"
         figure: "Wang Zhenyi"
-        story: "Wang Zhenyi, a young woman who taught herself astronomy and mathematics, shows with a lamp, a mirror and a round table why a lunar eclipse happens. She died in 1797 aged twenty nine, and her work is little known."
+        story: 'In her Explanation of Lunar Eclipses, Wang Zhenyi recounts moving a mirror below a round table so that the table blocked light from a suspended lamp. Raising the lamp let its light reach the mirror again. The employee reconstructs the demonstration with an invented helper. The game year sets the period of the visit.'
         relic: "A small round mirror"
         relic_desc: "The mirror that played the Moon in her model of an eclipse."
         points:
-          p1: "Sit with her among her books"
-          p2: "Follow her model of the eclipse"
-          p3: "Hear her argument to the end (a sharp mind, a teacher or a student)"
+          p1: 'Get the helper to repeat the mirror position before you raise the lamp'
+          p2: 'Watch closely for the change from shadow to light'
+          p3: 'Mark the initial and final lamp positions on the same diagram'
+        vignettes:
+          one_change: 'Your helper is about to lift the lamp and the mirror together. You ask her to leave the mirror where it is for one trial and draw the two lamp heights separately. The mirror brightens with just one change. You take that sketch back. The next chance to apply it to the sky is still ahead of you.'
+          shadow: 'You know this demonstration will survive on the page, but the helper who has just walked in only sees a dark mirror. You let her look before and after the lamp is lifted, and point out the rim of the table between the two. She can then mark the obstruction herself. The room has shown you one effect; no real eclipse comes during the visit.'
+          outline: 'You draw the table edge, the low mirror and a line from the lamp. When the light returns, you add a second line to the same sheet. You take both lines back. The sky outside has given you nothing to compare them with tonight.'
       zh:
-        name: "用一盏灯讲明白月食"
+        name: '挪到桌下的那面镜'
         place: "南京"
         figure: "王贞仪"
-        story: "王贞仪是个自学天文和数学的年轻女子，她用一盏灯、一面镜子和一张圆桌演示月食是怎么发生的。她1797年去世，年仅二十九岁，她的成果很少有人知道。"
+        story: '王贞仪在《月食解》中自述，把镜子移到圆桌下，桌面挡住了吊灯照向镜子的光。提起灯后，光又照到镜上。卡里员工与虚构帮工复现这段演示，地图年份用来设定穿越时期。'
         relic: "一面小圆镜"
         relic_desc: "在她的月食模型里充当月亮的那面镜子。"
         points:
-          p1: "和她一起坐在书堆里"
-          p2: "跟上她的月食模型"
-          p3: "把她的论证听到底"
+          p1: '提灯之前，请帮工把镜子放回同一个位置'
+          p2: '看准镜面从暗转亮的那一次'
+          p3: '把灯最初和最后的位置画在同一张图上'
+        vignettes:
+          one_change: '帮工正要把灯和镜一起抬。你请她这一遍先别动镜，只把两次灯高分别画出来。只动一样，镜上果然有了光。你把图带回去，下一次能拿它对照天色的时候还没到。'
+          shadow: '你知道后人能在书里读到这次演示，刚进门的帮工眼前却只有一面暗镜。你让她在提灯前后各看一次，指给她看挡在中间的桌沿。她自己就能在图上标出遮挡处。这趟看见的是屋里的现象，没有赶上真正月食。'
+          outline: '你在纸上画下桌沿、低处的镜子，再从灯处画出一条线。镜面一亮，你在同一页添了第二条线。两条都带回去，今夜的天空没有相应的变化可供比较。'
 text:
   en:
     name: Wang Zhenyi
@@ -45,3 +58,39 @@ text:
   zh:
     name: 王贞仪
     text: 清代天文学家与数学家，1768 年生，1797 年去世。她用灯、镜子和圆桌做模型解释日月食，还写过数学著作，二十九岁去世。
+hook: {en: 'What makes the light return to the mirror?', zh: '镜子为什么又亮起来？'}
+facts:
+  diagram:
+    date: '1790'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [wang_zhenyi_jinling_diagram]
+    text:
+      en: 'Wang describes the lamp, table and mirror and how changing the lamp’s height made the light reach the mirror again. The year is the setting, not a date established for the observation.'
+      zh: '王贞仪记述灯、桌与镜子，并说提灯后光又照到了镜上。所标年份是场景年代，未用来给演示定年。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional helper who sees only a dark mirror at the start of the demonstration.', zh: '虚构的帮工，演示开始时只见镜面暗着。'}
+wiki:
+  refs:
+    wang_zhenyi_jinling_diagram:
+      order: 580
+      status: checked
+      text:
+        en: 'Wang Zhenyi, Yueshi jie, Defengting chuji, passage beginning with the round table https://www.shidianguji.com/mid-page/7569723858027479067'
+        zh: '王贞仪《德风亭初集·月食解》，圆桌、晶灯与圆屏镜一段 https://www.shidianguji.com/mid-page/7569723858027479067'
+self_check:
+  fact: diagram
+  quote_line: '只动一样，镜上果然有了光。'
+  regret_choice: '同时动灯和镜，光回来也不知道是哪个变化造成。'
+  bookend: '从暗镜开始，到同一张图画下明暗之间的差别。'
+  share_line: '我没动镜子，只提了灯。'
+  share_number: '两次灯高'
+  knowing: 'shadow 知道日后文字会留存。'
+  near: 'diagram 锚定原书所载装置与遮挡。'
+  lever: 'one_change 复演中只改变灯高。'
+  missed: '没有赶上真正月食。'
+  brought: '两种灯高画在同一页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

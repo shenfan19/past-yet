@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {S: 3}
     regret: true
+    refs: [fanny_mendelssohn_berlin_score]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["streetwise","methodical"]}]}}
         - {id: p2, kind: trust, req: {"trait":["cosmopolitan","attached","charismatic"]}}
         - {id: p3, kind: hold, redeem: true, req: {"item":"golden_apple"}}
+      vignettes:
+        - {id: cover, traits: [methodical, curious]}
+        - {id: forward, traits: [bold, charismatic]}
+        - {id: order}
     text:
       en:
-        name: "The Sunday concert"
+        name: 'Six songs under one name'
         place: "Berlin"
         figure: "Fanny Mendelssohn Hensel"
-        story: "Fanny Mendelssohn Hensel composed hundreds of pieces, a few of which appeared under her brother's name. She dies of a stroke in May 1847 while rehearsing a concert at home."
+        story: 'Fanny Hensel’s Six Songs, Op. 1, appeared under her own name in 1846. The Berlin game visit is set in the following year. The exchange of parts at the rehearsal is fictional.'
         relic: "A song sheet"
         relic_desc: "A handwritten song marked Fanny."
         points:
-          p1: "Hear what is in the songs (a musician or a sensitive ear helps)"
-          p2: "Be welcome in the family room"
-          p3: "Play her piano part as she meant it"
+          p1: 'Match the title sheet to the six songs it belongs with'
+          p2: 'Ask the singer to check the name before passing the score around'
+          p3: 'Keep the title sheet attached when the music is put away'
+        vignettes:
+          cover: 'A singer has opened the score in the middle and asks whose music this is. You fetch its loose title sheet and set it beside the score. The initials on the title sheet are enough to settle what to write on the sleeve. You miss the first song while putting the papers together.'
+          forward: 'You start to tell the singer how collectors will search for these songs in the future. She points to the loose cover and asks whether they will still have it. You ask for the cover to go out with the next copy. It goes with one reader. You cannot follow it any further.'
+          order: 'You work through the contents and lay the six songs in order. The singer can turn straight to the one she needs. You keep the sequence on your own slip. What you cannot take home is the sound from the room after you close its door.'
       zh:
-        name: "周日音乐会"
+        name: '用自己的名字印六首歌'
         place: "柏林"
         figure: "范妮·门德尔松·亨泽尔"
-        story: "范妮·门德尔松·亨泽尔写了数百首乐曲，其中有几首是用她弟弟的名字发表的。1847年5月她在家中排练音乐会时中风去世。"
+        story: '范妮·亨泽尔的《六首歌曲》作品一号于 1846 年以她本人的名字出版。本趟设在次年的柏林，排练时分发乐谱是虚构差事。'
         relic: "一页歌谱"
         relic_desc: "一页手写的歌谱，署名范妮。"
         points:
-          p1: "听出歌里有什么（音乐家或敏感的耳朵更合适）"
-          p2: "在家庭的房间里受到欢迎"
-          p3: "按她的本意弹她的钢琴声部"
+          p1: '把题名页跟对应的六首歌配起来'
+          p2: '请歌手在传阅前先核对作曲者姓名'
+          p3: '收谱时把题名页与正文留在一起'
+        vignettes:
+          cover: '虚构的歌手从中间翻开乐谱，问是谁写的。你找来散开的题名页放在旁边。封面上署的名字足够确定纸套上该写什么。等你把纸理齐，第一首已经唱完。'
+          forward: '你刚要说后来的收藏者会怎样找这六首歌，歌手指着散开的封面，问他们还找不找得到它。你请她把封面随下一份谱一起交出去。一位读者带着它走了，再往下的去向你够不着。'
+          order: '你对着目录把六首排好，歌手可以直接翻到要唱的那一首。你另记下一份顺序。等门一关，屋里再响起什么，你带不走。'
 text:
   en:
     name: Fanny Mendelssohn Hensel
@@ -45,3 +58,39 @@ text:
   zh:
     name: 范妮·门德尔松·亨泽尔
     text: 德国作曲家与钢琴家，1805 年生，1847 年去世，费利克斯·门德尔松的姐姐。她写了几百首作品，包括歌曲和钢琴曲，但家人不赞成她出版。她在柏林排练时中风去世。
+hook: {en: 'Whose name is on the title page?', zh: '这张封面上是谁的名字？'}
+facts:
+  score:
+    date: '1846'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [fanny_mendelssohn_berlin_score]
+    text:
+      en: 'The 1846 first edition presents six songs for voice with piano under F. Hensel’s own name.'
+      zh: '1846 年初版以 F. Hensel 的名字刊行六首有钢琴伴奏的歌曲。'
+bystanders:
+  singer:
+    invented: true
+    text: {en: 'A fictional singer looking for the title sheet before rehearsal.', zh: '虚构的歌手，排练前在找题名页。'}
+wiki:
+  refs:
+    fanny_mendelssohn_berlin_score:
+      order: 474
+      status: checked
+      text:
+        en: 'Fanny Hensel, Sechs Lieder, Op. 1, first-edition score https://commons.wikimedia.org/wiki/File:6_Lieder,_Op.1_(IA_imslp-lieder-op1-hensel-fanny).pdf'
+        zh: '范妮·亨泽尔《六首歌曲》作品一号初版谱 https://commons.wikimedia.org/wiki/File:6_Lieder,_Op.1_(IA_imslp-lieder-op1-hensel-fanny).pdf'
+self_check:
+  fact: score
+  quote_line: '等你把纸理齐，第一首已经唱完。'
+  regret_choice: '留下来配封面会错过首曲。'
+  bookend: '从散了的题名页开始，到姓名和正文相随。'
+  share_line: '六首歌，一个该留在封面上的名字。'
+  share_number: '六首'
+  knowing: 'forward 知道未来的听众要靠题名页找到谱。'
+  near: 'score 锚定真实出版物。'
+  lever: '给一份谱补回原封面。'
+  missed: '错过首曲或后续传阅。'
+  brought: '六首歌的顺序。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

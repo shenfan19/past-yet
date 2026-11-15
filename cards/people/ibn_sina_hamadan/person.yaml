@@ -9,34 +9,47 @@ events:
     field: medicine
     tier: 2
     channels: {E: 1, V: 2, S: 1}
+    refs: [ibn_sina_hamadan_canon, ibn_sina_hamadan_date]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat": {"wit": 8}}}
         - {id: p2, kind: persuade, req: {"item": "neural_chip"}}
         - {id: p3, kind: hold, req: {"stat": {"wit": 7}}}
+      vignettes:
+        - {id: section, traits: [methodical, curious, scholarly]}
+        - {id: sleeve, traits: [handy, patient, vigil]}
+        - {id: afterlife}
     text:
       en:
-        name: A medical encyclopedia for centuries
+        name: 'Which of the five books'
         place: Hamadan, Persia
         figure: Ibn Sina
-        story: Ibn Sina finishes the Canon of Medicine, which is taught for centuries from Persia to Europe.
-        relic: A glass vial
-        relic_desc: A small stoppered vial of a physician.
+        story: 'The Canon of Medicine is arranged in five books. The U.S. National Library of Medicine places the completion of its long composition in Hamadan, and the Bodleian dates the work to about 1025. This encounter imagines two readers testing a set of guide slips at a Hamadan copying table.'
+        relic: 'A practice index strip'
+        relic_desc: 'A fictional marker distinguishing two of the five books.'
         points:
-          p1: "Follow the medicine"
-          p2: "Read Arabic and Persian"
-          p3: "Work through the Canon"
+          p1: 'Find the book a reader needs by comparing its heading with the index'
+          p2: 'Talk through the two labels before the book leaves'
+          p3: 'Keep the working strip in place while the reading copy is moved'
+        vignettes:
+          section: 'Ruqayya sends both requests to the same heading because both mention remedies. You ask her to open the index and point out which entry concerns a single substance and which concerns compounds. She puts one tab on each book. The two people at the table can now look for their entries without waiting for each other.'
+          sleeve: 'Yahya has to carry one copy away. Its guide slips will slide out if he tips the board. You help him fold the empty wrapper over the bookmarks while Ruqayya copies the two headings for the reader staying behind. The bench keeps a small index even when the book is gone.'
+          afterlife: 'You have seen the five books divided differently in a much later binding. Yahya asks where the first heading begins in this copy. You find its first line and leave the dates of future editions out of his note. You will miss his next reader trying the index from scratch.'
       zh:
-        name: 用了几百年的医学全书
+        name: '五卷之中该翻哪卷'
         place: 波斯哈马丹
         figure: 伊本·西那
-        story: 伊本·西那写完《医典》，这部书从波斯到欧洲被教了好几百年。
-        relic: 一只玻璃小瓶
-        relic_desc: 医生用的带塞的小瓶。
+        story: '《医典》全书分为五卷。美国国家医学图书馆将这部多年写成的书的完稿地记为哈马丹，博德利图书馆将书定于约1025年。游戏虚构两名读者在哈马丹抄书桌上试用一组索引签。'
+        relic: '一张练习索引条'
+        relic_desc: '虚构的读书签，区分全书五卷中的两卷。'
         points:
-          p1: "跟上他的医学"
-          p2: "读懂阿拉伯文和波斯文"
-          p3: "读完《医典》"
+          p1: '照题头与索引帮读者找对卷'
+          p2: '书送走前，把容易弄混的两张签对一遍'
+          p3: '搬走读本时，把临时索引条的位置留好'
+        vignettes:
+          section: '鲁卡娅见两张单都提到药物，便指向同个题头。你请她打开索引，指出哪条是单味，哪条是复方。她给两卷各夹一签。桌边的两个人现在可以各找各的条目了。'
+          sleeve: '叶海亚得带走一份抄本，板一斜，索引签就会滑掉。你帮他用空封纸把几个签护好，鲁卡娅则替还留在桌边的人另抄两个题头。书带走后，桌上还有一张小索引。'
+          afterlife: '你见过后世的装帧，同样五卷却分成不同的册子。叶海亚问，在手里这部抄本哪儿才是第一个题头。你找到开头那行，把后世版本的日子留在纸外。接手人第一次自己试索引，你已经看不到了。'
 text:
   en:
     name: Ibn Sina
@@ -44,3 +57,57 @@ text:
   zh:
     name: 伊本·西那
     text: 波斯医生与哲学家，约 980 年生，1037 年去世，拉丁名阿维森纳。他的《医典》在欧洲和伊斯兰世界数百年里是标准教材，他在哈马丹去世。
+hook: {en: 'The tab sends a reader to the wrong book.', zh: '一个书签，把读者引到错的一卷。'}
+facts:
+  canon:
+    date: '1025'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_sina_hamadan_canon]
+    text:
+      en: 'The catalogue describes composition across several places ending at Hamadan and the division into five books. It distinguishes the second book on single substances from the fifth on compound remedies.'
+      zh: '馆方记述《医典》历经多处撰写，在哈马丹完成，全书分五卷，第二卷记单味药，第五卷记复方。'
+  date:
+    date: '1025'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ibn_sina_hamadan_date]
+    text:
+      en: 'The guide dates the work to about 1025 and displays the title page of a later copy of Book 1.'
+      zh: '解说将作品定在约1025年，并展示后出第一卷抄本的题页。'
+bystanders:
+  ruqayya:
+    invented: true
+    text: {en: 'A fictional index maker answering two requests at once.', zh: '虚构索引编写人鲁卡娅，同时收到两项查找请求。'}
+  yahya:
+    invented: true
+    text: {en: 'A fictional messenger who has to carry the copying board away.', zh: '虚构送件人叶海亚，要把抄书板带走。'}
+wiki:
+  refs:
+    ibn_sina_hamadan_canon:
+      order: 953
+      status: checked
+      text:
+        en: 'National Library of Medicine, Islamic Medical Manuscripts, catalogue of the Canon https://www.nlm.nih.gov/hmd/arabic/E8.html'
+        zh: '美国国家医学图书馆，伊斯兰医学手稿目录，《医典》 https://www.nlm.nih.gov/hmd/arabic/E8.html'
+    ibn_sina_hamadan_date:
+      order: 954
+      status: checked
+      text:
+        en: 'Bodleian Libraries, The Canon of Medicine, object guide https://bodwhatson.web.ox.ac.uk/sites/default/files/bodwhatson/documents/media/mim-canon-medicine.pdf'
+        zh: '博德利图书馆，《医典》藏品解说 https://bodwhatson.web.ox.ac.uk/sites/default/files/bodwhatson/documents/media/mim-canon-medicine.pdf'
+self_check:
+  fact: canon
+  quote_line: '书带走后，桌上还有一张小索引。'
+  regret_choice: 'section 合用一签会引错卷，也耽误另一位读者。'
+  bookend: '从书签引错，到下一位可以自己试。'
+  share_line: '同样叫药，落在不同的卷。'
+  share_number: '全书五卷，取自馆藏目录。'
+  knowing: 'afterlife 知道后世装帧会另行分册。'
+  near: 'canon 以哈马丹完稿地与分卷为据。'
+  lever: 'sleeve 走一本仍留两项查找线索。'
+  missed: 'afterlife 看不到真正的下一位查找者。'
+  brought: 'sleeve 带回虚构的索引条。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

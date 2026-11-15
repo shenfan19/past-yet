@@ -9,38 +9,102 @@ events:
     field: architecture
     tier: 2
     channels: {W: 2, L: 2}
+    refs: [tenochtitlan_lake_date, tenochtitlan_lake_plots]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["builder"]},{"trait":["bold"]}]}}
         - {id: p3, kind: notice, req: {"trait":["wanderer","skeptical","quiet"]}}
+      vignettes:
+        - {id: fixed, traits: [methodical, scholarly]}
+        - {id: channel, traits: [hardy, curious]}
+        - {id: posts}
     text:
       en:
-        name: A city built on a lake
+        name: 'A boat route between raised plots'
         place: Tenochtitlan, Mexico
         figure: The Mexica builders
-        story: The Mexica build their city on an island in a lake, with causeways, canals and floating gardens of piled earth.
-        relic: A turquoise mosaic tile
-        relic_desc: A tiny tile of blue stone.
+        story: 'Historical Tenochtitlan grew on an island in Lake Texcoco. The game uses 1325, the conventional date associated with its foundation. Raised cultivation beds known as chinampas were fixed plots separated by water channels, as the later Xochimilco landscape shows. The scene imagines a practice route in the wider basin and does not date particular fields to 1325.'
+        relic: A sketch of the boat channel
+        relic_desc: A row of fixed posts and a movable slip showing the passing boat.
         points:
-          p1: "Work on the lake"
-          p2: "Pile up the floating fields"
-          p3: "Understand the waterways"
+          p1: 'Walk to where the planted edge meets the boat channel'
+          p2: 'Keep the water gap marked as the boat moves through the sketch'
+          p3: 'Distinguish a fixed plot from a moving landing mark'
+        vignettes:
+          fixed: 'The helper has drawn the whole planted plot where the boat was this morning. You show him the posts that still stand at the field edge and mark the boat on a loose slip. The slip can move while the field stays on the page. You leave before the boat returns.'
+          channel: 'You know later visitors will call such plots floating gardens. Here the helper has to find a way through water between two planted edges. You walk the bank far enough to mark the opening. There is room for the next boat on the plan. What it will carry is not on your sheet.'
+          posts: 'You mark one fixed row of posts and then where the boat passed beside them. The helper can read one mark without treating it as the other. You keep the interval on the sketch. From here you cannot see where the next channel leads.'
       zh:
-        name: 建在湖上的城市
+        name: '从隆起的田块之间过船'
         place: 墨西哥特诺奇蒂特兰
         figure: 墨西卡的建造者们
-        story: 墨西卡人把城建在湖心的岛上，有堤道、运河，还有堆土做成的浮动园圃。
-        relic: 一片绿松石镶嵌片
-        relic_desc: 一小片蓝色石头。
+        story: '特诺奇蒂特兰在特斯科科湖中的岛上发展。卡里采用与建城相联系的通行纪年 1325 年。称为奇南帕的垫高耕地固定在水道之间，后来索奇米尔科的景观仍可见这一形态。卡中的练习水路为虚构，未把某块实田定在 1325 年。'
+        relic: 一张船道草图
+        relic_desc: 一排固定的桩，另有一张画着船的散纸可以移动。
         points:
-          p1: "在湖上干活"
-          p2: "垒浮田"
-          p3: "看懂水路"
+          p1: '走到田边与船道相接的地方'
+          p2: '画船的路线时，给图上的水道留出宽度'
+          p3: '分清固定田块和会随水移动的停船记号'
+        vignettes:
+          fixed: '帮工把整块田画到早上停船的地方。你指给他看仍立在田边的桩，把船改画在散纸上。船能沿图移动，田仍留在那一处。等船再回来，你已经走了。'
+          channel: '你知道后来的来客会把这类田叫浮动园圃。眼下帮工却得在两块固定田地之间找水道。你沿着边走到能标出开口的地方。下一条船在图上有路可走，船上载什么，这张纸没记。'
+          posts: '你先标一排固定的桩，再画船贴着它们过去的位置。帮工看图能分清这两种记号。你带回这一小段两者间的距离，从这里还望不出下条水道通哪里。'
 text:
   en:
     name: The Mexica builders
-    text: The Mexica builders of Tenochtitlan, founded on an island in Lake Texcoco in 1325. The city had causeways, canals, aqueducts and floating gardens called chinampas, and Spanish forces destroyed it in 1521.
+    text: The Mexica developed Tenochtitlan on an island in Lake Texcoco. Its founding is conventionally dated to 1325. The city had causeways, canals and aqueducts. Chinampas in the wider basin were raised cultivation beds separated by canals.
   zh:
     name: 墨西卡的建造者们
-    text: 特诺奇蒂特兰的墨西卡建造者。这座城建在特斯科科湖的一座岛上，1325 年建立。城里有堤道、运河、引水渠和名为奇南帕的浮田，西班牙人在 1521 年将它摧毁。
+    text: 墨西卡人在特斯科科湖的一座岛上发展特诺奇蒂特兰，通行的建城纪年是 1325 年。城中有堤道、运河和引水渠。湖盆地区名为奇南帕的耕地为人工垫高的固定田块，由水道分隔。
+hook: {en: 'Which part of a garden stays put when the water moves?', zh: '水在动，园圃的哪一边留在原地？'}
+facts:
+  date:
+    date: '1325'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tenochtitlan_lake_date]
+    text:
+      en: 'INAH’s study discusses the conventional association between 2-House, 1325 and the settlement, as well as doubts about assigning a single foundation date.'
+      zh: '该研究说明二屋年与 1325 年及定居相联系的通行说法，并讨论建城能否定为某一个年份。'
+  plots:
+    date: '1325'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tenochtitlan_lake_plots]
+    text:
+      en: 'The listing describes the island city and Xochimilco’s artificial cultivation plots and channels. The game does not date these surviving plots to 1325.'
+      zh: '遗产档案说明湖中岛城，以及索奇米尔科的人工耕地和水道。卡里未把现存田块定到 1325 年。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional helper putting a boat route and a raised bed on the same sketch.', zh: '虚构的帮工，正在一张草图上画船路和垫高的田。'}
+wiki:
+  refs:
+    tenochtitlan_lake_date:
+      order: 715
+      status: checked
+      text:
+        en: 'INAH, Códice Boturini, discussion of 2-House and competing foundation dates https://www.codiceboturini.inah.gob.mx/approaches_text.php?textID=5'
+        zh: '墨西哥国家人类学与历史研究所，《博图里尼抄本》项目，二屋年及建城纪年的讨论 https://www.codiceboturini.inah.gob.mx/approaches_text.php?textID=5'
+    tenochtitlan_lake_plots:
+      order: 716
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Historic Centre of Mexico City and Xochimilco, site description https://whc.unesco.org/en/list/412/'
+        zh: '联合国教科文组织世界遗产中心，墨西哥城历史中心与索奇米尔科遗产说明 https://whc.unesco.org/en/list/412/'
+self_check:
+  fact: date
+  quote_line: '船能沿图移动，田仍留在那一处。'
+  regret_choice: '把船到过的位置画成田的位置，就会指错开口。'
+  bookend: '从地与船画在一处，到水道和田边固定物各是一记。'
+  share_line: '动的是船，田沿仍能认得。'
+  share_number: '1325 年为通行纪年'
+  knowing: 'channel 知道后世有浮动园圃的俗称。'
+  near: 'date 与 plots 锚定背景和景观。'
+  lever: '补上一处水道路口。'
+  missed: '没赶上下一船。'
+  brought: '固定的桩与移动的船位图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

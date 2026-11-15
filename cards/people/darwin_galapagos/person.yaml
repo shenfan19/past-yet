@@ -10,7 +10,7 @@ events:
     tier: 3
     era: darwin_galapagos_1835
     channels: {Y: 3, H: 2}
-    refs: [darwin_beagle_bird_notes]
+    refs: [darwin_beagle_bird_notes, darwin_galapagos_log]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","streetwise","handy"]}}
@@ -77,6 +77,7 @@ wiki:
         era: darwin_galapagos_1835
       refs:
         - darwin1839
+        - darwin_galapagos_log
         - game
       text:
         en:
@@ -101,6 +102,7 @@ wiki:
       unlock:
         era: darwin_galapagos_1835
       refs:
+        - darwin_galapagos_log
         - darwin1839
         - game
       text:
@@ -110,7 +112,20 @@ wiki:
         zh:
           name: 水和食物的计划
           text: 上岸的队伍怎样补水、补食物，是船上军官的选择。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
+  model_events:
+    expedition_handoff:
+      order: 21
+      refs: [game]
+      text:
+        en: 'An invented handoff. The employee’s response habit determines whether they send the available copy or make time to check it.'
+        zh: '虚构文书交接。员工的应对习惯决定是先交手里的记录，还是多留一点时间核对。'
   refs:
+    darwin_galapagos_log:
+      order: 995
+      status: checked
+      text:
+        en: 'Charles Darwin, Beagle diary, Galápagos entries, September–October 1835 https://www.galapagos.to/TEXTS/DIARY.HTM'
+        zh: '查尔斯·达尔文，《小猎犬号日记》，1835年9至10月加拉帕戈斯条目 https://www.galapagos.to/TEXTS/DIARY.HTM'
     darwin_beagle_bird_notes:
       order: 160
       status: checked
@@ -136,6 +151,7 @@ era_text:
       - galapagos
       - history
     event_titles:
+      expedition_handoff: 'The specimen label'
       time_strain: Time slip
     plots:
       field_notes:
@@ -166,20 +182,24 @@ era_text:
         - You can save today's people but not the whole voyage. On the main timeline the plan was not changed.
         - Water and shade matter more than any one clever idea, but a plan only changes when someone is heard.
     events:
+      expedition_handoff: '{date}: Joan and {staff} take time to copy the island name twice. Wren’s first boat leaves without the bundle. The next boat will have both the specimen and its checked label.'
+      expedition_send: '{date}: The survey is beginning and Wren has one bundle ready to send. {staff} keeps the island name with it and hands Joan the blank copy for a later cross-check.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       convince: 'Convince Darwin'
       trust: 'Win the trust of the ship''s company'
-      reform: 'Have the plan for water and food changed ahead of history'
+      reform: 'Have the plan for water and food changed before the simulation baseline'
     milestones:
+      surveying: '{date}: The Beagle surveys the outer coast of Chatham Island, now San Cristóbal.'
+      lands: '{date}: Darwin records an afternoon landing on Chatham Island with FitzRoy.'
       first_treat: '{date}: {staff} brings the first cup of clean water to a man with the heat sickness. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first hats and shade cloths to the shore party, and teaches the men to use them.'
       met_darwin: '{date}: {staff} is received by Darwin.'
       darwin_trusts: '{date}: Darwin gives {staff} the notes to work from.'
       darwin_convinced: '{date}: Darwin takes up the plan that {staff} put to him.'
       board_moves: '{date}: Word goes round that the plan might change.'
-      reform_history: '{date}: The plan for water and food is changed. The main timeline does not change.'
-      reform_early: '{date}: The plan for water and food is changed {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulated expedition sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The plan for water and food is changed {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: The ship''s company no longer keeps {staff} out, and some ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of ailing men falls to single digits.'
@@ -187,8 +207,8 @@ era_text:
       near_death: '{staff} collapses at Galapagos and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend at Galapagos. The plan was changed {advance_days:1} days earlier than in the main timeline.'
-      perfect: '{staff} completed the task at Galapagos and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      legend: '{staff} left a legend at Galapagos. The plan was changed {advance_days:1} days before the model’s baseline.'
+      perfect: '{staff} completed the task at Galapagos and came back safe. The simulation records {base_D:i} lost in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days at Galapagos, did what was within reach, and came back safe.'
     quotes:
@@ -238,6 +258,7 @@ era_text:
       - galapagos
       - history
     event_titles:
+      expedition_handoff: '标本包上的纸签'
       time_strain: 时间错位
     plots:
       field_notes:
@@ -268,20 +289,24 @@ era_text:
         - 你能救今天的人，救不了整次航行。主时间线上计划没有改。
         - 水和遮阴比任何一个聪明的主意都重要，但计划只有在有人被听见时才会改。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{date}，琼和 {staff} 先把岛名复写一份。雷恩没把这一包送上头一班船，下一班可以把标本和核过的签一起带走。'
+      expedition_send: '{date}，测量刚开始，雷恩有一包可以先送走。{staff} 让岛名随包一起去，把空底稿交给琼以后核对。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: '说服达尔文'
       trust: '赢得船员的信任'
-      reform: '让水和食物的计划比历史上更早改变'
+      reform: '让水和食物的计划比模型基准更早改变'
     milestones:
+      surveying: '{date}，小猎犬号测量查塔姆岛（今圣克里斯托瓦尔岛）外侧海岸。'
+      lands: '{date}，达尔文记下自己与菲茨罗伊当天下午登上查塔姆岛。'
       first_treat: '{date}：{staff} 给一个中暑的人递上第一杯干净的水，他开始开口了。'
       first_protect: '{date}：{staff} 给上岸的队伍发下第一批帽子和遮阳布，教大家使用。'
       met_darwin: '{date}：{staff} 被达尔文接见。'
       darwin_trusts: '{date}：达尔文把笔记交给 {staff} 用。'
       darwin_convinced: '{date}：达尔文采纳了 {staff} 提出的办法。'
       board_moves: '{date}：消息传开，计划也许要改。'
-      reform_history: '{date}：水和食物的计划被改了。主时间线没有变化。'
-      reform_early: '{date}：水和食物的计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟中的队伍按模型基准日调整安排。'
+      reform_early: '{date}：水和食物的计划比模型基准提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
       trust_won: '{date}：船员们不再把 {staff} 挡在外面，有的还开口求助。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：生病的人数降到了个位数。'
@@ -289,8 +314,8 @@ era_text:
       near_death: '{staff} 在加拉帕戈斯倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在加拉帕戈斯留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
-      perfect: '{staff} 在加拉帕戈斯完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      legend: '{staff} 在加拉帕戈斯留下了传说。计划比模型基准提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在加拉帕戈斯完成了任务，平安回来。模拟基准损失 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
       modest: '{staff} 在加拉帕戈斯待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -328,3 +353,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 查尔斯·达尔文的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'The island name travels with the packet.', zh: '那包标本，得带着岛名走。'}
+facts:
+  surveying:
+    date: '1835-09-15'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [darwin_galapagos_log, darwin_beagle_bird_notes]
+    text:
+      en: 'The Beagle surveys the outer coast of Chatham Island, now San Cristóbal.'
+      zh: '小猎犬号测量查塔姆岛（今圣克里斯托瓦尔岛）外侧海岸。'
+  lands:
+    date: '1835-09-16'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [darwin_galapagos_log, darwin_beagle_bird_notes]
+    text:
+      en: 'Darwin records an afternoon landing on Chatham Island with FitzRoy.'
+      zh: '达尔文记下自己与菲茨罗伊当天下午登上查塔姆岛。'
+bystanders:
+  wren:
+    invented: true
+    text: {en: 'Wren, a fictional labelling assistant who has to get a bundle into the next boat.', zh: '虚构帮工雷恩，要赶下一班小船送走标本包。'}
+  joan:
+    invented: true
+    text: {en: 'Joan, a fictional copyist holding the note that names the island.', zh: '虚构抄写员琼，手里有写着岛名的纸签。'}
+self_check:
+  fact: surveying
+  quote_line: '下一班可以把标本和核过的签一起带走。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '那包标本，得带着岛名走。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '那包标本，得带着岛名走。'
+  share_number: '两份岛名，可再核对。'
+  knowing: 'lands 知道后续有史料记下的日期。'
+  near: 'surveying, lands'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

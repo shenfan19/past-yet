@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {H: 3, V: 2}
+    refs: [maya_venus_tables_venus]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["archivist","student"]}}
         - {id: p3, kind: endure, req: {"provides":"warmth"}}
+      vignettes:
+        - {id: count, traits: [methodical, scholarly]}
+        - {id: dawn, traits: [curious, handy]}
+        - {id: margin}
     text:
       en:
-        name: Venus tracked for centuries
+        name: 'Five cycles in the margin'
         place: Chichen Itza, Mexico
         figure: The Maya scribes
-        story: Maya scribes keep tables of the movements of Venus, accurate across centuries, in painted bark paper books.
+        story: 'The Dresden Maya Codex preserves Venus tables on pages 24 and 46–50, reckoning a cycle as 584 days. The surviving manuscript is later than the game’s 900 setting. The scene imagines an earlier learner testing arithmetic of the kind preserved in the tables. The test numbers are not records of an actual observation.'
         relic: A painted bark strip
         relic_desc: A strip of bark paper with red and black glyphs.
         points:
-          p1: "Match the Venus cycles"
-          p2: "Copy out the tables"
-          p3: "Stand in the blazing sun"
+          p1: 'Distinguish a count of cycles from a count of days'
+          p2: 'Check the next line against five cycles of 584 days'
+          p3: 'Leave the computed and observed columns with distinct labels'
+        vignettes:
+          count: 'The learner has copied five beside the days. You write five short marks in one column and 2,920 days in the other. He can see why the labels change what the numbers mean. You bring both home. Neither tells what the sky will look like through a clouded dawn.'
+          dawn: 'You recognise the count from tables preserved in a later manuscript. The learner wants to enter the predicted day as a sighting. You ask him to wait until someone has seen the sky. One column now has a computed date and the other a blank. You miss the next clear dawn.'
+          margin: 'You copy 584 once, then beside it you write what the number is counting. The learner repeats the label before taking the sheet back. You can reconstruct the exercise at home. A sighting of Venus is still waiting on the weather.'
       zh:
-        name: 几个世纪里追踪着金星
+        name: '页边的五轮金星'
         place: 墨西哥奇琴伊察
         figure: 玛雅书吏们
-        story: 玛雅书吏在彩绘树皮纸书里记录金星的运行表，几个世纪都很准。
+        story: '《德累斯顿玛雅抄本》第 24 页及 46 至 50 页保存了金星表，以 584 日计一轮。存世抄本晚于卡里的 900 年。卡里虚构了更早的学算人验算这类表格的场景，算例不作真实观测。'
         relic: 一条彩绘树皮纸
         relic_desc: 一条树皮纸，上面有红黑的字符。
         points:
-          p1: "对照金星周期"
-          p2: "抄写表格"
-          p3: "顶着烈日"
+          p1: '区分周次与累计日数'
+          p2: '按每轮 584 日验算五轮合计'
+          p3: '分别标明推算栏与实测栏'
+        vignettes:
+          count: '学算人把五写到了日数那一栏。你在一栏画五道短划，在另一栏记累计 2920 日。他看得出两栏题头为何不能互换。你把两栏一同带回，至于隔着晨云还能看见什么，这些数答不出来。'
+          dawn: '你认出这个日数，后来的抄本里还留着这样的表。学算人想把推出来的日子填进实测一栏。你请他等有人看过天再填。现在一栏有推算的日子，另一栏空着。下一回天晴破晓，你来不及等。'
+          margin: '你抄下五百八十四，旁边补一句它数的是甚么。学算人把那个题头重念一遍才收纸。回去时你还能重算这道题。要真看到金星，仍得等天气。'
 text:
   en:
     name: The Maya scribes
@@ -44,3 +57,39 @@ text:
   zh:
     name: 玛雅书吏们
     text: 古典期及之后的玛雅书吏，他们追踪金星、月亮和日月食的周期。《德累斯顿抄本》里有金星 584 天周期的表，误差很小。
+hook: {en: 'How do you label the day count in a Venus table?', zh: '金星表上，哪栏可以先填？'}
+facts:
+  venus:
+    date: '900'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [maya_venus_tables_venus]
+    text:
+      en: 'The manuscript’s Venus tables use a 584-day cycle. The game year is an earlier setting and does not date the surviving manuscript.'
+      zh: '手稿的金星表以 584 日为一轮。卡里年份用作较早的故事背景，并非存世抄本的定年。'
+bystanders:
+  learner:
+    invented: true
+    text: {en: 'A fictional learner putting arithmetic and a prospective sighting onto separate lines.', zh: '虚构的学算人，需要把推算和将来的实测分开记。'}
+wiki:
+  refs:
+    maya_venus_tables_venus:
+      order: 634
+      status: checked
+      text:
+        en: 'SLUB Dresden, Dresden Maya Codex, content guide to pages 24 and 46–50 https://www.slub-dresden.de/en/explore/manuscripts/the-dresden-maya-codex/content'
+        zh: '德累斯顿州立暨大学图书馆，玛雅抄本第 24、46 至 50 页金星表内容说明 https://www.slub-dresden.de/en/explore/manuscripts/the-dresden-maya-codex/content'
+self_check:
+  fact: venus
+  quote_line: '现在一栏有推算的日子，另一栏空着。'
+  regret_choice: '拿推算填满观测栏，下一位再看不出有没有亲见。'
+  bookend: '从数错栏到分清两项所记。'
+  share_line: '五轮是 2920 日，天晴才能再辨。'
+  share_number: '584 日'
+  knowing: '员工知道存世抄本会留下这类数表。'
+  near: 'venus 给出馆藏可查的周期。'
+  lever: '分列周次、日数与实测。'
+  missed: '没有赶上晴晨。'
+  brought: '两栏核算和等待中的空白。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

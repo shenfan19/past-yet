@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {T: 3, L: 2}
     regret: true
+    refs: [pliny_stabiae_letter]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["wanderer","streetwise"]}}
         - {id: p2, kind: endure, req: {"any":[{"trait":["bold","hardy"]},{"stat":{"constitution":6}}]}}
         - {id: p3, kind: care, redeem: true, req: {"item":"cyber_lung"}}
+      vignettes:
+        - {id: wind, traits: [streetwise, wanderer]}
+        - {id: lantern, traits: [bold, hardy, kind]}
+        - {id: letter}
     text:
       en:
-        name: "The last voyage of a naturalist"
+        name: 'The wind at Stabiae'
         place: "Stabiae"
         figure: "Pliny the Elder"
-        story: "Pliny the Elder, who has finished his huge Natural History in thirty seven books, sails across the bay during the eruption of Vesuvius to look and to help his friends. He dies on the shore, and his nephew writes the account."
+        story: 'Pliny the Younger later wrote to Tacitus about his uncle reaching Pomponianus at Stabiae during the eruption of 79 CE. The wind that carried him in prevented the loaded ships from leaving. This visit imagines two people moving through that waiting household. The letter is a later account, and the card uses the year without fixing the eruption to a particular day.'
         relic: "A wax tablet"
         relic_desc: "A wooden tablet with wax for notes, scratched with a stylus."
         points:
-          p1: "Ask about his thirty seven books"
-          p2: "Sail across the bay as the ash falls"
-          p3: "Stay beside him on the shore"
+          p1: 'Spot the difference between a loaded boat and a departed one'
+          p2: 'Stay with the household and keep track of who is in each room'
+          p3: 'Use your equipment to fetch the porter who went back for the list'
+        vignettes:
+          wind: 'Crispus has marked every loaded chest as gone. From the doorway you watch the first newcomer come in with ash on his shoulders while the loaded boats stay in sight. Crispus crosses out the word gone. He asks you to leave him room on the tablet for the next name through the door.'
+          lantern: 'Prima has time to make one trip across the room before the lamp goes out. You take her place by the doorway while she calls to the people she can still see. The wax tablet goes dark first. She repeats the last two names aloud and you answer each one back.'
+          letter: 'You remember the letter that will be sent years later. Prima is asking about the man who carried the list, whose name will never appear there. You set your account of the coming morning aside and help her finish the roll. At the end of your visit you can still hear someone coming down the corridor.'
       zh:
-        name: "博物学家的最后一次航行"
+        name: '斯塔比亚的逆风'
         place: "斯塔比亚"
         figure: "老普林尼"
-        story: "老普林尼刚刚写完卷帙浩繁的三十七卷《博物志》，维苏威火山喷发时，他驾船横渡海湾，既为观察，也为帮助朋友。他死在岸边，是外甥写下了这段记述。"
+        story: '公元79年火山喷发时，老普林尼抵达斯塔比亚，找到庞波尼安努斯。小普林尼后来写信告诉塔西佗，送舅舅进来的风也让装好东西的船无法离港。游戏虚构了在这户人家等待的两个人，只采用信中事件的年份，不把喷发钉在某一天。'
         relic: "一块蜡板"
         relic_desc: "一块涂蜡的木板，用尖笔划出笔记。"
         points:
-          p1: "问他那三十七卷书"
-          p2: "在火山灰落下时驾船横渡海湾"
-          p3: "留在岸边陪着他"
+          p1: '看出船已经装好和船已经出港的区别'
+          p2: '留在屋里，记着每间屋有谁'
+          p3: '靠装备帮忙，去接回拿名单的搬运工'
+        vignettes:
+          wind: '克里斯普斯把搬上船的木箱全记成了已离开。你们从门边看见第一位来客肩上带灰走进来，装好东西的船却还看得见。克里斯普斯划掉了已离开几个字，请你给下一位进门的人在蜡板上留一行。'
+          lantern: '灯快熄了，普丽玛只来得及穿过屋子一次。你替她守在门边，她点数还能看见的人。先看不清的是蜡板，她大声念出最后两个名字，你一个个应回去。'
+          letter: '你记得多年后寄出的那封信。普丽玛问的却是拿名单的人，那封信里找不到他的名字。你把知道的明早结局搁在一旁，帮她点完人。离开时，还能听到有人沿走廊走过来。'
 text:
   en:
     name: Pliny the Elder
@@ -45,3 +58,42 @@ text:
   zh:
     name: 老普林尼
     text: 罗马作家与海军指挥官，公元 23 年生，79 年去世。他的《博物志》用三十七卷汇集知识。维苏威火山喷发时，他在斯塔比亚附近试图救人而去世。
+hook: {en: 'The wind that brings help also holds the boats.', zh: '送来援手的风，船却出不去。'}
+facts:
+  letter:
+    date: '79'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [pliny_stabiae_letter]
+    text:
+      en: 'The letter puts Pomponianus at Stabiae awaiting a change of wind and describes the elder Pliny arriving on that same wind.'
+      zh: '信中记述庞波尼安努斯在斯塔比亚等风转向，老普林尼却正借这阵风抵达。'
+bystanders:
+  crispus:
+    invented: true
+    text: {en: 'A fictional household tally keeper who must correct the record of which boats have left.', zh: '虚构的记账人克里斯普斯，要改正哪条船已经离港的记录。'}
+  prima:
+    invented: true
+    text: {en: 'A fictional household helper trying to account for the people she can see.', zh: '虚构的帮工普丽玛，在灯灭前点数还能看见的人。'}
+wiki:
+  refs:
+    pliny_stabiae_letter:
+      order: 797
+      status: checked
+      text:
+        en: 'Pliny the Younger, Letters 6.16.11–20, York University https://www.yorku.ca/pswarney/2100/pliny-6-16-20.htm'
+        zh: '小普林尼《书信集》6.16.11—20，约克大学 https://www.yorku.ca/pswarney/2100/pliny-6-16-20.htm'
+self_check:
+  fact: letter
+  quote_line: '先看不清的是蜡板。'
+  regret_choice: 'letter 若先讲未来那封信，眼下点名就得停下。'
+  bookend: '从出不去的船开始，以走廊里还在接近的脚步收尾。'
+  share_line: '风把客人送进来，也把船留在岸边。'
+  share_number: 'lantern 最后两人，以虚构点名的数量计。'
+  knowing: 'letter 员工知道后来寄给塔西佗的书信。'
+  near: 'letter 以斯塔比亚记载中的逆风为锚。'
+  lever: 'wind 修正船的出港栏。'
+  missed: 'letter 行程结束前看不到来者。'
+  brought: 'lantern 用声音接住蜡板上末尾两个名字。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: art
     tier: 2
     channels: {H: 2, T: 1}
+    refs: [ife_bronzes_cast]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"stat":{"finesse":7}},{"trait":["hardy"]}]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+      vignettes:
+        - {id: line, traits: [methodical, scholarly]}
+        - {id: surface, traits: [handy, curious]}
+        - {id: edge}
     text:
       en:
-        name: Lifelike heads in cast metal
+        name: 'The line that must survive the cast'
         place: Ife, Nigeria
         figure: The casters of Ife
-        story: Craftsmen in Ife cast heads in brass and copper so lifelike that visitors long afterwards could not believe they were local work.
-        relic: A small bronze head
-        relic_desc: A hand sized head with lines of fine scarring.
+        story: 'The British Museum catalogues a brass head from the Wunmonije Compound in Ifẹ̀ with cast and incised features. It records lost-wax casting. In the game the worker handles a small, invented practice sample with no human figure. Its markings illustrate a problem of comparison.'
+        relic: 'Two study drawings'
+        relic_desc: 'Drawings comparing lines on a plain casting sample.'
         points:
-          p1: "Get the detail of the wax model"
-          p2: "Tend the casting furnace"
-          p3: "See the proportions of the head"
+          p1: 'Keep the labelled sample in view while its line is copied'
+          p2: 'Take the comparison drawing to the other work bench'
+          p3: 'Identify which line was recorded before the surface was finished'
+        vignettes:
+          line: 'The helper is about to label a new scratch as part of the first design. You keep his drawing from before the finishing work and lay it next to today’s sample. He draws the new line on a separate scrap. You take home the pair. The next cast’s surface is still unseen.'
+          surface: 'You know a later museum will describe cast and incised features separately. The helper only wants to know where the new line starts. You tilt the wooden board under the sample and help him draw its edge on the slip. By the time it goes back to the bench, you are on the way home.'
+          edge: 'You make one drawing of the practice sample and a second line beside it for something seen only today. The helper can put the two beside the next sample instead of relying on memory. You keep the comparison. The finished work never passes through your hands.'
       zh:
-        name: 金属铸出的逼真头像
+        name: '铸好以后还能不能认出这道线'
         place: 尼日利亚伊费
         figure: 伊费的铸造匠人
-        story: 伊费的匠人用黄铜和铜铸出逼真的头像，后来的访客甚至不相信那是本地的手艺。
-        relic: 一个小铜头像
-        relic_desc: 巴掌大的头像，脸上有细细的刻痕。
+        story: '大英博物馆登记的伊费翁莫尼杰院落黄铜头像有铸造与刻划的特征，馆方记其采用失蜡法。卡里工人拿的是虚构的小练习样块，上面没有人像，用来试着分辨几道线的来历。'
+        relic: '一对线样小图'
+        relic_desc: '对照无像练习铸样上两次所见的线。'
         points:
-          p1: "蜡模的细节"
-          p2: "守着铸炉"
-          p3: "看出头像的比例"
+          p1: '抄线样时让带标签的样块一直在眼前'
+          p2: '把两份对照小图送到另一个工台'
+          p3: '辨认哪道线在表面收拾之前就有记录'
+        vignettes:
+          line: '帮工正要把一道新划痕标成起初就有的。你留下他收面前画的小图，摆到今天的样块旁。他把后来多的一道另画一张。你把这一对记下来，下一次铸成什么面，仍没有见到。'
+          surface: '你知道后来的馆藏说明会分开记录铸造和刻划的痕迹。帮工眼下只想知道新线从哪儿开始。你把垫样块的板略一斜，帮他在纸上标出边。样块回工台时，你已在收队路上。'
+          edge: '你描了一回练习样块，又把只有今天才见到的那一划另记在旁。帮工下回能拿这两项对，不用全靠记忆。你带走对照，成品从没到过你手上。'
 text:
   en:
     name: The casters of Ife
@@ -44,3 +57,39 @@ text:
   zh:
     name: 伊费的铸造匠人
     text: 伊费的铸造匠人。伊费是约鲁巴人的城市，在今尼日利亚境内。大约从十二世纪到十五世纪，他们用失蜡法做出写实的铜合金头像。
+hook: {en: 'Which mark belongs to the wax model?', zh: '这道线是草样上刻的，还是后来留下的？'}
+facts:
+  cast:
+    date: '1300'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ife_bronzes_cast]
+    text:
+      en: 'The museum record identifies the brass head from Wunmonije and records lost-wax casting and incision. The game year does not exactly date the piece.'
+      zh: '馆方确认该黄铜头像出自翁莫尼杰院落，记录有失蜡铸造和刻划。卡里年份未用于这件藏品的精确定年。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional work helper checking marks on a plain practice sample.', zh: '虚构的工场帮工，正在核对无像样块的线痕。'}
+wiki:
+  refs:
+    ife_bronzes_cast:
+      order: 707
+      status: checked
+      text:
+        en: 'British Museum, Ife head, Af1939,34.1, collection record on Google Arts & Culture https://artsandculture.google.com/asset/ife-head-brass-head-of-a-ruler/rQGTIZwDJn4lCg?hl=en'
+        zh: '大英博物馆，伊费头像 Af1939,34.1，馆藏在线展 https://artsandculture.google.com/asset/ife-head-brass-head-of-a-ruler/rQGTIZwDJn4lCg?hl=en'
+self_check:
+  fact: cast
+  quote_line: '他把后来多的一道另画一张。'
+  regret_choice: '用成品的一道线反推起初的样，也许会抄进后来才有的划痕。'
+  bookend: '从猜线的来历到把两次记录放在一起。'
+  share_line: '同一个样块，今天多出来的一条线另有一张纸。'
+  share_number: '两张线样'
+  knowing: 'surface 知道现代馆藏说明会区别两类工艺。'
+  near: 'cast 锚定失蜡与刻划实物。'
+  lever: '将新痕与原线分开。'
+  missed: '收队后才见下一次表面。'
+  brought: '无像样块的线样。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

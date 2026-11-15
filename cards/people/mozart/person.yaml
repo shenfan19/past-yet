@@ -9,34 +9,47 @@ events:
     field: music
     tier: 2
     channels: {V: 2}
+    refs: [mozart_prague_prague_preparations, mozart_prague_prague_premiere]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["wanderer","quiet","curious"]},{"job":["musician"]}]}}
         - {id: p2, kind: trust, req: {"any":[{"trait":["kind","artistic","attached"]},{"luck":0.4}]}}
         - {id: p3, kind: persuade, req: {"stat":{"finesse":6}}}
+      vignettes:
+        - {id: cue, traits: [curious, quiet, methodical]}
+        - {id: swap, traits: [kind, artistic, attached]}
+        - {id: applause}
     text:
       en:
-        name: An opera Prague loved
+        name: 'The cue before the curtain'
         place: Prague
         figure: Wolfgang Amadeus Mozart
-        story: Mozart's Don Giovanni premieres in Prague, a city that had taken his Figaro to heart.
-        relic: A manuscript leaf
-        relic_desc: One page of fast, clean handwriting with almost no corrections.
+        story: 'Mozart wrote from Prague that Don Giovanni went on stage on 29 October 1787. An earlier letter describes problems getting the opera ready. The branch imagines a copyist and a singer catching one mismatched cue before the premiere.'
+        relic: 'A corrected rehearsal part'
+        relic_desc: 'A fictional part with one rest crossed out.'
         points:
-          p1: "Hear the small jokes in the score"
-          p2: "Be invited backstage"
-          p3: "Speak for him to the theatre"
+          p1: 'Check the singer’s cue against the other part'
+          p2: 'Ask the copyist which page she can replace before the curtain rises'
+          p3: 'Get both singers to start from the cue once'
+        vignettes:
+          cue: 'Anna’s part gives her one extra rest. You tap where the other voice enters and let her mark which word she can listen for. On the next run she comes in on time. The part still has the crossed-out rest, and Anna asks you to keep it visible.'
+          swap: 'Jan has time to replace a page or fetch the missing singer. You take the walk to the stairs while he copies the page. By the time the curtain moves, both the new page and the singer are at the stand. Someone under the stage is still looking for the old copy.'
+          applause: 'You know Mozart will write about the applause. Jan asks whether anyone in the house will hear the extra rest. You give him the corrected page and tell him where to listen for Anna. When you leave, the curtain has risen and the cue has yet to come.'
       zh:
-        name: 布拉格喜爱的歌剧
+        name: '开幕前的接句'
         place: 布拉格
         figure: 沃尔夫冈·阿马德乌斯·莫扎特
-        story: 莫扎特的《唐璜》在布拉格首演，这座城早已把他的《费加罗》放进了心里。
-        relic: 一页乐谱手稿
-        relic_desc: 字迹又快又干净，几乎没有涂改。
+        story: '莫扎特从布拉格写信说，《唐璜》于1787年10月29日登台。更早的一封信提到筹备中的困难。游戏虚构一名抄谱员与一名歌手，让他们在首演前核对一处接句。'
+        relic: '一页改过的排练分谱'
+        relic_desc: '虚构排练用谱，划掉了一个休止。'
         points:
-          p1: "听出总谱里的小心思"
-          p2: "被邀进后台"
-          p3: "替他向剧院说话"
+          p1: '拿另一份分谱核对歌手的接句'
+          p2: '请抄谱员说清开幕前哪一页还能换'
+          p3: '请两个人从那句接头的地方合一遍'
+        vignettes:
+          cue: '安娜的分谱多抄了一个休止。你敲出另一声部进入的位置，让她标下该听哪个词。再合一遍时她进准了。划掉的休止还留在谱上，安娜请你别把它涂没。'
+          swap: '扬来得及重抄一页，或去找还没回来的歌手。你替他跑一趟楼梯，他留下抄。幕一动，改过的谱和歌手都到了谱架前。台下还有人在找那张旧谱。'
+          applause: '你知道莫扎特会在信里提到掌声。扬问，那一个多出来的休止会不会有人听出来。你交给他改好的谱，指给他在哪儿等安娜开口。离开时幕已经升起，那句还没到。'
   mozart_requiem_vienna:
     order: 112
     year: 1791
@@ -47,34 +60,48 @@ events:
     tier: 3
     channels: {E: 2, G: 2}
     regret: true
+    refs: [mozart_requiem_vienna_vienna_material, mozart_requiem_vienna_vienna_hands]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["faithful","cheerful","calm"]}}
         - {id: p2, kind: notice, req: {"any":[{"job":["musician"]},{"stat":{"wit":7}}]}}
         - {id: p3, kind: hold, redeem: true, req: {"item":"golden_apple"}}
+      vignettes:
+        - {id: stack, traits: [faithful, cheerful, calm]}
+        - {id: hand, traits: [artistic, methodical, scholarly]}
+        - {id: finish}
     text:
       en:
-        name: "The Requiem unfinished"
+        name: 'Leave the hand visible'
         place: "Vienna"
         figure: "Wolfgang Amadeus Mozart"
-        story: "Mozart lies ill in Vienna with his Requiem unfinished. He dies in December at thirty five."
-        relic: "A page of the Requiem"
-        relic_desc: "A score page ending mid phrase."
+        story: 'Mozart died in Vienna in December 1791 with the Requiem incomplete. The Austrian National Library preserves working material and a delivery score with contributions by Franz Xaver Süssmayr. Before the later completion, the game imagines a copying table where an empty passage has to be carried forward as it stands.'
+        relic: 'An unfinished practice leaf'
+        relic_desc: 'A fictional copying leaf showing where the surviving notes stop.'
         points:
-          p1: "Sit by him in the sickroom"
-          p2: "Follow the voices he sketches (a musician or sharp wit helps)"
-          p3: "Sing the last bars he sketched with him"
+          p1: 'Make space for the copyist to stack the working pages in order'
+          p2: 'Identify where the written music stops on the practice copy'
+          p3: 'Protect the unfinished passage from being filled in at the copying table'
+        vignettes:
+          stack: 'Greta is clearing the table and sets an empty-looking leaf aside. You hold the stack while Emil checks the page before it. The empty staff belongs in the sequence. Greta puts it back with a loose slip marking where it came from.'
+          hand: 'Emil can copy the line in front of him and is ready to carry straight on into an unwritten staff. You have him rule a small mark in the margin at the point where copying stops. In the finished handoff, the next reader can see exactly where a new hand would have to begin.'
+          finish: 'You can hum the passage as a future choir will sing it. Greta needs the copy now and asks where the written music on that page ends. You show her the boundary and keep the melody to yourself. The next version will be put together after you leave.'
       zh:
-        name: "未完成的安魂曲"
+        name: '留下能认出的笔迹'
         place: "维也纳"
         figure: "沃尔夫冈·阿马德乌斯·莫扎特"
-        story: "莫扎特病倒在维也纳，《安魂曲》还没写完。十二月他去世，年仅三十五岁。"
-        relic: "一页安魂曲手稿"
-        relic_desc: "一页乐谱，停在一句的中间。"
+        story: '莫扎特1791年12月在维也纳去世时，《安魂曲》尚未完成。奥地利国家图书馆保有工作稿和含弗朗茨·克萨韦尔·苏斯迈尔补写的交付谱。游戏把虚构的抄谱桌放在后来补写之前，员工得决定怎样把没填的段落交到下一人手里。'
+        relic: '一页留白的练习谱'
+        relic_desc: '虚构的抄谱习作，留着已经写下的乐句停住的位置。'
         points:
-          p1: "在病房里陪着他"
-          p2: "跟上他勾勒出的各声部（音乐家或敏锐的头脑更合适）"
-          p3: "和他一起唱他留下的最后几小节"
+          p1: '给抄谱员腾开桌面，顺次叠好工作页'
+          p2: '在习作副本上找出已经写下的音乐从哪儿停住'
+          p3: '守好还空的段落，别误在抄谱时填上'
+        vignettes:
+          stack: '格蕾塔收拾桌面，顺手拿开一页看着空白的纸。你扶住一叠谱，让埃米尔去对它前一页。原来那行空谱也该收在原来的次序里。格蕾塔把它放了回去，夹一张小条记下原来的位置。'
+          hand: '眼前的乐句埃米尔抄得出，顺着写下去就要越过原来空着的一行。你请他在抄写停住的地方划个边记。交稿后，下一个人翻到这里，就知道另一只手得从哪儿起笔。'
+          finish: '你哼得出后世合唱团会唱的那段。格蕾塔现在就得带走副本，问原谱在这一页写到了哪儿。你指出分界，把后来听过的旋律留在心里。下一版会在你离开后拼合。'
+
 text:
   en:
     name: Wolfgang Amadeus Mozart
@@ -82,3 +109,93 @@ text:
   zh:
     name: 沃尔夫冈·阿马德乌斯·莫扎特
     text: 奥地利作曲家，1756 年生，1791 年去世。他是神童，写下歌剧、交响曲和协奏曲。《唐璜》1787 年在布拉格首演，1791 年他在维也纳去世时《安魂曲》尚未完成。
+hook: {en: 'The curtain is ready. The parts are still changing.', zh: '幕要开了，分谱还没齐。'}
+facts:
+  prague_preparations:
+    date: '1787-10-25'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mozart_prague_prague_preparations]
+    text:
+      en: 'The letter records the postponement and identifies 29 October as the intended first performance. The cue discrepancy is invented.'
+      zh: '信中记下首演推迟，并在25日把29日列为预计首演日。对不上谱的那一句是虚构。'
+  prague_premiere:
+    date: '1787-10-29'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mozart_prague_prague_premiere]
+    text:
+      en: 'In the 4 November portion Mozart dates the first performance to 29 October and describes an enthusiastic reception.'
+      zh: '莫扎特在11月4日写成的部分把首演记在10月29日，并描述了热烈的反响。'
+  vienna_material:
+    date: '1791'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mozart_requiem_vienna_vienna_material]
+    text:
+      en: 'The surviving material is catalogued in two volumes, a delivery score containing Süssmayr’s completion and a working score.'
+      zh: '馆藏分作两卷登记，即含苏斯迈尔补写的交付谱和工作稿。'
+  vienna_hands:
+    date: '1792'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mozart_requiem_vienna_vienna_hands]
+    text:
+      en: 'The library discusses traces of multiple contributors. The scene supplies neither a recovered final page nor a purported last utterance.'
+      zh: '馆方说明稿件上留有多位参与者的笔迹。场景中的纸页和抄谱行为是虚构。'
+bystanders:
+  anna:
+    invented: true
+    text: {en: 'A fictional singer with a conflicting cue.', zh: '虚构歌手安娜，碰上一处对不上的接句。'}
+  jan:
+    invented: true
+    text: {en: 'A fictional copyist who has time to do just one more job.', zh: '虚构抄谱员扬，开幕前自己只来得及再做一件事。'}
+  greta:
+    invented: true
+    text: {en: 'A fictional attendant collecting a stack from the copying table.', zh: '虚构帮工格蕾塔，来抄谱桌上取走一叠纸。'}
+  emil:
+    invented: true
+    text: {en: 'A fictional copyist intent on producing a clean copy.', zh: '虚构抄谱员埃米尔，想把副本抄得整洁。'}
+wiki:
+  refs:
+    mozart_prague_prague_preparations:
+      order: 857
+      status: checked
+      text:
+        en: 'Mozart to Gottfried von Jacquin, 15–25 October 1787, Mozarteum BD 1069 https://dme.mozarteum.at/DME/objs/raradocs/transcr/pdf_eng/1069_WAM_Jacquin_1787.pdf'
+        zh: '莫扎特致戈特弗里德·冯·雅坎，1787年10月15至25日，莫扎特基金会 BD 1069 https://dme.mozarteum.at/DME/objs/raradocs/transcr/pdf_eng/1069_WAM_Jacquin_1787.pdf'
+    mozart_prague_prague_premiere:
+      order: 858
+      status: checked
+      text:
+        en: 'Mozart to Gottfried von Jacquin, 4 and 9 November 1787, Mozarteum BD 1072 https://dme.mozarteum.at/DME/objs/raradocs/transcr/pdf_eng/1072_WAM_Jacquin_1787.pdf'
+        zh: '莫扎特致戈特弗里德·冯·雅坎，1787年11月4日及9日，莫扎特基金会 BD 1072 https://dme.mozarteum.at/DME/objs/raradocs/transcr/pdf_eng/1072_WAM_Jacquin_1787.pdf'
+    mozart_requiem_vienna_vienna_material:
+      order: 861
+      status: checked
+      text:
+        en: 'Austrian National Library, Requiem KV 626, digital catalogue and manuscripts https://onb.digital/result/132000CB'
+        zh: '奥地利国家图书馆，《安魂曲》KV 626，数字馆藏与手稿 https://onb.digital/result/132000CB'
+    mozart_requiem_vienna_vienna_hands:
+      order: 862
+      status: checked
+      text:
+        en: 'Austrian National Library, The autograph of Mozart’s Requiem https://www.onb.ac.at/sammlungen/musiksammlung/200-jahre-musiksammlung/autograf-des-mozart-requiems'
+        zh: '奥地利国家图书馆，莫扎特《安魂曲》手稿专题 https://www.onb.ac.at/sammlungen/musiksammlung/200-jahre-musiksammlung/autograf-des-mozart-requiems'
+self_check:
+  fact: prague_premiere
+  quote_line: '布拉格｜划掉的休止还留在谱上。 维也纳｜交稿后，下一个人翻到这里，就知道另一只手得从哪儿起笔。'
+  regret_choice: '布拉格｜swap 重抄与找人都来不及，需要员工代跑一趟。 维也纳｜finish 若把后来听过的曲子当原稿，交接时就会混掉笔迹。'
+  bookend: '布拉格｜从分谱未齐开场，到幕升起来。 维也纳｜从看到空页，到保住空处的边界。'
+  share_line: '布拉格｜开幕之前，换好一张分谱。 维也纳｜一处留白，至少两次交接。'
+  share_number: '布拉格｜cue 划掉一个虚构的多余休止。 维也纳｜stack 留下一张原本要拿开的虚构练习页。'
+  knowing: '布拉格｜applause 员工知道表演后的来信。 维也纳｜finish 听过后世演奏的补全版。'
+  near: '布拉格｜prague_premiere 有莫扎特亲述的首演日期。 维也纳｜vienna_material 以馆藏两类稿本为实物依据。'
+  lever: '布拉格｜swap 让抄谱与找人同时做。 维也纳｜hand 后来的抄谱人知道从哪儿补。'
+  missed: '布拉格｜applause 没听上安娜进那一句。 维也纳｜finish 赶不上下一版的形成。'
+  brought: '布拉格｜cue 带回虚构的分谱练习页。 维也纳｜stack 带回有位置签的虚构页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

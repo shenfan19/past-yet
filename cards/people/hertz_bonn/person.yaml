@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 2}
     regret: true
+    refs: [hertz_bonn_resonator]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["civil_engineer","retired_engineer","electrician"]},{"stat":{"wit":7}}]}}
         - {id: p2, kind: care, req: {"trait":["faithful","cheerful","calm"]}}
         - {id: p3, kind: hold, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: repeat, traits: [methodical, handy]}
+        - {id: signal, traits: [bold, curious]}
+        - {id: gap}
     text:
       en:
-        name: "The waves he found"
+        name: 'A spark that is easy to miss'
         place: "Bonn"
         figure: "Heinrich Hertz"
-        story: "Heinrich Hertz, who proved that radio waves exist, dies in Bonn at thirty six after a long painful illness, before their use was seen."
+        story: 'Hertz’s earlier electromagnetic experiments used small sparks in a resonator as evidence of electrical oscillations. Fraunhofer HHI’s experiment chronology records that he also used a microscope to watch the spark. The 1894 Bonn scene is an imagined repeat by a workshop assistant. It is set after the original experiments.'
         relic: "A spark gap"
         relic_desc: "A small brass spark gap from his experiments."
         points:
-          p1: "Follow the spark across the room (an engineer, an electrician or sharp wit helps)"
-          p2: "Sit with him through the bad days"
-          p3: "Take the edge off his pain"
+          p1: 'Identify the tiny spark that signals a response in the receiving loop'
+          p2: 'Ask the assistant to keep the viewing position steady for a second trial'
+          p3: 'Keep an uncertain observation separate from a negative result'
+        vignettes:
+          repeat: 'The assistant is writing ‘none’ after one glance. You put the receiver back where it was and ask him to watch through the lens again. A brief spark appears on the second look. You change the first entry to ‘uncertain’. Its cause is still open when you leave.'
+          signal: 'You know later devices will carry signals much farther. The assistant asks if the spark itself can carry a sentence. You leave two empty columns on his page, one for a recognised spark and one for any pattern he can reproduce. There is time to fill only the first.'
+          gap: 'You hold the written record at the bench and let the assistant call out what he sees. One entry remains blank because neither of you had a decent view of the gap. You bring back that honest blank. Further trials are still on his list.'
       zh:
-        name: "他找到的电波"
+        name: '很容易看漏的一点火花'
         place: "波恩"
         figure: "海因里希·赫兹"
-        story: "赫兹证明了电磁波的存在，三十六岁时在波恩经过长期的痛苦病程后去世，没能看到电波的用处。"
+        story: '赫兹早先做电磁实验时，用谐振器里的细小火花来察看电振荡。弗劳恩霍夫海因里希·赫兹研究所的实验年表也记载他曾用显微镜观察火花。卡里 1894 年的波恩场景是后来的虚构复演。'
         relic: "一个火花隙"
         relic_desc: "他做实验用过的一个小铜火花隙。"
         points:
-          p1: "跟着火花穿过房间（工程师、电工或敏锐的头脑更合适）"
-          p2: "在难熬的日子里陪着他"
-          p3: "减轻他的一点痛苦"
+          p1: '在接收环上认出表示响应的一点火花'
+          p2: '请帮工稳住观察位置再试一回'
+          p3: '把没看清与确认没有分开记录'
+        vignettes:
+          repeat: '帮工瞥一眼就要写「无」。你把接收环放回原处，请他透过镜头再看一遍。第二眼见到一点短促火花。你把第一条改成「未看清」。第一回究竟有没有，收队时仍无法断定。'
+          signal: '你知道后来的装置会把信号送到更远处。帮工问这么一点火花能不能送一句话。你在他的记录上各留一栏，一栏记认出的火花，一栏记能重现的变化。收队前，只来得及填第一栏。'
+          gap: '你拿着记录守在台边，让帮工报自己看清的东西。有一格还空着，因为两人都没看准缝上发生了什么。你带回这个没乱填的空格，帮工单上还有几回要试。'
 text:
   en:
     name: Heinrich Hertz
@@ -45,3 +58,39 @@ text:
   zh:
     name: 海因里希·赫兹
     text: 德国物理学家，1857 年生，1894 年去世。1887 至 1888 年他产生并探测到无线电波，证实了麦克斯韦的电磁理论。频率单位以他命名，他年纪轻轻就在波恩去世。
+hook: {en: 'Is the missing spark a missing signal?', zh: '没看见火花，就没有信号吗？'}
+facts:
+  resonator:
+    date: '1887'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hertz_bonn_resonator]
+    text:
+      en: 'The chronology lists Hertz’s spark observations and an experiment with a smaller circular resonator and a microscope. The Bonn return visit is fictional.'
+      zh: '年表记有火花观察，以及用较小的圆形谐振器与显微镜做的试验。游戏回到波恩的差事为虚构。'
+bystanders:
+  assistant:
+    invented: true
+    text: {en: 'An invented assistant watching the narrow gap of the receiving apparatus.', zh: '虚构的帮工，盯着接收装置上那条细缝。'}
+wiki:
+  refs:
+    hertz_bonn_resonator:
+      order: 612
+      status: checked
+      text:
+        en: 'Fraunhofer Heinrich Hertz Institute, The most important experiments of Heinrich Hertz, 1886–1888 chronology https://www.hhi.fraunhofer.de/en/fraunhofer-hhi-the-institute/about-us/history-of-hhi/the-most-important-experiments-of-heinrich-hertz.html'
+        zh: '弗劳恩霍夫海因里希·赫兹研究所，赫兹主要实验年表 https://www.hhi.fraunhofer.de/en/fraunhofer-hhi-the-institute/about-us/history-of-hhi/the-most-important-experiments-of-heinrich-hertz.html'
+self_check:
+  fact: resonator
+  quote_line: '你把第一条改成「未看清」。'
+  regret_choice: '只看一次就填无，会把没看清当成阴性结果。'
+  bookend: '从一个写得太早的无，到分清空白和观察记号。'
+  share_line: '我替一点火花留了两栏。'
+  share_number: '两次观察'
+  knowing: 'signal 知道后世无线电会传讯。'
+  near: 'resonator 给出实验用的观察装置。'
+  lever: '补一次观察并改一条误记。'
+  missed: '进一步复验在收队后。'
+  brought: '一格注明未看清的表。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

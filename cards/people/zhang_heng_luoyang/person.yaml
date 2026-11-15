@@ -9,38 +9,87 @@ events:
     field: science
     tier: 2
     channels: {V: 1}
+    refs: [zhang_heng_luoyang_instrument]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":7}},{"trait":["wanderer"]}]}}
         - {id: p2, kind: hold, req: {"job":["mechanic","carpenter"]}}
         - {id: p3, kind: persuade, req: {"trait":["glib","ambitious","scholarly"]}}
+      vignettes:
+        - {id: register, traits: [methodical, scholarly]}
+        - {id: later, traits: [bold, curious]}
+        - {id: direction}
     text:
       en:
-        name: An instrument that senses distant earthquakes
+        name: 'A direction and a later dispatch'
         place: Luoyang, China
         figure: Zhang Heng
-        story: Zhang Heng builds a bronze vessel whose dragons drop a ball toward the direction of a distant earthquake.
-        relic: A bronze ball and dragon mouth
-        relic_desc: A small ball for the toad below to catch.
+        story: 'The Book of the Later Han dates Zhang Heng’s seismoscope to 132. It describes eight dragon heads and reports an occasion when one ball fell although the capital felt no shaking, followed days later by news of an earthquake in Longxi. The game imagines a recording exercise alongside this later account. It does not reconstruct the hidden mechanism or date the Longxi report to 132.'
+        relic: 'A direction record'
+        relic_desc: 'One recorded direction, with a blank to be filled when a dispatch arrives.'
         points:
-          p1: "Understand the mechanism of the eight directions"
-          p2: "Calibrate the bronze balls"
-          p3: "Explain the instrument to the officials"
+          p1: 'Mark the direction associated with the signal'
+          p2: 'Keep signal and confirmation slips apart until they can be checked'
+          p3: 'Explain why a direction on the record is not a specific locality'
+        vignettes:
+          register: 'The record keeper hears the signal in the exercise and reaches for a place name. You draw a space for the indicated direction and another for news received from outside the capital. Only the direction goes in. You take that two-part record home. There is no corroborating message before you leave.'
+          later: 'You know a later biography will say that a dispatch came from Longxi. The helper asks if it belongs on the present line. You leave a slip beside the record marked ‘awaiting word’. He can write on it when somebody arrives; your trip ends while the road is still quiet.'
+          direction: 'You mark the line for what was noticed at the instrument and leave the remaining space for a witness. When the helper folds the exercise, the blank stays visible. You take home just the direction. The name of the place is still on the road.'
       zh:
-        name: 一台能感知远处地震的仪器
+        name: '一记方向，一封后到的驿报'
         place: 中国洛阳
         figure: 张衡
-        story: 张衡造了一只青铜器，远处发生地震时，龙口会把一颗球朝震来的方向吐下去。
-        relic: 一颗铜球和龙口
-        relic_desc: 一颗小球，下面的蟾蜍张口接住。
+        story: '《后汉书》将张衡制候风地动仪记在 132 年。书中载有八龙，还叙述过一回铜丸落下、京师未觉地动，数日后才有陇西地震的驿报。卡里另编了一次分栏记录的练习，未复原仪器内部，也不把陇西驿报定在 132 年。'
+        relic: '一张报动记事'
+        relic_desc: '记下一处方向，另有一格留待驿报。'
         points:
-          p1: "看懂八个方向的机关"
-          p2: "校准铜丸"
-          p3: "向官员解释这台仪器"
+          p1: '标出信号对应的方向'
+          p2: '把报动与证实的两张纸留开，好回头核对'
+          p3: '说清为什么有方向还不能填一个确切地点'
+        vignettes:
+          register: '记事人在练习中听到报动，伸手就要填地名。你划出一处记信号所指方向，另留一处记京外来的消息。这时只够填方向。你带回分成两栏的记法，证实的消息收队前还没到。'
+          later: '你知道后世传记会写到陇西来报。帮工问现在是不是就能写上去。你另留一张记着「候报」的纸条。有人到了，他还能添写。你走时，驿路上仍然无声。'
+          direction: '你在纸上写一行仪器边所见，余处留给来报的人。帮工折纸时，空格依然露在外头。你带回的只有方向，地名还在路上。'
 text:
   en:
     name: Zhang Heng
-    text: Chinese polymath of the Han, 78 to 139. In 132 he made a seismoscope, a bronze vessel that indicated the direction of a distant earthquake, and built a water driven armillary sphere. He also wrote poetry.
+    text: Chinese polymath of the Han, 78 to 139. The Book of the Later Han records his construction of a bronze seismoscope in 132 and describes how observers associated its signals with directions. He also developed astronomical instruments and wrote poetry.
   zh:
     name: 张衡
-    text: 汉代通才，78 年生，139 年去世。132 年他制成候风地动仪，一件铜制仪器，能指示远处地震的方向，又造了水力驱动的浑天仪。他也写诗。
+    text: 汉代通才，78 年生，139 年去世。《后汉书》记载他于 132 年制铜质候风地动仪，并叙述观测者如何把报动信号与方向对应。他也研制天文仪器，创作诗赋。
+hook: {en: 'What did the dropped ball tell you before word came back?', zh: '铜丸落下时，哪一栏还不能填？'}
+facts:
+  instrument:
+    date: '132'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [zhang_heng_luoyang_instrument]
+    text:
+      en: 'The biography dates construction of the instrument to 132, describes its exterior and recounts a Longxi dispatch days after a ball fell. It gives no exact date for that episode.'
+      zh: '传记在 132 年记造仪，写了外形，也叙述一次落丸后数日收到陇西驿报。这一例没有确切日期。'
+bystanders:
+  keeper:
+    invented: true
+    text: {en: 'A fictional record keeper with a line for a signal and a line for subsequent word.', zh: '虚构的记事人，要把报动和后来消息记在两行。'}
+wiki:
+  refs:
+    zhang_heng_luoyang_instrument:
+      order: 741
+      status: checked
+      text:
+        en: 'Book of the Later Han, vol. 59, Biography of Zhang Heng, first year of Yangjia https://zh.wikisource.org/wiki/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B759'
+        zh: '《后汉书》卷五十九《张衡传》，阳嘉元年条 https://zh.wikisource.org/wiki/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B759'
+self_check:
+  fact: instrument
+  quote_line: '你带回的只有方向，地名还在路上。'
+  regret_choice: '提前填上未来的地名，便抹掉了当时尚待验证的时间差。'
+  bookend: '从铜丸的报动，到仍等驿报的一处空格。'
+  share_line: '我抄了方向，地名还不能填。'
+  share_number: '八个龙首'
+  knowing: 'later 知道后世传记将叙述陇西驿报。'
+  near: 'instrument 给出纪年、外形与有关驿报的叙述。'
+  lever: '分开信号、方向与确认三项。'
+  missed: '没赶到驿报抵达。'
+  brought: '有方向无地名的记录。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

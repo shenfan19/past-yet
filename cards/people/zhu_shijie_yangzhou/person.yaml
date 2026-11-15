@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {V: 1, Y: 1}
     regret: true
+    refs: [zhu_shijie_yangzhou_preface]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: persuade, req: {"job":["teacher"]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["bold","vigil"]},{"job":["teacher","student"]}]}}
+      vignettes:
+        - {id: rotate, traits: [methodical, scholarly]}
+        - {id: hand, traits: [curious, handy]}
+        - {id: outline}
     text:
       en:
-        name: "A mathematician whose books went missing"
+        name: 'The four sides of the counting board'
         place: "Yangzhou"
         figure: "Zhu Shijie"
-        story: "Zhu Shijie, a wandering teacher of mathematics, publishes the Jade Mirror of the Four Unknowns in 1303 with methods for equations of several unknowns. His books were lost in China for centuries and one was recovered from a Korean reprint."
+        story: 'In the preface to Zhu Shijie’s Jade Mirror of the Four Unknowns, Mo Ruo describes the arrangement of the four unknowns around the centre: heaven below, earth left, human right and thing above. The preface is dated 1303. The lesson and the counters below are fictional.'
         relic: "A set of counting rods"
         relic_desc: "Slender rods laid in rows to stand for numbers."
         points:
-          p1: "Follow the four unknowns"
-          p2: "Teach the counting rods to a pupil (a teacher)"
-          p3: "Stay with the lesson to the end (a teacher, a student or a stubborn employee)"
+          p1: 'Read the four positions before adding a new row'
+          p2: 'Show another learner which two groups were swapped'
+          p3: 'Keep the orientation marks on the copy until the board is cleared'
+        vignettes:
+          rotate: 'Two learners have copied the same board from opposite sides. You mark the bottom before comparing their sheets. The earth and human groups exchange places on one copy. You keep the corrected diagram. The long elimination is still ahead of them.'
+          hand: 'You ask why the learner has put all four names in one line. He says he can remember the names that way. You keep his line but place four markers around a centre so he can also recover the layout. By the time he clears the board, you have seen how to begin, and not how his exercise ends.'
+          outline: 'Before the counters go back into their box, you draw four short lines around the centre and note which end is the bottom. You can reproduce the arrangement when you get home. You leave the larger calculation on the learner’s board.'
       zh:
-        name: "著作遗失的数学家"
+        name: '算板四方各有一元'
         place: "扬州"
         figure: "朱世杰"
-        story: "云游四方的数学教师朱世杰于1303年出版《四元玉鉴》，书中有解多元方程的方法。他的书在中国失传了几个世纪，其中一部是靠朝鲜的翻刻本找回来的。"
+        story: '莫若在朱世杰《四元玉鉴》前序里说明四元怎样围着中央摆放：天元在下，地元在左，人元在右，物元在上。序作于 1303 年。卡里的习算场面和筹板为虚构。'
         relic: "一套算筹"
         relic_desc: "一根根细棍，排成行来代表数。"
         points:
-          p1: "跟上那四个未知数"
-          p2: "把算筹教给一个学生"
-          p3: "把这堂课听到最后"
+          p1: '添算式前先认清四元的位置'
+          p2: '让另一位学算人看出哪两组放反了'
+          p3: '收筹前把方向标记抄到副本上'
+        vignettes:
+          rotate: '两位学算人从算板两侧各抄了一份。你先标出从哪边算作下，再把两张摆在一起。有一张把地元和人元挪回正确位置。你抄走订正的图，还没轮到做那串长长的消元。'
+          hand: '你问学算人为什么四个名都写在一排。他说这样背得住。你让原来那行留着，另绕中央摆四个记号，好叫他也记得位置。等他收筹，你只看见了起手，还没看到题怎样算完。'
+          outline: '筹入盒前，你绕着中央画了四条短线，再记哪一端是下。回来时你还摆得出这个布局。大题留在学算人的板上。'
 text:
   en:
     name: Zhu Shijie
@@ -45,3 +58,39 @@ text:
   zh:
     name: 朱世杰
     text: 元代数学家，活跃于 1300 年前后。他 1303 年的《四元玉鉴》用类似现代矩阵的方法解最多含四个未知数的多项式方程组。
+hook: {en: 'Where do you put the fourth unknown?', zh: '第四个未知数摆在哪里？'}
+facts:
+  preface:
+    date: '1303'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [zhu_shijie_yangzhou_preface]
+    text:
+      en: 'The preface names the positions of the four unknowns around the centre and bears the date Dade gui-mao, 1303.'
+      zh: '前序列四元在中央四方的位置，署大德癸卯，即 1303 年。'
+bystanders:
+  learner:
+    invented: true
+    text: {en: 'A fictional learner whose copy faces the opposite way from the board.', zh: '虚构的学算人，抄图时站在算板另一边。'}
+wiki:
+  refs:
+    zhu_shijie_yangzhou_preface:
+      order: 568
+      status: checked
+      text:
+        en: 'Mo Ruo, preface to Siyuan Yujian, dated Dade gui-mao https://www.shidianguji.com/book/GJ058/chapter/1l8jdxuhza59k'
+        zh: '莫若，《四元玉鉴》前序，大德癸卯 https://www.shidianguji.com/book/GJ058/chapter/1l8jdxuhza59k'
+self_check:
+  fact: preface
+  quote_line: '你先标出从哪边算作下，再把两张摆在一起。'
+  regret_choice: '赶着抄会漏掉方向，留下核对会错过下一道题。'
+  bookend: '开头两张图对不上，结尾可以在事务所复摆相同布局。'
+  share_line: '四元不只要写对名字，还要摆对位置。'
+  share_number: '四个位置'
+  knowing: '员工读过后世留存的莫若序。'
+  near: 'preface 锚定布局和定年。'
+  lever: '改正一张位置互换的图。'
+  missed: '来不及看完消元。'
+  brought: '可复摆的四元笔记。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

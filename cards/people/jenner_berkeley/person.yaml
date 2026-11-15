@@ -10,7 +10,7 @@ events:
     tier: 2
     era: jenner_berkeley_1796
     channels: {E: 2}
-    refs: [jenner_inquiry_original]
+    refs: [jenner_inquiry_original, jenner_gutenberg_case]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"cure"}}
@@ -99,6 +99,7 @@ wiki:
       unlock:
         era: jenner_berkeley_1796
       refs:
+        - jenner_gutenberg_case
         - jenner1798
         - game
       text:
@@ -109,6 +110,12 @@ wiki:
           name: 第一次牛痘接种
           text: 1796 年 5 月 14 日，爱德华·詹纳把牛痘疮里的物质接种给一个男孩，后来又试了男孩是否受到天花的保护。按今天的标准，这样的试验不会被允许。游戏里员工能帮着让它提前，只在这条分支里成立。
   refs:
+    jenner_gutenberg_case:
+      order: 1005
+      status: checked
+      text:
+        en: 'Edward Jenner, An Inquiry into the Causes and Effects of the Variolae Vaccinae, case XVII https://www.gutenberg.org/cache/epub/29414/pg29414-images.html'
+        zh: '爱德华·詹纳《牛痘的成因及作用之研究》，第十七例 https://www.gutenberg.org/cache/epub/29414/pg29414-images.html'
     jenner_inquiry_original:
       order: 173
       status: checked
@@ -134,6 +141,7 @@ era_text:
       - england
       - history
     event_titles:
+      expedition_handoff: 'Who said it first?'
       time_strain: Time slip
     plots:
       case_book:
@@ -166,20 +174,24 @@ era_text:
         - You can save today's patients but not tomorrow's. On the main timeline the first inoculation was on 14 May.
         - The test was made on a child, by the standards of the day. Today it would not be allowed, and the game does not ask you to repeat it.
     events:
+      expedition_handoff: '{staff} asks Martha to repeat the message slowly while Alice writes down who spoke. The visitor collecting that day’s notes has already left.'
+      expedition_send: '{staff} sends the dated note with Martha. Alice flags the sentence that still needs to be checked against the family’s words.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       convince: "Convince Jenner"
       trust: "Win the trust of the village"
-      reform: "Have the first inoculation made ahead of history"
+      reform: 'Advance the simulated schedule'
     milestones:
+      case_xvii: '{date}: Jenner dates the beginning of his cowpox case study involving the boy later identified as James Phipps.'
+      case_followup: '{date}: About a week later, Jenner’s account records a first complaint in his follow-up with the boy.'
       first_treat: '{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak.'
       first_protect: '{date}: {staff} hands out the first masks and washes down a few rooms, and teaches the household to keep the sick apart.'
       met_jenner: '{date}: {staff} is received by Jenner.'
       jenner_trusts: '{date}: Jenner gives {staff} the notes to work from.'
       jenner_convinced: '{date}: Jenner takes up the plan that {staff} put to him.'
       board_moves: '{date}: Word goes round that the plan might change.'
-      reform_history: '{date}: The first cowpox inoculation is made. The main timeline does not change.'
-      reform_early: '{date}: The first cowpox inoculation is made {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulation sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The simulation records the Berkeley case paperwork {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: People in the village no longer keep {staff} out, and some knock on their own.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of patients falls to single digits.'
@@ -187,8 +199,8 @@ era_text:
       near_death: '{staff} collapses on a village lane and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend in Berkeley. The first inoculation was made {advance_days:1} days earlier than in history.'
-      perfect: '{staff} completed the task in Berkeley and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      legend: '{staff} brought the simulated schedule forward by {advance_days:1} days in this branch.'
+      perfect: '{staff} completed the task in Berkeley and came back safe. The simulation records {base_D:i} deaths in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away at the door again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days in Berkeley, did what was within reach, and came back safe.'
     quotes:
@@ -238,6 +250,7 @@ era_text:
       - england
       - history
     event_titles:
+      expedition_handoff: '这句话是谁说的？'
       time_strain: 时间错位
     plots:
       case_book:
@@ -270,20 +283,24 @@ era_text:
         - 你能救今天的病人，救不了明天的。主时间线上第一次接种在 5 月 14 日。
         - 按今天的标准，那次试验是拿一个孩子做的，现在不会被允许，游戏也不要求你重复它。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{staff} 请玛莎慢慢复述口信，艾丽丝记下说话的是谁。当天来收记录的人已经离开。'
+      expedition_send: '{staff} 请玛莎先把带日期的字条送出。艾丽丝标出还要向家里人核实的那一句。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: "说服詹纳"
       trust: "赢得村子的信任"
-      reform: "让第一次接种比历史上更早"
+      reform: '提前模拟中的安排'
     milestones:
+      case_xvii: '{date}，詹纳把这项牛痘案例的起始日期记在这一天。案例中的男孩后来被确认为詹姆斯·菲普斯。'
+      case_followup: '{date}，约一周后，詹纳记下了男孩在后续观察中第一次说身体不适。'
       first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
       first_protect: '{date}：{staff} 发下第一批口罩，擦洗了几间屋子，教这家人把病人隔开。'
       met_jenner: '{date}：{staff} 被詹纳接见。'
       jenner_trusts: '{date}：詹纳把笔记交给 {staff} 用。'
       jenner_convinced: '{date}：詹纳采纳了 {staff} 提出的办法。'
       board_moves: '{date}：消息传开，计划也许要改。'
-      reform_history: '{date}：第一次牛痘接种完成。主时间线没有变化。'
-      reform_early: '{date}：第一次牛痘接种比历史上提前 {advance_days:1} 天完成。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟按模型基准日调整安排。'
+      reform_early: '{date}，模拟记录伯克利案例的文书，比模型基准提前 {advance_days:1} 天。'
       trust_won: '{date}：村里的人不再把 {staff} 挡在外面，有的还自己来敲门。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：病人数降到了个位数。'
@@ -291,8 +308,8 @@ era_text:
       near_death: '{staff} 在村道上倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在伯克利留下了传说。第一次接种比历史上提前 {advance_days:1} 天完成。'
-      perfect: '{staff} 在伯克利完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      legend: '{staff} 在这条虚构分支中把模拟安排提前了 {advance_days:1} 天。'
+      perfect: '{staff} 在伯克利完成了任务，平安回来。模拟基准死亡 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
       modest: '{staff} 在伯克利待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -330,3 +347,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 詹纳的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'The ledger has room for the household’s exact words.', zh: '账簿上给家里人的原话留了一栏。'}
+facts:
+  case_xvii:
+    date: '1796-05-14'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [jenner_gutenberg_case, jenner_inquiry_original]
+    text:
+      en: 'Jenner dates the beginning of his cowpox case study involving the boy later identified as James Phipps.'
+      zh: '詹纳把这项牛痘案例的起始日期记在这一天。案例中的男孩后来被确认为詹姆斯·菲普斯。'
+  case_followup:
+    date: '1796-05'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [jenner_gutenberg_case, jenner_inquiry_original]
+    text:
+      en: 'About a week later, Jenner’s account records a first complaint in his follow-up with the boy.'
+      zh: '约一周后，詹纳记下了男孩在后续观察中第一次说身体不适。'
+bystanders:
+  martha:
+    invented: true
+    text: {en: 'Martha, an invented household messenger, remembers how the boy’s family worded its message.', zh: '玛莎是虚构的家庭信使，记得男孩家里口信的原话。'}
+  alice:
+    invented: true
+    text: {en: 'Alice, an invented ledger clerk, keeps a dated line for the household account.', zh: '艾丽丝是虚构的账簿文书，在账里为家人的说法单列一行日期。'}
+self_check:
+  fact: case_xvii
+  quote_line: '这一句是家里人说的，记上名字。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '账簿上给家里人的原话留了一栏。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '账簿上给家里人的原话留了一栏。'
+  share_number: '5月14日开始，约一周后记下不适'
+  knowing: 'case_followup 知道后续有史料记下的日期。'
+  near: 'case_xvii, case_followup'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

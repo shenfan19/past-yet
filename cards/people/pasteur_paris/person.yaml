@@ -9,44 +9,96 @@ events:
     field: medicine
     tier: 2
     channels: {E: 2}
+    refs: [pasteur_paris_arrival]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: care, req: {"provides":"cure"}}
         - {id: p3, kind: hold, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: date, traits: [methodical, curious, quiet]}
+        - {id: address, traits: [kind, patient, faithful]}
+        - {id: future}
     text:
       en:
-        name: A vaccine for rabies
+        name: 'The day he reached Paris'
         place: Paris
         figure: Louis Pasteur
-        story: Pasteur and his team give a boy bitten by a rabid dog the first rabies vaccine, and he lives.
-        relic: A swan-neck flask
-        relic_desc: A flask whose curved neck kept dust out and air in.
+        story: 'Joseph Meister was brought to Louis Pasteur in Paris on 6 July 1885, and survived after the team’s rabies vaccination. This episode follows two fictional reception workers sorting a dated entry and a later letter. Their paperwork, and the decision about copying it, are invented.'
+        relic: 'An arrival slip'
+        relic_desc: 'An invented record that distinguishes arrival from later news.'
         points:
-          p1: "Follow the schedule of the inoculation"
-          p2: "Keep watch over the boy"
-          p3: "Get through a dozen injections"
+          p1: 'Find which entry was written on arrival'
+          p2: 'Make time for the family messenger to check the address'
+          p3: 'Keep the arrival entry separate from the later outcome'
+        vignettes:
+          date: 'Claire has copied the day the letter was brought in beside the name in the arrival register. You set the envelope next to the register, and she finds the difference. Both dates stay on the desk, each beside the event it marks.'
+          address: 'Émile has offered to take the family’s reply while Claire keeps the register. You give him a narrow slip with just the address he needs. He checks it before leaving and the register stays closed while the visitors wait.'
+          future: 'You know this case will be remembered long after the boy leaves. Claire needs a line describing what is known today. You enter the arrival and leave the later news for its own date. The latest envelope is still unopened when your visit ends.'
       zh:
-        name: 狂犬病疫苗
+        name: '他抵达巴黎的那一天'
         place: 巴黎
         figure: 路易·巴斯德
-        story: 巴斯德和同事给一个被疯狗咬伤的男孩打了第一针狂犬病疫苗，孩子活了下来。
-        relic: 一只鹅颈瓶
-        relic_desc: 弯曲的瓶颈挡住灰尘，让空气进去。
+        story: '1885年7月6日，约瑟夫·迈斯特被带到巴黎见路易·巴斯德，接受团队的狂犬病疫苗接种后存活。游戏跟随两名虚构接待人员整理有日期的登记和后来一封来信。文书和如何誊抄的差事均为虚构。'
+        relic: '一张抵达登记副页'
+        relic_desc: '虚构登记副页，分开记录抵达与后来的来信。'
         points:
-          p1: "跟上接种的时间表"
-          p2: "守着男孩"
-          p3: "熬过十几针"
+          p1: '找出哪一项是在抵达时写下的'
+          p2: '给家人的送信人留时间核对地址'
+          p3: '把抵达记录与后来的结果分开留好'
+        vignettes:
+          date: '克莱尔把来信送到的日子抄进了抵达簿。你把信封摆到登记簿旁，她看出了两处不同。两天都留在桌上，各标它真正对应的事。'
+          address: '埃米尔愿意代送家人的回信，克莱尔留守登记簿。你递给他一张窄条，只写他要核对的地址。他出门前核过一遍，有旁人等候时，登记簿仍合着。'
+          future: '你知道男孩离开许久后，人们还会谈到这个病例。克莱尔要填的是今天确知的事。你记下抵达，将以后到的消息留给它自己的日期。你走时，最新一封信还没拆。'
 text:
   en:
     name: Louis Pasteur
-    text: French chemist and microbiologist, 1822 to 1895. He showed that fermentation and spoilage are caused by microbes, developed pasteurisation, and in 1885 gave the first rabies vaccine to a boy bitten by a rabid dog.
+    text: French chemist and microbiologist, 1822 to 1895. He studied fermentation and spoilage and developed pasteurisation. In 1885 his team vaccinated Joseph Meister against rabies after a dog bite.
   zh:
     name: 路易·巴斯德
-    text: 法国化学家与微生物学家，1822 年生，1895 年去世。他证明发酵和腐败由微生物引起，发明巴氏消毒法，1885 年给一个被疯狗咬伤的男孩注射了第一支狂犬病疫苗。
+    text: 法国化学家与微生物学家，1822年生，1895年去世。他研究发酵和腐败，发展了巴氏消毒法。1885年，巴斯德团队为被狗咬伤的约瑟夫·迈斯特接种狂犬病疫苗。
 quotes:
   pasteur:
     order: 5
     text:
       en: {who: Louis Pasteur, quote: "Chance favours only the prepared mind."}
       zh: {who: 巴斯德, quote: "机遇只青睐有准备的头脑。"}
+hook: {en: 'Which date belongs on the arrival card?', zh: '登记卡上，该填哪一天？'}
+facts:
+  arrival:
+    date: '1885-07-06'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [pasteur_paris_arrival]
+    text:
+      en: 'The institutional history dates Meister’s arrival with Pasteur to 6 July 1885 and records the successful vaccination.'
+      zh: '机构史记迈斯特于1885年7月6日见巴斯德，并记录该次接种的结果。'
+bystanders:
+  claire:
+    invented: true
+    text: {en: 'A fictional receptionist keeping an arrival register.', zh: '虚构接待员克莱尔，保管抵达簿。'}
+  emile:
+    invented: true
+    text: {en: 'A fictional messenger taking a reply to the family.', zh: '虚构送信人埃米尔，把回信带给家人。'}
+wiki:
+  refs:
+    pasteur_paris_arrival:
+      order: 973
+      status: checked
+      text:
+        en: 'Institut Pasteur, Louis Pasteur’s final years, Joseph Meister chronology https://www.pasteur.fr/en/about-us/final-years-1877-1887'
+        zh: '巴斯德研究所，巴斯德生平末期，约瑟夫·迈斯特纪年 https://www.pasteur.fr/en/about-us/final-years-1877-1887'
+self_check:
+  fact: arrival
+  quote_line: '两天都留在桌上，各标它真正对应的事。'
+  regret_choice: 'future 若提前落笔写结果，抵达时能知道的事就被改了。'
+  bookend: '从填不了一个日期，到各有落处。'
+  share_line: '一条抵达记录，一封待拆的信。'
+  share_number: '两类日期；抵达见史料。'
+  knowing: 'future 知道日后的结果与影响。'
+  near: 'arrival 当事人与抵达日可核对。'
+  lever: 'date 将误并日期拆回两笔。'
+  missed: 'future 未听到最新来信。'
+  brought: 'date 带回虚构登记的留底。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

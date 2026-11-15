@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 2
     channels: {L: 1}
+    refs: [marconi_bologna_lecture]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["electrician"]},{"trait":["bold"]}]}}
         - {id: p3, kind: persuade, req: {"trait":["streetwise","scholarly","charismatic"]}}
+      vignettes:
+        - {id: blank, traits: [methodical, curious, skeptical]}
+        - {id: times, traits: [streetwise, scholarly, charismatic]}
+        - {id: range}
     text:
       en:
-        name: Signals through the air
+        name: 'A signal and a silence'
         place: Bologna
         figure: Guglielmo Marconi
-        story: Marconi sends a signal across his family's fields with no wire between the two ends, and keeps pushing the distance.
-        relic: A coherer tube
-        relic_desc: A small glass tube of metal filings that woke at a radio wave.
+        story: 'In his 1909 Nobel lecture, Marconi recalled starting wireless telegraphy trials near Bologna early in 1895. The outdoor trial here imagines two assistants keeping separate records at the two ends. It uses the date and setting in the retrospective account and invents the individual test.'
+        relic: 'Two trial slips'
+        relic_desc: 'Fictional records of the same trial from the two ends.'
         points:
-          p1: "See how the signal arises"
-          p2: "Raise the aerial on the hillside"
-          p3: "Persuade the family to pay for it"
+          p1: 'Compare the heard marks with the sender’s record'
+          p2: 'Keep the two trials apart until the slips can be compared'
+          p3: 'Persuade the receiver to record the quiet interval as well'
+        vignettes:
+          blank: 'Rosa expected three sounds and has already marked three. You ask her to turn her slip face down during the next trial. When she picks it up, she writes down what she heard, including a sound in the quiet interval. Now there is a reason to repeat the test.'
+          times: 'Carlo wants to carry the two sheets downhill together. Each says first trial at the top, although one was restarted. You ask him to show you where he waited and where he began again. He labels both attempts before setting off. The sender and receiver can compare the same run now.'
+          range: 'You know the range will matter to future readers. Rosa wants to know if the last click was one of the agreed marks. You take her sheet to the sender and leave the answer as a question for another trial. By then the people at both ends have gone inside.'
       zh:
-        name: 信号穿过空气
+        name: '一次发报，一次静默'
         place: 博洛尼亚
         figure: 古列尔莫·马可尼
-        story: 马可尼在自家田野上发出了一个两端之间没有电线的信号，并一直把距离往远推。
-        relic: 一支检波管
-        relic_desc: 一支装着金属屑的小玻璃管，遇到无线电波就醒过来。
+        story: '马可尼在1909年的诺贝尔演讲里回忆，自己于1895年初在博洛尼亚附近开始试验无线电报。游戏虚构一次户外试验，让两名助手在两端各记一份。年代和地点来自后来的自述，单次试验为虚构。'
+        relic: '两张试验记事纸'
+        relic_desc: '虚构的同一趟试验，在两端各留一张记录。'
         points:
-          p1: "看出信号是怎么来的"
-          p2: "在山坡架天线"
-          p3: "说服家里人出钱"
+          p1: '比较听见的几声和发报端的记录'
+          p2: '替两端分开记两趟试验，留待对照'
+          p3: '劝接收端把静默的一段也记下来'
+        vignettes:
+          blank: '罗莎等的是三声，下笔已经写了三划。下一趟你请她把纸扣在桌上。重新翻开时，她把实际听见的记下来，连静默时多听到的一声也写上。这下有理由再做一遍了。'
+          times: '卡洛想把两张纸一起带下坡。纸头都写着第一趟，其实有一边重新做过。你请他指出哪一段在等，哪一段重新开始。他走前给两趟各写了记号，发报和接收两边终于能对上同一趟。'
+          range: '你知道后世读者会在意距离。罗莎却只想知道最后一响是不是约好的记号。你把她的纸拿到发报端，把这个问题留给下一趟。此时两头的人都已经进屋。'
 text:
   en:
     name: Guglielmo Marconi
@@ -44,3 +57,42 @@ text:
   zh:
     name: 古列尔莫·马可尼
     text: 意大利发明家，1874 年生，1937 年去世，博洛尼亚人。从 1895 年起他发展无线电报，1901 年发出跨越大西洋的信号，并分享了 1909 年诺贝尔物理学奖。
+hook: {en: 'Someone heard a click. Was it your call?', zh: '有人听见一声，是你发的吗？'}
+facts:
+  lecture:
+    date: '1895'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [marconi_bologna_lecture]
+    text:
+      en: 'Marconi recalls starting home experiments near Bologna early in 1895 to transmit telegraphic signs without joining the ends by wires.'
+      zh: '马可尼回忆1895年初在博洛尼亚附近家中试验，不在两端间架设连线而传送电报符号。'
+bystanders:
+  rosa:
+    invented: true
+    text: {en: 'A fictional receiver recording what she heard.', zh: '虚构接收员罗莎，记下确实听见的声音。'}
+  carlo:
+    invented: true
+    text: {en: 'A fictional helper carrying test slips between the two ends.', zh: '虚构帮工卡洛，在两端之间送试验记录。'}
+wiki:
+  refs:
+    marconi_bologna_lecture:
+      order: 845
+      status: checked
+      text:
+        en: 'Guglielmo Marconi, Nobel Lecture, 11 December 1909 https://www.nobelprize.org/uploads/2018/06/marconi-lecture.pdf'
+        zh: '古列尔莫·马可尼，1909年12月11日诺贝尔演讲 https://www.nobelprize.org/uploads/2018/06/marconi-lecture.pdf'
+self_check:
+  fact: lecture
+  quote_line: '连静默时多听到的一声也写上。'
+  regret_choice: 'range 若先说成果，就少一次检查杂响。'
+  bookend: '从一响开始，到两边各自回屋。'
+  share_line: '三声之外，还有一响。'
+  share_number: 'blank 的额外一声取自虚构试验。'
+  knowing: 'range 知道后世更关心传输距离。'
+  near: 'lecture 依据亲历者晚年叙述定位。'
+  lever: 'times 让发收记录对上同一趟。'
+  missed: 'range 来不及等下一次试验。'
+  brought: 'blank 带回两端的练习记录。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

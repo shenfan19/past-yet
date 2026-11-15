@@ -10,7 +10,7 @@ events:
     tier: 2
     era: humboldt_chimborazo_1802
     channels: {A: 3, C: 2, L: 2}
-    refs: [humboldt_diary_1802]
+    refs: [humboldt_diary_1802, humboldt_plants_table, humboldt_calpi_history]
     scene:
       points:
         - {id: p1, kind: endure, req: {"any":[{"stat":{"constitution":6}},{"provides":"endurance"}]}}
@@ -101,6 +101,8 @@ wiki:
       unlock:
         era: humboldt_chimborazo_1802
       refs:
+        - humboldt_calpi_history
+        - humboldt_plants_table
         - humboldt1807
         - game
       text:
@@ -111,6 +113,18 @@ wiki:
           name: 攀登的计划
           text: 爬多快、歇多久，是队伍在山坡上自己的选择。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
   refs:
+    humboldt_plants_table:
+      order: 997
+      status: checked
+      text:
+        en: 'Alexander von Humboldt and Aimé Bonpland, Essay on the Geography of Plants, physical tableau, University of Chicago Press edition https://gis.humboldt.edu/olm/courses/gsp_510/Articles/Alexander_von_Humboldt%2C_Aime_Bonpland-Essay_on_the_Geography_of_Plants-University_Of_Chicago_Press%282009%29.pdf'
+        zh: '亚历山大·冯·洪堡与艾梅·邦普朗，《植物地理学论》，自然图表，芝加哥大学出版社版 https://gis.humboldt.edu/olm/courses/gsp_510/Articles/Alexander_von_Humboldt%2C_Aime_Bonpland-Essay_on_the_Geography_of_Plants-University_Of_Chicago_Press%282009%29.pdf'
+    humboldt_calpi_history:
+      order: 999
+      status: checked
+      text:
+        en: 'Historia general de la República del Ecuador, vol. V, route to Calpi https://www.cervantesvirtual.com/obra-visor/historia-general-de-la-republica-del-ecuador-tomo-quinto--0/html/0016c7de-82b2-11df-acc7-002185ce6064_14.html'
+        zh: '《厄瓜多尔共和国通史》第五卷，前往卡尔皮的路线 https://www.cervantesvirtual.com/obra-visor/historia-general-de-la-republica-del-ecuador-tomo-quinto--0/html/0016c7de-82b2-11df-acc7-002185ce6064_14.html'
     humboldt_diary_1802:
       order: 166
       status: checked
@@ -136,6 +150,7 @@ era_text:
       - andes
       - history
     event_titles:
+      expedition_handoff: 'The reading in its place'
       time_strain: Time slip
     plots:
       field_notes:
@@ -156,30 +171,34 @@ era_text:
     plan_baseline: Main timeline
     encyclopedia:
       history:
-        - text: In June 1802 Alexander von Humboldt and Aime Bonpland climbed Chimborazo, then thought to be the highest mountain in the world.
+        - text: In June 1802 Alexander von Humboldt, Aimé Bonpland and Carlos Montúfar climbed Chimborazo, then thought to be the highest mountain in the world.
           check: true
         - text: They measured the air, the temperature and the plants at each height as they went.
           check: true
-        - text: They turned back below the summit, stopped by a deep cleft in the ridge, at a height that was a record for a climb at the time.
+        - text: They turned back below the summit, stopped by a deep cleft in the ridge.
           check: true
       regret:
         - You can save today's people but not the whole climb. On the main timeline the party turned back below the top.
         - Rest and warmth matter more than any one bold idea, but a plan only changes when someone is heard.
     events:
+      expedition_handoff: '{date}: {staff} stays to have Inés read back the place beside the number. Fog covers the mark they had been using on the slope. The sheet carries their last confirmed location, and the next reading will have to wait.'
+      expedition_send: '{date}: Diego is ready to go with the reading. {staff} adds the place on a loose slip while Inés keeps the original dry. They send the reading on time, with the place marked for the next person to check.'
       time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
     star_points:
       convince: 'Convince Humboldt'
       trust: 'Win the trust of the carriers'
-      reform: 'Have the plan for the climb changed ahead of history'
+      reform: 'Have the plan for the climb changed before the simulation baseline'
     milestones:
+      approach: '{date}: The party moves toward Chimborazo on the day before the climb.'
+      crevasse: '{date}: Humboldt, Bonpland and Carlos Montúfar climb Chimborazo and turn back below the summit.'
       first_treat: '{date}: {staff} gives the first cup of warm drink and leaf tea to a man with a splitting head. He starts to speak.'
       first_protect: '{date}: {staff} hands out the first blankets and a little oxygen, and teaches the carriers to use them.'
       met_humboldt: '{date}: {staff} is received by Humboldt.'
       humboldt_trusts: '{date}: Humboldt gives {staff} the notes to work from.'
       humboldt_convinced: '{date}: Humboldt takes up the plan that {staff} put to him.'
       board_moves: '{date}: Word goes round that the plan might change.'
-      reform_history: '{date}: The plan for the climb is changed. The main timeline does not change.'
-      reform_early: '{date}: The plan for the climb is changed {advance_days:1} days earlier than in the main timeline. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulated expedition sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The plan for the climb is changed {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: The carriers no longer keep {staff} out, and some ask for help.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of ailing men falls to one or none.'
@@ -187,8 +206,8 @@ era_text:
       near_death: '{staff} collapses at Chimborazo and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend at Chimborazo. The plan was changed {advance_days:1} days earlier than in the main timeline.'
-      perfect: '{staff} completed the task at Chimborazo and came back safe. {base_D:i} lost on the main timeline, {D:i} on this branch.'
+      legend: '{staff} left a legend at Chimborazo. The plan was changed {advance_days:1} days before the model’s baseline.'
+      perfect: '{staff} completed the task at Chimborazo and came back safe. The simulation records {base_D:i} lost in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days at Chimborazo, did what was within reach, and came back safe.'
     quotes:
@@ -238,6 +257,7 @@ era_text:
       - andes
       - history
     event_titles:
+      expedition_handoff: '把读数与地点一起交'
       time_strain: 时间错位
     plots:
       field_notes:
@@ -258,30 +278,34 @@ era_text:
     plan_baseline: 主时间线
     encyclopedia:
       history:
-        - text: 1802 年 6 月亚历山大·冯·洪堡和艾梅·邦普朗攀登钦博拉索，当时人们以为它是世界最高的山。
+        - text: 1802 年 6 月亚历山大·冯·洪堡、艾梅·邦普朗与卡洛斯·蒙图法尔攀登钦博拉索，当时人们以为它是世界最高的山。
           check: true
         - text: 他们一路上在每个高度测量空气、气温和植物。
           check: true
-        - text: 他们被山脊上一道深裂挡住，在山顶之下折返，那个高度在当时是攀登的纪录。
+        - text: 他们被山脊上一道深裂挡住，在山顶之下折返。
           check: true
       regret:
         - 你能救今天的人，救不了整次攀登。主时间线上这支队伍在山顶之下折返。
         - 休息和保暖比任何一个大胆的主意都重要，但计划只有在有人被听见时才会改。
     events:
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      expedition_handoff: '{date}，{staff} 留下来，请伊内斯把数字旁的地点念一遍。雾把坡上用来辨认位置的记号吞没了。纸上只留最后核实的地点，下一次读数得等。'
+      expedition_send: '{date}，迭戈已准备带走读数。{staff} 另写一签注明地点，伊内斯护住原纸。他们按时送走读数，也把地点留给接手人复核。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: '说服洪堡'
       trust: '赢得挑夫的信任'
-      reform: '让攀登计划比历史上更早改变'
+      reform: '让攀登计划比模型基准更早改变'
     milestones:
+      approach: '{date}，攀登前一天，一行人向钦博拉索山进发。'
+      crevasse: '{date}，洪堡、邦普朗与卡洛斯·蒙图法尔攀登钦博拉索，在山顶以下折返。'
       first_treat: '{date}：{staff} 给一个头痛欲裂的人喂下第一杯热饮和叶茶，他开始开口了。'
       first_protect: '{date}：{staff} 发下第一批毯子和一点氧气，教挑夫们使用。'
       met_humboldt: '{date}：{staff} 被洪堡接见。'
       humboldt_trusts: '{date}：洪堡把笔记交给 {staff} 用。'
       humboldt_convinced: '{date}：洪堡采纳了 {staff} 提出的办法。'
       board_moves: '{date}：消息传开，计划也许要改。'
-      reform_history: '{date}：攀登计划被改了。主时间线没有变化。'
-      reform_early: '{date}：攀登计划比主时间线提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟中的队伍按模型基准日调整安排。'
+      reform_early: '{date}：攀登计划比模型基准提前 {advance_days:1} 天改变。主时间线没有变化，只是这条分支。'
       trust_won: '{date}：挑夫们不再把 {staff} 挡在外面，有的还开口求助。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：生病的人数降到了一两个或没有。'
@@ -289,8 +313,8 @@ era_text:
       near_death: '{staff} 在钦博拉索倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在钦博拉索留下了传说。计划比主时间线提前 {advance_days:1} 天改变。'
-      perfect: '{staff} 在钦博拉索完成了任务，平安回来。主时间线损失 {base_D:i} 人，这条分支损失 {D:i} 人。'
+      legend: '{staff} 在钦博拉索留下了传说。计划比模型基准提前 {advance_days:1} 天改变。'
+      perfect: '{staff} 在钦博拉索完成了任务，平安回来。模拟基准损失 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒绝，最后带着一个笑话逃了回来。'
       modest: '{staff} 在钦博拉索待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -328,3 +352,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 亚历山大·冯·洪堡的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'Keep the reading and the place together.', zh: '读数要留，在哪里读的也要留。'}
+facts:
+  approach:
+    date: '1802-06-22'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [humboldt_calpi_history, humboldt_diary_1802]
+    text:
+      en: 'The party moves toward Chimborazo on the day before the climb.'
+      zh: '攀登前一天，一行人向钦博拉索山进发。'
+  crevasse:
+    date: '1802-06-23'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [humboldt_plants_table, humboldt_diary_1802]
+    text:
+      en: 'Humboldt, Bonpland and Carlos Montúfar climb Chimborazo and turn back below the summit.'
+      zh: '洪堡、邦普朗与卡洛斯·蒙图法尔攀登钦博拉索，在山顶以下折返。'
+bystanders:
+  ines:
+    invented: true
+    text: {en: 'Inés, a fictional assistant keeping a sheet of practice readings dry.', zh: '虚构助手伊内斯，要让试测纸保持干燥。'}
+  diego:
+    invented: true
+    text: {en: 'Diego, a fictional carrier who needs to leave before fog closes in.', zh: '虚构挑夫迭戈，得赶在雾合拢前走。'}
+self_check:
+  fact: approach
+  quote_line: '纸上只留最后核实的地点，下一次读数得等。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '读数要留，在哪里读的也要留。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '读数要留，在哪里读的也要留。'
+  share_number: '先到山脚，次日上山，两天记清。'
+  knowing: 'crevasse 知道后续有史料记下的日期。'
+  near: 'approach, crevasse'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

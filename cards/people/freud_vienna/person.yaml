@@ -9,34 +9,47 @@ events:
     field: thought
     tier: 2
     channels: {G: 1, S: 1}
+    refs: [freud_vienna_imprint, freud_vienna_appearance]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["quiet","curious"]}}
         - {id: p2, kind: care, req: {"provides":"calm"}}
         - {id: p3, kind: hold, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: imprint, traits: [quiet, curious, methodical]}
+        - {id: reader, traits: [kind, patient, sensitive]}
+        - {id: edition}
     text:
       en:
-        name: Dreams as a way into the mind
+        name: 'Two years for one book'
         place: Vienna
         figure: Sigmund Freud
-        story: Freud publishes The Interpretation of Dreams, a book that changes how people talk about the mind.
-        relic: A statuette from his study
-        relic_desc: One of the small antiquities he kept on his desk.
+        story: 'Freud’s The Interpretation of Dreams reached readers around the turn of 1899–1900. The first edition bears 1900 on its title page, while Freud later recalled having the book before him in 1899. This encounter imagines two Vienna booksellers recording their stock as the first copies arrive.'
+        relic: 'A dated bookseller’s slip'
+        relic_desc: 'An invented slip that preserves the imprint and the arrival year.'
         points:
-          p1: "Notice what goes unsaid"
-          p2: "Be a patient listener"
-          p3: "Listen the whole hour without judging"
+          p1: 'Read the title page against the dated delivery note'
+          p2: 'Give a puzzled reader time to ask why the dates differ'
+          p3: 'File the order slip before the last copy is carried off'
+        vignettes:
+          imprint: 'Grete sees 1900 on the title page and wants to change the arrival ledger. You bring the delivery slip over from the counter. She writes the printed year on the label and keeps today’s year in the ledger. The two records now answer different questions.'
+          reader: 'A customer thinks Emil has brought next year’s book by mistake. You invite him to compare the slip with the title page at the counter. The customer leaves with a copy and asks Emil to keep the slip in the shop so the next reader can see it too.'
+          edition: 'You know later bibliographies will file the book under the year on the title page. Grete only needs a way to find today’s order. You leave both dates where she can look them up. The door shuts while the last reader is still on the street.'
       zh:
-        name: 把梦当作进入内心的路
+        name: '一本书的两个年份'
         place: 维也纳
         figure: 西格蒙德·弗洛伊德
-        story: 弗洛伊德出版《梦的解析》，一本改变了人们谈论心灵方式的书。
-        relic: 一座书房里的小塑像
-        relic_desc: 他放在书桌上的小古物之一。
+        story: '《梦的解析》在1899至1900年之交面世，初版扉页印1900年，弗洛伊德后来回忆自己1899年已经拿到书。游戏虚构维也纳两名书商收到首批新书后登记库存。'
+        relic: '一张注明日期的书店存根'
+        relic_desc: '虚构书店存根，两处年份都保留。'
         points:
-          p1: "留意没说出口的话"
-          p2: "做耐心的倾听者"
-          p3: "不下判断地听满整个小时"
+          p1: '把扉页与有日期的送货单对照'
+          p2: '留点时间，让读者问清两个年份为何不同'
+          p3: '最后一册被带走之前，把订单副页收好'
+        vignettes:
+          imprint: '格雷特看了扉页上的1900年，就想改掉到货簿。你从柜台拿来送货单。她把印在书上的年份写给题签，簿上仍记今天是哪一年。两张纸各回答一个问题。'
+          reader: '有客人以为埃米尔错拿了明年的书。你请他在柜台上把到货单和扉页对着看。客人带书走时，请埃米尔把单留下，好给再来的人看看。'
+          edition: '你知道后世书目常以扉页上的年份著录。格雷特眼下只需要找得到今天的订单。你把两个年份都留在她会查的地方。门关上时，最后一位读者还在街上。'
 text:
   en:
     name: Sigmund Freud
@@ -44,3 +57,57 @@ text:
   zh:
     name: 西格蒙德·弗洛伊德
     text: 奥地利医生，1856 年生，1939 年去世，精神分析的创立者。1899 年的《梦的解析》提出梦表达隐藏的愿望。1938 年德国吞并奥地利后，他离开维也纳去了伦敦。
+hook: {en: 'The new book carries next year’s date.', zh: '新书扉页印着明年的年份。'}
+facts:
+  imprint:
+    date: '1900'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [freud_vienna_imprint]
+    text:
+      en: 'The first edition held by the library is catalogued with the Leipzig and Vienna imprint of 1900.'
+      zh: '馆藏初版依莱比锡与维也纳印记著录为1900年。'
+  appearance:
+    date: '1899'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [freud_vienna_appearance]
+    text:
+      en: 'The archive places publication across 1899–1900. The imagined bookshop records use 1899 for arrival and 1900 for the imprint.'
+      zh: '档案年表把该书出版记在1899至1900年。游戏虚构的店簿分别记1899年到货和1900年印记。'
+bystanders:
+  grete:
+    invented: true
+    text: {en: 'A fictional bookseller reconciling the arrival ledger with the title page.', zh: '虚构书商格雷特，要核对到货簿与扉页。'}
+  emil:
+    invented: true
+    text: {en: 'A fictional assistant handling a customer’s order.', zh: '虚构店员埃米尔，经手客人的订单。'}
+wiki:
+  refs:
+    freud_vienna_imprint:
+      order: 977
+      status: checked
+      text:
+        en: 'Library of Congress, Sigmund Freud collection, first edition of Die Traumdeutung https://guides.loc.gov/sigmund-freud-collection/about-the-collection'
+        zh: '美国国会图书馆，弗洛伊德藏书，《梦的解析》初版 https://guides.loc.gov/sigmund-freud-collection/about-the-collection'
+    freud_vienna_appearance:
+      order: 978
+      status: checked
+      text:
+        en: 'Library of Congress, Sigmund Freud Papers, publication chronology https://www.loc.gov/collections/sigmund-freud-papers/articles-and-essays/timeline/'
+        zh: '美国国会图书馆，弗洛伊德档案出版年表 https://www.loc.gov/collections/sigmund-freud-papers/articles-and-essays/timeline/'
+self_check:
+  fact: imprint
+  quote_line: '两张纸各回答一个问题。'
+  regret_choice: 'imprint 若改掉到货年份，接手人无法按日查单。'
+  bookend: '一本新书的年份冲突，收尾两处都能查。'
+  share_line: '1899到手，1900印在书上。'
+  share_number: '两个有史料依据的年份。'
+  knowing: 'edition 知道后世常按扉页号年。'
+  near: 'imprint 初版实物有著录。'
+  lever: 'imprint 原来的一笔不被覆盖。'
+  missed: 'edition 店关后见不到最后的读者。'
+  brought: 'reader 带回虚构的订单存根。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

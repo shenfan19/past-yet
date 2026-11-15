@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {L: 1, S: 3}
     regret: true
+    refs: [bessie_coleman_jacksonville_licence, bessie_coleman_jacksonville_paxon]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"]},{"stat":{"finesse":7}}]}}
         - {id: p2, kind: trust, req: {"trait":["kind","artistic","charismatic"]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"]},{"trait":["bold","vigil"]}]}}
+      vignettes:
+        - {id: proof, traits: [methodical, handy, curious]}
+        - {id: school, traits: [artistic, kind, charismatic]}
+        - {id: ground}
     text:
       en:
-        name: "The practice flight"
+        name: 'Her name before takeoff'
         place: "Jacksonville"
         figure: "Bessie Coleman"
-        story: "Bessie Coleman, who learned to fly in France because no American school would teach her, dies in a practice flight in Jacksonville at thirty four."
-        relic: "Flying goggles"
-        relic_desc: "Leather goggles with a cracked strap."
+        story: 'Bessie Coleman earned an international pilot’s licence in France on 15 June 1921. On 30 April 1926, she died during a practice flight at Paxon Field in Jacksonville, ahead of a May Day event. This branch follows two fictional workers preparing notices on the ground before the flight.'
+        relic: 'A dated printer’s proof'
+        relic_desc: 'A fictional ground crew notice, with Coleman’s name in full.'
         points:
-          p1: "Check the plane with her (a pilot, a mechanic or fine hands help)"
-          p2: "Share her nerve on the field"
-          p3: "Keep the day as she wanted it (a pilot, a mechanic or a stubborn one helps)"
+          p1: 'Check the pilot’s name on the notice before it leaves the table'
+          p2: 'Ask the runner whom the notice needs to reach'
+          p3: 'Keep one corrected copy when the runner collects the others'
+        vignettes:
+          proof: 'Ann is short a line and has cut the pilot’s given name. You trade out two words of puffery to free the space. At pickup, she makes the runner read the full name once before folding the proof. He can now tell someone who will fly without saying only that it is a woman.'
+          school: 'Lewis thinks the crowd wants nothing but the show time. A child near the fence asks where the pilot learned. You tell Lewis where the licence was issued and let him use the last line for a fact he can repeat. When he takes the proof, he practises saying the date as well as the place.'
+          ground: 'The field is filling and you know the next day’s notice will no longer describe the same show. Ann asks whether she should hand out the proof now. You keep one dated copy and help her send the others to the gate. Your visit ends on the ground, with the spectators still arriving.'
       zh:
-        name: "那次练习飞行"
+        name: '起飞之前，她的姓名'
         place: "杰克逊维尔"
         figure: "贝茜·科尔曼"
-        story: "贝茜·科尔曼因为美国没有学校肯教她，只好去法国学飞行。她在杰克逊维尔的一次练习飞行中去世，年三十四岁。"
-        relic: "一副飞行护目镜"
-        relic_desc: "一副皮护目镜，皮带已经裂了。"
+        story: '贝茜·科尔曼于1921年6月15日在法国取得国际飞行执照。1926年4月30日，她在杰克逊维尔帕克森机场为五一活动试飞时遇难。游戏虚构两名地面工作人员，跟随他们在起飞前准备告示。'
+        relic: '一张有日期的样张'
+        relic_desc: '游戏虚构的地面告示，完整排出了科尔曼的姓名。'
         points:
-          p1: "和她一起检查飞机（飞行员、机械师或灵巧的手更合适）"
-          p2: "在机场上分享她的胆量"
-          p3: "把这一天照她想要的方式过完（飞行员、机械师或固执的人更合适）"
+          p1: '告示送出去前，检查飞行员的姓名'
+          p2: '问跑腿人，这张告示是要送给谁看的'
+          p3: '跑腿人来取时，另外留一张改过的副本'
+        vignettes:
+          proof: '安少了一行，已经把飞行员的名字裁得只剩姓。你删掉两个吹捧词，给全名腾出位置。跑腿人来取时，她请他念全名，再把样张折好。有人问谁要飞，他可以直接说出名字。'
+          school: '刘易斯以为围观的人只想知道几点开场。有孩子在围栏边问，这位飞行员在哪儿学的。你告诉他执照是在哪儿发的，把最后一行留给这个可以复述的事实。他取走样张时，连日期也练着念了一遍。'
+          ground: '场边的人越来越多，你知道明天的告示不会再写这场表演。安问是不是这会儿就发。你留一份注明日期的样张，帮她把别的送到门口。你的行程在地面结束，观众还在往这儿来。'
 text:
   en:
     name: Bessie Coleman
@@ -45,3 +58,57 @@ text:
   zh:
     name: 贝茜·科尔曼
     text: 美国飞行员，1892 年生，1926 年去世，第一位取得飞行执照的黑人女性。她在美国被飞行学校拒之门外，于是学了法语，到法国受训。1926 年她在杰克逊维尔的一次坠机中去世。
+hook: {en: 'The printer has room for one last line.', zh: '排字架上只剩最后一行。'}
+facts:
+  licence:
+    date: '1921-06-15'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bessie_coleman_jacksonville_licence]
+    text:
+      en: 'The photographs show Coleman’s licence issued in France. The museum dates it to 15 June 1921.'
+      zh: '馆方所示照片为科尔曼在法国领取的执照，日期为1921年6月15日。'
+  paxon:
+    date: '1926-04-30'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bessie_coleman_jacksonville_paxon]
+    text:
+      en: 'The museum places the fatal practice flight at Paxon Field on 30 April 1926. The proof and its makers are fictional.'
+      zh: '馆方将致命的试飞记于1926年4月30日的帕克森机场。样张及其制作者为虚构。'
+bystanders:
+  ann:
+    invented: true
+    text: {en: 'A fictional typesetter racing to finish a short notice.', zh: '虚构排字工安，要赶着印好一张短告示。'}
+  lewis:
+    invented: true
+    text: {en: 'A fictional runner who will read the notice to the crowd.', zh: '虚构跑腿人刘易斯，要把告示念给场外的人。'}
+wiki:
+  refs:
+    bessie_coleman_jacksonville_licence:
+      order: 837
+      status: checked
+      text:
+        en: 'Smithsonian American Women’s History Museum, Bessie Coleman’s licence photographs https://womenshistory.si.edu/blog/pilot-bessie-coleman-lands-newest-quarter'
+        zh: '史密森尼美国女性历史博物馆，科尔曼的执照照片 https://womenshistory.si.edu/blog/pilot-bessie-coleman-lands-newest-quarter'
+    bessie_coleman_jacksonville_paxon:
+      order: 838
+      status: checked
+      text:
+        en: 'Smithsonian National Air and Space Museum, Bessie Coleman’s career and Paxon Field https://airandspace.si.edu/stories/editorial/celebrating-centennial-bessie-coleman'
+        zh: '史密森尼国家航空航天博物馆，科尔曼生涯与帕克森机场 https://airandspace.si.edu/stories/editorial/celebrating-centennial-bessie-coleman'
+self_check:
+  fact: licence
+  quote_line: '有人问谁要飞，他可以直接说出名字。'
+  regret_choice: 'proof 若保住广告词，名字就排不全。'
+  bookend: '从最后一行开始，到一张有日期的纸。'
+  share_line: '她的名字排在起飞之前。'
+  share_number: 'proof 给全名腾出一行。'
+  knowing: 'ground 知道次日活动将改变。'
+  near: 'paxon 在史载机场设置地面差事。'
+  lever: 'school 把学飞的问题留给更多人。'
+  missed: 'ground 只能见到地面聚来的观众。'
+  brought: 'ground 带回虚构的样张。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

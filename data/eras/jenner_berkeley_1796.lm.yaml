@@ -1,7 +1,7 @@
 # Berkeley, 1796. One era = one model file.
 # Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the Teleporter extensions
 # listed under `extensions`. Every number lives here, the engine in js/ only interprets.
-# Time unit is the day. Day 0 is 1 May 1796 00:00. History has Jenner inoculate with cowpox on 14 May.
+# Time unit is the day. Day 0 is 7 May 1796 00:00. History has Jenner inoculate with cowpox on 14 May.
 # Facts marked source: historical are placeholders awaiting a source check, see README.
 
 metadata:
@@ -18,7 +18,7 @@ metadata:
     geo: {lon: -2.46, lat: 51.69}
     place: berkeley_vale
     protagonist: jenner
-    calendar: {month: 5, day0: 1, month_length: 31}
+    calendar: {month: 5, day0: 7, month_length: 31}
   description:
     problem: "A village in the Vale of Berkeley in the spring of 1796, with smallpox about and an old rumour that milkmaids who caught cowpox did not catch smallpox. History says Jenner tried cowpox on 14 May. What can one visitor with limited supplies change in one village, and what does the protagonist do with their help?"
     method: "Daily-scale difference equations, 6-hour step. One compartment model (open, protected, sick untreated, sick treated, recovered, dead) coupled to two agents: a traveller and the period protagonist."
@@ -377,6 +377,16 @@ actions:
       utility: "3 * (0.4 + jenner.rapport)"
 
 events:
+  expedition_handoff:
+    source: game_assumption
+    importance: 5
+    tag: branch
+    when: "arrived == 1 and day >= arrive_day + 1"
+    probability: "1"
+    once: true
+    effects: {}
+    variants:
+      - {when: "resp_insist == 1", key: expedition_send}
   time_strain:
     source: game_assumption
     importance: 3
@@ -390,13 +400,15 @@ events:
       traveler.strain_count: "traveler.strain_count + 1"
 
 milestones:
+  case_xvii: {date: '1796-05-14', fact: case_xvii, importance: 5, tag: history, needs_traveler: false}
+  case_followup: {date: '1796-05-21', fact: case_followup, importance: 5, tag: history, needs_traveler: false}
   first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   first_protect: {when: "protected_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   met_jenner: {when: "jenner_act_meet * act_talk >= 1", importance: 4, tag: branch, needs_traveler: true}
   jenner_trusts: {when: "jenner.rapport >= 0.5", importance: 3, tag: branch, needs_traveler: true}
   jenner_convinced: {when: "jenner.belief >= 0.8 and jenner.rapport >= 0.4", importance: 4, tag: branch, needs_traveler: true}
   board_moves: {when: "jenner.board_pressure >= 0.6", importance: 4, tag: branch, needs_traveler: false}
-  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: history, needs_traveler: false}
+  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: param, needs_traveler: false}
   reform_early: {when: "reform_day >= 0 and advance_days > 0.2", importance: 5, tag: branch, needs_traveler: true}
   trust_won: {when: "traveler.trust >= 0.5", importance: 2, tag: trait, needs_traveler: true}
   exhausted: {when: "traveler.fatigue >= 0.8", importance: 1, tag: param, needs_traveler: true}

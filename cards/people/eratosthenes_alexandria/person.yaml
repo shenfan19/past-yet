@@ -9,38 +9,87 @@ events:
     field: science
     tier: 2
     channels: {H: 3, L: 2}
+    refs: [eratosthenes_alexandria_cleomedes]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: hold, req: {"any":[{"stat":{"will":6}},{"trait":["hardy"]}]}}
+      vignettes:
+        - {id: scale, traits: [methodical, scholarly]}
+        - {id: noon, traits: [curious, handy]}
+        - {id: arc}
     text:
       en:
-        name: Measuring the Earth with shadows
+        name: 'One fiftieth of the Earth'
         place: Alexandria and Syene
         figure: Eratosthenes
-        story: By comparing noon shadows in two cities Eratosthenes estimates the size of the Earth, and gets surprisingly close.
+        story: 'In Cleomedes’ later account, Eratosthenes compares the Sun at noon at Syene and Alexandria. A difference treated as one fiftieth of a circle, with a distance of 5,000 stadia, yields a circumference of 250,000 stadia in this account. The game’s measuring helper and tabletop exercise are fictional.'
         relic: A gnomon rod
         relic_desc: A plain upright rod whose shadow told him the angle of the sun.
         points:
-          p1: "Check the shadow in the well at Syene"
-          p2: "Pace the distance under the blazing sun"
-          p3: "Finish the measurement"
+          p1: 'Find the small arc on the same circle as the whole circumference'
+          p2: 'Carry the distance slip to the shadow diagram before doing the scaling'
+          p3: 'Keep the angular share and the length together until the result is copied'
+        vignettes:
+          scale: 'The helper has written fifty beside the distance and is ready to divide. You draw the small arc first and ask how often it fits around the circle. He turns the operation around and gets 250,000 in the exercise. You carry away the multiplication and the assumed distance; the length of a single stade is still outside the drawing.'
+          noon: 'You have seen the two cities together on a later map. The helper is about to compare a noon mark with one made after the shadow had moved away. You take the later mark out of the comparison. A place on the sheet stays empty until the proper hour. That hour comes after you have left.'
+          arc: 'You copy the small arc with its share of the circle, then write the distance on another line. The helper can now tell which number is a fraction and which a length. You take home the pair. You have not walked what lies between those cities.'
       zh:
-        name: 用影子量地球
+        name: '地球的一整圈要摆几段'
         place: 亚历山大与赛伊尼
         figure: 埃拉托色尼
-        story: 埃拉托色尼比较两座城市正午的影子，估出了地球的大小，结果出奇地接近。
+        story: '克莱奥梅德斯后来记述，埃拉托色尼比较塞伊尼与亚历山大城的正午日照。按这份记述，两处差角取全圆的五十分之一，城间距离取 5000 斯塔迪亚，推得全周 250000 斯塔迪亚。卡里的测量帮工与桌面算例为虚构。'
         relic: 一根日晷针
         relic_desc: 一根朴素的立杆，影子告诉他太阳的角度。
         points:
-          p1: "核对赛伊尼井里的影子"
-          p2: "在烈日下量步距"
-          p3: "把测量做完"
+          p1: '在同一个圆上找出小弧所占的位置'
+          p2: '做比例之前，把两城距离的纸条送到影图旁'
+          p3: '抄完结果前，让角度比例和路程留在同一处'
+        vignettes:
+          scale: '帮工在路程旁写了五十，准备拿去除。你先画出小弧，问这样的弧要摆几段才围一圈。他把算式倒过来，这回得了 250000。你带走乘法和取用的路程，单个斯塔迪亚究竟多长，图上却看不出来。'
+          noon: '你见过后世把两城放在一张地图上。帮工正要用正午那笔去对照日影已经移开后才取的一笔。你把后来这笔移出对照，纸上留一格等合适的时刻。那个时刻要在你收队以后才到。'
+          arc: '你把小弧所占的比例抄好，另起一行记距离。帮工能分清哪个数是份额，哪个数是长度。两项你都带回来了，两城之间的路却没有走过。'
 text:
   en:
     name: Eratosthenes
-    text: Greek scholar, about 276 BC to about 194 BC, librarian at Alexandria. Comparing the sun's shadows at Syene and Alexandria he estimated the circumference of the Earth, with a result close to the modern value.
+    text: Greek scholar, about 276 BC to about 194 BC, librarian at Alexandria. A later account credits him with estimating the Earth’s circumference from a comparison at Syene and Alexandria. Converting the answer to modern units depends on the length assigned to the stade.
   zh:
     name: 埃拉托色尼
-    text: 希腊学者，约公元前 276 年生，约公元前 194 年去世，亚历山大图书馆馆长。他比较塞伊尼与亚历山大的日影，估算出地球周长，结果与今天的数值相近。
+    text: 希腊学者，约公元前 276 年生，约公元前 194 年去世，曾任亚历山大图书馆馆长。据后出的记述，他对照塞伊尼与亚历山大城的日照来估算地球周长。换算成现代单位要看取哪一种斯塔迪亚长度。
+hook: {en: 'Can a short shadow stand for a whole circle?', zh: '一小段影子，怎样算出一整圈？'}
+facts:
+  cleomedes:
+    date: '-240'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [eratosthenes_alexandria_cleomedes]
+    text:
+      en: 'Cleomedes relates a comparison using one fiftieth of a circle and 5,000 stadia, yielding 250,000 stadia. This is a later witness; the event year locates the approximate setting.'
+      zh: '克莱奥梅德斯转述全圆五十分之一与 5000 斯塔迪亚的比例，推得全周 250000 斯塔迪亚。这是后出的记述，卡上年份只作背景设置。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional assistant keeping two figures on a scale drawing.', zh: '虚构的帮工，要把比例和距离标在草图上。'}
+wiki:
+  refs:
+    eratosthenes_alexandria_cleomedes:
+      order: 725
+      status: checked
+      text:
+        en: 'Cleomedes, On the Circular Motions of the Celestial Bodies, I.10, T. L. Heath translation https://www.roger-pearse.com/weblog/2017/04/15/cleomedes-how-big-is-the-earth/'
+        zh: '克莱奥梅德斯《论天体的圆周运动》卷一第十章，托马斯·希思英译 https://www.roger-pearse.com/weblog/2017/04/15/cleomedes-how-big-is-the-earth/'
+self_check:
+  fact: cleomedes
+  quote_line: '他把算式倒过来，这回得了 250000。'
+  regret_choice: '用五十去除，会把一小段算得更小。'
+  bookend: '从一段小弧起，最后问它要摆多少段才是一整圈。'
+  share_line: '五十是要摆的段数，不能拿去除城间距离。'
+  share_number: '250000 斯塔迪亚'
+  knowing: 'noon 员工见过可把两城并看的后世地图。'
+  near: 'cleomedes 锚定比例和计算。'
+  lever: '改正一处乘除方向。'
+  missed: '没有走过两城之间。'
+  brought: '一张配着距离的弧图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

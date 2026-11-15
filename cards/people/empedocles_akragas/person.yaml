@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {T: 1, H: 2}
     regret: true
+    refs: [empedocles_akragas_roots, empedocles_akragas_etna]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["skeptical","wanderer"]}}
         - {id: p2, kind: persuade, req: {"luck":0.4}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["charismatic","attached","wanderer"]}}
+      vignettes:
+        - {id: cue, traits: [skeptical, wanderer, methodical]}
+        - {id: handoff, traits: [charismatic, attached, kind]}
+        - {id: sandal}
     text:
       en:
-        name: "Four roots, love and strife"
+        name: 'Where the chorus parts'
         place: "Akragas"
         figure: "Empedocles"
-        story: "Empedocles writes in verse that everything is made of earth, air, fire and water, joined by love and parted by strife. His poems survive only in fragments."
+        story: 'Fragments attributed to Empedocles describe four roots and a cycle of joining and separation associated with Love and Strife. Much later, Diogenes Laertius preserves conflicting stories about his death. In the fictional Akragas rehearsal, two readers have one last run before the room is needed for supper.'
         relic: "A scrap of verse"
-        relic_desc: "A strip of papyrus with a few lines in hexameter."
+        relic_desc: A strip from the imagined rehearsal, marked at two turns in the verse.
         points:
-          p1: "Watch the four roots mixed in a jar"
-          p2: "Catch the crowd at the right moment"
-          p3: "Hear the poem through to the end"
+          p1: 'Mark which lines describe joining and which describe parting'
+          p2: 'Settle which reader starts before the room is needed'
+          p3: 'Earn the readers’ trust and carry away their rehearsal cue'
+        vignettes:
+          cue: 'Phaon has saved only the loudest line and both readers come in together. You mark the two places where the sense turns. At the first mark they draw their stools together; at the second they each take a step back. This time the reader facing the door can tell where she is without seeing the sheet.'
+          handoff: 'Eirenē can reach the second verse but keeps jumping straight to the last. Phaon offers to finish alone. You ask her to take the first cue and let him answer from across the room. When supper is called, she closes the rehearsal instead of leaving it halfway.'
+          sandal: 'Phaon asks which story people will remember. You almost tell him about the bronze sandal in a later account of Etna. He wants a line he can practise tomorrow. You leave the sandal out and repeat his unfinished part once with him. By the time you can look for Eirenē, the stools are stacked.'
       zh:
-        name: "四根与爱憎"
+        name: '合唱从哪句分开'
         place: "阿克拉加斯"
         figure: "恩培多克勒"
-        story: "恩培多克勒用诗写道，万物由土、气、火、水构成，被爱聚合，被恨分开。他的诗只留下了残篇。"
+        story: '恩培多克勒的诗歌残篇写到四根，以及爱与争引起的聚合和分离。远在后世，第欧根尼·拉尔修收录了互相矛盾的死因传说。游戏在阿克拉加斯虚构一次排练，饭桌要腾出来了，两名诵读者只剩最后一遍。'
         relic: "一片诗稿"
-        relic_desc: "一条纸莎草，上面是几行六音步诗。"
+        relic_desc: 虚构排练用的纸莎草条，在诗句的两处转折做过记号。
         points:
-          p1: "看四种元素在罐里混合"
-          p2: "在合适的时候赶上人群"
-          p3: "把整首诗听完"
+          p1: '标出哪几行写聚合，哪几行写分离'
+          p2: '腾屋之前，商量好谁先念'
+          p3: '赢得两位诵读者信任，带走排练用的提示片'
+        vignettes:
+          cue: '法翁只记住声音最高的一句，结果两个人同时起了头。你在意思转折的两处做记号。到头一处，两人把凳子挪近，到了第二处，各退一步。这回面朝门的读者不用看稿，也知道念到哪儿。'
+          handoff: '埃瑞涅能念到第二段，却总是一下跳到末尾。法翁说他一个人念完算了。你请她给第一个提示，让法翁在屋子另一边接腔。喊开饭时，收住这一遍的是她，终于没有半途离开。'
+          sandal: '法翁问后人会记住哪个故事。你差点说起后来那则埃特纳传说里的铜鞋。他想要的是明天还能练的一句。你收住铜鞋的话，陪他把没念完的那段再走一遍。再想去找埃瑞涅，凳子已经叠起来了。'
 text:
   en:
     name: Empedocles
@@ -45,3 +58,57 @@ text:
   zh:
     name: 恩培多克勒
     text: 西西里阿克拉加斯的希腊哲学家，约公元前 494 年生，约公元前 434 年去世。他主张万物由土、气、火、水四种根构成，由爱与恨推动。
+hook: {en: 'The chorus knows the ending but loses its place.', zh: '会背结尾的人，唱到中间乱了。'}
+facts:
+  roots:
+    date: '-440'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [empedocles_akragas_roots]
+    text:
+      en: 'The fragments describe the four constituents and alternate union and separation. The year is an approximate setting during the philosopher’s lifetime.'
+      zh: '残篇写出四种成分及交替的聚合、分离。年份取哲学家生平中的约略时间。'
+  etna:
+    date: '220'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [empedocles_akragas_etna]
+    text:
+      en: 'The much later biography records several incompatible accounts, including the Etna and bronze sandal story.'
+      zh: '这部晚出传记记录了数种互不相容的说法，埃特纳火山和铜鞋只是其中一种。'
+bystanders:
+  phaon:
+    invented: true
+    text: {en: 'A fictional reader who remembers the end more readily than the opening cue.', zh: '虚构读者法翁，记得结尾，反而容易忘掉接入的提示。'}
+  eirene:
+    invented: true
+    text: {en: 'A fictional reader who hopes to complete the rehearsal before supper.', zh: '虚构读者埃瑞涅，想在开饭前念完一次。'}
+wiki:
+  refs:
+    empedocles_akragas_roots:
+      order: 821
+      status: checked
+      text:
+        en: 'Empedocles, fragments 17 and 26, Fordham Internet History Sourcebooks https://sourcebooks.web.fordham.edu/ancient/empedocles-fragments.asp'
+        zh: '恩培多克勒残篇17、26，福特汉姆大学史料库 https://sourcebooks.web.fordham.edu/ancient/empedocles-fragments.asp'
+    empedocles_akragas_etna:
+      order: 822
+      status: checked
+      text:
+        en: 'Diogenes Laertius, Lives 8.67–72 https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diogenes_Laertius/Lives_of_the_Eminent_Philosophers/8/Empedocles%2A.html'
+        zh: '第欧根尼·拉尔修《名哲言行录》8.67—72 https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diogenes_Laertius/Lives_of_the_Eminent_Philosophers/8/Empedocles%2A.html'
+self_check:
+  fact: roots
+  quote_line: '凳子已经叠起来了。'
+  regret_choice: 'sandal 若去讲逸闻，就挤掉最后一遍。'
+  bookend: '从两人抢一句，到一人起头另一人接。'
+  share_line: '合在一起，再各退一步。'
+  share_number: 'cue 两处转折。'
+  knowing: 'sandal 员工知道晚出的铜鞋传说。'
+  near: 'roots 对照有传本的诗句。'
+  lever: 'handoff 让原本会被替掉的读者念完。'
+  missed: 'sandal 人散了，凳子也收了。'
+  brought: 'cue 带走提示聚散的练习片。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

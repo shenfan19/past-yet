@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 2
     channels: {V: 1}
+    refs: [bell_boston_notebook]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["mechanic","electrician"]},{"trait":["patient"]}]}}
         - {id: p3, kind: persuade, req: {"trait":["ambitious","charismatic","scholarly"]}}
+      vignettes:
+        - {id: blind, traits: [methodical, scholarly]}
+        - {id: future, traits: [bold, charismatic]}
+        - {id: door}
     text:
       en:
-        name: The voice on a wire
+        name: 'Write down what came through'
         place: Boston
         figure: Alexander Graham Bell
-        story: Bell speaks to his assistant down a wire in the next room, and the telephone is born.
+        story: 'Alexander Graham Bell’s laboratory notebook records that on 10 March 1876 in Boston, Thomas Watson heard and understood words Bell spoke into the transmitter. The two-room exercise in this branch uses an invented assistant and a fresh test sentence.'
         relic: A telephone receiver
         relic_desc: A wooden handpiece with a thin diaphragm.
         points:
-          p1: "Understand how sound becomes current"
-          p2: "Wire up the cellar"
-          p3: "Tell the judges there is really a voice in the wire"
+          p1: 'Distinguish a recognisable word from a sound on the wire'
+          p2: 'Have the receiver write before the test sentence is shown'
+          p3: 'Compare what was sent with what was written at the other end'
+        vignettes:
+          blind: 'The assistant at the receiver wants to see the sentence first. You fold the paper and ask him to write only what he hears. Two words come back intact and the last is left blank. You keep that slip. Another trial is about to start when you go.'
+          future: 'You tell the assistant that people will remember one sentence from this date. He guesses it will be whatever someone wrote on the transmitter side. You set out two slips, one for the speaker and one for the listener. The pair will show a difference the story of the famous sentence cannot tell you about this trial.'
+          door: 'You carry the receiver’s folded slip back through the door. Only then do you lay it beside the test sentence. The missing word is still missing, but the two matching ones now have a record. You take the comparison home and miss the next sentence.'
       zh:
-        name: 电线里的声音
+        name: '把听到的写下来'
         place: 波士顿
         figure: 亚历山大·格雷厄姆·贝尔
-        story: 贝尔通过电线向隔壁房间的助手说话，电话就这样诞生了。
+        story: '亚历山大·格雷厄姆·贝尔的实验笔记记载，1876 年 3 月 10 日在波士顿，托马斯·沃森听懂了贝尔对着发话装置说的话。卡里的两室试验另用一句话和一位虚构帮工。'
         relic: 一只电话听筒
         relic_desc: 一个木制听筒，里面有一片薄薄的振膜。
         points:
-          p1: "听懂声音怎样变成电流"
-          p2: "在地下室里接线"
-          p3: "向评审说明电线里真有声音"
+          p1: '区分只传来了声响和听清了一个词'
+          p2: '先请接听的人写下所闻，再亮出原句'
+          p3: '把发出的话和另一端写下的话逐字对一遍'
+        vignettes:
+          blind: '接听的帮工想先看试句。你把纸折起来，请他只写实际听见的。传过来两个完整的词，最后一个留了空。你把这张纸条带回去，收队时又一轮刚要开始。'
+          future: '你告诉帮工，后人会记住这天传过来的一句话。他猜只要留下说话那端写的句子就够了。你摊开两张纸条，一张给说话人，一张给听话人。眼下这趟究竟漏了哪儿，还得靠这两张对出来。'
+          door: '你把接听那张折好的条子带过门，这才摊到试句旁。听漏的词依旧空着，听对的两个总算有了记录。你带回对照表，下一句没有听到。'
 text:
   en:
     name: Alexander Graham Bell
@@ -44,3 +57,39 @@ text:
   zh:
     name: 亚历山大·格雷厄姆·贝尔
     text: 苏格兰出生的科学家与发明家，1847 年生，1922 年去世，在波士顿教聋人说话。1876 年他取得电话专利，并打出了第一通电话给助手。
+hook: {en: 'Did the other room hear syllables or words?', zh: '隔壁听到的是声响还是一句话？'}
+facts:
+  notebook:
+    date: '1876-03-10'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bell_boston_notebook]
+    text:
+      en: 'Bell’s notebook reports that Watson heard and understood the spoken sentence in their 10 March test.'
+      zh: '贝尔在笔记里记下，沃森在 3 月 10 日的试验中听到并听懂了说出的一句话。'
+bystanders:
+  listener:
+    invented: true
+    text: {en: 'A fictional receiver-side assistant keeping a record of what was actually heard.', zh: '虚构的接听帮工，负责记下自己确实听见的词。'}
+wiki:
+  refs:
+    bell_boston_notebook:
+      order: 600
+      status: checked
+      text:
+        en: 'Library of Congress, Alexander Graham Bell laboratory notebook, entry for 10 March 1876 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+        zh: '美国国会图书馆，贝尔实验笔记 1876 年 3 月 10 日条 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+self_check:
+  fact: notebook
+  quote_line: '传过来两个完整的词，最后一个留了空。'
+  regret_choice: '先亮原句，接听的人就很难分清是听见的还是猜出来的。'
+  bookend: '从问听见什么，到发话和接听各有一张纸。'
+  share_line: '我给电话那头留了一处空白。'
+  share_number: '两个听对的词'
+  knowing: 'future 员工知道后来广为人知的原句。'
+  near: 'notebook 给出日期和真实两端的参与者。'
+  lever: '两张纸条分别记录说与听。'
+  missed: '没赶上下一个试句。'
+  brought: '听见的两个词和一个空位。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

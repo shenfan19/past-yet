@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 3}
     regret: true
+    refs: [boltzmann_duino_counting]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"any":[{"trait":["glib","charismatic"]},{"trait":["glib","ambitious","streetwise"]}]}}
         - {id: p2, kind: trust, req: {"any":[{"trait":["charismatic","artistic","sensitive"]},{"trait":["cosmopolitan","charismatic","artistic"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["physician","nurse"]},{"trait":["calm","patient"]},{"trait":["calm","attached","cheerful"]}]}}
+      vignettes:
+        - {id: six, traits: [methodical, scholarly]}
+        - {id: swap, traits: [curious, artistic]}
+        - {id: boxes}
     text:
       en:
-        name: "Atoms by the sea"
+        name: 'Same count, different arrangements'
         place: "Duino"
         figure: "Ludwig Boltzmann"
-        story: "Boltzmann, worn out by illness and by years of arguments over whether atoms are real, spends a late summer holiday at Duino and dies there in September."
+        story: 'Boltzmann’s 1877 paper on probability and thermal equilibrium counts how many assignments of particles can yield the same distribution of energy. The game uses a miniature exercise with labelled counters. The Duino visit is set much later, in 1906. The exercise and the student are fictional.'
         relic: "A chalk stub"
         relic_desc: "A worn stub of lecture chalk."
         points:
-          p1: "Take his side in the old argument"
-          p2: "Walk with him along the shore"
-          p3: "Be a quiet and steady presence (a physician, a nurse or a kind one helps)"
+          p1: 'Show which marks matter when you swap two labelled counters'
+          p2: 'Have the learner separate the total from the arrangements on the sheet'
+          p3: 'Keep the counting example simple enough to reconstruct after the visit'
+        vignettes:
+          six: 'The learner counts one way to put two of four labelled counters in the left box. You name the two chosen counters on each line, and find six choices giving the same two-and-two count. He changes one total. You copy the list, though it cannot settle the questions the full paper asks.'
+          swap: 'You know the drawing alone will survive better than your explanation. You exchange one marked counter in each box and sketch the two results. Both still have two counters on each side. The learner can see what changed. You leave before a third box is added.'
+          boxes: 'You write two beside each box and circle the names of the counters inside. The learner keeps both descriptions on one sheet. You bring back a two-box example. The larger count is still on the table.'
       zh:
-        name: "海边的原子"
+        name: '同一个数，几种排法'
         place: "杜伊诺"
         figure: "路德维希·玻尔兹曼"
-        story: "玻尔兹曼被病痛和多年关于原子是否真实的争论拖得疲惫不堪，去杜伊诺度晚夏假期，九月在那里去世。"
+        story: '玻尔兹曼 1877 年关于概率与热平衡的论文，计算同一种能量分布可由多少种粒子分配方式得到。卡里用有记号的筹做个小练习。杜伊诺是后来 1906 年的穿越地点，练习和学算人均为虚构。'
         relic: "一截粉笔"
         relic_desc: "一截用得很短的讲课粉笔。"
         points:
-          p1: "在旧争论里站到他这边"
-          p2: "陪他沿着海岸走走"
-          p3: "做一个安静而稳定的陪伴（医生、护士或善良的人更合适）"
+          p1: '交换有标签的两枚筹，指出哪些记号变了'
+          p2: '请学算人把数量分布与具体摆法分开写'
+          p3: '把例题留得简明，收队后还能重摆'
+        vignettes:
+          six: '学算人从四枚有记号的筹里挑两枚放左盒，只数了一种。你每行写明挑哪两枚，找到了六种同为两边各二的摆法。他改了一个总数。你抄得走清单，论文里真正要问的事却还没算到。'
+          swap: '你知道图比口头解释留得久，便把左右各一枚有记号的筹互换，分别画下前后。左右仍各有两枚，学算人却看得出哪里变了。还未添第三只盒子，你就走了。'
+          boxes: '你在两个盒旁各写一个二，再圈出盒里的筹号。学算人把两种记法留在同一张纸上。你带回的是二盒例题，更多的摆法还留在桌边。'
 text:
   en:
     name: Ludwig Boltzmann
@@ -45,3 +58,39 @@ text:
   zh:
     name: 路德维希·玻尔兹曼
     text: 奥地利物理学家，1844 年生，1906 年去世。他用原子的统计解释热的规律，熵公式刻在他的墓碑上。面对对原子存在的怀疑，又受抑郁困扰，他 1906 年在杜伊诺去世。
+hook: {en: 'How many ways can four marked counters look the same?', zh: '四枚筹有几种摆法，看起来都一样？'}
+facts:
+  counting:
+    date: '1877'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [boltzmann_duino_counting]
+    text:
+      en: 'The paper counts assignments for a given distribution. The two-box exercise is a modern illustrative analogy used by the traveller.'
+      zh: '论文对得到同种分布的分配方式进行计数。二盒练习为员工用来说明区别的现代类比。'
+bystanders:
+  learner:
+    invented: true
+    text: {en: 'A fictional student testing a simpler question with four marked counters.', zh: '虚构的学算人，拿四枚有记号的筹练一个小问题。'}
+wiki:
+  refs:
+    boltzmann_duino_counting:
+      order: 608
+      status: checked
+      text:
+        en: 'Ludwig Boltzmann, paper on the relation of the second law to probability, English translation in Entropy https://doi.org/10.3390/E17041971'
+        zh: '玻尔兹曼 1877 年论热力学第二定律与概率，英译载《Entropy》 https://doi.org/10.3390/E17041971'
+self_check:
+  fact: counting
+  quote_line: '左右仍各有两枚，学算人却看得出哪里变了。'
+  regret_choice: '只写两边各二，会漏掉六种可以重摆的分配。'
+  bookend: '从一份总数开始，结尾还能摆出总数背后的换法。'
+  share_line: '两个盒里数目一样，摆法有六种。'
+  share_number: '六种'
+  knowing: '员工拿后世常见的微观排列解释来做二盒练习。'
+  near: 'counting 给出原论文的计数方法。'
+  lever: '点出同一数量分布下的六种选择。'
+  missed: '没赶上下一个盒子的题。'
+  brought: '可以重摆的两盒图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

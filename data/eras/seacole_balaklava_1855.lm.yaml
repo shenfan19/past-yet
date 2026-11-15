@@ -1,7 +1,7 @@
 # Balaklava, 1855. One era = one model file.
 # Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the Teleporter extensions
 # listed under `extensions`. Every number lives here, the engine in js/ only interprets.
-# Time unit is the day. Day 0 is 1 Jul 1855 00:00, in the summer of cholera and dysentery behind the lines.
+# Time unit is the day. Day 0 is 12 Jun 1855 00:00, six days before the events described in chapter XVI of Seacole’s memoir.
 # Facts marked source: historical are placeholders awaiting a source check, see README.
 
 metadata:
@@ -18,7 +18,7 @@ metadata:
     geo: {lon: 33.6, lat: 44.5}
     place: balaklava_camp
     protagonist: seacole
-    calendar: {month: 7, day0: 1, month_length: 31}
+    calendar: {month: 6, day0: 12, month_length: 30}
   description:
     problem: "A camp behind the lines at Balaklava in the summer of 1855, with dysentery and cholera among the men and an inn run by a woman who paid her own way there. What can one visitor with limited supplies change in one camp, and what does the protagonist do with their help?"
     method: "Daily-scale difference equations, 6-hour step. One compartment model (open, protected, sick untreated, sick treated, recovered, dead) coupled to two agents: a traveller and the period protagonist."
@@ -377,6 +377,16 @@ actions:
       utility: "3 * (0.4 + seacole.rapport)"
 
 events:
+  expedition_handoff:
+    source: game_assumption
+    importance: 5
+    tag: branch
+    when: "arrived == 1 and day >= arrive_day + 1"
+    probability: "1"
+    once: true
+    effects: {}
+    variants:
+      - {when: "resp_insist == 1", key: expedition_send}
   time_strain:
     source: game_assumption
     importance: 3
@@ -390,13 +400,15 @@ events:
       traveler.strain_count: "traveler.strain_count + 1"
 
 milestones:
+  cathcart_evening: {date: '1855-06-17', fact: cathcart_evening, importance: 5, tag: history, needs_traveler: false}
+  wounded_road: {date: '1855-06-18', fact: wounded_road, importance: 5, tag: history, needs_traveler: false}
   first_treat: {when: "treated_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   first_protect: {when: "protected_total >= 1", importance: 3, tag: branch, needs_traveler: true}
   met_seacole: {when: "seacole_act_meet * act_talk >= 1", importance: 4, tag: branch, needs_traveler: true}
   seacole_trusts: {when: "seacole.rapport >= 0.5", importance: 3, tag: branch, needs_traveler: true}
   seacole_convinced: {when: "seacole.belief >= 0.8 and seacole.rapport >= 0.4", importance: 4, tag: branch, needs_traveler: true}
   board_moves: {when: "seacole.board_pressure >= 0.6", importance: 4, tag: branch, needs_traveler: false}
-  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: history, needs_traveler: false}
+  reform_history: {when: "reform_day >= 0 and advance_days <= 0.2", importance: 5, tag: param, needs_traveler: false}
   reform_early: {when: "reform_day >= 0 and advance_days > 0.2", importance: 5, tag: branch, needs_traveler: true}
   trust_won: {when: "traveler.trust >= 0.5", importance: 2, tag: trait, needs_traveler: true}
   exhausted: {when: "traveler.fatigue >= 0.8", importance: 1, tag: param, needs_traveler: true}

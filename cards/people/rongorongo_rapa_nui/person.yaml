@@ -10,38 +10,87 @@ events:
     tier: 2
     channels: {E: 3, S: 2, G: 3}
     regret: true
+    refs: [rongorongo_rapa_nui_corpus]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["handy","skeptical"]}}
         - {id: p2, kind: care, req: {"trait":["cheerful","patient","attached"]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: orientation, traits: [methodical, handy]}
+        - {id: label, traits: [curious, kind]}
+        - {id: copies}
     text:
       en:
-        name: "Tablets nobody can read"
+        name: 'Mark the side before turning the page'
         place: "Rapa Nui"
         figure: "Rapa Nui people"
-        story: "Only about two dozen wooden tablets carved with rongorongo signs survive from Rapa Nui. Nobody can read them today, and the people who could died or were taken away in the 1860s."
-        relic: "A carved wooden tablet"
-        relic_desc: "A flat piece of wood cut with rows of small figures."
+        story: 'The Australian Museum records kōhau roŋoroŋo as a Rapa Nui practice of incising signs on wood. The surviving corpus is small and the script remains largely undeciphered by scholars. The game uses an imagined exercise with plain marks on a spare board. It does not reproduce a tablet’s writing or a community interpretation.'
+        relic: 'Two orientation sketches'
+        relic_desc: 'Practice sketches with the upper edge marked on each.'
         points:
-          p1: "Study the lines of signs"
-          p2: "Sit with the old people who remember"
-          p3: "Hear the old chants as they are spoken"
+          p1: 'Give each view a distinct orientation mark'
+          p2: 'Hold the first copy while the helper turns the board'
+          p3: 'Check the spoken label against the right drawing'
+        vignettes:
+          orientation: 'The helper turns the plain practice board and mistakes the second sketch for the first. You put a small arrow on the paper before comparing either sketch. The two marks can be reviewed in their proper orientation. You keep the exercise; it gives you no reading of an inscription.'
+          label: 'You know later people will ask how the surviving objects were oriented. The helper tells you which position he drew from. You keep his description apart from your drawing. When you leave, the placement is clear and nothing has been guessed about what the signs mean.'
+          copies: 'You mark the upper edge on both slips before they are put together. The helper turns them back the way you saw them. You bring home two study views. The writing that inspired the exercise stays beyond the page.'
       zh:
-        name: "无人能读的木板"
+        name: '翻页之前给这面做一记'
         place: "拉帕努伊岛"
         figure: "拉帕努伊人"
-        story: "拉帕努伊岛上刻着朗格朗格符号的木板只留下约二十来块。今天没有人能读懂，会读的人在1860年代死去或被带走了。"
-        relic: "一块刻字的木板"
-        relic_desc: "一块平整的木头，刻着一行行小小的人形。"
+        story: '澳大利亚博物馆记载，拉帕努伊的 kōhau roŋoroŋo 是在木面刻记号的传统。存世实物很少，学界仍未能系统释读。卡里只在虚构练习板上用普通线记练习看图，未仿刻实物文字，也不代述当地人的解读。'
+        relic: '两幅朝向习作'
+        relic_desc: '各在上缘做了一记的练习图。'
         points:
-          p1: "研究那些成行的符号"
-          p2: "陪记得那些的老人坐坐"
-          p3: "听懂老人念出的古老吟唱"
+          p1: '给每幅习作各留一个朝向标记'
+          p2: '帮工转板时保住第一张图的位置'
+          p3: '把口述标签与对应的草图核对'
+        vignettes:
+          orientation: '帮工把练习板转过来，误拿第二张当第一张。你先在纸上补一支小箭头，才对照两幅。下回照着箭头能复核方向。你带走这个练习，却还读不出任何真实铭文。'
+          label: '你知道后人会问实物当时怎样摆。帮工告诉你他从哪一边画的，你把这句话另记一张，与图分开。走时能确定站位，仍没给刻写的记号猜一个意思。'
+          copies: '合起两张纸前，你各在上边做个记号。帮工照记号转回你原来看的方向。你带回两张习作图，启发这道练习的真正文字仍在纸外。'
 text:
   en:
     name: Rapa Nui people
-    text: The Rapa Nui people of Easter Island, who made wooden tablets carved with the rongorongo glyphs. In the 1860s slave raids and disease killed most of the island's people, including those who could read the tablets, and the script remains undeciphered.
+    text: The people of Rapa Nui developed a tradition of carving roŋoroŋo signs in wood. Nineteenth-century upheavals disrupted the transmission of that knowledge. The surviving objects, Rapa Nui oral knowledge and attempts at scholarly decipherment tell different parts of its history.
   zh:
     name: 拉帕努伊人
-    text: 复活节岛的拉帕努伊人，他们制作刻有朗格朗格文字的木板。1860 年代的奴隶掠夺与疾病夺走了岛上大多数人的生命，包括能读木板的人，这种文字至今没有破译。
+    text: 拉帕努伊人发展了在木面刻写朗格朗格符号的传统。十九世纪的动荡打断了部分知识的传承。存世实物、拉帕努伊人的口述知识和学界的释读工作各保留了这段历史的一部分。
+hook: {en: 'How do you remember which edge a drawing came from?', zh: '图纸转过来，哪一边才是起头？'}
+facts:
+  corpus:
+    date: '1870'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [rongorongo_rapa_nui_corpus]
+    text:
+      en: 'The museum outlines the small surviving corpus and distinguishes scholarly decipherment from Rapa Nui oral knowledge. The card’s date is its setting, not an inventory date.'
+      zh: '馆方说明存世材料有限，也区分学界释读与拉帕努伊口述知识。卡上年份用于设定场景，未给藏品定年。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional helper working with an uninscribed practice board and two sketches.', zh: '虚构的帮工，用一块未刻写文字的练习板和两张图习作。'}
+wiki:
+  refs:
+    rongorongo_rapa_nui_corpus:
+      order: 767
+      status: checked
+      text:
+        en: 'Australian Museum, Kōhau Roŋoroŋo: Talking Tablet, Rapa Nui collection and Victor Pakomio’s account https://australian.museum/learn/cultures/pasifika-collections/rapa-nui-collections/kohau-rongorongo-talking-tablet/'
+        zh: '澳大利亚博物馆，拉帕努伊《会说话的木板》馆藏与维克托·帕科米奥介绍 https://australian.museum/learn/cultures/pasifika-collections/rapa-nui-collections/kohau-rongorongo-talking-tablet/'
+self_check:
+  fact: corpus
+  quote_line: '走时能确定站位，仍没给刻写的记号猜一个意思。'
+  regret_choice: '没有朝向标记，两幅图容易调换。'
+  bookend: '从转板丢了前后，到同样摆法可以复看。'
+  share_line: '我把练习板转回了第一次看它的方向。'
+  share_number: '两幅习作'
+  knowing: 'label 知道后世会问实物朝向。'
+  near: 'corpus 锚定公开馆藏与社区解释。'
+  lever: '在散纸上固定观测方向。'
+  missed: '没有译读真实铭文。'
+  brought: '标有朝向的两页习作。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

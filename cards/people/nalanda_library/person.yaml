@@ -10,38 +10,102 @@ events:
     tier: 3
     channels: {H: 2, S: 1}
     regret: true
+    refs: [nalanda_library_campus, nalanda_library_later_study]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","quiet"]}}
         - {id: p2, kind: hold, req: {"job":["archivist","teacher","student"]}}
         - {id: p3, kind: care, redeem: true, req: {"item":"holo_cloak"}}
+      vignettes:
+        - {id: number, traits: [methodical, scholarly]}
+        - {id: later, traits: [curious, kind]}
+        - {id: tie}
     text:
       en:
-        name: "A great library, later lost"
+        name: 'A leaf number for the next lesson'
         place: "Nalanda"
         figure: "The monks of Nalanda"
-        story: "For centuries Nalanda was a great place of study, and travellers such as Xuanzang described its libraries. The library was lost within a few years after the 1190s, and almost nothing of its books remains."
-        relic: "A palm leaf manuscript"
-        relic_desc: "Narrow leaves threaded on a cord, written with an iron stylus."
+        story: 'The archaeological site of Nalanda Mahavihara preserves residential and teaching buildings from a long history of study. Dharmasvāmin’s biography describes study at Nalanda in the thirteenth century, after the game’s 1190 setting. The practice bundle and readers below are invented. No exact year for the loss of a library is inferred from the visit.'
+        relic: 'A lesson slip'
+        relic_desc: 'A fictional note with the place where two readers can resume.'
         points:
-          p1: "Walk the halls of the library"
-          p2: "Help the copyists keep the catalogue (a record keeper, a teacher or a student)"
-          p3: "Sit among the monks unseen as they copy by lamp"
+          p1: 'Find where the previous reader stopped in the practice leaves'
+          p2: 'Copy the leaf reference before passing the bundle to the next reader'
+          p3: 'Keep two nearby positions apart on the lesson slip'
+        vignettes:
+          number: 'The reader remembers the previous lesson by its last word. You compare two practice leaves and find the word on both. He adds a leaf number to his slip. Someone can now open the bundle in the right place. You leave with a checkable reference, but before the next lesson starts.'
+          later: 'You know a later pilgrim will still describe studying here. The reader asks what will be needed if this bundle changes hands. You make a slip that names the position without assuming the next person heard today’s reading. The bundle is handed on, and you do not hear its next reader.'
+          tie: 'Before the leaves are tied, you note which comes just before the new lesson. You put the slip beneath the outer tie, where the next reader can see it first. You keep a copy. While you are still wondering what follows, your return begins.'
       zh:
-        name: "后来失去的大图书馆"
+        name: '给下堂课留个叶码'
         place: "那烂陀"
         figure: "那烂陀的僧人"
-        story: "几个世纪里，那烂陀都是一处大学府，玄奘等旅人描述过它的藏书楼。1190年代之后的几年里，它的图书馆消失了，书几乎一册也没有留下。"
-        relic: "一页贝叶经"
-        relic_desc: "一条条窄叶用绳串起，用铁笔写成。"
+        story: '那烂陀大寺遗址留有居住与教学建筑，见证长期讲学。《达摩斯瓦明传》记载达摩斯瓦明在十三世纪到那烂陀求学，晚于卡里采用的 1190 年。卡里的练习叶束与读书人为虚构，这一趟也无法给藏书散失定年。'
+        relic: '一张课签'
+        relic_desc: '虚构的读书记，用叶码标好该从哪处接着读。'
         points:
-          p1: "走过图书馆的大厅"
-          p2: "帮抄经人管目录"
-          p3: "不被察觉地坐在僧人中间，看他们在灯下抄经"
+          p1: '在练习叶束里找到上一位读到哪儿'
+          p2: '交出叶束前抄下所用叶码'
+          p3: '在课签上分开记两个相近的位置'
+        vignettes:
+          number: '读书人只靠上堂最后一个字找页。你对了两片练习叶，发现两处都有那个字。他这才在签上补一个叶码。下一位可以翻到对的位置。出处能查回去了，你却赶不上下一堂。'
+          later: '你知道以后还有旅人写到在这里求学。读书人问叶束交到别人手里时，该怎样让他接着读。你另做一张签，把位置写全，哪怕下一个人没听过今天这一段也能找回。叶束交出去了，你没听到下一个人读。'
+          tie: '叶束系起前，你先记好新课前面是哪一叶。你把课签放在外绳下，下一位先看到的是它。你留了一份抄件。后面会读到什么，正想着，人已经要回去了。'
 text:
   en:
     name: The monks of Nalanda
-    text: The monks and scholars of Nalanda, a Buddhist monastic university in Bihar that flourished from about the fifth century. Students came from across Asia. It was sacked around 1190 and its library is said to have burned for days.
+    text: Nalanda was a Buddhist centre of learning in Bihar, with residential and teaching buildings. Travellers came to study from across Asia. Dharmasvāmin’s biography describes study there in the thirteenth century.
   zh:
     name: 那烂陀的僧人
-    text: 那烂陀的僧人与学者。那烂陀是比哈尔邦的佛教寺院大学，从约五世纪起兴盛，学生来自亚洲各地。约 1190 年它被洗劫，据说图书馆烧了好几天。
+    text: 那烂陀是比哈尔邦的佛教讲学中心，有供居住和教学的建筑。亚洲各地有人来此求学。《达摩斯瓦明传》仍记有十三世纪在此访学的经历。
+hook: {en: 'Will the next reader find the same leaf?', zh: '下一位读的人，找得到同一叶吗？'}
+facts:
+  campus:
+    date: '1190'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [nalanda_library_campus]
+    text:
+      en: 'The site record describes remains of a monastic and scholastic institution including residential and teaching buildings. The map year places the invented scene.'
+      zh: '遗产档案记录了长期用于住学的寺院遗迹。地图年份用于布置虚构场景。'
+  later_study:
+    date: '1235'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [nalanda_library_later_study]
+    text:
+      en: 'The biography reports a later period of study at Nalanda in the 1230s. It does not document the fictional leaf bundle.'
+      zh: '传记记载十三世纪三十年代在那烂陀求学；卡里的叶束为虚构。'
+bystanders:
+  reader:
+    invented: true
+    text: {en: 'A fictional reader finishing a lesson with a bundle of practice leaves.', zh: '虚构的读书人，用一束练习叶刚读完一段功课。'}
+wiki:
+  refs:
+    nalanda_library_campus:
+      order: 775
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Archaeological Site of Nalanda Mahavihara at Nalanda, Bihar https://whc.unesco.org/en/list/1502/'
+        zh: '联合国教科文组织世界遗产中心，比哈尔邦那烂陀大寺考古遗址 https://whc.unesco.org/en/list/1502/'
+    nalanda_library_later_study:
+      order: 776
+      status: checked
+      text:
+        en: 'Biography of Dharmasvāmin, trans. George Roerich, later visit to Nalanda https://zenodo.org/record/1213643/files/Dharmasvamin%20OCR.pdf'
+        zh: '《达摩斯瓦明传》，乔治·罗列赫英译，十三世纪那烂陀访学段 https://zenodo.org/record/1213643/files/Dharmasvamin%20OCR.pdf'
+self_check:
+  fact: campus
+  quote_line: '下一位可以翻到对的位置。'
+  regret_choice: '只记最后一个字，会在两叶之间找错。'
+  bookend: '从靠记忆翻页，到下一位能查回原处。'
+  share_line: '我给下一堂课留了一个叶码。'
+  share_number: '两个相近位置'
+  knowing: 'later 知道十三世纪还有人在此求学。'
+  near: 'campus 和 later_study 锚定遗址与后世访学。'
+  lever: '在真实页次的问题上加一条可查的签。'
+  missed: '没等到下一堂。'
+  brought: '课签副本。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

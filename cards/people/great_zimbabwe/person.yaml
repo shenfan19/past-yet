@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 2
     channels: {L: 3, H: 1}
+    refs: [great_zimbabwe_passage]
     scene:
       points:
         - {id: p1, kind: hold, req: {"provides":"strength"}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+      vignettes:
+        - {id: lines, traits: [methodical, scholarly]}
+        - {id: width, traits: [hardy, curious]}
+        - {id: pace}
     text:
       en:
-        name: A stone city without mortar
+        name: 'The passage in the plan'
         place: Masvingo, Zimbabwe
         figure: The builders of Great Zimbabwe
-        story: Builders raise high walls of fitted granite blocks without mortar, the centre of a trading kingdom.
-        relic: A soapstone bird
-        relic_desc: A carved bird on a short column.
+        story: 'Great Zimbabwe’s Great Enclosure has a large curved wall built of dry-laid granite, and an inner wall running beside part of it to create a narrow passage. The stone-yard exercise below is invented. The map year marks a period in the growth of the settlement.'
+        relic: 'A sketch of the passage'
+        relic_desc: 'A work drawing that leaves the route blank between both walls.'
         points:
-          p1: "Lay the dry stone wall"
-          p2: "Carry stone all day"
-          p3: "Read the curve of the wall"
+          p1: 'Hold the sketch as the marker walks beside the second wall'
+          p2: 'Walk along the passage until the two lines separate on the plan'
+          p3: 'Identify which of two measurements belongs to the passage'
+        vignettes:
+          lines: 'The marker draws one thick line for the space between the walls. You turn the sheet and ask him to leave a strip of paper clear between the two edges. Now a runner can follow the strip rather than the masonry. You bring home the revised outline, with the far end still unchecked.'
+          width: 'You follow the marker far enough to see that the inner line does not continue all the way round. He has extended it out of habit. You stop the pencil line where your check ends, and leave the remaining paper clear. The next check lies beyond the turn.'
+          pace: 'You mark two short wall edges and draw nothing in the gap. The marker can point to the way through without drawing on a wall. You keep the space between the lines in your copy. The closing bend stays outside the sketch.'
       zh:
-        name: 不用灰浆的石头城
+        name: '图上两墙之间的路'
         place: 津巴布韦马斯温戈
         figure: 大津巴布韦的建造者
-        story: 建造者用切好的花岗岩块不加灰浆垒起高墙，那里是一个商贸王国的中心。
-        relic: 一只皂石鸟
-        relic_desc: 立在矮柱上的一只雕刻小鸟。
+        story: '大津巴布韦的大围场有花岗岩干砌的弧形外墙，部分区段的内墙与其并行，两墙间形成狭道。卡里石场的核图差事为虚构，年份用于定位聚落发展时期。'
+        relic: '一张两墙间的草图'
+        relic_desc: '图上两段墙之间留白，标的是能走的狭道。'
         points:
-          p1: "干砌石墙"
-          p2: "搬运整日的石块"
-          p3: "读出墙的曲线"
+          p1: '标记人沿第二道墙走时稳住图纸'
+          p2: '沿狭道走到图上能分辨两条墙线的地方'
+          p3: '辨出两个读数中哪一个量的才是狭道'
+        vignettes:
+          lines: '标记人用一道粗线画两墙之间的路。你旋过图纸，请他在两条边之间留出一条白。来取图的人现在知道该沿留白走。你带回改过的轮廓，远端还没核到。'
+          width: '你跟标记人走了一段，看出内墙没有沿外墙绕满一圈。他顺手把线接长了。你让线停在这次核到的边界，后面留白。转弯以后的情况，得下一趟再查。'
+          pace: '你画两段短墙，中间不落笔。标记人就能从图上指出怎么走过去。你在副本也留着两线之间的空处，末尾那一弯没画进去。'
 text:
   en:
     name: The builders of Great Zimbabwe
@@ -44,3 +57,39 @@ text:
   zh:
     name: 大津巴布韦的建造者
     text: 大津巴布韦的建造者。这座石头城属于说绍纳语的族群，大约在十一世纪到十五世纪兴盛。大围墙不用灰浆垒成，城里的人与海岸做黄金和象牙贸易。
+hook: {en: 'Why do two people count different walls?', zh: '两人数的到底是不是同一面墙？'}
+facts:
+  passage:
+    date: '1300'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [great_zimbabwe_passage]
+    text:
+      en: 'The site description documents the elliptical Great Enclosure, its regular courses of cut granite and a narrow passage leading to the conical tower.'
+      zh: '遗产档案记有椭圆形大围场、整齐垒砌的花岗岩墙体和通往锥形塔的狭道。'
+bystanders:
+  marker:
+    invented: true
+    text: {en: 'A fictional worker making a route sketch in the stone yard.', zh: '虚构的石场工人，要画一张能用来指路的图。'}
+wiki:
+  refs:
+    great_zimbabwe_passage:
+      order: 673
+      status: checked
+      text:
+        en: 'UNESCO World Heritage Centre, Great Zimbabwe National Monument, Great Enclosure description https://whc.unesco.org/en/list/364'
+        zh: '联合国教科文组织世界遗产中心，大津巴布韦遗址大围场说明 https://whc.unesco.org/en/list/364'
+self_check:
+  fact: passage
+  quote_line: '来取图的人现在知道该沿留白走。'
+  regret_choice: '顺手把内墙画满一圈，路就接错了。'
+  bookend: '从一条粗线到两条可以并读的墙线。'
+  share_line: '两道墙之间，白处才是路。'
+  share_number: '两条墙线'
+  knowing: '员工知道遗址最终保留了可以核对的狭道。'
+  near: 'passage 给出大围场与狭道。'
+  lever: '给实际通道留出一条白。'
+  missed: '远端没有核到。'
+  brought: '标出狭道的草图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

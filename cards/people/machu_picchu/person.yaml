@@ -9,34 +9,47 @@ events:
     field: architecture
     tier: 3
     channels: {A: 3, L: 3}
+    refs: [machu_picchu_water, machu_picchu_series]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p2, kind: hold, req: {"provides":"strength"}}
         - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+      vignettes:
+        - {id: wet, traits: [methodical, scholarly]}
+        - {id: steps, traits: [hardy, curious]}
+        - {id: mark}
     text:
       en:
-        name: A mountain citadel of fitted stone
+        name: 'Follow the water to the next stone basin'
         place: Machu Picchu, Peru
         figure: The Inca builders
-        story: Inca builders raise terraces and temples of fitted stone on a mountain ridge, with water carried through stone channels.
+        story: 'Field studies at Machu Picchu record a canal carrying water from a spring to a stair-stepped series of sixteen fountains in the built area. The game’s water check, stones and helper are fictional. The map year is an approximate setting.'
         relic: A carved stone
         relic_desc: A palm sized stone with a straight, true edge.
         points:
-          p1: "Lay stone at high altitude"
-          p2: "Fit the joints of the wall"
-          p3: "See the drainage design"
+          p1: 'Walk from the upper outlet to the next one before making a note'
+          p2: 'Keep the upstream and downstream observations in order'
+          p3: 'Mark the last place where you actually saw water'
+        vignettes:
+          wet: 'The helper has marked every basin wet after seeing water at the first outlet. You walk to the next basin and draw two boxes, one for each observation. His second mark stays blank. You bring back the pair with one unanswered question, and miss whatever the next test finds.'
+          steps: 'You know a later survey will number the outlets in a series. The helper is counting from where he started this morning. You retrace the steps and agree which one is upstream of the other. The sketch can now be read in either direction. You are gone by the time water reaches the lower mark.'
+          mark: 'You copy one wet mark beside the upper basin and follow the channel to the next notch. You leave a small arrow for the helper. The lower basin is still outside the part of the plan you can confirm.'
       zh:
-        name: 山上严丝合缝的石头城
+        name: '顺水再走一口石池'
         place: 秘鲁马丘比丘
         figure: 印加的建造者们
-        story: 印加的建造者们在山脊上用严丝合缝的石头建起梯田和神庙，水由石槽引进来。
+        story: '马丘比丘的现场研究记录了一条从泉眼引水的渠道，以及建筑区沿阶梯排列的十六处水池出水点。卡里的试水、石块和帮工为虚构，地图年份用于设定大致场景。'
         relic: 一块切好的石头
         relic_desc: 一块巴掌大的石头，边是直的、正的。
         points:
-          p1: "高海拔砌石"
-          p2: "对齐石缝"
-          p3: "看出排水设计"
+          p1: '从上一个出水点走到下一个，再落笔'
+          p2: '把上游和下游的记录按顺序留好'
+          p3: '标出你最后一次亲眼见到水的地方'
+        vignettes:
+          wet: '帮工在第一处见到水，顺手把下面几处也标成有水。你走到下一口池，改画两个格，各留一次所见。他的第二格仍空着。你带回一对记录和一个问题，下一趟试水的结果没等到。'
+          steps: '你知道后来的测绘会给这些出水点顺次编号，帮工却从自己早上站的地方数起。你沿台阶折回去，和他对准哪一口在上游。这张图从两头读都认得地方。等水到了下一个记号，你已经收队了。'
+          mark: '你抄下上池旁的湿痕，沿水槽走到下一道缺口，再画一个小箭头给帮工。下池的情况不在这一趟能核实的图里。'
 text:
   en:
     name: The Inca builders
@@ -44,3 +57,54 @@ text:
   zh:
     name: 印加的建造者们
     text: 马丘比丘的印加建造者。马丘比丘是约 1450 年建在安第斯山脊上的王室庄园，石墙不用灰浆砌合。西班牙征服后遗址被废弃，直到 1911 年才为外界熟知。
+hook: {en: 'If water appears above, why is the next basin dry?', zh: '上边见水，下边为什么还干着？'}
+facts:
+  water:
+    date: '1450'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [machu_picchu_water]
+    text:
+      en: 'Field research documents Machu Picchu’s water and drainage infrastructure. The game year is approximate.'
+      zh: '现场研究记录马丘比丘的供水与排水设施。地图年代为场景设定。'
+  series:
+    date: '1450'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [machu_picchu_series]
+    text:
+      en: 'The survey documents the spring-fed canal and the linked series of sixteen fountains.'
+      zh: '调查记录来自泉水的水渠和串联的十六处出水点。'
+bystanders:
+  helper:
+    invented: true
+    text: {en: 'A fictional helper comparing readings from two parts of the water route.', zh: '虚构的帮工，要把水路前后两处的记录对起来。'}
+wiki:
+  refs:
+    machu_picchu_water:
+      order: 677
+      status: checked
+      text:
+        en: 'K. R. Wright, A. Valencia Zegarra and W. L. Lorah, Ancient Machu Picchu Drainage Engineering, with field survey of the waterworks https://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%281999%29125%3A6%28360%29'
+        zh: '赖特、巴伦西亚·塞加拉与洛拉，《古代马丘比丘的排水工程》现场研究 https://ascelibrary.org/doi/10.1061/%28ASCE%290733-9437%281999%29125%3A6%28360%29'
+    machu_picchu_series:
+      order: 678
+      status: checked
+      text:
+        en: 'Wright, Kelly and Valencia Zegarra, Machu Picchu: Ancient Hydraulic Engineering https://ascelibrary.com/doi/10.1061/%28ASCE%290733-9429%281997%29123%3A10%28838%29'
+        zh: '赖特、凯利与巴伦西亚·塞加拉，《马丘比丘：古代水利工程》 https://ascelibrary.com/doi/10.1061/%28ASCE%290733-9429%281997%29123%3A10%28838%29'
+self_check:
+  fact: water
+  quote_line: '他的第二格仍空着。'
+  regret_choice: '看见上边有水就填完，下面是否出水便没有实测。'
+  bookend: '从上游的第一笔，走到图上的实测边界。'
+  share_line: '我只标了最后一次亲眼见到水的地方。'
+  share_number: '十六处出水点'
+  knowing: 'steps 知道后来的图会把出水点连在一起。'
+  near: 'water 和 series 锚定水路结构。'
+  lever: '分开上下游观察。'
+  missed: '下次试水未赶上。'
+  brought: '一支箭头和两格记录。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

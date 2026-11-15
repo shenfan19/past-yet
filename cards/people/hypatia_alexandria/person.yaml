@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {S: 3}
+    refs: [hypatia_alexandria_hydroscope]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"stat": {"finesse": 7}}}
         - {id: p2, kind: notice, req: {"stat": {"wit": 7}}}
         - {id: p3, kind: hold, req: {"item": "holo_cloak"}}
+      vignettes:
+        - {id: scale, traits: [methodical, curious, skeptical]}
+        - {id: copy, traits: [scholarly, quiet, attached]}
+        - {id: name}
     text:
       en:
-        name: Teaching mathematics and astronomy
+        name: 'Read at the surface'
         place: Alexandria
         figure: Hypatia
-        story: Hypatia teaches mathematics, astronomy and philosophy in Alexandria and is remembered as its best known woman scholar.
-        relic: An astrolabe plate
-        relic_desc: An engraved brass disc for finding the stars and the hour.
+        story: 'In Letter 15, Synesius asks Hypatia to have a brass instrument made and describes the upright float and its marks for comparing liquids. The test bench in this visit is fictional. The letter records a request; the two readers and the instrument they test here belong to the story.'
+        relic: 'A sketched float scale'
+        relic_desc: 'A fictional workshop sketch showing where the mark is read.'
         points:
-          p1: "Join the discussion"
-          p2: "Follow her geometry"
-          p3: "Slip through the crowd unseen"
+          p1: 'Ask the pupil and maker to agree where they took the reading'
+          p2: 'Check whether two readers are using the same notch'
+          p3: 'Use the remaining equipment to keep the trial out of the doorway'
+        vignettes:
+          scale: 'Timon holds his thumb over the mark and calls it the result. Nysa takes a reading from where the float meets the surface. You ask them to put down the tube and look again while it stands free. This time they read the same mark. Nysa adds where they were standing to the record.'
+          copy: 'Nysa has one side of a tablet left and wants to copy the result in large letters. You fit the observation on the top half and let her draw the cylinder below it. The next reader will have both the result and a place to look for it on the instrument.'
+          name: 'You could offer a future name for the device. Timon has a cloth in one hand and is about to lift the float out of the cup. You use the last quiet moment to ask Nysa for one independent reading. You leave without seeing what the recipient makes of the finished instrument.'
       zh:
-        name: 讲授数学与天文
+        name: '水面在哪一格'
         place: 亚历山大
         figure: 希帕提娅
-        story: 希帕提娅在亚历山大教数学、天文和哲学，被人记作那座城最有名的女学者。
-        relic: 一块星盘的盘面
-        relic_desc: 刻着星位的黄铜圆盘，用来找星星和时辰。
+        story: '昔涅修斯在第15封信里请希帕提娅找人制作黄铜仪器，并描述能直立漂浮、读刻线比较液体的器具。游戏虚构了试验台。书信留下的是请求，试读刻线的两人和他们测试的实物属于故事。'
+        relic: '一张浮标刻线图'
+        relic_desc: '虚构试验台的刻线图，画出了从哪里读数。'
         points:
-          p1: "加入讨论"
-          p2: "跟上她的几何"
-          p3: "不被察觉地穿过人群"
+          p1: '请学生与工匠对一对各自从哪里读数'
+          p2: '核查两个人读的是不是同一道刻线'
+          p3: '用带来的装备遮住试验台，给门边留出路'
+        vignettes:
+          scale: '提蒙用拇指按住一道刻线，说这就是结果。妮萨照浮标接触液面的位置读。你请他们松开手，等浮标自己立稳再看一遍。这次两人报的是同一格。妮萨把读数时站的位置也写了进去。'
+          copy: '妮萨只剩一面蜡板，原想用大字把结果一抄。你把观察写在上半边，留给她在下面画仪器。下一个读到的人，既有读数，也有图可循，知道刻线该从哪里看。'
+          name: '你原可以讲讲后世怎么称呼这件器具。提蒙已一手拿布，要把浮标从杯里提出去。你趁最后这点安静，请妮萨自己再读一次。收信人拿到成品后会怎样用，你已看不到了。'
 text:
   en:
     name: Hypatia
@@ -44,3 +57,42 @@ text:
   zh:
     name: 希帕提娅
     text: 希腊数学家与哲学家，约 355 年生，415 年去世，在亚历山大教学。她为数学与天文学著作作注。在城中的政治与宗教冲突里，她被暴徒杀害。
+hook: {en: 'Two readers see two marks on one float.', zh: '同一根浮标，两人读出两格。'}
+facts:
+  hydroscope:
+    date: '400'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hypatia_alexandria_hydroscope]
+    text:
+      en: 'The late antique letter requests an instrument from Hypatia and describes its vertical markings and upright flotation. The year gives the approximate setting, rather than a dated delivery.'
+      zh: '晚期古代书信向希帕提娅求制仪器，描述器具直立漂浮和竖排刻线。年份用于标示游戏的约略时代。'
+bystanders:
+  timon:
+    invented: true
+    text: {en: 'A fictional workshop maker who must put the prototype away before closing.', zh: '虚构工匠提蒙，关门前得把样件收起来。'}
+  nysa:
+    invented: true
+    text: {en: 'A fictional assistant who has space for only one side of a wax tablet.', zh: '虚构帮手妮萨，只剩一面蜡板可用。'}
+wiki:
+  refs:
+    hypatia_alexandria_hydroscope:
+      order: 829
+      status: checked
+      text:
+        en: 'Synesius of Cyrene, Letter 15, Livius https://www.livius.org/sources/content/synesius/synesius-letter-015/'
+        zh: '昔涅修斯书信第15封，Livius https://www.livius.org/sources/content/synesius/synesius-letter-015/'
+self_check:
+  fact: hydroscope
+  quote_line: '妮萨把读数时站的位置也写了进去。'
+  regret_choice: 'name 若忙着说后世名称，就没有最后一次读数。'
+  bookend: '开头读出两格，复核后两人读的是同一格。'
+  share_line: '一处刻线，两次独立读数。'
+  share_number: 'scale 两人先后独立观察。'
+  knowing: 'name 知道后世器具名称。'
+  near: 'hydroscope 试验使用书信所描述的刻线浮标。'
+  lever: 'copy 给接手的人留下示意图。'
+  missed: 'name 没看到成品的收件人。'
+  brought: 'copy 带回记着读数位置的小图。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

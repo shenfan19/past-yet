@@ -63,6 +63,7 @@ wiki:
         era: vienna_1847
       refs:
         - semmelweis1861
+        - semmelweis_vienna_archive
       text:
         en:
           name: The Vienna handwashing rule
@@ -71,6 +72,12 @@ wiki:
           name: 维也纳洗手规定
           text: 1847 年 5 月，森梅尔维斯在第一产科病房推行含氯洗手。他的著作按病房和时段比较收治与死亡人数。游戏报告中的逐日人数来自模型。
   refs:
+    semmelweis_vienna_archive:
+      order: 994
+      status: checked
+      text:
+        en: 'Semmelweis University, Ignac Semmelweis, Vienna clinic chronology https://semmelweis.hu/english/about-semmelweis-university/semmelweis200/'
+        zh: '森梅尔维斯大学，伊格纳茨·森梅尔维斯生平，维也纳病房纪年 https://semmelweis.hu/english/about-semmelweis-university/semmelweis200/'
     semmelweis1861:
       order: 2
       status: checked
@@ -99,9 +106,9 @@ antiques:
 era_text:
   en:
     vignettes:
-      denominator: 'The fictional clerk copies two death totals side by side. You ask how many patients were admitted in each ward. They make room for both admission counts before reading the figures back.'
-      ward_key: 'A fictional midwife tells the clerk the two ward names sound too alike across the room. You let her finish, then write the names in full on separate slips for the next handoff.'
-      tables: 'Two monthly sheets have been stacked together. You read the month and ward aloud before each number is copied. The clerk can now tell which total belongs to which sheet.'
+      denominator: 'Emil, a fictional clerk, has copied the death totals while the admission list is still with the ward. Marta asks how many people came through each door. You help her keep a space for those figures next to the totals. Emil can now hand over a question instead of a misleading comparison.'
+      ward_key: 'Marta, a fictional midwife, has been asked for the numbers from the other ward. The initials look alike on Emil’s slips. You wait for Marta to say the full name of the ward she means. She writes it out herself before carrying that slip across the corridor.'
+      tables: 'The next clerk is already at the door. Emil can hand over the two sheets now or read their headers with you first. When you read the month, Marta spots a sheet filed one month too early. The corrected copy goes to the next shift, who will still have to wait for the month’s final count.'
     name: Vienna General Hospital 1847
     short: Maternity ward
     place_name: Maternity ward, Vienna General Hospital
@@ -171,14 +178,14 @@ era_text:
           check: true
         - text: The first ward was staffed by doctors and medical students, who often came straight from dissecting corpses.
           check: true
-        - text: In mid May 1847 Semmelweis required doctors and students to wash their hands in a chlorinated lime solution before examining mothers.
+        - text: In May 1847 Semmelweis introduced chlorine hand disinfection in the first maternity clinic. The game uses a baseline day within that month.
           check: true
         - text: After the rule took effect the death rate fell markedly within a few months.
           check: true
         - text: Mainstream colleagues did not accept his explanation, and germ theory had not been established yet.
           check: true
       regret:
-        - The numbers are in front of you, and still you wait for the powerful to nod. On the main timeline the washing rule came in mid May.
+        - The numbers are in front of you, and still you wait for the powerful to nod. The rule began in May. The game uses a fixed day to compare the two runs.
         - He never lived to see his colleagues truly accept him.
     events:
       door_block_stubborn: A senior doctor says nobody needs an outsider to teach them how to examine mothers. {staff} is stubborn, does not give way, and {d.wash_supply:i} portions of washing solution are confiscated.
@@ -199,8 +206,8 @@ era_text:
       snow_trusts: '{date}: Semmelweis starts to treat {staff} as one of his own and brings out his unfinished tables to compare.'
       snow_convinced: '{date}: Semmelweis no longer merely suspects. He has laid the numbers out in a table nobody can avoid, and he believes the stranger.'
       board_moves: '{date}: The clinic director starts to give way and says handwashing before examinations might be tried.'
-      handle_off_history: '{date}: The washing rule starts in the first maternity ward. The main timeline does not change.'
-      handle_off_early: '{date}: The washing rule starts {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      handle_off_history: '{date}: The first maternity ward starts the washing rule on the model’s baseline date.'
+      handle_off_early: '{date}: In this branch, the washing rule starts {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: Nurses and students in the ward no longer avoid {staff}, and some come to ask how to wash.'
       exhausted: '{date}: {staff} is so tired they cannot stand steady and is forced to rest.'
       outbreak_fades: '{date}: Few mothers still have a fever.'
@@ -208,8 +215,8 @@ era_text:
       near_death: '{staff} collapses in the maternity ward and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a letter saying they want to stay with these mothers a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend in the maternity ward. The washing rule started {advance_days:1} days earlier than in history.'
-      perfect: '{staff} completed the task in the maternity ward and came back safe. {base_D:i} mothers died on the main timeline, {D:i} on this branch.'
+      legend: '{staff} left a legend in the maternity ward. The washing rule started {advance_days:1} days before the model’s baseline.'
+      perfect: '{staff} completed the task in the maternity ward and came back safe. The model records {base_D:i} maternal deaths at baseline and {D:i} on this branch.'
       scramble: '{staff} was kept out of the ward by seniors again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent sixty days in the maternity ward, did what was within reach, and came back safe.'
     quotes:
@@ -249,9 +256,9 @@ era_text:
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   zh:
     vignettes:
-      denominator: '虚构的账房把两个病房的死亡人数并排抄下。你问各收治了多少人。他先给两项收治人数都腾出位置，再把数念回来。'
-      ward_key: '一位虚构的助产士告诉账房，隔间一远，两个病房的简称听来太像。你等她说完，把全名分别写在两张纸上，留给下一班交接。'
-      tables: '两个月的纸叠在了一起。每抄一个数之前，你先把月份和病房念出来。账房现在看得出哪项合计该落在哪一页。'
+      denominator: '虚构账房埃米尔抄完了死亡人数，收治簿还在病房。总数摆在眼前，玛尔塔先问来过多少人。你帮她在总数旁给两个病房各留一格。下一班来时，埃米尔手里有一个待追查的问题。'
+      ward_key: '虚构助产士玛尔塔要去问另一间病房的人数，埃米尔两张单上的简称却很像。你等她说完她要去的病房。她亲手把全名写到该带的那张上，才穿过走廊。'
+      tables: '接班人已在门口，埃米尔可以直接递上两页，也可以先跟你读过表头。你念到月份，玛尔塔发现有一张提前一个月归了档。下一班接到了改好的副表，月底的最终数字还要等。'
     name: 维也纳总医院 1847
     short: 产科诊所
     place_name: 维也纳总医院产科病房
@@ -321,14 +328,14 @@ era_text:
           check: true
         - text: 第一病房由医生和医学生接生，他们常常刚做完尸体解剖。
           check: true
-        - text: 森梅尔维斯在 1847 年 5 月中旬要求医生和学生用含氯石灰溶液洗手后再检查产妇。
+        - text: 1847年5月，森梅尔维斯在第一产科病房推行含氯洗手。游戏采用当月的一个基准日。
           check: true
         - text: 规定实行后，死亡率在几个月内明显下降。
           check: true
         - text: 当时的主流同行并没有接受他的解释，细菌致病论还没有建立。
           check: true
       regret:
-        - 数字摆在眼前，也要等有权力的人点头。主时间线上，洗手规定在五月中旬才到。
+        - 数字摆在眼前，也要等有权力的人点头。洗手规定在五月开始。游戏用一个固定基准日来比较模拟。
         - 他一生都没有等到同行真正接受他。
     events:
       door_block_stubborn: 一位前辈医生说，没有人需要一个外人来教怎么检查产妇。{staff}固执，没有退让，洗手液被没收了 {d.wash_supply:i} 份。
@@ -349,8 +356,8 @@ era_text:
       snow_trusts: '{date}，森梅尔维斯开始把{staff}当作自己人，愿意把没写完的表格拿出来一起对。'
       snow_convinced: '{date}，森梅尔维斯不再只是怀疑。他把数字排成了一张谁也绕不开的表，也相信了这个陌生人。'
       board_moves: '{date}，诊所主任开始松口，说也许可以让检查前洗手试一试。'
-      handle_off_history: '{date}，洗手规定在第一产科病房开始实行。主时间线不变。'
-      handle_off_early: '{date}，洗手规定比史实早 {advance_days:1} 天开始实行。主时间线不变，只有这条分支里是这样。'
+      handle_off_history: '{date}，第一产科病房按模型基准日实行洗手规定。'
+      handle_off_early: '{date}，这条分支的洗手规定比模型基准早了 {advance_days:1} 天。'
       trust_won: '{date}，病房里的护士和学生不再绕开{staff}，有人主动来问怎么洗。'
       exhausted: '{date}，{staff}累得站不稳，被迫停下来休息。'
       outbreak_fades: '{date}，发热的产妇已经不多了。'
@@ -358,8 +365,8 @@ era_text:
       near_death: '{staff}在产科病房倒下，被回收符接了回来。保住了命，付出了代价。'
       stay_and_gifts: '{staff}完成了任务，却没有回来。离开时留下一封信，说想多陪陪这些产妇。以后会有礼物寄来。'
       gave_up: '{staff}提前放弃，回到了现代。{staff}说，这里不属于自己。'
-      legend: '{staff}在产科病房留下了传说，洗手规定比史实早 {advance_days:1} 天开始。'
-      perfect: '{staff}在产科病房完成任务，平安回来。主时间线 {base_D:i} 位产妇死亡，这条分支 {D:i} 位。'
+      legend: '{staff}在产科病房留下的变化是，洗手规定比模型基准早了 {advance_days:1} 天。'
+      perfect: '{staff}在产科病房完成任务，平安回来。模型基准的产妇死亡人数为 {base_D:i}，这条分支模拟为 {D:i}。'
       scramble: '{staff}一次次被前辈挡在病房外，最后狼狈地逃了回来，带着一个笑话。'
       modest: '{staff}在产科病房待了六十天，做了力所能及的事，平安回来。'
     quotes:
@@ -397,3 +404,53 @@ era_text:
       unused_ors: 物资没用完。
       ally_gap: 森梅尔维斯的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
       none: 换一项配置再派一趟，同一个种子，对照起来最清楚。
+
+hook: {en: 'What is missing from the two death totals?', zh: '两间病房的死亡数，少了哪一栏？'}
+facts:
+  clinics:
+    date: '1847'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [semmelweis1861, semmelweis_vienna_archive]
+    text:
+      en: 'Semmelweis compared the Vienna hospital’s two maternity divisions, including admissions and deaths. In his account the first division trained doctors and students, the second midwives.'
+      zh: '森梅尔维斯比较维也纳总医院两间产科病房的收治与死亡人数。他记载第一病房用于医生和学生的训练，第二病房训练助产士。'
+  kolletschka:
+    date: '1847-03'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [semmelweis1861, semmelweis_vienna_archive]
+    text:
+      en: 'Semmelweis’s later account links his reasoning in 1847 to Jakob Kolletschka’s death following an injury during an autopsy. The scenario begins in May, after that event.'
+      zh: '森梅尔维斯后来把1847年的推论与雅各布·科莱奇卡因解剖时受伤而死相联系。游戏从五月开始，这件事发生在到访之前。'
+  washing:
+    date: '1847-05'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [semmelweis1861, semmelweis_vienna_archive]
+    text:
+      en: 'Semmelweis introduced chlorine hand disinfection in the first clinic in May 1847. The scenario uses a particular day to compare branches. That day and the daily counts are model settings and results.'
+      zh: '森梅尔维斯于1847年5月在第一病房推行含氯洗手。游戏为比较分支选了一个基准日；该日及逐日人数属于模型设定与结果。'
+bystanders:
+  marta:
+    invented: true
+    text: {en: 'Marta, a fictional midwife handing the ward account to a colleague.', zh: '虚构助产士玛尔塔，要把病房记录交给接班人。'}
+  emil:
+    invented: true
+    text: {en: 'Emil, a fictional clerk copying the admissions and deaths before his shift ends.', zh: '虚构账房埃米尔，要在换班前抄好收治与死亡数字。'}
+self_check:
+  fact: 'clinics'
+  quote_line: '总数摆在眼前，玛尔塔先问来过多少人。'
+  regret_choice: 'denominator 赶在换班前交只写死亡的表，接手者就无法比较两间病房。'
+  bookend: '起点是两项死亡数，结局明示两组均为模型人数。'
+  share_line: '先看两间病房各收了多少人。'
+  share_number: '两间病房；五月开始实行；提前天数以模拟基准日计。'
+  knowing: 'denominator 知道后来书里会把两栏放在一起。'
+  near: 'clinics 与 washing 对应第一、第二病房的资料与五月洗手措施。'
+  lever: 'ward_key 让两张纸不会送错；handle_off_early 的提前天数是分支结果。'
+  missed: 'tables 下一班的月末汇总还没有送来。'
+  brought: 'tables 两张月表分开，留下清楚标识的副页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,38 +10,90 @@ events:
     tier: 2
     channels: {V: 1}
     regret: true
+    refs: [democritus_abdera_full_void]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","quiet"]}}
         - {id: p2, kind: trust, req: {"luck":0.4}}
         - {id: p3, kind: hold, redeem: true, req: {"job":["archivist","student","journalist"]}}
+      vignettes:
+        - {id: order, traits: [curious, quiet]}
+        - {id: gap, traits: [handy, patient, methodical]}
+        - {id: atom}
     text:
       en:
-        name: "Atoms in the empty space"
+        name: 'Between the tiles'
         place: "Abdera"
         figure: "Democritus"
-        story: "Democritus teaches that everything is made of tiny indivisible atoms moving in empty space. Of the dozens of books he wrote, none survives, and we know him from quotations by later writers."
-        relic: "A pebble and a knife"
-        relic_desc: "A smooth pebble and a small knife for cutting it, as in a thought experiment."
+        story: 'Aristotle’s Metaphysics attributes to Leucippus and Democritus an account of the full and the void, with differences of shape, order and position. He explains it in part with letters. The encounter in Abdera uses fictional letter tiles and a scribe’s tray to make the distinctions tangible.'
+        relic: 'Two practice letter tiles'
+        relic_desc: 'Two props from the imagined lesson on order.'
         points:
-          p1: "Ask what a cut apple is made of"
-          p2: "Find him in his quiet garden"
-          p3: "Copy a roll of his writing (a record keeper, a student or a journalist)"
+          p1: 'Swap the letter tiles without changing their shapes'
+          p2: 'Try the same arrangement on a tray with room to move'
+          p3: 'Copy both arrangements before the tiles go back in the sack'
+        vignettes:
+          order: 'Eukles puts different-shaped tiles on the table and calls every change a change of shape. You switch the places of alpha and nu. He can still name each tile. The little copy of the row is different, although the tiles fit their old outlines exactly.'
+          gap: 'Doris packs the narrow tray tight to save a trip. You ask her to put one tile on the table, then slide the others through the gap she has made. She leaves the spare slot open on the second trip. The empty place is now part of the demonstration.'
+          atom: 'You start to tell Eukles what future laboratories will call an atom. He asks if that word tells him why this row of tiles reads differently. You rub out the stray note and help him draw the order the tiles were in. Doris has already taken the tray away; you cannot check the last angle again.'
       zh:
-        name: "空间中的原子"
+        name: '两块陶片之间'
         place: "阿布德拉"
         figure: "德谟克利特"
-        story: "德谟克利特认为万物由不可再分的微小原子在虚空中运动构成。他写的几十部书一本也没有留下，我们是通过后人的引文才知道他。"
-        relic: "一块卵石和一把刀"
-        relic_desc: "一块光滑的卵石和一把切它的小刀，像思想实验里那样。"
+        story: '亚里士多德《形而上学》把实与虚空、形状与次序及方位等观点归于留基伯和德谟克利特，并拿字母作比。游戏在阿布德拉虚构一场遭遇，用字母陶片和抄写员的托盘来演示这些区别。'
+        relic: '两块字母陶片'
+        relic_desc: '虚构习作中用来比较次序的两件道具。'
         points:
-          p1: "问他切开的苹果是由什么组成的"
-          p2: "在他安静的园子里找到他"
-          p3: "抄下他的一卷文字"
+          p1: '不动字形，只交换两块陶片的次序'
+          p2: '换一只留出空位的托盘再排一遍'
+          p3: '陶片装回袋前，抄下两种排法'
+        vignettes:
+          order: '欧克勒斯摆出形状各异的陶片，把每种变化都叫变形。你只交换阿尔法和纽的位置。他照样叫得出每一块的名字，陶片也还嵌得进原来的轮廓，抄出来的一行却变了。'
+          gap: '多丽丝把窄盘塞得满满的，想少跑一趟。你请她先放一片在桌上，再让别的陶片顺着腾出的空格滑过去。第二趟她特意保留一格。这个空位如今也是演示的一部分。'
+          atom: '你开口讲后世实验室里什么叫原子。欧克勒斯问，这个词能不能解释那行陶片为什么读起来变了。你擦掉题外话，帮他画下陶片的次序。多丽丝已把托盘收走，最后那个角度来不及再核对一次。'
 text:
   en:
     name: Democritus
-    text: Greek philosopher of Abdera, born about 460 BC. With his teacher Leucippus he held that everything is made of atoms moving in empty space. Only fragments and later reports of his many works survive.
+    text: Greek philosopher of Abdera, born about 460 BCE. Aristotle links him with Leucippus in his account of the full and the void. Democritus’s work survives in fragments and later reports.
   zh:
     name: 德谟克利特
-    text: 阿布德拉的希腊哲学家，约公元前 460 年生。他与老师留基伯主张万物由在虚空中运动的原子构成。他的大量著作只留下残篇和后人的转述。
+    text: 阿布德拉的希腊哲学家，约公元前460年生。亚里士多德谈到实与虚空的学说时，将他与留基伯并提。德谟克利特的著作以残篇和后人的转述留存。
+hook: {en: 'Can the same pieces mean two things?', zh: '同样两块，能拼出两种意思吗？'}
+facts:
+  full_void:
+    date: '-350'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [democritus_abdera_full_void]
+    text:
+      en: 'The fourth-century BCE account ascribes the full and the void to Leucippus and Democritus and uses letter cases to explain differences of shape, order and position.'
+      zh: '这部公元前四世纪的著作把实与虚空归于留基伯和德谟克利特，用字母排法解释形状、次序和方位的差异。'
+bystanders:
+  eukles:
+    invented: true
+    text: {en: 'A fictional learner who needs to draw the changed row.', zh: '虚构学徒欧克勒斯，要抄下变过的一行。'}
+  doris:
+    invented: true
+    text: {en: 'A fictional helper who wants to return the tray in as few trips as possible.', zh: '虚构帮工多丽丝，想尽量少跑几趟把托盘还回去。'}
+wiki:
+  refs:
+    democritus_abdera_full_void:
+      order: 817
+      status: checked
+      text:
+        en: 'Aristotle, Metaphysics I.4, MIT Classics Archive https://classics.mit.edu/Aristotle/metaphysics.1.i.html'
+        zh: '亚里士多德《形而上学》第一卷第四节，麻省理工古典文库 https://classics.mit.edu/Aristotle/metaphysics.1.i.html'
+self_check:
+  fact: full_void
+  quote_line: '这个空位如今也是演示的一部分。'
+  regret_choice: 'atom 讲现代名词，少一次核对角度。'
+  bookend: '从挤满的盘到有意保留一格。'
+  share_line: '空位也能改变排法。'
+  share_number: 'gap 一个故意保留的空位。'
+  knowing: 'atom 知道现代的原子用法。'
+  near: 'full_void 对照后来著作里的字母比方。'
+  lever: 'gap 换一种收法留下移动的余地。'
+  missed: 'atom 托盘已经收走。'
+  brought: 'order 带回交换过次序的练习陶片。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

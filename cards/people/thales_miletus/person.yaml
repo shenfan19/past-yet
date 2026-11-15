@@ -9,38 +9,90 @@ events:
     field: science
     tier: 2
     channels: {H: 1}
+    refs: [thales_miletus_herodotus]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: persuade, req: {"trait":["ambitious","streetwise","cosmopolitan"]}}
         - {id: p3, kind: hold, req: {"luck":0.4}}
+      vignettes:
+        - {id: year, traits: [methodical, curious, skeptical]}
+        - {id: appointment, traits: [streetwise, cosmopolitan, ambitious]}
+        - {id: spoiler}
     text:
       en:
-        name: Explaining nature without gods
+        name: 'The hour left blank'
         place: Miletus, Ionia
         figure: Thales
-        story: Thales of Miletus looks for natural causes of things, and tradition says he foretold a solar eclipse.
-        relic: An amber bead
-        relic_desc: Rubbed on cloth, it picks up feathers, the oldest puzzle of electricity.
+        story: 'Herodotus credits Thales of Miletus with naming the year of a darkening of the day associated with a battle. He gives no surviving explanation of a method. The game uses the conventional year 585 BCE and imagines a discussion in Miletus. The harbour work, its two participants and their records are fictional.'
+        relic: 'A wax leaf with one space left empty'
+        relic_desc: 'A fictional harbour record with room for a year and an hour.'
         points:
-          p1: "See how he measures the pyramid by its shadow"
-          p2: "Explain the reason without gods to the people of the harbour"
-          p3: "Wait for a clear hour"
+          p1: 'Compare the year someone heard with the hour the recorder added'
+          p2: 'Persuade the boat owner to distinguish a report from an appointment'
+          p3: 'Wait to see which of the two blank columns can be filled'
+        vignettes:
+          year: 'Hegesias has set out spaces for the year and the hour. He has a year from the man who told him the story, but has invented an hour so the two columns look alike. You make him read the man''s words back before the boat leaves. One space remains blank, and this time it is blank on purpose.'
+          appointment: 'The boat owner Melitta asks whether she should bring the crew in early because of the story. You give her two wax leaves, one for the report as she heard it, one for the hour she has agreed with her crew. She makes the appointment herself. The story no longer dictates who comes back early.'
+          spoiler: 'You almost say that a later almanac could mark a local time. Hegesias turns the tablet towards you and holds out the stylus. You cannot show him how the teller of this story got a time. You give back the stylus without drawing its mark. You leave before the boat comes in.'
       zh:
-        name: 不借神明解释自然
+        name: '留空的时辰'
         place: 伊奥尼亚米利都
         figure: 泰勒斯
-        story: 米利都的泰勒斯去找事物的自然原因，传说他预言过一次日食。
-        relic: 一颗琥珀珠
-        relic_desc: 在布上擦一擦就能吸起羽毛，是电最古老的谜。
+        story: '希罗多德把一次战事中白昼转暗的预告归于米利都的泰勒斯，只说他预告了年份，没有交代方法。游戏采用习用的公元前585年，虚构一场发生在米利都的讨论。港口的差事、两名参与者和他们的记录都是虚构的。'
+        relic: '一片留着空格的蜡板'
+        relic_desc: '虚构的港口记录，分别给年份和时辰留了格。'
         points:
-          p1: "看他怎样量金字塔的影长"
-          p2: "不借神明地把道理讲给港口的人"
-          p3: "等到一个晴朗的时辰"
+          p1: '比较传来的年份和记事人后来加上的时辰'
+          p2: '劝船主把传闻和约好的时辰分开'
+          p3: '等一等，看两处空格里有哪一格能填上'
+        vignettes:
+          year: '赫格西亚斯留了两格，一格写年，一格写时辰。讲故事的人说了年份，他自己补了时辰，好让两格都齐整。船开之前，你让他把原话重念一遍。一格仍空着，这回是有意留空的。'
+          appointment: '船主墨利塔听过传闻，问要不要叫船员提前回来。你递给她两面蜡板，一面记听来的故事，一面写和船员说定的时辰。她自己定下回来的时候。那条传闻管不了谁提前返港。'
+          spoiler: '你差点说出后世的历书能标出当地时刻。赫格西亚斯把蜡板转到你面前，递来尖笔。你说不出这则故事的传话人怎么算出时刻，便把笔还给了他。回港的船还没露面，你已离开。'
 text:
   en:
     name: Thales
-    text: Greek thinker of Miletus, about 624 BC to about 546 BC. He is regarded as the first to seek natural explanations for the world, held that all things come from water, and is said to have predicted the solar eclipse of 585 BC.
+    text: Early Greek thinker from Miletus, traditionally dated to about 624–546 BCE. Later writers associated him with natural explanations. Herodotus credits him with predicting the year of a daylight darkening often identified with the eclipse of 585 BCE.
   zh:
     name: 泰勒斯
-    text: 米利都的希腊思想家，约公元前 624 年生，约公元前 546 年去世。他被看作最早为世界寻求自然解释的人，主张万物来自水，传说曾预言公元前 585 年的日食。
+    text: 米利都的早期希腊思想家，传统生卒年约为公元前624至前546年。后人把他与对自然现象的解释联系起来。希罗多德称他预告过一次白昼转暗的年份，这次事件通常被认为是公元前585年的日食。
+hook: {en: 'Can the year tell you the hour?', zh: '有了年份，就能画出时辰吗？'}
+facts:
+  herodotus:
+    date: '-585'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [thales_miletus_herodotus]
+    text:
+      en: 'Herodotus says Thales foretold the year in which daylight failed. He does not attribute a precise day, hour or route of visibility to the prediction.'
+      zh: '希罗多德说泰勒斯预告了白昼转暗的年份，没有说预告到了某日、某时或能在哪些地方看见。'
+bystanders:
+  hegesias:
+    invented: true
+    text: {en: 'A fictional recorder who wants his two columns filled before the boat leaves.', zh: '虚构记事人赫格西亚斯，想在出船前填齐两格。'}
+  melitta:
+    invented: true
+    text: {en: 'A fictional boat owner who has to agree the return hour with her crew.', zh: '虚构船主墨利塔，得与船员约定返港时辰。'}
+wiki:
+  refs:
+    thales_miletus_herodotus:
+      order: 805
+      status: checked
+      text:
+        en: 'Herodotus, Histories 1.74, G. C. Macaulay translation https://lexundria.com/go?q=Hdt.+1.74.1&v=mcly'
+        zh: '希罗多德《历史》1.74，G. C. 麦考莱译本 https://lexundria.com/go?q=Hdt.+1.74.1&v=mcly'
+self_check:
+  fact: herodotus
+  quote_line: '一格仍空着，这回是有意留空的。'
+  regret_choice: 'spoiler 写下后人能算的时刻，会混进传话人的记录。'
+  bookend: '从能否写时辰开始，到把尖笔原样交还。'
+  share_line: '听到了年份，时辰先空着。'
+  share_number: 'year 的两格记录。'
+  knowing: 'spoiler 员工知道后世历书可列当地时刻。'
+  near: 'herodotus 是晚出文本对年份说法的证据。'
+  lever: 'appointment 分开两份记录。'
+  missed: 'spoiler 返港船只仍未到。'
+  brought: 'year 留空的那一格也有含义。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

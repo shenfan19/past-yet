@@ -10,7 +10,7 @@ events:
     tier: 2
     era: finlay_havana_1881
     channels: {E: 3}
-    refs: [finlay_1881_archive]
+    refs: [finlay_1881_archive, finlay_wellcome_address]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["methodical","skeptical","handy"]}}
@@ -99,6 +99,7 @@ wiki:
       unlock:
         era: finlay_havana_1881
       refs:
+        - finlay_wellcome_address
         - finlay1881
         - game
       text:
@@ -109,6 +110,12 @@ wiki:
           name: 蚊子的说法
           text: 1881 年 8 月，卡洛斯·芬莱向哈瓦那科学院宣布黄热病由一种蚊子传播。这个说法多年不被接受，1900 年以后才得到证明。游戏里员工能帮着让城市提前行动，只在这条分支里成立。
   refs:
+    finlay_wellcome_address:
+      order: 1004
+      status: checked
+      text:
+        en: 'Wellcome Collection, Finlay’s paper and its August 1881 session date https://wellcomecollection.org/works/paeep774'
+        zh: '惠康收藏，芬莱论文与1881年8月宣读日期 https://wellcomecollection.org/works/paeep774'
     finlay_1881_archive:
       order: 174
       status: checked
@@ -134,6 +141,7 @@ era_text:
       - havana
       - history
     event_titles:
+      expedition_handoff: 'The word in the margin'
       door_block: Turned away at the door
       time_strain: Time slip
     plots:
@@ -165,6 +173,8 @@ era_text:
         - You can save today's patients but not tomorrow's. On the main timeline the city acted on the mosquito some twenty years later.
         - A good idea is not enough, it has to be shown again and again to people who do not want to hear it.
     events:
+      expedition_handoff: '{staff} asks Inés to read the full title back against the manuscript. Tomás leaves with the first packet while the corrected copy dries on her desk.'
+      expedition_send: '{staff} writes ‘hypothesis’ across the hurried summary and sends it with Tomás. The full title stays with Inés for a second copy.'
       door_block_stubborn: A physician bars the door, saying yellow fever comes from filth and bad air and no stranger will tell him otherwise. {staff} is stubborn, does not give way, is pushed out and loses {d.ors_stock:i} packets of supplies.
       door_block_stubborn_empty: A physician bars the door, saying yellow fever comes from filth and bad air. {staff} is stubborn, does not give way, and is pushed out.
       door_block_insist_empty: A physician bars the door, saying it is the bad air and not the mosquito. {staff} stands at the door and finishes speaking, and is turned away.
@@ -175,16 +185,18 @@ era_text:
     star_points:
       convince: "Convince Finlay"
       trust: "Win the trust of the district"
-      reform: "Have the city act on the mosquito ahead of history"
+      reform: 'Advance the simulated schedule'
     milestones:
+      havana_address: '{date}: Carlos Finlay presents his mosquito hypothesis to the Royal Academy in Havana.'
+      qualified_title: '{date}: The title Finlay supplied for the same session presents the proposed role as a hypothesis. The proceedings later preserve that title.'
       first_treat: '{date}: {staff} mixes the first cup of rehydration solution. A patient starts to speak.'
       first_protect: '{date}: {staff} hangs the first nets over the beds of a few households willing to listen, and shows them how to keep the mosquitoes out.'
       met_finlay: '{date}: {staff} meets Finlay at a bedside. He listens closely but keeps asking one thing: where is the evidence.'
       finlay_trusts: '{date}: Finlay starts to treat {staff} as one of his own and brings out the notes on the cases he has been keeping to compare.'
       finlay_convinced: '{date}: Finlay no longer merely suspects the mosquito. He has enough cases, and believes what the stranger told him.'
       board_moves: '{date}: The Sanitary Board starts to give way and says the mosquito might be looked into.'
-      reform_history: '{date}: The authorities begin to act against the mosquito. The main timeline does not change.'
-      reform_early: '{date}: The authorities begin to act against the mosquito {advance_days:1} days earlier than in history. The main timeline does not change, only this branch.'
+      reform_history: '{date}: The simulation sets its new plan on the model’s baseline date.'
+      reform_early: '{date}: The simulated Academy reviews a municipal request {advance_days:1} days before the model’s baseline.'
       trust_won: '{date}: People in the district no longer keep {staff} out, and some knock on their own.'
       exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
       outbreak_fades: '{date}: The number of patients falls to single digits. Many people have left for the hills.'
@@ -192,8 +204,8 @@ era_text:
       near_death: '{staff} collapses in a Havana street and is pulled back by the recall charm. Life saved, at a price.'
       stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay with these people a while longer. Gifts will arrive later.'
       gave_up: '{staff} gave up early and went back to the present. {staff} said this was not the place for them.'
-      legend: '{staff} left a legend in Havana. The authorities began to act against the mosquito {advance_days:1} days earlier than in history.'
-      perfect: '{staff} completed the task in Havana and came back safe. {base_D:i} died on the main timeline, {D:i} on this branch.'
+      legend: '{staff} brought the simulated schedule forward by {advance_days:1} days in this branch.'
+      perfect: '{staff} completed the task in Havana and came back safe. The simulation records {base_D:i} deaths in the baseline and {D:i} in this branch.'
       scramble: '{staff} was turned away at the door again and again and finally fled back with a joke to tell.'
       modest: '{staff} spent seven days in Havana, did what was within reach, and came back safe.'
     quotes:
@@ -243,6 +255,7 @@ era_text:
       - havana
       - history
     event_titles:
+      expedition_handoff: '页边的那个词'
       door_block: 被拒之门外
       time_strain: 时间错位
     plots:
@@ -274,26 +287,30 @@ era_text:
         - 你能救今天的病人，救不了明天的。主时间线上城市大约二十年后才对蚊子采取行动。
         - 一个好想法不够，还要一遍遍给不想听的人看。
     events:
+      expedition_handoff: '{staff} 请伊内斯对着手稿把全题念一遍。托马斯已经带着第一袋文件走了，校正后的纸还在桌上晾墨。'
+      expedition_send: '{staff} 在匆忙写成的摘要上补上「假说」，交给托马斯送出。伊内斯留着全题，另誊一份。'
       door_block_stubborn: 一位医生拦在门口，说黄热病来自污秽和坏空气，不会听外人的话。{staff} 倔强，不肯让路，被推了出去，丢了 {d.ors_stock:i} 包物资。
       door_block_stubborn_empty: 一位医生拦在门口，说黄热病来自污秽和坏空气。{staff} 倔强，不肯让路，被推了出去。
       door_block_insist_empty: 一位医生拦在门口，说是坏空气，不是蚊子。{staff} 站在门口把话说完，被请了出去。
       door_block_insist: 一位医生拦在门口，说是坏空气，不是蚊子。{staff} 站在门口把话说完，被请了出去，丢了 {d.ors_stock:i} 包物资。
       door_block_appeal: 一位医生拦在门口。{staff} 不硬闯，转身去找芬莱，请他出面说话。
       door_block_yield: 一位医生拦在门口。{staff} 没有争吵，退了一步，半天白白过去。
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      time_strain: '{date}：{staff} 听到钟声错了半拍。分支在偏离史实，疲态也越来越明显。'
     star_points:
       convince: "说服芬莱"
       trust: "赢得街区的信任"
-      reform: "让城市比历史上更早对蚊子采取行动"
+      reform: '提前模拟中的安排'
     milestones:
+      havana_address: '{date}，卡洛斯·芬莱在哈瓦那皇家科学院提出蚊媒假说。'
+      qualified_title: '{date}，同一场宣读中，芬莱在标题里将这个判断写成假说。后来的院刊保留了这一标题。'
       first_treat: '{date}：{staff} 调好第一杯补液盐，一位病人开始说话了。'
       first_protect: '{date}：{staff} 给几户愿意听的人家的床挂上第一批蚊帐，教他们怎样把蚊子挡在外面。'
       met_finlay: '{date}：{staff} 在病床边遇到芬莱。他听得很认真，却一再问同一件事：证据在哪里。'
       finlay_trusts: '{date}：芬莱开始把 {staff} 当自己人，拿出他一直在记的病例笔记来对比。'
       finlay_convinced: '{date}：芬莱不再只是怀疑蚊子。他有了足够的病例，也信了这位陌生人告诉他的话。'
       board_moves: '{date}：卫生委员会开始松口，说也许可以查一查蚊子。'
-      reform_history: '{date}：当局开始对蚊子采取行动。主时间线没有变化。'
-      reform_early: '{date}：当局比历史上提前 {advance_days:1} 天开始对蚊子采取行动。主时间线没有变化，只是这条分支。'
+      reform_history: '{date}，模拟按模型基准日调整安排。'
+      reform_early: '{date}，模拟中的科学院审阅市政请求，比模型基准提前 {advance_days:1} 天。'
       trust_won: '{date}：街区里的人不再把 {staff} 挡在外面，有的还自己来敲门。'
       exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
       outbreak_fades: '{date}：病人数降到了个位数，许多人已经去了山里。'
@@ -301,8 +318,8 @@ era_text:
       near_death: '{staff} 在哈瓦那街头倒下，被召回符拉了回来。人救下了，代价不小。'
       stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想再陪这些人一阵子。礼物之后会到。'
       gave_up: '{staff} 提前放弃，回到了现在。{staff} 说这里不适合自己。'
-      legend: '{staff} 在哈瓦那留下了传说。当局比历史上提前 {advance_days:1} 天开始对蚊子采取行动。'
-      perfect: '{staff} 在哈瓦那完成了任务，平安回来。主时间线死了 {base_D:i} 人，这条分支死了 {D:i} 人。'
+      legend: '{staff} 在这条虚构分支中把模拟安排提前了 {advance_days:1} 天。'
+      perfect: '{staff} 在哈瓦那完成了任务，平安回来。模拟基准死亡 {base_D:i} 人，这条分支为 {D:i} 人。'
       scramble: '{staff} 一次次被拒之门外，最后带着一个笑话逃了回来。'
       modest: '{staff} 在哈瓦那待了七天，做了力所能及的事，平安回来。'
     quotes:
@@ -340,3 +357,44 @@ era_text:
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 芬莱的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
+
+hook: {en: 'The word ‘hypothesis’ has to survive the copy.', zh: '「假说」二字得留在抄件上。'}
+facts:
+  havana_address:
+    date: '1881-08-14'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [finlay_wellcome_address, finlay_1881_archive]
+    text:
+      en: 'Carlos Finlay presents his mosquito hypothesis to the Royal Academy in Havana.'
+      zh: '卡洛斯·芬莱在哈瓦那皇家科学院提出蚊媒假说。'
+  qualified_title:
+    date: '1881-08-14'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [finlay_wellcome_address, finlay_1881_archive]
+    text:
+      en: 'The title Finlay supplied for the same session presents the proposed role as a hypothesis. The proceedings later preserve that title.'
+      zh: '同一场宣读中，芬莱在标题里将这个判断写成假说。后来的院刊保留了这一标题。'
+bystanders:
+  ines:
+    invented: true
+    text: {en: 'Inés, an invented copyist, strikes out the shorthand title after consulting the manuscript.', zh: '伊内斯是虚构的抄写员，她拿手稿比对，划掉速记里的标题。'}
+  tomas:
+    invented: true
+    text: {en: 'Tomás, an invented runner, has space for one sheet in the packet due at the Academy.', zh: '托马斯是虚构的传递员，他送往科学院的文件袋只剩一页纸的位置。'}
+self_check:
+  fact: havana_address
+  quote_line: '全题再念一遍，别漏掉「假说」。'
+  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
+  bookend: '「假说」二字得留在抄件上。 结尾还可看到交出的记录有没有待查一栏。'
+  share_line: '「假说」二字得留在抄件上。'
+  share_number: '8月14日，讲稿和标题同一天'
+  knowing: 'qualified_title 知道后续有史料记下的日期。'
+  near: 'havana_address, qualified_title'
+  lever: expedition_handoff
+  missed: expedition_send
+  brought: expedition_handoff
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {E: 2, Y: 2}
     regret: true
+    refs: [higuchi_ichiyo_tokyo_takekurabe]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"trait":["glib","scholarly"]}}
         - {id: p2, kind: notice, req: {"any":[{"trait":["scholarly","quiet","skeptical"]},{"job":["journalist"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"trait":["patient","attached","faithful"]}}
+      vignettes:
+        - {id: index, traits: [methodical, skeptical]}
+        - {id: reserve, traits: [kind, charismatic, patient]}
+        - {id: layout}
     text:
       en:
-        name: "Fourteen months of stories"
+        name: 'Seven instalments on one counter'
         place: "Tokyo"
         figure: "Higuchi Ichiyo"
-        story: "Higuchi Ichiyo supports her mother and sister in poverty and writes a handful of stories in about fourteen months. She dies of tuberculosis in November 1896 aged 24, just as the critics praise her."
+        story: 'Higuchi Ichiyō’s Takekurabe appeared in seven instalments in Bungakukai in 1895 and January 1896. Bungei Kurabu published it together in April 1896. The bookstall exchange is an invented branch.'
         relic: "A pocket diary"
         relic_desc: "A diary kept for years in careful brush writing."
         points:
-          p1: "Talk an editor into taking another story"
-          p2: "Read her diary pages (a curious or sensitive employee, or a journalist)"
-          p3: "Sit with her on a good afternoon"
+          p1: 'Get the stallkeeper to set out the instalments together'
+          p2: 'Identify the last instalment and the April collected printing'
+          p3: 'Hold the last instalment until the reader returns'
+        vignettes:
+          index: 'Someone has pencilled ‘complete’ on a single issue. You compare its ending to the April printing and find where it breaks off. The bookstall keeper lets you put a removable slip in it. You take home a list of seven instalments. You never find out who wrote the first label.'
+          reserve: 'The keeper has a reader who followed the story from issue to issue and hasn’t come back for the last one. You point out that other customers can buy the April printing now. The last instalment goes under the counter with a reservation slip. You leave before that reader returns.'
+          layout: 'You set the April issue beside the last instalment. One opens at the beginning and one assumes its reader has waited through six pieces already. You write that distinction on a scrap for the stallkeeper and keep your own copy. The original serial readers have waited longer than your entire visit.'
       zh:
-        name: "十四个月的小说"
+        name: '柜台上的七期《青梅竹马》'
         place: "东京"
         figure: "樋口一叶"
-        story: "樋口一叶在贫困中养着母亲和妹妹，约十四个月里写了寥寥几篇小说。1896年11月她死于肺结核，年仅二十四岁，那时评论界才刚开始称赞她。"
+        story: '樋口一叶的《青梅竹马》在 1895 年至 1896 年 1 月间于《文学界》连载，共七期。1896 年 4 月，《文艺俱乐部》一次刊出全文。书摊上的周折是分支演绎。'
         relic: "一本随身日记"
         relic_desc: "一本写了多年的日记，毛笔字端正。"
         points:
-          p1: "说动一位编辑再收一篇小说"
-          p2: "读她的日记"
-          p3: "在一个安稳的下午陪她坐坐"
+          p1: '说服摊主把连载各期摆到一起'
+          p2: '认出末回所在的那一期和四月的全文刊本'
+          p3: '替还没回来的读者留住末回'
+        vignettes:
+          index: '有人在一期杂志上用铅笔写了「全」。你翻到那一期的末尾，拿四月刊本一对，找到了断在何处。摊主让你夹张能取下来的纸签。你带回七期的清单，却没能问到原来的字是谁写的。'
+          reserve: '有位读者一期期追下来，末回还没来取。你指给摊主看，别的客人如今可以买四月的全文刊本。末回连同预留的小条一起放进柜台底下。那位读者回来以前，你先收队了。'
+          layout: '你把四月那期放在末回旁边。一本打开是开头，另一本默认读者已经等过前面六回。你给摊主写下区别，也给自己留了一份。最初追连载的读者，等的时间比你整趟穿越还长。'
 text:
   en:
     name: Higuchi Ichiyo
@@ -45,3 +58,39 @@ text:
   zh:
     name: 樋口一叶
     text: 日本作家，1872 年生，1896 年去世。她靠写作养家，在 1890 年代中期发表了《比肩》等代表作，写贫苦市民的生活。她二十四岁死于肺结核。
+hook: {en: 'Who waited for the last instalment?', zh: '谁还没读到末回？'}
+facts:
+  takekurabe:
+    date: '1896-04'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [higuchi_ichiyo_tokyo_takekurabe]
+    text:
+      en: 'The publication note records seven instalments in Bungakukai, from January 1895 to January 1896, followed by a single printing in Bungei Kurabu in April 1896.'
+      zh: '初刊说明列出《文学界》从 1895 年 1 月至 1896 年 1 月所刊七期，以及 1896 年 4 月《文艺俱乐部》的全文刊本。'
+bystanders:
+  keeper:
+    invented: true
+    text: {en: 'A fictional bookstall keeper with seven uneven issues and one regular who has not come back.', zh: '虚构的书摊摊主，正理七期高低不齐的杂志，还有一个没回来的熟客。'}
+wiki:
+  refs:
+    higuchi_ichiyo_tokyo_takekurabe:
+      order: 420
+      status: checked
+      text:
+        en: 'Higuchi Ichiyō, Takekurabe, publication note in the Aozora Bunko transcription https://www.aozora.gr.jp/cards/000064/files/389_15297.html'
+        zh: '樋口一叶《青梅竹马》，青空文库校本末尾的初刊说明 https://www.aozora.gr.jp/cards/000064/files/389_15297.html'
+self_check:
+  fact: takekurabe
+  quote_line: '最初追连载的读者，等的时间比你整趟穿越还长。'
+  regret_choice: '忙着核全卷就顾不上替熟客留末回，留书又等不到来取的人。'
+  bookend: '开头追查「全」字，结尾知道哪份是全文、哪份是末回。'
+  share_line: '我替追连载的人留了末回。'
+  share_number: '七期'
+  foreknowledge: '员工知道四月可以一次读全。'
+  proximity: 'takekurabe 的出版记录锚定 1896 年的柜台。'
+  leverage: '核一张错签或保留一册末回。'
+  missed: '没赶上熟客回来。'
+  takeaway: '连载七期的清单。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

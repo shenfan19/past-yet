@@ -9,34 +9,47 @@ events:
     field: medicine
     tier: 2
     channels: {E: 1}
+    refs: [hippocrates_kos_record]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["quiet","wanderer","skeptical"]}}
         - {id: p2, kind: care, req: {"any":[{"trait":["calm","cheerful","faithful"]},{"job":["nurse","midwife","physician","paramedic","doctor"]}]}}
         - {id: p3, kind: trust, req: {"trait":["kind","charismatic","sensitive"]}}
+      vignettes:
+        - {id: days, traits: [quiet, skeptical, methodical]}
+        - {id: watch, traits: [calm, faithful, kind]}
+        - {id: blank}
     text:
       en:
-        name: Medicine as careful observation
+        name: 'A night without a witness'
         place: Kos
         figure: Hippocrates
-        story: On Kos a physician and his school teach that disease has natural causes and must be watched at the bedside.
-        relic: A bronze probe
-        relic_desc: A thin tool of a doctor who preferred looking to guessing.
+        story: 'The Hippocratic Epidemics records illnesses day by day, including cases on Thasos. The work is part of a collection transmitted under Hippocrates’ name. This imagined workshop on Kos uses a practice note to compare observers’ dates. Its note and helpers are invented.'
+        relic: 'A practice watch record'
+        relic_desc: 'A fictional day-by-day record that preserves two starting points.'
         points:
-          p1: "Note the course of an illness at the bedside"
-          p2: "Tend the patients in the same room"
-          p3: "Record with the apprentices"
+          p1: 'Find where the two accounts start counting days'
+          p2: 'Take the watch so the other recorder can rest'
+          p3: 'Ask what happened on the night no one wrote about'
+        vignettes:
+          days: 'Myrine has numbered her first visit day one. Leon starts his count from the night before. You set both pages by the same lamp and ask them to point to the same morning. The two numbers stay on the sheet, alongside an indication of where each count began.'
+          watch: 'Leon is about to leave and Myrine has been awake since before sunrise. You give her time to rest while you mind the lamp outside. She brings the sheet back at the next change of watch. There is another observer for that stretch of the night.'
+          blank: 'You know later readers will make much of a day-by-day record. The space before Myrine’s first visit has no observer to fill it. You put a small mark beside the gap and leave the rest as it is. The person from the earlier watch will not return before you go.'
       zh:
-        name: 把医学当作细致的观察
+        name: '无人看守的那一夜'
         place: 科斯岛
         figure: 希波克拉底
-        story: 在科斯岛，一位医生和他的学派教人：疾病有自然的原因，要守在床边仔细看。
-        relic: 一根青铜探针
-        relic_desc: 一件细细的器具，属于宁愿多看也不乱猜的医生。
+        story: '传于希波克拉底名下的《流行病》逐日记录病程，其中有塔索斯岛的病例。游戏虚构科斯岛上一处习作场所，让两位帮工用练习记录核对观察的日子。记录与帮工均为虚构。'
+        relic: '一页练习值守记录'
+        relic_desc: '虚构逐日记录，留着两个起算点。'
         points:
-          p1: "在床边记下病程"
-          p2: "照看同屋的病人"
-          p3: "同学徒们一起记录"
+          p1: '找出两份记录各从哪天开始数'
+          p2: '替另一名记录人值守一段，让对方休息'
+          p3: '问问没留下笔记的那一夜谁在场'
+        vignettes:
+          days: '米里涅把自己第一次来看记作第一天，莱昂从前一夜就开始数。你把两张纸放到同一盏灯下，让两人指给你看同一个早晨。纸上保留两个数字，旁边注明各从哪里数起。'
+          watch: '莱昂要走了，米里涅从天没亮就醒着。你在外面守灯，让她先歇一会儿。下一轮换班，她把纸拿回来。夜里这一段有人接着看了。'
+          blank: '你知道后来的人会看重逐日记录。米里涅初次到访之前那一格，眼下找不到观察人来填。你只在空处旁添个记号。前一轮值守的人，你走之前还不会回来。'
 text:
   en:
     name: Hippocrates
@@ -50,3 +63,42 @@ quotes:
     text:
       en: {who: Hippocrates, quote: "Life is short, the art long."}
       zh: {who: 希波克拉底, quote: "人生短暂，技艺长久。"}
+hook: {en: 'What day does the chart start on?', zh: '记录上的第一天，是哪一天？'}
+facts:
+  record:
+    date: '-400'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hippocrates_kos_record]
+    text:
+      en: 'The transmitted book includes observations from Thasos and individual cases arranged by days. The visit on Kos and its calendar date belong to the game.'
+      zh: '传世文本保存了塔索斯岛的观察和按天叙述的个案。科斯岛上的这一趟差事与历年是游戏设定。'
+bystanders:
+  myrine:
+    invented: true
+    text: {en: 'A fictional assistant who counts from her own first visit.', zh: '虚构帮工米里涅，从自己第一次到访开始数。'}
+  leon:
+    invented: true
+    text: {en: 'A fictional watch keeper who counts from the preceding evening.', zh: '虚构值守人莱昂，从前一夜开始数。'}
+wiki:
+  refs:
+    hippocrates_kos_record:
+      order: 929
+      status: checked
+      text:
+        en: 'Hippocratic Corpus, Epidemics I, Francis Adams translation https://classics.mit.edu/Hippocrates/epidemics.1.i.html'
+        zh: '《希波克拉底文集·流行病》第一卷，弗朗西斯·亚当斯译本 https://classics.mit.edu/Hippocrates/epidemics.1.i.html'
+self_check:
+  fact: record
+  quote_line: '纸上保留两个数字，旁边注明各从哪里数起。'
+  regret_choice: 'days 擦掉一个数字会丢失它的起点。'
+  bookend: '从第一天的分歧，到让空夜保留原样。'
+  share_line: '第一天，要说清是从哪里起算。'
+  share_number: '两个虚构的起点。'
+  knowing: 'blank 知道后世重视逐日记录。'
+  near: 'record 对照有传本的记录写法。'
+  lever: 'watch 有人接过一段值守。'
+  missed: 'blank 原值守人没有回来。'
+  brought: 'days 带回两种计日的对照页。'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
