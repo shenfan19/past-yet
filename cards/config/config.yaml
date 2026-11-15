@@ -1,7 +1,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.4.0
+  version: 0.4.1
   released: '2026-11-15'
   card_authors: [AI, Fan Shen]
   links:
@@ -47,8 +47,8 @@ office:
   energy_per_change: 6
   max_plots: 2
   # Full reports are kept per place: the best result (most stars, then the newest) and the latest. The one line summaries of the trips (max_trips) are kept far longer and feed the log and the history of a place.
-  keep_best: 1
-  keep_latest: 1
+  keep_best: 2
+  keep_latest: 10
   max_trips: 2000
   hire_cost: 100
   # the funds come only from selling antiques, and this scales what they sell for against the price on the card
@@ -177,7 +177,7 @@ ui:
   # every list shows a page of rows, the first size by default, and the player can pick a longer one
   page_sizes: [5, 10, 20, 50]
   box_h: {story: 300, pick_staff: 520, carry: 200, plots: 170}
-  chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1, body_colors: ['#b3382c', '#2f4f6f', '#8a6a1f', '#5a7f3a', '#7a4f8a', '#3a7f7f', '#8a8272'], body_min_max: 0.05}
+  chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1, max_points: 200, body_colors: ['#b3382c', '#2f4f6f', '#8a6a1f', '#5a7f3a', '#7a4f8a', '#3a7f7f', '#8a8272'], body_min_max: 0.05}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
 stars:
@@ -263,6 +263,8 @@ settings:
     theme: [auto, light, dark]
 share:
   file_name: teleporter_share.png
+  # the card tells the trip from its record: the lines that won a star, the lines written for this employee, then the lines of history by importance, at most this many, in time order
+  record_lines: 6
   colors: {bg: '#f1e8d4', ink: '#2b241b', ink2: '#6b5f4d', stamp: '#b3382c', line: '#cdbf9f', qr_bg: '#f8f2e3'}
   canvas: {w: 1200, h: 960, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, logo_tilt_deg: -6}
 # The pressure channels of the events, and how they reach the body of the traveller (design: game_事件系统设计 sections 3 and 4 in the home folder).

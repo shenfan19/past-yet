@@ -173,7 +173,7 @@ It only touches funds, antiques and dispatches. Employees do not die.
 
 - English is the fallback and must be complete. Simplified Chinese is the second language. Any missing key reads English. `node tools/check_i18n.mjs` checks the files against English.
 - The music is a few piano pieces played by a small Web Audio synthesiser from MIDI files, and the sound effects are tones the page makes itself. There is no sampled audio.
-- A trip can be shared from its report. The card opens in a pop-up, not on a page of its own, and closes with a click beside it, the cross or Escape. It tells the story of the trip in a few lines. A simulated place shows its two curves against the mainline, a small story shows its sync points, and there is no table of numbers on it. It has the address and a QR code, as a picture to save or copy.
+- A trip can be shared from its report. The card opens in a pop-up, not on a page of its own, and closes with a click beside it, the cross or Escape. It tells the story of the trip in a few lines taken from its record: the line of the employee, how it ended, then the lines that won a star, the lines written for this employee and the history around them, at most `share.record_lines`, in time order. It draws no curves. A simulated place shows its two curves against the mainline, a small story shows its sync points, and there is no table of numbers on it. It has the address and a QR code, as a picture to save or copy.
 - The theme follows the system and can be set to light or dark. Quotes from historians and scientists rotate in the header.
 
 ## Checks
@@ -214,7 +214,7 @@ A catalogue event with `regret: true` is a story history treated unjustly: an ea
 
 ## Log, reports and the history of a place
 
-The log of dispatches is read from the one line summary of every trip, which is kept for good up to `office.max_trips`, so the log never loses a row. Full reports are kept per place: the best one (most stars, then the newest, `office.keep_best`) and the latest (`office.keep_latest`), so a report that is not among them can no longer be opened, but its line stays. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome.
+The log of dispatches is read from the one line summary of every trip, which is kept for good up to `office.max_trips`, so the log never loses a row. Full reports are kept per place: the two best (most stars, then the newest, `office.keep_best`) and the ten latest (`office.keep_latest`), so a report that is not among them can no longer be opened, but its line stays. A report keeps no curves when its model shows no numbers, and at most `ui.chart.max_points` points when it does, so the saved game stays small. The story of a place, once its relic is anchored, lists every trip that came home from it, newest first, with who went, the stars, whether the redemption was reached and the outcome.
 
 A trip can be archived, by itself or by a rule that archives all but the best trip of each place. Archiving hides it from the log and keeps its report, up to 200 of them, the oldest going first; the line and the stars always stay, and Restore brings the line back. A switch shows the archived ones dimmed. There is no delete, because the lines are small and bounded and the tally of stars must not lose what it counted.
 

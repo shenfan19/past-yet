@@ -190,13 +190,16 @@ export function buildReport(D, E, res) {
   const RP = E.report;
   // a handle that never came about is a negative day, and reads as nothing
   const orNull = (x) => (x >= 0 ? x : null);
+  const maxPoints = D.get('config.ui.chart.max_points');
+  const thin = (rows) => (rows.length <= maxPoints ? rows : rows.filter((_, i) => i % Math.ceil(rows.length / maxPoints) === 0 || i === rows.length - 1));
   const handleBase = orNull(res.base.final[RP.handle]);
   const handleBranch = orNull(F[RP.handle]);
   return {
     outcomeId: oid, outcomeName: T.outcomes[oid].name, summary, quote, staff, stars: E.starPoints.filter((p) => res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone)).length,
     timeline: kept, ledger, ledgerBySegment: bySegment,
     points: E.starPoints.map((p) => ({ id: p.id, hit: res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone) })),
-    chart: { base: res.base.series, branch: res.branch.series, arrive: res.branch.arrivedDay, leave: res.branch.leftDay, handleBase, handleBranch },
+    // a model that shows no numbers keeps no curves, and the curves of one that does are thinned to config.ui.chart.max_points, so a saved report stays small
+    chart: { base: E.report.numbers === false ? [] : thin(res.base.series), branch: E.report.numbers === false ? [] : thin(res.branch.series), arrive: res.branch.arrivedDay, leave: res.branch.leftDay, handleBase, handleBranch },
     accounts: { cost: res.cost, funds: res.funds, energy: res.energy, restDays: res.restDays, lives: res.score.lives_saved },
     compare: {
       deathsBase: res.base.final[RP.deaths], deathsBranch: F[RP.deaths], casesBase: res.base.final[RP.cases], casesBranch: F[RP.cases],
@@ -243,7 +246,8 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
     for (const f of EF.facts) {
       const year = Number(f.date.slice(0, 4));
       if (!(year >= ev.year)) continue;
-      const text = D.get('enc_text.facts')?.[EF.module]?.[f.id];
+      // only the line written for the record is told, never the text of the fact, which is for the wiki
+      const text = D.get('enc_text.fact_lines')?.[EF.module]?.[f.id];
       if (!text) continue;
       const [, mm, dd] = f.date.split('-').map(Number);
       const label = mm && dd ? T.date_day.replace('{m}', String(mm)).replace('{mn}', T.month_names[mm - 1]).replace('{d}', String(dd)) + R.light_fact_sep : '';

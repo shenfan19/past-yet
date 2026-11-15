@@ -759,7 +759,9 @@ try {
   ok('the log is a table with a pager', lg.paged);
   ok('every finished trip has a summary that is kept', lg.claimed > 0 && lg.trips >= lg.claimed);
   ok('the log shows a page of the summaries, not only the stored reports', lg.rows === Math.min(lg.size, lg.trips));
-  ok('at most the best and the latest report are stored for a place', lg.perPlace <= 2);
+  // a place keeps its best reports and its latest ones, config.office.keep_best and keep_latest
+  const keepMax = await page.evaluate(() => { const O = window.__game.D.get('config.office'); return O.keep_best + O.keep_latest; });
+  ok('at most the best and the latest reports are stored for a place', lg.perPlace <= keepMax);
   // paging: 25 trips make three pages of ten, the last with five
   const pg = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S();

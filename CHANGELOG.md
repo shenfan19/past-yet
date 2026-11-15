@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1, 2026-11-15
+
+- More reports are kept: the ten latest and the two best of each place. A report keeps no curves when its model shows no numbers, and at most 200 points when it does, so a report of Guangzhou 1924 is about 20 KB instead of 218 KB.
+- The share card is made from the record: the line of the employee, how it ended, and a few lines that won a star, were written for this employee or are history. It draws no curves.
+- A fact is told in a record only through a `line` written for the record; the text of a fact is for the wiki.
+
 ## 0.4.0, 2026-11-15
 
 - Stories are turned on one by one. With `release.ready_only`, a story is in the game only when its event card says `ready: true`, or, for a model with no event of its own, `metadata.ready: true`. Every other story is kept out: no place on the map, no antique, not drawn for the start, no page in the wiki, and the antiques of its model go with it.

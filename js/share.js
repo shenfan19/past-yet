@@ -1,5 +1,5 @@
-// The share card of one finished trip, shown in a pop-up over the page. It is drawn on a canvas from the report: the story of the trip and,
-// for a simulated place, its curves against the mainline; for a small story its sync points. There are no tables of numbers on it.
+// The share card of one finished trip, shown in a pop-up over the page. It is drawn on a canvas from the record of the report: the line of the employee,
+// how it ended, and a few lines of the record, the deeds that won a star, the lines written for this employee and the history around them. No curves and no tables.
 // The site address and a QR code from a matrix shipped with the game are on it. Nothing is uploaded and no outside service is asked.
 import { staffName } from './narrate.js';
 
@@ -13,6 +13,15 @@ export function createShare(X) {
   const dispatch = (id) => ctx.S().dispatches.find((d) => d.id === id);
   const hookOf = (n) => H.hooks[n % H.hooks.length];
 
+  // The lines of the record the card keeps: every line that won a star, then the lines written for this employee, then the lines of history by importance,
+  // up to config.share.record_lines, told in the order they happened.
+  function pickLines(timeline) {
+    const N = C.record_lines;
+    const rank = (t) => (t.star ? 0 : t.own ? 1 : t.tag === 'history' ? 2 : 3);
+    const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => rank(t) < 3)
+      .sort((a, b) => rank(a.t) - rank(b.t) || (b.t.importance || 0) - (a.t.importance || 0) || a.i - b.i).slice(0, N).sort((a, b) => a.i - b.i);
+    return chosen.map(({ t }) => ({ text: t.text, star: !!t.star, history: t.tag === 'history' }));
+  }
   // what the card says about a trip: its name, how it ended, the story told in a few lines, and the hook
   function parts(d) {
     const R = d.report;
@@ -37,7 +46,8 @@ export function createShare(X) {
       return {
         name: c.name,
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
-        text: [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure), c.story],
+        text: R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
+        lines: R.timeline ? pickLines(R.timeline) : null,
         points: R.points.map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
         hook: hookOf(index),
       };
@@ -45,13 +55,12 @@ export function createShare(X) {
     return {
       name: T.eras[d.eraId].name,
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
-      text: [R.summary, U.fmt.quote.replace('{x}', R.quote) + ' ' + U.fmt.dash + R.staff],
-      chart: R.chart,
-      labels: { ...U.report, ...(T.eras[d.eraId].labels || {}) },
+      text: [U.fmt.quote.replace('{x}', R.quote) + ' ' + U.fmt.dash + R.staff, R.summary],
+      lines: pickLines(R.timeline),
       hook: hookOf(index),
     };
   }
-  const caption = (d) => { const p = parts(d); return [H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...p.text, p.hook, QR.url].join(' '); };
+  const caption = (d) => { const p = parts(d); return [H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...p.text, ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), p.hook, QR.url].join(' '); };
 
   // the pop-up body: the card and what can be done with it
   function html(d) {
@@ -77,25 +86,6 @@ export function createShare(X) {
   }
   // at most n lines, the last one ending in an ellipsis when something was left out
   const cut = (lines, n) => (lines.length <= n ? lines : [...lines.slice(0, n - 1), lines[n - 1].replace(/[\s，。,.;；、]*$/, '') + '…']);
-
-  // one curve pair of the trip against the mainline, drawn small and plain
-  function curve(g, K, x0, y0, w, h, title, base, branch, key, marks) {
-    const sans = '"Segoe UI", "Microsoft YaHei", system-ui, sans-serif';
-    const xmax = Math.max(...base.map((p) => p.day), ...branch.map((p) => p.day), 1);
-    const ymax = Math.max(...base.map((p) => p[key]), ...branch.map((p) => p[key]), 1) * D.get('config.ui.chart.headroom');
-    const px = (v) => x0 + (v / xmax) * w, py = (v) => y0 + h - (v / ymax) * h;
-    g.fillStyle = K.ink2; g.font = `400 ${CV.small_px}px ${sans}`; g.textAlign = 'left';
-    g.fillText(title, x0, y0 - 10);
-    g.strokeStyle = K.line; g.lineWidth = 2;
-    g.beginPath(); g.moveTo(x0, y0); g.lineTo(x0, y0 + h); g.lineTo(x0 + w, y0 + h); g.stroke();
-    g.setLineDash([6, 6]); g.strokeStyle = K.ink2; g.lineWidth = 3;
-    g.beginPath(); base.forEach((p, i) => (i ? g.lineTo(px(p.day), py(p[key])) : g.moveTo(px(p.day), py(p[key])))); g.stroke();
-    g.setLineDash([]); g.strokeStyle = K.stamp; g.lineWidth = 4;
-    g.beginPath(); branch.forEach((p, i) => (i ? g.lineTo(px(p.day), py(p[key])) : g.moveTo(px(p.day), py(p[key])))); g.stroke();
-    g.setLineDash([2, 6]); g.strokeStyle = K.ink; g.lineWidth = 2;
-    for (const m of marks) if (m !== null && m !== undefined) { g.beginPath(); g.moveTo(px(m), y0); g.lineTo(px(m), y0 + h); g.stroke(); }
-    g.setLineDash([]);
-  }
 
   function draw(d) {
     const cv = document.getElementById('sharecanvas');
@@ -155,19 +145,21 @@ export function createShare(X) {
     g.fillText(QR.url.replace(/^https?:\/\//, ''), qrX + CV.qr_size / 2, qrY + CV.qr_size + CV.small_px + 14);
     g.textAlign = 'left';
 
-    // the middle band: the two curves of a simulated place, or the sync points of a small story
+    // the middle band: a few lines of the record, the ones that won a star marked; a report written before it kept a record shows its sync points
     const vy = CV.vis_y;
-    if (p.chart) {
-      const w = (CV.w - CV.pad * 2 - CV.chart_gap) / 2;
-      const mk = [p.chart.arrive, p.chart.leave];
-      curve(g, K, CV.pad, vy + 24, w, CV.chart_h, p.labels.sick, p.chart.base, p.chart.branch, 'cases', mk);
-      curve(g, K, CV.pad + w + CV.chart_gap, vy + 24, w, CV.chart_h, p.labels.dead, p.chart.base, p.chart.branch, 'deaths', mk);
-      g.fillStyle = K.ink2; g.font = `400 ${CV.small_px}px ${sans}`;
-      g.fillText(`- - ${U.report.mainline}      ── ${U.report.this_branch}`, CV.pad, vy + 24 + CV.chart_h + CV.small_px + 14);
+    let py = vy + 30;
+    const bandEnd = CV.h - CV.pad - 140;
+    if (p.lines) {
+      g.font = `400 ${CV.body_px - 2}px ${sans}`;
+      for (const l of p.lines) {
+        if (py > bandEnd) break;
+        g.fillStyle = l.star ? K.stamp : l.history ? K.ink2 : K.ink;
+        for (const [i, t] of cut(wrap(g, (l.star ? '★ ' : '') + l.text, CV.w - CV.pad * 2), 2).entries()) { g.fillText(i ? '    ' + t : t, CV.pad, py); py += (CV.body_px - 2) * CV.line_gap; }
+        py += 6;
+      }
     } else {
-      let py = vy + 30;
       g.font = `400 ${CV.body_px}px ${sans}`;
-      for (const pt of p.points) {
+      for (const pt of p.points || []) {
         g.fillStyle = pt.hit ? K.stamp : K.ink2;
         const mark = pt.redeem ? (pt.hit ? '♥' : '♡') : (pt.hit ? '★' : '☆');
         for (const [i, l] of cut(wrap(g, `${mark} ${pt.text}`, CV.w - CV.pad * 2), 2).entries()) { g.fillText(i ? '    ' + l : l, CV.pad, py); py += CV.body_px * CV.line_gap; }

@@ -2,7 +2,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.4.0
+  version: 0.4.1
   released: '2026-11-15'
   card_authors:
     - AI
@@ -48,8 +48,8 @@ office:
   implant_load_cap: 2
   energy_per_change: 6
   max_plots: 2
-  keep_best: 1
-  keep_latest: 1
+  keep_best: 2
+  keep_latest: 10
   max_trips: 2000
   hire_cost: 100
   sale_scale: 3
@@ -236,6 +236,7 @@ ui:
     y_lines: 4
     x_labels: 8
     headroom: 1.1
+    max_points: 200
     body_colors:
       - '#b3382c'
       - '#2f4f6f'
@@ -435,6 +436,7 @@ settings:
       - dark
 share:
   file_name: teleporter_share.png
+  record_lines: 6
   colors:
     bg: '#f1e8d4'
     ink: '#2b241b'
