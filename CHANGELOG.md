@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.11, 2026-11-15
+
+- A scene of Sor Juana names the employee once, as in English.
+
 ## 0.5.10, 2026-11-15
 
 - Mexico City 1695, Sor Juana Inés de la Cruz, is rewritten and turned on: the letter printed without her leave in 1690, her reply of 1 March 1691, the books sold in 1693, the vows of 1694, her death on 17 April 1695 after nursing her sisters, and the reply printed in 1700, with sync points in the convent kitchen, a sheet kept from the empty shelf and a sick sister watched over.
