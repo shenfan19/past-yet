@@ -88,7 +88,7 @@ export function createOffice(X) {
     if (s.seq === 1) startClock();
     const d = {
       id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, max: ctx.backend.maxStars(eventId), baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
-      report: { outcomeId: r.outcome, journey: r.journey, found: r.found || null, extraFavor: r.extraFavor || 0, vignette: r.vignette, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
+      report: { outcomeId: r.outcome, journey: r.journey, found: r.found || null, extraFavor: r.extraFavor || 0, vignette: r.vignette, timeline: r.timeline || null, body: r.body || null, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
       startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
     };
     s.dispatches.push(d);

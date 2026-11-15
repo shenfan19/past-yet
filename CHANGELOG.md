@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0, 2026-11-15
+
+- Every story is told by the same report. A small story of three sync points now keeps a record in the same shape as a model: the facts of the person in the year of the event, the arrival, the lines of getting in, each sync point on its day, won or not, the scene, the leaving, and the facts of later years, each year marked, between the crossing and the return to the office.
+- The build gives every event the facts of its person that may be told, with their dates and sources, so a line of history in any report can name its sources.
+- The new texts of the report are written in Chinese; the English ones are drafts.
+
 ## 0.2.3, 2026-11-15
 
 - A hint may name the star it explains, and is then given only when that star was missed. Guangzhou 1924 no longer tells an employee who cannot read about the copying of the records, which is no longer a star.

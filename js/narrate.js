@@ -228,6 +228,56 @@ export function weaveJourney(D, E, res, report, journey, vignette, vignetteTrait
   return { ...report, timeline: all };
 }
 
+// The record of a small story, in the same shape as the record of a model, so one report shows both. Its days are counted from arrival,
+// since a small story has a year and no calendar. Facts of the person dated in the year of the event come before the arrival, facts of later years
+// after the leaving, each year marked; the lines of getting in, the sync points on their days, the scene in the middle, and the leaving.
+export function lightRecord(D, ev, r, staffId, stayDays) {
+  const T = D.get('text');
+  const R = T.ui.report;
+  const c = T.catalog[ev.id];
+  const staff = staffName(D, staffId);
+  const dayWord = (d) => R.light_day.replace('{n}', String(Math.max(1, Math.round(d))));
+  const lines = [];
+  const EF = D.get('encyclopedia.event_facts')?.[ev.id];
+  if (EF) {
+    for (const f of EF.facts) {
+      const year = Number(f.date.slice(0, 4));
+      if (!(year >= ev.year)) continue;
+      const text = D.get('enc_text.facts')?.[EF.module]?.[f.id];
+      if (!text) continue;
+      const [, mm, dd] = f.date.split('-').map(Number);
+      const label = mm && dd ? T.date_day.replace('{m}', String(mm)).replace('{mn}', T.month_names[mm - 1]).replace('{d}', String(dd)) + R.light_fact_sep : '';
+      const after = year > ev.year;
+      const order = after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -400 + (mm || 0) * 31 + (dd || 0);
+      lines.push({ t: order, year, text: label + text, tag: 'history', kind: 'fact', id: f.id, key: f.id, fact: f.id, after, why: { kind: 'date', expr: f.date + ' · ' + f.id } });
+    }
+  }
+  lines.push({ t: 0, year: ev.year, text: R.light_arrive.replace('{staff}', staff).replace('{place}', c.place), tag: null, kind: 'arrive', id: 'arrive', key: 'arrive', after: false, why: null });
+  const j = r.journey;
+  if (j) {
+    const idText = j.identity ? T.identities[j.identity] : { name: '', cover: '' };
+    const jw = (stage) => (j.why?.[stage] ? { kind: 'journey', expr: `${Math.round(j.why[stage].score * 100) / 100} ≥ ${Math.round(j.why[stage].need * 100) / 100}` } : null);
+    const say = (key, day, stage) => lines.push({ t: day, year: ev.year, kind: 'journey', id: 'journey_' + key, key, tag: null, after: false, why: jw(stage),
+      text: R.participation['line_' + key].replace('{date}', dayWord(day)).replace('{cover}', idText.cover).replace('{identity}', idText.name).replace(/\{staff\}/g, staff) });
+    say(j.reached ? 'reached' : 'blocked', j.approachDay, 'reach');
+    if (j.reached) say(j.accepted ? 'accepted' : 'declined', j.recognitionDay, 'accept');
+  }
+  const n = (r.points || []).length;
+  (r.points || []).forEach((p, i) => {
+    const day = p.day ?? stayDays * (i + 1) / (n + 1);
+    const what = ev.scene ? c.points[p.id] : T.ui.light.points[p.id];
+    const spec = ev.scene?.points?.[i]?.req;
+    lines.push({ t: day, year: ev.year, kind: 'point', id: p.id, key: p.id, tag: null, after: false, star: !!p.hit,
+      text: (p.hit ? R.point_hit : R.point_miss).replace('{day}', dayWord(day)).replace('{staff}', staff).replace('{text}', what),
+      why: { kind: 'point', expr: (spec ? JSON.stringify(spec) : p.id) + (p.bonus ? ' · bonus' : '') } });
+  });
+  const vignette = r.vignette && c.vignettes ? c.vignettes[r.vignette] : null;
+  if (vignette) lines.push({ t: stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
+    why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
+  lines.push({ t: stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: R.light_leave.replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
+  return lines.map((x, i) => [x, i]).sort((a, b) => a[0].t - b[0].t || a[1] - b[1]).map(([x]) => x);
+}
+
 // Rows comparing two reports of the same era.
 export function diffRows(D, eraId, A, B) {
   const T = D.get('text');

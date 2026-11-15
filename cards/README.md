@@ -89,6 +89,8 @@ self_check:              # the written check of the story, for the reviewer
 pack: {author: ..., license: ..., version: 1, languages: [en, zh]}
 ```
 
+The facts of a person that are dated, used for `story` or `history`, not `single` and not `unused`, are told as lines of history in the record of every event of that person: those dated in the year of the event before the arrival, those of later years after the leaving. A fact with a full date `YYYY-MM-DD` reads with its day; a fact with a year only reads without one. The more dated facts a person has, the fuller its record.
+
 A card that has `facts` is a story made by the story process, and the build checks it against `tools/story_rules.mjs`: `checked` is `two_sources`, `official_record` (the record of the institution itself) or `single`; `level` is `usable`, `careful` or `unused`; a fact that is used must not be `single` or `unused` and must name its sources; every episode with a model needs two recorded dates that happen by themselves, a moment with a done and a missed form, stars that are deeds of the traveller and not recorded dates, two bystanders, and an ending that compares the main timeline with the branch. The build prints which published models have no fact sheet yet.
 
 A card may also stay a file of its own inside the module, in the folder of its kind, `events/<id>.yaml`, `wiki/places/<id>.yaml` and so on, with a list of ids under `events:` in `person.yaml`. Both forms build to the same data.

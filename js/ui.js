@@ -629,55 +629,27 @@ export function createUI(D, ctx, DEV = false) {
       <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
       <p>${esc(U.report.evacuation_text.replace('{day}', String(cur.evacuation.day)))}</p>
       <p>${esc(U.report.rest)} ${cur.paid.restDays} ${esc(U.report.days)}</p>`;
-    if (cur.light) return lightHtml(cur);
+    // a small story written before it kept a record is shown the old way
+    if (cur.light && !cur.report.timeline) return lightHtml(cur);
+    return storyHtml(cur, cur.light ? lightStory(cur) : modelStory(cur));
+  }
+
+  // What a report needs from a story with a full model: its record, its words, its numbers.
+  function modelStory(cur) {
     const R = cur.report;
     const e = ctx.era(cur.eraId);
     const event = D.get('catalog.events').find((ev) => ev.era === cur.eraId);
     const modelSource = e.raw.metadata.vignette_source;
     // the words for what is counted are those of the model when it has its own: a model about a university does not count the sick and the dead
     const RL = { ...U.report, ...(T.eras[cur.eraId].labels || {}) };
-    const spec = cur.spec;
-    const fn = (key, label, text) => {
-      const open = st.opened.has(cur.id + key);
-      return `<span class="fn" data-act="fn" data-key="${key}">${label}</span>${open ? `<div class="fntext">${esc(text)}</div>` : ''}`;
-    };
     const varNote = (name) => {
       const v = e.vars[name];
       return `${srcLabel(v.source)}${v.note ? COLON + v.note : ''}`;
     };
-    // The report is a story told in one list, in the order things happened: how the employee got in, what they did, the scene of the trip,
-    // the stars and what was recorded, also after they had left. A line is history, what is recorded and happens whoever is there, or a line of the employee,
-    // and a thin rule at the left tells the two apart. The buttons above the list show all of it or one of the two; the button of the employee bears their name,
-    // so the lines of another employee met in the same time can have their own button later.
-    // Notes are kept for what has a source worth reading: a line of history names the sources of its fact, and a number worked out by the model says so.
-    const notes = [];
-    const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
-    const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
-    const factRefs = (fact) => (fact ? D.get('encyclopedia.fact_sources')?.[cur.eraId]?.[fact] || [] : []);
-    const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
-    const tlLine = (t) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${lineKind(t) === 'history' ? sup(factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : ''}${DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : ''}</div></li>`;
-    const accepted = R.journey?.accepted !== false;
-    const summaryNote = accepted ? sup([noteOf('model', U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source))]) : '';
-    // The record opens in the year of today with the day of the office and how the crossing began, turns to the year of the place,
-    // and comes back to the year of today with the day of return, how it ended, and the rest and the mood the trip leaves behind.
-    const nowYear = officeDate(cur.startDay).getUTCFullYear();
-    const backYear = officeDate(cur.readyDay).getUTCFullYear();
-    const yearLine = (y) => `<li class="year"><div>${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
-    // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
-    const anchor = anchorOf(cur.eraId);
-    const via = anchor && D.get('antiques.antiques.' + anchor).kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
-    const placeWord = event ? T.catalog[event.id].place : T.eras[cur.eraId].short;
-    const departLine = `<li class="travel"><div>${esc(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', R.staff).replace('{anchor}', anchor ? T.antiques[anchor].name : '').replace('{year}', String(e.raw.metadata.era.year)).replace('{place}', placeWord))}${event?.refs ? ' ' + wl('events:c:' + event.id, U.light.sources) : ''}${modelSource ? ' ' + wl('events:' + modelSource, U.light.sources) : ''}</div></li>`;
-    const backLine = `<li class="travel"><div>${esc(accepted ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', R.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', R.staff))}${summaryNote}</div></li>`;
-    const fd = cur.favorDelta || 0;
-    const restLine = `<li class="travel"><div>${esc((R.accounts.restDays > 0 ? U.report.rest_line.replace('{n}', String(R.accounts.restDays)) : U.report.rest_none).replace(/\{staff\}/g, R.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, R.staff))}</div></li>`;
-    let lastYear = e.raw.metadata.era.year;
-    const record = R.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
-    const tl = yearLine(nowYear) + departLine + yearLine(e.raw.metadata.era.year) + record + yearLine(backYear) + backLine + restLine;
-    const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
-    const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', R.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
-    // a report written before the lines of getting in were part of the record still shows them on their own
-    const woven = R.timeline.some((t) => t.kind === 'journey');
+    const fn = (key, label, text) => {
+      const open = st.opened.has(cur.id + key);
+      return `<span class="fn" data-act="fn" data-key="${key}">${label}</span>${open ? `<div class="fntext">${esc(text)}</div>` : ''}`;
+    };
     // the numbers, chart and ledger are shown only where the model counts something that means something, such as the lives of an outbreak
     const numbersHtml = () => {
       const C = R.chart;
@@ -705,41 +677,103 @@ export function createUI(D, ctx, DEV = false) {
       <div class="scroll"><table><thead><tr><th>${R.ledgerBySegment ? U.report.segment : U.report.day}</th><th class="num">${RL.sick}</th><th class="num">${RL.dead}·${U.report.mainline}</th><th class="num">${RL.dead}·${U.report.this_branch}</th><th class="num">${RL.treated}</th><th class="num">${RL.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
       </details>`;
     };
+    // a report written before the lines of getting in were part of the record still shows them on their own
+    const woven = R.timeline.some((t) => t.kind === 'journey');
+    return {
+      title: T.eras[cur.eraId].name, year: e.raw.metadata.era.year, staff: R.staff,
+      place: event ? T.catalog[event.id].place : T.eras[cur.eraId].short, anchor: anchorOf(cur.eraId),
+      sources: `${event?.refs ? ' ' + wl('events:c:' + event.id, U.light.sources) : ''}${modelSource ? ' ' + wl('events:' + modelSource, U.light.sources) : ''}`,
+      timeline: R.timeline, factRefs: (fact) => (fact ? D.get('encyclopedia.fact_sources')?.[cur.eraId]?.[fact] || [] : []),
+      saying: R.quote, summary: R.summary, modelNote: U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source),
+      stay: R.chart.arrive != null && R.chart.leave != null ? R.chart.leave - R.chart.arrive : null,
+      before: woven ? '' : participationHtml(cur),
+      afterRecord: woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette]),
+      numbers: e.report.numbers === false ? '' : numbersHtml(),
+      cost: R.accounts.cost, restDays: R.accounts.restDays, pointText: (pid) => T.eras[cur.eraId].star_points[pid], hints: R.hints, warn: '', body: R.body,
+      buttons: `<button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button><button data-act="vs">${U.report.vs_prev}</button>`,
+    };
+  }
+
+  // What a report needs from a small story: the record it kept, the words of its catalogue card, no model numbers.
+  function lightStory(cur) {
+    const c = T.catalog[cur.eraId];
+    const ev = D.get('catalog.events').find((x) => x.id === cur.eraId);
+    const EF = D.get('encyclopedia.event_facts')?.[ev.id];
+    return {
+      title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
+      sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
+      timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
+      saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '',
+      cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
+      warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
+      buttons: `<button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
+    };
+  }
+
+  // One report for every story. Under the title and the stamp comes the line the employee says, then the record, one short line to a thing in time order:
+  // the year of the office and the crossing, the year of the place and what happened, a mark for each new year, and back in the year of the office with the return,
+  // the rest and the mood. A thin rule tells history from the lines of the employee, and buttons show all, only history or only the employee; the button of the
+  // employee bears their name, so the lines of another employee met in the same time can have their own button later. Notes are kept for what has a source
+  // worth reading: a line of history names the sources of its fact, and a number worked out by the model says so. In the developer mode each line also says where
+  // it came from. After the record come the numbers when the story has any, the body in the developer mode, and the summary with the stars.
+  function storyHtml(cur, S) {
+    const spec = cur.spec;
+    const notes = [];
+    const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
+    const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
+    const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
+    const tlLine = (t) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : ''}${DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : ''}</div></li>`;
+    const accepted = cur.report.journey?.accepted !== false;
+    const summaryNote = accepted && S.modelNote ? sup([noteOf('model', S.modelNote)]) : '';
+    const nowYear = officeDate(cur.startDay).getUTCFullYear();
+    const backYear = officeDate(cur.readyDay).getUTCFullYear();
+    const yearLine = (y) => `<li class="year"><div>${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
+    // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
+    const via = S.anchor && D.get('antiques.antiques.' + S.anchor)?.kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
+    const departLine = `<li class="travel"><div>${esc(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place))}${S.sources}</div></li>`;
+    const backLine = `<li class="travel"><div>${esc(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff))}${summaryNote}</div></li>`;
+    const fd = cur.favorDelta || 0;
+    const restLine = `<li class="travel"><div>${esc((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff))}</div></li>`;
+    let lastYear = S.year;
+    const record = S.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
+    const tl = yearLine(nowYear) + departLine + yearLine(S.year) + record + yearLine(backYear) + backLine + restLine;
+    const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
+    const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', S.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
     // the body of the employee through the stay as LM reads it, a part of its own that config.ui.report_body turns on always, in the developer mode only, or never
     const bodyHtml = () => {
       const show = D.get('config.ui.report_body');
-      if (!R.body || !R.body.length || !(show === 'always' || (show === 'dev' && DEV))) return '';
-      const keys = Object.keys(U.report.body_readouts).filter((k) => R.body.some((x) => x[k] > 0));
+      const B = S.body;
+      if (!B || !B.length || !(show === 'always' || (show === 'dev' && DEV))) return '';
+      const keys = Object.keys(U.report.body_readouts).filter((k) => B.some((x) => x[k] > 0));
       const colors = D.get('config.ui.chart.body_colors');
-      const series = keys.map((k, i) => ({ pts: R.body.map((x) => [x.day, 100 * (x[k] || 0)]), color: colors[i % colors.length] }));
+      const series = keys.map((k, i) => ({ pts: B.map((x) => [x.day, 100 * (x[k] || 0)]), color: colors[i % colors.length] }));
       // the readouts run from 0 to 1 and are drawn as percentages, so the axis reads whole numbers
-      const ymax = 100 * Math.max(D.get('config.ui.chart.body_min_max'), ...R.body.flatMap((x) => keys.map((k) => x[k] || 0))) * D.get('config.ui.chart.headroom');
+      const ymax = 100 * Math.max(D.get('config.ui.chart.body_min_max'), ...B.flatMap((x) => keys.map((k) => x[k] || 0))) * D.get('config.ui.chart.headroom');
       const legend = `<div class="legend">${keys.map((k, i) => `<span><i style="border-color:${colors[i % colors.length]}"></i>${esc(U.report.body_readouts[k])}</span>`).join('')}</div>`;
       return `<div class="sec">${U.report.body}</div>${keys.length ? legend + lineChart(series, [], ymax) : ''}`;
     };
-    const A = R.accounts;
-    const vsHtml = st.vs ? vsBlock(cur) : '';
+    const vsHtml = st.vs && !cur.light ? vsBlock(cur) : '';
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${accepted ? '' : staffLine(spec.staffId)}
-      ${R.chart.arrive != null && R.chart.leave != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(R.chart.leave - R.chart.arrive)))}</p>` : ''}
-      ${accepted ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(R.quote))} <span class="muted">${U.fmt.dash}${wl('staff:' + spec.staffId, R.staff)}</span></p>` : ''}
-      ${woven ? '' : participationHtml(cur)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${accepted && S.saying ? '' : staffLine(spec.staffId)}
+      ${S.stay != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(S.stay)))}</p>` : ''}
+      ${accepted && S.saying ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(S.saying))} <span class="muted">${U.fmt.dash}${wl('staff:' + spec.staffId, S.staff)}</span></p>` : ''}
+      ${S.before}
       <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
-      ${woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette])}
-      ${e.report.numbers === false ? '' : numbersHtml()}
+      ${S.afterRecord}${S.warn}
+      ${S.numbers}
       ${bodyHtml()}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
-        <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
+        ${S.cost != null ? `<tr><td>${U.report.spent}</td><td class="num">${ri(S.cost)}</td></tr>` : ''}
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
-        <tr class="points"><td colspan="2">${pointsHtml(cur, (id) => T.eras[cur.eraId].star_points[id])}</td></tr>
+        <tr class="points"><td colspan="2">${pointsHtml(cur, S.pointText)}</td></tr>
         ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
-        <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
+        <tr><td>${U.report.rest}</td><td class="num">${S.restDays} ${U.report.days}</td></tr>
       </tbody></table>
-      ${R.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
-      <div class="row" style="margin:16px 0"><button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button><button data-act="vs">${U.report.vs_prev}</button></div>${vsHtml}`;
+      ${S.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
+      <div class="row" style="margin:16px 0">${S.buttons}</div>${vsHtml}`;
     // the notes are numbered in the order they are first met on the page, so they are listed after the page is written
     return page + (notes.length ? `<div class="sec">${U.report.footnotes}</div><ol class="notes">${notes.map((x) => `<li class="muted">${esc(x.text)}</li>`).join('')}</ol>` : '');
   }

@@ -660,7 +660,8 @@ try {
   await page.click('[data-act=claim]');
   const storySources = page.locator('.reportbox [data-act=wiki][data-id="events:c:newton_cambridge"]');
   await storySources.waitFor();
-  ok('the Newton report shows participation and no branch timeline', (await page.locator('.reportbox .tl').count()) === 0 && (await page.locator('.reportbox .participation').count()) === 1 && await page.evaluate(() => {
+  // a small story is told by the same report as a model: one record with the lines of getting in, the sync points on their days and the scene
+  ok('the Newton report is one record with getting in, the points and the scene', (await page.locator('.reportbox .tl').count()) === 1 && (await page.locator('.reportbox .participation').count()) === 0 && (await page.locator('.reportbox .tl li.travel').count()) >= 4 && await page.evaluate(() => {
     const { D, ctx, ui } = window.__game;
     const trip = ctx.S().dispatches.find((d) => d.id === ui.state.modal.id);
     if (!trip.report.journey.accepted) return !trip.report.vignette;

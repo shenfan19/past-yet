@@ -2,7 +2,7 @@
 // simulation itself and reads only the plain fields listed in eraInfo. This local version calls the engine in the same page.
 // A server version would offer the same methods over fetch, with the yaml data and the engine on the server, and the page would only carry data.
 import * as sim from './sim.js';
-import { buildReport, weaveJourney } from './narrate.js';
+import { buildReport, weaveJourney, lightRecord } from './narrate.js';
 import { draw } from './rng.js';
 import { evalScene, pointDays } from './scene_core.js';
 import { runStay } from './stay.js';
@@ -188,9 +188,13 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       const r = runScene(ev, staffId, seed, items, favor, health);
       const days = pointDays(D, ev);
       const timed = r.points.map((p, i) => ({ ...p, day: days[i] }));
-      if (!journey.accepted) return { ...r, points: timed.map((p) => ({ id: p.id, day: p.day, redeem: p.redeem, hit: false })), stars: 0,
-        journey, vignette: null, found: null, extraFavor: 0, restDays: L.rest_days.missed, keepAntique: false, outcome: 'missed' };
-      return { ...r, points: timed, journey, outcome: outcomeOf(r.stars, ev.scene.points.length) };
+      if (!journey.accepted) {
+        const missedTrip = { ...r, points: timed.map((p) => ({ id: p.id, day: p.day, redeem: p.redeem, hit: false })), stars: 0,
+          journey, vignette: null, found: null, extraFavor: 0, restDays: L.rest_days.missed, keepAntique: false, outcome: 'missed' };
+        return { ...missedTrip, timeline: lightRecord(D, ev, missedTrip, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
+      }
+      const done = { ...r, points: timed, journey, outcome: outcomeOf(r.stars, ev.scene.points.length) };
+      return { ...done, timeline: lightRecord(D, ev, done, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
     }
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
@@ -199,7 +203,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const stars = points.filter((p) => p.hit).length;
     const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];
-    return { outcome, stars, points, journey, keepAntique: journey.accepted, energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
+    const plain = { outcome, stars, points, journey, keepAntique: journey.accepted, energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
+    return { ...plain, timeline: lightRecord(D, ev, plain, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
   }
   // The market price factor of an antique on a day: one seeded draw per field and per period, so every antique of a field moves together.
   const MK = D.get('config.office.market');

@@ -208,6 +208,15 @@ emitYaml('encyclopedia.yaml', {
   model_events: Object.fromEntries(modelEventCards.map((c) => [c.id, struct(c)])),
   stats: statCards.map((c) => ({ id: c.id, ...struct(c) })),
   ...(Object.keys(personImages).length ? { images: personImages } : {}),
+  // the facts each event may tell as lines of history in its record: dated, with sources, used for the story or the history, checked by more than one source and not set aside
+  event_facts: Object.fromEntries(moduleNames.flatMap((m) => {
+    const pc = moduleCard[m];
+    if (!isObj(pc) || !isObj(pc.facts)) return [];
+    const facts = Object.entries(pc.facts).filter(([, f]) => isObj(f) && f.date && f.level !== 'unused' && f.checked !== 'single' && (f.use || []).some((u) => u === 'story' || u === 'history')).map(([id, f]) => ({ id, date: String(f.date), sources: f.sources || [] }));
+    if (!facts.length) return [];
+    const events = [...Object.keys(embedded(m, 'events')), ...yamlFiles(`people/${m}/events`).map((f) => f.replace(/\.yaml$/, ''))];
+    return events.map((e) => [e, { module: m, facts }]);
+  })),
   // the sources of each fact a model leans on, by era and fact, so a line of history in a report can name where it comes from
   fact_sources: Object.fromEntries(Object.keys(eraDir).filter((id) => isObj(moduleCard[eraModule[id]]?.facts)).map((id) => [id, Object.fromEntries(Object.entries(moduleCard[eraModule[id]].facts).map(([f, x]) => [f, x.sources || []]))])),
 });
@@ -257,6 +266,15 @@ for (const lang of LANGS) {
     }
   }
   putEnc('model_events', modelEventCards, (t) => t);
+  // the text of every fact of a person, by person and fact
+  for (const m of moduleNames) {
+    const facts = isObj(moduleCard[m]) && isObj(moduleCard[m].facts) ? moduleCard[m].facts : null;
+    if (!facts) continue;
+    for (const [id, f] of Object.entries(facts)) {
+      const t = isObj(f) && isObj(f.text) ? f.text[lang] : undefined;
+      if (t !== undefined) (((enc.facts = enc.facts || {})[m] = enc.facts[m] || {})[id] = t);
+    }
+  }
   putEnc('stats', statCards, (t) => t);
   if (Object.keys(enc).length) emitYaml(`i18n/encyclopedia.${lang}.yaml`, enc);
 }
