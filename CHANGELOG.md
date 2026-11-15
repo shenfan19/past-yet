@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.25, 2026-11-15
+
+- Ife, the casters of the heads, is rewritten and turned on: heads cast in brass from wax models around 1300, Leo Frobenius made to give back the head he pressed a priest to sell in 1910, the heads found in the Wunmonije compound in 1938 and the London exhibition of 1948, with sync points for shaping a wax model, keeping the fire on the day of pouring and telling the cut lines from the added ones.
+
 ## 0.5.24, 2026-11-15
 
 - Rapa Nui, the carvers of the moai, is rewritten and turned on: the figures cut from the tuff of Rano Raraku from about the thirteenth century, and Jacob Roggeveen reaching the island on Easter Sunday 1722, with sync points for grinding the adzes, drawing a figure from front and side and cutting the tuff behind it.

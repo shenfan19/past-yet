@@ -6,72 +6,118 @@ events:
     lon: 4.56
     lat: 7.48
     region: africa
+    home: [west_africa]
     field: art
     tier: 2
     channels: {H: 2, T: 1}
-    refs: [ife_bronzes_cast]
+    # finished: in the game with release.ready_only. The heads are dated by century, so the stay carries no day.
+    ready: true
+    refs: [ife_bronzes_cast, natgeo_ife_heads, wikipedia_ife_head]
     scene:
       points:
-        - {id: p1, kind: hold, req: {"any":[{"stat":{"finesse":7}},{"trait":["hardy"]}]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"stat":{"finesse":6}},{"trait":["handy","patient"]},{"job":["woodcarver"]}]}}
+        - {id: p2, kind: endure, day: 60, req: {"any":[{"stat":{"constitution":6}},{"trait":["hardy","vigil"]}]}}
+        - {id: p3, kind: notice, day: 61, req: {"any":[{"stat":{"wit":6}},{"trait":["methodical","curious"]}]}}
       vignettes:
-        - {id: line, traits: [methodical, scholarly]}
-        - {id: surface, traits: [handy, curious]}
-        - {id: edge}
+        - {id: line, traits: [methodical, scholarly], day: 62}
+        - {id: surface, traits: [handy, curious], day: 40}
+        - {id: edge, day: 25}
     text:
       en:
         name: 'The line that must survive the cast'
         place: Ife, Nigeria
         figure: The casters of Ife
-        story: 'The British Museum catalogues a brass head from the Wunmonije Compound in Ifẹ̀ with cast and incised features. It records lost-wax casting. Its markings illustrate a problem of comparison.'
+        story: 'In Ife, a city of the Yoruba, casters made lifelike heads of copper alloy over some four centuries, around 1300 by most estimates. In 1910 the German Leo Frobenius pressed the priest of a grove to sell him a head he called the Olokun head, and had to give it back. In 1938 builders digging in the Wunmonije compound found a group of heads, among them the one now in the British Museum. At a London exhibition of 1948 the heads were said to rank with the finest works of Italy and Greece.'
         relic: 'Two study drawings'
         relic_desc: 'Drawings comparing lines on a plain casting sample.'
         points:
-          p1: 'Keep the labelled sample in view while its line is copied'
-          p2: 'Take the comparison drawing to the other work bench'
-          p3: 'Identify which line was recorded before the surface was finished'
+          p1: 'Be taken in by the casters, then shape a practice model in wax'
+          p2: 'On the day of pouring, keep the fire under the crucible going'
+          p3: 'After the pour, tell which line was cut in the wax and which was added after'
         vignettes:
-          line: 'The helper is about to label a new scratch as part of the first design. You keep his drawing from before the finishing work and lay it next to today’s sample. He draws the new line on a separate scrap. You take home the pair. The next cast’s surface is still unseen.'
-          surface: 'You know a later museum will describe cast and incised features separately. The helper only wants to know where the new line starts. You tilt the wooden board under the sample and help him draw its edge on the slip. By the time it goes back to the bench, you are on the way home.'
-          edge: 'You make one drawing of the practice sample and a second line beside it for something seen only today. The helper can put the two beside the next sample instead of relying on memory. You keep the comparison. The finished work never passes through your hands.'
+          line: '{staff} lays the drawing made before the finishing beside the sample of today, and draws the new scratch on a separate sheet.'
+          surface: '{staff} tilts the board under a sample so the light runs along it, and marks on paper where a fine line begins.'
+          edge: '{staff} draws a plain practice sample once, and next to it the one line seen only today, so the next comparison does not rest on memory.'
       zh:
         name: '铸好以后还能不能认出这道线'
         place: 尼日利亚伊费
         figure: 伊费的铸造匠人
-        story: '大英博物馆登记的伊费翁莫尼杰院落黄铜头像有铸造与刻划的特征，馆方记其采用失蜡法。'
+        story: '约鲁巴人的城市伊费，铸匠们在约四个世纪里用铜合金铸出写实的头像，多数估计在 1300 年前后。1910 年，德国人莱奥·弗罗贝尼乌斯逼一处圣林的祭司把一尊他称作“奥洛昆头像”的铜像卖给他，后来被迫交还。1938 年，人们在翁莫尼杰院落盖房挖地时挖出一批头像，其中一尊今藏大英博物馆。1948 年伦敦的一场展览上，有人说这些头像足以与意大利和希腊最好的作品并列。'
         relic: '一对线样小图'
         relic_desc: '对照无像练习铸样上两次所见的线。'
         points:
-          p1: '抄线样时让带标签的样块一直在眼前'
-          p2: '把两份对照小图送到另一个工台'
-          p3: '辨认哪道线在表面收拾之前就有记录'
+          p1: '先让铸匠们认下，再用蜡捏一个练习模'
+          p2: '浇铸那天，守着坩埚底下的火不让它弱下去'
+          p3: '浇铸之后，分辨哪道线是蜡模上刻的，哪道是后来添的'
         vignettes:
-          line: '帮工正要把一道新划痕标成起初就有的。你留下他收面前画的小图，摆到今天的样块旁。他把后来多的一道另画一张。你把这一对记下来，下一次铸成什么面，仍没有见到。'
-          surface: '你知道后来的馆藏说明会分开记录铸造和刻划的痕迹。帮工眼下只想知道新线从哪儿开始。你把垫样块的板略一斜，帮他在纸上标出边。样块回工台时，你已在收队路上。'
-          edge: '你描了一回练习样块，又把只有今天才见到的那一划另记在旁。帮工下回能拿这两项对，不用全靠记忆。你带走对照，成品从没到过你手上。'
+          line: '{staff}把收面之前画的小图摆到今天的样块旁边，后来多出的那一道划痕，另画在一张纸上。'
+          surface: '{staff}把垫样块的木板略斜一斜，让光顺着它走，在纸上标出一道细线从哪里开始。'
+          edge: '{staff}描了一遍没有图像的练习样块，旁边另记下今天才看见的那一道线，下回比对就不用全靠记性。'
 text:
   en:
     name: The casters of Ife
-    text: The casters of Ife, a city of the Yoruba in what is now Nigeria. From about the twelfth to the fifteenth century they made lifelike heads in copper alloy by the lost wax method.
+    text: The casters of Ife, a city of the Yoruba in what is now Nigeria. Over some four centuries, around 1300 by most estimates, they made lifelike heads in copper alloy.
   zh:
     name: 伊费的铸造匠人
-    text: 伊费的铸造匠人。伊费是约鲁巴人的城市，在今尼日利亚境内。大约从十二世纪到十五世纪，他们用失蜡法做出写实的铜合金头像。
+    text: 伊费的铸造匠人。伊费是约鲁巴人的城市，在今尼日利亚境内。在约四个世纪里，多数估计在 1300 年前后，他们做出了写实的铜合金头像。
 hook: {en: 'Which mark belongs to the wax model?', zh: '这道线是草样上刻的，还是后来留下的？'}
 facts:
   cast:
     date: '1300'
+    stay_day: 61
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [ife_bronzes_cast]
     text:
       en: 'The museum record identifies the brass head from Wunmonije and records lost-wax casting and incision.'
       zh: '馆方确认该黄铜头像出自翁莫尼杰院落，记录有失蜡铸造和刻划。'
+    line:
+      en: 'In the casting yard, a head is cast in brass from a wax model, and its lines are cut in after.'
+      zh: '铸场里，一尊头像从蜡模铸成黄铜，脸上的细线是铸成之后再刻上去的。'
+  frobenius:
+    date: '1910'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [natgeo_ife_heads, wikipedia_ife_head]
+    text:
+      en: 'In 1910 Leo Frobenius pressed the priest of a grove to sell him a head he named the Olokun head, reportedly for six pounds, and had to return it after the British administration stepped in.'
+      zh: '1910 年，莱奥·弗罗贝尼乌斯逼一处圣林的祭司把一尊他称作“奥洛昆头像”的铜像卖给他，据说只给了六英镑；英国殖民当局介入后，他被迫交还。'
+    line:
+      en: '1910: the German Leo Frobenius presses a priest to sell him a head from a sacred grove, and is made to give it back.'
+      zh: '1910 年，德国人莱奥·弗罗贝尼乌斯逼一位祭司卖给他一尊圣林里的头像，后来被迫交还。'
+  wunmonije:
+    date: '1938'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_ife_head, natgeo_ife_heads]
+    text:
+      en: 'In 1938 a group of brass and copper heads was found by chance in the Wunmonije compound in Ife, during building work.'
+      zh: '1938 年，伊费的翁莫尼杰院落在盖房时意外挖出一批黄铜与紫铜头像。'
+    line:
+      en: '1938: digging foundations in the Wunmonije compound, builders turn up a group of heads.'
+      zh: '1938 年，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
+  exhibition:
+    date: '1948'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [natgeo_ife_heads, wikipedia_ife_head]
+    text:
+      en: 'Of an exhibition of the heads at the British Museum in 1948, a London publication wrote that this African art was worthy to rank with the finest works of Italy and Greece.'
+      zh: '1948 年这些头像在大英博物馆展出，伦敦一份刊物写道，这些非洲艺术足以与意大利和希腊最好的作品并列。'
+    line:
+      en: '1948: the heads are shown at the British Museum. A London paper writes that they rank with the finest works of Italy and Greece.'
+      zh: '1948 年，头像在大英博物馆展出。伦敦一份刊物写道，它们足以与意大利和希腊最好的作品并列。'
 bystanders:
   helper:
     invented: true
-    text: {en: 'A fictional work helper checking marks on a plain practice sample.', zh: '虚构的工场帮工，正在核对无像样块的线痕。'}
+    text: {en: 'A helper in the casting yard, made up for the game, who checks the marks on a practice sample.', zh: '一位编出来的铸场帮工，核对练习样块上的线痕。'}
+  stoker:
+    invented: true
+    text: {en: 'A stoker, made up for the game, who keeps the bellows going.', zh: '一位编出来的拉风箱的人，风箱一直不停。'}
 wiki:
   refs:
     ife_bronzes_cast:
@@ -80,16 +126,28 @@ wiki:
       text:
         en: 'British Museum, Ife head, Af1939,34.1, collection record on Google Arts & Culture https://artsandculture.google.com/asset/ife-head-brass-head-of-a-ruler/rQGTIZwDJn4lCg?hl=en'
         zh: '大英博物馆，伊费头像 Af1939,34.1，馆藏在线展 https://artsandculture.google.com/asset/ife-head-brass-head-of-a-ruler/rQGTIZwDJn4lCg?hl=en'
+    natgeo_ife_heads:
+      order: 708
+      status: checked
+      text:
+        en: 'National Geographic, Nigeria''s ancient royal portraits challenged European biases toward African art. https://www.nationalgeographic.com/history/history-magazine/article/nigerian-treasures-ife-heads-bronze'
+        zh: '《国家地理》，尼日利亚古代王室肖像挑战了欧洲对非洲艺术的偏见。https://www.nationalgeographic.com/history/history-magazine/article/nigerian-treasures-ife-heads-bronze'
+    wikipedia_ife_head:
+      order: 709
+      status: checked
+      text:
+        en: 'Wikipedia, Ife Head. https://en.wikipedia.org/wiki/Ife_Head'
+        zh: '维基百科，伊费头像。https://en.wikipedia.org/wiki/Ife_Head'
 self_check:
-  fact: cast
-  quote_line: '他把后来多的一道另画一张。'
-  regret_choice: '用成品的一道线反推起初的样，也许会抄进后来才有的划痕。'
-  bookend: '从猜线的来历到把两次记录放在一起。'
-  share_line: '同一个样块，今天多出来的一条线另有一张纸。'
-  share_number: '两张线样'
-  knowing: 'surface 知道现代馆藏说明会区别两类工艺。'
-  near: 'cast 锚定失蜡与刻划实物。'
-  lever: '将新痕与原线分开。'
-  missed: '收队后才见下一次表面。'
-  brought: '无像样块的线样。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: wunmonije
+  quote_line: '1938 年，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
+  regret_choice: '派手巧的去，蜡模捏得好，浇铸那天的火却未必守得住；派守得住的去，火没弱，线是谁刻的却没人分。'
+  bookend: '从铸场里的一尊头像开始，以六百多年后伦敦的一句评语收尾。'
+  share_line: '我在伊费的铸场替铸匠们守过一炉火。'
+  share_number: '1938'
+  knowing: 'exhibition'
+  near: 'cast'
+  lever: 'p1, p3'
+  missed: 'frobenius'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

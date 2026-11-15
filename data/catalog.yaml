@@ -2083,43 +2083,65 @@ events:
     lon: 4.56
     lat: 7.48
     region: africa
+    home:
+      - west_africa
     field: art
     tier: 2
     channels:
       H: 2
       T: 1
+    ready: true
     refs:
       - ife_bronzes_cast
+      - natgeo_ife_heads
+      - wikipedia_ife_head
     scene:
       points:
         - id: p1
-          kind: hold
+          kind: trust
+          day: 10
           req:
             any:
               - stat:
-                  finesse: 7
+                  finesse: 6
               - trait:
-                  - hardy
+                  - handy
+                  - patient
+              - job:
+                  - woodcarver
         - id: p2
           kind: endure
+          day: 60
           req:
-            stat:
-              constitution: 6
+            any:
+              - stat:
+                  constitution: 6
+              - trait:
+                  - hardy
+                  - vigil
         - id: p3
           kind: notice
+          day: 61
           req:
-            stat:
-              wit: 6
+            any:
+              - stat:
+                  wit: 6
+              - trait:
+                  - methodical
+                  - curious
       vignettes:
         - id: line
           traits:
             - methodical
             - scholarly
+          day: 62
         - id: surface
           traits:
             - handy
             - curious
+          day: 40
         - id: edge
+          day: 25
     authors:
       - AI
       - Fan Shen
