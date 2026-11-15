@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0, 2026-11-15
+
+- A person card holds only what is true. The sentences that explained the card, the year of the game or what is made up were taken out of the stories, facts, articles and wiki cards of the people, and the descriptions of the relics no longer call them invented. What is made up stays on the side of the employee: identities, sync points, scenes, bystanders, events of the models.
+
 ## 0.4.1, 2026-11-15
 
 - More reports are kept: the ten latest and the two best of each place. A report keeps no curves when its model shows no numbers, and at most 200 points when it does, so a report of Guangzhou 1924 is about 20 KB instead of 218 KB.
