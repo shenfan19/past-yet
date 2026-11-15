@@ -119,6 +119,12 @@ milestones:
     variants:
       - {when: "tag.class_food == 1 or tag.class_trade == 1", key: last_stall}
 
+# The hints of Guangzhou point at the stars: only the first star needs walking, so only what stops the walking is said, and only when that star was missed.
+hints:
+  - {when: "tag.frail == 1", key: frail, point: site}
+  - {when: "has_compass == 0", key: empty, point: site}
+  - {when: "1 == 1", key: none}
+
 # What is recorded long after the stay, told at the end of the record as plain dated lines. The model does not run to these days.
 epilogue:
   - {date: "1925-03-12", fact: f13, key: sun_dies}

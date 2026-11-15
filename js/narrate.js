@@ -184,7 +184,9 @@ export function buildReport(D, E, res) {
   })).filter((l) => !bySegment || (arrivedAt !== null && l.day > arrivedAt && l.day <= arrivedAt + stayDays && Math.round(l.day - arrivedAt) % SEG === 0))
     .map((l) => (bySegment ? { ...l, day: Math.round((l.day - arrivedAt) / SEG) } : l));
 
-  const hints = res.hints.map((k) => ET.hints[k]);
+  // a hint that names a star is given only when that star was missed, so a hint always points at something the next trip could win
+  const missed = new Set(E.starPoints.filter((p) => !res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone)).map((p) => p.id));
+  const hints = res.hints.filter((h) => !h.point || missed.has(h.point)).slice(0, D.get('config.engine.report_hints')).map((h) => ET.hints[h.key]);
   const RP = E.report;
   // a handle that never came about is a negative day, and reads as nothing
   const orNull = (x) => (x >= 0 ? x : null);

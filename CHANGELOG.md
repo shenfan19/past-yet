@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3, 2026-11-15
+
+- A hint may name the star it explains, and is then given only when that star was missed. Guangzhou 1924 no longer tells an employee who cannot read about the copying of the records, which is no longer a star.
+
 ## 0.2.2, 2026-11-15
 
 - Only a pop-up the game forces open stops the clock: the welcome and the day a wage goes unpaid. A report, a page of the wiki, the settings or any other pop-up the player opens leaves the clock running (`clock.hold_modals`).

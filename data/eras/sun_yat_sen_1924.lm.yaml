@@ -904,12 +904,12 @@ tag_source:
   trait: game_assumption
   param: game_assumption
 hints:
-  - when: tag.literate == 0
-    key: unlettered
   - when: tag.frail == 1
     key: frail
-  - when: paper <= 0 and has_compass == 0
+    point: site
+  - when: has_compass == 0
     key: empty
+    point: site
   - when: 1 == 1
     key: none
 recall:

@@ -206,7 +206,8 @@ export function compileEra(raw, D, id) {
   for (const k of ['deaths', 'cases', 'handle', 'treated', 'protected']) if (!known.has(E.report[k])) throw new Error(where('report') + ' 未声明 ' + E.report[k]);
   E.logImportance = req(raw, 'log_importance', id);
   E.tagSource = req(raw, 'tag_source', id);
-  E.hints = req(raw, 'hints', id).map((h) => ({ key: h.key, fn: compile(h.when, knownScore, where('hints.' + h.key)) }));
+  // a hint may name the star it explains in `point`; it is then given only when that star was missed
+  E.hints = req(raw, 'hints', id).map((h) => ({ key: h.key, point: h.point || null, fn: compile(h.when, knownScore, where('hints.' + h.key)) }));
   E.series = req(raw, 'series', id).map((s) => ({ id: s.id, label: s.label, fn: compile(s.expr, known, where('series.' + s.id)) }));
 
   // bindings
@@ -480,7 +481,7 @@ export function runDispatch(E, D, spec) {
   const O = D.get('config.office');
   const henv = { ...branch.final, ...sc };
   for (const [n, x] of Object.entries(base.final)) henv[baseName(n)] = x;
-  const hints = E.hints.filter((h) => h.fn(henv)).map((h) => h.key).slice(0, D.get('config.engine.report_hints'));
+  const hints = E.hints.filter((h) => h.fn(henv)).map((h) => ({ key: h.key, point: h.point }));
   const mult = branch.outcomeDef ? branch.outcomeDef.energy_mult : 0;
   const energy = Math.round(sc.change_amount * O.energy_per_change * mult);
   return {
