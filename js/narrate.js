@@ -286,6 +286,12 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   if (vignette) lines.push({ t: typeof vDay === 'number' ? vDay : stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
     why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
   lines.push({ t: stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: R.light_leave.replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
+  // with `date`, the planned arrival on the calendar, the lines of the employee carry the year their day falls in, so a stay that runs into a new year marks it
+  if (ev.date) {
+    const [y, m, d] = String(ev.date).split('-').map(Number);
+    const yearAt = (t) => { const at = new Date(Date.UTC(2000, m - 1, d)); at.setUTCFullYear(y); at.setUTCDate(at.getUTCDate() + Math.floor(t)); return at.getUTCFullYear(); };
+    for (const x of lines) if (x.tag !== 'history') x.year = yearAt(x.t);
+  }
   return lines.map((x, i) => [x, i]).sort((a, b) => a[0].t - b[0].t || a[1] - b[1]).map(([x]) => x);
 }
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.5, 2026-11-15
+
+- An event card may name `date`, the planned arrival on the calendar, so the lines of the employee in a small story that runs into a new year carry the right year.
+
 ## 0.5.4, 2026-11-15
 
 - Kitty Hawk 1903 is rewritten and turned on: one office day from 1 December, the failed try of 14 December, the four flights of 17 December, the photograph, the telegram that gave 57 seconds for 59 and the silence of the Dayton papers, with sync points for carrying the rail with the life saving men, standing by the camera and handing the right number to the telegraph.
