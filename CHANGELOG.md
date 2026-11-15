@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.6, 2026-11-15
+
+- Rome 1820 to 1821, John Keats by the Spanish Steps, is rewritten and turned on: from the arrival on 15 November to the death on the night of 23 February, the register that wrote the 24th, the burial and the stone without a name, and Severn beside him in 1879. The exposure to infection is lowered so the stay is not cut short for everyone in its second week.
+
 ## 0.5.5, 2026-11-15
 
 - An event card may name `date`, the planned arrival on the calendar, so the lines of the employee in a small story that runs into a new year carry the right year.

@@ -4620,49 +4620,79 @@ events:
       - AI
       - Fan Shen
   - id: keats_rome
-    year: 1821
+    year: 1820
+    date: '1820-11-15'
     lon: 12.48
     lat: 41.9
     region: europe
+    home:
+      - europe_west
     field: literature
     tier: 1
     channels:
-      E: 3
+      E: 1
       G: 3
     regret: true
+    ready: true
     refs:
       - keats_rome_primary
+      - keats_locations_house
+      - wordsworth_keats_death
+      - romeartlover_keats
     scene:
       points:
         - id: p1
           kind: care
+          day: 20
           req:
-            trait:
-              - cheerful
-              - calm
-              - patient
+            any:
+              - trait:
+                  - kind
+                  - patient
+                  - cheerful
+              - job:
+                  - chef
+                  - baker
+                  - nurse
         - id: p2
           kind: endure
+          day: 99
           req:
-            stat:
-              will: 6
+            any:
+              - trait:
+                  - vigil
+                  - patient
+                  - faithful
+              - stat:
+                  will: 6
         - id: p3
           kind: care
           redeem: true
+          day: 103
           req:
-            item: elixir
+            any:
+              - trait:
+                  - attached
+                  - faithful
+                  - kind
+                  - quiet
+              - stat:
+                  will: 6
       vignettes:
-        - id: address
+        - id: stairs
           traits:
             - methodical
             - vigil
-        - id: farewell
+          day: 40
+        - id: window
           traits:
             - kind
             - quiet
             - artistic
             - charismatic
-        - id: stairs
+          day: 70
+        - id: fountain
+          day: 30
     authors:
       - AI
       - Fan Shen

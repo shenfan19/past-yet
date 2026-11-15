@@ -605,7 +605,22 @@ refs:
     authors:
       - AI
       - Fan Shen
+  keats_locations_house:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   keats_rome_primary:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  romeartlover_keats:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  wordsworth_keats_death:
     status: checked
     authors:
       - AI
@@ -3395,6 +3410,50 @@ stats:
       - AI
       - Fan Shen
 event_facts:
+  keats_rome:
+    module: keats_rome
+    facts:
+      - id: arrival
+        date: '1820-11-15'
+        sources:
+          - keats_locations_house
+          - romeartlover_keats
+        stay_day: 0
+      - id: rome_letter
+        date: '1820-11-30'
+        sources:
+          - keats_rome_primary
+          - keats_locations_house
+        stay_day: 15
+      - id: death
+        date: '1821-02-23'
+        sources:
+          - wordsworth_keats_death
+          - keats_locations_house
+        stay_day: 100
+      - id: register
+        date: '1821-02-24'
+        sources:
+          - wordsworth_keats_death
+          - romeartlover_keats
+        stay_day: 100.5
+      - id: burial
+        date: '1821-02-26'
+        sources:
+          - romeartlover_keats
+          - keats_locations_house
+        stay_day: 103
+      - id: epitaph
+        date: '1821'
+        sources:
+          - romeartlover_keats
+          - keats_locations_house
+        stay_day: 103.5
+      - id: severn
+        date: '1879'
+        sources:
+          - romeartlover_keats
+          - keats_locations_house
   su_shi_huangzhou:
     module: su_shi_huangzhou
     facts:

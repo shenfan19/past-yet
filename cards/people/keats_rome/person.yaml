@@ -2,55 +2,60 @@ order: 113
 events:
   keats_rome:
     order: 114
-    year: 1821
+    # the stay begins on 15 November 1820, the planned arrival, and the days of the facts and the points are counted from it
+    year: 1820
+    date: '1820-11-15'
     lon: 12.48
     lat: 41.9
     region: europe
+    home: [europe_west]
     field: literature
     tier: 1
-    channels: {E: 3, G: 3}
+    channels: {E: 1, G: 3}
     regret: true
-    refs: [keats_rome_primary]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [keats_rome_primary, keats_locations_house, wordsworth_keats_death, romeartlover_keats]
     scene:
       points:
-        - {id: p1, kind: care, req: {"trait":["cheerful","calm","patient"]}}
-        - {id: p2, kind: endure, req: {"stat":{"will":6}}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: care, day: 20, req: {"any":[{"trait":["kind","patient","cheerful"]},{"job":["chef","baker","nurse"]}]}}
+        - {id: p2, kind: endure, day: 99, req: {"any":[{"trait":["vigil","patient","faithful"]},{"stat":{"will":6}}]}}
+        - {id: p3, kind: care, redeem: true, day: 103, req: {"any":[{"trait":["attached","faithful","kind","quiet"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: address, traits: [methodical, vigil]}
-        - {id: farewell, traits: [kind, quiet, artistic, charismatic]}
-        - {id: stairs}
+        - {id: stairs, traits: [methodical, vigil], day: 40}
+        - {id: window, traits: [kind, quiet, artistic, charismatic], day: 70}
+        - {id: fountain, day: 30}
     text:
       en:
         name: "A room by the steps"
         place: "Rome"
         figure: "John Keats"
-        story: 'Keats wrote to Charles Brown from Rome on 30 November 1820 and remarked on how difficult writing and saying farewell had become.'
+        story: 'In November 1820 John Keats, ill with tuberculosis, came to Rome with the painter Joseph Severn and took rooms at 26 Piazza di Spagna beside the Spanish Steps. He died there on the night of 23 February 1821 and was buried on 26 February in the Protestant Cemetery. At his wish, his gravestone does not give his name.'
         relic: "A pressed violet"
         relic_desc: "A dried flower kept in a book."
         points:
-          p1: 'Keep the outside address legible'
-          p2: 'Help the lodger finish the errand without losing the enclosure'
-          p3: 'Leave the wording of the farewell with its writer'
+          p1: 'Be taken in by the house, then carry the bread and milk up the stairs each morning'
+          p2: 'In the last nights, sit up in Severn''s place so he can sleep a few hours'
+          p3: 'On the day of the burial, stand by the grave in the Protestant Cemetery'
         vignettes:
-          address: 'The lodger gives you the letter with a hurried address. You ask them to read it back without looking at the inside. One missing place name goes onto the outside before you leave.'
-          farewell: 'The lodger wants to add a longer farewell because the short one sounds awkward. You let them say it aloud once. They decide the short line is how they actually speak.'
-          stairs: 'You wait on the stairs while the lodger finds the paper with the address. By the time you go, the note can stay folded and the destination is still visible.'
+          stairs: '{staff} counts the steps from the door to the room, so as to know how long the tray will stay warm, and writes the number in the margin of a shopping list.'
+          window: '{staff} props the window a little so the sound of the fountain in the square comes in. Nobody in the room says anything about it, and nobody closes it.'
+          fountain: '{staff} fills a jug at the boat shaped fountain at the foot of the steps. A flower seller, made up for the game, asks who in the house is ill, and gives a bunch of violets for half the price.'
       zh:
         name: "台阶旁的小屋"
         place: "罗马"
         figure: "约翰·济慈"
-        story: '济慈在 1820 年 11 月 30 日从罗马写给查尔斯·布朗，信里说写信和告别都变得困难。'
+        story: '1820 年 11 月，患肺结核的约翰·济慈与画家约瑟夫·塞文来到罗马，住进西班牙台阶旁的西班牙广场 26 号。1821 年 2 月 23 日夜里他在那里去世，2 月 26 日葬在新教徒公墓。照他的意思，墓碑上没有他的名字。'
         relic: "一朵压干的紫罗兰"
         relic_desc: "夹在书里的一朵干花。"
         points:
-          p1: '让外封地址还认得清'
-          p2: '帮住客送出信而不丢掉附件'
-          p3: '把离别时怎么说留给写信的人'
+          p1: '先让这栋房子里的人认下，再每天早上把面包和牛奶送上楼'
+          p2: '最后那几夜，替塞文守着，让他睡上几个钟头'
+          p3: '下葬那天，在新教徒公墓的墓旁站着'
         vignettes:
-          address: '住客递给你的信，地址写得急。你请他只看外头念一遍，出门前补上了漏写的地名。'
-          farewell: '住客嫌道别太短、听着别扭，想添长些。你让他念一遍。他听完，觉得短的那句原本就是自己说话的样子。'
-          stairs: '住客找写地址的纸时，你在楼梯上等。等你出门，信折起来也还能看清送往哪里。'
+          stairs: '{staff}数了从门口到房间的台阶，好知道托盘端上去时还热不热，把数字记在买菜单的边上。'
+          window: '{staff}把窗推开一道缝，让广场上泉水的声音进来。屋里没人说什么，也没人去关。'
+          fountain: '{staff}在台阶脚下那座船形泉边打水。一位编出来的卖花人问，这栋楼里是谁病了，把一束紫罗兰半价卖了。'
 text:
   en:
     name: John Keats
@@ -58,21 +63,106 @@ text:
   zh:
     name: 约翰·济慈
     text: 英国诗人，1795 年生，1821 年去世。他在短短几年里写出包括颂诗在内的主要作品，二十五岁时在罗马死于肺结核。
-hook: {en: 'How much can a short goodbye say?', zh: '短短一句怎么道别'}
+hook: {en: 'A name writ in water', zh: '声名水上书'}
 facts:
+  arrival:
+    date: '1820-11-15'
+    stay_day: 0
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [keats_locations_house, romeartlover_keats]
+    text:
+      en: 'Keats and Severn reached Rome in mid November 1820, most accounts say on 15 November, and took rooms on the second floor of 26 Piazza di Spagna, at the foot of the Spanish Steps.'
+      zh: '济慈和塞文 1820 年 11 月中旬到达罗马，多数说法是 11 月 15 日，住进西班牙台阶脚下西班牙广场 26 号的二楼。'
+    line:
+      en: '15 November: Keats and Severn reach Rome and take rooms on the second floor of 26 Piazza di Spagna, by the Spanish Steps.'
+      zh: '11 月 15 日，济慈和塞文到了罗马，住进西班牙台阶旁 26 号的二楼。'
   rome_letter:
     date: '1820-11-30'
-    checked: official_record
+    stay_day: 15
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [keats_rome_primary]
+    use: [story, history, wiki]
+    sources: [keats_rome_primary, keats_locations_house]
     text:
       en: 'Keats wrote to Charles Brown from Rome on 30 November 1820 and remarked on how difficult writing and saying farewell had become.'
       zh: '济慈在 1820 年 11 月 30 日从罗马写给查尔斯·布朗，信里说写信和告别都变得困难。'
+    line:
+      en: '30 November: Keats writes to Charles Brown that writing a letter, and saying goodbye, has become hard.'
+      zh: '11 月 30 日，济慈给查尔斯·布朗写信，说如今写信和道别都很难。'
+  death:
+    date: '1821-02-23'
+    stay_day: 100
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [wordsworth_keats_death, keats_locations_house]
+    text:
+      en: 'Keats died late on the night of 23 February 1821, aged twenty five, with Severn beside him. His gravestone and the burial register give the date as 24 February.'
+      zh: '济慈于 1821 年 2 月 23 日深夜去世，年二十五岁，塞文在他身边。墓碑和葬礼登记上写的日子是 2 月 24 日。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '23 February, late at night: Keats dies. Severn is with him.'
+      zh: '2 月 23 日深夜，济慈去世，塞文在他身边。'
+  register:
+    date: '1821-02-24'
+    stay_day: 100.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wordsworth_keats_death, romeartlover_keats]
+    text:
+      en: 'The burial register and the gravestone give the date of his death as 24 February.'
+      zh: '葬礼登记和墓碑上把他的死期写作 2 月 24 日。'
+    line:
+      en: 'In the burial register the day is written as 24 February.'
+      zh: '葬礼登记上，这个日子写成了 2 月 24 日。'
+  burial:
+    date: '1821-02-26'
+    stay_day: 103
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [romeartlover_keats, keats_locations_house]
+    text:
+      en: 'He was buried on 26 February 1821 in the Protestant Cemetery near the Pyramid of Cestius.'
+      zh: '1821 年 2 月 26 日，他葬在塞斯提乌斯金字塔旁的新教徒公墓。'
+    line:
+      en: '26 February: Keats is buried in the Protestant Cemetery, by the pyramid.'
+      zh: '2 月 26 日，济慈葬在金字塔旁的新教徒公墓。'
+  epitaph:
+    date: '1821'
+    stay_day: 103.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [romeartlover_keats, keats_locations_house]
+    text:
+      en: 'At his wish his gravestone does not name him and bears the line Here lies One Whose Name was writ in Water.'
+      zh: '照他的意思，墓碑上不刻他的名字，刻的是“此地长眠者，声名水上书”。'
+    line:
+      en: 'At his wish, the stone will not carry his name, only: Here lies One Whose Name was writ in Water.'
+      zh: '照他的意思，墓碑上不刻名字，只刻：此地长眠者，声名水上书。'
+  severn:
+    date: '1879'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [romeartlover_keats, keats_locations_house]
+    text:
+      en: 'Joseph Severn died in 1879 and lies beside Keats in the Protestant Cemetery.'
+      zh: '约瑟夫·塞文 1879 年去世，葬在新教徒公墓济慈的旁边。'
+    line:
+      en: '1879: Severn dies. He is buried beside Keats.'
+      zh: '1879 年，塞文去世，葬在济慈旁边。'
 bystanders:
   keats_rome_reader:
     invented: true
-    text: {en: 'An invented lodger checking a letter before taking it out.', zh: '一位虚构的住客，出门前正核对要送的信。'}
+    text: {en: 'An invented flower seller at the foot of the Spanish Steps.', zh: '一位编出来的卖花人，在西班牙台阶脚下。'}
+  keats_rome_neighbour:
+    invented: true
+    text: {en: 'An invented neighbour on the stairs who asks after the sick lodger.', zh: '一位编出来的楼梯上的邻居，常问起楼上的病人。'}
 wiki:
   refs:
     keats_rome_primary:
@@ -80,12 +170,35 @@ wiki:
       status: checked
       text:
         en: 'John Keats, letter to Charles Brown from Rome, 30 November 1820, Letters of John Keats to His Family and Friends, no. CLVIII. https://www.gutenberg.org/ebooks/35698'
-        zh: 'John Keats, letter to Charles Brown from Rome, 30 November 1820, Letters of John Keats to His Family and Friends, no. CLVIII. https://www.gutenberg.org/ebooks/35698'
+        zh: '约翰·济慈 1820 年 11 月 30 日自罗马致查尔斯·布朗的信，《济慈致家人与朋友书信集》第 158 封。https://www.gutenberg.org/ebooks/35698'
+    keats_locations_house:
+      order: 194
+      status: checked
+      text:
+        en: 'Keats Locations, Keats-Shelley Memorial House, Rome. https://keatslocations.co.uk/keats-shelley-memorial-house-rome/'
+        zh: 'Keats Locations，罗马济慈雪莱纪念馆。https://keatslocations.co.uk/keats-shelley-memorial-house-rome/'
+    wordsworth_keats_death:
+      order: 194
+      status: checked
+      text:
+        en: 'Wordsworth Trust, When did John Keats die? https://wordsworth.org.uk/blog/2019/02/23/when-did-john-keats-die/'
+        zh: '华兹华斯基金会，济慈死于哪一天？https://wordsworth.org.uk/blog/2019/02/23/when-did-john-keats-die/'
+    romeartlover_keats:
+      order: 194
+      status: checked
+      text:
+        en: 'Rome Art Lover, John Keats in Rome. https://www.romeartlover.it/Keats.html'
+        zh: 'Rome Art Lover，济慈在罗马。https://www.romeartlover.it/Keats.html'
 self_check:
-  quote_line: '住客递给你的信，地址写得急。'
-  fact: rome_letter
-  regret_choice: '略过「让外封地址还认得清」，这处细节便留给下一位核对。'
-  bookend: '从「短短一句怎么道别」开始，以员工留下的观察或更正收尾。'
-  share_line: '短短一句怎么道别'
-  share_number: '1820-11-30'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '照他的意思，墓碑上不刻名字，只刻：此地长眠者，声名水上书。'
+  fact: epitaph
+  regret_choice: '派和气的去，每天的面包牛奶送得上楼，最后几夜却未必守得住；派守得住夜的去，塞文能睡几个钟头，早上的托盘就没人端。'
+  bookend: '从到罗马那天住进台阶旁的二楼开始，以墓碑上不刻名字收尾。'
+  share_line: '1821 年 2 月，我在罗马西班牙台阶旁的小楼里守过几个长夜。'
+  share_number: '100'
+  knowing: 'death'
+  near: 'arrival, rome_letter'
+  lever: 'p1, p2'
+  missed: 'severn'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
