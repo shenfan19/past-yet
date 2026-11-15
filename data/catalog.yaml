@@ -8834,57 +8834,79 @@ events:
       - Fan Shen
   - id: savitribai_phule_pune
     year: 1848
+    date: '1848-01-01'
     lon: 73.86
     lat: 18.52
     region: asia
+    home:
+      - south_asia
     field: thought
     tier: 1
     channels:
       S: 3
       L: 1
     regret: true
+    ready: true
     refs:
       - savitribai_phule_pune_early
       - savitribai_phule_pune_records
+      - wikipedia_savitribai
+      - janata_savitribai
+      - theprint_sari
     scene:
       points:
         - id: p1
-          kind: endure
+          kind: trust
+          day: 10
           req:
             any:
               - trait:
-                  - wanderer
+                  - kind
+                  - patient
+                  - quiet
+              - job:
+                  - teacher
+                  - nurse
+        - id: p2
+          kind: endure
+          day: 30
+          req:
+            any:
+              - trait:
+                  - bold
                   - hardy
+                  - faithful
               - stat:
                   will: 6
-        - id: p2
-          kind: persuade
-          req:
-            trait:
-              - glib
-              - charismatic
         - id: p3
           kind: care
           redeem: true
+          day: 90
           req:
             any:
               - job:
                   - teacher
               - trait:
-                  - faithful
                   - patient
+                  - faithful
+                  - kind
+              - stat:
+                  wit: 6
       vignettes:
         - id: slate
           traits:
             - faithful
             - patient
             - kind
-        - id: home
+          day: 60
+        - id: road
           traits:
-            - wanderer
+            - bold
             - hardy
             - vigil
-        - id: register
+          day: 31
+        - id: chalk
+          day: 5
     authors:
       - AI
       - Fan Shen

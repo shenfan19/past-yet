@@ -3,88 +3,135 @@ events:
   savitribai_phule_pune:
     order: 199
     year: 1848
+    # the planned arrival is 1 January 1848, the day most accounts give for the opening of the school
+    date: '1848-01-01'
     lon: 73.86
     lat: 18.52
     region: asia
+    home: [south_asia]
     field: thought
     tier: 1
     channels: {S: 3, L: 1}
     regret: true
-    refs: [savitribai_phule_pune_early, savitribai_phule_pune_records]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [savitribai_phule_pune_early, savitribai_phule_pune_records, wikipedia_savitribai, janata_savitribai, theprint_sari]
     scene:
       points:
-        - {id: p1, kind: endure, req: {"any":[{"trait":["wanderer","hardy"]},{"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","charismatic"]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["teacher"]},{"trait":["faithful","patient"]}]}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["kind","patient","quiet"]},{"job":["teacher","nurse"]}]}}
+        - {id: p2, kind: endure, day: 30, req: {"any":[{"trait":["bold","hardy","faithful"]},{"stat":{"will":6}}]}}
+        - {id: p3, kind: care, redeem: true, day: 90, req: {"any":[{"job":["teacher"]},{"trait":["patient","faithful","kind"]},{"stat":{"wit":6}}]}}
       vignettes:
-        - {id: slate, traits: [faithful, patient, kind]}
-        - {id: home, traits: [wanderer, hardy, vigil]}
-        - {id: register}
+        - {id: slate, traits: [faithful, patient, kind], day: 60}
+        - {id: road, traits: [bold, hardy, vigil], day: 31}
+        - {id: chalk, day: 5}
     text:
       en:
-        name: 'Leave room for another name'
+        name: 'A spare sari in the bag'
         place: "Pune"
         figure: "Savitribai Phule"
-        story: 'Early newspaper accounts reproduced in an NCERT historical lecture trace Jotirao and Savitribai Phule’s educational work in Pune to 1848. A report on the later school network names Savitribai as a head teacher.'
+        story: 'In January 1848 Savitribai Phule, Jyotirao Phule and Sagunabai opened a school for girls in the house of Tatyasaheb Bhide in Pune. On the way to the school she was often pelted with stones and dung, and she carried a spare sari to change into. In 1852 she was recorded as head teacher of the first of the Phules'' girls'' schools. She died on 10 March 1897 of plague caught while nursing the sick.'
         relic: "A slate"
         relic_desc: "A small slate with a first row of letters in chalk."
         points:
-          p1: 'Make the trip back for a slate before class ends'
-          p2: 'Ask the pupil who finished first to leave space for the next hand'
-          p3: 'Show each pupil how to make room for the other’s letters'
+          p1: 'Be taken in by the household at Bhide Wada, then sweep the room and set out the slates each morning'
+          p2: 'Walk beside her to the school and carry the bag with the spare sari'
+          p3: 'Sit with one girl until she can write her own name for her family to see'
         vignettes:
-          slate: 'Gauri can write the first stroke but stops as soon as Janki reaches for the slate. You turn it sideways and Janki takes one end. By the time they are called home, each has made a mark that the other can point to. They agree which end each will use when the slate comes back.'
-          home: 'Janki has to take the slate home in a bag with her other things. Gauri will come on a different day and worries she will find it wiped. You show Janki how to tuck the cloth over the smaller practice mark. The board she carries has one half cleared and one half left for Gauri to read.'
-          register: 'You have seen the later report with neatly ruled totals. Gauri wants to know whether the name she has just written can stay up until her family sees it. You point out its place on the slate to Janki. The bell sounds before you can see who comes to read it.'
+          slate: '{staff} turns the slate sideways so two girls can reach it at once. When they are called home, each has left a mark the other can point to.'
+          road: '{staff} walks half a step behind on the road to Budhwar Peth and keeps the bag on the side away from the doorways. Nobody in the street says anything that morning.'
+          chalk: '{staff} breaks the last stick of chalk in two so that there is one for the board and one for the slates, and writes down what is needed from the market.'
       zh:
-        name: '给另一个名字留地方'
+        name: '包里多带的一件纱丽'
         place: "浦那"
-        figure: "萨维特里白·普勒"
-        story: '印度国家教育研究与培训委员会刊印的史料讲座引录早期报纸，把乔蒂拉奥与萨维特里白·普勒在浦那开展教育的时间追溯至1848年。后来的办学记录记萨维特里白担任校长。'
+        figure: "萨维特丽巴伊·普勒"
+        story: '1848 年 1 月，萨维特丽巴伊·普勒、乔蒂拉奥·普勒和萨古娜拜在浦那塔蒂亚萨赫布·比德的宅子里开办女子学校。去学校的路上常有人朝她扔石头和粪，她包里多带一件纱丽，到学校再换上。1852 年的记录写她是普勒夫妇办的第一所女校的校长。1897 年 3 月 10 日，她在照顾病人时染上鼠疫去世。'
         relic: "一块石板"
         relic_desc: "一块小石板，上面用粉笔写着第一排字母。"
         points:
-          p1: '下课前跑一趟，把石板取回来'
-          p2: '请先写完的学生给另一只手留地方'
-          p3: '教两名学生给对方的字留出地方'
+          p1: '先让比德府这户人家认下，再每天早上扫好屋子、摆好石板'
+          p2: '陪她走到学校，替她拎着装纱丽的那只包'
+          p3: '陪一个女孩坐到她能写出自己的名字，留给家里人看'
         vignettes:
-          slate: '高莉能写第一笔，一见詹基来够石板就停了。你把石板横过来，詹基扶住另一头。喊她们回家时，两人都留了一道笔迹，彼此都指得出是谁写的。她们约好下回石板拿来各用哪一端。'
-          home: '詹基得把石板和别的东西装在同一个袋里带回家。高莉隔天才来，怕字早被擦了。你帮詹基用布遮好较小的那笔。她带走的石板上，一半已经擦净，一半还留给高莉看。'
-          register: '你见过后来的报告，表上把人数归得齐齐整整。高莉问，她刚写的名字能不能留到家里人看见。你把字在石板上的位置指给詹基。钟声一响，后来谁来读它，你就不在场了。'
+          slate: '{staff}把石板横过来，让两个女孩同时够得着。喊她们回家时，两人都留了一道笔迹，彼此都指得出是谁写的。'
+          road: '去布德瓦尔区的路上，{staff}落后半步跟着，把包拎在背对门口的那一侧。那天早上，街上没人说话。'
+          chalk: '{staff}把最后一支粉笔掰成两截，一截给黑板，一截给石板，又记下要去集市上买的东西。'
 text:
   en:
     name: Savitribai Phule
     text: Indian teacher and poet, 1831 to 1897. With her husband Jyotirao Phule she opened a school for girls in Pune in 1848, faced hostility for it, and later opened a home for widows and cared for plague patients.
   zh:
-    name: 萨维特里白·普勒
+    name: 萨维特丽巴伊·普勒
     text: 印度教师与诗人，1831 年生，1897 年去世。1848 年她与丈夫乔蒂拉奥·普勒在浦那开办女校，为此遭到敌视，后来又开设寡妇之家，并照顾鼠疫病人。
-hook: {en: 'Two pupils have one slate before dismissal.', zh: '放学前，两名学生只剩一块石板。'}
+hook: {en: 'A spare sari in the bag', zh: '包里多带一件纱丽'}
 facts:
-  early:
+  school:
+    date: '1848-01-01'
+    stay_day: 0
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_savitribai, janata_savitribai]
+    text:
+      en: 'In January 1848 Savitribai and Jyotirao Phule, with Sagunabai, started a school for girls at Bhide Wada, the house of Tatyasaheb Bhide in Pune. One account gives the date as 1 January.'
+      zh: '1848 年 1 月，萨维特丽巴伊和乔蒂拉奥·普勒与萨古娜拜在浦那塔蒂亚萨赫布·比德的宅子比德府开办女子学校，有说法定在 1 月 1 日。'
+    line:
+      en: 'January 1848: in Bhide Wada, the house of Tatyasaheb Bhide, Savitribai, Jyotirao and Sagunabai open a school for girls.'
+      zh: '1848 年 1 月，萨维特丽巴伊、乔蒂拉奥和萨古娜拜在比德府开办女子学校。'
+  sari:
     date: '1848'
+    stay_day: 25
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [theprint_sari, wikipedia_savitribai]
+    text:
+      en: 'On her way to the school she was often pelted with stones and dung and abused, and she carried a spare sari to change into at the school.'
+      zh: '去学校的路上，她常被人扔石头和粪、遭人辱骂，所以包里多带一件纱丽，到学校再换上。'
+    line:
+      en: 'On the road to the school she is pelted with stones and dung. She carries a spare sari in her bag and changes at the school.'
+      zh: '去学校的路上有人朝她扔石头和粪。她包里多带一件纱丽，到了学校再换上。'
+  early:
+    date: '1851'
     checked: official_record
     level: usable
     use: [story, wiki]
     sources: [savitribai_phule_pune_early]
     text:
       en: 'The lecture reproduces the 1851 account linking the start of the Phules’ educational work to 1848 and describing Savitribai’s role and training.'
-      zh: '讲座引录1851年报纸，把普勒夫妇开始办学的时间追溯到1848年，并记述萨维特里白的参与和受训经过。'
+      zh: '讲座引录1851年报纸，把普勒夫妇开始办学的时间追溯到1848年，并记述萨维特丽巴伊的参与和受训经过。'
   records:
     date: '1852-02-05'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [savitribai_phule_pune_records]
     text:
-      en: 'The lecture discusses the 5 February 1852 application for aid and accompanying records of later girls’ schools. These describe Savitribai as headmistress in the first of the schools in that series.'
-      zh: '讲座讨论1852年2月5日申请资助的文书及相关女子学校记录，后者指出萨维特里白是该批学校中第一所的校长。'
+      en: 'The 5 February 1852 application for aid and the records of the later girls’ schools describe Savitribai as headmistress of the first of the schools in that series.'
+      zh: '1852 年 2 月 5 日申请资助的文书及后来女子学校的记录，记萨维特丽巴伊为这批学校中第一所的校长。'
+    line:
+      en: '5 February 1852: in an application for aid, Savitribai is written down as headmistress of the first school.'
+      zh: '1852 年 2 月 5 日，申请资助的文书上，萨维特丽巴伊被写作第一所女校的校长。'
+  death:
+    date: '1897-03-10'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [wikipedia_savitribai, janata_savitribai]
+    text:
+      en: 'She died on 10 March 1897 of plague, which she caught while caring for patients.'
+      zh: '1897 年 3 月 10 日，她因照顾病人染上鼠疫去世。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '10 March 1897: Savitribai dies of plague, caught while she was nursing the sick.'
+      zh: '1897 年 3 月 10 日，萨维特丽巴伊在照顾病人时染上鼠疫，去世。'
 bystanders:
   gauri:
     invented: true
-    text: {en: 'A fictional pupil practising her name.', zh: '虚构学生高莉，正在练习写自己的名字。'}
+    text: {en: 'A girl, made up for the game, who practises her name on a shared slate.', zh: '一个编出来的女孩，在合用的石板上练写自己的名字。'}
   janki:
     invented: true
-    text: {en: 'A fictional pupil who has to take the shared slate home.', zh: '虚构学生詹基，得把合用的石板带回家。'}
+    text: {en: 'A girl, made up for the game, who has to take the slate home at night.', zh: '一个编出来的女孩，晚上得把石板带回家。'}
 wiki:
   refs:
     savitribai_phule_pune_early:
@@ -99,16 +146,34 @@ wiki:
       text:
         en: 'NCERT, Savitribai Phule memorial lecture, pp. 12–13, government assistance records https://www.ncert.nic.in/pdf/publication/otherpublications/Memorial-Lectures-Series/FINAL%20COVER%20OF%20SAVIRTIBAI%20PHULE.pdf'
         zh: '印度国家教育研究与培训委员会，纪念讲座第12至13页，引政府资助档案 https://www.ncert.nic.in/pdf/publication/otherpublications/Memorial-Lectures-Series/FINAL%20COVER%20OF%20SAVIRTIBAI%20PHULE.pdf'
+    wikipedia_savitribai:
+      order: 855
+      status: checked
+      text:
+        en: 'Wikipedia, Savitribai Phule. https://en.wikipedia.org/wiki/Savitribai_Phule'
+        zh: '维基百科，萨维特丽巴伊·普勒。https://en.wikipedia.org/wiki/Savitribai_Phule'
+    janata_savitribai:
+      order: 856
+      status: checked
+      text:
+        en: 'Janata Weekly, Remembering Savitribai Phule. https://janataweekly.org/remembering-savitribai-phule/'
+        zh: 'Janata Weekly，纪念萨维特丽巴伊·普勒。https://janataweekly.org/remembering-savitribai-phule/'
+    theprint_sari:
+      order: 857
+      status: checked
+      text:
+        en: 'ThePrint, book excerpt: Savitribai Phule carried an extra saree to school. https://theprint.in/pageturner/excerpt/savitribai-phule-carried-an-extra-saree-to-school-brahmins-regularly-threw-filth-at-her/1777412'
+        zh: 'ThePrint 书摘：萨维特丽巴伊·普勒上学时多带一件纱丽。https://theprint.in/pageturner/excerpt/savitribai-phule-carried-an-extra-saree-to-school-brahmins-regularly-threw-filth-at-her/1777412'
 self_check:
-  fact: early
-  quote_line: '两人都留了一道笔迹，彼此都指得出是谁写的。'
-  regret_choice: 'register 若去讲后来的校况，石板上的字可能被擦。'
-  bookend: '从一块不够分的石板，到两人各有一头。'
-  share_line: '一块石板，两个人写过。'
-  share_number: 'slate 的两名虚构学生。'
-  knowing: 'register 知道后来记录会清点人数。'
-  near: 'early 对照早期办学的报纸记载。'
-  lever: 'slate 让等待的学生也落笔。'
-  missed: 'register 钟响后无法知道家人是否看了字。'
-  brought: 'home 带回虚构练习石板。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '她包里多带一件纱丽，到了学校再换上。'
+  fact: sari
+  regret_choice: '派敢走那段路的去，包有人拎，屋里的石板就没人一早摆好；派耐心的去，女孩写得出名字，路上却没人陪着。'
+  bookend: '从比德府开学的那个一月开始，以 1897 年她在鼠疫里去世收尾。'
+  share_line: '1848 年，我在浦那替一位老师拎过一只装着纱丽的包。'
+  share_number: '1848'
+  knowing: 'death'
+  near: 'school, sari'
+  lever: 'p2, p3'
+  missed: 'records'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.8, 2026-11-15
+
+- Pune 1848, Savitribai Phule, is rewritten and turned on: the school at Bhide Wada in January 1848, the stones and dung on the road and the spare sari, the head teacher of 1852 and her death of plague in 1897, with sync points for setting out the slates, carrying the bag on the road and staying with a girl until she can write her name.
+
 ## 0.5.7, 2026-11-15
 
 - A line of history in a record carries its own date; no date is put before it.
