@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.12, 2026-11-15
+
+- Cairo 1406, Ibn Khaldun, is rewritten and turned on: his coming to Cairo in 1382, the judgeship and the shipwreck of 1384, the meeting with Timur outside Damascus in 1401, and his death on 17 March 1406 and burial outside the Bab al-Nasr, with sync points for copying the judgements, asking how long the gate was open and walking with the bier.
+
 ## 0.5.11, 2026-11-15
 
 - A scene of Sor Juana names the employee once, as in English.

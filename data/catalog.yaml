@@ -7585,53 +7585,77 @@ events:
       - Fan Shen
   - id: ibn_khaldun_cairo
     year: 1406
+    date: '1406-01-01'
     lon: 31.24
     lat: 30.04
     region: africa
+    home:
+      - north_africa
     field: thought
     tier: 3
     channels:
       G: 2
       S: 2
     regret: true
+    ready: true
     refs:
       - ibn_khaldun_cairo_method
+      - britannica_ibn_khaldun_later
+      - ahram_ibn_khaldun
+      - encyclopedia_ibn_khaldun
     scene:
       points:
         - id: p1
           kind: trust
+          day: 12
           req:
-            trait:
-              - cosmopolitan
-              - artistic
-              - sensitive
+            any:
+              - trait:
+                  - cosmopolitan
+                  - quiet
+                  - patient
+              - job:
+                  - archivist
+                  - teacher
+                  - student
         - id: p2
           kind: notice
+          day: 40
           req:
-            trait:
-              - curious
-              - streetwise
-              - artistic
+            any:
+              - trait:
+                  - curious
+                  - skeptical
+                  - methodical
+              - stat:
+                  wit: 6
         - id: p3
           kind: hold
           redeem: true
+          day: 76
           req:
-            job:
-              - archivist
-              - teacher
-              - student
+            any:
+              - trait:
+                  - faithful
+                  - attached
+                  - vigil
+              - stat:
+                  will: 6
       vignettes:
         - id: gate
           traits:
             - curious
             - methodical
             - skeptical
+          day: 30
         - id: two
           traits:
             - sensitive
             - artistic
             - cosmopolitan
-        - id: later
+          day: 50
+        - id: copy
+          day: 20
     authors:
       - AI
       - Fan Shen
