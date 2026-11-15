@@ -8924,6 +8924,7 @@ events:
     lat: 18.52
     region: asia
     home:
+      - india
       - south_asia
     field: thought
     tier: 1
@@ -10114,35 +10115,60 @@ events:
       - Fan Shen
   - id: hargrave_stanwell_park
     year: 1894
+    date: '1894-11-01'
+    stay: 1
     lon: 150.99
     lat: -34.23
     region: oceania
+    home:
+      - europe_west
+      - pacific
     field: technology
     tier: 2
     channels:
       L: 1
       H: 1
+    ready: true
     refs:
       - hargrave_stanwell_park_beach
       - hargrave_stanwell_park_photo
+      - britannica_hargrave
+      - ausgeo_hargrave
     scene:
       points:
         - id: p1
-          kind: notice
-          req:
-            stat:
-              wit: 6
-        - id: p2
           kind: trust
+          day: 4
           req:
-            trait:
-              - handy
+            any:
+              - trait:
+                  - handy
+                  - cheerful
+                  - kind
+              - job:
+                  - mechanic
+                  - tailor
+                  - carpenter
+        - id: p2
+          kind: notice
+          day: 11.2
+          req:
+            any:
+              - trait:
+                  - methodical
+                  - curious
+                  - calm
+              - stat:
+                  wit: 6
         - id: p3
           kind: hold
+          day: 11.4
           req:
             any:
               - trait:
                   - patient
+                  - hardy
+                  - vigil
               - stat:
                   will: 6
       vignettes:
@@ -10151,12 +10177,15 @@ events:
             - methodical
             - curious
             - scholarly
+          day: 11.6
         - id: tag
           traits:
             - handy
             - patient
             - vigil
+          day: 8
         - id: lift
+          day: 6
     authors:
       - AI
       - Fan Shen

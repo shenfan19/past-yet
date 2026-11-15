@@ -3,87 +3,126 @@ events:
   hargrave_stanwell_park:
     order: 221
     year: 1894
+    # one office day from the planned arrival on 1 November 1894
+    date: '1894-11-01'
+    stay: 1
     lon: 150.99
     lat: -34.23
     region: oceania
+    home: [europe_west, pacific]
     field: technology
     tier: 2
     channels: {L: 1, H: 1}
-    refs: [hargrave_stanwell_park_beach, hargrave_stanwell_park_photo]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [hargrave_stanwell_park_beach, hargrave_stanwell_park_photo, britannica_hargrave, ausgeo_hargrave]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
-        - {id: p2, kind: trust, req: {"trait":["handy"]}}
-        - {id: p3, kind: hold, req: {"any":[{"trait":["patient"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: trust, day: 4, req: {"any":[{"trait":["handy","cheerful","kind"]},{"job":["mechanic","tailor","carpenter"]}]}}
+        - {id: p2, kind: notice, day: 11.2, req: {"any":[{"trait":["methodical","curious","calm"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: hold, day: 11.4, req: {"any":[{"trait":["patient","hardy","vigil"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: four, traits: [methodical, curious, scholarly]}
-        - {id: tag, traits: [handy, patient, vigil]}
-        - {id: lift}
+        - {id: four, traits: [methodical, curious, scholarly], day: 11.6}
+        - {id: tag, traits: [handy, patient, vigil], day: 8}
+        - {id: lift, day: 6}
     text:
       en:
         name: 'The fourth kite'
         place: "Stanwell Park, Australia"
         figure: "Lawrence Hargrave"
-        story: 'On 12 November 1894 at Stanwell Park beach, Lawrence Hargrave rose from the ground in an experiment with four linked box kites. A photograph held by the State Library of New South Wales shows Hargrave, James Swaine and equipment from the test.'
-        relic: 'A spare box-kite tag'
-        relic_desc: 'A spare label from the fictional tally table.'
+        story: 'Lawrence Hargrave began his experiments with box kites in 1893. On 12 November 1894, on the beach at Stanwell Park, four of his linked box kites lifted him off the sand, about 16 feet into the air. A photograph held by the State Library of New South Wales shows Hargrave, James Swaine and the equipment of the trial. He died in Sydney on 6 July 1915.'
+        relic: 'A spare box kite tag'
+        relic_desc: 'A spare label for the frame of a box kite.'
         points:
-          p1: 'Count the kites laid out before the lift'
-          p2: 'Keep the frame labels readable while they are carried off the sand'
-          p3: 'Wait until the seat leaves the beach before marking the trial'
+          p1: 'Be taken in by the helpers on the beach, then stretch and tie the cloth of the kites'
+          p2: 'At the lift, stand by the winch and call out how high the seat has risen'
+          p3: 'When the wind drops, hold the line of the fourth kite steady'
         vignettes:
-          four: 'Ada has crossed one kite off because she saw its frame carried down in two pieces. You go back with her and count the assembled kites once. All four go onto the page. She draws a small bracket around them so the next reader knows they belong to the same lift.'
-          tag: 'Ned finds a tag torn loose as he carries the frames off the beach. You follow back along the wet sand while he keeps the other three frames apart. There is just enough of the mark left to match the loose tag. When he shuts the store, he can still tell the last frame from the first.'
-          lift: 'The number you remember from a future display almost goes into the height column. Ada has seen the seat stir but is waiting to see daylight between it and the sand. You watch for that first gap with her. The visit ends before you can check what height was entered into the ledger.'
+          four: '{staff} counts the kites laid out on the sand once more after the lift and writes all four on the page, with a bracket round them, so the next reader knows they flew together.'
+          tag: '{staff} follows the wet sand back to find a tag torn off a frame, and ties it on again with a new knot.'
+          lift: '{staff} stands with the helpers on the dune while the wind is tried with a single kite, and learns which way to run with the line.'
       zh:
         name: '第四只风筝'
-        place: "澳大利亚斯坦韦尔公园"
+        place: "澳大利亚斯坦威尔公园"
         figure: "劳伦斯·哈格雷夫"
-        story: '1894年11月12日，劳伦斯·哈格雷夫在斯坦韦尔公园海滩用四只相连的箱式风筝试验，被风筝托离地面。新南威尔士州立图书馆藏照有哈格雷夫、詹姆斯·斯韦恩和试验装备。'
-        relic: '一片箱式风筝的备用签'
-        relic_desc: '记事桌上留的一片备用签。'
+        story: '劳伦斯·哈格雷夫 1893 年开始试验箱形风筝。1894 年 11 月 12 日，在斯坦威尔公园的海滩上，四只串在一起的箱形风筝把他拉离沙地，升到约 16 英尺高。新南威尔士州立图书馆藏的照片里有哈格雷夫、詹姆斯·斯韦恩和试验器材。1915 年 7 月 6 日他在悉尼去世。'
+        relic: '一片箱形风筝的备用签'
+        relic_desc: '一片给箱形风筝骨架用的备用签。'
         points:
-          p1: '试验前数清铺开的风筝'
-          p2: '搬离沙滩时，让风筝骨架上的签还能看清'
-          p3: '等座椅真正离地再给这一趟做记号'
+          p1: '先让海滩上帮忙的人认下，再帮着绷紧、扎好风筝的布面'
+          p2: '升空时守在绞盘旁，报出座椅离地多高'
+          p3: '风停下来时，稳住第四只风筝的拉绳'
         vignettes:
-          four: '艾达看见一只风筝的骨架拆成两截搬下来，就把那只划掉了。你陪她回去，把拼好的风筝重新数一遍。四只都入了簿。她用括号把它们圈在一起，提醒下一个人读的是同一次试验。'
-          tag: '内德往岸上搬骨架时，发现一张签被扯脱了。你沿湿沙往回找，他把另外三副骨架分开摆着。掉下来的签上还剩一点笔迹，刚够认出是哪一副。关库门时，他仍分得清最后一副与第一副。'
-          lift: '你差点把后世展牌上的数字填进高度栏。艾达看见座椅动了，还在等座椅和沙地中间露出一点亮。你和她一起等到那道空隙。还没来得及核实簿上最后填了多高，你已经要走了。'
+          four: '升空之后，{staff}把沙滩上铺开的风筝又数了一遍，四只都记在本子上，用括号圈在一起，让下一个读的人知道它们是一起飞的。'
+          tag: '一张签从骨架上扯脱了，{staff}沿着湿沙往回找，找到后重新打了个结系上。'
+          lift: '先放一只风筝试风时，{staff}和帮手们站在沙丘上，学会了拉着绳该往哪边跑。'
 text:
   en:
     name: "Lawrence Hargrave"
-    text: "Engineer and inventor born in England, 1850 to 1915, who lived in Australia. He invented the box kite and published his flight work freely without patents."
+    text: "Engineer and inventor born in England, 1850 to 1915, who lived in Australia. He invented the box kite and published his work on flight."
   zh:
     name: "劳伦斯·哈格雷夫"
-    text: "出生在英国、生活在澳大利亚的工程师和发明家，1850 年生，1915 年去世。他发明了箱式风筝，并把飞行研究公开发表，不申请专利。"
-hook: {en: 'The wind eases. Which number do you keep?', zh: '风一停，你留下哪个数字？'}
+    text: "出生在英国、生活在澳大利亚的工程师和发明家，1850 年生，1915 年去世。他发明了箱形风筝，并公开发表自己的飞行研究。"
+hook: {en: 'Sixteen feet off the sand', zh: '离沙地十六英尺'}
 facts:
+  boxkite:
+    date: '1893'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [britannica_hargrave, hargrave_stanwell_park_photo]
+    text:
+      en: 'Hargrave began experimenting with kites in 1893 and devised the box kite.'
+      zh: '哈格雷夫 1893 年开始试验风筝，做出了箱形风筝。'
+    line:
+      en: '1893: Hargrave starts to experiment with kites and makes the box kite.'
+      zh: '1893 年，哈格雷夫开始试验风筝，做出了箱形风筝。'
   beach:
     date: '1894-11-12'
-    checked: official_record
+    stay_day: 11
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [hargrave_stanwell_park_beach]
+    use: [story, history, wiki]
+    sources: [hargrave_stanwell_park_beach, ausgeo_hargrave]
     text:
-      en: 'The museum dates the linked four-kite lift on Stanwell Park beach to 12 November 1894.'
-      zh: '馆方记载，1894年11月12日的斯坦韦尔公园海滩升空试验连用了四只风筝。'
+      en: 'On 12 November 1894 at Stanwell Park beach, four linked box kites of his own making lifted Hargrave off the ground, about 4.8 metres, almost 16 feet.'
+      zh: '1894 年 11 月 12 日，在斯坦威尔公园的海滩上，四只他自己做的、串在一起的箱形风筝把他拉离地面，约 4.8 米，将近 16 英尺。'
+    line:
+      en: '12 November: on the beach at Stanwell Park, four linked box kites lift Hargrave off the sand, almost 16 feet up.'
+      zh: '11 月 12 日，斯坦威尔公园的海滩上，四只串起来的箱形风筝把哈格雷夫拉离沙地，升到将近 16 英尺。'
   photo:
     date: '1894-11-12'
-    checked: official_record
+    stay_day: 11.5
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [hargrave_stanwell_park_photo]
+    use: [story, history, wiki]
+    sources: [hargrave_stanwell_park_photo, hargrave_stanwell_park_beach]
     text:
-      en: 'The library identifies the beach photograph with Hargrave and James Swaine and equipment from the kite-lift experiment.'
-      zh: '图书馆把海滩照片与升空试验联系起来，并认出其中的哈格雷夫、詹姆斯·斯韦恩及试验器材。'
+      en: 'A photograph of the trial on the beach shows Hargrave, James Swaine and equipment from the experiment.'
+      zh: '一张海滩试验的照片里有哈格雷夫、詹姆斯·斯韦恩和试验器材。'
+    line:
+      en: 'A photograph is taken on the beach: Hargrave, James Swaine and the gear of the trial.'
+      zh: '海滩上留下一张照片，照片里是哈格雷夫、詹姆斯·斯韦恩和试验的器材。'
+  death:
+    date: '1915-07-06'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [ausgeo_hargrave, britannica_hargrave]
+    text:
+      en: 'He died in Sydney on 6 July 1915, aged 65, of peritonitis after an operation.'
+      zh: '1915 年 7 月 6 日，他在悉尼因术后腹膜炎去世，终年 65 岁。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '6 July 1915: Hargrave dies in Sydney, aged 65.'
+      zh: '1915 年 7 月 6 日，哈格雷夫在悉尼去世，终年 65 岁。'
 bystanders:
   ada:
     invented: true
-    text: {en: 'A fictional tally keeper who wants an unambiguous count.', zh: '虚构记录员艾达，要留下数得明白的那一笔。'}
+    text: {en: 'A helper on the beach, made up for the game, who keeps the tally of the kites.', zh: '一位编出来的海滩帮手，记着风筝的数目。'}
   ned:
     invented: true
-    text: {en: 'A fictional store helper collecting labelled frames before the store closes.', zh: '虚构库房帮工内德，关门前要收好带签的骨架。'}
+    text: {en: 'A helper, made up for the game, who carries the frames back to the store.', zh: '一位编出来的帮工，把骨架搬回库房。'}
 wiki:
   refs:
     hargrave_stanwell_park_beach:
@@ -98,16 +137,28 @@ wiki:
       text:
         en: 'State Library of New South Wales, Hargrave’s flying machines and the beach photograph https://www.sl.nsw.gov.au/stories/hargraves-flying-machines'
         zh: '新南威尔士州立图书馆，哈格雷夫飞行器专题与海滩照片 https://www.sl.nsw.gov.au/stories/hargraves-flying-machines'
+    britannica_hargrave:
+      order: 843
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Lawrence Hargrave. https://www.britannica.com/biography/Lawrence-Hargrave'
+        zh: '《不列颠百科全书》，劳伦斯·哈格雷夫。https://www.britannica.com/biography/Lawrence-Hargrave'
+    ausgeo_hargrave:
+      order: 844
+      status: checked
+      text:
+        en: 'Australian Geographic, Defining moments in Australian history: Australia’s first piloted flight. https://australiangeographic.com.au/?p=344855'
+        zh: '《澳大利亚地理》，澳大利亚史上的关键时刻：澳洲首次载人飞行。https://australiangeographic.com.au/?p=344855'
 self_check:
   fact: beach
-  quote_line: '四只都入了簿。'
-  regret_choice: 'lift 若默写后世高度，就错过现场判断是否离地。'
-  bookend: '先数骨架，最后看座椅与地面的空隙。'
-  share_line: '四只风筝，一次升空。'
-  share_number: '四只是馆方记载的实数。'
-  knowing: 'lift 记得后世的展牌读数。'
-  near: 'beach 在有日有地的试验近旁观察。'
-  lever: 'tag 保住一副骨架的标识。'
-  missed: 'lift 离开前赶不上读数复核。'
-  brought: 'tag 带回虚构的备用骨架签。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '四只串起来的箱形风筝把哈格雷夫拉离沙地，升到将近 16 英尺。'
+  regret_choice: '派手巧的去，风筝的布面绷得紧，风停时未必拉得住绳；派稳得住的去，绳拉住了，离地多高却没人报。'
+  bookend: '从 1893 年的第一只箱形风筝开始，以他 1915 年在悉尼去世收尾。'
+  share_line: '1894 年 11 月，我在澳大利亚的海滩上拉过一根风筝绳。'
+  share_number: '16'
+  knowing: 'death'
+  near: 'beach, photo'
+  lever: 'p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

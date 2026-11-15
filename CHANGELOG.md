@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.13, 2026-11-15
+
+- Stanwell Park 1894, Lawrence Hargrave, is rewritten and turned on: the box kite of 1893, the lift on the beach on 12 November 1894, the photograph and his death in 1915, with sync points for stretching the cloth of the kites, calling the height at the winch and holding the line of the fourth kite.
+- The faces at home in Pune include India.
+
 ## 0.5.12, 2026-11-15
 
 - Cairo 1406, Ibn Khaldun, is rewritten and turned on: his coming to Cairo in 1382, the judgeship and the shipwreck of 1384, the meeting with Timur outside Damascus in 1401, and his death on 17 March 1406 and burial outside the Bab al-Nasr, with sync points for copying the judgements, asking how long the gate was open and walking with the bier.
