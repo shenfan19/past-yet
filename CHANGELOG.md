@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.7, 2026-11-15
+
+- A line of history in a record carries its own date; no date is put before it.
+
 ## 0.5.6, 2026-11-15
 
 - Rome 1820 to 1821, John Keats by the Spanish Steps, is rewritten and turned on: from the arrival on 15 November to the death on the night of 23 February, the register that wrote the 24th, the burial and the stone without a name, and Severn beside him in 1879. The exposure to infection is lowered so the stay is not cut short for everyone in its second week.

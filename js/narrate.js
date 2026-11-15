@@ -250,9 +250,9 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
       const text = D.get('enc_text.fact_lines')?.[EF.module]?.[f.id];
       if (!text) continue;
       const [, mm, dd] = f.date.split('-').map(Number);
-      // a fact placed on a day of the stay carries its own date in its line, such as a date of the lunar calendar, and reads without a label
       const onDay = typeof f.stay_day === 'number';
-      const label = !onDay && mm && dd ? T.date_day.replace('{m}', String(mm)).replace('{mn}', T.month_names[mm - 1]).replace('{d}', String(dd)) + R.light_fact_sep : '';
+      // a line written for the record carries its own date, so no label is put before it
+      const label = '';
       // a fact is placed on its day of the stay when it says so; otherwise a fact of an earlier year or of the year of the event comes before the arrival, in order,
       // and a fact of a later year after the leaving
       const after = onDay ? f.stay_day > stayDays : year > ev.year;
