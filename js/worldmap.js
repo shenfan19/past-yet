@@ -212,7 +212,7 @@ export function createWorldMap(X) {
     const name = info(p.events.find((e) => !e.catalog) || p.events[0]).place;
     const items = p.events.slice().sort((a, b) => a.year - b.year).map((e) => {
       const i = info(e);
-      return `<div class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e), e.id) : ''}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</div>`;
+      return `<button class="evrow ${isSel(e) ? 'on' : ''}" data-act="mapevent" data-id="${e.id}"><b>${fmtYear(D, e.year)}</b> <span>${esc(i.name)}</span> ${best(e) ? X.starsHtml(best(e), e.id) : ''}${e.locked ? ' <span class="chip warn">' + U.dispatch.hidden_mark + '</span>' : ''}</button>`;
     }).join('');
     return `<h3>${esc(name)} <span class="muted">· ${p.events.length}</span></h3><div class="evgrid">${items}</div>`;
   }
@@ -347,10 +347,7 @@ export function createWorldMap(X) {
     if (s.justDragged) return false;
     if (a === 'mapplace') {
       s.place = id;
-      const p = places()[id];
-      if (p && p.events.length === 1 && (DEV || !p.events[0].locked)) {
-        const e = p.events[0]; if (e.catalog) s.cat = e.id; else { s.cat = null; X.selectEra(e.id); } X.st.modal = { kind: 'dispatch' };
-      } else X.st.modal = { kind: 'place', place: id };
+      X.st.modal = { kind: 'place', place: id };
       return true;
     }
     if (a === 'mapevent') {

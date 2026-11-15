@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {C: 3, E: 2}
     regret: true
+    refs: [miyazawa_kenji_hanamaki_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["streetwise","handy","scholarly"]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: call, traits: [artistic, quiet]}
+        - {id: window, traits: [curious, wanderer]}
+        - {id: ticket}
     text:
       en:
         name: "Stories few had read"
         place: "Hanamaki"
         figure: "Miyazawa Kenji"
-        story: "A teacher and farm adviser in northern Japan, Miyazawa Kenji writes stories and poems that almost nobody buys. He dies of illness in 1933 aged 37, and Night on the Galactic Railroad is left unfinished."
+        story: 'Miyazawa revised Night on the Galactic Railroad in several drafts. In the manuscript-based text, Giovanni hears a station call before finding himself in a carriage. This Hanamaki discussion is invented.'
         relic: "A pocket notebook"
         relic_desc: "A small notebook of poems in pencil."
         points:
-          p1: "Look at the stars with him"
-          p2: "Work the cold field beside him"
-          p3: "Sit with him on his last evening"
+          p1: 'Find where the reader first hears the station'
+          p2: 'Keep the town and the carriage distinct in the notes'
+          p3: 'Read the transition so a listener can follow it'
+        vignettes:
+          call: 'You read the station call from across the room. The reader looks up before you explain who is there. They leave the explanation for later and keep the call in their reading.'
+          window: 'The reader tries to point to where the route enters the sky. You ask what Giovanni can see through the window first. They put the hill and the carriage on separate scraps.'
+          ticket: 'You hold the page open while the reader rereads the shift into the carriage. They make a short note of what changes before the next station is named.'
       zh:
         name: "很少有人读过的故事"
         place: "花卷"
         figure: "宫泽贤治"
-        story: "宫泽贤治是日本北部的教师兼农业指导员，他写的故事和诗几乎没人买。他于1933年病逝，年仅三十七岁，《银河铁道之夜》没有写完。"
+        story: '宫泽贤治多次修改《银河铁道之夜》。现行的据稿本整理的文字写乔班尼听见站名，接着发现自己坐在车厢里。花卷的这段讨论为虚构。'
         relic: "一本口袋笔记本"
         relic_desc: "一本小笔记本，里面是铅笔写的诗。"
         points:
-          p1: "陪他一起看星星"
-          p2: "在寒冷的田里和他一起干活"
-          p3: "在他最后的傍晚陪着他"
+          p1: '找出读者第一次听到站名的位置'
+          p2: '在笔记里分清城镇和车厢'
+          p3: '把转换处读到听的人能跟上'
+        vignettes:
+          call: '你在屋子那头念出站名。还没解释谁在那里，读者就抬了头。他再读时把解释往后放，先保留那一声。'
+          window: '读者想指出铁道从哪里通进天空。你问乔班尼先从窗里看见了什么。他把小山和车厢分别写在两张纸上。'
+          ticket: '读者重读转进车厢那几句时，你一直替他翻着这页。下一站还没叫名以前，他先记下眼前已经变了什么。'
 text:
   en:
     name: Miyazawa Kenji
@@ -45,3 +58,34 @@ text:
   zh:
     name: 宫泽贤治
     text: 日本诗人与童话作家，1896 年生，1933 年去世，花卷人。他教农业，帮助贫苦农民，并写了《银河铁道之夜》。他的作品大多在身后出版。
+hook: {en: 'When does a town become the railway?', zh: '城里走着走着，何时上了车'}
+facts:
+  galactic_manuscript:
+    date: '1933'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [miyazawa_kenji_hanamaki_primary]
+    text:
+      en: 'Miyazawa revised Night on the Galactic Railroad in several drafts. In the manuscript-based text, Giovanni hears a station call before finding himself in a carriage. This Hanamaki discussion is invented.'
+      zh: '宫泽贤治多次修改《银河铁道之夜》。现行的据稿本整理的文字写乔班尼听见站名，接着发现自己坐在车厢里。花卷的这段讨论为虚构。'
+bystanders:
+  miyazawa_kenji_hanamaki_reader:
+    invented: true
+    text: {en: 'An invented reader picturing the transition without a stage.', zh: '一位虚构的读者，试着在没有舞台的情况下想象这次转换。'}
+wiki:
+  refs:
+    miyazawa_kenji_hanamaki_primary:
+      order: 196
+      status: checked
+      text:
+        en: 'Kenji Miyazawa, Night on the Galactic Railroad, manuscript-based Japanese text, Aozora Bunko. https://www.aozora.gr.jp/cards/000081/files/48222_59645.html'
+        zh: 'Kenji Miyazawa, Night on the Galactic Railroad, manuscript-based Japanese text, Aozora Bunko. https://www.aozora.gr.jp/cards/000081/files/48222_59645.html'
+self_check:
+  quote_line: '你在屋子那头念出站名。'
+  fact: galactic_manuscript
+  regret_choice: '略过「找出读者第一次听到站名的位置」，这处细节便留给下一位核对。'
+  bookend: '从「城里走着走着，何时上了车」开始，以员工留下的观察或更正收尾。'
+  share_line: '城里走着走着，何时上了车'
+  share_number: '1933'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

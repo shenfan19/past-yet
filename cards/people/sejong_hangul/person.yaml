@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 3
     channels: {C: 2, S: 1}
+    refs: [sejong_hangul_primary]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"stat": {"finesse": 6}}}
         - {id: p2, kind: notice, req: {"stat": {"wit": 7}}}
         - {id: p3, kind: trust, req: {"item": "neural_chip"}}
+      vignettes:
+        - {id: gesture, traits: [curious, scholarly]}
+        - {id: spacing, traits: [methodical, artistic]}
+        - {id: lesson}
     text:
       en:
         name: An alphabet anyone can learn
         place: Seoul
         figure: King Sejong and the scholars
-        story: King Sejong and his scholars design Hangul, an alphabet whose letters copy the shape of the mouth.
+        story: 'The Haerye edition promulgated in 1446 explains the writing system completed under Sejong in 1443. The card uses 1443 as its setting; the reading lesson is invented.'
         relic: A woodblock of letters
         relic_desc: A block carved with the first letters, ready to ink.
         points:
-          p1: "Reach the king"
-          p2: "Help sort the sounds"
-          p3: "Speak Korean from day one"
+          p1: 'Find the beginning of the spoken syllable'
+          p2: 'Group the marks that belong to one syllable'
+          p3: 'Help the learner read a familiar word back'
+        vignettes:
+          gesture: 'You repeat the sound slowly until the learner can describe what the tongue is doing. They return to the written mark and try it again without your voice.'
+          spacing: 'The learner leaves a line of parts in a row. You draw a box around the ones that belong together and ask them to read the group as one syllable.'
+          lesson: 'The learner sounds out a familiar word and leaves a gap for the part they have forgotten. You cover the earlier example and wait until they can fill it from memory.'
       zh:
         name: 人人都学得会的字母
         place: 首尔
         figure: 世宗大王与学者们
-        story: 世宗大王和学者们设计了谚文，字母的形状模仿口型。
+        story: '1446 年刊行的《训民正音》解例本说明了世宗在 1443 年完成的文字。本卡以 1443 年为背景，识字练习是虚构的。'
         relic: 一块刻着字母的木板
         relic_desc: 刻着最早几个字母的木板，等着上墨。
         points:
-          p1: "见到国王"
-          p2: "帮着整理字音"
-          p3: "第一天就说韩语"
+          p1: '听出这个音节从哪里起音'
+          p2: '把属于同一音节的字形排在一起'
+          p3: '帮习字人把熟悉的词再读出来'
+        vignettes:
+          gesture: '你把那个音放慢，直到习字人能说清舌头在哪里。他回到纸上的字形，这次不用你领读就试了一遍。'
+          spacing: '习字人把几部分排成一长行。你用方框圈起属于同一组的几笔，请他合起来读成一个音节。'
+          lesson: '习字人念出一个熟词，忘记的部分空着。你把前面的例字盖上，等他想起来，自己把空处填了。'
 text:
   en:
     name: King Sejong and the scholars
@@ -44,3 +57,34 @@ text:
   zh:
     name: 世宗大王与学者们
     text: 朝鲜国王，1397 年生，1450 年去世。他与集贤殿的学者创制了一套适合朝鲜语的新文字，1446 年颁布，名为《训民正音》，好让百姓学会读写。
+hook: {en: 'Read the syllable from its parts.', zh: '拆开一格，听见一个音节'}
+facts:
+  haerye:
+    date: '1446'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sejong_hangul_primary]
+    text:
+      en: 'The Haerye edition promulgated in 1446 explains the writing system completed under Sejong in 1443. The card uses 1443 as its setting; the reading lesson is invented.'
+      zh: '1446 年刊行的《训民正音》解例本说明了世宗在 1443 年完成的文字。本卡以 1443 年为背景，识字练习是虚构的。'
+bystanders:
+  sejong_hangul_reader:
+    invented: true
+    text: {en: 'An invented learner setting down the parts of a syllable.', zh: '一位虚构的习字人，正把一个音节分开写。'}
+wiki:
+  refs:
+    sejong_hangul_primary:
+      order: 137
+      status: checked
+      text:
+        en: 'Hunminjeongum Haerye edition, 1446, UNESCO Memory of the World register. https://www.unesco.org/en/memory-world/hunminjeongum-manuscript?hub=1081'
+        zh: 'Hunminjeongum Haerye edition, 1446, UNESCO Memory of the World register. https://www.unesco.org/en/memory-world/hunminjeongum-manuscript?hub=1081'
+self_check:
+  quote_line: '你把那个音放慢，直到习字人能说清舌头在哪里。'
+  fact: haerye
+  regret_choice: '略过「听出这个音节从哪里起音」，这处细节便留给下一位核对。'
+  bookend: '从「拆开一格，听见一个音节」开始，以员工留下的观察或更正收尾。'
+  share_line: '拆开一格，听见一个音节'
+  share_number: '1446'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

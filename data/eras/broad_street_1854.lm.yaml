@@ -10,6 +10,11 @@ metadata:
   lm_format_version: "1.0"
   extension_version: "teleporter/0.1"
   status: released
+  vignette_source: pump_handle
+  vignettes:
+    - {id: odd_address, traits: [methodical, skeptical]}
+    - {id: witness, traits: [kind, patient]}
+    - {id: street_list}
   tags: [cholera, water, london, 1854]
   era:
     year: 1854
@@ -17,9 +22,12 @@ metadata:
     geo: {lon: -0.137, lat: 51.513}
     place: london_soho
     protagonist: snow
-    calendar: {month: 9, day0: 1, month_length: 30}
+    calendar: {month: 9, day0: 1}
+    region: europe
+    home: [europe_west]
+    crossroads: true
   description:
-    problem: "A cholera outbreak around one water pump. History says the handle comes off on 8 Sep and the outbreak ends. What can one visitor with limited supplies change in one street, and what does the protagonist do with their help?"
+    problem: "A cholera outbreak around one water pump. Snow recorded that the handle came off on 8 September, when cases were already declining. The simulation asks what a visitor with limited supplies might change on a separate branch."
     method: "Daily-scale difference equations, 6-hour step. One neighbourhood compartment model (open, protected, sick untreated, sick treated, recovered, dead) coupled to two agents: a traveller and the period protagonist."
     result: "Treatment saves the patients it reaches, protection saves more per unit of supply, and winning the protagonist's trust moves the handle date, which saves the most but strains the timeline."
     limitations: "Compartment structure and every rate are game assumptions. No fitted epidemic parameters yet. Not medical advice."
@@ -146,7 +154,7 @@ variables:
   cfr_treated: {type: parameter, value: 0.08, unit: fraction, source: game_assumption}
   protect_eff: {type: parameter, value: 0.85, unit: fraction, source: game_assumption}
   handle_day_hist: {type: parameter, value: 7.5, unit: day, source: historical, note: "8 Sep, around noon."}
-  stay_days: {type: parameter, value: 7, unit: day, source: game_assumption}
+  stay_days: {type: parameter, value: 1, unit: office_day, source: game_assumption}
   horizon_days: {type: parameter, value: 16, unit: day, source: game_assumption}
   goal_target: {type: parameter, value: 55, unit: score, source: game_assumption}
   w_treated: {type: parameter, value: 1, source: game_assumption}
@@ -316,7 +324,7 @@ equations:
   traveller_mind:
     priority: 40
     dynamics:
-      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * snow.rapport) * step"
+      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * snow.rapport) * office_step"
       traveler.attachment: "traveler.attachment + (attach_bedside * act_bedside + attach_sick * sick_density * arrived + attach_talk * act_talk * snow.rapport) * traveler.kindness * step"
       traveler.satisfaction: "traveler.satisfaction + arrived * (sat_treat * treated_flow + sat_protect * protect_flow - sat_death * death_flow - sat_fatigue * max(0, traveler.fatigue - 0.7) * step)"
       traveler.appeal_urge: "max(0, traveler.appeal_urge - appeal_decay * step)"

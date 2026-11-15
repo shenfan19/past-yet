@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {L: 1}
     regret: true
+    refs: [song_yingxing_fengxin_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: hold, req: {"job":["carpenter","mechanic","builder"]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["handy","vigil"]}]}}
+      vignettes:
+        - {id: strainer, traits: [handy, curious]}
+        - {id: drying, traits: [methodical, patient]}
+        - {id: sheet}
     text:
       en:
         name: "A book of how things are made"
         place: "Jiangxi"
         figure: "Song Yingxing"
-        story: "Song Yingxing, a provincial teacher and official, writes a book on how crops, cloth, salt, iron and paper are made. It was soon almost lost in China and survived in print in Japan."
+        story: 'Song Yingxing''s Tiangong kaiwu was first printed in 1637. Its chapters describe crafts and production, including papermaking in Killing the Green. This proof-reading visit is invented.'
         relic: "A page of tool drawings"
         relic_desc: "A woodblock print of a loom with every part labelled."
         points:
-          p1: "Learn how a loom and a kiln are worked"
-          p2: "Check the drawings of tools (a craftsperson)"
-          p3: "Keep a copy on the shelf (a record keeper or a stubborn employee)"
+          p1: 'Follow the sheet through the drawings'
+          p2: 'Catch a caption beside the wrong stage'
+          p3: 'Set aside a clean copy for the workshop reader'
+        vignettes:
+          strainer: 'You ask which side of the illustrated screen the wet sheet ends up on. The reader turns the print round to mimic the worker''s hands and finally points to the right surface.'
+          drying: 'The reader tells the stages out of order. You ask him to trace the wet sheet from the screen to the drying surface. He pauses and moves one caption to the next drawing.'
+          sheet: 'The reader drops a loose proof. You pick it up by the blank border and lay it beside the craft it was meant to explain. He puts a drying weight on the corner.'
       zh:
         name: "一本讲万物如何造成的书"
         place: "江西"
         figure: "宋应星"
-        story: "宋应星是地方上的教师和官员，写了一本讲庄稼、布匹、盐、铁和纸怎样制成的书。这本书在中国很快几乎失传，靠日本的刻本保存了下来。"
+        story: '宋应星的《天工开物》初刊于 1637 年，各篇写生产与手艺，其中《杀青》记造纸。本篇看校样的会面是虚构的。'
         relic: "一页工具图"
         relic_desc: "一张木刻版画，织机的每个部件都标了名。"
         points:
-          p1: "弄清织机和窑是怎么操作的"
-          p2: "核对工具图"
-          p3: "把一本留在书架上"
+          p1: '沿图找到纸张经过的几道工序'
+          p2: '找出跟工序串了位置的图注'
+          p3: '给工坊读者留一张干净的图样'
+        vignettes:
+          strainer: '你问图里的纸帘，湿纸最后留在哪一面。读者把图转过来，照着图里人的手势比了一遍，这才指准。'
+          drying: '读者把几道工序说串了。你请他顺着湿纸，从纸帘跟到烘干处。他停下来，把一处图注挪到了下一幅图。'
+          sheet: '读者掉了一张散开的校样。你捏着空白边捡起来，放回它要说明的那道工序旁。他在纸角压了块镇纸。'
 text:
   en:
     name: Song Yingxing
@@ -45,3 +58,34 @@ text:
   zh:
     name: 宋应星
     text: 晚明学者，1587 年生，约 1666 年去世。他的《天工开物》1637 年刊行，详细记述农业、纺织、冶金和许多手工业。
+hook: {en: 'Could you follow the craft from the page?', zh: '看图能认出哪一步吗'}
+facts:
+  craft_book:
+    date: '1637'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [song_yingxing_fengxin_primary]
+    text:
+      en: 'Song Yingxing''s Tiangong kaiwu was first printed in 1637. Its chapters describe crafts and production, including papermaking in Killing the Green. This proof-reading visit is invented.'
+      zh: '宋应星的《天工开物》初刊于 1637 年，各篇写生产与手艺，其中《杀青》记造纸。本篇看校样的会面是虚构的。'
+bystanders:
+  song_yingxing_fengxin_reader:
+    invented: true
+    text: {en: 'An invented workshop reader comparing a picture and its caption.', zh: '一位虚构的工坊读者，正对照图和文字。'}
+wiki:
+  refs:
+    song_yingxing_fengxin_primary:
+      order: 129
+      status: checked
+      text:
+        en: 'Song Yingxing, Tiangong kaiwu, 1637, author’s preface and illustrated text. https://zh.wikisource.org/wiki/天工開物'
+        zh: 'Song Yingxing, Tiangong kaiwu, 1637, author’s preface and illustrated text. https://zh.wikisource.org/wiki/天工開物'
+self_check:
+  quote_line: '你问图里的纸帘，湿纸最后留在哪一面。'
+  fact: craft_book
+  regret_choice: '略过「沿图找到纸张经过的几道工序」，这处细节便留给下一位核对。'
+  bookend: '从「看图能认出哪一步吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '看图能认出哪一步吗'
+  share_number: '1637'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

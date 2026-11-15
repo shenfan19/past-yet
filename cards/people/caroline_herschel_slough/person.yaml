@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {C: 2, V: 3}
     regret: true
+    refs: [caroline_herschel_slough_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["quiet","wanderer","curious"]}}
         - {id: p2, kind: hold, req: {"provides":"vigil"}}
         - {id: p3, kind: endure, redeem: true, req: {"stat":{"constitution":5}}}
+      vignettes:
+        - {id: fixed, traits: [vigil, methodical]}
+        - {id: doubt, traits: [skeptical, curious]}
+        - {id: lamp}
     text:
       en:
         name: "The one who swept the sky"
         place: "Slough"
         figure: "Caroline Herschel"
-        story: "On winter nights when her brother is away, Caroline Herschel sweeps the sky alone in the yard, and at last finds her first comet."
+        story: 'Caroline Herschel reported noticing an object unlike the sharply defined stars on 1 August 1786. She compared observations before writing to Charles Blagden. The game scene is invented.'
         relic: "A sky sweep ruler"
         relic_desc: "A wooden ruler with a scale, used to mark the swept patches on a star chart."
         points:
-          p1: "Sweep a patch of sky with her"
-          p2: "Keep the record until dawn"
-          p3: "Bear the cold of the winter night"
+          p1: 'Mark the comparison stars'
+          p2: 'Keep the two times beside their own diagrams'
+          p3: 'Help preserve the next observation in the dark'
+        vignettes:
+          fixed: 'You mark two bright neighbours before adding the fuzzy object. On the second drawing the stars remain a useful guide, even after the pages have shifted.'
+          doubt: 'The helper suggests cleaning the glass. You ask what the other stars look like through it. They stay sharp, and the helper keeps the uncertain mark on the sheet.'
+          lamp: 'You shade the lamp while the helper writes the hour. When the cover goes back on, both drawings still have times beside them.'
       zh:
         name: "扫天的人"
         place: "斯劳"
         figure: "卡罗琳·赫歇尔"
-        story: "哥哥外出的冬夜里，卡罗琳·赫歇尔一个人在院子里扫天，终于发现了她的第一颗彗星。"
+        story: '卡罗琳·赫歇尔记载，1786 年 8 月 1 日她看见一团不像周围恒星那样清晰的光，比较观测后写信给查尔斯·布拉格登。本卡场景为虚构。'
         relic: "一把天区扫描记录尺"
         relic_desc: "一把刻着刻度的木尺，用来在星图上标出扫过的天区。"
         points:
-          p1: "跟她扫天区"
-          p2: "守着记录到天亮"
-          p3: "冬夜的寒冷"
+          p1: '标出用来比较的邻星'
+          p2: '把两个时刻各记在对应的图旁'
+          p3: '在暗处帮忙留下下一次观测'
+        vignettes:
+          fixed: '你先记下两颗较亮的邻星，再添模糊的那个。第二张纸虽然挪了位置，仍能靠那两颗星找回原处。'
+          doubt: '帮手说兴许该擦擦镜片。你问同一片玻璃里的别的星怎样。那些仍然清晰，他便把这处可疑的记号留在纸上。'
+          lamp: '帮手记时刻时，你用手遮住灯。把灯盖好以后，两张图旁都还留着各自的时刻。'
 text:
   en:
     name: "Caroline Herschel"
@@ -45,3 +58,34 @@ text:
   zh:
     name: "卡罗琳·赫歇尔"
     text: "德国出生的英国天文学家，1750 年生，1848 年去世。她是天文学家威廉·赫歇尔的妹妹，1786 年发现了自己的第一颗彗星，后来又发现多颗彗星。"
+hook: {en: 'Put a time beside that fuzzy star.', zh: '给那团模糊的光记下时刻'}
+facts:
+  comet:
+    date: '1786-08-01'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [caroline_herschel_slough_primary]
+    text:
+      en: 'Caroline Herschel reported noticing an object unlike the sharply defined stars on 1 August 1786. She compared observations before writing to Charles Blagden. The game scene is invented.'
+      zh: '卡罗琳·赫歇尔记载，1786 年 8 月 1 日她看见一团不像周围恒星那样清晰的光，比较观测后写信给查尔斯·布拉格登。本卡场景为虚构。'
+bystanders:
+  caroline_herschel_slough_reader:
+    invented: true
+    text: {en: 'An invented helper keeping a lamp away from the observing spot.', zh: '一位虚构的帮手，把灯护在观测处之外。'}
+wiki:
+  refs:
+    caroline_herschel_slough_primary:
+      order: 149
+      status: checked
+      text:
+        en: 'Caroline Herschel, An Account of a New Comet, letter to Charles Blagden of 2 August 1786, Royal Society L&P/9/8. https://makingscience.royalsociety.org/items/l-and-p_9_8/paper-account-of-a-new-comet-by-caroline-herschel'
+        zh: 'Caroline Herschel, An Account of a New Comet, letter to Charles Blagden of 2 August 1786, Royal Society L&P/9/8. https://makingscience.royalsociety.org/items/l-and-p_9_8/paper-account-of-a-new-comet-by-caroline-herschel'
+self_check:
+  quote_line: '你先记下两颗较亮的邻星，再添模糊的那个。'
+  fact: comet
+  regret_choice: '略过「标出用来比较的邻星」，这处细节便留给下一位核对。'
+  bookend: '从「给那团模糊的光记下时刻」开始，以员工留下的观察或更正收尾。'
+  share_line: '给那团模糊的光记下时刻'
+  share_number: '1786-08-01'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

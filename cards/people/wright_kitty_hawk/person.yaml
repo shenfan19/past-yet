@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 3
     channels: {C: 2, L: 2}
+    refs: [wright_kitty_hawk_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["mechanic"]},{"trait":["hardy"]}]}}
         - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+      vignettes:
+        - {id: numbers, traits: [methodical, vigil]}
+        - {id: headline, traits: [glib, curious]}
+        - {id: copy}
     text:
       en:
         name: Twelve seconds in the air
         place: Kitty Hawk, North Carolina
         figure: Orville and Wilbur Wright
-        story: On a windy beach the Wright brothers fly a powered machine for twelve seconds, and then three more times that day.
+        story: 'Orville Wright''s diary records four flights on 17 December 1903 near Kitty Hawk. A telegram reported the trials to their father afterwards. This game''s message-copying scene is invented.'
         relic: A propeller blade
         relic_desc: A wooden blade shaped like a twisted wing.
         points:
-          p1: "See the accounts of lift"
-          p2: "Calibrate the wing"
-          p3: "Push the plane on the dune"
+          p1: 'Tell the first flight from the later trials'
+          p2: 'Keep the numbers with the right trial'
+          p3: 'Prepare a copy that can be read back without the rough notes'
+        vignettes:
+          numbers: 'The clerk puts the longest duration next to the first flight. You slide the rough notes back across the table and count the trials with them before the figures go out.'
+          headline: 'You suggest a big claim for the first line. The clerk asks which words can survive being copied into another newspaper. You try again, this time with the date and a place.'
+          copy: 'You hold the rough notes flat while the clerk shortens the message. The details that must reach the family are still legible when the two copies are compared.'
       zh:
         name: 在空中的十二秒
         place: 北卡罗来纳基蒂霍克
         figure: 奥维尔和威尔伯·莱特
-        story: 在一片大风的海滩上，莱特兄弟驾着动力飞机飞了十二秒，当天又飞了三次。
+        story: '奥维尔·莱特日记记载，1903 年 12 月 17 日在基蒂霍克附近共试飞四次，随后兄弟俩把消息电告父亲。本篇抄写消息的场面为虚构。'
         relic: 一片螺旋桨叶
         relic_desc: 一片木头叶子，像一只扭过的翅膀。
         points:
-          p1: "看出升力的账"
-          p2: "校准机翼"
-          p3: "在沙丘上推飞机"
+          p1: '分清首次飞行和后面的几次'
+          p2: '把数字对回对应的试飞'
+          p3: '留一份脱离草记仍读得懂的消息'
+        vignettes:
+          numbers: '报务员把最长的时长写到了第一次旁边。你把草记推回去，趁数字还没发走，与他重新数一遍四次试飞。'
+          headline: '你一开头就提了个大标题。报务员问，哪几个字给另一份报纸抄过去还说得通？你重写一遍，这回留下了日期和地点。'
+          copy: '报务员删短消息时，你把草记扶平。两张拿来一对，该让家里知道的数字都还看得清。'
 text:
   en:
     name: Orville and Wilbur Wright
@@ -44,3 +57,34 @@ text:
   zh:
     name: 奥维尔和威尔伯·莱特
     text: 美国的威尔伯·莱特，1867 年生，1912 年去世，以及奥维尔·莱特，1871 年生，1948 年去世，兄弟俩在代顿开自行车铺。他们靠风洞和自制滑翔机，于 1903 年 12 月 17 日在小鹰镇完成了第一次有动力、可操纵的飞行。
+hook: {en: 'Which number belongs to the first flight?', zh: '哪个数才是第一次飞行'}
+facts:
+  four_flights:
+    date: '1903-12-17'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [wright_kitty_hawk_primary]
+    text:
+      en: 'Orville Wright''s diary records four flights on 17 December 1903 near Kitty Hawk. A telegram reported the trials to their father afterwards. This game''s message-copying scene is invented.'
+      zh: '奥维尔·莱特日记记载，1903 年 12 月 17 日在基蒂霍克附近共试飞四次，随后兄弟俩把消息电告父亲。本篇抄写消息的场面为虚构。'
+bystanders:
+  wright_kitty_hawk_reader:
+    invented: true
+    text: {en: 'An invented clerk checking a short message against rough notes.', zh: '一位虚构的报务员，正把一件事从草记压成简短的消息。'}
+wiki:
+  refs:
+    wright_kitty_hawk_primary:
+      order: 145
+      status: checked
+      text:
+        en: 'Orville Wright diary and Wright brothers'' telegram to Milton Wright, 17 December 1903. Library of Congress. https://www.loc.gov/collections/wilbur-and-orville-wright-papers/articles-and-essays/collection-highlights/first-flight/'
+        zh: 'Orville Wright diary and Wright brothers'' telegram to Milton Wright, 17 December 1903. Library of Congress. https://www.loc.gov/collections/wilbur-and-orville-wright-papers/articles-and-essays/collection-highlights/first-flight/'
+self_check:
+  quote_line: '报务员把最长的时长写到了第一次旁边。'
+  fact: four_flights
+  regret_choice: '略过「分清首次飞行和后面的几次」，这处细节便留给下一位核对。'
+  bookend: '从「哪个数才是第一次飞行」开始，以员工留下的观察或更正收尾。'
+  share_line: '哪个数才是第一次飞行'
+  share_number: '1903-12-17'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

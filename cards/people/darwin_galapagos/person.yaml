@@ -10,34 +10,47 @@ events:
     tier: 3
     era: darwin_galapagos_1835
     channels: {Y: 3, H: 2}
+    refs: [darwin_beagle_bird_notes]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","streetwise","handy"]}}
         - {id: p2, kind: endure, req: {"stat": {"constitution": 5}}}
         - {id: p3, kind: care, req: {"any": [{"stat": {"wit": 6}}, {"job": ["archivist", "data_analyst"]}]}}
+      vignettes:
+        - {id: two_tags, traits: [methodical, vigil]}
+        - {id: differences, traits: [curious, skeptical]}
+        - {id: drawer}
     text:
       en:
         name: Islands and the variety of life
         place: Galápagos Islands
         figure: Charles Darwin
-        story: A young naturalist on the Beagle notices how birds and tortoises differ from island to island, and years later explains why.
+        story: 'Darwin visited the Galápagos on the Beagle in 1835. His bird notes associate mockingbird specimens with particular islands. This vignette imagines a shipboard helper comparing labels.'
         relic: A finch feather
         relic_desc: A small brown feather from the islands.
         points:
           p1: "Notice what others miss"
           p2: "Survive the voyage"
           p3: "Help him sort the specimens (a sharp mind or a record keeper)"
+        vignettes:
+          two_tags: 'One tag says only ''island''. You set it aside until the helper can find the separate landing note. The two specimens stay apart even after the trays are put away.'
+          differences: 'The helper points to two similar-looking birds and wants one entry for both. You ask which island each came from. They leave both labels in the book so the likeness can be considered again later.'
+          drawer: 'You keep the paper label beside the tray until the helper can read the name back to you. When they close the drawer, the note stays where it belongs.'
       zh:
         name: 岛屿与生命的多样
         place: 加拉帕戈斯群岛
         figure: 查尔斯·达尔文
-        story: 贝格尔号上的年轻博物学家注意到鸟和龟每座岛都不一样，多年之后他讲清了为什么。
+        story: '达尔文 1835 年随小猎犬号到访加拉帕戈斯。他的鸟类笔记把嘲鸫标本和各自采集的岛对应起来。船上帮手核对标签的一幕为虚构。'
         relic: 一根雀的羽毛
         relic_desc: 来自群岛的一根小小的褐色羽毛。
         points:
           p1: "注意到别人没注意到的"
           p2: "熬过远航"
           p3: "帮他整理标本（头脑好的人或管档案的人）"
+        vignettes:
+          two_tags: '一张签只写了「岛上」。你把它搁到一边，等帮手找来另记的上岸记录。盘子即便收好，两件标本也还能分清。'
+          differences: '帮手指着两只相似的鸟，准备合写一条。你问它们各来自哪座岛。他把两个标签都留在册上，下次好重新比较。'
+          drawer: '帮手能把地名念回给你以前，你一直把签放在盘旁。抽屉关上时，纸签仍在对应的标本旁。'
 text:
   en:
     name: Charles Darwin
@@ -98,6 +111,12 @@ wiki:
           name: 水和食物的计划
           text: 上岸的队伍怎样补水、补食物，是船上军官的选择。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
   refs:
+    darwin_beagle_bird_notes:
+      order: 160
+      status: checked
+      text:
+        en: 'Charles Darwin, Ornithological Notes, Cambridge University Library DAR 29.2, manuscript transcription at Darwin Online. https://darwin-online.org.uk/converted/manuscripts/Darwin_C_R_CUL-DAR29.2.html'
+        zh: '查尔斯·达尔文，鸟类笔记，剑桥大学图书馆 DAR 29.2。达尔文在线手稿转录：https://darwin-online.org.uk/converted/manuscripts/Darwin_C_R_CUL-DAR29.2.html'
     darwin1839:
       order: 31
       status: pending

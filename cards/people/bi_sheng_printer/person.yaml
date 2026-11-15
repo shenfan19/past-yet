@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {L: 1}
     regret: true
+    refs: [bi_sheng_printer_primary]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["carpenter","builder","mechanic"]},{"trait":["sensitive","vigil"]}]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","sensitive","artistic"]}}
+      vignettes:
+        - {id: rhyme, traits: [scholarly, methodical]}
+        - {id: surface, traits: [handy, vigil]}
+        - {id: duplicates}
     text:
       en:
         name: "Type made of clay"
         place: "Hangzhou"
         figure: "Bi Sheng"
-        story: "Bi Sheng, a commoner, makes movable type from baked clay and prints with it, as the scholar Shen Kuo later records. The method is not widely taken up, and nothing of his work survives."
+        story: 'Shen Kuo''s Dream Pool Essays describes Bi Sheng making individual clay types during the Qingli era, 1041–1048, and keeping unused types by rhyme. The workshop scene is invented.'
         relic: "A clay type character"
         relic_desc: "A small baked piece with one reversed character."
         points:
-          p1: "Cut and fire the clay type (a craftsperson or a sensitive employee)"
-          p2: "Sort the characters by rhyme"
-          p3: "Believe in the clay type when others see only a trick"
+          p1: 'Pick out a piece with the wrong face'
+          p2: 'Return the types to their rhyme groups'
+          p3: 'Set aside enough repeated characters before composing the line'
+        vignettes:
+          rhyme: 'A type is going back under the wrong rhyme. You read the word aloud, and the helper shifts the label before another handful follows it.'
+          surface: 'The helper blames the ink for a pale mark. You hold the proof at eye level and ask which letters stood even with their neighbours.'
+          duplicates: 'You count how often one word comes up in a trial line. When the tray runs short, the helper finally understands why there are several pieces for the same character.'
       zh:
         name: "陶土做的活字"
         place: "杭州"
         figure: "毕昇"
-        story: "平民毕昇用烧过的胶泥制成活字，并用它印书，这是后来沈括记下来的。这种方法并没有被广泛采用，他的东西一件也没有留下。"
+        story: '《梦溪笔谈》记庆历年间（1041 至 1048）毕昇做泥活字，并按韵收存不用的字。卡中的工坊是虚构的。'
         relic: "一枚泥活字"
         relic_desc: "一小块烧过的泥，上面是一个反刻的字。"
         points:
-          p1: "刻制并烧好泥活字"
-          p2: "按韵部把字排序"
-          p3: "在别人只看到把戏的时候，相信这些泥活字"
+          p1: '从字格里分辨放错的活字'
+          p2: '拆版后把活字按韵归回去'
+          p3: '排版前为反复用到的字备足字模'
+        vignettes:
+          rhyme: '有个字要放错韵部。你把字念出来，帮工趁下一把字落进去之前换了签。'
+          surface: '帮工说淡印是墨的问题。你把印样举到眼前，请他回想哪些字原先和两旁一样高。'
+          duplicates: '你数一行里那个字用了几遍。字格见了底，帮工才明白，同一个字为什么要备上几枚。'
 text:
   en:
     name: Bi Sheng
@@ -45,3 +58,34 @@ text:
   zh:
     name: 毕昇
     text: 北宋工匠，约 1051 年去世。约 1041 年他用烧制的黏土制成活字，沈括记下了这种方法。
+hook: {en: 'One character goes back to its own drawer.', zh: '一个字该放回哪里'}
+facts:
+  clay_type:
+    date: '1041'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bi_sheng_printer_primary]
+    text:
+      en: 'Shen Kuo''s Dream Pool Essays describes Bi Sheng making individual clay types during the Qingli era, 1041–1048, and keeping unused types by rhyme. The workshop scene is invented.'
+      zh: '《梦溪笔谈》记庆历年间（1041 至 1048）毕昇做泥活字，并按韵收存不用的字。卡中的工坊是虚构的。'
+bystanders:
+  bi_sheng_printer_reader:
+    invented: true
+    text: {en: 'An invented helper sorting type after a trial impression.', zh: '一位虚构的帮工，试印后正在分拣活字。'}
+wiki:
+  refs:
+    bi_sheng_printer_primary:
+      order: 135
+      status: checked
+      text:
+        en: 'Shen Kuo, Dream Pool Essays, vol. 18, Techniques, account of Bi Sheng and movable type. https://www.wenlinshe.com/tw/chapter/zhuzibaijia/meng-xi-bi-tan/juan-shi-ba-ji-yi.html'
+        zh: '沈括，《梦溪笔谈》卷十八《技艺》，毕昇活字段。https://www.wenlinshe.com/tw/chapter/zhuzibaijia/meng-xi-bi-tan/juan-shi-ba-ji-yi.html'
+self_check:
+  quote_line: '有个字要放错韵部。'
+  fact: clay_type
+  regret_choice: '略过「从字格里分辨放错的活字」，这处细节便留给下一位核对。'
+  bookend: '从「一个字该放回哪里」开始，以员工留下的观察或更正收尾。'
+  share_line: '一个字该放回哪里'
+  share_number: '1041'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

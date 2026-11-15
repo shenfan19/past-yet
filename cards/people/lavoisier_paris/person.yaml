@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {E: 1, S: 1}
+    refs: [lavoisier_paris_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"scan"}}
         - {id: p2, kind: hold, req: {"job":["pharmacist","mechanic"]}}
         - {id: p3, kind: persuade, req: {"trait":["glib","charismatic","scholarly"]}}
+      vignettes:
+        - {id: units, traits: [methodical, vigil]}
+        - {id: air, traits: [curious, skeptical]}
+        - {id: proof}
     text:
       en:
         name: A new language for chemistry
         place: Paris
         figure: Antoine Lavoisier
-        story: Lavoisier publishes a treatise that names oxygen, treats combustion as combining with it, and measures everything by weight.
+        story: 'Lavoisier''s 1789 treatise uses mass measurements to account for chemical changes and treats oxygen as a participant in combustion.'
         relic: A precision balance
         relic_desc: A fine balance that kept the books of chemistry.
         points:
-          p1: "Follow the readings of the balance"
-          p2: "Seal the bell jar for the burning"
-          p3: "Persuade colleagues to accept oxygen"
+          p1: 'Match the figures to their headings'
+          p2: 'Check the spacing between two neighbouring columns'
+          p3: 'Read the corrected table back to the compositor'
+        vignettes:
+          units: 'Two numbers line up beautifully, but the unit on one row has slipped. You catch it before the compositor locks the columns in place.'
+          air: 'You ask why the table accounts for something the reader cannot see. The compositor taps the headings for what entered and what remained, then leaves both headings in the proof.'
+          proof: 'You put a scrap of paper under the current row as the compositor reads. A number that looked like part of the next example finds its own heading again.'
       zh:
         name: 化学有了新语言
         place: 巴黎
         figure: 拉瓦锡
-        story: 拉瓦锡出版专著，给氧命了名，把燃烧看作与氧的化合，一切都用重量来量。
+        story: '拉瓦锡 1789 年出版的《化学基础论》用质量测量解释化学变化，把氧视为参与燃烧的物质。'
         relic: 一台精密天平
         relic_desc: 一台精细的天平，给化学记账。
         points:
-          p1: "跟上天平的读数"
-          p2: "密封燃烧的钟罩"
-          p3: "说服同行接受氧"
+          p1: '把数字对回各自栏头'
+          p2: '核对相邻两栏的间距'
+          p3: '把更正的表格读回给排字工'
+        vignettes:
+          units: '两个数字对得很齐，其中一行的单位却串了列。排字工固定版面之前，你把它指了出来。'
+          air: '你问表格为什么还要记下看不见的东西。排字工指了指「加入」和「剩余」两栏，把两个栏头都保留在校样上。'
+          proof: '排字工念表时，你拿纸条压住正在读的那一行。原本看起来属于下一例的数字，重新对回了自己的栏头。'
 text:
   en:
     name: Antoine Lavoisier
@@ -44,3 +57,34 @@ text:
   zh:
     name: 拉瓦锡
     text: 法国化学家，1743 年生，1794 年去世。他阐明氧在燃烧中的作用，参与建立现代化学命名体系，并陈述了质量守恒。他在恐怖时期被送上断头台。
+hook: {en: 'What belongs on the balance?', zh: '天平上究竟该称什么'}
+facts:
+  balance:
+    date: '1789'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [lavoisier_paris_primary]
+    text:
+      en: 'Lavoisier''s 1789 treatise uses mass measurements to account for chemical changes and treats oxygen as a participant in combustion.'
+      zh: '拉瓦锡 1789 年出版的《化学基础论》用质量测量解释化学变化，把氧视为参与燃烧的物质。'
+bystanders:
+  lavoisier_paris_reader:
+    invented: true
+    text: {en: 'An invented compositor reading a table in proof.', zh: '一位虚构的排字工，正在校对表格。'}
+wiki:
+  refs:
+    lavoisier_paris_primary:
+      order: 119
+      status: checked
+      text:
+        en: 'Antoine Lavoisier, Traité élémentaire de chimie, vol. 1, Paris, 1789. Smithsonian Libraries scan. https://library.si.edu/digital-library/book/traiteyeyleyment1lavo'
+        zh: 'Antoine Lavoisier, Traité élémentaire de chimie, vol. 1, Paris, 1789. Smithsonian Libraries scan. https://library.si.edu/digital-library/book/traiteyeyleyment1lavo'
+self_check:
+  quote_line: '两个数字对得很齐，其中一行的单位却串了列。'
+  fact: balance
+  regret_choice: '略过「把数字对回各自栏头」，这处细节便留给下一位核对。'
+  bookend: '从「天平上究竟该称什么」开始，以员工留下的观察或更正收尾。'
+  share_line: '天平上究竟该称什么'
+  share_number: '1789'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

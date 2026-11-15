@@ -6,56 +6,78 @@ events:
     lon: 113.27
     lat: 23.13
     region: asia
+    home: [china]
+    crossroads: true
     field: thought
     tier: 1
     era: sun_yat_sen_1924
     channels: {H: 1}
     start: true
+    refs: [sysu_founding_museum, sysu_news_lectures]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["kind","patient","attached","quiet"]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":5}}}
         - {id: p3, kind: hold, req: {"any":[{"trait":["patient","methodical","vigil"]},{"stat":{"will":6}}]}}
+      vignettes:
+        - {id: slips, traits: [methodical, vigil]}
+        - {id: back_row, traits: [kind, patient]}
+        - {id: hundred}
     text:
       en:
         name: "From the statue to a new university"
         place: "Guangzhou"
         figure: "Sun Yat-sen"
-        story: "Standing before the statue of Sun Yat-sen at Sun Yat-sen University, you are carried back to Guangzhou on 4 February 1924, the day he orders three schools joined into National Guangdong University and names Zou Lu to prepare it. Classes begin on 19 September, and the founding ceremony is held on 11 November with the motto he wrote. He dies in Beijing on 12 March 1925, and in 1926 the university takes his name."
-        relic: "A brass school badge"
-        relic_desc: "A small badge from the first years of the university."
+        story: "Standing before the statue of Sun Yat-sen at Sun Yat-sen University, you are carried back to Guangzhou on 4 February 1924, the day he orders three schools joined into National Guangdong University and names Zou Lu to prepare it. In the same months he lectures on Sundays in the hall of the Higher Normal School, and the notes of the lectures go back and forth until they are a book. Classes begin on 19 September, and the founding ceremony is held on 11 November with the motto he wrote. He dies in Beijing on 12 March 1925, and in 1926 the university takes his name."
+        relic: "A pamphlet printed in March 1924"
+        relic_desc: "The first of the Sunday lectures in print, with a preface dated 30 March 1924."
         points:
-          p1: "Be of use to the people who come asking"
-          p2: "Put a clear map of the schools in every hand"
-          p3: "Keep the work going until the preparation begins"
+          p1: "Copy the records of the three schools into one book"
+          p2: "Bring home a copy of the book of the lectures"
+          p3: "Be there for the last lecture"
+        vignettes:
+          slips: 'A clerk made up for the game is about to copy a page that has a slip pasted over two lines. You ask which hand wrote the slip and which wrote the page. He copies the page first and leaves the slip where it is.'
+          back_row: 'A student made up for the game cannot find a seat and keeps standing up to look. You move along the bench. He sits through the rest without a word and nods to you as the hall empties.'
+          hundred: 'You keep a tally of the days in the back of your notebook, five strokes to a mark. When it reaches a hundred, a clerk made up for the game asks what you are counting. You tell him, days.'
       zh:
         name: "从铜像到一所新大学"
         place: "广州"
         figure: "孙中山"
-        story: "你站在中山大学的孙中山像前，被带回 1924 年 2 月 4 日的广州，这一天他下令把三所学校合并为国立广东大学，派邹鲁筹备。9 月 19 日开学，11 月 11 日举行成立典礼，用的是他写的校训。1925 年 3 月 12 日他在北京去世，1926 年这所大学以他的名字命名。"
-        relic: "一枚铜质校徽"
-        relic_desc: "这所大学最初几年的一枚小徽章。"
+        story: "你站在中山大学的孙中山像前，被带回 1924 年 2 月 4 日的广州，这一天他下令把三所学校合并为国立广东大学，派邹鲁筹备。同一段日子里，他星期天在高等师范的礼堂演讲，讲稿在几个人手里来回走，后来成了一本书。9 月 19 日开学，11 月 11 日举行成立典礼，用的是他写的校训。1925 年 3 月 12 日他在北京去世，1926 年这所大学以他的名字命名。"
+        relic: "一本 1924 年三月印的小册子"
+        relic_desc: "星期天的演讲头一回印成书，序写于 1924 年 3 月 30 日。"
         points:
-          p1: "帮上每一个来问的人"
-          p2: "让清楚的简图人手一份"
-          p3: "把事情一直推到筹备开始"
+          p1: "把三所学校的名册抄成一本"
+          p2: "带回一本演讲印成的书"
+          p3: "待到最后一讲"
+        vignettes:
+          slips: '一位编出来的办事员正要抄一页稿子，稿上有一张签条盖住了两行。你问他签条是谁的字，稿子又是谁的字。他先抄了稿子，签条留在原处没有动。'
+          back_row: '一位编出来的学生找不到座位，老是站起来张望。你往里挪了挪。他坐下来听完了后半场，一句话没说，散场时朝你点了点头。'
+          hundred: '你在本子最后一页画正字，一天一笔。画满一百天的时候，一位编出来的办事员问你在数什么。你说，日子。'
   sun_yat_sen_beijing_1925:
     order: 223
     year: 1925
     lon: 116.41
     lat: 39.92
     region: asia
+    home: [china]
+    crossroads: true
     field: thought
     tier: 1
     stay: 7
     after: sun_yat_sen_guangzhou
     channels: {C: 1, G: 2}
     regret: true
+    refs: [chnmuseum_sun_1925]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"trait":["vigil","patient"]},{"stat":{"will":6}}]}}
         - {id: p2, kind: care, req: {"any":[{"job":["nurse","caregiver","doctor","physician","paramedic","midwife"]},{"trait":["kind","attached"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["attached","faithful","kind","quiet"]}}
+      vignettes:
+        - {id: list, traits: [methodical, vigil]}
+        - {id: bench, traits: [kind, patient]}
+        - {id: water}
     text:
       en:
         name: "The last winter in Beijing"
@@ -68,6 +90,10 @@ events:
           p1: "Keep watch through the long nights in the corridor and at the gate"
           p2: "Boil water, carry meals and run errands for those who are keeping watch"
           p3: "Leave a school badge from Guangzhou at the door, as a token of regard"
+        vignettes:
+          list: 'A fictional attendant starts to make one list for people waiting and people who have already gone. You suggest two headings. The next shift knows which names they still need to call.'
+          bench: 'Someone at the gate has come a long way and keeps standing up at every sound. You find them a place on the bench and promise to call when the attendant comes out.'
+          water: 'You put the kettle next to the tray where the night shift will find it. The attendant moves it within reach and leaves a note for the next person.'
       zh:
         name: "北京的最后一个冬天"
         place: "北京"
@@ -79,22 +105,33 @@ events:
           p1: "在走廊里和大门外守过一个个长夜"
           p2: "替守在这里的人烧水、送饭、跑腿"
           p3: "把一枚从广州带来的校徽留在门口，作为一份心意"
+        vignettes:
+          list: '虚构的值守人把还在等的人和已经离开的人记在同一张名单里。你请他列两个栏头，下一班接手便知道还要叫谁。'
+          bench: '门口有人走了很远的路，一有动静便站起来。你在长凳上给他找了个位置，说值守人出来时就叫他。'
+          water: '你把水壶搁在夜班能找到的托盘旁。值守人把它移到随手够得着的地方，给下一班留了个字条。'
   sun_yat_sen_university_1926:
     order: 224
     year: 1926
     lon: 113.27
     lat: 23.13
     region: asia
+    home: [china]
+    crossroads: true
     field: thought
     tier: 1
     stay: 5
     after: sun_yat_sen_beijing_1925
     channels: {H: 1}
+    refs: [sysu_rename_museum]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":5}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["archivist","proofreader","accountant"]},{"trait":["methodical"]}]}}
         - {id: p3, kind: trust, req: {"trait":["kind","cheerful","cosmopolitan","patient"]}}
+      vignettes:
+        - {id: letter, traits: [methodical, vigil]}
+        - {id: sign, traits: [cosmopolitan, kind]}
+        - {id: copy}
     text:
       en:
         name: "The university takes his name"
@@ -107,6 +144,10 @@ events:
           p1: "Find the resolution in the record of the meeting"
           p2: "Sort and file the papers and seals that carry the old name"
           p3: "Help the new students learn the new name and where to go"
+        vignettes:
+          letter: 'The fictional clerk prepares to mark both papers with the same date. You point out that one records the school''s request and the other announces the order. The papers go into different folders.'
+          sign: 'A new student reads the old name from a letter and thinks they have the wrong gate. You walk them to the new sign so they can see how the address stayed useful after the name changed.'
+          copy: 'You hold down the corner of a notice while the clerk copies the new name. In the space below, you put the old name once, so a visitor starting with older directions can still tell where to go.'
       zh:
         name: "这所大学以他的名字命名"
         place: "广州"
@@ -118,13 +159,17 @@ events:
           p1: "在会议记录里找到那条决议"
           p2: "把带着旧校名的文件和印章清点归档"
           p3: "帮新来的学生认识新校名，知道往哪里去"
+        vignettes:
+          letter: '虚构的书吏准备给两张纸写同一个日期。你指给他看，一张记学校呈请，一张公布命令。两张最后分开归档。'
+          sign: '新生照着信上的旧名念，以为找错了门。你带他到新牌子前，让他看明白校名换了，信上的地址仍找得到地方。'
+          copy: '书吏抄校名时，你按住告示一角。在下面空处，你另写了一遍旧名，好让跟着旧路引来的人还能找到地方。'
 text:
   en:
     name: "Sun Yat-sen"
-    text: "Chinese revolutionary and political leader, 1866 to 1925. On 4 February 1924 he ordered the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and named Zou Lu to prepare it. Classes began on 19 September, and he wrote the motto used at the founding ceremony on 11 November. He reached Beijing on 31 December 1924, was operated on for cancer on 26 January 1925, and died there on 12 March 1925. On 17 August 1926 the National Government ordered the university renamed National Sun Yat-sen University."
+    text: "Chinese revolutionary and political leader, 1866 to 1925. On 4 February 1924 he ordered the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and named Zou Lu to prepare it. From 27 January to 24 August 1924 he lectured on Sundays in the hall of the Higher Normal School, sixteen lectures in all, which were taken down, revised and printed. Classes began on 19 September, and he wrote the motto used at the founding ceremony on 11 November. He reached Beijing on 31 December 1924, was operated on for cancer on 26 January 1925, and died there on 12 March 1925. On 17 August 1926 the National Government ordered the university renamed National Sun Yat-sen University."
   zh:
     name: "孙中山"
-    text: "中国革命家和政治领袖，1866 年生，1925 年去世。1924 年 2 月 4 日他下令把国立高等师范学校、广东法科大学和广东农业专门学校合并为国立广东大学，派邹鲁筹备。9 月 19 日开学，11 月 11 日成立典礼上用的校训是他写的。他 1924 年 12 月 31 日抵达北京，1925 年 1 月 26 日因癌症接受手术，3 月 12 日在北京去世。1926 年 8 月 17 日国民政府下令把这所大学改名为国立中山大学。"
+    text: "中国革命家和政治领袖，1866 年生，1925 年去世。1924 年 2 月 4 日他下令把国立高等师范学校、广东法科大学和广东农业专门学校合并为国立广东大学，派邹鲁筹备。1924 年 1 月 27 日到 8 月 24 日，他利用星期天在高等师范的礼堂演讲，共十六讲，讲稿经记录、校改后印行。9 月 19 日开学，11 月 11 日成立典礼上用的校训是他写的。他 1924 年 12 月 31 日抵达北京，1925 年 1 月 26 日因癌症接受手术，3 月 12 日在北京去世。1926 年 8 月 17 日国民政府下令把这所大学改名为国立中山大学。"
 wiki:
   places:
     guangdong_university_office:
@@ -144,14 +189,15 @@ wiki:
         era: sun_yat_sen_1924
       refs:
         - sysu_chronicle
+        - sysu_news_lectures
         - game
       text:
         en:
-          name: The office of the university, Guangzhou, 1924
-          text: The rooms in Guangzhou where the three schools were to be joined in 1924, before the new campus was built. The university in the game is a model of about six hundred teachers and students.
+          name: The hall of the Higher Normal School, Guangzhou, 1924
+          text: The hall of the National Higher Normal School in Guangzhou, on the old site of the examination compound. In 1924 the three schools were being joined into one university here, and on Sundays Sun Yat-sen lectured in the same hall. The count of unsettled matters in the game is a model, not a record.
         zh:
-          name: 大学筹备处，广州，1924
-          text: 1924 年新校区建好以前，三所学校要在广州并成一所的那几间屋子。游戏里的大学是一个约六百名师生的模型。
+          name: 高等师范的礼堂，广州，1924
+          text: 广州国立高等师范学校的礼堂，建在原贡院的旧址上。1924 年三所学校在这里筹备并成一所大学，星期天孙中山也在这座礼堂演讲。游戏里悬而未决的事的数目是模型算出来的，不是记载。
   events:
     university_order:
       order: 23
@@ -173,26 +219,49 @@ wiki:
       text:
         en:
           name: The order to join the schools
-          text: On 4 February 1924 Sun Yat-sen ordered the three schools joined into one university. In the game an employee can help bring the preparatory work earlier, which holds only in this branch.
+          text: On 4 February 1924 Sun Yat-sen ordered the three schools joined into one university. In the game an employee can copy the records of the three schools into one book and draw the scattered sites on one sheet, which holds only in this branch. The recorded dates do not move.
         zh:
           name: 合并学校的命令
-          text: 1924 年 2 月 4 日孙中山下令把三所学校并成一所大学。游戏里员工能帮着让筹备工作提前，只在这条分支里成立。
+          text: 1924 年 2 月 4 日孙中山下令把三所学校并成一所大学。游戏里员工能把三所学校的名册抄成一本，把散在各处的校址画成一张图，只在这条分支里成立。有记载的日期不会变。
   model_events:
-    lin_diploma:
+    asked_the_way:
       order: 3
       refs:
         - game
       text:
-        en: A made-up student asks what will happen to the diploma of a school that is about to be joined into another. The question is invented for the game. The records only say that the graduation of the students of the three schools was on the agenda of the first preparatory meeting on 3 March 1924. If the employee is helping people settle at that moment the question is taken down, otherwise the student goes away.
-        zh: 一名编出来的学生问，一所就要并入别校的学校，文凭会怎么算。这个问题是为游戏编的，记录里只说三所学校学生的毕业问题列在 1924 年 3 月 3 日第一次筹备会议的议题里。员工那时正在帮人安顿，问题就会被记下来，否则这名学生就走了。
-    lost_at_gate:
-      order: 4
-      refs:
-        - game
-      text:
-        en: A made-up new student stands in a courtyard with a letter and does not know which office to go to. The student is invented for the game. If the employee is handing out the simple map at that moment the student is shown the way, otherwise the student leaves for another school.
-        zh: 一名编出来的新生拿着一封信站在院子里，不知道该去哪个办公室。这名学生是为游戏编的。员工那时正在发简图，他就被指了路，否则他去了别的学校。
+        en: A new student with a letter asks the employee the way to an office. The student is made up for the game and has no name. If the employee has walked the sites by then, the way is shown on the sheet, otherwise the two of them look for it together. It happens once in a trip and is not counted in the comparison with the main timeline.
+        zh: 一个拿着信的新生向员工问某间办公室怎么走。这名学生是为游戏编的，没有名字。员工那时已经走熟了校址，就在图上指给他看，否则两个人一起找。一趟只发生一次，不计入与主时间线的对比。
   refs:
+    sysu_rename_museum:
+      order: 175
+      status: checked
+      text:
+        en: 'Sun Yat-sen University Museum, account of the earliest graduation ceremonies and the 17 August 1926 name change. https://bwgxsg.sysu.edu.cn/zh-hans/node/332'
+        zh: '中山大学博物馆（校史馆），早期毕业典礼及 1926 年 8 月 17 日校名变更。https://bwgxsg.sysu.edu.cn/zh-hans/node/332'
+    sysu_founding_museum:
+      order: 161
+      status: checked
+      text:
+        en: 'Sun Yat-sen University Museum, history of the university anniversary and preparations for the National Guangdong University. https://bwgxsg.sysu.edu.cn/zh-hans/node/305'
+        zh: '中山大学博物馆（校史馆），《中山大学校庆日的来由》，载 1924 年合并筹办国立广东大学。https://bwgxsg.sysu.edu.cn/zh-hans/node/305'
+    sysu_news_lectures:
+      order: 176
+      status: checked
+      text:
+        en: 'Li Yanbao. Preface to the collection of the speeches of Sun Yat-sen at Sun Yat-sen University and the schools before it. Sun Yat-sen University News, 12 November 2014. https://www.sysu.edu.cn/news/info/2161/626871.htm'
+        zh: '李延保。《声振神州——孙中山在中山大学及前身院校的演讲》序言。中山大学新闻网，2014 年 11 月 12 日。https://www.sysu.edu.cn/news/info/2161/626871.htm'
+    wikisource_sanmin:
+      order: 177
+      status: checked
+      text:
+        en: 'Wikisource in Chinese. The texts of the 1924 lectures with the date of each. https://zh.wikisource.org/wiki/三民主義'
+        zh: '中文维基文库。1924 年各讲讲稿，载各讲日期。https://zh.wikisource.org/wiki/三民主義'
+    sswgw_minsheng:
+      order: 178
+      status: checked
+      text:
+        en: 'Memorial Hall of the Former Residence of Sun Yat-sen in Shanghai. Note on the pamphlet of the last four lectures. https://www.sswgw.org.cn/wwdc/xgww/4732.htm'
+        zh: '上海孙中山故居纪念馆。孙中山著《民生主义》单行本说明。https://www.sswgw.org.cn/wwdc/xgww/4732.htm'
     sysu_chronicle:
       order: 33
       status: checked
@@ -209,7 +278,7 @@ wiki:
       order: 32
       status: checked
       text:
-        en: 'National Museum of China. On the death of Sun Yat-sen and the mourning in Beijing. Read 2026.'
+        en: 'National Museum of China. On the death of Sun Yat-sen and the mourning in Beijing. https://www.chnmuseum.cn/yj/xscg/xslw/201812/t20181224_36324.shtml'
         zh: '中国国家博物馆。孙中山逝世与国民党北京治丧活动述论。2026 年查阅。'
     people_daily_sun_last_days:
       order: 33
@@ -225,10 +294,92 @@ wiki:
         zh: '中文维基百科。中山大学校史。2026 年查阅。'
 era_text:
   en:
-    labels: {sick: 'People without a place', dead: 'Gave up and left', deaths: 'Gave up and left', treated: 'Settled', protected: 'Shown the way'}
+    labels: {sick: 'Matters still open', dead: 'Matters nobody asks about any more', deaths: 'Matters that lapsed', treated: 'Records in one book, percent', protected: 'Sites walked, percent'}
+    identities:
+      local_scholar: {name: a helper in the copying room, cover: '{staff} says they have had some schooling, write a fair hand and would gladly help with the copying.'}
+      pen: {name: a reporter from outside, cover: '{staff} says they write for a newspaper elsewhere and want to see how the new university is made.'}
+      wanderer: {name: a wanderer come to hear the lectures, cover: '{staff} says they are on the road, heard that someone speaks here on Sundays, and have come to listen.'}
+      maker: {name: someone selling at the door of the hall, cover: '{staff} says they have a trade and would like to set up where the crowd is.'}
+      far_guest: {name: a guest off a ship, cover: '{staff} says they came with a ship and will be in Guangzhou for a while.'}
+    # Lines written for one employee at one moment. Where there is one, it is read in place of the line of the moment.
+    personal:
+      records_read_aloud:
+        s_fan: '{date}: Shen Fan writes a hand he has to guess at himself. He reads the names out and a clerk writes, and as they go he marks every name that stands in two of the three records.'
+        s_somchai: '{date}: Somchai can read, but his hands are clumsy and nobody can make out what he writes. He reads the names out and a clerk writes. At the temple, when the others were up mending the roof, he was the one who held the ladder.'
+      sunday_first:
+        s_fan: '{date}: Shen Fan is pressed in at the very back of the hall and cannot hear all of it, so he counts how many are in the hall and how many are taking notes, and writes the two numbers down.'
+        s_samuel: '{date}: Samuel is pressed in at the very back of the hall, taking notes on tiptoe. He is too far off, and half of what he writes down is the faces of the people listening.'
+        s_amara: '{date}: Amara is pressed in at the very back of the hall and cannot hear all of it. A student beside her has stood too long and turns faint. She helps him sit and counts at his wrist for a while.'
+      spoiler:
+        s_fan: '{date}: Shen Fan knows that in two years this school will take the name of the man who ordered it, and that a hundred years on he will set out from its statue. He writes the two sentences on the last page of the notebook and closes it.'
+        s_guilan: '{date}: Guilan knows that in two years this school will change its name. She cannot write the characters, so she says them over once in her head and tells nobody.'
+        s_somchai: '{date}: Somchai knows that in two years this school will take the name of the man who ordered it. He writes the sentence on the last page of the notebook, closes it, and goes to ask a clerk what he is reading.'
+        s_carlos: '{date}: Carlos knows that in two years this school will change its name. He cannot write it down, so he tells it to the oven, and laughs before he has finished.'
+        s_samuel: '{date}: Samuel knows that in two years this school will change its name, a piece of news nobody else has. He writes it on the last page of the notebook and crosses it out again. There is nowhere to file it.'
+        s_amara: '{date}: Amara knows that in two years this school will change its name. She writes the sentence on the last page of the notebook and closes it.'
+      pamphlet_given:
+        s_fan: '{date}: A clerk hands Shen Fan a copy of the pamphlet, new from the printer, and says everyone in the room is to have one. Shen Fan turns to the preface first and looks at the date under it.'
+        s_samuel: '{date}: A clerk hands Samuel a copy of the pamphlet, new from the printer. He asks which printing it is, and the clerk says, the first.'
+      errand_frail:
+        s_fan: '{date}: Shen Fan is out of breath after a few stairs and cannot carry the pages. He sits at the door of the copying room and counts how many times one text goes round.'
+        s_somchai: '{date}: Somchai is out of breath after a few stairs and cannot carry the pages. He sits at the door of the copying room and watches the pages with their slips go in and out.'
+        s_samuel: '{date}: Samuel has had his stomach trouble again for some days and is out of breath after a few stairs. He sits at the door of the copying room and notes the hour of every carrying of the pages.'
+      homesick_may:
+        s_fan: '{date}: A month with nothing on record. Shen Fan keeps a tally in the notebook until it reaches a hundred days, then works it out again beside it. At the office a little over three days have gone by.'
+        s_guilan: '{date}: A month with nothing on record. Guilan counts the days. At home the chillies should be going into the ground about now. At the office a little over three days have gone by.'
+        s_somchai: '{date}: A month with nothing on record. Somchai still wants to see snow once, and there is none in Guangzhou in May. At the office a little over three days have gone by.'
+        s_carlos: '{date}: A month with nothing on record. Carlos wakes at three every morning. His oven is not here, and he stands a whole morning by the stove of someone else, watching. At the office a little over three days have gone by.'
+        s_samuel: '{date}: A month with nothing on record, the hardest kind for a reporter. Samuel keeps a tally in the notebook, and it reaches a hundred days. At the office a little over three days have gone by.'
+        s_amara: '{date}: A month with nothing on record. Amara works out how many children the ward must have seen born in these hundred days. At the office a little over three days have gone by.'
+        s_jeanluc: '{date}: A month with nothing on record. Jean-Luc writes a line a day, as in a log at sea, until there are a hundred. At the office a little over three days have gone by.'
+      shipai_frail:
+        s_fan: '{date}: Shen Fan knows what will be built at Shipai, east of the city. It is too far, and he cannot walk it.'
+        s_somchai: '{date}: Somchai knows what will stand at Shipai, east of the city. It is too far, and he cannot walk it.'
+        s_samuel: '{date}: Samuel knows what will stand at Shipai, east of the city, and that it would make a good piece. It is too far, and he cannot walk it.'
+      last_seat:
+        s_fan: '{date}: Shen Fan hears this lecture out from the usual place, and the count in his notebook stops at sixteen. He stays sitting a while after the hall has emptied.'
+        s_guilan: '{date}: Guilan hears this lecture out from the usual place. When the hall has emptied she does not go at once, and sets the benches straight one by one.'
+        s_somchai: '{date}: Somchai hears this lecture out from the usual place. He stays sitting a while after the hall has emptied, as he used to wait at the temple for the last bell.'
+        s_samuel: '{date}: Samuel takes this lecture down from the usual place. He knows it is the last, and in the notebook he writes only its number and not the word last.'
+        s_amara: '{date}: Amara hears this lecture out from the usual place. She stays sitting a while after, until the last person has gone out of the door.'
+        s_jeanluc: '{date}: Jean-Luc hears this lecture out standing in the usual place. He is the last to leave the hall, as a captain is the last off the ship.'
+      records_shut:
+        s_guilan: '{date}: Guilan left school after the third year, and has no part in copying the records. She comes to know the gatekeepers of all three schools. To learn who is where, it is quicker to ask her than to turn the pages.'
+        s_carlos: '{date}: Carlos writes only his own name, and has no part in copying the records. He comes to know the gatekeepers of all three schools. To learn who is where, it is quicker to ask him than to turn the pages.'
+      sunday_sit:
+        s_guilan: '{date}: Guilan sits down in a back row of the hall, bad knees and all, and stays from the first word to the last. She does not follow everything said on the platform. The student beside her is thirsty, and she hands over her water.'
+        s_somchai: '{date}: Somchai listened to sermons at the temple for twenty years, and sits in a back row of the hall to the very end. As it empties he asks the student beside him what he has been reading.'
+        s_jeanluc: '{date}: Jean-Luc has a bad back and insists on standing, and stands at the back of the hall from the first word to the last.'
+      pamphlet:
+        s_guilan: '{date}: The pamphlet, new from the printer, lies on the desk of a clerk. Guilan sees it through the window and knows two of the characters on the cover.'
+        s_somchai: '{date}: The pamphlet, new from the printer, lies on the desk of a clerk. Somchai sees the cover through the window. He knows how many copies of this book there will one day be, and asks the clerk only how far he has got in it.'
+        s_amara: '{date}: The pamphlet, new from the printer, lies on the desk of a clerk. Amara sees it through the window and begins to hum.'
+        s_jeanluc: '{date}: The pamphlet, new from the printer, lies on the desk of a clerk. Jean-Luc sees the cover through the window.'
+      errand:
+        s_guilan: '{date}: Pages with slips pasted on them go in and out of the copying room. Guilan sits outside trimming vegetables and asks everyone who comes out whether they have eaten.'
+        s_amara: '{date}: Pages with slips pasted on them go in and out of the copying room. Amara is outside and sees only the back of whoever carries them, and can tell from the footsteps that he is in a hurry.'
+        s_jeanluc: '{date}: Pages with slips pasted on them go in and out of the copying room. Jean-Luc is outside teaching the child of a gatekeeper to tie knots, and sees only the back of whoever carries them.'
+      shipai_reached:
+        s_guilan: '{date}: Bad knees and all, Guilan walks to Shipai a step at a time. There are only fields. She squats, rubs a pinch of soil between her fingers and says things will grow here.'
+        s_carlos: '{date}: Carlos pushes his cart out of the city to the east and reaches Shipai, and comes back saying there are only fields there. He knows a university will be built there, and still he says, only fields.'
+        s_amara: '{date}: Amara walks out of the city to the east and reaches Shipai. She knows what will stand here, stays a long while, and draws what is here now, slowly.'
+      sunday_stall:
+        s_carlos: '{date}: Carlos does not understand what is being said inside, and sets up an oven at the door of the hall to bake bread. When the hall empties the crowd pours out and the bread is gone in no time, sold too cheap as usual.'
+      pamphlet_traded:
+        s_carlos: '{date}: Carlos trades an ovenful of bread for a copy of the pamphlet, new from the printer. He cannot read it himself, and says it is for the child at home who wants to take over the bakery.'
+      errand_carried:
+        s_carlos: '{date}: In this branch, the one sent to carry the pages is once Carlos. A sheaf of paper with slips pasted on it, of which he cannot read a word, and not a sheet is creased.'
+      last_stall:
+        s_carlos: '{date}: Carlos bakes one ovenful more than usual. He knows that on the Sundays to come there will not be such a crowd at this door, and gives away what is left.'
+      records_begun:
+        s_amara: '{date}: Amara begins to copy the records of the three schools. Written work has always been hard for her, so she copies a line and has a clerk check a line.'
+      spoiler_said:
+        s_jeanluc: '{date}: Jean-Luc tells a clerk at his copying that in two years this school will take the name of the man who ordered it, and does not raise his voice to say it. The clerk does not look up. The man is still alive, he says, and who names a school like that.'
+      shipai_walk:
+        s_jeanluc: '{date}: Jean-Luc hears that the new campus is to be at Shipai, east of the city. His knees will not take him so far, and he stands a while on the quay looking east.'
     name: Guangzhou, 1924
     short: Guangzhou
-    place_name: Guangzhou, the university office
+    place_name: Guangzhou, the hall of the Higher Normal School
     tags:
       - thought
       - education
@@ -237,63 +388,87 @@ era_text:
       - guangzhou
       - history
     event_titles:
-      time_strain: Time slip
+      asked_the_way: Asked the way
     plots: {}
-    blurb: Three schools, one order to join them, and the weeks before anything is built. Close, cheap, and the effect of care and clear directions is clear. This is where the game begins.
-    handle_label: The preparatory work begins
+    blurb: One hall and two things being made in it, a university and a book. Seven months, from the order to join the schools to eighteen days before classes begin. This is where the game begins.
+    handle_label: The records become one book
     protagonist: Sun Yat-sen
-    protagonist_role: A statesman who has just ordered three schools joined into one university
-    stay: Stay seven days
+    protagonist_role: A statesman who has ordered three schools joined into one university, and lectures in their hall on Sundays
+    stay: Stay seven office days, 210 days of history
     plan_baseline: Main timeline
     encyclopedia:
       history:
         - text: 'On 4 February 1924 Sun Yat-sen ordered the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and named Zou Lu to prepare it.'
           check: true
-        - text: 'Zou Lu took up the preparation on 21 February. On 24 February he called the students of the three schools together in the hall of the Higher Normal School to announce it, and the first preparatory meeting was held on 3 March, with the graduation of the students of the three schools on its agenda.'
+        - text: 'From 27 January to 24 August 1924 Sun lectured on Sundays in the hall of the Higher Normal School, sixteen lectures in all. Huang Changgu took each one down, Zou Lu read the fair copies and pasted slips on them, and Sun corrected them in his own hand.'
           check: true
-        - text: 'On 3 June Zou Lu submitted the measures for joining the schools, and they were approved on 6 June.'
+        - text: 'Zou Lu took up the preparation on 21 February. On 24 February he called the students of the three schools together in the hall to announce it, and the first preparatory meeting was held on 3 March, with the graduation of the students of the three schools on its agenda.'
           check: true
-        - text: 'The schools were spread over several places, which made them hard to run, and Sun told Zou Lu to choose a new campus at Shipai on the eastern edge of the city. Land was marked out there in 1924.'
+        - text: 'The first lectures were printed as a pamphlet at the end of March, with a preface Sun wrote on 30 March. On 3 June Zou Lu submitted the measures for joining the schools, and they were approved on 6 June.'
           check: true
         - text: 'Classes began on 19 September, and the founding ceremony was held on 11 November with the motto Sun wrote. Sun died in Beijing on 12 March 1925, and in 1926 the university was renamed National Sun Yat-sen University.'
           check: true
       regret:
-        - 'You can help today''s people but not tomorrow''s. On the main timeline the preparatory work began on 21 February.'
-        - 'A plan and a place matter more than any one speech, but they only come when someone is heard.'
+        - 'You leave on 1 September. Classes begin on the 19th, and the motto is written after that.'
+        - 'The lectures stopped at the sixteenth. Nobody in the hall knew it was the last.'
     events:
-      lin_diploma_helped: '{date}: Lin, a final-year student (a character invented for the game), asks what will happen to the diploma of a school that is about to be joined into another. {staff} writes the question down and gets it to the clerk who is collecting such questions. Lin goes home with an answer to wait for.'
-      lin_diploma: '{date}: Lin, a final-year student (a character invented for the game), asks what will happen to the diploma of a school that is about to be joined into another. Nobody is free to write it down, and Lin goes away unsure and does not come back.'
-      lost_at_gate_helped: '{date}: A new student, Wen (invented for the game), stands in a courtyard with a letter and no idea which office to go to. {staff} points the way on the map, and within minutes Wen is in the right line.'
-      lost_at_gate: '{date}: A new student, Wen (invented for the game), stands in a courtyard with a letter and no idea which office to go to, and in the end leaves for another school.'
-      time_strain: '{date}: {staff} hears the bell strike half a beat wrong. This branch drifts further from history and they are visibly more tired.'
+      asked_the_way: '{date}: A new student with a letter asks {staff} the way to an office. {staff} does not know either, and they look for it together for half the morning.'
+      asked_the_way_shown: '{date}: A new student with a letter asks {staff} the way to an office. {staff} shows it on the sheet, and the student thanks them and goes off with the sheet in hand.'
     star_points:
-      settled: 'Be of use to the people who come asking'
-      campus: 'Put a clear map of the schools in every hand'
-      lin: 'Write down the question of the student Lin'
+      roster: 'The records of the three schools are one book before the first preparatory meeting'
+      copy: 'Bring home a copy of the book of the lectures'
+      last: 'Be there for the last lecture'
     milestones:
-      lin_question: '{date}: The question Lin asked is on paper and on its way to the people who collect such questions.'
-      site_known: '{date}: {staff} has the map in every hand. Nobody asks where to go any more.'
-      people_settled: '{date}: {staff} has found a place and a class for everyone who came asking.'
-      first_treat: '{date}: {staff} writes down the first names and finds a teacher and his class a room.'
-      first_protect: '{date}: {staff} draws the first simple map of the schools and their sites and hands it round.'
-      reform_history: '{date}: Zou Lu takes up the preparation, as in history. The main timeline does not change.'
-      trust_won: '{date}: The clerks of the three schools come to {staff} on their own to ask for help.'
-      exhausted: '{date}: {staff} is so tired their hands shake and is forced to rest.'
-      outbreak_fades: '{date}: The number of people left without a place falls to single digits.'
-      students_told: '{date}: Zou Lu calls the students of the three schools together in the hall of the Higher Normal School and announces the preparation.'
-      first_meeting: '{date}: The first meeting of the preparatory committee is held, with the graduation of the students of the three schools on its agenda.'
+      order_given: '{date}: Sun Yat-sen orders the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and names Zou Lu to prepare it. Nobody in the city can yet say where this university is.'
+      lecture_feb17: '{date}: A Sunday. Sun Yat-sen lectures in the hall of the Higher Normal School. The series began on 27 January and this is the fourth lecture. At the side of the platform a man writes without looking up. That is Huang Changgu, who is there for every one.'
+      zou_takes_up: '{date}: Zou Lu takes up the preparation.'
+      hall_feb24: '{date}: A Sunday again. The fifth lecture is given in the hall today, and Zou Lu calls the students of the three schools together here to announce the preparation.'
+      first_meeting: '{date}: The first preparatory meeting is held, with the graduation of the students of the three schools on its agenda. Of the thirty-five members of the preparatory committee, thirty-one have studied abroad.'
+      first_meeting_book: '{date}: The first preparatory meeting is held, with the graduation of the students of the three schools on its agenda. Of the thirty-five members of the preparatory committee, thirty-one have studied abroad. In this branch the names of the graduating classes of the three schools are by now in one book.'
+      proofs_travel: 'Through March the text of the lectures goes from hand to hand. The notes of Huang Changgu are copied fair and sent to Sun Yat-sen, he has them carried to Zou Lu to be read, Zou Lu pastes slips on the pages and sends them back, Sun corrects them in his own hand, and they come round again.'
+      preface: '{date}: Sun Yat-sen writes the preface for the pamphlet of the first lectures. It is printed at the end of March.'
+      lecture_apr20: '{date}: A Sunday. The lectures in the hall have reached their second part.'
+      measures_sent: '{date}: Zou Lu submits the measures for joining the three schools.'
+      measures_approved: '{date}: The measures are approved.'
+      shipai_chosen: 'In this year Sun Yat-sen tells Zou Lu to choose a new campus at Shipai, east of the city. The schools are spread over several places and hard to run.'
+      last_lecture: '{date}: The sixteenth lecture. The third part has reached only its fourth lecture, and the rest is never given. Nobody in the hall knows this is the last.'
+      classes_begin: '{date}: Classes begin at National Guangdong University.'
+      ceremony: '{date}: The founding ceremony is held, with the motto Sun Yat-sen wrote: study widely, enquire carefully, think prudently, discern clearly, practise earnestly. He is not there, and he leaves Guangzhou two days later.'
+      sunday_first: '{date}: {staff} is pressed in at the very back of the hall, a long way from the platform, able to see the man and unable to hear all of it.'
+      sunday_stall: '{date}: {staff} cannot get into the hall and sets up a stall at the door. When the hall empties the crowd pours out, and everything is sold in no time.'
+      sunday_sit: '{date}: {staff} finds a place in a back row of the hall and sits from the first word to the last without moving.'
+      records_begun: '{date}: {staff} begins to copy the records of the three schools into one book.'
+      records_read_aloud: '{date}: Nobody can read the hand of {staff}. So {staff} reads the names out and a clerk writes, and the three records begin to become one.'
+      records_shut: '{date}: Copying the records takes reading, and {staff} has no part in it, but comes to know the gatekeepers of all three schools. To learn who is where, it is quicker to ask {staff} than to turn the pages.'
+      records_done: '{date}: The records of the three schools are one book, before the first preparatory meeting.'
+      records_late: '{date}: The records of the three schools are one book. The first preparatory meeting has already been held.'
+      sites_done: '{date}: {staff} has walked every one of the sites scattered over the city and drawn them on one sheet, with how long it takes to walk from each to the next.'
+      asked_inside: '{date}: The clerks no longer leave {staff} waiting at the door, and call them in.'
+      copy_kept: '{date}: {staff} wraps the pamphlet and puts it in with their things.'
+      exhausted: '{date}: {staff} is so tired their hands shake, and has to rest.'
+      spoiler: '{date}: {staff} knows that in two years this school will take the name of the man who ordered it. {staff} writes the sentence on the last page of the notebook and closes it.'
+      spoiler_said: '{date}: {staff} tells a clerk at his copying that in two years this school will take the name of the man who ordered it. The clerk does not look up. The man is still alive, he says, and who names a school like that.'
+      errand: '{date}: Pages with slips pasted on them go in and out of the copying room. {staff} is outside and sees only the back of whoever carries them.'
+      errand_carried: '{date}: In this branch, the one sent to carry the pages is once {staff}. A sheaf of paper with slips pasted on it goes from one end to the other, and not a sheet is creased.'
+      errand_frail: '{date}: {staff} is out of breath after a few stairs and cannot carry the pages, and sits at the door of the copying room watching the pages with their slips go in and out.'
+      pamphlet: '{date}: The pamphlet, new from the printer, lies on the desk of a clerk. {staff} sees the cover through the window.'
+      pamphlet_traded: '{date}: {staff} trades what they make with their own hands for a copy of the pamphlet, new from the printer.'
+      pamphlet_given: '{date}: A clerk hands {staff} a copy of the pamphlet, new from the printer, and says everyone in the room is to have one.'
+      homesick_may: '{date}: A month with nothing on record. {staff} keeps a tally in the notebook, and it reaches a hundred days. At the office a little over three days have gone by.'
+      shipai_walk: '{date}: {staff} hears that the new campus is to be at Shipai, east of the city, and does not get there on this trip.'
+      shipai_reached: '{date}: {staff} walks out of the city to the east and reaches Shipai. {staff} knows what will stand here, stays a long while, and draws what is here now.'
+      shipai_frail: '{date}: {staff} knows what will stand at Shipai, east of the city. It is too far, and {staff} cannot walk it.'
+      last_seat: '{date}: {staff} hears this lecture out from the usual place, and stays sitting a while after the hall has emptied.'
+      last_stall: '{date}: {staff} brings more to the door of the hall than on other Sundays. {staff} knows that on the Sundays to come there will not be such a crowd at this door.'
     summary:
-      near_death: '{staff} collapses in a Guangzhou lane and is pulled back by the recall charm, and wakes before the statue. Life saved, at a price.'
-      stay_and_gifts: '{staff} finished the task but did not come back. They left a note saying they want to stay and see the university open. Gifts will arrive later.'
-      gave_up: '{staff} gave up early and woke before the statue, saying the offices of 1924 were not for them.'
-      legend: '{staff} woke before the statue with a brass badge in a pocket. The preparation began {advance_days:1} days earlier than in the main timeline.'
-      perfect: '{staff} came back to the statue. On the main timeline {base_D:i} people gave up before classes began, in this branch {D:i}.'
-      scramble: '{staff} was turned away again and again and finally woke before the statue with a joke to tell.'
-      modest: '{staff} spent seven days in the office, did what was within reach, and stood before the statue again.'
+      near_death: '{staff} falls ill in Guangzhou, is pulled back by the recall charm, and wakes before the statue.'
+      stay_and_gifts: '{staff} finished the work and did not come back. They left a note saying they want to stay and see the university open. Gifts will arrive later.'
+      gave_up: '{staff} did not last to the end and woke before the statue, saying they could not stay in the Guangzhou of 1924 any longer.'
+      legend: '{staff} woke before the statue with a pamphlet printed in March 1924 among their things. On the main timeline {base_D:i} matters lapsed with nobody asking any more, in this branch {D:i}. On the day they left, classes were eighteen days away.'
+      perfect: '{staff} came back to the statue. On the main timeline {base_D:i} matters lapsed with nobody asking any more, in this branch {D:i}. On the day they left, classes were eighteen days away.'
+      modest: '{staff} spent two hundred and ten days in Guangzhou, did what was within reach, and stood before the statue again. On the day they left, classes were eighteen days away.'
     quotes:
       near_death:
-        - trait: kind
-          text: At the end I was still wondering whether anyone was keeping watch at night.
         - text: I thought I could hold out a little longer.
       stay_and_gifts:
         - trait: kind
@@ -302,33 +477,111 @@ era_text:
       gave_up:
         - trait: homesick
           text: I want to go home. That is all.
-        - text: I am not cut out for this.
+        - text: Seven months is too long.
       legend:
-        - text: I only told them what they needed to hear.
+        - trait: curious
+          text: So that is how a book is made, a page corrected at a time.
+        - text: When I left they had not yet begun classes.
       perfect:
         - trait: kind
-          text: I could save today's people, not tomorrow's.
-        - trait: curious
-          text: So that is how it is, people stay when they know where to go.
+          text: The people who came asking were answered in the end.
         - text: Did what had to be done.
-      scramble:
-        - trait: methodical
-          text: They will understand sooner or later. Just later.
-        - text: Next time I want to bring more.
       modest:
         - trait: glib
-          text: I said all I had to say. Whether they listen is up to them.
-        - text: With one more item I might have saved one more life.
+          text: I said the name would change in two years. Nobody believed me.
+        - text: I was only there.
     hints:
-      lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Maps were left over. The limit was the trust of the three schools, not the supplies. Let the employee help people first to build trust.
-      unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
+      unlettered: This employee cannot read, so the copying of the records is closed to them. Send one who can read for the first star.
+      frail: This employee is frail and cannot walk all the sites in the city, nor as far as Shipai.
+      empty: This trip went empty-handed. Paper and pens make the copying faster, and a compass makes the walking faster.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   zh:
-    labels: {sick: '没有着落的人', dead: '放弃离开', deaths: '放弃离开', treated: '安顿', protected: '指路'}
+    labels: {sick: '悬而未决的事', dead: '没人再问的事', deaths: '拖到没人再问的事', treated: '名册抄成的百分数', protected: '校址走熟的百分数'}
+    identities:
+      local_scholar: {name: 誊清屋里的帮手, cover: '{staff}说自己读过几年书，字还过得去，愿意帮着抄写。'}
+      pen: {name: 外面来的记者, cover: '{staff}说自己替外面的报纸写稿，想看看这所新大学是怎样办起来的。'}
+      wanderer: {name: 来听讲的游方人, cover: '{staff}说自己是游方的，听说这里星期天有人演讲，想来听听。'}
+      maker: {name: 礼堂门口做小买卖的, cover: '{staff}说自己有一门手艺，想在人多的地方摆个摊。'}
+      far_guest: {name: 船上下来的远客, cover: '{staff}说自己是跟船来的，要在广州住上一阵。'}
+    # Lines written for one employee at one moment. Where there is one, it is read in place of the line of the moment.
+    personal:
+      records_read_aloud:
+        s_fan: '{date}，沈凡的字潦草得连自己都要猜。他念名字，一位办事员写，他顺手把三本名册里重了的名字一个个标出来。'
+        s_somchai: '{date}，颂猜识字，手笨，写出来的字没人认得。他念名字，一位办事员写。在寺里别人上房修屋顶，他也是在下面扶梯子的那一个。'
+      sunday_first:
+        s_fan: '{date}，沈凡挤在礼堂最后面，听不全，就数台下有多少人、多少人在记笔记，记在本子上。'
+        s_samuel: '{date}，塞缪尔挤在礼堂最后面，踮着脚记。离得太远，他记下的一半是台下人的脸色。'
+        s_amara: '{date}，阿玛拉挤在礼堂最后面，听不全。旁边一个学生站久了发晕，她扶他坐下，按着他的手腕数了一阵。'
+      spoiler:
+        s_fan: '{date}，沈凡知道两年以后这所学校会改用孙先生的名字，也知道一百年以后自己会从这所学校的铜像前出发。他把这两句话写在本子最后一页，合上了。'
+        s_guilan: '{date}，桂兰知道两年以后这所学校要改名。那几个字她不会写，在心里记了一遍，没有对人说。'
+        s_somchai: '{date}，颂猜知道两年以后这所学校会改用孙先生的名字。他把这句话写在本子最后一页，合上了，接着去问办事员在读什么。'
+        s_carlos: '{date}，卡洛斯知道两年以后这所学校要改名。他不会写，就讲给炉子听，讲完自己先笑了。'
+        s_samuel: '{date}，塞缪尔知道两年以后这所学校要改名，这是一条谁也没有的消息。他写在本子最后一页，又划掉了，没有地方可以发。'
+        s_amara: '{date}，阿玛拉知道两年以后这所学校要改名。她把这句话写在本子最后一页，合上了。'
+      pamphlet_given:
+        s_fan: '{date}，办事员把一本刚印出来的《民族主义》递给沈凡，说屋里的人一人一本。沈凡先翻到序，看了落款的日子。'
+        s_samuel: '{date}，办事员把一本刚印出来的《民族主义》递给塞缪尔。他问这是第几版，办事员说，头一版。'
+      errand_frail:
+        s_fan: '{date}，沈凡爬几级楼梯就喘，送不了稿。他坐在誊清的屋子门口，数一份稿子来回走了几趟。'
+        s_somchai: '{date}，颂猜爬几级楼梯就喘，送不了稿。他坐在誊清的屋子门口，看贴着签注条的稿子进进出出。'
+        s_samuel: '{date}，塞缪尔的肠胃又闹了几天，爬几级楼梯就喘。他坐在誊清的屋子门口，把每一趟送稿的时刻记了下来。'
+      homesick_may:
+        s_fan: '{date}，没有记载的一个月。沈凡在本子上画正字，画满了一百天，又在旁边算了一遍，事务所那边只过了三天多。'
+        s_guilan: '{date}，没有记载的一个月。桂兰数着日子，家里的辣椒这时候该下地了。事务所那边只过了三天多。'
+        s_somchai: '{date}，没有记载的一个月。颂猜还想亲眼看一次雪，广州的五月没有雪。事务所那边只过了三天多。'
+        s_carlos: '{date}，没有记载的一个月。卡洛斯每天三点就醒，这里没有他的炉子，他站在别人的灶边看了一早上。事务所那边只过了三天多。'
+        s_samuel: '{date}，没有记载的一个月，对一个记者最难熬。塞缪尔在本子上画正字，画满了一百天。事务所那边只过了三天多。'
+        s_amara: '{date}，没有记载的一个月。阿玛拉算了算，这一百天里病房该添了多少个孩子。事务所那边只过了三天多。'
+        s_jeanluc: '{date}，没有记载的一个月。让-吕克像记航海日志一样一天记一行，记满了一百天。事务所那边只过了三天多。'
+      shipai_frail:
+        s_fan: '{date}，沈凡知道城东的石牌以后会盖起什么。路太远，他走不到。'
+        s_somchai: '{date}，颂猜知道城东的石牌以后是什么样子。路太远，他走不到。'
+        s_samuel: '{date}，塞缪尔知道城东的石牌以后是什么样子，那会是一条好稿子。路太远，他走不到。'
+      last_seat:
+        s_fan: '{date}，沈凡坐在老位置上听完了这一讲，本子上记的场次停在十六。散场后他多坐了一会儿。'
+        s_guilan: '{date}，桂兰坐在老位置上听完了这一讲。散场后她没有马上走，把长凳一条一条摆齐了。'
+        s_somchai: '{date}，颂猜坐在老位置上听完了这一讲。散场后他多坐了一会儿，像在寺里等最后一声钟。'
+        s_samuel: '{date}，塞缪尔坐在老位置上记完了这一讲。他知道这是最后一讲，本子上只写了场次，没有写最后两个字。'
+        s_amara: '{date}，阿玛拉坐在老位置上听完了这一讲。散场后她多坐了一会儿，等最后一个人走出门。'
+        s_jeanluc: '{date}，让-吕克站在老位置上听完了这一讲。散场后他最后一个离开，像船长最后一个下船。'
+      records_shut:
+        s_guilan: '{date}，桂兰只念到三年级，抄名册插不上手。她把三所学校的门房都认熟了，谁在哪里，问她比翻名册快。'
+        s_carlos: '{date}，卡洛斯只会写自己的名字，抄名册插不上手。他把三所学校的门房都认熟了，谁在哪里，问他比翻名册快。'
+      sunday_sit:
+        s_guilan: '{date}，桂兰在礼堂后排坐下，膝盖不好，却从开讲坐到了散场。台上的话她没全听懂，旁边的学生渴了，她把自己的水递了过去。'
+        s_somchai: '{date}，颂猜在寺里听了二十年讲经，在礼堂后排一坐到底。散场时他问旁边的学生最近在读什么。'
+        s_jeanluc: '{date}，让-吕克腰不好，偏要站着听，在礼堂后排从开讲站到了散场。'
+      pamphlet:
+        s_guilan: '{date}，刚印出来的《民族主义》摆在办事员的桌上。桂兰隔着窗看了一眼，封面上的字她认得两个。'
+        s_somchai: '{date}，刚印出来的《民族主义》摆在办事员的桌上。颂猜隔着窗看了一眼封面。他知道这本书后来印了多少，只问办事员读到哪里了。'
+        s_amara: '{date}，刚印出来的《民族主义》摆在办事员的桌上。阿玛拉隔着窗看了一眼，轻轻哼起歌来。'
+        s_jeanluc: '{date}，刚印出来的《民族主义》摆在办事员的桌上。让-吕克隔着窗看了一眼封面。'
+      errand:
+        s_guilan: '{date}，贴着签注条的讲稿从誊清的屋子里进进出出。桂兰在门外择菜，谁出来都问一句吃了没有。'
+        s_amara: '{date}，贴着签注条的讲稿从誊清的屋子里进进出出。阿玛拉在门外，只看得见送稿人的背影，听脚步就知道那人赶得很急。'
+        s_jeanluc: '{date}，贴着签注条的讲稿从誊清的屋子里进进出出。让-吕克在门外教门房的孩子打绳结，只看得见送稿人的背影。'
+      shipai_reached:
+        s_guilan: '{date}，桂兰膝盖不好，还是一步一步走到了石牌。那里只有田，她蹲下来捏了一把土，说这地种得出东西。'
+        s_carlos: '{date}，卡洛斯推着车出城往东，走到了石牌，回来说那里只有田。他知道那里以后会盖起一所大学，还是说，只有田。'
+        s_amara: '{date}，阿玛拉出城往东，走到了石牌。她知道这里以后是什么样子，站了很久，把眼前的样子画了下来，画得很慢。'
+      sunday_stall:
+        s_carlos: '{date}，卡洛斯听不懂里面讲什么，在礼堂门口支起炉子烤面包。散场时人涌出来，面包一会儿就卖完了，照老习惯又卖便宜了。'
+      pamphlet_traded:
+        s_carlos: '{date}，卡洛斯拿一炉面包换了一本刚印出来的《民族主义》。他自己读不了，说带回去给家里想接手面包店的那个孩子。'
+      errand_carried:
+        s_carlos: '{date}，这条分支里，被叫去送稿的人有一回是卡洛斯。一叠贴着签注条的纸，他一个字也不认得，一张也没弄皱。'
+      last_stall:
+        s_carlos: '{date}，卡洛斯多烤了一炉。他知道以后的星期天，这扇门口不会再有这么多人，剩下的面包都送了出去。'
+      records_begun:
+        s_amara: '{date}，阿玛拉开始抄三所学校的名册。书面的东西她一向吃力，抄一行，请办事员对一行。'
+      spoiler_said:
+        s_jeanluc: '{date}，让-吕克对一位抄写的办事员说，两年以后这所学校会改用孙先生的名字，嗓门一点没提高。办事员头也没抬，说先生人还在，哪有这样起校名的。'
+      shipai_walk:
+        s_jeanluc: '{date}，让-吕克听说新校址选在城东的石牌。他的膝盖走不了那么远，在码头上朝东望了一阵。'
     name: 广州 1924
     short: 广州
-    place_name: 广州，大学筹备处
+    place_name: 广州，高等师范的礼堂
     tags:
       - thought
       - education
@@ -337,63 +590,87 @@ era_text:
       - guangzhou
       - history
     event_titles:
-      time_strain: 时间错位
+      asked_the_way: 问路
     plots: {}
-    blurb: 三所学校，四处校址，一道合并的命令。近，成本低，照应和指路的效果很明显。游戏从这里开始。
-    handle_label: 筹备工作开始
+    blurb: 一座礼堂里同时在成两件事，一所大学和一本书。七个月，从合并学校的命令到开学前十八天。游戏从这里开始。
+    handle_label: 名册合成一本
     protagonist: 孙中山
-    protagonist_role: 刚下令把三所学校并成一所大学的政治家
-    stay: 停留七天
+    protagonist_role: 下令把三所学校并成一所大学的政治家，星期天在这座礼堂演讲
+    stay: 停留七个事务所日，历史 210 天
     plan_baseline: 主时间线
     encyclopedia:
       history:
         - text: '1924 年 2 月 4 日，孙中山下令把国立高等师范学校、广东法科大学和广东农业专门学校合并为国立广东大学，派邹鲁筹备。'
           check: true
-        - text: '邹鲁 2 月 21 日接手筹备。2 月 24 日他在高等师范的礼堂召集三所学校的学生宣布此事，3 月 3 日开第一次筹备会议，议题里有三所学校学生的毕业问题。'
+        - text: '1924 年 1 月 27 日到 8 月 24 日，孙中山利用星期天在高等师范的礼堂演讲，共十六讲。黄昌谷每一讲都随同速记，邹鲁校读誊清的讲稿并贴签注条，孙中山亲笔修正。'
           check: true
-        - text: '6 月 3 日邹鲁呈报归并三校的办法，6 月 6 日获批准。'
+        - text: '邹鲁 2 月 21 日接手筹备。2 月 24 日他在礼堂召集三所学校的学生宣布此事，3 月 3 日开第一次筹备会议，议题里有三所学校学生的毕业问题。'
           check: true
-        - text: '几所学校分散在好几处，不便管理，孙中山让邹鲁在广州东郊选石牌作新校址，1924 年那里划出了土地。'
+        - text: '头几讲在三月底印成单行本，孙中山 3 月 30 日为它写了序。6 月 3 日邹鲁呈报归并三校的办法，6 月 6 日获批准。'
           check: true
         - text: '9 月 19 日开学，11 月 11 日举行成立典礼，用了孙中山写的校训。孙中山 1925 年 3 月 12 日在北京去世，1926 年这所大学改名为国立中山大学。'
           check: true
       regret:
-        - '你能帮今天的人，帮不了明天的。主时间线上筹备工作 2 月 21 日开始。'
-        - '一个计划和一个地方比任何一次演讲都重要，但它们只有在有人被听见时才会来。'
+        - '你 9 月 1 日离开。开学在 19 日，校训是那以后的事。'
+        - '演讲停在第十六讲。台下没有人知道那是最后一讲。'
     events:
-      lin_diploma_helped: '{date}：阿林是一名毕业班的学生（游戏里编出来的人物），他问，一所就要并入别校的学校，文凭会怎么算。{staff} 把问题记下来，送到收集这类问题的办事员手里。阿林带着一个要等的答复回家了。'
-      lin_diploma: '{date}：阿林是一名毕业班的学生（游戏里编出来的人物），他问，一所就要并入别校的学校，文凭会怎么算。没有人有空记下来，阿林带着不安走了，没有再回来。'
-      lost_at_gate_helped: '{date}：新生小文（游戏里编出来的人物）拿着一封信站在院子里，不知道该去哪个办公室。{staff} 在简图上给他指了路，几分钟后小文已经排在了对的队里。'
-      lost_at_gate: '{date}：新生小文（游戏里编出来的人物）拿着一封信站在院子里，不知道该去哪个办公室，最后去了别的学校。'
-      time_strain: '{date}：{staff} 听到钟声错了半拍。这条分支离历史更远了，{staff} 明显更累。'
+      asked_the_way: '{date}，一个拿着信的新生问{staff}某间办公室怎么走。{staff}也说不清，陪着找了半天。'
+      asked_the_way_shown: '{date}，一个拿着信的新生问{staff}某间办公室怎么走。{staff}在图上指给他看，他道了谢，拿着图走了。'
     star_points:
-      settled: '帮上每一个来问的人'
-      campus: '让清楚的简图人手一份'
-      lin: '记下学生阿林的问题'
+      roster: '三校名册在第一次筹备会议之前合成一本'
+      copy: '带回一本演讲印成的书'
+      last: '待到最后一讲'
     milestones:
-      lin_question: '{date}：阿林问的问题已经写在纸上，送往收集这类问题的人手里。'
-      site_known: '{date}：简图人手一份，没有人再问往哪里去。'
-      people_settled: '{date}：来问的人，{staff} 都给找到了位置和班级。'
-      first_treat: '{date}：{staff} 记下第一批名字，给一位老师和他的班找到了一间教室。'
-      first_protect: '{date}：{staff} 画出第一张几所学校和校址的简图，发了下去。'
-      reform_history: '{date}：邹鲁接手筹备，和史实一样。主时间线没有变化。'
-      trust_won: '{date}：三所学校的办事员开始主动来找 {staff} 帮忙。'
-      exhausted: '{date}：{staff} 累得手发抖，不得不休息。'
-      outbreak_fades: '{date}：没有着落的人数降到了个位数。'
-      students_told: '{date}：邹鲁在高等师范的礼堂把三所学校的学生召集到一起，宣布筹备工作。'
-      first_meeting: '{date}：筹备委员会开第一次会，议题里有三所学校学生的毕业问题。'
+      order_given: '{date}，孙中山下令把国立高等师范学校、广东法科大学和广东农业专门学校并成国立广东大学，派邹鲁筹备。城里还没有人说得清这所大学在哪里。'
+      lecture_feb17: '{date}，星期天。孙中山在高等师范的礼堂演讲，这个系列从 1 月 27 日讲起，这一天是第四讲。台侧有人埋头速记，那是黄昌谷，每一讲他都在。'
+      zou_takes_up: '{date}，邹鲁就任筹备主任。'
+      hall_feb24: '{date}，又是星期天。这一天礼堂里有第五讲，邹鲁也在这里召集三所学校的学生，宣布筹建。'
+      first_meeting: '{date}，第一次筹备会议，议题里有三所学校学生的毕业问题。三十五名筹备委员里，三十一人留过洋。'
+      first_meeting_book: '{date}，第一次筹备会议，议题里有三所学校学生的毕业问题。三十五名筹备委员里，三十一人留过洋。这条分支里，三所学校毕业班的名字这时已经抄在同一本册子上。'
+      proofs_travel: '三月里，讲稿在几个人手里来回走。黄昌谷的笔记誊清后送给孙中山，孙中山叫人送给邹鲁校读，邹鲁在稿上贴签注条送回去，孙中山亲笔改，改完又送来。'
+      preface: '{date}，孙中山为《民族主义》单行本写了序。单行本在三月底印出。'
+      lecture_apr20: '{date}，星期天。礼堂里讲到了民权主义。'
+      measures_sent: '{date}，邹鲁呈报归并三校的办法。'
+      measures_approved: '{date}，办法获批准。'
+      shipai_chosen: '这一年，孙中山让邹鲁在城东的石牌选新校址。几所学校散在城里好几处，不便管理。'
+      last_lecture: '{date}，第十六讲。民生主义只讲到第四讲，后面的没有再讲。台下没有人知道这是最后一讲。'
+      classes_begin: '{date}，国立广东大学正式开学。'
+      ceremony: '{date}，举行成立典礼，用的是孙中山写的校训，博学、审问、慎思、明辨、笃行。他本人没有到场，两天后离开广州。'
+      sunday_first: '{date}，{staff}挤在礼堂的最后面，离讲台很远，看得见人，听不全话。'
+      sunday_stall: '{date}，{staff}进不去礼堂，在门口摆了个摊。散场时人涌出来，东西一会儿就卖完了。'
+      sunday_sit: '{date}，{staff}在礼堂后排找了个位置，从开讲坐到散场，一动没动。'
+      records_begun: '{date}，{staff}开始把三所学校的名册往同一本册子上抄。'
+      records_read_aloud: '{date}，{staff}的字没人认得。{staff}念名字，一位办事员写，三本名册开始并成一本。'
+      records_shut: '{date}，抄名册要识字，{staff}插不上手，倒把三所学校的门房都认熟了。谁在哪里，问{staff}比翻名册快。'
+      records_done: '{date}，三所学校的名册合成了一本，赶在第一次筹备会议之前。'
+      records_late: '{date}，三所学校的名册合成了一本。第一次筹备会议已经开过了。'
+      sites_done: '{date}，{staff}把散在城里的几处校址都走了一遍，画成一张图，注上从这一处到那一处要走多久。'
+      asked_inside: '{date}，办事员不再让{staff}在门外等，叫进了屋。'
+      copy_kept: '{date}，{staff}把那本《民族主义》包好，放进了行李。'
+      exhausted: '{date}，{staff}累得手发抖，不得不歇下来。'
+      spoiler: '{date}，{staff}知道两年以后这所学校会改用孙先生的名字。{staff}把这句话写在本子最后一页，合上了。'
+      spoiler_said: '{date}，{staff}对一位抄写的办事员说，两年以后这所学校会改用孙先生的名字。办事员头也没抬，说先生人还在，哪有这样起校名的。'
+      errand: '{date}，贴着签注条的讲稿从誊清的屋子里进进出出。{staff}在门外，只看得见送稿人的背影。'
+      errand_carried: '{date}，这条分支里，被叫去送稿的人有一回是{staff}。一叠贴着签注条的纸，从这头送到那头，一张也没弄皱。'
+      errand_frail: '{date}，{staff}爬几级楼梯就喘，送不了稿，坐在誊清的屋子门口，看贴着签注条的稿子进进出出。'
+      pamphlet: '{date}，刚印出来的《民族主义》摆在办事员的桌上。{staff}隔着窗看了一眼封面。'
+      pamphlet_traded: '{date}，{staff}拿自己亲手做的东西，跟人换了一本刚印出来的《民族主义》。'
+      pamphlet_given: '{date}，办事员把一本刚印出来的《民族主义》递给{staff}，说屋里的人一人一本。'
+      homesick_may: '{date}，没有记载的一个月。{staff}在本子上画正字，画满了一百天。事务所那边只过了三天多。'
+      shipai_walk: '{date}，{staff}听说新校址选在城东的石牌，这一趟没有去成。'
+      shipai_reached: '{date}，{staff}出城往东，走到了石牌。{staff}知道这里以后是什么样子，站了很久，把眼前的样子画了下来。'
+      shipai_frail: '{date}，{staff}知道城东的石牌以后是什么样子。路太远，{staff}走不到。'
+      last_seat: '{date}，{staff}坐在老位置上听完了这一讲。散场后多坐了一会儿。'
+      last_stall: '{date}，{staff}在礼堂门口比平常多备了一份货。{staff}知道以后的星期天，这扇门口不会再有这么多人。'
     summary:
-      near_death: '{staff} 在广州的一条巷子里倒下，被召回符拉了回来，在铜像前醒来。人救下了，代价不小。'
-      stay_and_gifts: '{staff} 完成了任务，但没有回来。留下一张字条，说想留下来看着这所大学开学。礼物之后会到。'
-      gave_up: '{staff} 提前放弃，在铜像前醒来，说 1924 年的办公室不适合自己。'
-      legend: '{staff} 在铜像前醒来，口袋里多了一枚铜质校徽。筹备工作比主时间线提前 {advance_days:1} 天开始。'
-      perfect: '{staff} 回到了铜像前。主时间线上开学前有 {base_D:i} 个人放弃，这条分支里是 {D:i} 个。'
-      scramble: '{staff} 一次次被拒绝，最后带着一个笑话在铜像前醒来。'
-      modest: '{staff} 在办公室待了七天，做了力所能及的事，又站在了铜像前。'
+      near_death: '{staff}在广州病倒，被召回符拉了回来，在铜像前醒来。'
+      stay_and_gifts: '{staff}做完了事，却没有回来。留下一张字条，说想留下来看着这所大学开学。礼物之后会到。'
+      gave_up: '{staff}没有撑到最后，在铜像前醒来，说 1924 年的广州待不下去了。'
+      legend: '{staff}在铜像前醒来，行李里有一本 1924 年三月印的《民族主义》。主时间线上有 {base_D:i} 件事拖到没人再问，这条分支里是 {D:i} 件。走的那天，离开学还有十八天。'
+      perfect: '{staff}回到了铜像前。主时间线上有 {base_D:i} 件事拖到没人再问，这条分支里是 {D:i} 件。走的那天，离开学还有十八天。'
+      modest: '{staff}在广州待了二百一十天，做了力所能及的事，又站在了铜像前。走的那天，离开学还有十八天。'
     quotes:
       near_death:
-        - trait: kind
-          text: 到最后我还在想，夜里有没有人守着。
         - text: 我以为还能再撑一会儿。
       stay_and_gifts:
         - trait: kind
@@ -402,31 +679,27 @@ era_text:
       gave_up:
         - trait: homesick
           text: 我想回家，就这样。
-        - text: 我不是干这个的料。
+        - text: 七个月太长了。
       legend:
-        - text: 我只是把他们需要听到的话告诉了他们。
+        - trait: curious
+          text: 原来一本书是这样一页一页改出来的。
+        - text: 我走的时候，他们还没有开学。
       perfect:
         - trait: kind
-          text: 我能救今天的人，救不了明天的。
-        - trait: curious
-          text: 原来是这样，人知道往哪里去，才会留下来。
+          text: 来问的人，后来都有人答了。
         - text: 该做的做了。
-      scramble:
-        - trait: methodical
-          text: 他们迟早会明白，只是会晚一些。
-        - text: 下次我想多带点东西。
       modest:
         - trait: glib
-          text: 该说的我都说了，听不听由他们。
-        - text: 再多带一件东西，也许还能多救一个人。
+          text: 我说两年后这里会改名，没有人信。
+        - text: 我只是在那里待过。
     hints:
-      lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 简图剩下了。限制不是物资，是三所学校对你的信任。先让员工帮人做事，建立信任。
-      unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
+      unlettered: 这位员工不识字，抄名册插不上手。换一位识字的，第一颗星才拿得到。
+      frail: 这位员工体弱，走不遍城里的校址，也走不到石牌。
+      empty: 这一趟两手空空。纸笔让抄写快一些，指南针让走路快一些。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
 hook:
-  en: 'One order, and three schools must become one university'
-  zh: '一道命令，三所学校要成为一所大学'
+  en: 'One hall, and two things being made in it'
+  zh: '一座礼堂里，同时在成两件事'
 # Every fact the story may lean on. checked: two_sources, official_record (the record of the institution itself) or single. level: usable, careful or unused. use: where it appears.
 facts:
   f01:
@@ -469,7 +742,7 @@ facts:
     date: '1924-06-06'
     checked: official_record
     level: usable
-    use: [wiki]
+    use: [history, wiki]
     sources: [sysu_chronicle]
     text:
       en: 'The measures for joining the schools, submitted on 3 June, are approved.'
@@ -488,17 +761,17 @@ facts:
     date: '1924'
     checked: official_record
     level: usable
-    use: [wiki]
+    use: [history, wiki]
     sources: [sysu_history_articles]
     text:
       en: 'The schools are spread over several places and hard to run, Sun tells Zou Lu to choose a new campus at Shipai, and land is marked out there.'
       zh: '各校分散各处，管理不便，孙中山命邹鲁择石牌为新校址，当年划定土地。'
-    note: 'No date inside the year is given.'
+    note: 'No date inside the year is given, so the line in the report carries no date.'
   f08:
     date: '1924-09-19'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [history, story, wiki]
     sources: [sysu_chronicle]
     text:
       en: 'Classes begin.'
@@ -507,7 +780,7 @@ facts:
     date: '1924-11-11'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [history, story, wiki]
     sources: [sysu_chronicle, sysu_history_articles]
     text:
       en: 'The founding ceremony is held with the motto Sun wrote. He is not there, and he leaves Guangzhou on 13 November.'
@@ -606,9 +879,65 @@ facts:
     use: []
     sources: []
     text:
-      en: 'The members of the preparatory committee.'
+      en: 'The names of the members of the preparatory committee.'
       zh: '筹备委员的名单。'
-    note: 'Names of political figures are left out.'
+    note: 'The names are left out. The count of the members is fact g5.'
+  g1:
+    date: '1924-01-27'
+    checked: two_sources
+    level: usable
+    use: [history, story, wiki]
+    sources: [sysu_news_lectures, sswgw_minsheng, wikisource_sanmin]
+    text:
+      en: 'From 27 January to 24 August 1924 Sun Yat-sen lectures on Sundays in the hall of the National Higher Normal School, sixteen lectures in three parts. The fourth lecture of the first part is dated 17 February and the fifth 24 February, a lecture of the second part is dated 20 April, and the series stops on 24 August at the fourth lecture of the third part.'
+      zh: '1924 年 1 月 27 日到 8 月 24 日，孙中山利用星期天在国立广东高等师范学校礼堂演讲三民主义，共十六讲。民族主义第四讲的讲稿日期是 2 月 17 日，第五讲是 2 月 24 日，4 月 20 日在民权主义之内，8 月 24 日讲到民生主义第四讲后停止。'
+    note: 'The fifth lecture and the assembly of fact f03 fall on the same day in the same hall. Which came first is not recorded, so the report does not say.'
+  g2:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [history, wiki]
+    sources: [sysu_news_lectures]
+    text:
+      en: 'Huang Changgu goes with Sun Yat-sen to every lecture and takes it down in shorthand, and afterwards the notes are collated and published.'
+      zh: '黄昌谷每次随孙中山前往，速记演讲内容，随后校译、整理并发表。'
+  g3:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [history, wiki]
+    sources: [sysu_news_lectures]
+    text:
+      en: 'Zou Lu tells how the text was read: the notes were copied fair and given to Sun Yat-sen, who had them sent to Zou Lu; Zou Lu pasted slips with his remarks on the pages; Sun corrected the text in his own hand, and it went back and forth until Sun was satisfied.'
+      zh: '邹鲁自述校读的经过：笔记誊清后先呈孙中山，孙中山叫人送给邹鲁校读，邹鲁用签注条贴在稿上，孙中山亲笔修正，往复多次，直到孙中山认为妥适。'
+  g4:
+    date: '1924-03-30'
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [sysu_news_lectures]
+    text:
+      en: 'The lectures are first printed in the weekly of the party, and at the end of March the first part appears as a pamphlet, for which Sun Yat-sen writes a preface on 30 March.'
+      zh: '讲稿先在《中国国民党周刊》发表，三月底以《民族主义》为名出版单行本，孙中山 3 月 30 日为单行本作序。'
+  g5:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [history]
+    sources: [sysu_news_lectures]
+    text:
+      en: 'Of the thirty-five members of the preparatory committee, thirty-one have returned from study abroad.'
+      zh: '三十五名筹备委员中，三十一人从海外留学归来。'
+  g6:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [wiki]
+    sources: [sysu_news_lectures]
+    text:
+      en: 'The Higher Normal School stands on the old site of the examination compound, and its hall is on what is now Wenming Road in Guangzhou.'
+      zh: '广东高等师范建在原贡院旧址上，礼堂在今广州文明路。'
+    note: 'The street number, 215 Wenming Road, was given by the author of the card and still needs a written source.'
 # What was said. A line of the person is written only when it is recorded, and then it names its fact and its sources. A line of a bystander is invented and says so.
 dialogue:
   motto:
@@ -619,34 +948,44 @@ dialogue:
     text:
       en: 'Study widely, enquire carefully, think prudently, discern clearly, practise earnestly.'
       zh: '博学、审问、慎思、明辨、笃行。'
-  lin_question:
-    who: lin
+  clerk_name:
+    who: clerk
     recorded: false
     text:
-      en: 'What will happen to the diploma of a school that is about to be joined into another?'
-      zh: '一所就要并入别校的学校，文凭会怎么算？'
-# The people who were there and are made up for the game.
+      en: 'The man is still alive. Who names a school like that?'
+      zh: '先生人还在，哪有这样起校名的。'
+# The people who were there and are made up for the game. None of them has a name, and none of them has a star of their own.
 bystanders:
-  lin:
+  clerk:
     invented: true
     text:
-      en: 'Lin, a final-year student, who asks what will happen to his diploma.'
-      zh: '阿林，毕业班的学生，想知道自己的文凭会怎么算。'
-  wen:
+      en: 'A clerk of the preparatory office, who copies and carries.'
+      zh: '筹备处的一位办事员，抄写，也跑腿。'
+  gatekeeper:
     invented: true
     text:
-      en: 'Wen, a new student, who stands in a courtyard with a letter and does not know which office to go to.'
-      zh: '小文，新生，拿着一封信站在院子里，不知道该去哪个办公室。'
+      en: 'The gatekeepers of the three schools, who know who is where.'
+      zh: '三所学校的门房，知道谁在哪里。'
+  student:
+    invented: true
+    text:
+      en: 'A new student with a letter, who asks the way.'
+      zh: '一个拿着信的新生，来问路。'
 # The written check of the story, for the reviewer.
 self_check:
-  quote_line: '阿林带着一个要等的答复回家了。'
-  fact: f04
-  regret_choice: '先记下阿林的文凭问题，还是先给走错院子的小文指路，同一时刻只能做一件，没做的那个人走了。'
-  bookend: '从校园里的铜像前出发，每个结局都回到铜像前。'
-  share_line: '1924 年，三所学校并成一所大学的头七天，我在场。'
-  share_number: '开学前放弃的人：主时间线 {base_D}，我的分支 {D}'
+  quote_line: '台下没有人知道这是最后一讲。'
+  fact: g1
+  regret_choice: '派识字的去，名册赶得上第一次筹备会议，却未必换得到那本书；派做买卖的去，书带得回来，名册的事插不上手。一个人拿不全三颗星。'
+  bookend: '从校园里的铜像前出发，每个结局都回到铜像前。走的那天离开学还有十八天。'
+  share_line: '1924 年我在广州待了 210 天，走的那天离开学还有 18 天。'
+  share_number: '拖到没人再问的事：主时间线 {base_D}，我的分支 {D}'
+  knowing: 'spoiler, last_lecture'
+  near: 'lecture_feb17, sunday_first'
+  lever: 'records_done, errand_carried'
+  missed: 'classes_begin, ceremony'
+  brought: 'copy_kept'
 pack:
   author: Fan Shen
   license: MIT
-  version: 1
+  version: 2
   languages: [en, zh]

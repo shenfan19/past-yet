@@ -9,34 +9,47 @@ events:
     field: science
     tier: 3
     channels: {T: 2}
+    refs: [franklin_philadelphia_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: endure, req: {"trait":["bold","calm","hardy","ambitious"]}}
         - {id: p3, kind: trust, req: {"trait":["cosmopolitan","glib"]}}
+      vignettes:
+        - {id: cloud, traits: [skeptical, curious]}
+        - {id: date, traits: [vigil, methodical]}
+        - {id: proof}
     text:
       en:
         name: Lightning is electricity
         place: Philadelphia
         figure: Benjamin Franklin
-        story: Franklin flies a kite in a storm and shows that lightning is electrical, and soon puts rods on roofs.
+        story: 'Franklin sent Peter Collinson a letter about an electrical kite in October 1752. The surviving manuscript is in the Royal Society archives. The print-shop conversation is invented.'
         relic: A silk ribbon and key
         relic_desc: A key tied to a kite string with a dry silk ribbon.
         points:
-          p1: "Grasp that charge comes in two kinds"
-          p2: "Fly the kite in the thunderstorm"
-          p3: "Talk with him in the print shop"
+          p1: 'Find the observation on the page'
+          p2: 'Separate the date of the letter from the event'
+          p3: 'Read the corrected account back to the printer'
+        vignettes:
+          cloud: 'The printer says the kite must have taken a direct strike. You ask which line reports that. They turn the sheet over and put the street story in a separate note.'
+          date: 'You catch the date going into the headline as the day of the event. The printer moves it back beside the address so readers can tell it is the date of the letter.'
+          proof: 'The printer asks you to read the proof aloud for someone who has not heard the town''s version. A sentence nobody can trace comes back out of the type.'
       zh:
         name: 闪电就是电
         place: 费城
         figure: 本杰明·富兰克林
-        story: 富兰克林在暴风雨里放风筝，证明闪电是电，不久屋顶就装上了避雷针。
+        story: '富兰克林 1752 年 10 月致信彼得·科林森，谈到与电有关的风筝实验。手稿现藏英国皇家学会。印工之间的谈话为虚构。'
         relic: 一条丝带和一把钥匙
         relic_desc: 一把钥匙系在风筝线上，线头接着一条干丝带。
         points:
-          p1: "领会电荷有两种"
-          p2: "在雷雨里放风筝"
-          p3: "在印刷所里同他聊天"
+          p1: '从纸上找出有记载的观察'
+          p2: '分开写信日和事发日'
+          p3: '把改好的说法念回给印工'
+        vignettes:
+          cloud: '印工说风筝定是挨了一道雷。你请他找出报告里哪一行这么写。他翻过纸，把街上传的那段另记了一笔。'
+          date: '你看见信上的日期被排作事情发生的日子。印工把它移回地址旁，读者便能分清这是写信的日期。'
+          proof: '印工请你把校样念给没听过市面传闻的人。一句谁也说不清来源的话，最后从版上撤了下来。'
 text:
   en:
     name: Benjamin Franklin
@@ -44,3 +57,34 @@ text:
   zh:
     name: 本杰明·富兰克林
     text: 美国印刷商、作家与科学家，1706 年生，1790 年去世，费城人。他在 1740 至 1750 年代的电学实验导致了避雷针的发明，并参与起草《独立宣言》。
+hook: {en: 'What did the letter actually say?', zh: '信里究竟报告了什么'}
+facts:
+  kite_letter:
+    date: '1752-10-03'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [franklin_philadelphia_primary]
+    text:
+      en: 'Franklin sent Peter Collinson a letter about an electrical kite in October 1752. The surviving manuscript is in the Royal Society archives. The print-shop conversation is invented.'
+      zh: '富兰克林 1752 年 10 月致信彼得·科林森，谈到与电有关的风筝实验。手稿现藏英国皇家学会。印工之间的谈话为虚构。'
+bystanders:
+  franklin_philadelphia_reader:
+    invented: true
+    text: {en: 'An invented printer sorting a report from a rumour.', zh: '一位虚构的印工，正在区分报告和传闻。'}
+wiki:
+  refs:
+    franklin_philadelphia_primary:
+      order: 165
+      status: checked
+      text:
+        en: 'Benjamin Franklin to Peter Collinson, Of an Electrical Kite, 3 October 1752, Royal Society Archives L&P/2/343. https://catalogues.royalsociety.org/CalmView/Record.aspx?id=L%26P%2F2%2F343&src=CalmView.Catalog'
+        zh: 'Benjamin Franklin to Peter Collinson, Of an Electrical Kite, 3 October 1752, Royal Society Archives L&P/2/343. https://catalogues.royalsociety.org/CalmView/Record.aspx?id=L%26P%2F2%2F343&src=CalmView.Catalog'
+self_check:
+  quote_line: '印工说风筝定是挨了一道雷。'
+  fact: kite_letter
+  regret_choice: '略过「从纸上找出有记载的观察」，这处细节便留给下一位核对。'
+  bookend: '从「信里究竟报告了什么」开始，以员工留下的观察或更正收尾。'
+  share_line: '信里究竟报告了什么'
+  share_number: '1752-10-03'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

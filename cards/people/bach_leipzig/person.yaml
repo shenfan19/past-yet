@@ -9,34 +9,47 @@ events:
     field: music
     tier: 2
     channels: {V: 2, L: 1}
+    refs: [bach_leipzig_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["curious","methodical","skeptical"]},{"job":["musician"]}]}}
         - {id: p2, kind: hold, req: {"any":[{"job":["musician"]},{"stat":{"will":6}}]}}
         - {id: p3, kind: trust, req: {"trait":["kind","artistic","sensitive"]}}
+      vignettes:
+        - {id: entry, traits: [artistic, quiet]}
+        - {id: rest, traits: [methodical, patient]}
+        - {id: light}
     text:
       en:
         name: A cantor writes for every Sunday
         place: Leipzig
         figure: Johann Sebastian Bach
-        story: Bach becomes cantor in Leipzig and over the years writes music for the church year at a pace few could match.
+        story: 'Bach introduced himself to Leipzig with the cantata Die Elenden sollen essen, BWV 75, on 30 May 1723. The rehearsal and its singers here are invented.'
         relic: An organ pipe cut from quill
         relic_desc: A small pipe, tuned and tested, left unsold.
         points:
-          p1: "Hear the fourth voice in the fugue"
-          p2: "Rehearse with the choir all week"
-          p3: "Sit among the children in his parlour"
+          p1: 'Hear a cue from another voice'
+          p2: 'Keep a singer''s place through a rest'
+          p3: 'Help two readers share one page'
+        vignettes:
+          entry: 'You hear the lower part arrive a breath before the singer expects it. You have them listen from the other side of the room. This time they raise their head before the cue.'
+          rest: 'The singer loses count during the rest. You copy the line they can hear while waiting, and they mark the word that comes just before their own entrance.'
+          light: 'Two singers share one page. You tilt it towards the light and hold it there until both can see the place where their lines separate.'
       zh:
         name: 一位乐长为每个礼拜日写曲
         place: 莱比锡
         figure: 约翰·塞巴斯蒂安·巴赫
-        story: 巴赫在莱比锡做了乐长，多年里为教会历写下了很少有人比得上的大量音乐。
+        story: '1723 年 5 月 30 日，巴赫在莱比锡以康塔塔《困苦人必得吃饱》BWV 75 开启任职后的演出。本篇的排练和歌者是虚构的。'
         relic: 一根小风琴管
         relic_desc: 一根调好音、试过音的小管子，没有卖掉。
         points:
-          p1: "听出赋格里的第四个声部"
-          p2: "和唱诗班排练整个礼拜"
-          p3: "在他家客厅的孩子们中间"
+          p1: '听出另一个声部给的提示'
+          p2: '帮歌者过了休止还跟得上'
+          p3: '让两人在同一页谱上都看得清'
+        vignettes:
+          entry: '你听出低声部比歌者预想的早到一口气。你请他换到屋子另一边听。这次，提示还没来，他就抬起了头。'
+          rest: '歌者一唱到休止就数乱。你抄下等待时能听到的另一行，他在自己开口前的那个字上做了记号。'
+          light: '两人合看一页谱。你把纸转向有光的地方，扶住不动，直到两人都看见自己的声部从哪儿分开。'
 text:
   en:
     name: Johann Sebastian Bach
@@ -44,3 +57,34 @@ text:
   zh:
     name: 约翰·塞巴斯蒂安·巴赫
     text: 德国作曲家与管风琴家，1685 年生，1750 年去世。1723 年起他担任莱比锡圣托马斯教堂的乐长，写下清唱剧、受难曲和键盘作品。他的音乐在十九世纪复兴之前，除音乐圈外鲜为人知。
+hook: {en: 'Come back in at the right word.', zh: '等到那个字再进声'}
+facts:
+  cantata:
+    date: '1723-05-30'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [bach_leipzig_primary]
+    text:
+      en: 'Bach introduced himself to Leipzig with the cantata Die Elenden sollen essen, BWV 75, on 30 May 1723. The rehearsal and its singers here are invented.'
+      zh: '1723 年 5 月 30 日，巴赫在莱比锡以康塔塔《困苦人必得吃饱》BWV 75 开启任职后的演出。本篇的排练和歌者是虚构的。'
+bystanders:
+  bach_leipzig_reader:
+    invented: true
+    text: {en: 'An invented singer whose entrance comes after a rest.', zh: '一位虚构的歌者，要在一段休止后进声。'}
+wiki:
+  refs:
+    bach_leipzig_primary:
+      order: 133
+      status: checked
+      text:
+        en: 'Johann Sebastian Bach, Die Elenden sollen essen, BWV 75. Text and first-performance record, University of Illinois Music and Performing Arts Library. https://scalar.library.illinois.edu/scalar/bachcantatas/bdii'
+        zh: 'Johann Sebastian Bach, Die Elenden sollen essen, BWV 75. Text and first-performance record, University of Illinois Music and Performing Arts Library. https://scalar.library.illinois.edu/scalar/bachcantatas/bdii'
+self_check:
+  quote_line: '你听出低声部比歌者预想的早到一口气。'
+  fact: cantata
+  regret_choice: '略过「听出另一个声部给的提示」，这处细节便留给下一位核对。'
+  bookend: '从「等到那个字再进声」开始，以员工留下的观察或更正收尾。'
+  share_line: '等到那个字再进声'
+  share_number: '1723-05-30'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

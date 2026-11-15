@@ -11,34 +11,47 @@ events:
     era: tupaia_tahiti_1769
     channels: {Y: 3, E: 2}
     regret: true
+    refs: [tupaia_chart_survival]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p2, kind: notice, req: {"trait":["streetwise","wanderer","vigil"]}}
         - {id: p3, kind: trust, redeem: true, req: {"any":[{"job":["sailor","fisher"]},{"trait":["attached","cosmopolitan","artistic"]}]}}
+      vignettes:
+        - {id: pronounce, traits: [cosmopolitan, curious]}
+        - {id: route, traits: [methodical, wanderer]}
+        - {id: room}
     text:
       en:
         name: "The navigator's chart"
         place: "Tahiti"
         figure: "Tupaia"
-        story: "Tupaia, a priest and navigator from Raiatea, joins Captain Cook's ship at Tahiti and draws from memory a chart of some seventy islands across the Pacific. He dies of illness in Batavia in 1770, and his chart was long poorly understood."
+        story: 'Tupaia joined the Endeavour at Tahiti in 1769. The State Library of New South Wales reproduces a surviving copy of a South Sea chart based on Tupaia''s geographical knowledge. This exchange over place names is invented.'
         relic: "A sketch of islands"
         relic_desc: "A sheet of ink and wash with small island shapes and names."
         points:
           p1: "Share the cramped cabin on the passage"
           p2: "Watch him draw the chart of the islands"
           p3: "Learn the island names from him (a seafarer or a kind employee)"
+        vignettes:
+          pronounce: 'A fictional copyist thinks two spellings belong to different islands. You ask them to read both aloud before drawing another island. They put a question alongside the names until someone who knows can check.'
+          route: 'The copyist draws a straight line between two marks. You ask which island the explanation started from. They lift the pen and leave the bearings with the account that gave them.'
+          room: 'You hold the folded corner of the sheet while the copyist writes another name. They move their hand so the next name can be written without covering the first.'
       zh:
         name: "领航者的海图"
         place: "塔希提"
         figure: "图帕亚"
-        story: "来自赖阿特阿岛的祭司兼领航员图帕亚在塔希提登上库克的船，凭记忆画出了横跨太平洋约七十个岛屿的海图。他1770年病逝于巴达维亚，那幅海图长期没有被好好理解。"
+        story: '1769 年，图帕亚在塔希提登上奋进号。新南威尔士州立图书馆展示了一幅据图帕亚地理知识绘成的南太平洋海图的传世抄本。这段核对地名的交谈为虚构。'
         relic: "一张岛屿草图"
         relic_desc: "一张墨与淡彩的纸，画着小小的岛形和名字。"
         points:
           p1: "在航程中挤着住那间小舱"
           p2: "看他画那幅群岛海图"
           p3: "向他学岛的名字"
+        vignettes:
+          pronounce: '虚构的抄图人以为两种拼法是两座岛。你请他先把两个名字念出来，再决定画不画新岛。他在名字旁留了个问号，等熟悉的人来核对。'
+          route: '抄图人拿笔要在两个记号间拉道直线。你问刚才说方位时是从哪座岛算起的。他抬起笔，把这个方位留在原先那段说法旁。'
+          room: '抄图人写下一个名字时，你压住卷起的纸角。他挪开手，好让下一个名字落笔时不盖住上一个。'
 text:
   en:
     name: Tupaia
@@ -99,6 +112,12 @@ wiki:
           name: 新鲜食物的计划
           text: 船在岛上为长途航行补什么，是船上军官的选择。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
   refs:
+    tupaia_chart_survival:
+      order: 169
+      status: checked
+      text:
+        en: 'State Library of New South Wales, A chart representing the Isles of the South Sea, based on Tupaia''s chart. https://www.sl.nsw.gov.au/collection-items/chart-representing-isles-south-sea'
+        zh: '新南威尔士州立图书馆，南太平洋群岛海图馆藏，源自图帕亚的海图。https://www.sl.nsw.gov.au/collection-items/chart-representing-isles-south-sea'
     cook1773:
       order: 32
       status: pending

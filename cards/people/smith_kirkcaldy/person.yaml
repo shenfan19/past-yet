@@ -9,34 +9,47 @@ events:
     field: thought
     tier: 2
     channels: {S: 1}
+    refs: [smith_kirkcaldy_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: persuade, req: {"provides":"show"}}
         - {id: p3, kind: trust, req: {"trait":["artistic","sensitive","attached"]}}
+      vignettes:
+        - {id: queue, traits: [methodical, curious]}
+        - {id: handoff, traits: [handy, kind]}
+        - {id: walk}
     text:
       en:
         name: How a nation grows rich
         place: Kirkcaldy, Scotland
         figure: Adam Smith
-        story: Adam Smith publishes The Wealth of Nations, arguing that division of labour and trade make people richer.
+        story: 'The opening chapter of Adam Smith''s Wealth of Nations (1776) uses pin-making to illustrate the division of labour. The Kirkcaldy card stages an invented workbench demonstration.'
         relic: A pin from the pin factory
         relic_desc: The pin he used to show what dividing a job can do.
         points:
-          p1: "Hear him on the division of labour in a pin factory"
-          p2: "Debate the division of labour with him"
-          p3: "Walk by the sea"
+          p1: 'Name one stage in the workbench example'
+          p2: 'Follow one piece through the handoff'
+          p3: 'Explain how the whole bench works from the separate tasks'
+        vignettes:
+          queue: 'The worker adds more counters at the fastest station. You ask them to count how many are still waiting at the slower one. They change their plan before the second demonstration.'
+          handoff: 'Two people both reach for the same tray; no one takes the one behind it. You set the finished pieces where the next worker can reach them and hear the clatter stop.'
+          walk: 'You watch each person describe their one small job. To trace the whole route, you have to walk from one end of the bench to the other.'
       zh:
         name: 一个国家怎样变富
         place: 苏格兰柯卡尔迪
         figure: 亚当·斯密
-        story: 亚当·斯密出版《国富论》，论证分工和贸易会让人变得更富。
+        story: '亚当·斯密 1776 年出版的《国富论》开篇用制针来说明分工。卡片在柯卡尔迪安排一场虚构的桌边演示。'
         relic: 一枚别针
         relic_desc: 他用来说明分工威力的那种别针。
         points:
-          p1: "听他讲别针工厂的分工"
-          p2: "同他辩论分工"
-          p3: "海边散步"
+          p1: '说清桌边演示里的一道工序'
+          p2: '看一件东西怎样交到下一手'
+          p3: '从各人的小事讲清整张桌子如何配合'
+        vignettes:
+          queue: '工人给最快的那道工序多放了几枚算子。你请他数一数慢的那道前还积了多少，第二遍他就换了排法。'
+          handoff: '两个人同时去够同一只盘，后头那只却没人拿。你把做完的件移到下一人随手能取的地方，碰撞声这才停下。'
+          walk: '你听每个人讲自己负责的一小段。要弄清一根针经过哪些手，你得从桌子一头走到另一头。'
 text:
   en:
     name: Adam Smith
@@ -44,3 +57,34 @@ text:
   zh:
     name: 亚当·斯密
     text: 苏格兰哲学家与经济学家，1723 年生，1790 年去世，生于柯卡尔迪。1776 年出版的《国富论》论证了分工和自由交换会增加国家的财富。他还写了《道德情操论》。
+hook: {en: 'Which task is holding up the rest?', zh: '哪一步让后面的人一直等'}
+facts:
+  division:
+    date: '1776'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [smith_kirkcaldy_primary]
+    text:
+      en: 'The opening chapter of Adam Smith''s Wealth of Nations (1776) uses pin-making to illustrate the division of labour. The Kirkcaldy card stages an invented workbench demonstration.'
+      zh: '亚当·斯密 1776 年出版的《国富论》开篇用制针来说明分工。卡片在柯卡尔迪安排一场虚构的桌边演示。'
+bystanders:
+  smith_kirkcaldy_reader:
+    invented: true
+    text: {en: 'An invented worker arranging counters to stand for jobs at a bench.', zh: '一位虚构的工人，用算子表示几项工序。'}
+wiki:
+  refs:
+    smith_kirkcaldy_primary:
+      order: 159
+      status: checked
+      text:
+        en: 'Adam Smith, An Inquiry into the Nature and Causes of the Wealth of Nations, 1776, book I, chapter 1. https://www.econlib.org/library/Smith/smWN.html?chapter_num=2'
+        zh: 'Adam Smith, An Inquiry into the Nature and Causes of the Wealth of Nations, 1776, book I, chapter 1. https://www.econlib.org/library/Smith/smWN.html?chapter_num=2'
+self_check:
+  quote_line: '工人给最快的那道工序多放了几枚算子。'
+  fact: division
+  regret_choice: '略过「说清桌边演示里的一道工序」，这处细节便留给下一位核对。'
+  bookend: '从「哪一步让后面的人一直等」开始，以员工留下的观察或更正收尾。'
+  share_line: '哪一步让后面的人一直等'
+  share_number: '1776'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

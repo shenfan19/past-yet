@@ -1,0 +1,322 @@
+# Template: a founding. Several scattered things have to become one institution by an opening day.
+# A model of a person names this file with `template: founding` and is laid over it key by key, so the person file holds only its own dates, stars, identities and numbers.
+# Format: LM 1.0 blocks plus the Teleporter extensions listed under `extensions`. Every number lives here or in the person file, the engine in js/ only interprets.
+# Time unit is the historical day. What wears on the traveller at the pace of the office is written with office_step.
+
+metadata:
+  version: "0.2"
+  lm_format_version: "1.0"
+  extension_version: "teleporter/0.2"
+  description:
+    method: "Daily-scale difference equations, 6-hour step. Matters that people bring to the new institution are raised until it opens, are settled at a rate that rises with the two pieces of groundwork the traveller can do, the merged records and the known sites, and lapse when nobody answers. One agent, the traveller, picks one piece of work each step."
+    limitations: "The matters are a count, not named people, and every rate is a game assumption. The recorded dates are not part of the model: they are written on their days whatever the traveller does."
+
+extensions:
+  agents: "Named actors with their own states. Each step an agent picks the available action with the highest utility and the action writes level inputs."
+  actions: "requires and utility are expressions over declared variables, the builtins and the tags of the employee. The pick order is the agent order."
+  events: "Seeded stochastic events. The draw depends on seed, event id and occurrence index only. once: true lets an event happen once in a trip."
+  milestones: "One-shot report lines. A line fires when its expression turns true, or on its date. A line may change variables, and may have variants that give it another text and other changes."
+  tags: "tag.<name> is 1 or 0 for the employee who is sent, from cards/config/staff_rules.yaml: what they can read, carry, sit through or make, and whether their face is local, near or far."
+  identity: "ring is 0 outside the door and 1 inside it, conspicuous is 0, 0.5 or 1, both from the identity the employee takes in this place."
+  outcomes: "Ordered end states, the first true expression wins."
+  scoring: "Counterfactual score. The same seed is run once without the traveller, the baseline supplies base_* values."
+  provenance: "Every variable and event carries source: historical | lm_model | game_assumption | calibrated."
+  item_bindings: "Dispatch inputs. Items chosen before departure are delivered once, at arrival, into the listed variables."
+  strategies: "Staff habits. Each employee carries a habit per group, the option writes input variables when that employee is dispatched."
+
+roles:
+  stay: stay_days
+  horizon: horizon_days
+  arrive: arrive_day
+  recalled: traveler.recalled
+  charm: has_charm
+
+agents:
+  traveler: {label: employee, role: dispatched, order: 1}
+
+variables:
+  # ---- the institution ----
+  Q: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption, note: "Matters people have brought and that nobody has answered yet."}
+  R: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption, note: "Matters that were settled."}
+  D: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption, note: "Matters that lapsed: the people who brought them stopped asking."}
+  cum_cases: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption, note: "All matters raised so far."}
+  raise_flow: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption}
+  settle_flow: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption}
+  lapse_flow: {type: state, value: 0, unit: matter, bounds: [0, null], source: game_assumption}
+  records: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption, note: "How much of the separate records has been copied into one book."}
+  records_pct: {type: state, value: 0, unit: percent, bounds: [0, 100], source: game_assumption}
+  records_day: {type: state, value: -1, unit: day, bounds: [-1, null], source: game_assumption, note: "The day the records became one book in this branch. No such day is recorded on the main timeline."}
+  sites: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption, note: "How much of the scattered sites has been walked and drawn."}
+  sites_pct: {type: state, value: 0, unit: percent, bounds: [0, 100], source: game_assumption}
+
+  # ---- traveller ----
+  traveler.fatigue: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.health: {type: state, value: 1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.trust: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption, note: "How far the people of the place take the stranger for one of their own."}
+  traveler.favor: {type: parameter, value: 0.5, from_spec: favor, source: game_assumption, note: "The employee affection for the office, 0 to 1. 0.5 is neutral."}
+  traveler.homesick: {type: state, value: 0.1, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.attachment: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.satisfaction: {type: state, value: 0.5, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.progress: {type: state, value: 0, unit: fraction, bounds: [0, 1], source: game_assumption}
+  traveler.recalled: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.charm_used: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.lost_all: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  traveler.stamina: {type: parameter, value: 1, from_staff: stamina, source: game_assumption}
+  traveler.skill: {type: parameter, value: 0.4, from_staff: skill, source: game_assumption}
+  traveler.kindness: {type: parameter, value: 0.3, from_staff: kindness, source: game_assumption}
+  traveler.homesick_trait: {type: parameter, value: 0.2, from_staff: homesick_trait, source: game_assumption}
+  ring_now: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption, note: "Whether the traveller stands inside the door now: by the identity they came as, or by trust won since."}
+  has_copy: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption, note: "Whether the traveller has a keepsake of the place to take home."}
+  carried: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption, note: "Whether the traveller was once sent on an errand of the house."}
+  reached_far: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  # items delivered at arrival
+  paper: {type: state, value: 0, unit: pack, bounds: [0, null], source: game_assumption, note: "Paper, pens and the like, which make copying faster."}
+  has_compass: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_handbook: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_monitor: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+  has_charm: {type: state, value: 0, unit: flag, bounds: [0, 1], source: game_assumption}
+
+  # ---- action levels, written by the agent each step ----
+  act_copy: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_walk: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_stall: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_hand: {type: input, value: 0, delivery: level, source: game_assumption}
+  act_rest: {type: input, value: 0, delivery: level, source: game_assumption}
+
+  # ---- pre-departure choices ----
+  arrive_day: {type: input, value: 0.25, unit: day, source: game_assumption}
+  pref_copy: {type: input, value: 1, source: game_assumption}
+  pref_walk: {type: input, value: 1, source: game_assumption}
+  pref_people: {type: input, value: 1, source: game_assumption}
+  on_block: {type: input, value: 0, source: game_assumption, note: "Kept for the habit of the employee. Nobody bars a door in this template."}
+
+  # ---- the institution, parameters ----
+  open_day: {type: parameter, value: 200, unit: day, source: historical, note: "The day the institution opens. The person file sets it from a recorded date."}
+  early_day: {type: parameter, value: 28, unit: day, source: historical, note: "The recorded day before which the records are worth most. The person file sets it."}
+  raise_rate: {type: parameter, value: 2, unit: "matter/day", source: game_assumption}
+  settle_base: {type: parameter, value: 0.03, unit: "1/day", source: game_assumption}
+  settle_records: {type: parameter, value: 0.03, unit: "1/day", source: game_assumption}
+  settle_sites: {type: parameter, value: 0.02, unit: "1/day", source: game_assumption}
+  settle_trust: {type: parameter, value: 0.02, unit: "1/day", source: game_assumption, note: "A stranger the place trusts answers some of the questions while they are there."}
+  lapse_rate: {type: parameter, value: 0.01, unit: "1/day", source: game_assumption}
+  stay_days: {type: parameter, value: 7, unit: office_day, source: game_assumption}
+  horizon_days: {type: parameter, value: 240, unit: day, source: game_assumption}
+
+  # ---- the work of the traveller ----
+  copy_rate: {type: parameter, value: 0.07, unit: "1/day", source: game_assumption}
+  copy_clumsy: {type: parameter, value: 0.75, source: game_assumption, note: "A clumsy hand reads the names out while someone else writes."}
+  copy_paper: {type: parameter, value: 0.4, source: game_assumption}
+  copy_handbook: {type: parameter, value: 0.2, source: game_assumption}
+  walk_rate: {type: parameter, value: 0.03, unit: "1/day", source: game_assumption}
+  walk_compass: {type: parameter, value: 0.5, source: game_assumption}
+  fatigue_penalty: {type: parameter, value: 0.6, source: game_assumption}
+  tired_limit: {type: parameter, value: 0.85, source: game_assumption}
+  monitor_fatigue_cut: {type: parameter, value: 0.25, source: game_assumption}
+  rest_from: {type: parameter, value: 0.5, source: game_assumption}
+  rest_weight: {type: parameter, value: 6, source: game_assumption}
+  fat_copy: {type: parameter, value: 0.3, unit: "1/day", source: game_assumption}
+  fat_walk: {type: parameter, value: 0.4, unit: "1/day", source: game_assumption}
+  fat_stall: {type: parameter, value: 0.25, unit: "1/day", source: game_assumption}
+  fat_hand: {type: parameter, value: 0.2, unit: "1/day", source: game_assumption}
+  fat_rest: {type: parameter, value: 1.5, unit: "1/day", source: game_assumption}
+  recall_health: {type: parameter, value: 0.2, source: game_assumption}
+
+  # ---- trust, mood ----
+  inner_trust: {type: parameter, value: 0.5, source: game_assumption, note: "Trust at which the traveller is asked inside, whatever they came as."}
+  trust_copy: {type: parameter, value: 0.004, unit: "1/day", source: game_assumption}
+  trust_walk: {type: parameter, value: 0.002, unit: "1/day", source: game_assumption}
+  trust_stall: {type: parameter, value: 0.008, unit: "1/day", source: game_assumption}
+  trust_hand: {type: parameter, value: 0.003, unit: "1/day", source: game_assumption}
+  talk_far: {type: parameter, value: 0.3, source: game_assumption, note: "People say more to someone from far away."}
+  homesick_rate: {type: parameter, value: 0.04, unit: "1/office_day", source: game_assumption}
+  homesick_mult: {type: parameter, value: 3, source: game_assumption}
+  favor_calm: {type: parameter, value: 0.6, source: game_assumption}
+  attach_rate: {type: parameter, value: 0.12, unit: "1/office_day", source: game_assumption}
+  stay_attach: {type: parameter, value: 0.6, source: game_assumption}
+  give_up_homesick: {type: parameter, value: 0.85, source: game_assumption}
+  give_up_satisfaction: {type: parameter, value: 0.12, source: game_assumption}
+  w_records: {type: parameter, value: 0.4, source: game_assumption}
+  w_sites: {type: parameter, value: 0.3, source: game_assumption}
+  w_trust: {type: parameter, value: 0.3, source: game_assumption}
+
+equations:
+  matters:
+    priority: 80
+    description: "Matters are raised until the opening, settled faster where the records are one book and the sites are known, and lapse when nobody answers."
+    dynamics:
+      raise_flow: "raise_rate * step * (1 if day < open_day else 0)"
+      settle_flow: "Q * (1 - exp(-(settle_base + settle_records * records + settle_sites * sites + settle_trust * arrived * traveler.trust) * step))"
+      lapse_flow: "(Q - settle_flow) * (1 - exp(-lapse_rate * step))"
+      Q: "Q + raise_flow - settle_flow - lapse_flow"
+      R: "R + settle_flow"
+      D: "D + lapse_flow"
+      cum_cases: "cum_cases + raise_flow"
+
+  groundwork:
+    priority: 70
+    dynamics:
+      records: "records + act_copy * copy_rate * (copy_clumsy if tag.clumsy == 1 else 1) * (1 + copy_paper * (1 if paper > 0 else 0) + copy_handbook * has_handbook) * (1 - traveler.fatigue * fatigue_penalty) * step"
+      records_day: "records_day if records_day >= 0 else (day if records >= 1 else -1)"
+      records_pct: "100 * records"
+      sites: "sites + act_walk * walk_rate * traveler.stamina * (1 + walk_compass * has_compass) * (1 - traveler.fatigue * fatigue_penalty) * step"
+      sites_pct: "100 * sites"
+
+  standing:
+    priority: 60
+    dynamics:
+      traveler.trust: "traveler.trust + (trust_copy * act_copy + trust_walk * act_walk + trust_stall * act_stall + trust_hand * act_hand * (1 + traveler.kindness)) * (1 + talk_far * conspicuous) * step"
+      ring_now: "1 if (ring == 1 or traveler.trust >= inner_trust) else 0"
+
+  traveller_body:
+    priority: 45
+    dynamics:
+      traveler.fatigue: "traveler.fatigue + (fat_copy * act_copy + fat_walk * act_walk + fat_stall * act_stall + fat_hand * act_hand - fat_rest * act_rest) / traveler.stamina * (1 - monitor_fatigue_cut * has_monitor) * step"
+
+  traveller_mind:
+    priority: 40
+    dynamics:
+      traveler.homesick: "traveler.homesick + arrived * homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) * office_step"
+      traveler.attachment: "traveler.attachment + arrived * attach_rate * traveler.trust * traveler.kindness * office_step"
+      traveler.progress: "w_records * records + w_sites * sites + w_trust * traveler.trust"
+      traveler.satisfaction: "clamp(0.4 + 0.6 * traveler.progress - 0.2 * max(0, traveler.fatigue - 0.7), 0, 1)"
+
+actions:
+  traveler:
+    copy:
+      level: act_copy
+      requires: "arrived == 1 and tag.literate == 1 and records < 1 and traveler.fatigue < tired_limit"
+      utility: "pref_copy * 1.4"
+    walk:
+      level: act_walk
+      requires: "arrived == 1 and tag.frail == 0 and sites < 1 and traveler.fatigue < tired_limit"
+      utility: "pref_walk * 1.0"
+    stall:
+      level: act_stall
+      requires: "arrived == 1 and (tag.class_food == 1 or tag.class_trade == 1 or tag.class_craft == 1) and traveler.fatigue < tired_limit"
+      utility: "pref_people * 0.8"
+    hand:
+      level: act_hand
+      requires: "arrived == 1 and traveler.fatigue < tired_limit"
+      utility: "pref_people * 0.5"
+    rest:
+      level: act_rest
+      requires: "arrived == 1"
+      utility: "rest_weight * max(0, traveler.fatigue - rest_from) + 0.05"
+
+events:
+  asked_the_way:
+    source: game_assumption
+    importance: 3
+    tag: branch
+    once: true
+    when: "arrived == 1 and day >= 10"
+    probability: "0.04 * step"
+    effects:
+      traveler.trust: "traveler.trust + (0.05 if sites >= 0.5 else 0.01)"
+    variants:
+      - {when: "sites >= 0.5", key: asked_the_way_shown}
+
+milestones:
+  records_begun:
+    when: "records > 0"
+    importance: 3
+    tag: branch
+    needs_traveler: true
+    variants:
+      - {when: "tag.clumsy == 1", key: records_read_aloud}
+  records_shut: {when: "tag.literate == 0 and arrived == 1 and day >= 10", importance: 3, tag: trait, needs_traveler: true, effects: {traveler.trust: "traveler.trust + 0.05"}}
+  records_done: {when: "records_day >= 0 and records_day < early_day", importance: 4, tag: branch, needs_traveler: true}
+  records_late: {when: "records_day >= early_day", importance: 3, tag: branch, needs_traveler: true}
+  sites_done: {when: "sites >= 1", importance: 3, tag: branch, needs_traveler: true}
+  asked_inside: {when: "ring_now == 1 and ring == 0", importance: 4, tag: branch, needs_traveler: true}
+  copy_kept: {when: "has_copy >= 1", importance: 4, tag: branch, needs_traveler: true}
+
+report: {deaths: D, cases: cum_cases, handle: records_day, treated: records_pct, protected: sites_pct, protected_scale: 1}
+
+log_importance: {arrive: 5, leave: 5, recall: 5}
+
+tag_source: {history: historical, branch: game_assumption, trait: game_assumption, param: game_assumption}
+
+hints:
+  - {when: "tag.literate == 0", key: unlettered}
+  - {when: "tag.frail == 1", key: frail}
+  - {when: "paper <= 0 and has_compass == 0", key: empty}
+  - {when: "1 == 1", key: none}
+
+recall:
+  when: "traveler.health <= recall_health and arrived == 1"
+  with_charm:
+    traveler.charm_used: "1"
+  without_charm:
+    traveler.lost_all: "1"
+
+outcomes:
+  - {id: near_death, when: "traveler.recalled == 1", energy_mult: 0.3, rest_days: 3}
+  - {id: stay_and_gifts, when: "traveler.attachment >= stay_attach and traveler.progress >= 0.45", energy_mult: 0.9, rest_days: 0}
+  - {id: gave_up, when: "traveler.homesick >= give_up_homesick or traveler.satisfaction <= give_up_satisfaction", energy_mult: 0.5, rest_days: 1}
+  - {id: legend, when: "traveler.progress >= 0.85 and has_copy == 1", energy_mult: 1.5, rest_days: 1}
+  - {id: perfect, when: "traveler.progress >= 0.5", energy_mult: 1.0, rest_days: 1}
+  - {id: modest, when: "1 == 1", energy_mult: 0.7, rest_days: 1}
+
+scoring:
+  lives_saved: "base_D - D"
+  cases_prevented: "base_cum_cases - cum_cases"
+  change_amount: "max(0, base_D - D) * 0.5 + records * 10 + sites * 6"
+
+item_bindings:
+  notebook_pen: {paper: 1}
+  voice_recorder: {paper: 2}
+  handbook: {has_handbook: 1}
+  compass: {has_compass: 1}
+  gift_box: {traveler.trust: 0.04}
+  recall_charm: {has_charm: 1}
+  heart_monitor: {has_monitor: 1}
+
+plots: {}
+
+strategies:
+  focus:
+    cure: {pref_copy: 1.2, pref_walk: 0.6, pref_people: 0.5}
+    prevent: {pref_copy: 0.6, pref_walk: 1.6, pref_people: 0.5}
+    ally: {pref_copy: 0.5, pref_walk: 0.5, pref_people: 2.6}
+    balanced: {pref_copy: 1.0, pref_walk: 1.0, pref_people: 0.9}
+  on_block:
+    yield: {on_block: 0}
+    insist: {on_block: 1}
+    appeal: {on_block: 2}
+
+series:
+  - {id: cases, expr: "Q", label: sick}
+  - {id: deaths, expr: "D", label: dead}
+
+simulation:
+  step_size: {value: 0.25, unit: day}
+  start_day: 0
+  output_variables: [Q, R, D, records, sites, traveler.fatigue, traveler.trust]
+  plans:
+    - id: baseline
+      label: "Main timeline, no visitor"
+      regimens: []
+    - id: dispatch
+      label: "Dispatch plan built from the pre-departure sheet"
+      regimens:
+        - {variable: paper, delivery: total, time_start: arrival, from_item: notebook_pen}
+
+optimization:
+  method: pareto_sample
+  objectives:
+    - {variable: lives_saved, metric: final, direction: maximize}
+    - {variable: cost, metric: final, direction: minimize}
+  constraints:
+    - {variable: weight, condition: "<= capacity"}
+    - {variable: cost, condition: "<= funds"}
+  algorithm: {samples: 60, refine: 60, max_jump: 2, skip_prob: 0.5, seed: 11}
+  mc: {runs: 2, seed: 7}
+  startpoint:
+    regimens:
+      - {item: notebook_pen, variable: paper, delivery: total, optimize: {value: [0, 4], integer: true}}
+      - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: compass, variable: has_compass, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: gift_box, variable: traveler.trust, delivery: total, optimize: {value: [0, 4], integer: true}}
+      - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
+      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

@@ -11,34 +11,47 @@ events:
     era: mallory_everest_1924
     channels: {A: 3, C: 3}
     regret: true
+    refs: [mallory_letters_1924]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p2, kind: trust, req: {"trait":["sensitive","cosmopolitan","charismatic"]}}
         - {id: p3, kind: endure, redeem: true, req: {"item":"cyber_lung"}}
+      vignettes:
+        - {id: date, traits: [methodical, vigil]}
+        - {id: question, traits: [curious, skeptical]}
+        - {id: wrap}
     text:
       en:
         name: "Last seen climbing"
         place: "Mount Everest"
         figure: "George Mallory"
-        story: "Mallory and Irvine leave the high camp for the summit of Everest and are last seen climbing high on the mountain. Mallory's body is found seventy five years later."
+        story: 'Mallory''s surviving letters from the 1924 expedition describe conditions and plans at different camps. The fate of Mallory and Irvine does not establish whether they reached the summit. The camp-letter scene is invented.'
         relic: "An ice axe"
         relic_desc: "A plain wooden ice axe with a worn head."
         points:
           p1: "Keep pace on the long approach"
           p2: "Share the camp and the plan with them"
           p3: "Go as high as they do to see them off"
+        vignettes:
+          date: 'A fictional messenger has two letters from different camps but one shared date on the carrying slip. You ask them to check the headings separately. Each letter leaves with its own place and date.'
+          question: 'The messenger reads an intended departure as a promise. You stop at the sentence where the letter talks about the weather. This time they repeat the plan with the condition still attached.'
+          wrap: 'You set aside the outgoing envelope while the messenger sorts the papers on their lap. They can put the camp list away without folding it into the letter.'
       zh:
         name: "最后一次被人看见"
         place: "珠穆朗玛峰"
         figure: "乔治·马洛里"
-        story: "马洛里和欧文离开高处营地去登珠峰，最后有人看见他们在高处攀登。七十五年后，人们才找到马洛里的遗体。"
+        story: '马洛里在 1924 年远征中留下的信件记述了不同营地的状况和计划。马洛里与欧文的结局无法证明二人是否登顶。营地交信场景为虚构。'
         relic: "一把冰镐"
         relic_desc: "一把朴素的木柄冰镐，镐头磨旧了。"
         points:
           p1: "在漫长的攀登路上跟上队伍"
           p2: "和他们一起分享营地与计划"
           p3: "陪他们爬到足够高处送他们出发"
+        vignettes:
+          date: '虚构的送信人拿着来自两个营地的信，交接单上却只写一个日期。你请他各自看信头，两封信出发时便各带着自己的地名和日期。'
+          question: '送信人把预定出发念成了准会出发。你在信中说到天气的地方请他停一下。他再念这项计划时，连同那个条件一起说出来。'
+          wrap: '送信人在膝上分拣纸页，你替他把要带走的信封放在一旁。他可以另把营地清单收好，不用折进信里。'
 text:
   en:
     name: George Mallory
@@ -99,6 +112,12 @@ wiki:
           name: 高营地的计划
           text: 高营地怎样补给、氧气装置用到什么程度，在山上一直有争论。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
   refs:
+    mallory_letters_1924:
+      order: 170
+      status: checked
+      text:
+        en: 'Magdalene College Archives, George Mallory''s correspondence, 1924, MCPP/GM/3/1/1924. https://magdalene.maxarchiveservices.co.uk/index.php/informationobject/browse?ancestor=477&page=1&sort=startDate&sortDir=desc&topLod=0&view=table'
+        zh: '剑桥大学抹大拉学院档案，乔治·马洛里 1924 年书信，MCPP/GM/3/1/1924。https://magdalene.maxarchiveservices.co.uk/index.php/informationobject/browse?ancestor=477&page=1&sort=startDate&sortDir=desc&topLod=0&view=table'
     everest1925:
       order: 29
       status: pending

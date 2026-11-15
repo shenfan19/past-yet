@@ -9,34 +9,47 @@ events:
     field: art
     tier: 3
     channels: {L: 1}
+    refs: [hokusai_edo_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["skeptical","scholarly"]},{"job":["painter"]}]}}
         - {id: p2, kind: persuade, req: {"stat": {"wit": 6}}}
         - {id: p3, kind: endure, req: {"provides": "strength"}}
+      vignettes:
+        - {id: mountain, traits: [artistic, vigil]}
+        - {id: edge, traits: [handy, methodical]}
+        - {id: counter}
     text:
       en:
         name: The Great Wave
         place: Edo, Japan
         figure: Katsushika Hokusai
-        story: Hokusai, in his seventies, makes the Great Wave off Kanagawa and the series of Thirty-six Views of Mount Fuji.
+        story: 'Hokusai''s Under the Wave off Kanagawa is a woodblock print in Thirty-six Views of Mount Fuji. The Met dates its impression to about 1830–1832. The print-shop visit is invented.'
         relic: A woodblock for printing
         relic_desc: A carved plank of cherry wood.
         points:
-          p1: "See the waves as he does (a painter or a sensitive employee)"
-          p2: "Ask the right question"
-          p3: "Carry the great canvas"
+          p1: 'Find Fuji among the shapes of the waves'
+          p2: 'Explain one detail to a visitor at the counter'
+          p3: 'Leave the title and signature visible on the display copy'
+        vignettes:
+          mountain: 'The seller points to the foam. You ask him to cover the wave with his hand. Once he uncovers it, the little triangle in the distance looks less like another splash.'
+          edge: 'The seller wants to trim a practice sheet. You set the untrimmed copy beside it and show him how close the signature sits to the edge.'
+          counter: 'You turn the print towards a customer who keeps looking for Fuji above everything else. The customer finally finds it low on the page and asks to see another view.'
       zh:
         name: 神奈川冲浪里
         place: 日本江户
         figure: 葛饰北斋
-        story: 年过七十的北斋画出了《神奈川冲浪里》和《富岳三十六景》。
+        story: '葛饰北斋的《神奈川冲浪里》是《富岳三十六景》中的木版画。大都会艺术博物馆将所藏这一印本约定年为 1830 至 1832 年。版画铺的会面是虚构的。'
         relic: 一块印刷用的木版
         relic_desc: 一块雕好的樱木版。
         points:
-          p1: "像他一样看浪（画家或敏感的员工）"
-          p2: "问对问题"
-          p3: "扛起巨幅画布"
+          p1: '从浪形之间找出富士山'
+          p2: '给柜台前的客人讲清一处细节'
+          p3: '给展示的印本留出题签和落款'
+        vignettes:
+          mountain: '版画商指着浪花，你请他用手遮住浪头。手再移开，远处那个小三角就不像另一朵水花了。'
+          edge: '版画商打算裁一张试印纸。你拿未裁的那张并排放好，给他看落款离纸边多近。'
+          counter: '一位客人总往纸的上方找富士山。你把印本转向他，他终于在下面认出来，问还能不能看看另一景。'
 text:
   en:
     name: Katsushika Hokusai
@@ -44,3 +57,34 @@ text:
   zh:
     name: 葛饰北斋
     text: 日本画家，1760 年生，1849 年去世，江户人。1831 年起出版的《富岳三十六景》包括《神奈川冲浪里》。他多次改名，到老仍在作画。
+hook: {en: 'The mountain almost disappears.', zh: '浪尖下面，找一座山'}
+facts:
+  great_wave:
+    date: '1831'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hokusai_edo_primary]
+    text:
+      en: 'Hokusai''s Under the Wave off Kanagawa is a woodblock print in Thirty-six Views of Mount Fuji. The Met dates its impression to about 1830–1832. The print-shop visit is invented.'
+      zh: '葛饰北斋的《神奈川冲浪里》是《富岳三十六景》中的木版画。大都会艺术博物馆将所藏这一印本约定年为 1830 至 1832 年。版画铺的会面是虚构的。'
+bystanders:
+  hokusai_edo_reader:
+    invented: true
+    text: {en: 'An invented print seller comparing impressions.', zh: '一位虚构的版画商，正拿两张印本比对。'}
+wiki:
+  refs:
+    hokusai_edo_primary:
+      order: 127
+      status: checked
+      text:
+        en: 'Katsushika Hokusai, Under the Wave off Kanagawa, c. 1830–1832. Metropolitan Museum of Art, JP1847. https://www.metmuseum.org/art/collection/search/45434'
+        zh: 'Katsushika Hokusai, Under the Wave off Kanagawa, c. 1830–1832. Metropolitan Museum of Art, JP1847. https://www.metmuseum.org/art/collection/search/45434'
+self_check:
+  quote_line: '版画商指着浪花，你请他用手遮住浪头。'
+  fact: great_wave
+  regret_choice: '略过「从浪形之间找出富士山」，这处细节便留给下一位核对。'
+  bookend: '从「浪尖下面，找一座山」开始，以员工留下的观察或更正收尾。'
+  share_line: '浪尖下面，找一座山'
+  share_number: '1831'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

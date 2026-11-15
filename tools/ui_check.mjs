@@ -39,7 +39,7 @@ try {
   };
   const tool = async (id) => { if (await page.locator('#modal .modalbg').count()) await page.keyboard.press('Escape'); await page.click(`#tools [data-act=modalopen][data-id=${id}]`); };
   const sub = (id) => go(['modern', 'future', 'hire'].includes(id) ? 'buy' : 'shop');
-  // a pin opens the events of its place, a place with one event goes straight to the dispatch pop-up
+  // a pin opens the event list even if the city has only one story
   const pick = async (pin, ev) => { await page.click(`.map [data-id=${pin}] .hit`, { force: true }); const row = page.locator(`#modal .evrow[data-id=${ev}]`); if (await row.count()) await row.click(); };
   const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&devtools`);
@@ -211,7 +211,7 @@ try {
   }
   ok('share page has save and copy', (await page.locator('[data-act=sharesave]').count()) === 1 && (await page.locator('[data-act=sharecopy]').count()) === 1);
   await page.mouse.click(5, 5);
-  ok('the share pop-up closes on a click beside it and the report stays', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('.tl').count()) === 1);
+  ok('closing the share pop-up returns to the report dialog', (await page.locator('#modal .reportbox .tl').count()) === 1);
   const inv = await page.evaluate(() => window.__game.ctx.S().inv);
   ok('stock was consumed', inv.chlorine_tablet < 40 || inv.ors_pack < 40 || inv.handbook < 1);
   const before = await page.evaluate(() => window.__game.ctx.S().energy);
@@ -423,7 +423,8 @@ try {
   const rc = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     S.staff.s_ning.restUntil = 0; S.staff.s_arjun.restUntil = 0;
-    const era = 'broad_street_1854';
+    // a place with a long stay, so that two days in the traveller is still away and can be called back
+    const era = 'sun_yat_sen_1924';
     const d = off.launch(era, { seed: 5, staffId: 's_ning', items: {} });
     const second = off.launch(era, { seed: 6, staffId: 's_arjun', items: {} });
     S.clock.day += 2;
@@ -643,18 +644,19 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
   await page.waitForSelector('[data-act=claim]');
   await page.click('[data-act=claim]');
-  const storySources = page.locator('[data-act=wiki][data-id="events:c:newton_cambridge"]');
+  const storySources = page.locator('.reportbox [data-act=wiki][data-id="events:c:newton_cambridge"]');
   await storySources.waitFor();
-  ok('the Newton report shows a fictional vignette and no branch timeline', (await page.locator('.tl').count()) === 0 && (await page.locator('table').count()) === 1 && await page.evaluate(() => {
+  ok('the Newton report shows participation and no branch timeline', (await page.locator('.reportbox .tl').count()) === 0 && (await page.locator('.reportbox .participation').count()) === 1 && await page.evaluate(() => {
     const { D, ctx, ui } = window.__game;
-    const trip = ctx.S().dispatches.find((d) => d.id === ui.state.sub);
+    const trip = ctx.S().dispatches.find((d) => d.id === ui.state.modal.id);
+    if (!trip.report.journey.accepted) return !trip.report.vignette;
     const passage = D.get('text.catalog.newton_cambridge.vignettes.' + trip.report.vignette);
     return document.body.textContent.includes(passage);
   }));
   await storySources.click();
   ok('the Newton report links to its historical sources', await page.getByText(/Royal Society MS\/142|英国皇家学会 MS\/142/).isVisible());
   await page.keyboard.press('Escape');
-  await page.click('[data-act=back]');
+  await page.keyboard.press('Escape');
   await tool('wiki');
   await page.fill('#wiki-q', '月亮');
   ok('relic unlocked the event article', (await page.locator('#wiki-list .wrow:not(.locked)').count()) === 1);

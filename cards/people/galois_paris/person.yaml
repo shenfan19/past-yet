@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {G: 2, S: 1, V: 2}
     regret: true
+    refs: [galois_paris_primary]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["cosmopolitan","attached","artistic"]}}
         - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["bold","hardy"]}]}}
         - {id: p3, kind: notice, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: check, traits: [curious, scholarly, skeptical]}
+        - {id: sequence, traits: [methodical, vigil]}
+        - {id: fold}
     text:
       en:
         name: "The night before the duel"
         place: "Paris"
         figure: "Évariste Galois"
-        story: "On the night before a duel, Galois writes out his mathematics in a hurried letter to a friend. He dies of his wound the next day, aged twenty."
+        story: 'In a letter dated 29 May 1832, Galois summarized mathematical work for Auguste Chevalier and distinguished results from questions still to be pursued. The sorting of pages in this scene is invented.'
         relic: "A hurried letter"
         relic_desc: "Pages crossed with figures and the words that he had no time."
         points:
-          p1: "Earn his trust at the table"
-          p2: "Stay awake through the night"
-          p3: "Read the pages to the end"
+          p1: 'Identify a question left for another reader'
+          p2: 'Keep the pages in their proper order'
+          p3: 'Leave the letter with its own date and recipient'
+        vignettes:
+          check: 'The copyist puts a question among the conclusions. You trace it back to the request at the end of the letter. They mark what the next reader is being asked to check.'
+          sequence: 'Two pages both begin with the same symbol. You read the last line of each and find which one the argument needs first. The copyist adds a page mark.'
+          fold: 'You hold the letter open until the copyist has copied the date and recipient. They fold the notes separately so the two sets of paper can still be found.'
       zh:
         name: "决斗前夜"
         place: "巴黎"
         figure: "埃瓦里斯特·伽罗瓦"
-        story: "决斗前一夜，伽罗瓦匆匆写信给朋友，把自己的数学一页页写下来。第二天他伤重而死，年仅二十岁。"
+        story: '伽罗瓦在署于 1832 年 5 月 29 日的致奥古斯特·舍瓦利耶信中概述了自己的数学研究，区分已得结果和有待追究的问题。卡中分拣纸页为虚构。'
         relic: "一封匆忙写就的信"
         relic_desc: "写满算式的信页，页边写着没有时间了。"
         points:
-          p1: "在桌边赢得他的信任"
-          p2: "陪他熬过这一夜"
-          p3: "把那几页一直读到最后"
+          p1: '认出留给下一位读者的问题'
+          p2: '把纸页按论证顺序排好'
+          p3: '替信留下原有的日期与收信人'
+        vignettes:
+          check: '誊写员把一个问题夹进了结论。你顺着信查到末尾的请求，他另标出下一个读信人要核对哪件事。'
+          sequence: '两页都从同一个符号起笔。你分别读了末行，找出论证先用哪一页。誊写员补上页码。'
+          fold: '你扶着信，等誊写员抄好日期和收信人。他把笔记另折一份，后来还找得出两套纸。'
 text:
   en:
     name: Évariste Galois
@@ -45,3 +58,34 @@ text:
   zh:
     name: 埃瓦里斯特·伽罗瓦
     text: 法国数学家，1811 年生，1832 年去世。他在少年时找到方程能否用根式求解的条件，并开创了群论。他二十岁时在巴黎因决斗去世。
+hook: {en: 'What is a reader supposed to check?', zh: '给后来的人留哪一道题'}
+facts:
+  letter_to_chevalier:
+    date: '1832-05-29'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [galois_paris_primary]
+    text:
+      en: 'In a letter dated 29 May 1832, Galois summarized mathematical work for Auguste Chevalier and distinguished results from questions still to be pursued. The sorting of pages in this scene is invented.'
+      zh: '伽罗瓦在署于 1832 年 5 月 29 日的致奥古斯特·舍瓦利耶信中概述了自己的数学研究，区分已得结果和有待追究的问题。卡中分拣纸页为虚构。'
+bystanders:
+  galois_paris_reader:
+    invented: true
+    text: {en: 'An invented copyist setting out the letter beside a page of notes.', zh: '一位虚构的誊写员，把信和一页笔记摊开。'}
+wiki:
+  refs:
+    galois_paris_primary:
+      order: 183
+      status: checked
+      text:
+        en: 'Évariste Galois, letter to Auguste Chevalier, 29 May 1832, in the posthumous Œuvres mathématiques, 1846, NUMDAM scan. https://www.numdam.org/item/JMPA_1846_1_11__381_0.pdf'
+        zh: 'Évariste Galois, letter to Auguste Chevalier, 29 May 1832, in the posthumous Œuvres mathématiques, 1846, NUMDAM scan. https://www.numdam.org/item/JMPA_1846_1_11__381_0.pdf'
+self_check:
+  quote_line: '誊写员把一个问题夹进了结论。'
+  fact: letter_to_chevalier
+  regret_choice: '略过「认出留给下一位读者的问题」，这处细节便留给下一位核对。'
+  bookend: '从「给后来的人留哪一道题」开始，以员工留下的观察或更正收尾。'
+  share_line: '给后来的人留哪一道题'
+  share_number: '1832-05-29'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

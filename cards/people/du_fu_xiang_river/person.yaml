@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {C: 2, Y: 2}
     regret: true
+    refs: [du_fu_xiang_river_primary]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["attached","faithful","patient"]}}
         - {id: p2, kind: notice, req: {"any":[{"trait":["quiet","wanderer"]},{"job":["teacher","journalist"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: shore, traits: [artistic, quiet]}
+        - {id: delivery, traits: [kind, streetwise]}
+        - {id: damp}
     text:
       en:
         name: "A poet on a boat"
         place: "Xiang River"
         figure: "Du Fu"
-        story: "Poor, ill and moving from town to town along the Xiang River, Du Fu lives on a boat and keeps writing. His poems were little known in his own lifetime, and he died on the river in 770."
+        story: 'A poem transmitted under Du Fu''s name is headed as verses written in illness aboard a boat and addressed to friends in Hunan. The poem evokes river and shore scenes. The stop at a landing in this card is invented.'
         relic: "A boatman's oil lamp"
         relic_desc: "A small clay lamp that burned late over a few lines of verse."
         points:
-          p1: "Share a meal with him"
-          p2: "Listen to the poem he is still revising (a curious employee, a teacher or a journalist)"
-          p3: "Ease his last winter on the boat"
+          p1: 'Pick out a detail visible from a boat'
+          p2: 'Carry the note clear of water at the landing'
+          p3: 'Help a greeting reach someone in the next town'
+        vignettes:
+          shore: 'The traveller writes that the shore looks gloomy. You ask what made them look up from the boat. They pause, then write down one thing that was actually there.'
+          delivery: 'You hear that the next boat goes only partway to the friend''s town. The traveller nearly folds the note without a second name on it. You help them find someone who can take it onwards.'
+          damp: 'The traveller sets the note where spray has reached the board. You lay a dry scrap beneath it while they finish writing the greeting.'
       zh:
         name: "船上的诗人"
         place: "湘江"
         figure: "杜甫"
-        story: "贫病交加的杜甫沿着湘江辗转，一个镇接一个镇，住在船上，仍然不停地写。他的诗在生前少有人知，770年他在江上去世。"
+        story: '传世杜诗《风疾舟中伏枕书怀三十六韵奉呈湖南亲友》，题中写舟中抱病、作诗寄湖南亲友，诗里也写到水岸景色。卡片的停船相遇为虚构。'
         relic: "一盏船灯"
         relic_desc: "一盏小小的陶油灯，为了几行诗亮到很晚。"
         points:
-          p1: "和他一起吃顿饭"
-          p2: "听他还在改的那首诗"
-          p3: "让他在船上的最后一个冬天好过些"
+          p1: '认出一个从船上才好看清的细节'
+          p2: '在渡口把信拿离湿处'
+          p3: '帮旅人把问候送向下一个镇子'
+        vignettes:
+          shore: '旅人写岸上阴沉。你问刚才是什么让他从舱里抬起头。他想了一会儿，只写下一样真正看见的东西。'
+          delivery: '你听说下一条船只去半程。旅人差点没写转交人的名字就折起信。你帮他找了一个能再往前带的人。'
+          damp: '旅人把纸搁在溅湿了的板上。你拿张干的纸垫住，等他把问候写完。'
 text:
   en:
     name: Du Fu
@@ -45,3 +58,34 @@ text:
   zh:
     name: 杜甫
     text: 唐代诗人，712 年生，770 年去世。他写战乱、饥荒和普通人的生活，格律功力深厚，主要在身后才受推崇。他死在湘江的一条船上。
+hook: {en: 'What can a poem send upriver?', zh: '舟上的诗能托给谁'}
+facts:
+  boat_poem:
+    date: '770'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [du_fu_xiang_river_primary]
+    text:
+      en: 'A poem transmitted under Du Fu''s name is headed as verses written in illness aboard a boat and addressed to friends in Hunan. The poem evokes river and shore scenes. The stop at a landing in this card is invented.'
+      zh: '传世杜诗《风疾舟中伏枕书怀三十六韵奉呈湖南亲友》，题中写舟中抱病、作诗寄湖南亲友，诗里也写到水岸景色。卡片的停船相遇为虚构。'
+bystanders:
+  du_fu_xiang_river_reader:
+    invented: true
+    text: {en: 'An invented boat traveller preparing a note for a friend.', zh: '一位虚构的舟中旅人，正在给朋友备一张信笺。'}
+wiki:
+  refs:
+    du_fu_xiang_river_primary:
+      order: 198
+      status: checked
+      text:
+        en: 'Du Fu, Thirty-six Rhymes Written in Illness on a Boat and Sent to Friends in Hunan, Complete Tang Poems, vol. 233. https://zh.wikisource.org/zh/風疾舟中伏枕書懷三十六韻奉呈湖南親友'
+        zh: 'Du Fu, Thirty-six Rhymes Written in Illness on a Boat and Sent to Friends in Hunan, Complete Tang Poems, vol. 233. https://zh.wikisource.org/zh/風疾舟中伏枕書懷三十六韻奉呈湖南親友'
+self_check:
+  quote_line: '旅人写岸上阴沉。'
+  fact: boat_poem
+  regret_choice: '略过「认出一个从船上才好看清的细节」，这处细节便留给下一位核对。'
+  bookend: '从「舟上的诗能托给谁」开始，以员工留下的观察或更正收尾。'
+  share_line: '舟上的诗能托给谁'
+  share_number: '770'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

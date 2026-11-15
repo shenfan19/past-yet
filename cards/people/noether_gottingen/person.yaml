@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {S: 3}
     regret: true
+    refs: [noether_gottingen_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: persuade, req: {"trait":["glib","ambitious","scholarly"]}}
         - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+      vignettes:
+        - {id: clock, traits: [curious, scholarly]}
+        - {id: assumption, traits: [skeptical, methodical]}
+        - {id: board}
     text:
       en:
         name: "A lecture under another name"
         place: "Göttingen"
         figure: "Emmy Noether"
-        story: "Emmy Noether proves the theorem that ties symmetry to conservation, while the faculty still refuses her a post and her courses are announced under Hilbert's name."
+        story: 'In her 1918 paper Noether connects continuous symmetries of a variational problem with corresponding conservation relations under stated conditions. The exercise in this card is invented.'
         relic: "A lecture notice"
         relic_desc: "A hall notice with Hilbert's name where hers should be."
         points:
-          p1: "Follow the proof"
-          p2: "Speak for her in the corridor"
-          p3: "Sit in her lecture as an ordinary listener"
+          p1: 'Identify the transformation in the example'
+          p2: 'Read the assumptions back before discussing the conclusion'
+          p3: 'Help a listener separate symmetry from the conserved quantity'
+        vignettes:
+          clock: 'You ask whether starting the same example later changes its rule. The listener moves the clock''s starting mark and redraws the margin figure without touching the rule itself.'
+          assumption: 'The listener remembers the conclusion but skips its assumptions. You write those on a separate slip and ask which change would make that slip cease to apply.'
+          board: 'You copy two headings before the board is wiped. The listener puts the transformation under one and the quantity that stays constant under the other.'
       zh:
         name: "署着别人名字的课"
         place: "哥廷根"
         figure: "埃米·诺特"
-        story: "埃米·诺特证明了把对称与守恒联系起来的定理，而系里仍不肯给她职位，她的课程用希尔伯特的名字发布。"
+        story: '诺特在 1918 年的论文中说明，在给定条件下，变分问题的连续对称性与相应守恒关系之间的联系。本卡的讨论小练习为虚构。'
         relic: "一张课程通告"
         relic_desc: "一张厅里的通告，应该写她名字的地方写着希尔伯特。"
         points:
-          p1: "跟上这个证明"
-          p2: "在走廊里替她说话"
-          p3: "作为普通听众坐进她的课堂"
+          p1: '认出例子里做的变换'
+          p2: '讨论结论前把前提再读一遍'
+          p3: '帮听讲者分清对称性和守恒的量'
+        vignettes:
+          clock: '你问把同一个例子往后推一会开始，规则会不会变。听讲者挪了钟上的起点，在页边重画图，原规则一笔没动。'
+          assumption: '听讲者记住了结论，却跳过了前提。你把前提另写一条，请他说出怎样改例子，这张纸条就不再适用。'
+          board: '黑板要擦时，你先抄下两个栏头。听讲者把所做的变换和保持恒定的量分列记在下面。'
 text:
   en:
     name: Emmy Noether
@@ -45,3 +58,34 @@ text:
   zh:
     name: 埃米·诺特
     text: 德国数学家，1882 年生，1935 年去世。她在哥廷根证明了物理系统的每种对称性对应一个守恒量，并塑造了现代抽象代数。1933 年她丢掉职位，移居美国。
+hook: {en: 'What changes, and what is conserved?', zh: '什么变了，什么守恒'}
+facts:
+  symmetry:
+    date: '1918'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [noether_gottingen_primary]
+    text:
+      en: 'In her 1918 paper Noether connects continuous symmetries of a variational problem with corresponding conservation relations under stated conditions. The exercise in this card is invented.'
+      zh: '诺特在 1918 年的论文中说明，在给定条件下，变分问题的连续对称性与相应守恒关系之间的联系。本卡的讨论小练习为虚构。'
+bystanders:
+  noether_gottingen_reader:
+    invented: true
+    text: {en: 'An invented listener puzzling over an example after a reading.', zh: '一位虚构的听讲者，散场后还在琢磨例子。'}
+wiki:
+  refs:
+    noether_gottingen_primary:
+      order: 147
+      status: checked
+      text:
+        en: 'Emmy Noether, Invariante Variationsprobleme, Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, 1918, pp. 235–257. https://de.wikisource.org/wiki/Invariante_Variationsprobleme'
+        zh: 'Emmy Noether, Invariante Variationsprobleme, Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, 1918, pp. 235–257. https://de.wikisource.org/wiki/Invariante_Variationsprobleme'
+self_check:
+  quote_line: '你问把同一个例子往后推一会开始，规则会不会变。'
+  fact: symmetry
+  regret_choice: '略过「认出例子里做的变换」，这处细节便留给下一位核对。'
+  bookend: '从「什么变了，什么守恒」开始，以员工留下的观察或更正收尾。'
+  share_line: '什么变了，什么守恒'
+  share_number: '1918'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {V: 2}
+    refs: [lovelace_london_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: persuade, req: {"trait":["ambitious","cosmopolitan","streetwise","scholarly"]}}
         - {id: p3, kind: care, req: {"trait":["calm","patient","faithful"]}}
+      vignettes:
+        - {id: repeat, traits: [methodical, scholarly]}
+        - {id: music, traits: [artistic, curious]}
+        - {id: row}
     text:
       en:
         name: The first program
         place: London
         figure: Ada Lovelace
-        story: Ada Lovelace publishes notes on the Analytical Engine with an algorithm and the idea that such machines could work with more than numbers.
+        story: 'Note G of Lovelace''s 1843 published translation includes a table for calculating Bernoulli numbers with the proposed Analytical Engine.'
         relic: A punched card
         relic_desc: A card of holes, meant to tell an engine what to do.
         points:
-          p1: "Read the Bernoulli algorithm in Note G"
-          p2: "Explain her idea to Babbage"
-          p3: "Stay with her during her illness"
+          p1: 'Identify a value that gets used again'
+          p2: 'Explain an operation to the proofreader'
+          p3: 'Leave a reading guide with the corrected copy'
+        vignettes:
+          repeat: 'You mark where a group of operations repeats. The proofreader has counted only one pass and uses your mark to retrace the later rows.'
+          music: 'You ask whether the columns might stand for musical notes. The proofreader asks how the machine would know the rules for them. You jot that question beside the diagram to bring home.'
+          row: 'You cover the next row with a scrap until you can explain the current one. The proofreader can see exactly where a value will be used again.'
       zh:
         name: 第一段程序
         place: 伦敦
         figure: 阿达·洛芙莱斯
-        story: 阿达·洛芙莱斯发表了对分析机的注释，里面有一段算法，还有一个想法：这样的机器不只能算数。
+        story: '洛芙莱斯 1843 年发表的译注中，注 G 用表格列出了拟议中的分析机计算伯努利数的操作。'
         relic: 一张穿孔卡
         relic_desc: 一张打了孔的卡片，用来告诉机器做什么。
         points:
-          p1: "读懂笔记G里的伯努利数算法"
-          p2: "向巴贝奇说明她的想法"
-          p3: "在她病中陪着"
+          p1: '找出一个稍后还会用到的值'
+          p2: '向校对员讲清一项操作'
+          p3: '在校样旁留下阅读提示'
+        vignettes:
+          repeat: '你标出一组操作从哪里重复。校对员刚才只数了一遍，便顺着你的记号重走后面的几行。'
+          music: '你问这几列能不能代表乐音。校对员反问，机器怎么知道乐音该遵循什么规则？你把这个问题记在图旁，准备带回去。'
+          row: '你拿纸挡住下一行，先把眼前这行讲明白。校对员这才看清，刚写出的值在哪儿还会再用。'
 text:
   en:
     name: Ada Lovelace
@@ -44,3 +57,34 @@ text:
   zh:
     name: 阿达·洛芙莱斯
     text: 英国数学家，1815 年生，1852 年去世，拜伦勋爵之女。1843 年她发表了为查尔斯·巴贝奇分析机所作的注释，其中有计算伯努利数的方法，常被称为第一个程序，并提出这类机器可以处理数以外的东西。
+hook: {en: 'Read the table one operation at a time.', zh: '一行行跟着机器算'}
+facts:
+  note_g:
+    date: '1843'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [lovelace_london_primary]
+    text:
+      en: 'Note G of Lovelace''s 1843 published translation includes a table for calculating Bernoulli numbers with the proposed Analytical Engine.'
+      zh: '洛芙莱斯 1843 年发表的译注中，注 G 用表格列出了拟议中的分析机计算伯努利数的操作。'
+bystanders:
+  lovelace_london_reader:
+    invented: true
+    text: {en: 'An invented proofreader following the table by hand.', zh: '一位虚构的校对员，正在手工跟读表格。'}
+wiki:
+  refs:
+    lovelace_london_primary:
+      order: 120
+      status: checked
+      text:
+        en: 'Luigi Menabrea, Sketch of the Analytical Engine, translated and annotated by Ada Lovelace, Scientific Memoirs 3, 1843, Note G. https://archive.org/details/scientificmemoir03memo'
+        zh: 'Luigi Menabrea, Sketch of the Analytical Engine, translated and annotated by Ada Lovelace, Scientific Memoirs 3, 1843, Note G. https://archive.org/details/scientificmemoir03memo'
+self_check:
+  quote_line: '你标出一组操作从哪里重复。'
+  fact: note_g
+  regret_choice: '略过「找出一个稍后还会用到的值」，这处细节便留给下一位核对。'
+  bookend: '从「一行行跟着机器算」开始，以员工留下的观察或更正收尾。'
+  share_line: '一行行跟着机器算'
+  share_number: '1843'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

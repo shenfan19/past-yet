@@ -9,34 +9,47 @@ events:
     field: philosophy
     tier: 2
     channels: {C: 2}
+    refs: [descartes_leiden_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: persuade, req: {"trait":["ambitious","cosmopolitan","glib","streetwise"]}}
         - {id: p3, kind: trust, req: {"trait":["curious","charismatic","sensitive"]}}
+      vignettes:
+        - {id: parts, traits: [methodical, scholarly]}
+        - {id: claim, traits: [skeptical, curious]}
+        - {id: contents}
     text:
       en:
         name: Doubt as a method
         place: Leiden
         figure: René Descartes
-        story: Descartes publishes the Discourse on the Method, starting from doubting everything and building up again.
+        story: 'The 1637 Leiden edition of Descartes''s Discourse on the Method appeared with three essays, on optics, meteorology and geometry. This reading-room scene is invented.'
         relic: A folded cogito note
         relic_desc: A slip with a single sentence about thinking and being.
         points:
-          p1: "Follow the first step of doubt"
-          p2: "Argue with theologians without being misunderstood"
-          p3: "Talk in the room until late at night"
+          p1: 'Divide the worked problem into smaller questions'
+          p2: 'Ask the reader to show one step that supports the conclusion'
+          p3: 'Find an example to read beside the method'
+        vignettes:
+          parts: 'The reader is stuck on the whole problem. You mark a smaller one that can be settled first. They finish that part before opening the page with the answer.'
+          claim: 'A second reader calls the result obvious. You ask them to name the step that makes it so. They reread the middle of the example, where neither of them had stopped before.'
+          contents: 'You keep the method open beside one of its examples. The reader moves the paper marker from the rule they liked to the page where they can see it being used.'
       zh:
         name: 把怀疑当作方法
         place: 莱顿
         figure: 笛卡尔
-        story: 笛卡尔发表《谈谈方法》，从怀疑一切出发，再一步步重新搭起来。
+        story: '笛卡尔的《谈谈方法》1637 年在莱顿刊行，随附光学、气象和几何三篇论文。本卡读书场景为虚构。'
         relic: 一张折起来的小纸条
         relic_desc: 纸条上只有一句话，讲思考与存在。
         points:
-          p1: "跟上第一步的怀疑"
-          p2: "同神学家辩论而不被误会"
-          p3: "在房间里讨论到深夜"
+          p1: '把例题分成几个小问题'
+          p2: '请读者指出支撑结论的一步'
+          p3: '找一道例子，同方法放在一起读'
+        vignettes:
+          parts: '读者卡在整道题里。你标出能先解决的一小问。他先做完这一部分，才翻到写答案的那页。'
+          claim: '另一位读者说结果显而易见。你请他指出究竟是哪一步让结果这样明白。他们重读例子中段，两人之前都没在这里停过。'
+          contents: '你把讲方法的一页同例题一起翻开。读者把纸签从自己喜欢的那条规则，移到了能看见它如何使用的一页。'
 text:
   en:
     name: René Descartes
@@ -44,3 +57,34 @@ text:
   zh:
     name: 笛卡尔
     text: 法国哲学家与数学家，1596 年生，1650 年去世，一生大部分时间住在荷兰共和国。1637 年的《方法谈》含有“我思故我在”，附录中的几何学引入了坐标。
+hook: {en: 'What can you check before believing?', zh: '相信之前能先查哪一步'}
+facts:
+  discourse:
+    date: '1637'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [descartes_leiden_primary]
+    text:
+      en: 'The 1637 Leiden edition of Descartes''s Discourse on the Method appeared with three essays, on optics, meteorology and geometry. This reading-room scene is invented.'
+      zh: '笛卡尔的《谈谈方法》1637 年在莱顿刊行，随附光学、气象和几何三篇论文。本卡读书场景为虚构。'
+bystanders:
+  descartes_leiden_reader:
+    invented: true
+    text: {en: 'An invented reader trying a rule on a worked example.', zh: '一位虚构的读者，正试着把书上的规则用到例题里。'}
+wiki:
+  refs:
+    descartes_leiden_primary:
+      order: 163
+      status: checked
+      text:
+        en: 'René Descartes, Discours de la méthode, Leiden: Jan Maire, 1637. Wellcome Collection copy. https://wellcomecollection.org/works/zc7f33fn'
+        zh: 'René Descartes, Discours de la méthode, Leiden: Jan Maire, 1637. Wellcome Collection copy. https://wellcomecollection.org/works/zc7f33fn'
+self_check:
+  quote_line: '读者卡在整道题里。'
+  fact: discourse
+  regret_choice: '略过「把例题分成几个小问题」，这处细节便留给下一位核对。'
+  bookend: '从「相信之前能先查哪一步」开始，以员工留下的观察或更正收尾。'
+  share_line: '相信之前能先查哪一步'
+  share_number: '1637'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

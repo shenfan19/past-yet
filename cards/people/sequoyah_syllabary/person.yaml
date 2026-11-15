@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 2
     channels: {S: 2}
+    refs: [sequoyah_syllabary_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"scan"}}
         - {id: p2, kind: persuade, req: {"trait":["cosmopolitan","streetwise","charismatic"]}}
         - {id: p3, kind: trust, req: {"trait":["artistic","kind","sensitive"]}}
+      vignettes:
+        - {id: sound, traits: [patient, quiet]}
+        - {id: lookalike, traits: [curious, skeptical]}
+        - {id: note}
     text:
       en:
         name: A writing system made by one man
         place: Cherokee country, southeastern United States
         figure: Sequoyah
-        story: Sequoyah, who could not read English, invents a syllabary for Cherokee, and within a few years many Cherokee can read and write.
+        story: 'Sequoyah devised a syllabary for Cherokee, adopted in 1821. Its signs represent syllables. The surviving print illustrates early use; the lesson on this trip is invented.'
         relic: A syllabary chart
         relic_desc: A sheet with eighty-odd characters laid out in rows.
         points:
-          p1: "Watch him make the symbols one by one"
-          p2: "Prove to the people that the script is useful"
-          p3: "Be treated as no outsider"
+          p1: 'Match the signs to whole spoken syllables'
+          p2: 'Pass a practice slip to a second reader'
+          p3: 'Check how the second reader sounded out the word'
+        vignettes:
+          sound: 'You wait while the learner says the word at their usual speed, then repeats it more slowly. The reader points to one sign at each syllable until the learner can do it alone.'
+          lookalike: 'A sign reminds you of a letter you already know. The reader has you listen to the whole syllable before you guess again. You cross out the English letter you had penciled in.'
+          note: 'You carry a practice slip across the room. The second learner reads it without having heard you dictate it, and the two of them compare how they said it.'
       zh:
         name: 一个人造出来的文字
         place: 美国东南部切罗基地区
         figure: 塞阔雅
-        story: 不识英文的塞阔雅为切罗基语发明了一套音节文字，几年内就有许多切罗基人学会了读写。
+        story: '塞阔雅为切罗基语创制的音节文字于 1821 年获得采用。这套符号表记音节。现存印刷品见证其早期使用，本趟识读练习是虚构的。'
         relic: 一张音节表
         relic_desc: 一张纸，八十多个字符排成行。
         points:
-          p1: "看他一个个造符号"
-          p2: "向族人证明字母有用"
-          p3: "不被当作外人"
+          p1: '把字形对回完整的音节'
+          p2: '把练习纸送给另一位读者'
+          p3: '核对另一位读者是怎么念的'
+        vignettes:
+          sound: '你等对方先按平常速度念完，再慢慢念一遍。读者一音节指一字，等到对方能自己指着念下去。'
+          lookalike: '有个字形让你想起以前认得的字母。读者请你听完一整个音节再猜。你擦掉了刚才随手标上的英文字母。'
+          note: '你把一张练习纸送到屋子另一边。另一位习字人没听过你口述，却照纸念了出来，两人便对着听自己念得是否一样。'
 text:
   en:
     name: Sequoyah
@@ -44,3 +57,34 @@ text:
   zh:
     name: 塞阔雅
     text: 切罗基银匠，约 1770 年生，1843 年去世。他不识英文，在 1809 至 1821 年间为切罗基语创制了含八十五个字符的音节文字。几年之内，大多数切罗基成年人都学会了读。
+hook: {en: 'Can the next reader sound it out?', zh: '下一位读者能念出来吗'}
+facts:
+  syllabary:
+    date: '1821'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sequoyah_syllabary_primary]
+    text:
+      en: 'Sequoyah devised a syllabary for Cherokee, adopted in 1821. Its signs represent syllables. The surviving print illustrates early use; the lesson on this trip is invented.'
+      zh: '塞阔雅为切罗基语创制的音节文字于 1821 年获得采用。这套符号表记音节。现存印刷品见证其早期使用，本趟识读练习是虚构的。'
+bystanders:
+  sequoyah_syllabary_reader:
+    invented: true
+    text: {en: 'An invented Cherokee reader helping a fellow learner practise.', zh: '一位虚构的切罗基读者，正在帮同伴练习辨读。'}
+wiki:
+  refs:
+    sequoyah_syllabary_primary:
+      order: 138
+      status: checked
+      text:
+        en: 'Smithsonian National Portrait Gallery, Sequoyah, with notes on adoption in 1821. https://npg.si.edu/learn/classroom-resource/sequoyah-c-1770%E2%80%93c-1843'
+        zh: '史密森尼国家肖像馆，塞阔雅条目，附 1821 年采用音节文字的说明。https://npg.si.edu/learn/classroom-resource/sequoyah-c-1770%E2%80%93c-1843'
+self_check:
+  quote_line: '你等对方先按平常速度念完，再慢慢念一遍。'
+  fact: syllabary
+  regret_choice: '略过「把字形对回完整的音节」，这处细节便留给下一位核对。'
+  bookend: '从「下一位读者能念出来吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '下一位读者能念出来吗'
+  share_number: '1821'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

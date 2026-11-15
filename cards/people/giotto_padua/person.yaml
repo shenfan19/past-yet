@@ -9,34 +9,47 @@ events:
     field: art
     tier: 2
     channels: {L: 1}
+    refs: [giotto_padua_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"stat":{"finesse":7}}]}}
         - {id: p2, kind: hold, req: {"any":[{"job":["carpenter","builder"]},{"trait":["attached"]}]}}
         - {id: p3, kind: trust, req: {"trait":["sensitive","kind","attached"]}}
+      vignettes:
+        - {id: eye, traits: [artistic, curious]}
+        - {id: register, traits: [methodical, vigil]}
+        - {id: step}
     text:
       en:
         name: Figures with weight and feeling
         place: Padua
         figure: Giotto
-        story: In the Scrovegni Chapel Giotto paints saints as people with weight and feeling, a turn in European painting.
+        story: 'Giotto''s frescoes at the Scrovegni Chapel in Padua are dated 1303–1305 by the chapel. The scenes occupy successive bands along the walls. This visit with an imagined guide is fictional.'
         relic: A pot of blue pigment
         relic_desc: Ground blue, the colour of the chapel vault.
         points:
-          p1: "Look at how he paints the folds of cloth"
-          p2: "Build the scaffold and lay the plaster"
-          p3: "Stand in silence before the new painting"
+          p1: 'Find which scene comes next in the band'
+          p2: 'Follow a painted gesture across the space'
+          p3: 'Choose a place to see two scenes together'
+        vignettes:
+          eye: 'The visitor always starts where the faces are easiest to see. You ask what their eyes do when you send them back to the corner. They follow a gesture into the next part of the picture.'
+          register: 'The visitor tries to continue on the band just below. You trace the route around the wall in the air. They walk a few steps and find the scene they were looking for.'
+          step: 'You step back with the visitor until two scenes fit into the same view. The visitor points out one detail that had been invisible when they stood directly beneath it.'
       zh:
         name: 有分量、有感情的人物
         place: 帕多瓦
         figure: 乔托
-        story: 在斯克罗威尼礼拜堂里，乔托把圣徒画成有分量、有感情的人，欧洲绘画由此转了向。
+        story: '斯克罗威尼礼拜堂将帕多瓦现存的乔托壁画定年为 1303 至 1305 年。画面沿墙分层展开。本卡里领人看画的场面为虚构。'
         relic: 一罐蓝颜料
         relic_desc: 磨好的蓝色，是礼拜堂穹顶的颜色。
         points:
-          p1: "看他画的衣褶"
-          p2: "搭脚手架与抹灰"
-          p3: "站在新画前沉默"
+          p1: '沿墙找出这一层的下一幕'
+          p2: '顺着画中人的手势往下看'
+          p3: '找一个能同时看见两幕的位置'
+        vignettes:
+          eye: '访客总从面孔最清楚的地方看。你请他把视线拉回画角，看看接下来会往哪儿去。他顺着画中人的手势，看到了下一部分。'
+          register: '访客要直接往正下方一层接着看。你在空中沿墙比出看画的顺序。他往前走几步，找到了刚才在找的那一幕。'
+          step: '你陪访客往后退，直到两幕能一起看见。他指出一处刚才站在画底下看不见的细节。'
 text:
   en:
     name: Giotto
@@ -44,3 +57,34 @@ text:
   zh:
     name: 乔托
     text: 意大利画家，约 1267 年生，1337 年去世。他约在 1305 年画成的帕多瓦斯克罗维尼礼拜堂壁画，人物有重量感和情感，被视为通向文艺复兴绘画的一步。
+hook: {en: 'Look up, then look along the wall.', zh: '先抬头，再沿墙看'}
+facts:
+  chapel_cycle:
+    date: '1305'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [giotto_padua_primary]
+    text:
+      en: 'Giotto''s frescoes at the Scrovegni Chapel in Padua are dated 1303–1305 by the chapel. The scenes occupy successive bands along the walls. This visit with an imagined guide is fictional.'
+      zh: '斯克罗威尼礼拜堂将帕多瓦现存的乔托壁画定年为 1303 至 1305 年。画面沿墙分层展开。本卡里领人看画的场面为虚构。'
+bystanders:
+  giotto_padua_reader:
+    invented: true
+    text: {en: 'An invented visitor trying to follow the order of the paintings.', zh: '一位虚构的访客，正试着按顺序看壁画。'}
+wiki:
+  refs:
+    giotto_padua_primary:
+      order: 178
+      status: checked
+      text:
+        en: 'Scrovegni Chapel, Padua, surviving Giotto fresco cycle, dated 1303–1305 by the chapel''s official site. https://cappelladegliscrovegni.it/index.php/en/'
+        zh: 'Scrovegni Chapel, Padua, surviving Giotto fresco cycle, dated 1303–1305 by the chapel''s official site. https://cappelladegliscrovegni.it/index.php/en/'
+self_check:
+  quote_line: '访客总从面孔最清楚的地方看。'
+  fact: chapel_cycle
+  regret_choice: '略过「沿墙找出这一层的下一幕」，这处细节便留给下一位核对。'
+  bookend: '从「先抬头，再沿墙看」开始，以员工留下的观察或更正收尾。'
+  share_line: '先抬头，再沿墙看'
+  share_number: '1305'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

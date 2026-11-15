@@ -57,17 +57,17 @@ export function createOffice(X) {
 
   function launch(eraId, spec, opts = {}) {
     if (!canDispatchTo(eraId, false, opts.auto)) return null;
-    const E = ctx.era(eraId);
     const s = S();
     const full = { ...spec, plots: plotsFor(eraId), favor: s.staff[spec.staffId].favor, gear: staffGear(spec.staffId) };
     const err = ctx.backend.validate(eraId, full, s.inv);
     if (err || staffState(full.staffId) !== 'ready' || eraBusy(eraId)) return null;
-    const { res, report } = ctx.backend.dispatch(eraId, full);
-    const antique = ctx.backend.findAntique(eraId, full.seed, s.antiques, report.stars, ctx.backend.luckFactor(full.staffId, s.staff[full.staffId].favor));
+    const { res, report, evacuation } = ctx.backend.dispatch(eraId, full);
+    if (evacuation) return launchEvacuation(eraId, full, evacuation, opts);
+    const antique = report.journey?.accepted === false ? null : ctx.backend.findAntique(eraId, full.seed, s.antiques, report.stars, ctx.backend.luckFactor(full.staffId, s.staff[full.staffId].favor));
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     if (s.seq === 1) startClock();
-    const stay = E.vars[E.roles.stay].value;
+    const stay = ctx.backend.eraStay(eraId);
     const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
     s.dispatches.push(d);
     ctx.save();
@@ -79,17 +79,32 @@ export function createOffice(X) {
   function launchLight(eventId, staffId, seed, items = {}, opts = {}) {
     const s = S();
     if (!canDispatchTo(eventId, true, opts.auto) || staffState(staffId) !== 'ready' || eraBusy(eventId)) return null;
-    const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && D.get('items.' + id).scene && !D.get('items.' + id).implant && (s.inv[id] || 0) >= n));
+    const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && ctx.backend.lightKitAllowed(eventId, id) && (s.inv[id] || 0) >= n));
     const r = ctx.backend.runLight(eventId, staffId, seed, kit, s.staff[staffId].favor);
+    if (r.evacuation) return launchEvacuation(eventId, { seed, staffId, items: kit, favor: s.staff[staffId].favor }, r, opts, true);
     const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
     for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
     s.seq += 1;
     if (s.seq === 1) startClock();
     const d = {
       id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, max: ctx.backend.maxStars(eventId), baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
-      report: { outcomeId: r.outcome, found: r.found || null, extraFavor: r.extraFavor || 0, vignette: r.vignette, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
+      report: { outcomeId: r.outcome, journey: r.journey, found: r.found || null, extraFavor: r.extraFavor || 0, vignette: r.vignette, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
       startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
     };
+    s.dispatches.push(d);
+    ctx.save();
+    return d;
+  }
+
+  function launchEvacuation(eraId, spec, result, opts, light = false) {
+    const s = S();
+    for (const [id, n] of Object.entries(spec.items)) s.inv[id] -= n;
+    s.seq += 1;
+    if (s.seq === 1) startClock();
+    const d = { id: 'd' + s.seq, eraId, light, spec, stars: 0, baseEnergy: 0, evacuation: result.evacuation,
+      report: { outcomeId: 'missed', points: [], accounts: { lives: 0 } },
+      startDay: day(), readyDay: day() + result.stay, claimed: false, notified: false, auto: !!opts.auto,
+      payout: { energy: 0, restDays: result.restDays, antique: null } };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -118,7 +133,7 @@ export function createOffice(X) {
     return {
       id: d.id, place: d.eraId, light: !!d.light, staffId: d.spec.staffId, day: Math.floor(d.startDay), back: Math.floor(d.recalled ? d.recallDay : d.readyDay),
       stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, energy: d.paid?.energy || 0,
-      antique: d.paid?.antique || null, recalled: !!d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
+      antique: d.paid?.antique || null, recalled: !!d.recalled, evacuated: !!d.evacuation && !d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
       redeemed: pts.some((p) => p.redeem && p.hit), archived: false,
     };
   }
@@ -237,7 +252,7 @@ export function createOffice(X) {
     if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
     sf.restUntil = day() + d.paid.restDays;
-    const delta = (d.light ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId]) + (d.report.extraFavor || 0);
+    const delta = (d.light || d.evacuation ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId]) + (d.report.extraFavor || 0);
     d.favorDelta = delta > 0 ? delta * (1 + p.favor_gain) : delta;
     sf.favor = clamp(sf.favor + d.favorDelta, F.min, F.max);
     const aim = secretaryAim();
@@ -251,7 +266,7 @@ export function createOffice(X) {
     // The next episode of the same person opens when this one has been visited: an event that names this one in `after` has its relic found and anchored.
     d.paid.opened = [];
     for (const e of D.get('catalog.events')) {
-      if (!e.after) continue;
+      if (d.evacuation || !e.after) continue;
       const prev = D.get('catalog.events').find((x) => x.id === e.after);
       if (!prev || (d.eraId !== prev.id && d.eraId !== prev.era)) continue;
       const relic = 'relic_' + e.id;
@@ -630,7 +645,7 @@ export function createOffice(X) {
     const s = S();
     const ev = D.get('catalog.events').find((x) => x.id === eventId);
     const favor = s.staff[staffId].favor;
-    const none = { kit: {}, buy: [], stars: ctx.backend.runLight(eventId, staffId, seed, {}, favor).stars };
+    const none = { kit: {}, buy: [], stars: ctx.backend.runLight(eventId, staffId, seed, {}, favor, { estimate: true }).stars };
     if (!ev.scene) return none;
     const owned = sceneItems.filter((id) => (s.inv[id] || 0) > 0);
     const spend = Math.floor(s.energy * A.item_buy.energy_share);
@@ -643,7 +658,7 @@ export function createOffice(X) {
       const cost = buy.reduce((a, id) => a + D.get('items.' + id).cost, 0);
       if (cost > spend) continue;
       const kit = Object.fromEntries(set.map((id) => [id, 1]));
-      const stars = ctx.backend.runLight(eventId, staffId, seed, kit, favor).stars;
+      const stars = ctx.backend.runLight(eventId, staffId, seed, kit, favor, { estimate: true }).stars;
       const key = [stars, -cost, -set.length];
       if (!best || key[0] > best.key[0] || (key[0] === best.key[0] && (key[1] > best.key[1] || (key[1] === best.key[1] && key[2] > best.key[2])))) best = { key, kit, buy, stars };
     }

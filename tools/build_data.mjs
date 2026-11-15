@@ -111,6 +111,7 @@ audioCfg.music.tracks = musicFiles.map((file) => ({ file, ...(audioCfg.music.nam
 delete audioCfg.music.names;
 emitYaml('audio.yaml', audioCfg);
 emitYaml('hiring.yaml', read('config/hiring.yaml'));
+emitYaml('identities.yaml', read('config/identities.yaml'));
 emitYaml('share_qr.yaml', read('config/share_qr.yaml'));
 emitCopy('world_land.json', 'world/world_land.json');
 // the traveller core: the flat model and the bridge description exported from the LM game bridge, copied as they are
@@ -130,6 +131,7 @@ const staffCards = cards('staff');
 const quoteCards = cards('quotes');
 emitYaml('staff.yaml', {
   attributes: staffRules.attributes, stats: staffRules.stats, derive: staffRules.derive, default_base: staffRules.default_base, default_habit: staffRules.default_habit, gender_class: staffRules.gender_class,
+  tags: staffRules.tags, job_classes: staffRules.job_classes, literacy: staffRules.literacy, ages: staffRules.ages, faces: staffRules.faces,
   traits: Object.fromEntries(traitCards.map((c) => [c.id, struct(c)])),
   staff: Object.fromEntries(staffCards.map((c) => [c.id, struct(c)])),
 });
@@ -155,9 +157,20 @@ for (const m of moduleNames) {
   eraDir[id] = `people/${m}/era`;
   eraModule[id] = m;
 }
+// A model may name a template: a model file in cards/templates that holds what the stories of one kind share. The model of the person is laid over the template key by key,
+// so the person file holds only what is its own: the dates, the stars, the identities and the numbers it changes. A model without a template is copied as it is.
+const eraModel = {};
+function modelOfDir(dir) {
+  const own = read(`${dir}/model.lm.yaml`);
+  if (!own.template) return { raw: own, merged: false };
+  if (!exists(`templates/${own.template}.lm.yaml`)) { fail(`${dir}/model.lm.yaml names the template ${own.template}, which is not in cards/templates`); return { raw: own, merged: false }; }
+  return { raw: merge(read(`templates/${own.template}.lm.yaml`), own), merged: true };
+}
 for (const id of config.eras) {
   if (!(id in eraDir)) { fail(`config.eras lists ${id} but no folder holds its model`); continue; }
-  emitCopy(`eras/${id}.lm.yaml`, `${eraDir[id]}/model.lm.yaml`);
+  eraModel[id] = modelOfDir(eraDir[id]);
+  if (eraModel[id].merged) emitYaml(`eras/${id}.lm.yaml`, eraModel[id].raw);
+  else emitCopy(`eras/${id}.lm.yaml`, `${eraDir[id]}/model.lm.yaml`);
 }
 for (const id of Object.keys(eraDir)) if (!config.eras.includes(id)) fail(`${eraDir[id]} is not in config.eras`);
 
@@ -275,31 +288,40 @@ let storyLine = '';
 {
   const refIds = new Set(refCards.map((c) => c.id));
   const traitIds = new Set(traitCards.map((c) => c.id));
-  for (const ev of eventCards) {
-    for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
-    const variants = ev.scene?.vignettes;
-    if (variants === undefined) continue;
+  function checkVignettes(id, variants, localText) {
+    if (variants === undefined) return;
     if (!Array.isArray(variants) || !variants.length) {
-      fail(`event ${ev.id} needs a non-empty list of vignettes`);
-      continue;
+      fail(`${id} needs a non-empty list of vignettes`);
+      return;
     }
     const ids = new Set();
     for (const [i, v] of variants.entries()) {
       if (!isObj(v) || typeof v.id !== 'string' || !v.id || ids.has(v.id)) {
-        fail(`event ${ev.id} has an invalid or duplicate vignette id`);
+        fail(`${id} has an invalid or duplicate vignette id`);
         continue;
       }
       ids.add(v.id);
       if (i === variants.length - 1 ? v.traits !== undefined : !Array.isArray(v.traits) || !v.traits.length || v.traits.some((t) => !traitIds.has(t))) {
-        fail(`event ${ev.id} vignette ${v.id} needs known traits, or must be the final unconditional vignette`);
+        fail(`${id} vignette ${v.id} needs known traits, or must be the final unconditional vignette`);
       }
       for (const lang of LANGS) {
-        const line = ev.text[lang]?.vignettes?.[v.id];
-        if (typeof line !== 'string' || !line.trim()) fail(`event ${ev.id} vignette ${v.id} is missing ${lang} text`);
+        const line = localText(lang)?.vignettes?.[v.id];
+        if (typeof line !== 'string' || !line.trim()) fail(`${id} vignette ${v.id} is missing ${lang} text`);
       }
     }
   }
-  const modelOf = (era) => (era && eraDir[era] ? read(`${eraDir[era]}/model.lm.yaml`) : null);
+  for (const ev of eventCards) {
+    for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
+    checkVignettes(`event ${ev.id}`, ev.scene?.vignettes, (lang) => ev.text[lang]);
+  }
+  const modelOf = (era) => (era && eraDir[era] ? (eraModel[era] ?? modelOfDir(eraDir[era])).raw : null);
+  const modelText = (id, lang) => moduleCard[eraModule[id]]?.era_text?.[lang] ?? (exists(`${eraDir[id]}/text.${lang}.yaml`) ? read(`${eraDir[id]}/text.${lang}.yaml`) : null);
+  const eventSources = new Set(sectionCards.events.map((c) => c.id));
+  for (const id of config.eras) {
+    const meta = modelOf(id).metadata;
+    if (meta.vignettes !== undefined && !eventSources.has(meta.vignette_source)) fail(`model ${id} needs a wiki event as its vignette source`);
+    checkVignettes(`model ${id}`, meta.vignettes, (lang) => modelText(id, lang));
+  }
   const people = [];
   for (const m of moduleNames) {
     const pc = moduleCard[m];

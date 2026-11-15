@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 2, C: 2}
     regret: true
+    refs: [boole_ballintemple_primary]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"trait":["glib","ambitious"]}}
         - {id: p2, kind: endure, req: {"trait":["hardy","wanderer"]}}
         - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: repeat, traits: [scholarly, curious]}
+        - {id: border, traits: [methodical, vigil]}
+        - {id: example}
     text:
       en:
         name: "Wet clothes and a lecture"
         place: "Ballintemple, Cork"
         figure: "George Boole"
-        story: "George Boole walks to Queen's College in the rain and lectures in wet clothes. He dies of pneumonia at forty nine, before his logic of true and false found any use."
+        story: 'Boole''s 1854 Laws of Thought represents logical operations with algebra. One of its laws says that repeating the same selection produces the same class. The 1864 reading exercise is invented.'
         relic: "A page of logic"
         relic_desc: "A page of equations in which letters stand for yes and no."
         points:
-          p1: "Talk him into resting"
-          p2: "Walk the rainy road with him"
-          p3: "Ease the fever that follows"
+          p1: 'Follow one operation using example slips'
+          p2: 'Keep the original condition through the second selection'
+          p3: 'Explain why the result stayed the same'
+        vignettes:
+          repeat: 'You ask the learner to pick the even numbers, then to pick the even numbers again from the pile they just selected. They laugh once, then write down why the second choice gave back the same pile.'
+          border: 'The learner starts to put a slip in both piles without saying which property they used. You ask for the condition first. They label each stack before trying the operation again.'
+          example: 'You turn the selection into a few slips the learner can move. When they copy the conclusion, they can still point to the condition it came from.'
       zh:
         name: "湿衣服与一堂课"
         place: "科克巴林滕普尔"
         figure: "乔治·布尔"
-        story: "乔治·布尔冒雨走到女王学院，穿着湿衣服讲课，死于肺炎，年四十九，他那套关于真和假的逻辑还没有用武之地。"
+        story: '布尔 1854 年出版的《思维规律研究》用代数表示逻辑运算。其中一条规律是，重复同一选择，所得的类不变。本卡的 1864 年阅读练习为虚构。'
         relic: "一页逻辑演算"
         relic_desc: "一页方程，其中的字母代表是和否。"
         points:
-          p1: "劝他先休息"
-          p2: "陪他走过那段雨路"
-          p3: "缓解之后的高烧"
+          p1: '用例题纸条走完一步运算'
+          p2: '再选一遍时保留原来的条件'
+          p3: '说明所得结果为何没有变化'
+        vignettes:
+          repeat: '你请学算者先挑出偶数，再从刚挑出的那一堆里挑偶数。他笑了一声，随后记下为什么第二次挑出的还是原来那一堆。'
+          border: '学算者没说依据什么，就准备把一张纸同时放进两堆。你请他先说条件。他给各堆贴上标签，再试一遍。'
+          example: '你把选择过程换成几张能挪动的纸条。学算者抄下结论时，还能指出它对应哪个条件。'
 text:
   en:
     name: George Boole
@@ -45,3 +58,34 @@ text:
   zh:
     name: 乔治·布尔
     text: 英国数学家，1815 年生，1864 年去世，科克女王学院第一位数学教授。他建立了逻辑代数，后来成为数字电路的基础，因肺炎在巴林特普尔去世。
+hook: {en: 'What happens if you choose twice?', zh: '同一类选两遍会怎样'}
+facts:
+  laws_of_thought:
+    date: '1854'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [boole_ballintemple_primary]
+    text:
+      en: 'Boole''s 1854 Laws of Thought represents logical operations with algebra. One of its laws says that repeating the same selection produces the same class. The 1864 reading exercise is invented.'
+      zh: '布尔 1854 年出版的《思维规律研究》用代数表示逻辑运算。其中一条规律是，重复同一选择，所得的类不变。本卡的 1864 年阅读练习为虚构。'
+bystanders:
+  boole_ballintemple_reader:
+    invented: true
+    text: {en: 'An invented learner sorting numbered slips for a small exercise.', zh: '一位虚构的学算者，拿编号纸条做一道小练习。'}
+wiki:
+  refs:
+    boole_ballintemple_primary:
+      order: 182
+      status: checked
+      text:
+        en: 'George Boole, An Investigation of the Laws of Thought, London, 1854. Wellcome Collection. https://wellcomecollection.org/works/e3xyy2tg'
+        zh: 'George Boole, An Investigation of the Laws of Thought, London, 1854. Wellcome Collection. https://wellcomecollection.org/works/e3xyy2tg'
+self_check:
+  quote_line: '你请学算者先挑出偶数，再从剩在手里的这堆挑出偶数。'
+  fact: laws_of_thought
+  regret_choice: '略过「用例题纸条走完一步运算」，这处细节便留给下一位核对。'
+  bookend: '从「同一类选两遍会怎样」开始，以员工留下的观察或更正收尾。'
+  share_line: '同一类选两遍会怎样'
+  share_number: '1854'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

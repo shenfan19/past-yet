@@ -179,8 +179,11 @@ stars:
   energy_base: {broad_street_1854: 60, vienna_1847: 80, scutari_1855: 80, finlay_havana_1881: 80, jenner_berkeley_1796: 80, seacole_balaklava_1855: 80, wegener_greenland_1930: 80}
   # the share of the base paid in total at a star count, so each star above the best pays the difference
   energy_share: {3: {0: 0, 1: 0.25, 2: 0.5, 3: 1}, 5: {0: 0, 1: 0.15, 2: 0.3, 3: 0.5, 4: 0.75, 5: 1}}
+travel:
+  max_office_days: 7
+  history_days_per_office_day: 30
 light:
-  stay_by_tier: {1: 4, 2: 6, 3: 9}
+  stay_by_tier: {1: 4, 2: 6, 3: 7}
   difficulty: {base: 0.32, per_tier: 0.1}
   noise: 0.25
   # the three points of a small story are reached, met and made a mark, each at a margin of the traveller against the event
@@ -267,7 +270,7 @@ channels:
   per_event_max: 3
   levels: [1, 2, 3]
   # channels switched off for now: the event cards keep them, but the stay ignores them until the core can move the body for them (see the task file of the event system, T4b)
-  off: [W, E, A, L, T]
+  off: [A, L, T]
   # items lower the effective level of the channel they name by item_levels each, and all the items together lower one channel by at most item_cap levels, so a level 3 channel cannot be cleared with items alone
   # a piece of gear that names the channel lowers it by gear_levels, outside the cap of the items, so the third level can be cleared with items, gear and traits together
   relief: {item_levels: 1, item_cap: 2, gear_levels: 1, floor: 0}
@@ -285,11 +288,13 @@ body:
     finesse: [injury_burden, mobility_loss]
     will: [psychological_strain, loneliness]
   # whether the stay is stepped through the body of the traveller at all. Off, a scene is met on the attributes of the card, as it was before the body; on, on the attributes of the day.
-  enabled: false
+  enabled: true
   # minutes of the step the coordinator gives the core, one day
   step_minutes: 1440
-  # a traveller whose largest reading in this list reaches the level cannot act any more, and every later point fails by itself
-  incapacity: {readouts: [injury_burden, mobility_loss, infection_burden, hydration_deficit, energy_deficit, psychological_strain], at: 0.9}
+  # Health is checked at most one historical week apart and at every scene objective.
+  check_days: 7
+  # Evacuation thresholds are game balance values for LM's normalized readouts.
+  incapacity: {readouts: [injury_burden, mobility_loss, infection_burden, hydration_deficit, energy_deficit, psychological_strain], at: 0.9, infection_at: 0.014, rest_days: 3}
   # what the result of a point writes back for the days after it, added to the pressure of the channels as an event source and fading by decay each day
   feedback: {miss: {psychological_demand: 0.1}, hit: {psychological_demand: -0.05}, decay: 0.5}
   # loneliness has no provider in the core, so the game raises it by this much per level of the grief channel each day, and it never falls inside a stay

@@ -5,6 +5,7 @@
 // It knows nothing about the body: the attributes of the day come in from outside, so a traveller who falls ill later in the stay meets the later points on lower attributes.
 import { compile } from './expr.js';
 import { draw } from './rng.js';
+import { historicalDays } from './travel_time.js';
 
 const num = (v) => String(v);
 const cache = new Map();
@@ -33,7 +34,7 @@ export function sceneModel(D, ev) {
     });
     return parts.length ? parts.join(' and ') : 'true';
   };
-  const stay = ev.stay || D.get('config.light.stay_by_tier.' + ev.tier);
+  const stay = historicalDays(D, ev.stay || D.get('config.light.stay_by_tier.' + ev.tier));
   const share = D.get('config.scene.point_share.' + ev.scene.points.length);
   const points = ev.scene.points.map((p, i) => ({ id: p.id, kind: p.kind, day: Math.max(1, Math.round(stay * share[i])), expr: expr(p.req) }));
   return { id: ev.id, stay, points, names: [...names], rolls };

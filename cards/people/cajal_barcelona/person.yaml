@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {V: 2}
+    refs: [cajal_barcelona_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["painter"]},{"stat":{"finesse":7}}]}}
         - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+      vignettes:
+        - {id: crossing, traits: [skeptical, vigil]}
+        - {id: legend, traits: [artistic, methodical]}
+        - {id: blank}
     text:
       en:
         name: Nerve cells as separate units
         place: Barcelona
         figure: Santiago Ramón y Cajal
-        story: Cajal draws silver stained nerve cells in beautiful detail and argues that the brain is made of separate cells.
+        story: 'Cajal published an illustrated manual of histology in 1889. A later diagram preserved by the CSIC shows the retina and directions of currents. This card imagines a drawing exercise in Barcelona in 1889.'
         relic: A fine drawing pen
         relic_desc: A pen so fine it drew every branch of a neuron.
         points:
-          p1: "Recognise the branching cell under the microscope"
-          p2: "Draw what is seen as a figure"
-          p3: "Wait out the stain through the night"
+          p1: 'Follow one branch back to its beginning'
+          p2: 'Keep annotation marks separate from the figure'
+          p3: 'Leave a precise question for another look'
+        vignettes:
+          crossing: 'The student joins two strokes where they cross. You ask them to follow each back to its own beginning. One of the connections comes off the page.'
+          legend: 'A bold arrow hides a faint branch. You give the arrow a place outside the figure and ask the student to add a key, so both marks can be read.'
+          blank: 'You keep a blank space by the uncertain end of the drawing. The student leaves a question there for a second look instead of extending the line from memory.'
       zh:
         name: 神经细胞是一个个独立的单位
         place: 巴塞罗那
         figure: 圣地亚哥·拉蒙-卡哈尔
-        story: 卡哈尔把银染的神经细胞画得极细致，并论证大脑是由一个个独立的细胞组成的。
+        story: '卡哈尔于 1889 年刊行有插图的组织学手册。西班牙国家研究委员会藏有他后来绘制的视网膜结构及传导方向图。本卡在 1889 年的巴塞罗那安排一段虚构的描图练习。'
         relic: 一支极细的绘图笔
         relic_desc: 细到能画出神经元每一条分支的笔。
         points:
-          p1: "在显微镜里认出分叉的细胞"
-          p2: "把看到的画成图"
-          p3: "整夜等染色"
+          p1: '沿一根分支找到它的起点'
+          p2: '把标注与组织结构线分开'
+          p3: '留一个明确问题，方便下次复看'
+        vignettes:
+          crossing: '学生把交叉的两笔连起来。你让他分别往回找起点。两条脉络对过一遍，有一处连线被他擦掉了。'
+          legend: '粗箭头盖住了一根细分支。你把箭头移到图外，请学生补图例，两种线就都看得见了。'
+          blank: '你在画不准的末端旁留了一块白。学生在那里写了个问题，准备下回再看，没凭记忆把线拖长。'
 text:
   en:
     name: Santiago Ramón y Cajal
@@ -44,3 +57,34 @@ text:
   zh:
     name: 圣地亚哥·拉蒙-卡哈尔
     text: 西班牙神经科学家，1852 年生，1934 年去世。他用银染法证明神经系统由彼此分离的细胞组成，即神经元学说。他分享了 1906 年诺贝尔奖，1890 年代在巴塞罗那任教。
+hook: {en: 'Is that a join or a crossing?', zh: '两条线相交，就一定相连吗'}
+facts:
+  histology:
+    date: '1889'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [cajal_barcelona_primary]
+    text:
+      en: 'Cajal published an illustrated manual of histology in 1889. A later diagram preserved by the CSIC shows the retina and directions of currents. This card imagines a drawing exercise in Barcelona in 1889.'
+      zh: '卡哈尔于 1889 年刊行有插图的组织学手册。西班牙国家研究委员会藏有他后来绘制的视网膜结构及传导方向图。本卡在 1889 年的巴塞罗那安排一段虚构的描图练习。'
+bystanders:
+  cajal_barcelona_reader:
+    invented: true
+    text: {en: 'An invented student trying to copy a branching figure.', zh: '一位虚构的学生，正试着描一幅有多处分叉的图。'}
+wiki:
+  refs:
+    cajal_barcelona_primary:
+      order: 154
+      status: checked
+      text:
+        en: 'Santiago Ramón y Cajal, Manual de histología normal y técnica micrográfica, Valencia, 1889. Wellcome Collection: https://wellcomecollection.org/works/gwudyvvg . Later retinal drawing, CSIC: https://simurg.csic.es/view/9918479815704201'
+        zh: '圣地亚哥·拉蒙-卡哈尔，《正常组织学与显微技术手册》，1889 年。韦尔科姆馆藏：https://wellcomecollection.org/works/gwudyvvg 。视网膜手稿图，西班牙国家研究委员会：https://simurg.csic.es/view/9918479815704201'
+self_check:
+  quote_line: '学生把交叉的两笔连起来。'
+  fact: histology
+  regret_choice: '略过「沿一根分支找到它的起点」，这处细节便留给下一位核对。'
+  bookend: '从「两条线相交，就一定相连吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '两条线相交，就一定相连吗'
+  share_number: '1902'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

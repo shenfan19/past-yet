@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {L: 1}
     regret: true
+    refs: [antikythera_rhodes_primary]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["mechanic","carpenter","builder"]},{"trait":["faithful"]}]}}
         - {id: p2, kind: notice, req: {"trait":["curious","wanderer","skeptical"]}}
         - {id: p3, kind: care, redeem: true, req: {"trait":["patient","cheerful","faithful"]}}
+      vignettes:
+        - {id: rings, traits: [handy, methodical]}
+        - {id: calendar, traits: [curious, scholarly]}
+        - {id: legend}
     text:
       en:
         name: "A machine with no maker's name"
         place: "Rhodes"
         figure: "An unknown maker"
-        story: "An unknown maker builds a hand cranked device of more than thirty bronze gears that shows the Sun, the Moon and eclipses. It sinks in a wreck near Antikythera and is understood only in the twentieth century, and nobody recorded who made it."
+        story: 'The Antikythera shipwreck yielded fragments of a toothed mechanism with overlapping astronomical cycles and inscriptions. The maker and workshop are uncertain; Rhodes is this game''s scenario setting.'
         relic: "A bronze gear"
         relic_desc: "A small toothed wheel green with age."
         points:
-          p1: "File the bronze gears (a craftsperson)"
-          p2: "Follow how the gears model the eclipses"
-          p3: "Keep the maker company through the long nights"
+          p1: 'Recognize the marked scale on the practice face'
+          p2: 'Distinguish two cycles traced on different rings'
+          p3: 'Help the next reader match a label to its dial'
+        vignettes:
+          rings: 'The visitor points to the inner scale while reading a mark on the outer one. You let them turn the practice face without following both at once. This time they finish the reading on one ring.'
+          calendar: 'One pointer comes round sooner than the visitor expected. You ask which cycle they were counting. They draw a second row instead of squeezing two cycles under one heading.'
+          legend: 'You make a separate mark for the pointer and the place it is pointing at. The visitor reads the label again and stops calling both marks the same thing.'
       zh:
         name: "没有留下匠人姓名的机器"
         place: "罗得岛"
         figure: "不知名的匠人"
-        story: "一位不知名的匠人造出一台手摇装置，有三十多个青铜齿轮，能显示太阳、月亮和日月食。它随沉船沉在安提基特拉附近，到二十世纪才被弄明白，也没有人记下是谁造的。"
+        story: '安提基特拉沉船出水的齿轮装置残片保留了对应天文周期的刻度和铭文。工匠与工坊尚不能确定；罗得岛是本卡的虚构场景地点。'
         relic: "一枚青铜齿轮"
         relic_desc: "一个带齿的小轮，因年久而发绿。"
         points:
-          p1: "锉制青铜齿轮"
-          p2: "看懂齿轮怎样模拟日月食"
-          p3: "陪匠人熬过漫长的夜"
+          p1: '认出练习盘上标着的那圈刻度'
+          p2: '分清不同圈上对应的两个周期'
+          p3: '让下一个读者把铭文对回刻度盘'
+        vignettes:
+          rings: '来客嘴里念外圈的标记，手却指向了内圈。你让他转一下练习盘，只跟其中一圈走，这回他沿着同一圈念到了底。'
+          calendar: '一根指针回转得比来客料想的快。你问他原先数的是哪一个周期。他另画了一行，没有把两个周期挤在同一栏下。'
+          legend: '你给指针和它所指的位置分别做记号。来客再念一遍标签，两处终于没被叫成同一个名字。'
 text:
   en:
     name: An unknown maker
@@ -45,3 +58,34 @@ text:
   zh:
     name: 不知名的匠人
     text: 安提基特拉机械的不知名制造者。这是一件公元前二世纪前后的齿轮装置，1901 年从沉船中打捞出来，模拟日月运行并预测日月食。制造者的情况无人知晓。
+hook: {en: 'Which dial are you reading?', zh: '你认的是哪一圈刻度'}
+facts:
+  dials:
+    date: '-100'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [antikythera_rhodes_primary]
+    text:
+      en: 'The Antikythera shipwreck yielded fragments of a toothed mechanism with overlapping astronomical cycles and inscriptions. The maker and workshop are uncertain; Rhodes is this game''s scenario setting.'
+      zh: '安提基特拉沉船出水的齿轮装置残片保留了对应天文周期的刻度和铭文。工匠与工坊尚不能确定；罗得岛是本卡的虚构场景地点。'
+bystanders:
+  antikythera_rhodes_reader:
+    invented: true
+    text: {en: 'An invented workshop visitor trying to read two dials.', zh: '一位虚构的工坊来客，正试着读两个刻度盘。'}
+wiki:
+  refs:
+    antikythera_rhodes_primary:
+      order: 152
+      status: checked
+      text:
+        en: 'National Archaeological Museum, Athens, Antikythera Mechanism, surviving fragments and inscriptions. https://antikythera-mechanism.namuseum.gr/en/what-is-the-mechanism-and-what-does-it-consist-of/'
+        zh: 'National Archaeological Museum, Athens, Antikythera Mechanism, surviving fragments and inscriptions. https://antikythera-mechanism.namuseum.gr/en/what-is-the-mechanism-and-what-does-it-consist-of/'
+self_check:
+  quote_line: '来客嘴里念外圈的标记，手却指向了内圈。'
+  fact: dials
+  regret_choice: '略过「认出练习盘上标着的那圈刻度」，这处细节便留给下一位核对。'
+  bookend: '从「你认的是哪一圈刻度」开始，以员工留下的观察或更正收尾。'
+  share_line: '你认的是哪一圈刻度'
+  share_number: '-100'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

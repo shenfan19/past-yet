@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 3
     channels: {S: 1, W: 1}
+    refs: [shakespeare_globe_primary]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"stat": {"finesse": 6}}}
         - {id: p2, kind: trust, req: {"trait":["glib","artistic","cosmopolitan"]}}
         - {id: p3, kind: hold, req: {"luck": 0.5}}
+      vignettes:
+        - {id: back_row, traits: [artistic, quiet]}
+        - {id: space, traits: [bold, glib]}
+        - {id: cue}
     text:
       en:
         name: A playhouse for everyone
         place: London
         figure: William Shakespeare
-        story: The Globe opens on the Thames bank, and its plays reach from the cheapest standing place to the best seats.
+        story: 'The Chorus in Henry V asks the audience to imagine places and events beyond what a stage can show. The play belongs to the Globe''s early years. The rehearsal here is invented.'
         relic: A goose quill
         relic_desc: A feather cut for writing, ink still on the tip.
         points:
-          p1: "Get a hearing at the Globe"
-          p2: "Offer a line he keeps"
-          p3: "A full house"
+          p1: 'Find a place where the cue can be heard'
+          p2: 'Help the player make a place clear without scenery'
+          p3: 'Stay through one more run of the entrance'
+        vignettes:
+          back_row: 'You stand at the edge of the yard and signal when the last words vanish into the room. The player tries the cue again, this time facing the audience.'
+          space: 'You ask how the player will fit a whole countryside on the boards. He points to a single doorway and asks you to cross it as if it were a day''s journey.'
+          cue: 'You listen for the one word that sends the next player on. They run the same entrance again and this time the door opens on the word.'
       zh:
         name: 人人都能进的剧场
         place: 伦敦
         figure: 威廉·莎士比亚
-        story: 环球剧场在泰晤士河边开张，戏文从最便宜的站票一直演到最好的座位。
+        story: '《亨利五世》的开场合唱请观众想象舞台呈现不了的地点和事件。此剧属于环球剧场早期演出时期，本篇的排练是虚构的。'
         relic: 一支鹅毛笔
         relic_desc: 削好的羽毛笔，笔尖上还有墨。
         points:
-          p1: "在环球剧场得到倾听"
-          p2: "给他一句他会留下的台词"
-          p3: "座无虚席"
+          p1: '找一个能听清接词的位置'
+          p2: '帮演员在没有布景时交代身在何处'
+          p3: '留下来再核对一遍上场信号'
+        vignettes:
+          back_row: '你站到院场边缘，听不见尾字时就举手。演员再试一遍，这一次转过身朝向观众。'
+          space: '你问演员怎么把整片乡野塞上几块台板。他指着一道门，请你穿过去，走得像刚赶了一整天路。'
+          cue: '你听清了哪一个字是下一人上场的信号。他们再试一次，这回字音一落，门便开了。'
 text:
   en:
     name: William Shakespeare
@@ -44,3 +57,34 @@ text:
   zh:
     name: 威廉·莎士比亚
     text: 英国剧作家与诗人，1564 年生，1616 年去世。他为在伦敦环球剧院演出的剧团写了约三十七部戏，包括《哈姆雷特》和《麦克白》，环球剧院于 1599 年开张，他也写十四行诗。
+hook: {en: 'Can one stage hold a kingdom?', zh: '一座台能装下多少地方'}
+facts:
+  wooden_o:
+    date: '1599'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [shakespeare_globe_primary]
+    text:
+      en: 'The Chorus in Henry V asks the audience to imagine places and events beyond what a stage can show. The play belongs to the Globe''s early years. The rehearsal here is invented.'
+      zh: '《亨利五世》的开场合唱请观众想象舞台呈现不了的地点和事件。此剧属于环球剧场早期演出时期，本篇的排练是虚构的。'
+bystanders:
+  shakespeare_globe_reader:
+    invented: true
+    text: {en: 'An invented player trying out an entrance and a cue.', zh: '一位虚构的演员，正在试走位、听接词。'}
+wiki:
+  refs:
+    shakespeare_globe_primary:
+      order: 124
+      status: checked
+      text:
+        en: 'William Shakespeare, Henry V, Prologue and text history, Folger Shakespeare Library edition and Folgerpedia. https://folgerpedia.folger.edu/Henry_V'
+        zh: 'William Shakespeare, Henry V, Prologue and text history, Folger Shakespeare Library edition and Folgerpedia. https://folgerpedia.folger.edu/Henry_V'
+self_check:
+  quote_line: '你站到院场边缘，听不见尾字时就举手。'
+  fact: wooden_o
+  regret_choice: '略过「找一个能听清接词的位置」，这处细节便留给下一位核对。'
+  bookend: '从「一座台能装下多少地方」开始，以员工留下的观察或更正收尾。'
+  share_line: '一座台能装下多少地方'
+  share_number: '1599'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

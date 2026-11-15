@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 2, S: 1}
     regret: true
+    refs: [vermeer_delft_primary, vermeer_delft_inventory]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"finesse":6}},{"job":["painter"]},{"trait":["handy","skeptical"]},{"trait":["scholarly","skeptical","quiet"]}]}}
         - {id: p2, kind: trust, req: {"any":[{"trait":["charismatic","sensitive","artistic"]},{"trait":["attached","charismatic","kind"]}]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["antique_dealer","accountant"]},{"trait":["vigil","bold"]},{"trait":["handy","ambitious","vigil"]}]}}
+      vignettes:
+        - {id: motif, traits: [artistic, vigil]}
+        - {id: pledge, traits: [methodical, skeptical]}
+        - {id: cover}
     text:
       en:
         name: "The painter in debt"
         place: "Delft"
         figure: "Johannes Vermeer"
-        story: "Vermeer, who painted very slowly and sold few pictures, dies in Delft leaving his wife and many children in debt."
+        story: 'Vermeer died in Delft in 1675. The Rijksmuseum''s exhibition documents the debts his household faced and the paintings Catharina Bolnes pledged to the baker. The ledger scene is invented.'
         relic: "A pearl earring"
         relic_desc: "A small pearl of the kind he painted so often."
         points:
-          p1: "Look at the light the way he does (a painter or curious eye helps)"
-          p2: "Be a patient visitor to the house"
-          p3: "Keep his paintings from being scattered (a dealer, an accountant or a stubborn one helps)"
+          p1: 'Find a visual detail that identifies a work'
+          p2: 'Check a description with the person who remembers it'
+          p3: 'Keep a pledge distinct from a sale in the copy'
+        vignettes:
+          motif: 'The clerk remembers the light in one picture but cannot tell you which picture it was. You ask what the figure was doing. They write down the action beside the title, so the next person has two clues.'
+          pledge: 'Someone has copied a pledged picture into the column for sold goods. You find the earlier entry and ask the clerk what each word puts on the record.'
+          cover: 'You hold the ledger open while the clerk looks across the room for the description they need. When they return, the right page is still waiting.'
       zh:
         name: "负债的画家"
         place: "代尔夫特"
         figure: "约翰内斯·维米尔"
-        story: "维米尔画得很慢，卖出的画很少，他在代尔夫特去世，留下妻子和许多孩子，也留下债务。"
+        story: '维米尔 1675 年在代尔夫特去世。阿姆斯特丹国立博物馆的展览记录了他家留下的债务，以及卡塔琳娜·博尔内斯向面包商抵押画作的事。核对账页的场景为虚构。'
         relic: "一枚珍珠耳环"
         relic_desc: "一颗小珍珠，是他常画的那种。"
         points:
-          p1: "像他一样看光（画家或好奇的眼睛更合适）"
-          p2: "做一位耐心上门的客人"
-          p3: "不让他的画散得到处都是（古董商、会计或固执的人更合适）"
+          p1: '找出能辨认一幅画的细节'
+          p2: '向记得画的人核对描述'
+          p3: '誊账时分清抵押与出售'
+        vignettes:
+          motif: '账房记得一幅画里的光，却说不准是哪幅。你问画里的人在做什么。他把动作记在画名旁，后来查的人便有两条线索。'
+          pledge: '有人把抵押的画抄进了已出售一栏。你翻到早一页，请账房分别说清两个词在账上记的是什么。'
+          cover: '账房去屋子另一头找画的描述，你替他扶着账本。回来时，该核对的那一页还翻着。'
 text:
   en:
     name: Johannes Vermeer
@@ -45,3 +58,40 @@ text:
   zh:
     name: 约翰内斯·维米尔
     text: 荷兰画家，1632 年生，1675 年去世，代尔夫特人。他画光线柔和的静谧室内场景，如《戴珍珠耳环的少女》，留存的作品只有约四十件，去世时家人负债。
+hook: {en: 'A painting can stay after the painter.', zh: '画留下来，账也留下来'}
+facts:
+  delft_records:
+    date: '1675'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [vermeer_delft_primary, vermeer_delft_inventory]
+    text:
+      en: 'Vermeer died in Delft in 1675. The Rijksmuseum''s exhibition documents the debts his household faced and the paintings Catharina Bolnes pledged to the baker. The ledger scene is invented.'
+      zh: '维米尔 1675 年在代尔夫特去世。阿姆斯特丹国立博物馆的展览记录了他家留下的债务，以及卡塔琳娜·博尔内斯向面包商抵押画作的事。核对账页的场景为虚构。'
+bystanders:
+  vermeer_delft_reader:
+    invented: true
+    text: {en: 'An invented clerk trying to identify pictures in a ledger.', zh: '一位虚构的账房，想查明账页写的是哪些画。'}
+wiki:
+  refs:
+    vermeer_delft_primary:
+      order: 177
+      status: checked
+      text:
+        en: 'Rijksmuseum, Vermeer exhibition timeline and account of his household debts. https://www.rijksmuseum.nl/en/whats-on/exhibitions/past/vermeer/vermeer-exhibition-text'
+        zh: '阿姆斯特丹国立博物馆，维米尔展览年表及身后债务记录。https://www.rijksmuseum.nl/en/whats-on/exhibitions/past/vermeer/vermeer-exhibition-text'
+    vermeer_delft_inventory:
+      order: 187
+      status: checked
+      text:
+        en: 'Erfgoed Delft, images of the 1676 inventory of Vermeer’s estate. https://erfgoeddelft.nl/verhalen/johannes-vermeer'
+        zh: '代尔夫特市档案，1676 年维米尔遗产清册影像。https://erfgoeddelft.nl/verhalen/johannes-vermeer'
+self_check:
+  quote_line: '账房记得一幅画里的光，却说不准是哪幅。'
+  fact: delft_records
+  regret_choice: '略过「找出能辨认一幅画的细节」，这处细节便留给下一位核对。'
+  bookend: '从「画留下来，账也留下来」开始，以员工留下的观察或更正收尾。'
+  share_line: '画留下来，账也留下来'
+  share_number: '1675'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

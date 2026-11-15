@@ -10,34 +10,47 @@ events:
     tier: 2
     era: scutari_1855
     channels: {E: 3, G: 2, L: 2}
+    refs: [nightingale_army_report]
     scene:
       points:
         - {id: p1, kind: care, req: {"job": ["nurse", "midwife", "physician", "paramedic", "doctor"]}}
         - {id: p2, kind: trust, req: {"trait":["kind","attached"]}}
         - {id: p3, kind: endure, req: {"stat": {"constitution": 6}}}
+      vignettes:
+        - {id: totals, traits: [methodical, vigil]}
+        - {id: name, traits: [kind, patient]}
+        - {id: fold}
     text:
       en:
         name: Nursing as a discipline of data and care
         place: Scutari, Ottoman Empire
         figure: Florence Nightingale
-        story: At the Scutari hospital Nightingale cleans the wards, counts the deaths, and turns the counts into a case for reform.
+        story: 'Florence Nightingale''s 1858 report on army health drew on the recent war and included hospital statistics. This 1855 Scutari scene imagines a clerk making a ward return; it is not the creation of the eventual report.'
         relic: A small oil lamp
         relic_desc: The lamp from her night rounds.
         points:
           p1: "Know the ward work (medical staff)"
           p2: "Keep the men calm"
           p3: "Last the long night shifts"
+        vignettes:
+          totals: 'A fictional clerk adds the transfer list to the admissions total. You ask which names are newly admitted. They leave the transfers in their own column before sending the return.'
+          name: 'The clerk cannot hear a name over the room''s noise. You wait beside the person who gave it until they can say it again. The next copy spells it as they asked.'
+          fold: 'You set the ward papers in the order the clerk calls out. The sheet that used to appear after the total now arrives before it.'
       zh:
         name: 把护理做成用数据和关怀的学科
         place: 奥斯曼斯库塔里
         figure: 弗洛伦斯·南丁格尔
-        story: 在斯库塔里的医院，南丁格尔打扫病房、清点死亡数字，又把数字变成改革的理由。
+        story: '弗洛伦斯·南丁格尔 1858 年的军队卫生报告依据战时经验，收入医院统计。本卡在 1855 年斯库塔里虚构一个病房报表的誊写场景。'
         relic: 一盏小油灯
         relic_desc: 她夜里查房时用的那盏灯。
         points:
           p1: "懂病房的活儿（医护人员）"
           p2: "安抚伤员"
           p3: "撑过漫长的夜班"
+        vignettes:
+          totals: '虚构书记员把转房名单也算进新收治人数。你问哪些名字是刚入院的。他另留一栏记转房，再把报表送出去。'
+          name: '书记员隔着嘈杂声没听清名字。你在报名字的人身旁等他再说一遍，下一份抄件就照他给的拼法写。'
+          fold: '书记员念哪一处，你就按顺序放哪一页。原来夹在合计后面那张，这次先送到了他手里。'
 text:
   en:
     name: Florence Nightingale
@@ -96,6 +109,12 @@ wiki:
           name: 斯库塔里的卫生委员会
           text: 1855 年 3 月初，英国派出的卫生委员会到达斯库塔里，冲洗了下水道，让病房通了风。此后几个月医院里的死亡数大幅下降。游戏里员工能帮着让这项工作提前，只在这条分支里成立。
   refs:
+    nightingale_army_report:
+      order: 172
+      status: checked
+      text:
+        en: 'Florence Nightingale, Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army, 1858. Wellcome Collection. https://wellcomecollection.org/works/jxwtskzc'
+        zh: '弗洛伦斯·南丁格尔，军队卫生、效率与医院管理报告，1858 年，韦尔科姆馆藏。https://wellcomecollection.org/works/jxwtskzc'
     nightingale1858:
       order: 3
       status: pending

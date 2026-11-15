@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {E: 3, G: 2}
     regret: true
+    refs: [kafka_kierling_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["translator","archivist"]},{"trait":["skeptical","curious"]}]}}
         - {id: p2, kind: care, req: {"trait":["calm","attached","faithful"]}}
         - {id: p3, kind: hold, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: sound, traits: [artistic, curious]}
+        - {id: mark, traits: [methodical, vigil]}
+        - {id: packet}
     text:
       en:
         name: "Proofs in the sanatorium"
         place: "Kierling"
         figure: "Franz Kafka"
-        story: "Kafka, dying of tuberculosis in a small sanatorium, corrects the proofs of his last stories. He had asked a friend to burn the rest of his work."
+        story: 'The 1924 edition of A Hunger Artist contains four stories, including Josephine the Singer, or the Mouse Folk. This Kierling card imagines a messenger checking a set of proofs.'
         relic: "A page of proofs"
         relic_desc: "A galley proof with small corrections in pencil."
         points:
-          p1: "Read the proofs with him (a translator, a librarian or a curious mind helps)"
-          p2: "Be at his side with Dora"
-          p3: "Ease the pain of speaking"
+          p1: 'Find the story that belongs with the contents entry'
+          p2: 'Place a correction beside the right line'
+          p3: 'Pack the named proofs so their order is clear'
+        vignettes:
+          sound: 'The messenger reads the singer''s title aloud and asks why anyone would doubt what they hear. You have them read the same line to two listeners. The answers differ before you say a word.'
+          mark: 'A proof mark sits between two lines. You ask the messenger which line they would change if all they had was this page. They move the mark before it can be taken the wrong way.'
+          packet: 'You straighten the loose sheets while the messenger checks the contents. The last story goes in its own fold, with the page number showing.'
       zh:
         name: "疗养院里的校样"
         place: "基尔灵"
         figure: "弗朗茨·卡夫卡"
-        story: "卡夫卡因肺结核在一家小疗养院里弥留，仍在校对最后几篇小说的清样。他曾请朋友把其余的作品烧掉。"
+        story: '卡夫卡 1924 年的《饥饿艺术家》收四篇小说，包括《女歌手约瑟芬，或鼠族》。本卡在基尔灵虚构一位送稿人核对校样。'
         relic: "一页校样"
         relic_desc: "一页印刷校样，上面有铅笔改的小字。"
         points:
-          p1: "陪他一起读校样（译者、图书管理员或好奇的人更合适）"
-          p2: "和多拉一起守在他身边"
-          p3: "让他说话时少一点痛"
+          p1: '把目录上的篇名对回正文'
+          p2: '把更正的记号放到对应行旁'
+          p3: '收好写了篇名的校样，留清楚顺序'
+        vignettes:
+          sound: '送稿人念出女歌手的篇名，问听见了还有什么可怀疑。你让他把同一句念给两个人听。你还没说话，两人的回答已经不一样。'
+          mark: '校样上一处记号落在两行之间。你问送稿人，如果手头只有这张纸，他会改哪行。他先把记号移准，免得带回去被人改错。'
+          packet: '送稿人查目录时，你理平散页。最后一篇另折进去，页码露在外面。'
 text:
   en:
     name: Franz Kafka
@@ -45,3 +58,34 @@ text:
   zh:
     name: 弗朗茨·卡夫卡
     text: 用德语写作的布拉格作家，1883 年生，1924 年去世。他在保险公司工作，大部分作品没有发表，并请朋友烧掉。马克斯·布罗德出版了《审判》和《城堡》。他在基尔林的疗养院死于肺结核。
+hook: {en: 'Can the next reader see the small change?', zh: '下一位读者能看出改过吗'}
+facts:
+  four_stories:
+    date: '1924'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [kafka_kierling_primary]
+    text:
+      en: 'The 1924 edition of A Hunger Artist contains four stories, including Josephine the Singer, or the Mouse Folk. This Kierling card imagines a messenger checking a set of proofs.'
+      zh: '卡夫卡 1924 年的《饥饿艺术家》收四篇小说，包括《女歌手约瑟芬，或鼠族》。本卡在基尔灵虚构一位送稿人核对校样。'
+bystanders:
+  kafka_kierling_reader:
+    invented: true
+    text: {en: 'An invented messenger collecting proof sheets.', zh: '一位虚构的送稿人，来收校样。'}
+wiki:
+  refs:
+    kafka_kierling_primary:
+      order: 193
+      status: checked
+      text:
+        en: 'Franz Kafka, Ein Hungerkünstler: Vier Geschichten, Berlin, 1924, first-edition scan and transcription. https://de.wikisource.org/wiki/Ein_Hungerk%C3%BCnstler_(Sammelband)'
+        zh: 'Franz Kafka, Ein Hungerkünstler: Vier Geschichten, Berlin, 1924, first-edition scan and transcription. https://de.wikisource.org/wiki/Ein_Hungerk%C3%BCnstler_(Sammelband)'
+self_check:
+  quote_line: '送稿人念出女歌手的篇名，问听见了还有什么可怀疑。'
+  fact: four_stories
+  regret_choice: '略过「把目录上的篇名对回正文」，这处细节便留给下一位核对。'
+  bookend: '从「下一位读者能看出改过吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '下一位读者能看出改过吗'
+  share_number: '1924'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 2
     channels: {V: 1}
+    refs: [morse_washington_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: hold, req: {"any":[{"job":["electrician"]},{"trait":["bold"]}]}}
         - {id: p3, kind: persuade, req: {"trait":["scholarly","cosmopolitan","charismatic"]}}
+      vignettes:
+        - {id: gap, traits: [methodical, vigil]}
+        - {id: credit, traits: [curious, bold]}
+        - {id: readback}
     text:
       en:
         name: What hath God wrought
         place: Washington
         figure: Samuel Morse
-        story: Samuel Morse taps out a message over forty miles of wire to Baltimore, and the telegraph is open.
+        story: 'On 24 May 1844 Morse sent a message from the U.S. Capitol to Alfred Vail in Baltimore. A surviving paper tape records the signals; Morse credits Annie Ellsworth with suggesting the wording. The report scene uses an invented practice message.'
         relic: A telegraph key
         relic_desc: A brass lever worn bright where a thumb rested.
         points:
-          p1: "Work out the dot and dash code"
-          p2: "Connect the wire"
-          p3: "Persuade the congressmen"
+          p1: 'Pick out the spaces on the practice tape'
+          p2: 'Keep the message with its sender''s entry'
+          p3: 'Check the received text against the original wording'
+        vignettes:
+          gap: 'You see the operator start a new word at the wrong gap. Reading the strip back together, you find the break where the next person will expect it.'
+          credit: 'You ask whose words the operator has put on the strip. The operator adds the sender to the ledger, and you leave space for the person who supplied the words.'
+          readback: 'The operator hands you a strip without the intended text. You read it back and compare it with the sealed slip only after finishing.'
       zh:
         name: 上帝做了何等的事
         place: 华盛顿
         figure: 塞缪尔·莫尔斯
-        story: 塞缪尔·莫尔斯通过四十英里长的电线向巴尔的摩拍出一条消息，电报通了。
+        story: '1844 年 5 月 24 日，莫尔斯从美国国会大厦向巴尔的摩的阿尔弗雷德·韦尔发送电报。留存的纸带记录了信号；莫尔斯注明文句由安妮·埃尔斯沃思建议。报告里的练习电文为虚构。'
         relic: 一只电报键
         relic_desc: 一根黄铜杠杆，拇指放的地方磨亮了。
         points:
-          p1: "编出点划码"
-          p2: "接通电线"
-          p3: "说服议员"
+          p1: '认出练习纸带上各处分隔'
+          p2: '把电文和发报人的记录放在一起'
+          p3: '把收文同原来的字句核对'
+        vignettes:
+          gap: '报务员从一道短空隙另起了一个词。你和他把纸带倒回来读，终于找到下一个人读来也合适的分隔。'
+          credit: '你问打在纸带上的话是谁想的。报务员在簿上记了发报人，你另外留了一格给先提这句话的人。'
+          readback: '报务员把纸带递给你，没告诉你预定的文句。你先完整读一遍，末了才打开纸条核对。'
 text:
   en:
     name: Samuel Morse
@@ -44,3 +57,34 @@ text:
   zh:
     name: 塞缪尔·莫尔斯
     text: 美国画家与发明家，1791 年生，1872 年去世。他与阿尔弗雷德·维尔合作发展电报机和点划电码。1844 年 5 月 24 日，他从华盛顿向巴尔的摩发出了“上帝创造了何等奇迹”。
+hook: {en: 'Can the same message survive the journey?', zh: '隔着城，字还读得通吗'}
+facts:
+  telegraph_tape:
+    date: '1844-05-24'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [morse_washington_primary]
+    text:
+      en: 'On 24 May 1844 Morse sent a message from the U.S. Capitol to Alfred Vail in Baltimore. A surviving paper tape records the signals; Morse credits Annie Ellsworth with suggesting the wording. The report scene uses an invented practice message.'
+      zh: '1844 年 5 月 24 日，莫尔斯从美国国会大厦向巴尔的摩的阿尔弗雷德·韦尔发送电报。留存的纸带记录了信号；莫尔斯注明文句由安妮·埃尔斯沃思建议。报告里的练习电文为虚构。'
+bystanders:
+  morse_washington_reader:
+    invented: true
+    text: {en: 'An invented operator checking a practice strip.', zh: '一位虚构的报务员，正在核对练习纸带。'}
+wiki:
+  refs:
+    morse_washington_primary:
+      order: 157
+      status: checked
+      text:
+        en: 'Samuel F. B. Morse Papers, First Telegraph Message, 24 May 1844, Library of Congress. https://www.loc.gov/resource/mcc.019/?st=gallery'
+        zh: 'Samuel F. B. Morse Papers, First Telegraph Message, 24 May 1844, Library of Congress. https://www.loc.gov/resource/mcc.019/?st=gallery'
+self_check:
+  quote_line: '报务员从一道短空隙另起了一个词。'
+  fact: telegraph_tape
+  regret_choice: '略过「认出练习纸带上各处分隔」，这处细节便留给下一位核对。'
+  bookend: '从「隔着城，字还读得通吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '隔着城，字还读得通吗'
+  share_number: '1844-05-24'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

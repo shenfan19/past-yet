@@ -11,34 +11,47 @@ events:
     era: wegener_greenland_1930
     channels: {C: 3, L: 3}
     regret: true
+    refs: [wegener_eismitte_archive]
     scene:
       points:
         - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p2, kind: notice, req: {"trait":["curious","skeptical","wanderer"]}}
         - {id: p3, kind: hold, redeem: true, req: {"provides":"strength"}}
+      vignettes:
+        - {id: names, traits: [kind, cosmopolitan]}
+        - {id: count, traits: [methodical, vigil]}
+        - {id: note}
     text:
       en:
         name: "Across the ice"
         place: "Greenland ice cap"
         figure: "Alfred Wegener"
-        story: "Alfred Wegener, whose drifting continents are still doubted, crosses the Greenland ice with supplies for a winter station, and dies on the way back."
+        story: 'Wegener reached the inland station Eismitte in 1930 with supplies and died on the return journey. The account at the Alfred Wegener Institute preserves the expedition''s sequence and identifies his Greenlandic companion Rasmus Willumsen. The inventory scene is invented.'
         relic: "A sledge strap"
         relic_desc: "A frozen leather strap from a loaded sledge."
         points:
           p1: "Keep pace in the cold"
           p2: "Notice the weather turning"
           p3: "Haul the sledge to the end of the march"
+        vignettes:
+          names: 'A fictional clerk lists the expedition under only one surname. You ask who handed over the load. They leave a line for the other people involved instead of recording just the best-known name.'
+          count: 'The clerk has made the first count look like the quantity delivered. You ask them to mark which station each figure came from. The two totals no longer sit under the same heading.'
+          note: 'You copy the destination onto a second slip while the clerk ties up the empty ledger. The next person can still tell which station the entries concern.'
       zh:
         name: "越过冰盖"
         place: "格陵兰冰盖"
         figure: "阿尔弗雷德·魏格纳"
-        story: "大陆漂移说仍被人怀疑，魏格纳带着补给穿过格陵兰冰盖，去给一处越冬站送东西，在回程的路上去世。"
+        story: '1930 年，魏格纳运送补给抵达冰盖内陆站艾斯米特，在回程中去世。阿尔弗雷德·魏格纳研究所的档案说明记下了行程，并指出格陵兰同行者拉斯穆斯·威卢姆森的姓名。清点场景为虚构。'
         relic: "一条雪橇皮带"
         relic_desc: "一条冻硬的皮带，系过满载的雪橇。"
         points:
           p1: "在严寒里跟上队伍"
           p2: "留意天气正在变"
           p3: "把雪橇拉到行程的尽头"
+        vignettes:
+          names: '虚构的办事员只在远征一栏写下一个姓。你问是谁把那份东西交到站上的。他给其他参与的人另留了一行，没有只记最著名的姓名。'
+          count: '办事员把出发的数写得像到站的数。你请他在每项数字旁标上是哪一站的记录，两项合计便不再挤在同一个栏头下。'
+          note: '办事员收拢账本时，你把目的地另抄一张。后来的人仍能看出这些条目记的是哪一站。'
 text:
   en:
     name: Alfred Wegener
@@ -99,6 +112,12 @@ wiki:
           name: 从艾斯米特返回的路
           text: 魏格纳 1930 年 11 月 1 日和拉斯穆斯·维卢姆森从艾斯米特出发，被认为在 11 月 16 日前后去世。搜寻队 1931 年 5 月 12 日找到他的墓。游戏里员工能帮队伍度过这几周，只在这条分支里成立。
   refs:
+    wegener_eismitte_archive:
+      order: 171
+      status: checked
+      text:
+        en: 'Alfred Wegener Institute, archive-based account of the 1930 Greenland expedition and Eismitte, with information about Rasmus Willumsen. https://www.awi.de/en/about-us/organisation/alfred-wegener.html'
+        zh: '阿尔弗雷德·魏格纳研究所，1930 年格陵兰远征和艾斯米特站相关记录，含拉斯穆斯·威卢姆森。https://www.awi.de/en/about-us/organisation/alfred-wegener.html'
     wegener_sources:
       order: 30
       status: checked

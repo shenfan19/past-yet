@@ -9,34 +9,47 @@ events:
     field: thought
     tier: 3
     channels: {V: 2, L: 1}
+    refs: [xuanzang_changan_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["handy","quiet","wanderer"]},{"stat":{"wit":7}}]}}
         - {id: p2, kind: hold, req: {"job":["translator","archivist"]}}
         - {id: p3, kind: persuade, req: {"trait":["glib","scholarly","ambitious"]}}
+      vignettes:
+        - {id: totals, traits: [methodical, scholarly]}
+        - {id: names, traits: [curious, cosmopolitan]}
+        - {id: space}
     text:
       en:
         name: "Six hundred texts from the west"
         place: "Chang'an"
         figure: "Xuanzang"
-        story: "Xuanzang returns to Chang'an from India with more than six hundred Buddhist texts, and with court support begins a translation hall to put them into Chinese."
+        story: 'Xuanzang''s early biography places his return to the capital in 645 and lists 657 works carried in 520 bundles. The receiving-table scene is invented.'
         relic: "A palm leaf from a sutra"
         relic_desc: "A palm leaf written in Sanskrit, its edges gone dark."
         points:
-          p1: "Proofread the Sanskrit and Chinese pairs"
-          p2: "Keep the days and nights of the translation hall"
-          p3: "Ask the office for paper and ink for the hall"
+          p1: 'Check two inventory numbers against their units'
+          p2: 'Keep the piles in order through the handoff'
+          p3: 'Help the clerk get room and paper to finish the list'
+        vignettes:
+          totals: 'The clerk has carried the bundle total into the column for works. You point to the unit before they seal the new copy. The discrepancy disappears without a single bundle changing hands.'
+          names: 'Two slips carry titles that look alike to you. The clerk reads them back and has you copy the distinguishing characters before the bundles are carried away.'
+          space: 'You clear room for the clerk to lay out one bundle at a time. The person carrying the last stack can set it down without covering the checklist.'
       zh:
         name: "从西域带回的六百多部经"
         place: "长安"
         figure: "玄奘"
-        story: "玄奘从印度回到长安，带回六百多部佛经，在朝廷的支持下开始组织译场，把它们译成汉文。"
+        story: '《大唐大慈恩寺三藏法师传》记玄奘于 645 年返京，并列出所携典籍共 520 夹、657 部。本卡的接收登记场景为虚构。'
         relic: "一片贝叶经"
         relic_desc: "一片写着梵文的贝叶，边缘已经发黑。"
         points:
-          p1: "校对梵汉对译"
-          p2: "守着译场的昼夜"
-          p3: "替译场向官署要纸墨"
+          p1: '把两项数各自对回单位'
+          p2: '交接时别让东西串了堆'
+          p3: '给书吏腾出桌面和纸，写完清单'
+        vignettes:
+          totals: '书吏把夹数抄进了部数那栏。封好新抄之前，你指明两个单位。没有一夹需要挪动，两份数却对上了。'
+          names: '你看着两个签上的名目很像。书吏念给你听，趁经夹还没搬走，请你把不同的几个字另抄下来。'
+          space: '你给书吏腾出地方，一次只摊开一夹。搬来最后一摞的人终于能搁下东西，不压住清单。'
 text:
   en:
     name: "Xuanzang"
@@ -44,3 +57,34 @@ text:
   zh:
     name: "玄奘"
     text: "唐代僧人，约 602 年生，664 年去世。629 年前后西行求法，在印度学习多年，645 年带着六百多部佛经回到长安，其后主持译经，译出七十多部。"
+hook: {en: 'A bundle and a work are different counts.', zh: '一夹和一部怎么数'}
+facts:
+  return:
+    date: '645'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [xuanzang_changan_primary]
+    text:
+      en: 'Xuanzang''s early biography places his return to the capital in 645 and lists 657 works carried in 520 bundles. The receiving-table scene is invented.'
+      zh: '《大唐大慈恩寺三藏法师传》记玄奘于 645 年返京，并列出所携典籍共 520 夹、657 部。本卡的接收登记场景为虚构。'
+bystanders:
+  xuanzang_changan_reader:
+    invented: true
+    text: {en: 'An invented clerk checking two kinds of inventory totals.', zh: '一位虚构的书吏，正在核对两种计数。'}
+wiki:
+  refs:
+    xuanzang_changan_primary:
+      order: 155
+      status: checked
+      text:
+        en: 'Huili and Yancong, Biography of the Tripitaka Master of the Great Ci''en Monastery, vol. 6. https://zh.wikisource.org/zh/大唐大慈恩寺三藏法師傳/卷06'
+        zh: 'Huili and Yancong, Biography of the Tripitaka Master of the Great Ci''en Monastery, vol. 6. https://zh.wikisource.org/zh/大唐大慈恩寺三藏法師傳/卷06'
+self_check:
+  quote_line: '书吏把夹数抄进了部数那栏。'
+  fact: return
+  regret_choice: '略过「把两项数各自对回单位」，这处细节便留给下一位核对。'
+  bookend: '从「一夹和一部怎么数」开始，以员工留下的观察或更正收尾。'
+  share_line: '一夹和一部怎么数'
+  share_number: '645'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

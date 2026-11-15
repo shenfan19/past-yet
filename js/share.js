@@ -18,6 +18,18 @@ export function createShare(X) {
     const R = d.report;
     const who = staffName(D, d.spec.staffId);
     const index = ctx.S().dispatches.indexOf(d);
+    if (d.evacuation) return {
+      name: d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name,
+      outcome: U.report.evacuated,
+      text: [U.report.evacuation_text.replace('{day}', String(d.evacuation.day))],
+      points: [], hook: hookOf(index),
+    };
+    if (R.journey?.accepted === false) return {
+      name: d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name,
+      outcome: U.report.participation.title_missed,
+      text: [U.report.participation.share_missed.replace('{staff}', who)],
+      points: [], hook: hookOf(index),
+    };
     if (d.light) {
       const c = T.catalog[d.eraId];
       const ev = D.get('catalog.events').find((x) => x.id === d.eraId);

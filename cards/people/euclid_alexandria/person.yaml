@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {V: 1}
+    refs: [euclid_alexandria_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"job":["archivist","teacher"]}}
         - {id: p3, kind: persuade, req: {"job":["teacher"]}}
+      vignettes:
+        - {id: intersection, traits: [handy, artistic]}
+        - {id: reason, traits: [skeptical, scholarly]}
+        - {id: clean}
     text:
       en:
         name: Geometry from a few axioms
         place: Alexandria
         figure: Euclid
-        story: Euclid gathers the geometry of his time into the Elements, building everything from a few plain starting points.
+        story: 'The first proposition of Euclid''s Elements constructs an equilateral triangle on a given line segment. Alexandria around 300 BCE is the setting for an invented lesson.'
         relic: A bronze compass
         relic_desc: Two arms and a pivot, enough to draw every figure in the book.
         points:
-          p1: "Follow the proofs of the first book"
-          p2: "Copy the propositions one by one"
-          p3: "Explain to an official that geometry has no shortcut"
+          p1: 'Follow the construction from the given segment'
+          p2: 'Keep the two centres distinct in the copy'
+          p3: 'Explain why the finished triangle has equal sides'
+        vignettes:
+          intersection: 'The learner puts the third point where it looks right. You draw the second arc. When the arcs cross, they can see precisely where the point belongs.'
+          reason: 'You ask why the sides should be equal before the learner reaches for a rule. They look again at the centers of the circles and trace each side back to a radius.'
+          clean: 'You help copy the finished drawing without the trial marks. The learner puts back the arcs you nearly erased, because the next reader will need to see where the point came from.'
       zh:
         name: 从几条公理推出几何
         place: 亚历山大
         figure: 欧几里得
-        story: 欧几里得把当时的几何收进《几何原本》，一切都从几个朴素的起点推出来。
+        story: '欧几里得《几何原本》第一卷第一命题在一条给定线段上作等边三角形。约公元前 300 年的亚历山大是本篇虚构课业的背景。'
         relic: 一把青铜圆规
         relic_desc: 两条臂和一个轴，足够画出书里的每一个图形。
         points:
-          p1: "跟上第一卷的证明"
-          p2: "逐条抄写命题"
-          p3: "向官员解释几何没有捷径"
+          p1: '从给定线段跟着作图'
+          p2: '誊图时分清两个圆心'
+          p3: '说清作出的三角形为什么三边相等'
+        vignettes:
+          intersection: '学生凭眼力点出第三点。你添画第二道弧，两弧一交，他就看得出那个点该落在哪儿。'
+          reason: '学生伸手摸尺以前，你先问三边为何相等。他回头看两个圆心，沿着每一边找回一段半径。'
+          clean: '你帮忙清抄图，把试画的痕迹去掉。学生补回你差点擦掉的圆弧，下一个人得看见那个点怎么来的。'
 text:
   en:
     name: Euclid
@@ -44,3 +57,34 @@ text:
   zh:
     name: 欧几里得
     text: 约公元前 300 年在亚历山大工作的希腊数学家。他的《几何原本》从定义、公设和证明出发构建几何，两千多年里一直是标准教材。他的生平所知甚少。
+hook: {en: 'A third point from two circles.', zh: '两道圆弧找出第三点'}
+facts:
+  first_proposition:
+    date: '-300'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [euclid_alexandria_primary]
+    text:
+      en: 'The first proposition of Euclid''s Elements constructs an equilateral triangle on a given line segment. Alexandria around 300 BCE is the setting for an invented lesson.'
+      zh: '欧几里得《几何原本》第一卷第一命题在一条给定线段上作等边三角形。约公元前 300 年的亚历山大是本篇虚构课业的背景。'
+bystanders:
+  euclid_alexandria_reader:
+    invented: true
+    text: {en: 'An invented learner with a half-finished drawing.', zh: '一位虚构的学生，图只画了一半。'}
+wiki:
+  refs:
+    euclid_alexandria_primary:
+      order: 141
+      status: checked
+      text:
+        en: 'Euclid, Elements, book I, proposition 1. Greek manuscript and Heath''s translation, Clay Mathematics Institute. https://www.claymath.org/library/historical/euclid/index.html'
+        zh: 'Euclid, Elements, book I, proposition 1. Greek manuscript and Heath''s translation, Clay Mathematics Institute. https://www.claymath.org/library/historical/euclid/index.html'
+self_check:
+  quote_line: '学生凭眼力点出第三点。'
+  fact: first_proposition
+  regret_choice: '略过「从给定线段跟着作图」，这处细节便留给下一位核对。'
+  bookend: '从「两道圆弧找出第三点」开始，以员工留下的观察或更正收尾。'
+  share_line: '两道圆弧找出第三点'
+  share_number: '-300'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

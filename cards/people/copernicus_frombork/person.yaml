@@ -9,34 +9,47 @@ events:
     field: science
     tier: 3
     channels: {C: 2, V: 2}
+    refs: [copernicus_frombork_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: hold, req: {"provides":"vigil"}}
         - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+      vignettes:
+        - {id: walk, traits: [curious, bold]}
+        - {id: frame, traits: [methodical, skeptical]}
+        - {id: diagram}
     text:
       en:
         name: The Sun at the centre
         place: Frombork, Poland
         figure: Nicolaus Copernicus
-        story: Copernicus publishes a model in which the Earth goes round the Sun.
+        story: 'In 1543 De revolutionibus was printed in Nuremberg with an account in which Earth rotates and orbits the Sun. Frombork is the setting for the game''s invented reading scene.'
         relic: A brass quadrant
         relic_desc: A quarter circle for measuring the height of stars.
         points:
-          p1: "Check the order of the heavens"
-          p2: "Keep the manuscript safe"
-          p3: "Endure the winter nights in the tower"
+          p1: 'Identify where the observer is standing'
+          p2: 'Keep the two diagrams separate'
+          p3: 'Follow the changing viewpoint through a full turn'
+        vignettes:
+          walk: 'You ask the reader to keep looking at a point across the room while walking around a stool. He stops halfway, surprised by how far the stool has seemed to move against the wall.'
+          frame: 'You put the labels for observer and observed on separate scraps. The reader turns over one scrap at a time while he compares two possible accounts of the same apparent motion.'
+          diagram: 'You turn the page so the reader can see the orbit in full. He holds his finger on Earth while you follow the direction that changes during the year.'
       zh:
         name: 太阳在中心
         place: 波兰弗龙堡
         figure: 哥白尼
-        story: 哥白尼发表了一个地球绕着太阳转的模型。
+        story: '《天体运行论》于 1543 年在纽伦堡印行，书中论述地球自转并绕太阳运行。弗龙堡的阅读场景为游戏虚构。'
         relic: 一个黄铜象限仪
         relic_desc: 四分之一圆，用来量星星的高度。
         points:
-          p1: "核对天体的次序"
-          p2: "守住手稿"
-          p3: "在塔楼上熬过冬夜"
+          p1: '找出观察者站在哪里'
+          p2: '把两张不同的图分开放'
+          p3: '顺着转动走完一圈，看视线怎样变'
+        vignettes:
+          walk: '你请读者绕着凳子走，眼睛一直看着对面墙上的一点。他走到一半停住了，没想到凳子对着墙看起来挪了那么远。'
+          frame: '你把「观察者」和「被观察者」写在两张纸上。读者一张一张翻过去，比较同一个视运动的两种解释。'
+          diagram: '你把书页转过去，让读者看见整个轨道。他按住地球的位置，你沿着图找一年中视线方向怎样变化。'
 text:
   en:
     name: Nicolaus Copernicus
@@ -44,3 +57,34 @@ text:
   zh:
     name: 哥白尼
     text: 波兰天文学家与教士，1473 年生，1543 年去世，在弗龙堡工作。他的《天体运行论》于 1543 年印行，把太阳放在行星运行的中心。据说他在临终前才拿到第一本印好的书。
+hook: {en: 'Try looking from the moving Earth.', zh: '站在会动的地球上看'}
+facts:
+  revolutions:
+    date: '1543'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [copernicus_frombork_primary]
+    text:
+      en: 'In 1543 De revolutionibus was printed in Nuremberg with an account in which Earth rotates and orbits the Sun. Frombork is the setting for the game''s invented reading scene.'
+      zh: '《天体运行论》于 1543 年在纽伦堡印行，书中论述地球自转并绕太阳运行。弗龙堡的阅读场景为游戏虚构。'
+bystanders:
+  copernicus_frombork_reader:
+    invented: true
+    text: {en: 'An invented reader trying to follow the diagrams.', zh: '一位虚构的读者，正在试着看懂图解。'}
+wiki:
+  refs:
+    copernicus_frombork_primary:
+      order: 122
+      status: checked
+      text:
+        en: 'Nicolaus Copernicus, De revolutionibus orbium coelestium, Nuremberg, 1543. Library of Congress facsimile. https://www.loc.gov/exhibits/exploring-the-early-americas/documenting-new-knowledge.html'
+        zh: 'Nicolaus Copernicus, De revolutionibus orbium coelestium, Nuremberg, 1543. Library of Congress facsimile. https://www.loc.gov/exhibits/exploring-the-early-americas/documenting-new-knowledge.html'
+self_check:
+  quote_line: '你请读者绕着凳子走，眼睛一直看着对面墙上的一点。'
+  fact: revolutions
+  regret_choice: '略过「找出观察者站在哪里」，这处细节便留给下一位核对。'
+  bookend: '从「站在会动的地球上看」开始，以员工留下的观察或更正收尾。'
+  share_line: '站在会动的地球上看'
+  share_number: '1543'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

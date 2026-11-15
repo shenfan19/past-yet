@@ -318,7 +318,7 @@ equations:
   traveller_mind:
     priority: 40
     dynamics:
-      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * scott.rapport) * step"
+      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * scott.rapport) * office_step"
       traveler.attachment: "traveler.attachment + (attach_bedside * act_bedside + attach_sick * sick_density * arrived + attach_talk * act_talk * scott.rapport) * traveler.kindness * step"
       traveler.satisfaction: "traveler.satisfaction + arrived * (sat_treat * treated_flow + sat_protect * protect_flow - sat_death * death_flow - sat_fatigue * max(0, traveler.fatigue - 0.7) * step)"
       traveler.appeal_urge: "max(0, traveler.appeal_urge - appeal_decay * step)"

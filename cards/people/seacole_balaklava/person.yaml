@@ -11,34 +11,47 @@ events:
     era: seacole_balaklava_1855
     channels: {E: 3, L: 2, S: 2}
     regret: true
+    refs: [seacole_memoir_hotel]
     scene:
       points:
         - {id: p1, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
         - {id: p2, kind: persuade, req: {"trait":["streetwise","cosmopolitan","charismatic","skeptical"]}}
         - {id: p3, kind: endure, redeem: true, req: {"provides":"clean_water"}}
+      vignettes:
+        - {id: meal, traits: [kind, patient]}
+        - {id: counter, traits: [streetwise, methodical]}
+        - {id: shelf}
     text:
       en:
         name: "The inn she found her own way to"
         place: "Balaklava"
         figure: "Mary Seacole"
-        story: "Refused when she asks to nurse for the army, Mary Seacole pays her own way to the Crimea, opens an inn behind the camp, and tends patients with dysentery and cholera."
+        story: 'Mary Seacole''s 1857 memoir describes the British Hotel she ran with Thomas Day near Balaklava, the goods it sold and the people who came there in 1855. The visit to the counter is invented.'
         relic: "A medicine chest"
         relic_desc: "An old wooden chest with compartments for herbs and gauze."
         points:
           p1: "Tend the dysentery and cholera patients"
           p2: "Ask the quartermaster for a chest of medicine"
           p3: "Get through a whole summer"
+        vignettes:
+          meal: 'A fictional customer has been standing so long that they cannot explain what they came for. You find a seat first. By the time the attendant returns, the customer can ask for supper in their own words.'
+          counter: 'Two customers repeat the same order, each thinking the other has not been heard. You ask the attendant to read back what they wrote. One tray turns out to be enough.'
+          shelf: 'The attendant calls for room at the end of the counter. You move two empty plates and put a stool where a waiting guest can sit without holding up the next customer.'
       zh:
         name: "自己找路去的战地客栈"
         place: "巴拉克拉瓦"
         figure: "玛丽·西科尔"
-        story: "玛丽·西科尔申请当军队的护士被拒绝，就自己出钱去了克里米亚，在营地后方开了一家客栈，照看痢疾和霍乱的病人。"
+        story: '玛丽·西科尔 1857 年的回忆录记有她同托马斯·戴在巴拉克拉瓦附近经营的英式旅店、卖的东西和 1855 年来过的人。柜台边的这一幕为虚构。'
         relic: "一只药箱"
         relic_desc: "一只旧木药箱，里面分格放着草药和纱布。"
         points:
           p1: "照看痢疾和霍乱病人"
           p2: "向军需官要一箱药"
           p3: "撑过一整个夏天"
+        vignettes:
+          meal: '一位虚构的来客站了太久，一时说不清来做什么。你先找了个座位，等店员回来，来客已能自己开口问晚饭。'
+          counter: '两个人都以为店员没听见对方，便把同一份点单各报了一次。你请店员把写下来的念回来，原来只要备一盘。'
+          shelf: '店员喊着要在柜台末端腾个地方。你挪走两只空盘，再放把凳子，让等候的人能坐下，也不挡下一位来客。'
 text:
   en:
     name: "Mary Seacole"
@@ -97,6 +110,12 @@ wiki:
           name: 营地物资
           text: 玛丽·西科尔自己采购、自己运送物资，并在营地后方开了一家客栈。军队物资向她开放的日期没有记录，所以游戏自己定了一天，员工能在这条分支里让它提前。
   refs:
+    seacole_memoir_hotel:
+      order: 168
+      status: checked
+      text:
+        en: 'Mary Seacole, Wonderful Adventures of Mrs. Seacole in Many Lands, 1857, chapters XIII–XIV. https://www.gutenberg.org/cache/epub/23031/pg23031-images.html'
+        zh: '玛丽·西科尔，《西科尔夫人多国历险记》，1857 年，第十三至十四章。https://www.gutenberg.org/cache/epub/23031/pg23031-images.html'
     seacole1857:
       order: 6
       status: pending

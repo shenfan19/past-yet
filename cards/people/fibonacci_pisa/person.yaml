@@ -9,34 +9,47 @@ events:
     field: math
     tier: 2
     channels: {Y: 1}
+    refs: [fibonacci_pisa_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
         - {id: p2, kind: persuade, req: {"trait":["charismatic","ambitious","glib"]}}
         - {id: p3, kind: trust, req: {"trait":["curious","attached","kind"]}}
+      vignettes:
+        - {id: gap, traits: [methodical, vigil]}
+        - {id: tokens, traits: [curious, handy]}
+        - {id: copy}
     text:
       en:
         name: Hindu-Arabic numerals reach Europe
         place: Pisa
         figure: Fibonacci
-        story: In the Liber Abaci Fibonacci shows merchants how nine digits and a zero make arithmetic quick.
+        story: 'Leonardo of Pisa wrote the Liber abaci in 1202. Its surviving 1228 revision explains the nine Indian digits and zero. The market reckoning in this scene is invented.'
         relic: A wax tablet of numerals
         relic_desc: A tablet with the ten new numerals set out beside the old Roman ones.
         points:
-          p1: "Learn how the new numerals are written"
-          p2: "Persuade a merchant to use the new numerals"
-          p3: "Talk over the ledgers with an Arab trader"
+          p1: 'Read the total without skipping the zero'
+          p2: 'Show how moving a digit changes its place value'
+          p3: 'Check the two copies before they leave the market'
+        vignettes:
+          gap: 'The clerk skips the empty column when copying the total. You put zero back into the gap and ask him to read the number again. It now agrees with the earlier reckoning.'
+          tokens: 'You arrange a few counters in groups on the counter. The clerk moves one to the next column, then explains why the same mark would now mean something different.'
+          copy: 'Two copies of a total are about to leave the market. You have the clerk read both back before the carriers go their separate ways.'
       zh:
         name: 印度阿拉伯数字传入欧洲
         place: 比萨
         figure: 斐波那契
-        story: 在《计算之书》里，斐波那契告诉商人：九个数字加一个零，能让算术快得多。
+        story: '比萨的莱昂纳多于 1202 年写《计算之书》。现传的 1228 年修订本开篇说明九个印度数字和零。本篇市场算账为虚构。'
         relic: 一块写着数字的蜡板
         relic_desc: 板上把十个新数字和旧的罗马数字并排写在一起。
         points:
-          p1: "学会新数字的写法"
-          p2: "说服一位商人改用新数字"
-          p3: "同阿拉伯商人聊账本"
+          p1: '读合计时把零所在的位也算进去'
+          p2: '说明数字移一位后为何变值'
+          p3: '两份抄件送出市集前核对一次'
+        vignettes:
+          gap: '账房照抄合计时跳过空栏。你把零填回空处，请他再读一遍，这才和原先算出的数一致。'
+          tokens: '你把几枚算子分列摆在柜台上。账房把一枚挪到下一列，接着讲给你听，怎么同一个记号这时就表示了另一个数。'
+          copy: '两份合计马上要带出市集。两位送单人分头走之前，你请账房把两份都念一遍。'
 text:
   en:
     name: Fibonacci
@@ -44,3 +57,34 @@ text:
   zh:
     name: 斐波那契
     text: 意大利数学家，约 1170 年生，约 1250 年去世，出身比萨。他 1202 年的《计算之书》把印度阿拉伯数字带到欧洲，书中兔子繁殖的问题产生了斐波那契数列。
+hook: {en: 'What does an empty place do?', zh: '空着的一位为什么要写零'}
+facts:
+  numerals:
+    date: '1202'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [fibonacci_pisa_primary]
+    text:
+      en: 'Leonardo of Pisa wrote the Liber abaci in 1202. Its surviving 1228 revision explains the nine Indian digits and zero. The market reckoning in this scene is invented.'
+      zh: '比萨的莱昂纳多于 1202 年写《计算之书》。现传的 1228 年修订本开篇说明九个印度数字和零。本篇市场算账为虚构。'
+bystanders:
+  fibonacci_pisa_reader:
+    invented: true
+    text: {en: 'An invented market clerk trying a new way to record a total.', zh: '一位虚构的市集账房，正在换一种记合计的写法。'}
+wiki:
+  refs:
+    fibonacci_pisa_primary:
+      order: 142
+      status: checked
+      text:
+        en: 'Leonardo of Pisa, Liber abaci, first chapter, surviving 1228 revision. Manuscript tradition described by Treccani. https://www.treccani.it/enciclopedia/leonardo-fibonacci_(Il-Contributo-italiano-alla-storia-del-Pensiero:-Scienze)/'
+        zh: 'Leonardo of Pisa, Liber abaci, first chapter, surviving 1228 revision. Manuscript tradition described by Treccani. https://www.treccani.it/enciclopedia/leonardo-fibonacci_(Il-Contributo-italiano-alla-storia-del-Pensiero:-Scienze)/'
+self_check:
+  quote_line: '账房照抄合计时跳过空栏。'
+  fact: numerals
+  regret_choice: '略过「读合计时把零所在的位也算进去」，这处细节便留给下一位核对。'
+  bookend: '从「空着的一位为什么要写零」开始，以员工留下的观察或更正收尾。'
+  share_line: '空着的一位为什么要写零'
+  share_number: '1202'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

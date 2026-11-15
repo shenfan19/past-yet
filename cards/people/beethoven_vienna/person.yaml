@@ -9,34 +9,47 @@ events:
     field: music
     tier: 3
     channels: {G: 2, S: 1}
+    refs: [beethoven_vienna_primary]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["attached","cheerful","patient"]}}
         - {id: p2, kind: notice, req: {"any":[{"trait":["quiet","skeptical"]},{"job":["musician","painter"]}]}}
         - {id: p3, kind: trust, req: {"luck": 0.4}}
+      vignettes:
+        - {id: voice, traits: [artistic, curious]}
+        - {id: step, traits: [kind, patient]}
+        - {id: programme}
     text:
       en:
         name: The Ninth Symphony
         place: Vienna
         figure: Ludwig van Beethoven
-        story: Beethoven, almost deaf, premieres the Ninth Symphony and has to be turned round to see the applause.
+        story: 'A concert poster records the premiere of Beethoven''s Ninth Symphony on 7 May 1824 at Vienna''s Kärntnertor Theatre. The scene follows an invented usher and concertgoers.'
         relic: An ear trumpet
         relic_desc: A horn he held to his ear as the world went quiet.
         points:
-          p1: "Comfort him"
-          p2: "Hear the music in his head (a musician, a painter or a sensitive employee)"
-          p3: "A good day for him"
+          p1: 'Show the late guest where to wait'
+          p2: 'Work out how to follow the concert from the programme'
+          p3: 'Keep the entrance clear without interrupting the music'
+        vignettes:
+          voice: 'You point out the singers to the usher. The guest starts to ask why there is a chorus at a symphony, then stops when the first voice comes in.'
+          step: 'The late guest keeps missing the step down. You stay by the door and wait for his eyes to adjust, then show him to a place without making the row stand.'
+          programme: 'The usher lends you his programme. You keep one finger on the current item so the guest can tell which piece is still to come.'
       zh:
         name: 第九交响曲
         place: 维也纳
         figure: 路德维希·凡·贝多芬
-        story: 几乎全聋的贝多芬首演了第九交响曲，要有人把他转过身，他才看见掌声。
+        story: '音乐会海报记录了贝多芬《第九交响曲》于 1824 年 5 月 7 日在维也纳克恩特纳门剧院首演。场景里的引座员和观众为游戏虚构。'
         relic: 一只助听喇叭
         relic_desc: 世界静下来的时候，他举到耳边的号角。
         points:
-          p1: "安慰他"
-          p2: "听见他脑中的音乐（乐手、画家或敏感的员工）"
-          p3: "他状态好的一天"
+          p1: '给迟到的客人找个地方等候'
+          p2: '顺着节目单认出演出进度'
+          p3: '不打断演出，把门口让出来'
+        vignettes:
+          voice: '你指给引座员看台上的歌者。客人正要问交响曲里为什么有人唱，第一声响起，他便把话咽了回去。'
+          step: '迟到的客人一直没看清脚下那级台阶。你陪他在门边站了一会儿，等他看清，再把人领进去，一整排座位都不用起身。'
+          programme: '引座员把节目单借给你。你用手指按住眼下这一项，客人就知道哪首还在后头。'
 text:
   en:
     name: Ludwig van Beethoven
@@ -44,3 +57,34 @@ text:
   zh:
     name: 路德维希·凡·贝多芬
     text: 德国作曲家，1770 年生，1827 年去世，大半生在维也纳工作。他从二十多岁末起听力渐退，1824 年首演《第九交响曲》时已几乎全聋。
+hook: {en: 'When does the chorus come in?', zh: '等到合唱开口'}
+facts:
+  premiere:
+    date: '1824-05-07'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [beethoven_vienna_primary]
+    text:
+      en: 'A concert poster records the premiere of Beethoven''s Ninth Symphony on 7 May 1824 at Vienna''s Kärntnertor Theatre. The scene follows an invented usher and concertgoers.'
+      zh: '音乐会海报记录了贝多芬《第九交响曲》于 1824 年 5 月 7 日在维也纳克恩特纳门剧院首演。场景里的引座员和观众为游戏虚构。'
+bystanders:
+  beethoven_vienna_reader:
+    invented: true
+    text: {en: 'An invented usher with a late arrival at the door.', zh: '一位虚构的引座员，门外还有一位迟到的客人。'}
+wiki:
+  refs:
+    beethoven_vienna_primary:
+      order: 126
+      status: checked
+      text:
+        en: 'Vienna concert poster for Beethoven''s academy, 7 May 1824, documented by Beethoven-Haus Bonn. https://internet.beethoven.de/pdf-sonderausstellung/Von-Herzen-Moege-es-wieder-zu-Herzen-gehen-Brief-Guide.pdf'
+        zh: 'Vienna concert poster for Beethoven''s academy, 7 May 1824, documented by Beethoven-Haus Bonn. https://internet.beethoven.de/pdf-sonderausstellung/Von-Herzen-Moege-es-wieder-zu-Herzen-gehen-Brief-Guide.pdf'
+self_check:
+  quote_line: '你指给引座员看台上的歌者。'
+  fact: premiere
+  regret_choice: '略过「给迟到的客人找个地方等候」，这处细节便留给下一位核对。'
+  bookend: '从「等到合唱开口」开始，以员工留下的观察或更正收尾。'
+  share_line: '等到合唱开口'
+  share_number: '1824-05-07'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

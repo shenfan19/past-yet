@@ -27,20 +27,29 @@ D.o.config.body.feedback = { miss: {}, hit: {}, decay: fb.decay };
 let n = 0;
 for (const ev of events) {
   const calm = { ...ev, channels: {} };
-  // the LM core is slower than the stand-in was, so every fifth employee and the first three seeds stand for all
-  for (const staffId of staffIds.filter((_, i) => i % 5 === 0)) {
-    const stats = { ...sim.staffAttrs(D, staffId, null, []) };
-    for (const seed of seeds.slice(0, 3)) {
-      const got = runStay(D, core, calm, { staffId, seed, carried: [], stats });
-      const want = evalScene(D, ev, { staffId, seed, carried: [], statsAt: () => stats });
-      n++;
-      if (!same(got.hits, want)) err(`no pressure differs: ${ev.id} ${staffId} seed ${seed}`);
-      if (got.trace.some((t) => Object.values(t.readouts).some((x) => x !== 0))) err(`no pressure moves a reading: ${ev.id}`);
-    }
-  }
+  // Sample every scene with a rotating employee and seed. The historical stays are up to 210 LM steps each.
+  const i = n % staffIds.length;
+  const staffId = staffIds[i], seed = seeds[n % seeds.length];
+  const stats = { ...sim.staffAttrs(D, staffId, null, []) };
+  const got = runStay(D, core, calm, { staffId, seed, carried: [], stats });
+  const want = evalScene(D, ev, { staffId, seed, carried: [], statsAt: () => stats });
+  n++;
+  if (!same(got.hits, want)) err(`no pressure differs: ${ev.id} ${staffId} seed ${seed}`);
+  if (got.trace.some((t) => Object.values(t.readouts).some((x) => x !== 0))) err(`no pressure moves a reading: ${ev.id}`);
 }
 D.o.config.body.feedback = fb;
 console.log(`no pressure: ${n} stays compared with the static rule`);
+
+{
+  const ev = events.find((e) => e.id === 'nightingale_scutari');
+  const ctx = (staffId, props = []) => ({ staffId, seed: 17, props, carried: [], stats: sim.staffAttrs(D, staffId) });
+  const weak = runStay(D, core, ev, ctx('s_fan'));
+  const stronger = runStay(D, core, ev, ctx('s_ning'));
+  const protectedStay = runStay(D, core, ev, ctx('s_fan', ['face_mask']));
+  if (weak.evacuation?.reason !== 'infection_burden' || !(stronger.evacuation?.day > weak.evacuation.day) || protectedStay.evacuation) {
+    err('constitution and protection do not change the outcome of a high-exposure stay');
+  }
+}
 
 // the result of a point is written back: a point that is missed adds to the demand of the days after it
 {
@@ -48,8 +57,9 @@ console.log(`no pressure: ${n} stays compared with the static rule`);
   const pd = (await import('../js/scene_core.js')).pointDays(D, ev);
   const impossible = { ...ev, scene: { points: ev.scene.points.map((p) => ({ ...p, req: { stat: { wit: 99 } } })) } };
   const r = runStay(D, core, impossible, { staffId: staffIds[0], seed: 1, carried: [], stats: { ...sim.staffAttrs(D, staffIds[0], null, []) } });
-  const demand = (day) => r.trace[day - 1].handles.find((h) => h.concept === 'psychological_demand').value;
-  if (!(pd[0] < r.trace.length && demand(pd[0] + 1) > demand(pd[0]))) err('a missed point writes nothing back to the later days');
+  const demand = (row) => row.handles.find((h) => h.concept === 'psychological_demand').value;
+  const i = r.trace.findIndex((row) => row.day === pd[0]);
+  if (!(i >= 0 && r.trace[i + 1] && demand(r.trace[i + 1]) > demand(r.trace[i]))) err('a missed point writes nothing back to the later days');
 }
 
 // 2 determinism, and the messages the core returns stay inside the vocabulary and the range
@@ -76,7 +86,7 @@ D.o.config.body.incapacity.at = keep;
 const first = dead.trace.findIndex((x) => x.down);
 if (first < 0) err('nobody went down with the limit set low');
 else {
-  const days = heavy.scene.points.map((_, i) => dead.trace.length && i);
+  if (dead.evacuation?.day !== dead.trace.at(-1).day) err('the stay continued after evacuation');
   const pd = (await import('../js/scene_core.js')).pointDays(D, heavy);
   pd.forEach((d, i) => { if (d >= dead.trace[first].day && dead.hits[i]) err(`point ${i} was met after the traveller went down`); });
 }

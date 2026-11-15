@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {S: 3, G: 2}
     regret: true
+    refs: [sima_qian_changan_primary]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["attached","cheerful","patient"]}}
         - {id: p2, kind: notice, req: {"any":[{"stat":{"wit":7}},{"job":["archivist","journalist"]}]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["patient","vigil","quiet"]},{"stat":{"will":6}}]}}
+      vignettes:
+        - {id: dates, traits: [methodical, vigil]}
+        - {id: witness, traits: [curious, skeptical]}
+        - {id: binding}
     text:
       en:
         name: "A history written after the sentence"
         place: "Chang'an"
         figure: "Sima Qian"
-        story: "Sima Qian is punished by the court for speaking up for a general, and chooses to go on living in order to finish his history of China, the Records of the Grand Historian."
+        story: 'The Book of Han preserves Sima Qian''s letter to Ren An, in which he discusses the aims and organization of his historical work. The game sets an invented copying scene around 98 BCE; the conventional event year is not the date of the letter.'
         relic: "A bundle of bamboo slips"
         relic_desc: "Slips tied with cord, each carrying a column of characters."
         points:
-          p1: "Sit with him in the days after the sentence"
-          p2: "Read the old records with him (a record keeper, a journalist or a sharp mind)"
-          p3: "Stay until the last chapter is written"
+          p1: 'Identify what two accounts really disagree about'
+          p2: 'Keep the order of the dates clear'
+          p3: 'Leave a readable note where the evidence does not decide'
+        vignettes:
+          dates: 'The clerk starts to merge two entries under one year. You ask them to leave the dates with their respective accounts. It becomes possible to see exactly where the mismatch begins.'
+          witness: 'The clerk wants the better story to go first. You ask how each account got to the desk. They mark the origins before deciding what order a reader should see.'
+          binding: 'You leave both slips loose while the clerk reads them once more. When the bundle is tied, a short label says that one question is still open.'
       zh:
         name: "受刑之后写成的史书"
         place: "长安"
         figure: "司马迁"
-        story: "司马迁因为替一位将军说话而受到朝廷惩罚，他选择活下去，为的是写完那部中国的历史，也就是《史记》。"
+        story: '《汉书·司马迁传》保存《报任安书》，信中谈到著史的用意和全书体例。卡片在约公元前 98 年的长安虚构抄写场景；游戏年份不是这封信的日期。'
         relic: "一捆竹简"
         relic_desc: "用绳子编起来的竹简，每一片写着一行字。"
         points:
-          p1: "在判决之后的日子里陪他坐坐"
-          p2: "和他一起读旧档案"
-          p3: "留到最后一章写完"
+          p1: '找出两种说法到底在哪一点相冲'
+          p2: '把年次的前后理清'
+          p3: '证据分不出时，留下看得明白的存疑说明'
+        vignettes:
+          dates: '书吏要把两条合到同一年。你请他各留原来的年次。重新看过，分歧从哪里开始便看得清。'
+          witness: '书吏想把好听些的故事放在前头。你问两个说法各是怎样到桌上的。他先写明来处，再想该让读者先读哪条。'
+          binding: '书吏再读一遍时，你先不系那两枚简。收成一束以后，短签上写清还有一个问题待查。'
 text:
   en:
     name: Sima Qian
@@ -51,3 +64,34 @@ quotes:
     text:
       en: {who: Sima Qian, quote: "To examine the relation between heaven and man, to trace the changes from antiquity to the present, and to complete a school of one's own."}
       zh: {who: 司马迁, quote: "究天人之际，通古今之变，成一家之言。"}
+hook: {en: 'What should a historian leave unresolved?', zh: '哪一条该先存疑'}
+facts:
+  letter_to_ren_an:
+    date: '-98'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sima_qian_changan_primary]
+    text:
+      en: 'The Book of Han preserves Sima Qian''s letter to Ren An, in which he discusses the aims and organization of his historical work. The game sets an invented copying scene around 98 BCE; the conventional event year is not the date of the letter.'
+      zh: '《汉书·司马迁传》保存《报任安书》，信中谈到著史的用意和全书体例。卡片在约公元前 98 年的长安虚构抄写场景；游戏年份不是这封信的日期。'
+bystanders:
+  sima_qian_changan_reader:
+    invented: true
+    text: {en: 'An invented clerk weighing two entries that disagree.', zh: '一位虚构的书吏，桌上两条记载彼此抵触。'}
+wiki:
+  refs:
+    sima_qian_changan_primary:
+      order: 200
+      status: checked
+      text:
+        en: 'Ban Gu, Book of Han, vol. 62, Biography of Sima Qian, including his letter to Ren An. https://zh.wikisource.org/zh-hant/漢書/卷062'
+        zh: 'Ban Gu, Book of Han, vol. 62, Biography of Sima Qian, including his letter to Ren An. https://zh.wikisource.org/zh-hant/漢書/卷062'
+self_check:
+  quote_line: '书吏要把两条合到同一年。'
+  fact: letter_to_ren_an
+  regret_choice: '略过「找出两种说法到底在哪一点相冲」，这处细节便留给下一位核对。'
+  bookend: '从「哪一条该先存疑」开始，以员工留下的观察或更正收尾。'
+  share_line: '哪一条该先存疑'
+  share_number: '-98'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 2
     channels: {E: 2, V: 1}
+    refs: [dante_ravenna_primary, boccaccio_dante_tradition]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["methodical","handy"]}}
         - {id: p2, kind: trust, req: {"trait":["kind","attached","cosmopolitan"]}}
         - {id: p3, kind: endure, req: {"provides":"clean_water"}}
+      vignettes:
+        - {id: dream, traits: [bold, curious]}
+        - {id: ear, traits: [artistic, quiet]}
+        - {id: stars}
     text:
       en:
         name: A poem in the language of the street
         place: Ravenna
         figure: Dante Alighieri
-        story: In exile Dante finishes the Divine Comedy, written in the Italian people actually spoke.
+        story: 'The closing lines of Dante''s Paradiso invoke the Sun and the other stars. The game sets an invented reading in Ravenna in Dante''s later years. Boccaccio''s later account of missing cantos found after a dream is a literary tradition.'
         relic: A laurel leaf
         relic_desc: A dried leaf of the poet's crown.
         points:
-          p1: "Hear him read the Inferno"
-          p2: "Do not ask about his past"
-          p3: "Walk with him along the marsh road"
+          p1: 'Follow the verse through a change of page'
+          p2: 'Hear the rhyme that carries into the next group of lines'
+          p3: 'Help the reader find where the poem ends'
+        vignettes:
+          dream: 'You ask whether a dream can tell the copyist where a missing canto went. They put down the lamp. “A dream may tell you where to look. What will you read when you get there?” You mark the story as a later tradition in the report.'
+          ear: 'The copyist stops when a verse ends. You ask them to keep reading just long enough to hear the next rhyme arrive. The new page no longer sounds like a fresh start.'
+          stars: 'You help the copyist find the last line before the lamp goes out. The word for stars is the one they remember when you step into the street.'
       zh:
         name: 用街头的语言写一部长诗
         place: 拉文纳
         figure: 但丁
-        story: 流亡中的但丁写完了《神曲》，用的是人们真正说的意大利语。
+        story: '但丁《天堂篇》末尾写到太阳和其他星辰。卡片在但丁晚年的拉文纳虚构一场读诗。薄伽丘后来讲过梦中得知遗稿下落的故事，属于流传下来的文学轶闻。'
         relic: 一片月桂叶
         relic_desc: 诗人桂冠上的一片干叶。
         points:
-          p1: "听他念地狱篇"
-          p2: "不问他的过去"
-          p3: "陪他走过沼泽边的路"
+          p1: '翻页时跟住上一行诗'
+          p2: '听出接到下几行的韵'
+          p3: '帮读诗的人找到这篇的结尾'
+        vignettes:
+          dream: '你问誊写员，做个梦能不能知道丢了的诗章在哪儿。他放下灯：「梦兴许能叫你去找。到了地方，你打算读什么？」你在报告里注明，托梦是后来流传的故事。'
+          ear: '一行诗念完，誊写员正要停。你请他再念几行，听见下一个韵落下再说。翻页以后，这回听着像刚才的话还在往下走。'
+          stars: '熄灯前，你帮誊写员找到最后一行。走到街上时，他还记得诗里的星辰。'
 text:
   en:
     name: Dante Alighieri
@@ -44,3 +57,40 @@ text:
   zh:
     name: 但丁
     text: 意大利诗人，1265 年生，1321 年去世，出身佛罗伦萨。1302 年被逐出故城，他用托斯卡纳语写下《神曲》，在拉韦纳去世并葬在那里。
+hook: {en: 'What does the poem leave you looking at?', zh: '诗读完以后眼睛看向哪里'}
+facts:
+  paradiso:
+    date: '1320'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [dante_ravenna_primary, boccaccio_dante_tradition]
+    text:
+      en: 'The closing lines of Dante''s Paradiso invoke the Sun and the other stars. The game sets an invented reading in Ravenna in Dante''s later years. Boccaccio''s later account of missing cantos found after a dream is a literary tradition.'
+      zh: '但丁《天堂篇》末尾写到太阳和其他星辰。卡片在但丁晚年的拉文纳虚构一场读诗。薄伽丘后来讲过梦中得知遗稿下落的故事，属于流传下来的文学轶闻。'
+bystanders:
+  dante_ravenna_reader:
+    invented: true
+    text: {en: 'An invented copyist reading a poem aloud while checking the pages.', zh: '一位虚构的誊写员，边看纸页边把诗读出来。'}
+wiki:
+  refs:
+    boccaccio_dante_tradition:
+      order: 192
+      status: checked
+      text:
+        en: 'Giovanni Boccaccio, Trattatello in laude di Dante, first version, account of the recovery of the final thirteen cantos. Source for the later tradition. https://www.enteboccaccio.it/s/ente-boccaccio/item/10201'
+        zh: '薄伽丘，《但丁传》第一稿，寻回末十三歌一节。此条是托梦轶闻的出处。https://www.enteboccaccio.it/s/ente-boccaccio/item/10201'
+    dante_ravenna_primary:
+      order: 188
+      status: checked
+      text:
+        en: 'Dante Alighieri, Paradiso, canto 33, Italian text in Dartmouth Dante Lab. https://dantelab.dartmouth.edu/reader?reader%5Bcantica%5D=3&reader%5Bcanto%5D=33'
+        zh: 'Dante Alighieri, Paradiso, canto 33, Italian text in Dartmouth Dante Lab. https://dantelab.dartmouth.edu/reader?reader%5Bcantica%5D=3&reader%5Bcanto%5D=33'
+self_check:
+  quote_line: '你问誊写员，做个梦能不能知道丢了的诗章在哪儿。'
+  fact: paradiso
+  regret_choice: '略过「翻页时跟住上一行诗」，这处细节便留给下一位核对。'
+  bookend: '从「诗读完以后眼睛看向哪里」开始，以员工留下的观察或更正收尾。'
+  share_line: '诗读完以后眼睛看向哪里'
+  share_number: '1320'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

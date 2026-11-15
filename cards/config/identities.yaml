@@ -1,0 +1,17 @@
+# Who a traveller is taken for in a place. An identity asks for tags of the person (staff_rules.yaml) and for things of the place.
+# all: every tag is needed. any: at least one. none: none of them. since, until: the years in which the identity exists.
+# crossroads: the place must be a port or a great city. ring: where the person starts, 0 outside the door, 1 inside it.
+# reach and accept are added to the two throws of taking part (js/participation.js), so an identity that fits opens the door sooner.
+# A place lists the identities it has room for, in the order it prefers them, and a person takes the first that fits. lodger asks for nothing, so everyone has a door.
+identities:
+  local_hand: {ring: 0, all: [face_local], reach: 0.6, accept: 0.3}
+  local_scholar: {ring: 1, all: [literate], any: [face_local], reach: 0.4, accept: 0.6}
+  healer: {ring: 1, any: [class_medical], reach: 0.3, accept: 0.6}
+  pen: {ring: 1, all: [literate], any: [class_press], none: [face_local], since: 1800, reach: 0.3, accept: 0.4}
+  scholar_guest: {ring: 1, all: [learned], none: [face_local], crossroads: true, reach: 0.3, accept: 0.4}
+  wanderer: {ring: 0, any: [class_religious, class_teaching], reach: 0.3, accept: 0.3}
+  maker: {ring: 0, any: [class_food, class_craft, class_trade], reach: 0.4, accept: 0.3}
+  far_guest: {ring: 0, any: [literate, class_trade, class_seafaring, class_travel], none: [face_local], crossroads: true, reach: 0.2, accept: 0.2}
+  lodger: {ring: 0, reach: 0, accept: 0}
+# What a place offers when its card names none.
+default: [local_scholar, healer, pen, scholar_guest, wanderer, maker, local_hand, far_guest, lodger]

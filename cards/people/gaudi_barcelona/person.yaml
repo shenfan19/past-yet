@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {L: 1, S: 1}
     regret: true
+    refs: [gaudi_barcelona_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["builder","carpenter"]},{"stat":{"wit":7}},{"trait":["handy","wanderer","methodical"]},{"trait":["scholarly"]}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","scholarly","ambitious"]},{"trait":["glib","streetwise","scholarly"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["patient","faithful","calm"]},{"trait":["cheerful","patient","calm"]}]}}
+      vignettes:
+        - {id: outline, traits: [handy, methodical]}
+        - {id: street, traits: [artistic, curious]}
+        - {id: copy}
     text:
       en:
         name: "Struck by a tram"
         place: "Barcelona"
         figure: "Antoni Gaudí"
-        story: "Gaudí is hit by a tram on his way to church. In his worn clothes he is not recognised, and he dies three days later with the Sagrada Família unfinished."
+        story: 'The Saint Barnabas tower on the Nativity façade was completed in 1925. The Sagrada Família was still unfinished when Gaudí died in 1926. The discussion over a drawing in this card is invented.'
         relic: "A plaster model"
         relic_desc: "A small hanging model of a vault."
         points:
-          p1: "Read his model of the vault (a builder, a mason, a carpenter or sharp wit helps)"
-          p2: "Call for help in the street"
-          p3: "Be the one who stays with him at the hospital"
+          p1: 'Find a finished feature on the drawing'
+          p2: 'Compare the drawing with the view from the street'
+          p3: 'Leave a note that makes the next visitor''s bearings clear'
+        vignettes:
+          outline: 'The clerk holds a plan so the visitor can see all the towers together. You shade the one that already stands. The visitor now has a landmark to look for outside.'
+          street: 'You ask the visitor to step to the next corner before looking up again. A finished shape on the plan was hidden from the first position. They mark where they stood.'
+          copy: 'You hand the plan back while it is still folded on the place the clerk showed you. They add a mark for the next visitor, who will approach from a different street.'
       zh:
         name: "被电车撞倒"
         place: "巴塞罗那"
         figure: "安东尼·高迪"
-        story: "高迪在去教堂的路上被电车撞倒，他衣着破旧，没有人认出他，三天后去世，圣家堂还没有完成。"
+        story: '圣家堂诞生立面的圣巴拿巴钟塔于 1925 年完工。1926 年高迪去世时，整座教堂仍未完成。本卡围着图纸说话的一幕为虚构。'
         relic: "一个石膏模型"
         relic_desc: "一个小小的悬挂式穹顶模型。"
         points:
-          p1: "读懂他的穹顶模型（建筑工、石匠、木匠或敏锐的头脑更合适）"
-          p2: "在街上喊人来帮忙"
-          p3: "在医院里一直陪着他"
+          p1: '在图上认出一处已经完工的部位'
+          p2: '把图纸和街头所见对一对'
+          p3: '留条纸片，帮下一位访客认出方向'
+        vignettes:
+          outline: '办事员举起图，让访客一次看见所有塔。你把已经立着的那座涂深一点。出去后，访客便有一处可以先找。'
+          street: '你请访客先走到下一个街角再抬头。图上那道已经完成的轮廓，在刚才的位置看不见。他记下了自己站在哪里。'
+          copy: '你把图折回办事员指给你看的那一面交还。他补了个记号，留给下一位从别条街走来的人。'
 text:
   en:
     name: Antoni Gaudí
@@ -45,3 +58,34 @@ text:
   zh:
     name: 安东尼·高迪
     text: 加泰罗尼亚建筑师，1852 年生，1926 年去世。他在巴塞罗那的建筑，包括巴特略之家和圣家堂，使用取自自然的曲线形态。他 1926 年被电车撞死，圣家堂至今未完工。
+hook: {en: 'Which tower is already standing?', zh: '先认出已经立起的那座塔'}
+facts:
+  tower:
+    date: '1926'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [gaudi_barcelona_primary]
+    text:
+      en: 'The Saint Barnabas tower on the Nativity façade was completed in 1925. The Sagrada Família was still unfinished when Gaudí died in 1926. The discussion over a drawing in this card is invented.'
+      zh: '圣家堂诞生立面的圣巴拿巴钟塔于 1925 年完工。1926 年高迪去世时，整座教堂仍未完成。本卡围着图纸说话的一幕为虚构。'
+bystanders:
+  gaudi_barcelona_reader:
+    invented: true
+    text: {en: 'An invented site clerk taking a visitor past the drawings.', zh: '一位虚构的工地办事员，带访客看图。'}
+wiki:
+  refs:
+    gaudi_barcelona_primary:
+      order: 181
+      status: checked
+      text:
+        en: 'Sagrada Família, Brief History, archival photograph and chronology of the Nativity façade and Saint Barnabas bell tower. https://sagradafamilia.org/documents/20142/1205286/SF_Booklet_02_20240405_digital_AF.pdf/'
+        zh: 'Sagrada Família, Brief History, archival photograph and chronology of the Nativity façade and Saint Barnabas bell tower. https://sagradafamilia.org/documents/20142/1205286/SF_Booklet_02_20240405_digital_AF.pdf/'
+self_check:
+  quote_line: '办事员举起图，让访客一次看见所有塔。'
+  fact: tower
+  regret_choice: '略过「在图上认出一处已经完工的部位」，这处细节便留给下一位核对。'
+  bookend: '从「先认出已经立起的那座塔」开始，以员工留下的观察或更正收尾。'
+  share_line: '先认出已经立起的那座塔'
+  share_number: '1926'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

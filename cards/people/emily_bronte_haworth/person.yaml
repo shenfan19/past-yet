@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 2, C: 3}
     regret: true
+    refs: [emily_bronte_haworth_primary]
     scene:
       points:
         - {id: p1, kind: trust, req: {"any":[{"trait":["cosmopolitan","artistic","sensitive"]},{"trait":["attached","charismatic","cosmopolitan"]}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","charismatic"]},{"trait":["glib","scholarly","ambitious"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["nurse","physician"]},{"trait":["faithful","cheerful"]},{"trait":["cheerful","faithful","patient"]}]}}
+      vignettes:
+        - {id: witness, traits: [curious, skeptical]}
+        - {id: voices, traits: [artistic, quiet]}
+        - {id: mark}
     text:
       en:
         name: "The parsonage in winter"
         place: "Haworth"
         figure: "Emily Brontë"
-        story: "Emily Brontë, whose only novel Wuthering Heights puzzled reviewers, falls ill at the parsonage in Haworth and dies in December aged thirty."
+        story: 'Wuthering Heights appeared in 1847 under the name Ellis Bell. The novel frames much of its story as Nelly Dean''s account to Lockwood. The 1848 reading in this card is invented.'
         relic: "A dog collar"
         relic_desc: "A worn leather collar from the parsonage mastiff."
         points:
-          p1: "Spend an hour on the moor with her"
-          p2: "Gently coax her to rest"
-          p3: "Sit by her in the last days (a nurse, a physician or a kind one helps)"
+          p1: 'Find the point where the account changes speaker'
+          p2: 'Distinguish what a narrator saw from what they heard'
+          p3: 'Help another reader return to the right page'
+        vignettes:
+          witness: 'The reader thinks the person telling the story saw it all. You ask how she learned one particular detail. They trace the sentence back to the speaker who supplied it.'
+          voices: 'The reader gives the whole page one voice. You ask them to try again from the place Nelly takes over. A listener can now tell when one speaker is passing the story to another.'
+          mark: 'You leave a scrap at the point where the telling changes hands. The reader returns to it before deciding whether a later passage contradicts what they heard.'
       zh:
         name: "冬天的牧师住宅"
         place: "霍沃斯"
         figure: "艾米莉·勃朗特"
-        story: "艾米莉·勃朗特唯一的长篇小说《呼啸山庄》让评论家们困惑，她在霍沃斯的牧师住宅里病倒，十二月去世，年三十岁。"
+        story: '《呼啸山庄》1847 年以埃利斯·贝尔的名字出版。小说的大段故事借内莉·迪恩讲给洛克伍德听。本卡在 1848 年安排虚构的阅读场景。'
         relic: "一条狗项圈"
         relic_desc: "牧师住宅里那条大狗用过的旧皮项圈。"
         points:
-          p1: "陪她在荒原上待一个小时"
-          p2: "轻声劝她休息"
-          p3: "在最后的日子里坐在她身边（护士、医生或善良的人更合适）"
+          p1: '找出叙述从哪里换了人'
+          p2: '分清叙述者亲见与听来的事'
+          p3: '帮另一位读者翻回原来那页'
+        vignettes:
+          witness: '读者以为讲故事的人什么都看见了。你问有一件事她是从哪儿知道的。他把那句话往回找，找到了先说这事的人。'
+          voices: '读者整页只用一个声音。你请他从内莉接过话头处再念。听的人这回听得出，故事什么时候交到了另一个人手上。'
+          mark: '你在换人讲述处夹了块纸。读者觉得后面一段同刚才抵触，便先翻回纸签在的地方。'
 text:
   en:
     name: Emily Brontë
@@ -45,3 +58,34 @@ text:
   zh:
     name: 艾米莉·勃朗特
     text: 英国小说家与诗人，1818 年生，1848 年去世，住在霍沃斯的牧师住宅。她唯一的小说《呼啸山庄》1847 年以埃利斯·贝尔之名出版。一年后她死于肺结核。
+hook: {en: 'Who is telling this part of the story?', zh: '这一段是谁在说'}
+facts:
+  wuthering_voices:
+    date: '1847'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [emily_bronte_haworth_primary]
+    text:
+      en: 'Wuthering Heights appeared in 1847 under the name Ellis Bell. The novel frames much of its story as Nelly Dean''s account to Lockwood. The 1848 reading in this card is invented.'
+      zh: '《呼啸山庄》1847 年以埃利斯·贝尔的名字出版。小说的大段故事借内莉·迪恩讲给洛克伍德听。本卡在 1848 年安排虚构的阅读场景。'
+bystanders:
+  emily_bronte_haworth_reader:
+    invented: true
+    text: {en: 'An invented reader who has stopped to sort out the voices.', zh: '一位虚构的读者，为分清说话声停在书页上。'}
+wiki:
+  refs:
+    emily_bronte_haworth_primary:
+      order: 195
+      status: checked
+      text:
+        en: 'Emily Brontë, Wuthering Heights, first published as Ellis Bell in 1847, especially chapter IV. Project Gutenberg text. https://www.gutenberg.org/ebooks/768'
+        zh: 'Emily Brontë, Wuthering Heights, first published as Ellis Bell in 1847, especially chapter IV. Project Gutenberg text. https://www.gutenberg.org/ebooks/768'
+self_check:
+  quote_line: '读者以为讲故事的人什么都看见了。'
+  fact: wuthering_voices
+  regret_choice: '略过「找出叙述从哪里换了人」，这处细节便留给下一位核对。'
+  bookend: '从「这一段是谁在说」开始，以员工留下的观察或更正收尾。'
+  share_line: '这一段是谁在说'
+  share_number: '1847'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

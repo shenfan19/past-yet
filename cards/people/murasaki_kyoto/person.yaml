@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 3
     channels: {S: 3}
+    refs: [murasaki_kyoto_primary]
     scene:
       points:
         - {id: p1, kind: trust, req: {"gender": "f"}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["streetwise","ambitious"]},{"stat":{"wit":10}}]}}
         - {id: p3, kind: hold, req: {"item": "holo_cloak"}}
+      vignettes:
+        - {id: nickname, traits: [glib, curious]}
+        - {id: voice, traits: [quiet, artistic]}
+        - {id: return}
     text:
       en:
         name: The world's first great novel
         place: Kyoto
         figure: Murasaki Shikibu
-        story: A lady at the Heian court, Murasaki Shikibu writes The Tale of Genji, a long novel of court life and its feelings.
+        story: 'Murasaki Shikibu''s diary recalls an exchange in 1008 that plays on a character from The Tale of Genji, evidence that the story was already known at court. The conversation in the game is invented.'
         relic: A lacquered brush box
         relic_desc: A small box with brushes, a stone and water.
         points:
-          p1: "Be received at court"
-          p2: "Talk about her story"
-          p3: "Pass as one of the court"
+          p1: 'Tell a character''s name from a nickname in the room'
+          p2: 'Follow the thread of a reading interrupted by talk'
+          p3: 'Give back the page without losing the reader''s place'
+        vignettes:
+          nickname: 'You hear someone use a name from the tale and look around for the wrong person. The attendant catches your mistake and asks whether you have been listening in the doorway again.'
+          voice: 'You notice the attendant changes her voice when she reads a letter in the story. You ask her to read the same line plainly. It sounds less certain the second time.'
+          return: 'A page gets passed to you halfway through the reading. You keep your finger where she stopped so nobody has to guess where the story should resume.'
       zh:
         name: 世界上第一部伟大的长篇小说
         place: 京都
         figure: 紫式部
-        story: 平安宫廷里的紫式部写出了《源氏物语》，一部写宫廷生活和人心的长篇小说。
+        story: '紫式部日记记载，1008 年有人借《源氏物语》中的人物开玩笑，可见故事当时已在宫中为人所知。游戏里的闲谈为虚构。'
         relic: 一只漆制笔盒
         relic_desc: 一只小盒子，里面有笔、砚和水。
         points:
-          p1: "被宫廷接纳"
-          p2: "聊她的故事"
-          p3: "混作宫里的人"
+          p1: '分清人物名和屋里随口叫的称呼'
+          p2: '在闲谈打断后接上朗读的线索'
+          p3: '还回纸页时保留读到的位置'
+        vignettes:
+          nickname: '你听见有人叫小说里的人名，转头找错了人。侍女看出来了，笑问你是不是又在门口偷听人念故事。'
+          voice: '你听出侍女念到故事里的信时换了语气，请她照原来的声音再念一次。第二遍听来，话里竟少了几分笃定。'
+          return: '念到一半，纸页传到你手里。你按住刚停下的地方，免得换回去时还得猜从哪里接着念。'
 text:
   en:
     name: Murasaki Shikibu
@@ -44,3 +57,34 @@ text:
   zh:
     name: 紫式部
     text: 平安时代的日本宫廷女官与作家，约 973 年生。她在十一世纪初写的《源氏物语》常被称为第一部长篇小说。她的日记记录了京都宫廷的生活。
+hook: {en: 'A name steps out of the story.', zh: '小说里的人走进了闲谈'}
+facts:
+  diary:
+    date: '1008'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [murasaki_kyoto_primary]
+    text:
+      en: 'Murasaki Shikibu''s diary recalls an exchange in 1008 that plays on a character from The Tale of Genji, evidence that the story was already known at court. The conversation in the game is invented.'
+      zh: '紫式部日记记载，1008 年有人借《源氏物语》中的人物开玩笑，可见故事当时已在宫中为人所知。游戏里的闲谈为虚构。'
+bystanders:
+  murasaki_kyoto_reader:
+    invented: true
+    text: {en: 'An invented attendant who has heard the tale read aloud.', zh: '一位虚构的侍女，曾听人念过这个故事。'}
+wiki:
+  refs:
+    murasaki_kyoto_primary:
+      order: 131
+      status: checked
+      text:
+        en: 'Murasaki Shikibu Diary, 1008 entry on the prince''s fiftieth day, discussed with translation in The Tale of Genji: A Japanese Classic Illuminated, Metropolitan Museum of Art. https://resources.metmuseum.org/resources/metpublications/pdf/The_Tale_of_Genji_A_Japanese_Classic_Illuminated.pdf'
+        zh: 'Murasaki Shikibu Diary, 1008 entry on the prince''s fiftieth day, discussed with translation in The Tale of Genji: A Japanese Classic Illuminated, Metropolitan Museum of Art. https://resources.metmuseum.org/resources/metpublications/pdf/The_Tale_of_Genji_A_Japanese_Classic_Illuminated.pdf'
+self_check:
+  quote_line: '你听见有人叫小说里的人名，转头找错了人。'
+  fact: diary
+  regret_choice: '略过「分清人物名和屋里随口叫的称呼」，这处细节便留给下一位核对。'
+  bookend: '从「小说里的人走进了闲谈」开始，以员工留下的观察或更正收尾。'
+  share_line: '小说里的人走进了闲谈'
+  share_number: '1008'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

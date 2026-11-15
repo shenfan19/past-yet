@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {S: 3}
     regret: true
+    refs: [artemisia_florence_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"stat":{"finesse":7}}]}}
         - {id: p2, kind: persuade, req: {"trait":["glib","ambitious"]}}
         - {id: p3, kind: hold, redeem: true, req: {"trait":["patient","bold","vigil","handy"]}}
+      vignettes:
+        - {id: pose, traits: [artistic, curious]}
+        - {id: name, traits: [methodical, vigil]}
+        - {id: mirror}
     text:
       en:
         name: "The first woman in the academy"
         place: "Florence"
         figure: "Artemisia Gentileschi"
-        story: "Artemisia Gentileschi is the first woman admitted to the Florence drawing academy, and paints large canvases while heavy in debt. For centuries many of them are credited to others."
+        story: 'Artemisia Gentileschi became the first woman admitted to Florence''s Academy of the Arts of Drawing in 1616. Her Florentine years include the work now known as Self-Portrait as a Lute Player. The studio conversation is invented.'
         relic: "A pigment jar"
         relic_desc: "A small jar of ground lapis blue."
         points:
-          p1: "See how she builds a figure (a painter or fine hands help)"
-          p2: "Speak for her to a patron"
-          p3: "Stand by her work as hers"
+          p1: 'Notice what the hands suggest in a pose'
+          p2: 'Help someone identify the artist behind the portrait'
+          p3: 'Keep the practice sketches together with their labels'
+        vignettes:
+          pose: 'The visitor turns towards the mirror and asks which pose looks more natural. You ask what each pose seems to be doing. They pick the one that lets the hand keep its own purpose.'
+          name: 'A practice sheet has the sitter''s description but no place for the painter''s name. You turn it over and ask the visitor to put down both before the sheets are stacked.'
+          mirror: 'You move the mirror until the visitor can see the angle without twisting. They try the pose once, then make a small change of their own before drawing.'
       zh:
         name: "学院里的第一位女性"
         place: "佛罗伦萨"
         figure: "阿尔泰米西娅·真蒂莱斯基"
-        story: "阿尔泰米西娅·真蒂莱斯基是第一位被佛罗伦萨绘画学院接纳的女性，她负着重债画大幅油画。此后几百年里，她的许多画被算在别人名下。"
+        story: '1616 年，阿尔泰米西娅·真蒂莱斯基成为佛罗伦萨绘画学院接纳的首位女性。现称《弹鲁特琴的自画像》的作品属于她在佛罗伦萨的时期。画室交谈为虚构。'
         relic: "一罐颜料"
         relic_desc: "一小罐磨好的青金石蓝。"
         points:
-          p1: "看她怎样塑造一个人体（画家或灵巧的手更合适）"
-          p2: "在赞助人面前替她说话"
-          p3: "承认这些作品是她的"
+          p1: '看出手的姿势像在做什么'
+          p2: '帮来客认清肖像是谁画的'
+          p3: '把习作和各自的签条放在一起'
+        vignettes:
+          pose: '访客面对镜子，问哪种姿势看着自然。你问两种姿势各像在做什么。他选了手还能做自己的事的那一种。'
+          name: '一张习作只写了画中人的描述，没留画家的名字。你把纸翻过来，请访客在收进一摞图以前把两项都写上。'
+          mirror: '你挪了镜子，让访客不用扭身也能看见那个角度。他试坐一回，又自己调了一点，才开始画。'
 text:
   en:
     name: Artemisia Gentileschi
@@ -45,3 +58,34 @@ text:
   zh:
     name: 阿尔泰米西娅·真蒂莱斯基
     text: 意大利画家，1593 年生，约 1656 年去世。她随父亲奥拉齐奥·真蒂莱斯基学画，1612 年卷入一桩著名的审判，此后画了许多坚毅的圣经与神话女性。1616 年她成为佛罗伦萨绘画艺术学院接纳的第一位女性。
+hook: {en: 'A painter chooses how to be seen.', zh: '画家怎样画自己的样子'}
+facts:
+  self_portrait:
+    date: '1616'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [artemisia_florence_primary]
+    text:
+      en: 'Artemisia Gentileschi became the first woman admitted to Florence''s Academy of the Arts of Drawing in 1616. Her Florentine years include the work now known as Self-Portrait as a Lute Player. The studio conversation is invented.'
+      zh: '1616 年，阿尔泰米西娅·真蒂莱斯基成为佛罗伦萨绘画学院接纳的首位女性。现称《弹鲁特琴的自画像》的作品属于她在佛罗伦萨的时期。画室交谈为虚构。'
+bystanders:
+  artemisia_florence_reader:
+    invented: true
+    text: {en: 'An invented studio visitor comparing two practice poses.', zh: '一位虚构的画室访客，正对比两种习作姿势。'}
+wiki:
+  refs:
+    artemisia_florence_primary:
+      order: 180
+      status: checked
+      text:
+        en: 'Artemisia Gentileschi, Self-Portrait as a Lute Player, about 1615–18, Wadsworth Atheneum. National Gallery records her 1616 admission to the Florentine drawing academy. https://www.thewadsworth.org/event/gallery-music-artemisia-gentileschis-self-portrait-as-a-lute-player/'
+        zh: 'Artemisia Gentileschi, Self-Portrait as a Lute Player, about 1615–18, Wadsworth Atheneum. National Gallery records her 1616 admission to the Florentine drawing academy. https://www.thewadsworth.org/event/gallery-music-artemisia-gentileschis-self-portrait-as-a-lute-player/'
+self_check:
+  quote_line: '访客面对镜子，问哪种姿势看着自然。'
+  fact: self_portrait
+  regret_choice: '略过「看出手的姿势像在做什么」，这处细节便留给下一位核对。'
+  bookend: '从「画家怎样画自己的样子」开始，以员工留下的观察或更正收尾。'
+  share_line: '画家怎样画自己的样子'
+  share_number: '1616'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

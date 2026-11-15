@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {C: 1, L: 2, T: 1}
     regret: true
+    refs: [mary_anning_lyme_regis_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["geologist"]},{"trait":["methodical","quiet"]},{"trait":["artistic"]}]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["attached","charismatic","kind"]}}
+      vignettes:
+        - {id: stone, traits: [vigil, skeptical]}
+        - {id: vertebrae, traits: [curious, scholarly]}
+        - {id: pose}
     text:
       en:
         name: "Bones in the cliff"
         place: "Lyme Regis"
         figure: "Mary Anning"
-        story: "Mary Anning, who dug the first great sea reptile skeletons out of the Lyme cliffs, dies of cancer at forty seven. The papers on her finds were mostly written by others."
+        story: 'Mary Anning discovered a complete plesiosaur skeleton at Lyme Regis in December 1823. Her sketch records the remarkably long neck. The 1847 card uses an invented visit to look back at the sketch.'
         relic: "An ammonite"
         relic_desc: "A coiled fossil shell split from the blue lias."
         points:
-          p1: "Spot the bone in the rock (a geologist or a curious eye helps)"
-          p2: "Search the shore after the storm"
-          p3: "Be a visitor who asks her what she thinks"
+          p1: 'Distinguish a crack from an outline'
+          p2: 'Follow the neck on the sketch without skipping a joint'
+          p3: 'Leave a useful copy with the discovery credited'
+        vignettes:
+          stone: 'The visitor traces a crack as though it were bone. You ask them to keep following it past the neck. When the line leaves the skeleton, they lift their pencil.'
+          vertebrae: 'You and the visitor trace the neck from opposite ends. Their counts disagree at the same place. You leave a bracket there instead of silently adding a bone.'
+          pose: 'You rotate the copy until the visitor can find the head without your help. They turn it back before writing the specimen''s name below.'
       zh:
         name: "崖壁里的骨头"
         place: "莱姆里吉斯"
         figure: "玛丽·安宁"
-        story: "玛丽·安宁从莱姆的崖壁里挖出最早的巨型海生爬行动物骨架，四十七岁死于癌症。写她那些发现的论文多半出自别人之手。"
+        story: '1823 年 12 月，玛丽·安宁在莱姆里吉斯发现一具完整的蛇颈龙骨架，她的草图记下了那条长颈。卡片保留 1847 年，用虚构的访客回看早年的图。'
         relic: "一枚菊石"
         relic_desc: "一枚从蓝色里亚斯岩里敲出来的螺旋形化石。"
         points:
-          p1: "在岩石里认出那块骨头（地质学家或好奇的眼睛更合适）"
-          p2: "风暴后到海滩上搜寻"
-          p3: "做一位向她请教看法的访客"
+          p1: '分清裂纹和骨骼轮廓'
+          p2: '沿着草图找颈部，别漏掉关节'
+          p3: '留下一张注明发现者的可用抄图'
+        vignettes:
+          stone: '访客把一条裂缝描成了骨头。你请他沿线继续往下找。那道线离开骨架时，他抬起了笔。'
+          vertebrae: '你和访客从颈部两头相向数，偏偏在同一处数不到一起。你在那里留了括号，没有顺手添上一块骨头。'
+          pose: '你转动抄图，直到访客不靠你指也能找出头部。他再把纸转回来，在下面补上标本名。'
 text:
   en:
     name: Mary Anning
@@ -45,3 +58,34 @@ text:
   zh:
     name: 玛丽·安宁
     text: 英国化石采集者，1799 年生，1847 年去世，莱姆里吉斯人。她在海边悬崖挖出了第一批完整的鱼龙和蛇颈龙骨架。作为一个家境普通的女性，她生前很少在科学论文里被署名。
+hook: {en: 'Which curve belongs to the skeleton?', zh: '哪一道弯线真是骨头'}
+facts:
+  plesiosaur:
+    date: '1823-12'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mary_anning_lyme_regis_primary]
+    text:
+      en: 'Mary Anning discovered a complete plesiosaur skeleton at Lyme Regis in December 1823. Her sketch records the remarkably long neck. The 1847 card uses an invented visit to look back at the sketch.'
+      zh: '1823 年 12 月，玛丽·安宁在莱姆里吉斯发现一具完整的蛇颈龙骨架，她的草图记下了那条长颈。卡片保留 1847 年，用虚构的访客回看早年的图。'
+bystanders:
+  mary_anning_lyme_regis_reader:
+    invented: true
+    text: {en: 'An invented visitor who wants to take a copy of the fossil sketch home.', zh: '一位虚构的访客，想把化石草图抄回去。'}
+wiki:
+  refs:
+    mary_anning_lyme_regis_primary:
+      order: 150
+      status: checked
+      text:
+        en: 'Mary Anning''s sketch of her 1823 plesiosaur discovery, reproduced by the Natural History Museum. https://www.nhm.ac.uk/discover/mary-anning-unsung-hero.html'
+        zh: 'Mary Anning''s sketch of her 1823 plesiosaur discovery, reproduced by the Natural History Museum. https://www.nhm.ac.uk/discover/mary-anning-unsung-hero.html'
+self_check:
+  quote_line: '访客把一条裂缝描成了骨头。'
+  fact: plesiosaur
+  regret_choice: '略过「分清裂纹和骨骼轮廓」，这处细节便留给下一位核对。'
+  bookend: '从「哪一道弯线真是骨头」开始，以员工留下的观察或更正收尾。'
+  share_line: '哪一道弯线真是骨头'
+  share_number: '1823-12'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

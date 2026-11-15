@@ -1,0 +1,34 @@
+# The benchmark stories and the reference employees, read by tools/check_benchmarks.mjs. They are not part of the game data.
+# A benchmark is a place with a full model, named by the id of its era, or a place of three points, named by the id of its event.
+lang: zh
+seeds: [36891, 20241, 7]
+# Seven employees that between them cover the faces, the genders, reading and the kinds of work.
+staff: [s_fan, s_guilan, s_somchai, s_carlos, s_samuel, s_amara, s_jeanluc]
+benchmarks:
+  # A founding, seven segments: the long stay, what happened after the traveller left, the lines written for an employee.
+  sun_yat_sen_1924:
+    card: sun_yat_sen_guangzhou
+    hooks: true
+    every_segment: true
+    distinct_lines: 4
+    gave_up_allowed: 0
+    identities: {s_fan: local_scholar, s_guilan: local_hand, s_somchai: wanderer, s_carlos: maker, s_samuel: pen, s_amara: far_guest, s_jeanluc: far_guest}
+  # An outbreak, one segment: recorded dates close together, the rates at thirty historical days to the office day.
+  broad_street_1854:
+    distinct_lines: 2
+    gave_up_allowed: 0
+    identities: {s_fan: scholar_guest, s_guilan: lodger, s_somchai: scholar_guest, s_carlos: maker, s_samuel: pen, s_amara: healer, s_jeanluc: local_scholar}
+  # An outbreak in a ward, two segments.
+  vienna_1847:
+    distinct_lines: 2
+    gave_up_allowed: 0
+    identities: {s_fan: scholar_guest, s_guilan: lodger, s_somchai: scholar_guest, s_carlos: maker, s_samuel: pen, s_amara: healer, s_jeanluc: local_scholar}
+  # Three points, thin sources, a time with no reporters and no port.
+  zhuge_liang_longzhong:
+    identities: {s_fan: local_scholar, s_guilan: local_hand, s_somchai: wanderer, s_carlos: maker, s_samuel: lodger, s_amara: healer, s_jeanluc: lodger}
+  # Three points, a real amanuensis whose place the traveller does not take.
+  newton_cambridge:
+    identities: {s_fan: scholar_guest, s_guilan: lodger, s_somchai: scholar_guest, s_carlos: maker, s_samuel: far_guest, s_amara: healer, s_jeanluc: local_scholar}
+  # Three points, an ending that cannot be changed.
+  sun_yat_sen_beijing_1925:
+    identities: {s_fan: local_scholar, s_guilan: local_hand, s_somchai: scholar_guest, s_carlos: maker, s_samuel: pen, s_amara: healer, s_jeanluc: far_guest}

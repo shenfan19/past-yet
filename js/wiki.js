@@ -84,7 +84,11 @@ export function createWiki(X) {
       const relicId = 'relic_' + ev.id;
       add({
         id: 'events:c:' + ev.id, cat: 'events', title: c.name, tags: D.get('antiques.antiques.' + relicId + '.tags'), unlock: { anchored: relicId }, refs: ev.refs || ['catalog'], authors: ev.authors,
-        body: () => `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${personOf[ev.id] && byId('people:' + personOf[ev.id]) && open(byId('people:' + personOf[ev.id])) ? a('people:' + personOf[ev.id], c.figure) : esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${U.dispatch.small_story.replace('{n}', String(ctx.backend.lightStay(ev.id)))}</div>`,
+        body: () => {
+          const days = ev.era ? ctx.backend.eraStay(ev.era) : ctx.backend.lightStay(ev.id);
+          const stay = U.dispatch.travel_time.replace('{n}', String(days)).replace('{h}', String(ctx.backend.historicalDays(days)));
+          return `<p>${esc(c.story)}</p><div class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</div><div>${U.dispatch.character}${COLON}${personOf[ev.id] && byId('people:' + personOf[ev.id]) && open(byId('people:' + personOf[ev.id])) ? a('people:' + personOf[ev.id], c.figure) : esc(c.figure)}</div><div>${U.dispatch.relic}${COLON}${a('antiques:' + relicId, c.relic)}</div><div class="muted">${esc(stay)}</div>`;
+        },
       });
     }
 

@@ -9,34 +9,47 @@ events:
     field: art
     tier: 3
     channels: {V: 1, S: 1}
+    refs: [leonardo_florence_primary]
     scene:
       points:
         - {id: p1, kind: persuade, req: {"stat": {"finesse": 7}}}
         - {id: p2, kind: trust, req: {"gender": "f"}}
         - {id: p3, kind: notice, req: {"any":[{"trait":["streetwise","skeptical"]},{"job":["musician","painter"]},{"item":"golden_apple"}]}}
+      vignettes:
+        - {id: shadow, traits: [artistic, quiet]}
+        - {id: hands, traits: [curious, methodical]}
+        - {id: seat}
     text:
       en:
         name: A painter who drew machines
         place: Florence
         figure: Leonardo da Vinci
-        story: Leonardo paints the Mona Lisa and fills his notebooks with anatomy, water and flying machines.
+        story: 'The Louvre dates the beginning of Leonardo''s portrait known as the Mona Lisa to around 1503 and records that he kept working on it later. This workshop visit is invented.'
         relic: A mirror-written notebook page
         relic_desc: A page of backwards script that needs a mirror to read.
         points:
-          p1: "Win Leonardo's trust"
-          p2: "Sit for the portrait as the model"
-          p3: "Spark his sense of beauty (a painter, a musician, a sensitive employee, or a golden apple)"
+          p1: 'Describe one place where the shading changes'
+          p2: 'Help the apprentice check the position of the hands'
+          p3: 'Keep the sitting ready for a later session'
+        vignettes:
+          shadow: 'You ask the apprentice to show where the face ends and the background begins. They point, then hesitate. Instead of drawing a heavier line, they leave the transition for a second look.'
+          hands: 'The visitor remembers the face but puts the hands in a different place. You set the practice drawing beside their memory sketch and let them find the changed lines.'
+          seat: 'You mark the sitter''s chair on the floor while the apprentice packs up. They leave the drawing unfinished, knowing where the chair will go when they return.'
       zh:
         name: 画画的人，也画机器
         place: 佛罗伦萨
         figure: 列奥纳多·达·芬奇
-        story: 列奥纳多画了《蒙娜丽莎》，笔记本里却画满了解剖、水流和飞行机器。
+        story: '卢浮宫把列奥纳多开始画《蒙娜丽莎》的时间定在约 1503 年，并记载他后来仍在继续修改。本卡的作坊场景是虚构的。'
         relic: 一页镜像书写的笔记
         relic_desc: 一页反着写的字，要对着镜子才读得出。
         points:
-          p1: "赢得达芬奇的信任"
-          p2: "做他画像的模特"
-          p3: "点燃他的审美灵感（画家、乐手、敏感的员工，或带金苹果）"
+          p1: '说清一处明暗过渡在哪里'
+          p2: '帮学徒核对双手的位置'
+          p3: '给下次坐像留好原来的位置'
+        vignettes:
+          shadow: '你请学徒指一指，脸从哪儿结束，背景从哪儿开始。他伸手又犹豫了，没有加重那道线，先把交界处留着再看。'
+          hands: '访客记得脸，却把手的位置画变了。你把习作和他凭记忆画的图并排，让他自己找出线条挪到了哪里。'
+          seat: '学徒收拾东西时，你在地上替模特的椅子做了个记号。他把画留在半成处，下次来仍知道椅子该放哪儿。'
 text:
   en:
     name: Leonardo da Vinci
@@ -44,3 +57,34 @@ text:
   zh:
     name: 列奥纳多·达·芬奇
     text: 意大利画家与工程师，1452 年生，1519 年去世。他画了《最后的晚餐》和约 1503 年在佛罗伦萨开始的《蒙娜丽莎》，并用数千页笔记研究解剖、水流和机械。
+hook: {en: 'How long can a portrait stay in progress?', zh: '一幅肖像可以画多久'}
+facts:
+  lisa_portrait:
+    date: '1503'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [leonardo_florence_primary]
+    text:
+      en: 'The Louvre dates the beginning of Leonardo''s portrait known as the Mona Lisa to around 1503 and records that he kept working on it later. This workshop visit is invented.'
+      zh: '卢浮宫把列奥纳多开始画《蒙娜丽莎》的时间定在约 1503 年，并记载他后来仍在继续修改。本卡的作坊场景是虚构的。'
+bystanders:
+  leonardo_florence_reader:
+    invented: true
+    text: {en: 'An invented visitor watching an apprentice draw a practice portrait.', zh: '一位虚构的访客，在作坊看学徒练习画肖像。'}
+wiki:
+  refs:
+    leonardo_florence_primary:
+      order: 179
+      status: checked
+      text:
+        en: 'Louvre, Portrait of Lisa Gherardini (Mona Lisa), INV 779, with institutional dating and provenance. https://collections.louvre.fr/ark:/53355/cl010062370'
+        zh: 'Louvre, Portrait of Lisa Gherardini (Mona Lisa), INV 779, with institutional dating and provenance. https://collections.louvre.fr/ark:/53355/cl010062370'
+self_check:
+  quote_line: '你请学徒指一指，脸从哪儿结束，背景从哪儿开始。'
+  fact: lisa_portrait
+  regret_choice: '略过「说清一处明暗过渡在哪里」，这处细节便留给下一位核对。'
+  bookend: '从「一幅肖像可以画多久」开始，以员工留下的观察或更正收尾。'
+  share_line: '一幅肖像可以画多久'
+  share_number: '1503'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

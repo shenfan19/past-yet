@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {V: 1, S: 1}
     regret: true
+    refs: [hooke_london_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":7}},{"job":["civil_engineer","retired_engineer","geologist"]},{"trait":["methodical","quiet","skeptical"]}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","cosmopolitan"]},{"trait":["glib","streetwise","ambitious"]},{"trait":["ambitious"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["sensitive","artistic","cosmopolitan"]},{"trait":["kind","artistic","cosmopolitan"]}]}}
+      vignettes:
+        - {id: edge, traits: [artistic, vigil]}
+        - {id: analogy, traits: [curious, skeptical]}
+        - {id: plate}
     text:
       en:
         name: "The curator of experiments"
         place: "London"
         figure: "Robert Hooke"
-        story: "Robert Hooke, who drew the flea under the microscope and helped rebuild London, dies in his rooms at Gresham College. No certain portrait of him survives."
+        story: 'Hooke''s Micrographia of 1665 illustrates the small compartments he observed in cork. This London trip is set late in his life; the plate-reading visit is invented.'
         relic: "A drawing of a flea"
         relic_desc: "A fine engraving of a flea under glass."
         points:
-          p1: "Follow his instruments (an engineer, a mapmaker or sharp wit helps)"
-          p2: "Speak up for his name at the Society"
-          p3: "Sit with him in his rooms"
+          p1: 'Pick out a boundary on Hooke''s plate'
+          p2: 'Compare a cork chamber with the honeycomb drawing'
+          p3: 'Give the reader time to finish one careful sketch'
+        vignettes:
+          edge: 'The reader closes every incomplete edge. You cover half the plate and ask which outlines they can still defend. When the cover comes away, they leave several marks unfinished.'
+          analogy: 'You ask where the cork stops looking like a honeycomb. The reader puts the two pictures together and starts pointing out differences instead of naming more similarities.'
+          plate: 'The reader holds the picture too close and loses the grid. You give them room to pull it back and then ask them to point to one chamber.'
       zh:
         name: "实验的管理人"
         place: "伦敦"
         figure: "罗伯特·胡克"
-        story: "罗伯特·胡克在显微镜下画过跳蚤，也参与了伦敦的重建，他死在格雷欣学院的住处。他没有一幅确定无疑的肖像留下来。"
+        story: '胡克 1665 年的《显微图谱》画出了他在软木中观察到的小格。本卡在他晚年安排一场虚构的图版阅读。'
         relic: "一幅跳蚤的图"
         relic_desc: "一幅玻璃下跳蚤的精细版画。"
         points:
-          p1: "看懂他的仪器（工程师、制图师或敏锐的头脑更合适）"
-          p2: "在学会里替他的名字说话"
-          p3: "在他的住处陪他坐坐"
+          p1: '从胡克的图版里认出一格边界'
+          p2: '把软木小格和蜂房图对着看'
+          p3: '留时间让读者仔细描完一格'
+        vignettes:
+          edge: '读者把每一处断开的边都补成了整格。你盖住半张图，问他哪些线还能从图上认出。再揭开时，他留了几处断线。'
+          analogy: '你问软木在哪儿就不像蜂房了。读者把图凑到一起，开始指两幅图哪里不同。'
+          plate: '读者把图凑太近，看散了整片格子。你给他腾开地方，让他往远处拿，再请他只指出其中一格。'
 text:
   en:
     name: Robert Hooke
@@ -45,3 +58,34 @@ text:
   zh:
     name: 罗伯特·胡克
     text: 英国科学家，1635 年生，1703 年去世。他任皇家学会实验管理员，1665 年出版《显微图谱》，展示了软木的细胞结构，并提出以他命名的弹性定律。
+hook: {en: 'Draw only the boundary you can see.', zh: '看得见的格子才画下来'}
+facts:
+  micrographia:
+    date: '1665'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [hooke_london_primary]
+    text:
+      en: 'Hooke''s Micrographia of 1665 illustrates the small compartments he observed in cork. This London trip is set late in his life; the plate-reading visit is invented.'
+      zh: '胡克 1665 年的《显微图谱》画出了他在软木中观察到的小格。本卡在他晚年安排一场虚构的图版阅读。'
+bystanders:
+  hooke_london_reader:
+    invented: true
+    text: {en: 'An invented reader trying to draw what a plate shows.', zh: '一位虚构的读者，正试着描下图版里的形状。'}
+wiki:
+  refs:
+    hooke_london_primary:
+      order: 143
+      status: checked
+      text:
+        en: 'Robert Hooke, Micrographia, 1665, cork and honeycomb plate. Library of Congress. https://www.loc.gov/resource/cph.3b41351/'
+        zh: 'Robert Hooke, Micrographia, 1665, cork and honeycomb plate. Library of Congress. https://www.loc.gov/resource/cph.3b41351/'
+self_check:
+  quote_line: '读者把每一处断开的边都补成了整格。'
+  fact: micrographia
+  regret_choice: '略过「从胡克的图版里认出一格边界」，这处细节便留给下一位核对。'
+  bookend: '从「看得见的格子才画下来」开始，以员工留下的观察或更正收尾。'
+  share_line: '看得见的格子才画下来'
+  share_number: '1665'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

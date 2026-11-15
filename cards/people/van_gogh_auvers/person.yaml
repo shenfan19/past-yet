@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {H: 2, G: 3}
     regret: true
+    refs: [van_gogh_auvers_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"trait":["streetwise","wanderer"]},{"trait":["vigil"]}]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["kind","patient","faithful"]},{"job":["nurse"]}]}}
+      vignettes:
+        - {id: sky, traits: [artistic, curious]}
+        - {id: wind, traits: [quiet, vigil]}
+        - {id: path}
     text:
       en:
         name: "A summer in Auvers"
         place: "Auvers sur Oise"
         figure: "Vincent van Gogh"
-        story: "Van Gogh paints wheat fields and village streets almost every day in Auvers, and in July he dies with his brother Theo beside him. He sold almost none of his work."
+        story: 'In an Auvers letter from July 1890, Van Gogh describes painting broad wheatfields beneath unsettled skies. The walk with a fictional visitor is an imagined response to those works.'
         relic: "A tube of chrome yellow"
         relic_desc: "A squeezed tin tube of the colour he used for the fields."
         points:
-          p1: "See what the fields are saying (a painter or a curious mind helps)"
-          p2: "Walk the fields in the heat"
-          p3: "Stay by his bed through the last night"
+          p1: 'Pick out the changes in the sky above one field'
+          p2: 'Walk far enough to see where the path leads'
+          p3: 'Help the visitor bring a legible sketch back'
+        vignettes:
+          sky: 'You ask the visitor to draw the same field twice, first leaving little sky and then leaving much more. They can name one thing the second drawing makes them notice.'
+          wind: 'The visitor thinks the stalks point one way and stays there to draw them. You wait for the next gust. The dark patch moves and neither of you has to rub it out from the first sketch.'
+          path: 'You walk until the visitor can see the end of the path in the field. On the way back, they leave the end out of their drawing and can still explain where it goes.'
       zh:
         name: "奥维尔的夏天"
         place: "奥维尔"
         figure: "文森特·梵高"
-        story: "梵高在奥维尔几乎每天都在画麦田和村路，七月他在弟弟提奥身旁离世。他生前几乎没有卖出过作品。"
+        story: '梵高 1890 年 7 月在奥维尔写信，提到自己画了不安的天空下大片延展的麦田。卡中的访客和散步是围绕这些作品写的虚构情节。'
         relic: "一管铬黄颜料"
         relic_desc: "一支挤瘪的锡管，里面是他画麦田用的那种黄。"
         points:
-          p1: "看懂田野在说什么（画家或好奇的人更容易）"
-          p2: "在酷热里走过麦田"
-          p3: "整夜守在他的床边"
+          p1: '看同一片田上方的天空怎样变'
+          p2: '走到看得出路通往哪儿的地方'
+          p3: '帮访客带回一张看得明白的草图'
+        vignettes:
+          sky: '你请访客把同一片地画两遍，先只留一条天，再多留些。他从第二幅里指出了一件原先没留意的东西。'
+          wind: '访客觉得麦秆全朝一个方向，停下来画。你等到下一阵风，暗下去的一块换了地方，两人就另记一笔，不必擦去第一眼。'
+          path: '你走到访客看得清田路尽头的位置。回去时他没把尽头画进去，却已说得清路通到哪儿。'
 text:
   en:
     name: Vincent van Gogh
@@ -45,3 +58,34 @@ text:
   zh:
     name: 文森特·梵高
     text: 荷兰画家，1853 年生，1890 年去世。他只画了大约十年，留下两千多件作品，卖出的很少。最后几周他住在瓦兹河畔奥维尔，1890 年 7 月因枪伤去世。
+hook: {en: 'How much sky belongs above the field?', zh: '麦田上方，要留多少天空'}
+facts:
+  auvers_letter:
+    date: '1890-07'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [van_gogh_auvers_primary]
+    text:
+      en: 'In an Auvers letter from July 1890, Van Gogh describes painting broad wheatfields beneath unsettled skies. The walk with a fictional visitor is an imagined response to those works.'
+      zh: '梵高 1890 年 7 月在奥维尔写信，提到自己画了不安的天空下大片延展的麦田。卡中的访客和散步是围绕这些作品写的虚构情节。'
+bystanders:
+  van_gogh_auvers_reader:
+    invented: true
+    text: {en: 'An invented visitor who stops on the path to draw the view.', zh: '一位虚构的访客，在路上停下来画眼前的景色。'}
+wiki:
+  refs:
+    van_gogh_auvers_primary:
+      order: 176
+      status: checked
+      text:
+        en: 'Vincent van Gogh to Theo and Jo van Gogh-Bonger, Auvers-sur-Oise, about 10 July 1890, letter 898. Van Gogh Museum and Huygens ING edition. https://vangoghletters.org/vg/letters/let898/letter.html'
+        zh: 'Vincent van Gogh to Theo and Jo van Gogh-Bonger, Auvers-sur-Oise, about 10 July 1890, letter 898. Van Gogh Museum and Huygens ING edition. https://vangoghletters.org/vg/letters/let898/letter.html'
+self_check:
+  quote_line: '你请访客把同一片地画两遍，先只留一条天，再多留些。'
+  fact: auvers_letter
+  regret_choice: '略过「看同一片田上方的天空怎样变」，这处细节便留给下一位核对。'
+  bookend: '从「麦田上方，要留多少天空」开始，以员工留下的观察或更正收尾。'
+  share_line: '麦田上方，要留多少天空'
+  share_number: '1890-07'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {E: 3, G: 3}
     regret: true
+    refs: [keats_rome_primary]
     scene:
       points:
         - {id: p1, kind: care, req: {"trait":["cheerful","calm","patient"]}}
         - {id: p2, kind: endure, req: {"stat":{"will":6}}}
         - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+      vignettes:
+        - {id: address, traits: [methodical, vigil]}
+        - {id: farewell, traits: [kind, quiet, artistic, charismatic]}
+        - {id: stairs}
     text:
       en:
         name: "A room by the steps"
         place: "Rome"
         figure: "John Keats"
-        story: "Keats, ill with tuberculosis, spends his last months in a small room by the Spanish Steps with his friend Joseph Severn. He dies at twenty five."
+        story: 'Keats wrote to Charles Brown from Rome on 30 November 1820 and remarked on how difficult writing and saying farewell had become. The 1821 errand here is invented.'
         relic: "A pressed violet"
         relic_desc: "A dried flower kept in a book."
         points:
-          p1: "Keep him company in the afternoons"
-          p2: "Share the nights with Severn"
-          p3: "Ease his last hours"
+          p1: 'Keep the outside address legible'
+          p2: 'Help the lodger finish the errand without losing the enclosure'
+          p3: 'Leave the wording of the farewell with its writer'
+        vignettes:
+          address: 'The lodger gives you the letter with a hurried address. You ask them to read it back without looking at the inside. One missing place name goes onto the outside before you leave.'
+          farewell: 'The lodger wants to add a longer farewell because the short one sounds awkward. You let them say it aloud once. They decide the short line is how they actually speak.'
+          stairs: 'You wait on the stairs while the lodger finds the paper with the address. By the time you go, the note can stay folded and the destination is still visible.'
       zh:
         name: "台阶旁的小屋"
         place: "罗马"
         figure: "约翰·济慈"
-        story: "济慈患着肺结核，在西班牙台阶旁的一间小屋里度过最后几个月，朋友约瑟夫·塞文陪着他。他死时二十五岁。"
+        story: '济慈在 1820 年 11 月 30 日从罗马写给查尔斯·布朗，信里说写信和告别都变得困难。卡中 1821 年的送信差事为虚构。'
         relic: "一朵压干的紫罗兰"
         relic_desc: "夹在书里的一朵干花。"
         points:
-          p1: "下午陪他说说话"
-          p2: "和塞文轮流守夜"
-          p3: "让他最后的几个小时好过一些"
+          p1: '让外封地址还认得清'
+          p2: '帮住客送出信而不丢掉附件'
+          p3: '把离别时怎么说留给写信的人'
+        vignettes:
+          address: '住客递给你的信，地址写得急。你请他只看外头念一遍，出门前补上了漏写的地名。'
+          farewell: '住客嫌道别太短、听着别扭，想添长些。你让他念一遍。他听完，觉得短的那句原本就是自己说话的样子。'
+          stairs: '住客找写地址的纸时，你在楼梯上等。等你出门，信折起来也还能看清送往哪里。'
 text:
   en:
     name: John Keats
@@ -45,3 +58,34 @@ text:
   zh:
     name: 约翰·济慈
     text: 英国诗人，1795 年生，1821 年去世。他在短短几年里写出包括颂诗在内的主要作品，二十五岁时在罗马死于肺结核。
+hook: {en: 'How much can a short goodbye say?', zh: '短短一句怎么道别'}
+facts:
+  rome_letter:
+    date: '1820-11-30'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [keats_rome_primary]
+    text:
+      en: 'Keats wrote to Charles Brown from Rome on 30 November 1820 and remarked on how difficult writing and saying farewell had become. The 1821 errand here is invented.'
+      zh: '济慈在 1820 年 11 月 30 日从罗马写给查尔斯·布朗，信里说写信和告别都变得困难。卡中 1821 年的送信差事为虚构。'
+bystanders:
+  keats_rome_reader:
+    invented: true
+    text: {en: 'An invented lodger checking a letter before taking it out.', zh: '一位虚构的住客，出门前正核对要送的信。'}
+wiki:
+  refs:
+    keats_rome_primary:
+      order: 194
+      status: checked
+      text:
+        en: 'John Keats, letter to Charles Brown from Rome, 30 November 1820, Letters of John Keats to His Family and Friends, no. CLVIII. https://www.gutenberg.org/ebooks/35698'
+        zh: 'John Keats, letter to Charles Brown from Rome, 30 November 1820, Letters of John Keats to His Family and Friends, no. CLVIII. https://www.gutenberg.org/ebooks/35698'
+self_check:
+  quote_line: '住客递给你的信，地址写得急。'
+  fact: rome_letter
+  regret_choice: '略过「让外封地址还认得清」，这处细节便留给下一位核对。'
+  bookend: '从「短短一句怎么道别」开始，以员工留下的观察或更正收尾。'
+  share_line: '短短一句怎么道别'
+  share_number: '1820-11-30'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

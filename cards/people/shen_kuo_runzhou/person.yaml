@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {L: 1}
+    refs: [shen_kuo_runzhou_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["methodical","curious","wanderer"]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: hold, req: {"any":[{"job":["archivist"]},{"trait":["bold"]}]}}
+      vignettes:
+        - {id: directions, traits: [skeptical, methodical]}
+        - {id: ends, traits: [handy, vigil]}
+        - {id: copy}
     text:
       en:
         name: A notebook of everything he saw
         place: Runzhou, China
         figure: Shen Kuo
-        story: Shen Kuo writes the Dream Pool Essays, noting among much else that a magnet needle points a little off true north.
+        story: 'In Dream Pool Essays Shen Kuo records that the south-seeking end of a magnetized needle points slightly east of due south. The card''s date places an imagined reading scene in his Runzhou years.'
         relic: A magnetised needle
         relic_desc: A needle that finds the same direction every time.
         points:
-          p1: "Identify the things he recorded"
-          p2: "Walk the long road of the survey"
-          p3: "Sort out the notes"
+          p1: 'Identify the south-seeking end of the needle'
+          p2: 'Keep the marked direction clear when the sheet is turned'
+          p3: 'Leave a caption that preserves the small deviation'
+        vignettes:
+          directions: 'You ask the reader which line is due south. He has drawn just one. You add a second line on the paper, and the small angle the passage describes becomes visible.'
+          ends: 'The reader turns the paper over to show you the drawing and swaps the two ends as he retells it. You label the south-seeking tip before he copies it into the notebook.'
+          copy: 'You ask the reader to keep the word slightly in the caption. The drawing takes up a whole page; the difference described in the book need not.'
       zh:
         name: 什么都记下来的笔记
         place: 中国润州
         figure: 沈括
-        story: 沈括写下《梦溪笔谈》，其中记到磁针指的方向略偏离正北。
+        story: '沈括在《梦溪笔谈》中记下，磨过的磁针指南，却常微微偏东。卡片用润州时期的年份安排一段虚构的读书场景。'
         relic: 一根磁化的针
         relic_desc: 每次都指向同一个方向的针。
         points:
-          p1: "辨认他记下的事物"
-          p2: "跟着考察走远路"
-          p3: "整理笔记"
+          p1: '认出磁针指南的一端'
+          p2: '纸转动之后仍能认清标记的方向'
+          p3: '把「微微偏东」写进图注'
+        vignettes:
+          directions: '你问读者哪一条是正南。他纸上只有一道线。你添上另一道，书里那个微小的偏角才看得出来。'
+          ends: '读者把纸转过来给你看，口头重述时却换了针的两头。你趁他还没誊进本子，标明哪一头指南。'
+          copy: '你请读者在图旁保留那个「微」字。图画了一整页，书上说的偏差可没那么大。'
 text:
   en:
     name: Shen Kuo
@@ -44,3 +57,34 @@ text:
   zh:
     name: 沈括
     text: 宋代学者与官员，1031 年生，1095 年去世。他在润州写成的《梦溪笔谈》记载了指南针、活字印刷、侵蚀地质学以及许多其他观察。
+hook: {en: 'The needle misses due south.', zh: '针尖为何没有正指南'}
+facts:
+  needle:
+    date: '1088'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [shen_kuo_runzhou_primary]
+    text:
+      en: 'In Dream Pool Essays Shen Kuo records that the south-seeking end of a magnetized needle points slightly east of due south. The card''s date places an imagined reading scene in his Runzhou years.'
+      zh: '沈括在《梦溪笔谈》中记下，磨过的磁针指南，却常微微偏东。卡片用润州时期的年份安排一段虚构的读书场景。'
+bystanders:
+  shen_kuo_runzhou_reader:
+    invented: true
+    text: {en: 'An invented reader trying to draw the needle''s direction.', zh: '一位虚构的读者，正照书画针的指向。'}
+wiki:
+  refs:
+    shen_kuo_runzhou_primary:
+      order: 128
+      status: checked
+      text:
+        en: 'Shen Kuo, Mengxi bitan (Dream Pool Essays), vol. 24, Miscellaneous Notes. Sibu congkan facsimile. https://zh.wikisource.org/wiki/Page:Sibu_Congkan_Xubian344-沈括-夢溪筆談-4-4.djvu/61'
+        zh: 'Shen Kuo, Mengxi bitan (Dream Pool Essays), vol. 24, Miscellaneous Notes. Sibu congkan facsimile. https://zh.wikisource.org/wiki/Page:Sibu_Congkan_Xubian344-沈括-夢溪筆談-4-4.djvu/61'
+self_check:
+  quote_line: '你问读者哪一条是正南。'
+  fact: needle
+  regret_choice: '略过「认出磁针指南的一端」，这处细节便留给下一位核对。'
+  bookend: '从「针尖为何没有正指南」开始，以员工留下的观察或更正收尾。'
+  share_line: '针尖为何没有正指南'
+  share_number: '1088'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {C: 3, Y: 2}
     regret: true
+    refs: [cao_xueqin_beijing_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: care, req: {"trait":["sensitive","patient","calm"]}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["attached","cosmopolitan","sensitive"]}}
+      vignettes:
+        - {id: stone, traits: [curious, bold]}
+        - {id: margin, traits: [methodical, vigil]}
+        - {id: loose}
     text:
       en:
         name: "A novel left at eighty chapters"
         place: "Western Hills, Beijing"
         figure: "Cao Xueqin"
-        story: "Living in poverty on the western edge of Beijing, Cao Xueqin spends years revising Dream of the Red Chamber. He dies leaving it unfinished, and friends copy it out by hand."
+        story: 'An early annotated text of The Story of the Stone names Cao Xueqin in its opening and describes repeated revision within the novel''s frame. The setting uses 1763 without treating the book''s self-description as a dated biography. The copying scene is invented.'
         relic: "A hand copied chapter"
         relic_desc: "A chapter copied by friends, with comments in red ink in the margin."
         points:
-          p1: "Keep track of the many families in the story"
-          p2: "Share a meal in the cold hills"
-          p3: "Be a reader he trusts to the last page he wrote"
+          p1: 'Identify a voice inside the framing story'
+          p2: 'Keep a comment next to the line it discusses'
+          p3: 'Restore the order of two loose pages'
+        vignettes:
+          stone: 'You ask whether the stone could name its own copyist. The copyist lifts the first sheet and reads how the story introduces itself. You put the stone under story and the copying question on another slip.'
+          margin: 'Two hands have left marks beside the same passage. You ask the copyist to leave room between the commentary and the line it comments on. The next copy still shows both.'
+          loose: 'You pick up a loose page by the blank edge and read its first few characters aloud. The copyist finds the matching catch in the pile and puts the leaf back.'
       zh:
         name: "停在八十回的小说"
         place: "北京西山"
         figure: "曹雪芹"
-        story: "曹雪芹在北京西郊过着贫困的日子，花了多年反复修改《红楼梦》。他去世时书还没有写完，朋友们把它一份份抄了下来。"
+        story: '脂评本《石头记》开篇提到曹雪芹，并在小说的叙事框架里写到反复增删。卡片沿用 1763 年作为背景，抄书场景为虚构。书里的自述也以原文中的框架来读。'
         relic: "一份手抄的章回"
         relic_desc: "朋友抄下的一回，页边有红笔写的批语。"
         points:
-          p1: "理清故事里那么多家人"
-          p2: "在寒冷的山里和他分食一餐"
-          p3: "做他信得过的读者，读到他写下的最后一页"
+          p1: '认出开篇框架里说话的是谁'
+          p2: '让批语跟着它所批的那一句'
+          p3: '把两张散开的纸排回顺序'
+        vignettes:
+          stone: '你问石头会不会说出是谁抄的。抄书人揭起第一页，把故事如何开头念了一遍。你把石头列在故事里，抄书人的问题另夹一签。'
+          margin: '同一段旁边有两种笔迹。你请抄书人在批语和所批的句子间留空。传下去的新抄件还能看见两边。'
+          loose: '你捏住空白边捡起散页，念出开头几个字。抄书人从纸摞里找到接得上的地方，把这一页夹回去。'
 text:
   en:
     name: Cao Xueqin
@@ -45,3 +58,34 @@ text:
   zh:
     name: 曹雪芹
     text: 清代小说家，约 1715 年生，约 1763 年去世。他写下《红楼梦》，讲一个大家族的盛衰，晚年住在北京西山，书稿未能写完。
+hook: {en: 'Whose words are in the margin?', zh: '页边那句究竟是谁写的'}
+facts:
+  stone_opening:
+    date: '1763'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [cao_xueqin_beijing_primary]
+    text:
+      en: 'An early annotated text of The Story of the Stone names Cao Xueqin in its opening and describes repeated revision within the novel''s frame. The setting uses 1763 without treating the book''s self-description as a dated biography. The copying scene is invented.'
+      zh: '脂评本《石头记》开篇提到曹雪芹，并在小说的叙事框架里写到反复增删。卡片沿用 1763 年作为背景，抄书场景为虚构。书里的自述也以原文中的框架来读。'
+bystanders:
+  cao_xueqin_beijing_reader:
+    invented: true
+    text: {en: 'An invented copyist with a page of text and a page of comments.', zh: '一位虚构的抄书人，手边一页正文、一页批语。'}
+wiki:
+  refs:
+    cao_xueqin_beijing_primary:
+      order: 189
+      status: checked
+      text:
+        en: 'The Story of the Stone, Rouge Ink annotated text, chapter 1, Wikisource transcription. https://zh.wikisource.org/wiki/脂硯齋重評石頭記/第一回'
+        zh: 'The Story of the Stone, Rouge Ink annotated text, chapter 1, Wikisource transcription. https://zh.wikisource.org/wiki/脂硯齋重評石頭記/第一回'
+self_check:
+  quote_line: '你问石头会不会说出是谁抄的。'
+  fact: stone_opening
+  regret_choice: '略过「认出开篇框架里说话的是谁」，这处细节便留给下一位核对。'
+  bookend: '从「页边那句究竟是谁写的」开始，以员工留下的观察或更正收尾。'
+  share_line: '页边那句究竟是谁写的'
+  share_number: '1763'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 1, G: 2}
     regret: true
+    refs: [rembrandt_amsterdam_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"stat":{"finesse":6}}]}}
         - {id: p2, kind: care, req: {"trait":["faithful","cheerful","calm"]}}
         - {id: p3, kind: hold, redeem: true, req: {"trait":["methodical","bold","vigil","handy"]}}
+      vignettes:
+        - {id: mirror, traits: [artistic, curious]}
+        - {id: seat, traits: [handy, methodical]}
+        - {id: look}
     text:
       en:
         name: "After his son"
         place: "Amsterdam"
         figure: "Rembrandt van Rijn"
-        story: "Rembrandt, bankrupt years before and having outlived his son Titus, dies in Amsterdam in modest circumstances. He is still painting his own face."
+        story: 'The dated Self Portrait at the Age of 63 shows that Rembrandt was painting self-portraits in 1669, the year of his death. The workshop exercise is invented.'
         relic: "A brush"
         relic_desc: "A worn brush with the paint dried in the hairs."
         points:
-          p1: "See how he builds a face (a painter or fine hands help)"
-          p2: "Sit with him after Titus"
-          p3: "Stay until the last self portrait is done"
+          p1: 'Notice what changes when the face turns'
+          p2: 'Help the apprentice settle on a place to sit'
+          p3: 'Leave the exercise ready for another look'
+        vignettes:
+          mirror: 'The apprentice keeps drawing the face they expected to see. You ask them to turn a little and wait until they can describe the light before drawing again.'
+          seat: 'You put a chalk mark beside the stool before the apprentice takes a break. On returning they find the angle again without moving the whole table.'
+          look: 'You sit beside the apprentice until their gaze stops darting between mirror and paper. When they show you the drawing, one corner is still blank and they decide to leave it.'
       zh:
         name: "儿子之后"
         place: "阿姆斯特丹"
         figure: "伦勃朗"
-        story: "伦勃朗几年前破产，又比儿子提图斯活得更久，最后在阿姆斯特丹清贫地去世，直到晚年还在画自己的脸。"
+        story: '伦勃朗有一幅署年 1669 的《六十三岁自画像》，可见他在去世那年仍在画自己的脸。工坊中的习作场景为虚构。'
         relic: "一支画笔"
         relic_desc: "一支磨旧的画笔，笔毛里的颜料已经干了。"
         points:
-          p1: "看他怎样塑造一张脸（画家或灵巧的手更合适）"
-          p2: "在提图斯去世后陪他坐一会"
-          p3: "一直待到最后那幅自画像画完"
+          p1: '看出脸转过去时光线哪里变了'
+          p2: '帮学徒找准能坐住的位置'
+          p3: '把习作留好，方便回头再看'
+        vignettes:
+          mirror: '学徒总画成自己想象的样子。你请他稍微转过脸，等能说清光落在哪儿，再往下画。'
+          seat: '学徒歇手前，你在凳脚旁画了道粉笔记号。他回来时不用挪整张桌子，也能坐回原来的角度。'
+          look: '你陪学徒坐着，等他的眼睛不再急着在镜子和纸之间来回跳。他把画递给你看时还有一角空着，决定先留在那里。'
 text:
   en:
     name: Rembrandt van Rijn
@@ -45,3 +58,34 @@ text:
   zh:
     name: 伦勃朗
     text: 荷兰画家与蚀刻师，1606 年生，1669 年去世。他画光线强烈的肖像和圣经场景，包括《夜巡》。1656 年他破产，晚年在阿姆斯特丹负债度日。
+hook: {en: 'How long can you sit still for a mirror?', zh: '你能在镜前坐多久'}
+facts:
+  late_portrait:
+    date: '1669'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [rembrandt_amsterdam_primary]
+    text:
+      en: 'The dated Self Portrait at the Age of 63 shows that Rembrandt was painting self-portraits in 1669, the year of his death. The workshop exercise is invented.'
+      zh: '伦勃朗有一幅署年 1669 的《六十三岁自画像》，可见他在去世那年仍在画自己的脸。工坊中的习作场景为虚构。'
+bystanders:
+  rembrandt_amsterdam_reader:
+    invented: true
+    text: {en: 'An invented apprentice trying to sketch their own face.', zh: '一位虚构的学徒，第一次试着画自己的脸。'}
+wiki:
+  refs:
+    rembrandt_amsterdam_primary:
+      order: 132
+      status: checked
+      text:
+        en: 'Rembrandt, Self Portrait at the Age of 63, 1669, National Gallery, London. https://www.nationalgallery.org.uk/paintings/rembrandt-self-portrait-at-the-age-of-63'
+        zh: 'Rembrandt, Self Portrait at the Age of 63, 1669, National Gallery, London. https://www.nationalgallery.org.uk/paintings/rembrandt-self-portrait-at-the-age-of-63'
+self_check:
+  quote_line: '学徒总画成自己想象的样子。'
+  fact: late_portrait
+  regret_choice: '略过「看出脸转过去时光线哪里变了」，这处细节便留给下一位核对。'
+  bookend: '从「你能在镜前坐多久」开始，以员工留下的观察或更正收尾。'
+  share_line: '你能在镜前坐多久'
+  share_number: '1669'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

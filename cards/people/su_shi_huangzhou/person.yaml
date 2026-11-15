@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {L: 2, Y: 1}
     regret: true
+    refs: [su_shi_huangzhou_primary]
     scene:
       points:
         - {id: p1, kind: care, req: {"any":[{"job":["chef"]},{"trait":["faithful","patient","attached"]}]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: notice, redeem: true, req: {"any":[{"trait":["handy","quiet"]},{"job":["painter","musician"]}]}}
+      vignettes:
+        - {id: place, traits: [skeptical, curious]}
+        - {id: sound, traits: [artistic, quiet]}
+        - {id: landing}
     text:
       en:
         name: "Exile on the Eastern Slope"
         place: "Huangzhou"
         figure: "Su Shi"
-        story: "Sent to Huangzhou after a trial over his poems, Su Shi farms a hillside plot, writes some of his best known poems and essays, and visits the Red Cliff."
+        story: 'Su Shi''s Former Ode on the Red Cliff opens with a boat outing in the autumn of the renxu year, 1082. The essay uses the landscape to invoke older stories. The people in this game''s riverside scene are invented.'
         relic: "A straw cloak"
         relic_desc: "A rough rain cloak of the kind a farmer wore on the slope."
         points:
-          p1: "Cook a meal with him (a chef, a kind employee or a sensitive employee)"
-          p2: "Dig the field on the slope with him"
-          p3: "Hear him by the river in the moonlight (a sensitive employee, a painter or a musician)"
+          p1: 'Help a passenger keep a bundle dry'
+          p2: 'Make room at the landing while the boat is being readied'
+          p3: 'Bring back a description of the river that the reader can picture'
+        vignettes:
+          place: 'You ask the boatman which part of the old story happened on this bank. He points you towards the landing he knows, then asks which book you got the other bank from.'
+          sound: 'A passenger tries to tell you about the river before the boat pushes off. You wait for a lull in the reeds to ask which sound made him turn his head.'
+          landing: 'You hold a small bundle while the boatman frees the rope. When you write down where you went, you mark the landing and the river bend separately.'
       zh:
         name: "东坡的流放"
         place: "黄州"
         figure: "苏轼"
-        story: "因为诗文而受审之后，苏轼被贬到黄州，在山坡上种地，写下一些最有名的诗文，并游了赤壁。"
+        story: '苏轼《前赤壁赋》开篇记壬戌之秋泛舟赤壁，即 1082 年。赋里由眼前江景联想旧事。本趟江边相遇的人是虚构的。'
         relic: "一件蓑衣"
         relic_desc: "一件粗糙的雨衣，是农人在坡地上穿的那种。"
         points:
-          p1: "和他一起做一顿饭"
-          p2: "陪他在坡地上开垦"
-          p3: "在月色里的江边听他说话"
+          p1: '帮乘客把包裹拿离湿处'
+          p2: '开船前帮忙让开渡口'
+          p3: '带回一段让人看得见江景的描述'
+        vignettes:
+          place: '你问船家，旧故事里哪一段真发生在这边。船家指了指他认得的渡口，反问你，对岸那段是从哪本书里听来的。'
+          sound: '船离岸前，一位乘客急着跟你说江上的见闻。你等芦苇声低下去，才问哪一声让他回过头。'
+          landing: '船家去松缆，你帮他抱住一小包东西。写下这趟去了哪里时，你把渡口和江湾分别记了下来。'
 text:
   en:
     name: Su Shi
@@ -45,3 +58,34 @@ text:
   zh:
     name: 苏轼
     text: 宋代诗人、书法家与官员，1037 年生，1101 年去世。1080 年因一桩政治案件被贬到黄州，他在那里种地，并写出了几篇最有名的诗文。
+hook: {en: 'Which Red Cliff are we talking about?', zh: '江边说的是哪一个赤壁'}
+facts:
+  red_cliff:
+    date: '1082'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [su_shi_huangzhou_primary]
+    text:
+      en: 'Su Shi''s Former Ode on the Red Cliff opens with a boat outing in the autumn of the renxu year, 1082. The essay uses the landscape to invoke older stories. The people in this game''s riverside scene are invented.'
+      zh: '苏轼《前赤壁赋》开篇记壬戌之秋泛舟赤壁，即 1082 年。赋里由眼前江景联想旧事。本趟江边相遇的人是虚构的。'
+bystanders:
+  su_shi_huangzhou_reader:
+    invented: true
+    text: {en: 'An invented boatman waiting for the last passenger.', zh: '一位虚构的船家，正在等最后一位乘客。'}
+wiki:
+  refs:
+    su_shi_huangzhou_primary:
+      order: 130
+      status: checked
+      text:
+        en: 'Su Shi, Former Ode on the Red Cliff, autograph scroll, National Palace Museum. https://digitalarchive.npm.gov.tw/Collection/Detail?dep=P&id=882'
+        zh: 'Su Shi, Former Ode on the Red Cliff, autograph scroll, National Palace Museum. https://digitalarchive.npm.gov.tw/Collection/Detail?dep=P&id=882'
+self_check:
+  quote_line: '你问船家，旧故事里哪一段真发生在这边。'
+  fact: red_cliff
+  regret_choice: '略过「帮乘客把包裹拿离湿处」，这处细节便留给下一位核对。'
+  bookend: '从「江边说的是哪一个赤壁」开始，以员工留下的观察或更正收尾。'
+  share_line: '江边说的是哪一个赤壁'
+  share_number: '1082'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

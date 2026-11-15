@@ -10,34 +10,47 @@ events:
     tier: 3
     channels: {L: 2, G: 2}
     regret: true
+    refs: [qu_yuan_miluo_primary, qu_yuan_miluo_shiji]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["quiet","scholarly","methodical"]},{"stat":{"wit":6}}]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"stat":{"will":7}},{"job":["archivist","student"]}]}}
+      vignettes:
+        - {id: two_tales, traits: [curious, skeptical]}
+        - {id: refrain, traits: [artistic, quiet]}
+        - {id: wait}
     text:
       en:
         name: "Verses by the river"
         place: "Miluo River"
         figure: "Qu Yuan"
-        story: "Exiled far from the court he served, the poet Qu Yuan wanders the banks of the Miluo and gives his grief to long poems. Tradition says he died in these waters in 278 BC, and his verses were kept by those who loved them."
+        story: 'The Songs of Chu transmits The Fisherman, a literary exchange between Qu Yuan and a fisherman. The later biography in the Records also preserves a version of the dialogue. The traditional game year and this riverside scene do not identify either dialogue as a witnessed encounter.'
         relic: "A bamboo slip of verse"
         relic_desc: "A slip of bamboo carrying a few lines of a long poem."
         points:
-          p1: "Hear the verses as he speaks them"
-          p2: "Walk the river bank with him all day"
-          p3: "Keep his verses by heart (a record keeper, a student or a determined employee)"
+          p1: 'Recognize the two voices in the literary dialogue'
+          p2: 'Listen for what changes in a second telling'
+          p3: 'Keep a line of poetry with the account that preserves it'
+        vignettes:
+          two_tales: 'The ferryman has heard a different ending from the one you brought. You listen as they tell it through and mark whose telling it is before comparing the lines.'
+          refrain: 'The ferryman starts humming after the question in the tale. You wait until the tune ends before asking where they first heard the words.'
+          wait: 'While the ferry waits, you ask the teller to go back to where the two people first speak. Onshore, you can still remember who asked the first question.'
       zh:
         name: "江边的诗句"
         place: "汨罗江"
         figure: "屈原"
-        story: "被放逐到远离朝廷的地方，诗人屈原在汨罗江边游走，把满腔忧愁写成长诗。相传他于公元前278年在这片水中去世，他的诗句由爱它们的人留了下来。"
+        story: '《楚辞》传有《渔父》，写屈原与渔父的文辞问答。《史记》本传也保留了一版对话。本卡采用传统年份作背景，江边场景为虚构。传本对话是文献中的记述。'
         relic: "一片写诗的竹简"
         relic_desc: "一片竹简，上面是一首长诗中的几行。"
         points:
-          p1: "听他把诗句念出来"
-          p2: "陪他沿江岸走一整天"
-          p3: "把他的诗记在心里"
+          p1: '认出文辞问答里两种声音'
+          p2: '听出换个人讲以后哪里变了'
+          p3: '把诗句和保存它的传本放在一起'
+        vignettes:
+          two_tales: '渡船人听来的收尾跟你带来的不同。你听他把整段讲完，先记是谁传的，再对照两处词句。'
+          refrain: '故事讲到问话，渡船人接着哼起来。你等曲子完了才问，他最早从哪里听到这些话。'
+          wait: '等开船时，你请讲故事的人回到两人头一次开口的地方。上岸之后，你还记得是谁先问了一句。'
 text:
   en:
     name: Qu Yuan
@@ -45,3 +58,40 @@ text:
   zh:
     name: 屈原
     text: 楚国诗人与大臣，约公元前 340 年生，约公元前 278 年去世。他的长诗《离骚》是中国诗歌的奠基之作。楚国都城陷落后，据说他投汨罗江自尽，端午节与对他的纪念有关。
+hook: {en: 'A fisherman is also a voice in a story.', zh: '渔父在书中，是谁的声音'}
+facts:
+  fisherman_tradition:
+    date: '-278'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [qu_yuan_miluo_primary, qu_yuan_miluo_shiji]
+    text:
+      en: 'The Songs of Chu transmits The Fisherman, a literary exchange between Qu Yuan and a fisherman. The later biography in the Records also preserves a version of the dialogue. The traditional game year and this riverside scene do not identify either dialogue as a witnessed encounter.'
+      zh: '《楚辞》传有《渔父》，写屈原与渔父的文辞问答。《史记》本传也保留了一版对话。本卡采用传统年份作背景，江边场景为虚构。传本对话是文献中的记述。'
+bystanders:
+  qu_yuan_miluo_reader:
+    invented: true
+    text: {en: 'An invented ferryman who has heard a version of the tale.', zh: '一位虚构的渡船人，听人讲过这个故事。'}
+wiki:
+  refs:
+    qu_yuan_miluo_shiji:
+      order: 201
+      status: checked
+      text:
+        en: 'Records of the Grand Historian, vol. 84, Biography of Qu Yuan and Jia Yi, three commentaries edition. https://zh.wikisource.org/wiki/史記三家註/卷084'
+        zh: '《史记三家注》卷八十四《屈原贾生列传》。https://zh.wikisource.org/wiki/史記三家註/卷084'
+    qu_yuan_miluo_primary:
+      order: 199
+      status: checked
+      text:
+        en: 'The Fisherman, Songs of Chu, with Wang Yi''s received commentary; Records of the Grand Historian, vol. 84, three commentaries edition. https://zh.wikisource.org/zh-hant/漁父'
+        zh: 'The Fisherman, Songs of Chu, with Wang Yi''s received commentary; Records of the Grand Historian, vol. 84, three commentaries edition. https://zh.wikisource.org/zh-hant/漁父'
+self_check:
+  quote_line: '渡船人听来的收尾跟你带来的不同。'
+  fact: fisherman_tradition
+  regret_choice: '略过「认出文辞问答里两种声音」，这处细节便留给下一位核对。'
+  bookend: '从「渔父在书中，是谁的声音」开始，以员工留下的观察或更正收尾。'
+  share_line: '渔父在书中，是谁的声音'
+  share_number: '-278'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

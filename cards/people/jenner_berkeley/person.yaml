@@ -10,34 +10,47 @@ events:
     tier: 2
     era: jenner_berkeley_1796
     channels: {E: 2}
+    refs: [jenner_inquiry_original]
     scene:
       points:
         - {id: p1, kind: notice, req: {"provides":"cure"}}
         - {id: p2, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
         - {id: p3, kind: persuade, req: {"trait":["streetwise","ambitious","charismatic","skeptical"]}}
+      vignettes:
+        - {id: firsthand, traits: [curious, skeptical]}
+        - {id: order, traits: [methodical, vigil]}
+        - {id: blank}
     text:
       en:
         name: The first vaccine
         place: Berkeley, England
         figure: Edward Jenner
-        story: Jenner tests that cowpox protects against smallpox, and vaccination begins.
+        story: 'Jenner''s 1798 Inquiry records earlier observations and cases concerning cowpox and smallpox. This Berkeley trip uses 1796 as its setting for an invented conversation about how to keep an observation record.'
         relic: A glass lancet
         relic_desc: A thin blade for the first small scratch.
         points:
           p1: "Hear the milkmaid speak of cowpox"
           p2: "Tend the children after the inoculation"
           p3: "Persuade a doubtful mother"
+        vignettes:
+          firsthand: 'A fictional copyist has written every account in the same voice. You ask which one the writer actually saw. The copyist adds a note beside the rest rather than giving every line the same weight.'
+          order: 'Two observations have traded places in the copy. You check the dates, and the copyist reverses the slips before using the order to tell a story.'
+          blank: 'You leave room under a note the copyist cannot confirm. By the time the page is passed on, the blank has a label so no one mistakes it for an omission.'
       zh:
         name: 第一支疫苗
         place: 英国伯克利
         figure: 爱德华·詹纳
-        story: 詹纳验证了牛痘能防天花，接种由此开始。
+        story: '詹纳 1798 年出版的《探究》回顾了较早的牛痘与天花观察和病例。卡片以 1796 年的伯克利为背景，关于怎样记观察的交谈是虚构的。'
         relic: 一把玻璃小刀
         relic_desc: 一片很薄的刀片，划下第一道小口。
         points:
           p1: "听挤奶女工说起牛痘"
           p2: "照看接种后的孩子"
           p3: "说服疑虑的母亲"
+        vignettes:
+          firsthand: '虚构的誊写员把每则记载都誊成了同一种口气。你问哪一件是记述者亲眼见过的。他在其余条目旁补上说明，没把每一行都当成同一等证据。'
+          order: '抄件里两条观察换了位置。你核对日期，誊写员先把纸签调回来，才照先后讲述。'
+          blank: '誊写员有一条无法确定，你在下面留了地方。纸递出去以前，空白旁添上说明，免得后来人当成漏抄。'
 text:
   en:
     name: Edward Jenner
@@ -96,6 +109,12 @@ wiki:
           name: 第一次牛痘接种
           text: 1796 年 5 月 14 日，爱德华·詹纳把牛痘疮里的物质接种给一个男孩，后来又试了男孩是否受到天花的保护。按今天的标准，这样的试验不会被允许。游戏里员工能帮着让它提前，只在这条分支里成立。
   refs:
+    jenner_inquiry_original:
+      order: 173
+      status: checked
+      text:
+        en: 'Edward Jenner, An Inquiry into the Causes and Effects of the Variolae Vaccinae, 1798. Project Gutenberg transcription. https://www.gutenberg.org/ebooks/29414'
+        zh: '爱德华·詹纳，《关于牛痘成因和影响的探究》，1798 年，古登堡计划转录。https://www.gutenberg.org/ebooks/29414'
     jenner1798:
       order: 5
       status: pending

@@ -16,17 +16,20 @@ export function fmt(tpl, vars, extra = {}) {
   });
 }
 
-export function dateLabel(D, E, t) {
+export function dateLabel(D, E, t, dayOnly = false) {
   const T = D.get('text');
   const hour = (t - Math.floor(t)) * 24;
   let part = T.day_parts[0].name;
   for (const p of T.day_parts) if (hour >= p.from) part = p.name;
+  // the date is counted on the real calendar from day 0 of the model, so a month has its own length
   const cal = E.calendar;
-  const total = cal.day0 + Math.floor(t);
-  const month = cal.month + Math.floor((total - 1) / cal.month_length);
+  const at = new Date(Date.UTC(2000, cal.month - 1, cal.day0));
+  at.setUTCFullYear(E.raw.metadata.era.year);
+  at.setUTCDate(at.getUTCDate() + Math.floor(t));
+  const month = at.getUTCMonth() + 1;
   const monthName = T.month_names[month - 1];
-  const day = ((total - 1) % cal.month_length) + 1;
-  return fmt(T.date_format, {}, { m: month, mn: monthName, d: day, part });
+  const day = at.getUTCDate();
+  return fmt(dayOnly ? T.date_day : T.date_format, {}, { m: month, mn: monthName, d: day, part });
 }
 
 export function itemText(D, eraId, id) {
@@ -57,6 +60,8 @@ export function staffProfile(D, id) {
 export function staffName(D, id) { return D.get(`text.staff.${id}.name`); }
 export function staffTraits(D, id) { return D.get(`staff.staff.${id}.traits`); }
 
+const stayDaysOf = (res) => (res.branch.arrivedDay === null ? 0 : (res.branch.leftDay ?? res.branch.digest.length) - res.branch.arrivedDay);
+
 export function buildReport(D, E, res) {
   const T = D.get('text');
   const ET = T.eras[E.id];
@@ -69,22 +74,39 @@ export function buildReport(D, E, res) {
   Object.assign(ctxVars, res.score);
   const common = { staff, era: ET.short, kit: kitText(D, spec.items, E.id) };
 
-  // timeline
+  // timeline. A line belongs to a segment of the stay, one office day long, and a recorded date that falls after the traveller has left is marked as after.
+  // A milestone reads the text of its variant, and where the card has a line written for this employee at this moment, that line.
+  const SEG = D.get('config.travel.history_days_per_office_day');
+  const arrivedAt = res.branch.arrivedDay, leftAt = res.branch.leftDay;
+  const personal = (key) => ET.personal?.[key]?.[spec.staffId];
   const entries = res.branch.log.map((e) => {
     const vars = { ...e.snap };
     for (const [n, x] of Object.entries(res.base.final)) vars['base_' + n.replace(/\./g, '_')] = x;
-    const extra = { ...common, date: dateLabel(D, E, e.t), __delta: e.delta };
+    const extra = { ...common, date: dateLabel(D, E, e.t, e.kind === 'milestone'), __delta: e.delta };
     let text;
     if (e.kind === 'arrive') text = fmt(Object.values(spec.items).some((n) => n > 0) ? T.generic.arrive : T.generic.arrive_empty, vars, extra);
     else if (e.kind === 'leave') text = fmt(T.generic.leave, vars, extra);
     else if (e.kind === 'recall') text = fmt(T.generic[e.key], vars, extra);
     else if (e.kind === 'event') text = fmt(ET.events[e.key], vars, extra);
-    else text = fmt(ET.milestones[e.id], vars, extra);
+    else text = fmt(personal(e.key || e.id) ?? ET.milestones[e.key || e.id], vars, extra);
     const tag = e.tag || null;
     const source = e.source || (tag ? E.tagSource[tag] : null);
-    return { t: e.t, text, tag, source, importance: e.importance, kind: e.kind, id: e.id };
+    const after = leftAt !== null && e.t >= leftAt && e.kind !== 'leave' && e.kind !== 'recall';
+    const seg = arrivedAt === null || after ? null : Math.min(Math.max(1, Math.ceil(stayDaysOf(res) / SEG)), Math.max(1, Math.floor((e.t - Math.floor(arrivedAt)) / SEG) + 1));
+    return { t: e.t, text, tag, source, importance: e.importance, kind: e.kind, id: e.id, key: e.key || e.id, fact: e.fact || null, after, seg, own: e.kind === 'milestone' && personal(e.key || e.id) !== undefined };
   });
-  const max = D.get('config.ui.timeline_max');
+  // an event that comes again and reads the same is told once, where it first happened, with how many times it came
+  {
+    const firstOf = new Map();
+    for (const en of entries) {
+      if (en.kind !== 'event') continue;
+      const f = firstOf.get(en.key);
+      if (f) { f.times++; en.drop = true; } else { en.times = 1; firstOf.set(en.key, en); }
+    }
+    for (let i = entries.length - 1; i >= 0; i--) if (entries[i].drop) entries.splice(i, 1);
+  }
+  // the cap is for one segment of the stay, so a long stay keeps as many lines for each of its months as a short one has in all
+  const max = D.get('config.ui.timeline_max') * Math.max(1, Math.ceil(stayDaysOf(res) / SEG));
   // the milestone lines of the sync points are never dropped from the timeline, and they are marked
   const pointIds = new Set(E.starPoints.map((p) => p.milestone));
   for (const en of entries) en.star = en.kind === 'milestone' && pointIds.has(en.id);
@@ -101,25 +123,31 @@ export function buildReport(D, E, res) {
   let quote = '';
   for (const q of ET.quotes[oid]) if (!q.trait || traitSet.has(q.trait)) { quote = q.text; break; }
 
-  // ledger from daily digests
+  // The ledger reads the two series of the model, whatever they count. A stay of one office day or less is kept day by day, a longer one has one row for each segment.
+  const cases = E.series.find((x) => x.id === 'cases').fn, deaths = E.series.find((x) => x.id === 'deaths').fn;
+  const stayDays = arrivedAt === null ? 0 : (leftAt ?? res.branch.digest.length) - arrivedAt;
+  const bySegment = stayDays > SEG;
   const ledger = res.branch.digest.map((d, i) => ({
-    day: d.day, sick: d.snap.Iu + d.snap.It, dead: d.snap.D, baseDead: res.base.digest[i].snap.D,
+    day: d.day, sick: cases(d.snap), dead: deaths(d.snap), baseDead: deaths(res.base.digest[i].snap),
     treated: d.snap[E.report.treated], protected: d.snap[E.report.protected] * E.report.protected_scale, arrived: d.arrived,
-  }));
+  })).filter((l) => !bySegment || (arrivedAt !== null && l.day > arrivedAt && l.day <= arrivedAt + stayDays && Math.round(l.day - arrivedAt) % SEG === 0))
+    .map((l) => (bySegment ? { ...l, day: Math.round((l.day - arrivedAt) / SEG) } : l));
 
   const hints = res.hints.map((k) => ET.hints[k]);
   const RP = E.report;
-  const handleBase = res.base.final[RP.handle];
-  const handleBranch = F[RP.handle];
+  // a handle that never came about is a negative day, and reads as nothing
+  const orNull = (x) => (x >= 0 ? x : null);
+  const handleBase = orNull(res.base.final[RP.handle]);
+  const handleBranch = orNull(F[RP.handle]);
   return {
     outcomeId: oid, outcomeName: T.outcomes[oid].name, summary, quote, staff, stars: E.starPoints.filter((p) => res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone)).length,
-    timeline: kept, ledger,
+    timeline: kept, ledger, ledgerBySegment: bySegment,
     points: E.starPoints.map((p) => ({ id: p.id, hit: res.branch.log.some((e) => e.kind === 'milestone' && e.id === p.milestone) })),
     chart: { base: res.base.series, branch: res.branch.series, arrive: res.branch.arrivedDay, leave: res.branch.leftDay, handleBase, handleBranch },
     accounts: { cost: res.cost, funds: res.funds, energy: res.energy, restDays: res.restDays, lives: res.score.lives_saved },
     compare: {
       deathsBase: res.base.final[RP.deaths], deathsBranch: F[RP.deaths], casesBase: res.base.final[RP.cases], casesBranch: F[RP.cases],
-      handleBase: dateLabel(D, E, handleBase), handleBranch: dateLabel(D, E, handleBranch),
+      handleBase: handleBase === null ? T.ui.report.never : dateLabel(D, E, handleBase), handleBranch: handleBranch === null ? T.ui.report.never : dateLabel(D, E, handleBranch),
       treated: F[RP.treated], protectedTotal: F[RP.protected] * RP.protected_scale,
     },
     hints,

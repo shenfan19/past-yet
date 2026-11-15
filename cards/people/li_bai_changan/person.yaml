@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 2
     channels: {T: 1, S: 1}
+    refs: [li_bai_changan_primary]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["sensitive","glib","charismatic"]}}
         - {id: p2, kind: persuade, req: {"stat": {"finesse": 8}}}
         - {id: p3, kind: care, req: {"luck": 0.4}}
+      vignettes:
+        - {id: verse, traits: [artistic, quiet]}
+        - {id: palace, traits: [curious, bold]}
+        - {id: copy}
     text:
       en:
         name: Poems of wine, moon and travel
         place: Chang'an, China
         figure: Li Bai
-        story: In Chang'an Li Bai writes poems of moonlight, wine and distance that every schoolchild still learns.
+        story: 'Three pieces traditionally attributed to Li Bai are transmitted as the Qingping Tune. An accompanying account tells of a court performance, but is not a contemporary record of a particular evening. The Chang''an scene is invented, and 750 is its game year.'
         relic: A small wine cup
         relic_desc: A cup with a faint line of moon painted inside.
         points:
-          p1: "Keep him company over a drink"
-          p2: "Trade verses"
-          p3: "He is in a good mood"
+          p1: 'Listen for a change between two lines'
+          p2: 'Ask how a remembered performance was passed down'
+          p3: 'Leave the written verse legible for the next singer'
+        vignettes:
+          verse: 'The singer stops at the line that fits the tune poorly. You ask them to speak it before singing it again. Their second breath falls where the thought turns.'
+          palace: 'The singer hears you ask who was in the palace that night. They set down the copied poem and ask which account you read. You leave a note that the two were handed down separately.'
+          copy: 'You keep the page open while the singer marks the place that always makes them pause. You can carry the written lines away and still remember where to listen for that pause.'
       zh:
         name: 关于酒、月和远方的诗
         place: 中国长安
         figure: 李白
-        story: 李白在长安写下关于月光、酒和远方的诗，至今每个孩子都要背。
+        story: '《清平调》三首传为李白所作。附录讲了宫中演唱的故事，属于后来的记述。本卡在 750 年的长安安排一段虚构相遇，诗作和轶闻并非定年于这一年。'
         relic: 一只小酒杯
         relic_desc: 杯底画着一弯淡淡的月。
         points:
-          p1: "陪他喝酒作诗"
-          p2: "和他对诗"
-          p3: "他兴致正高"
+          p1: '听出两句之间转折在哪里'
+          p2: '问清一个演唱故事是怎样传下来的'
+          p3: '把诗抄得清楚，留给下一个歌者'
+        vignettes:
+          verse: '唱到不贴曲的一行，歌者停住。你请他先念，再唱一次。第二遍换气，恰好落在诗意转过去的地方。'
+          palace: '歌者听你问那晚宫里有哪些人，便放下抄诗，问你读的是哪段记载。你在旁写下，诗和讲那一夜的故事各有来处。'
+          copy: '歌者标出每次唱到都会停一下的地方，你一直替他翻开那页。带走诗句时，你还记得要在哪一处听那一停。'
 text:
   en:
     name: Li Bai
@@ -44,3 +57,34 @@ text:
   zh:
     name: 李白
     text: 唐代诗人，701 年生，762 年去世。他写酒、友情和月亮的抒情诗，曾在长安宫廷任职，后来离开。他的许多诗至今仍被传诵。
+hook: {en: 'Can a poem travel without its tune?', zh: '诗传下来了，曲子呢'}
+facts:
+  qingping_tradition:
+    date: '750'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [li_bai_changan_primary]
+    text:
+      en: 'Three pieces traditionally attributed to Li Bai are transmitted as the Qingping Tune. An accompanying account tells of a court performance, but is not a contemporary record of a particular evening. The Chang''an scene is invented, and 750 is its game year.'
+      zh: '《清平调》三首传为李白所作。附录讲了宫中演唱的故事，属于后来的记述。本卡在 750 年的长安安排一段虚构相遇，诗作和轶闻并非定年于这一年。'
+bystanders:
+  li_bai_changan_reader:
+    invented: true
+    text: {en: 'An invented singer comparing a remembered tune with the written verse.', zh: '一位虚构的歌者，正把记得的曲子和写下来的诗对着看。'}
+wiki:
+  refs:
+    li_bai_changan_primary:
+      order: 197
+      status: checked
+      text:
+        en: 'Li Bai, Qingping Tune poems, and the accompanying later account of the court performance, Wikisource. https://zh.wikisource.org/wiki/清平調'
+        zh: 'Li Bai, Qingping Tune poems, and the accompanying later account of the court performance, Wikisource. https://zh.wikisource.org/wiki/清平調'
+self_check:
+  quote_line: '唱到不贴曲的一行，歌者停住。'
+  fact: qingping_tradition
+  regret_choice: '略过「听出两句之间转折在哪里」，这处细节便留给下一位核对。'
+  bookend: '从「诗传下来了，曲子呢」开始，以员工留下的观察或更正收尾。'
+  share_line: '诗传下来了，曲子呢'
+  share_number: '750'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

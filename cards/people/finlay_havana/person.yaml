@@ -10,34 +10,47 @@ events:
     tier: 2
     era: finlay_havana_1881
     channels: {E: 3}
+    refs: [finlay_1881_archive]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["methodical","skeptical","handy"]}}
         - {id: p2, kind: care, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"]},{"trait":["calm"]}]}}
         - {id: p3, kind: hold, req: {"provides":"clean_water"}}
+      vignettes:
+        - {id: headline, traits: [curious, skeptical]}
+        - {id: columns, traits: [methodical, vigil]}
+        - {id: place}
     text:
       en:
         name: Mosquitoes and yellow fever
         place: Havana
         figure: Carlos Finlay
-        story: Carlos Finlay proposes that yellow fever is carried by mosquitoes, years before it is confirmed.
+        story: 'Carlos Finlay presented the mosquito hypothesis for yellow fever transmission in Havana in 1881. The title of his paper identifies it as a hypothesis. The exchange over a printed summary is invented.'
         relic: A glass slide of mosquitoes
         relic_desc: A mounted slide with a mosquito wing.
         points:
           p1: "Watch the moment the mosquito bites"
           p2: "Tend the yellow fever patients"
           p3: "Keep a daily record of cases for a whole year"
+        vignettes:
+          headline: 'A fictional editor turns a suggestion into a certainty in the heading. You read the title back slowly. They put the word hypothesis back in before passing the proof on.'
+          columns: 'The editor reads their notes as if each line meant the same thing. You rule two columns for what was observed and what was proposed. A sentence changes columns.'
+          place: 'You check the name of the place where the paper was read. The editor puts it beside the date, so the report does not turn the meeting into a different one.'
       zh:
         name: 蚊子与黄热病
         place: 哈瓦那
         figure: 卡洛斯·芬莱
-        story: 卡洛斯·芬莱提出黄热病是蚊子传播的，早了证实好几年。
+        story: '卡洛斯·芬莱 1881 年在哈瓦那提出黄热病蚊媒传播的假说，论文题目也表明其假说性质。核对印刷摘要的交谈为虚构。'
         relic: 一片蚊子的玻片标本
         relic_desc: 一片标本，里面有一只蚊子的翅。
         points:
           p1: "看蚊子叮咬的时刻"
           p2: "照看黄热病人"
           p3: "逐日记录一整年的病例"
+        vignettes:
+          headline: '虚构的编辑把一个推测写成了确定的事。你慢慢念回原题，他在校样交出去前把「假说」两字补回去。'
+          columns: '编辑把笔记里每一行都照同一种意思念。你划成所见和所推两栏，有一句移到了另一边。'
+          place: '你核对宣读论文的地点。编辑把地名记在日期旁，后来的报道才不会把会议说成另一场。'
 text:
   en:
     name: Carlos Finlay
@@ -96,6 +109,12 @@ wiki:
           name: 蚊子的说法
           text: 1881 年 8 月，卡洛斯·芬莱向哈瓦那科学院宣布黄热病由一种蚊子传播。这个说法多年不被接受，1900 年以后才得到证明。游戏里员工能帮着让城市提前行动，只在这条分支里成立。
   refs:
+    finlay_1881_archive:
+      order: 174
+      status: checked
+      text:
+        en: 'Carlos J. Finlay, El mosquito hipoteticamente considerado como agente de transmision de la fiebre amarilla, originally published in the Havana Royal Academy annals, 1881–82. Wellcome Collection. https://wellcomecollection.org/works/kee7gdwj'
+        zh: '卡洛斯·芬莱，《作为黄热病传播媒介的蚊子假说》，原载哈瓦那皇家科学院年鉴 1881 至 1882 年卷。韦尔科姆馆藏。https://wellcomecollection.org/works/kee7gdwj'
     finlay1881:
       order: 4
       status: pending

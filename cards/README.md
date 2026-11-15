@@ -97,7 +97,9 @@ An event card has these optional fields. `era: <model id>` hands the event to th
 
 An id may be used once. The build stops with a message when two cards use the same id, when the events of a module and its card do not match, or when a module holds something a module does not use, and `node tools/build_data.mjs --check` says when `data/` is out of date.
 
-A small scene can add `scene.vignettes`, an ordered list of entries such as `{id: apple, traits: [bold]}`. The first entry matching any of the traveller's listed traits is shown in the return report. The last entry has only an `id` and is the default. Put its prose and the matching prose for each other entry under `text.<language>.vignettes.<id>`. These fictional passages do not change the scene's stars. A catalogue event can also list `refs` from the wiki to make its historical sources available in the report.
+A catalogue event can add `scene.vignettes`, an ordered list of entries such as `{id: apple, traits: [bold]}`. After an accepted visit, the first entry matching any of the traveller's listed traits appears in the return report, including for events linked to a full simulation model. The last entry has only an `id` and is the default. Put the prose for each entry under `text.<language>.vignettes.<id>`. These fictional passages do not change the scene's stars. An event can also list `refs` from the wiki to make its historical sources available in the report.
+
+For a standalone model without a catalogue event, put the same entries in `metadata.vignettes`, set `metadata.vignette_source` to a wiki event ID, and put the prose in `era_text.<language>.vignettes`.
 
 Languages are the codes in `config/config.yaml` under `i18n.locales`. A language that lacks a key reads English for that key.
 
@@ -106,7 +108,38 @@ To add:
 - an employee: copy a card in `staff/`, choose traits from `traits/`, a region and a skin tone from `config/hiring.yaml`, one to three jobs, an ethnicity (one short label that names a people or a descent, such as Igbo, Han or African descent, never a place and never a country plus a descent such as African American; where the person lives belongs in the story), and write a short life story that fits the age, the place and the numbers: a high attribute is a gift that shows in the life, a low one is a flaw that shows too. `node tools/check_content.mjs` checks the range of the attributes, that the name is unique, that the titles of the jobs match the ids, and that every region and skin tone is used.
 - a language: add its code to `i18n.locales`, then add that language under `text:` in the cards you want to translate and add `text/<lang>/` files. Nothing is required, English fills the gaps.
 
-After any change run the build, then `node tools/check_i18n.mjs` and `node tools/ui_check.mjs`.
+After any change run the build, then `node tools/check_i18n.mjs`, `node tools/check_benchmarks.mjs` and `node tools/ui_check.mjs`.
+
+## Time
+
+One office day is thirty historical days, `travel.history_days_per_office_day` in `config/config.yaml`. A stay is one to seven office days. A model counts in historical days, and what wears on the traveller at the pace of the office, such as homesickness, is written with `office_step`. Dates are counted on the real calendar from `metadata.era.calendar`, which gives the month and the day of day 0. A report of a stay longer than one office day is told in segments, one for each office day, and what is recorded after the traveller has left is told last under its own heading.
+
+## Templates
+
+A model may begin with `template: <name>`. The file `templates/<name>.lm.yaml` holds what the stories of one kind share, and the model of the person is laid over it key by key, so the person file holds only its own place, dates, moments, stars and identities. `templates/founding.lm.yaml` is the first: scattered things have to become one institution by an opening day.
+
+A milestone of a model is a line of the report that is written once. Besides `when` it may have:
+
+- `date: "1924-02-17"`: the line is written on that day. A recorded date, with `needs_traveler: false`, writes itself whoever is there. A line of the traveller with a date is written only if the traveller is there on that day.
+- `fact: <id>`: the fact of the person card the line rests on.
+- `effects`: variables the line changes when it is written.
+- `variants`: a list of `{when, key, effects}`. The first whose condition holds gives the text, under `era_text.<language>.milestones.<key>`, and may change variables of its own.
+
+An event with `once: true` happens at most once in a trip. An event that comes again and reads the same is told once in the report, with how many times it came.
+
+`era_text.<language>.personal.<key>.<employee id>` is a line written for one employee at one moment. Where there is one, it is read in place of the line of the moment.
+
+## Tags and identities
+
+The tags of an employee are worked out from the card by the rules in `config/staff_rules.yaml`: tags from an attribute (`steady`, `clumsy`, `eloquent`, `sturdy`, `frail`, `sharp`, `steadfast`), the kinds of work as `class_<kind>`, the traits as `trait_<id>`, `literate`, `learned` or `unlettered`, `female` or `male`, `young` or `elder`, and the face in a place, `face_local`, `face_near` or `face_far`. A model reads each as `tag.<name>`, 1 or 0, in any expression.
+
+A place says whose faces are at home in it: `home: [regions]`, optionally `near: [regions]`, and `crossroads: true` for a port or a great city. For a model these lie in `metadata.era`, with `region` for the part of the world, and for an event in the event card.
+
+An identity is who a traveller is taken for. The library is `config/identities.yaml`, and the names and the accounts travellers give of themselves are in `text/<language>/identities.yaml`. A place lists the identities it has room for in the order it prefers them, `identities: [...]` in a model or an event card, and an employee takes the first that fits. Without a list the default of the library is used. `lodger` asks for nothing, so every employee has a door into every place. A story may give an identity its own name and account under `era_text.<language>.identities`. In a model `ring` is 0 outside the door and 1 inside it, and `conspicuous` is 0, 0.5 or 1 by the face.
+
+## Benchmarks
+
+`node tools/check_benchmarks.mjs` runs the benchmark stories for the reference employees with fixed seeds, both listed in `config/benchmarks.yaml`, and checks that identities are as expected, recorded dates fall on their days, a report keeps to its segments and tells nothing twice, staying to the end is not giving up, empty hands do not make the compared number worse than the main timeline, the employees read different lines and get different stars, and the hooks named in `self_check` are read.
 
 ## The engine boundary
 

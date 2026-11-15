@@ -45,14 +45,14 @@ export function createUI(D, ctx, DEV = false) {
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
-  const st = { tab: 'home', sub: null, modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, back: 'home', vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
   // Render records the entry, so any way of changing page is covered without each place having to remember it.
   const nav = { list: [], pos: -1, sid: String(Date.now()) };
-  const navSnap = () => ({ tab: st.tab, sub: st.sub, back: st.back, modal: st.modal });
-  const navSame = (a, b) => a.tab === b.tab && a.sub === b.sub;
+  const navSnap = () => ({ tab: st.tab, modal: st.modal });
+  const navSame = (a, b) => a.tab === b.tab;
   function navCommit() {
     const s = navSnap();
     if (nav.pos < 0) {
@@ -65,11 +65,6 @@ export function createUI(D, ctx, DEV = false) {
     nav.list.push(s);
     nav.pos += 1;
     try { history.pushState({ n: nav.pos, sid: nav.sid }, ''); } catch (e) { /* history may be blocked */ }
-  }
-  // Going to another page from a pop-up records the pop-up on the page that is left, so Back returns to it.
-  function leave() {
-    if (nav.pos >= 0) nav.list[nav.pos] = navSnap();
-    st.modal = null;
   }
   function navStep(delta) {
     if (nav.pos + delta < 0 || nav.pos + delta >= nav.list.length) return;
@@ -112,7 +107,7 @@ export function createUI(D, ctx, DEV = false) {
   const staffState = (id) => office.staffState(id);
   const totals = () => ctx.backend.itemTotals(st.form.items);
   const formSpec = () => ({ seed: Number(st.form.seed) || 1, staffId: st.form.staffId, items: Object.fromEntries(Object.entries(st.form.items).filter(([k]) => k in E().itemBindings)) });
-  const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && D.get('items.' + k).scene && !D.get('items.' + k).implant));
+  const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && ctx.backend.lightKitAllowed(st.map.cat, k)));
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const tagLabel = (tag) => U.report[tag];
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
@@ -163,7 +158,7 @@ export function createUI(D, ctx, DEV = false) {
   const starRow = (n, STAR_MAX) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
   // a point that a trait made up for, or that a trait lost, says so, because the timeline shows what happened and the traits then changed the count
-  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}${p.lost ? ' lost' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}</li>`).join('')}</ul>`;
+  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}${p.lost ? ' lost' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${p.day ? `<span class="muted">${esc(U.report.participation.day.replace('{day}', String(p.day)))} · </span>` : ''}${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}</li>`).join('')}</ul>`;
   const yearOfPlace = (id, light) => (light ? D.get('catalog.events').find((x) => x.id === id).year : ctx.era(id).raw.metadata.era.year);
   const shortOfPlace = (id, light) => (light ? T.catalog[id].place : T.eras[id].short);
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
@@ -183,10 +178,10 @@ export function createUI(D, ctx, DEV = false) {
   const protagonistHtml = (d) => { const p = protagonistOf(d); return p.link ? wl(p.link, p.name) : esc(p.name); };
   const staffLine = (id) => `<div class="muted small">${U.report.staff_line.replace('{x}', staffLink(id))}</div>`;
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
-  const outcomeOf = (d) => (d.recalled ? U.report.recalled : d.light ? U.light.outcome[d.report.outcomeId] : d.report.outcomeName);
+  const outcomeOf = (d) => (d.recalled ? U.report.recalled : d.evacuation ? U.report.evacuated : d.light ? U.light.outcome[d.report.outcomeId] : d.report.outcomeName);
   // a plain running count of the trips sent out, not a reference to anything
   const seqOf = (d) => d.id.slice(1);
-  const livesOf = (d) => (d.recalled || d.light ? '—' : r1(d.report.accounts.lives));
+  const livesOf = (d) => (d.recalled || d.evacuation || d.light ? '—' : r1(d.report.accounts.lives));
   const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(placeShort(d))}</td><td>${esc(outcomeOf(d))}</td><td class="num">${livesOf(d)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`;
   function selectEra(id) {
     if (st.form.eraId !== id) { st.form = { ...newForm(id), staffId: st.form.staffId };  }
@@ -224,9 +219,9 @@ export function createUI(D, ctx, DEV = false) {
     try {
       const keeps = {};
       view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
-      const key = st.sub ? 'sub:' + st.sub : st.tab;
+      const key = st.tab;
       sessionStorage.setItem(UI_KEY, JSON.stringify({
-        tab: st.tab, sub: st.sub, back: st.back, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki', 'welcome'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
+        tab: st.tab, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki', 'welcome', 'report'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
         wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
         reloadOnly, modalScroll: modalEl.querySelector('.modalbg')?.scrollTop || 0,
       }));
@@ -242,8 +237,9 @@ export function createUI(D, ctx, DEV = false) {
       if (o.reloadOnly && performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
       if (o.tab in U.tabs) st.tab = o.tab;
       if (o.pager) st.pager = o.pager;
-      if (o.modal && ['settings', 'about', 'wiki', 'welcome'].includes(o.modal.kind)) st.modal = o.modal;
-      if (o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) { st.sub = o.sub; st.back = o.back in U.tabs ? o.back : 'home'; st.vs = !!o.vs; }
+      if (o.modal && ['settings', 'about', 'wiki', 'welcome', 'report'].includes(o.modal.kind)) st.modal = o.modal;
+      if (!st.modal && o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) st.modal = { kind: 'report', id: o.sub };
+      st.vs = !!o.vs;
       st.opened = new Set(o.opened || []);
       if (o.filters) st.filters = o.filters;
       st.cart = o.cart || {};
@@ -312,7 +308,7 @@ export function createUI(D, ctx, DEV = false) {
     const arrows = `<span class="navbtns"><button data-nav="-1" title="${esc(U.nav.back)}" aria-label="${esc(U.nav.back)}" ${nav.pos > 0 ? '' : 'disabled'}>◀</button><button data-nav="1" title="${esc(U.nav.forward)}" aria-label="${esc(U.nav.forward)}" ${nav.pos < nav.list.length - 1 ? '' : 'disabled'}>▶</button></span>`;
     const tools = D.get('config.ui.tool_icons');
     setHtml(toolsEl, Object.entries(U.tools).map(([k, label]) => `<button class="tool ${st.modal && st.modal.kind === k ? 'on' : ''}" data-act="modalopen" data-id="${k}" title="${esc(label)}" aria-label="${esc(label)}">${tools[k]}</button>`).join(''));
-    setHtml(tabsEl, arrows + Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k && !st.sub ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
+    setHtml(tabsEl, arrows + Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
   }
 
   // ---------- agency: employees and hiring ----------
@@ -443,7 +439,7 @@ export function createUI(D, ctx, DEV = false) {
     const kept = new Set(ctx.S().dispatches.map((d) => d.id));
     const body = trips.length
       ? `<ul class="trips">${trips.map((t) => {
-        const oc = t.recalled ? U.report.recalled : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
+        const oc = t.recalled ? U.report.recalled : t.evacuated ? U.report.evacuated : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
         return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place)}${t.redeemed ? ' <span class="chip">♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
       }).join('')}</ul>`
@@ -451,11 +447,12 @@ export function createUI(D, ctx, DEV = false) {
     return `<div class="sec">${U.archive.trips} (${trips.length})</div>${body}`;
   }
   // The story of the selected place: who it is about, what the traveller can bring up with them, and what is known of it once someone has been.
+  const travelTime = (days) => U.dispatch.travel_time.replace('{n}', String(days)).replace('{h}', String(ctx.backend.historicalDays(days)));
   function placeFile(id) {
     const ET = T.eras[id];
     const done = office.tripsOf(id);
     const ideas = office.plotsFor(id).map((pid) => `<li>${esc(ET.plots[pid].name)}${U.fmt.paren.replace('{x}', esc(ET.plots[pid].character))}</li>`).join('');
-    const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(ET.stay)}</span></div>
+    const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(travelTime(ctx.backend.eraStay(id)))}</span></div>
       <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
@@ -481,7 +478,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
-      <p class="muted" style="margin-top:8px">${(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story).replace('{n}', String(ctx.backend.lightStay(id)))}</p>${own ? tripsHtml(id) : ''}</div></div>`;
+      <p class="muted" style="margin-top:8px">${esc(travelTime(ctx.backend.lightStay(id)))} · ${esc(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story)}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
 
   // ---------- home: the dispatch desk under the map ----------
@@ -528,7 +525,7 @@ export function createUI(D, ctx, DEV = false) {
     const stState = staffState(f.staffId);
     const story = !!st.map.cat;
     // only what can be taken is listed: what is in stock, and anything already chosen
-    const carryRows = story ? Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && !D.get('items.' + id).implant && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
+    const carryRows = story ? Object.keys(D.get('items')).filter((id) => ctx.backend.lightKitAllowed(st.map.cat, id) && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
     const carryBox = listbox.html({
       id: 'carry', scroll: true, maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
@@ -571,20 +568,24 @@ export function createUI(D, ctx, DEV = false) {
     return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">${g}</svg>`;
   }
 
+  function vignetteHtml(line) {
+    return line ? `<div class="sec">${esc(U.light.vignette)}</div><p>${esc(line)}</p>` : '';
+  }
+
   // A small story has no branch to compare, so its page is short: how it went, the event itself, and the accounts.
   function lightHtml(cur) {
     const c = T.catalog[cur.eraId];
     const ev = D.get('catalog.events').find((x) => x.id === cur.eraId);
-    const vignette = c.vignettes?.[cur.report.vignette];
     const P = cur.paid;
     const o = cur.report.outcomeId;
     const summary = U.light.summary[o].replace('{staff}', staffName(D, cur.spec.staffId)).replace('{place}', c.place).replace('{figure}', c.figure);
     return `
-      <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
+      <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2>${ev.scene?.vignettes ? '' : `<span class="stamp">${esc(U.light.outcome[o])}</span>`}</div>${staffLine(cur.spec.staffId)}
-      ${ev.scene?.vignettes ? '' : `<p style="font-size:16px">${esc(summary)}</p>`}
+      ${cur.report.journey?.accepted === false || ev.scene?.vignettes ? '' : `<p style="font-size:16px">${esc(summary)}</p>`}
       ${ev.refs ? `<p>${esc(c.story)} ${wl('events:c:' + ev.id, U.light.sources)}</p>` : `<div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>`}
-      ${vignette ? `<div class="sec">${esc(U.light.vignette)}</div><p>${esc(vignette)}</p>` : ''}
+      ${participationHtml(cur)}
+      ${vignetteHtml(c.vignettes?.[cur.report.vignette])}
       <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (ev.scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
@@ -602,7 +603,7 @@ export function createUI(D, ctx, DEV = false) {
   function recalledHtml(cur) {
     const P = cur.paid;
     return `
-      <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
+      <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(placeName(cur))}</h2><span class="stamp">${U.report.recalled}</span></div>${staffLine(cur.spec.staffId)}
       <p style="font-size:16px">${U.report.recalled_text.replace('{day}', String(Math.floor(cur.recallDay) + 1)).replace('{p}', String(Math.round(P.share * 100)))}</p>
       <div class="sec">${U.report.accounts}</div>
@@ -615,13 +616,19 @@ export function createUI(D, ctx, DEV = false) {
       </tbody></table>`;
   }
 
-  function reportHtml() {
-    const cur = ctx.S().dispatches.find((d) => d.id === st.sub);
+  function reportHtml(id) {
+    const cur = ctx.S().dispatches.find((d) => d.id === id);
     if (!cur) return `<p class="muted">${U.report.none}</p>`;
     if (cur.recalled) return recalledHtml(cur);
+    if (cur.evacuation) return `<p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
+      <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(U.report.evacuated)}</span></div>${staffLine(cur.spec.staffId)}
+      <p>${esc(U.report.evacuation_text.replace('{day}', String(cur.evacuation.day)))}</p>
+      <p>${esc(U.report.rest)} ${cur.paid.restDays} ${esc(U.report.days)}</p>`;
     if (cur.light) return lightHtml(cur);
     const R = cur.report;
     const e = ctx.era(cur.eraId);
+    const event = D.get('catalog.events').find((ev) => ev.era === cur.eraId);
+    const modelSource = e.raw.metadata.vignette_source;
     // the words for what is counted are those of the model when it has its own: a model about a university does not count the sick and the dead
     const RL = { ...U.report, ...(T.eras[cur.eraId].labels || {}) };
     const spec = cur.spec;
@@ -633,13 +640,26 @@ export function createUI(D, ctx, DEV = false) {
       const v = e.vars[name];
       return `${srcLabel(v.source)}${v.note ? COLON + v.note : ''}`;
     };
-    const tl = R.timeline.map((t, i) => `<li class="${t.tag || ''}${t.star ? ' star' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`).join('');
+    const tlLine = (t, i) => `<li class="${t.tag || ''}${t.star ? ' star' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${t.tag ? `<span class="chip ${t.tag}">${esc(tagLabel(t.tag))}</span>` : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`;
+    // the lines of the stay stand under a heading for each segment when the stay has more than one, and what was recorded after the traveller left comes last, under its own heading
+    const during = R.timeline.map((t, i) => [t, i]).filter(([t]) => !t.after);
+    const afterLeave = R.timeline.map((t, i) => [t, i]).filter(([t]) => t.after);
+    const segs = [...new Set(during.map(([t]) => t.seg).filter((x) => x !== null))];
+    let tl = '';
+    let lastSeg = null;
+    for (const [t, i] of during) {
+      if (segs.length > 1 && t.seg !== null && t.seg !== lastSeg) { tl += `<li class="seg"><div class="muted">${esc(U.report.segment_title.replace('{n}', String(t.seg)))}</div></li>`; lastSeg = t.seg; }
+      tl += tlLine(t, i);
+    }
+    const afterHtml = afterLeave.length ? `<div class="sec">${esc(U.report.after_leave)}</div><p class="muted">${esc(U.report.after_leave_note.replace('{staff}', R.staff))}</p><ul class="tl after">${afterLeave.map(([t, i]) => tlLine(t, i)).join('')}</ul>` : '';
     const C = R.chart;
     const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * D.get('config.ui.chart.headroom');
     const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * D.get('config.ui.chart.headroom');
     const pts = (rows, k) => rows.map((p) => [p.day, p[k]]);
-    const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }];
-    const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${U.report.legend_handle_hist}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${U.report.legend_handle_branch}</span></div>`;
+    const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }].filter((m) => m.x !== null && m.x !== undefined);
+    // the two marks of the handle are named by the model, so a model about a university does not speak of a pump
+    const handleName = T.eras[cur.eraId].handle_label;
+    const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${esc(U.report.legend_handle_hist.replace('{x}', handleName))}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${esc(U.report.legend_handle_branch.replace('{x}', handleName))}</span></div>`;
     const charts = `<div class="grid2"><div><div class="muted">${RL.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
       <div><div class="muted">${RL.dead}</div>${lineChart([{ pts: pts(C.base, 'deaths'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'deaths'), color: '#b3382c' }], mk, deadMax)}</div></div>`;
     const led = R.ledger.map((l) => `<tr><td>${l.day}</td><td class="num">${ri(l.sick)}</td><td class="num">${ri(l.baseDead)}</td><td class="num">${ri(l.dead)}</td><td class="num">${ri(l.treated)}</td><td class="num">${ri(l.protected)}</td></tr>`).join('');
@@ -647,13 +667,18 @@ export function createUI(D, ctx, DEV = false) {
     const A = R.accounts;
     const vsHtml = st.vs ? vsBlock(cur) : '';
     return `
-      <p><button class="ghost" data-act="back">‹ ${U.report.back}</button></p>
+      <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>${staffLine(spec.staffId)}
+      ${C.arrive != null && C.leave != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(C.leave - C.arrive)))}</p>` : ''}
       <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
       <div class="sec">${U.report.summary}</div>
-      <p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>
+      ${participationHtml(cur)}
+      ${R.journey?.accepted === false ? '' : `<p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>`}
+      ${event?.refs ? `<p>${esc(T.catalog[event.id].story)} ${wl('events:c:' + event.id, U.light.sources)}</p>` : ''}
+      ${modelSource ? `<p>${wl('events:' + modelSource, U.light.sources)}</p>` : ''}
+      ${vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette])}
       <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => T.eras[cur.eraId].star_points[id])}
-      <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>
+      <div class="sec">${U.report.timeline}</div><ul class="tl">${tl}</ul>${afterHtml}
       <div class="sec">${U.report.chart}</div>${legend}${charts}
       <div class="sec">${U.report.compare}</div>
       <table><thead><tr><th></th><th class="num">${U.report.mainline}</th><th class="num">${U.report.this_branch}</th></tr></thead><tbody>
@@ -663,7 +688,7 @@ export function createUI(D, ctx, DEV = false) {
         <tr><td>${RL.treated} / ${RL.protected}${fn('c4', '†', varNote(e.report.treated))}</td><td class="num">—</td><td class="num">${ri(cmp.treated)} / ${ri(cmp.protectedTotal)}</td></tr>
       </tbody></table>
       <div class="sec">${U.report.ledger}</div>
-      <div class="scroll"><table><thead><tr><th>${U.report.day}</th><th class="num">${RL.sick}</th><th class="num">${RL.dead}·${U.report.mainline}</th><th class="num">${RL.dead}·${U.report.this_branch}</th><th class="num">${RL.treated}</th><th class="num">${RL.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
+      <div class="scroll"><table><thead><tr><th>${R.ledgerBySegment ? U.report.segment : U.report.day}</th><th class="num">${RL.sick}</th><th class="num">${RL.dead}·${U.report.mainline}</th><th class="num">${RL.dead}·${U.report.this_branch}</th><th class="num">${RL.treated}</th><th class="num">${RL.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
@@ -679,8 +704,19 @@ export function createUI(D, ctx, DEV = false) {
       <div class="sec">${U.report.footnotes}</div><p class="muted">† ${U.report.drilldown}</p>`;
   }
 
+  function participationHtml(cur) {
+    const j = cur.report.journey;
+    if (!j) return '';
+    const P = U.report.participation;
+    const staff = staffName(D, cur.spec.staffId);
+    // who the employee was taken for, in the words of the story when it has its own for that identity
+    const idText = j.identity ? { ...T.identities[j.identity], ...((cur.eraId && T.eras[cur.eraId]?.identities?.[j.identity]) || {}) } : { name: '', cover: '' };
+    const entry = (key, day) => `<li>${esc(P[key].replace('{day}', String(day)).replace('{cover}', idText.cover).replace(/\{staff\}/g, staff).replace('{identity}', idText.name))}</li>`;
+    return `<div class="sec">${esc(P.title)}</div><ol class="participation">${entry(j.reached ? 'reached' : 'blocked', j.approachDay)}${j.reached ? entry(j.accepted ? 'accepted' : 'declined', j.recognitionDay) : ''}${entry(j.accepted ? 'involved' : 'continued', j.recognitionDay)}</ol>`;
+  }
+
   function vsBlock(cur) {
-    const older = reports().filter((d) => d.eraId === cur.eraId && d.claimedAt < cur.claimedAt)[0];
+    const older = reports().find((d) => d.eraId === cur.eraId && d.claimedAt < cur.claimedAt && !d.evacuation);
     if (!older) return `<p class="muted">${U.report.none}</p>`;
     const rows = diffRows(D, cur.eraId, { res: cur }, { res: older }).map((r) => `<tr><td>${esc(r.k)}</td><td class="num">${esc(r.b)}</td><td class="num">${esc(r.a)}</td></tr>`).join('');
     const dl = (a, b) => { const d = a - b; return `<span class="delta ${d < 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${r1(d)}</span>`; };
@@ -864,7 +900,7 @@ export function createUI(D, ctx, DEV = false) {
   function closeModal() {
     if (st.modal && st.modal.kind === 'welcome') return;
     // the wiki and the status page open over what is open and give it back, one step at a time
-    st.modal = st.modal && ['wiki', 'staff'].includes(st.modal.kind) && st.modalStack.length ? st.modalStack.pop() : null;
+    st.modal = st.modal && ['wiki', 'staff', 'share', 'report'].includes(st.modal.kind) && st.modalStack.length ? st.modalStack.pop() : null;
     if (!st.modal) st.modalStack = [];
     render();
   }
@@ -876,6 +912,7 @@ export function createUI(D, ctx, DEV = false) {
     if (m.kind === 'wiki') return `<div class="mbox wide wikibox">${wiki.html()}</div>`;
     if (m.kind === 'settings') return `<div class="mbox narrow">${settingsPage.html()}</div>`;
     if (m.kind === 'about') return `<div class="mbox narrow">${aboutHtml()}</div>`;
+    if (m.kind === 'report') return `<div class="mbox wide reportbox" role="dialog" aria-modal="true" aria-label="${esc(U.report.view)}">${reportHtml(m.id)}</div>`;
     if (m.kind === 'staff') return `<div class="mbox wide">${staffModalHtml(m.id)}</div>`;
     if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
     if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;
@@ -915,8 +952,8 @@ export function createUI(D, ctx, DEV = false) {
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
-    const html = st.sub ? reportHtml() : { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
-    const key = st.sub ? 'sub:' + st.sub : st.tab;
+    const html = { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
+    const key = st.tab;
     if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(); return; }
     viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
@@ -950,7 +987,6 @@ export function createUI(D, ctx, DEV = false) {
     if (!d) return;
     ctx.audio.sfx('send');
     st.tab = 'home';
-    st.sub = null;
     st.modal = null;
     st.form.plots = [];
     renderClock();
@@ -963,8 +999,12 @@ export function createUI(D, ctx, DEV = false) {
     const d = office.claim(id);
     if (!d) return;
     ctx.audio.sfx('back');
-    st.sub = id;
-    st.back = 'home';
+    openReport(id);
+  }
+
+  function openReport(id) {
+    if (st.modal) st.modalStack.push(st.modal);
+    st.modal = { kind: 'report', id };
     st.vs = false;
     render();
   }
@@ -995,8 +1035,8 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'claim') claim(id);
     else if (act === 'gift') { office.gift(id); render(); }
     else if (act === 'appoint') { office.appoint(id); renderClock(); render(); }
-    else if (act === 'recall') { const r = office.recall(id); if (r.ok) { st.back = st.tab; st.sub = id; st.vs = false; st.modal = null; } renderClock(); render(); }
-    else if (act === 'open') { st.back = st.tab; leave(); st.sub = id; st.vs = false; render(); }
+    else if (act === 'recall') { const r = office.recall(id); if (r.ok) openReport(id); renderClock(); render(); }
+    else if (act === 'open') openReport(id);
     else if (act === 'fire') { office.dismiss(id); render(); }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
     else if (act === 'wiki') { wiki.go(id); if (st.modal && st.modal.kind === 'wiki') wiki.refresh(); else { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'wiki' }; render(); } }
@@ -1008,7 +1048,7 @@ export function createUI(D, ctx, DEV = false) {
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
     else if (['cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    else if (act === 'shareopen') { st.modal = { kind: 'share', id }; render(); }
+    else if (act === 'shareopen') { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'share', id }; render(); }
     else if (act === 'modalclose') closeModal();
     else if (act === 'rerollstart') { office.rerollStart(); render(); }
     else if (act === 'rerollstaff') { office.rerollStaff(); render(); }
@@ -1041,20 +1081,21 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'sfxtry') ctx.audio.sfx(id);
     else if (act === 'saveexport') settingsPage.exportSave();
     else if (act === 'settingsreset') { ctx.settings.reset(); ctx.audio.setEnabled(ctx.settings.get('music_autostart')); render(); }
-    else if (act === 'go') { st.tab = id; st.sub = null; st.modal = null; render(); }
-    else if (act === 'back') { st.sub = null; st.tab = st.back; render(); }
+    else if (act === 'go') { st.tab = id; st.modal = null; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
-    else if (act === 'fn') { const k = st.sub + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
+    else if (act === 'fn') { const k = st.modal.id + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
     else if (act === 'again') {
       const d = ctx.S().dispatches.find((x) => x.id === id);
       const fresh = newForm(d.eraId);
       st.form = { ...fresh, staffId: d.spec.staffId, items: Object.fromEntries(Object.entries(d.spec.items).map(([k, n]) => [k, Math.min(n, ctx.S().inv[k] || 0)])), seed: DEV ? d.spec.seed : fresh.seed };
       
-      st.sub = null;
       st.tab = 'home';
+      st.map.cat = null;
+      st.modalStack = [];
+      st.modal = { kind: 'dispatch' };
       render();
-    } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); st.sub = null; render(); } }
+    } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); render(); } }
   }
   view.addEventListener('click', onClick);
   toolsEl.addEventListener('click', onClick);
@@ -1107,7 +1148,7 @@ export function createUI(D, ctx, DEV = false) {
     if (t.dataset.pgsize) { listbox.setSize(t.dataset.pgsize, Number(t.value)); render(); return; }
     if (settingsPage.onInput(ev)) return;
     if (t.id === 'map-star') { worldMap.onInput(t); render(); return; }
-    if (t.dataset.act === 'saveimport' && t.files && t.files[0]) { settingsPage.importSave(t.files[0]).then((okk) => { if (okk) { st.sub = null; render(); } }); return; }
+    if (t.dataset.act === 'saveimport' && t.files && t.files[0]) { settingsPage.importSave(t.files[0]).then((okk) => { if (okk) { render(); } }); return; }
     if (t.name === 'staff') { if (staffState(t.value) === 'ready') { st.form.staffId = t.value;  } render(); }
     else if (t.id === 'seed') { st.form.seed = Number(t.value) || 1;  }
   }
@@ -1117,7 +1158,7 @@ export function createUI(D, ctx, DEV = false) {
     if (n === null || !nav.list[n]) return;
     nav.pos = n;
     const s = nav.list[n];
-    st.tab = s.tab; st.sub = s.sub && ctx.S().dispatches.some((d) => d.id === s.sub) ? s.sub : null; st.modal = s.modal || null; st.back = s.back;
+    st.tab = s.tab; st.modal = s.modal || null; st.modalStack = [];
     render();
   });
   tabsEl.addEventListener('click', (ev) => {
@@ -1126,7 +1167,6 @@ export function createUI(D, ctx, DEV = false) {
     const b = ev.target.closest('[data-tab]');
     if (!b) return;
     st.tab = b.dataset.tab;
-    st.sub = null;
     st.modal = null;
     render();
   });
@@ -1149,7 +1189,7 @@ export function createUI(D, ctx, DEV = false) {
   toastEl.addEventListener('click', (ev) => {
     if (!ev.target.closest('[data-act=toastgo]')) return;
     toastEl.innerHTML = '';
-    st.modal = null; st.sub = null; st.tab = 'home';
+    st.modal = null; st.tab = 'home';
     render();
   });
 
@@ -1165,7 +1205,7 @@ export function createUI(D, ctx, DEV = false) {
     // Redrawing the page replaces the box someone is typing in and loses the cursor, so the page waits while a field has the focus.
     const ae = document.activeElement;
     const typing = !!ae && view.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName);
-    if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !st.sub && !typing) render(true);
+    if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !typing) render(true);
     setHtml(resEl, resHtml());
   }
   const quotes = createQuotes(D, document.getElementById('quote'));

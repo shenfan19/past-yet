@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {Y: 1, G: 1}
     regret: true
+    refs: [li_qingzhao_hangzhou_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["quiet","methodical","skeptical"]}}
         - {id: p2, kind: trust, req: {"luck":0.5}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist","teacher"]},{"stat":{"will":7}}]}}
+      vignettes:
+        - {id: trace, traits: [scholarly, methodical]}
+        - {id: missing, traits: [sensitive, patient]}
+        - {id: book}
     text:
       en:
         name: "The lost collection"
         place: "Hangzhou"
         figure: "Li Qingzhao"
-        story: "Widowed and far from her northern home, Li Qingzhao has lost most of the books and inscriptions she and her husband gathered. In Hangzhou she writes poems of memory, and the record of her life ends in these years."
+        story: 'Li Qingzhao''s postface to the Jinshi lu recalls how she and Zhao Mingcheng gathered books and inscriptions and how much of the collection was later dispersed. The 1150 reading scene in Hangzhou is invented.'
         relic: "A rubbing of an old inscription"
         relic_desc: "Ink pressed from a stone, the kind she and her husband collected."
         points:
-          p1: "Listen to her read her poems"
-          p2: "Find her in a good hour"
-          p3: "Help her put the catalogue in order (a record keeper, a teacher or a determined employee)"
+          p1: 'Distinguish a recollection from a catalogue entry'
+          p2: 'Keep the incomplete copy open at the right place'
+          p3: 'Record a missing entry without guessing its wording'
+        vignettes:
+          trace: 'The reader recognises a title and reaches for the next page. You ask whether they can identify the object too. They stop and copy the place name before the missing line.'
+          missing: 'There is a gap in the list. The reader hesitates over what to add. You keep the place with a short note of what was missing, leaving room for a later reader to find it.'
+          book: 'You set the postface beside the numbered list. The reader turns from one to the other before reading aloud, and the names start to sound like things that were once held and carried.'
       zh:
         name: "失去的藏品"
         place: "杭州"
         figure: "李清照"
-        story: "李清照丧夫后远离北方的家乡，她和丈夫一起收集的书籍和金石大多已经失去。在杭州，她写下充满回忆的诗词，关于她生平的记载也止于这几年。"
+        story: '李清照在《金石录后序》中回忆她与赵明诚搜求书籍金石，以及后来收藏散失的经过。1150 年杭州读抄本的场景为虚构。'
         relic: "一张古碑拓片"
         relic_desc: "用墨从石头上拓下来的纸，是她和丈夫曾经收集的那种。"
         points:
-          p1: "听她读自己的词"
-          p2: "碰上她心情好的时候"
-          p3: "帮她把目录理清"
+          p1: '分清后序里的回忆与目录条目'
+          p2: '把残抄翻开，保留需要核对的那页'
+          p3: '记下残缺处，别用猜来的字填满'
+        vignettes:
+          trace: '读者认出题名就要翻页。你问他能不能认出所记之物。他停下来，先补抄缺行前的地名。'
+          missing: '清单中间空了一处，读者犹豫补什么。你用小字记清缺了什么，留着地方，等后面的人查到再填。'
+          book: '你把后序搁到编号的目录旁。读者开口之前在两边来回看了一遍。念出来时，那些名目像是从前真有人抱在手里、带上路的东西。'
 text:
   en:
     name: Li Qingzhao
@@ -45,3 +58,34 @@ text:
   zh:
     name: 李清照
     text: 宋代词人，约 1084 年生，约 1155 年去世。她写爱情与失去的词，1127 年北方沦陷，家园与丈夫都失去了，晚年住在南方。
+hook: {en: 'What can a catalogue still remember?', zh: '东西散了，目录还记得吗'}
+facts:
+  postface:
+    date: '1132'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [li_qingzhao_hangzhou_primary]
+    text:
+      en: 'Li Qingzhao''s postface to the Jinshi lu recalls how she and Zhao Mingcheng gathered books and inscriptions and how much of the collection was later dispersed. The 1150 reading scene in Hangzhou is invented.'
+      zh: '李清照在《金石录后序》中回忆她与赵明诚搜求书籍金石，以及后来收藏散失的经过。1150 年杭州读抄本的场景为虚构。'
+bystanders:
+  li_qingzhao_hangzhou_reader:
+    invented: true
+    text: {en: 'An invented reader trying to identify an entry from an incomplete copy.', zh: '一位虚构的读者，想从残抄里认出一则条目。'}
+wiki:
+  refs:
+    li_qingzhao_hangzhou_primary:
+      order: 156
+      status: checked
+      text:
+        en: 'Li Qingzhao, Postface to the Catalogue of Inscriptions on Metal and Stone, dated in the transmitted text to Shaoxing 2. https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+        zh: 'Li Qingzhao, Postface to the Catalogue of Inscriptions on Metal and Stone, dated in the transmitted text to Shaoxing 2. https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+self_check:
+  quote_line: '读者认出题名就要翻页。'
+  fact: postface
+  regret_choice: '略过「分清后序里的回忆与目录条目」，这处细节便留给下一位核对。'
+  bookend: '从「东西散了，目录还记得吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '东西散了，目录还记得吗'
+  share_number: '1132'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

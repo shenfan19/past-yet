@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {L: 1}
+    refs: [mendel_brno_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","handy","methodical"]}}
         - {id: p2, kind: hold, req: {"any":[{"trait":["vigil","bold","patient"]},{"stat":{"will":6}}]}}
         - {id: p3, kind: trust, req: {"trait":["sensitive","artistic","kind"]}}
+      vignettes:
+        - {id: ratio, traits: [skeptical, scholarly]}
+        - {id: label, traits: [methodical, handy]}
+        - {id: tally}
     text:
       en:
         name: Peas and the rules of heredity
         place: Brno
         figure: Gregor Mendel
-        story: Mendel reports what years of crossing garden peas show about how traits are passed on.
+        story: 'Mendel''s paper, published in 1866 after his 1865 presentations, reports pea-cross counts and compares the resulting ratios.'
         relic: A pea pod
         relic_desc: A dried pod from the monastery garden.
         points:
-          p1: "Count the peas of different shapes"
-          p2: "Keep recording year after year"
-          p3: "Get along with the abbot"
+          p1: 'Keep the two shapes separate while counting'
+          p2: 'Finish a tally without rounding the raw counts'
+          p3: 'Leave another reader enough detail to check the tally'
+        vignettes:
+          ratio: 'The reader rounds the tally until it looks exact. You leave the counts in the margin and ask him to work the ratio back from those numbers.'
+          label: 'Two paper labels look alike. You turn both over and find that one belongs to the parent plants. The reader moves it away from the counts for the offspring.'
+          tally: 'You read the two shapes out loud as the reader makes tally marks. At the end you leave the tally beside its total for someone else to check.'
       zh:
         name: 豌豆与遗传的规律
         place: 布尔诺
         figure: 格雷戈尔·孟德尔
-        story: 孟德尔报告了多年杂交豌豆的结果：性状是怎样传下去的。
+        story: '孟德尔在 1865 年报告豌豆杂交结果，1866 年刊出的论文列了计数并比较所得比例。'
         relic: 一只豌豆荚
         relic_desc: 修道院花园里的一只干豆荚。
         points:
-          p1: "数不同形状的豆子"
-          p2: "年复一年地记录"
-          p3: "同修道院长相处"
+          p1: '计数时分清两种形状'
+          p2: '完成计数并保留原数'
+          p3: '给下一个读者留下可复核的记录'
+        vignettes:
+          ratio: '听讲人把数约成了一个整齐的比例。你把原始计数留在页边，请他从这些数重新算一遍。'
+          label: '两张纸签看着很像。你翻过来才发现，其中一张写的是亲代。听讲人把它从后代的计数旁移开。'
+          tally: '听讲人画正字时，你逐粒念出两种形状。数完，你把正字留在合计旁，让别人也能复核。'
 text:
   en:
     name: Gregor Mendel
@@ -44,3 +57,34 @@ text:
   zh:
     name: 格雷戈尔·孟德尔
     text: 捷克与奥地利的修士与科学家，1822 年生，1884 年去世，布尔诺人。他在修道院花园里杂交豌豆，发现性状按固定比例遗传，成果 1866 年发表，到 1900 年前后才受到注意。
+hook: {en: 'Count the peas before rounding the ratio.', zh: '先数豆子，再说比例'}
+facts:
+  peas:
+    date: '1866'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [mendel_brno_primary]
+    text:
+      en: 'Mendel''s paper, published in 1866 after his 1865 presentations, reports pea-cross counts and compares the resulting ratios.'
+      zh: '孟德尔在 1865 年报告豌豆杂交结果，1866 年刊出的论文列了计数并比较所得比例。'
+bystanders:
+  mendel_brno_reader:
+    invented: true
+    text: {en: 'An invented reader checking a practice tally before the talk.', zh: '一位虚构的听讲人，会前正在核对一张练习计数表。'}
+wiki:
+  refs:
+    mendel_brno_primary:
+      order: 121
+      status: checked
+      text:
+        en: 'Gregor Mendel, Versuche über Pflanzen-Hybriden, Brünn, 1866. Smithsonian copy, Biodiversity Heritage Library. https://www.biodiversitylibrary.org/item/124139'
+        zh: 'Gregor Mendel, Versuche über Pflanzen-Hybriden, Brünn, 1866. Smithsonian copy, Biodiversity Heritage Library. https://www.biodiversitylibrary.org/item/124139'
+self_check:
+  quote_line: '听讲人把数约成了一个整齐的比例。'
+  fact: peas
+  regret_choice: '略过「计数时分清两种形状」，这处细节便留给下一位核对。'
+  bookend: '从「先数豆子，再说比例」开始，以员工留下的观察或更正收尾。'
+  share_line: '先数豆子，再说比例'
+  share_number: '1866'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

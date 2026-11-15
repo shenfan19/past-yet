@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 3
     channels: {L: 2, T: 1}
+    refs: [gutenberg_mainz_primary]
     scene:
       points:
         - {id: p1, kind: hold, req: {"job": ["mechanic", "carpenter", "builder"]}}
         - {id: p2, kind: endure, req: {"provides": "strength"}}
         - {id: p3, kind: notice, req: {"stat": {"wit": 7}}}
+      vignettes:
+        - {id: wrong_sort, traits: [handy, methodical]}
+        - {id: reader, traits: [artistic, curious]}
+        - {id: proof}
     text:
       en:
         name: Printing with movable metal type
         place: Mainz
         figure: Johannes Gutenberg
-        story: Gutenberg combines movable metal type, oil based ink and a press, and books stop being rare.
+        story: 'The surviving 42-line Bible was printed in Mainz around 1454–1455 using movable type. This trip visits an invented workshop preparing a practice page in the early 1450s.'
         relic: A lead type sort
         relic_desc: One small letter of lead and tin, backwards.
         points:
-          p1: "Help with the press (a craftsperson)"
-          p2: "Lift the heavy press"
-          p3: "Get the type to line up"
+          p1: 'Help the apprentice keep the type in order'
+          p2: 'Carry the practice sheets to the reading table'
+          p3: 'Catch a mistake in a printed line'
+        vignettes:
+          wrong_sort: 'You spot a wrong sort just before the apprentice returns it to the box. You set it beside its neighbour and let him see how one face would print into the other''s place.'
+          reader: 'You ask whether a crowded line can be read from a lectern. The apprentice moves back and reads it aloud. He marks where his eye jumped to the wrong line.'
+          proof: 'You read the fresh proof from the bottom upwards, one line at a time. The apprentice laughs until he catches himself reading what he expects rather than what is on the page.'
       zh:
         name: 用活动金属字模印书
         place: 美因茨
         figure: 古腾堡
-        story: 古腾堡把活动金属字模、油墨和压印机合在一起，书不再稀罕了。
+        story: '现存的四十二行《圣经》约于 1454 至 1455 年在美因茨以活字印成。本趟前往虚构的早期工坊，看的是一张试排页。'
         relic: 一粒铅字
         relic_desc: 铅锡合金的一个小字，是反着的。
         points:
-          p1: "帮他调试印刷机（懂手艺的人）"
-          p2: "抬起沉重的压印机"
-          p3: "让活字对齐"
+          p1: '帮学徒把拆下的活字分好'
+          p2: '把试印的纸送到读样的桌上'
+          p3: '找出校样里漏掉的字'
+        vignettes:
+          wrong_sort: '学徒正要把一枚活字扔回字格，你认出它放错了。你把它和旁边那枚并在一起，让他看看为什么印出来会串成另一个字。'
+          reader: '你问字挤成这样，离远一点还能读吗？学徒退后几步念出声，在眼睛跳错行的地方做了记号。'
+          proof: '你拿到校样，从下往上一行一行念。学徒还在笑，转眼发现自己把纸上没印的字也念了出来。'
 text:
   en:
     name: Johannes Gutenberg
@@ -44,3 +57,34 @@ text:
   zh:
     name: 古腾堡
     text: 德国印刷商，约 1400 年生，1468 年去世，美因茨人。约 1450 年他发展出金属活字和印刷机，1450 年代印出了《圣经》。他的方法在几十年里传遍欧洲。
+hook: {en: 'One backward letter can spoil a whole line.', zh: '一枚反字，一整行校样'}
+facts:
+  bible:
+    date: '1455'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [gutenberg_mainz_primary]
+    text:
+      en: 'The surviving 42-line Bible was printed in Mainz around 1454–1455 using movable type. This trip visits an invented workshop preparing a practice page in the early 1450s.'
+      zh: '现存的四十二行《圣经》约于 1454 至 1455 年在美因茨以活字印成。本趟前往虚构的早期工坊，看的是一张试排页。'
+bystanders:
+  gutenberg_mainz_reader:
+    invented: true
+    text: {en: 'An invented apprentice distributing type.', zh: '一位虚构的学徒，正把拆下的活字分回字格。'}
+wiki:
+  refs:
+    gutenberg_mainz_primary:
+      order: 123
+      status: checked
+      text:
+        en: 'Biblia latina, Mainz, around 1454–1455. Morgan Library & Museum, PML 12. https://www.themorgan.org/incunables/136021'
+        zh: 'Biblia latina, Mainz, around 1454–1455. Morgan Library & Museum, PML 12. https://www.themorgan.org/incunables/136021'
+self_check:
+  quote_line: '学徒正要把一枚活字扔回字格，你认出它放错了。'
+  fact: bible
+  regret_choice: '略过「帮学徒把拆下的活字分好」，这处细节便留给下一位核对。'
+  bookend: '从「一枚反字，一整行校样」开始，以员工留下的观察或更正收尾。'
+  share_line: '一枚反字，一整行校样'
+  share_number: '1455'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

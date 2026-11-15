@@ -9,34 +9,47 @@ events:
     field: technology
     tier: 2
     channels: {H: 1, L: 1}
+    refs: [al_jazari_diyarbakir_primary]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"job":["mechanic","carpenter"]},{"trait":["hardy"]}]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: trust, req: {"trait":["curious","sensitive","artistic"]}}
+      vignettes:
+        - {id: sequence, traits: [handy, methodical]}
+        - {id: viewer, traits: [curious, artistic]}
+        - {id: paper}
     text:
       en:
         name: A book of ingenious machines
         place: Diyarbakır
         figure: Al-Jazari
-        story: Al-Jazari writes a book describing and drawing automata, water clocks and pumps, with their cams and cranks.
+        story: 'Al-Jazari''s treatise on mechanical devices dates to 1206. A surviving manuscript folio copied in 1315 illustrates its elephant clock. This workshop''s demonstration is invented.'
         relic: A brass cam
         relic_desc: A shaped wheel that turns a spin into a stroke.
         points:
-          p1: "Set the gears of the water clock"
-          p2: "See how a cam drives the figure"
-          p3: "Be allowed to leaf through the sketches"
+          p1: 'Find the visible figures on the diagram'
+          p2: 'Describe the order in which two figures appear'
+          p3: 'Help the apprentice leave the sketch readable for a visitor'
+        vignettes:
+          sequence: 'The apprentice explains every figure at once. You point to the first movement and ask what comes immediately after it. They start telling the story of the clock in order.'
+          viewer: 'A visitor never looks up from the largest figure. You ask them to watch the spot the apprentice marked instead. On the second demonstration they see the smaller movement in time.'
+          paper: 'You hold up the drawing while the apprentice points past it at the model. They add one small mark so a reader without the model will know where to look.'
       zh:
         name: 一本奇巧机械之书
         place: 迪亚巴克尔
         figure: 加扎里
-        story: 加扎里写了一本书，描述并画出了自动机、水钟和水泵，连凸轮和曲柄都有。
+        story: '加扎里的机械装置著作成于 1206 年。现存 1315 年抄本的一页画出了书中的象钟。本卡的工坊示范为虚构。'
         relic: 一个黄铜凸轮
         relic_desc: 一个有形状的轮子，把转动变成往复。
         points:
-          p1: "校准水钟的齿轮"
-          p2: "看懂凸轮怎样带动人偶"
-          p3: "获准翻阅草图"
+          p1: '在图上找到能看见的人偶'
+          p2: '说清两个人偶出现的先后'
+          p3: '帮学徒把图留到来客也看得懂'
+        vignettes:
+          sequence: '学徒一开口便把所有人偶都说到。你指着第一个动作，问紧跟着是哪一下。他这回按着先后讲起钟来。'
+          viewer: '来客始终盯着最大的人偶。你请他改看学徒作了记号的地方。第二遍，他赶在小人偶动的时候看见了。'
+          paper: '学徒越过图指向模型，你把纸举稳。他补了一处小记号，让手边没模型的人也知道该看哪里。'
 text:
   en:
     name: Al-Jazari
@@ -44,3 +57,34 @@ text:
   zh:
     name: 加扎里
     text: 为阿尔图格王朝宫廷服务的工程师，活跃于 1200 年前后。他 1206 年的《精巧机械装置知识之书》记载了水钟、自动机和水泵，其中出现了曲柄连杆与曲轴。
+hook: {en: 'Which figure comes out first?', zh: '哪一个人偶先出来'}
+facts:
+  mechanical_book:
+    date: '1206'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [al_jazari_diyarbakir_primary]
+    text:
+      en: 'Al-Jazari''s treatise on mechanical devices dates to 1206. A surviving manuscript folio copied in 1315 illustrates its elephant clock. This workshop''s demonstration is invented.'
+      zh: '加扎里的机械装置著作成于 1206 年。现存 1315 年抄本的一页画出了书中的象钟。本卡的工坊示范为虚构。'
+bystanders:
+  al_jazari_diyarbakir_reader:
+    invented: true
+    text: {en: 'An invented apprentice holding a copy of the diagram.', zh: '一位虚构的学徒，手里捏着装置图的抄件。'}
+wiki:
+  refs:
+    al_jazari_diyarbakir_primary:
+      order: 162
+      status: checked
+      text:
+        en: 'Al-Jazari, Book of the Knowledge of Ingenious Mechanical Devices, Elephant Clock folio, 1315 copy. Metropolitan Museum of Art, 13.49.4. https://www.metmuseum.org/art/collection/search/451402'
+        zh: 'Al-Jazari, Book of the Knowledge of Ingenious Mechanical Devices, Elephant Clock folio, 1315 copy. Metropolitan Museum of Art, 13.49.4. https://www.metmuseum.org/art/collection/search/451402'
+self_check:
+  quote_line: '学徒一开口便把所有人偶都说到。'
+  fact: mechanical_book
+  regret_choice: '略过「在图上找到能看见的人偶」，这处细节便留给下一位核对。'
+  bookend: '从「哪一个人偶先出来」开始，以员工留下的观察或更正收尾。'
+  share_line: '哪一个人偶先出来'
+  share_number: '1206'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

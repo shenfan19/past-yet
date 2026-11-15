@@ -1,8 +1,6 @@
-// The coordinator of a stay. It steps the traveller through the days of the stay with a computational core, reads the body each day,
-// turns the readings into the attributes of that day, meets each sync point of the scene on the day it falls, and writes the outcome of the point
-// back to the handles as an event source. It is explicit coupling step by step, nothing iterates to convergence.
-// A traveller who can no longer act fails every later point. The core is whatever speaks the core interface, a stand-in or the LM core.
-import { evalPoint, pointDays } from './scene_core.js';
+// LM advances in historical days. Read health at checkpoints and objectives, then feed the objective result back into the next interval.
+import { evalPoint, sceneModel } from './scene_core.js';
+import { historicalDays } from './travel_time.js';
 
 // the value of every handle on a day, from the pressure of the channels the event names and what the earlier points wrote back
 export function dayHandles(D, ev, day, carry, modes) {
@@ -34,7 +32,7 @@ export function effectiveChannels(D, ev, staffId, props, gear) {
   const field = D.get('config.channels.trait_resist.field');
   const traits = D.get('staff.staff.' + staffId + '.traits');
   const out = {};
-  for (const [c, lv] of Object.entries(ev.channels)) {
+  for (const [c, lv] of Object.entries(ev.channels || {})) {
     const named = (ids) => ids.filter((id) => D.get('items.' + id).channels.includes(c)).length;
     const cut = Math.min(R.item_cap, R.item_levels * named(props)) + R.gear_levels * named(gear)
       + traits.reduce((a, t) => a + (D.get('staff.traits.' + t)[field]?.[c] || 0), 0);
@@ -57,28 +55,38 @@ export function runStay(D, core, ev0, ctx) {
   // the reference is the same body for the same days with no pressure at all, so the body factor counts only what the pressure added to a body that is not perfectly at rest
   const ref = 'reference';
   core.init({ v: 1, kind: 'init', vocabulary_version: hello.vocabulary_version, subjects: [{ id, seed: ctx.seed, context }, { id: ref, seed: ctx.seed, context: {} }] });
-  const days = pointDays(D, ev);
-  const stay = Math.max(...days);
+  const scene = ev.scene ? sceneModel(D, ev) : null;
+  const days = scene?.points.map((p) => p.day) || [];
+  const stay = ctx.historicalDays ?? scene?.stay ?? historicalDays(D, ev.stay || D.get('config.light.stay_by_tier.' + ev.tier));
+  const checks = new Set([stay, ...days]);
+  for (let day = B.check_days; day < stay; day += B.check_days) checks.add(day);
   const grief = ev.channels.G || 0;
-  let carry = {}, lonely = 0, down = false;
-  const hits = ev.scene.points.map(() => false);
+  let carry = {}, lonely = 0, prev = 0;
+  const hits = days.map(() => false);
   const trace = [];
-  for (let day = 1; day <= stay; day++) {
+  for (const day of [...checks].sort((a, b) => a - b)) {
+    const elapsed = day - prev;
+    prev = day;
     const handles = dayHandles(D, ev, day, carry, hello.handles);
-    const msg = core.step({ v: 1, kind: 'step', minutes: B.step_minutes, subjects: [{ id, handles }, { id: ref, handles: dayHandles(D, { channels: {} }, day, {}, hello.handles) }] });
+    const interval = (writes) => writes.map((h) => h.mode === 'total' ? { ...h, value: h.value * elapsed } : h);
+    const msg = core.step({ v: 1, kind: 'step', minutes: B.step_minutes * elapsed, subjects: [{ id, handles: interval(handles) }, { id: ref, handles: interval(dayHandles(D, { channels: {} }, day, {}, hello.handles)) }] });
     const raw = msg.subjects.find((s) => s.id === id).readouts;
     const calm = msg.subjects.find((s) => s.id === ref).readouts;
     const read = Object.fromEntries(Object.keys(raw).map((r) => [r, Math.max(0, raw[r] - calm[r])]));
-    lonely += B.loneliness.per_level_day * grief;
+    lonely += B.loneliness.per_level_day * grief * elapsed / D.get('config.travel.history_days_per_office_day');
     read.loneliness = Math.min(1, lonely);
-    if (Math.max(...B.incapacity.readouts.map((r) => read[r] || 0)) >= B.incapacity.at) down = true;
+    const resilience = 0.75 + 0.05 * ctx.stats.constitution;
+    const infectionLimit = resilience * B.incapacity.infection_at;
+    const reason = B.incapacity.readouts.find((r) => read[r] >= (r === 'infection_burden' ? infectionLimit : resilience * B.incapacity.at));
+    const strain = { ...read, infection_burden: Math.min(1, (read.infection_burden || 0) / infectionLimit) };
     const stats = { ...ctx.stats };
-    for (const [a, carriers] of Object.entries(B.carriers)) stats[a] = ctx.stats[a] * (1 - B.k * Math.max(...carriers.map((r) => read[r] || 0)));
-    trace.push({ day, readouts: read, handles, stats, down });
-    carry = Object.fromEntries(Object.entries(carry).map(([h, v]) => [h, v * B.feedback.decay]));
+    for (const [a, carriers] of Object.entries(B.carriers)) stats[a] = ctx.stats[a] * (1 - B.k * Math.max(...carriers.map((r) => strain[r] || 0)));
+    trace.push({ day, readouts: read, handles, stats, down: !!reason });
+    if (reason) return { hits, trace, evacuation: { day, reason } };
+    carry = Object.fromEntries(Object.entries(carry).map(([h, v]) => [h, v * B.feedback.decay ** elapsed]));
     days.forEach((d, i) => {
       if (d !== day) return;
-      hits[i] = !down && evalPoint(D, ev, i, { staffId: ctx.staffId, seed: ctx.seed, carried: ctx.carried, statsAt: () => stats });
+      hits[i] = evalPoint(D, ev, i, { staffId: ctx.staffId, seed: ctx.seed, carried: ctx.carried, statsAt: () => stats });
       for (const [h, v] of Object.entries(B.feedback[hits[i] ? 'hit' : 'miss'])) carry[h] = (carry[h] || 0) + v;
     });
   }

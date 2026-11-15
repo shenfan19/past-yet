@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {V: 3}
     regret: true
+    refs: [du_chatelet_luneville_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["bold","hardy"]}]}}
         - {id: p3, kind: notice, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: source, traits: [methodical, scholarly]}
+        - {id: diagram, traits: [curious, artistic]}
+        - {id: mark}
     text:
       en:
         name: "Newton in French"
         place: "Lunéville"
         figure: "Émilie du Châtelet"
-        story: "Émilie du Châtelet races to finish her French translation of Newton's Principia with her own commentary. She dies days after giving birth, and the book appears ten years later."
+        story: 'The complete French edition of Newton''s Principia translated and annotated by Émilie du Châtelet appeared posthumously in 1759. The 1749 manuscript-reading scene is invented.'
         relic: "An inkwell"
         relic_desc: "A small inkwell from a desk worked at through the night."
         points:
-          p1: "Follow her commentary"
-          p2: "Keep the long hours with her"
-          p3: "Be the one who checks the last pages"
+          p1: 'Find the sentence the commentary is answering'
+          p2: 'Help the reader keep the two texts aligned'
+          p3: 'Leave a clear mark for the next reading'
+        vignettes:
+          source: 'The reader follows one sentence straight into the next. You stop them where the commentary begins. Back at the first page, they can now tell who is doing the explaining.'
+          diagram: 'You ask what the words would look like on paper. The reader sketches a direction, then goes back to the text to check where the arrow belongs.'
+          mark: 'You move the paper mark from the next page to the exact line the reader wants to revisit. When the sheets are collected, the question stays with the passage.'
       zh:
         name: "法语版牛顿"
         place: "吕内维尔"
         figure: "埃米莉·迪沙特莱"
-        story: "埃米莉·迪沙特莱赶着译完牛顿的《原理》，并加上自己的评注。她在生产几天后去世，书十年后才出版。"
+        story: '迪沙特莱翻译并加注的牛顿《原理》完整法译本，于她去世后的 1759 年刊行。卡中 1749 年的读稿场景为虚构。'
         relic: "一只墨水瓶"
         relic_desc: "一只小墨水瓶，来自一张通宵写字的书桌。"
         points:
-          p1: "跟上她的评注"
-          p2: "陪她一起熬长夜"
-          p3: "替她核对最后几页"
+          p1: '找出评注正在解释的那句原文'
+          p2: '帮读者把两份文字对齐'
+          p3: '给下一次读稿留下清楚的标记'
+        vignettes:
+          source: '读者顺着一句直接念到下一句。到评注开头处，你请他停一下。再翻回第一页，他已能认出是哪一位作者在解释。'
+          diagram: '你问这段话画出来该是什么样。读者先画了个方向，又回去翻文字，确认箭头该落在哪儿。'
+          mark: '你把夹在下一页的纸签移到读者想回看的那一行。散页收起来时，问题仍和原段夹在一起。'
 text:
   en:
     name: Émilie du Châtelet
@@ -45,3 +58,34 @@ text:
   zh:
     name: 埃米莉·迪沙特莱
     text: 法国数学家与物理学家，1706 年生，1749 年去世。她把牛顿的《原理》译成法文并作注，论证运动物体的能量与速度的平方有关。她在吕内维尔因产后并发症去世。
+hook: {en: 'Where does the translation end?', zh: '译文到哪儿，评注从哪儿起'}
+facts:
+  principes:
+    date: '1759'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [du_chatelet_luneville_primary]
+    text:
+      en: 'The complete French edition of Newton''s Principia translated and annotated by Émilie du Châtelet appeared posthumously in 1759. The 1749 manuscript-reading scene is invented.'
+      zh: '迪沙特莱翻译并加注的牛顿《原理》完整法译本，于她去世后的 1759 年刊行。卡中 1749 年的读稿场景为虚构。'
+bystanders:
+  du_chatelet_luneville_reader:
+    invented: true
+    text: {en: 'An invented reader comparing the translation and commentary.', zh: '一位虚构的读者，正把译文和评注放在一起看。'}
+wiki:
+  refs:
+    du_chatelet_luneville_primary:
+      order: 146
+      status: checked
+      text:
+        en: 'Isaac Newton, Principes mathématiques de la philosophie naturelle, translated and annotated by Émilie du Châtelet, Paris, 1759. Ghent University copy. https://books.google.com/books?id=eoUPAAAAQAAJ'
+        zh: 'Isaac Newton, Principes mathématiques de la philosophie naturelle, translated and annotated by Émilie du Châtelet, Paris, 1759. Ghent University copy. https://books.google.com/books?id=eoUPAAAAQAAJ'
+self_check:
+  quote_line: '读者顺着一句直接念到下一句。'
+  fact: principes
+  regret_choice: '略过「找出评注正在解释的那句原文」，这处细节便留给下一位核对。'
+  bookend: '从「译文到哪儿，评注从哪儿起」开始，以员工留下的观察或更正收尾。'
+  share_line: '译文到哪儿，评注从哪儿起'
+  share_number: '1759'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

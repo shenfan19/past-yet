@@ -35,7 +35,7 @@ for (const stem of ['text', 'encyclopedia']) {
     for (const p of extra) { console.log(`${file}: key not in ${I.fallback}: ${p}`); bad++; }
     if (missing.length) console.log(`${file}: ${missing.length} keys fall back to ${I.fallback}, first: ${missing.slice(0, 3).join(', ')}`);
     for (const p of bp) {
-      if (!op.has(p) || p === 'date_format') continue;
+      if (!op.has(p) || p === 'date_format' || p === 'date_day') continue;
       const a = placeholders(valueAt(base, p)), b = placeholders(valueAt(other, p));
       if (a !== b) { console.log(`${file}: placeholders differ at ${p}: ${a} / ${b}`); bad++; }
     }

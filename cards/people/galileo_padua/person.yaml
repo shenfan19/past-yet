@@ -9,34 +9,47 @@ events:
     field: science
     tier: 3
     channels: {C: 1, V: 2}
+    refs: [galileo_padua_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["quiet","handy"]}}
         - {id: p2, kind: persuade, req: {"stat": {"finesse": 6}}}
         - {id: p3, kind: hold, req: {"luck": 0.5}}
+      vignettes:
+        - {id: alignment, traits: [methodical, vigil]}
+        - {id: telescope, traits: [bold, curious]}
+        - {id: dates}
     text:
       en:
         name: Moons around Jupiter
         place: Padua
         figure: Galileo Galilei
-        story: Galileo points a telescope at Jupiter and sees four small moons going round it.
+        story: 'In the Starry Messenger, Galileo records changing positions of four small bodies near Jupiter and concludes that they orbit it.'
         relic: A ground lens
         relic_desc: A small glass lens, polished by hand.
         points:
-          p1: "Look through the telescope with him"
-          p2: "Stand by him before the doubters"
-          p3: "A clear night"
+          p1: 'Compare diagrams from two observing nights'
+          p2: 'Keep two loose sheets in chronological order'
+          p3: 'Check which positions still need a second look'
+        vignettes:
+          alignment: 'You stop the copyist from aligning the pages by their edges. Line up Jupiter instead, you suggest. The dots no longer sit on top of one another.'
+          telescope: 'You ask which dot is the fourth. The copyist sets out the sheets from several nights and asks which should be trusted when the dots seem to merge.'
+          dates: 'You mark the date on each loose sheet before the copyist stacks them. The order lets the next reader see the dots change position.'
       zh:
         name: 木星身边的卫星
         place: 帕多瓦
         figure: 伽利略
-        story: 伽利略把望远镜对准木星，看见四颗小卫星在绕着它转。
+        story: '伽利略在《星际信使》中记录了木星附近四个小天体的位置变化，并判断它们绕木星运行。'
         relic: 一片磨制的透镜
         relic_desc: 一片小小的玻璃透镜，是手工磨出来的。
         points:
-          p1: "和他一起看望远镜"
-          p2: "在质疑者面前替他说话"
-          p3: "碰上一个晴朗的夜晚"
+          p1: '比较两个夜晚的观测图'
+          p2: '把散页按观测日期排好'
+          p3: '标出还需复核的光点位置'
+        vignettes:
+          alignment: '你拦住正要把两页按纸边对齐的誊写员。先对齐木星吧。纸一挪，几个光点就错开了。'
+          telescope: '你追问第四个光点是哪一个。誊写员摊开几晚的图，反问你：有两个点挨得看不清时，该相信哪一夜？'
+          dates: '誊写员叠起散页之前，你替每张补上日期。下一个人就能按夜看出光点怎样换了位置。'
 text:
   en:
     name: Galileo Galilei
@@ -44,3 +57,34 @@ text:
   zh:
     name: 伽利略
     text: 意大利科学家，1564 年生，1642 年去世，曾在帕多瓦任教。他用望远镜看到木星的卫星和金星的位相，1610 年公布。后来他受宗教裁判所审判，晚年被软禁。
+hook: {en: 'Night after night, the dots move.', zh: '逐夜移动的四个光点'}
+facts:
+  jupiter:
+    date: '1610'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [galileo_padua_primary]
+    text:
+      en: 'In the Starry Messenger, Galileo records changing positions of four small bodies near Jupiter and concludes that they orbit it.'
+      zh: '伽利略在《星际信使》中记录了木星附近四个小天体的位置变化，并判断它们绕木星运行。'
+bystanders:
+  galileo_padua_reader:
+    invented: true
+    text: {en: 'An invented copyist comparing two observing diagrams.', zh: '一位虚构的誊写员，正对照两夜的观测图。'}
+wiki:
+  refs:
+    galileo_padua_primary:
+      order: 117
+      status: checked
+      text:
+        en: 'Galileo Galilei, Sidereus nuncius, Venice, 1610. University of Padua copy, Library of Congress facsimile. https://www.loc.gov/resource/gdcwdl.wdl_04170/?st=gallery'
+        zh: 'Galileo Galilei, Sidereus nuncius, Venice, 1610. University of Padua copy, Library of Congress facsimile. https://www.loc.gov/resource/gdcwdl.wdl_04170/?st=gallery'
+self_check:
+  quote_line: '你拦住正要把两页按纸边对齐的誊写员。'
+  fact: jupiter
+  regret_choice: '略过「比较两个夜晚的观测图」，这处细节便留给下一位核对。'
+  bookend: '从「逐夜移动的四个光点」开始，以员工留下的观察或更正收尾。'
+  share_line: '逐夜移动的四个光点'
+  share_number: '1610'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

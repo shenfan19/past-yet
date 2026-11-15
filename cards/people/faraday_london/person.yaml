@@ -9,34 +9,47 @@ events:
     field: science
     tier: 2
     channels: {L: 1, T: 1}
+    refs: [faraday_london_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["curious","methodical","handy"]}}
         - {id: p2, kind: hold, req: {"any":[{"job":["electrician","mechanic"]},{"trait":["bold"]}]}}
         - {id: p3, kind: trust, req: {"trait":["sensitive","artistic","kind","curious"]}}
+      vignettes:
+        - {id: instant, traits: [methodical, vigil]}
+        - {id: skeptic, traits: [skeptical, curious]}
+        - {id: sketch}
     text:
       en:
         name: Electricity from magnetism
         place: London
         figure: Michael Faraday
-        story: Faraday moves a magnet through a coil of wire and gets a current, the principle behind the dynamo.
+        story: 'On 29 August 1831 Faraday recorded a transient needle movement using two sets of coils wound around an iron ring.'
         relic: An iron ring and coil
         relic_desc: Two coils of wire on a ring of soft iron.
         points:
-          p1: "Watch iron filings circle a magnet"
-          p2: "Wind the coil"
-          p3: "Serve as his assistant"
+          p1: 'Mark when the needle moved'
+          p2: 'Keep the two sets of windings distinct in the sketch'
+          p3: 'Make the observation legible to the next reader'
+        vignettes:
+          instant: 'The assistant writes that the needle moved. You leave space for when it moved. By the time he looks back at the instrument, the needle has settled.'
+          skeptic: 'You ask whether the reading stayed put. The assistant points to the blank after the first mark. Together you label it as a return to rest so nobody mistakes the blank for a missed reading.'
+          sketch: 'You draw the ring in the margin and mark its two sets of windings on opposite sides. The assistant can now match the observation to the right apparatus.'
       zh:
         name: 从磁里得到电
         place: 伦敦
         figure: 迈克尔·法拉第
-        story: 法拉第让磁铁穿过线圈，得到了电流，发电机的原理就在这里。
+        story: '1831 年 8 月 29 日，法拉第记录了铁环上线圈实验中指针的短暂偏转。'
         relic: 一个铁环和线圈
         relic_desc: 软铁环上绕着两组线圈。
         points:
-          p1: "看铁屑围着磁铁转"
-          p2: "绕线圈"
-          p3: "做他的实验助手"
+          p1: '记下指针何时偏转'
+          p2: '在图上分清两组绕线'
+          p3: '让下一位读者看得懂这条记录'
+        vignettes:
+          instant: '助手写下「指针偏转」。你腾出一栏补记何时偏转。他再回头时，针已经归位了。'
+          skeptic: '你问读数有没有一直停在那里。助手指给你看第一道记号后面的空白。你们补上「回到静止」，免得后来人当成漏记。'
+          sketch: '你在页边画出铁环，标出两侧的绕线。助手现在能把这条观察对回对应的器具。'
 text:
   en:
     name: Michael Faraday
@@ -50,3 +63,34 @@ quotes:
     text:
       en: {who: Michael Faraday, quote: "Nothing is too wonderful to be true, if it be consistent with the laws of nature."}
       zh: {who: 法拉第, quote: "只要不违背自然规律，再奇妙的事也可能是真的。"}
+hook: {en: 'The needle moves, then settles.', zh: '针动了一下，又归零'}
+facts:
+  ring:
+    date: '1831-08-29'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [faraday_london_primary]
+    text:
+      en: 'On 29 August 1831 Faraday recorded a transient needle movement using two sets of coils wound around an iron ring.'
+      zh: '1831 年 8 月 29 日，法拉第记录了铁环上线圈实验中指针的短暂偏转。'
+bystanders:
+  faraday_london_reader:
+    invented: true
+    text: {en: 'An invented assistant keeping a copy of the observations.', zh: '一位虚构的助手，正在誊写观察记录。'}
+wiki:
+  refs:
+    faraday_london_primary:
+      order: 118
+      status: checked
+      text:
+        en: 'Michael Faraday, laboratory diary, 29 August 1831, Royal Institution; surviving ring-coil apparatus. https://www.rigb.org/explore-science/explore/collection/michael-faradays-ring-coil-apparatus'
+        zh: 'Michael Faraday, laboratory diary, 29 August 1831, Royal Institution; surviving ring-coil apparatus. https://www.rigb.org/explore-science/explore/collection/michael-faradays-ring-coil-apparatus'
+self_check:
+  quote_line: '助手写下「指针偏转」。'
+  fact: ring
+  regret_choice: '略过「记下指针何时偏转」，这处细节便留给下一位核对。'
+  bookend: '从「针动了一下，又归零」开始，以员工留下的观察或更正收尾。'
+  share_line: '针动了一下，又归零'
+  share_number: '1831-08-29'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

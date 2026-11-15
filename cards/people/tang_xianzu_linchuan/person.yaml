@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {V: 1}
     regret: true
+    refs: [tang_xianzu_linchuan_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"trait":["streetwise","wanderer"]},{"job":["musician"]}]}}
         - {id: p2, kind: hold, req: {"any":[{"trait":["bold","vigil"]},{"job":["musician"]}]}}
         - {id: p3, kind: persuade, redeem: true, req: {"item":"golden_apple"}}
+      vignettes:
+        - {id: empty_garden, traits: [artistic, curious]}
+        - {id: cue, traits: [methodical, vigil]}
+        - {id: breath}
     text:
       en:
         name: "A play on love beyond death"
         place: "Linchuan"
         figure: "Tang Xianzu"
-        story: "Tang Xianzu, who has left official life, finishes The Peony Pavilion, a play in which love outlasts death, and later sees troupes cut and rewrite his lines."
+        story: 'In The Peony Pavilion, the garden scene passes from spring scenery into Du Liniang''s dream. The card uses 1598 as its setting and imagines performers deciding what the audience needs to hear.'
         relic: "A printed songbook"
         relic_desc: "Printed arias for singers, with the tune named above each."
         points:
-          p1: "Hear the songs of the play (a musician or a sensitive employee)"
-          p2: "Stand by his lines when the troupe wants to cut them (a stubborn employee or a musician)"
-          p3: "Praise the play so well that he hears it said"
+          p1: 'Recognize where the garden becomes the dream'
+          p2: 'Find the line another player uses as a cue'
+          p3: 'Make room for the next movement without interrupting the song'
+        vignettes:
+          empty_garden: 'You ask the player to rehearse the garden without anything on the stage. After a few lines, a listener points to where they imagined a flower. The player keeps the line that put it there.'
+          cue: 'A cut takes away the other player''s entrance signal. You catch it in rehearsal and put the cue where both can hear, without having to restore the whole cut.'
+          breath: 'You wait until the singer reaches the end of the line before moving the chair. This time nobody has to stop and explain why the dream began.'
       zh:
         name: "写爱情超越死亡的戏"
         place: "临川"
         figure: "汤显祖"
-        story: "汤显祖离开官场之后写完了《牡丹亭》，一部爱情胜过死亡的戏，后来他看到戏班删改他的唱词。"
+        story: '汤显祖《牡丹亭》的《惊梦》一出，从游园春色转入杜丽娘的梦。卡片用 1598 年为背景，虚构戏班商量哪一句必须让观众听见。'
         relic: "一册刻印的曲本"
         relic_desc: "给歌者用的刻本，每支曲牌的名字写在上方。"
         points:
-          p1: "听这出戏的唱段"
-          p2: "戏班要删改时，守住他的唱词"
-          p3: "把这出戏夸得让他亲耳听到"
+          p1: '听出游园在何处转入梦里'
+          p2: '找出另一个演员靠哪一句接上'
+          p3: '让开走位而不中断唱腔'
+        vignettes:
+          empty_garden: '你请演员在空台上排游园。几句之后，听的人指出想象中花开在什么地方。演员留下了让他看见那朵花的一句。'
+          cue: '删词连另一个演员上场的信号也删掉了。你在排练时发现，把那个字留在两人都听得到的位置，余下的删节仍能保留。'
+          breath: '你等演员把这一句唱完才挪椅子。这一遍，没人需要停下来解释为什么到了梦里。'
 text:
   en:
     name: Tang Xianzu
@@ -45,3 +58,34 @@ text:
   zh:
     name: 汤显祖
     text: 明代剧作家，1550 年生，1616 年去世。他退居临川，1598 年写成《牡丹亭》，这是一部关于爱情跨越梦与现实界限的长剧。
+hook: {en: 'What can one garden scene carry?', zh: '一折惊梦，要留什么给观众'}
+facts:
+  peony_dream:
+    date: '1598'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [tang_xianzu_linchuan_primary]
+    text:
+      en: 'In The Peony Pavilion, the garden scene passes from spring scenery into Du Liniang''s dream. The card uses 1598 as its setting and imagines performers deciding what the audience needs to hear.'
+      zh: '汤显祖《牡丹亭》的《惊梦》一出，从游园春色转入杜丽娘的梦。卡片用 1598 年为背景，虚构戏班商量哪一句必须让观众听见。'
+bystanders:
+  tang_xianzu_linchuan_reader:
+    invented: true
+    text: {en: 'An invented player testing the cue between waking and dreaming.', zh: '一位虚构的演员，正试怎样让观众听出由醒入梦。'}
+wiki:
+  refs:
+    tang_xianzu_linchuan_primary:
+      order: 190
+      status: checked
+      text:
+        en: 'Tang Xianzu, The Peony Pavilion, author''s preface and scene 10, Interrupted Dream, Wikisource transcription. https://zh.wikisource.org/zh-hant/牡丹亭/驚夢'
+        zh: 'Tang Xianzu, The Peony Pavilion, author''s preface and scene 10, Interrupted Dream, Wikisource transcription. https://zh.wikisource.org/zh-hant/牡丹亭/驚夢'
+self_check:
+  quote_line: '你请演员在空台上排游园。'
+  fact: peony_dream
+  regret_choice: '略过「听出游园在何处转入梦里」，这处细节便留给下一位核对。'
+  bookend: '从「一折惊梦，要留什么给观众」开始，以员工留下的观察或更正收尾。'
+  share_line: '一折惊梦，要留什么给观众'
+  share_number: '1598'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

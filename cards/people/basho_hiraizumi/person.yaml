@@ -9,34 +9,47 @@ events:
     field: literature
     tier: 2
     channels: {C: 2, L: 2}
+    refs: [basho_hiraizumi_primary]
     scene:
       points:
         - {id: p1, kind: endure, req: {"provides":"ration"}}
         - {id: p2, kind: notice, req: {"trait":["skeptical","curious"]}}
         - {id: p3, kind: trust, req: {"luck":0.5}}
+      vignettes:
+        - {id: grass, traits: [artistic, quiet]}
+        - {id: accounts, traits: [curious, skeptical]}
+        - {id: sandal}
     text:
       en:
         name: The narrow road to the deep north
         place: Hiraizumi, Japan
         figure: Matsuo Basho
-        story: Basho walks north through Japan for months and writes the travel diary, with haiku, of the Narrow Road to the Deep North.
+        story: 'Basho''s Oku no Hosomichi, written after his 1689 journey, recalls Hiraizumi through present landscape and remembered history. It includes his verse on summer grasses. The resting scene is invented.'
         relic: A straw hat
         relic_desc: A woven hat grey with rain.
         points:
-          p1: "Walk the mountain roads of the north"
-          p2: "Stop where he stops"
-          p3: "Meet a shopkeeper willing to talk"
+          p1: 'Make it to the resting place with the traveler'
+          p2: 'Notice one change in the view while stopped'
+          p3: 'Bring back a detail you saw for yourself'
+        vignettes:
+          grass: 'The traveler asks what you are looking at. You wait for the grass to move again before answering. When you write the place down later, you remember the movement before the name.'
+          accounts: 'The traveler remembers a story that puts a landmark farther away than you can see. You put the story and the view on separate lines, then ask where the name came from.'
+          sandal: 'You move your bundle so the traveler can set the damp sandal flat. Between the two of you there is time to point out one place on the ridge before setting off.'
       zh:
         name: 奥州小路
         place: 日本平泉
         figure: 松尾芭蕉
-        story: 芭蕉一路向北走了几个月，写下了夹着俳句的《奥之细道》。
+        story: '芭蕉以 1689 年行旅为素材，后来写成《奥之细道》。平泉一节从眼前景物想到旧事，收有咏夏草的俳句。本篇歇脚是虚构的。'
         relic: 一顶草笠
         relic_desc: 被雨淋灰了的编织草帽。
         points:
-          p1: "走完北国的山路"
-          p2: "停在他停的地方"
-          p3: "遇上愿意聊天的店家"
+          p1: '与同行旅人一起走到歇脚处'
+          p2: '停下时看清景物的一点变化'
+          p3: '带回一个亲眼看见的细节'
+        vignettes:
+          grass: '旅人问你在看什么。你等草再动了一下才回答。后来写下这个地方，你先想起的是草动的样子，才想起地名。'
+          accounts: '旅人讲的旧事里，有个地方比眼睛能看到的还远。你把故事和所见分两行记，接着问这名字是从哪听来的。'
+          sandal: '你挪开包袱，让旅人把湿草鞋摊平。再次出发之前，两人还有空指认山脊上的一处地方。'
 text:
   en:
     name: Matsuo Basho
@@ -44,3 +57,34 @@ text:
   zh:
     name: 松尾芭蕉
     text: 日本俳句诗人，1644 年生，1694 年去世。1689 年他步行游历北方，写下散文与俳句相间的《奥之细道》。
+hook: {en: 'What stays when the road moves on?', zh: '走过平泉，带走什么'}
+facts:
+  hiraizumi:
+    date: '1689'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [basho_hiraizumi_primary]
+    text:
+      en: 'Basho''s Oku no Hosomichi, written after his 1689 journey, recalls Hiraizumi through present landscape and remembered history. It includes his verse on summer grasses. The resting scene is invented.'
+      zh: '芭蕉以 1689 年行旅为素材，后来写成《奥之细道》。平泉一节从眼前景物想到旧事，收有咏夏草的俳句。本篇歇脚是虚构的。'
+bystanders:
+  basho_hiraizumi_reader:
+    invented: true
+    text: {en: 'An invented fellow traveler waiting for a damp sandal to dry.', zh: '一位虚构的同行旅人，正等湿草鞋晾干。'}
+wiki:
+  refs:
+    basho_hiraizumi_primary:
+      order: 134
+      status: checked
+      text:
+        en: 'Matsuo Basho, Oku no Hosomichi, Hiraizumi section. Aozora Bunko transcription of the annotated Japanese edition. https://www.aozora.gr.jp/cards/002240/files/61619_78128.html'
+        zh: 'Matsuo Basho, Oku no Hosomichi, Hiraizumi section. Aozora Bunko transcription of the annotated Japanese edition. https://www.aozora.gr.jp/cards/002240/files/61619_78128.html'
+self_check:
+  quote_line: '旅人问你在看什么。'
+  fact: hiraizumi
+  regret_choice: '略过「与同行旅人一起走到歇脚处」，这处细节便留给下一位核对。'
+  bookend: '从「走过平泉，带走什么」开始，以员工留下的观察或更正收尾。'
+  share_line: '走过平泉，带走什么'
+  share_number: '1689'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

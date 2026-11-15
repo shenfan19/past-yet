@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 1, G: 2}
     regret: true
+    refs: [sophie_germain_paris_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p2, kind: persuade, req: {"luck":0.4}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["faithful","calm","cheerful"]},{"job":["nurse"]}]}}
+      vignettes:
+        - {id: quiet_lines, traits: [artistic, curious]}
+        - {id: edges, traits: [methodical, vigil]}
+        - {id: compare}
     text:
       en:
         name: "A degree that came too late"
         place: "Paris"
         figure: "Sophie Germain"
-        story: "Sophie Germain, who taught herself mathematics from books and once wrote to Gauss under a man's name, dies of cancer in Paris. The honorary degree Göttingen had in mind never reaches her."
+        story: 'Sophie Germain published her mathematical study of elastic surfaces in 1821, engaging with patterns observed on vibrating plates. The 1831 scene imagines a reader explaining the work from its figures.'
         relic: "A letter signed Le Blanc"
         relic_desc: "A letter to Gauss in a borrowed name."
         points:
-          p1: "Follow her work on elasticity"
-          p2: "Hope that a hearing goes her way"
-          p3: "Sit with her through the last illness"
+          p1: 'Find the indicated still lines in the figure'
+          p2: 'Keep track of how each plate is described'
+          p3: 'Tell what the figure shows and what the text explains'
+        vignettes:
+          quiet_lines: 'The reader points to the darkest line and guesses that it moves the most. You ask what was still when the pattern appeared. They look back to the description before drawing another arrow.'
+          edges: 'The two figures look almost alike until you check how the edges are treated in the text. The reader adds each condition beside its matching figure.'
+          compare: 'You set the two prints beside each other and make room below them for the reader''s note. They can now point to the difference without covering either picture.'
       zh:
         name: "来迟了的学位"
         place: "巴黎"
         figure: "索菲·热尔曼"
-        story: "索菲·热尔曼靠读书自学数学，曾用男人的名字给高斯写信，后来在巴黎死于癌症。哥廷根本想授给她的荣誉学位没有送到她手上。"
+        story: '索菲·热尔曼于 1821 年出版弹性曲面的数学研究，讨论振动薄板上观察到的图样。本卡在 1831 年虚构一位读者对着图解释这项研究。'
         relic: "一封署名勒布朗的信"
         relic_desc: "一封用借来的名字写给高斯的信。"
         points:
-          p1: "跟上她关于弹性的工作"
-          p2: "盼着一次聆听能朝着她有利的方向走"
-          p3: "陪她走过最后的病中日子"
+          p1: '辨认图中所示的静止线'
+          p2: '记清每块薄板在文中怎样说明'
+          p3: '分别说出图上看得见什么、文字又解释了什么'
+        vignettes:
+          quiet_lines: '读者指着最深的线，猜它动得最厉害。你问当图样出现时，哪一处反而是静的。他回头翻说明，先没再添箭头。'
+          edges: '两张图看着差不多，直到你们读到文字是怎样处理边缘的。读者把两个条件各自写回对应的图。'
+          compare: '你把印图并排搁好，在下边给读者留条记字的空。他指出两幅不同之处时，手不必压住任何一幅。'
 text:
   en:
     name: Sophie Germain
@@ -45,3 +58,34 @@ text:
   zh:
     name: 索菲·热尔曼
     text: 法国数学家，1776 年生，1831 年去世。她被大学拒之门外，靠书本自学，并以男性名字通信。她在费马大定理上取得进展，并因对振动板的研究获得科学院奖。
+hook: {en: 'Which lines stay still when a plate sounds?', zh: '薄板响时，哪几道线不动'}
+facts:
+  elastic_surfaces:
+    date: '1821'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sophie_germain_paris_primary]
+    text:
+      en: 'Sophie Germain published her mathematical study of elastic surfaces in 1821, engaging with patterns observed on vibrating plates. The 1831 scene imagines a reader explaining the work from its figures.'
+      zh: '索菲·热尔曼于 1821 年出版弹性曲面的数学研究，讨论振动薄板上观察到的图样。本卡在 1831 年虚构一位读者对着图解释这项研究。'
+bystanders:
+  sophie_germain_paris_reader:
+    invented: true
+    text: {en: 'An invented reader comparing the curved lines in two printed figures.', zh: '一位虚构的读者，对照两幅印图上的曲线。'}
+wiki:
+  refs:
+    sophie_germain_paris_primary:
+      order: 186
+      status: checked
+      text:
+        en: 'Sophie Germain, Recherches sur la théorie des surfaces élastiques, Paris, 1821. ETH Library, Rar 22198. https://www.e-rara.ch/zut/content/titleinfo/17082368'
+        zh: 'Sophie Germain, Recherches sur la théorie des surfaces élastiques, Paris, 1821. ETH Library, Rar 22198. https://www.e-rara.ch/zut/content/titleinfo/17082368'
+self_check:
+  quote_line: '读者指着最深的线，猜它动得最厉害。'
+  fact: elastic_surfaces
+  regret_choice: '略过「辨认图中所示的静止线」，这处细节便留给下一位核对。'
+  bookend: '从「薄板响时，哪几道线不动」开始，以员工留下的观察或更正收尾。'
+  share_line: '薄板响时，哪几道线不动'
+  share_number: '1821'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

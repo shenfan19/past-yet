@@ -10,34 +10,47 @@ events:
     tier: 1
     channels: {G: 1}
     regret: true
+    refs: [dickinson_amherst_primary]
     scene:
       points:
         - {id: p1, kind: trust, req: {"trait":["charismatic","kind","sensitive"]}}
         - {id: p2, kind: notice, req: {"luck":0.4}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["ambitious","vigil"]}]}}
+      vignettes:
+        - {id: pause, traits: [artistic, quiet]}
+        - {id: variant, traits: [methodical, vigil]}
+        - {id: stack}
     text:
       en:
         name: "Poems in a chest"
         place: "Amherst"
         figure: "Emily Dickinson"
-        story: "Emily Dickinson dies in her family's house in Amherst. Her sister then finds hundreds of poems in a chest, and almost none had been printed."
+        story: 'Many of Emily Dickinson''s poems survive in manuscripts. This game scene is set in 1886 and imagines an early reader comparing a loose transcript against the handwriting.'
         relic: "A sewn booklet"
         relic_desc: "A few pages sewn by hand with a poem on each."
         points:
-          p1: "Be a visitor she does not mind"
-          p2: "Spot the right drawer by chance"
-          p3: "Be the one who keeps the poems together (a librarian, an archivist or a curious mind helps)"
+          p1: 'Identify a pause marked on the page'
+          p2: 'Keep a loose scrap with the lines it belongs to'
+          p3: 'Leave a transcription that retains the alternate reading'
+        vignettes:
+          pause: 'The reader makes the dash disappear as they read aloud. You ask them to pause where the pencil broke off. They try the line again and hear a different ending.'
+          variant: 'You see a word written above the line. The reader wants to choose one version and move on. You make room in the margin for both and label which comes from where.'
+          stack: 'The reader straightens a loose pile. You keep two scraps together because their edges and handwriting match. The next clean copy starts with them side by side.'
       zh:
         name: "箱子里的诗"
         place: "阿默斯特"
         figure: "艾米莉·狄金森"
-        story: "艾米莉·狄金森在阿默斯特的家中去世。她的妹妹随后在一只箱子里找到数百首诗，生前几乎没有印出来过。"
+        story: '艾米莉·狄金森许多诗以手稿传世。本卡在 1886 年安排一名虚构的早期读者，用手稿核对一页松散的抄件。'
         relic: "一册手缝的小本"
         relic_desc: "几页手工缝起来的纸，每页一首诗。"
         points:
-          p1: "做一位她不介意的访客"
-          p2: "凭运气找对那只抽屉"
-          p3: "把这些诗好好收在一起（图书管理员、档案员或好奇的人更合适）"
+          p1: '认出纸上标着的一处停顿'
+          p2: '把散页和它接着的几行放一起'
+          p3: '留下保留异文的一份抄件'
+        vignettes:
+          pause: '读者朗读时把破折号滑了过去。你请他在笔迹断开的地方停一停。再读那一行，他听出了另一种收尾。'
+          variant: '你看见行上还写了一个词。读者想挑一个抄完就算，你腾出页边，把两个都留着，并注明各在何处。'
+          stack: '读者整理散页时，你把边缘和笔迹对得上的两张留在一起。下一次清抄，便从这两张并排开始。'
 text:
   en:
     name: Emily Dickinson
@@ -45,3 +58,34 @@ text:
   zh:
     name: 艾米莉·狄金森
     text: 美国诗人，1830 年生，1886 年去世，大半生住在马萨诸塞州的阿默斯特。她写了近一千八百首诗，许多手工装订成册，生前只发表了寥寥几首。
+hook: {en: 'What if a dash changes the reading?', zh: '一道破折号怎么读'}
+facts:
+  manuscripts:
+    date: '1886'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [dickinson_amherst_primary]
+    text:
+      en: 'Many of Emily Dickinson''s poems survive in manuscripts. This game scene is set in 1886 and imagines an early reader comparing a loose transcript against the handwriting.'
+      zh: '艾米莉·狄金森许多诗以手稿传世。本卡在 1886 年安排一名虚构的早期读者，用手稿核对一页松散的抄件。'
+bystanders:
+  dickinson_amherst_reader:
+    invented: true
+    text: {en: 'An invented reader sorting papers on a table in Amherst.', zh: '一位虚构的读者，正坐在阿默斯特一张桌边整理纸页。'}
+wiki:
+  refs:
+    dickinson_amherst_primary:
+      order: 151
+      status: checked
+      text:
+        en: 'Emily Dickinson collection, manuscript poems. Amherst College Archives and Special Collections. https://archivesspace.amherst.edu/repositories/2/archival_objects/61973'
+        zh: 'Emily Dickinson collection, manuscript poems. Amherst College Archives and Special Collections. https://archivesspace.amherst.edu/repositories/2/archival_objects/61973'
+self_check:
+  quote_line: '读者朗读时把破折号滑了过去。'
+  fact: manuscripts
+  regret_choice: '略过「认出纸上标着的一处停顿」，这处细节便留给下一位核对。'
+  bookend: '从「一道破折号怎么读」开始，以员工留下的观察或更正收尾。'
+  share_line: '一道破折号怎么读'
+  share_number: '1886'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     era: humboldt_chimborazo_1802
     channels: {A: 3, C: 2, L: 2}
+    refs: [humboldt_diary_1802]
     scene:
       points:
         - {id: p1, kind: endure, req: {"any":[{"stat":{"constitution":6}},{"provides":"endurance"}]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
         - {id: p3, kind: hold, req: {"trait":["bold","vigil"]}}
+      vignettes:
+        - {id: turn, traits: [skeptical, curious]}
+        - {id: units, traits: [methodical, vigil]}
+        - {id: names}
     text:
       en:
         name: "Reading a whole mountain from the snow line"
         place: "Mount Chimborazo, Ecuador"
         figure: "Alexander von Humboldt"
-        story: "Humboldt climbs Chimborazo with a barometer and thermometers, noting all the way how height changes plants and weather, and draws a picture that ties nature together."
+        story: 'Humboldt''s travel diary describes the 23 June 1802 attempted ascent of Chimborazo. Aimé Bonpland and Carlos Montúfar were with him, and they did not reach the summit. The note-sorting scene is invented.'
         relic: "A barometer"
         relic_desc: "A mercury barometer with heights marked on the glass."
         points:
           p1: "Keep walking on the snow line"
           p2: "Read the barometer and the boiling point"
           p3: "Finish the last stretch"
+        vignettes:
+          turn: 'A fictional reader has drawn the summit at the end of the route. You ask where the diary stops describing the ascent. They move their last mark down the slope and leave the top untouched.'
+          units: 'The reader wants to copy a height without its unit. You keep it attached to the original measurement and leave space for a separate modern conversion.'
+          names: 'You ask the reader to leave space beside Humboldt for the other travellers'' names. When the note is folded, the list still follows the account of the day''s attempt.'
       zh:
         name: "在雪线下量出一座山的全貌"
         place: "厄瓜多尔钦博拉索山"
         figure: "亚历山大·冯·洪堡"
-        story: "洪堡带着气压计和温度计爬上钦博拉索山，一路记下高度怎样改变植物和天气，画出一幅把自然连在一起的图。"
+        story: '洪堡的旅行日记记下了 1802 年 6 月 23 日攀登钦博拉索山的尝试。同行有埃梅·邦普兰和卡洛斯·蒙图法尔，一行人没有登顶。整理记录的一幕为虚构。'
         relic: "一支气压计"
         relic_desc: "一支装着水银的气压计，玻璃管上刻着高度。"
         points:
           p1: "在雪线上继续走"
           p2: "读气压计和沸点"
           p3: "走完最后一段"
+        vignettes:
+          turn: '虚构读者把线路一路画上山顶。你问日记写到哪里就停止往上走了。他把最后一记往山坡下移，没再碰山顶。'
+          units: '读者要只抄一个高度，把单位省掉。你请他把原单位和测数放在一起，另留一行给今天的换算。'
+          names: '你请读者在洪堡旁留出地方，记下另外几名同行者。折起纸以后，名单仍跟着当天攀登的记录。'
 text:
   en:
     name: "Alexander von Humboldt"
@@ -98,6 +111,12 @@ wiki:
           name: 攀登的计划
           text: 爬多快、歇多久，是队伍在山坡上自己的选择。游戏里员工能帮着让计划提前改变，只在这条分支里成立。
   refs:
+    humboldt_diary_1802:
+      order: 166
+      status: checked
+      text:
+        en: 'Alexander von Humboldt, American travel diary VII bb/c, fol. 23r, archival description and transcription. https://kalliope-verbund.info/ead?ead.id=DE-611-HS-2350328'
+        zh: '亚历山大·冯·洪堡，美洲旅行日记 VII bb/c，第 23 叶正面，档案说明及摘录。https://kalliope-verbund.info/ead?ead.id=DE-611-HS-2350328'
     humboldt1807:
       order: 30
       status: pending

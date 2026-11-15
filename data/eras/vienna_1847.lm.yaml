@@ -8,6 +8,11 @@ metadata:
   lm_format_version: "1.0"
   extension_version: "teleporter/0.1"
   status: released
+  vignette_source: handwashing_rule
+  vignettes:
+    - {id: denominator, traits: [methodical, skeptical]}
+    - {id: ward_key, traits: [kind, patient]}
+    - {id: tables}
   tags: [childbed_fever, hygiene, vienna, 1847]
   era:
     year: 1847
@@ -15,7 +20,10 @@ metadata:
     geo: {lon: 16.353, lat: 48.221}
     place: vienna_general_hospital
     protagonist: semmelweis
-    calendar: {month: 5, day0: 1, month_length: 31}
+    calendar: {month: 5, day0: 1}
+    region: europe
+    home: [europe_west, europe_east]
+    crossroads: true
   description:
     problem: "Mothers on one ward die at several times the rate of mothers on the next ward. History says the doctor who sees the pattern gets a washing rule through in mid May. What can a visitor change about how fast the rule comes and how many wash their hands before it does?"
     method: "Half-day step. A birth inflow, contamination from doctors' hands, a hand-washing coverage state, two agents. The traveller teaches washing and nurses the sick. The protagonist collects the death statistics and pushes the clinic head."
@@ -131,7 +139,7 @@ variables:
   cfr_treated: {type: parameter, value: 0.4, unit: fraction, source: game_assumption}
   forceps_cfr_cut: {type: parameter, value: 0.15, unit: fraction, source: game_assumption}
   mandate_day_hist: {type: parameter, value: 17, unit: day, source: historical, note: "Mid May 1847."}
-  stay_days: {type: parameter, value: 21, unit: day, source: game_assumption}
+  stay_days: {type: parameter, value: 2, unit: office_day, source: game_assumption}
   horizon_days: {type: parameter, value: 60, unit: day, source: game_assumption}
   goal_target: {type: parameter, value: 60, unit: score, source: game_assumption}
   w_treated: {type: parameter, value: 1, source: game_assumption}
@@ -287,7 +295,7 @@ equations:
   traveller_mind:
     priority: 40
     dynamics:
-      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * semmelweis.rapport) * step"
+      traveler.homesick: "traveler.homesick + arrived * (homesick_rate * (1 + traveler.homesick_trait * homesick_mult) * (1 - favor_calm * (traveler.favor - 0.5)) - talk_relief * act_talk * semmelweis.rapport) * office_step"
       traveler.attachment: "traveler.attachment + (attach_nurse * act_nurse + attach_load * ward_load * arrived + attach_talk * act_talk * semmelweis.rapport) * traveler.kindness * step"
       traveler.satisfaction: "traveler.satisfaction + arrived * (sat_treat * treated_flow + sat_wash * wash_flow - sat_death * death_flow - sat_fatigue * max(0, traveler.fatigue - 0.7) * step)"
       traveler.appeal_urge: "max(0, traveler.appeal_urge - appeal_decay * step)"

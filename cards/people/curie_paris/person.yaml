@@ -9,34 +9,47 @@ events:
     field: science
     tier: 3
     channels: {T: 3, L: 1}
+    refs: [curie_paris_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat": {"wit": 8}}}
         - {id: p2, kind: endure, req: {"provides": "shield"}}
         - {id: p3, kind: hold, req: {"stat": {"wit": 7}}}
+      vignettes:
+        - {id: two_notices, traits: [methodical, vigil]}
+        - {id: word, traits: [skeptical, scholarly, curious]}
+        - {id: heading}
     text:
       en:
         name: Two new elements
         place: Paris
         figure: Marie Curie
-        story: Working in a shed, Marie and Pierre Curie separate polonium and radium from tonnes of ore.
+        story: 'Polonium and radium were announced in 1898. Marie Curie''s 1911 lecture looks back on the discoveries and the later work needed to establish radium''s properties. The editorial scene is invented.'
         relic: A tube of pitchblende
         relic_desc: A glass tube of dark ore that left a faint glow in the dark.
         points:
-          p1: "Keep up in the laboratory"
-          p2: "Endure the dusty shed"
-          p3: "Wait out the long refining"
+          p1: 'Keep the two announcements distinct'
+          p2: 'Check the date against the right notice'
+          p3: 'Finish the proof with the claim stated precisely'
+        vignettes:
+          two_notices: 'The typesetter has set the two notices under one date. You put the earlier and later sheets apart and mark their months before the form is locked.'
+          word: 'You notice that the headline promises a finished result. The typesetter reads the announcement aloud and leaves a narrower claim in the heading.'
+          heading: 'You hold the second proof until its element name is checked. The typesetter leaves both notices readable rather than moving one into the other''s column.'
       zh:
         name: 两种新元素
         place: 巴黎
         figure: 玛丽·居里
-        story: 玛丽和皮埃尔·居里在一间棚屋里，从成吨的矿石中分离出了钋和镭。
+        story: '钋和镭的发现公布于 1898 年。玛丽·居里 1911 年的诺贝尔演讲回顾了这两项发现，以及随后为确定镭的性质所做的工作。卡中编辑场景为虚构。'
         relic: 一管沥青铀矿
         relic_desc: 一支装着黑色矿石的玻璃管，在黑暗里有一点微光。
         points:
-          p1: "在实验室里跟上进度"
-          p2: "熬过尘土飞扬的棚屋"
-          p3: "耐心等完漫长的提纯"
+          p1: '分清两次发现的报告'
+          p2: '把日期对回相应消息'
+          p3: '校样交出去前把所声称的结果写准确'
+        vignettes:
+          two_notices: '排字工把两条消息排在同一天名下。固定版面之前，你把先后两张纸分开，各自标上月份。'
+          word: '你发现标题把话说成了工作已经全做完。排字工把报告念了一遍，最后在标题里只留报告能支持的话。'
+          heading: '你扶着第二张校样，等上面的元素名核过一遍。排字工让两条都能单独读清，没把谁移进另一栏。'
 text:
   en:
     name: Marie Curie
@@ -44,3 +57,34 @@ text:
   zh:
     name: 玛丽·居里
     text: 波兰出生的物理学家与化学家，1867 年生，1934 年去世，在巴黎工作。她与皮埃尔·居里研究放射性，1898 年发现钋和镭。她 1903 年获诺贝尔物理学奖，1911 年获化学奖，死于与辐射有关的疾病。
+hook: {en: 'A new name, a separate claim.', zh: '名字写下，证据另记'}
+facts:
+  announcements:
+    date: '1898'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [curie_paris_primary]
+    text:
+      en: 'Polonium and radium were announced in 1898. Marie Curie''s 1911 lecture looks back on the discoveries and the later work needed to establish radium''s properties. The editorial scene is invented.'
+      zh: '钋和镭的发现公布于 1898 年。玛丽·居里 1911 年的诺贝尔演讲回顾了这两项发现，以及随后为确定镭的性质所做的工作。卡中编辑场景为虚构。'
+bystanders:
+  curie_paris_reader:
+    invented: true
+    text: {en: 'An invented typesetter setting two separate notices.', zh: '一位虚构的排字工，正在排两份不同的消息。'}
+wiki:
+  refs:
+    curie_paris_primary:
+      order: 164
+      status: checked
+      text:
+        en: 'Marie Curie, Nobel lecture, 1911, recalling the discoveries of polonium and radium. Nobel Prize archive. https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/lecture/'
+        zh: 'Marie Curie, Nobel lecture, 1911, recalling the discoveries of polonium and radium. Nobel Prize archive. https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/lecture/'
+self_check:
+  quote_line: '排字工把两条消息排在同一天名下。'
+  fact: announcements
+  regret_choice: '略过「分清两次发现的报告」，这处细节便留给下一位核对。'
+  bookend: '从「名字写下，证据另记」开始，以员工留下的观察或更正收尾。'
+  share_line: '名字写下，证据另记'
+  share_number: '1898'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

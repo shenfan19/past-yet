@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {V: 3}
     regret: true
+    refs: [leavitt_cambridge_ma_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
         - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["bold","hardy"]}]}}
         - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","sensitive","cosmopolitan"]}}
+      vignettes:
+        - {id: rank, traits: [methodical, vigil]}
+        - {id: distance, traits: [curious, skeptical]}
+        - {id: period}
     text:
       en:
         name: "A rule for the stars"
         place: "Cambridge, Massachusetts"
         figure: "Henrietta Leavitt"
-        story: "Henrietta Leavitt, a human computer at Harvard Observatory, finds that brighter Cepheid stars pulse more slowly, a rule that lets astronomers measure the universe. She is paid a small wage and dies in 1921."
+        story: 'The 1912 circular presents Leavitt''s comparison of 25 variables in the Small Magellanic Cloud. Among these stars the brighter ones generally have longer periods. The plate-room visit is invented.'
         relic: "A glass plate"
         relic_desc: "A photographic plate crowded with tiny stars."
         points:
-          p1: "Follow her tables of stars"
-          p2: "Keep up the long hours at the plates"
-          p3: "Be the colleague who asks what she has found"
+          p1: 'Match plotted points to the table'
+          p2: 'Keep the period and brightness readings together'
+          p3: 'Explain why the comparison uses stars from the same cloud'
+        vignettes:
+          rank: 'You put the table in order of period and find one row that lost its label. The reader retrieves its identifier before the plotted point is moved.'
+          distance: 'You ask whether a nearer star could merely look brighter. The reader puts a finger on the heading for the Small Magellanic Cloud. You write the reason for comparing this group beside the plot.'
+          period: 'The reader gives you the brightness first. You ask for the period as well and keep the two values together until the last dot is marked.'
       zh:
         name: "星星的一条规则"
         place: "马萨诸塞州剑桥"
         figure: "亨丽埃塔·勒维特"
-        story: "亨丽埃塔·勒维特是哈佛天文台的人工计算员，她发现越亮的造父变星脉动越慢，天文学家因此可以量出宇宙的尺度。她拿着微薄的薪水，1921年去世。"
+        story: '1912 年哈佛天文台通报刊出勒维特对小麦哲伦云 25 颗变星的比较。在这一组星里，较亮者的周期通常较长。本卡的底片室场景为虚构。'
         relic: "一块玻璃底片"
         relic_desc: "一块布满细小星点的照相底片。"
         points:
-          p1: "跟上她的恒星数表"
-          p2: "陪她熬过在底片前的长时间工作"
-          p3: "做那个问她发现了什么的同事"
+          p1: '把图上的点对回表格'
+          p2: '把周期和亮度成对记下'
+          p3: '说明为什么在同一片星云里比较'
+        vignettes:
+          rank: '你按周期给表格排序，发现一行丢了标号。读表人在图上的点被挪动前找回了对应的星号。'
+          distance: '你问近一点的星是不是光看起来就更亮。读表人把手指按在「小麦哲伦云」的标题上，你把为什么选这一组来比记在图旁。'
+          period: '读表人先报亮度。你再问周期，把两个数一起记，直到最后一个点也画上去。'
 text:
   en:
     name: Henrietta Leavitt
@@ -45,3 +58,34 @@ text:
   zh:
     name: 亨丽埃塔·勒维特
     text: 美国天文学家，1868 年生，1921 年去世，在哈佛天文台工作。她发现造父变星的周期与亮度相关，天文学家由此得以测量到其他星系的距离。
+hook: {en: 'Do the readings still line up?', zh: '二十五颗星能排出什么'}
+facts:
+  variable_stars:
+    date: '1912'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [leavitt_cambridge_ma_primary]
+    text:
+      en: 'The 1912 circular presents Leavitt''s comparison of 25 variables in the Small Magellanic Cloud. Among these stars the brighter ones generally have longer periods. The plate-room visit is invented.'
+      zh: '1912 年哈佛天文台通报刊出勒维特对小麦哲伦云 25 颗变星的比较。在这一组星里，较亮者的周期通常较长。本卡的底片室场景为虚构。'
+bystanders:
+  leavitt_cambridge_ma_reader:
+    invented: true
+    text: {en: 'An invented reader reconciling a plotted point with its table row.', zh: '一位虚构的读表人，正把图上的点对回原表。'}
+wiki:
+  refs:
+    leavitt_cambridge_ma_primary:
+      order: 148
+      status: checked
+      text:
+        en: 'Henrietta S. Leavitt and Edward C. Pickering, Periods of 25 Variable Stars in the Small Magellanic Cloud, Harvard College Observatory Circular 173, 1912. https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L'
+        zh: 'Henrietta S. Leavitt and Edward C. Pickering, Periods of 25 Variable Stars in the Small Magellanic Cloud, Harvard College Observatory Circular 173, 1912. https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L'
+self_check:
+  quote_line: '你按周期给表格排序，发现一行丢了标号。'
+  fact: variable_stars
+  regret_choice: '略过「把图上的点对回表格」，这处细节便留给下一位核对。'
+  bookend: '从「二十五颗星能排出什么」开始，以员工留下的观察或更正收尾。'
+  share_line: '二十五颗星能排出什么'
+  share_number: '1912'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

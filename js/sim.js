@@ -2,8 +2,83 @@
 // states, equations, agent actions, events, milestones, outcomes and scoring all come from YAML.
 import { compile } from './expr.js';
 import { draw } from './rng.js';
+import { historicalDays } from './travel_time.js';
 
-const BUILTINS = ['day', 'step', 'arrived'];
+// day and step are in historical days. office_step is the same step in office days, for what wears on the traveller at the pace of the office, like homesickness.
+// ring is where the traveller stands, 0 outside the door and 1 inside it, and conspicuous is how much the face stands out, both from the identity.
+const BUILTINS = ['day', 'step', 'arrived', 'office_step', 'ring', 'conspicuous'];
+
+// ---------- tags ----------
+// What a scene can ask of a person, worked out from the card by the rules in staff_rules.yaml. A model reads each as tag.<name>, 1 or 0.
+export function tagNames(D) {
+  const R = D.get('staff');
+  return [...Object.keys(R.tags), ...Object.keys(R.job_classes).map((c) => 'class_' + c), ...Object.keys(R.traits).map((t) => 'trait_' + t),
+    'literate', 'learned', 'unlettered', 'face_local', 'face_near', 'face_far', 'female', 'male', 'young', 'elder'];
+}
+// place: { home: [regions], near: [regions] or undefined, region: the part of the world }. Without a place the face tags are left out.
+export function staffTags(D, staffId, place = null) {
+  const R = D.get('staff');
+  const st = R.staff[staffId];
+  const a = staffAttrs(D, staffId);
+  const out = new Set();
+  for (const [t, rule] of Object.entries(R.tags)) if ((rule.min === undefined || a[rule.stat] >= rule.min) && (rule.max === undefined || a[rule.stat] <= rule.max)) out.add(t);
+  const classes = Object.entries(R.job_classes).filter(([, jobs]) => st.jobs.some((j) => jobs.includes(j))).map(([c]) => c);
+  for (const c of classes) out.add('class_' + c);
+  for (const t of st.traits) out.add('trait_' + t);
+  const L = R.literacy;
+  const byJob = classes.some((c) => L.lettered_classes.includes(c));
+  const literate = byJob || a.wit >= L.lettered_wit;
+  const learned = classes.some((c) => L.learned_classes.includes(c)) || (byJob && a.wit >= L.learned_wit);
+  out.add(literate ? 'literate' : 'unlettered');
+  if (learned) out.add('learned');
+  const g = R.gender_class[st.gender];
+  if (g === 'f') out.add('female');
+  if (g === 'm') out.add('male');
+  if (st.age <= R.ages.young_max) out.add('young');
+  if (st.age >= R.ages.elder_min) out.add('elder');
+  if (place) out.add('face_' + faceOf(D, staffId, place));
+  return out;
+}
+export function faceOf(D, staffId, place) {
+  // the founder has no region on the card: they come from another timeline and are a stranger everywhere
+  const region = D.get('staff.staff')[staffId].region;
+  if (region === undefined) return 'far';
+  if ((place.home || []).includes(region)) return 'local';
+  const near = place.near ?? D.get('staff.faces.parts')[place.region] ?? [];
+  return near.includes(region) ? 'near' : 'far';
+}
+// The identity a person takes in a place: the first of the list of the place that fits. The year and whether it is a crossroads are those of the place.
+export function identityFor(D, staffId, place, list = null) {
+  const I = D.get('identities');
+  const tags = staffTags(D, staffId, place);
+  const fits = (id) => {
+    const d = I.identities[id];
+    if (!d) throw new Error('未知身份 ' + id);
+    if (d.since !== undefined && place.year < d.since) return false;
+    if (d.until !== undefined && place.year > d.until) return false;
+    if (d.crossroads && !place.crossroads) return false;
+    if ((d.all || []).some((t) => !tags.has(t))) return false;
+    if (d.any && !d.any.some((t) => tags.has(t))) return false;
+    if ((d.none || []).some((t) => tags.has(t))) return false;
+    return true;
+  };
+  const id = (list || I.default).find(fits);
+  if (!id) return null;
+  const face = faceOf(D, staffId, place);
+  return { id, ring: I.identities[id].ring, reach: I.identities[id].reach, accept: I.identities[id].accept, face, conspicuous: D.get('staff.faces.conspicuous')[face] };
+}
+// the place of a model, from its metadata
+export function placeOfEra(raw) {
+  const m = raw.metadata.era;
+  return { home: m.home || [], near: m.near, region: m.region, year: m.year, crossroads: !!m.crossroads };
+}
+// the day of a date in a model, counted from its day 0. A date is year-month-day.
+export function dayOfDate(raw, date) {
+  const m = raw.metadata.era;
+  const ms = (y, mo, d) => { const x = new Date(Date.UTC(2000, mo - 1, d)); x.setUTCFullYear(y); return x.getTime(); };
+  const [y, mo, d] = String(date).split('-').map(Number);
+  return Math.round((ms(y, mo, d) - ms(m.year, m.calendar.month, m.calendar.day0)) / 86400000);
+}
 
 function req(obj, key, where) {
   if (!(key in obj)) throw new Error(`${where} 缺少键 ${key}`);
@@ -23,7 +98,7 @@ export function compileEra(raw, D, id) {
   const E = { id, raw };
   const vars = req(raw, 'variables', id);
   const names = Object.keys(vars);
-  const known = new Set([...BUILTINS, ...names]);
+  const known = new Set([...BUILTINS, ...tagNames(D).map((t) => 'tag.' + t), ...names]);
   const knownScore = new Set([...known, ...names.map(baseName), ...Object.keys(req(raw, 'scoring', id))]);
   const where = (s) => `${id}.${s}`;
 
@@ -79,7 +154,7 @@ export function compileEra(raw, D, id) {
 
   // events
   E.events = Object.entries(req(raw, 'events', id)).map(([eid, ev]) => ({
-    id: eid, tag: ev.tag, source: ev.source, importance: ev.importance, cooldown: ev.cooldown_days,
+    id: eid, tag: ev.tag, source: ev.source, importance: ev.importance, cooldown: ev.cooldown_days, once: !!ev.once,
     when: compile(ev.when, known, where(`events.${eid}.when`)),
     probability: compile(ev.probability, known, where(`events.${eid}.probability`)),
     effects: Object.entries(ev.effects).map(([t, src]) => {
@@ -92,10 +167,24 @@ export function compileEra(raw, D, id) {
     })),
   }));
 
-  E.milestones = Object.entries(req(raw, 'milestones', id)).map(([mid, m]) => ({
-    id: mid, tag: m.tag, importance: m.importance, needsTraveler: m.needs_traveler,
-    when: compile(m.when, known, where(`milestones.${mid}`)),
-  }));
+  // A milestone is a line of the report that is written once. It may carry a date, and then it is written on that day: a recorded date writes itself whoever is there,
+  // and a line of the traveller that has a date is written only if the traveller is there on that day. It may change variables when it is written, and it may have variants:
+  // the first variant whose condition holds gives the text, and may change variables of its own, so the same moment reads differently for different people.
+  const effectsOf = (obj, w) => Object.entries(obj || {}).map(([t, src]) => {
+    if (!known.has(t)) throw new Error(w + ' 写入未声明变量 ' + t);
+    return { target: t, fn: compile(src, known, w + '.' + t) };
+  });
+  E.milestones = Object.entries(req(raw, 'milestones', id)).map(([mid, m]) => {
+    const w = where(`milestones.${mid}`);
+    if (m.when === undefined && m.date === undefined) throw new Error(w + ' 需要 when 或 date');
+    const at = m.date !== undefined ? dayOfDate(raw, m.date) : null;
+    return {
+      id: mid, tag: m.tag, importance: m.importance, needsTraveler: m.needs_traveler, fact: m.fact || null, at,
+      when: m.when !== undefined ? compile(m.when, known, w) : null,
+      effects: effectsOf(m.effects, w),
+      variants: (m.variants || []).map((x) => ({ key: x.key, when: compile(x.when, known, w + '.variants'), effects: effectsOf(x.effects, w + '.variants.' + x.key) })),
+    };
+  });
 
   E.starPoints = req(raw, 'star_points', id).map((p) => {
     if (!p.kind) throw new Error(where('star_points.' + p.id) + ' needs a kind');
@@ -202,6 +291,13 @@ function initVars(E, D, spec, withTraveler) {
   const stats = staffStats(D, spec.staffId, spec.favor ?? null, spec.gear || []);
   for (const [n, d] of Object.entries(E.vars)) if (d.from_staff) v[n] = stats[d.from_staff];
   for (const [n, d] of Object.entries(E.vars)) if (d.from_spec) v[n] = spec[d.from_spec] ?? d.value;
+  v[E.roles.stay] = historicalDays(D, v[E.roles.stay]);
+  v.office_step = E.step / D.get('config.travel.history_days_per_office_day');
+  const who = staffTags(D, spec.staffId, E.place || placeOfEra(E.raw));
+  for (const t of tagNames(D)) v['tag.' + t] = who.has(t) ? 1 : 0;
+  v.ring = spec.identity ? spec.identity.ring : 0;
+  v.conspicuous = spec.identity ? spec.identity.conspicuous : 0;
+  v[E.roles.horizon] = Math.max(E.horizon, Math.ceil((v[E.roles.arrive] + v[E.roles.stay]) / E.step) * E.step + E.step);
   const apply = (grp, key) => {
     const o = E.strategies[grp][key];
     if (!o) throw new Error('未知策略 ' + grp + '.' + key);
@@ -225,8 +321,8 @@ function clampTo(E, name, x) {
 
 export function run(E, D, spec, withTraveler) {
   const v = initVars(E, D, spec, withTraveler);
-  const stay = E.vars[E.roles.stay].value;
-  const steps = Math.ceil(E.horizon / E.step);
+  const stay = v[E.roles.stay];
+  const steps = Math.ceil(v[E.roles.horizon] / E.step);
   const log = [];
   const series = [];
   const digest = [];
@@ -235,24 +331,29 @@ export function run(E, D, spec, withTraveler) {
   let delivered = false;
   let arrivedDay = null;
   let leftDay = null;
+  const acceptedAt = spec.journey ? (spec.journey.accepted ? spec.journey.recognitionDay : Infinity) : 0;
+  const supplies = () => {
+    for (const [item, n] of Object.entries(spec.items)) {
+      for (const [target, per] of Object.entries(E.itemBindings[item] || {})) v[target] = clampTo(E, target, v[target] + n * per);
+    }
+    for (const pid of spec.plots || []) {
+      for (const [target, add] of Object.entries(E.plots[pid].bindings)) v[target] = clampTo(E, target, v[target] + add);
+    }
+  };
+  let authorized = false;
 
   const snap = () => ({ ...v });
 
   for (let k = 0; k < steps; k++) {
     v.day = k * E.step;
     const inWindow = withTraveler && v.day >= v[E.roles.arrive] && v.day < v[E.roles.arrive] + stay && v[E.roles.recalled] === 0;
-    v.arrived = inWindow ? 1 : 0;
+    v.arrived = inWindow && v.day >= v[E.roles.arrive] + acceptedAt ? 1 : 0;
     if (inWindow && !delivered) {
       delivered = true;
       arrivedDay = v.day;
-      for (const [item, n] of Object.entries(spec.items)) {
-        for (const [target, per] of Object.entries(E.itemBindings[item] || {})) v[target] = clampTo(E, target, v[target] + n * per);
-      }
-      for (const pid of spec.plots || []) {
-        for (const [target, add] of Object.entries(E.plots[pid].bindings)) v[target] = clampTo(E, target, v[target] + add);
-      }
       log.push({ t: v.day, kind: 'arrive', id: 'arrive', importance: E.logImportance.arrive, snap: snap() });
     }
+    if (v.arrived && !authorized) { authorized = true; supplies(); }
     if (delivered && !inWindow && leftDay === null) {
       leftDay = v.day;
       log.push({ t: v.day, kind: 'leave', id: 'leave', importance: E.logImportance.leave, snap: snap() });
@@ -280,6 +381,7 @@ export function run(E, D, spec, withTraveler) {
     // events
     for (const ev of E.events) {
       if (!ev.when(v)) continue;
+      if (ev.once && lastFire[ev.id] !== undefined) continue;
       if (ev.cooldown && lastFire[ev.id] !== undefined && v.day - lastFire[ev.id] < ev.cooldown) continue;
       if (draw(spec.seed, ev.id, k) >= ev.probability(v)) continue;
       lastFire[ev.id] = v.day;
@@ -306,11 +408,18 @@ export function run(E, D, spec, withTraveler) {
     // milestones
     for (const m of E.milestones) {
       if (doneMs.has(m.id)) continue;
-      if (m.needsTraveler && !delivered) continue;
-      if (m.when(v)) {
-        doneMs.add(m.id);
-        log.push({ t: v.day, kind: 'milestone', id: m.id, tag: m.tag, importance: m.importance, snap: snap() });
+      if (m.needsTraveler && !authorized) continue;
+      if (m.at !== null) {
+        if (v.day < m.at) continue;
+        // a line of the traveller with a date belongs to that day: if the traveller is not there then, it is never written
+        if (m.needsTraveler && (v.day >= m.at + 1 || v.arrived !== 1)) { if (v.day >= m.at + 1) doneMs.add(m.id); continue; }
       }
+      if (m.when && !m.when(v)) continue;
+      doneMs.add(m.id);
+      const variant = m.variants.find((x) => x.when(v));
+      for (const e of m.effects) v[e.target] = clampTo(E, e.target, e.fn(v));
+      if (variant) for (const e of variant.effects) v[e.target] = clampTo(E, e.target, e.fn(v));
+      log.push({ t: m.at !== null && !m.needsTraveler ? m.at : v.day, kind: 'milestone', id: m.id, key: variant ? variant.key : m.id, fact: m.fact, dated: m.at !== null, tag: m.tag, importance: m.importance, snap: snap() });
     }
 
     const row = { day: v.day + E.step, picked: { ...picked } };

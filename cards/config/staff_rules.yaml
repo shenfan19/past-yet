@@ -39,3 +39,46 @@ derive:
   infect: {from: constitution, scale: -0.2, offset: 1}
 # What a point that asks for a woman or a man sees: a trans woman is a woman, a trans man is a man, another gender is its own.
 gender_class: {f: f, m: m, tf: f, tm: m, x: x}
+# What a scene can ask of a person beyond the five attributes: the tags. They are worked out from the card, nothing is entered by hand.
+# A model reads each of them as a variable named tag.<name> that is 1 or 0, and an identity asks for them by name.
+# Tags from an attribute: at least min, or at most max.
+tags:
+  steady: {stat: finesse, min: 6}
+  clumsy: {stat: finesse, max: 2}
+  eloquent: {stat: finesse, min: 6}
+  sturdy: {stat: constitution, min: 5}
+  frail: {stat: constitution, max: 2}
+  sharp: {stat: wit, min: 7}
+  steadfast: {stat: will, min: 7}
+# The kinds of work. A job may be of several kinds. Each kind is the tag class_<kind>.
+job_classes:
+  lettered: [accountant, archivist, bookseller, data_analyst, game_designer, journalist, office_worker, programmer, proofreader, tax_preparer, translator, writer, sysadmin, student, architecture_intern, radio_host, union_organizer, tour_guide, site_manager, antique_dealer]
+  learned: [biologist, geologist, modelling_scientist, lecturer, university_lecturer, medical_teacher, doctor, physician, civil_engineer, retired_engineer, mining_consultant, pharmacist]
+  medical: [doctor, physician, nurse, midwife, paramedic, pharmacist, caregiver, medical_teacher]
+  teaching: [teacher, tutor, lecturer, university_lecturer, sewing_teacher, flight_instructor, medical_teacher]
+  religious: [former_monk]
+  food: [baker, chef, cook, street_food_seller, waitress]
+  trade: [market_trader, shopkeeper, stall_keeper, street_vendor, shop_assistant, hardware_shop_assistant, bookseller, antique_dealer, street_food_seller]
+  craft: [carpenter, electrician, embroiderer, mechanic, pump_repairer, restorer, seamstress, tailor, woodcarver, shipwright, garment_worker, painter, illustrator, musician]
+  labour: [builder, courier, factory_worker, farmer, farmhand, dairy_farmer, potato_farmer, coffee_farmer, shepherd, villager, warehouse_loader, scaffolder, cooperative_member, dishwasher]
+  seafaring: [sailor, navigator, ferry_pilot, ferryman, fisher, fisherman, shipwright, net_mender]
+  travel: [driver, rideshare_driver, bush_pilot, courier, tour_guide, navigator, sailor, ferry_pilot]
+  press: [journalist, radio_host, writer]
+# Reading and writing. literate: a job of one of these kinds, or wit at least lettered_wit. learned: a learned job, or literate by a job with wit at least learned_wit.
+literacy:
+  lettered_classes: [lettered, learned, teaching, medical, press, religious]
+  lettered_wit: 6
+  learned_classes: [learned]
+  learned_wit: 7
+# The age tags.
+ages: {young_max: 29, elder_min: 60}
+# The face of a person in a place is local, near or far. A place names the regions that are at home in it and may name those near it.
+# Where it names none near, the regions of the same part of the world are near.
+faces:
+  conspicuous: {local: 0, near: 0.5, far: 1}
+  parts:
+    asia: [china, japan, korea, india, south_asia, southeast_asia, central_asia, middle_east]
+    europe: [europe_west, europe_east]
+    africa: [north_africa, west_africa, east_africa, central_africa, southern_africa]
+    americas: [latin_america, north_america]
+    oceania: [pacific]

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 1, G: 2}
     regret: true
+    refs: [riemann_selasca_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":6}},{"trait":["wanderer","scholarly","methodical"]}]}}
         - {id: p2, kind: trust, req: {"any":[{"trait":["artistic","charismatic","kind"]},{"trait":["attached","charismatic","sensitive"]}]}}
         - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["handy","faithful"]},{"trait":["methodical","bold","vigil"]},{"trait":["vigil"]}]}}
+      vignettes:
+        - {id: surface, traits: [handy, artistic]}
+        - {id: assumption, traits: [skeptical, curious]}
+        - {id: paper}
     text:
       en:
         name: "The last paper"
         place: "Selasca"
         figure: "Bernhard Riemann"
-        story: "Riemann, ill with tuberculosis, spends his last summer by Lake Maggiore working on a paper he does not finish. He dies at thirty nine."
+        story: 'Riemann''s 1854 lecture manuscript examines the assumptions underlying geometry and how distances can be defined. The 1866 visit at Lake Maggiore imagines a reader working through one idea from the manuscript.'
         relic: "A page of notes"
         relic_desc: "A page of unfinished formulas in a small hand."
         points:
-          p1: "Follow his unfinished argument"
-          p2: "Be at ease with him on the terrace"
-          p3: "Keep his last pages from scattering (a historian, an archivist or a stubborn one helps)"
+          p1: 'Follow a line while staying on the surface'
+          p2: 'Keep the same marked endpoints through the comparison'
+          p3: 'Explain one assumption behind a measurement'
+        vignettes:
+          surface: 'The reader stretches a strip across two points and lets it leave the surface in between. You press a second strip down against the curve and ask which journey each one measures.'
+          assumption: 'The reader says the distance is obvious. You ask how they decided which paths to allow. They add that choice above the drawing and begin measuring again.'
+          paper: 'You help the reader keep the starting points marked when the practice sheet bends. They can now compare their two readings without having to find the points again.'
       zh:
         name: "最后一篇论文"
         place: "塞拉斯卡"
         figure: "伯恩哈德·黎曼"
-        story: "黎曼患着肺结核，在马焦雷湖边度过最后一个夏天，继续写一篇没能写完的论文。他死时三十九岁。"
+        story: '黎曼 1854 年的讲稿讨论几何的基本假设及距离如何定义。本卡保留 1866 年马焦雷湖畔的地点，虚构一位读者琢磨讲稿里的一个问题。'
         relic: "一页笔记"
         relic_desc: "一页写着没完成公式的纸，字很小。"
         points:
-          p1: "跟上他没写完的论证"
-          p2: "在露台上陪他安静坐着"
-          p3: "让他最后的几页不致散失（历史学家、档案员或固执的人更合适）"
+          p1: '沿着表面走完一条线'
+          p2: '比较时仍用原来标好的两个端点'
+          p3: '讲明一次测量所用的一个假设'
+        vignettes:
+          surface: '读者把纸带从一点拉到另一点，中间却离开了曲面。你把另一条沿弧面按下去，请他分清两条量的是哪种走法。'
+          assumption: '读者说距离一看就知道。你问哪些走法算数，是怎么定的。他把这个条件添在图上方，重新开始量。'
+          paper: '练习纸弯起来时，你帮读者留住起讫两点的记号。现在比较两次读数时，不必重新找点。'
 text:
   en:
     name: Bernhard Riemann
@@ -45,3 +58,34 @@ text:
   zh:
     name: 伯恩哈德·黎曼
     text: 德国数学家，1826 年生，1866 年去世。他在弯曲空间的几何和素数分布上的工作开辟了重要领域，黎曼猜想至今未解。他在马焦雷湖畔的塞拉斯卡死于肺结核。
+hook: {en: 'A flat sheet gives only one answer.', zh: '换个表面，量法会变吗'}
+facts:
+  geometry_lecture:
+    date: '1854'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [riemann_selasca_primary]
+    text:
+      en: 'Riemann''s 1854 lecture manuscript examines the assumptions underlying geometry and how distances can be defined. The 1866 visit at Lake Maggiore imagines a reader working through one idea from the manuscript.'
+      zh: '黎曼 1854 年的讲稿讨论几何的基本假设及距离如何定义。本卡保留 1866 年马焦雷湖畔的地点，虚构一位读者琢磨讲稿里的一个问题。'
+bystanders:
+  riemann_selasca_reader:
+    invented: true
+    text: {en: 'An invented reader with a strip of paper and two curved surfaces.', zh: '一位虚构的读者，手边有纸带和两个曲面。'}
+wiki:
+  refs:
+    riemann_selasca_primary:
+      order: 185
+      status: checked
+      text:
+        en: 'Bernhard Riemann, On the Hypotheses Underlying Geometry, 1854 habilitation lecture manuscript, Göttingen University Library. https://gdz.sub.uni-goettingen.de/id/DE-611-HS-3206822'
+        zh: 'Bernhard Riemann, On the Hypotheses Underlying Geometry, 1854 habilitation lecture manuscript, Göttingen University Library. https://gdz.sub.uni-goettingen.de/id/DE-611-HS-3206822'
+self_check:
+  quote_line: '读者把纸带从一点拉到另一点，中间却离开了曲面。'
+  fact: geometry_lecture
+  regret_choice: '略过「沿着表面走完一条线」，这处细节便留给下一位核对。'
+  bookend: '从「换个表面，量法会变吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '换个表面，量法会变吗'
+  share_number: '1854'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

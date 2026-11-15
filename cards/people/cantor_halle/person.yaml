@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {G: 3, S: 2}
     regret: true
+    refs: [cantor_halle_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":8}},{"trait":["wanderer","curious","streetwise"]}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","ambitious"]},{"trait":["glib","scholarly","streetwise"]},{"trait":["streetwise"]}]}}
         - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["calm","cheerful","patient"]},{"trait":["cheerful","faithful","attached"]}]}}
+      vignettes:
+        - {id: list, traits: [curious, scholarly]}
+        - {id: after, traits: [methodical, vigil]}
+        - {id: end}
     text:
       en:
         name: "Sizes of infinity"
         place: "Halle"
         figure: "Georg Cantor"
-        story: "Georg Cantor, mocked by older mathematicians for his work on infinite sets, suffers the first of his breakdowns in Halle."
+        story: 'Cantor''s 1874 paper gives a way to enumerate the real algebraic numbers and shows that a list cannot contain all real numbers in an interval. The 1884 reading scene is invented.'
         relic: "A set of index cards"
         relic_desc: "Cards covered with lists that never end."
         points:
-          p1: "See what his sets are doing"
-          p2: "Answer the mockery in the lecture hall"
-          p3: "Be the visitor who simply listens"
+          p1: 'Tell what the example list is supposed to include'
+          p2: 'Follow its rule for another entry'
+          p3: 'Explain what still needs proof after drawing the list'
+        vignettes:
+          list: 'The learner says the list is already endless. You ask what would show that everything is on it. They leave a second line for the reasoning rather than merely extending the first.'
+          after: 'The learner copies several numbers and forgets the rule for getting the next. You ask them to put the rule first so another person can carry on where the slate ends.'
+          end: 'You move the sample list to the side of the slate and let the learner add a line describing which numbers it is meant to include.'
       zh:
         name: "无穷的大小"
         place: "哈雷"
         figure: "格奥尔格·康托尔"
-        story: "格奥尔格·康托尔研究无穷集合，被年长的数学家嘲笑，在哈雷第一次精神崩溃。"
+        story: '康托尔 1874 年的论文给出了逐一列举实代数数的方法，并说明一张这样排出的名单无法包含区间内所有实数。本卡的 1884 年阅读场景为虚构。'
         relic: "一叠索引卡片"
         relic_desc: "卡片上写满了永远列不完的清单。"
         points:
-          p1: "看出他的集合在做什么"
-          p2: "在讲堂里回应那些嘲笑"
-          p3: "做一位只是认真听他说的来访者"
+          p1: '说明例表打算列进哪些数'
+          p2: '照同一规则再添一项'
+          p3: '列出一些数后，说清还要证明什么'
+        vignettes:
+          list: '学算者说这张表已经写不到头。你问怎样才知道什么都在上面。他另留一行记理由，没只顾把第一行续长。'
+          after: '学算者抄了几个数，却忘了下一个该怎么算。你请他先写规则，石板写到边，换个人也能接下去。'
+          end: '你把示例数列移到石板一边，请学算者另添一行，说明它本来打算把哪些数列进去。'
 text:
   en:
     name: Georg Cantor
@@ -45,3 +58,34 @@ text:
   zh:
     name: 格奥尔格·康托尔
     text: 德国数学家，1845 年生，1918 年去世，在哈雷任教。他创立集合论，证明无穷集合有不同的大小。他的想法遭到强烈批评，他本人长期受抑郁困扰。
+hook: {en: 'Being infinite leaves a question open.', zh: '都是无穷，还能一一排开吗'}
+facts:
+  countability:
+    date: '1874'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [cantor_halle_primary]
+    text:
+      en: 'Cantor''s 1874 paper gives a way to enumerate the real algebraic numbers and shows that a list cannot contain all real numbers in an interval. The 1884 reading scene is invented.'
+      zh: '康托尔 1874 年的论文给出了逐一列举实代数数的方法，并说明一张这样排出的名单无法包含区间内所有实数。本卡的 1884 年阅读场景为虚构。'
+bystanders:
+  cantor_halle_reader:
+    invented: true
+    text: {en: 'An invented learner copying a sequence onto a slate.', zh: '一位虚构的学算者，正往石板上抄一个数列。'}
+wiki:
+  refs:
+    cantor_halle_primary:
+      order: 184
+      status: checked
+      text:
+        en: 'Georg Cantor, On a Property of the Collection of All Real Algebraic Numbers, Journal für die reine und angewandte Mathematik 77 (1874), 258–262. Göttingen scan. https://gdz.sub.uni-goettingen.de/id/PPN243919689_0077?tify=%7B%22view%22%3A%22info%22%2C%22pages%22%3A%5B266%5D%7D'
+        zh: 'Georg Cantor, On a Property of the Collection of All Real Algebraic Numbers, Journal für die reine und angewandte Mathematik 77 (1874), 258–262. Göttingen scan. https://gdz.sub.uni-goettingen.de/id/PPN243919689_0077?tify=%7B%22view%22%3A%22info%22%2C%22pages%22%3A%5B266%5D%7D'
+self_check:
+  quote_line: '学算者说这张表已经写不到头。'
+  fact: countability
+  regret_choice: '略过「说明例表打算列进哪些数」，这处细节便留给下一位核对。'
+  bookend: '从「都是无穷，还能一一排开吗」开始，以员工留下的观察或更正收尾。'
+  share_line: '都是无穷，还能一一排开吗'
+  share_number: '1874'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

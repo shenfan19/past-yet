@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {E: 2, G: 2}
     regret: true
+    refs: [sor_juana_mexico_city_primary]
     scene:
       points:
         - {id: p1, kind: notice, req: {"trait":["quiet","handy"]}}
         - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
         - {id: p3, kind: notice, redeem: true, req: {"item":"neural_chip"}}
+      vignettes:
+        - {id: aristotle, traits: [curious, glib]}
+        - {id: ordinary, traits: [methodical, vigil]}
+        - {id: reply}
     text:
       en:
         name: "The last books given away"
         place: "Mexico City"
         figure: "Sor Juana Inés de la Cruz"
-        story: "After church leaders criticised her writing, Sor Juana gives up her books. She dies in 1695 nursing her sisters in an epidemic."
+        story: 'In her 1691 Reply to Sor Filotea, Sor Juana describes her drive to study and uses ordinary kitchen observations to make a point about learning. The reading in the 1695 Mexico City card is invented.'
         relic: "A quill pen"
         relic_desc: "A quill with a split tip beside an empty shelf."
         points:
-          p1: "Find what she hid in her verse"
-          p2: "Work beside her in the infirmary"
-          p3: "Read her verse aloud in the language she wrote it"
+          p1: 'Find an observation from ordinary life'
+          p2: 'Read a passage with its surrounding argument'
+          p3: 'Help the reader leave a question for later'
+        vignettes:
+          aristotle: 'The reader smiles at the passage wondering what Aristotle might have written if he had cooked. You hand them a blank slip and ask for one kitchen question that would actually bear writing down.'
+          ordinary: 'You find the everyday example the reader had passed by on the way to a learned name. They reread it and discover which question the name had nearly drowned out.'
+          reply: 'You keep the copy open where the reader has stopped. They put a finger on the sentence they want to come back to before returning the rest of the papers.'
       zh:
         name: "送走的最后几本书"
         place: "墨西哥城"
         figure: "胡安娜修女"
-        story: "教会的人批评了她的写作之后，胡安娜修女放弃了她的藏书。1695年她在一场瘟疫中照顾姐妹，自己也去世了。"
+        story: '胡安娜·伊内斯·德·拉·克鲁斯在 1691 年《答菲洛特亚修女》中回顾自己的求学愿望，也以厨房里的日常观察谈学习。本卡的 1695 年墨西哥城读信场景为虚构。'
         relic: "一支羽毛笔"
         relic_desc: "一支笔尖裂开的羽毛笔，旁边是空书架。"
         points:
-          p1: "读出她藏在诗里的东西"
-          p2: "在医务室里和她并肩劳作"
-          p3: "用她写作的语言把她的诗读出来"
+          p1: '找出一条来自日常生活的观察'
+          p2: '连着前后论证把一段读完'
+          p3: '帮读者留下一道以后还想问的问题'
+        vignettes:
+          aristotle: '读者读到「如果亚里士多德下过厨」的意思就笑了。你递给他一张空纸，请他说一件发生在厨房、值得记下来再问的问题。'
+          ordinary: '读者一路去找一位学者的名字，跳过了一个日常例子。你把那一段翻回来，他才听出那个名字差点盖过了哪一个问题。'
+          reply: '读者停在一页，你便替他一直翻那里。他先按住想再看的那一句，才把别的纸还回去。'
 text:
   en:
     name: Sor Juana Inés de la Cruz
@@ -45,3 +58,34 @@ text:
   zh:
     name: 胡安娜修女
     text: 墨西哥修女、诗人与学者，1648 或 1651 年生，1695 年去世。她在墨西哥城的修道院里收藏了大批图书，写诗和戏剧。1691 年她回复一位主教的信为女性求学的权利辩护，后来在压力下交出了藏书。
+hook: {en: 'Where does a question begin?', zh: '学问可以从哪里开始'}
+facts:
+  respuesta:
+    date: '1691'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [sor_juana_mexico_city_primary]
+    text:
+      en: 'In her 1691 Reply to Sor Filotea, Sor Juana describes her drive to study and uses ordinary kitchen observations to make a point about learning. The reading in the 1695 Mexico City card is invented.'
+      zh: '胡安娜·伊内斯·德·拉·克鲁斯在 1691 年《答菲洛特亚修女》中回顾自己的求学愿望，也以厨房里的日常观察谈学习。本卡的 1695 年墨西哥城读信场景为虚构。'
+bystanders:
+  sor_juana_mexico_city_reader:
+    invented: true
+    text: {en: 'An invented reader given a copy of the letter.', zh: '一位虚构的读者，手里有一份信的抄本。'}
+wiki:
+  refs:
+    sor_juana_mexico_city_primary:
+      order: 191
+      status: checked
+      text:
+        en: 'Sor Juana Inés de la Cruz, Respuesta a sor Filotea de la Cruz, 1691, original Spanish text. https://es.wikisource.org/wiki/Respuesta_a_sor_Filotea_de_la_Cruz'
+        zh: 'Sor Juana Inés de la Cruz, Respuesta a sor Filotea de la Cruz, 1691, original Spanish text. https://es.wikisource.org/wiki/Respuesta_a_sor_Filotea_de_la_Cruz'
+self_check:
+  quote_line: '读者读到「如果亚里士多德下过厨」的意思就笑了。'
+  fact: respuesta
+  regret_choice: '略过「找出一条来自日常生活的观察」，这处细节便留给下一位核对。'
+  bookend: '从「学问可以从哪里开始」开始，以员工留下的观察或更正收尾。'
+  share_line: '学问可以从哪里开始'
+  share_number: '1691'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

@@ -10,34 +10,47 @@ events:
     tier: 2
     channels: {V: 1, H: 1}
     regret: true
+    refs: [al_khwarizmi_baghdad_primary]
     scene:
       points:
         - {id: p1, kind: hold, req: {"any":[{"stat":{"will":7}},{"job":["archivist"]}]}}
         - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","streetwise"]},{"job":["teacher"]}]}}
         - {id: p3, kind: notice, redeem: true, req: {"any":[{"trait":["skeptical","handy"]},{"job":["journalist"]}]}}
+      vignettes:
+        - {id: balance, traits: [methodical, scholarly]}
+        - {id: tiles, traits: [handy, curious]}
+        - {id: check}
     text:
       en:
         name: "The man behind algebra"
         place: "Baghdad"
         figure: "Al-Khwarizmi"
-        story: "Al-Khwarizmi writes a short book on solving equations by restoring and balancing, from which algebra takes its name, yet almost nothing is known of his life, not even where he was born."
+        story: 'Al-Khwarizmi''s book on completion and balancing, written around 830, explains methods for solving equations through worked examples. The reading lesson is invented.'
         relic: "A sheet of worked equations"
         relic_desc: "A sheet of sums solved step by step with squares and roots."
         points:
-          p1: "Work the long sums by hand (a record keeper or a determined employee)"
-          p2: "Explain the balancing method to a merchant (a teacher or a silver tongued employee)"
-          p3: "Ask where he was born and write the answer down (a curious employee or a journalist)"
+          p1: 'Follow a worked calculation step by step'
+          p2: 'Explain one change with the learner''s own example'
+          p3: 'Check the result against the starting problem'
+        vignettes:
+          balance: 'You ask the learner to say the same change aloud on both sides. They stop before reaching the answer. The line that did not balance is now the one they can explain best.'
+          tiles: 'You put small square tiles on the table as the learner reads. When the words begin to run together, the remaining shape shows which piece is still missing.'
+          check: 'You keep the first line in sight after the learner finishes. They read their answer back into it to see if the numbers agree.'
       zh:
         name: "代数背后的那个人"
         place: "巴格达"
         figure: "花拉子米"
-        story: "花拉子米写了一本用还原与对消解方程的小书，代数这个名字就由此而来，可是人们几乎不知道他的生平，连他生在哪里都不清楚。"
+        story: '花拉子米约在 830 年写成《还原与对消计算概要》，用算例说明解方程的方法。本卡的算术练习为虚构。'
         relic: "一张演算过的方程"
         relic_desc: "一张逐步解出平方与根的演算纸。"
         points:
-          p1: "用手把长长的算式一步步算完"
-          p2: "向一位商人解释对消的方法"
-          p3: "问他生在哪里，把答案记下来"
+          p1: '沿着算例一步步做下去'
+          p2: '用学算者自己的例子说明一步变化'
+          p3: '把结果放回原题核对'
+        vignettes:
+          balance: '你请学算者把两边各做了什么都说出来。他还没算到答案就停了下来。刚才最糊涂的那一步，这回他讲得最清楚。'
+          tiles: '学算者照着念，你把几块方片摆在桌上。念到绕口处，剩下的形状正好让人看出还缺哪一块。'
+          check: '学算者做完后，你把第一行留在眼前。他把答案放回去念了一遍，看看两边的数是否还相等。'
 text:
   en:
     name: Al-Khwarizmi
@@ -45,3 +58,34 @@ text:
   zh:
     name: 花拉子米
     text: 巴格达智慧宫的学者，约 780 年生，约 850 年去世。他讲述还原与对消的计算之书为代数命名，而他本人名字的拉丁化形式则成了“算法”一词。
+hook: {en: 'The step must work on both sides.', zh: '两边怎样才还相等'}
+facts:
+  al_jabr:
+    date: '830'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [al_khwarizmi_baghdad_primary]
+    text:
+      en: 'Al-Khwarizmi''s book on completion and balancing, written around 830, explains methods for solving equations through worked examples. The reading lesson is invented.'
+      zh: '花拉子米约在 830 年写成《还原与对消计算概要》，用算例说明解方程的方法。本卡的算术练习为虚构。'
+bystanders:
+  al_khwarizmi_baghdad_reader:
+    invented: true
+    text: {en: 'An invented learner trying to explain a calculation aloud.', zh: '一位虚构的学算者，正试着把算式用话讲出来。'}
+wiki:
+  refs:
+    al_khwarizmi_baghdad_primary:
+      order: 140
+      status: checked
+      text:
+        en: 'Muhammad ibn Musa al-Khwarizmi, The Compendious Book on Calculation by Completion and Balancing, manuscript digitized by the Library of Congress. https://www.loc.gov/resource/gdcwdl.wdl_07462/?st=gallery'
+        zh: 'Muhammad ibn Musa al-Khwarizmi, The Compendious Book on Calculation by Completion and Balancing, manuscript digitized by the Library of Congress. https://www.loc.gov/resource/gdcwdl.wdl_07462/?st=gallery'
+self_check:
+  quote_line: '你请学算者把两边各做了什么都说出来。'
+  fact: al_jabr
+  regret_choice: '略过「沿着算例一步步做下去」，这处细节便留给下一位核对。'
+  bookend: '从「两边怎样才还相等」开始，以员工留下的观察或更正收尾。'
+  share_line: '两边怎样才还相等'
+  share_number: '830'
+pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
