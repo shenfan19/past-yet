@@ -27,6 +27,8 @@ export function merge(base, over) {
 
 // pickLang(i18n) returns the language code to use. A code that is not in config.i18n.locales, or a language with no file, falls back.
 // opts.drafts: show what is marked as a draft. A simulated era whose model says `metadata.status: draft` and a catalogue event that says `draft: true` are left out of the game, so
+// With config.release.ready_only, an event is a draft unless its card says `ready: true`, and so is the era of such an event; a model with no event of its own needs
+// `metadata.ready: true`. The antiques of a model kept out are kept out too. A story is turned on when it is finished.
 // content can be added step by step and only the finished part is published. The event of a draft era falls back to its own sync points, and the wiki cards of a draft era are dropped.
 export async function loadData(readText, parse, pickLang, opts = {}) {
   const o = {};
@@ -53,11 +55,17 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
   }
   // what is still a draft is left out unless it was asked for
   if (!(opts.drafts ?? o.config.release.drafts)) {
-    const drafts = new Set(o.config.eras.filter((id) => o.era_raw[id].metadata.status === 'draft'));
+    const notReady = (e) => e.draft || (o.config.release.ready_only && !e.ready);
+    const unreadyEras = new Set(o.catalog.events.filter((e) => e.era && notReady(e)).map((e) => e.era));
+    // a model with no catalogue event of its own is turned on in the model itself, metadata.ready: true
+    const standaloneOff = (id) => o.config.release.ready_only && !o.catalog.events.some((e) => e.era === id) && !o.era_raw[id].metadata.ready;
+    const drafts = new Set(o.config.eras.filter((id) => o.era_raw[id].metadata.status === 'draft' || unreadyEras.has(id) || standaloneOff(id)));
+    // the antiques that lead to a model kept out go with it
+    for (const [id, a] of Object.entries(o.antiques.antiques)) if (a.era && drafts.has(a.era)) delete o.antiques.antiques[id];
     o.config.eras = o.config.eras.filter((id) => !drafts.has(id));
     for (const id of drafts) { delete o.era_raw[id]; delete o.era_src[id]; delete o.config.stars.energy_base[id]; }
-    const gone = new Set(o.catalog.events.filter((e) => e.draft).map((e) => e.id));
-    o.catalog.events = o.catalog.events.filter((e) => !e.draft);
+    const gone = new Set(o.catalog.events.filter(notReady).map((e) => e.id));
+    o.catalog.events = o.catalog.events.filter((e) => !notReady(e));
     for (const e of o.catalog.events) if (drafts.has(e.era)) delete e.era;
     const hidden = (c) => (c.era && drafts.has(c.era)) || (c.unlock && c.unlock.era && drafts.has(c.unlock.era)) || (c.events && c.events.length && c.events.every((x) => gone.has(x)));
     for (const k of Object.keys(o.encyclopedia.sections)) o.encyclopedia.sections[k] = o.encyclopedia.sections[k].filter((c) => !hidden(c));

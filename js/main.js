@@ -25,7 +25,7 @@ const D = await loadData(async (p) => {
   const res = await fetch(p, { cache: 'no-cache' }); // always ask the server whether the data changed, so a rebuilt playlist is never hidden by the browser cache
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();
-}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev ? true : undefined });
+}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev || new URLSearchParams(location.search).has('drafts') ? true : undefined });
 
 document.documentElement.lang = D.lang;
 document.title = [D.get('text.ui.title'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');

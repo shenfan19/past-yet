@@ -564,7 +564,7 @@ try {
   ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 6);
   // the game so far was played with the drafts shown, and a page without them does not know their places, so the trips to them are taken out of the save first
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(), D = g.D; const draft = new Set(D.get('config.eras').filter((id) => D.get('era_raw.' + id).metadata.status === 'draft')); S.dispatches = S.dispatches.filter((d) => !draft.has(d.eraId)); S.visited = S.visited.filter((x) => !draft.has(x)); if (S.trips) S.trips = S.trips.filter((x) => !draft.has(x.place)); for (const k of draft) delete S.stars[k]; g.ctx.save(); });
-  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&drafts`);
   await page.waitForSelector('.lead');
   // settings, music and effects
   // the time axis zooms around the pointer and slides when dragged, and its marks are plain dots
@@ -619,7 +619,16 @@ try {
   ok('guest has three pages and three tools', (await page.locator('#tabs [data-tab]').count()) === 3 && (await page.locator('#tools [data-act=modalopen]').count()) === 3);
   await tool('wiki');
   await page.waitForSelector('.wiki');
-  ok('without dev the drafts are left out, and an event of a draft falls back to its own points', await page.evaluate(() => { const D = window.__game.D; return D.get('config.eras').every((id) => D.get('era_raw.' + id).metadata.status !== 'draft') && D.get('catalog.events').every((e) => !e.era || D.get('config.eras').includes(e.era)); }));
+  {
+    // a player, on a page of their own with a save of their own, sees only the stories that are turned on, and their places, antiques and start
+    const solo = await browser.newContext();
+    const p2 = await solo.newPage();
+    await p2.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
+    await p2.waitForFunction(() => window.__game && window.__game.D);
+    const shown = await p2.evaluate(() => { const D = window.__game.D, S = window.__game.ctx.S(); const evs = D.get('catalog.events'); const ids = new Set(evs.map((e) => e.id)); return { all: evs.every((e) => e.ready && !e.draft), eras: D.get('config.eras').every((id) => evs.some((e) => e.era === id)), relics: Object.values(D.get('antiques.antiques')).every((a) => ids.has(a.event) || !a.event), start: S.locks.every((x) => ids.has(x.replace('relic_', ''))), n: evs.length }; });
+    await solo.close();
+    ok('without dev only the stories turned on are in the game, with their places, antiques and start', shown.all && shown.eras && shown.relics && shown.start && shown.n >= 1);
+  }
   ok('guest wiki has no model categories', (await page.locator('.wcat[data-cat=formulas]').count()) === 0);
   ok('guest sees locked rows and no hidden marks', (await page.locator('.wrow.locked').count()) > 0 && !(await page.locator('#wiki-list').innerText()).includes('(hidden)'));
   await page.screenshot({ path: path.join(outDir, '10_wiki_guest.png'), fullPage: true });
@@ -679,7 +688,7 @@ try {
   await sub('future');
   ok('guest sees the future shop and its goods', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   // English, language switch and fallback
-  await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=en&drafts`);
   await page.waitForSelector('.lead');
   ok('English title', (await page.title()) === 'The Teleporter');
   ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
@@ -725,12 +734,12 @@ try {
   await frPage.goto(`http://127.0.0.1:${port}/index.html`);
   await frPage.waitForSelector('.lead');
   ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
-  await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=fr`);
+  await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=fr&drafts`);
   await frPage.waitForSelector('.lead');
   ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
   await frCtx.close();
   // a click that spans several ticks of the clock must still land
-  await page.goto(`http://127.0.0.1:${port}/index.html?lang=en`);
+  await page.goto(`http://127.0.0.1:${port}/index.html?lang=en&drafts`);
   await page.waitForSelector('.lead');
   await page.selectOption('[data-clk=speed]', '3');
   const tabBox = await page.locator('#tabs [data-tab=shop]').boundingBox();
@@ -887,7 +896,7 @@ await page.evaluate(() => { window.__game.ctx.settings.set('map_daynight', false
 ok('the setting takes the night shade off the map', (await page.locator('svg.map .night').count()) === 0);
 // a save that names something no longer in the data is not loaded, the game starts again instead of showing an empty page
 await page.evaluate(() => { const S = JSON.parse(localStorage.getItem('teleporter_save')); S.locks.push('relic_removed_event'); localStorage.setItem('teleporter_save', JSON.stringify(S)); });
-await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
+await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&drafts`);
 await page.waitForSelector('#tabs button');
 ok('a save that does not fit the data is dropped and the page still opens', (await page.locator('#tabs button[data-tab]').count()) === 3 && !(await page.evaluate(() => window.__game.ctx.S().locks.includes('relic_removed_event'))));
 // implants: worn up to the load cap, add to the attributes, and come back to the stock when the wearer is let go

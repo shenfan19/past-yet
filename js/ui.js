@@ -934,9 +934,9 @@ export function createUI(D, ctx, DEV = false) {
       <section><h3>${esc(W.staff_title)}</h3><p class="muted">${esc(W.staff_hint.replace('{n}', need))}</p>
         <ul class="startstaff">${crew}</ul>
         <button class="ghost" data-act="rerollstaff" ${S.seq > 0 || !S.startStaff ? 'disabled' : ''}>${esc(W.reroll_staff)}</button></section>
-      <section><h3>${esc(W.places_title)}</h3><p class="muted">${esc(W.places_hint)}</p>
+      <section><h3>${esc(W.places_title)}</h3><p class="muted">${esc((S.startRandom || []).length ? W.places_hint : W.places_hint_start_only)}</p>
         <ul class="startplaces">${places}</ul>
-        <button class="ghost" data-act="rerollstart" ${S.seq > 0 || !S.startRandom ? 'disabled' : ''}>${esc(W.reroll)}</button></section>
+        ${(S.startRandom || []).length ? `<button class="ghost" data-act="rerollstart" ${S.seq > 0 ? 'disabled' : ''}>${esc(W.reroll)}</button>` : ''}</section>
     </div>`;
   }
   function welcomeIntroHtml() {

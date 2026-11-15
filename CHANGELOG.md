@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0, 2026-11-15
+
+- Stories are turned on one by one. With `release.ready_only`, a story is in the game only when its event card says `ready: true`, or, for a model with no event of its own, `metadata.ready: true`. Every other story is kept out: no place on the map, no antique, not drawn for the start, no page in the wiki, and the antiques of its model go with it.
+- Guangzhou 1924 is the one story turned on.
+- The developer mode, and `?drafts` in the address, show every story.
+- The welcome says which places are open from the start as they are.
+
 ## 0.3.0, 2026-11-15
 
 - Every story is told by the same report. A small story of three sync points now keeps a record in the same shape as a model: the facts of the person in the year of the event, the arrival, the lines of getting in, each sync point on its day, won or not, the scene, the leaving, and the facts of later years, each year marked, between the crossing and the return to the office.

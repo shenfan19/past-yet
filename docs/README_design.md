@@ -77,6 +77,10 @@ After the record comes the summary: the cost of the kit, the stars with the sync
 
 The stamp at the top of a report is read from three things. How the employee came back: normally, early (gave up or was recalled) or the hard way (near death or sent back). How many stars: all, some or none. And where none was won, whether the branch still came out different from the main timeline. Every stamp is a kind word and the least of them is to try again: Home in full, Well worth it, Left a mark, Next time; Done and home early, Something gained, It made a difference, Plenty of time yet; Home a hero, A close call still a gain, Safe and sound. The stamp only says how it went. The ending of the model still sets the time energy and the rest. The table is `stamp` in the config.
 
+## Which stories are in the game
+
+A story is turned on when it is finished. With `release.ready_only`, only an event whose card says `ready: true` is in the game, and a model with no event of its own needs `metadata.ready: true`. The rest are kept out as drafts: no place on the map, no antique, not drawn for the start, no page in the wiki, and the antiques of their models with them. The developer mode and `?drafts` show every story. The welcome says which places are open from the start as they are; with only the start story on, it is the one place.
+
 ## Time and the crossing
 
 One office day is thirty historical days, and a stay is one to seven office days, so a trip can span recorded events that lie weeks or months apart. The office keeps a calendar from the real date the game began. What wears on the traveller at the pace of the office, such as homesickness, runs on office days, and the world runs on historical days. The crossing is not exact: a trip arrives before or after the planned day by up to a tenth of its stay, at least one day and at most ten, drawn from its seed, never before day 0 of the model. A short story is not missed and a long one is not thrown off by weeks. A model may set its own range.

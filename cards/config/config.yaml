@@ -1,7 +1,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.3.0
+  version: 0.4.0
   released: '2026-11-15'
   card_authors: [AI, Fan Shen]
   links:
@@ -93,6 +93,10 @@ founder:
 # in the cards and be added step by step. The page shows drafts with ?devtools, and the tools always check them. See the task about the models for what finished means.
 release:
   drafts: false
+  # With ready_only, a story is in the game only when its event card says ready: true, and every other one is kept out as a draft:
+  # no place on the map, no antique, not drawn for the start, no page in the wiki. A story is turned on when it is finished.
+  # The developer mode, and ?drafts in the address, show them all.
+  ready_only: true
   # the hook of a story, the one line that makes a reader want the rest, is at most this many characters in Chinese
   hook_max: 20
   # the pictures of a person: the kinds a file name may start with, the extensions, and the fields every picture must have in the card of the person
