@@ -3,54 +3,61 @@ events:
   pushkin_st_petersburg:
     order: 125
     year: 1837
+    # two office days from the planned arrival on 1 January 1837 by the new calendar; the lines give both calendars, Russia kept the old one
+    date: '1837-01-01'
+    stay: 2
     lon: 30.32
     lat: 59.94
     region: europe
+    home: [europe_east]
+    near: [europe_west]
     field: literature
     tier: 2
     channels: {C: 2, G: 2, L: 1}
     regret: true
-    refs: [pushkin_st_petersburg_address, pushkin_st_petersburg_apartment]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [pushkin_st_petersburg_address, pushkin_st_petersburg_apartment, poetry_foundation_pushkin, gw2ru_last_duel, poets_graves_pushkin]
     scene:
       points:
-        - {id: p1, kind: trust, req: {"trait":["kind","charismatic","artistic"]}}
-        - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["calm","hardy"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["doctor","physician","nurse"]},{"trait":["calm","cheerful"]}]}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["kind","charismatic","quiet"]},{"stat":{"finesse":6}}]}}
+        - {id: p2, kind: endure, day: 38.5, req: {"any":[{"stat":{"will":6}},{"trait":["calm","hardy","bold"]}]}}
+        - {id: p3, kind: care, redeem: true, day: 39, req: {"any":[{"job":["doctor","physician","nurse"]},{"trait":["calm","kind","vigil"]}]}}
       vignettes:
-        - {id: number, traits: [bold, curious]}
-        - {id: queue, traits: [methodical, kind]}
-        - {id: river}
+        - {id: number, traits: [bold, curious], day: 20}
+        - {id: queue, traits: [methodical, kind], day: 39.5}
+        - {id: river, day: 15}
     text:
       en:
         name: 'A place before its house number'
         place: "St Petersburg"
         figure: "Alexander Pushkin"
-        story: 'The Pushkin Apartment Museum records Pushkin''s death in this apartment in February 1837 and reproduces his description of the address near the Konyushenny Bridge, in Princess Volkonskaya’s house. The familiar number 12 dates to 1880.'
+        story: 'In 1836 and 1837 Alexander Pushkin lived in an apartment on the Moika embankment by the Konyushenny Bridge, in the house of Princess Volkonskaya. On 27 January 1837 by the old calendar, 8 February by the new, he fought a duel with Georges d''Anthès by the Black River and was shot in the stomach. He was brought home and died there on 29 January, 10 February by the new calendar. He is buried beside his mother at the Svyatogorsky Monastery near Mikhailovskoye.'
         relic: "A book of his verse"
         relic_desc: "A small book with a pressed leaf at one poem."
         points:
-          p1: 'Earn the door attendant’s trust so you can pass on directions'
-          p2: 'Stay by the bridge until a late visitor finds the right entry'
-          p3: 'Keep the corridor quiet for those who need to go upstairs'
+          p1: 'Be taken in by the servants of the house, then run its errands to the bridge and back'
+          p2: 'On the day of the duel, wait in the cold by the Black River and help bring the sleigh back to town'
+          p3: 'In the two days after, keep the hall and write down the name of everyone who comes to ask'
         vignettes:
-          number: 'You nearly give the visitor the number you remember from the museum. The door attendant asks which house you mean. You cross out the number and draw the bridge on the slip. The visitor finds the door. You will be long gone when the number you first wrote is put up.'
-          queue: 'The door attendant can answer one visitor at a time. You write the same directions twice so the next two can stop asking separately. You keep the draft on which you worked out the turn from the bridge. You still have no word from the room when you go.'
-          river: 'You walk from the bridge with the door attendant and count which turns belong in the directions. Before you go, one person uses your little map without needing to hear a house number. What happens beyond the entrance stays on the other side of the door.'
+          number: '{staff} nearly gives a visitor a house number from a museum plaque that does not exist yet, then crosses it out and draws the bridge on the slip instead.'
+          queue: '{staff} writes the same answer on several slips so that the people waiting in the hall can read it without asking again.'
+          river: '{staff} walks from the bridge along the Moika with the porter and counts the turns that belong in directions to the door.'
       zh:
         name: '门牌号尚未出现的那户人家'
         place: "圣彼得堡"
         figure: "亚历山大·普希金"
-        story: '普希金故居博物馆记载，普希金于 1837 年 2 月在这间寓所去世。他曾给父亲写过住处，在莫伊卡河畔、科纽申内桥旁的沃尔孔斯卡娅公爵夫人府邸。今天熟悉的 12 号门牌要到 1880 年才固定。'
+        story: '1836 年到 1837 年，亚历山大·普希金住在莫伊卡河畔、科纽申内桥旁沃尔孔斯卡娅公爵夫人的房子里。旧历 1837 年 1 月 27 日，也就是新历 2 月 8 日，他在黑溪边与乔治·丹特斯决斗，腹部中弹，被送回寓所，旧历 1 月 29 日，也就是新历 2 月 10 日在那里去世。他葬在米哈伊洛夫斯科耶附近的圣山修道院，在他母亲身旁。'
         relic: "一本诗集"
         relic_desc: "一本小书，某首诗里夹着一片压干的叶子。"
         points:
-          p1: '让看门人放心把指路的差事交给你'
-          p2: '在桥边守到来迟的访客找对门口'
-          p3: '给必须上楼的人留一段安静的走廊'
+          p1: '先让这户人家的仆人认下，再替他们往桥那头跑腿'
+          p2: '决斗那天，在黑溪边的寒风里等着，帮着把雪橇赶回城'
+          p3: '那之后的两天，守在门厅，把来问消息的人一个个记下名字'
         vignettes:
-          number: '你险些顺口说出在博物馆见过的门牌号。看门人问你指的是哪栋。你划掉数字，在纸条上画出那座桥。访客总算找到了门口。等最初写下的号码真正挂上，你早已不在这里。'
-          queue: '看门人一次只能答一位访客。你把同一条路抄了两份，让后来的两个人各拿一张，省去再问。你留下最早试画转弯处的那张草纸。临走时，房里还是没有消息传给你。'
-          river: '你跟看门人从桥边走一遍，数清哪些弯得画进指路图。临走前，有个人照小图找到了门口，没问门牌。门里面后来发生什么，仍旧隔在那扇门后。'
+          number: '{staff}差点把一块博物馆门牌上的号码告诉来访的人，可那块牌子这时还没有，便划掉数字，在纸条上画了那座桥。'
+          queue: '{staff}把同一句回答抄在几张纸条上，门厅里等着的人看了就不用再问。'
+          river: '{staff}跟着门房从桥边沿莫伊卡河走一遍，数清指路时该说的几个转弯。'
 text:
   en:
     name: Alexander Pushkin
@@ -64,24 +71,74 @@ facts:
     date: '1836-10'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [pushkin_st_petersburg_address]
     text:
       en: 'Pushkin described the apartment by the bridge and the owner of the house. The museum dates the current street number to 1880.'
       zh: '普希金以桥和房主指明住处，博物馆记载现用门牌于 1880 年固定。'
+    line:
+      en: 'October 1836: in a letter Pushkin gives his address as the house of Princess Volkonskaya by the Konyushenny Bridge. There is no number; the one on the door today was fixed in 1880.'
+      zh: '1836 年 10 月，普希金在信里写自己住在科纽申内桥边沃尔孔斯卡娅公爵夫人的房子里。没有门牌号，今天门上那个号码是 1880 年才定下的。'
+  duel:
+    date: '1837-02-08'
+    stay_day: 38
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [gw2ru_last_duel, poetry_foundation_pushkin]
+    text:
+      en: 'On 27 January 1837 by the old calendar, 8 February by the new, Pushkin fought a duel with Georges d''Anthès by the Black River. D''Anthès fired first and wounded him in the stomach; Pushkin fired back and wounded d''Anthès lightly in the arm.'
+      zh: '旧历 1837 年 1 月 27 日，也就是新历 2 月 8 日，普希金在黑溪边与乔治·丹特斯决斗。丹特斯先开枪，击中普希金腹部；普希金还了一枪，只擦伤丹特斯的手臂。'
+    line:
+      en: '27 January by the old calendar, 8 February by the new: by the Black River, d''Anthès fires first and hits Pushkin in the stomach. Pushkin fires back and grazes his arm.'
+      zh: '旧历 1 月 27 日，也就是新历 2 月 8 日，黑溪边，丹特斯先开枪，打中普希金的腹部。普希金还了一枪，只擦伤对方的手臂。'
+  carried_home:
+    date: '1837-02-08'
+    stay_day: 38.6
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [gw2ru_last_duel, poets_graves_pushkin]
+    text:
+      en: 'The wounded poet was brought back to his apartment on the Moika.'
+      zh: '受伤的诗人被送回莫伊卡河畔的寓所。'
+    line:
+      en: 'He is brought home to the apartment on the Moika.'
+      zh: '他被送回莫伊卡河畔的寓所。'
   apartment:
     date: '1837-02-10'
+    stay_day: 40
     checked: official_record
     level: careful
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [pushkin_st_petersburg_apartment]
     text:
       en: 'Pushkin died in this apartment on February 10, 1837, or January 29 by the old calendar.'
       zh: '普希金于 1837 年 2 月 10 日在该寓所去世，按当时俄历为 1 月 29 日。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '29 January by the old calendar, 10 February by the new: Pushkin dies in the apartment.'
+      zh: '旧历 1 月 29 日，也就是新历 2 月 10 日，普希金在寓所里去世。'
+  buried:
+    date: '1837'
+    stay_day: 48
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [poets_graves_pushkin, gw2ru_last_duel]
+    text:
+      en: 'He was buried beside his mother at the Svyatogorsky Monastery near his estate of Mikhailovskoye.'
+      zh: '他葬在米哈伊洛夫斯科耶庄园附近的圣山修道院，在他母亲身旁。'
+    line:
+      en: 'Far from the city, near Mikhailovskoye, he is buried at the Svyatogorsky Monastery beside his mother.'
+      zh: '远离彼得堡，在米哈伊洛夫斯科耶附近的圣山修道院，他葬在母亲身旁。'
 bystanders:
   attendant:
     invented: true
-    text: {en: 'An invented door attendant who has to answer everyone asking for the apartment.', zh: '虚构的看门人，来打听寓所的人都来找他问路。'}
+    text: {en: 'A porter, made up for the game, whom everyone asks for the way to the apartment.', zh: '一位编出来的门房，来打听寓所的人都找他问路。'}
+  maid:
+    invented: true
+    text: {en: 'A maid of the house, made up for the game, who sends errands to the bridge.', zh: '一位编出来的女仆，常差人往桥那头跑腿。'}
 wiki:
   refs:
     pushkin_st_petersburg_address:
@@ -96,16 +153,34 @@ wiki:
       text:
         en: 'All-Russian Pushkin Museum, The Pushkin Apartment Museum https://www.museumpushkin.ru/vserossijskij_muzej_a._s._pushkina/muzej-kvartira_a.s.pushkina/the_pushkin_apartment_museum.html'
         zh: '全俄普希金博物馆，普希金故居 https://www.museumpushkin.ru/vserossijskij_muzej_a._s._pushkina/muzej-kvartira_a.s.pushkina/the_pushkin_apartment_museum.html'
+    poetry_foundation_pushkin:
+      order: 436
+      status: checked
+      text:
+        en: 'Poetry Foundation, Alexander Pushkin. https://www.poetryfoundation.org/poets/alexander-pushkin'
+        zh: '美国诗歌基金会，亚历山大·普希金。https://www.poetryfoundation.org/poets/alexander-pushkin'
+    gw2ru_last_duel:
+      order: 437
+      status: checked
+      text:
+        en: 'Gateway to Russia, Retracing the timeline of Alexander Pushkin''s last duel. https://www.gw2ru.com/arts/226110-pushkin-last-duel'
+        zh: 'Gateway to Russia，普希金最后一次决斗的时间线。https://www.gw2ru.com/arts/226110-pushkin-last-duel'
+    poets_graves_pushkin:
+      order: 438
+      status: checked
+      text:
+        en: 'Poets'' Graves, Alexander Pushkin. https://poetsgraves.co.uk/pushkin.htm'
+        zh: 'Poets'' Graves，亚历山大·普希金。https://poetsgraves.co.uk/pushkin.htm'
 self_check:
-  fact: address
-  quote_line: '你划掉数字，在纸条上画出那座桥。'
-  regret_choice: '抄出两张路条就没工夫等房里传话。'
-  bookend: '从一个记错时代的门牌开始，到访客沿着小图真正找对门。'
-  share_line: '莫伊卡河畔，那时还不能写 12 号。'
-  share_number: '门牌到 1880 年才固定'
-  foreknowledge: 'number 从现代门牌知道未来地址，却要适配当时。'
-  proximity: 'apartment 与 address 固定寓所与日期。'
-  leverage: '划掉一个时代错误，补一张桥边转弯图。'
-  missed: '员工没进房内。'
-  takeaway: '指路图与 1880 年门牌年代。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: duel
+  quote_line: '黑溪边，丹特斯先开枪，打中普希金的腹部。'
+  regret_choice: '派冷天里守得住的去，雪橇能赶回城，门厅里却没人记名字；派细心和气的去，来问消息的人都记下了，黑溪边那趟就没人陪。'
+  bookend: '从一封只写桥和房主的信开始，以远在乡下的修道院收尾。'
+  share_line: '1837 年 2 月，我在彼得堡一户人家的门厅里，把来问消息的人一个个记下。'
+  share_number: '2'
+  knowing: 'apartment'
+  near: 'duel, carried_home'
+  lever: 'p2, p3'
+  missed: 'buried'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

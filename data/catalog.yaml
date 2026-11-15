@@ -5344,9 +5344,15 @@ events:
       - Fan Shen
   - id: pushkin_st_petersburg
     year: 1837
+    date: '1837-01-01'
+    stay: 2
     lon: 30.32
     lat: 59.94
     region: europe
+    home:
+      - europe_east
+    near:
+      - europe_west
     field: literature
     tier: 2
     channels:
@@ -5354,20 +5360,29 @@ events:
       G: 2
       L: 1
     regret: true
+    ready: true
     refs:
       - pushkin_st_petersburg_address
       - pushkin_st_petersburg_apartment
+      - poetry_foundation_pushkin
+      - gw2ru_last_duel
+      - poets_graves_pushkin
     scene:
       points:
         - id: p1
           kind: trust
+          day: 10
           req:
-            trait:
-              - kind
-              - charismatic
-              - artistic
+            any:
+              - trait:
+                  - kind
+                  - charismatic
+                  - quiet
+              - stat:
+                  finesse: 6
         - id: p2
           kind: endure
+          day: 38.5
           req:
             any:
               - stat:
@@ -5375,9 +5390,11 @@ events:
               - trait:
                   - calm
                   - hardy
+                  - bold
         - id: p3
           kind: care
           redeem: true
+          day: 39
           req:
             any:
               - job:
@@ -5386,17 +5403,21 @@ events:
                   - nurse
               - trait:
                   - calm
-                  - cheerful
+                  - kind
+                  - vigil
       vignettes:
         - id: number
           traits:
             - bold
             - curious
+          day: 20
         - id: queue
           traits:
             - methodical
             - kind
+          day: 39.5
         - id: river
+          day: 15
     authors:
       - AI
       - Fan Shen

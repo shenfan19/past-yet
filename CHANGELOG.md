@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.17, 2026-11-15
+
+- St Petersburg 1837, Alexander Pushkin, is rewritten and turned on, on both calendars: his letter giving the house by the bridge, the duel by the Black River on 27 January old style, 8 February new style, his death on 29 January, 10 February, and his burial at the Svyatogorsky Monastery, with sync points for the errands of the house, waiting by the Black River and keeping the hall.
+
 ## 0.5.16, 2026-11-15
 
 - Ternate 1858, Alfred Russel Wallace, is rewritten and turned on: the fever and the essay of February 1858, the mail steamer whose month is still argued over, the essay reaching Darwin on 18 June, the reading at the Linnean Society on 1 July with neither author there, and the printing on 20 August, with sync points for pinning the specimens, nursing the fever and seeing the essay aboard. The exposure to infection and heat is lowered from three to two.
