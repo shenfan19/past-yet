@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.24, 2026-11-15
+
+- Rapa Nui, the carvers of the moai, is rewritten and turned on: the figures cut from the tuff of Rano Raraku from about the thirteenth century, and Jacob Roggeveen reaching the island on Easter Sunday 1722, with sync points for grinding the adzes, drawing a figure from front and side and cutting the tuff behind it.
+
 ## 0.5.23, 2026-11-15
 
 - Cherokee country 1821, Sequoyah, is rewritten and turned on: the syllabary shown at the Cherokee National Council and accepted, the first Cherokee Phoenix on 21 February 1828 and his death in Mexico in 1843, with sync points for keeping his sheets of signs in order, teaching a neighbour to write her name and carrying a slip across the council ground.

@@ -10342,32 +10342,38 @@ events:
     lon: -109.29
     lat: -27.12
     region: oceania
+    home:
+      - pacific
     field: architecture
     tier: 2
     channels:
-      L: 3
+      L: 2
       H: 1
+    ready: true
     refs:
       - rapa_nui_moai_quarry
+      - newworld_moai
+      - history_easter_island
     scene:
       points:
         - id: p1
-          kind: hold
-          req:
-            job:
-              - builder
-              - scaffolder
-              - carpenter
-              - woodcarver
-        - id: p2
-          kind: endure
+          kind: trust
+          day: 10
           req:
             any:
+              - job:
+                  - builder
+                  - scaffolder
+                  - carpenter
+                  - woodcarver
+              - trait:
+                  - handy
+                  - patient
               - stat:
-                  constitution: 6
-              - provides: strength
-        - id: p3
+                  finesse: 6
+        - id: p2
           kind: notice
+          day: 60
           req:
             any:
               - stat:
@@ -10375,16 +10381,31 @@ events:
               - trait:
                   - curious
                   - methodical
+        - id: p3
+          kind: endure
+          day: 120
+          req:
+            any:
+              - stat:
+                  constitution: 6
+              - trait:
+                  - hardy
+                  - vigil
+              - stat:
+                  will: 6
       vignettes:
         - id: pair
           traits:
             - methodical
             - scholarly
+          day: 65
         - id: surface
           traits:
             - hardy
             - curious
+          day: 100
         - id: height
+          day: 30
     authors:
       - AI
       - Fan Shen
