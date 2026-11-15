@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.21, 2026-11-15
+
+- Great Zimbabwe is rewritten and turned on: the stone city built over three centuries by ancestors of the Shona, the Great Enclosure and its passage, Karl Mauch at the ruins in 1871, the country named for the city in 1980 and the World Heritage listing of 1986, with sync points for sorting stones for the next course, drawing the passage with the way left blank and carrying water up the hill.
+
 ## 0.5.20, 2026-11-15
 
 - Lalibela, the rock hewn churches, is rewritten and turned on: the reign of King Lalibela from 1181 to 1221, the ditches and trenches cut into the same rock, the first detailed European description by Francisco Álvares in the 1520s and the World Heritage listing of 1978, with sync points for carrying the broken rock out of the trench, finding the outlet of a channel before the rains and clearing a ditch in the rains. The exposure to the land is lowered from three to two.

@@ -2128,39 +2128,70 @@ events:
     lon: 30.93
     lat: -20.27
     region: africa
+    home:
+      - southern_africa
     field: architecture
     tier: 2
     channels:
-      L: 3
+      L: 2
       H: 1
+    ready: true
     refs:
       - great_zimbabwe_passage
+      - livescience_great_zimbabwe
+      - worldatlas_great_zimbabwe
+      - ancient_history_great_zimbabwe
     scene:
       points:
         - id: p1
-          kind: hold
+          kind: trust
+          day: 10
           req:
-            provides: strength
+            any:
+              - trait:
+                  - hardy
+                  - cheerful
+                  - handy
+              - job:
+                  - builder
+                  - carpenter
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 6
-        - id: p3
           kind: notice
+          day: 60
           req:
-            stat:
-              wit: 6
+            any:
+              - trait:
+                  - methodical
+                  - scholarly
+                  - curious
+              - stat:
+                  wit: 6
+        - id: p3
+          kind: endure
+          day: 120
+          req:
+            any:
+              - trait:
+                  - hardy
+                  - patient
+                  - vigil
+              - stat:
+                  will: 6
       vignettes:
         - id: lines
           traits:
             - methodical
             - scholarly
+          day: 65
         - id: width
           traits:
             - hardy
             - curious
+          day: 90
         - id: pace
+          day: 30
     authors:
       - AI
       - Fan Shen
