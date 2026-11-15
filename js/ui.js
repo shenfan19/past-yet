@@ -595,7 +595,6 @@ export function createUI(D, ctx, DEV = false) {
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
-        <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
@@ -612,7 +611,6 @@ export function createUI(D, ctx, DEV = false) {
       <p style="font-size:16px">${U.report.recalled_text.replace('{day}', String(Math.floor(cur.recallDay) + 1)).replace('{p}', String(Math.round(P.share * 100)))}</p>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
-        <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(P.energy)}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
@@ -643,44 +641,49 @@ export function createUI(D, ctx, DEV = false) {
       const v = e.vars[name];
       return `${srcLabel(v.source)}${v.note ? COLON + v.note : ''}`;
     };
-    // The report is a story told in one list, in the order things happened. A line is either history, what is recorded and happens whoever is there,
-    // or the crossing, what the traveller did and met, and a star of the trip is a line of the crossing marked with a star. A thin rule at the left tells the two apart,
-    // and the buttons above the list show all of it, only one of the two, or only the stars. What was recorded after the traveller left follows a single quiet line.
+    // The report is a story told in one list, in the order things happened: how the employee got in, what they did, the scene of the trip,
+    // the stars and what was recorded, also after they had left. A line is history, what is recorded and happens whoever is there, or a line of the employee,
+    // and a thin rule at the left tells the two apart. The buttons above the list show all of it or one of the two; the button of the employee bears their name,
+    // so the lines of another employee met in the same time can have their own button later.
+    // Notes are kept for what has a source worth reading: a line of history names the sources of its fact, and a number worked out by the model says so.
+    const notes = [];
+    const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
+    const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
+    const factRefs = (fact) => (fact ? D.get('encyclopedia.fact_sources')?.[cur.eraId]?.[fact] || [] : []);
     const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
-    const tlLine = (t, i) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${t.source ? fn('t' + i, '†', srcLabel(t.source)) : ''}</div></li>`;
-    const during = R.timeline.map((t, i) => [t, i]).filter(([t]) => !t.after);
-    const afterLeave = R.timeline.map((t, i) => [t, i]).filter(([t]) => t.after);
-    const tl = during.map(([t, i]) => tlLine(t, i)).join('') + (afterLeave.length ? `<li class="gap"><div class="muted">${esc(U.report.after_leave_note.replace('{staff}', R.staff))}</div></li>${afterLeave.map(([t, i]) => tlLine(t, i)).join('')}` : '');
-    const tlf = st.tlf || 'all';
-    const tlButtons = ['all', 'history', 'travel', 'star'].map((k) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(U.report.line_filter[k])}</button>`).join(' ');
-    const C = R.chart;
-    const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * D.get('config.ui.chart.headroom');
-    const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * D.get('config.ui.chart.headroom');
-    const pts = (rows, k) => rows.map((p) => [p.day, p[k]]);
-    const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }].filter((m) => m.x !== null && m.x !== undefined);
-    // the two marks of the handle are named by the model, so a model about a university does not speak of a pump
-    const handleName = T.eras[cur.eraId].handle_label;
-    const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${esc(U.report.legend_handle_hist.replace('{x}', handleName))}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${esc(U.report.legend_handle_branch.replace('{x}', handleName))}</span></div>`;
-    const charts = `<div class="grid2"><div><div class="muted">${RL.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
+    const tlLine = (t) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${lineKind(t) === 'history' ? sup(factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : ''}</div></li>`;
+    const accepted = R.journey?.accepted !== false;
+    const summaryNote = accepted ? sup([noteOf('model', U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source))]) : '';
+    // The record opens in the year of today with the day of the office and how the crossing began, turns to the year of the place,
+    // and comes back to the year of today with the day of return, how it ended, and the rest and the mood the trip leaves behind.
+    const nowYear = cur.presentYear ?? new Date().getFullYear();
+    const yearLine = (y) => `<li class="year"><div>${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
+    const officeDay = (d) => U.clock.day.replace('{n}', String(Math.floor(d) + 1));
+    const story = event ? T.catalog[event.id].story : null;
+    const departLine = `<li class="travel"><div>${esc(story ? U.report.depart.replace('{day}', officeDay(cur.startDay)).replace('{text}', story) : U.report.depart_plain.replace('{day}', officeDay(cur.startDay)).replace('{staff}', R.staff))}${event?.refs ? ' ' + wl('events:c:' + event.id, U.light.sources) : ''}${modelSource ? ' ' + wl('events:' + modelSource, U.light.sources) : ''}</div></li>`;
+    const backLine = `<li class="travel"><div>${esc(accepted ? U.report.back_line.replace('{day}', officeDay(cur.readyDay)).replace('{text}', R.summary) : U.report.back_plain.replace('{day}', officeDay(cur.readyDay)).replace('{staff}', R.staff))}${summaryNote}</div></li>`;
+    const fd = cur.favorDelta || 0;
+    const restLine = `<li class="travel"><div>${esc((R.accounts.restDays > 0 ? U.report.rest_line.replace('{n}', String(R.accounts.restDays)) : U.report.rest_none).replace(/\{staff\}/g, R.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, R.staff))}</div></li>`;
+    const tl = yearLine(nowYear) + departLine + yearLine(e.raw.metadata.era.year) + R.timeline.map((t) => tlLine(t)).join('') + yearLine(nowYear) + backLine + restLine;
+    const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
+    const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', R.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
+    // a report written before the lines of getting in were part of the record still shows them on their own
+    const woven = R.timeline.some((t) => t.kind === 'journey');
+    // the numbers, chart and ledger are shown only where the model counts something that means something, such as the lives of an outbreak
+    const numbersHtml = () => {
+      const C = R.chart;
+      const sickMax = Math.max(...C.base.map((p) => p.cases), ...C.branch.map((p) => p.cases)) * D.get('config.ui.chart.headroom');
+      const deadMax = Math.max(...C.base.map((p) => p.deaths), ...C.branch.map((p) => p.deaths)) * D.get('config.ui.chart.headroom');
+      const pts = (rows, k) => rows.map((p) => [p.day, p[k]]);
+      const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }].filter((m) => m.x !== null && m.x !== undefined);
+      // the two marks of the handle are named by the model, so a model about a university does not speak of a pump
+      const handleName = T.eras[cur.eraId].handle_label;
+      const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${esc(U.report.legend_handle_hist.replace('{x}', handleName))}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${esc(U.report.legend_handle_branch.replace('{x}', handleName))}</span></div>`;
+      const charts = `<div class="grid2"><div><div class="muted">${RL.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
       <div><div class="muted">${RL.dead}</div>${lineChart([{ pts: pts(C.base, 'deaths'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'deaths'), color: '#b3382c' }], mk, deadMax)}</div></div>`;
-    const led = R.ledger.map((l) => `<tr><td>${l.day}</td><td class="num">${ri(l.sick)}</td><td class="num">${ri(l.baseDead)}</td><td class="num">${ri(l.dead)}</td><td class="num">${ri(l.treated)}</td><td class="num">${ri(l.protected)}</td></tr>`).join('');
-    const cmp = R.compare;
-    const A = R.accounts;
-    const vsHtml = st.vs ? vsBlock(cur) : '';
-    return `
-      <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>${staffLine(spec.staffId)}
-      ${C.arrive != null && C.leave != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(C.leave - C.arrive)))}</p>` : ''}
-      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
-      <div class="sec">${U.report.summary}</div>
-      ${participationHtml(cur)}
-      ${R.journey?.accepted === false ? '' : `<p style="font-size:16px">${esc(R.summary)}</p><div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>`}
-      <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
-      ${event?.refs ? `<p>${esc(T.catalog[event.id].story)} ${wl('events:c:' + event.id, U.light.sources)}</p>` : ''}
-      ${modelSource ? `<p>${wl('events:' + modelSource, U.light.sources)}</p>` : ''}
-      ${vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette])}
-      <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => T.eras[cur.eraId].star_points[id])}
-      <details class="nums"><summary class="sec">${U.report.numbers}</summary>
+      const led = R.ledger.map((l) => `<tr><td>${l.day}</td><td class="num">${ri(l.sick)}</td><td class="num">${ri(l.baseDead)}</td><td class="num">${ri(l.dead)}</td><td class="num">${ri(l.treated)}</td><td class="num">${ri(l.protected)}</td></tr>`).join('');
+      const cmp = R.compare;
+      return `<details class="nums"><summary class="sec">${U.report.numbers}</summary>
       <div class="sec">${U.report.chart}</div>${legend}${charts}
       <div class="sec">${U.report.compare}</div>
       <table><thead><tr><th></th><th class="num">${U.report.mainline}</th><th class="num">${U.report.this_branch}</th></tr></thead><tbody>
@@ -691,19 +694,46 @@ export function createUI(D, ctx, DEV = false) {
       </tbody></table>
       <div class="sec">${U.report.ledger}</div>
       <div class="scroll"><table><thead><tr><th>${R.ledgerBySegment ? U.report.segment : U.report.day}</th><th class="num">${RL.sick}</th><th class="num">${RL.dead}·${U.report.mainline}</th><th class="num">${RL.dead}·${U.report.this_branch}</th><th class="num">${RL.treated}</th><th class="num">${RL.protected}</th></tr></thead><tbody>${led}</tbody></table></div>
-      </details>
+      </details>`;
+    };
+    // the body of the employee through the stay as LM reads it, a part of its own that config.ui.report_body turns on always, in the developer mode only, or never
+    const bodyHtml = () => {
+      const show = D.get('config.ui.report_body');
+      if (!R.body || !R.body.length || !(show === 'always' || (show === 'dev' && DEV))) return '';
+      const keys = Object.keys(U.report.body_readouts).filter((k) => R.body.some((x) => x[k] > 0));
+      const colors = D.get('config.ui.chart.body_colors');
+      const series = keys.map((k, i) => ({ pts: R.body.map((x) => [x.day, 100 * (x[k] || 0)]), color: colors[i % colors.length] }));
+      // the readouts run from 0 to 1 and are drawn as percentages, so the axis reads whole numbers
+      const ymax = 100 * Math.max(D.get('config.ui.chart.body_min_max'), ...R.body.flatMap((x) => keys.map((k) => x[k] || 0))) * D.get('config.ui.chart.headroom');
+      const legend = `<div class="legend">${keys.map((k, i) => `<span><i style="border-color:${colors[i % colors.length]}"></i>${esc(U.report.body_readouts[k])}</span>`).join('')}</div>`;
+      return `<div class="sec">${U.report.body}</div>${keys.length ? legend + lineChart(series, [], ymax) : ''}`;
+    };
+    const A = R.accounts;
+    const vsHtml = st.vs ? vsBlock(cur) : '';
+    const page = `
+      <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>${staffLine(spec.staffId)}
+      ${R.chart.arrive != null && R.chart.leave != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(R.chart.leave - R.chart.arrive)))}</p>` : ''}
+      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
+      ${accepted ? `<div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>` : ''}
+      ${woven ? '' : participationHtml(cur)}
+      <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
+      ${woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette])}
+      ${e.report.numbers === false ? '' : numbersHtml()}
+      ${bodyHtml()}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         <tr><td>${U.report.spent}</td><td class="num">${ri(A.cost)}</td></tr>
         <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
-        <tr><td>${U.report.energy_gain}</td><td class="num">+${ri(cur.paid.energy)}</td></tr>
+        <tr class="points"><td colspan="2">${pointsHtml(cur, (id) => T.eras[cur.eraId].star_points[id])}</td></tr>
         ${grownRow(cur.paid)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${A.restDays} ${U.report.days}</td></tr>
       </tbody></table>
       ${R.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
-      <div class="row" style="margin:16px 0"><button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button><button data-act="vs">${U.report.vs_prev}</button></div>${vsHtml}
-      <div class="sec">${U.report.footnotes}</div><p class="muted">† ${U.report.drilldown}</p>`;
+      <div class="row" style="margin:16px 0"><button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button><button data-act="vs">${U.report.vs_prev}</button></div>${vsHtml}`;
+    // the notes are numbered in the order they are first met on the page, so they are listed after the page is written
+    return page + (notes.length ? `<div class="sec">${U.report.footnotes}</div><ol class="notes">${notes.map((x) => `<li class="muted">${esc(x.text)}</li>`).join('')}</ol>` : '');
   }
 
   function participationHtml(cur) {

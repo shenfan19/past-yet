@@ -158,6 +158,26 @@ export function buildReport(D, E, res) {
   };
 }
 
+// How the employee got in and the scene of the trip are lines of the record too, told where they happened, so the report is one list in time order.
+// The identity lines fall on the days counted from arrival, and the scene, which has no date of its own, in the middle of the stay.
+export function weaveJourney(D, E, res, report, journey, vignette) {
+  const T = D.get('text');
+  const arrivedAt = res.branch.arrivedDay;
+  if (arrivedAt === null || !journey) return report;
+  const P = T.ui.report.participation;
+  const idText = journey.identity ? { ...T.identities[journey.identity], ...(T.eras[E.id]?.identities?.[journey.identity] || {}) } : { name: '', cover: '' };
+  const say = (key, day) => ({
+    t: arrivedAt + day, kind: 'journey', key, id: 'journey_' + key, tag: null, importance: 5, after: false, seg: 1,
+    text: P['line_' + key].replace('{date}', dateLabel(D, E, arrivedAt + day, true)).replace('{cover}', idText.cover).replace('{identity}', idText.name).replace(/{staff}/g, report.staff),
+  });
+  const lines = [say(journey.reached ? 'reached' : 'blocked', journey.approachDay)];
+  if (journey.reached) lines.push(say(journey.accepted ? 'accepted' : 'declined', journey.recognitionDay));
+  const stay = (res.branch.leftDay ?? arrivedAt) - arrivedAt;
+  if (vignette) lines.push({ t: arrivedAt + stay / 2, kind: 'vignette', key: 'vignette', id: 'vignette', tag: null, importance: 4, after: false, seg: null, text: vignette });
+  const all = [...report.timeline, ...lines].map((x, i) => [x, i]).sort((a, b) => a[0].t - b[0].t || a[1] - b[1]).map(([x]) => x);
+  return { ...report, timeline: all };
+}
+
 // Rows comparing two reports of the same era.
 export function diffRows(D, eraId, A, B) {
   const T = D.get('text');

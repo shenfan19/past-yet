@@ -555,12 +555,12 @@ ui:
     this: 这一份
     back: 返回
     summary: 摘要
-    timeline: 经历
+    timeline: 记录
     chart: 主时间线与这条分支
     ledger: 每日记录
-    accounts: 账目
+    accounts: 总结
     compare: 与史实对照
-    footnotes: 脚注
+    footnotes: 注
     again: 按这份派遣单再派一趟
     vs_prev: 与上一份对照
     vs_title: 与上一份同时空报告的差别
@@ -590,6 +590,10 @@ ui:
       declined: 历史第 {day} 天，{staff}想搭一把手，在场的人没有接这个话。
       involved: 此后{staff}开始做事。做成了多少，看下面的同步点。
       continued: 事情照旧往前走。{staff}只能在旁边看着，要亲手做的事一件也没做成。
+      line_reached: '{date}，{staff}以{identity}的样子在这一带落了脚。{cover}'
+      line_blocked: '{date}，{staff}想以{identity}的样子留下来，没能找到落脚的地方。'
+      line_accepted: '{date}，在场的人认下了{staff}，肯让这位{identity}搭一把手。'
+      line_declined: '{date}，{staff}想搭一把手，在场的人没有接这个话。'
     historical_stay: 实际停留：历史 {n} 天
     evacuation_text: 员工在历史第 {day} 天因健康恶化被自动送回事务所。这趟没有取得星数、时空能量或遗物。
     recalled: 召回
@@ -622,8 +626,25 @@ ui:
     line_filter:
       all: 全部
       history: 史实
-      travel: 穿越
-      star: ★
+    body: 身体读数，百分比
+    body_readouts:
+      injury_burden: 伤
+      mobility_loss: 行动
+      infection_burden: 感染
+      hydration_deficit: 缺水
+      energy_deficit: 体力
+      psychological_strain: 心理
+      loneliness: 孤独
+    note_model: 模型算出的数字
+    year_mark: '{y} 年'
+    depart: 事务所{day}。{text}
+    depart_plain: 事务所{day}，{staff}出发。
+    back_line: 事务所{day}。{text}
+    back_plain: 事务所{day}，{staff}回到事务所。
+    rest_line: '{staff}累了，要休息 {n} 天。'
+    rest_none: '{staff}不用休息，随时可以再出发。'
+    mood_up: 这一趟让{staff}心情好了些。
+    mood_down: 这一趟让{staff}心里不太好受。
     numbers: 数字与账本
   music:
     label: 音乐

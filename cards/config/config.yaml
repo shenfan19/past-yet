@@ -164,12 +164,14 @@ ui:
   # a return shows a note this many seconds before it fades; the reports wait on the home page
   toast_seconds: 8
   timeline_max: 9
+  # the body of the traveller through the stay as LM reads it, its own part of the report: always, dev for the developer mode only, or never
+  report_body: dev
   recent_reports: 8
   search_delay_ms: 30
   # every list shows a page of rows, the first size by default, and the player can pick a longer one
   page_sizes: [5, 10, 20, 50]
   box_h: {story: 300, pick_staff: 520, carry: 200, plots: 170}
-  chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1}
+  chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1, body_colors: ['#b3382c', '#2f4f6f', '#8a6a1f', '#5a7f3a', '#7a4f8a', '#3a7f7f', '#8a8272'], body_min_max: 0.05}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
 stars:

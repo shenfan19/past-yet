@@ -208,6 +208,8 @@ emitYaml('encyclopedia.yaml', {
   model_events: Object.fromEntries(modelEventCards.map((c) => [c.id, struct(c)])),
   stats: statCards.map((c) => ({ id: c.id, ...struct(c) })),
   ...(Object.keys(personImages).length ? { images: personImages } : {}),
+  // the sources of each fact a model leans on, by era and fact, so a line of history in a report can name where it comes from
+  fact_sources: Object.fromEntries(Object.keys(eraDir).filter((id) => isObj(moduleCard[eraModule[id]]?.facts)).map((id) => [id, Object.fromEntries(Object.entries(moduleCard[eraModule[id]].facts).map(([f, x]) => [f, x.sources || []]))])),
 });
 
 // ---------- text, one file per language ----------

@@ -2,7 +2,7 @@
 // simulation itself and reads only the plain fields listed in eraInfo. This local version calls the engine in the same page.
 // A server version would offer the same methods over fetch, with the yaml data and the engine on the server, and the page would only carry data.
 import * as sim from './sim.js';
-import { buildReport } from './narrate.js';
+import { buildReport, weaveJourney } from './narrate.js';
 import { draw } from './rng.js';
 import { evalScene, pointDays } from './scene_core.js';
 import { runStay } from './stay.js';
@@ -220,9 +220,13 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       const identity = identityOf(eraId, ev, spec.staffId);
       const journey = { ...participationFor(ev || { id: eraId, tier: 1 }, { ...spec, identity }, eraStay(eraId), health, sceneKit(spec.staffId, spec.items, spec.favor).stats), identity: identity.id };
       const res = sim.runDispatch(eras[eraId], D, { ...spec, journey, identity });
-      const report = buildReport(D, eras[eraId], res);
+      const vignetteId = journey.accepted ? vignetteFor(ev?.scene?.vignettes ?? info[eraId].raw.metadata.vignettes, spec.staffId) : null;
+      const vignetteText = vignetteId ? (D.get('text.catalog')[ev?.id]?.vignettes ?? D.get('text.eras')[eraId].vignettes)?.[vignetteId] : null;
+      const report = weaveJourney(D, eras[eraId], res, buildReport(D, eras[eraId], res), journey, vignetteText);
       report.journey = journey;
-      if (journey.accepted) report.vignette = vignetteFor(ev?.scene?.vignettes ?? info[eraId].raw.metadata.vignettes, spec.staffId);
+      report.vignette = vignetteId;
+      // the body of the traveller through the stay, as LM reads it, for the part of the report that shows it
+      report.body = health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null;
       if (!journey.accepted) report.outcomeName = D.get('text.ui.report.participation.title_missed');
       report.points = journey.accepted ? applyBonus(report.points, eras[eraId].starPoints.map((p) => p.kind), spec.staffId, spec.seed, eraId) : report.points.map((p) => ({ ...p, hit: false }));
       report.stars = report.points.filter((p) => p.hit).length;

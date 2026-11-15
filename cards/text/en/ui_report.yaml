@@ -8,12 +8,12 @@ ui:
     this: This one
     back: Back
     summary: Summary
-    timeline: What happened
+    timeline: Record
     chart: Main timeline and this branch
     ledger: Daily log
-    accounts: Accounts
+    accounts: In sum
     compare: Compared with history
-    footnotes: Footnotes
+    footnotes: Notes
     again: Send again with this setup
     vs_prev: Compare with previous
     vs_title: Difference from the previous report for the same era
@@ -43,6 +43,10 @@ ui:
       declined: On historical day {day}, {staff} offered to lend a hand, and nobody there took up the offer.
       involved: From then on {staff} had work to do. The objectives below show how much of it was done.
       continued: Things went on as they would have. {staff} could only watch, and did none of what has to be done by hand.
+      line_reached: '{date}: {staff} settles in nearby as {identity}. {cover}'
+      line_blocked: '{date}: {staff} tries to stay on as {identity} and finds no place to settle.'
+      line_accepted: '{date}: the people there take {staff} in and let this {identity} lend a hand.'
+      line_declined: '{date}: {staff} offers to lend a hand and nobody takes it up.'
     historical_stay: "Actual stay: {n} historical days"
     evacuation_text: "The traveller was automatically returned after their health deteriorated on historical day {day}. The trip earned no stars, time energy or relic."
     recalled: "Recalled"
@@ -72,5 +76,17 @@ ui:
     times: "This happened {n} times in all."
     segment: Month
     after_leave_note: What follows happened after {staff} had left.
-    line_filter: {all: All, history: History, travel: Crossing, star: ★}
+    line_filter: {all: All, history: History}
+    body: Body readouts, per cent
+    body_readouts: {injury_burden: Injury, mobility_loss: Mobility, infection_burden: Infection, hydration_deficit: Thirst, energy_deficit: Energy, psychological_strain: Strain, loneliness: Loneliness}
+    note_model: A number worked out by the model
+    year_mark: '{y}'
+    depart: 'Office, {day}. {text}'
+    depart_plain: 'Office, {day}: {staff} sets out.'
+    back_line: 'Office, {day}. {text}'
+    back_plain: 'Office, {day}: {staff} is back at the office.'
+    rest_line: '{staff} is tired and needs {n} days of rest.'
+    rest_none: '{staff} needs no rest and can set out again at once.'
+    mood_up: ' The trip has lifted the spirits of {staff}.'
+    mood_down: ' The trip has weighed on {staff}.'
     numbers: Numbers and ledger
