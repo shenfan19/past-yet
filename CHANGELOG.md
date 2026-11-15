@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.27, 2026-11-15
+
+- Tupaia keeps one Chinese spelling of his name throughout.
+
 ## 0.5.26, 2026-11-15
 
 - Tahiti 1769, Tupaia, is turned on as a scene: going aboard the Endeavour on 12 July 1769, sailing the next day, the chart of some 130 islands begun on 15 August, 74 named by him, and his death at Batavia late in 1770, with sync points for rolling the water casks to the boats, the wind and bearing on the day of sailing and writing down the island names. Its full model is still a draft.
