@@ -213,7 +213,7 @@ emitYaml('encyclopedia.yaml', {
   event_facts: Object.fromEntries(moduleNames.flatMap((m) => {
     const pc = moduleCard[m];
     if (!isObj(pc) || !isObj(pc.facts)) return [];
-    const facts = Object.entries(pc.facts).filter(([, f]) => isObj(f) && isObj(f.line) && f.date && f.level !== 'unused' && f.checked !== 'single' && (f.use || []).some((u) => u === 'story' || u === 'history')).map(([id, f]) => ({ id, date: String(f.date), sources: f.sources || [] }));
+    const facts = Object.entries(pc.facts).filter(([, f]) => isObj(f) && isObj(f.line) && f.date && f.level !== 'unused' && f.checked !== 'single' && (f.use || []).some((u) => u === 'story' || u === 'history')).map(([id, f]) => ({ id, date: String(f.date), sources: f.sources || [], ...(typeof f.stay_day === 'number' ? { stay_day: f.stay_day } : {}) }));
     if (!facts.length) return [];
     const events = [...Object.keys(embedded(m, 'events')), ...yamlFiles(`people/${m}/events`).map((f) => f.replace(/\.yaml$/, ''))];
     return events.map((e) => [e, { module: m, facts }]);

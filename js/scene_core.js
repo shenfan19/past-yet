@@ -36,7 +36,8 @@ export function sceneModel(D, ev) {
   };
   const stay = historicalDays(D, ev.stay || D.get('config.light.stay_by_tier.' + ev.tier));
   const share = D.get('config.scene.point_share.' + ev.scene.points.length);
-  const points = ev.scene.points.map((p, i) => ({ id: p.id, kind: p.kind, day: Math.max(1, Math.round(stay * share[i])), expr: expr(p.req) }));
+  // a point falls on its share of the stay, or on the day of the stay its card names, when the story ties it to a recorded day
+  const points = ev.scene.points.map((p, i) => ({ id: p.id, kind: p.kind, day: typeof p.day === 'number' ? Math.min(stay, Math.max(1, p.day)) : Math.max(1, Math.round(stay * share[i])), expr: expr(p.req) }));
   return { id: ev.id, stay, points, names: [...names], rolls };
 }
 

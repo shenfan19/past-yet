@@ -245,14 +245,17 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   if (EF) {
     for (const f of EF.facts) {
       const year = Number(f.date.slice(0, 4));
-      if (!(year >= ev.year)) continue;
       // only the line written for the record is told, never the text of the fact, which is for the wiki
       const text = D.get('enc_text.fact_lines')?.[EF.module]?.[f.id];
       if (!text) continue;
       const [, mm, dd] = f.date.split('-').map(Number);
-      const label = mm && dd ? T.date_day.replace('{m}', String(mm)).replace('{mn}', T.month_names[mm - 1]).replace('{d}', String(dd)) + R.light_fact_sep : '';
-      const after = year > ev.year;
-      const order = after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -400 + (mm || 0) * 31 + (dd || 0);
+      // a fact placed on a day of the stay carries its own date in its line, such as a date of the lunar calendar, and reads without a label
+      const onDay = typeof f.stay_day === 'number';
+      const label = !onDay && mm && dd ? T.date_day.replace('{m}', String(mm)).replace('{mn}', T.month_names[mm - 1]).replace('{d}', String(dd)) + R.light_fact_sep : '';
+      // a fact is placed on its day of the stay when it says so; otherwise a fact of an earlier year or of the year of the event comes before the arrival, in order,
+      // and a fact of a later year after the leaving
+      const after = onDay ? f.stay_day > stayDays : year > ev.year;
+      const order = onDay ? f.stay_day : after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -1e7 + (year - ev.year) * 400 + (mm || 0) * 31 + (dd || 0);
       lines.push({ t: order, year, text: label + text, tag: 'history', kind: 'fact', id: f.id, key: f.id, fact: f.id, after, why: { kind: 'date', expr: f.date + ' · ' + f.id } });
     }
   }
@@ -275,7 +278,8 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
       text: (p.hit ? R.point_hit : R.point_miss).replace('{day}', dayWord(day)).replace('{staff}', staff).replace('{text}', what),
       why: { kind: 'point', expr: (spec ? JSON.stringify(spec) : p.id) + (p.bonus ? ' · bonus' : '') } });
   });
-  const vignette = r.vignette && c.vignettes ? c.vignettes[r.vignette] : null;
+  // a scene names the employee with {staff}
+  const vignette = r.vignette && c.vignettes ? c.vignettes[r.vignette]?.split('{staff}').join(staff) : null;
   if (vignette) lines.push({ t: stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
     why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
   lines.push({ t: stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: R.light_leave.replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });

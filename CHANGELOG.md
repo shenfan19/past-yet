@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1, 2026-11-15
+
+- A small story can be told on the days of its stay. A fact may name `stay_day`, its day counted from the planned arrival, and a sync point may name `day`, so a story on the lunar calendar or with a known order of events reads in that order without converting dates.
+- Facts with a line from years before the event are told before the arrival, in order, as what led up to it.
+- A scene names the employee with `{staff}`.
+
 ## 0.5.0, 2026-11-15
 
 - A person card holds only what is true. The sentences that explained the card, the year of the game or what is made up were taken out of the stories, facts, articles and wiki cards of the people, and the descriptions of the relics no longer call them invented. What is made up stays on the side of the employee: identities, sync points, scenes, bystanders, events of the models.
