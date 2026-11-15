@@ -81,6 +81,19 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // two thirds of the stars or more is a success, any is a partial, none is missed
   const outcomeOf = (stars, n) => (stars * 3 >= 2 * n ? 'success' : stars > 0 ? 'partial' : 'missed');
   // how many stars a place can give: a scene has one per sync point, everything else three
+  // The stamp on a report is read from three things: how the employee came back, how many of the stars were won, and whether the branch came out
+  // different from the main timeline. The words are all kind, the least of them is to try again, so no trip is told it failed. See config.stamp.
+  function stampOf(d) {
+    const ST = D.get('config.stamp');
+    const back = d.recalled ? ST.recalled : d.evacuation ? ST.evacuated : (ST.returns[d.report?.outcomeId] || ST.default_return);
+    const max = maxStars(d.eraId);
+    const n = d.evacuation ? 0 : (d.stars || 0);
+    const won = n >= max ? 'full' : n > 0 ? 'part' : 'none';
+    const C = d.report?.compare;
+    const changed = !!C && C.deathsBranch < C.deathsBase - ST.changed_margin;
+    const key = back + '_' + won;
+    return changed && ST.changed[key] ? ST.changed[key] : key;
+  }
   const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => { const e = lightEvent(eventId); return officeStay(D, e.stay || L.stay_by_tier[e.tier]); };
@@ -196,7 +209,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     runLight, lightStay, lightKitAllowed, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
-    findOdds, findAntique,
+    findOdds, findAntique, stampOf,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],

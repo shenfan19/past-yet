@@ -26,9 +26,6 @@ metadata:
     calendar:
       month: 1
       day0: 27
-    drift:
-      early: 7
-      late: 7
     region: asia
     home:
       - china
@@ -593,6 +590,18 @@ variables:
     type: parameter
     value: 0.3
     source: game_assumption
+  site_by:
+    type: parameter
+    value: 158
+    unit: day
+    source: historical
+    note: July 1924, when Sun Yat-sen has Zou Lu choose Shipai. Fact f07. The map has to be handed in before it.
+  site_known:
+    type: parameter
+    value: 0.5
+    unit: fraction
+    source: game_assumption
+    note: How much of the sites the traveller has to have walked to draw a map worth handing in.
 equations:
   matters:
     priority: 80
@@ -860,6 +869,14 @@ milestones:
           reached_far: '1'
       - when: tag.frail == 1
         key: shipai_frail
+  site_offered:
+    when: arrived == 1 and sites >= site_known and day < site_by and (ring_now == 1 or tag.trait_bold == 1)
+    importance: 5
+    tag: branch
+    needs_traveler: true
+    variants:
+      - when: ring_now == 0
+        key: site_offered_bold
   last_seat:
     date: '1924-08-24'
     importance: 5
@@ -876,6 +893,7 @@ report:
   protected: sites_pct
   protected_scale: 1
   numbers: false
+  countdown: open_day
 log_importance:
   arrive: 5
   leave: 5
@@ -1083,10 +1101,17 @@ identities:
   - local_hand
   - far_guest
   - lodger
+epilogue:
+  - date: '1925-03-12'
+    fact: f13
+    key: sun_dies
+  - date: '1926-08-17'
+    fact: f16
+    key: renamed
 star_points:
-  - id: roster
-    kind: care
-    milestone: records_done
+  - id: site
+    kind: notice
+    milestone: site_offered
   - id: copy
     kind: trust
     milestone: copy_kept

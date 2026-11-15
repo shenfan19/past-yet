@@ -9992,13 +9992,13 @@ events:
     scene:
       points:
         - id: p1
-          kind: care
+          kind: notice
           req:
-            trait:
-              - kind
-              - patient
-              - attached
-              - quiet
+            any:
+              - trait:
+                  - bold
+              - stat:
+                  constitution: 6
         - id: p2
           kind: notice
           req:

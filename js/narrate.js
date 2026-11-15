@@ -16,16 +16,28 @@ export function fmt(tpl, vars, extra = {}) {
   });
 }
 
+// the date of a day of a model, on the real calendar from day 0 of the model, so a month has its own length
+export function dateOf(E, t) {
+  const cal = E.calendar;
+  const at = new Date(Date.UTC(2000, cal.month - 1, cal.day0));
+  at.setUTCFullYear(E.raw.metadata.era.year);
+  at.setUTCDate(at.getUTCDate() + Math.floor(t));
+  return at;
+}
+
+// the day of a model on which a date falls
+export function dayOfDate(E, iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const at = new Date(Date.UTC(2000, m - 1, d)); at.setUTCFullYear(y);
+  return Math.round((at - dateOf(E, 0)) / 86400000);
+}
+
 export function dateLabel(D, E, t, dayOnly = false) {
   const T = D.get('text');
   const hour = (t - Math.floor(t)) * 24;
   let part = T.day_parts[0].name;
   for (const p of T.day_parts) if (hour >= p.from) part = p.name;
-  // the date is counted on the real calendar from day 0 of the model, so a month has its own length
-  const cal = E.calendar;
-  const at = new Date(Date.UTC(2000, cal.month - 1, cal.day0));
-  at.setUTCFullYear(E.raw.metadata.era.year);
-  at.setUTCDate(at.getUTCDate() + Math.floor(t));
+  const at = dateOf(E, t);
   const month = at.getUTCMonth() + 1;
   const monthName = T.month_names[month - 1];
   const day = at.getUTCDate();
@@ -72,6 +84,8 @@ export function buildReport(D, E, res) {
   const ctxVars = { ...F };
   for (const [n, x] of Object.entries(res.base.final)) ctxVars['base_' + n.replace(/\./g, '_')] = x;
   Object.assign(ctxVars, res.score);
+  // a model may name in report.countdown the day it counts toward, such as the opening day, and the texts read how many days were left when the traveller went
+  if (E.report.countdown) ctxVars.countdown = Math.max(0, Math.round(F[E.report.countdown] - (res.branch.leftDay ?? F[E.report.countdown])));
   const common = { staff, era: ET.short, kit: kitText(D, spec.items, E.id) };
 
   // timeline. A line belongs to a segment of the stay, one office day long, and a recorded date that falls after the traveller has left is marked as after.
@@ -87,7 +101,7 @@ export function buildReport(D, E, res) {
     if (e.kind === 'arrive') {
       // how far the crossing missed the planned day, in whole days, told after the line of arrival
       const off = Math.round(e.t - E.vars[E.roles.arrive].value);
-      text = fmt(Object.values(spec.items).some((n) => n > 0) ? T.generic.arrive : T.generic.arrive_empty, vars, extra) + (off ? fmt(T.generic[off < 0 ? 'drift_early' : 'drift_late'], vars, { ...extra, n: String(Math.abs(off)) }) : '');
+      text = fmt(T.generic.arrive, vars, extra) + (off ? fmt(T.generic[off < 0 ? 'drift_early' : 'drift_late'], vars, { ...extra, n: String(Math.abs(off)) }) : '');
     }
     else if (e.kind === 'leave') text = fmt(T.generic.leave, vars, extra);
     else if (e.kind === 'recall') text = fmt(T.generic[e.key], vars, extra);
@@ -97,7 +111,7 @@ export function buildReport(D, E, res) {
     const source = e.source || (tag ? E.tagSource[tag] : null);
     const after = leftAt !== null && e.t >= leftAt && e.kind !== 'leave' && e.kind !== 'recall';
     const seg = arrivedAt === null || after ? null : Math.min(Math.max(1, Math.ceil(stayDaysOf(res) / SEG)), Math.max(1, Math.floor((e.t - Math.floor(arrivedAt)) / SEG) + 1));
-    return { t: e.t, text, tag, source, importance: e.importance, kind: e.kind, id: e.id, key: e.key || e.id, fact: e.fact || null, after, seg, own: e.kind === 'milestone' && personal(e.key || e.id) !== undefined };
+    return { t: e.t, year: dateOf(E, e.t).getUTCFullYear(), text, tag, source, importance: e.importance, kind: e.kind, id: e.id, key: e.key || e.id, fact: e.fact || null, after, seg, own: e.kind === 'milestone' && personal(e.key || e.id) !== undefined };
   });
   // an event that comes again and reads the same is told once, where it first happened, with how many times it came
   {
@@ -119,6 +133,12 @@ export function buildReport(D, E, res) {
     const ranked = [...entries].sort((a, b) => b.importance - a.importance || a.t - b.t).slice(0, max);
     const set = new Set(ranked);
     kept = entries.filter((e) => set.has(e) || e.star);
+  }
+  // The epilogue of a model is what is recorded after the model ends, months or years later, each a dated line of history on a fact of the person.
+  // It is told plainly at the end of the record, after the traveller has gone, and the simulation does not run to it.
+  for (const ep of E.raw.epilogue || []) {
+    const t = dayOfDate(E, ep.date);
+    kept.push({ t, year: Number(ep.date.slice(0, 4)), text: fmt(ET.milestones[ep.key], {}, { ...common, date: dateLabel(D, E, t, true) }), tag: 'history', source: null, importance: 5, kind: 'milestone', id: ep.key, key: ep.key, fact: ep.fact || null, after: true, seg: null, own: false });
   }
 
   // outcome, summary, quote

@@ -66,6 +66,8 @@ function fresh() {
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
     secretaryLast: null,
+    // the office keeps a calendar: day 0 is the real date this game began, so the days of the office read as dates
+    calendarStart: new Date().toISOString().slice(0, 10),
     // places that have had a trip come back, their names are shown on the map
     visited: [],
     // the best star count of each place, time energy is paid only for an improvement on it
@@ -116,7 +118,7 @@ function load() {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const S = JSON.parse(raw);
-      if (S.version === VERSION && fits(S)) return updateUnfinishedCrew(S);
+      if (S.version === VERSION && fits(S)) { S.calendarStart ||= new Date().toISOString().slice(0, 10); return updateUnfinishedCrew(S); }
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);

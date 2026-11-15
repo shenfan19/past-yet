@@ -1,8 +1,8 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.1.0
-  released: '2026-11-09'
+  version: 0.2.0
+  released: '2026-11-15'
   card_authors: [AI, Fan Shen]
   links:
     author: https://github.com/shenfan19
@@ -181,12 +181,23 @@ stars:
   energy_base: {broad_street_1854: 60, vienna_1847: 80, scutari_1855: 80, finlay_havana_1881: 80, jenner_berkeley_1796: 80, seacole_balaklava_1855: 80, wegener_greenland_1930: 80}
   # the share of the base paid in total at a star count, so each star above the best pays the difference
   energy_share: {3: {0: 0, 1: 0.25, 2: 0.5, 3: 1}, 5: {0: 0, 1: 0.15, 2: 0.3, 3: 0.5, 4: 0.75, 5: 1}}
+# The stamp on a report, from how the trip came back, the stars won, and whether the branch differs from the main timeline.
+# returns maps an ending of a model to a way of coming back: normal, early or rough; a recall is early and an evacuation rough.
+# changed gives a kinder stamp where no star was won but the branch still came out different by more than changed_margin.
+stamp:
+  default_return: normal
+  returns: {gave_up: early, near_death: rough, scramble: rough}
+  recalled: early
+  evacuated: rough
+  changed_margin: 0.5
+  changed: {normal_none: normal_none_changed, early_none: early_none_changed}
 travel:
   max_office_days: 7
   history_days_per_office_day: 30
-  # The crossing is not exact. A trip arrives up to early historical days before the planned day or up to late days after it, drawn from the seed of the trip.
-  # A model may set its own in metadata.era.drift. A trip never arrives before day 0 of its model.
-  drift: {early: 7, late: 7}
+  # The crossing is not exact. A trip arrives up to a share of its stay before or after the planned day, drawn from the seed of the trip, at least min_days
+  # and at most max_days, so a short story is not missed and a long one is not thrown off by weeks. A model may set its own in metadata.era.drift
+  # as {early, late} in historical days. A trip never arrives before day 0 of its model.
+  drift: {share: 0.1, min_days: 1, max_days: 10}
 light:
   stay_by_tier: {1: 4, 2: 6, 3: 7}
   difficulty: {base: 0.32, per_tier: 0.1}

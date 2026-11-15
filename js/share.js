@@ -26,7 +26,7 @@ export function createShare(X) {
     };
     if (R.journey?.accepted === false) return {
       name: d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name,
-      outcome: U.report.participation.title_missed,
+      outcome: U.report.stamp[ctx.backend.stampOf(d)],
       text: [U.report.participation.share_missed.replace('{staff}', who)],
       points: [], hook: hookOf(index),
     };
@@ -36,7 +36,7 @@ export function createShare(X) {
       const o = R.outcomeId;
       return {
         name: c.name,
-        outcome: U.light.outcome[o],
+        outcome: U.report.stamp[ctx.backend.stampOf(d)],
         text: [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure), c.story],
         points: R.points.map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
         hook: hookOf(index),
@@ -44,7 +44,7 @@ export function createShare(X) {
     }
     return {
       name: T.eras[d.eraId].name,
-      outcome: R.outcomeName,
+      outcome: U.report.stamp[ctx.backend.stampOf(d)],
       text: [R.summary, U.fmt.quote.replace('{x}', R.quote) + ' ' + U.fmt.dash + R.staff],
       chart: R.chart,
       labels: { ...U.report, ...(T.eras[d.eraId].labels || {}) },

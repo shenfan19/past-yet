@@ -1,7 +1,7 @@
 # Guangzhou, 1924. A founding: three schools are to become one university, and in the same hall a book is being made from the Sunday lectures.
 # This file is laid over cards/templates/founding.lm.yaml. It holds what is its own: the place, the recorded dates, the moments of the traveller, the stars and the identities.
 # Day 0 is 27 January 1924, the first of the Sunday lectures. The traveller is meant to arrive on day 8, 4 February, the day the order to join the three schools is given,
-# and the crossing may bring them up to seven days early or late. One office day is thirty historical days, so a stay of seven ends near 1 September.
+# and the crossing may bring them a few days early or late, see travel.drift in the config. One office day is thirty historical days, so a stay of seven ends near 1 September.
 
 template: founding
 
@@ -16,8 +16,6 @@ metadata:
     place: guangdong_university_office
     protagonist: sun
     calendar: {month: 1, day0: 27}
-    # the crossing is not exact: a trip arrives up to this many historical days before or after arrive_day, drawn from its seed
-    drift: {early: 7, late: 7}
     region: asia
     home: [china]
     near: []
@@ -32,6 +30,8 @@ identities: [local_scholar, pen, wanderer, maker, local_hand, far_guest, lodger]
 variables:
   arrive_day: {value: 8.25, note: "4 February 1924, the day of the order. Fact f01."}
   open_day: {value: 236, note: "19 September 1924, classes begin. Fact f08."}
+  site_by: {type: parameter, value: 158, unit: day, source: historical, note: "July 1924, when Sun Yat-sen has Zou Lu choose Shipai. Fact f07. The map has to be handed in before it."}
+  site_known: {type: parameter, value: 0.5, unit: fraction, source: game_assumption, note: "How much of the sites the traveller has to have walked to draw a map worth handing in."}
   early_day: {value: 36, note: "3 March 1924, the first preparatory meeting. Fact f04."}
   horizon_days: {value: 298}
 
@@ -101,6 +101,16 @@ milestones:
     variants:
       - {when: "sites >= 1", key: shipai_reached, effects: {reached_far: "1"}}
       - {when: "tag.frail == 1", key: shipai_frail}
+  # The first star. Nothing is recorded of who walked the sites before the choice of Shipai, so the branch may hold this deed of the traveller:
+  # once the office takes them in and they know the sites, they hand a map of the sites and of the open ground at Shipai to a clerk.
+  # A bold employee does not wait to be asked in and stops a clerk at the door. Whether the map counted is not said; the choice stays as it is recorded.
+  site_offered:
+    when: "arrived == 1 and sites >= site_known and day < site_by and (ring_now == 1 or tag.trait_bold == 1)"
+    importance: 5
+    tag: branch
+    needs_traveler: true
+    variants:
+      - {when: "ring_now == 0", key: site_offered_bold}
   last_seat:
     date: "1924-08-24"
     importance: 5
@@ -109,8 +119,13 @@ milestones:
     variants:
       - {when: "tag.class_food == 1 or tag.class_trade == 1", key: last_stall}
 
-# Three sync points. Each is a deed of the traveller: the records in one book before the first meeting, a copy of the book of the lectures to take home, and being there for the last lecture.
+# What is recorded long after the stay, told at the end of the record as plain dated lines. The model does not run to these days.
+epilogue:
+  - {date: "1925-03-12", fact: f13, key: sun_dies}
+  - {date: "1926-08-17", fact: f16, key: renamed}
+
+# Three sync points. Each is a deed of the traveller: a map of the sites handed in before the choice of Shipai, a copy of the book of the lectures to take home, and being there for the last lecture.
 star_points:
-  - {id: roster, kind: care, milestone: records_done}
+  - {id: site, kind: notice, milestone: site_offered}
   - {id: copy, kind: trust, milestone: copy_kept}
   - {id: last, kind: hold, milestone: last_seat}

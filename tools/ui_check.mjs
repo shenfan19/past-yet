@@ -698,7 +698,8 @@ try {
   await tool('about');
   ok('about page has the disclaimer', (await page.locator('.about h3').allInnerTexts()).includes('Disclaimer'));
   ok('about page has jump links and no second title', (await page.locator('.about .jumps a').count()) >= 5 && (await page.locator('.about h2').count()) === 0);
-  ok('about release shows the date only', (await page.locator('.about .muted').first().innerText()).includes('2026-11-09') && !(await page.locator('.about .muted').first().innerText()).includes('T00'));
+  const released = await page.evaluate(() => window.__game.D.get('config.meta.released'));
+  ok('about release shows the date only', (await page.locator('.about .muted').first().innerText()).includes(released) && !(await page.locator('.about .muted').first().innerText()).includes('T00'));
   ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
   await tool('wiki');
   await page.click('.wcat[data-cat=people] summary');

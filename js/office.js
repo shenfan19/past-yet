@@ -68,7 +68,7 @@ export function createOffice(X) {
     s.seq += 1;
     if (s.seq === 1) startClock();
     const stay = ctx.backend.eraStay(eraId);
-    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: ST.energy_base[eraId], startDay: day(), presentYear: new Date().getFullYear(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
+    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -89,7 +89,7 @@ export function createOffice(X) {
     const d = {
       id: 'd' + s.seq, eraId: eventId, light: true, stars: r.stars, max: ctx.backend.maxStars(eventId), baseEnergy: r.energyBase, spec: { seed, staffId, items: kit, plots: [], favor: s.staff[staffId].favor },
       report: { outcomeId: r.outcome, journey: r.journey, found: r.found || null, extraFavor: r.extraFavor || 0, vignette: r.vignette, points: Array.isArray(r.points) && typeof r.points[0] === 'boolean' ? r.points.map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })) : r.points, accounts: { cost: 0, funds: r.funds, energy: r.energy, restDays: r.restDays, lives: 0 } },
-      startDay: day(), presentYear: new Date().getFullYear(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
+      startDay: day(), readyDay: day() + r.stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, restDays: r.restDays, antique },
     };
     s.dispatches.push(d);
     ctx.save();
@@ -103,7 +103,7 @@ export function createOffice(X) {
     if (s.seq === 1) startClock();
     const d = { id: 'd' + s.seq, eraId, light, spec, stars: 0, baseEnergy: 0, evacuation: result.evacuation,
       report: { outcomeId: 'missed', points: [], accounts: { lives: 0 } },
-      startDay: day(), presentYear: new Date().getFullYear(), readyDay: day() + result.stay, claimed: false, notified: false, auto: !!opts.auto,
+      startDay: day(), readyDay: day() + result.stay, claimed: false, notified: false, auto: !!opts.auto,
       payout: { energy: 0, restDays: result.restDays, antique: null } };
     s.dispatches.push(d);
     ctx.save();
@@ -132,7 +132,7 @@ export function createOffice(X) {
     const pts = d.report.points || [];
     return {
       id: d.id, place: d.eraId, light: !!d.light, staffId: d.spec.staffId, day: Math.floor(d.startDay), back: Math.floor(d.recalled ? d.recallDay : d.readyDay),
-      stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, energy: d.paid?.energy || 0,
+      stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, stamp: ctx.backend.stampOf(d), energy: d.paid?.energy || 0,
       antique: d.paid?.antique || null, recalled: !!d.recalled, evacuated: !!d.evacuation && !d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
       redeemed: pts.some((p) => p.redeem && p.hit), archived: false,
     };

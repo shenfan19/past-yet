@@ -2,8 +2,8 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.1.0
-  released: '2026-11-09'
+  version: 0.2.0
+  released: '2026-11-15'
   card_authors:
     - AI
     - Fan Shen
@@ -277,12 +277,25 @@ stars:
       '3': 0.5
       '4': 0.75
       '5': 1
+stamp:
+  default_return: normal
+  returns:
+    gave_up: early
+    near_death: rough
+    scramble: rough
+  recalled: early
+  evacuated: rough
+  changed_margin: 0.5
+  changed:
+    normal_none: normal_none_changed
+    early_none: early_none_changed
 travel:
   max_office_days: 7
   history_days_per_office_day: 30
   drift:
-    early: 7
-    late: 7
+    share: 0.1
+    min_days: 1
+    max_days: 10
 light:
   stay_by_tier:
     '1': 4

@@ -110,6 +110,9 @@ export function createUI(D, ctx, DEV = false) {
   const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && ctx.backend.lightKitAllowed(st.map.cat, k)));
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
+  // the calendar of the office: day 0 is the date the game began, see calendarStart in main.js
+  const officeDate = (day) => { const at = new Date((ctx.S().calendarStart || new Date().toISOString().slice(0, 10)) + 'T00:00:00Z'); at.setUTCDate(at.getUTCDate() + Math.floor(day)); return at; };
+  const officeDay = (day) => { const at = officeDate(day); return T.date_day.replace('{m}', String(at.getUTCMonth() + 1)).replace('{mn}', T.month_names[at.getUTCMonth()]).replace('{d}', String(at.getUTCDate())); };
   const tip = (text) => ` data-tip="${esc(text)}"`;
   const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
   // What a sync point asks for, said from its requirement, so the hint can never differ from the rule. All the keys of a requirement must hold, any lists alternatives.
@@ -176,7 +179,8 @@ export function createUI(D, ctx, DEV = false) {
   const protagonistHtml = (d) => { const p = protagonistOf(d); return p.link ? wl(p.link, p.name) : esc(p.name); };
   const staffLine = (id) => `<div class="muted small">${U.report.staff_line.replace('{x}', staffLink(id))}</div>`;
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
-  const outcomeOf = (d) => (d.recalled ? U.report.recalled : d.evacuation ? U.report.evacuated : d.light ? U.light.outcome[d.report.outcomeId] : d.report.outcomeName);
+  // how a trip ended is told by its stamp, see stampOf in backend.js
+  const outcomeOf = (d) => U.report.stamp[ctx.backend.stampOf(d)];
   // a plain running count of the trips sent out, not a reference to anything
   const livesOf = (d) => (d.recalled || d.evacuation || d.light ? '—' : r1(d.report.accounts.lives));
   const recordRow = (d, withStaff) => `<tr><td>${withStaff ? staffLink(d.spec.staffId) : esc(placeShort(d))}</td><td>${esc(outcomeOf(d))}</td><td class="num">${livesOf(d)}</td><td><button class="ghost" data-act="open" data-id="${d.id}">${U.report.view}</button></td></tr>`;
@@ -274,7 +278,7 @@ export function createUI(D, ctx, DEV = false) {
     const al = office.alerts();
     // a ring that fills once a day, so the passing of time can be seen at any speed
     const frac = c.day - Math.floor(c.day), circ = 2 * Math.PI * 7;
-    setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg>${esc(U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}`);
+    setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg><span title="${esc(U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}">${esc(T.year_day.replace('{y}', String(officeDate(c.day).getUTCFullYear())).replace('{date}', officeDay(c.day)))}</span>`);
     const speeds = C.speeds.map((sp, i) => `<option value="${i}" ${c.speed === sp ? 'selected' : ''}>${sp === 0 ? '⏸ ' + U.clock.pause : sp + '×'}</option>`).join('');
     setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label></span>`);
     const first = ctx.S().seq === 0 && c.speed === 0;
@@ -444,7 +448,7 @@ export function createUI(D, ctx, DEV = false) {
     const kept = new Set(ctx.S().dispatches.map((d) => d.id));
     const body = trips.length
       ? `<ul class="trips">${trips.map((t) => {
-        const oc = t.recalled ? U.report.recalled : t.evacuated ? U.report.evacuated : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
+        const oc = t.stamp ? U.report.stamp[t.stamp] : t.recalled ? U.report.recalled : t.evacuated ? U.report.evacuated : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
         return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place)}${t.redeemed ? ' <span class="chip">♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
       }).join('')}</ul>`
@@ -586,7 +590,7 @@ export function createUI(D, ctx, DEV = false) {
     const summary = U.light.summary[o].replace('{staff}', staffName(D, cur.spec.staffId)).replace('{place}', c.place).replace('{figure}', c.figure);
     return `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2>${ev.scene?.vignettes ? '' : `<span class="stamp">${esc(U.light.outcome[o])}</span>`}</div>${staffLine(cur.spec.staffId)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
       ${cur.report.journey?.accepted === false || ev.scene?.vignettes ? '' : `<p style="font-size:16px">${esc(summary)}</p>`}
       ${ev.refs ? `<p>${esc(c.story)} ${wl('events:c:' + ev.id, U.light.sources)}</p>` : `<div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>`}
       ${participationHtml(cur)}
@@ -607,7 +611,7 @@ export function createUI(D, ctx, DEV = false) {
     const P = cur.paid;
     return `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(placeName(cur))}</h2><span class="stamp">${U.report.recalled}</span></div>${staffLine(cur.spec.staffId)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
       <p style="font-size:16px">${U.report.recalled_text.replace('{day}', String(Math.floor(cur.recallDay) + 1)).replace('{p}', String(Math.round(P.share * 100)))}</p>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
@@ -622,7 +626,7 @@ export function createUI(D, ctx, DEV = false) {
     if (!cur) return `<p class="muted">${U.report.none}</p>`;
     if (cur.recalled) return recalledHtml(cur);
     if (cur.evacuation) return `<p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(U.report.evacuated)}</span></div>${staffLine(cur.spec.staffId)}
+      <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
       <p>${esc(U.report.evacuation_text.replace('{day}', String(cur.evacuation.day)))}</p>
       <p>${esc(U.report.rest)} ${cur.paid.restDays} ${esc(U.report.days)}</p>`;
     if (cur.light) return lightHtml(cur);
@@ -656,15 +660,20 @@ export function createUI(D, ctx, DEV = false) {
     const summaryNote = accepted ? sup([noteOf('model', U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source))]) : '';
     // The record opens in the year of today with the day of the office and how the crossing began, turns to the year of the place,
     // and comes back to the year of today with the day of return, how it ended, and the rest and the mood the trip leaves behind.
-    const nowYear = cur.presentYear ?? new Date().getFullYear();
+    const nowYear = officeDate(cur.startDay).getUTCFullYear();
+    const backYear = officeDate(cur.readyDay).getUTCFullYear();
     const yearLine = (y) => `<li class="year"><div>${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
-    const officeDay = (d) => U.clock.day.replace('{n}', String(Math.floor(d) + 1));
-    const story = event ? T.catalog[event.id].story : null;
-    const departLine = `<li class="travel"><div>${esc(story ? U.report.depart.replace('{day}', officeDay(cur.startDay)).replace('{text}', story) : U.report.depart_plain.replace('{day}', officeDay(cur.startDay)).replace('{staff}', R.staff))}${event?.refs ? ' ' + wl('events:c:' + event.id, U.light.sources) : ''}${modelSource ? ' ' + wl('events:' + modelSource, U.light.sources) : ''}</div></li>`;
-    const backLine = `<li class="travel"><div>${esc(accepted ? U.report.back_line.replace('{day}', officeDay(cur.readyDay)).replace('{text}', R.summary) : U.report.back_plain.replace('{day}', officeDay(cur.readyDay)).replace('{staff}', R.staff))}${summaryNote}</div></li>`;
+    // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
+    const anchor = anchorOf(cur.eraId);
+    const via = anchor && D.get('antiques.antiques.' + anchor).kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
+    const placeWord = event ? T.catalog[event.id].place : T.eras[cur.eraId].short;
+    const departLine = `<li class="travel"><div>${esc(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', R.staff).replace('{anchor}', anchor ? T.antiques[anchor].name : '').replace('{year}', String(e.raw.metadata.era.year)).replace('{place}', placeWord))}${event?.refs ? ' ' + wl('events:c:' + event.id, U.light.sources) : ''}${modelSource ? ' ' + wl('events:' + modelSource, U.light.sources) : ''}</div></li>`;
+    const backLine = `<li class="travel"><div>${esc(accepted ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', R.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', R.staff))}${summaryNote}</div></li>`;
     const fd = cur.favorDelta || 0;
     const restLine = `<li class="travel"><div>${esc((R.accounts.restDays > 0 ? U.report.rest_line.replace('{n}', String(R.accounts.restDays)) : U.report.rest_none).replace(/\{staff\}/g, R.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, R.staff))}</div></li>`;
-    const tl = yearLine(nowYear) + departLine + yearLine(e.raw.metadata.era.year) + R.timeline.map((t) => tlLine(t)).join('') + yearLine(nowYear) + backLine + restLine;
+    let lastYear = e.raw.metadata.era.year;
+    const record = R.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
+    const tl = yearLine(nowYear) + departLine + yearLine(e.raw.metadata.era.year) + record + yearLine(backYear) + backLine + restLine;
     const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
     const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', R.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
     // a report written before the lines of getting in were part of the record still shows them on their own
@@ -712,10 +721,9 @@ export function createUI(D, ctx, DEV = false) {
     const vsHtml = st.vs ? vsBlock(cur) : '';
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(R.outcomeName)}</span></div>${staffLine(spec.staffId)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(T.eras[cur.eraId].name)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${accepted ? '' : staffLine(spec.staffId)}
       ${R.chart.arrive != null && R.chart.leave != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(R.chart.leave - R.chart.arrive)))}</p>` : ''}
-      <div class="muted">${DEV ? U.report.seed + ' ' + spec.seed + ' · ' : ''}${esc(kitText(D, spec.items, cur.eraId) || '—')}${(spec.plots || []).length ? ' · ' + spec.plots.map((p) => esc(T.eras[cur.eraId].plots[p].name)).join(SEP) : ''}</div>
-      ${accepted ? `<div class="quote">${U.fmt.quote.replace('{x}', esc(R.quote))}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(R.staff)}</div></div>` : ''}
+      ${accepted ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(R.quote))} <span class="muted">${U.fmt.dash}${wl('staff:' + spec.staffId, R.staff)}</span></p>` : ''}
       ${woven ? '' : participationHtml(cur)}
       <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
       ${woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette])}
@@ -755,7 +763,7 @@ export function createUI(D, ctx, DEV = false) {
     return `<div class="card"><h3>${U.report.vs_title}</h3><table><thead><tr><th></th><th class="num">${U.report.prev}</th><th class="num">${U.report.this}</th></tr></thead><tbody>${rows}
       <tr><td>${U.report.deaths}</td><td class="num">${ri(older.report.compare.deathsBranch)}</td><td class="num">${ri(cur.report.compare.deathsBranch)} ${dl(cur.report.compare.deathsBranch, older.report.compare.deathsBranch)}</td></tr>
       <tr><td>${esc(T.eras[cur.eraId].handle_label)}</td><td class="num">${esc(older.report.compare.handleBranch)}</td><td class="num">${esc(cur.report.compare.handleBranch)}</td></tr>
-      <tr><td>${esc(older.report.outcomeName)}</td><td class="num">→</td><td class="num">${esc(cur.report.outcomeName)}</td></tr></tbody></table></div>`;
+      <tr><td>${esc(outcomeOf(older))}</td><td class="num">→</td><td class="num">${esc(outcomeOf(cur))}</td></tr></tbody></table></div>`;
   }
 
   // ---------- about ----------

@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Prototype. Two simulated eras (London 1854, Vienna 1847), fifty employees with their own stories, a world map of 179 catalogue events, antiques found on trips and anchored to open places, item allocation, a search for a good item set, an automatic mode, music, a share card and English and Chinese text. Historical facts are placeholders until their sources are checked. How it all works is in [docs/README_design.md](docs/README_design.md).
+Version 0.2.0. The framework for stories is in place: people as modules with fact sheets, templates for models, recorded dates, identities for the employees, a calendar, and reports told as one record. The stories are still being written. Three simulated places are published, Guangzhou 1924, London 1854 and Vienna 1847, and Guangzhou 1924 is the first built on the new framework. There are fifty employees with their own stories, a world map of catalogue events, antiques found on trips and anchored to open places, an automatic mode, music, a share card and English and Chinese text. Facts outside the fact sheets are placeholders until their sources are checked. What changed is in [CHANGELOG.md](CHANGELOG.md), how it all works in [docs/README_design.md](docs/README_design.md), and how to write a story in [cards/README.md](cards/README.md).
 
 ## Run
 

@@ -292,10 +292,13 @@ function initVars(E, D, spec, withTraveler) {
   for (const [n, d] of Object.entries(E.vars)) if (d.from_staff) v[n] = stats[d.from_staff];
   for (const [n, d] of Object.entries(E.vars)) if (d.from_spec) v[n] = spec[d.from_spec] ?? d.value;
   v[E.roles.stay] = historicalDays(D, v[E.roles.stay]);
-  // The crossing is not exact: the day of arrival moves by up to drift.early days before the planned day and drift.late days after it,
+  // The crossing is not exact: the day of arrival moves by up to a share of the stay before or after the planned day, between min_days and max_days of config.travel.drift,
+  // or by the early and late days a model sets in metadata.era.drift,
   // drawn from the seed, in whole days, and never before day 0 of the model.
   // The horizon covers the latest arrival the drift allows, so the run with the traveller and the one without have the same length.
-  const DR = E.raw.metadata?.era?.drift ?? D.get('config.travel.drift');
+  const TD = D.get('config.travel.drift');
+  const span = Math.min(TD.max_days, Math.max(TD.min_days, Math.round(TD.share * v[E.roles.stay])));
+  const DR = E.raw.metadata?.era?.drift ?? { early: span, late: span };
   const planned = v[E.roles.arrive];
   const lo = -Math.min(DR.early, Math.floor(planned));
   if (withTraveler) v[E.roles.arrive] = planned + Math.round(lo + draw(spec.seed, 'arrival_drift', 0) * (DR.late - lo));

@@ -16,7 +16,7 @@ events:
     refs: [sysu_founding_museum, sysu_news_lectures]
     scene:
       points:
-        - {id: p1, kind: care, req: {"trait":["kind","patient","attached","quiet"]}}
+        - {id: p1, kind: notice, req: {"any":[{"trait":["bold"]},{"stat":{"constitution":6}}]}}
         - {id: p2, kind: notice, req: {"stat":{"wit":5}}}
         - {id: p3, kind: hold, req: {"any":[{"trait":["patient","methodical","vigil"]},{"stat":{"will":6}}]}}
       vignettes:
@@ -32,7 +32,7 @@ events:
         relic: "The statue of Sun Yat-sen"
         relic_desc: "The statue on the campus of Sun Yat-sen University. It is the way to Guangzhou in 1924 and is not an antique, so it cannot be sold."
         points:
-          p1: "Copy the records of the three schools into one book"
+          p1: "Hand in a map of the sites before the new campus is chosen"
           p2: "Bring home a copy of the book of the lectures"
           p3: "Be there for the last lecture"
         vignettes:
@@ -47,7 +47,7 @@ events:
         relic: "孙中山铜像"
         relic_desc: "中山大学校园里的孙中山铜像。它是通往 1924 年广州的穿越媒介，不是古董，不能出售。"
         points:
-          p1: "把三所学校的名册抄成一本"
+          p1: "选址之前，把走熟的校址画成图交给筹备处"
           p2: "带回一本演讲印成的书"
           p3: "待到最后一讲"
         vignettes:
@@ -306,11 +306,13 @@ era_text:
       asked_the_way: '{date}: A new student with a letter asks {staff} the way to an office. {staff} does not know either, and they look for it together for half the morning.'
       asked_the_way_shown: '{date}: A new student with a letter asks {staff} the way to an office. {staff} shows it on the sheet, and the student thanks them and goes off with the sheet in hand.'
     star_points:
-      roster: 'The records of the three schools are one book before the first preparatory meeting'
+      site: 'A map of the sites handed to the office before the new campus is chosen'
       copy: 'Bring home a copy of the book of the lectures'
       last: 'Be there for the last lecture'
     milestones:
       order_given: '{date}: Sun Yat-sen orders the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and names Zou Lu to prepare it. Nobody in the city can yet say where this university is.'
+      sun_dies: '{date}: Sun Yat-sen dies in Beijing.'
+      renamed: '{date}: The National Government orders National Guangdong University renamed National Sun Yat-sen University.'
       lecture_jan27: '{date}: A Sunday. Sun Yat-sen gives the first of his lectures on the Three Principles of the People in the hall of the Higher Normal School.'
       lecture_feb17: '{date}: A Sunday. Sun Yat-sen lectures in the hall of the Higher Normal School. The series began on 27 January and this is the fourth lecture. At the side of the platform a man writes without looking up. That is Huang Changgu, who is there for every one.'
       zou_takes_up: '{date}: Zou Lu takes up the preparation.'
@@ -332,6 +334,8 @@ era_text:
       records_begun: '{date}: {staff} begins to copy the records of the three schools into one book.'
       records_read_aloud: '{date}: Nobody can read the hand of {staff}. So {staff} reads the names out and a clerk writes, and the three records begin to become one.'
       records_shut: '{date}: Copying the records takes reading, and {staff} has no part in it, but comes to know the gatekeepers of all three schools. To learn who is where, it is quicker to ask {staff} than to turn the pages.'
+      site_offered: '{date}: Taken in by the office by now, {staff} draws the sites they have walked on one sheet, with the open ground at Shipai east of the city, and hands it to a clerk. In this branch the sheet lies with the papers on the new campus.'
+      site_offered_bold: '{date}: Not yet asked inside, {staff} stops a clerk at the door of the office, says the open ground at Shipai east of the city is wide and the roads reach it, and goes over the sheet of the sites. The clerk keeps the sheet.'
       records_done: '{date}: The records of the three schools are one book, before the first preparatory meeting.'
       records_late: '{date}: The records of the three schools are one book. The first preparatory meeting has already been held.'
       sites_done: '{date}: {staff} has walked every one of the sites scattered over the city and drawn them on one sheet, with how long it takes to walk from each to the next.'
@@ -356,9 +360,9 @@ era_text:
       near_death: '{staff} falls ill in Guangzhou, is pulled back by the recall charm, and wakes before the statue.'
       stay_and_gifts: '{staff} finished the work and did not come back. They left a note saying they want to stay and see the university open. Gifts will arrive later.'
       gave_up: '{staff} did not last to the end and woke before the statue, saying they could not stay in the Guangzhou of 1924 any longer.'
-      legend: '{staff} woke before the statue with a pamphlet printed in March 1924 among their things. On the main timeline {base_D:i} matters lapsed with nobody asking any more, in this branch {D:i}. On the day they left, classes were eighteen days away.'
-      perfect: '{staff} came back to the statue. On the main timeline {base_D:i} matters lapsed with nobody asking any more, in this branch {D:i}. On the day they left, classes were eighteen days away.'
-      modest: '{staff} spent two hundred and ten days in Guangzhou, did what was within reach, and stood before the statue again. On the day they left, classes were eighteen days away.'
+      legend: '{staff} woke before the statue with a pamphlet printed in March 1924 among their things. On the main timeline {base_D:i} matters lapsed with nobody asking any more, in this branch {D:i}. On the day they left, classes were {countdown:i} days away.'
+      perfect: '{staff} came back to the statue. On the main timeline {base_D:i} matters lapsed with nobody asking any more, in this branch {D:i}. On the day they left, classes were {countdown:i} days away.'
+      modest: '{staff} spent two hundred and ten days in Guangzhou, did what was within reach, and stood before the statue again. On the day they left, classes were {countdown:i} days away.'
     quotes:
       near_death:
         - text: I thought I could hold out a little longer.
@@ -383,8 +387,8 @@ era_text:
           text: I said the name would change in two years. Nobody believed me.
         - text: I was only there.
     hints:
-      unlettered: This employee cannot read, so the copying of the records is closed to them. Send one who can read for the first star.
-      frail: This employee is frail and cannot walk all the sites in the city, nor as far as Shipai.
+      unlettered: This employee cannot read, so the copying of the records is closed to them.
+      frail: This employee is frail and cannot walk the sites in the city, so there is no map to hand in for the first star. Send one who can walk.
       empty: This trip went empty-handed. Paper and pens make the copying faster, and a compass makes the walking faster.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   zh:
@@ -509,11 +513,13 @@ era_text:
       asked_the_way: '{date}，一个拿着信的新生问{staff}某间办公室怎么走。{staff}也说不清，陪着找了半天。'
       asked_the_way_shown: '{date}，一个拿着信的新生问{staff}某间办公室怎么走。{staff}在图上指给他看，他道了谢，拿着图走了。'
     star_points:
-      roster: '三校名册在第一次筹备会议之前合成一本'
+      site: '选址之前，把走熟的校址画成图交给筹备处'
       copy: '带回一本演讲印成的书'
       last: '待到最后一讲'
     milestones:
       order_given: '{date}，孙中山下令把国立高等师范学校、广东法科大学和广东农业专门学校并成国立广东大学，派邹鲁筹备。城里还没有人说得清这所大学在哪里。'
+      sun_dies: '{date}，孙中山在北京逝世。'
+      renamed: '{date}，国民政府下令把国立广东大学改名为国立中山大学。'
       lecture_jan27: '{date}，星期天。孙中山在高等师范的礼堂讲三民主义的第一讲。'
       lecture_feb17: '{date}，星期天。孙中山在高等师范的礼堂演讲，这个系列从 1 月 27 日讲起，这一天是第四讲。台侧有人埋头速记，那是黄昌谷，每一讲他都在。'
       zou_takes_up: '{date}，邹鲁就任筹备主任。'
@@ -535,6 +541,8 @@ era_text:
       records_begun: '{date}，{staff}开始把三所学校的名册往同一本册子上抄。'
       records_read_aloud: '{date}，{staff}的字没人认得。{staff}念名字，一位办事员写，三本名册开始并成一本。'
       records_shut: '{date}，抄名册要识字，{staff}插不上手，倒把三所学校的门房都认熟了。谁在哪里，问{staff}比翻名册快。'
+      site_offered: '{date}，已经被筹备处认下的{staff}把走熟的几处校址画在一张纸上，连同城东石牌那一片空地，交给了办事员。这条分支里，这张图和选址的文书放在了一起。'
+      site_offered_bold: '{date}，{staff}还没被请进门，就在筹备处门口拦住办事员，说城东石牌那一片地方大，路也通，拿着自己画的图讲了一遍。办事员把图收下了。'
       records_done: '{date}，三所学校的名册合成了一本，赶在第一次筹备会议之前。'
       records_late: '{date}，三所学校的名册合成了一本。第一次筹备会议已经开过了。'
       sites_done: '{date}，{staff}把散在城里的几处校址都走了一遍，画成一张图，注上从这一处到那一处要走多久。'
@@ -559,9 +567,9 @@ era_text:
       near_death: '{staff}在广州病倒，被召回符拉了回来，在铜像前醒来。'
       stay_and_gifts: '{staff}做完了事，却没有回来。留下一张字条，说想留下来看着这所大学开学。礼物之后会到。'
       gave_up: '{staff}没有撑到最后，在铜像前醒来，说 1924 年的广州待不下去了。'
-      legend: '{staff}在铜像前醒来，行李里有一本 1924 年三月印的《民族主义》。主时间线上有 {base_D:i} 件事拖到没人再问，这条分支里是 {D:i} 件。走的那天，离开学还有十八天。'
-      perfect: '{staff}回到了铜像前。主时间线上有 {base_D:i} 件事拖到没人再问，这条分支里是 {D:i} 件。走的那天，离开学还有十八天。'
-      modest: '{staff}在广州待了二百一十天，做了力所能及的事，又站在了铜像前。走的那天，离开学还有十八天。'
+      legend: '{staff}在铜像前醒来，行李里有一本 1924 年三月印的《民族主义》。主时间线上有 {base_D:i} 件事拖到没人再问，这条分支里是 {D:i} 件。走的那天，离开学还有 {countdown:i} 天。'
+      perfect: '{staff}回到了铜像前。主时间线上有 {base_D:i} 件事拖到没人再问，这条分支里是 {D:i} 件。走的那天，离开学还有 {countdown:i} 天。'
+      modest: '{staff}在广州待了二百一十天，做了力所能及的事，又站在了铜像前。走的那天，离开学还有 {countdown:i} 天。'
     quotes:
       near_death:
         - text: 我以为还能再撑一会儿。
@@ -586,8 +594,8 @@ era_text:
           text: 我说两年后这里会改名，没有人信。
         - text: 我只是在那里待过。
     hints:
-      unlettered: 这位员工不识字，抄名册插不上手。换一位识字的，第一颗星才拿得到。
-      frail: 这位员工体弱，走不遍城里的校址，也走不到石牌。
+      unlettered: 这位员工不识字，抄名册插不上手。
+      frail: 这位员工体弱，走不遍城里的校址，画不成图，第一颗星拿不到。换一位走得动的。
       empty: 这一趟两手空空。纸笔让抄写快一些，指南针让走路快一些。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
 hook:
@@ -868,13 +876,13 @@ bystanders:
 self_check:
   quote_line: '台下没有人知道这是最后一讲。'
   fact: g1
-  regret_choice: '派识字的去，名册赶得上第一次筹备会议，却未必换得到那本书；派做买卖的去，书带得回来，名册的事插不上手。一个人拿不全三颗星。'
-  bookend: '从校园里的铜像前出发，每个结局都回到铜像前。走的那天离开学还有十八天。'
-  share_line: '1924 年我在广州待了 210 天，走的那天离开学还有 18 天。'
+  regret_choice: '派走得动又敢开口的去，选址之前图交得上去，却未必换得到那本书；派体弱识字的去，名册抄得快，校址却走不遍。一个人难拿全三颗星。'
+  bookend: '从校园里的铜像前出发，每个结局都回到铜像前。走的那天离开学还有十来天，偏差不同天数不同。'
+  share_line: '1924 年我在广州待了 210 天，走的那天离开学还有十来天。'
   share_number: '拖到没人再问的事：主时间线 {base_D}，我的分支 {D}'
   knowing: 'spoiler, last_lecture'
   near: 'lecture_feb17, sunday_first'
-  lever: 'records_done, errand_carried'
+  lever: 'site_offered, errand_carried'
   missed: 'classes_begin, ceremony'
   brought: 'copy_kept'
 pack:
