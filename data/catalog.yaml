@@ -9654,53 +9654,72 @@ events:
       - Fan Shen
   - id: ino_tadataka_ezo
     year: 1800
+    date: '1800-06-11'
     lon: 143
     lat: 42.8
     region: asia
+    home:
+      - japan
     field: exploration
     tier: 2
     channels:
       C: 2
       L: 3
       'Y': 1
+    ready: true
     refs:
       - ino_tadataka_ezo_survey
       - ino_tadataka_ezo_notes
+      - nippon_ino
+      - wikipedia_ino
     scene:
       points:
         - id: p1
-          kind: endure
+          kind: trust
+          day: 5
           req:
             any:
               - trait:
                   - cheerful
-                  - bold
                   - hardy
+                  - kind
               - stat:
                   constitution: 6
         - id: p2
           kind: notice
+          day: 70
           req:
-            stat:
-              wit: 7
+            any:
+              - trait:
+                  - methodical
+                  - scholarly
+                  - vigil
+              - stat:
+                  wit: 7
         - id: p3
-          kind: hold
+          kind: endure
+          day: 130
           req:
-            trait:
-              - vigil
-              - patient
-              - bold
-              - hardy
+            any:
+              - trait:
+                  - hardy
+                  - patient
+                  - bold
+              - stat:
+                  will: 6
       vignettes:
         - id: bend
           traits:
             - methodical
             - scholarly
+          day: 80
         - id: repeat
           traits:
             - hardy
             - curious
+          day: 100
         - id: sketch
+          day: 50
     authors:
       - AI
       - Fan Shen

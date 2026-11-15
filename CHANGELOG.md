@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.18, 2026-11-15
+
+- Ezo 1800, Ino Tadataka, is rewritten and turned on: the party of five setting out from Edo on 11 June 1800, the survey of the southeastern coast, his death in 1818 kept quiet for the sake of the work, and the maps finished in 1821, with sync points for carrying the line, writing down paces and bearings and walking a whole stretch of coast in the autumn wind.
+
 ## 0.5.17, 2026-11-15
 
 - St Petersburg 1837, Alexander Pushkin, is rewritten and turned on, on both calendars: his letter giving the house by the bridge, the duel by the Black River on 27 January old style, 8 February new style, his death on 29 January, 10 February, and his burial at the Svyatogorsky Monastery, with sync points for the errands of the house, waiting by the Black River and keeping the hall.

@@ -3,53 +3,58 @@ events:
   ino_tadataka_ezo:
     order: 209
     year: 1800
+    # the planned arrival is 11 June 1800, the day the first survey set out from Edo
+    date: '1800-06-11'
     lon: 143.0
     lat: 42.8
     region: asia
+    home: [japan]
     field: exploration
     tier: 2
     channels: {C: 2, L: 3, Y: 1}
-    refs: [ino_tadataka_ezo_survey, ino_tadataka_ezo_notes]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [ino_tadataka_ezo_survey, ino_tadataka_ezo_notes, nippon_ino, wikipedia_ino]
     scene:
       points:
-        - {id: p1, kind: endure, req: {"any":[{"trait":["cheerful","bold","hardy"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: hold, req: {"trait":["vigil","patient","bold","hardy"]}}
+        - {id: p1, kind: trust, day: 5, req: {"any":[{"trait":["cheerful","hardy","kind"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 70, req: {"any":[{"trait":["methodical","scholarly","vigil"]},{"stat":{"wit":7}}]}}
+        - {id: p3, kind: endure, day: 130, req: {"any":[{"trait":["hardy","patient","bold"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: bend, traits: [methodical, scholarly]}
-        - {id: repeat, traits: [hardy, curious]}
-        - {id: sketch}
+        - {id: bend, traits: [methodical, scholarly], day: 80}
+        - {id: repeat, traits: [hardy, curious], day: 100}
+        - {id: sketch, day: 50}
     text:
       en:
         name: 'The bend left out of the line'
         place: "Hokkaido"
         figure: "Ino Tadataka"
-        story: 'The Inō Tadataka Museum dates Inō’s first survey, through northeastern Honshū and southern Hokkaidō, to 1800. His team recorded distances and directions. The finished national maps were presented in 1821, after his death.'
+        story: 'On 11 June 1800 Ino Tadataka set out from Edo with a party of five to survey Ezo, today''s Hokkaido. They spent about six months on the island and measured its southeastern coast. He died in 1818; his death was kept quiet for a time so that the work could go on, and in 1821 Takahashi Kageyasu and others finished the maps of the coasts of Great Japan.'
         relic: "A measuring staff"
         relic_desc: "A thin staff for measuring paces, marked with a scale."
         points:
-          p1: 'Carry the distance notes as far as the next turning point'
-          p2: 'Check the change of bearing before joining two stretches'
-          p3: 'Keep the segments in order until they are transferred to the sketch'
+          p1: 'Be taken in by the bearers of the party, then carry the measuring line'
+          p2: 'On the shore, write down the paces and the bearing of each stretch'
+          p3: 'In the autumn wind, follow one whole stretch of the coast to its end'
         vignettes:
-          bend: 'The survey helper has added the lengths of three stretches and drawn a single line. You copy each bearing beside its length. Once the turns are restored, the last mark sits off to the side. You take two sketches home. The national map is still years away.'
-          repeat: 'You go back to the turn where the note was taken and ask the helper to face the next stretch again. He had read from the direction of return. You mark an arrow at the bend and correct his direction. You are not there for the next survey season.'
-          sketch: 'You put the length and direction of each stretch on the same line. The helper can redraw the walk when the coast is no longer in sight. You carry the little bend home. The finished map will need many more such sheets.'
+          bend: '{staff} sees a bend of the shore about to be drawn as part of a straight line and asks for one more bearing at the turn, so the bend stays on the page.'
+          repeat: '{staff} walks a stretch a second time at the same pace and writes the two counts side by side, without choosing between them.'
+          sketch: '{staff} draws the outline of a headland on the back of a tally sheet while the others rest, and marks where the line was laid.'
       zh:
         name: '被直线吞掉的转弯'
         place: "北海道"
         figure: "伊能忠敬"
-        story: '伊能忠敬纪念馆的年表记载，伊能队 1800 年首次测量，走过本州东北和北海道南部。队伍记录距离与方位。全国地图到他去世后的 1821 年才完成呈交。'
+        story: '1800 年 6 月 11 日，伊能忠敬带着一行五人从江户出发，去测量虾夷地，也就是今天的北海道。他们在岛上待了约半年，测了东南沿岸。他于 1818 年去世，死讯一度被隐瞒，好让测绘继续；1821 年，高桥景保等人完成了《大日本沿海舆地全图》。'
         relic: "一根测杖"
         relic_desc: "一根量步距用的细杖，上面刻着尺度。"
         points:
-          p1: '把测距的记录带到下一个转折点'
-          p2: '接两段路前先核对偏转了哪个方向'
-          p3: '誊到草图上以前，按顺序看住各段记录'
+          p1: '先让队里背器材的人认下，再替他们扛测绳'
+          p2: '在海边，把每一段的步数和方位记下来'
+          p3: '秋天的海风里，跟着把一整段海岸走到头'
         vignettes:
-          bend: '帮手把三段路的长度加起来，画成一条直线。你给每段长度旁补上方位。转弯画回来，最后一个点落在偏侧。你带回两张对照图，全国地图还要等许多年。'
-          repeat: '你回到记数的路口，请帮手再面向下一段。他方才照回头的方向记了。你在拐处画个箭头，把方位改回来。下一季出门测量时，你就不在了。'
-          sketch: '你把每段路的长度和方向写到同一行。看不见海岸时，帮手还能照条子画出走过的路。你把这一处拐弯带回去，要成图还得许多页。'
+          bend: '一处海湾眼看要被画进一条直线里，{staff}请他们在拐弯处再测一次方位，那个弯就留在了纸上。'
+          repeat: '{staff}用同样的步子把一段路又走了一遍，两次的步数并排记着，没去挑哪一个。'
+          sketch: '众人歇脚时，{staff}在计数单背面画了一个岬角的轮廓，标出测绳铺在哪里。'
 text:
   en:
     name: "Ino Tadataka"
@@ -59,28 +64,64 @@ text:
     text: "日本的测量家，1745 年生，1818 年去世。50 岁以后学习天文和测量，1800 年起走遍日本海岸，主持绘制了精度很高的全国地图。"
 hook: {en: 'Do three stretches of road make one straight coast?', zh: '拐过两回，还能画成一条直线吗？'}
 facts:
-  survey:
-    date: '1800'
-    checked: official_record
+  set_out:
+    date: '1800-06-11'
+    stay_day: 0
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [ino_tadataka_ezo_survey]
+    use: [story, history, wiki]
+    sources: [ino_tadataka_ezo_survey, nippon_ino]
     text:
-      en: 'The museum dates the first survey through northeastern Japan and southern Hokkaidō to 1800 and the completion of the national map to 1821.'
-      zh: '馆方年表载，1800 年首次测量本州东北及北海道南部，1821 年完成日本全图。'
-  notes:
+      en: 'The first survey set out from Edo on 11 June 1800 with five members, bound for Ezo.'
+      zh: '第一次测量于 1800 年 6 月 11 日从江户出发，一行五人，前往虾夷地。'
+    line:
+      en: '11 June 1800: Ino Tadataka and four others set out from Edo for Ezo.'
+      zh: '1800 年 6 月 11 日，伊能忠敬一行五人从江户出发，去测量虾夷地。'
+  coast:
     date: '1800'
-    checked: official_record
+    stay_day: 60
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [ino_tadataka_ezo_notes]
+    use: [story, history, wiki]
+    sources: [wikipedia_ino, nippon_ino]
     text:
-      en: 'The guide explains that the survey party collected measured distances and directions.'
-      zh: '资料介绍测量队采集距离与方位。'
+      en: 'In Ezo the party surveyed only the southeastern coast, spending about six months on the island.'
+      zh: '测量队在虾夷地只测了东南沿岸，在岛上待了约半年。'
+    line:
+      en: 'On Ezo the party measures its way along the southeastern coast.'
+      zh: '在虾夷地，测量队沿着东南海岸一段一段测过去。'
+  death:
+    date: '1818'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [wikipedia_ino, nippon_ino]
+    text:
+      en: 'He died in 1818. His death was kept quiet for a time so that the map work could go on.'
+      zh: '他于 1818 年去世，死讯一度被隐瞒，好让地图的工作继续下去。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '1818: Ino Tadataka dies. For a while nobody announces it, so the work on the maps can go on.'
+      zh: '1818 年，伊能忠敬去世。死讯一时没有公布，地图的工作就还能接着做。'
+  map:
+    date: '1821'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_ino, nippon_ino]
+    text:
+      en: 'In 1821 Takahashi Kageyasu and other cartographers completed the maps of the coasts of Great Japan.'
+      zh: '1821 年，高桥景保等测绘者完成了《大日本沿海舆地全图》。'
+    line:
+      en: '1821: Takahashi Kageyasu and the others finish the maps of the coasts of Great Japan.'
+      zh: '1821 年，高桥景保等人完成了《大日本沿海舆地全图》。'
 bystanders:
-  helper:
+  bearer:
     invented: true
-    text: {en: 'A fictional survey helper combining three consecutive stretches on a draft.', zh: '虚构的测量帮手，要把连续三段路接进一张草图。'}
+    text: {en: 'A bearer, made up for the game, who carries the line and counts aloud.', zh: '一位编出来的挑夫，扛着测绳，大声数着步子。'}
+  fisher:
+    invented: true
+    text: {en: 'A fisherman, made up for the game, who knows where the shore turns.', zh: '一位编出来的渔夫，知道海岸在哪里拐弯。'}
 wiki:
   refs:
     ino_tadataka_ezo_survey:
@@ -95,16 +136,28 @@ wiki:
       text:
         en: 'Inō Tadataka Museum, Katori City, survey methods and tools guide https://www.city.katori.lg.jp/sightseeing/museum/guide.files/kinenkan2.pdf'
         zh: '香取市伊能忠敬纪念馆，测量方法与器具资料 https://www.city.katori.lg.jp/sightseeing/museum/guide.files/kinenkan2.pdf'
+    nippon_ino:
+      order: 644
+      status: checked
+      text:
+        en: 'Nippon.com, Mapping a Nation: Japan''s Most Famous Cartographer, Inō Tadataka. https://nippon.com/en/japan-topics/b07210'
+        zh: 'Nippon.com，测绘一个国家：日本最著名的测绘家伊能忠敬。https://nippon.com/en/japan-topics/b07210'
+    wikipedia_ino:
+      order: 645
+      status: checked
+      text:
+        en: 'Wikipedia, Inō Tadataka. https://en.wikipedia.org/wiki/In%C5%8D_Tadataka'
+        zh: '维基百科，伊能忠敬。https://en.wikipedia.org/wiki/In%C5%8D_Tadataka'
 self_check:
-  fact: survey
-  quote_line: '转弯画回来，最后一个点落在偏侧。'
-  regret_choice: '只加路长会漏掉两处转弯。'
-  bookend: '从总长度画成直线，到转弯能复画。'
-  share_line: '三段路各带一个方向，才能画回我走过的海岸。'
-  share_number: '1800 年首次测量'
-  knowing: '员工知道全国地图将来才完成。'
-  near: 'survey 锚定 1800 年的范围，notes 是操作依据。'
-  lever: '补三项方位，校正一路口的箭头。'
-  missed: '最终呈交晚于这趟。'
-  brought: '一处拐弯的前后对照。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: death
+  quote_line: '死讯一时没有公布，地图的工作就还能接着做。'
+  regret_choice: '派力气大的去，测绳扛得动，步数方位却未必记得清；派细心的去，数字记清了，秋风里那段海岸未必走得到头。'
+  bookend: '从江户出发的那天开始，以他死后三年才完成的地图收尾。'
+  share_line: '1800 年，我在虾夷地的海边替一支测量队扛过测绳。'
+  share_number: '5'
+  knowing: 'map'
+  near: 'set_out, coast'
+  lever: 'p2, p3'
+  missed: 'map'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
