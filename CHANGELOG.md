@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.20, 2026-11-15
+
+- Lalibela, the rock hewn churches, is rewritten and turned on: the reign of King Lalibela from 1181 to 1221, the ditches and trenches cut into the same rock, the first detailed European description by Francisco Álvares in the 1520s and the World Heritage listing of 1978, with sync points for carrying the broken rock out of the trench, finding the outlet of a channel before the rains and clearing a ditch in the rains. The exposure to the land is lowered from three to two.
+
 ## 0.5.19, 2026-11-15
 
 - Nishapur 1079, Omar Khayyam, is rewritten and turned on: the observatory of Malik-Shah at Isfahan, the new calendar beginning on 15 March 1079 with the year set by the spring equinox, the closing of the observatory in 1092 and the calendar that outlived it by eight centuries, with sync points for copying the new month table, watching the sunrise around the equinox and a farmer persuaded to the new calendar.

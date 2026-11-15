@@ -6,50 +6,53 @@ events:
     lon: 39.04
     lat: 12.03
     region: africa
+    home: [east_africa]
     field: architecture
     tier: 2
-    channels: {A: 1, L: 3}
-    refs: [lalibela_rock_drainage]
+    channels: {A: 1, L: 2}
+    # finished: in the game with release.ready_only. No year is recorded for any one cut, so the stay carries the year of the reign only.
+    ready: true
+    refs: [lalibela_rock_drainage, wikipedia_lalibela_churches, everything_everywhere_lalibela]
     scene:
       points:
-        - {id: p1, kind: hold, req: {"provides":"strength"}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p3, kind: notice, req: {"stat":{"wit":6}}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"job":["carpenter"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 70, req: {"any":[{"trait":["curious","methodical","scholarly"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: endure, day: 140, req: {"any":[{"trait":["hardy","patient","vigil"]},{"stat":{"will":6}}]}}
       vignettes:
-        - {id: outlet, traits: [methodical, scholarly]}
-        - {id: rain, traits: [hardy, curious]}
-        - {id: bend}
+        - {id: outlet, traits: [methodical, scholarly], day: 75}
+        - {id: rain, traits: [hardy, curious], day: 130}
+        - {id: bend, day: 40}
     text:
       en:
         name: 'Look for the outlet in the rock'
         place: Lalibela, Ethiopia
         figure: Lalibela and the stonecutters
-        story: 'UNESCO’s site record describes the rock-hewn churches of Lalibela and their ditches, trenches and passages. The year is an approximate setting, without assigning a year to a particular cut.'
+        story: 'King Lalibela of the Zagwe dynasty reigned from 1181 to 1221, and the eleven churches cut down into the rock of the town that bears his name are attributed to him, with their ditches, trenches and passages; the dating of single churches is not well established. In the 1520s the Portuguese priest Francisco Álvares came with an embassy and wrote the first detailed European description of them. They were inscribed as a World Heritage site in 1978.'
         relic: A stonecutter's chisel
         relic_desc: An iron chisel, the edge ground thin.
         points:
-          p1: 'Keep the paper clear and steady while the channel is traced'
-          p2: 'Walk as far as the end visible from the trench'
-          p3: 'Separate the passage line from the drainage line'
+          p1: 'Be taken in by the stonecutters, then carry the broken rock out of the trench'
+          p2: 'Before the rains, follow a channel in the rock to its outlet and show where the water will stand'
+          p3: 'In the rains, help clear one whole ditch from end to end'
         vignettes:
-          outlet: 'The works helper has taken a line for footsteps and extended it down the water channel. You ask where the channel itself breaks out of the rock. He can point only as far as the bend. You put an unfinished end on his plan. You leave before anyone traces beyond it.'
-          rain: 'You know the surviving site will have ditches as well as paths. Here there are dry marks that could be either. You carry the sketch to the lower bend and add a separate mark for the channel lip. The rock has not seen rain again when you leave.'
-          bend: 'You follow the helper down one side of the trench and draw a notch at the turn. He can find your place without taking every line on the sheet for a route. You keep the little notch. The next section is beyond what you saw.'
+          outlet: '{staff} follows a channel cut in the rock down past the bend to where it breaks out into the open, and marks the place with a chip of stone.'
+          rain: '{staff} stands in the trench with the water to the ankles and passes baskets of silt up to the rim, one after another, until the light goes.'
+          bend: '{staff} draws a notch at the turn of a trench on a scrap, so that a helper can find the same turn the next morning.'
       zh:
         name: '沿岩沟找出口'
         place: 埃塞俄比亚拉利贝拉
         figure: 拉利贝拉与石匠们
-        story: '联合国教科文组织的遗址档案记录拉利贝拉的岩凿教堂及沟渠、深槽和通道。'
+        story: '扎格韦王朝的拉利贝拉国王在位于 1181 年至 1221 年，以他命名的城镇周围有十一座向下凿进岩石的教堂，连同沟渠、深槽和通道，都归在他名下，各座教堂的确切年代并不确定。1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来到这里，写下欧洲人对这些教堂的第一份详细记述。1978 年，岩凿教堂列入世界遗产。'
         relic: 石匠的凿子
         relic_desc: 一把铁凿子，刃口磨得很薄。
         points:
-          p1: '沿沟查线时，把纸避开泥水并拿稳'
-          p2: '沿深槽走到看得见的尽头'
-          p3: '把供人通行的线与水沟线分开'
+          p1: '先让石匠们认下，再替他们把凿下的碎石运出深槽'
+          p2: '雨季前，沿岩沟找到出口，指给他们看哪里会积水'
+          p3: '雨季里，帮着把一整条沟渠从头清到尾'
         vignettes:
-          outlet: '帮工把供人走的线一直延进水沟。你问水沟究竟在哪里出了岩壁。他只能指到弯处。你在图上记下这里尚未走完。还没等人绕过去看，你便收队。'
-          rain: '你知道以后留得下来的，除了路还有沟。眼下岩面是干的，几道线单看都分不清。你带图走到低处的弯，在沟边另做一记。收队前，岩面没有再等到一场雨。'
-          bend: '你跟着帮工沿深槽一边走，在转弯处画个缺口。他照着就能认出你画的是哪儿，不会把纸上每条线都当成路。你带回这个小缺口，下一段没有亲眼见到。'
+          outlet: '{staff}顺着一条凿在岩上的沟往下走，过了弯，找到它出岩壁的地方，用一块碎石做了记号。'
+          rain: '{staff}站在没过脚踝的水里，把一筐筐淤泥递上槽沿，一筐接一筐，直到天黑。'
+          bend: '{staff}在一片碎纸上画了个缺口，标出深槽的转弯处，帮工第二天早上照着就能找到同一个弯。'
 text:
   en:
     name: Lalibela and the stonecutters
@@ -59,19 +62,83 @@ text:
     text: 拉利贝拉与埃塞俄比亚扎格韦王朝的石匠。十二世纪末到十三世纪初，以他命名的城镇周围，十一座教堂从岩石中向下凿出。
 hook: {en: 'Does the rock channel lead out or stop?', zh: '凿出的水沟通出去了吗？'}
 facts:
+  reign:
+    date: '1181'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lalibela_rock_drainage, wikipedia_lalibela_churches]
+    text:
+      en: 'King Lalibela of the Zagwe dynasty reigned from 1181 to 1221, and the building of the eleven rock hewn churches is attributed to him.'
+      zh: '扎格韦王朝的拉利贝拉国王在位于 1181 年至 1221 年，十一座岩凿教堂的修建归在他名下。'
+    line:
+      en: '1181: Lalibela of the Zagwe dynasty becomes king. The churches cut into the rock of his town will be put down to him.'
+      zh: '1181 年，扎格韦王朝的拉利贝拉即位。城边凿进岩石的那些教堂，后来都归在他名下。'
   drainage:
     date: '1200'
+    stay_day: 5
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [lalibela_rock_drainage]
     text:
       en: 'The property includes churches hewn from rock and an extensive system of drainage ditches, trenches and passages.'
       zh: '遗址包括从岩石中凿出的教堂，以及排水沟、深槽和通道。'
+    line:
+      en: 'Around the churches run ditches, trenches and passages, all cut down into the same rock.'
+      zh: '教堂四周是排水沟、深槽和通道，都从同一片岩石里向下凿出。'
+  undated:
+    date: '1200'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [wikipedia_lalibela_churches, everything_everywhere_lalibela]
+    text:
+      en: 'The dating of the single churches is not well established; most are thought to date from the twelfth and thirteenth centuries.'
+      zh: '各座教堂的确切年代并不确定，多数被认为属于十二、十三世纪。'
+  reign_end:
+    date: '1221'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lalibela_rock_drainage, wikipedia_lalibela_churches]
+    text:
+      en: 'His reign ended in 1221.'
+      zh: '他的统治于 1221 年结束。'
+    line:
+      en: '1221: the reign of Lalibela ends.'
+      zh: '1221 年，拉利贝拉的统治结束。'
+  alvares:
+    date: '1520'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_lalibela_churches, everything_everywhere_lalibela]
+    text:
+      en: 'In the 1520s the Portuguese priest Francisco Álvares, travelling with an embassy, gave the first detailed European description of the churches.'
+      zh: '1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来访，写下欧洲人对这些教堂的第一份详细描述。'
+    line:
+      en: 'The 1520s: a Portuguese priest, Francisco Álvares, comes with an embassy and writes the churches down for Europe for the first time.'
+      zh: '1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来到这里，第一次为欧洲人把这些教堂详细写了下来。'
+  heritage:
+    date: '1978'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lalibela_rock_drainage, wikipedia_lalibela_churches]
+    text:
+      en: 'The rock hewn churches were inscribed on the World Heritage List in 1978.'
+      zh: '岩凿教堂于 1978 年列入《世界遗产名录》。'
+    line:
+      en: '1978: the rock hewn churches of Lalibela are inscribed as a World Heritage site.'
+      zh: '1978 年，拉利贝拉的岩凿教堂列入世界遗产。'
 bystanders:
   helper:
     invented: true
-    text: {en: 'A fictional helper checking a work sketch outside the buildings.', zh: '虚构的帮工，在建筑外核对线条。'}
+    text: {en: 'A helper, made up for the game, who carries the baskets out of the trench.', zh: '一位编出来的帮工，把筐从深槽里扛出去。'}
+  cutter:
+    invented: true
+    text: {en: 'A stonecutter, made up for the game, who reads the rock by its sound.', zh: '一位编出来的石匠，听声音就知道岩石的纹路。'}
 wiki:
   refs:
     lalibela_rock_drainage:
@@ -80,16 +147,28 @@ wiki:
       text:
         en: 'UNESCO World Heritage Centre, Rock-Hewn Churches, Lalibela, site description https://whc.unesco.org/en/list/18'
         zh: '联合国教科文组织世界遗产中心，拉利贝拉岩凿教堂遗产说明 https://whc.unesco.org/en/list/18'
+    wikipedia_lalibela_churches:
+      order: 682
+      status: checked
+      text:
+        en: 'Wikipedia, Rock-Hewn Churches, Lalibela. https://en.wikipedia.org/wiki/Rock-Hewn_Churches,_Lalibela'
+        zh: '维基百科，拉利贝拉岩凿教堂。https://en.wikipedia.org/wiki/Rock-Hewn_Churches,_Lalibela'
+    everything_everywhere_lalibela:
+      order: 683
+      status: checked
+      text:
+        en: 'Everything Everywhere, The Rock-Hewn Churches, Lalibela. https://everything-everywhere.com/unesco-world-heritage-site-306-rock-hewn-churches-lalibela/'
+        zh: 'Everything Everywhere，拉利贝拉岩凿教堂。https://everything-everywhere.com/unesco-world-heritage-site-306-rock-hewn-churches-lalibela/'
 self_check:
   fact: drainage
-  quote_line: '你在图上记下这里尚未走完。'
-  regret_choice: '如果顺着同一条线延伸，纸上就会把过人路线引进水沟。'
-  bookend: '从含混的一条线，记到一个明确的待核端点。'
-  share_line: '弯后没查到，我让那条线断在了弯前。'
-  share_number: '两种线'
-  knowing: 'rain 知道遗址有不同类的岩凿通道。'
-  near: 'drainage 给出沟渠与通路的现场依据。'
-  lever: '把一条线拆成两种可复核记号。'
-  missed: '没赶上再下雨。'
-  brought: '低处一弯的缺口图。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '教堂四周是排水沟、深槽和通道，都从同一片岩石里向下凿出。'
+  regret_choice: '派力气大的去，碎石运得出去，水从哪里流走却没人去找；派爱琢磨的去，出口找到了，雨季那条沟却清不到头。'
+  bookend: '从拉利贝拉即位开始，以八百年后列入世界遗产收尾。'
+  share_line: '我在拉利贝拉的深槽里，替石匠们往外递过一筐筐碎石。'
+  share_number: '11'
+  knowing: 'heritage'
+  near: 'drainage'
+  lever: 'p1, p2'
+  missed: 'alvares'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

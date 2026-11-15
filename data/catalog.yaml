@@ -2013,39 +2013,68 @@ events:
     lon: 39.04
     lat: 12.03
     region: africa
+    home:
+      - east_africa
     field: architecture
     tier: 2
     channels:
       A: 1
-      L: 3
+      L: 2
+    ready: true
     refs:
       - lalibela_rock_drainage
+      - wikipedia_lalibela_churches
+      - everything_everywhere_lalibela
     scene:
       points:
         - id: p1
-          kind: hold
+          kind: trust
+          day: 10
           req:
-            provides: strength
+            any:
+              - trait:
+                  - hardy
+                  - cheerful
+                  - kind
+              - job:
+                  - carpenter
+              - stat:
+                  constitution: 6
         - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 6
-        - id: p3
           kind: notice
+          day: 70
           req:
-            stat:
-              wit: 6
+            any:
+              - trait:
+                  - curious
+                  - methodical
+                  - scholarly
+              - stat:
+                  wit: 6
+        - id: p3
+          kind: endure
+          day: 140
+          req:
+            any:
+              - trait:
+                  - hardy
+                  - patient
+                  - vigil
+              - stat:
+                  will: 6
       vignettes:
         - id: outlet
           traits:
             - methodical
             - scholarly
+          day: 75
         - id: rain
           traits:
             - hardy
             - curious
+          day: 130
         - id: bend
+          day: 40
     authors:
       - AI
       - Fan Shen
