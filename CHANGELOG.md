@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.26, 2026-11-15
+
+- Tahiti 1769, Tupaia, is turned on as a scene: going aboard the Endeavour on 12 July 1769, sailing the next day, the chart of some 130 islands begun on 15 August, 74 named by him, and his death at Batavia late in 1770, with sync points for rolling the water casks to the boats, the wind and bearing on the day of sailing and writing down the island names. Its full model is still a draft.
+
 ## 0.5.25, 2026-11-15
 
 - Ife, the casters of the heads, is rewritten and turned on: heads cast in brass from wax models around 1300, Leo Frobenius made to give back the head he pressed a priest to sell in 1910, the heads found in the Wunmonije compound in 1938 and the London exhibition of 1948, with sync points for shaping a wax model, keeping the fire on the day of pouring and telling the cut lines from the added ones.

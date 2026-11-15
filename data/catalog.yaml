@@ -9045,36 +9045,56 @@ events:
       - Fan Shen
   - id: tupaia_tahiti
     year: 1769
+    date: '1769-07-01'
     lon: -149.5
     lat: -17.5
     region: oceania
+    home:
+      - pacific
     field: exploration
     tier: 2
     era: tupaia_tahiti_1769
     channels:
-      'Y': 3
+      'Y': 2
       E: 2
     regret: true
+    ready: true
     refs:
       - tupaia_chart_survival
       - tupaia_banks_july
+      - wikipedia_tupaia
+      - potsdam_tupaia_map
     scene:
       points:
         - id: p1
-          kind: endure
+          kind: trust
+          day: 9
           req:
-            stat:
-              constitution: 6
+            any:
+              - trait:
+                  - hardy
+                  - cheerful
+                  - kind
+              - stat:
+                  constitution: 6
         - id: p2
           kind: notice
+          day: 12.5
           req:
-            trait:
-              - streetwise
-              - wanderer
-              - vigil
+            any:
+              - trait:
+                  - streetwise
+                  - wanderer
+                  - vigil
+              - job:
+                  - sailor
+                  - fisher
+              - stat:
+                  wit: 6
         - id: p3
           kind: trust
           redeem: true
+          day: 45.5
           req:
             any:
               - job:
@@ -9083,17 +9103,20 @@ events:
               - trait:
                   - attached
                   - cosmopolitan
-                  - artistic
+                  - patient
       vignettes:
         - id: pronounce
           traits:
             - cosmopolitan
             - curious
+          day: 46
         - id: route
           traits:
             - methodical
             - wanderer
+          day: 30
         - id: room
+          day: 20
     authors:
       - AI
       - Fan Shen

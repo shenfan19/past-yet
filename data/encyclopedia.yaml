@@ -1735,6 +1735,16 @@ refs:
     authors:
       - AI
       - Fan Shen
+  wikipedia_tupaia:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
+  potsdam_tupaia_map:
+    status: checked
+    authors:
+      - AI
+      - Fan Shen
   scott_archive_final:
     status: checked
     authors:
@@ -4094,6 +4104,32 @@ event_facts:
         sources:
           - wikipedia_crow_terrace
           - creature_exile
+  tupaia_tahiti:
+    module: tupaia_tahiti
+    facts:
+      - id: boards
+        date: '1769-07-12'
+        sources:
+          - tupaia_banks_july
+          - tupaia_chart_survival
+        stay_day: 11
+      - id: departs
+        date: '1769-07-13'
+        sources:
+          - tupaia_banks_july
+          - tupaia_chart_survival
+        stay_day: 12
+      - id: chart
+        date: '1769-08-15'
+        sources:
+          - wikipedia_tupaia
+          - potsdam_tupaia_map
+        stay_day: 45
+      - id: death
+        date: '1770'
+        sources:
+          - wikipedia_tupaia
+          - potsdam_tupaia_map
   ulugh_beg_samarkand:
     module: ulugh_beg_samarkand
     facts:
@@ -4334,6 +4370,12 @@ fact_sources:
     departs:
       - tupaia_banks_july
       - tupaia_chart_survival
+    chart:
+      - wikipedia_tupaia
+      - potsdam_tupaia_map
+    death:
+      - wikipedia_tupaia
+      - potsdam_tupaia_map
   wegener_greenland_1930:
     eismitte_reached:
       - wegener_nasa_expedition

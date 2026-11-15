@@ -3,55 +3,60 @@ events:
   tupaia_tahiti:
     order: 196
     year: 1769
+    # the planned arrival is 1 July 1769, a few days before Tupaia went aboard the Endeavour
+    date: '1769-07-01'
     lon: -149.5
     lat: -17.5
     region: oceania
+    home: [pacific]
     field: exploration
     tier: 2
     era: tupaia_tahiti_1769
-    channels: {Y: 3, E: 2}
+    channels: {Y: 2, E: 2}
     regret: true
-    refs: [tupaia_chart_survival, tupaia_banks_july]
+    # finished: in the game with release.ready_only; its full model is still a draft, so the game plays the scene
+    ready: true
+    refs: [tupaia_chart_survival, tupaia_banks_july, wikipedia_tupaia, potsdam_tupaia_map]
     scene:
       points:
-        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p2, kind: notice, req: {"trait":["streetwise","wanderer","vigil"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"any":[{"job":["sailor","fisher"]},{"trait":["attached","cosmopolitan","artistic"]}]}}
+        - {id: p1, kind: trust, day: 9, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 12.5, req: {"any":[{"trait":["streetwise","wanderer","vigil"]},{"job":["sailor","fisher"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: trust, redeem: true, day: 45.5, req: {"any":[{"job":["sailor","fisher"]},{"trait":["attached","cosmopolitan","patient"]}]}}
       vignettes:
-        - {id: pronounce, traits: [cosmopolitan, curious]}
-        - {id: route, traits: [methodical, wanderer]}
-        - {id: room}
+        - {id: pronounce, traits: [cosmopolitan, curious], day: 46}
+        - {id: route, traits: [methodical, wanderer], day: 30}
+        - {id: room, day: 20}
     text:
       en:
         name: "The navigator's chart"
         place: "Tahiti"
         figure: "Tupaia"
-        story: 'Tupaia joined the Endeavour at Tahiti in 1769. The State Library of New South Wales reproduces a surviving copy of a South Sea chart based on Tupaia''s geographical knowledge.'
+        story: 'Tupaia, a navigator and priest from Raiatea, came aboard the Endeavour at Tahiti in July 1769 and sailed with James Cook. From the middle of August he worked on a chart of the islands around, some 130 of them, 74 named by him; his own sketch is lost and a copy survives in the papers of Joseph Banks. He died at Batavia late in 1770.'
         relic: "A sketch of islands"
         relic_desc: "A sheet of ink and wash with small island shapes and names."
         points:
-          p1: "Share the cramped cabin on the passage"
-          p2: "Watch him draw the chart of the islands"
-          p3: "Learn the island names from him (a seafarer or a kind employee)"
+          p1: 'Be taken in by the people on the shore, then roll the water casks down to the boats'
+          p2: 'On the day the ship sails, write down the wind he points to and the bearing of the first island'
+          p3: 'While he draws the chart, write down each island name as he says it'
         vignettes:
-          pronounce: 'A fictional copyist thinks two spellings belong to different islands. You ask them to read both aloud before drawing another island. They put a question alongside the names until someone who knows can check.'
-          route: 'The copyist draws a straight line between two marks. You ask which island the explanation started from. They lift the pen and leave the bearings with the account that gave them.'
-          room: 'You hold the folded corner of the sheet while the copyist writes another name. They move their hand so the next name can be written without covering the first.'
+          pronounce: '{staff} asks a copyist, made up for the game, to read two spellings aloud before drawing a second island, and he puts a question mark by the names instead.'
+          route: '{staff} asks from which island a bearing was given before a straight line is drawn between two marks, and the line is left undrawn.'
+          room: '{staff} holds down the rolled corner of a sheet so that a new name can be written without covering the one before.'
       zh:
         name: "领航者的海图"
         place: "塔希提"
-        figure: "图帕亚"
-        story: '1769 年，图帕亚在塔希提登上奋进号。新南威尔士州立图书馆展示了一幅据图帕亚地理知识绘成的南太平洋海图的传世抄本。'
+        figure: "图帕伊亚"
+        story: '来自赖阿特阿岛的领航者兼祭司图帕伊亚，1769 年 7 月在塔希提登上“奋进号”，随詹姆斯·库克远航。从八月中旬起，他画了一幅周边群岛的海图，图上约有 130 座岛，其中 74 座的名字是他说出来的；他自己的草图已经遗失，一份抄本保存在约瑟夫·班克斯的文件里。1770 年末，他在巴达维亚病逝。'
         relic: "一张岛屿草图"
         relic_desc: "一张墨与淡彩的纸，画着小小的岛形和名字。"
         points:
-          p1: "在航程中挤着住那间小舱"
-          p2: "看他画那幅群岛海图"
-          p3: "向他学岛的名字"
+          p1: '先让岸上的人认下，再帮着把淡水桶滚到小船边'
+          p2: '起航那天，记下他指的风向和第一座岛的方位'
+          p3: '他画海图的时候，把他念出的岛名一个个记下'
         vignettes:
-          pronounce: '虚构的抄图人以为两种拼法是两座岛。你请他先把两个名字念出来，再决定画不画新岛。他在名字旁留了个问号，等熟悉的人来核对。'
-          route: '抄图人拿笔要在两个记号间拉道直线。你问刚才说方位时是从哪座岛算起的。他抬起笔，把这个方位留在原先那段说法旁。'
-          room: '抄图人写下一个名字时，你压住卷起的纸角。他挪开手，好让下一个名字落笔时不盖住上一个。'
+          pronounce: '一位编出来的抄图人以为两种拼法是两座岛。{staff}请他先把两个名字念出来，他便在名字旁留了个问号，没画新岛。'
+          route: '抄图人要在两个记号之间拉一条直线，{staff}问刚才说方位是从哪座岛算起的，那条线就没有画下去。'
+          room: '{staff}压住卷起的纸角，下一个名字写下去时，就不会盖住上一个。'
 text:
   en:
     name: Tupaia
@@ -119,6 +124,18 @@ wiki:
       text:
         en: 'Joseph Banks, Endeavour Journal, 12–13 July 1769 https://www.gutenberg.net.au/ebooks05/0501141h.html'
         zh: '约瑟夫·班克斯，《奋进号日记》，1769年7月12至13日 https://www.gutenberg.net.au/ebooks05/0501141h.html'
+    wikipedia_tupaia:
+      order: 997
+      status: checked
+      text:
+        en: 'Wikipedia, Tupaia (navigator). https://en.wikipedia.org/wiki/Tupaia_(navigator)'
+        zh: '维基百科，图帕伊亚（领航者）。https://en.wikipedia.org/wiki/Tupaia_(navigator)'
+    potsdam_tupaia_map:
+      order: 998
+      status: checked
+      text:
+        en: 'University of Potsdam, Tupaia''s Map. https://uni-potsdam.de/en/iaa-alc/tupaias-map'
+        zh: '波茨坦大学，图帕伊亚的海图。https://uni-potsdam.de/en/iaa-alc/tupaias-map'
     tupaia_chart_survival:
       order: 169
       status: checked
@@ -357,7 +374,11 @@ facts:
     sources: [tupaia_banks_july, tupaia_chart_survival]
     text:
       en: 'Banks records that Tupaia came aboard and reaffirmed his wish to sail.'
-      zh: '班克斯记下图帕亚登船，并重申愿意随船远行。'
+      zh: '班克斯记下图帕伊亚登船，并重申愿意随船远行。'
+    stay_day: 11
+    line:
+      en: '12 July 1769: Tupaia comes aboard the Endeavour and says again that he wants to sail with it.'
+      zh: '1769 年 7 月 12 日，图帕伊亚登上“奋进号”，又说了一遍他要随船走。'
   departs:
     date: '1769-07-13'
     checked: official_record
@@ -366,7 +387,37 @@ facts:
     sources: [tupaia_banks_july, tupaia_chart_survival]
     text:
       en: 'The Endeavour departs Tahiti with Tupaia and Taiata aboard.'
-      zh: '奋进号驶离塔希提，图帕亚与泰阿塔随船。'
+      zh: '奋进号驶离塔希提，图帕伊亚与泰阿塔随船。'
+    stay_day: 12
+    line:
+      en: '13 July: the Endeavour leaves Tahiti with Tupaia and the boy Taiata aboard.'
+      zh: '7 月 13 日，“奋进号”驶离塔希提，图帕伊亚和少年泰阿塔都在船上。'
+  chart:
+    date: '1769-08-15'
+    stay_day: 45
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wikipedia_tupaia, potsdam_tupaia_map]
+    text:
+      en: 'From 15 August 1769 Tupaia worked on a chart of about 130 islands within some two thousand miles, 74 of them named by him. His own sketch is lost; a copy by Cook survives in the papers of Joseph Banks at the British Library.'
+      zh: '从 1769 年 8 月 15 日起，图帕伊亚画了一幅方圆约两千英里、约 130 座岛的海图，其中 74 座的名字是他说的。他自己的草图已遗失，库克的抄本保存在大英图书馆的班克斯文件里。'
+    line:
+      en: '15 August: Tupaia starts on a chart of the islands he knows, some 130 of them. Seventy four he names himself.'
+      zh: '8 月 15 日，图帕伊亚开始画他知道的群岛，约 130 座。其中 74 座的名字，是他自己说出来的。'
+  death:
+    date: '1770'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [wikipedia_tupaia, potsdam_tupaia_map]
+    text:
+      en: 'Tupaia died at Batavia late in 1770, most sources say on 20 December; one gives 11 November.'
+      zh: '图帕伊亚 1770 年末在巴达维亚病逝，多数说法是 12 月 20 日，也有一说是 11 月 11 日。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: 'Late 1770: at Batavia, Tupaia dies of illness, far from the islands on his chart.'
+      zh: '1770 年末，图帕伊亚在巴达维亚病逝，离他海图上的那些岛很远。'
 bystanders:
   maeva:
     invented: true
@@ -375,15 +426,15 @@ bystanders:
     invented: true
     text: {en: 'Reed, a fictional store clerk with a boat waiting to take his list.', zh: '虚构库房文员里德，小船在等他交单。'}
 self_check:
-  fact: boards
-  quote_line: '她认可的写法备好时，头一班船已经走了。'
-  regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
-  bookend: '领航员刚才说的是哪座岛？ 结尾还可看到交出的记录有没有待查一栏。'
-  share_line: '领航员刚才说的是哪座岛？'
-  share_number: '两日相接，先登船，后启航。'
-  knowing: 'departs 知道后续有史料记下的日期。'
-  near: 'boards, departs'
-  lever: expedition_handoff
-  missed: expedition_send
-  brought: expedition_handoff
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: chart
+  quote_line: '其中 74 座的名字，是他自己说出来的。'
+  regret_choice: '派力气大的去，水桶滚得到船边，起航那天的风向却没人记；派细心的去，岛名记全了，岸上的人却未必认得下。'
+  bookend: '从他登上奋进号那天开始，以他在离那些岛很远的地方病逝收尾。'
+  share_line: '1769 年，我在奋进号上把一位领航者念的岛名一个个记了下来。'
+  share_number: '74'
+  knowing: 'death'
+  near: 'boards, departs, chart'
+  lever: 'p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
