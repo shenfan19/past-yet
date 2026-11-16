@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.2, 2026-11-16
+
+- Two test employees for the developer mode: King, every attribute at 1 with nothing carried, reads the floor of a story, and V, every attribute at 10 and read as having every job, trait, item and implant, reads its ceiling. They are in the agency only with ?devtools, take no wage, keep their mood, rest no day, are never sent by the automatic mode, and are never written into a save.
+- The scene core check reads plain items asked for by a sync point.
+
 ## 0.8.1, 2026-11-16
 
 - The shift of the timeline of the twenty one stories with new stars now has what history recorded for every point, the guard points included, each opening with its date, so a trip out of sync shows the event it failed to hold.

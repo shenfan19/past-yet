@@ -53,6 +53,9 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
     o.era_src[id] = src;
     o.era_raw[id] = parse(src);
   }
+  // The test employees, King and V, cards with dev_only, are left out unless asked for with opts.devStaff: the game asks in the developer mode,
+  // the story probe asks, and every check of the roster reads the fifty without them.
+  if (!opts.devStaff) for (const id of Object.keys(o.staff.staff)) if (o.staff.staff[id].dev_only) delete o.staff.staff[id];
   // what is still a draft is left out unless it was asked for
   if (!(opts.drafts ?? o.config.release.drafts)) {
     const notReady = (e) => e.draft || (o.config.release.ready_only && !e.ready);

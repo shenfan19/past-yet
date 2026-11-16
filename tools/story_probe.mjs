@@ -10,9 +10,10 @@ import { createLocalBackend } from '../js/backend.js';
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
 const [id, lang = 'zh', seedArg = '36891', staffArg = '', itemArg = ''] = process.argv.slice(2);
-const D = await loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => lang, { drafts: true });
+const D = await loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => lang, { drafts: true, devStaff: true });
 const B = createLocalBackend(D);
-const staff = staffArg ? staffArg.split(',') : ['s_fan', 's_guilan', 's_somchai', 's_carlos', 's_samuel', 's_amara', 's_jeanluc'];
+// the reference employees, and the two test employees: King reads the floor of a story and V its ceiling
+const staff = staffArg ? staffArg.split(',') : ['s_fan', 's_guilan', 's_somchai', 's_carlos', 's_samuel', 's_amara', 's_jeanluc', 's_king', 's_v'];
 const items = Object.fromEntries(itemArg ? itemArg.split(',').map((x) => { const [k, n] = x.split(':'); return [k, Number(n)]; }) : []);
 const seed = Number(seedArg);
 const isEra = D.get('config.eras').includes(id);

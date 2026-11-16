@@ -26,7 +26,7 @@ function oracle(ev, staffId, seed, carried, stats) {
     if (k === 'job') return staff.jobs.some((j) => v.includes(j));
     if (k === 'gender') return D.get('staff.gender_class')[staff.gender] === v;
     if (k === 'item') return carried.includes(v);
-    if (k === 'provides') return carried.some((id) => items[id].provides.includes(v));
+    if (k === 'provides') return carried.some((id) => (items[id].provides || []).includes(v));
     if (k === 'luck') return draw(seed, 'scene_luck_' + JSON.stringify(req), ev.id) < Math.min(LK.max_chance, v * (LK.base + LK.per_point * stats.luck));
     if (k === 'any') return v.some(meets);
     throw new Error('unknown requirement ' + k);

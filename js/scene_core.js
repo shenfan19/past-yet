@@ -62,6 +62,8 @@ export function evalPoint(D, ev, i, ctx) {
   const v = {};
   for (const n of model.names) v[n] = 0;
   Object.assign(v, stats, { luck_base: L.base, luck_per: L.per_point, luck_max: L.max_chance });
+  // V, the test employee of dev_only max, has every trait, every job and every gender a point can ask for
+  if (staff.dev_only === 'max') for (const n of model.names) if (/^(trait|job|gender|item|has)_/.test(n)) v[n] = 1;
   for (const t of staff.traits) v['trait_' + t] = 1;
   for (const j of staff.jobs) v['job_' + j] = 1;
   v['gender_' + klass] = 1;

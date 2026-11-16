@@ -31,7 +31,12 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const LK = D.get('config.office.luck');
   // what an employee wears is kept in the game state, so the backend asks for it through a function the page sets
   let gearSource = () => [];
-  const gearOf = (staffId) => gearSource(staffId) || [];
+  // The test employees of the developer mode: V, dev_only max, carries every item and wears every implant, whatever was packed; King, dev_only min, carries and wears nothing.
+  const devKind = (staffId) => D.get('staff.staff')[staffId]?.dev_only || null;
+  const allItems = () => Object.fromEntries(Object.keys(D.get('items')).filter((id) => !D.get('items.' + id).implant).map((id) => [id, 1]));
+  const allImplants = () => Object.keys(D.get('items')).filter((id) => D.get('items.' + id).implant);
+  const gearOf = (staffId) => (devKind(staffId) === 'max' ? allImplants() : devKind(staffId) === 'min' ? [] : gearSource(staffId) || []);
+  const kitOf = (staffId, items) => (devKind(staffId) === 'max' ? allItems() : devKind(staffId) === 'min' ? {} : items);
   const luckFactor = (staffId, mood = null) => LK.base + LK.per_point * sim.staffAttrs(D, staffId, mood, gearOf(staffId)).luck;
   const rad = (x) => (x * Math.PI) / 180;
   const km = (a, b) => {
@@ -72,6 +77,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const HI = D.get('hiring');
   // a recall is only a request. Someone who has decided to stay does not come, and for anyone else the refusal is a roll at the base chance
   function recallRefused(staffId, seed, outcomeId) {
+    if (D.get('staff.staff')[staffId]?.dev_only) return false;
     if (outcomeId === HI.recall.stay_outcome) return true;
     return draw(seed, 'recall_refuse', staffId) < HI.recall.refuse_base;
   }
@@ -137,6 +143,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // a point that was missed is still reached with the chance of the bonus, and a negative bonus loses a point that was reached. The draw is seeded.
   const traitBonus = (staffId, kind) => D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).points[kind] || 0), 0);
   function applyBonus(points, kinds, staffId, seed, key) {
+    // a test employee is read on the requirements alone, so the same story gives the same stars every time
+    if (devKind(staffId)) return points;
     return points.map((p, i) => {
       const b = traitBonus(staffId, kinds[i]);
       const r = draw(seed, 'bonus_' + key + '_' + p.id, 0);
@@ -148,12 +156,14 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // A scene: three points the traveller meets or does not by what they are, and what they carry. Being found out costs stars, rest and favor.
   const SC = D.get('config.scene');
   // what the traveller has on in a scene: the attributes after the items, the items that count, and how much of it shows
-  function sceneKit(staffId, items, favor) {
+  function sceneKit(staffId, items0, favor) {
+    const items = kitOf(staffId, items0);
     const gear = gearOf(staffId);
     const stats = { ...sim.staffAttrs(D, staffId, favor, gear) };
     const carried = [...new Set([...Object.entries(items || {}).filter(([id, n]) => n > 0 && D.get('items.' + id).scene).map(([id]) => id), ...gear])];
     let exposure = 0;
-    for (const id of carried) {
+    // V carries everything and is never the weaker for it: nothing shows and no item takes from the attributes
+    if (devKind(staffId) !== 'max') for (const id of carried) {
       const it = D.get('items.' + id);
       exposure += it.exposure;
       for (const [k, m] of Object.entries(it.stat_mult || {})) stats[k] *= m;

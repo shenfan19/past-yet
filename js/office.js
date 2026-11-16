@@ -15,6 +15,9 @@ export function createOffice(X) {
   const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 
   const hiredIds = () => Object.keys(S().staff).filter((id) => S().staff[id].hired);
+  // the test employees of the developer mode, King and V, take no wage, keep their mood, rest no day and are always recalled
+  const isDev = (id) => !!D.get('staff.staff')[id]?.dev_only;
+  const paidIds = () => hiredIds().filter((id) => !isDev(id));
   // only one employee can be in a place at a time, the simulation cannot yet hold two travellers in one place
   const ST = D.get('config.stars');
   const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
@@ -274,10 +277,10 @@ export function createOffice(X) {
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
-    sf.restUntil = day() + d.paid.restDays;
+    sf.restUntil = isDev(d.spec.staffId) ? day() : day() + d.paid.restDays;
     const delta = (d.light || d.evacuation ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId]) + (d.report.extraFavor || 0);
     d.favorDelta = delta > 0 ? delta * (1 + p.favor_gain) : delta;
-    sf.favor = clamp(sf.favor + d.favorDelta, F.min, F.max);
+    if (!isDev(d.spec.staffId)) sf.favor = clamp(sf.favor + d.favorDelta, F.min, F.max);
     const aim = secretaryAim();
     if (d.auto && aim) {
       const R = A.secretary_rules;
@@ -294,7 +297,7 @@ export function createOffice(X) {
   }
 
   // A reward costs the wage of F.gift_days days of that person, and lifts the mood by F.gift_gain.
-  const giftCost = () => Math.round(F.gift_days * wageOf(hiredIds().length) / Math.max(1, hiredIds().length));
+  const giftCost = () => Math.round(F.gift_days * wageOf(paidIds().length) / Math.max(1, paidIds().length));
   function gift(id) {
     const s = S();
     const cost = giftCost();
@@ -454,7 +457,7 @@ export function createOffice(X) {
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
-    sf.restUntil = day() + d.paid.restDays;
+    sf.restUntil = isDev(d.spec.staffId) ? day() : day() + d.paid.restDays;
     sf.favor = clamp(sf.favor - RC.favor_loss, F.min, F.max);
     d.favorDelta = -RC.favor_loss;
     record(d);
@@ -550,14 +553,14 @@ export function createOffice(X) {
   const W = O.wage;
   // The wage of the whole staff of n people: the more of them, the more each costs, so the upkeep grows faster than the staff.
   const wageOf = (n) => n * W.base * (1 + W.step * (n - 1));
-  const wageTotal = () => wageOf(hiredIds().length);
+  const wageTotal = () => wageOf(paidIds().length);
   // Settles every whole day that has passed since the last payment. What cannot be paid is not owed: the funds go to nothing and the staff lose favor.
   function payWages() {
     const s = S();
     if (s.wageDay == null) s.wageDay = Math.floor(day());
     while (Math.floor(day()) > s.wageDay) {
       s.wageDay += 1;
-      const ids = hiredIds();
+      const ids = paidIds();
       const due = wageTotal();
       if (s.funds >= due) { s.funds -= due; continue; }
       s.funds = 0;
@@ -568,7 +571,7 @@ export function createOffice(X) {
 
   // ---------- clock ----------
   // The speed the clock really runs at: when the funds pay fewer than low_funds_days days of wages it is held to low_funds_speed.
-  const lowFunds = () => hiredIds().length > 0 && S().funds < C.low_funds_days * wageTotal();
+  const lowFunds = () => paidIds().length > 0 && S().funds < C.low_funds_days * wageTotal();
   const effectiveSpeed = () => { const sp = S().clock.speed; return lowFunds() ? Math.min(sp, C.low_funds_speed) : sp; };
   // While a pop-up is open the clock stands still, and the speed that was set comes back when it closes.
   function holdClock() {
@@ -728,7 +731,8 @@ export function createOffice(X) {
     restock();
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
     const stories = D.get('catalog.events').filter((e) => !e.era).map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
-    for (const staffId of hiredIds()) {
+    // the automatic mode sends the paid staff only, never the test employees
+    for (const staffId of paidIds()) {
       if (staffState(staffId) !== 'ready') continue;
       const free = [...eras, ...stories].filter((id) => !eraBusy(id));
       if (!free.length) break;

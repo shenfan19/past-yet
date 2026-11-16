@@ -53,7 +53,7 @@ export function createSettingsPage(X) {
   }
 
   function exportSave() {
-    const blob = new Blob([JSON.stringify(ctx.S(), null, 1)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(ctx.saved(), null, 1)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = D.get('config.save.key') + '.json';

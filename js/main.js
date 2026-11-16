@@ -25,7 +25,28 @@ const D = await loadData(async (p) => {
   const res = await fetch(p, { cache: 'no-cache' }); // always ask the server whether the data changed, so a rebuilt playlist is never hidden by the browser cache
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();
-}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev || new URLSearchParams(location.search).has('drafts') ? true : undefined });
+}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev || new URLSearchParams(location.search).has('drafts') ? true : undefined, devStaff: dev });
+
+// The test employees, King and V, cards with dev_only: they are in the agency only with ?devtools, and never in a save,
+// so a save written in the developer mode still opens in the normal game, and the normal game never shows them.
+const staffCards = D.get('staff.staff');
+const DEV_STAFF = Object.keys(staffCards).filter((id) => staffCards[id].dev_only);
+const devIds = DEV_STAFF;
+const devStaffEntry = () => ({ restUntil: 0, gear: [], hired: true, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} });
+// a save as it is written: without the test employees and what they did
+function withoutDevStaff(S) {
+  if (!DEV_STAFF.length) return S;
+  const out = { ...S, staff: Object.fromEntries(Object.entries(S.staff).filter(([id]) => !DEV_STAFF.includes(id))) };
+  out.dispatches = (S.dispatches || []).filter((d) => !DEV_STAFF.includes(d.spec?.staffId));
+  out.trips = (S.trips || []).filter((t) => !DEV_STAFF.includes(t.staffId));
+  if (DEV_STAFF.includes(S.secretary)) out.secretary = null;
+  return out;
+}
+// the test employees join a save read in the developer mode, always hired and ready
+function withDevStaff(S) {
+  for (const id of devIds) S.staff[id] ||= devStaffEntry();
+  return S;
+}
 
 document.documentElement.lang = D.lang;
 document.title = [D.get('text.ui.title'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');
@@ -62,7 +83,7 @@ function fresh() {
     founder,
     // trips: the log of finished trips, made with the save so a cleared save renders like a new one
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [], trips: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id) || id === founder.id, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
+    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id) || id === founder.id || devIds.includes(id), favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
@@ -100,7 +121,7 @@ function fits(S) {
     const staff = D.get('staff.staff');
     return S.locks.every((id) => id in antiques) && S.antiques.every((id) => id in antiques) && S.visited.every((id) => places.has(id))
       && S.dispatches.every((d) => places.has(d.eraId) && d.spec.staffId in staff)
-      && Object.keys(S.staff).length === Object.keys(staff).length && Object.keys(S.staff).every((id) => id in staff)
+      && Object.keys(S.staff).filter((id) => !DEV_STAFF.includes(id)).length === Object.keys(staff).filter((id) => !DEV_STAFF.includes(id)).length && Object.keys(S.staff).every((id) => id in staff)
       && (!S.startStaff || S.startStaff.offer.every((id) => id in staff));
   } catch (e) { return false; }
 }
@@ -119,7 +140,7 @@ function load() {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const S = JSON.parse(raw);
-      if (S.version === VERSION && fits(S)) { S.calendarStart ||= new Date().toISOString().slice(0, 10); return updateUnfinishedCrew(S); }
+      if (S.version === VERSION && fits(S)) { S.calendarStart ||= new Date().toISOString().slice(0, 10); return withDevStaff(updateUnfinishedCrew(S)); }
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);
@@ -134,17 +155,19 @@ const ctx = {
   settings,
   audio: createAudio(D, settings),
   S: () => S,
+  // the save as it is written and exported, without the test employees
+  saved: () => withoutDevStaff(S),
   now: () => Date.now(),
   backend,
   era: (id) => backend.eraInfo(id),
   eraSource: (id) => D.get('era_src.' + id),
   save() {
-    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage may be blocked, the game still runs */ }
+    try { localStorage.setItem(KEY, JSON.stringify(withoutDevStaff(S))); } catch (e) { /* storage may be blocked, the game still runs */ }
   },
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
     if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches) || !fits(obj)) { if (S && S.founder) applyFounder(D, S.founder); return false; }
-    S = updateUnfinishedCrew(obj);
+    S = withDevStaff(updateUnfinishedCrew(obj));
     this.save();
     return true;
   },
