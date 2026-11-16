@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.1, 2026-11-16
+
+- The record is plainer: no frame around the lines of the employee on a wide screen, a light ground on a narrow one where both sides stand right of the axis, and one emphasis only, a won star; the lighter steps and the heavier facts are gone.
+
 ## 0.9.0, 2026-11-16
 
 - The record runs around a time axis: the date on the axis, history on the left, the employee on the right in a bubble, a won star with a gold edge and the steps of getting there and away set lighter; the buttons are all, history and the employee again.

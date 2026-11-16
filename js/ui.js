@@ -760,8 +760,6 @@ export function createUI(D, ctx, DEV = false) {
       title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
       sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
       timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
-      // a fact written with care, a death or an illness, is a turn of the story and is set heavier in the record
-      factKey: (fact) => !!(fact && EF && EF.facts.find((f) => f.id === fact)?.level === 'careful'),
       saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
@@ -781,10 +779,7 @@ export function createUI(D, ctx, DEV = false) {
     const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
     const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
     const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
-    // Three weights, so the eye has somewhere to land: heavy for a won star and a turn of the story, light for the steps of getting there and away,
-    // and the plain weight for the rest. History and the employee are told apart by their side of the time axis.
-    const LIGHT = ['arrive', 'journey', 'leave'];
-    const weightOf = (t) => (t.star || (t.tag === 'history' && S.factKey?.(t.fact)) || (t.kind === 'point_fail' && cur.report.outcomeId === 'desync') ? 'heavy' : LIGHT.includes(t.kind) && cur.report.outcomeId !== 'desync' ? 'light' : 'plain');
+    // the one emphasis of the record is a won star; every other line has the same weight, and history and the employee are told apart by their side of the axis
     // the date goes to a column of its own: the lead of the sentence up to its first comma, when it reads as a date or a day of the stay
     const splitLead = (text) => {
       const m = String(text).match(/^([^，。：,:;]{1,24}?)(，|：|, |: )/);
@@ -799,7 +794,7 @@ export function createUI(D, ctx, DEV = false) {
       const refs = lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : '';
       const why = DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : '';
       const body = `${t.star ? '<span class="starmark">★</span> ' : ''}${esc(rest)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}`;
-      return `<li class="${lineKind(t)} w-${weightOf(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}">${cell(lineKind(t) === 'history' ? 'l' : 'r', body).replace('%W', esc(lead))}</li>`;
+      return `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}">${cell(lineKind(t) === 'history' ? 'l' : 'r', body).replace('%W', esc(lead))}</li>`;
     };
     const accepted = cur.report.journey?.accepted !== false;
     const summaryNote = accepted && S.modelNote ? sup([noteOf('model', S.modelNote)]) : '';
@@ -809,11 +804,11 @@ export function createUI(D, ctx, DEV = false) {
     // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
     const via = S.anchor && D.get('antiques.antiques.' + S.anchor)?.kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
     // the lines of the office, set out like the others: the date in its column, the sentence beside it
-    const officeLi = (text, extra, weight) => { const [lead, rest] = splitLead(text); return `<li class="travel w-${weight}">${cell('r', esc(rest) + extra).replace('%W', esc(lead))}</li>`; };
-    const departLine = officeLi(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place), S.sources, 'plain');
-    const backLine = officeLi(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff), summaryNote, 'plain');
+    const officeLi = (text, extra) => { const [lead, rest] = splitLead(text); return `<li class="travel">${cell('r', esc(rest) + extra).replace('%W', esc(lead))}</li>`; };
+    const departLine = officeLi(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place), S.sources);
+    const backLine = officeLi(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff), summaryNote);
     const fd = cur.favorDelta || 0;
-    const restLine = officeLi((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff), '', 'light');
+    const restLine = officeLi((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff), '');
     let lastYear = S.year;
     const record = S.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
     const tl = yearLine(nowYear) + departLine + yearLine(S.year) + record + yearLine(backYear) + backLine + restLine;
