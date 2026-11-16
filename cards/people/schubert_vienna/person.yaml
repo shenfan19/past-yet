@@ -2,20 +2,23 @@ order: 170
 events:
   schubert_vienna:
     order: 113
+    build_step: 2
     year: 1828
+    date: '1828-03-12'
+    stay: 7
     lon: 16.37
     lat: 48.2
     region: europe
     field: music
     tier: 2
     channels: {W: 2, G: 1}
-    regret: true
-    refs: [schubert_vienna_programme]
+    refs: [schubert_vienna_programme, schubert_vienna_performance_documents, schubert_probst_1828, schubert_trio_live_document, schubert_first_edition]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["handy","quiet"]},{"trait":["scholarly","skeptical","methodical"]}]}}
-        - {id: p2, kind: trust, req: {"any":[{"trait":["artistic","charismatic"]},{"trait":["charismatic","kind","artistic"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["faithful","calm","cheerful"]},{"job":["musician"]},{"trait":["calm","patient","faithful"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"trait":["methodical","charismatic"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 15, req: {"any":[{"job":["musician","archivist"]},{"trait":["methodical","artistic","patient"]}]}}
+        - {id: p3, kind: persuade, day: 203, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"job":["archivist","translator"],"stat":{"wit":7,"will":7}}]}}
       vignettes:
         - {id: timing, traits: [methodical, quiet]}
         - {id: memory, traits: [bold, charismatic]}
@@ -29,9 +32,24 @@ events:
         relic: "A song manuscript"
         relic_desc: "A song in a quick hand with the ink still dark."
         points:
-          p1: 'Read the printed programme and mark where the next piece starts'
-          p2: 'Guide a late arrival to a seat without stopping the music'
-          p3: 'Stay for the last piece and return the seat list'
+          p1: 'Get the volunteer players and the society''s hall onto the same evening and protect Schubert''s own concert'
+          p2: 'While the Trio''s performance is still fresh, give the interested publisher a record of the pieces the audience heard'
+          p3: 'Turn the inquiry into an agreement while Schubert can still settle publication and the dedication for his last three sonatas'
+        points_fail:
+          p1: 'The players and the available hall are booked for different days. The friends'' concert is canceled, and the office recalls the employee after a loss of sync.'
+          p2: 'The publisher hears that the concert went well but cannot tell which version of the Trio was played.'
+          p3: 'The inquiry is left waiting for a reply. The sonatas appear years after his death with a different dedication.'
+        shift:
+          p1:
+            was: 'On 26 March 1828 Schubert gave a Vienna concert of his own music with help from friends and performers.'
+          p2:
+            was: 'After the March 1828 concert Schubert offered the Trio to publishers and referred to its reception.'
+            now: '{staff} has the players check the parts used that evening and leaves Schubert a list he can compare with what he sends to the publisher.'
+          p3:
+            was: 'On 2 October 1828 Schubert offered his final three sonatas and named his intended dedicatee. They were first published in 1839.'
+            now: '{staff} gets all three scores and the dedication sent together and asks for written confirmation. Schubert receives it while he is alive, and the dedication stays with the music.'
+            who: schubert_vienna
+            bio: 'Schubert received a publication commitment for his final sonatas before his death. Their later printers followed the dedication he had chosen.'
         vignettes:
           timing: 'The usher wants to open the door as soon as the visitor comes. You count the pieces on the programme and ask them both to wait for the next pause. One person finds a seat and the musicians play on. You hear the ending from the corridor.'
           memory: 'You tell the usher that people will look for this invitation long after the chairs are gone. He asks you to keep a clean copy away from the door. You put it aside and pencil the date on your own note. By the time you return, you have missed the opening.'
@@ -44,9 +62,24 @@ events:
         relic: "一份歌曲手稿"
         relic_desc: "一首运笔很快的歌，墨迹还很深。"
         points:
-          p1: '读懂节目单，标出下一首从哪儿开始'
-          p2: '不打断演奏，把迟到的听众领到座位'
-          p3: '留到最后一首，把座位纸交回'
+          p1: '把临时凑到的演奏者和音乐协会的场地约到同一晚，护住舒伯特自己的音乐会'
+          p2: '趁三重奏得到掌声，把观众想再听的曲目按原谱记给有意付印的出版人'
+          p3: '把出版问询变成可交稿的约定，让舒伯特赶得及为最后三首钢琴奏鸣曲定下出版与题献'
+        points_fail:
+          p1: '出场的人和空出的场地错了日期，靠朋友帮忙才排成的音乐会取消。行程同步失败，员工被召回。'
+          p2: '出版人只知道音乐会成功，不知道台上弹过三重奏的哪一版。'
+          p3: '来信仍停在等回音的阶段，三首奏鸣曲在他去世多年后才出版，题献也换了人。'
+        shift:
+          p1:
+            was: '1828 年 3 月 26 日，舒伯特获朋友和演奏者协助，在维也纳以自己的作品举办专场音乐会。'
+          p2:
+            was: '1828 年 3 月音乐会后，舒伯特向出版商推荐三重奏，并提及音乐会反响。'
+            now: '{staff}请演奏者核对当晚的声部谱，再为舒伯特留一份能同寄稿核对的曲目和版本清单。'
+          p3:
+            was: '1828 年 10 月 2 日舒伯特致函推荐最后三首奏鸣曲并提出题献意愿，三曲直到 1839 年才刊印。'
+            now: '{staff}帮舒伯特把三份谱和题献要求随交稿清单送出，请出版方先回一封能核对的确认。舒伯特生前收到了确认，题献随乐谱保留。'
+            who: schubert_vienna
+            bio: '舒伯特生前为最后三首奏鸣曲留下了出版确认与题献说明。后来付印的人沿用他亲自留下的要求。'
         vignettes:
           timing: '引座人见客人一到就想开门。你照节目单数过曲目，请两人等到下一次停顿。迟到的人找到座位，台上接着演。末尾那一段，你站在走廊里听完。'
           memory: '你告诉虚构的引座人，多年后人们还会找这张请柬，到时这些椅子早就不在了。他请你留一张没折的。你收到一边，在自己的纸条上记下日期。回来时，开场已经过去。'
@@ -75,6 +108,29 @@ bystanders:
     text: {en: 'A fictional usher with one empty chair marked on the seat list.', zh: '虚构的引座人，座位纸上还有一把椅子待安排。'}
 wiki:
   refs:
+    schubert_vienna_performance_documents:
+      order: 852
+      status: checked
+      text:
+        en: 'Cambridge University Press, Schubert’s Beethoven Project, chronological performance list. https://assets.cambridge.org/97805216/50878/excerpt/9780521650878_excerpt.pdf'
+        zh: '剑桥大学出版社，《舒伯特的贝多芬计划》，作曲与演出年表。 https://assets.cambridge.org/97805216/50878/excerpt/9780521650878_excerpt.pdf'
+    schubert_probst_1828:
+      order: 853
+      status: checked
+      text:
+        en: 'Music & Letters, Studying with Sechter, discussion of Schubert’s 2 October 1828 letter to Probst. https://www.academia.edu/31415403/_Studying_with_Sechter_Newly_Recovered_Reminiscences_about_Schubert_by_his_Forgotten_Friend_the_Composer_Joseph_Lanz_in_Music_and_Letters_88_2_May_2007_226_265)'
+        zh: '《音乐与书信》，《跟随塞希特学习》，舒伯特 1828 年 10 月 2 日致出版人的信。 https://www.academia.edu/31415403/_Studying_with_Sechter_Newly_Recovered_Reminiscences_about_Schubert_by_his_Forgotten_Friend_the_Composer_Joseph_Lanz_in_Music_and_Letters_88_2_May_2007_226_265)'
+    schubert_trio_live_document:
+      order: 854
+      status: checked
+      text:
+        en: 'Cambridge University Press, concert accounts and Schubert’s proposals to publishers. https://www.cambridge.org/core/publications/publishing-partners/boydell-brewer/listing?pageNum=1170'
+        zh: '剑桥大学出版社，舒伯特音乐会的日记、书信和出版邀约。 https://www.cambridge.org/core/publications/publishing-partners/boydell-brewer/listing?pageNum=1170'
+    schubert_first_edition:
+      order: 5
+      text:
+        en: 'Austrian National Library first edition of D. 958, published by Diabelli in 1839. https://schubert-digital.acdh-dev.oeaw.ac.at/SP-00588.html'
+        zh: '奥地利国家图书馆所藏迪亚贝利 1839 年 D. 958 初版。 https://schubert-digital.acdh-dev.oeaw.ac.at/SP-00588.html'
     schubert_vienna_programme:
       order: 478
       status: checked

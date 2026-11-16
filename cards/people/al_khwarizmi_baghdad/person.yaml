@@ -2,6 +2,7 @@ order: 15
 events:
   al_khwarizmi_baghdad:
     order: 172
+    build_step: 2
     year: 830
     lon: 44.4
     lat: 33.31
@@ -9,13 +10,13 @@ events:
     field: math
     tier: 2
     channels: {V: 1, H: 1}
-    regret: true
-    refs: [al_khwarizmi_baghdad_primary]
+    refs: [al_khwarizmi_baghdad_primary, al_khwarizmi_baghdad_library_book, al_khwarizmi_baghdad_printed_preface, al_khwarizmi_baghdad_transmission]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"any":[{"stat":{"will":7}},{"job":["archivist"]}]}}
-        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","streetwise"]},{"job":["teacher"]}]}}
-        - {id: p3, kind: notice, redeem: true, req: {"any":[{"trait":["skeptical","handy"]},{"job":["journalist"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["archivist","tutor","accountant"]},{"trait":["curious","scholarly"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 39, req: {"any":[{"job":["archivist","tutor","proofreader"]},{"trait":["curious","scholarly","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 69, req: {"any":[{"job":["archivist","tutor"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: balance, traits: [methodical, scholarly]}
         - {id: tiles, traits: [handy, curious]}
@@ -29,9 +30,24 @@ events:
         relic: "A sheet of worked equations"
         relic_desc: "A sheet of sums solved step by step with squares and roots."
         points:
-          p1: 'Follow a worked calculation step by step'
-          p2: 'Explain one change with the learner''s own example'
-          p3: 'Check the result against the starting problem'
+          p1: 'At the Baghdad handover, keep the practical examples with the text that explains how to put a calculation in order'
+          p2: 'Ask a shop apprentice to solve a proportion example. Find the step most likely to go wrong while turning an account into a problem'
+          p3: 'Leave copyists a reference volume that links examples to the parts of the text they use. Ask readers who have tried an example to flag any omissions'
+        points_fail:
+          p1: 'The copy has the calculations but lacks the applications. The compilation cannot be handed over intact, and the office recalls the employee.'
+          p2: 'The apprentice copies a result. Faced with a different account, they still cannot tell which quantities to compare.'
+          p3: 'The next group of copies carries the mathematical chapters alone. Readers trying to divide property have no worked example to consult.'
+        shift:
+          p1:
+            was: 'Al-Khwarizmi compiled his book on calculation around 830. Its preface names trade, land measurement and division of property among its uses.'
+          p2:
+            was: 'The book contains transaction problems involving proportion, as well as practical geometry and other topics.'
+            now: 'The author clarifies the line where the apprentice stopped. Another reader can try the corrected example against a different account.'
+          p3:
+            was: 'Later manuscripts and translations vary. Some omit parts of the material on practical applications.'
+            now: 'A cross-referenced copy stays available to apprentices and scribes. If someone copies an example on its own, its place in the whole can still be verified.'
+            who: al_khwarizmi_baghdad
+            bio: 'Al-Khwarizmi wrote about calculation for ordinary needs. Different parts of the book followed different paths through copying and translation.'
         vignettes:
           balance: 'You ask the learner to say the same change aloud on both sides. They stop before reaching the answer. The line that did not balance is now the one they can explain best.'
           tiles: 'You put small square tiles on the table as the learner reads. When the words begin to run together, the remaining shape shows which piece is still missing.'
@@ -44,9 +60,24 @@ events:
         relic: "一张演算过的方程"
         relic_desc: "一张逐步解出平方与根的演算纸。"
         points:
-          p1: '沿着算例一步步做下去'
-          p2: '用学算者自己的例子说明一步变化'
-          p3: '把结果放回原题核对'
+          p1: '在巴格达交抄时把实用例题与如何归整算式的正文合入同一册'
+          p2: '请识字的商铺学徒自己做完一个比例题，找出从账面转成可算的问题时最容易抄错的一项'
+          p3: '给后来的抄写人留一册把题例与它应用的正文相连的底本，让实际用过的读者也能指出抄漏'
+        points_fail:
+          p1: '抄成的纸只记录算式，没有后面的实用题，原拟成册的著作没能完整交出，事务所召回员工。'
+          p2: '学徒能跟着书抄结果，换一份账到手仍旧没找出哪些量相比较。'
+          p3: '后一批抄本只传数学正文，试着拿去算分割的人没有例子可查。'
+        shift:
+          p1:
+            was: '花剌子密约在 830 年编写《还原与对消计算概要》。作者序列举经商、测地和财物分配等用途。'
+          p2:
+            was: '书里确有比例交易及实用几何等不同类型的题目。'
+            now: '作者把学徒卡住的那一行补清楚，下一位读者可以用另一份账重算。'
+          p3:
+            was: '后世传抄和翻译时曾出现章节差异。某些传本没有保留全部实用部分。'
+            now: '一份有互见的完整本可留给学徒和抄写者核对。后来分抄时也能查到哪一段来自整体中的哪一类题。'
+            who: al_khwarizmi_baghdad
+            bio: '花剌子密编书时关心数学怎样用于日常问题。书在跨地域传抄与翻译时，部分内容的流传路径不同。'
         vignettes:
           balance: '你请学算者把两边各做了什么都说出来。他还没算到答案就停了下来。刚才最糊涂的那一步，这回他讲得最清楚。'
           tiles: '学算者照着念，你把几块方片摆在桌上。念到绕口处，剩下的形状正好让人看出还缺哪一块。'
@@ -75,6 +106,24 @@ bystanders:
     text: {en: 'An invented learner trying to explain a calculation aloud.', zh: '一位虚构的学算者，正试着把算式用话讲出来。'}
 wiki:
   refs:
+    al_khwarizmi_baghdad_library_book:
+      order: 10
+      status: checked
+      text:
+        en: 'Library of Congress manuscript record and approximate composition date https://www.loc.gov/resource/gdcwdl.wdl_07462/?sp=1&st=gallery'
+        zh: '美国国会图书馆手稿档案与成书估年 https://www.loc.gov/resource/gdcwdl.wdl_07462/?sp=1&st=gallery'
+    al_khwarizmi_baghdad_printed_preface:
+      order: 11
+      status: checked
+      text:
+        en: 'Rosen’s translation of the manuscript and author’s preface https://en.wikisource.org/wiki/Index%3AThe_Algebra_of_Mohammed_Ben_Musa_%281831%29.djvu'
+        zh: '罗森所译手稿与作者序 https://en.wikisource.org/wiki/Index%3AThe_Algebra_of_Mohammed_Ben_Musa_%281831%29.djvu'
+    al_khwarizmi_baghdad_transmission:
+      order: 12
+      status: checked
+      text:
+        en: 'Comparative research on lost and retained sections in different versions https://rucforsk.ruc.dk/ws/portalfiles/portal/4340050/manuscript.pdf'
+        zh: '各传本所留章节的比对研究 https://rucforsk.ruc.dk/ws/portalfiles/portal/4340050/manuscript.pdf'
     al_khwarizmi_baghdad_primary:
       order: 140
       status: checked

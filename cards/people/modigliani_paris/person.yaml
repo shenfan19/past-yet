@@ -2,20 +2,23 @@ order: 139
 events:
   modigliani_paris:
     order: 132
+    build_step: 2
     year: 1920
+    date: '1920-01-06'
+    stay: 3
     lon: 2.33
     lat: 48.86
     region: europe
     field: art
     tier: 2
     channels: {E: 2, T: 1, G: 2}
-    regret: true
-    refs: [modigliani_paris_portrait]
+    refs: [modigliani_paris_portrait, modigliani_paris_museum_chronology, modigliani_paris_estate_exhibitions, modigliani_paris_last_portraits]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"trait":["wanderer","skeptical"]},{"trait":["skeptical","scholarly","streetwise"]}]}}
-        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","streetwise"]},{"trait":["glib","scholarly","ambitious"]},{"trait":["streetwise"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["cheerful","patient","attached"]},{"trait":["cheerful","faithful","calm"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["archivist","painter","illustrator"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 27, req: {"any":[{"job":["archivist","painter","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 58, req: {"any":[{"job":["archivist","painter"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: line, traits: [artistic, curious]}
         - {id: reverse, traits: [methodical, handy]}
@@ -29,9 +32,24 @@ events:
         relic: "A charcoal stick"
         relic_desc: "A stub of charcoal black to the fingers."
         points:
-          p1: 'Pick out one feature that distinguishes the portrait from the other painting'
-          p2: 'Ask the attendant to pair each label with the right work'
-          p3: 'Keep the labels from coming loose while the paintings are covered'
+          p1: 'List the late paintings left in Modigliani’s Paris studio separately and give Zborowski a receipt he can check'
+          p2: 'Ask people from the studio to check sitters’ names and working titles separately, leaving unconfirmed cases open'
+          p3: 'Have Zborowski and potential lenders keep copies of the exhibition and return records. Discuss a small display first'
+        points_fail:
+          p1: 'Unmarked work leaves the studio during the clearing. Several pieces cannot be located for later display, and the office recalls the employee.'
+          p2: 'Similar labels are treated as the same person. Later witnesses cannot tell which painting they are being asked about.'
+          p3: 'Loan requests rely on what friends remember, and lenders receive no confirmation of the owner or return date.'
+        shift:
+          p1:
+            was: 'Modigliani died in January 1920. Zborowski subsequently handled work from his estate and organized exhibitions.'
+          p2:
+            was: 'He often painted people he knew. Collection research continues to compare the pictures and records to identify some sitters.'
+            now: 'The dealer keeps a list of identifications already verified. A new identification can be recorded with its evidence.'
+          p3:
+            was: 'Zborowski arranged Paris exhibitions in 1920. The artist had had few opportunities to exhibit during his life.'
+            now: 'A small list of loans is agreed earlier. Owners can see the return arrangements, and the venue can check how long the works are available.'
+            who: modigliani_paris
+            bio: 'Modigliani spent part of his last years painting portraits of people he knew in Paris. Dealers, collectors and exhibitions continued to circulate the work after his death.'
         vignettes:
           line: 'You recognise the angle of the head before the painting has been fully uncovered. The attendant compares it with your thumbnail sketch and moves one label to the other pile. You keep the pencil line. By the time there is room to see the whole face, the canvas has been covered again.'
           reverse: 'The labels come loose when the frames are set down. You copy one distinctive line from each portrait before the attendant covers them. Now both labels can be put back. An earlier owner’s handwriting stays unidentified.'
@@ -44,9 +62,24 @@ events:
         relic: "一截炭条"
         relic_desc: "一截能把手指染黑的炭条。"
         points:
-          p1: '从画面找出一处能与另一幅区分开的细节'
-          p2: '请帮工给每幅画配对纸签'
-          p3: '蒙画布时护住纸签，免得再散开'
+          p1: '把莫迪利亚尼最后留在巴黎工房的几幅画分开核点，给经手的兹博罗夫斯基交一份可查的单'
+          p2: '在交接时请画家身边的人分别核认坐画者和作品暂名，给仍不能肯定的情况留空'
+          p3: '给兹博罗夫斯基和愿出借画的人各留一份展品的资料和可归还的记录，先讨论小规模展出'
+        points_fail:
+          p1: '工房清理时有人拿走没有标名的画。经手人拿不到后续可展出的几件，事务所召回员工。'
+          p2: '几个相近的称谓混成了一个人。采访到熟人时已不知道该用哪幅画去问。'
+          p3: '邀请借画只能凭熟人转述，出借者迟迟等不到物主和归还期的说明。'
+        shift:
+          p1:
+            was: '莫迪利亚尼 1920 年 1 月去世，画商兹博罗夫斯基之后经手其遗作并继续安排展览。'
+          p2:
+            was: '他晚年主要画身边的人。馆藏研究仍需依据作品和记录核对部分画中的人物。'
+            now: '画商留了一张标明哪些身份已核实的表。新认出一幅时可以另补证据。'
+          p3:
+            was: '兹博罗夫斯基安排了 1920 年巴黎的多次展出。此前画家的展览机会有限。'
+            now: '小范围的出借清单提前准备好，各物主能查到如何取回自己的画，展场也有一份写明可借期限的清单。'
+            who: modigliani_paris
+            bio: '莫迪利亚尼晚年在巴黎画身边熟人的肖像。作品在他去世后经画商、藏家和展场继续流传。'
         vignettes:
           line: '画布还没完全揭开，你先认出了头偏向的角度。帮工对着你的小草图，把一张纸签挪到另一摞。你把那道铅笔线留在本子上。等你腾出位置好看整张脸，画又被蒙上了。'
           reverse: '画框刚放下，两张纸签就掉了。你趁帮工还没蒙布，各描一道最容易认出的线。这下两张签都能放回原处。纸角有一行前人写的字，仍不知是谁的笔迹。'
@@ -75,6 +108,24 @@ bystanders:
     text: {en: 'An invented studio attendant trying to match the labels before covering the paintings.', zh: '虚构的帮工，要在把画蒙起来之前配好纸签。'}
 wiki:
   refs:
+    modigliani_paris_museum_chronology:
+      order: 10
+      status: checked
+      text:
+        en: 'Ca’ Pesaro exhibition chronology of the return to Paris https://archivio-capesaro.visitmuve.it/en/mostre-en/archivio-mostre-en/a-modigliani-masterpiece-at-capesaro-la-femme-a-leventail-from-the-musee-dart-modernede-la-ville-de-paris/2011/07/958/amedeo-modigliani-1/'
+        zh: '佩萨罗宫展览所录巴黎行程 https://archivio-capesaro.visitmuve.it/en/mostre-en/archivio-mostre-en/a-modigliani-masterpiece-at-capesaro-la-femme-a-leventail-from-the-musee-dart-modernede-la-ville-de-paris/2011/07/958/amedeo-modigliani-1/'
+    modigliani_paris_estate_exhibitions:
+      order: 11
+      status: checked
+      text:
+        en: 'Archival study of Zborowski and the 1920 exhibitions https://www.modigliani-initiative.org/spotlight/gamechanger-bernheim-jeune'
+        zh: '兹博罗夫斯基与 1920 年展览档案研究 https://www.modigliani-initiative.org/spotlight/gamechanger-bernheim-jeune'
+    modigliani_paris_last_portraits:
+      order: 12
+      status: checked
+      text:
+        en: 'Albertina exhibition on the last portraits https://www.albertina.at/site/assets/files/9693/presskit_modigliani_en.pdf'
+        zh: '阿尔贝蒂娜博物馆晚期肖像展览 https://www.albertina.at/site/assets/files/9693/presskit_modigliani_en.pdf'
     modigliani_paris_portrait:
       order: 504
       status: checked

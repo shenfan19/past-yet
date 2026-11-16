@@ -2,6 +2,7 @@ order: 23
 events:
   aryabhata_patna:
     order: 70
+    build_step: 2
     year: 499
     lon: 85.14
     lat: 25.6
@@ -9,12 +10,13 @@ events:
     field: math
     tier: 2
     channels: {H: 2}
-    refs: [aryabhata_patna_circle]
+    refs: [aryabhata_patna_circle, aryabhata_patna_isaw_census, aryabhata_patna_dated_text]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: hold, req: {"job":["teacher","student"]}}
-        - {id: p3, kind: persuade, req: {"trait":["ambitious","streetwise","charismatic"]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","teacher","tutor"]},{"trait":["curious","scholarly"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 26, req: {"any":[{"job":["archivist","teacher","proofreader"]},{"trait":["curious","scholarly","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 52, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: scale, traits: [methodical, scholarly]}
         - {id: measure, traits: [handy, curious]}
@@ -28,9 +30,24 @@ events:
         relic: A palm-leaf of verses
         relic_desc: A thin leaf with verses scratched in.
         points:
-          p1: 'Reproduce all three operations in their order'
-          p2: 'Explain the starting diameter before passing on the result'
-          p3: 'Give the rope maker a worked example for a circle twice as wide'
+          p1: 'At Kusumapura, check that the mathematics and its dated passage are both present in the compilation'
+          p2: 'Have an apprentice use the verse to find a circumference and write down that it gives an approximation'
+          p3: 'Ask the author and a teacher to use one example to check when the approximation is enough. Copy it alongside the original verse'
+        points_fail:
+          p1: 'The rules are copied without the leaves recording the date. The office recalls the employee.'
+          p2: 'People remember the answer and omit the qualification when repeating it.'
+          p3: 'The verse survives separately from the exercise used to check the approximation.'
+        shift:
+          p1:
+            was: 'The Aryabhatiya names Kusumapura. Its chronological passage is conventionally read as 499 CE.'
+          p2:
+            was: 'The mathematics section gives a rule for circumference and describes it as approximate.'
+            now: 'The apprentice records both the diameter used and the approximation, so a different problem can be worked afresh.'
+          p3:
+            was: 'Several commentary traditions developed around the concise verses.'
+            now: 'Students circulate a copy with a worked example checked by the author. A later commentator can still distinguish the words of the verse.'
+            who: aryabhata_patna
+            bio: 'Aryabhata put astronomical and mathematical knowledge into concise verses. How dates, terms and examples traveled affected later readings.'
         vignettes:
           scale: 'The rope maker writes two diameters on the board but gives them the same circumference. You pair 20,000 with 62,832 and show him what scales when the diameter doubles. He changes one line. You take home the two pairs. The rope is still being measured when you go.'
           measure: 'You know the rule will outlast everyone in the workshop. The rope maker wants to know how to remember it while working. You write the three steps in separate lines. He gets the next trial right without asking which addition comes last. The rope itself is left for another day.'
@@ -43,9 +60,24 @@ events:
         relic: 一片棕榈叶经文
         relic_desc: 一片薄叶，上面刻着诗句。
         points:
-          p1: '按顺序算完三步'
-          p2: '传下结果之前说清直径取多少'
-          p3: '给制绳人做一道直径加倍的算例'
+          p1: '在拘苏摩补罗核齐《阿耶波多历数书》的数学篇和写有纪年的段落，让初编能成册'
+          p2: '请一位学徒照颂文算完圆周，再在答数旁写清取的是近似'
+          p3: '让作者和教习用一题检查近似何时足够，并把试讲用的算例与原颂合抄'
+        points_fail:
+          p1: '抄完的一组只见口诀，没有写年代的篇页，事务所因同步失败召回员工。'
+          p2: '人们记住了答数，复述时省掉近似的提示。'
+          p3: '短颂传下来了，课堂上用来检查近似的例子却不见了。'
+        shift:
+          p1:
+            was: '《阿耶波多历数书》提及拘苏摩补罗，纪年部分通常折为 499 年。'
+          p2:
+            was: '数学篇有一条求圆周的规则，传本文字表示这是近似值。'
+            now: '学徒写下用的是哪一个直径和哪一种近似，不同的问题可以照办法重算。'
+          p3:
+            was: '简练的颂文后来成为不同注释传统的对象。'
+            now: '一套供学习者传看的本子带有作者核过的例子。后来作注的人还能识别哪些词出自原颂。'
+            who: aryabhata_patna
+            bio: '阿耶波多用简短颂文组织历算知识。年代、术语和具体例子如何一同传递，影响后来怎样解释这部书。'
         vignettes:
           scale: '制绳人在板上写了两个直径，配的却是同一个圆周。你把 20,000 和 62,832 配在一行，再指给他看直径加倍时该把哪个数也翻倍。他改了一行，你把两组数字记下来。你走时，绳子还在量。'
           measure: '你知道这条口诀会比作坊里的人流传得久。制绳人问做活时该怎么记，你把三步各写一行。他重算一遍，没再问最后该加哪一个数。真正的绳子得留到另一天。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'A fictional rope maker needing the numbers in a form he can check at work.', zh: '虚构的制绳人，希望能边干活边核算。'}
 wiki:
   refs:
+    aryabhata_patna_isaw_census:
+      order: 10
+      status: checked
+      text:
+        en: 'Institute for the Study of the Ancient World census entry https://mc.dlib.nyu.edu/files/books/isaw_aphs000003/isaw_aphs000003_hi.pdf'
+        zh: '纽约大学古代世界研究所梵文科学文献目录 https://mc.dlib.nyu.edu/files/books/isaw_aphs000003/isaw_aphs000003_hi.pdf'
+    aryabhata_patna_dated_text:
+      order: 11
+      status: checked
+      text:
+        en: 'Government of India publication on the dated Aryabhatiya https://www.indiascienceandtechnology.gov.in/sites/all/themes/vigyan/pdf_file/newsletter_dreams_2047/1999/May1999English6.pdf'
+        zh: '印度科技史资料所录《阿耶波多历数书》纪年 https://www.indiascienceandtechnology.gov.in/sites/all/themes/vigyan/pdf_file/newsletter_dreams_2047/1999/May1999English6.pdf'
     aryabhata_patna_circle:
       order: 534
       status: checked

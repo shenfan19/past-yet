@@ -2,20 +2,23 @@ order: 156
 events:
   poe_baltimore:
     order: 120
+    build_step: 2
     year: 1849
+    date: '1849-09-20'
+    stay: 1
     lon: -76.61
     lat: 39.29
     region: americas
     field: literature
     tier: 2
     channels: {S: 2, T: 2}
-    regret: true
-    refs: [poe_baltimore_walker, poe_baltimore_death]
+    refs: [poe_baltimore_walker, poe_baltimore_death, poe_clemm_october_letter, poe_baltimore_chronology]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["handy","methodical","skeptical"]}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","ambitious"]}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["nurse","physician","doctor"],"stat":{"will":6}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 13.5, req: {"any":[{"job":["nurse","archivist"]},{"trait":["methodical","patient","vigil"]}]}}
+        - {id: p3, kind: care, day: 14, req: {"any":[{"job":["nurse","physician","doctor"],"stat":{"will":7}},{"trait":["methodical","patient"],"stat":{"wit":7,"will":7}}]}}
       vignettes:
         - {id: witness, traits: [methodical, skeptical]}
         - {id: dispatch, traits: [bold, charismatic, glib]}
@@ -29,9 +32,24 @@ events:
         relic: "A walking cane"
         relic_desc: "A plain cane with a worn handle."
         points:
-          p1: 'Check the recipient and the location on the request for help'
-          p2: 'Find someone who can take the note straight to its recipient'
-          p3: 'Keep the passage open for the people coming to help'
+          p1: 'Use the request for help to find someone who can get Poe from the tavern area to the hospital'
+          p2: 'Record where he was found, when he reached the hospital, and who brought him on one dated slip'
+          p3: 'Send word to the family before there is a diagnosis so Maria Clemm still has time to write back'
+        points_fail:
+          p1: 'The note goes into the crowd and no one comes in time to bring Poe to the hospital. The branch falls out of sync and the office recalls the employee.'
+          p2: 'Later recollections disagree about the time and date, with no contemporaneous admission record to check.'
+          p3: 'His family still expects him to come home, and Maria has to ask what happened after she reads of his death in the paper.'
+        shift:
+          p1:
+            was: 'On 3 October 1849 Poe was found in need of help. After a note was sent, he was taken to a hospital in Baltimore.'
+          p2:
+            was: 'In early October 1849 Poe was hospitalized in Baltimore. Later accounts differ on when he was admitted.'
+            now: '{staff} asks the receiving clerk and the people who brought him to confirm the time on one slip and records what they know without inferring a cause.'
+          p3:
+            was: 'Poe died in Baltimore on 7 October 1849. On 9 October Maria Clemm wrote that she had just learned of his death from the newspaper.'
+            now: '{staff} sends a brief account of what the hospital knows and provides an address where the family can write back. An answer reaches the hospital before Poe dies.'
+            who: poe_baltimore
+            bio: 'During Poe''s last days his family knew where he was and got their reply to the hospital.'
         vignettes:
           witness: 'A print-shop helper has heard three reasons for the man''s condition. You ask which one he saw. He can give you a place and one man''s name. On the spare slip you keep those two details. Four days later there will still be people filling in the rest.'
           dispatch: 'The print-shop helper wants to wait for someone who knows Poe. You send him with the address he already has. He comes back able to say the note reached the right door. You keep the route on a scrap. He has nothing to tell you about the days before that afternoon.'
@@ -44,9 +62,24 @@ events:
         relic: "一根手杖"
         relic_desc: "一根朴素的手杖，握柄已被磨旧。"
         points:
-          p1: '核对求助条要送给谁、人在何处'
-          p2: '找一个能把纸条直接送到收信人手里的人'
-          p3: '给前来帮忙的人留出通道'
+          p1: '凭求助条尽快找到能接应的人，护住坡从酒馆附近到医院的那段路'
+          p2: '在送院时把发现地点、送达时刻和经手人记在同一张单上'
+          p3: '让通知亲属的信在诊断未明时就发出去，给玛丽亚·克莱姆一次及早回信的机会'
+        points_fail:
+          p1: '求助递进人群里就断了，没有人赶到接他进医院。行程同步失败，员工被召回。'
+          p2: '事后几个回忆说法的日期和时刻合不起来，没有同一份当日记录可以核对。'
+          p3: '家里继续等他自行回来，玛丽亚只能在报上读到噩耗后再打听他出了什么事。'
+        shift:
+          p1:
+            was: '1849 年 10 月 3 日，有人发现坡急需帮助，写条求援后，坡被送到巴尔的摩的医院。'
+          p2:
+            was: '1849 年 10 月上旬坡在巴尔的摩住院，此后回忆对送达的日期与时刻有出入。'
+            now: '{staff}请接诊方和送来的人在同一张纸上各自确认时间，只记经过，不推断发病原因。'
+          p3:
+            was: '1849 年 10 月 7 日坡在巴尔的摩去世，10 月 9 日玛丽亚·克莱姆写信说刚从报上得知。'
+            now: '{staff}先按院方能确认的情况代发短讯，再留地址让家人直接问到病房。坡去世前已有亲属的回函送到。'
+            who: poe_baltimore
+            bio: '坡在巴尔的摩最后几天，家里及时知道他在哪里，并把回函送到了医院。'
         vignettes:
           witness: '印刷铺帮工听了三种说法。你问他哪一种是亲眼见的。他能说准一个地点、一个人名。你在备用纸条上只留这两项。四天后，仍有人试着把空下的地方填满。'
           dispatch: '印刷铺帮工想等个认识坡的人来。你请他先按已有的地址跑一趟。他回来时，能说清纸条已经送对了门。你把路记在纸角。至于那天下午以前发生过什么，他也说不上来。'
@@ -84,6 +117,18 @@ bystanders:
     text: {en: 'A fictional print-shop helper who can find an address but has only heard the rumours second-hand.', zh: '虚构的印刷铺帮工，认得路，所听传言都是转述。'}
 wiki:
   refs:
+    poe_clemm_october_letter:
+      order: 855
+      status: checked
+      text:
+        en: 'U.S. National Park Service, Maria Poe Clemm, letter to Neilson Poe on 9 October 1849. https://www.nps.gov/people/poe-mariaclemm.htm'
+        zh: '美国国家公园管理局，玛丽亚·坡·克莱姆 1849 年 10 月 9 日书信。 https://www.nps.gov/people/poe-mariaclemm.htm'
+    poe_baltimore_chronology:
+      order: 856
+      status: checked
+      text:
+        en: 'Edgar Allan Poe Society of Baltimore, documented October 1849 chronology. https://www.eapoe.org/geninfo/poechron.htm'
+        zh: '巴尔的摩爱伦·坡学会，1849 年 10 月史料年表。 https://www.eapoe.org/geninfo/poechron.htm'
     poe_baltimore_walker:
       order: 408
       status: checked

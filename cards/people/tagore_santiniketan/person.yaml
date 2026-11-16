@@ -2,19 +2,23 @@ order: 186
 events:
   tagore_santiniketan:
     order: 82
+    build_step: 2
     year: 1913
+    date: '1913-11-01'
+    stay: 3
     lon: 87.68
     lat: 23.68
     region: asia
     field: literature
     tier: 2
     channels: {H: 1}
-    refs: [tagore_santiniketan_translation, tagore_santiniketan_award]
+    refs: [tagore_santiniketan_translation, tagore_santiniketan_award, tagore_1913_santiniketan_reception, tagore_nobel_school]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["handy","curious","scholarly"]},{"job":["musician"]}]}}
-        - {id: p2, kind: trust, req: {"trait":["kind","artistic","sensitive","patient"]}}
-        - {id: p3, kind: hold, req: {"any":[{"job":["teacher"]},{"trait":["faithful"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["journalist","translator"]},{"trait":["methodical","scholarly","patient"]}]}}
+        - {id: p3, kind: persuade, day: 44, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: headline, traits: [bold, charismatic]}
         - {id: pause, traits: [methodical, artistic]}
@@ -28,9 +32,24 @@ events:
         relic: A hand-copied songbook
         relic_desc: A small book of songs in his own hand.
         points:
-          p1: 'Check which handout is Tagore’s English rendering'
-          p2: 'Make room for a second reading in the other language'
-          p3: 'Keep the two reading sheets together for the next class'
+          p1: 'Keep a place for Tagore to reply in person when the reception grows crowded'
+          p2: 'Give the school a full account of a speech that might otherwise circulate as one sentence'
+          p3: 'While congratulations are still arriving, help Tagore turn some of the goodwill into regular gifts of books for the school'
+        points_fail:
+          p1: 'The crowd overwhelms the schedule. The organizers read their congratulations and close the gathering without a reply. The branch falls out of sync and the employee is recalled.'
+          p2: 'The guests carry away the most disputed line, and the school has nothing fuller to show people who were absent.'
+          p3: 'Most letters are filed once the ceremony ends, and the school adds books slowly from the funds it already has.'
+        shift:
+          p1:
+            was: 'On 23 November 1913 visitors reached the area by special train, and Tagore replied at the celebration at his school in Santiniketan.'
+          p2:
+            was: 'At the November 1913 reception, some visitors were disappointed by Tagore''s reply.'
+            now: '{staff} leaves the organizers a record with the surrounding remarks intact and has the school use it to answer inquiries in his own words.'
+          p3:
+            was: 'After the 1913 prize, Tagore used some of the prize money to support his Santiniketan school.'
+            now: '{staff} asks willing correspondents to make regular gifts and lets teachers choose books. The prize funds are used as Tagore planned, and the school gains a separate source of support.'
+            who: tagore_santiniketan
+            bio: 'Tagore turned some of the interest following his prize into regular gifts for the school. Teachers could keep its books aligned with what they taught.'
         vignettes:
           headline: 'You tell a student helping with the reading that the prize will bring readers who know only the English. The student asks which sheet they will reach for first. You leave both on the desk and label the English as the author’s rendering. You have time to hear only the first reading.'
           pause: 'The student keeps stopping at the ends of the printed lines. You read a sentence aloud and mark one pause that comes earlier. The next reader gets through the whole thought. You keep a copy of the marked sheet, but leave before you can hear how the other version sounds.'
@@ -43,9 +62,24 @@ events:
         relic: 一本手抄的歌集
         relic_desc: 一本小小的歌本，是他的亲笔。
         points:
-          p1: '确定哪张讲义是泰戈尔本人译写的英文'
-          p2: '请读诗小组用另一种语言再读一遍'
-          p3: '把两份朗读稿留给下一班'
+          p1: '在接待临时挤满人时给泰戈尔留出亲自发言的时段，让来访者听到他的答辞'
+          p2: '把容易被只摘一句的答辞送给校方留全稿，让没到的人也能看到上下文'
+          p3: '趁各地来信还在，帮泰戈尔把临时贺意变成给学校的常年图书支持'
+        points_fail:
+          p1: '到访人数压乱议程，组织者只读贺词就散场，泰戈尔的答辞没有讲出。事务所因同步失败召回员工。'
+          p2: '来客只把现场最有争议的一句带走，学校没有材料给没听到的人核对。'
+          p3: '来信多数随着典礼结束收存，学校仍要从既有经费里慢慢添书。'
+        shift:
+          p1:
+            was: '1913 年 11 月 23 日，来客乘专车抵达圣蒂尼克坦附近，泰戈尔在校内的祝贺会上作了答辞。'
+          p2:
+            was: '1913 年 11 月的祝贺会上，泰戈尔的答辞让部分来客感到失望。'
+            now: '{staff}在组织者手边留一份连着前后文的记录，请校方用它答复来信而不代他重写。'
+          p3:
+            was: '1913 年获奖后，泰戈尔后来用部分奖金扶持圣蒂尼克坦的学校。'
+            now: '{staff}请愿意帮助学校的人各认一项常年供书，并把书目交给教师选择。奖金仍可照泰戈尔的安排使用，学校另外得到一份持续的支持。'
+            who: tagore_santiniketan
+            bio: '泰戈尔把获奖后收到的一部分支持转成学校的定期赠书。日后教师可以按课程补足图书。'
         vignettes:
           headline: '你告诉管朗读的学生，奖项会带来只读得懂英文的新读者。学生问他们会先拿哪张。你把两张都留在桌上，给英文那张标明是作者自己译写。轮到第二遍时，你已得收队。'
           pause: '学生每到印刷行尾就停。你念了一整句，把该停的一处标在更前面。下一位朗读的人念完了整句的意思。你留了一份带停顿记号的纸，但没能听到另一种语言的读法。'
@@ -83,6 +117,18 @@ bystanders:
     text: {en: 'A fictional student setting out the sheets for both languages.', zh: '虚构的学生，负责为两种语言的朗读摆讲义。'}
 wiki:
   refs:
+    tagore_1913_santiniketan_reception:
+      order: 862
+      status: checked
+      text:
+        en: 'India Perspectives, Gitanjali and the Nobel Prize, account of the 23 November 1913 reception. https://www.indembangola.gov.in/pdf/Jun_06.pdf'
+        zh: '《印度展望》，《吉檀迦利》与诺贝尔奖，1913 年 11 月 23 日祝贺会记录。 https://www.indembangola.gov.in/pdf/Jun_06.pdf'
+    tagore_nobel_school:
+      order: 863
+      status: checked
+      text:
+        en: 'Amartya Sen, Nobel Prize archive, Tagore and his India, on the school and the prize money. https://www.nobelprize.org/prizes/literature/1913/tagore/article/'
+        zh: '阿马蒂亚·森，诺贝尔奖档案，《泰戈尔和他的印度》，学校与奖金。 https://www.nobelprize.org/prizes/literature/1913/tagore/article/'
     tagore_santiniketan_translation:
       order: 450
       status: checked

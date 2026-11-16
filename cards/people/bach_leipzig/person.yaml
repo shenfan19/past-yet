@@ -2,19 +2,23 @@ order: 24
 events:
   bach_leipzig:
     order: 23
+    build_step: 2
     year: 1723
+    date: '1723-04-22'
+    stay: 4
     lon: 12.37
     lat: 51.34
     region: europe
     field: music
     tier: 2
     channels: {V: 2, L: 1}
-    refs: [bach_leipzig_primary]
+    refs: [bach_leipzig_primary, bach_leipzig_leipzig_council, bach_leipzig_choir, bach_leipzig_chronology]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["curious","methodical","skeptical"]},{"job":["musician"]}]}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["musician"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: trust, req: {"trait":["kind","artistic","sensitive"]}}
+        - {id: p1, kind: hold, guard: true, day: 38, req: {"any":[{"job":["musician","archivist"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 40, req: {"any":[{"job":["musician","archivist","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 71, req: {"any":[{"job":["musician","archivist"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: entry, traits: [artistic, quiet]}
         - {id: rest, traits: [methodical, patient]}
@@ -28,9 +32,24 @@ events:
         relic: An organ pipe cut from quill
         relic_desc: A small pipe, tuned and tested, left unsold.
         points:
-          p1: 'Hear a cue from another voice'
-          p2: 'Keep a singer''s place through a rest'
-          p3: 'Help two readers share one page'
+          p1: 'Check Bach’s first set of performing parts against the roster so the chorus and players have enough readable copies for May 30'
+          p2: 'After the performance, compare the players’ changes with the copyist and mark the corresponding pages in the score'
+          p3: 'Work out next month’s copying, rehearsals and replacements with Bach. Take the schedule and expected hours to the school to secure regular help'
+        points_fail:
+          p1: 'Several parts are left among the appointment papers. The set is incomplete on the day, and the office recalls the employee.'
+          p2: 'Returned parts carry different marks. The next group cannot tell which changes the director accepted.'
+          p3: 'When several jobs land in one week, copying still depends on whoever can take it and rehearsals wait for the parts.'
+        shift:
+          p1:
+            was: 'The Leipzig council appointed Bach in 1723. On May 30 he performed BWV 75 in Leipzig.'
+          p2:
+            was: 'The cantor had to prepare music repeatedly for Sundays and other dates. Copying and rehearsal turned a score into parts people could perform.'
+            now: 'The main score now has a list that points back to each part. The next copyist can start with the version that worked.'
+          p3:
+            was: 'The Leipzig post required regular performances, and Bach organized new music almost every week after his appointment.'
+            now: 'The school sets aside hours for copying and covering missing parts. When performances come close together, players see the parts before their first rehearsal.'
+            who: bach_leipzig
+            bio: 'Bach took over as Leipzig’s Thomaskantor in 1723. Teaching, copying and performing had to fit the same timetable.'
         vignettes:
           entry: 'You hear the lower part arrive a breath before the singer expects it. You have them listen from the other side of the room. This time they raise their head before the cue.'
           rest: 'The singer loses count during the rest. You copy the line they can hear while waiting, and they mark the word that comes just before their own entrance.'
@@ -43,9 +62,24 @@ events:
         relic: 一根小风琴管
         relic_desc: 一根调好音、试过音的小管子，没有卖掉。
         points:
-          p1: '听出另一个声部给的提示'
-          p2: '帮歌者过了休止还跟得上'
-          p3: '让两人在同一页谱上都看得清'
+          p1: '把新任乐长巴赫的首套演出分谱按人核齐，赶在 5 月 30 日前给合唱和乐手留齐可读的份数'
+          p2: '演出后请抄谱员和乐手复核各声部的删改，把共用页码写回总谱'
+          p3: '和巴赫定好下一月的抄谱、排练与补缺时间，拿一份写明实际工时的计划向校方争取固定名额'
+        points_fail:
+          p1: '几份声部谱夹在新任交接文件里，演出当天没凑齐，事务所因同步失败召回员工。'
+          p2: '乐手退回的分谱各有标记，下一班人看不出哪条已被指挥采用。'
+          p3: '遇见同周几件工作时，抄谱仍靠临时叫人，排练只能等分谱陆续送到。'
+        shift:
+          p1:
+            was: '1723 年，巴赫经莱比锡市议会选任。5 月 30 日，他在当地演出 BWV 75。'
+          p2:
+            was: '乐长需为星期日和节日持续准备演出。分谱须由抄谱与排练转为实际使用。'
+            now: '总谱旁有一份能查回各声部的改动表。下一组抄谱员可以从可用版本开始。'
+          p3:
+            was: '莱比锡的职务要求常为不同场合准备演出，巴赫到任后几乎每周要组织新的曲目。'
+            now: '校方给抄谱和声部补缺留固定时数。碰上连着两次演出时，乐手能在第一次排练前看到分谱。'
+            who: bach_leipzig
+            bio: '巴赫 1723 年接任莱比锡圣托马斯乐长，教学、抄谱和演出必须按同一张日程推行。'
         vignettes:
           entry: '你听出低声部比歌者预想的早到一口气。你请他换到屋子另一边听。这次，提示还没来，他就抬起了头。'
           rest: '歌者一唱到休止就数乱。你抄下等待时能听到的另一行，他在自己开口前的那个字上做了记号。'
@@ -74,6 +108,24 @@ bystanders:
     text: {en: 'An invented singer whose entrance comes after a rest.', zh: '一位虚构的歌者，要在一段休止后进声。'}
 wiki:
   refs:
+    bach_leipzig_leipzig_council:
+      order: 10
+      status: checked
+      text:
+        en: 'Council record of 22 April https://jsbach.de/dokumente/1723-22-april-leipzig-wahl-zum-thomaskantor'
+        zh: '4 月 22 日市议会记录 https://jsbach.de/dokumente/1723-22-april-leipzig-wahl-zum-thomaskantor'
+    bach_leipzig_choir:
+      order: 11
+      status: checked
+      text:
+        en: 'St Thomas Choir archive on appointment and performance duties https://thomanerchor.de/en/about-the-choir/our-history/'
+        zh: '圣托马斯合唱团档案，任职与演出安排 https://thomanerchor.de/en/about-the-choir/our-history/'
+    bach_leipzig_chronology:
+      order: 12
+      status: checked
+      text:
+        en: 'Bach Archive chronology https://www.bachmuseumleipzig.de/en/node/1480'
+        zh: '巴赫档案馆年表 https://www.bachmuseumleipzig.de/en/node/1480'
     bach_leipzig_primary:
       order: 133
       status: checked

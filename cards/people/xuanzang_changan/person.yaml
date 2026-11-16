@@ -2,6 +2,7 @@ order: 211
 events:
   xuanzang_changan:
     order: 201
+    build_step: 2
     year: 645
     lon: 108.94
     lat: 34.27
@@ -9,12 +10,13 @@ events:
     field: thought
     tier: 3
     channels: {V: 2, L: 1}
-    refs: [xuanzang_changan_primary]
+    refs: [xuanzang_changan_primary, xuanzang_changan_team, xuanzang_changan_tang_account]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["handy","quiet","wanderer"]},{"stat":{"wit":7}}]}}
-        - {id: p2, kind: hold, req: {"job":["translator","archivist"]}}
-        - {id: p3, kind: persuade, req: {"trait":["glib","scholarly","ambitious"]}}
+        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["translator","archivist"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 37, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 102, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: totals, traits: [methodical, scholarly]}
         - {id: names, traits: [curious, cosmopolitan]}
@@ -28,9 +30,24 @@ events:
         relic: "A palm leaf from a sutra"
         relic_desc: "A palm leaf written in Sanskrit, its edges gone dark."
         points:
-          p1: 'Check two inventory numbers against their units'
-          p2: 'Keep the piles in order through the handoff'
-          p3: 'Help the clerk get room and paper to finish the list'
+          p1: 'After reaching Chang’an, hand over the returned manuscripts bundle by bundle and leave a receipt so work can begin at Hongfu Monastery'
+          p2: 'Give the readers separate columns for original titles, fascicles and variant readings, with space for terms still undecided'
+          p3: 'Leave incoming translators an index to the source manuscripts. Mark translated pages whose originals cannot yet be traced'
+        points_fail:
+          p1: 'After the transfer nobody can locate the first manuscripts needed. Work is put off, and the office recalls the employee.'
+          p2: 'The list treats several provisional titles as settled. Collation later shows that one title was used for different fascicles.'
+          p3: 'The team can keep copying translations, but only someone present that day knows which original is missing.'
+        shift:
+          p1:
+            was: 'Early biographies date Xuanzang’s return with many manuscripts to 645. Tang accounts place his first translation work that year at Hongfu Monastery.'
+          p2:
+            was: 'Accounts of the Hongfu team describe different work performed by its members. Texts passed through collation and revision.'
+            now: 'The first checklist keeps disputed entries open. At the next reading the team can find which words still need discussion.'
+          p3:
+            was: 'Xuanzang continued to translate for years, and the work moved between sites with changes in collaborators.'
+            now: 'When the team moves, the source index goes with the copies. A later translator can find the fascicle and the passage to check.'
+            who: xuanzang_changan
+            bio: 'Several people translated the manuscripts Xuanzang brought to Chang’an. How the sources passed between them shaped what later readers could verify.'
         vignettes:
           totals: 'The clerk has carried the bundle total into the column for works. You point to the unit before they seal the new copy. The discrepancy disappears without a single bundle changing hands.'
           names: 'Two slips carry titles that look alike to you. The clerk reads them back and has you copy the distinguishing characters before the bundles are carried away.'
@@ -43,9 +60,24 @@ events:
         relic: "一片贝叶经"
         relic_desc: "一片写着梵文的贝叶，边缘已经发黑。"
         points:
-          p1: '把两项数各自对回单位'
-          p2: '交接时别让东西串了堆'
-          p3: '给书吏腾出桌面和纸，写完清单'
+          p1: '入长安后把带回的书卷按包交接，先留可追查的纸单，护住弘福寺译场能按计划开工'
+          p2: '给对读的人另开一栏记原题、卷数和异读，留出尚未商定的字词'
+          p3: '让各组留下一份能交给后来译者的原卷索引，凡找不到原卷的译文暂注底本待查'
+        points_fail:
+          p1: '交接后有人寻不回第一批要用的原卷，译场开工中止，事务所因同步失败召回员工。'
+          p2: '清单把尚须核对的几个题目抄成已定，后来有人发现同名处指的是不同卷。'
+          p3: '译本可以继续抄，手边少了哪一卷却只能去问当天在场的人。'
+        shift:
+          p1:
+            was: '早期传记记玄奘 645 年回到长安并带回大批书卷，唐代记载将这一年初译工作系于弘福寺。'
+          p2:
+            was: '传记与史料载弘福寺译场多人分任不同工作。原稿需要经过对读和修订。'
+            now: '初次核对表仍留空栏。下一次对读时能指出哪一处是仍有分歧的译词。'
+          p3:
+            was: '玄奘之后仍长期从事翻译，工作地点与协作者随时间变动。'
+            now: '译场换地点时，原卷索引随抄本一起交过去。后来的译者遇到不确定的词，可以先找到哪卷、哪一处待查。'
+            who: xuanzang_changan
+            bio: '玄奘从西行带回的书卷在长安由多人参与翻译。文本如何交接直接影响后来的人能核对到什么。'
         vignettes:
           totals: '书吏把夹数抄进了部数那栏。封好新抄之前，你指明两个单位。没有一夹需要挪动，两份数却对上了。'
           names: '你看着两个签上的名目很像。书吏念给你听，趁经夹还没搬走，请你把不同的几个字另抄下来。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'An invented clerk checking two kinds of inventory totals.', zh: '一位虚构的书吏，正在核对两种计数。'}
 wiki:
   refs:
+    xuanzang_changan_team:
+      order: 10
+      status: checked
+      text:
+        en: 'Research on Xuanzang’s translation team and primary accounts https://backoffice.biblio.ugent.be/download/8581797/8581798'
+        zh: '玄奘译场及一手记载研究 https://backoffice.biblio.ugent.be/download/8581797/8581798'
+    xuanzang_changan_tang_account:
+      order: 11
+      status: checked
+      text:
+        en: 'Tang Xinyu, manuscripts and Hongfu Monastery https://ctext.org/wiki.pl?chapter=431403&if=en&remap=gb'
+        zh: '《唐新语》，书卷与弘福寺 https://ctext.org/wiki.pl?chapter=431403&if=en&remap=gb'
     xuanzang_changan_primary:
       order: 155
       status: checked

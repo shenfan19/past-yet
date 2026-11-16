@@ -2,19 +2,23 @@ order: 135
 events:
   mendel_brno:
     order: 34
+    build_step: 2
     year: 1865
+    date: '1865-01-26'
+    stay: 3
     lon: 16.6
     lat: 49.2
     region: europe
     field: science
     tier: 2
     channels: {L: 1}
-    refs: [mendel_brno_primary]
+    refs: [mendel_brno_primary, mendel_brno_manuscript_1865, mendel_brno_lecture_sources, mendel_brno_replication_letters]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["curious","handy","methodical"]}}
-        - {id: p2, kind: hold, req: {"any":[{"trait":["vigil","bold","patient"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: trust, req: {"trait":["sensitive","artistic","kind"]}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 41, req: {"any":[{"job":["teacher","biologist"]},{"trait":["methodical","scholarly","patient"]}]}}
+        - {id: p3, kind: persuade, day: 45, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: ratio, traits: [skeptical, scholarly]}
         - {id: label, traits: [methodical, handy]}
@@ -28,9 +32,24 @@ events:
         relic: A pea pod
         relic_desc: A dried pod from the monastery garden.
         points:
-          p1: 'Keep the two shapes separate while counting'
-          p2: 'Finish a tally without rounding the raw counts'
-          p3: 'Leave another reader enough detail to check the tally'
+          p1: 'Help Mendel fit eight years of counts into two talks and protect both readings to the Brno society'
+          p2: 'Separate the counts by generation so listeners can check the numbers they heard'
+          p3: 'While the listeners are still there, help Mendel arrange a replication at another site before the printed account comes out'
+        points_fail:
+          p1: 'The first meeting runs out of time and the second is never scheduled. The account is incomplete and the office recalls the employee after a loss of sync.'
+          p2: 'Readers take home a total but cannot tell which counts came from the first generation and which came later.'
+          p3: 'Readers outside Brno must wait for the proceedings and offprints, and no one who attended has agreed to repeat the counts.'
+        shift:
+          p1:
+            was: 'On 8 February and 8 March 1865 Mendel reported his pea experiments in two talks to the Brno Natural History Society.'
+          p2:
+            was: 'The 1865 talks drew on years of pea counts. The paper published in 1866 separated the results by generation.'
+            now: '{staff} has Mendel leave a comparison sheet after the talk so listeners can check their own notes against it.'
+          p3:
+            was: 'The Brno society printed the paper in 1866. Mendel used offprints to correspond with other scholars about checking his results.'
+            now: '{staff} records the addresses of willing observers and agrees on which counts to send back. In the next growing season one observer sends figures to Brno that Mendel can compare with his own before the proceedings circulate.'
+            who: mendel_brno
+            bio: 'Mendel''s paper eventually appeared in the proceedings. A replication set in motion at the talks brought him earlier results he could check independently.'
         vignettes:
           ratio: 'The reader rounds the tally until it looks exact. You leave the counts in the margin and ask him to work the ratio back from those numbers.'
           label: 'Two paper labels look alike. You turn both over and find that one belongs to the parent plants. The reader moves it away from the counts for the offspring.'
@@ -43,9 +62,24 @@ events:
         relic: 一只豌豆荚
         relic_desc: 修道院花园里的一只干豆荚。
         points:
-          p1: '计数时分清两种形状'
-          p2: '完成计数并保留原数'
-          p3: '给下一个读者留下可复核的记录'
+          p1: '帮孟德尔把八年的计数拆成两场讲得完的报告，护住布尔诺学会的两次宣读'
+          p2: '把容易在口头报告里混淆的两代计数分开列给听众核对'
+          p3: '趁听众还在，替孟德尔约定一份异地复测，让刊印前就有人回报自己的计数'
+        points_fail:
+          p1: '首场念完时间只够交代做法，第二场没有排上。学会少了完整的两次报告，事务所因同步失败召回员工。'
+          p2: '听众带走的是总数，回去后分不清哪些是第一代、哪些是下一代的观测。'
+          p3: '报告传到外地要等学会年刊和抽印本，读者听完以后也没有约定谁来复测。'
+        shift:
+          p1:
+            was: '1865 年 2 月 8 日和 3 月 8 日，孟德尔在布尔诺自然科学学会分两次报告豌豆杂交实验。'
+          p2:
+            was: '1865 年的两次报告以多年豌豆计数为据，1866 年刊印的论文逐项列出各代结果。'
+            now: '{staff}请孟德尔在报告后留下分代对照表，听众可以拿自己抄的数字回来核对。'
+          p3:
+            was: '1866 年布尔诺学会刊印论文，孟德尔用抽印本同外地学者通信，讨论结果能否验证。'
+            now: '{staff}请愿意复测的人留下地址并约好回报的内容。下一季有人把自己的数字寄回布尔诺，孟德尔可以在年刊流通前把两地结果对照。'
+            who: mendel_brno
+            bio: '孟德尔的报告后来随年刊刊行。跟随报告启动的异地复测让他较早收到一组可以独立核对的结果。'
         vignettes:
           ratio: '听讲人把数约成了一个整齐的比例。你把原始计数留在页边，请他从这些数重新算一遍。'
           label: '两张纸签看着很像。你翻过来才发现，其中一张写的是亲代。听讲人把它从后代的计数旁移开。'
@@ -74,6 +108,24 @@ bystanders:
     text: {en: 'An invented reader checking a practice tally before the talk.', zh: '一位虚构的听讲人，会前正在核对一张练习计数表。'}
 wiki:
   refs:
+    mendel_brno_manuscript_1865:
+      order: 843
+      status: checked
+      text:
+        en: 'Mendel manuscript archive, dates of the Brno lectures, manuscript and order for offprints. https://www.mendel-genetics.cz/en/about-the-manuscript/?lang=en'
+        zh: '孟德尔手稿档案，布尔诺两场报告与抽印本记载。 https://www.mendel-genetics.cz/en/about-the-manuscript/?lang=en'
+    mendel_brno_lecture_sources:
+      order: 844
+      status: checked
+      text:
+        en: 'Gregor Mendel, Versuche über Pflanzenhybriden, text of the publication and lecture dates. https://dev.gutenberg.org/cache/epub/40854/pg40854-images.html'
+        zh: '格雷戈尔·孟德尔，《植物杂交实验》刊本原文及两场宣读日期。 https://dev.gutenberg.org/cache/epub/40854/pg40854-images.html'
+    mendel_brno_replication_letters:
+      order: 845
+      status: checked
+      text:
+        en: 'Mendelism: New Insights from Gregor Mendel’s Lectures in Brno, analysis of contemporary papers and letters. https://pmc.ncbi.nlm.nih.gov/articles/PMC5586364/'
+        zh: '《重新认识孟德尔在布尔诺的报告》，核对同时期报道与通信。 https://pmc.ncbi.nlm.nih.gov/articles/PMC5586364/'
     mendel_brno_primary:
       order: 121
       status: checked

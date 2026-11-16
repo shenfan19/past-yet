@@ -2,6 +2,7 @@ order: 206
 events:
   zhang_heng_luoyang:
     order: 68
+    build_step: 2
     year: 132
     lon: 112.46
     lat: 34.62
@@ -9,12 +10,13 @@ events:
     field: science
     tier: 2
     channels: {V: 1}
-    refs: [zhang_heng_luoyang_instrument]
+    refs: [zhang_heng_luoyang_instrument, zhang_heng_luoyang_han_text, zhang_heng_luoyang_ihns_records]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":7}},{"trait":["wanderer"]}]}}
-        - {id: p2, kind: hold, req: {"job":["mechanic","carpenter"]}}
-        - {id: p3, kind: persuade, req: {"trait":["glib","ambitious","scholarly"]}}
+        - {id: p1, kind: hold, guard: true, day: 25, req: {"any":[{"job":["archivist","carpenter","mechanic"]},{"trait":["methodical","handy"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 40, req: {"any":[{"job":["archivist","mechanic","proofreader"]},{"trait":["methodical","handy","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 73, req: {"any":[{"job":["archivist","mechanic"],"stat":{"wit":7,"will":7}},{"trait":["methodical","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: register, traits: [methodical, scholarly]}
         - {id: later, traits: [bold, curious]}
@@ -28,9 +30,24 @@ events:
         relic: 'A direction record'
         relic_desc: 'One recorded direction, with a blank to be filled when a dispatch arrives.'
         points:
-          p1: 'Mark the direction associated with the signal'
-          p2: 'Keep signal and confirmation slips apart until they can be checked'
-          p3: 'Explain why a direction on the record is not a specific locality'
+          p1: 'When the instrument is handed over in Luoyang, identify who built it and who will watch it so the 132 device can go into use'
+          p2: 'Have two attendants write down each unusual response independently before comparing the time and direction'
+          p3: 'Ask Zhang and the court recorders to match distant reports to the original watch entries, leaving unmatched events on the list'
+        points_fail:
+          p1: 'The device is assembled without a formal handover. No watch is assigned, and the office recalls the employee.'
+          p2: 'The entries give different directions for what may be the same event. The next clerk merges them and the originals are lost.'
+          p3: 'When a dispatch arrives, the watch notes have been overwritten by later accounts. Nobody can check whether the records agree.'
+        shift:
+          p1:
+            was: 'The Book of the Later Han dates the manufacture of the seismoscope to 132.'
+          p2:
+            was: 'Zhang Heng’s biography describes a response when nobody at the capital felt a quake. The date of the associated earthquake is disputed.'
+            now: 'The clerk keeps both entries with the new report. A later reader can trace a reading to the watch that recorded it.'
+          p3:
+            was: 'The history says officials later recorded the direction of earthquakes. It gives no complete set of original readings.'
+            now: 'Luoyang retains a separate watch copy and records reports on the dates they arrive. Unverified entries stay open for later checking.'
+            who: zhang_heng_luoyang
+            bio: 'Zhang Heng’s device does not survive. The historical account still lets readers ask how people compared a signal with reports from farther away.'
         vignettes:
           register: 'The record keeper hears the signal in the exercise and reaches for a place name. You draw a space for the indicated direction and another for news received from outside the capital. Only the direction goes in. You take that two-part record home. There is no corroborating message before you leave.'
           later: 'You know a later biography will say that a dispatch came from Longxi. The helper asks if it belongs on the present line. You leave a slip beside the record marked ‘awaiting word’. He can write on it when somebody arrives; your trip ends while the road is still quiet.'
@@ -43,9 +60,24 @@ events:
         relic: '一张报动记事'
         relic_desc: '记下一处方向，另有一格留待驿报。'
         points:
-          p1: '标出信号对应的方向'
-          p2: '把报动与证实的两张纸留开，好回头核对'
-          p3: '说清为什么有方向还不能填一个确切地点'
+          p1: '在洛阳交接候风地动仪时，核清仪器班与值守班各负责的人，护住 132 年造出的仪器能入署使用'
+          p2: '让值守的两个人在每次响动后各记时间和方向，先分别保存，再对读相合与不合'
+          p3: '请张衡和史官定一个登记办法，让远地报告回来时可以与当天值守原条对接，也保留没有回证的记录'
+        points_fail:
+          p1: '仪器已装好却无人正式接管，值守册没有登记，事务所因同步失败召回员工。'
+          p2: '两人用不同方向记同一次响动，交班的人直接抄成一条，原条再也不能比对。'
+          p3: '驿报到时，值守人的原记已全并入后补的说法，没有办法查出两事是否相合。'
+        shift:
+          p1:
+            was: '《后汉书》将制作候风地动仪记在阳嘉元年（132 年）。'
+          p2:
+            was: '张衡传写一次京师无明显震感却见仪器响应的事件。事件所涉地震的具体年份有争议。'
+            now: '以后异常记录附有两份原条。京师的人可查读数来自哪一值守班。'
+          p3:
+            was: '《后汉书》记后来史官要登记地震发自的方向。这段记载未留下成套的原始观测登记。'
+            now: '洛阳先多存一联原条，随后来的报告按抵达日另记。未能核实的几行仍标待查，供下一班继续追对。'
+            who: zhang_heng_luoyang
+            bio: '张衡的器物已经不存。今人能凭史书追问当时把仪器响应和远地消息怎样对读。'
         vignettes:
           register: '记事人在练习中听到报动，伸手就要填地名。你划出一处记信号所指方向，另留一处记京外来的消息。这时只够填方向。你带回分成两栏的记法，证实的消息收队前还没到。'
           later: '你知道后世传记会写到陇西来报。帮工问现在是不是就能写上去。你另留一张记着「候报」的纸条。有人到了，他还能添写。你走时，驿路上仍然无声。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'A fictional record keeper with a line for a signal and a line for subsequent word.', zh: '虚构的记事人，要把报动和后来消息记在两行。'}
 wiki:
   refs:
+    zhang_heng_luoyang_han_text:
+      order: 10
+      status: checked
+      text:
+        en: 'Book of the Later Han, Zhang Heng’s biography https://latehan.blogspot.com/p/blog-page_79.html'
+        zh: '《后汉书》张衡列传 https://latehan.blogspot.com/p/blog-page_79.html'
+    zhang_heng_luoyang_ihns_records:
+      order: 11
+      status: checked
+      text:
+        en: 'Chinese Academy of Sciences comparison of the textual witnesses https://english.ihns.cas.cn/institute/OS/journal/shns/201011/t20101109_61115.html'
+        zh: '中国科学院自然科学史所校勘与研究 https://english.ihns.cas.cn/institute/OS/journal/shns/201011/t20101109_61115.html'
     zhang_heng_luoyang_instrument:
       order: 741
       status: checked

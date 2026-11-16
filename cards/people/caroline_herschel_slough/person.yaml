@@ -2,20 +2,23 @@ order: 227
 events:
   caroline_herschel_slough:
     order: 217
+    build_step: 2
     year: 1786
+    date: '1786-07-20'
+    stay: 5
     lon: -0.59
     lat: 51.51
     region: europe
     field: science
     tier: 2
     channels: {C: 2, V: 3}
-    regret: true
-    refs: [caroline_herschel_slough_primary]
+    refs: [caroline_herschel_slough_primary, herschel_first_comet_memoir, herschel_ransom_archive]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["quiet","wanderer","curious"]}}
-        - {id: p2, kind: hold, req: {"provides":"vigil"}}
-        - {id: p3, kind: endure, redeem: true, req: {"stat":{"constitution":5}}}
+        - {id: p1, kind: hold, guard: true, day: 12.9, req: {"any":[{"job":["university_lecturer","archivist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 15, req: {"any":[{"trait":["patient","methodical","scholarly"]},{"job":["university_lecturer","archivist"]}]}}
+        - {id: p3, kind: persuade, day: 112, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: fixed, traits: [vigil, methodical]}
         - {id: doubt, traits: [skeptical, curious]}
@@ -29,9 +32,24 @@ events:
         relic: "A sky sweep ruler"
         relic_desc: "A wooden ruler with a scale, used to mark the swept patches on a star chart."
         points:
-          p1: 'Mark the comparison stars'
-          p2: 'Keep the two times beside their own diagrams'
-          p3: 'Help preserve the next observation in the dark'
+          p1: 'Fix the positions of the reference stars before the haze closes in and protect the evidence for Herschel''s first comet'
+          p2: 'Get a chart to an observer who can promptly check the short-lived sighting'
+          p3: 'Use Herschel''s first comet report to secure regular nights for her own observations'
+        points_fail:
+          p1: 'The haze hides the reference stars. The object returns the next evening, but there is no earlier position to compare. The branch loses sync and the employee is recalled.'
+          p2: 'An exchange of letters takes its time, and there is one fewer independent record from the earliest nights.'
+          p3: 'When her brother uses the large telescope she spends the evening taking down his readings, and her own observations still fit around his.'
+        shift:
+          p1:
+            was: 'On 1 and 2 August 1786 Caroline Herschel recorded the movement of a suspected comet and sent out her observations and drawings.'
+          p2:
+            was: 'On 7 August 1786 Alexander Aubert replied to Herschel''s letter of the 2nd and congratulated her on the comet.'
+            now: '{staff} sends the same reference chart and observing times. A second observer records a comparable position before sending back a reply.'
+          p3:
+            was: 'In 1787 Caroline Herschel received a salary as her brother''s assistant; in her first report she had already explained how that work limited her observing time.'
+            now: '{staff} helps Herschel put her observing schedule beside her comet report and place both before a supporter. The later arrangement for her work reserves several nights a month for her own observations.'
+            who: caroline_herschel_slough
+            bio: 'As a paid assistant, Herschel had regular nights allotted to her own work and could plan her comet searches in advance.'
         vignettes:
           fixed: 'You mark two bright neighbours before adding the fuzzy object. On the second drawing the stars remain a useful guide, even after the pages have shifted.'
           doubt: 'The helper suggests cleaning the glass. You ask what the other stars look like through it. They stay sharp, and the helper keeps the uncertain mark on the sheet.'
@@ -44,9 +62,24 @@ events:
         relic: "一把天区扫描记录尺"
         relic_desc: "一把刻着刻度的木尺，用来在星图上标出扫过的天区。"
         points:
-          p1: '标出用来比较的邻星'
-          p2: '把两个时刻各记在对应的图旁'
-          p3: '在暗处帮忙留下下一次观测'
+          p1: '趁薄雾遮住参照星前帮赫歇尔绘定星位，护住她第一颗彗星的观测证据'
+          p2: '把星图送到能立即复看的观测者手里，让短暂露面的彗星多留一份独立记录'
+          p3: '拿首份彗星报告为赫歇尔争取固定的独立观测时段'
+        points_fail:
+          p1: '夜雾遮住参照星，第二夜有光点却没有前一夜的位置可比。历史脱节，员工被召回。'
+          p2: '收信人仍须等一轮书信往返，最早几个晚上少一份可对照的观测。'
+          p3: '每逢兄长用大望远镜，她仍得整晚记他的读数，自己的观测只能挤在空当里。'
+        shift:
+          p1:
+            was: '1786 年 8 月 1 至 2 日，卡罗琳·赫歇尔记录了疑似彗星的位置变化，随后寄出观测和附图。'
+          p2:
+            was: '1786 年 8 月 7 日，收到 2 日来信的奥伯特回信，就这颗彗星向赫歇尔道贺。'
+            now: '{staff}送去相同的参照星图和记录时刻，另一位观测者在回信前先留下了一份可以互相校对的记录。'
+          p3:
+            was: '1787 年，卡罗琳·赫歇尔作为兄长的助手领取薪金，她在首次报告中已说明助手工作占去自己的观测时间。'
+            now: '{staff}让赫歇尔把第一份观测报告连同自己的观测排班交给愿意支持她的人。后来议定助手职责时，每月另留给她几个可自行安排的夜晚。'
+            who: caroline_herschel_slough
+            bio: '赫歇尔担任有薪助手后仍有固定的自主观测时段。她能提前安排自己的寻彗工作。'
         vignettes:
           fixed: '你先记下两颗较亮的邻星，再添模糊的那个。第二张纸虽然挪了位置，仍能靠那两颗星找回原处。'
           doubt: '帮手说兴许该擦擦镜片。你问同一片玻璃里的别的星怎样。那些仍然清晰，他便把这处可疑的记号留在纸上。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented helper keeping a lamp away from the observing spot.', zh: '一位虚构的帮手，把灯护在观测处之外。'}
 wiki:
   refs:
+    herschel_first_comet_memoir:
+      order: 822
+      status: checked
+      text:
+        en: 'Memoir and Correspondence of Caroline Herschel, chapter II, correspondence and account of her first salary. https://www.gutenberg.org/cache/epub/52923/pg52923-images.html'
+        zh: '《卡罗琳·赫歇尔回忆录与通信》第二章，彗星通信和首次薪金。 https://www.gutenberg.org/cache/epub/52923/pg52923-images.html'
+    herschel_ransom_archive:
+      order: 823
+      status: checked
+      text:
+        en: 'Harry Ransom Center, Herschel Family papers inventory. https://norman.hrc.utexas.edu/fasearch/findingAid.cfm?eadID=00568'
+        zh: '哈里·兰塞姆中心，赫歇尔家族档案。 https://norman.hrc.utexas.edu/fasearch/findingAid.cfm?eadID=00568'
     caroline_herschel_slough_primary:
       order: 149
       status: checked

@@ -2,6 +2,7 @@ order: 205
 events:
   xu_xiake_lijiang:
     order: 159
+    build_step: 2
     year: 1639
     lon: 100.23
     lat: 26.87
@@ -9,13 +10,13 @@ events:
     field: exploration
     tier: 2
     channels: {L: 3, A: 2, E: 1}
-    regret: true
-    refs: [xu_xiake_lijiang_diary]
+    refs: [xu_xiake_lijiang_diary, xu_xiake_lijiang_diary7, xu_xiake_lijiang_transmission]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {"any":[{"trait":["bold","hardy"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, req: {"trait":["wanderer","quiet"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"provides":"strength"}}
+        - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["archivist","courier","translator"]},{"trait":["wanderer","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 26, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["wanderer","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 41, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["wanderer","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: view, traits: [methodical, scholarly]}
         - {id: trail, traits: [hardy, curious]}
@@ -29,9 +30,24 @@ events:
         relic: "A travel notebook"
         relic_desc: "Pages of dense notes on caves, rivers and rocks, written at the end of each day."
         points:
-          p1: 'Reach the slope before the guide starts down'
-          p2: 'Separate a view from a leg of the walk on your sketch'
-          p3: 'Carry both the route and the landscape note back without mixing them'
+          p1: 'Return the books Xu checked for Mu Zeng volume by volume so the request to continue the Gazetteer of Mount Ji can be handed over as recorded'
+          p2: 'Keep travel observations in the route book. Return the notes on the work he checked and ask each custodian to verify their papers'
+          p3: 'Before leaving Lijiang, have local readers check several place names and keep a marked copy on each side'
+        points_fail:
+          p1: 'The returned volumes lack receipts. The messenger cannot confirm the earlier work was done, the handover is missed, and the office recalls the employee.'
+          p2: 'Material borrowed for the gazetteer is mixed with the diary and copied later as a firsthand observation.'
+          p3: 'The only notebook leaves with Xu. A name changes in a later copy and nobody there has a chance to check it.'
+        shift:
+          p1:
+            was: 'The Yunnan travel diary records that Mu Zeng sent thanks for editorial work and wrote again asking Xu to compile the gazetteer.'
+          p2:
+            was: 'Xu recorded observations around Lijiang and also edited papers for Mu Zeng.'
+            now: 'The route book identifies places Xu visited. The returned sheets show which passages he checked.'
+          p3:
+            was: 'The travel diaries reached later readers through manuscripts and printed editions. Original notes are missing for parts of the Yunnan journey.'
+            now: 'A local copy is checked against familiar names, and the travel book carries the same corrections. Later copyists have two records to compare.'
+            who: xu_xiake_lijiang
+            bio: 'Xu left firsthand notes on his stay in Lijiang and also worked on papers for Mu Zeng. Later editors transmitted his travel diary.'
         vignettes:
           view: 'The guide turns the east-facing view into an arrow for where you walked. You draw the place where your feet stopped, then add a short line for what you could see from it. He keeps both marks. By the time you return downhill, the view itself is out of sight.'
           trail: 'At Jietuo Lin the guide tells you about a distant mountain called Gugang. You recall that Xu also described learning about it from a wall picture here. On the sheet you distinguish a place drawn on the wall from a stretch you have actually walked. When you leave, the path to Gugang is still only a question in the margin.'
@@ -44,9 +60,24 @@ events:
         relic: "一本旅行笔记"
         relic_desc: "密密麻麻的笔记，写着洞穴、河流和岩石，每天夜里写成。"
         points:
-          p1: '在带路人下坡前走到山腰'
-          p2: '在草图上区分一处面向和一段行程'
-          p3: '带回路线和景物记注，别抄混'
+          p1: '在丽江帮徐霞客把木增请他校过的书按卷送回，护住二月初九收到续修《鸡山志》委托的交接'
+          p2: '把游历日记夹进路线原簿，把受邀校书留下的批注送回另一边让经办人各验一次'
+          p3: '离开丽江前请当地读者复核数处地名，两边各留带修订标记的一份路线笔记'
+        points_fail:
+          p1: '退回的几卷还缺着签记，来请修志的人无法确认校书已完，这次交接错过，事务所召回员工。'
+          p2: '修志参考与途中日记混到一起，再抄时误把借来的材料当成亲历。'
+          p3: '回程带走唯一一份草记。后来抄本的地名变了，当地人没有来得及指出。'
+        shift:
+          p1:
+            was: '《滇游日记七》记木增遣人谢校书，并再次致书请修《鸡山志》。'
+          p2:
+            was: '徐霞客既记录丽江的沿途见闻，也为木增整理和校读书稿。'
+            now: '出行原簿留着亲历的地点，交回的校书纸页也能查到他动过哪些字。'
+          p3:
+            was: '现存游记由手稿与后来的抄刻本传下，滇游的某些时段缺原稿。'
+            now: '留在丽江的一份给本地读者校过，随行簿另带批注。日后抄本有异时可以对照两份。'
+            who: xu_xiake_lijiang
+            bio: '徐霞客在丽江留下自己走访的记录，也与木增一方合作整理文稿。他的游记通过后来的编辑流传。'
         vignettes:
           view: '带路人把朝东的景色画成往东走的箭头。你先落笔画下脚停在哪里，再添一道短线标从那里看见什么。他把两种记号都留下。你一下坡，山腰那处景已经望不见了。'
           trail: '带路人在解脱林说起远处的古冈。你想起徐霞客的游记也写过，他是从这里的一幅壁图得知那处景致的。你把画上看见的远山和脚下走过的路分开记，在古冈旁只留一个问号。等你收队，那条路还没走。'
@@ -75,6 +106,18 @@ bystanders:
     text: {en: 'A fictional guide working out which mark on a route sketch means what.', zh: '虚构的带路人，要在路线草图上分清不同记号。'}
 wiki:
   refs:
+    xu_xiake_lijiang_diary7:
+      order: 10
+      status: checked
+      text:
+        en: 'Yunnan diary on collating books and the gazetteer commission https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
+        zh: '《滇游日记七》校书与山志委托原文 https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
+    xu_xiake_lijiang_transmission:
+      order: 11
+      status: checked
+      text:
+        en: 'University of Washington edition on travel notes and later editing https://uw.manifoldapp.org/read/wading-barefoot-through-a-mountain-stream/section/ad279d00-0a6e-476f-83d6-3ddb55fb6e6d'
+        zh: '华盛顿大学校译所录滇游日记及编次 https://uw.manifoldapp.org/read/wading-barefoot-through-a-mountain-stream/section/ad279d00-0a6e-476f-83d6-3ddb55fb6e6d'
     xu_xiake_lijiang_diary:
       order: 646
       status: checked

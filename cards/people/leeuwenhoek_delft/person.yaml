@@ -2,19 +2,23 @@ order: 120
 events:
   leeuwenhoek_delft:
     order: 21
+    build_step: 2
     year: 1676
+    date: '1676-09-25'
+    stay: 3
     lon: 4.36
     lat: 52.01
     region: europe
     field: science
     tier: 2
     channels: {V: 1}
-    refs: [leeuwenhoek_delft_primary]
+    refs: [leeuwenhoek_delft_primary, leeuwenhoek_delft_october_letter, leeuwenhoek_delft_witnesses]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["methodical","wanderer","quiet"]}}
-        - {id: p2, kind: hold, req: {"stat":{"finesse":7}}}
-        - {id: p3, kind: trust, req: {"luck":0.4}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","translator"]},{"trait":["curious","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 16, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["curious","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 40, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["curious","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: motion, traits: [skeptical, curious]}
         - {id: label, traits: [handy, methodical]}
@@ -28,9 +32,24 @@ events:
         relic: A tiny brass lens plate
         relic_desc: A thumb sized plate holding one very small, very clear lens.
         points:
-          p1: 'Find the description that belongs to a figure'
-          p2: 'Keep the sample labels beside their drawings'
-          p3: 'Read the observation back to someone without the lens'
+          p1: 'In Delft, check every page and illustration of the long October 9 letter before dispatching it to the Royal Society'
+          p2: 'Give the translator headings in the retained copy that distinguish the different observations in the letter'
+          p3: 'Have a witness in Delft independently describe the shapes and movements they see. Send the signed account apart from Leeuwenhoek’s own comments'
+        points_fail:
+          p1: 'Loose sheets are set aside and the drawings no longer match the account. The office recalls the employee.'
+          p2: 'The translator cannot see how several passages connect. Some sections have to wait for another meeting.'
+          p3: 'London receives only the observer’s account. Others have to wait for more evidence to judge what can be seen independently.'
+        shift:
+          p1:
+            was: 'The Royal Society preserves Leeuwenhoek’s long Dutch letter to Oldenburg dated October 9, 1676, at Delft.'
+          p2:
+            was: 'The Society read the Dutch letter in installments as translation took time.'
+            now: 'Oldenburg can query an exact section, and translators can work through the headings section by section.'
+          p3:
+            was: 'Witnesses wrote in 1677, and the Society also asked Hooke to verify observations.'
+            now: 'A dated statement from a witness reaches London earlier. Readers can compare the accounts and identify what still needs checking.'
+            who: leeuwenhoek_delft
+            bio: 'Leeuwenhoek corresponded with the Royal Society from Delft for years. Translation and independent checks shaped how his observations were received.'
         vignettes:
           motion: 'The correspondent writes that something moved. You ask what the movement looked like to someone who cannot see the lens. They cross out a comparison and draw a second position beside the first.'
           label: 'There are drawings from wood and from wine on the table. You add temporary labels before the correspondent scrapes up the stray sheets, and the pictures go in the right order.'
@@ -43,9 +62,24 @@ events:
         relic: 一块小黄铜透镜板
         relic_desc: 拇指大的板子，里面嵌着一片极小又极清晰的透镜。
         points:
-          p1: '把图对到信里的那段说明'
-          p2: '让图和样品标签放在一起'
-          p3: '给没看过透镜的人读一遍观察'
+          p1: '在代尔夫特给列文虎克 10 月 9 日写出的长信核齐各页和随信图，再合封送往皇家学会'
+          p2: '在誊本边写上给译者看的观察题名，给一封信里几类不同的观察分出清楚段落'
+          p3: '请一位当地见证者留下自己看到的形状和动作，和列文虎克的注释分开署名，再寄给伦敦'
+        points_fail:
+          p1: '附页被另放一边，信中的观察与图对不上。事务所因同步失败召回员工。'
+          p2: '译者找不到个别段落与前文接续的位置，长信有几节只好等下一次会议。'
+          p3: '伦敦只收到观察者自己的解释，同行仍须等下一轮材料判断哪些能独立复见。'
+        shift:
+          p1:
+            was: '皇家学会保存了他 1676 年 10 月 9 日从代尔夫特寄给奥尔登堡的荷兰文长信。'
+          p2:
+            was: '皇家学会的记录显示，这封荷兰文长信因翻译所需时间分次讨论。'
+            now: '一份留底便于奥尔登堡回问哪一节，翻译可以分给不同的人逐段处理。'
+          p3:
+            was: '1677 年有见证者来信，皇家学会也请胡克验证。'
+            now: '一份标明见证人和日期的说明提前到了伦敦，读者可以先判断哪些所见相同，哪些仍待核实。'
+            who: leeuwenhoek_delft
+            bio: '列文虎克从代尔夫特向皇家学会长期寄信。观察能否经翻译和独立核验传递，是通信的重要部分。'
         vignettes:
           motion: '通信者写了句「有东西在动」。你问看不到透镜的人该怎样想象这个动法。他划去原先的比喻，在第一个位置旁画了第二个。'
           label: '桌上混着木头和酒的观察图。通信者收走散页前，你加了两张临时标签，图才按原来的顺序放进信里。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented correspondent trying to describe a sight through a lens.', zh: '一位虚构的通信者，正在写透镜下的景象。'}
 wiki:
   refs:
+    leeuwenhoek_delft_october_letter:
+      order: 10
+      status: checked
+      text:
+        en: 'Royal Society manuscript of the October letter https://makingscience.royalsociety.org/items/el_l1_22/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
+        zh: '皇家学会所藏十月书信 https://makingscience.royalsociety.org/items/el_l1_22/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
+    leeuwenhoek_delft_witnesses:
+      order: 11
+      status: checked
+      text:
+        en: 'Royal Society minutes and witness correspondence https://www.leeuwenhoek.net/content/1677-confirm-his-observations'
+        zh: '皇家学会会议记录与见证书信 https://www.leeuwenhoek.net/content/1677-confirm-his-observations'
     leeuwenhoek_delft_primary:
       order: 144
       status: checked

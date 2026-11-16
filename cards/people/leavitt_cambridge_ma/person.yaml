@@ -2,20 +2,23 @@ order: 119
 events:
   leavitt_cambridge_ma:
     order: 138
+    build_step: 2
     year: 1912
+    date: '1912-02-17'
+    stay: 3
     lon: -71.12
     lat: 42.38
     region: americas
     field: science
     tier: 2
     channels: {V: 3}
-    regret: true
-    refs: [leavitt_cambridge_ma_primary]
+    refs: [leavitt_cambridge_ma_primary, leavitt_harvard_plates, leavitt_wolbach_archives]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["bold","hardy"]}]}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","sensitive","cosmopolitan"]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["university_lecturer","archivist"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
+        - {id: p2, kind: notice, day: 14.5, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["methodical","patient","scholarly"]}]}}
+        - {id: p3, kind: persuade, day: 15, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: rank, traits: [methodical, vigil]}
         - {id: distance, traits: [curious, skeptical]}
@@ -29,9 +32,24 @@ events:
         relic: "A glass plate"
         relic_desc: "A photographic plate crowded with tiny stars."
         points:
-          p1: 'Match plotted points to the table'
-          p2: 'Keep the period and brightness readings together'
-          p3: 'Explain why the comparison uses stars from the same cloud'
+          p1: 'Match the measurements of faint stars to their plates before printing and protect Leavitt''s table of twenty-five periods'
+          p2: 'Get the printer to keep a plate index with the table so another observer can repeat a measurement'
+          p3: 'Use the circular''s unresolved calibration to win observing time for Leavitt to take part in the next step'
+        points_fail:
+          p1: 'Rows whose plate references cannot be checked are cut and the table of twenty-five periods does not appear. The office recalls the employee after a loss of sync.'
+          p2: 'Readers can see the numbers but have to write to Harvard to find the original plates.'
+          p3: 'The period and brightness relation survives, and its absolute calibration is taken up elsewhere.'
+        shift:
+          p1:
+            was: 'On 3 March 1912 Harvard Observatory Circular 173 published Leavitt''s periods for twenty-five variables in the Small Magellanic Cloud.'
+          p2:
+            was: 'In March 1912 the circular printed periods, magnitudes and plots, while plate references were kept in the observing records.'
+            now: '{staff} helps Leavitt add a cross-reference from star numbers to plates. Readers can use the printed list to check a measurement.'
+          p3:
+            was: 'In 1913 Ejnar Hertzsprung used Milky Way Cepheids to calibrate Leavitt''s relation.'
+            now: '{staff} helps Leavitt prepare a list for joint observation. The observatory gives her time to review the resulting measurements and check the calibration sample with her collaborators.'
+            who: leavitt_cambridge_ma
+            bio: 'Leavitt continued working on stellar brightness and took part in applying her relation to distances. She left her own observing notes on the calibration.'
         vignettes:
           rank: 'You put the table in order of period and find one row that lost its label. The reader retrieves its identifier before the plotted point is moved.'
           distance: 'You ask whether a nearer star could merely look brighter. The reader puts a finger on the heading for the Small Magellanic Cloud. You write the reason for comparing this group beside the plot.'
@@ -44,9 +62,24 @@ events:
         relic: "一块玻璃底片"
         relic_desc: "一块布满细小星点的照相底片。"
         points:
-          p1: '把图上的点对回表格'
-          p2: '把周期和亮度成对记下'
-          p3: '说明为什么在同一片星云里比较'
+          p1: '排印前帮勒维特把暗星观测与玻璃底片对上，护住二十五颗变星的周期表'
+          p2: '劝排印人员在周期表后留一份底片索引，让别人能回到同一颗星重做测量'
+          p3: '用通报里留下的定标难题争取观测时间，让勒维特本人参与下一步'
+        points_fail:
+          p1: '错号让排印人员删去无法查对的几行，二十五颗星的周期表没有发表。行程同步失败，员工被召回。'
+          p2: '读者只能对着刊出的数字找星，得向哈佛另问原始底片。'
+          p3: '论文留下了亮度与周期的关系，给它定出绝对尺度的工作要由外地的研究者接手。'
+        shift:
+          p1:
+            was: '1912 年 3 月 3 日，哈佛天文台第 173 号通报刊登了勒维特整理的二十五颗小麦哲伦云变星周期。'
+          p2:
+            was: '1912 年 3 月的通报刊出了周期、亮度与图表，玻璃底片编号另存于观测记录。'
+            now: '{staff}帮勒维特把星号同底片号配成附表，印出后读者也能顺着编号核对。'
+          p3:
+            was: '1913 年，赫茨普龙用了银河系中的造父变星为勒维特的关系式定标。'
+            now: '{staff}替勒维特整理一份可供合作观测的名单，天文台给她留出时间审阅后来的量测。她能跟合作者一起核对定标用的样本。'
+            who: leavitt_cambridge_ma
+            bio: '勒维特继续做变星的亮度研究，并参与将自己的关系式用于测量距离。她给后来的定标留有自己的观测说明。'
         vignettes:
           rank: '你按周期给表格排序，发现一行丢了标号。读表人在图上的点被挪动前找回了对应的星号。'
           distance: '你问近一点的星是不是光看起来就更亮。读表人把手指按在「小麦哲伦云」的标题上，你把为什么选这一组来比记在图旁。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented reader reconciling a plotted point with its table row.', zh: '一位虚构的读表人，正把图上的点对回原表。'}
 wiki:
   refs:
+    leavitt_harvard_plates:
+      order: 824
+      status: checked
+      text:
+        en: 'Harvard College Observatory Plate Stacks, Leavitt’s marked plates, notebooks and 1913 calibration. https://platestacks.cfa.harvard.edu/henrietta-swan-leavitt/variable-stars'
+        zh: '哈佛大学天文台底片档案，勒维特的标记、笔记及 1913 年定标。 https://platestacks.cfa.harvard.edu/henrietta-swan-leavitt/variable-stars'
+    leavitt_wolbach_archives:
+      order: 825
+      status: checked
+      text:
+        en: 'Wolbach Library, Henrietta Swan Leavitt archives. https://library.cfa.harvard.edu/women-at-hco/henrietta-swan-leavitt'
+        zh: '沃尔巴赫图书馆，亨丽爱塔·斯万·勒维特档案。 https://library.cfa.harvard.edu/women-at-hco/henrietta-swan-leavitt'
     leavitt_cambridge_ma_primary:
       order: 148
       status: checked

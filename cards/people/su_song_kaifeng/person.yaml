@@ -2,6 +2,7 @@ order: 185
 events:
   su_song_kaifeng:
     order: 74
+    build_step: 2
     year: 1088
     lon: 114.35
     lat: 34.8
@@ -9,12 +10,13 @@ events:
     field: technology
     tier: 2
     channels: {L: 1}
-    refs: [su_song_kaifeng_primary]
+    refs: [su_song_kaifeng_primary, su_song_kaifeng_first_volume, su_song_kaifeng_song_history, su_song_kaifeng_project_history]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"any":[{"job":["mechanic","carpenter"]},{"trait":["hardy"]}]}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+        - {id: p1, kind: hold, guard: true, day: 42, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 47, req: {"any":[{"job":["archivist","carpenter","proofreader"]},{"trait":["handy","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 83, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["handy","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: listen, traits: [quiet, vigil]}
         - {id: layers, traits: [handy, methodical]}
@@ -28,9 +30,24 @@ events:
         relic: A gear tooth
         relic_desc: One bronze tooth of a gear as tall as a person.
         points:
-          p1: 'Identify the parts of the documented tower'
-          p2: 'Tell two practice signals apart'
-          p3: 'Help the keeper set a clear place for visitors'
+          p1: 'Send Han Gonglian’s model pieces and the drawings required for inspection to the Kaifeng workshop so the wooden trial model can be finished'
+          p2: 'Ask the carpenters to number the pieces being remade. Compare the fitted ones with Han and leave a handover record for the next test'
+          p3: 'Give the drawings a set of workshop notes approved by the people who tested the model. Keep a copy ready for future repairs'
+        points_fail:
+          p1: 'The inspector receives an old drawing. The pieces no longer fit it, the inspection stops, and the office recalls the employee.'
+          p2: 'Remade pieces go back on the old rack and are issued as though they have already been checked.'
+          p3: 'The drawing preserves its shape. The way the crew identified pieces still awaiting adjustment is lost when the workers leave.'
+        shift:
+          p1:
+            was: 'Su Song recorded employing Han Gonglian and making a wooden model early in the instrument project, which proceeded in stages.'
+          p2:
+            was: 'Su Song recorded who did different jobs and how drawings and prototypes led to the new instrument.'
+            now: 'The next crew can trace a remade piece to the person who checked it and recover the previous test record.'
+          p3:
+            was: 'Su Song’s illustrated account survived. Later Song records describe consulting his papers to study the earlier instrument.'
+            now: 'A second set records work actually tested against the drawings. Before repairing anything, a later crew can tell which features were only proposed and which the workshop tried.'
+            who: su_song_kaifeng
+            bio: 'Su Song, Han Gonglian and their collaborators directed work on the Kaifeng instrument. Surveying, drawing, inspection and craft all needed to agree.'
         vignettes:
           listen: 'You stand beyond the door where the figures cannot be seen. The keeper strikes two practice signals. You repeat them in order and he checks them against their labels.'
           layers: 'The keeper points to one figure but describes the one above it. You trace each storey on the drawing and ask him to assign one sound to each line before the next demonstration.'
@@ -43,9 +60,24 @@ events:
         relic: 一枚齿轮的齿
         relic_desc: 一个与人一样高的齿轮上的一颗青铜齿。
         points:
-          p1: '认出图上的仪象台部件'
-          p2: '分清两组试报的声音'
-          p3: '帮看守给来看的人腾出清楚的站位'
+          p1: '把韩公廉的样件和官署需核的图一并交到开封试验场，护住试制木样能做完'
+          p2: '请木工把返工的样件另记批号，与韩公廉逐处复核已经装过的部件，给后续试制留交接册'
+          p3: '给图稿添一层工匠自己核过的试制注记，并留一册可独立交给日后接修的人'
+        points_fail:
+          p1: '核样的人只领到一套旧图，木件装起来对不上。工房暂停验收，事务所因同步失败召回员工。'
+          p2: '几件返工样品重新放回旧架，被领走的人当作已经验过。'
+          p3: '图册留下了形状，先前试制中怎样辨认返工件的办法随工班散了。'
+        shift:
+          p1:
+            was: '苏颂记新仪制作曾任用韩公廉并先造木样机轮。仪象工程分阶段推进。'
+          p2:
+            was: '苏颂后来记录了制造人员的分工，以及新仪如何从图样与样件一步步做成。'
+            now: '下一个工班能按编号找到某次返工是谁接下的，复试时也能调出前一次的记录。'
+          p3:
+            was: '《新仪象法要》保有图文。宋代后来仍有以苏颂遗书查考旧法的记载。'
+            now: '另一套册页留有图稿对应的实物试用记录，后来的工匠在修补前能够分辨哪些地方还是当年的设想，哪些真的试过。'
+            who: su_song_kaifeng
+            bio: '苏颂与韩公廉等人主持开封仪象工程。建造需要测验、制图、监察与工匠相互核对。'
         vignettes:
           listen: '你站到门外，看不见木人。看守敲了两组试声。你依次复述，他拿标签逐一对上。'
           layers: '看守手指着这层，嘴里却讲的是上面那层。你沿图一层层划过去，请他下一次演示前给声音各标一行。'
@@ -74,6 +106,24 @@ bystanders:
     text: {en: 'An invented workshop keeper testing the sequence of a model''s signals.', zh: '一位虚构的工坊看守，正在试认模型的报时顺序。'}
 wiki:
   refs:
+    su_song_kaifeng_first_volume:
+      order: 10
+      status: checked
+      text:
+        en: 'Su Song’s account of Han Gonglian and trial model https://www.shidianguji.com/zh/book/SK1514/chapter/1la1iiiqlm52i'
+        zh: '苏颂卷上自记韩公廉与木样 https://www.shidianguji.com/zh/book/SK1514/chapter/1la1iiiqlm52i'
+    su_song_kaifeng_song_history:
+      order: 11
+      status: checked
+      text:
+        en: 'History of Song on later use of Su Song’s papers https://wk.100ke.info/zh-hant/%E5%AE%8B%E5%8F%B2/%E5%8D%B7048'
+        zh: '《宋史》所记后世征遗书考旧法 https://wk.100ke.info/zh-hant/%E5%AE%8B%E5%8F%B2/%E5%8D%B7048'
+    su_song_kaifeng_project_history:
+      order: 12
+      status: checked
+      text:
+        en: 'Study of the stages of the Kaifeng project https://brill.com/view/journals/east/38/1/article-p17_3.pdf'
+        zh: '开封仪象工程各阶段研究 https://brill.com/view/journals/east/38/1/article-p17_3.pdf'
     su_song_kaifeng_primary:
       order: 153
       status: checked

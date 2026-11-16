@@ -2,19 +2,23 @@ order: 68
 events:
   faraday_london:
     order: 30
+    build_step: 2
     year: 1831
+    date: '1831-08-16'
+    stay: 6
     lon: -0.14
     lat: 51.51
     region: europe
     field: science
     tier: 2
     channels: {L: 1, T: 1}
-    refs: [faraday_london_primary]
+    refs: [faraday_london_primary, faraday_induction_manuscript, faraday_diary_ri, faraday_1832_delay]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["curious","methodical","handy"]}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["electrician","mechanic"]},{"trait":["bold"]}]}}
-        - {id: p3, kind: trust, req: {"trait":["sensitive","artistic","kind","curious"]}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["electrician","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":7}}]}}
+        - {id: p2, kind: notice, day: 14, req: {"any":[{"job":["electrician","university_lecturer","archivist"]},{"trait":["methodical","scholarly"]}]}}
+        - {id: p3, kind: persuade, day: 103, req: {"any":[{"job":["electrician","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil"],"stat":{"will":8}}]}}
       vignettes:
         - {id: instant, traits: [methodical, vigil]}
         - {id: skeptic, traits: [skeptical, curious]}
@@ -28,9 +32,24 @@ events:
         relic: An iron ring and coil
         relic_desc: Two coils of wire on a ring of soft iron.
         points:
-          p1: 'Mark when the needle moved'
-          p2: 'Keep the two sets of windings distinct in the sketch'
-          p3: 'Make the observation legible to the next reader'
+          p1: 'Watch the switching and the needle separately to preserve the fleeting deflection in Faraday''s ring experiment'
+          p2: 'Set the unsuccessful arrangement beside the successful one so nobody has to repeat the same false start'
+          p3: 'Before review delays the printed paper, persuade the Royal Society to circulate an abstract with the date it received the work'
+        points_fail:
+          p1: 'The needle is back at rest before anyone looks. The experiment is entered as a null result, and the office recalls the employee after a loss of sync.'
+          p2: 'Only the result that worked reaches the next observer, who repeats an arrangement that does not give the same deflection.'
+          p3: 'Printing remains slow. Faraday has to write again, and readers struggle to place the various accounts in order.'
+        shift:
+          p1:
+            was: 'On 29 August 1831 Faraday observed a brief induced current when the iron-ring apparatus was switched on and off.'
+          p2:
+            was: 'In 1831 Faraday logged both experiments that showed induction and trials that gave no visible result.'
+            now: '{staff} asks Faraday to pick out two comparable arrangements from the diary and puts their different results side by side for colleagues.'
+          p3:
+            was: 'On 24 November 1831 the Royal Society heard Faraday''s paper. Printing was delayed into the next year, and Faraday wrote to hurry it along.'
+            now: '{staff} has the Society send a dated abstract while the review runs its course. Readers can check which results Faraday had reported by the date of the reading.'
+            who: faraday_london
+            bio: 'Faraday had a dated Society abstract before his induction paper appeared in print. He could use the same arrangement to put later experiments on the public record.'
         vignettes:
           instant: 'The assistant writes that the needle moved. You leave space for when it moved. By the time he looks back at the instrument, the needle has settled.'
           skeptic: 'You ask whether the reading stayed put. The assistant points to the blank after the first mark. Together you label it as a return to rest so nobody mistakes the blank for a missed reading.'
@@ -43,9 +62,24 @@ events:
         relic: 一个铁环和线圈
         relic_desc: 软铁环上绕着两组线圈。
         points:
-          p1: '记下指针何时偏转'
-          p2: '在图上分清两组绕线'
-          p3: '让下一位读者看得懂这条记录'
+          p1: '两人分看接通时刻和表针，护住铁环实验里转瞬即逝的偏转'
+          p2: '把失败的接线与确实有效的试验分栏记下，省去后来重复一次已经走过的弯路'
+          p3: '在审稿拖慢刊印前，劝皇家学会发出一份有接收日期的实验摘要'
+        points_fail:
+          p1: '表针摆回去才有人抬头，这一趟把实验记成无结果。行程同步失败，员工被召回。'
+          p2: '交接时只剩成功的结果，后来接手的人又试了一遍得不出同样偏转的布置。'
+          p3: '刊印仍然拖延，法拉第只能另去催问，读者也难判断几封先后传出的通信。'
+        shift:
+          p1:
+            was: '1831 年 8 月 29 日，法拉第在铁环装置接通和断开时观察到了短暂的感应电流。'
+          p2:
+            was: '1831 年，法拉第的实验日记把观察到感应的试验与没有可见结果的试验分别逐次记下。'
+            now: '{staff}请法拉第从散在日记里的试验里划出彼此最接近的两种布置，把不同结果并排留给同事。'
+          p3:
+            was: '1831 年 11 月 24 日论文在皇家学会宣读，刊印延至翌年，法拉第在等候期间致信催促。'
+            now: '{staff}让学会在不动正式审稿程序的情况下附发注明宣读日期的摘要。读者可以从有日期的版本核对法拉第公布了哪些结果。'
+            who: faraday_london
+            bio: '法拉第的感应研究在正式论文前已有注明日期的学会摘要。他后来能用同样办法给后续试验留下公开的时间记录。'
         vignettes:
           instant: '助手写下「指针偏转」。你腾出一栏补记何时偏转。他再回头时，针已经归位了。'
           skeptic: '你问读数有没有一直停在那里。助手指给你看第一道记号后面的空白。你们补上「回到静止」，免得后来人当成漏记。'
@@ -80,6 +114,24 @@ bystanders:
     text: {en: 'An invented assistant keeping a copy of the observations.', zh: '一位虚构的助手，正在誊写观察记录。'}
 wiki:
   refs:
+    faraday_induction_manuscript:
+      order: 826
+      status: checked
+      text:
+        en: 'Royal Society archives, Experimental researches in electricity, read 24 November 1831. https://makingscience.royalsociety.org/items/pt_20_4/paper-experimental-researches-in-electricity-by-m-michael-faraday'
+        zh: '英国皇家学会，1831 年 11 月 24 日宣读的《电学实验研究》手稿。 https://makingscience.royalsociety.org/items/pt_20_4/paper-experimental-researches-in-electricity-by-m-michael-faraday'
+    faraday_diary_ri:
+      order: 827
+      status: checked
+      text:
+        en: 'Royal Institution, Faraday’s laboratory diary, 1831 entries. https://faradaysdiary.com/ws3/faraday.pdf'
+        zh: '英国皇家研究院，法拉第实验日记 1831 年条目。 https://faradaysdiary.com/ws3/faraday.pdf'
+    faraday_1832_delay:
+      order: 828
+      status: checked
+      text:
+        en: 'Royal Society commentary on the 1832 paper, including Faraday’s letter of 14 January 1832. https://pmc.ncbi.nlm.nih.gov/articles/PMC4360079/'
+        zh: '皇家学会《电学实验研究》评述，含法拉第 1832 年 1 月 14 日书信。 https://pmc.ncbi.nlm.nih.gov/articles/PMC4360079/'
     faraday_london_primary:
       order: 118
       status: checked

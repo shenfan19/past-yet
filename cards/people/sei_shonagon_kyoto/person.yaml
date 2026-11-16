@@ -2,6 +2,7 @@ order: 173
 events:
   sei_shonagon_kyoto:
     order: 167
+    build_step: 2
     year: 1000
     lon: 135.76
     lat: 35.01
@@ -9,13 +10,13 @@ events:
     field: literature
     tier: 1
     channels: {G: 1, S: 1}
-    regret: true
-    refs: [sei_shonagon_kyoto_opening]
+    refs: [sei_shonagon_kyoto_opening, sei_shonagon_kyoto_collected_manuscripts, sei_shonagon_kyoto_court_writing]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["scholarly","streetwise"]}}
-        - {id: p2, kind: trust, req: {"luck":0.5}}
-        - {id: p3, kind: care, redeem: true, req: {"trait":["patient","cheerful","calm"]}}
+        - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 26, req: {"any":[{"job":["archivist","proofreader","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 60, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: compare, traits: [scholarly, skeptical, methodical]}
         - {id: colour, traits: [artistic, curious, kind]}
@@ -29,9 +30,24 @@ events:
         relic: "A folded list"
         relic_desc: "A sheet of lightly written lists of things that please and things that do not."
         points:
-          p1: 'Pick out the first change of light in the opening'
-          p2: 'Get the copyist to show where the first entry ends'
-          p3: 'Wait at the opening and record one detail of your own at dawn'
+          p1: 'Give Sei Shōnagon a box for the notes she is gathering in Kyōto and a way to find the sections already written'
+          p2: 'Mark which passages she is willing to lend so a reader does not copy the adjacent private pages'
+          p3: 'Ask her to choose some lists and scenes for a loan copy and arrange the sequence. Return the other pages to her own box'
+        points_fail:
+          p1: 'Borrowers separate the loose papers. No collection remains to be copied, and the office recalls the employee.'
+          p2: 'The reader takes the whole pile. Only later does she find that a page she kept to herself is circulating.'
+          p3: 'The first person to borrow the pages determines their order. Readers cannot tell how she kept them.'
+        shift:
+          p1:
+            was: 'Some manuscripts of The Pillow Book relate how she obtained paper and how the notes came to be seen by others.'
+          p2:
+            was: 'An authorial account in some manuscripts describes someone taking the notes. This passage does not occur in every version.'
+            now: 'A borrower receives the passages she approved, marked where the selection ends.'
+          p3:
+            was: 'Manuscripts arrange The Pillow Book differently. The order and the status of the authorial notes are matters of study.'
+            now: 'The borrower receives a selection she arranged. A second record stays with her so another copyist can tell which order the loan copy used.'
+            who: sei_shonagon_kyoto
+            bio: 'Sei Shōnagon wrote observations, lists and recollections at court. Different manuscripts preserve different arrangements and accounts of circulation.'
         vignettes:
           compare: 'You recognise the opening from a future edition. The copyist has skipped the edge of the mountain while reciting it. You ask where the light first shows, and the omitted place returns to the practice copy. You save the correction on a folded list. From this doorway the mountain itself stays out of sight.'
           colour: 'The painter’s purple you remember is too dark for that sky. The copyist lets you use an offcut. You put a thin grey line over a small patch of violet, and the two of you wait for the paper to dry. By then the colour outside has gone.'
@@ -44,9 +60,24 @@ events:
         relic: "一张折起来的清单"
         relic_desc: "一张轻轻写着喜欢和不喜欢的事的单子。"
         points:
-          p1: '在开篇找出天色最先变在哪里'
-          p2: '请抄写人指出开头一段在哪里收笔'
-          p3: '守在门边，天亮时亲手记下一样细节'
+          p1: '在京都给清少纳言正在积攒的记事留一处可取用的纸盒，把已经写成的段落收好'
+          p2: '在清少纳言愿意给人看的段落旁另记节选，不让同一人误把未同意的旁页抄去'
+          p3: '请她从自己所写的清单和记事中各挑一组，安排可以借看的顺序，将其余页留回自己的箱中'
+        points_fail:
+          p1: '随手记的页被借纸的人拆走，没能聚成供后来抄读的笔记，事务所召回员工。'
+          p2: '读者拿走的是相邻的整摞纸，作者后来才发现原本私人留存的一页也传出去了。'
+          p3: '借阅本的收页次序由第一个抄写人决定。作者很难让后来读者辨别她原来怎么放。'
+        shift:
+          p1:
+            was: '一些《枕草子》传本记清少纳言获得纸张写记事，也叙述笔记怎样被其他人看到。'
+          p2:
+            was: '部分传本中的自述将笔记流传与一次有人拿走稿子的情节联系起来；该段并非所有版本都有。'
+            now: '来借的人只领到她核过的几则，附来的段尾写明节选在此截止。'
+          p3:
+            was: '《枕草子》有不同的写本编排，段落次序与自述性质均是研究问题。'
+            now: '早期借阅者得到一份由她排过的节选，另外有一份留在作者处的次序。后来的抄写可以查到曾经使用哪一种。'
+            who: sei_shonagon_kyoto
+            bio: '清少纳言在京都宫廷写下见闻、清单和感想。《枕草子》的传本保留不同的安排与流传线索。'
         vignettes:
           compare: '你认出后世版本的开头。抄写人念漏了山际，你问光最先从哪里出来，他把漏掉的地方补到练习纸上。你把这处订正记进折起来的清单。从这扇门望出去，山本身却被挡着。'
           colour: '你印象里的紫颜料太深了。抄写人分你一张纸边，你在淡紫上压了一笔细灰。两人等纸干，再往门外望，天上已不是那个颜色。'
@@ -75,6 +106,18 @@ bystanders:
     text: {en: 'A fictional copyist practising the opening on an offcut of paper.', zh: '虚构的抄写人，用裁剩的纸边练开头几行。'}
 wiki:
   refs:
+    sei_shonagon_kyoto_collected_manuscripts:
+      order: 10
+      status: checked
+      text:
+        en: 'Bowring’s study of the manuscript versions and the paper episode https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/20/02/93/89/2020029389/2020029389.pdf'
+        zh: '鲍林关于传本差异和获纸段落的研究 https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/20/02/93/89/2020029389/2020029389.pdf'
+    sei_shonagon_kyoto_court_writing:
+      order: 11
+      status: checked
+      text:
+        en: 'Study of the account of Shōnagon’s paper and writing https://journals.library.brandeis.edu/index.php/PMAJLS/article/download/2384/1874/5867'
+        zh: '清少纳言因纸写作记述研究 https://journals.library.brandeis.edu/index.php/PMAJLS/article/download/2384/1874/5867'
     sei_shonagon_kyoto_opening:
       order: 412
       status: checked

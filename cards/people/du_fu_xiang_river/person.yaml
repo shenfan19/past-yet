@@ -2,6 +2,7 @@ order: 58
 events:
   du_fu_xiang_river:
     order: 153
+    build_step: 2
     year: 770
     lon: 112.94
     lat: 28.23
@@ -9,13 +10,13 @@ events:
     field: literature
     tier: 1
     channels: {C: 2, Y: 2}
-    regret: true
-    refs: [du_fu_xiang_river_primary]
+    refs: [du_fu_xiang_river_primary, du_fu_xiang_river_collected_poem, du_fu_xiang_river_hunan_edition]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"trait":["attached","faithful","patient"]}}
-        - {id: p2, kind: notice, req: {"any":[{"trait":["quiet","wanderer"]},{"job":["teacher","journalist"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: hold, guard: true, day: 16, req: {"any":[{"job":["archivist","translator","caregiver"]},{"trait":["patient","artistic"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 27, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["patient","artistic","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 38, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["patient","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: shore, traits: [artistic, quiet]}
         - {id: delivery, traits: [kind, streetwise]}
@@ -29,9 +30,24 @@ events:
         relic: "A boatman's oil lamp"
         relic_desc: "A small clay lamp that burned late over a few lines of verse."
         points:
-          p1: 'Pick out a detail visible from a boat'
-          p2: 'Carry the note clear of water at the landing'
-          p3: 'Help a greeting reach someone in the next town'
+          p1: 'Keep a place for Du Fu’s pages on the boat so the long poem for friends in Hunan can be assembled'
+          p2: 'Ask the poet to check the places in the dispatch copy and keep a set he can compare with his route'
+          p3: 'Leave checked copies with two sets of friends. Preserve the title and author’s changes for later collectors'
+        points_fail:
+          p1: 'Only the first and last leaves turn up after a hurried move. The poem cannot be assembled and the office recalls the employee.'
+          p2: 'The copy for friends loses a marginal place name, leaving no reference to consult.'
+          p3: 'Only one friend keeps a copy. A later scribe drops the words addressed to the author’s friends.'
+        shift:
+          p1:
+            was: 'A surviving poem attributed to Du Fu has thirty-six rhymes and is headed as written in illness on a boat for friends in Hunan.'
+          p2:
+            was: 'The poem describes life aboard and scenes along the river. Its title identifies the people it addresses.'
+            now: 'The pages distinguish places already visited from entries still to be checked. The poet can compare the dispatch against his copy.'
+          p3:
+            was: 'Later collections transmit the poem. Its dating and route are studied through the title and related records.'
+            now: 'Copies held in two places give the same heading and page sequence. Later editors can compare them while leaving uncertain route details open.'
+            who: du_fu_xiang_river
+            bio: 'Du Fu spent parts of his last years traveling by boat. This poem’s heading preserves something of how it was written and whom he meant to read it.'
         vignettes:
           shore: 'The traveller writes that the shore looks gloomy. You ask what made them look up from the boat. They pause, then write down one thing that was actually there.'
           delivery: 'You hear that the next boat goes only partway to the friend''s town. The traveller nearly folds the note without a second name on it. You help them find someone who can take it onwards.'
@@ -44,9 +60,24 @@ events:
         relic: "一盏船灯"
         relic_desc: "一盏小小的陶油灯，为了几行诗亮到很晚。"
         points:
-          p1: '认出一个从船上才好看清的细节'
-          p2: '在渡口把信拿离湿处'
-          p3: '帮旅人把问候送向下一个镇子'
+          p1: '在船上给杜甫留一处可以收好诗纸的位置，护住寄湖南亲友的长诗从零散纸页连成全篇'
+          p2: '请作者确定寄送稿中按旅程提到的几处地方，给自己另留一套便于沿路核对的稿纸'
+          p3: '请两边的亲友各留一份可核作者改笔的抄稿，给后来选诗者指到诗题原来如何署'
+        points_fail:
+          p1: '匆忙挪舱时只找到头尾几张，长诗没能成篇，事务所因同步失败召回员工。'
+          p2: '抄给友人的一套把借写在边上的地名漏掉，后来没有办法回查。'
+          p3: '只有受信的友人留了一套抄稿，抄手再传时把题里关于亲友的字漏掉。'
+        shift:
+          p1:
+            was: '传世杜诗有一首题为舟中抱病时写给湖南亲友的三十六韵。'
+          p2:
+            was: '这首诗写及舟中处境与两岸景物，诗题给出了收信范围。'
+            now: '抄页仍分出所经地点和准备另查之处。作者能从原稿核定寄本。'
+          p3:
+            was: '诗经后来的杜集和唐诗总集传下，舟中寄呈的时间和行程需要依据诗题与其他资料考证。'
+            now: '两份不同处保存的抄稿标着相同的诗题与页次，编集者可以对读。有些航行细节依然留待考证。'
+            who: du_fu_xiang_river
+            bio: '杜甫晚年多在舟中转徙。这首作品把写诗时的处境和希望送给谁都留在题里。'
         vignettes:
           shore: '旅人写岸上阴沉。你问刚才是什么让他从舱里抬起头。他想了一会儿，只写下一样真正看见的东西。'
           delivery: '你听说下一条船只去半程。旅人差点没写转交人的名字就折起信。你帮他找了一个能再往前带的人。'
@@ -75,6 +106,18 @@ bystanders:
     text: {en: 'An invented boat traveller preparing a note for a friend.', zh: '一位虚构的舟中旅人，正在给朋友备一张信笺。'}
 wiki:
   refs:
+    du_fu_xiang_river_collected_poem:
+      order: 10
+      status: checked
+      text:
+        en: 'Complete Tang poetry, volume 233, text and heading https://zh.wikisource.org/zh/風疾舟中伏枕書懷三十六韻奉呈湖南親友'
+        zh: '《全唐诗》卷二三三诗题与正文 https://zh.wikisource.org/zh/風疾舟中伏枕書懷三十六韻奉呈湖南親友'
+    du_fu_xiang_river_hunan_edition:
+      order: 11
+      status: checked
+      text:
+        en: 'Collected Du Fu poems in the Hunan library edition https://www.hnwomen.com.cn/_upload/article/files/41/0c/5f6d7bef424dae8ca27059792b79/72619f8f-12d5-4722-abf3-dc0906ad516f.pdf'
+        zh: '湖南文献所录杜诗 https://www.hnwomen.com.cn/_upload/article/files/41/0c/5f6d7bef424dae8ca27059792b79/72619f8f-12d5-4722-abf3-dc0906ad516f.pdf'
     du_fu_xiang_river_primary:
       order: 198
       status: checked

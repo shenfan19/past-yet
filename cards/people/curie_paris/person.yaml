@@ -2,19 +2,23 @@ order: 51
 events:
   curie_paris:
     order: 37
+    build_step: 2
     year: 1898
+    date: '1898-06-30'
+    stay: 7
     lon: 2.34
     lat: 48.85
     region: europe
     field: science
     tier: 3
     channels: {T: 3, L: 1}
-    refs: [curie_paris_primary]
+    refs: [curie_paris_primary, curie_academy_july_1898, curie_academy_dec_1898, curie_nobel_lab_conditions]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat": {"wit": 8}}}
-        - {id: p2, kind: endure, req: {"provides": "shield"}}
-        - {id: p3, kind: hold, req: {"stat": {"wit": 7}}}
+        - {id: p1, kind: hold, guard: true, day: 178, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 18, req: {"any":[{"job":["archivist","biologist"]},{"trait":["methodical","scholarly","patient"]}]}}
+        - {id: p3, kind: persuade, day: 177, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: two_notices, traits: [methodical, vigil]}
         - {id: word, traits: [skeptical, scholarly, curious]}
@@ -28,9 +32,24 @@ events:
         relic: A tube of pitchblende
         relic_desc: A glass tube of dark ore that left a faint glow in the dark.
         points:
-          p1: 'Keep the two announcements distinct'
-          p2: 'Check the date against the right notice'
-          p3: 'Finish the proof with the claim stated precisely'
+          p1: 'Before the year-end reading, match the records still awaiting an independent check and protect the second report'
+          p2: 'Keep a separate list of the first report''s open questions so later readers can tell which things Curie actually observed'
+          p3: 'Use the two reports to secure a regular workroom for Curie and protect the instruments and records for later measurements'
+        points_fail:
+          p1: 'The independent observation cannot be matched to the team''s records before submission. The year-end report is lost, and the office recalls the employee.'
+          p2: 'The name circulates without the distinction between old observations and evidence that still has to be gathered.'
+          p3: 'The team still shares makeshift benches. When the weather turns they have to move instruments and wait for space.'
+        shift:
+          p1:
+            was: 'On 26 December 1898 the Paris Academy received a report on a new radioactive substance and published an independent spectroscopic observation alongside it.'
+          p2:
+            was: 'The report of 18 July 1898 proposed a possible new element and made its proposed name conditional on confirmation.'
+            now: '{staff} uses the authors'' wording to separate what they observed from what still needs checking. Readers can reply with evidence on the open points.'
+          p3:
+            was: 'After the two 1898 reports, the Curies continued their research in makeshift space at the school.'
+            now: '{staff} presents both reports alongside a record of interruptions to someone who can arrange space. The school sets aside a room for long-term measurements.'
+            who: curie_paris
+            bio: 'Marie Curie had a regular room for the work that followed. She could have her colleagues consult and check the records in one place.'
         vignettes:
           two_notices: 'The typesetter has set the two notices under one date. You put the earlier and later sheets apart and mark their months before the form is locked.'
           word: 'You notice that the headline promises a finished result. The typesetter reads the announcement aloud and leaves a narrower claim in the heading.'
@@ -43,9 +62,24 @@ events:
         relic: 一管沥青铀矿
         relic_desc: 一支装着黑色矿石的玻璃管，在黑暗里有一点微光。
         points:
-          p1: '分清两次发现的报告'
-          p2: '把日期对回相应消息'
-          p3: '校样交出去前把所声称的结果写准确'
+          p1: '在年末宣读前把还待独立验证的几份记录对齐，护住第二份新元素报告'
+          p2: '给首次报告中提出的假说另留一份待验清单，让后来的人能看清作者已经测到什么'
+          p3: '用两次报告为居里争取一间能稳定工作的房间，替以后反复测量保住仪器和记录'
+        points_fail:
+          p1: '交稿时独立观察与研究记录对不上，年末没有这份报告。事务所因同步失败召回员工。'
+          p2: '传阅时只剩新元素的名字，当时还待补的证据和原来做过的观察混在一起。'
+          p3: '几个人还在临时场地分着用台面，遇到天气坏时又要挪仪器、等场地。'
+        shift:
+          p1:
+            was: '1898 年 12 月 26 日，巴黎科学院报告新的放射性物质，独立光谱观察随同刊出。'
+          p2:
+            was: '1898 年 7 月 18 日的报告提出可能存在新元素，并把命名写作有待证实的建议。'
+            now: '{staff}按作者原来的措辞把观察和待验的问题分别摘出。收到报告的人可以照着清单回信，继续补证据。'
+          p3:
+            was: '1898 年两次报告之后，居里夫妇的后续研究仍在学校的简陋场地进行。'
+            now: '{staff}把两份成果和停工的记录一并交给愿意协调场地的人。学院为接下来的测量腾出一间可长期使用的房间。'
+            who: curie_paris
+            bio: '玛丽·居里在开始后续测量时有了固定的工作间，能够安排同事在同一处核对记录。'
         vignettes:
           two_notices: '排字工把两条消息排在同一天名下。固定版面之前，你把先后两张纸分开，各自标上月份。'
           word: '你发现标题把话说成了工作已经全做完。排字工把报告念了一遍，最后在标题里只留报告能支持的话。'
@@ -74,6 +108,24 @@ bystanders:
     text: {en: 'An invented typesetter setting two separate notices.', zh: '一位虚构的排字工，正在排两份不同的消息。'}
 wiki:
   refs:
+    curie_academy_july_1898:
+      order: 857
+      status: checked
+      text:
+        en: 'Académie des sciences, July 1898 note announcing the possible discovery of polonium. https://www.academie-sciences.fr/pdf/dossiers/Curie/Curie_pdf/CR1898_p175_178.pdf'
+        zh: '法国科学院，1898 年 7 月关于钋的通报原件。 https://www.academie-sciences.fr/pdf/dossiers/Curie/Curie_pdf/CR1898_p175_178.pdf'
+    curie_academy_dec_1898:
+      order: 858
+      status: checked
+      text:
+        en: 'Académie des sciences, December 1898 note and the announcement of radium. https://www.academie-sciences.fr/pdf/dossiers/Curie/Curie_pdf/CR1898_p1215_1217.pdf'
+        zh: '法国科学院，1898 年 12 月关于镭的通报原件。 https://www.academie-sciences.fr/pdf/dossiers/Curie/Curie_pdf/CR1898_p1215_1217.pdf'
+    curie_nobel_lab_conditions:
+      order: 859
+      status: checked
+      text:
+        en: 'Nobel Prize archive, the Curies’ early workspace and the research following the 1898 reports. https://www.nobelprize.org/prizes/themes/marie-and-pierre-curie-and-the-discovery-of-polonium-and-radium/'
+        zh: '诺贝尔奖档案，居里夫妇早期场地及 1898 年通报后的研究。 https://www.nobelprize.org/prizes/themes/marie-and-pierre-curie-and-the-discovery-of-polonium-and-radium/'
     curie_paris_primary:
       order: 164
       status: checked

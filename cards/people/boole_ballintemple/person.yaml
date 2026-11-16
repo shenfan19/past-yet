@@ -2,20 +2,23 @@ order: 34
 events:
   boole_ballintemple:
     order: 133
+    build_step: 2
     year: 1864
+    date: '1864-11-17'
+    stay: 2
     lon: -8.45
     lat: 51.89
     region: europe
     field: math
     tier: 2
     channels: {E: 2, C: 2}
-    regret: true
-    refs: [boole_ballintemple_primary]
+    refs: [boole_ballintemple_primary, boole_ballintemple_cork_rain, boole_ballintemple_todhunter_preface]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"trait":["glib","ambitious"]}}
-        - {id: p2, kind: endure, req: {"trait":["hardy","wanderer"]}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: hold, guard: true, day: 7, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["patient","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 13, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["patient","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 18, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["patient","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: repeat, traits: [scholarly, curious]}
         - {id: border, traits: [methodical, vigil]}
@@ -29,9 +32,24 @@ events:
         relic: "A page of logic"
         relic_desc: "A page of equations in which letters stand for yes and no."
         points:
-          p1: 'Follow one operation using example slips'
-          p2: 'Keep the original condition through the second selection'
-          p3: 'Explain why the result stayed the same'
+          p1: 'Get the lecture notes to the college before Boole sets out in heavy rain. Leave him time to change wet clothes and keep the class on schedule'
+          p2: 'At home, check the differential-equations notes against Boole’s marked pages. Set aside the ones meant for a revised edition'
+          p3: 'Have Boole approve a note to Todhunter identifying tables to recalculate and passages of the supplement still under revision'
+        points_fail:
+          p1: 'The notes are soaked and nobody has a duplicate. The class is missed, and the office recalls the employee.'
+          p2: 'Class notes and additions for the publisher are filed together. Later someone else has to decide which belong in each pile.'
+          p3: 'The publisher receives papers without a list of which parts have been checked and which still need work.'
+        shift:
+          p1:
+            was: 'University College Cork records that Boole walked from home to teach in heavy rain on November 24, 1864.'
+          p2:
+            was: 'Boole left changes in his interleaved copy. Todhunter later used them in preparing a revision.'
+            now: 'Boole signs off separately on notes for students and changes for print. The recipient can check the pages against the lists.'
+          p3:
+            was: 'Boole died in December 1864. Todhunter prepared the supplement. His preface records a table recalculated after a sign error in the manuscript.'
+            now: 'Boole leaves a short list of checks. An editor opening the supplement can assign the table for independent review and file the editorial decision beside the draft.'
+            who: boole_ballintemple
+            bio: 'Boole taught in Cork and wrote mathematical textbooks. Surviving editions and papers preserve corrections he intended to make.'
         vignettes:
           repeat: 'You ask the learner to pick the even numbers, then to pick the even numbers again from the pile they just selected. They laugh once, then write down why the second choice gave back the same pile.'
           border: 'The learner starts to put a slip in both piles without saying which property they used. You ask for the condition first. They label each stack before trying the operation again.'
@@ -44,9 +62,24 @@ events:
         relic: "一页逻辑演算"
         relic_desc: "一页方程，其中的字母代表是和否。"
         points:
-          p1: '用例题纸条走完一步运算'
-          p2: '再选一遍时保留原来的条件'
-          p3: '说明所得结果为何没有变化'
+          p1: '大雨中从家出门前，把要用的讲义送到学院，再给布尔留可换下湿衣的时间，护住当天的课'
+          p2: '回到家以后，照布尔自己的改页核对微分方程讲义，把准备给修订本的页面另放'
+          p3: '请布尔核准给托德亨特的一页交代，标明待复算的表格和仍未定下的补编段落'
+        points_fail:
+          p1: '讲义淋湿且没人有备份，当天课没能开讲，事务所因同步失败召回员工。'
+          p2: '课上用过的批注和给出版商的增补夹在一起，后来只能靠旁人的判断分堆。'
+          p3: '出版社拿到稿件时，补编里哪些算过、哪些还待查并无一张总单。'
+        shift:
+          p1:
+            was: '科克学院档案记布尔在 1864 年 11 月 24 日的大雨里从家赶去教学。'
+          p2:
+            was: '布尔曾在自己夹有空白页的印本上留下拟改之处。托德亨特后来据此整理修订本。'
+            now: '布尔把写给学生看的提示和给出版的改字各签一份。后来接稿的人可以先照册核对。'
+          p3:
+            was: '布尔于 1864 年 12 月去世，托德亨特后来整理了补编。编者序记有一张表因稿内符号写错而需重新算过。'
+            now: '布尔留下逐项复算的短单。编辑打开补编时，可以先让一位校对者单独核表，再把编辑决定附回原稿。'
+            who: boole_ballintemple
+            bio: '布尔在科克教课并写数学教材。现存印本与稿件还保有他计划修订的痕迹。'
         vignettes:
           repeat: '你请学算者先挑出偶数，再从刚挑出的那一堆里挑偶数。他笑了一声，随后记下为什么第二次挑出的还是原来那一堆。'
           border: '学算者没说依据什么，就准备把一张纸同时放进两堆。你请他先说条件。他给各堆贴上标签，再试一遍。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented learner sorting numbered slips for a small exercise.', zh: '一位虚构的学算者，拿编号纸条做一道小练习。'}
 wiki:
   refs:
+    boole_ballintemple_cork_rain:
+      order: 10
+      status: checked
+      text:
+        en: 'University College Cork archival account of November 24 https://theriverside.ucc.ie/george-booles-untimely-death/'
+        zh: '科克大学档案馆 11 月 24 日记录 https://theriverside.ucc.ie/george-booles-untimely-death/'
+    boole_ballintemple_todhunter_preface:
+      order: 11
+      status: checked
+      text:
+        en: 'Printed edition with Todhunter’s account of the papers https://upload.wikimedia.org/wikipedia/commons/9/97/A_treatise_on_differential_equations_%28IA_treatiseondiffer00bool%29.pdf'
+        zh: '托德亨特编者序及修订本 https://upload.wikimedia.org/wikipedia/commons/9/97/A_treatise_on_differential_equations_%28IA_treatiseondiffer00bool%29.pdf'
     boole_ballintemple_primary:
       order: 182
       status: checked

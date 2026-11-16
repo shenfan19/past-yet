@@ -2,19 +2,23 @@ order: 142
 events:
   mozart_prague:
     order: 26
+    build_step: 2
     year: 1787
+    date: '1787-10-05'
+    stay: 2
     lon: 14.42
     lat: 50.09
     region: europe
     field: music
     tier: 2
     channels: {V: 2}
-    refs: [mozart_prague_prague_preparations, mozart_prague_prague_premiere]
+    refs: [mozart_prague_prague_preparations, mozart_prague_prague_premiere, mozart_giovanni_critical]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["wanderer","quiet","curious"]},{"job":["musician"]}]}}
-        - {id: p2, kind: trust, req: {"any":[{"trait":["kind","artistic","attached"]},{"luck":0.4}]}}
-        - {id: p3, kind: persuade, req: {"stat":{"finesse":6}}}
+        - {id: p1, kind: hold, guard: true, day: 23, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}}]}}
+        - {id: p2, kind: notice, day: 9, req: {"any":[{"job":["musician","archivist"]},{"trait":["artistic","methodical","vigil"]}]}}
+        - {id: p3, kind: persuade, day: 24, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: cue, traits: [curious, quiet, methodical]}
         - {id: swap, traits: [kind, artistic, attached]}
@@ -28,9 +32,24 @@ events:
         relic: 'A corrected rehearsal part'
         relic_desc: 'A fictional part with one rest crossed out.'
         points:
-          p1: 'Check the singer’s cue against the other part'
-          p2: 'Ask the copyist which page she can replace before the curtain rises'
-          p3: 'Get both singers to start from the cue once'
+          p1: 'Reschedule the opening rehearsal after illness hits the small company and protect the 29 October premiere of Don Giovanni'
+          p2: 'Put the changed dates and programs on a record before the wrong announcement circulates again'
+          p3: 'Have Mozart approve a complete Prague copy while the premiere parts are still in the theater'
+        points_fail:
+          p1: 'The choir and orchestra cannot fit in another rehearsal and the 29 October premiere is canceled again. The office recalls the employee after a loss of sync.'
+          p2: 'The old date remains on the notice. Listeners have to reach the theater to learn that another opera is being performed.'
+          p3: 'Vienna''s revisions and the older Prague passage readings circulate together and a later company has to piece the versions together.'
+        shift:
+          p1:
+            was: 'On 29 October 1787 Don Giovanni premiered in Prague after inadequate preparation and a singer''s illness forced postponements.'
+          p2:
+            was: 'On 14 October 1787 The Marriage of Figaro was performed in place of the scheduled Don Giovanni.'
+            now: '{staff} lists the original date and the substitute in the theater register and posts a dated correction. Later readers can trace how the premiere moved.'
+          p3:
+            was: 'In 1788 Mozart made changes for the Vienna production of Don Giovanni.'
+            now: '{staff} gets a copy checked against the Prague performance and has the replacement pages kept separately. When another city changes the score, the Prague stage version remains legible.'
+            who: mozart
+            bio: 'When Mozart revised Don Giovanni he had a checked Prague copy to work from. He retained each city''s parts as a distinct version.'
         vignettes:
           cue: 'Anna’s part gives her one extra rest. You tap where the other voice enters and let her mark which word she can listen for. On the next run she comes in on time. The part still has the crossed-out rest, and Anna asks you to keep it visible.'
           swap: 'Jan has time to replace a page or fetch the missing singer. You take the walk to the stairs while he copies the page. By the time the curtain moves, both the new page and the singer are at the stand. Someone under the stage is still looking for the old copy.'
@@ -43,29 +62,47 @@ events:
         relic: '一页改过的排练分谱'
         relic_desc: '排练用谱，划掉了一个休止。'
         points:
-          p1: '拿另一份分谱核对歌手的接句'
-          p2: '请抄谱员说清开幕前哪一页还能换'
-          p3: '请两个人从那句接头的地方合一遍'
+          p1: '在小剧团有人病倒后重新排练开场，保住 10 月 29 日的《唐璜》首演'
+          p2: '在临时定下的剧目和日期又传错之前，帮剧院留下可查的换戏公告'
+          p3: '趁首演用的分谱仍在台上，请莫扎特核准一份注明布拉格版的完整副本'
+        points_fail:
+          p1: '狭窄的排练时间挤不出合唱和乐队重来一次，29 日的首演再度取消。行程同步失败，员工被召回。'
+          p2: '公告仍用原来的日期，观众得到了剧院才知道当天换演了另一部戏。'
+          p3: '后来为维也纳改写的段落和布拉格旧稿混着流传，排演的人得去找不同的分谱拼。'
+        shift:
+          p1:
+            was: '1787 年 10 月 29 日，在排练准备不足及歌手患病造成延期后，《唐璜》在布拉格首演。'
+          p2:
+            was: '1787 年 10 月 14 日原订演《唐璜》，当天实际演了《费加罗的婚礼》。'
+            now: '{staff}把日期和替演剧目一起登进剧院的演出清册，重贴一份有日期的公告。后来查首演记录的人也能看到原来的改期。'
+          p3:
+            was: '1788 年《唐璜》在维也纳上演时，莫扎特为当地演出另作改动。'
+            now: '{staff}请莫扎特在首演后核准一份照布拉格演出保留的副本，并把后来替换的页另装。另一座城市改谱时，仍可以读到这份原来的演出版本。'
+            who: mozart
+            bio: '莫扎特为《唐璜》改谱时，有一份经过自己核准的布拉格演出副本可以对照。他保留了两地各自的演员用谱。'
         vignettes:
           cue: '安娜的分谱多抄了一个休止。你敲出另一声部进入的位置，让她标下该听哪个词。再合一遍时她进准了。划掉的休止还留在谱上，安娜请你别把它涂没。'
           swap: '扬来得及重抄一页，或去找还没回来的歌手。你替他跑一趟楼梯，他留下抄。幕一动，改过的谱和歌手都到了谱架前。台下还有人在找那张旧谱。'
           applause: '你知道莫扎特会在信里提到掌声。扬问，那一个多出来的休止会不会有人听出来。你交给他改好的谱，指给他在哪儿等安娜开口。离开时幕已经升起，那句还没到。'
   mozart_requiem_vienna:
     order: 112
+    build_step: 2
     year: 1791
+    date: '1791-11-15'
+    stay: 2
     lon: 16.37
     lat: 48.21
     region: europe
     field: music
     tier: 3
     channels: {E: 2, G: 2}
-    regret: true
-    refs: [mozart_requiem_vienna_vienna_material, mozart_requiem_vienna_vienna_hands]
+    refs: [mozart_requiem_vienna_vienna_material, mozart_requiem_vienna_vienna_hands, mozart_nma_requiem, mozart_1791_requiem_illness]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"trait":["faithful","cheerful","calm"]}}
-        - {id: p2, kind: notice, req: {"any":[{"job":["musician"]},{"stat":{"wit":7}}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"item":"golden_apple"}}
+        - {id: p1, kind: hold, guard: true, day: 6, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"finesse":7}}]}}
+        - {id: p2, kind: notice, day: 10, req: {"any":[{"trait":["methodical","artistic","scholarly"]},{"job":["musician","archivist"]}]}}
+        - {id: p3, kind: care, day: 19, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"job":["archivist"],"trait":["methodical"],"stat":{"wit":8,"will":8}}]}}
       vignettes:
         - {id: stack, traits: [faithful, cheerful, calm]}
         - {id: hand, traits: [artistic, methodical, scholarly]}
@@ -79,9 +116,24 @@ events:
         relic: 'An unfinished practice leaf'
         relic_desc: 'A fictional copying leaf showing where the surviving notes stop.'
         points:
-          p1: 'Make space for the copyist to stack the working pages in order'
-          p2: 'Identify where the written music stops on the practice copy'
-          p3: 'Protect the unfinished passage from being filled in at the copying table'
+          p1: 'Keep the finished opening of the Requiem together when illness forces a handover'
+          p2: 'Before the handover, have a copyist keep a checked score marking where Mozart''s writing ends'
+          p3: 'While Mozart can still guide a copyist, help him leave a few bars beyond the break in the Lacrimosa'
+        points_fail:
+          p1: 'The opening parts get mixed with loose drafts and the first movement can no longer be reassembled. The office recalls the employee after the branch falls out of sync.'
+          p2: 'Later copies still run the additions into the original, and checking any error means finding the manuscript again.'
+          p3: 'Mozart''s contribution stops at the eighth bar and another hand has to continue from there.'
+        shift:
+          p1:
+            was: 'In December 1791, Mozart died with the opening of the Requiem fully orchestrated and much of the rest unfinished.'
+          p2:
+            was: 'In 1800, around the publication of the first edition, Constanze wrote to her publisher about errors in handwritten copies.'
+            now: '{staff} leaves a checked copy with Constanze so she can later identify which notes came from the original.'
+          p3:
+            was: 'In December 1791, Mozart died having written only the first eight bars of the Lacrimosa.'
+            now: '{staff} has the copyist ask only for the next phrase and write the few bars Mozart indicates on a separate work sheet. Later orchestration takes up where those bars leave off.'
+            who: mozart
+            bio: 'Before he died, Mozart left a few more bars of his Lacrimosa. Later performances kept a little more of what he wrote.'
         vignettes:
           stack: 'Greta is clearing the table and sets an empty-looking leaf aside. You hold the stack while Emil checks the page before it. The empty staff belongs in the sequence. Greta puts it back with a loose slip marking where it came from.'
           hand: 'Emil can copy the line in front of him and is ready to carry straight on into an unwritten staff. You have him rule a small mark in the margin at the point where copying stops. In the finished handoff, the next reader can see exactly where a new hand would have to begin.'
@@ -94,9 +146,24 @@ events:
         relic: '一页留白的练习谱'
         relic_desc: '抄谱习作，留着已经写下的乐句停住的位置。'
         points:
-          p1: '给抄谱员腾开桌面，顺次叠好工作页'
-          p2: '在习作副本上找出已经写下的音乐从哪儿停住'
-          p3: '守好还空的段落，别误在抄谱时填上'
+          p1: '在病中交接时，护住莫扎特已经配完器的《安魂曲》开篇，别让散页错放'
+          p2: '在交给续作者前，请抄谱员保留一份注明原稿笔迹界线的校本'
+          p3: '趁莫扎特还能指点谱子，请他把断在第八小节的《落泪之日》往下留几小节'
+        points_fail:
+          p1: '第一段的分谱和草页混在一起，再拼不回完整的开篇。这条分支与史实脱节，员工被召回。'
+          p2: '后来的抄谱仍把补写和原稿接成一份，勘误只能再去找原件。'
+          p3: '莫扎特自己的谱停在第八小节，后面依然只能由续作者接写。'
+        shift:
+          p1:
+            was: '1791 年 12 月，莫扎特去世时，《安魂曲》的开篇已经配完器，其余多处仍是未完稿。'
+          p2:
+            was: '1800 年，首版问世前后，康斯坦策同出版商通信，指出手抄副本中的错误。'
+            now: '{staff}把单独校过的副本留给康斯坦策，以后她能拿它逐处指出哪些音符来自原稿。'
+          p3:
+            was: '1791 年 12 月，莫扎特去世时，《落泪之日》只留下他写的前八小节。'
+            now: '{staff}让抄谱员只问下一句怎么走，并把莫扎特点明的几小节另记在工作页上。后来的配器从这几小节接下去。'
+            who: mozart
+            bio: '莫扎特去世前为《落泪之日》多留了几小节自己的写法。后来被传唱的乐句因此多保留了一小段他的原稿。'
         vignettes:
           stack: '格蕾塔收拾桌面，顺手拿开一页看着空白的纸。你扶住一叠谱，让埃米尔去对它前一页。原来那行空谱也该收在原来的次序里。格蕾塔把它放了回去，夹一张小条记下原来的位置。'
           hand: '眼前的乐句埃米尔抄得出，顺着写下去就要越过原来空着的一行。你请他在抄写停住的地方划个边记。交稿后，下一个人翻到这里，就知道另一只手得从哪儿起笔。'
@@ -162,6 +229,24 @@ bystanders:
     text: {en: 'A fictional copyist intent on producing a clean copy.', zh: '虚构抄谱员埃米尔，想把副本抄得整洁。'}
 wiki:
   refs:
+    mozart_giovanni_critical:
+      order: 838
+      status: checked
+      text:
+        en: 'International Mozarteum Foundation, New Mozart Edition, Don Giovanni, critical introduction. https://dme.mozarteum.at/DME/objs/pdf/nma_68_-27_-3_eng.pdf'
+        zh: '莫扎特国际基金会，《莫扎特新全集·唐璜》校勘序。 https://dme.mozarteum.at/DME/objs/pdf/nma_68_-27_-3_eng.pdf'
+    mozart_nma_requiem:
+      order: 806
+      status: checked
+      text:
+        en: 'International Mozarteum Foundation, New Mozart Edition, Requiem, critical introduction. https://dme.mozarteum.at/DME/objs/pdf/nma_14_-23_-3_eng.pdf'
+        zh: '莫扎特国际基金会，《莫扎特新全集·安魂曲》校勘序。 https://dme.mozarteum.at/DME/objs/pdf/nma_14_-23_-3_eng.pdf'
+    mozart_1791_requiem_illness:
+      order: 807
+      status: checked
+      text:
+        en: 'Mozarteum Salzburg, Letters and Music, on the final weeks of composition. https://mozarteum.at/static/f57c4c201c285f019cbfef82553b8cf1/MoWo_26_Almanach_WEB.pdf'
+        zh: '萨尔茨堡莫扎特基金会，《书信与音乐》，最后几周的创作。 https://mozarteum.at/static/f57c4c201c285f019cbfef82553b8cf1/MoWo_26_Almanach_WEB.pdf'
     mozart_prague_prague_preparations:
       order: 857
       status: checked

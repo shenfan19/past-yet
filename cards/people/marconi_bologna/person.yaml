@@ -2,6 +2,7 @@ order: 130
 events:
   marconi_bologna:
     order: 47
+    build_step: 2
     year: 1895
     lon: 11.34
     lat: 44.49
@@ -9,12 +10,13 @@ events:
     field: technology
     tier: 2
     channels: {L: 1}
-    refs: [marconi_bologna_lecture]
+    refs: [marconi_bologna_lecture, marconi_bologna_bologna_archive, marconi_bologna_villa_experiments, marconi_bologna_transport]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["electrician"]},{"trait":["bold"]}]}}
-        - {id: p3, kind: persuade, req: {"trait":["streetwise","scholarly","charismatic"]}}
+        - {id: p1, kind: hold, guard: true, day: 12, req: {"any":[{"job":["electrician","archivist"]},{"trait":["handy","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 33, req: {"any":[{"job":["archivist","electrician","proofreader"]},{"trait":["handy","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 84, req: {"any":[{"job":["archivist","electrician"],"stat":{"wit":7,"will":7}},{"trait":["handy","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: blank, traits: [methodical, curious, skeptical]}
         - {id: times, traits: [streetwise, scholarly, charismatic]}
@@ -28,9 +30,24 @@ events:
         relic: 'Two trial slips'
         relic_desc: 'Fictional records of the same trial from the two ends.'
         points:
-          p1: 'Compare the heard marks with the sender’s record'
-          p2: 'Keep the two trials apart until the slips can be compared'
-          p3: 'Persuade the receiver to record the quiet interval as well'
+          p1: 'Have the receiver at Villa Griffone record the agreed signal and time for each early transmission, keeping a usable account of the range test'
+          p2: 'Keep separate books for indoor and outdoor results. Ask people at the tests to check only the entries they witnessed'
+          p3: 'Before the trip, give the family a plain-language index of trials and make a separate copy for possible collaborators in Britain'
+        points_fail:
+          p1: 'Several transmissions go out after the sides separate, and the receiver does not log them separately. Nobody can verify a success, and the office recalls the employee.'
+          p2: 'Indoor and outdoor results are copied into one sequence. Away from the villa it is hard to tell when the conditions changed.'
+          p3: 'The papers go with the luggage. At home, the family can only reconstruct what they heard.'
+        shift:
+          p1:
+            was: 'Marconi carried out early wireless experiments at Villa Griffone near Bologna in 1895.'
+          p2:
+            was: 'Marconi had a laboratory in the family house. His equipment and trials continued to change.'
+            now: 'Each entry says where it was made and who witnessed it. A copy for a distant reader now carries enough context to assess the entries.'
+          p3:
+            was: 'Marconi moved to Britain to pursue patents and contacts. Some of his equipment required changes or repairs after arrival.'
+            now: 'The family and traveler each hold an index. Losses on the journey can be checked against the copy at home, and later British trials are entered separately.'
+            who: marconi_bologna
+            bio: 'Work at Villa Griffone and the later British patent were successive stages. Family and local support helped make the early work possible.'
         vignettes:
           blank: 'Rosa expected three sounds and has already marked three. You ask her to turn her slip face down during the next trial. When she picks it up, she writes down what she heard, including a sound in the quiet interval. Now there is a reason to repeat the test.'
           times: 'Carlo wants to carry the two sheets downhill together. Each says first trial at the top, although one was restarted. You ask him to show you where he waited and where he began again. He labels both attempts before setting off. The sender and receiver can compare the same run now.'
@@ -43,9 +60,24 @@ events:
         relic: '两张试验记事纸'
         relic_desc: '同一趟试验，在两端各留一张记录。'
         points:
-          p1: '比较听见的几声和发报端的记录'
-          p2: '替两端分开记两趟试验，留待对照'
-          p3: '劝接收端把静默的一段也记下来'
+          p1: '在格里福内别墅请接收端留下每次收到的约定信号和时间，护住当年最初的远距试验记录'
+          p2: '把在室内做的试验和在户外试出的结果分成两册，各请参加者核对自己看到的项目'
+          p3: '启程前请他给留在当地的家人一份用通俗文字写成的试验索引，再另抄一份带去给英国合作者'
+        points_fail:
+          p1: '隔开之后发出的几次信号在接收端没有分别记下。现场无法重对一次成功，事务所因同步失败召回员工。'
+          p2: '同一份记录把两处结果按先后混抄，离开别墅便说不清哪次条件不同。'
+          p3: '相关纸页跟行李一起去了英国，本地的人只能按听过的说法追记。'
+        shift:
+          p1:
+            was: '马可尼于 1895 年在博洛尼亚附近的格里福内别墅进行早期无线通信实验。'
+          p2:
+            was: '马可尼在父家设有实验房，后续的装置和试验仍持续调整。'
+            now: '每条记录分得清是在哪做的，由谁确认。整理给外地读者时，可以带上一份较完整的证据。'
+          p3:
+            was: '马可尼后来赴英国寻求专利和接洽。抵英后还需要调整和修理设备。'
+            now: '家里和旅行者各带一份能查的索引，旅途中出现损失也可用留底确认。英方的记录另外接在后面。'
+            who: marconi_bologna
+            bio: '格里福内别墅里的试验与后来在英国取得专利是前后不同的阶段，其中涉及家人和当地支持。'
         vignettes:
           blank: '罗莎等的是三声，下笔已经写了三划。下一趟你请她把纸扣在桌上。重新翻开时，她把实际听见的记下来，连静默时多听到的一声也写上。这下有理由再做一遍了。'
           times: '卡洛想把两张纸一起带下坡。纸头都写着第一趟，其实有一边重新做过。你请他指出哪一段在等，哪一段重新开始。他走前给两趟各写了记号，发报和接收两边终于能对上同一趟。'
@@ -77,6 +109,24 @@ bystanders:
     text: {en: 'A fictional helper carrying test slips between the two ends.', zh: '虚构帮工卡洛，在两端之间送试验记录。'}
 wiki:
   refs:
+    marconi_bologna_bologna_archive:
+      order: 10
+      status: checked
+      text:
+        en: 'University of Bologna biography and Villa Griffone record https://www.unibo.it/en/university/who-we-are/our-history/famous-people-and-students/guglielmo-marconi-2'
+        zh: '博洛尼亚大学生平与别墅记录 https://www.unibo.it/en/university/who-we-are/our-history/famous-people-and-students/guglielmo-marconi-2'
+    marconi_bologna_villa_experiments:
+      order: 11
+      status: checked
+      text:
+        en: 'Marconi Foundation study of the 1895 experiments https://www.fgm.it/documenti/articoli/corazza.pdf'
+        zh: '马可尼基金会 1895 年实验史 https://www.fgm.it/documenti/articoli/corazza.pdf'
+    marconi_bologna_transport:
+      order: 12
+      status: checked
+      text:
+        en: 'Bologna archival study on equipment and later work in Britain https://www.academia.edu/9213469/Storia_scienza_e_societ%C3%A0_Ricerche_sulla_scienza_in_Italia_nell_et%C3%A0_moderna_e_contemporanea_a_cura_di_Paola_Govoni_Bologna_Studies_in_History_of_Science_11_CIS_Universit%C3%A0_di_Bologna_2006'
+        zh: '博洛尼亚档案研究，器材运输与英国后续工作 https://www.academia.edu/9213469/Storia_scienza_e_societ%C3%A0_Ricerche_sulla_scienza_in_Italia_nell_et%C3%A0_moderna_e_contemporanea_a_cura_di_Paola_Govoni_Bologna_Studies_in_History_of_Science_11_CIS_Universit%C3%A0_di_Bologna_2006'
     marconi_bologna_lecture:
       order: 845
       status: checked

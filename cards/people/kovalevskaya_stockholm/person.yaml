@@ -2,20 +2,23 @@ order: 228
 events:
   kovalevskaya_stockholm:
     order: 218
+    build_step: 2
     year: 1888
+    date: '1888-10-25'
+    stay: 4
     lon: 18.07
     lat: 59.33
     region: europe
     field: math
     tier: 2
     channels: {C: 2, V: 3, S: 1}
-    regret: true
-    refs: [kovalevskaya_stockholm_rotation]
+    refs: [kovalevskaya_stockholm_rotation, kovalevskaya_stockholm_bordin_memoir, kovalevskaya_stockholm_stockholm_letters, kovalevskaya_stockholm_stockholm_post]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: persuade, req: {"stat":{"finesse":7}}}
-        - {id: p3, kind: endure, redeem: true, req: {"provides":"ration"}}
+        - {id: p1, kind: hold, guard: true, day: 32, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["methodical","scholarly"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 61, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","scholarly","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 82, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: conditions, traits: [methodical, scholarly]}
         - {id: diagram, traits: [curious, handy]}
@@ -29,9 +32,24 @@ events:
         relic: "A top model"
         relic_desc: "A brass spinning top with a number cut into its axis."
         points:
-          p1: 'Locate where the body’s symmetry enters the argument'
-          p2: 'Get the proofreader to retain both qualifying conditions'
-          p3: 'Keep the assumptions with the clean copy until it is finished'
+          p1: 'Keep a Stockholm copy of the anonymous entry. Check that its identifying envelope matches before sending it to the Paris judges'
+          p2: 'After the award, have her review the pages whose conclusions depend on extra conditions. Leave a reference for the assumptions a reader might confuse'
+          p3: 'Bring the prize record and her existing duties to the Stockholm university. Ask for written terms and pay before her old appointment expires'
+        points_fail:
+          p1: 'The entry has the wrong identifying envelope and cannot be matched to its author after judging. The office recalls the employee.'
+          p2: 'A few pages omit their assumptions. One reader takes the results to apply to any rigid body.'
+          p3: 'The news reaches the university. Her teaching hours and pay are still discussed only informally.'
+        shift:
+          p1:
+            was: 'Kovalevskaya won the Paris Academy’s 1888 Prix Bordin for work on rigid-body rotation.'
+          p2:
+            was: 'The Acta Mathematica paper of 1889 states conditions on the moments of inertia and the center of mass and made the work available in print.'
+            now: 'The printed proof makes the conditions easy to find and signals at the start where the conclusions apply.'
+          p3:
+            was: 'She became a full professor in Stockholm in 1889. Private correspondence also records questions about the length of her appointment and pay.'
+            now: 'The university sets out the dates and pay in writing early. She can plan the next semester and the department has a commitment it can consult.'
+            who: kovalevskaya_stockholm
+            bio: 'Kovalevskaya taught and studied rigid-body rotation in Stockholm. The international prize and her local working conditions were decided by different institutions.'
         vignettes:
           conditions: 'The shorthand on a practice sheet says ‘a rotating body’. You use the first page to restore two qualifications, one for inertia and one for where the centre of mass sits. The proofreader copies both onto his slip. You can take the correction away, but the journal issue is still in the future.'
           diagram: 'The proofreader wants to try a toy top. You sketch a point that stays fixed and mark the separate point that represents the centre of mass. He can point out which is which on the next copy. The toy still spins when your time is up, and it has not proved the paper.'
@@ -44,9 +62,24 @@ events:
         relic: "一只陀螺模型"
         relic_desc: "一只铜陀螺，轴上刻着编号。"
         points:
-          p1: '找出论证从哪里用到刚体的对称条件'
-          p2: '请校对人把两类前提都保留下来'
-          p3: '等到誊清完成，确认前提与正文在一起'
+          p1: '在斯德哥尔摩留备份，核对匿名参赛稿和分存的身份封后，再发给巴黎的评委'
+          p2: '奖讯传回后，请她和编辑把刊稿中依赖额外条件的段落逐页对清，留出读者最容易混淆的假设'
+          p3: '拿着奖项记录与她已经承担的工作清单，请斯德哥尔摩的校方在旧聘期结束前书面定下续聘和课酬'
+        points_fail:
+          p1: '匿名稿附错了识别封，无法在评定后认回作者，事务所因同步失败召回员工。'
+          p2: '待刊稿几页省去了假设，试读的人误以为结论适用于所有刚体。'
+          p3: '荣誉已转达给学校，新的课时和薪酬仍只靠私下转述。'
+        shift:
+          p1:
+            was: '柯瓦列夫斯卡娅以刚体转动问题的研究获得巴黎科学院 1888 年博尔丹奖。'
+          p2:
+            was: '1889 年的《数学学报》刊本有明确的惯量与质心条件，全文比参赛成果更易公开取得。'
+            now: '排印时把关键条件移到读者容易回查的位置，并在开头指明其适用范围。'
+          p3:
+            was: '她在斯德哥尔摩工作多年，于 1889 年获正式教授职位。私人通信还记有关于聘期和薪酬的争议。'
+            now: '校方提前给出书面聘期及课酬。她可以据此安排下一学期的教学和研究，系里也有可查的承诺。'
+            who: kovalevskaya_stockholm
+            bio: '柯瓦列夫斯卡娅在斯德哥尔摩教学并研究刚体转动。国际评奖及本地的工作条件分别由不同机构决定。'
         vignettes:
           conditions: '练习纸上省写成了「一个转动的刚体」。你照首页补回两类条件，一类管转动惯量，一类管质心在哪儿。校对人把两条都誊上纸条。你能抄走这两条更正，刊物还没有印出来。'
           diagram: '校对人想拿一只陀螺试。你画了一个固定不动的点，再标出代表质心的另一个点。他拿到下一张图就能分清两个地方。收队时陀螺仍在转，这一转证明不了论文。'
@@ -75,6 +108,24 @@ bystanders:
     text: {en: 'A fictional proofreader working with a loose diagram and a short exercise sheet.', zh: '虚构的校对人，手头有一张散图和一道短练习。'}
 wiki:
   refs:
+    kovalevskaya_stockholm_bordin_memoir:
+      order: 10
+      status: checked
+      text:
+        en: 'University presentation with facsimile of Acta Mathematica and prize date https://www.math.uni-konstanz.de/~infusino/KWIM/Matusinski-Slides.pdf'
+        zh: '大学报告所载《数学学报》影印及获奖日期 https://www.math.uni-konstanz.de/~infusino/KWIM/Matusinski-Slides.pdf'
+    kovalevskaya_stockholm_stockholm_letters:
+      order: 11
+      status: checked
+      text:
+        en: 'Mittag-Leffler correspondence and editorial archival notes https://henripoincarepapers.univ-nantes.fr/chp/text/mittag-leffler106.html'
+        zh: '米塔格-莱夫勒通信及档案注释 https://henripoincarepapers.univ-nantes.fr/chp/text/mittag-leffler106.html'
+    kovalevskaya_stockholm_stockholm_post:
+      order: 12
+      status: checked
+      text:
+        en: 'Study of the Prix Bordin and Stockholm appointment https://mathshistory.st-andrews.ac.uk//Extras/Kovalevskaya_bio_sketch/'
+        zh: '博尔丹奖与斯德哥尔摩任职研究 https://mathshistory.st-andrews.ac.uk//Extras/Kovalevskaya_bio_sketch/'
     kovalevskaya_stockholm_rotation:
       order: 546
       status: checked

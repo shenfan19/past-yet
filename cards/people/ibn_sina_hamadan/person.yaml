@@ -2,6 +2,7 @@ order: 104
 events:
   ibn_sina_hamadan:
     order: 57
+    build_step: 2
     year: 1025
     lon: 48.51
     lat: 34.8
@@ -9,12 +10,13 @@ events:
     field: medicine
     tier: 2
     channels: {E: 1, V: 2, S: 1}
-    refs: [ibn_sina_hamadan_canon, ibn_sina_hamadan_date]
+    refs: [ibn_sina_hamadan_canon, ibn_sina_hamadan_date, ibn_sina_hamadan_nlm_completion]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat": {"wit": 8}}}
-        - {id: p2, kind: persuade, req: {"item": "neural_chip"}}
-        - {id: p3, kind: hold, req: {"stat": {"wit": 7}}}
+        - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","physician","translator"]},{"trait":["scholarly","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 46, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["scholarly","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 71, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: section, traits: [methodical, curious, scholarly]}
         - {id: sleeve, traits: [handy, patient, vigil]}
@@ -28,9 +30,24 @@ events:
         relic: 'A practice index strip'
         relic_desc: 'A fictional marker distinguishing two of the five books.'
         points:
-          p1: 'Find the book a reader needs by comparing its heading with the index'
-          p2: 'Talk through the two labels before the book leaves'
-          p3: 'Keep the working strip in place while the reading copy is moved'
+          p1: 'Bring the Canon’s separately completed volumes under one catalogue in Hamadan so its five books can be assembled'
+          p2: 'Give repeated headings a book and section number. Compare two manuscripts to check whether either occurrence has been lost'
+          p3: 'Leave scribes an index checked by the author. Mark any section missing from a copy for comparison with another manuscript'
+        points_fail:
+          p1: 'The move leaves several volumes missing. The catalogue lists them all but nobody can hand over the completed work, and the office recalls the employee.'
+          p2: 'The copyist takes the same heading for a duplicate and leaves out the second passage.'
+          p3: 'The copy conceals a gap. A future translator cannot verify whether another section belonged there.'
+        shift:
+          p1:
+            was: 'The Canon was composed in several cities. The U.S. National Library of Medicine places its completion in Hamadan. The text has five books.'
+          p2:
+            was: 'Collections preserve manuscripts from different dates and separate books of the Canon. The divisions help readers locate material.'
+            now: 'A reader can find both occurrences by heading and book, and the next copyist can reproduce both.'
+          p3:
+            was: 'The Canon spread in Arabic manuscripts and in translation. Later editors compared translations with Arabic copies.'
+            now: 'A copyist can use the index to compare a gap with another copy. Later readers can see which parts of their book have been checked.'
+            who: ibn_sina_hamadan
+            bio: 'Ibn Sina wrote the Canon in several cities. The ways its books were divided and reassembled shaped how readers received it elsewhere.'
         vignettes:
           section: 'Ruqayya sends both requests to the same heading because both mention remedies. You ask her to open the index and point out which entry concerns a single substance and which concerns compounds. She puts one tab on each book. The two people at the table can now look for their entries without waiting for each other.'
           sleeve: 'Yahya has to carry one copy away. Its guide slips will slide out if he tips the board. You help him fold the empty wrapper over the bookmarks while Ruqayya copies the two headings for the reader staying behind. The bench keeps a small index even when the book is gone.'
@@ -43,9 +60,24 @@ events:
         relic: '一张练习索引条'
         relic_desc: '读书签，区分全书五卷中的两卷。'
         points:
-          p1: '照题头与索引帮读者找对卷'
-          p2: '书送走前，把容易弄混的两张签对一遍'
-          p3: '搬走读本时，把临时索引条的位置留好'
+          p1: '在哈马丹把陆续完成的《医典》各卷归在同一目录下，护住这次能够合成五书'
+          p2: '请誊手把不同书内同名处各记卷和段，用两份手稿对读检查条目有没有少一边'
+          p3: '为继续誊写的人准备一份作者核过的借阅索引，凡一份抄本缺整段的地方，要求留待原卷核验'
+        points_fail:
+          p1: '迁收时只找到几卷，目录列全了却没有可交阅的成书，事务所因同步失败召回员工。'
+          p2: '誊清人只见到同样的题名，把第二处当作重复略过。'
+          p3: '只在誊本上把缺处抹平。后来的译者无法确认原来是否还有被漏掉的一节。'
+        shift:
+          p1:
+            was: '《医典》历经多个城市写成，美国国家医学图书馆将完成地点记为哈马丹。存世文本分成五书。'
+          p2:
+            was: '馆藏中有不同年代的《医典》抄本与不同书卷。分卷结构为后人查阅提供索引。'
+            now: '学者可以按题目再按所处卷核回同名的两处，下一本也会抄齐。'
+          p3:
+            was: '《医典》后来经阿拉伯文传抄和多种译本流传，确有译者再拿阿拉伯文稿逐段核对。'
+            now: '抄写人遇到空处可直接用索引查另一本。后来的读者也能看出他们拿到的书是否已经核齐。'
+            who: ibn_sina_hamadan
+            bio: '伊本·西那在多地写作《医典》。书卷怎样分开与合拢，影响到后来在不同地区读到它的方式。'
         vignettes:
           section: '鲁卡娅见两张单都提到药物，便指向同个题头。你请她打开索引，指出哪条是单味，哪条是复方。她给两卷各夹一签。桌边的两个人现在可以各找各的条目了。'
           sleeve: '叶海亚得带走一份抄本，板一斜，索引签就会滑掉。你帮他用空封纸把几个签护好，鲁卡娅则替还留在桌边的人另抄两个题头。书带走后，桌上还有一张小索引。'
@@ -86,6 +118,12 @@ bystanders:
     text: {en: 'A fictional messenger who has to carry the copying board away.', zh: '虚构送件人叶海亚，要把抄书板带走。'}
 wiki:
   refs:
+    ibn_sina_hamadan_nlm_completion:
+      order: 10
+      status: checked
+      text:
+        en: 'National Library of Medicine manuscript catalogue and Hamadan completion https://mainweb.awsprod.nlm.nih.gov/hmd/arabic/E8.html'
+        zh: '美国国家医学图书馆写本目录与哈马丹成书档案 https://mainweb.awsprod.nlm.nih.gov/hmd/arabic/E8.html'
     ibn_sina_hamadan_canon:
       order: 953
       status: checked

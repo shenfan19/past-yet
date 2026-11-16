@@ -2,20 +2,23 @@ order: 30
 events:
   bessie_coleman_jacksonville:
     order: 141
+    build_step: 2
     year: 1926
+    date: '1926-04-15'
+    stay: 1
     lon: -81.66
     lat: 30.33
     region: americas
     field: exploration
     tier: 2
     channels: {L: 1, S: 3}
-    regret: true
-    refs: [bessie_coleman_jacksonville_licence, bessie_coleman_jacksonville_paxon]
+    refs: [bessie_coleman_jacksonville_licence, bessie_coleman_jacksonville_paxon, coleman_nasa_history, coleman_jax_certificate]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"]},{"stat":{"finesse":7}}]}}
-        - {id: p2, kind: trust, req: {"trait":["kind","artistic","charismatic"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"]},{"trait":["bold","vigil"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["teacher","journalist"],"stat":{"wit":7}},{"trait":["methodical","streetwise"],"stat":{"will":7}}]}}
+        - {id: p2, kind: trust, day: 14.5, req: {"any":[{"trait":["kind","charismatic","patient"]},{"job":["teacher","tutor","flight_instructor"]}]}}
+        - {id: p3, kind: notice, day: 15, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"finesse":9}}]}}
       vignettes:
         - {id: proof, traits: [methodical, handy, curious]}
         - {id: school, traits: [artistic, kind, charismatic]}
@@ -29,9 +32,24 @@ events:
         relic: 'A dated printer’s proof'
         relic_desc: 'A fictional ground crew notice, with Coleman’s name in full.'
         points:
-          p1: 'Check the pilot’s name on the notice before it leaves the table'
-          p2: 'Ask the runner whom the notice needs to reach'
-          p3: 'Keep one corrected copy when the runner collects the others'
+          p1: 'Keep the air show preparations from displacing Coleman''s visits with Jacksonville students'
+          p2: 'Help Coleman and the teachers set up a follow-up lesson while the students are still asking about flying'
+          p3: 'Use the fault found during the ground check to stop the Paxon test flight and keep both aviators on the ground'
+        points_fail:
+          p1: 'The organizers drop the visits to make up time. The branch falls out of sync and the office recalls the employee that day.'
+          p2: 'The students go home with their questions and no teacher has agreed to a follow-up lesson.'
+          p3: 'The old aircraft takes off as planned. Coleman and the pilot die on the practice flight.'
+        shift:
+          p1:
+            was: 'On 29 April 1926, Coleman visited students at Jacksonville''s Black public schools.'
+          p2:
+            was: 'On 29 April 1926, Coleman visited the schools, and the next day she died on a practice flight.'
+            now: '{staff} asks a teacher to collect the questions and set aside a lesson on how to learn to fly.'
+          p3:
+            was: 'On 30 April 1926, Coleman and the pilot died in a practice flight accident at Paxon Field.'
+            now: '{staff} has the ground crew double-check the controls. They find a fault and call off the flight, and Coleman goes on speaking to Black students about aviation.'
+            who: bessie_coleman_jacksonville
+            bio: 'After Jacksonville, Coleman kept flying and continued working to open flight training to Black students.'
         vignettes:
           proof: 'Ann is short a line and has cut the pilot’s given name. You trade out two words of puffery to free the space. At pickup, she makes the runner read the full name once before folding the proof. He can now tell someone who will fly without saying only that it is a woman.'
           school: 'Lewis thinks the crowd wants nothing but the show time. A child near the fence asks where the pilot learned. You tell Lewis where the licence was issued and let him use the last line for a fact he can repeat. When he takes the proof, he practises saying the date as well as the place.'
@@ -44,9 +62,24 @@ events:
         relic: '一张有日期的样张'
         relic_desc: '地面告示，完整排出了科尔曼的姓名。'
         points:
-          p1: '告示送出去前，检查飞行员的姓名'
-          p2: '问跑腿人，这张告示是要送给谁看的'
-          p3: '跑腿人来取时，另外留一张改过的副本'
+          p1: '护住科尔曼的学校行程，别让赶着筹备试飞的人取消她和学生见面的时间'
+          p2: '趁学生还在问怎么学飞，帮科尔曼和老师约好一堂后续课'
+          p3: '凭检查时发现的问题叫停帕克森机场的试飞，让科尔曼和飞行员留在地面'
+        points_fail:
+          p1: '临时筹备挤掉了约好的到访，科尔曼赶不到学校，这条分支与史实脱节，员工当天被召回。'
+          p2: '孩子们问过学飞的事，散场时还没有老师答应接着教。'
+          p3: '旧飞机按原安排升空，科尔曼和驾驶员在试飞中遇难。'
+        shift:
+          p1:
+            was: '1926 年 4 月 29 日，科尔曼到杰克逊维尔的黑人公立学校拜访学生。'
+          p2:
+            was: '1926 年 4 月 29 日，科尔曼进校拜访，次日试飞遇难。'
+            now: '{staff}请一位老师把课堂上的问题收齐，安排一堂课继续讲学飞的门槛。'
+          p3:
+            was: '1926 年 4 月 30 日，科尔曼和驾驶员在帕克森机场的试飞事故中遇难。'
+            now: '{staff}请机务人员复核飞行操纵，发现故障后取消当天的试飞。科尔曼往后继续办面向黑人学生的航空讲座。'
+            who: bessie_coleman_jacksonville
+            bio: '科尔曼从杰克逊维尔回去后继续飞行，也继续筹办向黑人学生开放的飞行训练。'
         vignettes:
           proof: '安少了一行，已经把飞行员的名字裁得只剩姓。你删掉两个吹捧词，给全名腾出位置。跑腿人来取时，她请他念全名，再把样张折好。有人问谁要飞，他可以直接说出名字。'
           school: '刘易斯以为围观的人只想知道几点开场。有孩子在围栏边问，这位飞行员在哪儿学的。你告诉他执照是在哪儿发的，把最后一行留给这个可以复述的事实。他取走样张时，连日期也练着念了一遍。'
@@ -87,6 +120,18 @@ bystanders:
     text: {en: 'A fictional runner who will read the notice to the crowd.', zh: '虚构跑腿人刘易斯，要把告示念给场外的人。'}
 wiki:
   refs:
+    coleman_nasa_history:
+      order: 802
+      status: checked
+      text:
+        en: 'NASA History, Realizing the Dream of Flight, chapter 1, p. 14. https://www.nasa.gov/wp-content/uploads/2023/04/sp-4112.pdf'
+        zh: 'NASA 历史项目，《实现飞行之梦》第一章，第 14 页。 https://www.nasa.gov/wp-content/uploads/2023/04/sp-4112.pdf'
+    coleman_jax_certificate:
+      order: 803
+      status: checked
+      text:
+        en: 'Jacksonville History Center, Bessie Coleman’s death certificate and account of the accident. https://jaxhistory.org/the-daring-of-bessie-coleman-100-years-later/'
+        zh: '杰克逊维尔历史中心，科尔曼死亡证明及事故记录。 https://jaxhistory.org/the-daring-of-bessie-coleman-100-years-later/'
     bessie_coleman_jacksonville_licence:
       order: 837
       status: checked

@@ -2,20 +2,23 @@ order: 198
 events:
   vermeer_delft:
     order: 115
+    build_step: 2
     year: 1675
+    date: '1675-12-01'
+    stay: 4
     lon: 4.36
     lat: 52.01
     region: europe
     field: art
     tier: 2
     channels: {G: 2, S: 1}
-    regret: true
-    refs: [vermeer_delft_primary, vermeer_delft_inventory]
+    refs: [vermeer_delft_primary, vermeer_delft_inventory, vermeer_estate_archives, vermeer_baker_document]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"stat":{"finesse":6}},{"job":["painter"]},{"trait":["handy","skeptical"]},{"trait":["scholarly","skeptical","quiet"]}]}}
-        - {id: p2, kind: trust, req: {"any":[{"trait":["charismatic","sensitive","artistic"]},{"trait":["attached","charismatic","kind"]}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["antique_dealer","accountant"]},{"trait":["vigil","bold"]},{"trait":["handy","ambitious","vigil"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 57, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 90, req: {"any":[{"job":["archivist","painter"]},{"trait":["methodical","artistic"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 103, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: motif, traits: [artistic, vigil]}
         - {id: pledge, traits: [methodical, skeptical]}
@@ -29,9 +32,24 @@ events:
         relic: "A pearl earring"
         relic_desc: "A small pearl of the kind he painted so often."
         points:
-          p1: 'Find a visual detail that identifies a work'
-          p2: 'Check a description with the person who remembers it'
-          p3: 'Keep a pledge distinct from a sale in the copy'
+          p1: 'When Catharina offers the baker two paintings for the bread debt, check that both parties agree which works are listed and how much debt the agreement covers.'
+          p2: 'As the notary inventories the rooms, ask Catharina to distinguish the paintings still in the house from those already transferred. Put the receipts in a separate column.'
+          p3: 'Before the remaining debts go to court, help Catharina use the receipts to negotiate a short agreement with other creditors covering household expenses and deadlines for the pictures.'
+        points_fail:
+          p1: 'The same painting goes under two names on separate sheets. The baker will not sign, the agreement falls through, and the office recalls the employee.'
+          p2: 'Works still in the house and works already transferred are entered together. Later readers have to go by very short descriptions of the pictures.'
+          p3: 'Creditors still press their separate deadlines. The family has to wait for the court to discover which household items it can keep in use.'
+        shift:
+          p1:
+            was: 'Vermeer died in Delft in 1675. In January of the next year Catharina Bolnes transferred two works to the baker Hendrick van Buyten against the debt.'
+          p2:
+            was: 'The 1676 inventory lists items by room. Some paintings are described only by what they depict.'
+            now: 'A supplement to the inventory gives the paperwork for each painting already transferred. Catharina can check whether a later claim refers to a work she has already handed over.'
+          p3:
+            was: 'The war made paintings difficult to sell. Vermeer’s household was left in debt, and Catharina petitioned the court to address it.'
+            now: 'Several creditors agree to leave certain listed items alone until the court checks the papers. A short payment schedule leaves Catharina enough for household needs while she decides which remaining paintings she can offer through a dealer.'
+            who: vermeer_delft
+            bio: 'Vermeer painted and traded in art. The inventory and Catharina’s petition preserve the household’s attempts to settle its debts after the market slumped.'
         vignettes:
           motif: 'The clerk remembers the light in one picture but cannot tell you which picture it was. You ask what the figure was doing. They write down the action beside the title, so the next person has two clues.'
           pledge: 'Someone has copied a pledged picture into the column for sold goods. You find the earlier entry and ask the clerk what each word puts on the record.'
@@ -44,9 +62,24 @@ events:
         relic: "一枚珍珠耳环"
         relic_desc: "一颗小珍珠，是他常画的那种。"
         points:
-          p1: '找出能辨认一幅画的细节'
-          p2: '向记得画的人核对描述'
-          p3: '誊账时分清抵押与出售'
+          p1: '卡塔琳娜用两幅画抵偿面包债时，请她和面包商逐项核对画名、数目与债款，让这份协议能成立。'
+          p2: '公证人清点房间时，请卡塔琳娜指出哪些画还在这间屋里、哪些已经交给别人，把交付凭据和清册分栏。'
+          p3: '在请法院处理余债前，协助卡塔琳娜拿着已交付的凭据找其他债权人，谈出一份家用开支与画作处分各有期限的短约。'
+        points_fail:
+          p1: '同一幅画在两张纸上用了不同叫法，面包商不肯签认。协议未能成立，事务所因同步失败召回员工。'
+          p2: '房里还挂着的作品和已经交付的画被记作同一拨。日后核单时，各方只能靠过于简略的画面描述来猜。'
+          p3: '各人仍按自己的期限催缴，家人要等法院处理才能知道还有哪些家用之物可周转。'
+        shift:
+          p1:
+            was: '维米尔 1675 年在代尔夫特去世。次年 1 月，卡塔琳娜·博尔内斯把两幅画交给面包商亨德里克·范·拜滕抵偿欠款。'
+          p2:
+            was: '1676 年的财产清册记有家中不同房间的物品，其中一些画只写了画面里的事物。'
+            now: '清册附件可查到每幅已交付作品的凭据。卡塔琳娜后来面对新的债权请求时，可以先核对是否指向早已交出的一幅画。'
+          p3:
+            was: '战争期间画作难以出手，维米尔去世后给家庭留下债务。卡塔琳娜曾向法院请愿处理这些债务。'
+            now: '几名债权人同意在法院核单前暂停追索清册里指定的物品。一份短期的付款安排让她先把家用开支留出，再决定哪几幅未交付的画可另行托售。'
+            who: vermeer_delft
+            bio: '维米尔既作画，也买卖画。留存的清册和卡塔琳娜的请愿留下了这个家庭在画市萧条后处理债务的记录。'
         vignettes:
           motif: '账房记得一幅画里的光，却说不准是哪幅。你问画里的人在做什么。他把动作记在画名旁，后来查的人便有两条线索。'
           pledge: '有人把抵押的画抄进了已出售一栏。你翻到早一页，请账房分别说清两个词在账上记的是什么。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented clerk trying to identify pictures in a ledger.', zh: '一位虚构的账房，想查明账页写的是哪些画。'}
 wiki:
   refs:
+    vermeer_estate_archives:
+      order: 3
+      status: checked
+      text:
+        en: 'Leiden Collection archival biography and sources for the petition https://www.theleidencollection.com/archives/artist/johannes-vermeer_2020.pdf'
+        zh: '莱顿收藏档案研究及债务请愿书来源 https://www.theleidencollection.com/archives/artist/johannes-vermeer_2020.pdf'
+    vermeer_baker_document:
+      order: 4
+      status: checked
+      text:
+        en: 'Max Rooses’s publication of the January 1676 transfer https://www.dbnl.org/tekst/_els001189801_01/_els001189801_01_0032.php'
+        zh: '马克斯·罗斯所录 1676 年 1 月画作交付 https://www.dbnl.org/tekst/_els001189801_01/_els001189801_01_0032.php'
     vermeer_delft_primary:
       order: 177
       status: checked

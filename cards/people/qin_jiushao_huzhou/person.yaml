@@ -2,6 +2,7 @@ order: 213
 events:
   qin_jiushao_huzhou:
     order: 203
+    build_step: 2
     year: 1247
     lon: 120.09
     lat: 30.89
@@ -9,12 +10,13 @@ events:
     field: math
     tier: 1
     channels: {V: 1}
-    refs: [qin_jiushao_huzhou_remainders]
+    refs: [qin_jiushao_huzhou_remainders, qin_jiushao_huzhou_writing_context, qin_jiushao_huzhou_dayan_fascicle]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: hold, req: {"job":["archivist","teacher"]}}
-        - {id: p3, kind: persuade, req: {"trait":["ambitious","streetwise","scholarly"]}}
+        - {id: p1, kind: hold, guard: true, day: 31, req: {"any":[{"job":["archivist","teacher","tutor"]},{"trait":["scholarly","curious"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 38, req: {"any":[{"job":["archivist","teacher","proofreader"]},{"trait":["scholarly","curious","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 67, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","curious","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: witness, traits: [methodical, scholarly]}
         - {id: rows, traits: [curious, handy]}
@@ -28,9 +30,24 @@ events:
         relic: "A counting rod"
         relic_desc: "A bamboo counting rod worn smooth."
         points:
-          p1: 'Check the same pile against both remainder rules'
-          p2: 'Preserve the divisors beside their own remainders'
-          p3: 'Explain why a candidate that fails one row must be rejected'
+          p1: 'Check the problems and solutions against Qin’s categories. Leave the copyist in Huzhou the complete sequence'
+          p2: 'Ask two readers to check the same remainder problem independently and record which line to check again'
+          p3: 'Have Qin preserve one full example from rough calculation through the error and the final check. Ask a teacher to use it with a beginner'
+        points_fail:
+          p1: 'A category is bound with answers but its explanations are filed in another volume. The compilation cannot be assembled, and the office recalls the employee.'
+          p2: 'The copied text has only a final number. When it fails a second remainder, a reader cannot tell which line to recalculate.'
+          p3: 'A reader receives only the polished solution. When a result fails, they can do little but copy the answer.'
+        shift:
+          p1:
+            was: 'Qin’s preface records choosing eighty-one problems for the Mathematical Treatise in Nine Sections, associated with 1247.'
+          p2:
+            was: 'Volume one presents the method for problems involving remainders, with worked procedures.'
+            now: 'Both readers can trace the remainder that fails back to a line of arithmetic. Qin adds the check to the proof.'
+          p3:
+            was: 'Qin grouped problems by subject. The surviving text gives both statements and methods.'
+            now: 'The reader working with a teacher can recover the step after a check fails. A copy Qin reviewed is kept for later copyists.'
+            who: qin_jiushao_huzhou
+            bio: 'Qin worked on the book during his mourning period in Huzhou. It presents problems, answers and procedures together.'
         vignettes:
           witness: 'The learner puts five counters down. Groups of three leave two, just as requested, but groups of five leave none. You ask him to test eight. That leaves two in the first row and three in the second. He crosses out one answer. You leave before they start a problem with a third row.'
           rows: 'You know the procedure will be studied long after the learner forgets this exercise. He asks why two remainders cannot be written in one box. You have him label the one for groups of three and the one for groups of five. He can now test the next answer on his own. That next answer is still out of reach when you go.'
@@ -43,9 +60,24 @@ events:
         relic: "一枚算筹"
         relic_desc: "一根磨得发亮的竹算筹。"
         points:
-          p1: '把同一堆筹按两条规则分别验算'
-          p2: '抄表时让除数紧挨对应的余数'
-          p3: '说清为什么只过一行也得重算'
+          p1: '照秦九韶手中的题类核齐《数书九章》的题解，在湖州给会誊写的人留成套次序'
+          p2: '请两位读者用相同的余数题分别验算，把哪一行需回验写进各自的算纸'
+          p3: '让秦九韶挑一题从初算、错算到回验逐步留下，交给带新手的人按这个例子试教'
+        points_fail:
+          p1: '装订时有一类题只有答案，解说散在别卷。书不能按原来安排合成，事务所召回员工。'
+          p2: '誊稿只有一个最终数。用另一条余数检查出问题时，读者不知道应追回哪一行。'
+          p3: '传给下一位的人只有整理过的正确演算，初学者遇到坏结果便跳到书后照抄。'
+        shift:
+          p1:
+            was: '秦九韶自序记从许多题中选出八十一题，编入成于 1247 年前后的《数书九章》。'
+          p2:
+            was: '《数书九章》卷一叙述处理有关余数问题的大衍方法，并展示解题步骤。'
+            now: '两人可以把出错的那条余数指回算纸的一行。作者再把检查写在抄本边。'
+          p3:
+            was: '秦九韶按题类整理问题。现存传本显示题设与解法并列。'
+            now: '试教的读者面对一次真实验算失败，能找到应重做的一步。之后仍保留秦九韶校过的例题，便于新抄人对读。'
+            who: qin_jiushao_huzhou
+            bio: '秦九韶在湖州居丧期间整理数学著作。作品将实际题目、答数与步骤放进同一个可学习的文本。'
         vignettes:
           witness: '学算人摆了五根筹。三根一组的确剩二，但五根一组剩零。你请他试八，第一行剩二，第二行剩三。他划去一个答案。再加第三行的题，你没等到。'
           rows: '你知道以后还有人研究这套算法，学算人却只想知道两个余数能不能填进同一格。你请他分别标明按三分组与按五分组的两行。他下次能自己验了，那个新答案你仍没赶上。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'A fictional learner who checked one row and stopped too soon.', zh: '虚构的学算人，只验一行便收了筹。'}
 wiki:
   refs:
+    qin_jiushao_huzhou_writing_context:
+      order: 10
+      status: checked
+      text:
+        en: 'Textual research on Qin’s preface and years in Huzhou https://www.researchgate.net/publication/338389535_On_Qin_Jiushao%27s_writing_system'
+        zh: '秦九韶自序与居湖州年限的研究 https://www.researchgate.net/publication/338389535_On_Qin_Jiushao%27s_writing_system'
+    qin_jiushao_huzhou_dayan_fascicle:
+      order: 11
+      status: checked
+      text:
+        en: 'Mathematical Treatise in Nine Sections, volume one https://www.shidianguji.com/zh/book/GJ093/chapter/1l40c2hxsn38k'
+        zh: '《数书九章》卷一大衍 https://www.shidianguji.com/zh/book/GJ093/chapter/1l40c2hxsn38k'
     qin_jiushao_huzhou_remainders:
       order: 564
       status: checked

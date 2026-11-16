@@ -2,6 +2,7 @@ order: 41
 events:
   cai_lun_luoyang:
     order: 67
+    build_step: 2
     year: 105
     lon: 112.45
     lat: 34.62
@@ -9,12 +10,13 @@ events:
     field: technology
     tier: 3
     channels: {L: 2, H: 1}
-    refs: [cai_lun_luoyang_primary]
+    refs: [cai_lun_luoyang_primary, cai_lun_luoyang_later_han_volume78, cai_lun_luoyang_early_paper]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"job": ["carpenter", "builder", "mechanic"]}}
-        - {id: p2, kind: notice, req: {"stat": {"wit": 6}}}
-        - {id: p3, kind: endure, req: {"luck": 0.5}}
+        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 29, req: {"any":[{"job":["archivist","carpenter","proofreader"]},{"trait":["handy","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 76, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["handy","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: light, traits: [handy, vigil]}
         - {id: ink, traits: [curious, skeptical]}
@@ -28,9 +30,24 @@ events:
         relic: A sheet of coarse paper
         relic_desc: A sheet with bits of fibre still showing.
         points:
-          p1: 'Help the workshop hand handle a trial sheet'
-          p2: 'Find an uneven patch before drying'
-          p3: 'Wait until the sample can be lifted intact'
+          p1: 'Pack usable writing samples apart from the list of materials and deliver both to the receiving office in Luoyang'
+          p2: 'Have one scribe write on each sample and identify its source so the results can be compared'
+          p3: 'Leave tested paper with two groups of scribes. Ask them to return samples next season with the problems they encountered'
+        points_fail:
+          p1: 'Only the list reaches the office. There is no sample to test for writing, and the office recalls the employee.'
+          p2: 'Paper from different workshops is mixed together. Nobody can trace which samples took ink cleanly and which blurred.'
+          p3: 'Word spreads that paper is in use. Each office still has to solve its own problems with difficult sheets.'
+        shift:
+          p1:
+            was: 'The Book of the Later Han dates Cai Lun’s report on papermaking to 105 and names several materials used.'
+          p2:
+            was: 'The Later Han history links the new submission to costly silk and bulky slips. Excavated paper also predates 105.'
+            now: 'The receiving office gets writing samples it can trace to their makers and can request the kind that serves its work.'
+          p3:
+            was: 'The history describes paper spreading after court approval and gives little detail about how offices began to use it.'
+            now: 'Two offices return marked samples the next season. The workshop can see which sheets held up in copying and decide what to keep ready.'
+            who: cai_lun_luoyang
+            bio: 'Cai Lun reported materials and uses to the Eastern Han court. Archaeological finds also record earlier forms of paper.'
         vignettes:
           light: 'You hold the two trial sheets up to the window. A patch that looked even on the board lets much more light through. The worker pins a mark beside it.'
           ink: 'The worker passes you the smoother sheet. You ask to try the same brush on both before choosing one. The smaller mark turns out to be the easier one to read.'
@@ -43,9 +60,24 @@ events:
         relic: 一张粗纸
         relic_desc: 纸里还看得见纤维的碎屑。
         points:
-          p1: '帮纸坊帮工接住一张试纸'
-          p2: '晾之前找出一处厚薄不匀'
-          p3: '等到样纸能完整揭下来'
+          p1: '把能写字的纸样与用料记分开装好，在洛阳呈给负责收件的宫署'
+          p2: '把几份样纸交给同一位写手试写，在样纸旁注明来源，让后来的人知道哪一张字迹能看清'
+          p3: '请蔡伦给两处书吏各留一样经过试写的纸，并约定下一季带退回的样张说明问题'
+        points_fail:
+          p1: '呈送时只有用料名，能验写字效果的纸样没有送到。事务所因同步失败召回员工。'
+          p2: '不同作坊送来的样纸混放，能写和容易洇墨的几张对不回来源。'
+          p3: '采用纸的消息已经传开，各处遇到纸张不好写时只好各找各的办法。'
+        shift:
+          p1:
+            was: '《后汉书》说蔡伦于元兴元年（105）上奏造纸事，并列举数种可以使用的材料。'
+          p2:
+            was: '《后汉书》把缣帛贵、简牍重与蔡伦呈上的纸联系起来。也有早于 105 年的出土纸。'
+            now: '管收件的人收到一套能查来源的试写样，能按实际用途挑纸并问作坊补样。'
+          p3:
+            was: '史传记载宫廷认可之后纸渐为人用，未细说洛阳各书署怎样换用新材料。'
+            now: '下一季两处书署送回带说明的样张。作坊据此知道哪些纸能应付誊写，再据实决定常备哪一种。'
+            who: cai_lun_luoyang
+            bio: '蔡伦在东汉宫廷呈报的是一种已经能够说明用料与用途的做法。比此更早的纸在考古材料中也有记录。'
         vignettes:
           light: '你把两张试纸举到窗前。搁在板上看着平整的一块，透光却多得多。帮工在旁边别了个记号。'
           ink: '帮工递来摸着更滑的那张。你请他先用同一支笔在两张上都试一下。后来认得更清的，倒是墨痕更小的那张。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'An invented workshop hand waiting for two samples to dry.', zh: '一位虚构的纸坊帮工，正在等两张样纸晾干。'}
 wiki:
   refs:
+    cai_lun_luoyang_later_han_volume78:
+      order: 10
+      status: checked
+      text:
+        en: 'Book of the Later Han, volume 78, Cai Lun https://zh.wikisource.org/zh-hant/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B778'
+        zh: '《后汉书》卷七十八蔡伦传 https://zh.wikisource.org/zh-hant/%E5%BE%8C%E6%BC%A2%E6%9B%B8/%E5%8D%B778'
+    cai_lun_luoyang_early_paper:
+      order: 11
+      status: checked
+      text:
+        en: 'Paper history research, earlier archaeological finds https://www.paperhistory.org/Archive/iph2-2011.pdf'
+        zh: '造纸史研究，早期出土纸 https://www.paperhistory.org/Archive/iph2-2011.pdf'
     cai_lun_luoyang_primary:
       order: 136
       status: checked

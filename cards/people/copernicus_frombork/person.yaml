@@ -2,19 +2,23 @@ order: 50
 events:
   copernicus_frombork:
     order: 16
+    build_step: 2
     year: 1543
+    date: '1543-04-08'
+    stay: 4
     lon: 19.68
     lat: 54.36
     region: europe
     field: science
     tier: 3
     channels: {C: 2, V: 2}
-    refs: [copernicus_frombork_primary]
+    refs: [copernicus_frombork_primary, copernicus_autograph_provenance, copernicus_first_edition_prefaces, copernicus_giese_letters]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: hold, req: {"provides":"vigil"}}
-        - {id: p3, kind: endure, req: {"stat":{"constitution":5}}}
+        - {id: p1, kind: hold, guard: true, day: 44, req: {"any":[{"job":["archivist","translator"]},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 63, req: {"any":[{"job":["proofreader","translator","archivist"]},{"trait":["methodical","scholarly"],"stat":{"wit":7}}]}}
+        - {id: p3, kind: persuade, day: 109, req: {"any":[{"job":["archivist","translator"],"stat":{"will":7,"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
       vignettes:
         - {id: walk, traits: [curious, bold]}
         - {id: frame, traits: [methodical, skeptical]}
@@ -28,9 +32,24 @@ events:
         relic: A brass quadrant
         relic_desc: A quarter circle for measuring the height of stars.
         points:
-          p1: 'Identify where the observer is standing'
-          p2: 'Keep the two diagrams separate'
-          p3: 'Follow the changing viewpoint through a full turn'
+          p1: 'While Frombork can still inventory the papers, list the autograph of De revolutionibus apart from the working sheets and leave Giese a receipt for the handover.'
+          p2: 'Set the autograph beside the printed book. Mark for Giese where the unsigned address and the author’s own preface begin.'
+          p3: 'Before Giese presses for a corrected edition, make a slip for copies lent nearby. Give the location of the author’s preface and record the absence of the unsigned address from the autograph.'
+        points_fail:
+          p1: 'Two bundles from the desk are mistaken for the copy already sent to the printer. The original never reaches Giese, and the office recalls the employee.'
+          p2: 'The two pieces circulate together, and readers attribute the unsigned text’s claims to Copernicus.'
+          p3: 'Giese can only wait for the printer and council abroad. Local readers still go through the opening pages in the same order.'
+        shift:
+          p1:
+            was: 'The Nuremberg edition used a copy. Copernicus’s autograph survived separately and later passed through Tiedemann Giese to Rheticus.'
+          p2:
+            was: 'The 1543 printed book includes an unsigned address besides the author’s own preface. It describes the book’s claims as hypotheses for calculation.'
+            now: 'A single sheet lists both openings and identifies what the autograph can verify. Local readers can consult the author’s own account first.'
+          p3:
+            was: 'Giese asked Rheticus to forward a letter to the Nuremberg council requesting a revised edition. The unsigned text was already circulating in the 1543 first edition.'
+            now: 'The copies sent out nearby carry a correction slip. The next reader can use it to check the autograph, and the printer’s eventual response is filed with the same record.'
+            who: copernicus_frombork
+            bio: 'The autograph and the Nuremberg edition are separate witnesses to the work. The autograph survived Copernicus and lets readers distinguish the printed address from the author’s own words.'
         vignettes:
           walk: 'You ask the reader to keep looking at a point across the room while walking around a stool. He stops halfway, surprised by how far the stool has seemed to move against the wall.'
           frame: 'You put the labels for observer and observed on separate scraps. The reader turns over one scrap at a time while he compares two possible accounts of the same apparent motion.'
@@ -43,9 +62,24 @@ events:
         relic: 一个黄铜象限仪
         relic_desc: 四分之一圆，用来量星星的高度。
         points:
-          p1: '找出观察者站在哪里'
-          p2: '把两张不同的图分开放'
-          p3: '顺着转动走完一圈，看视线怎样变'
+          p1: '趁弗龙堡还来得及清点，把《天体运行论》的亲笔原稿和工作纸分开记账，给后来接手的吉泽留一张收执。'
+          p2: '把亲笔原稿和寄回的印本放在一处，给吉泽标出卷首匿名文字与作者署名序言各从哪一页开始。'
+          p3: '吉泽催印坊改版前，先为附近传阅的印本备一张勘误页，列出作者序言所在及匿名告读者文在原稿中缺席的事实。'
+        points_fail:
+          p1: '收拾桌上纸张时，两叠工作纸被当作已经交给印坊的那份抄本处理。亲笔原稿没有交到吉泽手上，事务所因同步失败召回员工。'
+          p2: '卷首两种文字一并随书传阅，一些读者把匿名文字的说法也记到哥白尼名下。'
+          p3: '吉泽只能等外地印坊和市议会答复，附近的读者仍按原来的页面顺序翻读。'
+        shift:
+          p1:
+            was: '纽伦堡印本以抄本为底，哥白尼的亲笔原稿另存，后来经蒂德曼·吉泽传至雷蒂库斯。'
+          p2:
+            was: '1543 年印本在作者序言外另有一篇未署名的告读者文，把书里的主张当作计算假设来说明。'
+            now: '同一张纸上可查到两篇序文在印本中的页次，并标出亲笔原稿能证实的部分。这里的读者能先核对作者自己的表述。'
+          p3:
+            was: '吉泽确曾请雷蒂库斯把要求改版的信转交纽伦堡市议会，1543 年首版的匿名文字已经随着印本流通。'
+            now: '附近几份先借出的书都补上一张勘误页。新借书的人能从旁边那页查回原稿，外地印坊的回复也留在同一份档案里。'
+            who: copernicus_frombork
+            bio: '哥白尼的亲笔稿与纽伦堡印本是两组来源。亲笔稿在他身后保存下来，使后来的读者能够查到印本卷首文字与作者的区别。'
         vignettes:
           walk: '你请读者绕着凳子走，眼睛一直看着对面墙上的一点。他走到一半停住了，没想到凳子对着墙看起来挪了那么远。'
           frame: '你把「观察者」和「被观察者」写在两张纸上。读者一张一张翻过去，比较同一个视运动的两种解释。'
@@ -74,6 +108,24 @@ bystanders:
     text: {en: 'An invented reader trying to follow the diagrams.', zh: '一位虚构的读者，正在试着看懂图解。'}
 wiki:
   refs:
+    copernicus_autograph_provenance:
+      order: 2
+      status: checked
+      text:
+        en: 'Jagiellonian Library manuscript provenance filed with UNESCO https://media.unesco.org/sites/default/files/webform/mow001/nicolaus-copernicus-s-masterpiece-de-revolutionibus-libri-sex_nom_en.pdf'
+        zh: '雅盖隆图书馆向联合国教科文组织提交的手稿流传记录 https://media.unesco.org/sites/default/files/webform/mow001/nicolaus-copernicus-s-masterpiece-de-revolutionibus-libri-sex_nom_en.pdf'
+    copernicus_first_edition_prefaces:
+      order: 3
+      status: checked
+      text:
+        en: 'Carnegie Mellon University first edition and contents https://iiif.library.cmu.edu/file/Posner_Files_523.2_C78D_1543/Posner_Files_523.2_C78D_1543.pdf'
+        zh: '卡内基梅隆大学初版与卷首目录 https://iiif.library.cmu.edu/file/Posner_Files_523.2_C78D_1543/Posner_Files_523.2_C78D_1543.pdf'
+    copernicus_giese_letters:
+      order: 4
+      status: checked
+      text:
+        en: 'Linda Hall Library on Giese’s letters and the requested correction https://www.lindahall.org/about/news/scientist-of-the-day/tiedemann-giese/'
+        zh: '琳达·霍尔图书馆所录吉泽的信与改版要求 https://www.lindahall.org/about/news/scientist-of-the-day/tiedemann-giese/'
     copernicus_frombork_primary:
       order: 122
       status: checked

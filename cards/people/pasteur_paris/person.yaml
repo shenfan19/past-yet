@@ -2,19 +2,23 @@ order: 152
 events:
   pasteur_paris:
     order: 36
+    build_step: 2
     year: 1885
+    date: '1885-06-28'
+    stay: 5
     lon: 2.34
     lat: 48.84
     region: europe
     field: medicine
     tier: 2
     channels: {E: 2}
-    refs: [pasteur_paris_arrival]
+    refs: [pasteur_paris_arrival, pasteur_paris_paris_1885, pasteur_paris_grancher_role, pasteur_paris_institution_open]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: care, req: {"provides":"cure"}}
-        - {id: p3, kind: hold, req: {"stat":{"will":6}}}
+        - {id: p1, kind: hold, guard: true, day: 8, req: {"any":[{"job":["doctor","physician","nurse","archivist"]},{"trait":["kind","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 13, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["kind","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 108, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["kind","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: date, traits: [methodical, curious, quiet]}
         - {id: address, traits: [kind, patient, faithful]}
@@ -28,9 +32,24 @@ events:
         relic: 'An arrival slip'
         relic_desc: 'An invented record that distinguishes arrival from later news.'
         points:
-          p1: 'Find which entry was written on arrival'
-          p2: 'Make time for the family messenger to check the address'
-          p3: 'Keep the arrival entry separate from the later outcome'
+          p1: 'When Joseph Meister and his mother reach Paris, connect their referral to Dr. Grancher so they can be seen on July 6'
+          p2: 'Help the reception desk agree a follow-up time and an address with the family. Keep identifying contact information private'
+          p3: 'As more families arrive in autumn, put a contact point in place and have the desk assign someone to answer questions about where and when to be seen'
+        points_fail:
+          p1: 'The family is sent to wait elsewhere. Grancher does not find the child on his list, and the office recalls the employee.'
+          p2: 'After the family leaves, there is no address for a follow-up. Staff have to ask another traveler from the area.'
+          p3: 'Visitors get directions by word of mouth. Families arriving at night cannot tell whom to contact.'
+        shift:
+          p1:
+            was: 'Joseph Meister was brought to Pasteur in Paris on July 6, 1885. Dr. Jacques-Joseph Grancher was responsible for treating him.'
+          p2:
+            was: 'Meister came from Alsace. More people living outside Paris subsequently traveled there seeking help.'
+            now: 'Staff can send the family confirmation and pass its reply to the person taking over. The public record retains only the dates that can be checked.'
+          p3:
+            was: 'After 1885 the number of people seeking help in Paris continued to grow. The dedicated institute was built later.'
+            now: 'A staffed reception period gives families a place to leave their details and learn where to wait. Referrals from outside Paris now have a traceable record at the existing site.'
+            who: pasteur_paris
+            bio: 'The early case involved a family traveling to Paris, researchers and a physician responsible for care. Each had a different part in the visit.'
         vignettes:
           date: 'Claire has copied the day the letter was brought in beside the name in the arrival register. You set the envelope next to the register, and she finds the difference. Both dates stay on the desk, each beside the event it marks.'
           address: 'Émile has offered to take the family’s reply while Claire keeps the register. You give him a narrow slip with just the address he needs. He checks it before leaving and the register stays closed while the visitors wait.'
@@ -43,9 +62,24 @@ events:
         relic: '一张抵达登记副页'
         relic_desc: '登记副页，分开记录抵达与后来的来信。'
         points:
-          p1: '找出哪一项是在抵达时写下的'
-          p2: '给家人的送信人留时间核对地址'
-          p3: '把抵达记录与后来的结果分开留好'
+          p1: '约瑟夫·迈斯特和母亲到达巴黎时，把来访经过与可接诊的格朗谢医生对上，护住 7 月 6 日的接诊'
+          p2: '帮接诊处给一家人留返回时间与能收到消息的地点，由接手人员核对并另存私密联络信息'
+          p3: '秋季来访者增多时，给等候的外地家庭明确联络处，请接诊处安排能答复问路和接待时段的人'
+        points_fail:
+          p1: '母子被转往另一处等候，格朗谢收到的名单漏了这个孩子，事务所因同步失败召回员工。'
+          p2: '家人离开后没有可回访的地址。要取得新消息只好请从同地来的人辗转打听。'
+          p3: '不同人只收到口头指路，夜间抵达的家庭不知道该跟哪一处联系。'
+        shift:
+          p1:
+            was: '1885 年 7 月 6 日，迈斯特被带到巴黎见巴斯德，医生雅克－约瑟夫·格朗谢负责接诊和治疗。'
+          p2:
+            was: '迈斯特来自阿尔萨斯。随后越来越多外地来访者赴巴黎寻求帮助。'
+            now: '接诊处可以给一家人寄确认信，回函由接手的人拿到；公开记录里只留能核对的日期。'
+          p3:
+            was: '1885 年之后赴巴黎求助的人数继续增加。新的专门机构后来才建成。'
+            now: '接诊处留出一个有人值守的时段，负责接收来访信息并把候诊地点告诉家属。远地转介在已有机构内也能留下可追查的记录。'
+            who: pasteur_paris
+            bio: '首位著名接种者由外地赶到巴黎，家人、负责研究的人和具备医疗职责的人员分别参与了这一次就诊。'
         vignettes:
           date: '克莱尔把来信送到的日子抄进了抵达簿。你把信封摆到登记簿旁，她看出了两处不同。两天都留在桌上，各标它真正对应的事。'
           address: '埃米尔愿意代送家人的回信，克莱尔留守登记簿。你递给他一张窄条，只写他要核对的地址。他出门前核过一遍，有旁人等候时，登记簿仍合着。'
@@ -83,6 +117,24 @@ bystanders:
     text: {en: 'A fictional messenger taking a reply to the family.', zh: '虚构送信人埃米尔，把回信带给家人。'}
 wiki:
   refs:
+    pasteur_paris_paris_1885:
+      order: 10
+      status: checked
+      text:
+        en: 'Institut Pasteur institutional history on the July visit and subsequent arrivals https://www.pasteur.fr/en/about-us/our-dna/history'
+        zh: '巴斯德研究所档案，七月接诊与外地来访 https://www.pasteur.fr/en/about-us/our-dna/history'
+    pasteur_paris_grancher_role:
+      order: 11
+      status: checked
+      text:
+        en: 'Institut Pasteur account of Grancher’s role https://www.pasteur.fr/en/about-us/final-years-1877-1887'
+        zh: '巴斯德研究所所录格朗谢职责 https://www.pasteur.fr/en/about-us/final-years-1877-1887'
+    pasteur_paris_institution_open:
+      order: 12
+      status: checked
+      text:
+        en: 'Institut Pasteur archive on establishment of the dedicated institution https://www.pasteur.fr/en/whats-new/latest-news/news/130-years-ago-institut-pasteur-was-under-construction'
+        zh: '巴斯德研究所筹建与开设档案 https://www.pasteur.fr/en/whats-new/latest-news/news/130-years-ago-institut-pasteur-was-under-construction'
     pasteur_paris_arrival:
       order: 973
       status: checked

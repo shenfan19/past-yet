@@ -2,19 +2,23 @@ order: 14
 events:
   al_jazari_diyarbakir:
     order: 59
+    build_step: 2
     year: 1206
+    date: '1206-01-03'
+    stay: 3
     lon: 40.22
     lat: 37.91
     region: asia
     field: technology
     tier: 2
     channels: {H: 1, L: 1}
-    refs: [al_jazari_diyarbakir_primary]
+    refs: [al_jazari_diyarbakir_primary, al_jazari_diyarbakir_manuscript_route, al_jazari_diyarbakir_met_catalog]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"any":[{"job":["mechanic","carpenter"]},{"trait":["hardy"]}]}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: trust, req: {"trait":["curious","sensitive","artistic"]}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["archivist","carpenter"]},{"trait":["methodical","handy"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 16, req: {"any":[{"job":["archivist","carpenter","proofreader"]},{"trait":["methodical","handy","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 36, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["methodical","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: sequence, traits: [handy, methodical]}
         - {id: viewer, traits: [curious, artistic]}
@@ -28,9 +32,24 @@ events:
         relic: A brass cam
         relic_desc: A shaped wheel that turns a spin into a stroke.
         points:
-          p1: 'Find the visible figures on the diagram'
-          p2: 'Describe the order in which two figures appear'
-          p3: 'Help the apprentice leave the sketch readable for a visitor'
+          p1: 'At the handover in Amid, check the descriptions and illustrations against the contents so the manuscript can be delivered complete'
+          p2: 'Give the copyist a caption for illustrations still unfinished so a blank leaf is not mistaken for a lost page'
+          p3: 'Choose a reference copy with the author. List the notes, captions and blank spaces that later copyists should keep distinct'
+        points_fail:
+          p1: 'Several diagrams can no longer be matched to their sections. The manuscript cannot be handed over as a set, and the office recalls the employee.'
+          p2: 'A blank portion looks like a gap to the copyist. It drops out of the next copy, leaving the text without a place for its figure.'
+          p3: 'The next copyist works from a draft that has accumulated other notes. Readers cannot tell the author''s description from later additions.'
+        shift:
+          p1:
+            was: 'The colophon of an early Topkapı manuscript gives January 16, 1206, as its completion date. Al-Jazari’s book was associated with the Artuqid court in Amid.'
+          p2:
+            was: 'An early manuscript has a completion colophon and also contains unfinished diagrams.'
+            now: 'The next copy keeps the empty space in its original chapter and identifies the kind of illustration still missing.'
+          p3:
+            was: 'Later manuscripts do not all descend through the same branch. Some have different illustrations and wording.'
+            now: 'The collection keeps a copy checked by the author. A later scribe can record their own changes separately and then check captions against it.'
+            who: al_jazari_diyarbakir
+            bio: 'Al-Jazari wrote his descriptions in Amid. The text and illustrations changed together as the book was copied and moved between places.'
         vignettes:
           sequence: 'The apprentice explains every figure at once. You point to the first movement and ask what comes immediately after it. They start telling the story of the clock in order.'
           viewer: 'A visitor never looks up from the largest figure. You ask them to watch the spot the apprentice marked instead. On the second demonstration they see the smaller movement in time.'
@@ -43,9 +62,24 @@ events:
         relic: 一个黄铜凸轮
         relic_desc: 一个有形状的轮子，把转动变成往复。
         points:
-          p1: '在图上找到能看见的人偶'
-          p2: '说清两个人偶出现的先后'
-          p3: '帮学徒把图留到来客也看得懂'
+          p1: '在阿米德交稿时，按目录把装置说明和对应图页逐册核齐，护住书稿完成'
+          p2: '请抄写人给未画完的示意图留题名，不要把空页误当作缺页撤去'
+          p3: '和作者一起选一册留作传抄底本，列出旁注、图题与后来抄写人不得合并的空白栏'
+        points_fail:
+          p1: '几幅图无从对回章节，书稿无法成套交付，事务所因同步失败召回员工。'
+          p2: '抄写人只看见一处留白。复抄时这页被拿掉，对应的说明失去图位。'
+          p3: '下一位抄手只能从已混入不同注记的工作本起抄，读者分不开作者所见与后来补记。'
+        shift:
+          p1:
+            was: '托普卡帕所藏早期抄本的题记给出 1206 年 1 月 16 日的完成日期。贾扎里的书与阿米德的阿尔图格宫廷相连。'
+          p2:
+            was: '一份很早的贾扎里书稿有完成题记，也仍有未完成的图。'
+            now: '新版把图未完处留在该章，后来补图的人知道缺的是哪一类图。'
+          p3:
+            was: '研究所见的后代抄本并非全从同一传抄支系而来，有的图与文本都出现差异。'
+            now: '库房留下一册有作者核验记号的样本。后来抄写人能在抄本前另记自己的修订，也能拿图题对照底本。'
+            who: al_jazari_diyarbakir
+            bio: '贾扎里在阿米德写下对机械装置的说明，图与文字在后来多次传抄和跨地流通中一同变化。'
         vignettes:
           sequence: '学徒一开口便把所有人偶都说到。你指着第一个动作，问紧跟着是哪一下。他这回按着先后讲起钟来。'
           viewer: '来客始终盯着最大的人偶。你请他改看学徒作了记号的地方。第二遍，他赶在小人偶动的时候看见了。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented apprentice holding a copy of the diagram.', zh: '一位虚构的学徒，手里捏着装置图的抄件。'}
 wiki:
   refs:
+    al_jazari_diyarbakir_manuscript_route:
+      order: 10
+      status: checked
+      text:
+        en: 'Research on colophons, illustrated copies and copying https://www.tandfonline.com/doi/full/10.1080/02666030.2023.2287840'
+        zh: '题记、插图与传抄研究 https://www.tandfonline.com/doi/full/10.1080/02666030.2023.2287840'
+    al_jazari_diyarbakir_met_catalog:
+      order: 11
+      status: checked
+      text:
+        en: 'Met collection catalogue on the manuscript and Artuqid court https://resources.metmuseum.org/resources/metpublications/pdf/Masterpieces_from_the_Department_of_Islamic_Art_in_The_Metropolitan_Museum_of_Art.pdf'
+        zh: '大都会艺术博物馆馆藏图录，手稿与阿尔图格宫廷 https://resources.metmuseum.org/resources/metpublications/pdf/Masterpieces_from_the_Department_of_Islamic_Art_in_The_Metropolitan_Museum_of_Art.pdf'
     al_jazari_diyarbakir_primary:
       order: 162
       status: checked

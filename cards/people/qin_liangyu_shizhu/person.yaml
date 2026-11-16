@@ -2,6 +2,7 @@ order: 234
 events:
   qin_liangyu_shizhu:
     order: 207
+    build_step: 2
     year: 1630
     lon: 108.11
     lat: 30.00
@@ -10,12 +11,13 @@ events:
     tier: 1
     channels: {}
     draft: true
-    refs: [mingshi_qin_liangyu, shizhu_gazetteer_qin]
+    refs: [mingshi_qin_liangyu, shizhu_gazetteer_qin, qin_liangyu_shizhu_ming_biography, qin_liangyu_shizhu_shizhu_gazetteer]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {any: [{trait: [methodical, vigil]}, {stat: {wit: 5}}]}}
-        - {id: p2, kind: care, req: {any: [{trait: [kind, calm]}, {stat: {finesse: 6}}]}}
-        - {id: p3, kind: hold, req: {any: [{trait: [patient, methodical]}, {stat: {will: 6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["accountant","archivist"]},{"trait":["methodical","kind"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["accountant","archivist","proofreader"]},{"trait":["methodical","kind","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 47, req: {"any":[{"job":["accountant","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","kind","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: ledger, traits: [methodical, vigil]}
         - {id: hands, traits: [kind, calm]}
@@ -29,9 +31,24 @@ events:
         relic: Copy of a Shizhu receipt
         relic_desc: A fictional receipt with one name in the margin and another beside a bundle.
         points:
-          p1: Spot two similar names on the clerk's sheet
-          p2: Help the carrier check which bundle is hers to collect
-          p3: Leave two copies that agree before the table is cleared
+          p1: 'Verify each transfer of Qin Liangyu’s own funds so the people handling the accounts at Shizhu can sign for what they receive'
+          p2: 'Keep the transfer notes apart from household expenses. Send Shizhu a copy identifying the people who handled payments and the dates'
+          p3: 'Have Qin approve an expense account her relatives can check. Record any delayed payment still needing confirmation'
+        points_fail:
+          p1: 'The clerk loses track of who has received a payment. The transfer fails and the office recalls the employee.'
+          p2: 'Public and household expenses go into the same book. A family member has to ask everyone who handled a disputed payment.'
+          p3: 'Amounts still owed are treated as paid, and those who cannot return have no way to check them.'
+        shift:
+          p1:
+            was: 'The History of Ming says Qin Liangyu and Qin Yiming answered a summons in 1630 and that she contributed her own family funds.'
+          p2:
+            was: 'The biography describes her expenditure without preserving an itemized ledger.'
+            now: 'The retained copy distinguishes funds already paid from those still being advanced by the family.'
+          p3:
+            was: 'The local gazetteer records the summons and departure. Later records mainly report the expedition and her service.'
+            now: 'The household can check a missing entry against its copy. A person who handled a payment can trace how the amount was recorded.'
+            who: qin_liangyu_shizhu
+            bio: 'Qin Liangyu’s ties to Shizhu were longstanding. Records identify her contribution from household funds. The branch follows how the transfer could be recorded.'
         vignettes:
           ledger: 'Two lines begin with nearly the same name. The clerk has read them as one. You underline the characters that differ, and he calls both bearers back to check.'
           hands: 'The waiting carrier has both hands on a bundle and cannot open her slip. You hold it flat and read the name back to her before she lifts it again.'
@@ -44,9 +61,24 @@ events:
         relic: 石砫领物抄单
         relic_desc: 页边记了一个姓名，包裹旁又写了另一个。
         points:
-          p1: 找出清单上两个写得很像的名字
-          p2: 帮搬货人核对她该领的是哪一包
-          p3: 在收桌前留好两张对得上的单子
+          p1: '把秦良玉拿出家财的交接款逐笔确认，让石砫经手的人能在开支日期签领'
+          p2: '把交割手记和家中其余的开销分开记，发回石砫的一份加经手人和实际支付日期'
+          p3: '请秦良玉核对一份家人也能查的支出单，给因分摊费用而迟领钱的人留待核记录'
+        points_fail:
+          p1: '临时收款的人记不清谁已领款，家财没能按原意交割，事务所因同步失败召回员工。'
+          p2: '把公私开销抄在一处，后来查一笔支出时，家人得再去问所有经手者。'
+          p3: '应补支付当作已经给出，不能回来的经手人也没法核清。'
+        shift:
+          p1:
+            was: '《明史》记 1630 年秦良玉与秦翼明奉诏应召，秦良玉出家财济饷。'
+          p2:
+            was: '秦良玉的支出由史书概述，公开传记没有留这批款项完整细账。'
+            now: '留下的副本可以确定哪些钱已交付、哪些家人还在垫付。'
+          p3:
+            was: '石砫地方志也记奉诏出行，后来的记载以出行和事功为主。'
+            now: '家里能凭留底追对漏项。经手的人来问时，可以看见当日应补的数如何核出。'
+            who: qin_liangyu_shizhu
+            bio: '秦良玉与石砫关系密切。史料明载她用到家中财物，具体如何经手是这条分支考察的内容。'
         vignettes:
           ledger: '两行名字只差一个字，账房顺嘴读成了同一个人。你把那个字圈出来，他把两位领物人都叫回来核对。'
           hands: '搬货人两手托着包裹，腾不出手展开单子。你替她把纸按平，把名字念给她听，她才重新抱紧包裹。'
@@ -89,6 +121,18 @@ bystanders:
     text: {en: A fictional carrier waiting to collect a bundle., zh: 一位虚构的搬货人，正等着领走一包东西。}
 wiki:
   refs:
+    qin_liangyu_shizhu_ming_biography:
+      order: 10
+      status: checked
+      text:
+        en: 'History of Ming, biography of Qin Liangyu https://www.shidianguji.com/zh/book/LS0024/chapter/LS0024_1492'
+        zh: '《明史·秦良玉传》原文 https://www.shidianguji.com/zh/book/LS0024/chapter/LS0024_1492'
+    qin_liangyu_shizhu_shizhu_gazetteer:
+      order: 11
+      status: checked
+      text:
+        en: 'Shizhu gazetteer section on Qin Liangyu https://www.shidianguji.com/zh/book/CADAL11201834/chapter/1l7qwgzczjtpf'
+        zh: '《补辑石砫厅新志》土司传 https://www.shidianguji.com/zh/book/CADAL11201834/chapter/1l7qwgzczjtpf'
     mingshi_qin_liangyu:
       order: 115
       status: checked

@@ -2,20 +2,23 @@ order: 171
 events:
   schumann_endenich:
     order: 128
+    build_step: 2
     year: 1856
+    date: '1856-07-05'
+    stay: 1
     lon: 7.07
     lat: 50.72
     region: europe
     field: music
     tier: 2
     channels: {G: 3, S: 1}
-    regret: true
-    refs: [schumann_endenich_papillon]
+    refs: [schumann_endenich_papillon, schumann_clara_july1856, schumann_loc_endenich, schumann_clara_itinerary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, req: {"trait":["artistic","cosmopolitan","kind"]}}
-        - {id: p2, kind: notice, req: {"any":[{"job":["musician"]},{"trait":["quiet","wanderer"]}]}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["nurse","physician","archivist"]},{"trait":["patient","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 20, req: {"any":[{"job":["musician","archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: care, day: 16, req: {"any":[{"job":["nurse","archivist"],"stat":{"will":7}},{"trait":["patient","methodical"],"stat":{"will":8}}]}}
       vignettes:
         - {id: key, traits: [artistic, curious, scholarly]}
         - {id: envelope, traits: [kind, quiet, attached]}
@@ -29,9 +32,24 @@ events:
         relic: 'A labelled practice score'
         relic_desc: 'A fictional page marked for a comparison of keys.'
         points:
-          p1: 'Ask the helper to play the opening on the other key'
-          p2: 'Compare the two starting notes and mark both headings'
-          p3: 'Keep the second version apart from the sheet already taken downstairs'
+          p1: 'After Brahms sends news of Robert’s condition, get the doctor’s visiting time to Clara so she can make the July 27 visit.'
+          p2: 'Set the B-flat Papillon No. 10 apart from the loose sheets. Give the person receiving the music a list with its original key and the new one.'
+          p3: 'Ask the doctor for a short visit earlier in July. Ask Robert if he wants it first, then find a quiet time when either person can end the visit.'
+        points_fail:
+          p1: 'The visiting time is not passed to Clara. She arrives too late, and the office recalls the employee.'
+          p2: 'The recipient has only the title. Faced with two different scores, they file the transposition as an ordinary copy.'
+          p3: 'Clara receives accounts of Robert’s condition and still has to wait until the end of July to see him.'
+        shift:
+          p1:
+            was: 'Clara visited Robert Schumann at Endenich on July 27, 1856. Robert died there on July 29.'
+          p2:
+            was: 'The Library of Congress holds a copy of Papillon No. 10 that Schumann transposed to B-flat while at Endenich.'
+            now: 'Clara receives a list that identifies the transposition. Anyone sorting the pages later can file it separately and recover the piece it came from.'
+          p3:
+            was: 'Clara did not see Robert at Endenich until July 27, 1856. She wrote about the visit to Joseph Joachim.'
+            now: 'Both agree to an earlier short visit. Clara brings a page of familiar music and sits with him for a little while. She returns as planned on July 27.'
+            who: schumann_endenich
+            bio: 'Letters and a surviving transposition from Robert’s time at Endenich record some of his connections with family and music during his stay.'
         vignettes:
           key: 'Lina thinks the first note was copied wrong. You ask her to start each version on its own note and play a few bars. She can hear the tune go the same way from a different pitch. Instead of rubbing either page out, she writes the key above each.'
           envelope: 'Emil has an envelope ready for only one page. You fold a wider wrapper so he can carry both without covering Lina’s headings. At the door he reads the two key names back to her. She can put the keyboard cover down without wondering which copy went away.'
@@ -44,9 +62,24 @@ events:
         relic: '一页写明调号的练习谱'
         relic_desc: '练习谱，标明了对照用的调号。'
         points:
-          p1: '请帮工换个调起头弹一遍'
-          p2: '比较两份谱的起音，给两页都写好题头'
-          p3: '把第二个版本留好，与已经送下楼的那份分开'
+          p1: '布拉姆斯发出病况消息后，把医生同意的探视时段送到克拉拉手里，护住她 7 月 27 日的探视。'
+          p2: '把降 B 大调《蝴蝶》第十首的抄谱页从杂纸中抽出，在原稿旁另记原调与移调，给来接稿的人一份清单。'
+          p3: '向医生申请让克拉拉在七月下旬更早有一次短访。先请罗伯特表示愿意，再安排安静、随时能结束的会面。'
+        points_fail:
+          p1: '医生给出的探视时段没有转到克拉拉手中。她赶到时已经错过，事务所因同步失败召回员工。'
+          p2: '来接稿的人只知道曲名，面对两份不同的谱页，误把这份移调稿当成普通抄件混收。'
+          p3: '克拉拉能收到病况转述，仍要等到月底才可见面。'
+        shift:
+          p1:
+            was: '1856 年 7 月 27 日，克拉拉到恩德尼希见罗伯特·舒曼。罗伯特在 7 月 29 日去世。'
+          p2:
+            was: '美国国会图书馆藏有舒曼在恩德尼希期间把《蝴蝶》第十首移至降 B 大调的抄谱。'
+            now: '克拉拉接到一份能辨认移调稿的清单。以后整理谱页的人能把它单列，并找回原来对应的一首。'
+          p3:
+            was: '克拉拉直到 1856 年 7 月 27 日才在恩德尼希见到罗伯特。有关这一趟探视，有她写给约阿希姆的信。'
+            now: '双方先同意一次短访。克拉拉把一页他熟悉的曲谱带去，两人有片刻可以安静坐在一起；7 月 27 日她照样再去探视。'
+            who: schumann_endenich
+            bio: '罗伯特在恩德尼希仍有书信和留存的抄谱。这些纸页记录了他住院期间与家人及音乐的一些联系。'
         vignettes:
           key: '莉娜以为起音抄错了。你请她照两份谱各自写的起音，弹几小节。她听出起音不同，旋律的走向却一样。两页都不必擦，她在各自上面标了调。'
           envelope: '埃米尔备好的信封只能放一页。你另折了张宽一点的包纸，他把两份都带走，莉娜的题头也不用折进去。到门口他把两个调名念给她听。她可以安心盖好琴盖了。'
@@ -78,6 +111,24 @@ bystanders:
     text: {en: 'A fictional messenger with an envelope that is too small.', zh: '虚构送件人埃米尔，带来的信封不够大。'}
 wiki:
   refs:
+    schumann_clara_july1856:
+      order: 2
+      status: checked
+      text:
+        en: 'Clara Schumann’s July 28 letter to Joseph Joachim https://s9.imslp.org/files/imglnks/usimg/6/6d/IMSLP591615-PMLP952503-BICKLEY%2C_ed._Letters_from_and_to_Joseph_Joachim.pdf'
+        zh: '克拉拉·舒曼 7 月 28 日致约阿希姆信 https://s9.imslp.org/files/imglnks/usimg/6/6d/IMSLP591615-PMLP952503-BICKLEY%2C_ed._Letters_from_and_to_Joseph_Joachim.pdf'
+    schumann_loc_endenich:
+      order: 3
+      status: checked
+      text:
+        en: 'Library of Congress Schumann correspondence and Endenich dates https://guides.loc.gov/robert-schumann/correspondence'
+        zh: '美国国会图书馆舒曼书信与恩德尼希时间记录 https://guides.loc.gov/robert-schumann/correspondence'
+    schumann_clara_itinerary:
+      order: 4
+      status: checked
+      text:
+        en: 'Schumann Portal itinerary for Clara Schumann https://www.schumann-portal.de/itinerar-4214.html?cid=9975&file=files%2Fimg%2FClaraSchumann%2FClara-Wieck-Schumann-Itinerar_Theresa_Schlegel.pdf'
+        zh: '舒曼门户克拉拉行程年表 https://www.schumann-portal.de/itinerar-4214.html?cid=9975&file=files%2Fimg%2FClaraSchumann%2FClara-Wieck-Schumann-Itinerar_Theresa_Schlegel.pdf'
     schumann_endenich_papillon:
       order: 873
       status: checked

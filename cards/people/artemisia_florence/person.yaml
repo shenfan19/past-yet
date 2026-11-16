@@ -2,20 +2,23 @@ order: 22
 events:
   artemisia_florence:
     order: 146
+    build_step: 2
     year: 1616
+    date: '1616-07-05'
+    stay: 3
     lon: 11.26
     lat: 43.77
     region: europe
     field: art
     tier: 2
     channels: {S: 3}
-    regret: true
-    refs: [artemisia_florence_primary]
+    refs: [artemisia_florence_primary, artemisia_florence_admission, artemisia_florence_payments, artemisia_florence_tribunal]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["painter"]},{"stat":{"finesse":7}}]}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","ambitious"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"trait":["patient","bold","vigil","handy"]}}
+        - {id: p1, kind: trust, guard: true, day: 14, req: {"any":[{"job":["painter","archivist"]},{"trait":["methodical","artistic"],"stat":{"wit":5}}]}}
+        - {id: p2, kind: notice, day: 21, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 43, req: {"any":[{"job":["archivist","painter"],"stat":{"wit":6}},{"trait":["methodical","scholarly"],"stat":{"will":7}}]}}
       vignettes:
         - {id: pose, traits: [artistic, curious]}
         - {id: name, traits: [methodical, vigil]}
@@ -29,9 +32,24 @@ events:
         relic: "A pigment jar"
         relic_desc: "A small jar of ground lapis blue."
         points:
-          p1: 'Notice what the hands suggest in a pose'
-          p2: 'Help someone identify the artist behind the portrait'
-          p3: 'Keep the practice sketches together with their labels'
+          p1: 'Before the July 19 admission, bring Florence’s Academy of the Arts of Drawing a commission record under Artemisia’s name so it can verify her work.'
+          p2: 'Read the advances for Allegory of Inclination against the delivery accounts. Leave the painter a copy she can show to the supplier herself.'
+          p3: 'Give Artemisia time to use her accounts to agree dates with the next patron for materials, delivery and final payment. Both copies of the agreement are to name her as payee.'
+        points_fail:
+          p1: 'The academy receives a record bearing only the patron’s mark. The clerks cannot check who delivered the work and put off the vote. The office recalls the employee.'
+          p2: 'An advance and the expenses for another project sit side by side in the ledger. When the supplier calls again, Artemisia has to borrow the books and search them anew.'
+          p3: 'Both sides are in a hurry to start and write the deposit down on a single slip. At the next demand from the pigment seller, she still needs the patron to find the original account.'
+        shift:
+          p1:
+            was: 'On July 19, 1616, the Academy of the Arts of Drawing in Florence admitted Artemisia Gentileschi.'
+          p2:
+            was: 'The Buonarroti archive holds payment records for the commission. Artemisia also brought cases to the academy’s tribunal, including disputes over debts to suppliers.'
+            now: 'She puts away a dated account of her own. When the supplier returns, she can show which payment bought the pigments and which was an advance from the patron.'
+          p3:
+            was: 'The Buonarroti archive preserves records of advances and correspondence that show her finding money to work in Florence.'
+            now: 'Her early requests for money still survive in letters. For later commissions, she puts the materials and payment dates on both copies of the agreement, so suppliers can order their stock against the terms she has made.'
+            who: artemisia_florence
+            bio: 'She painted Allegory of Inclination for Michelangelo Buonarroti the Younger’s house, where it remains part of the decoration. Admission also gave her access to the academy’s tribunal for disputes arising from her trade.'
         vignettes:
           pose: 'The visitor turns towards the mirror and asks which pose looks more natural. You ask what each pose seems to be doing. They pick the one that lets the hand keep its own purpose.'
           name: 'A practice sheet has the sitter''s description but no place for the painter''s name. You turn it over and ask the visitor to put down both before the sheets are stacked.'
@@ -44,9 +62,24 @@ events:
         relic: "一罐颜料"
         relic_desc: "一小罐磨好的青金石蓝。"
         points:
-          p1: '看出手的姿势像在做什么'
-          p2: '帮来客认清肖像是谁画的'
-          p3: '把习作和各自的签条放在一起'
+          p1: '赶在7月19日入会前，把阿尔泰米西娅署名的委托记录送到佛罗伦萨绘画艺术学院，让院方有据可查。'
+          p2: '逐笔对读《倾向的寓意》的预付款与交画账，让画家自己留一份能答复材料商的账单。'
+          p3: '请阿尔泰米西娅拿她自己的账与下一位委托方议定付料钱、交画和结清的日期，并在两份画约上写明由她收款。'
+        points_fail:
+          p1: '送去的纸只有委托方的记号。院方查不到画是谁交的，推迟了表决。事务所因同步失败召回员工。'
+          p2: '预付款和别人的项目开支记在相邻行。材料商再问起时，阿尔泰米西娅只能重新借账翻查。'
+          p3: '双方急着开工，只把订金写在一张纸上。下次颜料商催款时，她仍得请委托人找原账。'
+        shift:
+          p1:
+            was: '1616年7月19日，阿尔泰米西娅·真蒂莱斯基获佛罗伦萨绘画艺术学院接纳。'
+          p2:
+            was: '博纳罗蒂家族档案保存了这项委托的付款记录。阿尔泰米西娅也曾借助学院的法庭处理包括材料商欠款在内的案件。'
+            now: '她自己收起一份有日期的对账单。材料商再来时，她能从哪笔是买颜料、哪笔是委托预付款讲起。'
+          p3:
+            was: '如今还能从博纳罗蒂家族档案的预付款记录及通信中看到她在佛罗伦萨如何筹措画资。'
+            now: '开头几次催付仍见于她的来信。此后谈新委托时，她会把供料和结清日期写在两份画约上，让材料商先按已约定的款项备货。'
+            who: artemisia_florence
+            bio: '她为小米开朗琪罗·博纳罗蒂的宅邸绘制《倾向的寓意》，作品至今仍属建筑装饰的一部分。入会以后，她也可以向学院的法庭提出与画业有关的争议。'
         vignettes:
           pose: '访客面对镜子，问哪种姿势看着自然。你问两种姿势各像在做什么。他选了手还能做自己的事的那一种。'
           name: '一张习作只写了画中人的描述，没留画家的名字。你把纸翻过来，请访客在收进一摞图以前把两项都写上。'
@@ -75,6 +108,24 @@ bystanders:
     text: {en: 'An invented studio visitor comparing two practice poses.', zh: '一位虚构的画室访客，正对比两种习作姿势。'}
 wiki:
   refs:
+    artemisia_florence_admission:
+      order: 2
+      status: checked
+      text:
+        en: 'Casa Buonarroti exhibition on the July 19 admission https://www.casabuonarroti.it/en/artemisia-upclose-artemisia-in-the-museum-of-michelangelo/'
+        zh: '博纳罗蒂故居展览与7月19日入会记录 https://www.casabuonarroti.it/en/artemisia-upclose-artemisia-in-the-museum-of-michelangelo/'
+    artemisia_florence_payments:
+      order: 3
+      status: checked
+      text:
+        en: 'Comparative study with facsimiles of the commission payments https://www.academia.edu/117369444/Artemisia_and_Michelangelo_Competitive_Imitation_at_Casa_Buonarroti_and_Beyond'
+        zh: '原委托账簿影印件与作品研究 https://www.academia.edu/117369444/Artemisia_and_Michelangelo_Competitive_Imitation_at_Casa_Buonarroti_and_Beyond'
+    artemisia_florence_tribunal:
+      order: 4
+      status: checked
+      text:
+        en: 'Museo degli Innocenti exhibition on the Academy tribunal https://www.museodeglinnocenti.it/en/mostra/artemisia-gentileschi-a-firenze/'
+        zh: '育婴堂博物馆展览与学院法庭 https://www.museodeglinnocenti.it/en/mostra/artemisia-gentileschi-a-firenze/'
     artemisia_florence_primary:
       order: 180
       status: checked

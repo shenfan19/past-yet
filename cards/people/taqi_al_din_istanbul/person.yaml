@@ -2,20 +2,23 @@ order: 188
 events:
   taqi_al_din_istanbul:
     order: 174
+    build_step: 2
     year: 1580
+    date: '1580-01-03'
+    stay: 3
     lon: 28.98
     lat: 41.03
     region: europe
     field: science
     tier: 2
     channels: {S: 2, V: 2}
-    regret: true
-    refs: [taqi_al_din_istanbul_observations, taqi_al_din_istanbul_closure]
+    refs: [taqi_al_din_istanbul_observations, taqi_al_din_istanbul_closure, taqi_al_din_istanbul_closure_chronology, taqi_al_din_istanbul_astronomical_manuscripts, taqi_al_din_istanbul_instrument_manuscript]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"any":[{"job":["mechanic","carpenter","builder"]},{"stat":{"wit":7}}]}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["cosmopolitan","charismatic"]}}
+        - {id: p1, kind: hold, guard: true, day: 16, req: {"any":[{"job":["archivist","mechanic","translator"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 17, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 40, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: clock, traits: [methodical, handy, scholarly]}
         - {id: copy, traits: [cosmopolitan, charismatic, patient]}
@@ -29,9 +32,24 @@ events:
         relic: 'A comparison slip'
         relic_desc: 'A fictional observatory slip with an original row and its correction.'
         points:
-          p1: 'Keep the practice sighting steady while another helper notes the time'
-          p2: 'Check whether the angle and the time came from the same call'
-          p3: 'Persuade the keeper to preserve a smudged row with its correction'
+          p1: 'As word of the closure reaches the observatory, inventory the existing tables and give the people keeping them a usable set'
+          p2: 'Keep drawings, descriptions of instruments and observations identifiable. Leave blanks where the use is known but the drawing cannot be confirmed'
+          p3: 'Have Taqī al-Dīn approve an observing book for use elsewhere and leave two assistants copies with a way to exchange corrections'
+        points_fail:
+          p1: 'The old tables are locked away with equipment scheduled for removal. Their readers cannot retrieve them, and the office recalls the employee.'
+          p2: 'Unlabeled diagrams go into the same packet. Readers later copy an image from elsewhere as a drawing of the observatory’s equipment.'
+          p3: 'After closure each person can take part of the material. Nobody can count on borrowing the other half later.'
+        shift:
+          p1:
+            was: 'The Istanbul observatory was ordered demolished in 1580. Manuscripts of Taqī al-Dīn’s astronomical work survive.'
+          p2:
+            was: 'Images, descriptions and observations inform research on the observatory. Surviving records do not trace every instrument.'
+            now: 'A later copyist knows which question each diagram can answer. Entries lacking provenance remain visibly open.'
+          p3:
+            was: 'Demolition ended the work at the observatory. Taqī al-Dīn’s astronomical writings survive in separate manuscripts.'
+            now: 'Two copies stay in different places. The assistants can exchange corrections by page and keep a common record after the observatory closes.'
+            who: taqi_al_din_istanbul
+            bio: 'Taqī al-Dīn organized observations in Istanbul. Instruments, tables and people worked together there. Manuscripts could still be read after the site was gone.'
         vignettes:
           clock: 'Hasan reads the angle aloud while Leyla copies the clock. The next row inherits the last angle because she did not hear his second call. You ask them to repeat, one voice at a time. Both workers mark the correction beside the record, where the next reader can find it.'
           copy: 'The bound notebook must go downstairs and Hasan will need the correction at the bench. You let Leyla copy the old and corrected rows onto one slip. She writes which was read first. When the notebook leaves, the bench still has the trail of the change.'
@@ -44,9 +62,24 @@ events:
         relic: '一张订正对照纸'
         relic_desc: '天文台记录副页，保存了原行与订正。'
         points:
-          p1: '一人记时的时候，帮另一人稳住练习观测'
-          p2: '核实角度与时刻是不是同一声报出来的'
-          p3: '请记录员把墨污那行和订正一起留下'
+          p1: '观象台接到撤除的消息时，尽快把台里已有的观测表按组清点，给能继续保管的人留可核的稿件'
+          p2: '把仪器图、用途说明和对应观测分别夹好，把只能确认用途而不能确认外形的项目留空'
+          p3: '请塔基丁核准一本可在台外使用的观测册，让两名原助手各自保管一份，写明今后如何交换抄件'
+        points_fail:
+          p1: '旧表和待撤的物件同仓封走，研究者取不到留存数据，事务所因同步失败召回员工。'
+          p2: '一叠记录混收无题的示意图，后来读者把用来说明别处仪器的照抄成台内图。'
+          p3: '失去观象台后，各人能带走部分材料，下一次能不能借到另一半由不得他们。'
+        shift:
+          p1:
+            was: '伊斯坦布尔观象台于 1580 年奉命撤除。塔基丁的观测与天文工作仍有稿件传世。'
+          p2:
+            was: '研究观象台可用同期的仪器图、用途说明与观测稿，但所存文献并未记录所有器物的去向。'
+            now: '后来的抄写者知道每张图能回答哪一项，也能看见台内没有留下出处说明的空栏。'
+          p3:
+            was: '拆除中断了这处观象台的工作，仍有塔基丁的天文稿分散传世。'
+            now: '两套观测册留在不同地方。助手往后能凭页次互送勘误，离开观象台以后至少还有一份共同底稿。'
+            who: taqi_al_din_istanbul
+            bio: '塔基丁在伊斯坦布尔组织观测，仪器、计算表和分工一起支撑这项工作。场地消失以后，手稿仍可留给后来的人。'
         vignettes:
           clock: '哈桑读角度，莱拉抄钟上的时刻。她没听到第二次报码，下一行沿用了前一行的角度。你请两人一先一后再报一遍，他们把订正并排写在原记录旁，下一个人翻到这里就能找到。'
           copy: '装订好的记录簿要送下楼，哈桑在台边还得查那次订正。你请莱拉把旧行和改行一起抄在一张纸上，注明先读的是哪一行。簿子送走后，台边还查得到这次改动的来路。'
@@ -87,6 +120,24 @@ bystanders:
     text: {en: 'A fictional time recorder who needs to keep the correction within reach.', zh: '虚构计时员莱拉，要把订正留在伸手可取的位置。'}
 wiki:
   refs:
+    taqi_al_din_istanbul_closure_chronology:
+      order: 10
+      status: checked
+      text:
+        en: 'Turkish Historical Society research on the closure and date sources https://belleten.gov.tr/eng/full-text-pdf/1224/eng'
+        zh: '土耳其历史学会所录拆除与纪年研究 https://belleten.gov.tr/eng/full-text-pdf/1224/eng'
+    taqi_al_din_istanbul_astronomical_manuscripts:
+      order: 11
+      status: checked
+      text:
+        en: 'Study of the observatory’s observing texts and assistants https://www.academia.edu/2711296/Taq%C4%AB_al_D%C4%ABn_Ibn_Ma_r%C5%ABf_A_Bio_Bibliographical_Essay'
+        zh: '观象台观测手稿及助手研究 https://www.academia.edu/2711296/Taq%C4%AB_al_D%C4%ABn_Ibn_Ma_r%C5%ABf_A_Bio_Bibliographical_Essay'
+    taqi_al_din_istanbul_instrument_manuscript:
+      order: 12
+      status: checked
+      text:
+        en: 'Boğaziçi University archive on the instrument manuscript https://digitalarchive.library.bogazici.edu.tr/bitstreams/f9ce8bca-a842-45ec-a517-f058f3b7955b/download'
+        zh: '博阿齐奇大学档案，观象仪器图稿 https://digitalarchive.library.bogazici.edu.tr/bitstreams/f9ce8bca-a842-45ec-a517-f058f3b7955b/download'
     taqi_al_din_istanbul_observations:
       order: 921
       status: checked

@@ -2,20 +2,23 @@ order: 56
 events:
   dickinson_amherst:
     order: 119
+    build_step: 2
     year: 1886
+    date: '1886-05-01'
+    stay: 2
     lon: -72.52
     lat: 42.37
     region: americas
     field: literature
     tier: 1
     channels: {G: 1}
-    regret: true
-    refs: [dickinson_amherst_primary]
+    refs: [dickinson_amherst_primary, dickinson_lavinia_burn, dickinson_harvard_fascicles]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, req: {"trait":["charismatic","kind","sensitive"]}}
-        - {id: p2, kind: notice, req: {"luck":0.4}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["ambitious","vigil"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}},{"trait":["methodical"],"stat":{"will":8}}]}}
+        - {id: p2, kind: notice, day: 26, req: {"any":[{"trait":["methodical","artistic","scholarly"]},{"job":["archivist","translator"]}]}}
+        - {id: p3, kind: persuade, day: 38, req: {"any":[{"job":["archivist","translator"],"stat":{"will":8}},{"trait":["methodical","charismatic"],"stat":{"wit":9}}]}}
       vignettes:
         - {id: pause, traits: [artistic, quiet]}
         - {id: variant, traits: [methodical, vigil]}
@@ -29,9 +32,24 @@ events:
         relic: "A sewn booklet"
         relic_desc: "A few pages sewn by hand with a poem on each."
         points:
-          p1: 'Identify a pause marked on the page'
-          p2: 'Keep a loose scrap with the lines it belongs to'
-          p3: 'Leave a transcription that retains the alternate reading'
+          p1: 'Help Lavinia separate the letters to be destroyed from the bound poems and protect the unpublished work'
+          p2: 'Before the papers pass into several hands, help the family record which sheets contain variants of the same poem'
+          p3: 'Persuade Lavinia to keep the sewn books at home and send only copies that preserve the layout'
+        points_fail:
+          p1: 'The poems are mixed with the correspondence and much of the unpublished work is lost. The branch falls out of sync and the office recalls the employee.'
+          p2: 'The sheets go their separate ways and editors have to recover variants from their first lines.'
+          p3: 'The books are taken apart for editing. Later readers have to reconstruct the order from stitch marks and paper.'
+        shift:
+          p1:
+            was: 'In 1886, after Dickinson died, Lavinia destroyed the incoming letters as requested and discovered hundreds of poems.'
+          p2:
+            was: 'After 1886 Dickinson''s manuscripts passed among family members and editors, and variants came to be held in different collections.'
+            now: '{staff} has the people handling the sheets record the first lines and variant words so that copies of the same poem can be compared.'
+          p3:
+            was: 'After 1886, Dickinson''s hand-sewn books were disbound during the early editing of her poems.'
+            now: '{staff} helps Lavinia copy the pages as laid out and keep the originals at home. Later readers can still see which poems Dickinson stitched together.'
+            who: dickinson_amherst
+            bio: 'Editors worked from copies after Dickinson''s death. Her sewn books remained intact, and readers could read the poems in the order she set.'
         vignettes:
           pause: 'The reader makes the dash disappear as they read aloud. You ask them to pause where the pencil broke off. They try the line again and hear a different ending.'
           variant: 'You see a word written above the line. The reader wants to choose one version and move on. You make room in the margin for both and label which comes from where.'
@@ -44,9 +62,24 @@ events:
         relic: "一册手缝的小本"
         relic_desc: "几页手工缝起来的纸，每页一首诗。"
         points:
-          p1: '认出纸上标着的一处停顿'
-          p2: '把散页和它接着的几行放一起'
-          p3: '留下保留异文的一份抄件'
+          p1: '帮拉维尼娅分开要销毁的来信和姐姐捆好的诗稿，护住那批尚未刊行的诗'
+          p2: '在不同人手里的复稿分开前，帮家属记下同一首诗有哪些改写'
+          p3: '劝拉维尼娅把原册留在家中，只把保留手稿版面的副本交出去编辑'
+        points_fail:
+          p1: '诗稿和来信混进同一摞纸，大批未刊诗跟着消失。这条分支与史实脱节，员工被召回。'
+          p2: '各处的手稿照旧分开，校订时又得凭首句逐一找回异稿。'
+          p3: '编诗时原册被拆，后来的读者只能靠针孔和纸张重排册序。'
+        shift:
+          p1:
+            was: '1886 年，狄金森去世后，拉维尼娅按姐姐的要求销毁来信，另外发现了成批诗稿。'
+          p2:
+            was: '1886 年以后，狄金森的诗稿在家属和编辑之间分散流传，异稿后来分藏各处。'
+            now: '{staff}让经手人分别注明首句和不同用词，把能够互相对读的版本记在同一张清单上。'
+          p3:
+            was: '1886 年以后，狄金森亲手缝成的诗册在早期编辑阶段被拆开。'
+            now: '{staff}帮拉维尼娅把摊开的页面逐页照原样副抄，原册留在家里。后来读者能看到哪些诗是狄金森自己缝在一起的。'
+            who: dickinson_amherst
+            bio: '狄金森身后刊行的诗集有副本可供编辑。她亲手编的诗册仍成册保存，读者可以按她当时排的顺序读。'
         vignettes:
           pause: '读者朗读时把破折号滑了过去。你请他在笔迹断开的地方停一停。再读那一行，他听出了另一种收尾。'
           variant: '你看见行上还写了一个词。读者想挑一个抄完就算，你腾出页边，把两个都留着，并注明各在何处。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented reader sorting papers on a table in Amherst.', zh: '一位虚构的读者，正坐在阿默斯特一张桌边整理纸页。'}
 wiki:
   refs:
+    dickinson_lavinia_burn:
+      order: 811
+      status: checked
+      text:
+        en: 'Emily Dickinson Museum, Lavinia Dickinson, on the incoming letters and the discovery. https://www.emilydickinsonmuseum.org/roomitem/lavinia-dickinson/'
+        zh: '艾米莉·狄金森博物馆，拉维尼娅与来信、诗稿。 https://www.emilydickinsonmuseum.org/roomitem/lavinia-dickinson/'
+    dickinson_harvard_fascicles:
+      order: 812
+      status: checked
+      text:
+        en: 'Harvard Library, Emily Dickinson Collection, on the disbound fascicles. https://library.harvard.edu/collections/emily-dickinson-collection'
+        zh: '哈佛图书馆，艾米莉·狄金森馆藏及拆开的诗册。 https://library.harvard.edu/collections/emily-dickinson-collection'
     dickinson_amherst_primary:
       order: 151
       status: checked

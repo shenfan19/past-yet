@@ -2,6 +2,7 @@ order: 87
 events:
   heo_nanseolheon_hanyang:
     order: 197
+    build_step: 2
     year: 1589
     lon: 126.98
     lat: 37.57
@@ -9,13 +10,13 @@ events:
     field: literature
     tier: 1
     channels: {S: 3, G: 3}
-    regret: true
-    refs: [heo_nanseolheon_hanyang_edition, heo_nanseolheon_hanyang_collection]
+    refs: [heo_nanseolheon_hanyang_edition, heo_nanseolheon_hanyang_collection, heo_history_compilation, heo_klwave_drafts]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["artistic","handy"]}}
-        - {id: p2, kind: care, req: {"trait":["calm","sensitive","cheerful"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"job":["archivist","student"]}}
+        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 17.25, req: {"any":[{"trait":["methodical","scholarly","patient"]},{"job":["archivist","translator"]}]}}
+        - {id: p3, kind: persuade, day: 18, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: binding, traits: [methodical, handy]}
         - {id: name, traits: [kind, curious]}
@@ -29,9 +30,24 @@ events:
         relic: "A sheet of poems"
         relic_desc: "A sheet of fine paper with brushed poems on flowers and distant places."
         points:
-          p1: 'Read the names and titles on two loose poetry sheets'
-          p2: 'Keep the working copies separate from the originals'
-          p3: 'Copy the heading together with the poem'
+          p1: 'Trace the poems Heo left with her family so her brother can later find the papers he used to make the collection'
+          p2: 'Identify the hand on the poems the author agrees to keep before the papers are copied and dispersed'
+          p3: 'Before papers can be destroyed, ask Heo to choose the poems she is willing to let others read'
+        points_fail:
+          p1: 'The family loses track of the separate papers and Heo Gyun cannot compile the collection from them. The branch falls out of sync and the office recalls the employee.'
+          p2: 'Copies bearing the same title circulate together. Later readers cannot tell which changes the poet checked herself.'
+          p3: 'After she dies, the family can only choose for her from the copies that remain.'
+        shift:
+          p1:
+            was: 'After Heo Nanseolheon died in 1589, Heo Gyun used poems kept at her family home to compile her work.'
+          p2:
+            was: 'Some poems in the Korean collection printed in 1608 later became the subject of disputes over authorship.'
+            now: '{staff} asks Heo to check the few poems she wants to leave and mark the parts she wrote herself.'
+          p3:
+            was: 'After Heo Nanseolheon''s death in 1589, autograph papers were said to have been burned. Heo Gyun made the later selections.'
+            now: '{staff} asks Heo which poems she is willing to circulate and which she wants to dispose of. The later collection preserves the small group she chose herself.'
+            who: heo_nanseolheon_hanyang
+            bio: 'Heo Nanseolheon selected a small group of poems she was willing to share. Her family kept her chosen order when preparing her surviving work.'
         vignettes:
           binding: 'The copyist has mixed a practice page in with the other sheets. You compare the two headings and fold a second sleeve for the exercises. One ambiguous page stays loose for him to check. You leave before any of the poems reaches a printed book.'
           name: 'You know some of these poems will be read far from this house. The copyist is about to pass on a practice sheet with no heading. You ask him to copy the heading as well, and one more sheet leaves with a name. You keep your place with a blank strip of paper. The woodblock edition lies years ahead.'
@@ -44,9 +60,24 @@ events:
         relic: "一页诗稿"
         relic_desc: "一页细纸，用毛笔写着写花和远方的诗。"
         points:
-          p1: '核对两张散诗页的署名和标题'
-          p2: '把练抄的稿纸与原来那叠分开'
-          p3: '把题头跟诗一道誊下'
+          p1: '理清许兰雪轩留在娘家的诗稿去向，让许筠后来找得到用来编集的那一份'
+          p2: '在纸页分散前给作者认可留下的诗注明笔迹，免得传抄时混入别人的句子'
+          p3: '在诗稿可能被销毁前，请许兰雪轩自己划出肯让人读的诗'
+        points_fail:
+          p1: '分存的诗稿下落也断了，许筠后来无法循原稿编集。行程与史实脱节，员工被召回。'
+          p2: '同题的抄稿一起传开，后来分不清哪些改字经过作者亲手核定。'
+          p3: '去世之后，只能由家人从留存稿中替她选篇。'
+        shift:
+          p1:
+            was: '1589 年许兰雪轩去世后，许筠后来以娘家留存的稿件整理她的作品。'
+          p2:
+            was: '1608 年《兰雪轩集》朝鲜刻本所收作品中，后来有部分篇目引起真伪争议。'
+            now: '{staff}请许兰雪轩只为自己同意留下的几首核对字句，再标明哪部分是她的笔迹。'
+          p3:
+            was: '1589 年许兰雪轩去世后，亲笔稿据记载曾遭焚毁，后来的选编由许筠进行。'
+            now: '{staff}在生前请许兰雪轩决定哪些诗可以传阅，哪些应按她的意愿处理。后来的选本保留了她亲自挑出的一个小组。'
+            who: heo_nanseolheon_hanyang
+            bio: '许兰雪轩生前定下了一小组愿意传阅的诗。亲人整理她的遗稿时保留了这个次序。'
         vignettes:
           binding: '抄写人把练笔的纸夹在其他页里。你对过两个题头，另折了一个纸套装练抄稿。还有一页看不准，留散着让他再查。哪首诗最后印进了书，你在这趟看不到。'
           name: '你知道有些诗以后会传到离这户人家很远的地方。抄写人要递出去一张没题头的练抄稿，你请他把题头一同誊下。送出门的纸多了一张带署名的。你用空白纸条夹住自己读到的位置，木刻本还要等许多年。'
@@ -84,6 +115,18 @@ bystanders:
     text: {en: 'A fictional copyist handling a practice pile and a set of papers intended for safekeeping.', zh: '虚构的抄写人，手头一叠是练笔，一叠待收存。'}
 wiki:
   refs:
+    heo_history_compilation:
+      order: 834
+      status: checked
+      text:
+        en: 'National Institute of Korean History, Our History Net, account of the destruction and surviving papers. https://contents.history.go.kr/mobile/eh/view.do?code=&levelId=eh_n0505_0010'
+        zh: '韩国国史编纂委员会，许兰雪轩焚稿与留存别稿的记述。 https://contents.history.go.kr/mobile/eh/view.do?code=&levelId=eh_n0505_0010'
+    heo_klwave_drafts:
+      order: 835
+      status: checked
+      text:
+        en: 'Literature Translation Institute of Korea, Heo Nanseolheon author dossier and manuscript transmission. https://klwave.or.kr/klw/directories/202194/authorsView.do'
+        zh: '韩国文学翻译院，许兰雪轩与稿本流传档案。 https://klwave.or.kr/klw/directories/202194/authorsView.do'
     heo_nanseolheon_hanyang_edition:
       order: 458
       status: checked

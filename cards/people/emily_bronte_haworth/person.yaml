@@ -2,20 +2,23 @@ order: 62
 events:
   emily_bronte_haworth:
     order: 148
+    build_step: 2
     year: 1848
+    date: '1848-06-24'
+    stay: 7
     lon: -1.95
     lat: 53.83
     region: europe
     field: literature
     tier: 2
     channels: {E: 2, C: 3}
-    regret: true
-    refs: [emily_bronte_haworth_primary]
+    refs: [emily_bronte_haworth_primary, bronte_nypl_emily, bronte_1850_editors_preface, bronte_cambridge_chronology, bronte_variants_edition]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, req: {"any":[{"trait":["cosmopolitan","artistic","sensitive"]},{"trait":["attached","charismatic","cosmopolitan"]}]}}
-        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","charismatic"]},{"trait":["glib","scholarly","ambitious"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["nurse","physician"]},{"trait":["faithful","cheerful"]},{"trait":["cheerful","faithful","patient"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 21, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","scholarly","artistic"]}]}}
+        - {id: p3, kind: persuade, day: 150, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: witness, traits: [curious, skeptical]}
         - {id: voices, traits: [artistic, quiet]}
@@ -29,9 +32,24 @@ events:
         relic: "A dog collar"
         relic_desc: "A worn leather collar from the parsonage mastiff."
         points:
-          p1: 'Find the point where the account changes speaker'
-          p2: 'Distinguish what a narrator saw from what they heard'
-          p3: 'Help another reader return to the right page'
+          p1: 'When London letters mix up the Bells'' books, help the sisters assemble papers that identify each author''s work'
+          p2: 'When a printer''s error changes a line, help Emily leave corrections that a later printer can check'
+          p3: 'While Emily can still check how her characters speak, have her prepare a dialect copy for a later edition'
+        points_fail:
+          p1: 'The letters still attribute the books to one pen name and the sisters cannot take separate proof to London. The clarification is lost, and the office recalls the employee.'
+          p2: 'The next printer must guess which readings were intentional, and errors carry forward.'
+          p3: 'Her family must decide which lines to change when the book is reissued, with no way to establish which spellings the author wanted.'
+        shift:
+          p1:
+            was: 'In July 1848 Charlotte and Anne Brontë went to London from Haworth to explain to a publisher that the Bell pen names belonged to different writers.'
+          p2:
+            was: 'The 1847 Wuthering Heights contained printing errors. Corrections appeared in the new edition of 1850.'
+            now: '{staff} leaves Emily a copy to mark and writes out the errors she identifies with page references.'
+          p3:
+            was: 'Emily died in Haworth in 1848. Charlotte edited the 1850 edition and changed some dialect spellings.'
+            now: '{staff} puts the dialect pages in front of Emily separately and records the spellings she approves apart from printing errors. Charlotte has that copy when she prepares the next edition.'
+            who: emily_bronte_haworth
+            bio: 'Emily left an annotated copy of Wuthering Heights with the dialect checked in her own hand. Later printers could preserve the way she had written her characters'' voices.'
         vignettes:
           witness: 'The reader thinks the person telling the story saw it all. You ask how she learned one particular detail. They trace the sentence back to the speaker who supplied it.'
           voices: 'The reader gives the whole page one voice. You ask them to try again from the place Nelly takes over. A listener can now tell when one speaker is passing the story to another.'
@@ -44,9 +62,24 @@ events:
         relic: "一条狗项圈"
         relic_desc: "牧师住宅里那条大狗用过的旧皮项圈。"
         points:
-          p1: '找出叙述从哪里换了人'
-          p2: '分清叙述者亲见与听来的事'
-          p3: '帮另一位读者翻回原来那页'
+          p1: '在伦敦来函把几位贝尔的作品混起来时，帮哈沃思的姐妹从书信中理出能各自认领的作品'
+          p2: '发现初版里不同于原句的误字时，帮艾米莉留下逐条可查的勘误'
+          p3: '趁艾米莉还能核对人物说话的声音，请她定一份以后重印时可照用的方言校本'
+        points_fail:
+          p1: '几份来函仍把书归到同一个笔名下，姐妹带不出能分开认领的文件。澄清落空，员工因同步失败被召回。'
+          p2: '下次排印的人只能从初版猜测哪些字本来就这样写，排字错误继续传下去。'
+          p3: '再版时只能由家人判断哪里读不顺，改字里分不清哪些是作者原意。'
+        shift:
+          p1:
+            was: '1848 年 7 月，夏洛蒂与安妮·勃朗特从哈沃思到伦敦，向出版人澄清几个贝尔笔名并非同一作者。'
+          p2:
+            was: '1847 年版《呼啸山庄》留有排印错误，1850 年新版才作校订。'
+            now: '{staff}在艾米莉手边留一册可圈改的印本，再把她指出的误字抄成附有页码的清单。'
+          p3:
+            was: '1848 年艾米莉在哈沃思去世；1850 年的新版由夏洛蒂编辑，其中改动了部分方言拼写。'
+            now: '{staff}把方言页分开请艾米莉逐句审过，将她亲自核准的拼写和仍可改的排印错误分明标记。夏洛蒂后来再版时有了这份依据。'
+            who: emily_bronte_haworth
+            bio: '艾米莉的《呼啸山庄》留下一部她亲自核过方言的印本。后来的重印能够保留人物的原有说话方式。'
         vignettes:
           witness: '读者以为讲故事的人什么都看见了。你问有一件事她是从哪儿知道的。他把那句话往回找，找到了先说这事的人。'
           voices: '读者整页只用一个声音。你请他从内莉接过话头处再念。听的人这回听得出，故事什么时候交到了另一个人手上。'
@@ -75,6 +108,30 @@ bystanders:
     text: {en: 'An invented reader who has stopped to sort out the voices.', zh: '一位虚构的读者，为分清说话声停在书页上。'}
 wiki:
   refs:
+    bronte_nypl_emily:
+      order: 848
+      status: checked
+      text:
+        en: 'New York Public Library, Berg Collection, Emily Brontë papers and chronology. https://archives.nypl.org/brg/19106'
+        zh: '纽约公共图书馆伯格馆藏，艾米莉·勃朗特文献和年表。 https://archives.nypl.org/brg/19106'
+    bronte_1850_editors_preface:
+      order: 849
+      status: checked
+      text:
+        en: 'Charlotte Brontë, Biographical Notice and Editor’s Preface to the 1850 Wuthering Heights. https://www.gutenberg.org/files/771/old/brnte10h.htm'
+        zh: '夏洛蒂·勃朗特，《呼啸山庄》1850 年版的传略与编辑序。 https://www.gutenberg.org/files/771/old/brnte10h.htm'
+    bronte_cambridge_chronology:
+      order: 850
+      status: checked
+      text:
+        en: 'The Brontës in Context, chronology for the London visit in July 1848. https://assets.cambridge.org/97805217/61864/frontmatter/9780521761864_frontmatter.pdf'
+        zh: '《勃朗特姐妹的时代背景》年表，1848 年 7 月的伦敦之行。 https://assets.cambridge.org/97805217/61864/frontmatter/9780521761864_frontmatter.pdf'
+    bronte_variants_edition:
+      order: 851
+      status: checked
+      text:
+        en: 'Wuthering Heights, editorial note on the 1847 and 1850 texts and dialect variants. https://upload.wikimedia.org/wikipedia/commons/3/37/Wuthering_Heights_%28IA_in.ernet.dli.2015.185888%29.pdf'
+        zh: '《呼啸山庄》版本说明，初版、1850 年版及方言异文。 https://upload.wikimedia.org/wikipedia/commons/3/37/Wuthering_Heights_%28IA_in.ernet.dli.2015.185888%29.pdf'
     emily_bronte_haworth_primary:
       order: 195
       status: checked

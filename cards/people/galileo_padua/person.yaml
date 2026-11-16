@@ -2,19 +2,23 @@ order: 78
 events:
   galileo_padua:
     order: 19
+    build_step: 2
     year: 1610
+    date: '1610-01-04'
+    stay: 4
     lon: 11.89
     lat: 45.41
     region: europe
     field: science
     tier: 3
     channels: {C: 1, V: 2}
-    refs: [galileo_padua_primary]
+    refs: [galileo_padua_primary, galileo_padua_manuscript, galileo_padua_timeline, galileo_padua_first_print]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["quiet","handy"]}}
-        - {id: p2, kind: persuade, req: {"stat": {"finesse": 6}}}
-        - {id: p3, kind: hold, req: {"luck": 0.5}}
+        - {id: p1, kind: hold, guard: true, day: 11, req: {"any":[{"job":["archivist","university_lecturer"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 28, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 65, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: alignment, traits: [methodical, vigil]}
         - {id: telescope, traits: [bold, curious]}
@@ -28,9 +32,24 @@ events:
         relic: A ground lens
         relic_desc: A small glass lens, polished by hand.
         points:
-          p1: 'Compare diagrams from two observing nights'
-          p2: 'Keep two loose sheets in chronological order'
-          p3: 'Check which positions still need a second look'
+          p1: 'Keep Galileo’s dated sketches of Jupiter and its points of light in order for the copy going to Venice'
+          p2: 'Have him mark east and west on each illustration and keep a reference set in Padua'
+          p3: 'Before the first copies circulate, have Galileo prepare a blank chart readers can use to send back observations in the same format'
+        points_fail:
+          p1: 'The loose sketches lose their order. The printer’s copy puts the nights out of sequence, and the office recalls the employee.'
+          p2: 'The direction of one drawing is legible only in an old marginal note. Once the copy leaves the desk, nobody can verify its orientation.'
+          p3: 'Readers argue over what they can see, but their loose drawings are missing comparable dates and directions.'
+        shift:
+          p1:
+            was: 'Galileo observed Jupiter over successive nights from January 1610 and printed positional records in Sidereus Nuncius.'
+          p2:
+            was: 'Surviving drafts and printed pages both plot the points of light beside Jupiter.'
+            now: 'The printer can ask about the corresponding night in the retained set and check the orientation again when reprinting.'
+          p3:
+            was: 'The first edition sold quickly. Kepler supported Galileo and other observers gradually reported what they could see.'
+            now: 'Early readers receive a blank chart with the book. Galileo can line up responses by night and identify an observation still needing a check.'
+            who: galileo_padua
+            bio: 'The Padua sketches record how observations over several nights distinguished Jupiter’s companions. Their sequence mattered more than any single drawing.'
         vignettes:
           alignment: 'You stop the copyist from aligning the pages by their edges. Line up Jupiter instead, you suggest. The dots no longer sit on top of one another.'
           telescope: 'You ask which dot is the fourth. The copyist sets out the sheets from several nights and asks which should be trusted when the dots seem to merge.'
@@ -43,9 +62,24 @@ events:
         relic: 一片磨制的透镜
         relic_desc: 一片小小的玻璃透镜，是手工磨出来的。
         points:
-          p1: '比较两个夜晚的观测图'
-          p2: '把散页按观测日期排好'
-          p3: '标出还需复核的光点位置'
+          p1: '把一月连夜画下的木星与光点位置按日期装好，护住送往威尼斯付印时的观测日序'
+          p2: '请伽利略在送印图上逐页标注东西方向，留一套帕多瓦的可对照底稿'
+          p3: '首批短册在外传阅前，请他给能观测的人预备一张空白图表，交代怎样把各夜位置用同一格式寄回'
+        points_fail:
+          p1: '几夜的简图散开后只剩大致次序，排印稿的日序错位，事务所因同步失败召回员工。'
+          p2: '一幅图的方向只靠页边旧字辨认，抄件离开书桌便没人记得图的朝向。'
+          p3: '读者争论光点能否复见，寄来的零散图却没有可并排的日期和方向。'
+        shift:
+          p1:
+            was: '伽利略从 1610 年 1 月起连续观测木星，随后在《星际信使》刊出位置记录。'
+          p2:
+            was: '留存的底稿和刊本均以小图记录星点与木星的相对位置。'
+            now: '威尼斯收到图稿后可以回问底稿上的同一晚，重印时仍能查回图的方向。'
+          p3:
+            was: '首版很快售完。开普勒随后支持伽利略，同行逐渐报告独立观察。'
+            now: '先收到书的人也收到一张空表。数封来信能按夜排在一起，伽利略可以标出哪一晚还有待复核。'
+            who: galileo_padua
+            bio: '帕多瓦的草图保存了从多夜记录辨认木星伴星的过程，观测年表比任何一张孤立图更重要。'
         vignettes:
           alignment: '你拦住正要把两页按纸边对齐的誊写员。先对齐木星吧。纸一挪，几个光点就错开了。'
           telescope: '你追问第四个光点是哪一个。誊写员摊开几晚的图，反问你：有两个点挨得看不清时，该相信哪一夜？'
@@ -74,6 +108,24 @@ bystanders:
     text: {en: 'An invented copyist comparing two observing diagrams.', zh: '一位虚构的誊写员，正对照两夜的观测图。'}
 wiki:
   refs:
+    galileo_padua_manuscript:
+      order: 10
+      status: checked
+      text:
+        en: 'University manuscript collection, observing notes https://www.lib.umich.edu/collections/collecting-areas/special-collections/history-astronomy-and-mathematics/galileo/'
+        zh: '大学手稿馆藏，观测笔记 https://www.lib.umich.edu/collections/collecting-areas/special-collections/history-astronomy-and-mathematics/galileo/'
+    galileo_padua_timeline:
+      order: 11
+      status: checked
+      text:
+        en: 'Museo Galileo manuscript and publication chronology https://www.museogalileo.it/en/galileo/life.html'
+        zh: '伽利略博物馆刊行年表 https://www.museogalileo.it/en/galileo/life.html'
+    galileo_padua_first_print:
+      order: 12
+      status: checked
+      text:
+        en: 'Oxford first-edition exhibit https://www.cabinet.ox.ac.uk/node/6002'
+        zh: '牛津初版藏品 https://www.cabinet.ox.ac.uk/node/6002'
     galileo_padua_primary:
       order: 117
       status: checked

@@ -2,6 +2,7 @@ order: 108
 events:
   jianzhen_nara:
     order: 162
+    build_step: 2
     year: 754
     lon: 135.84
     lat: 34.69
@@ -9,13 +10,13 @@ events:
     field: thought
     tier: 2
     channels: {Y: 3, E: 1}
-    regret: true
-    refs: [jianzhen_nara_arrival, jianzhen_nara_foundation]
+    refs: [jianzhen_nara_arrival, jianzhen_nara_foundation, jianzhen_nara_nara_arrival, jianzhen_nara_todai_register]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"trait":["methodical","vigil"]}}
-        - {id: p2, kind: notice, req: {"job":["nurse","pharmacist","physician"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","cosmopolitan","charismatic"]}}
+        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["archivist","translator","builder"]},{"trait":["handy","patient"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 39, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["handy","patient","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 81, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["handy","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: sound, traits: [kind, charismatic, cosmopolitan]}
         - {id: tie, traits: [methodical, vigil, handy]}
@@ -29,9 +30,24 @@ events:
         relic: 'A practice wrapper label'
         relic_desc: 'An invented label used by the fictional temple helpers.'
         points:
-          p1: 'Hold the reading bundle steady while the order is checked'
-          p2: 'Ask the attendant which bundle was prepared for this reading'
-          p3: 'Help the next reader learn where the passage begins'
+          p1: 'Prepare a place for the party’s books and belongings at Tōdai-ji. Check which volumes the travelers will need to reach first'
+          p2: 'Ask the visiting readers to put their Chinese labels and the receiving office’s names for the same texts on one sheet'
+          p3: 'Keep two copies of the catalogue for future delivery, reading and copying. Have the people who know each half check the entries'
+        points_fail:
+          p1: 'Some fascicles go to another store with the luggage. The receiving clerk cannot find the first set, and the office recalls the employee.'
+          p2: 'The same volume is recorded under two names. Someone trying to borrow it has to open each chest.'
+          p3: 'The first delivery is complete. Later visitors still have to find someone who was present at the handover to identify the scrolls.'
+        shift:
+          p1:
+            was: 'Jianzhen’s party reached Tōdai-ji in Nara in 754. The travelers and the things they brought entered its community.'
+          p2:
+            was: 'Documents from Nara-period Tōdai-ji show scrolls registered by number, source and where they were kept.'
+            now: 'Both names point to the same fascicle. The visitors know where it is when they first ask to consult it.'
+          p3:
+            was: 'Jianzhen later helped establish Tōshōdai-ji. Study at both institutions continued through later generations.'
+            now: 'When a reader goes to the new site, a catalogue at Tōdai-ji can still be matched to the copies received. Both places can record later additions.'
+            who: jianzhen_nara
+            bio: 'Jianzhen reached Nara with companions. The texts they brought and the work of people receiving them contributed to what was passed on.'
         vignettes:
           sound: 'Chiyo points to the right bundle from across the room. Jun still cannot tell which one she means on the crowded shelf. You ask her to read the opening aloud instead. Jun finds the matching words on the wrapper and sets the bundle down for the next reader.'
           tie: 'Jun starts to retie a loose wrapper before checking the order. You hold the bundle as Chiyo reads the first line of each part in turn. He puts one misplaced part back. The bundle will now open in the order in which they practised it.'
@@ -44,9 +60,24 @@ events:
         relic: '一张练习用的卷签'
         relic_desc: '故事中的帮工使用的经卷签。'
         points:
-          p1: '核对经卷次序时扶稳经卷'
-          p2: '问帮工，哪一束是为这次读诵备下的'
-          p3: '帮接读的人找到从哪儿念起'
+          p1: '在奈良给东大寺接收一行人的书物安排位置，逐件核对哪几份需要先让同行人取用'
+          p2: '请同行的讲读者把汉文卷标和熟悉本地收件方式的名字放在同一张纸上'
+          p3: '在奈良留下请求讲读与抄阅时能用的双份目录，请两地来的人各核自己知道的部分'
+        points_fail:
+          p1: '行李暂放时几卷迁往别库，来接收的人找不到第一批书物，事务所召回员工。'
+          p2: '一卷只用了来处的叫法，本地经手人又另起一名，日后查卷时只能逐箱找。'
+          p3: '第一次接收已完成，后续到访的人仍要找原来在场的人才能辨别书卷。'
+        shift:
+          p1:
+            was: '鉴真一行在 754 年抵达奈良东大寺，带去的人员与物件进入寺院使用。'
+          p2:
+            was: '奈良时期的东大寺存有按来源、卷数与经房记录收存文书的实例。'
+            now: '一份对照表可在两种叫法下找到同一卷。同行人第一次领取就知道卷在何处。'
+          p3:
+            was: '鉴真后来参与创建唐招提寺。东大寺与唐招提寺的研究和承续由多代人员传下。'
+            now: '后来有人另到新处讲读，东大寺的一份目录仍能与他领到的抄卷核对。两处可以据此分别补登记。'
+            who: jianzhen_nara
+            bio: '鉴真东渡后与同伴到达奈良。他们携来的文书和在地人员的工作共同参与了后续传承。'
         vignettes:
           sound: '千代隔着屋子指给人看，可架上摆得太满，准还是分不清她指哪束。你请她念出开头。准听着去对包纸上的字，找到那一束，给接读的人摆了出来。'
           tie: '准想先把松开的包纸捆上，还没核对里面的次序。你扶着那束经卷，千代挨个念每部分的头一句。准把放错的一份放了回去。下次打开时，次序就是他们练过的那样。'
@@ -87,6 +118,18 @@ bystanders:
     text: {en: 'A fictional helper bundling the texts for the next reader.', zh: '虚构帮工准，要为接读的人把经卷收好。'}
 wiki:
   refs:
+    jianzhen_nara_nara_arrival:
+      order: 10
+      status: checked
+      text:
+        en: 'Research on the party’s arrival at Tōdai-ji https://uva.theopenscholar.com/files/dorothy-wong/files/wong_jianzhen_entry_for_brill_encyclopedia_of_buddhism.pdf'
+        zh: '鉴真一行抵达东大寺的研究 https://uva.theopenscholar.com/files/dorothy-wong/files/wong_jianzhen_entry_for_brill_encyclopedia_of_buddhism.pdf'
+    jianzhen_nara_todai_register:
+      order: 11
+      status: checked
+      text:
+        en: 'Nara National Museum, contemporary Tōdai-ji receiving record https://www.narahaku.go.jp/english/collection/p-1118-0.html'
+        zh: '奈良国立博物馆东大寺同期收存文书 https://www.narahaku.go.jp/english/collection/p-1118-0.html'
     jianzhen_nara_arrival:
       order: 893
       status: checked

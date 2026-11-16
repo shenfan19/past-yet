@@ -782,7 +782,7 @@ export function createUI(D, ctx, DEV = false) {
     const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
     const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
     // Three weights, so the eye has somewhere to land: heavy for a won star and a turn of the story, light for the steps of getting there and away,
-    // which the brief view folds away, and the plain weight for the rest. History and the employee are told apart by the type, not by a coloured rule.
+    // and the plain weight for the rest. History and the employee are told apart by their side of the time axis.
     const LIGHT = ['arrive', 'journey', 'leave'];
     const weightOf = (t) => (t.star || (t.tag === 'history' && S.factKey?.(t.fact)) || (t.kind === 'point_fail' && cur.report.outcomeId === 'desync') ? 'heavy' : LIGHT.includes(t.kind) && cur.report.outcomeId !== 'desync' ? 'light' : 'plain');
     // the date goes to a column of its own: the lead of the sentence up to its first comma, when it reads as a date or a day of the stay
@@ -791,21 +791,25 @@ export function createUI(D, ctx, DEV = false) {
       if (!m || !/\d|十|廿|元|初|望|朔|晦/.test(m[1]) || !/[年月日天]|day|Day|\d{3,4}|January|February|March|April|May|June|July|August|September|October|November|December/.test(m[1])) return ['', text];
       return [m[1], text.slice(m[0].length)];
     };
+    // A time axis down the middle: history on the left, leaning towards the axis, the employee on the right in a bubble, the date on the axis between them.
+    // Another employee met in the same time can later take the right side in a colour of their own.
+    const cell = (side, body) => (side === 'l' ? `<div class="what l">${body}</div><span class="when">%W</span><div class="what r"></div>` : `<div class="what l"></div><span class="when">%W</span><div class="what r"><div class="bubble">${body}</div></div>`);
     const tlLine = (t) => {
       const [lead, rest] = splitLead(t.text);
       const refs = lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : '';
       const why = DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : '';
-      return `<li class="${lineKind(t)} w-${weightOf(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><span class="when">${esc(lead)}</span><div class="what">${t.star ? '<span class="starmark">★</span> ' : ''}${esc(rest)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}</div></li>`;
+      const body = `${t.star ? '<span class="starmark">★</span> ' : ''}${esc(rest)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}`;
+      return `<li class="${lineKind(t)} w-${weightOf(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}">${cell(lineKind(t) === 'history' ? 'l' : 'r', body).replace('%W', esc(lead))}</li>`;
     };
     const accepted = cur.report.journey?.accepted !== false;
     const summaryNote = accepted && S.modelNote ? sup([noteOf('model', S.modelNote)]) : '';
     const nowYear = officeDate(cur.startDay).getUTCFullYear();
     const backYear = officeDate(cur.readyDay).getUTCFullYear();
-    const yearLine = (y) => `<li class="year"><span class="when"></span><div class="what">${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
+    const yearLine = (y) => `<li class="year"><span class="when">${esc(U.report.year_mark.replace('{y}', String(y)))}</span></li>`;
     // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
     const via = S.anchor && D.get('antiques.antiques.' + S.anchor)?.kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
     // the lines of the office, set out like the others: the date in its column, the sentence beside it
-    const officeLi = (text, extra, weight) => { const [lead, rest] = splitLead(text); return `<li class="travel w-${weight}"><span class="when">${esc(lead)}</span><div class="what">${esc(rest)}${extra}</div></li>`; };
+    const officeLi = (text, extra, weight) => { const [lead, rest] = splitLead(text); return `<li class="travel w-${weight}">${cell('r', esc(rest) + extra).replace('%W', esc(lead))}</li>`; };
     const departLine = officeLi(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place), S.sources, 'plain');
     const backLine = officeLi(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff), summaryNote, 'plain');
     const fd = cur.favorDelta || 0;
@@ -813,9 +817,8 @@ export function createUI(D, ctx, DEV = false) {
     let lastYear = S.year;
     const record = S.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
     const tl = yearLine(nowYear) + departLine + yearLine(S.year) + record + yearLine(backYear) + backLine + restLine;
-    // the brief view is the default: the light steps fold away, every line of the story stays
-    const tlf = st.tlf === 'full' ? 'full' : 'brief';
-    const tlButtons = [['brief', U.report.line_filter.brief], ['full', U.report.line_filter.full]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
+    const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
+    const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', S.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
     // the body of the employee through the stay as LM reads it, a part of its own that config.ui.report_body turns on always, in the developer mode only, or never
     const bodyHtml = () => {
       const show = D.get('config.ui.report_body');

@@ -2,19 +2,23 @@ order: 179
 events:
   smith_kirkcaldy:
     order: 24
+    build_step: 2
     year: 1776
+    date: '1776-10-28'
+    stay: 3
     lon: -3.16
     lat: 56.11
     region: europe
     field: thought
     tier: 2
     channels: {S: 1}
-    refs: [smith_kirkcaldy_primary]
+    refs: [smith_kirkcaldy_primary, smith_kirkcaldy_strahan_autograph, smith_kirkcaldy_glasgow_letters]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
-        - {id: p2, kind: persuade, req: {"provides":"show"}}
-        - {id: p3, kind: trust, req: {"trait":["artistic","sensitive","attached"]}}
+        - {id: p1, kind: hold, guard: true, day: 16, req: {"any":[{"job":["archivist","bookseller"]},{"trait":["methodical","skeptical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","skeptical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 56, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","skeptical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: queue, traits: [methodical, curious]}
         - {id: handoff, traits: [handy, kind]}
@@ -28,9 +32,24 @@ events:
         relic: A pin from the pin factory
         relic_desc: The pin he used to show what dividing a job can do.
         points:
-          p1: 'Name one stage in the workbench example'
-          p2: 'Follow one piece through the handoff'
-          p3: 'Explain how the whole bench works from the separate tasks'
+          p1: 'In Kirkcaldy, check the enclosure and address for Smith’s November letter to Strahan. Make sure London receives his terms on costs and proceeds for another edition'
+          p2: 'Estimate changes to the text separately from the costs of a new format so the publisher can see what would affect the price'
+          p3: 'Help Smith arrange a trial loan for Kirkcaldy readers who cannot afford a full set. Use its records when discussing the possible print run'
+        points_fail:
+          p1: 'The publisher receives the proposed format without the terms on costs. The inquiry stalls and the office recalls the employee.'
+          p2: 'The smaller format is costed from the first edition’s pagination, so the bookseller cannot compare the proposals item by item.'
+          p3: 'The new edition is considered only at the full set price. The publisher has no record of demand from readers with less to spend.'
+        shift:
+          p1:
+            was: 'On November 13, 1776, Smith wrote from Kirkcaldy to Strahan about the next edition’s format, costs and profits.'
+          p2:
+            was: 'The first edition and the 1778 second edition both appeared in two quarto volumes. This proposal for four octavo volumes was not adopted.'
+            now: 'The bookseller receives page and binding estimates for both formats. For changes still undecided, the estimate keeps a separate line.'
+          p3:
+            was: 'Smith proposed four octavo volumes with the publisher paying costs and sharing profits. The next edition kept the larger format.'
+            now: 'Subscribers share a set at a lower cost and record which parts get read. The bookseller has a record of borrowing when considering a future smaller edition.'
+            who: smith_kirkcaldy
+            bio: 'Smith returned to Kirkcaldy after the first edition appeared. His talks with publishers addressed size, who paid to print it, and how to divide proceeds.'
         vignettes:
           queue: 'The worker adds more counters at the fastest station. You ask them to count how many are still waiting at the slower one. They change their plan before the second demonstration.'
           handoff: 'Two people both reach for the same tray; no one takes the one behind it. You set the finished pieces where the next worker can reach them and hear the clatter stop.'
@@ -43,9 +62,24 @@ events:
         relic: 一枚别针
         relic_desc: 他用来说明分工威力的那种别针。
         points:
-          p1: '说清桌边演示里的一道工序'
-          p2: '看一件东西怎样交到下一手'
-          p3: '从各人的小事讲清整张桌子如何配合'
+          p1: '在柯科迪把斯密 11 月给斯特拉恩的再版建议和来信地址配齐，让伦敦书商收到可议的印费及分成办法'
+          p2: '同斯密把可改的正文与纯属开本更换的页数分开估，使出版商知道哪些建议影响定价'
+          p3: '请斯密在柯科迪为想购书但嫌整套太贵的读者议一个先试行的借阅安排，带着书会的记账结果再谈印量'
+        points_fail:
+          p1: '书商收到谈版式的纸，约定印费的那页却没有送到。再版问询断在这一环，事务所召回员工。'
+          p2: '开本缩小后的页数仍按首版估，书商无法逐项比较两套方案。'
+          p3: '再版仍只按整套售价议，出版商手里没有小额读者的实际需求记录。'
+        shift:
+          p1:
+            was: '1776 年 11 月 13 日，斯密从柯科迪给斯特拉恩写信，谈《国富论》再版开本、印费和分成。'
+          p2:
+            was: '首版和 1778 年再版均为两卷四开；四卷八开的这次提议未实行。'
+            now: '书商拿到两种开本的页数和预计装订数。对于尚不决定的改页，另留一行检查成本。'
+          p3:
+            was: '斯密在信中希望改用四册八开，并提出由出版商承担印费后分利润。后来再版沿用大开本。'
+            now: '几家订户以较低费用共用一套书并登记最常读的章节。书商收到真实的借阅数据，可以继续商量未来小开本的销路。'
+            who: smith_kirkcaldy
+            bio: '斯密在《国富论》首次出版后回到柯科迪。他同出版商商量的除了文字，还有谁付印费、用何种开本和收益如何分配。'
         vignettes:
           queue: '工人给最快的那道工序多放了几枚算子。你请他数一数慢的那道前还积了多少，第二遍他就换了排法。'
           handoff: '两个人同时去够同一只盘，后头那只却没人拿。你把做完的件移到下一人随手能取的地方，碰撞声这才停下。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented worker arranging counters to stand for jobs at a bench.', zh: '一位虚构的工人，用算子表示几项工序。'}
 wiki:
   refs:
+    smith_kirkcaldy_strahan_autograph:
+      order: 10
+      status: checked
+      text:
+        en: 'November 1776 autograph letter to Strahan https://www.christies.com.cn/lot/lot-6179947'
+        zh: '1776 年 11 月致斯特拉恩手迹 https://www.christies.com.cn/lot/lot-6179947'
+    smith_kirkcaldy_glasgow_letters:
+      order: 11
+      status: checked
+      text:
+        en: 'Glasgow edition of Smith’s correspondence https://pratclif.com/liberty/smith/Smith_0141-07_EBk_v4.pdf'
+        zh: '格拉斯哥版斯密通信 https://pratclif.com/liberty/smith/Smith_0141-07_EBk_v4.pdf'
     smith_kirkcaldy_primary:
       order: 159
       status: checked

@@ -2,20 +2,23 @@ order: 80
 events:
   gaudi_barcelona:
     order: 117
+    build_step: 2
     year: 1926
+    date: '1926-05-26'
+    stay: 2
     lon: 2.17
     lat: 41.4
     region: europe
     field: architecture
     tier: 2
     channels: {L: 1, S: 1}
-    regret: true
-    refs: [gaudi_barcelona_primary]
+    refs: [gaudi_barcelona_primary, gaudi_june_dates_archive, gaudi_workshop_chronology]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["builder","carpenter"]},{"stat":{"wit":7}},{"trait":["handy","wanderer","methodical"]},{"trait":["scholarly"]}]}}
-        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","scholarly","ambitious"]},{"trait":["glib","streetwise","scholarly"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["patient","faithful","calm"]},{"trait":["cheerful","patient","calm"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 24, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","artistic"],"stat":{"finesse":5}}]}}
+        - {id: p3, kind: persuade, day: 40, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":6}},{"trait":["methodical","handy"],"stat":{"will":7}}]}}
       vignettes:
         - {id: outline, traits: [handy, methodical]}
         - {id: street, traits: [artistic, curious]}
@@ -29,9 +32,24 @@ events:
         relic: "A plaster model"
         relic_desc: "A small hanging model of a vault."
         points:
-          p1: 'Find a finished feature on the drawing'
-          p2: 'Compare the drawing with the view from the street'
-          p3: 'Leave a note that makes the next visitor''s bearings clear'
+          p1: 'After Gaudí is hospitalized, give Domènec Sugranyes the active works list and the workshop keys so he can take over construction in June.'
+          p2: 'Have the incoming team photograph the faces and orientation of each plaster model in a single sequence. Mark the related drawings with the same model number.'
+          p3: 'Ask Sugranyes to keep photographs, scales and related drawings for the main models in a second location. Leave the workshop a signed list of what went there.'
+        points_fail:
+          p1: 'The workshop waits for Gaudí to sign off, and his colleague cannot retrieve the list of active work. The handover stops and the office recalls the employee.'
+          p2: 'There are photos of the models, but the drawings still use workshop shorthand. A new person handling them cannot match some of the images to the drawings.'
+          p3: 'The photographs and drawings stay in the same row of cupboards. When the workshop is damaged, the comparison material is lost with the plaster models.'
+        shift:
+          p1:
+            was: 'A tram accident put Gaudí in hospital in June 1926, where he died. His colleague Sugranyes took charge of the Sagrada Família project.'
+          p2:
+            was: 'Gaudí’s workshop held models and drawings. Published photographs and plans later helped the team reconstruct parts of the design.'
+            now: 'The team can find the drawing with the same number as a photograph and tell which way the model faced after the handover.'
+          p3:
+            was: 'In 1936 much of the workshop’s original drawings and plaster models were lost. The project later drew on fragments and published images for reconstruction.'
+            now: 'Ten years later the workshop cupboards burn. The team retrieves an album and the drawings from the second site. Two model faces they would otherwise have to piece together from fragments now have contemporary dimensions for comparison.'
+            who: gaudi_barcelona
+            bio: 'Gaudí concentrated his later work in the Sagrada Família and its workshop. Drawings and plaster models both guided the design, and his collaborators continued building after his death.'
         vignettes:
           outline: 'The clerk holds a plan so the visitor can see all the towers together. You shade the one that already stands. The visitor now has a landmark to look for outside.'
           street: 'You ask the visitor to step to the next corner before looking up again. A finished shape on the plan was hidden from the first position. They mark where they stood.'
@@ -44,9 +62,24 @@ events:
         relic: "一个石膏模型"
         relic_desc: "一个小小的悬挂式穹顶模型。"
         points:
-          p1: '在图上认出一处已经完工的部位'
-          p2: '把图纸和街头所见对一对'
-          p3: '留条纸片，帮下一位访客认出方向'
+          p1: '高迪入院后，把进行中的工程清单和工房钥匙交给多梅内克·苏格拉涅斯，让他在六月接手施工。'
+          p2: '让接手的工匠把石膏模型的各面和指向拍在同一组照片里，再把模型号写到相应的图纸上。'
+          p3: '请苏格拉涅斯在另一处存放关键模型的照片、标尺与相应图纸，给工房留有签收的副本清单。'
+        points_fail:
+          p1: '工房等着高迪回来核准，接手的同事拿不到进行中的工程清单。施工交接中断，事务所因同步失败召回员工。'
+          p2: '模型拍了照，图纸上仍只有工房熟悉的简称。换了人整理时，部分照片找不到相应的纸本。'
+          p3: '照片和图纸仍收在工房同一排柜里。后来工房毁损时，对照材料随石膏模型一起散失。'
+        shift:
+          p1:
+            was: '高迪 1926 年 6 月遭遇电车事故，在医院去世。他的合作者苏格拉涅斯接掌圣家堂工程。'
+          p2:
+            was: '高迪的工房留有模型和图纸。后来继续工程时，已经发表的照片与图纸提供了部分复原依据。'
+            now: '工匠查照片时也能找到同号的图纸，交接以后仍能辨认模型朝向。'
+          p3:
+            was: '1936 年工房毁损，原图和石膏模型多有损失。工程团队后来从残件和已刊照片等材料重建。'
+            now: '十年后工房里的柜子烧毁，团队从另一处取回照相册和有签收的图纸。以前只能靠残件拼的两个模型面，现在有当年的尺寸可作对照。'
+            who: gaudi_barcelona
+            bio: '晚年高迪把大部分工作集中在圣家堂与工房。图纸和石膏模型都参与设计，工程在他去世后靠协作者继续。'
         vignettes:
           outline: '办事员举起图，让访客一次看见所有塔。你把已经立着的那座涂深一点。出去后，访客便有一处可以先找。'
           street: '你请访客先走到下一个街角再抬头。图上那道已经完成的轮廓，在刚才的位置看不见。他记下了自己站在哪里。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented site clerk taking a visitor past the drawings.', zh: '一位虚构的工地办事员，带访客看图。'}
 wiki:
   refs:
+    gaudi_june_dates_archive:
+      order: 2
+      status: checked
+      text:
+        en: 'Sagrada Família archive on the accident and workshop photographs https://blog.sagradafamilia.org/en/sagrada-familia-144-anys-historia-compartida/'
+        zh: '圣家堂档案的事故记载与工房照片 https://blog.sagradafamilia.org/en/sagrada-familia-144-anys-historia-compartida/'
+    gaudi_workshop_chronology:
+      order: 3
+      status: checked
+      text:
+        en: 'Sagrada Família building chronology, succession and 1936 damage https://sagradafamilia.org/es/historia-del-templo/'
+        zh: '圣家堂工程年表、接任与 1936 年损毁 https://sagradafamilia.org/es/historia-del-templo/'
     gaudi_barcelona_primary:
       order: 181
       status: checked

@@ -2,19 +2,23 @@ order: 27
 events:
   beethoven_vienna:
     order: 29
+    build_step: 2
     year: 1824
+    date: '1824-04-22'
+    stay: 2
     lon: 16.37
     lat: 48.21
     region: europe
     field: music
     tier: 3
     channels: {G: 2, S: 1}
-    refs: [beethoven_vienna_primary]
+    refs: [beethoven_vienna_primary, beethoven_house_ninth, beethoven_conversation_rehearsals]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"trait":["attached","cheerful","patient"]}}
-        - {id: p2, kind: notice, req: {"any":[{"trait":["quiet","skeptical"]},{"job":["musician","painter"]}]}}
-        - {id: p3, kind: trust, req: {"luck": 0.4}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}}]}}
+        - {id: p2, kind: notice, day: 14, req: {"any":[{"job":["musician","translator"]},{"trait":["methodical","artistic","scholarly"]}]}}
+        - {id: p3, kind: persuade, day: 27, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: voice, traits: [artistic, curious]}
         - {id: step, traits: [kind, patient]}
@@ -28,9 +32,24 @@ events:
         relic: An ear trumpet
         relic_desc: A horn he held to his ear as the world went quiet.
         points:
-          p1: 'Show the late guest where to wait'
-          p2: 'Work out how to follow the concert from the programme'
-          p3: 'Keep the entrance clear without interrupting the music'
+          p1: 'Bring the separately rehearsed choir and orchestra together at the first joint rehearsal and protect the Ninth''s premiere'
+          p2: 'Leave Beethoven a written account of the combined rehearsal so he can respond before the concert'
+          p3: 'Secure advance blocks of seats before listeners leave Vienna and salvage the second concert''s receipts'
+        points_fail:
+          p1: 'The groups lose their place when they come in, and a passage drops out at the premiere. The branch falls out of sync and the office recalls the employee.'
+          p2: 'Players mark their parts separately and the rehearsal problems never reach the composer for review.'
+          p3: 'The repeat comes after the season. Too many seats are empty for Beethoven to make the return he hoped for.'
+        shift:
+          p1:
+            was: 'On 7 May 1824 Beethoven''s Ninth Symphony was first performed in Vienna.'
+          p2:
+            was: 'In May 1824, during preparations for the premiere, musicians conveyed rehearsal news to Beethoven in his conversation books.'
+            now: '{staff} puts the most troublesome entries on one page and has the sections try them again with marks Beethoven has approved.'
+          p3:
+            was: 'On 23 May 1824 the second concert took place in Vienna and brought in disappointing receipts.'
+            now: '{staff} secures reservations before prospective listeners leave the city and has those receipts included in the accounts. Beethoven has room to arrange a further concert on his own behalf.'
+            who: beethoven_vienna
+            bio: 'Beethoven had advance revenue when he arranged repeat concerts in Vienna. He could cover more of their costs before the doors opened.'
         vignettes:
           voice: 'You point out the singers to the usher. The guest starts to ask why there is a chorus at a symphony, then stops when the first voice comes in.'
           step: 'The late guest keeps missing the step down. You stay by the door and wait for his eyes to adjust, then show him to a place without making the row stand.'
@@ -43,9 +62,24 @@ events:
         relic: 一只助听喇叭
         relic_desc: 世界静下来的时候，他举到耳边的号角。
         points:
-          p1: '给迟到的客人找个地方等候'
-          p2: '顺着节目单认出演出进度'
-          p3: '不打断演出，把门口让出来'
+          p1: '在合唱与乐队第一次合排时把分开练过的开头对齐，护住《第九交响曲》的首演'
+          p2: '给听不见乐队的贝多芬留一份合排记录，让他有机会在正式演出前回应'
+          p3: '赶在观众出城前替贝多芬找到愿意包座的人，救回第二场的票房'
+        points_fail:
+          p1: '各组进场时对不上，首演临场缺了一段，这条分支与史实脱节，员工被召回。'
+          p2: '演奏者在分谱上各记各的，合排里暴露的问题到上台也没有送给作曲者确认。'
+          p3: '再演时季节已过，空座多，贝多芬没能靠这一场挣回应得的收入。'
+        shift:
+          p1:
+            was: '1824 年 5 月 7 日，贝多芬的《第九交响曲》在维也纳首次演出。'
+          p2:
+            was: '1824 年 5 月，首演筹备中，贝多芬借谈话簿接收演奏者转述的排练情况。'
+            now: '{staff}把几处要紧的进拍问题写在同一页，请各声部按贝多芬认可的记号重试。'
+          p3:
+            was: '1824 年 5 月 23 日，第二场音乐会在维也纳举行，票房不理想。'
+            now: '{staff}赶在潜在观众离城前落实一批预订，把实收票款记入结算。贝多芬有余地继续安排为自己筹款的演出。'
+            who: beethoven_vienna
+            bio: '贝多芬在维也纳安排重演时有了预订收入，演出开支不必全押给当天买票的人。'
         vignettes:
           voice: '你指给引座员看台上的歌者。客人正要问交响曲里为什么有人唱，第一声响起，他便把话咽了回去。'
           step: '迟到的客人一直没看清脚下那级台阶。你陪他在门边站了一会儿，等他看清，再把人领进去，一整排座位都不用起身。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented usher with a late arrival at the door.', zh: '一位虚构的引座员，门外还有一位迟到的客人。'}
 wiki:
   refs:
+    beethoven_house_ninth:
+      order: 817
+      status: checked
+      text:
+        en: 'Beethoven-Haus Bonn, Symphony No. 9 chronology and archival sources. https://www.beethoven.de/en/work/view/5556714292117504/'
+        zh: '波恩贝多芬故居博物馆，《第九交响曲》年表与档案。 https://www.beethoven.de/en/work/view/5556714292117504/'
+    beethoven_conversation_rehearsals:
+      order: 818
+      status: checked
+      text:
+        en: 'Theodore Albrecht, International Horn Society, rehearsal accounts and the second concert. https://www.hornsociety.org/publications/horn-call/horn-call-archive/142-ec-lewy-and-beethovens-ninth-symphony-premiere?showall=1'
+        zh: '国际圆号协会，首演排练记录及第二场演出。 https://www.hornsociety.org/publications/horn-call/horn-call-archive/142-ec-lewy-and-beethovens-ninth-symphony-premiere?showall=1'
     beethoven_vienna_primary:
       order: 126
       status: checked

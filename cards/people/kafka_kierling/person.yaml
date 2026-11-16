@@ -2,20 +2,23 @@ order: 111
 events:
   kafka_kierling:
     order: 118
+    build_step: 2
     year: 1924
+    date: '1924-05-01'
+    stay: 2
     lon: 16.32
     lat: 48.3
     region: europe
     field: literature
     tier: 1
     channels: {E: 3, G: 2}
-    regret: true
-    refs: [kafka_kierling_primary]
+    refs: [kafka_kierling_primary, kafka_morgan_proofs, kafka_kierling_chronology]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["translator","archivist"]},{"trait":["skeptical","curious"]}]}}
-        - {id: p2, kind: care, req: {"trait":["calm","attached","faithful"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: care, day: 20, req: {"any":[{"job":["nurse","physician"]},{"trait":["kind","patient","methodical"]}]}}
+        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: sound, traits: [artistic, curious]}
         - {id: mark, traits: [methodical, vigil]}
@@ -29,9 +32,24 @@ events:
         relic: "A page of proofs"
         relic_desc: "A galley proof with small corrections in pencil."
         points:
-          p1: 'Find the story that belongs with the contents entry'
-          p2: 'Place a correction beside the right line'
-          p3: 'Pack the named proofs so their order is clear'
+          p1: 'Keep Kafka''s place each time illness interrupts the proofing and protect the stories he was correcting'
+          p2: 'Share errands and correspondence among helpers so the people staying in Kierling have time to rest'
+          p3: 'Have the Berlin publisher bind an advance copy and send it to Kierling so Kafka can see his four stories together'
+        points_fail:
+          p1: 'The proofs go back to Berlin without his final corrections. The branch loses sync and the office recalls the employee.'
+          p2: 'The same people are left to keep watch, answer letters and run errands, with no break while waiting for replies.'
+          p3: 'Kafka never sees the book. The publisher sends it out only after his death.'
+        shift:
+          p1:
+            was: 'In May 1924 Kafka continued correcting proofs for A Hunger Artist while ill in Kierling.'
+          p2:
+            was: 'In May 1924 a friend came to Kierling to help care for the seriously ill Kafka and relieve some of the work his partner had been doing.'
+            now: '{staff} gives the helpers turns taking letters, sending pages and keeping company. When one of them arrives, the person keeping watch can step outside.'
+          p3:
+            was: 'Kafka died on 3 June 1924. The collection A Hunger Artist was published that August.'
+            now: '{staff} gets Berlin to bind a single copy of the corrected sheets and send it ahead. Kafka turns through it in Kierling and recognizes the four stories and the order he chose.'
+            who: kafka_kierling
+            bio: 'Kafka saw a copy bound from the final proofs before he died. The printed edition kept the selection and order he approved.'
         vignettes:
           sound: 'The messenger reads the singer''s title aloud and asks why anyone would doubt what they hear. You have them read the same line to two listeners. The answers differ before you say a word.'
           mark: 'A proof mark sits between two lines. You ask the messenger which line they would change if all they had was this page. They move the mark before it can be taken the wrong way.'
@@ -44,9 +62,24 @@ events:
         relic: "一页校样"
         relic_desc: "一页印刷校样，上面有铅笔改的小字。"
         points:
-          p1: '把目录上的篇名对回正文'
-          p2: '把更正的记号放到对应行旁'
-          p3: '收好写了篇名的校样，留清楚顺序'
+          p1: '病中校稿一中断就给他留下接续的位置，护住卡夫卡最后校过的故事集'
+          p2: '把跑腿与通信交接给轮换的帮手，给守在基尔灵的人留出一段歇息时间'
+          p3: '让柏林出版人先装订一本寄到基尔灵，让卡夫卡生前看到自己选定的四篇小说合在一起'
+        points_fail:
+          p1: '校样寄回柏林时缺了作者最后一轮批改，印本失去这次校订。行程与史实脱节，员工被召回。'
+          p2: '照料者仍同时守病房、收信和跑腿，连等回信的空当都抽不开身。'
+          p3: '作者来不及看到书，出版者在他去世后才把它交给读者。'
+        shift:
+          p1:
+            was: '1924 年 5 月，卡夫卡在基尔灵养病时仍在校订《饥饿艺术家》的校样。'
+          p2:
+            was: '1924 年 5 月，有朋友前往基尔灵协助照料已经病重的卡夫卡，分担伴侣原先承担的工作。'
+            now: '{staff}把送印、送信和陪伴所需的人手分时安排，帮手到时，原来守着的人可以出门走一会儿。'
+          p3:
+            was: '1924 年 6 月 3 日卡夫卡去世，同年 8 月《饥饿艺术家》故事集出版。'
+            now: '{staff}请柏林先把已经改完的印张装成一本随邮寄回。卡夫卡在基尔灵翻过它，认得出自己定的四篇和次序。'
+            who: kafka_kierling
+            bio: '卡夫卡生前看到一册按最后校样装订的故事集。正式出版时出版社保留了他选定的篇目和次序。'
         vignettes:
           sound: '送稿人念出女歌手的篇名，问听见了还有什么可怀疑。你让他把同一句念给两个人听。你还没说话，两人的回答已经不一样。'
           mark: '校样上一处记号落在两行之间。你问送稿人，如果手头只有这张纸，他会改哪行。他先把记号移准，免得带回去被人改错。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented messenger collecting proof sheets.', zh: '一位虚构的送稿人，来收校样。'}
 wiki:
   refs:
+    kafka_morgan_proofs:
+      order: 836
+      status: checked
+      text:
+        en: 'Morgan Library and Museum and Bodleian Libraries, Franz Kafka exhibition, the proofs and publication of A Hunger Artist. https://www.themorgan.org/sites/default/files/pdf/exhibitions/FranzKafkaLargePrintLabels_0.pdf'
+        zh: '摩根图书馆与博德利图书馆卡夫卡展，《饥饿艺术家》校样与出版资料。 https://www.themorgan.org/sites/default/files/pdf/exhibitions/FranzKafkaLargePrintLabels_0.pdf'
+    kafka_kierling_chronology:
+      order: 837
+      status: checked
+      text:
+        en: 'Austrian Franz Kafka Society, 1924 Kierling chronology. https://www.franzkafka.at/studien-gedenkraum/kafka-in-kierling/1924'
+        zh: '奥地利弗朗茨·卡夫卡协会，1924 年基尔灵年表。 https://www.franzkafka.at/studien-gedenkraum/kafka-in-kierling/1924'
     kafka_kierling_primary:
       order: 193
       status: checked

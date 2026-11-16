@@ -2,20 +2,23 @@ order: 164
 events:
   riemann_selasca:
     order: 104
+    build_step: 2
     year: 1866
+    date: '1866-06-23'
+    stay: 2
     lon: 8.57
     lat: 45.95
     region: europe
     field: math
     tier: 2
     channels: {E: 1, G: 2}
-    regret: true
-    refs: [riemann_selasca_primary]
+    refs: [riemann_selasca_primary, riemann_selasca_royal_obituary, riemann_selasca_gottingen_papers, riemann_selasca_nachlass_research]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":6}},{"trait":["wanderer","scholarly","methodical"]}]}}
-        - {id: p2, kind: trust, req: {"any":[{"trait":["artistic","charismatic","kind"]},{"trait":["attached","charismatic","sensitive"]}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["handy","faithful"]},{"trait":["methodical","bold","vigil"]},{"trait":["vigil"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 26, req: {"any":[{"job":["archivist","nurse"]},{"trait":["methodical","patient"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 18, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["methodical","patient","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: surface, traits: [handy, artistic]}
         - {id: assumption, traits: [skeptical, curious]}
@@ -29,9 +32,24 @@ events:
         relic: "A page of notes"
         relic_desc: "A page of unfinished formulas in a small hand."
         points:
-          p1: 'Follow a line while staying on the surface'
-          p2: 'Keep the same marked endpoints through the comparison'
-          p3: 'Explain one assumption behind a measurement'
+          p1: 'Keep an uninterrupted period for Riemann’s last work. Give the new pages and related drafts to his family in the same folder'
+          p2: 'Put a list beside the outgoing letters showing which notes are here and which remain in Göttingen'
+          p3: 'While Riemann can decide, have him mark a set of results colleagues can read and a separate set of questions he hopes they will check'
+        points_fail:
+          p1: 'New sheets slip into the luggage with the old drafts. No identifiable record of the last session survives, and the office recalls the employee.'
+          p2: 'The family remembers only that some papers stayed behind. Later searches have to recover each item from memory.'
+          p3: 'The files have only a partial list. Later editors have to decide which pages are working notes and which might be published.'
+        shift:
+          p1:
+            was: 'Riemann reached the Lake Maggiore area on June 23, 1866. A Royal Society obituary says he studied the mechanism of hearing the day before he died in Selasca.'
+          p2:
+            was: 'After his death, manuscripts, letters and working notes passed between family and scholars.'
+            now: 'Two columns give the locations. When colleagues reply, the family can check who has which pages.'
+          p3:
+            was: 'Dedekind and Weber later collected and edited Riemann’s works. Surviving letters document searches for correspondence and its return.'
+            now: 'Readers receive the two sets he marked. They reply first about the results they can check and keep the open questions on a separate list.'
+            who: riemann_selasca
+            bio: 'Riemann kept working in his last month. Editors later depended on colleagues and relatives to find papers in several places.'
         vignettes:
           surface: 'The reader stretches a strip across two points and lets it leave the surface in between. You press a second strip down against the curve and ask which journey each one measures.'
           assumption: 'The reader says the distance is obvious. You ask how they decided which paths to allow. They add that choice above the drawing and begin measuring again.'
@@ -44,9 +62,24 @@ events:
         relic: "一页笔记"
         relic_desc: "一页写着没完成公式的纸，字很小。"
         points:
-          p1: '沿着表面走完一条线'
-          p2: '比较时仍用原来标好的两个端点'
-          p3: '讲明一次测量所用的一个假设'
+          p1: '替黎曼给最后一项研究留一段不受打扰的时段，把写下的几页与正在查的旧稿一并交给家人保管'
+          p2: '给能寄出的信附一张清单，记明各份笔记现在放在当地还是哥廷根'
+          p3: '请黎曼趁还能决定时标出一两组可供同行审读的笔记，一组是已有推算，一组是接下去希望有人检验的问题'
+        points_fail:
+          p1: '沿用旧稿夹的几张新纸被收进行李，最后一次工作没有留下可辨的记录，事务所因同步失败召回员工。'
+          p2: '家人只记得有一批稿件留在别处，日后查找时要凭记忆逐件辨认。'
+          p3: '各页只有零散目录。身后编辑要先自行判断哪些仍是工作笔记、哪些可以发表。'
+        shift:
+          p1:
+            was: '黎曼 1866 年 6 月 23 日抵达马焦雷湖一带。皇家学会悼文记他在塞拉斯卡去世的前一天仍在研究听觉器官。'
+          p2:
+            was: '黎曼去世后，遗稿、书信和研究记录经家属与不同学者转交。'
+            now: '两处的存稿各有一栏。家人收到同事回信时，可以一项项确认谁手里有哪张纸。'
+          p3:
+            was: '戴德金与韦伯后来整理黎曼的文稿并出版全集。现存通信记载了寻找和归还书信的工作。'
+            now: '审读人收到由他分好的两组纸，先对能核对的部分写下意见。余下的问题保留在一张可回查的清单里。'
+            who: riemann_selasca
+            bio: '黎曼最后一个月仍设法继续研究。身后编辑要依靠家人和同行找齐分处几地的纸张。'
         vignettes:
           surface: '读者把纸带从一点拉到另一点，中间却离开了曲面。你把另一条沿弧面按下去，请他分清两条量的是哪种走法。'
           assumption: '读者说距离一看就知道。你问哪些走法算数，是怎么定的。他把这个条件添在图上方，重新开始量。'
@@ -75,6 +108,24 @@ bystanders:
     text: {en: 'An invented reader with a strip of paper and two curved surfaces.', zh: '一位虚构的读者，手边有纸带和两个曲面。'}
 wiki:
   refs:
+    riemann_selasca_royal_obituary:
+      order: 10
+      status: checked
+      text:
+        en: 'Royal Society obituary, arrival and last research https://mathshistory.st-andrews.ac.uk/RS/riemann_rs.pdf'
+        zh: '皇家学会悼文，抵达与最后研究 https://mathshistory.st-andrews.ac.uk/RS/riemann_rs.pdf'
+    riemann_selasca_gottingen_papers:
+      order: 11
+      status: checked
+      text:
+        en: 'Göttingen University Library inventory of the Riemann papers https://www.sub.uni-goettingen.de/fileadmin/media/texte/spezialsammlungen/Nachl%C3%A4sse/Riemann.pdf'
+        zh: '哥廷根大学图书馆黎曼遗稿清册 https://www.sub.uni-goettingen.de/fileadmin/media/texte/spezialsammlungen/Nachl%C3%A4sse/Riemann.pdf'
+    riemann_selasca_nachlass_research:
+      order: 12
+      status: checked
+      text:
+        en: 'Archival study of the transmission of the Riemann papers https://www.academia.edu/117343057/A_brief_report_on_a_number_of_recently_discovered_sets_of_notes_on_Riemanns_lectures_and_on_the_transmission_of_the_Riemann_Nachlass'
+        zh: '黎曼遗稿流传档案研究 https://www.academia.edu/117343057/A_brief_report_on_a_number_of_recently_discovered_sets_of_notes_on_Riemanns_lectures_and_on_the_transmission_of_the_Riemann_Nachlass'
     riemann_selasca_primary:
       order: 185
       status: checked

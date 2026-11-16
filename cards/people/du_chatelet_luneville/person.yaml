@@ -2,20 +2,23 @@ order: 57
 events:
   du_chatelet_luneville:
     order: 105
+    build_step: 2
     year: 1749
+    date: '1749-08-22'
+    stay: 2
     lon: 6.49
     lat: 48.59
     region: europe
     field: science
     tier: 2
     channels: {V: 3}
-    regret: true
-    refs: [du_chatelet_luneville_primary]
+    refs: [du_chatelet_luneville_primary, du_chatelet_luneville_royal_library, du_chatelet_luneville_deposit_receipt, du_chatelet_luneville_workpapers]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: endure, req: {"any":[{"stat":{"will":6}},{"trait":["bold","hardy"]}]}}
-        - {id: p3, kind: notice, redeem: true, req: {"item":"neural_chip"}}
+        - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["translator","archivist"]},{"trait":["methodical","patient"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 9, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","patient","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 14, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: source, traits: [methodical, scholarly]}
         - {id: diagram, traits: [curious, artistic]}
@@ -29,9 +32,24 @@ events:
         relic: "An inkwell"
         relic_desc: "A small inkwell from a desk worked at through the night."
         points:
-          p1: 'Find the sentence the commentary is answering'
-          p2: 'Help the reader keep the two texts aligned'
-          p3: 'Leave a clear mark for the next reading'
+          p1: 'In Lunéville, list the three packets of commentary before sending them with her request to the Royal Library'
+          p2: 'While she is still editing, number the translation and the independent commentary separately and identify the revisions to each'
+          p3: 'Have her leave Clairaut decisions on the two hardest passages, identifying where her translation should stand and where a later revision should be listed separately'
+        points_fail:
+          p1: 'The packet with the commentary stays behind. The Library receives only the letter, and the office recalls the employee.'
+          p2: 'The clean copy has a single set of numbers. A later editor has to guess which additions belong to her own commentary.'
+          p3: 'Two drafts reach the editor, but her decisions about how to print the revised passages do not.'
+        shift:
+          p1:
+            was: 'On September 10, 1749, the Royal Library issued a receipt for three packets of Du Châtelet’s commentary on Newton.'
+          p2:
+            was: 'The working papers preserve copying by secretaries as well as her corrections and inserted sheets.'
+            now: 'Each inserted sheet points back to a translation or commentary passage. The next editor checks that entry before setting type.'
+          p3:
+            was: 'Clairaut helped prepare the work after Du Châtelet’s death. The complete French edition appeared in 1759.'
+            now: 'The editor has two decisions she approved and describes any later changes on another page. Readers can distinguish her commentary from editorial additions.'
+            who: du_chatelet_luneville
+            bio: 'She translated Newton from Latin into French and wrote a commentary that helped readers follow the reasoning.'
         vignettes:
           source: 'The reader follows one sentence straight into the next. You stop them where the commentary begins. Back at the first page, they can now tell who is doing the explaining.'
           diagram: 'You ask what the words would look like on paper. The reader sketches a direction, then goes back to the text to check where the arrow belongs.'
@@ -44,9 +62,24 @@ events:
         relic: "一只墨水瓶"
         relic_desc: "一只小墨水瓶，来自一张通宵写字的书桌。"
         points:
-          p1: '找出评注正在解释的那句原文'
-          p2: '帮读者把两份文字对齐'
-          p3: '给下一次读稿留下清楚的标记'
+          p1: '在吕内维尔把三包评注稿逐包登记，连同她写给王家图书馆的请求交运'
+          p2: '趁她仍在校订，把译文和独立评注分开标出页码及各自的改稿'
+          p3: '请她把最难厘清的两项留给克莱罗，说明哪里要保留原译，哪里需另列后续校改'
+        points_fail:
+          p1: '夹有评注的稿包留在宅邸，图书馆只收到信，事务所因同步失败召回员工。'
+          p2: '誊本只有统一页码，日后编辑必须猜哪几个增补属于她自己的评注。'
+          p3: '两份相关草稿一起送达，改过的位置却没有留下她想怎样印的说明。'
+        shift:
+          p1:
+            was: '1749 年 9 月 10 日，王家图书馆为杜·夏特莱寄存的三包牛顿评注稿开出收据。'
+          p2:
+            was: '她留下的工作稿保有秘书的笔迹，也有自己的改字和补页。'
+            now: '每个补页能查回它对应的译文或评注。后来编辑先核对这一栏，再动排字。'
+          p3:
+            was: '杜·夏特莱去世后，克莱罗参与整理，法语全本于 1759 年出版。'
+            now: '编辑手里有她核过的两份决定，后来附上的修改在另页说明。读者可以区分她的评注与编辑的补充。'
+            who: du_chatelet_luneville
+            bio: '她把牛顿的拉丁文著作译为法语，也写了帮助读者追踪推算的评注。'
         vignettes:
           source: '读者顺着一句直接念到下一句。到评注开头处，你请他停一下。再翻回第一页，他已能认出是哪一位作者在解释。'
           diagram: '你问这段话画出来该是什么样。读者先画了个方向，又回去翻文字，确认箭头该落在哪儿。'
@@ -75,6 +108,24 @@ bystanders:
     text: {en: 'An invented reader comparing the translation and commentary.', zh: '一位虚构的读者，正把译文和评注放在一起看。'}
 wiki:
   refs:
+    du_chatelet_luneville_royal_library:
+      order: 10
+      status: checked
+      text:
+        en: 'Bibliothèque nationale de France account of the deposit https://classes.bnf.fr/pdf/Chatelet.pdf'
+        zh: '法国国家图书馆交存记载 https://classes.bnf.fr/pdf/Chatelet.pdf'
+    du_chatelet_luneville_deposit_receipt:
+      order: 11
+      status: checked
+      text:
+        en: 'Du Châtelet archival chronology and receipt https://www.c18.net/edc/aedc_pages.php?nom=chronologie'
+        zh: '杜·夏特莱档案年表及收据 https://www.c18.net/edc/aedc_pages.php?nom=chronologie'
+    du_chatelet_luneville_workpapers:
+      order: 12
+      status: checked
+      text:
+        en: 'Catalogue describing surviving working drafts https://www.christies.com/en/lot/lot-5611396'
+        zh: '馆藏流通目录所录工作稿 https://www.christies.com/en/lot/lot-5611396'
     du_chatelet_luneville_primary:
       order: 146
       status: checked

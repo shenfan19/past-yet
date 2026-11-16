@@ -2,20 +2,23 @@ order: 44
 events:
   cantor_halle:
     order: 110
+    build_step: 2
     year: 1884
+    date: '1884-11-11'
+    stay: 6
     lon: 11.97
     lat: 51.48
     region: europe
     field: math
     tier: 2
     channels: {G: 3, S: 2}
-    regret: true
-    refs: [cantor_halle_primary]
+    refs: [cantor_halle_primary, cantor_halle_unpublished_material, cantor_halle_letter_index]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":8}},{"trait":["wanderer","curious","streetwise"]}]}}
-        - {id: p2, kind: persuade, req: {"any":[{"trait":["glib","ambitious"]},{"trait":["glib","scholarly","streetwise"]},{"trait":["streetwise"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["calm","cheerful","patient"]},{"trait":["cheerful","faithful","attached"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 124, req: {"any":[{"job":["archivist","university_lecturer"]},{"trait":["methodical","scholarly"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 128, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["methodical","scholarly","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 145, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: list, traits: [curious, scholarly]}
         - {id: after, traits: [methodical, vigil]}
@@ -29,9 +32,24 @@ events:
         relic: "A set of index cards"
         relic_desc: "Cards covered with lists that never end."
         points:
-          p1: 'Tell what the example list is supposed to include'
-          p2: 'Follow its rule for another entry'
-          p3: 'Explain what still needs proof after drawing the list'
+          p1: 'In Halle, match Cantor’s successive corrections to the final draft so Mittag-Leffler can receive and review the complete submission'
+          p2: 'When the editor considers postponement, ask Cantor to choose an example of a new definition and identify separately the claim still to be checked'
+          p3: 'Have Cantor approve a copy for a small group. Mark what can be demonstrated on its own and which parts remain proposals'
+        points_fail:
+          p1: 'The editor receives only the previous round of corrections. The final submission cannot be read, and the office recalls the employee.'
+          p2: 'The reply deals only with whether to print. A reader has no example unless they find another copy.'
+          p3: 'Once withdrawn, the work stays in the correspondence. A group willing to read it has no complete copy or stable page references.'
+        shift:
+          p1:
+            was: 'From late 1884 into spring 1885 Cantor sent a draft and successive changes from Halle. The two corresponded about the editor’s review.'
+          p2:
+            was: 'The editor recommended waiting in 1885, and this submission did not appear in that round.'
+            now: 'A few readers can try the definition and send back the pages where they stopped without arranging publication.'
+          p3:
+            was: 'The early paper on order types was withdrawn. Researchers later edited it from surviving archives.'
+            now: 'The circulating copy carries readers’ queries and keeps the dates and authorship of the open sections. Later readers can recover what the first group asked.'
+            who: cantor_halle
+            bio: 'Cantor worked on sets and order in Halle. Whether readers could follow his new terms was part of his exchange with an editor.'
         vignettes:
           list: 'The learner says the list is already endless. You ask what would show that everything is on it. They leave a second line for the reasoning rather than merely extending the first.'
           after: 'The learner copies several numbers and forgets the rule for getting the next. You ask them to put the rule first so another person can carry on where the slate ends.'
@@ -44,9 +62,24 @@ events:
         relic: "一叠索引卡片"
         relic_desc: "卡片上写满了永远列不完的清单。"
         points:
-          p1: '说明例表打算列进哪些数'
-          p2: '照同一规则再添一项'
-          p3: '列出一些数后，说清还要证明什么'
+          p1: '在哈雷把坎托尔连寄的修改与最后稿配齐，护住米塔格－莱夫勒确实能收到并回读这项稿件'
+          p2: '编辑希望推迟发表时，先请坎托尔给稿内新定义挑一个可供试读的例子，与还要核的主张分开寄'
+          p3: '请坎托尔核准一份小范围传阅本，标出已经能独立说明的部分和仍在拟议的部分'
+        points_fail:
+          p1: '编辑只收到上一轮的改页，最终稿无法审阅，事务所召回员工。'
+          p2: '回信只讨论何时刊出。想读新定义的人得先碰到另一份稿才有例子可查。'
+          p3: '撤稿后材料只留在编辑往来中，愿意核对的小组没有完整抄本与页次。'
+        shift:
+          p1:
+            was: '1884 年秋冬到 1885 年春，坎托尔从哈雷寄稿并续寄改动，后续通信谈及编辑对稿件的评估。'
+          p2:
+            was: '1885 年编辑建议暂缓发表，相关稿件在这一轮没有刊出。'
+            now: '几位试读者能检验定义实际怎样用，并把自己卡住的页交回来，不必先承诺刊发。'
+          p3:
+            was: '这篇有关次序类型的早期稿件被撤回，后来由研究者从档案重新整理。'
+            now: '小范围传阅本留下阅读意见，未解决的地方仍带原来的署名与日期。日后档案里也能找到当时读者的问题。'
+            who: cantor_halle
+            bio: '坎托尔在哈雷研究集合与次序。他的新术语能否让读者跟上，是与编辑协商的一部分。'
         vignettes:
           list: '学算者说这张表已经写不到头。你问怎样才知道什么都在上面。他另留一行记理由，没只顾把第一行续长。'
           after: '学算者抄了几个数，却忘了下一个该怎么算。你请他先写规则，石板写到边，换个人也能接下去。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented learner copying a sequence onto a slate.', zh: '一位虚构的学算者，正往石板上抄一个数列。'}
 wiki:
   refs:
+    cantor_halle_unpublished_material:
+      order: 10
+      status: checked
+      text:
+        en: 'Archival paper with the 1885 letters and unpublished manuscript https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6089-11511_2006_Article_BF02394569.pdf'
+        zh: '未刊稿与 1885 年通信考证 https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6089-11511_2006_Article_BF02394569.pdf'
+    cantor_halle_letter_index:
+      order: 11
+      status: checked
+      text:
+        en: 'German archival catalogue of Cantor’s correspondence https://kalliope.staatsbibliothek-berlin.de/de/ead?ead.id=DE-611-HS-3188547'
+        zh: '德国档案联合目录所录坎托尔通信 https://kalliope.staatsbibliothek-berlin.de/de/ead?ead.id=DE-611-HS-3188547'
     cantor_halle_primary:
       order: 184
       status: checked

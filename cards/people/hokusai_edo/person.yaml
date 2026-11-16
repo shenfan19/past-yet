@@ -2,6 +2,7 @@ order: 95
 events:
   hokusai_edo:
     order: 80
+    build_step: 2
     year: 1831
     lon: 139.77
     lat: 35.68
@@ -9,12 +10,13 @@ events:
     field: art
     tier: 3
     channels: {L: 1}
-    refs: [hokusai_edo_primary]
+    refs: [hokusai_edo_primary, hokusai_edo_met_ad, hokusai_edo_bm_wear]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["skeptical","scholarly"]},{"job":["painter"]}]}}
-        - {id: p2, kind: persuade, req: {"stat": {"wit": 6}}}
-        - {id: p3, kind: endure, req: {"provides": "strength"}}
+        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["painter","carpenter"]},{"trait":["handy","artistic"],"stat":{"finesse":5}}]}}
+        - {id: p2, kind: notice, day: 40, req: {"any":[{"job":["painter","proofreader"]},{"trait":["artistic","methodical"],"stat":{"finesse":5}}]}}
+        - {id: p3, kind: persuade, day: 71, req: {"any":[{"job":["painter","archivist"],"stat":{"wit":6}},{"trait":["methodical","artistic"],"stat":{"wit":7}}]}}
       vignettes:
         - {id: mountain, traits: [artistic, vigil]}
         - {id: edge, traits: [handy, methodical]}
@@ -28,9 +30,24 @@ events:
         relic: A woodblock for printing
         relic_desc: A carved plank of cherry wood.
         points:
-          p1: 'Find Fuji among the shapes of the waves'
-          p2: 'Explain one detail to a visitor at the counter'
-          p3: 'Leave the title and signature visible on the display copy'
+          p1: 'Choose an Edo publisher’s proof in which both the wave crest and the distant peak read clearly. Leave it with the carver and printer as the reference for the first run.'
+          p2: 'Ask the printer to mark a changed color boundary and a gap in the wave line on the backs of separate proofs for the next run.'
+          p3: 'Before the publisher breaks up the proofs, have Hokusai and the printer keep a comparison set. Ask the publisher to file a new proof in sequence each time printing resumes.'
+        points_fail:
+          p1: 'The carver and printer have no shared proof and keep sending back sheets with the same broken wave line. The publisher holds back the first delivery, and the office recalls the employee.'
+          p2: 'New impressions pile up together, and the workshop has to sort darker color and gaps in the lines by memory.'
+          p3: 'Only sale copies stay at the counter. The proofs Hokusai checked with the printer go back into the stock, where a new printer cannot recover the set.'
+        shift:
+          p1:
+            was: 'The Edo publisher Eijudō advertised Thirty-six Views of Mount Fuji for the New Year of 1831. Under the Wave off Kanagawa belongs to the series, and early impressions with the wave lines intact survive.'
+          p2:
+            was: 'Surviving impressions differ in color and line. The British Museum compared gaps across multiple impressions to trace progressive wear in the blocks.'
+            now: 'The printer records the changes separately. When the edge of Fuji comes out faint on the next run, the apprentice checks the color first. A gap that recurs at the same spot in the wave sends them to the block.'
+          p3:
+            was: 'These impressions carry no dates or batch numbers. The original blocks have not survived, and the marks on the prints are the main clues to their sequence.'
+            now: 'Eijudō keeps a packet of proofs in order behind the counter. A new printer can tell which gap appeared later and ask Hokusai to judge whether the run meets his design.'
+            who: hokusai_edo
+            bio: 'Hokusai designed the image. Its appearance on paper also depended on where the carver cut, how the printer transferred the ink, and when the publisher ordered another run.'
         vignettes:
           mountain: 'The seller points to the foam. You ask him to cover the wave with his hand. Once he uncovers it, the little triangle in the distance looks less like another splash.'
           edge: 'The seller wants to trim a practice sheet. You set the untrimmed copy beside it and show him how close the signature sits to the edge.'
@@ -43,9 +60,24 @@ events:
         relic: 一块印刷用的木版
         relic_desc: 一块雕好的樱木版。
         points:
-          p1: '从浪形之间找出富士山'
-          p2: '给柜台前的客人讲清一处细节'
-          p3: '给展示的印本留出题签和落款'
+          p1: '从江户版元送来的样张里挑出浪尖与远山都清楚的一张，给刻工和摺师留作首批出样的准绳。'
+          p2: '请摺师把套色边缘和浪线的变化分别写在两张样印背面，留给下一轮开工的人对照。'
+          p3: '在版元打散样张前，请北斋与摺师共同留存一套对照印。让版元约定重开印时把新样也夹进去，并写下顺序。'
+        points_fail:
+          p1: '刻工与摺师手里没有同一张好样，反复送来的样张在浪峰同一处断线。版元扣住第一批货，事务所因同步失败召回员工。'
+          p2: '几叠新印张摆到一处，色深和线断都只凭记忆分辨。'
+          p3: '版元在柜上只留下好卖的印成品。北斋与摺师核过的样张又回到货堆，换了谁接手也找不回那一套。'
+        shift:
+          p1:
+            was: '江户版元永寿堂赶在1831年新年时为《富岳三十六景》登广告，《神奈川冲浪里》是该系列的版画之一，早期印张上浪线仍完整的例子保存至今。'
+          p2:
+            was: '留存的印张存在颜色与线条差异。大英博物馆根据多张印本上的线条断裂追踪了版木的逐步磨损。'
+            now: '摺师分开记下套色和断线的位置。下一轮看见远山边缘变淡，学徒先试着调整印色，查到浪线固定缺掉的一小段才去检查版木。'
+          p3:
+            was: '当时这组印张没有日期和批次编号。原版木没有留存，后世主要靠印张上的痕迹判断先后。'
+            now: '永寿堂柜后留下一封有次序的样张。换了摺师，开印时仍能查出哪处断线是后来才有的，再让北斋核定是否接受这批效果。'
+            who: hokusai_edo
+            bio: '北斋负责画稿。一张版画的面貌还取决于刻工如何落刀、摺师如何转印和版元何时续印；这些人共同影响后来的印张。'
         vignettes:
           mountain: '版画商指着浪花，你请他用手遮住浪头。手再移开，远处那个小三角就不像另一朵水花了。'
           edge: '版画商打算裁一张试印纸。你拿未裁的那张并排放好，给他看落款离纸边多近。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'An invented print seller comparing impressions.', zh: '一位虚构的版画商，正拿两张印本比对。'}
 wiki:
   refs:
+    hokusai_edo_met_ad:
+      order: 2
+      status: checked
+      text:
+        en: 'Met print study and the New Year advertisement https://www.metmuseum.org/ja/essays/hokusai-great-wave'
+        zh: '大都会艺术博物馆版画研究与新年广告 https://www.metmuseum.org/ja/essays/hokusai-great-wave'
+    hokusai_edo_bm_wear:
+      order: 3
+      status: checked
+      text:
+        en: 'British Museum comparison of block wear https://www.britishmuseum.org/sites/default/files/2022-03/korenberg_article-for_hokusai%20_edited_volume_final-2020_accessible.pdf'
+        zh: '大英博物馆版木磨损比对 https://www.britishmuseum.org/sites/default/files/2022-03/korenberg_article-for_hokusai%20_edited_volume_final-2020_accessible.pdf'
     hokusai_edo_primary:
       order: 127
       status: checked

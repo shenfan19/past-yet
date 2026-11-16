@@ -2,6 +2,7 @@ order: 181
 events:
   song_yingxing_fengxin:
     order: 160
+    build_step: 2
     year: 1637
     lon: 115.4
     lat: 28.7
@@ -9,13 +10,13 @@ events:
     field: technology
     tier: 2
     channels: {L: 1}
-    regret: true
-    refs: [song_yingxing_fengxin_primary]
+    refs: [song_yingxing_fengxin_primary, song_bnf_first_print, song_nlc_print_history]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":6}}}
-        - {id: p2, kind: hold, req: {"job":["carpenter","mechanic","builder"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["handy","vigil"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 22, req: {"any":[{"job":["archivist","illustrator"]},{"trait":["methodical","handy","artistic"]}]}}
+        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: strainer, traits: [handy, curious]}
         - {id: drying, traits: [methodical, patient]}
@@ -29,9 +30,24 @@ events:
         relic: "A page of tool drawings"
         relic_desc: "A woodblock print of a loom with every part labelled."
         points:
-          p1: 'Follow the sheet through the drawings'
-          p2: 'Catch a caption beside the wrong stage'
-          p3: 'Set aside a clean copy for the workshop reader'
+          p1: 'Give the printing sponsor a clear count of volumes and costs so Song can send the book for carving'
+          p2: 'Match each picture of a process to its text before carving so someone borrowing a volume can restore the pictures correctly'
+          p3: 'Get Song to approve and deposit a numbered proof so the first printing he reviewed remains identifiable'
+        points_fail:
+          p1: 'The funds cover paper but never produce a complete book with its text and images. The branch falls out of sync and the office recalls the employee.'
+          p2: 'One volume circulates without the contents list and the borrower cannot match similar-looking pictures to the proper steps.'
+          p3: 'As editions are handled and rebound, reconstructing the first edition''s original order becomes harder.'
+        shift:
+          p1:
+            was: 'In 1637 Song wrote the preface in Fengxin. Exploitation of the Works of Nature was printed in Jiangxi with a friend''s support.'
+          p2:
+            was: 'The 1637 first edition set woodblock illustrations alongside accounts of production practices.'
+            now: '{staff} and Song mark the volume and passage for images likely to be misplaced, so another copy can use the same references.'
+          p3:
+            was: 'Copies of the first edition of 1637 and a later printing survive. Some copies were subsequently rebound.'
+            now: '{staff} gets Song to deposit a checked copy and a separate list of its pages. Later readers can use the list to identify the order he approved.'
+            who: song_yingxing_fengxin
+            bio: 'Song left a proof copy with the page order of the first edition. Readers could compare later printings to the copy he had reviewed.'
         vignettes:
           strainer: 'You ask which side of the illustrated screen the wet sheet ends up on. The reader turns the print round to mimic the worker''s hands and finally points to the right surface.'
           drying: 'The reader tells the stages out of order. You ask him to trace the wet sheet from the screen to the drying surface. He pauses and moves one caption to the next drawing.'
@@ -44,9 +60,24 @@ events:
         relic: "一页工具图"
         relic_desc: "一张木刻版画，织机的每个部件都标了名。"
         points:
-          p1: '沿图找到纸张经过的几道工序'
-          p2: '找出跟工序串了位置的图注'
-          p3: '给工坊读者留一张干净的图样'
+          p1: '给资助刻书的人列清卷数和工钱，让缺印资的宋应星能把书送去刊刻'
+          p2: '付梓前把画过的工序同正文逐项对上，让异处借来抄书的人能配回图页'
+          p3: '请宋应星核准一套带卷次的样书另存，让后世还能分清他亲自审过的初刻'
+        points_fail:
+          p1: '资助只够备纸，正文和插图没有印成一部完整的书。事务所因同步失败召回员工。'
+          p2: '借到单卷的人只有图没有目录，遇到相似的图就不知道应对哪一步。'
+          p3: '几份刻本后来换开本、改装帧，初版原来的卷页组合更难复原。'
+        shift:
+          p1:
+            was: '1637 年，宋应星在奉新写下书序，《天工开物》得到友人资助后在江西刊印。'
+          p2:
+            was: '1637 年《天工开物》初刊本把生产经验写入正文，并搭配木刻插图。'
+            now: '{staff}同宋应星把几处容易错配的图分别记上卷次和正文位置，后来的抄本也能按此配图。'
+          p3:
+            was: '1637 年初刻本和稍晚刻本的实物都存有传本，其中部分后来重新装帧。'
+            now: '{staff}请宋应星把校过的样书封存，并另存卷页清单。后来的整理者能据此辨认初刻中的原有次序。'
+            who: song_yingxing_fengxin
+            bio: '宋应星留下了一套标明初刻卷页次序的样书。不同印本流传后，读者仍能核对他审过的那一版。'
         vignettes:
           strainer: '你问图里的纸帘，湿纸最后留在哪一面。读者把图转过来，照着图里人的手势比了一遍，这才指准。'
           drying: '读者把几道工序说串了。你请他顺着湿纸，从纸帘跟到烘干处。他停下来，把一处图注挪到了下一幅图。'
@@ -75,6 +106,18 @@ bystanders:
     text: {en: 'An invented workshop reader comparing a picture and its caption.', zh: '一位虚构的工坊读者，正对照图和文字。'}
 wiki:
   refs:
+    song_bnf_first_print:
+      order: 860
+      status: checked
+      text:
+        en: 'Bibliothèque nationale de France, Tiangong kaiwu, preface and surviving editions. https://heritage.bnf.fr/france-chine/zh-hans/tiangongkaiwu'
+        zh: '法国国家图书馆，《天工开物》自序、刊刻与现存版本。 https://heritage.bnf.fr/france-chine/zh-hans/tiangongkaiwu'
+    song_nlc_print_history:
+      order: 861
+      status: checked
+      text:
+        en: 'National Library of China, history of the 1637 first printing of Tiangong kaiwu. https://www.nlc.cn/pcab/ztzl/csb/2021/202211/P020221130456490928784.pdf'
+        zh: '中国国家图书馆，《天工开物》1637 年初刊记载。 https://www.nlc.cn/pcab/ztzl/csb/2021/202211/P020221130456490928784.pdf'
     song_yingxing_fengxin_primary:
       order: 129
       status: checked

@@ -2,19 +2,23 @@ order: 60
 events:
   edison_menlo_park:
     order: 87
+    build_step: 2
     year: 1879
+    date: '1879-10-09'
+    stay: 3
     lon: -74.33
     lat: 40.56
     region: americas
     field: technology
     tier: 3
     channels: {V: 3, L: 1}
-    refs: [edison_menlo_park_entry]
+    refs: [edison_menlo_park_entry, edison_smithsonian_lighting, edison_rutgers_sampler]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"provides":"vigil"}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":6}}}
-        - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["mechanic","electrician"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":7}}]}}
+        - {id: p2, kind: notice, day: 14, req: {"any":[{"job":["mechanic","archivist"]},{"trait":["methodical","vigil","scholarly"]}]}}
+        - {id: p3, kind: persuade, day: 80, req: {"any":[{"job":["mechanic","electrician"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil"],"stat":{"will":8}}]}}
       vignettes:
         - {id: log, traits: [methodical, handy]}
         - {id: future, traits: [bold, curious]}
@@ -28,9 +32,24 @@ events:
         relic: A carbon filament bulb
         relic_desc: A glass bulb with one hair thin loop inside.
         points:
-          p1: 'Keep watch through one handover and write down its time'
-          p2: 'Match the lamp material to its own readings'
-          p3: 'Stay until two observations can be told apart on the page'
+          p1: 'Cover a shift on the night fragile filaments are under test and protect the long burn Batchelor recorded'
+          p2: 'Keep the failed lamps apart in the records so the shop does not rebuild a batch that already fell short'
+          p3: 'Before the public lighting at Menlo Park, secure a full-night rehearsal and spare lamps for the shop'
+        points_fail:
+          p1: 'The next watch arrives after the lamp has gone out. There is no reliable continuous run in the books, and the office recalls the employee after a loss of sync.'
+          p2: 'The shop receives a single general order and makes another batch of short-lived lamps.'
+          p3: 'The train brings the visitors before the shop discovers where lamps fail, leaving only a few replacements at hand.'
+        shift:
+          p1:
+            was: 'On 22 and 23 October 1879 the Menlo Park notebook recorded a lamp with a carbonized cotton thread burning for fourteen and a half hours.'
+          p2:
+            was: 'In October 1879 Batchelor kept separate notebook entries on lamps made with different filament materials.'
+            now: '{staff} gets the short-lived and longer-lasting lamps numbered so the people making the next batch can compare the results.'
+          p3:
+            was: 'In late December 1879 Menlo Park displayed its lighting to the public. Visitors saw around a hundred lamps in and around the laboratory.'
+            now: '{staff} helps the shop run the full layout overnight and list the places where spare lamps are needed. Edison and his colleagues have a record of a full night before visitors arrive.'
+            who: edison_menlo_park
+            bio: 'Edison arranged a full rehearsal before the public lighting. The shop used the trial to plan spares and shifts for later displays.'
         vignettes:
           log: 'The workshop assistant writes that the lamp was still lit, but leaves off the time. You ask him to copy the clock reading into the next line before handing over. The next watch can tell how far apart the two observations are. The bulb is still lit when you go. Its full lifetime is not in your notes.'
           future: 'You know electric lights will light whole streets. The workshop assistant wants to mark this lamp as ready on the strength of its first glow. You put a line in the log for a second observation. The lamp can stay on watch for another shift. You miss what the next material does.'
@@ -43,9 +62,24 @@ events:
         relic: 一只炭丝灯泡
         relic_desc: 玻璃泡里有一根头发丝细的圈。
         points:
-          p1: '守过一次换班，写明是哪一刻交接'
-          p2: '把灯丝材料与这一盏灯的读数对上'
-          p3: '守到同页两次读数各有时间可查'
+          p1: '在灯丝容易坏掉的那夜接上值守，护住巴彻勒记下的长时试灯'
+          p2: '把早先没经住试验的灯与长时试灯分栏，别让工坊把失败的一批照样做出来'
+          p3: '趁门洛帕克公开点灯还有准备时间，为工坊争取一次整晚预演和备用灯'
+        points_fail:
+          p1: '没人及时接班，灯熄灭后才被发现，工坊没有可查的连续试灯时长。事务所因同步失败召回员工。'
+          p2: '工坊只得到一张笼统的备货单，后来又做了一批表现欠佳的样灯。'
+          p3: '观众乘车到了，工坊才第一次发现几处灯位难以维持，现场只有几件临时替换件。'
+        shift:
+          p1:
+            was: '1879 年 10 月 22 至 23 日，门洛帕克试验簿记录一盏使用碳化棉线的试验灯亮了十四个半小时。'
+          p2:
+            was: '1879 年 10 月，巴彻勒在实验笔记中分别记录了不同材料的灯丝试验。'
+            now: '{staff}请记录员把短命样灯和耐久样灯加上编号，制作下一批的人可以照着比较结果。'
+          p3:
+            was: '1879 年 12 月底，门洛帕克向公众展示灯光，来客看到了实验室和附近建筑里的约百盏灯。'
+            now: '{staff}帮工坊按现场载荷提前试亮一夜，把需换的灯位和备件记下来。公众到场前，爱迪生和同事已经拿到能撑过整晚的现场记录。'
+            who: edison_menlo_park
+            bio: '爱迪生在公开展示前安排了整场预演。团队据试点记录备件和排班，这套办法后来用于准备展示。'
         vignettes:
           log: '工场帮工写了「灯仍然亮」，漏记了钟点。你请他交班前把看钟的结果添到下一行。接班的人于是分得清两次观察隔了多久。你走时灯还亮着，整盏灯到底撑了多久，笔记里没有。'
           future: '你知道以后电灯会照亮整条街。工场帮工看见这盏灯一亮，就想标作已经试好。你给第二次观察留了一行，灯可以交给下一班接着看。换了下一种材料的结果，你没赶上。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'A fictional workshop assistant keeping the lamp log between two shifts.', zh: '虚构的工场帮工，要把观察表交给下一班。'}
 wiki:
   refs:
+    edison_smithsonian_lighting:
+      order: 846
+      status: checked
+      text:
+        en: 'Smithsonian National Museum of American History, Lighting a Revolution, early Menlo Park tests and display lamps. https://americanhistory.si.edu/lighting/19thcent/invent19.htm'
+        zh: '史密森尼美国国家历史博物馆，《照明革命》，门洛帕克早期试验及展灯。 https://americanhistory.si.edu/lighting/19thcent/invent19.htm'
+    edison_rutgers_sampler:
+      order: 847
+      status: checked
+      text:
+        en: 'Thomas A. Edison Papers, Rutgers University, Batchelor laboratory notebook, 22 October 1879. https://edison.rutgers.edu/research/document-sampler'
+        zh: '罗格斯大学爱迪生文献，巴彻勒 1879 年 10 月 22 日实验笔记。 https://edison.rutgers.edu/research/document-sampler'
     edison_menlo_park_entry:
       order: 604
       status: checked

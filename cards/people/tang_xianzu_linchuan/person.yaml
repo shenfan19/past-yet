@@ -2,6 +2,7 @@ order: 187
 events:
   tang_xianzu_linchuan:
     order: 157
+    build_step: 2
     year: 1598
     lon: 116.36
     lat: 27.95
@@ -9,13 +10,13 @@ events:
     field: literature
     tier: 2
     channels: {V: 1}
-    regret: true
-    refs: [tang_xianzu_linchuan_primary]
+    refs: [tang_xianzu_linchuan_primary, tang_xianzu_linchuan_preface_text, tang_xianzu_linchuan_circulation, tang_xianzu_linchuan_adapted_texts]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["streetwise","wanderer"]},{"job":["musician"]}]}}
-        - {id: p2, kind: hold, req: {"any":[{"trait":["bold","vigil"]},{"job":["musician"]}]}}
-        - {id: p3, kind: persuade, redeem: true, req: {"item":"golden_apple"}}
+        - {id: p1, kind: hold, guard: true, day: 30, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 46, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 80, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: empty_garden, traits: [artistic, curious]}
         - {id: cue, traits: [methodical, vigil]}
@@ -29,9 +30,24 @@ events:
         relic: "A printed songbook"
         relic_desc: "Printed arias for singers, with the tune named above each."
         points:
-          p1: 'Recognize where the garden becomes the dream'
-          p2: 'Find the line another player uses as a cue'
-          p3: 'Make room for the next movement without interrupting the song'
+          p1: 'Bind the preface and scenes of The Peony Pavilion separately in Linchuan. Retain the autumn date on the preface'
+          p2: 'List passages the singers find difficult. Let Tang indicate which may be cut and where the wording is deliberate'
+          p3: 'Have Tang approve a complete text to lend to friends. Leave a separate copy a company can adapt for performance'
+        points_fail:
+          p1: 'The copy keeps the play, but the dated preface is lost. The office recalls the employee.'
+          p2: 'Difficulty in rehearsal becomes a deletion in the next copy. The author cannot find out what was changed.'
+          p3: 'One copy goes to friends and is used for rehearsal. A later scribe treats performance cuts as the original text.'
+        shift:
+          p1:
+            was: 'Tang Xianzu’s preface to The Peony Pavilion is dated to the autumn of 1598. Printed texts of the play later circulated.'
+          p2:
+            was: 'Tang later wrote to friends about revisions he had not approved and expressed his displeasure.'
+            now: 'The copy keeps the original words. Performers get instructions he has approved and can see where disagreement remains.'
+          p3:
+            was: 'Tang later gave a manuscript to a friend. The play continued to circulate in handwritten, printed and adapted forms.'
+            now: 'Friends receive a checked full text. The company marks its decisions in another copy, and readers can consult both.'
+            who: tang_xianzu_linchuan
+            bio: 'After returning home, Tang continued to send his work to friends in manuscript. Later adaptations made keeping track of his own words a practical issue.'
         vignettes:
           empty_garden: 'You ask the player to rehearse the garden without anything on the stage. After a few lines, a listener points to where they imagined a flower. The player keeps the line that put it there.'
           cue: 'A cut takes away the other player''s entrance signal. You catch it in rehearsal and put the cue where both can hear, without having to restore the whole cut.'
@@ -44,9 +60,24 @@ events:
         relic: "一册刻印的曲本"
         relic_desc: "给歌者用的刻本，每支曲牌的名字写在上方。"
         points:
-          p1: '听出游园在何处转入梦里'
-          p2: '找出另一个演员靠哪一句接上'
-          p3: '让开走位而不中断唱腔'
+          p1: '在临川把《牡丹亭》的题词与各出曲文分开装订，在题词上留戊戌秋的署款'
+          p2: '把排练时觉得难唱的地方逐一抄给汤显祖，让他在旁注中指出哪里可以缩、哪里是有意这样写'
+          p3: '让汤显祖签认一套用于送友的全本，为戏班另留一份可改动的演出副本'
+        points_fail:
+          p1: '传抄本只留下正文，署有年月的题词找不着，事务所因同步失败召回员工。'
+          p2: '试唱提出的难处直接变成抄本删文，作者连哪句被改也查不到。'
+          p3: '同一抄本既被送人又被用来排戏，演出删节随后被抄作原文。'
+        shift:
+          p1:
+            was: '《牡丹亭记》有署万历戊戌秋的汤显祖题词，也有后来刊刻流传的剧本。'
+          p2:
+            was: '汤显祖后来在给友人的信中谈到未经自己同意的改本，并表达不满。'
+            now: '抄本保住原句。排练的人拿到一份作者认可的处理方式，也能看到尚有异议的地方。'
+          p3:
+            was: '汤显祖后来曾把抄本赠人。作品通过抄写、刊刻与多种改本继续传播。'
+            now: '朋友收到作者核过的全本，戏班在另一套上记下自己的删改。有人想复核时，能分别借到两种本子。'
+            who: tang_xianzu_linchuan
+            bio: '汤显祖回乡后仍借抄本把作品送给友人。后来的演出和改编让作者原文如何保存成为实际问题。'
         vignettes:
           empty_garden: '你请演员在空台上排游园。几句之后，听的人指出想象中花开在什么地方。演员留下了让他看见那朵花的一句。'
           cue: '删词连另一个演员上场的信号也删掉了。你在排练时发现，把那个字留在两人都听得到的位置，余下的删节仍能保留。'
@@ -75,6 +106,24 @@ bystanders:
     text: {en: 'An invented player testing the cue between waking and dreaming.', zh: '一位虚构的演员，正试怎样让观众听出由醒入梦。'}
 wiki:
   refs:
+    tang_xianzu_linchuan_preface_text:
+      order: 10
+      status: checked
+      text:
+        en: 'Municipal reference edition of the author’s preface https://www.jxdy.gov.cn/dyxzf/c105618/202105/c0a84b075f5a4d538e04c47524bde30a.shtml'
+        zh: '地方文献所载《牡丹亭记》题词 https://www.jxdy.gov.cn/dyxzf/c105618/202105/c0a84b075f5a4d538e04c47524bde30a.shtml'
+    tang_xianzu_linchuan_circulation:
+      order: 11
+      status: checked
+      text:
+        en: 'Research on copies, gifts and print circulation https://journal.ipm.edu.mo/images/journal_c/2016_3/201603-005-021.pdf'
+        zh: '赠抄本与版本传播研究 https://journal.ipm.edu.mo/images/journal_c/2016_3/201603-005-021.pdf'
+    tang_xianzu_linchuan_adapted_texts:
+      order: 12
+      status: checked
+      text:
+        en: 'Research on the adaptations and Tang’s letters https://omu.repo.nii.ac.jp/record/4455/files/2011000072.pdf'
+        zh: '《牡丹亭》改本与汤显祖书信研究 https://omu.repo.nii.ac.jp/record/4455/files/2011000072.pdf'
     tang_xianzu_linchuan_primary:
       order: 190
       status: checked

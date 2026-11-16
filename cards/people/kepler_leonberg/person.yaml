@@ -2,20 +2,23 @@ order: 114
 events:
   kepler_leonberg:
     order: 124
+    build_step: 2
     year: 1620
+    date: '1620-07-25'
+    stay: 6
     lon: 8.99
     lat: 48.8
     region: europe
     field: science
     tier: 2
     channels: {S: 3, G: 2}
-    regret: true
-    refs: [kepler_leonberg_arrest, kepler_leonberg_released]
+    refs: [kepler_leonberg_arrest, kepler_leonberg_released, kepler_leonberg_trial_research, kepler_leonberg_stuttgart_archives]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"any":[{"trait":["glib","charismatic"]},{"trait":["glib","scholarly","ambitious"]}]}}
-        - {id: p2, kind: hold, req: {"any":[{"trait":["bold","faithful","ambitious"]},{"trait":["cheerful","bold","vigil"]}]}}
-        - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","charismatic","artistic"]},{"trait":["sensitive","artistic","cosmopolitan"]},{"trait":["attached"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","translator"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 36, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 150, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: heard, traits: [skeptical, methodical, scholarly]}
         - {id: compare, traits: [bold, faithful, vigil]}
@@ -29,9 +32,24 @@ events:
         relic: 'A checked defence copy'
         relic_desc: 'A fictional copying sheet with one corrected date.'
         points:
-          p1: 'Ask the scribe to keep an allegation with the name of its speaker'
-          p2: 'Keep the two copies together until they can be compared'
-          p3: 'Earn enough trust to read back what the messenger actually heard'
+          p1: 'After Katharina is brought to Leonberg, have the keeper of the defense papers file a second copy so her written response reaches the proceedings'
+          p2: 'Help the family sort firsthand testimony, hearsay and later inferences into separate columns'
+          p3: 'Keep a signed witness index and handover dates with the lawyer in Leonberg so Katharina''s family knows where to ask next'
+        points_fail:
+          p1: 'The only copy the family can find is never delivered. The file has only the accusations, and the office recalls the employee.'
+          p2: 'The copy puts all three together. Once it reaches the file, the defense still has to ask who originally said what.'
+          p3: 'After the file moves, relatives make separate inquiries. Written replies stay in different places.'
+        shift:
+          p1:
+            was: 'Katharina was arrested in August 1620. Through lawyers, Johannes Kepler insisted on a written record of the proceedings.'
+          p2:
+            was: 'Testimony and written defenses survive. The defense answered claims one by one and challenged inferences used to link them.'
+            now: 'The lawyer can compare the three columns and point to claims the witnesses could not verify for themselves.'
+          p3:
+            was: 'The case passed between Leonberg and Güglingen and met delays. Katharina was released in 1621.'
+            now: 'Delivery dates let the lawyer trace several unanswered items and obtain a written response to one. The family can cite the date when following up.'
+            who: kepler_leonberg
+            bio: 'Kepler''s defense of his mother involved checking testimony and insisting on written proceedings. The family still needed access to the papers after the case moved.'
         vignettes:
           heard: 'Margarete has written that a neighbour saw something. When you ask which neighbour, she can only name the man who repeated it at the door. She copies the two claims onto separate lines and leaves a place for a first-hand account if one comes.'
           compare: 'Matthias wants to send the first copy now and keep the second at the desk. You read one against the other and find that a date has lost a digit. He waits while Margarete checks the original. The messenger takes the corrected copy as the bells finish striking.'
@@ -44,9 +62,24 @@ events:
         relic: '一页核对过的辩护文书练习稿'
         relic_desc: '抄写练习，有一处改过日期。'
         points:
-          p1: '请抄写员把指控和说出它的人记在一处'
-          p2: '把两份抄本放在一起，等人核对'
-          p3: '取得信任，把送件人亲耳听到的话念回给他'
+          p1: '卡塔琳娜被带到莱昂贝格以后，请保管申辩书的人立刻另抄并交存一份，护住书面申辩继续进入程序'
+          p2: '让家人整理原证词，逐项区分证人亲眼所见、由人转述和后来附上的推断'
+          p3: '在莱昂贝格留一份经律师签收的证词对照和转交日期，让卡塔琳娜的家人能查下一步该问哪个衙署'
+        points_fail:
+          p1: '家里能找到的那份申辩书没能转交。案卷只剩指控人的陈述，事务所因同步失败召回员工。'
+          p2: '三种说法抄在同一栏。送进案卷以后，辩护人还要再追问最早是谁说的。'
+          p3: '案卷转走以后，家人仍各自托人询问，书面答复散在不同地方。'
+        shift:
+          p1:
+            was: '卡塔琳娜于 1620 年 8 月被捕。约翰内斯·开普勒随后经律师坚持把程序落实在书面记录上。'
+          p2:
+            was: '审理留下证词及书面辩护。辩方逐项回应并反对把猜测当作说法之间的因果。'
+            now: '送给律师的抄本可以按栏核查。辩护人先指出证人未能亲验的数项。'
+          p3:
+            was: '诉讼跨越莱昂贝格和居格林根。辩护及审理拖延，直至 1621 年卡塔琳娜方获释放。'
+            now: '律师从接收和转交的日期查出几件久无回音的材料，先收到一项书面说明。家人以后据此追问案程。'
+            who: kepler_leonberg
+            bio: '开普勒为母亲的辩护重视逐项核对证词和书面程序。家人还须在案件移交后继续取得材料。'
         vignettes:
           heard: '玛格丽特写着有邻居亲眼看见。你问是哪位邻居，她只叫得出在门边转述的那个人。她把两种说法分成两行，又给可能收到的亲历说法留个位置。'
           compare: '马蒂亚斯想先送出一份，另一份留桌上。你照着念了两遍，发现有个日期漏了一位数字。他等玛格丽特找原稿核对。钟声刚停，送件人带着改好的副本走了。'
@@ -87,6 +120,18 @@ bystanders:
     text: {en: 'A fictional courier about to leave with the first copy he is handed.', zh: '虚构送件人马蒂亚斯，拿到第一份纸就准备走。'}
 wiki:
   refs:
+    kepler_leonberg_trial_research:
+      order: 10
+      status: checked
+      text:
+        en: 'Württemberg State Library research on the arrest and proceedings https://journals.wlb-stuttgart.de/index.php/sh/article/download/5593/5537'
+        zh: '符腾堡州立图书馆所刊逮捕与诉讼研究 https://journals.wlb-stuttgart.de/index.php/sh/article/download/5593/5537'
+    kepler_leonberg_stuttgart_archives:
+      order: 11
+      status: checked
+      text:
+        en: 'University of Stuttgart exhibition on the defense and written process https://www.project.uni-stuttgart.de/kepler2022/dokumente/Kepler-Begleitband_screen-Version.pdf'
+        zh: '斯图加特大学展览档案，书面程序及辩护 https://www.project.uni-stuttgart.de/kepler2022/dokumente/Kepler-Begleitband_screen-Version.pdf'
     kepler_leonberg_arrest:
       order: 865
       status: checked

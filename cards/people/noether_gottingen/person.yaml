@@ -2,20 +2,23 @@ order: 149
 events:
   noether_gottingen:
     order: 106
+    build_step: 2
     year: 1918
+    date: '1918-07-12'
+    stay: 6
     lon: 9.93
     lat: 51.53
     region: europe
     field: math
     tier: 3
     channels: {S: 3}
-    regret: true
-    refs: [noether_gottingen_primary]
+    refs: [noether_gottingen_primary, noether_paper_title_page, noether_habilitation_archives, noether_university_teaching]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","ambitious","scholarly"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["university_lecturer","archivist","proofreader"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
+        - {id: p2, kind: notice, day: 62, req: {"any":[{"job":["proofreader","university_lecturer"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 151, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"will":7,"wit":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: clock, traits: [curious, scholarly]}
         - {id: assumption, traits: [skeptical, methodical]}
@@ -29,9 +32,24 @@ events:
         relic: "A lecture notice"
         relic_desc: "A hall notice with Hilbert's name where hers should be."
         points:
-          p1: 'Identify the transformation in the example'
-          p2: 'Read the assumptions back before discussing the conclusion'
-          p3: 'Help a listener separate symmetry from the conserved quantity'
+          p1: 'Get Noether’s signed paper and its summary to Klein together so he can submit the work at the scheduled Göttingen meeting.'
+          p2: 'Leave students a reading sheet keyed to the final draft. Mark the assumptions they need to check before using each result.'
+          p3: 'Give the department a record of the classes Noether has taught and a copy of her signed paper. Ask the department to budget payment for the next seminar and file it with the new application.'
+        points_fail:
+          p1: 'The list has the presenter’s name, but the manuscript and its author’s page cannot be matched. The society puts the paper off to another meeting, and the office recalls the employee.'
+          p2: 'Students receive copied conclusions alone. Their questions about the assumptions have to wait until Noether can find the relevant passages in circulating copies.'
+          p3: 'The department agrees to keep the seminar running. It uses the old schedule and sets aside no pay for the hours Noether teaches.'
+        shift:
+          p1:
+            was: 'Felix Klein presented Invariant Variational Problems at a meeting in Göttingen on July 26, 1918. The printed paper names Emmy Noether as its author.'
+          p2:
+            was: 'The final manuscript of Invariant Variational Problems dates to September 1918. The paper was later used in Noether’s habilitation.'
+            now: 'Students use a page-by-page list of assumptions to bring counterexamples to the next discussion. Their questions and Noether’s written replies go on file together.'
+          p3:
+            was: 'Noether completed her habilitation in 1919. The university dates her first teaching assignment with a small fixed salary to 1923.'
+            now: 'The department approves a small seminar budget ahead of the new habilitation review and pays for the hours she teaches. Students working with her have a regular time to bring their problems.'
+            who: noether_gottingen
+            bio: 'Göttingen’s rules blocked Noether’s first application to qualify as a lecturer. She continued her research and later taught students in her own classes.'
         vignettes:
           clock: 'You ask whether starting the same example later changes its rule. The listener moves the clock''s starting mark and redraws the margin figure without touching the rule itself.'
           assumption: 'The listener remembers the conclusion but skips its assumptions. You write those on a separate slip and ask which change would make that slip cease to apply.'
@@ -44,9 +62,24 @@ events:
         relic: "一张课程通告"
         relic_desc: "一张厅里的通告，应该写她名字的地方写着希尔伯特。"
         points:
-          p1: '认出例子里做的变换'
-          p2: '讨论结论前把前提再读一遍'
-          p3: '帮听讲者分清对称性和守恒的量'
+          p1: '把诺特署名的文稿和提要同时交到克莱因手上，让他能按期将论文呈交给哥廷根学术团体。'
+          p2: '在秋季定稿旁留一页供学生使用的核对表，标清论文里哪些条件要先确认、哪些结论要在条件成立以后才可引用。'
+          p3: '把本学期由诺特实际授课的记录和署名论文一并交给系里，请系里先为下一轮讨论课核定课酬，再随新申请存档。'
+        points_fail:
+          p1: '名册上只有呈交人的名字，讲义与作者页没能对回同一份。会议把论文退到下一次，事务所因同步失败召回员工。'
+          p2: '学生只收到抄下来的结论，回头问到假设时，得等诺特从各人借走的抄本里翻找。'
+          p3: '系里同意有人继续带讨论课，但依然用原来的排课办法，没有经费支付诺特这部分工时。'
+        shift:
+          p1:
+            was: '1918 年 7 月 26 日，费利克斯·克莱因在哥廷根的一次会议上呈交《不变变分问题》。印本所署作者是埃米·诺特。'
+          p2:
+            was: '《不变变分问题》的终稿成于 1918 年 9 月，论文后来也用于她的任教资格申请。'
+            now: '跟读的学生拿到带页码的条件表，可以把不满足假设的例子带到下次讨论，之后留下问题与诺特的书面答复。'
+          p3:
+            was: '诺特于 1919 年获任教资格，哥廷根大学记录她到 1923 年才取得带少量固定薪酬的教学任务。'
+            now: '系里在任教资格重审前先拨了一小笔课酬，按实际开课支付。这个学期愿意跟她做题的学生因此有一段固定的时间可来。'
+            who: noether_gottingen
+            bio: '哥廷根的任教规则曾让诺特的第一份申请受阻。她仍开展研究，后来以一系列论文和自己的课堂培养学生。'
         vignettes:
           clock: '你问把同一个例子往后推一会开始，规则会不会变。听讲者挪了钟上的起点，在页边重画图，原规则一笔没动。'
           assumption: '听讲者记住了结论，却跳过了前提。你把前提另写一条，请他说出怎样改例子，这张纸条就不再适用。'
@@ -75,6 +108,24 @@ bystanders:
     text: {en: 'An invented listener puzzling over an example after a reading.', zh: '一位虚构的听讲者，散场后还在琢磨例子。'}
 wiki:
   refs:
+    noether_paper_title_page:
+      order: 2
+      status: checked
+      text:
+        en: 'Facsimile of the 1918 paper, author and meeting date https://de.wikisource.org/wiki/Seite%3AInvarianteVariationsprobleme.djvu/1'
+        zh: '1918 年论文首页影印及会议日期 https://de.wikisource.org/wiki/Seite%3AInvarianteVariationsprobleme.djvu/1'
+    noether_habilitation_archives:
+      order: 3
+      status: checked
+      text:
+        en: 'Historical research on Noether’s applications and the final manuscript https://emmy-noether.net/Goettingen-1915-bis-1919/Habilitation/'
+        zh: '诺特申请任教资格与论文终稿的档案研究 https://emmy-noether.net/Goettingen-1915-bis-1919/Habilitation/'
+    noether_university_teaching:
+      order: 4
+      status: checked
+      text:
+        en: 'University of Göttingen biography and teaching appointment https://www.uni-goettingen.de/en/74993.html'
+        zh: '哥廷根大学记录任教资格与教学报酬 https://www.uni-goettingen.de/en/74993.html'
     noether_gottingen_primary:
       order: 147
       status: checked

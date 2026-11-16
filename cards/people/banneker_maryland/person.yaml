@@ -2,20 +2,23 @@ order: 224
 events:
   banneker_maryland:
     order: 214
+    build_step: 2
     year: 1791
+    date: '1791-08-01'
+    stay: 2
     lon: -76.7
     lat: 39.3
     region: americas
     field: science
     tier: 1
     channels: {V: 2, S: 2}
-    regret: true
-    refs: [banneker_maryland_letter, banneker_maryland_reply]
+    refs: [banneker_maryland_letter, banneker_maryland_reply, banneker_1792_almanack, banneker_monticello_record, banneker_white_house_history]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"provides":"scan"}}
-        - {id: p2, kind: persuade, req: {"any":[{"trait":["charismatic","scholarly","cosmopolitan"]},{"stat":{"finesse":7}}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"trait":["vigil","faithful","bold"]}}
+        - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["archivist","journalist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}}]}}
+        - {id: p2, kind: notice, day: 19, req: {"any":[{"job":["archivist","teacher"]},{"trait":["scholarly","patient","methodical"]}]}}
+        - {id: p3, kind: persuade, day: 28, req: {"any":[{"job":["archivist"],"trait":["methodical"],"stat":{"wit":7,"will":7}},{"trait":["methodical"],"stat":{"wit":9,"will":8}}]}}
       vignettes:
         - {id: packet, traits: [methodical, scholarly]}
         - {id: handoff, traits: [faithful, vigil, patient]}
@@ -29,9 +32,24 @@ events:
         relic: 'A duplicate wrapper label'
         relic_desc: 'A fictional copy naming the almanac and its accompanying letter.'
         points:
-          p1: 'Check the addressed copy against the workshop copy'
-          p2: 'Persuade the carrier to keep the letter with the manuscript'
-          p3: 'Wait for the handoff and check that both parts go with it'
+          p1: 'Keep the printer''s copy separate so Banneker can send his handwritten almanac with the letter'
+          p2: 'Use the working sheets to persuade the printer to keep a calculation readers can check'
+          p3: 'Persuade Banneker to deposit a checked copy of his observations away from the house'
+        points_fail:
+          p1: 'The printer takes the only copy available for the letter. The branch falls out of sync and the office recalls the employee.'
+          p2: 'The results are printed, but readers have only the endorsement and the figures and cannot retrace the calculation.'
+          p3: 'Most of the working papers remain at home and burn with the house.'
+        shift:
+          p1:
+            was: 'On 19 August 1791, Banneker wrote to Jefferson and enclosed a handwritten copy of his almanac.'
+          p2:
+            was: 'The Baltimore almanac for 1792 printed Banneker''s tables and a letter of endorsement.'
+            now: '{staff} helps Banneker choose one worked calculation. The printer includes it beside the table so readers can reproduce it.'
+          p3:
+            was: 'On the day of Banneker''s funeral in 1806, a fire destroyed his home and much of his manuscript material.'
+            now: '{staff} asks Banneker which notebooks can be kept elsewhere and finds a printer willing to copy them. After the fire, readers can still consult a copy of his observations and working calculations.'
+            who: banneker_maryland
+            bio: 'Banneker left a copy of his observations in a separate place. Later readers could consult how he worked out the figures in his almanacs.'
         vignettes:
           packet: 'Rachel sees the months on the first page and begins a label for a book of calculations. You set the letter beside it and ask her to finish the label after reading the address. She threads one tie through both wrappers. The tables will travel under the sender’s name and with his argument still attached.'
           handoff: 'Isaac has room in the satchel for one flat packet. The wax on the letter is still soft. You hold the wrapper open while he slips in a folded guard to keep the letter from sticking to the tables. He leaves with both. You stay long enough to watch the empty square the packet left on the table.'
@@ -44,9 +62,24 @@ events:
         relic: '一张留底的信包签'
         relic_desc: '留底签，写明里头有历书，也有随附的信。'
         points:
-          p1: '把寄出的副本与桌上留底核对'
-          p2: '劝送信人把信和手稿放在同一包'
-          p3: '等人来接，确认两件都交了出去'
+          p1: '替班纳克隔开给印坊的底稿，护住他要随信寄出的那份亲笔年历'
+          p2: '趁印坊审稿时拿计算底表说服排字人，给读者留下一页能复核的算法'
+          p3: '说服班纳克让校过的观测笔记另存一份，别把多年的草算都押在同一间屋里'
+        points_fail:
+          p1: '唯一能随信寄出的抄本被印坊带走，信里没有年历可供查验。这条分支与史实脱节，员工当天被召回。'
+          p2: '印出来的只有结果，读者只能看推荐信和表上的数字，复算无从下手。'
+          p3: '草算依旧集中留在家中，多数手稿和住宅一起烧失。'
+        shift:
+          p1:
+            was: '1791 年 8 月 19 日，班纳克写信给杰斐逊，并随信附上一份亲笔抄写的年历。'
+          p2:
+            was: '1792 年年历的巴尔的摩版刊出计算表与推荐信。'
+            now: '{staff}帮班纳克挑出一段演算，印坊把它留在表旁，读者可以自己重算一次。'
+          p3:
+            was: '1806 年班纳克下葬当天，他的住宅失火，许多手稿随之烧毁。'
+            now: '{staff}请班纳克指定哪几册可以交给外地保管，再请印坊替他复抄。后来家中失火，校过的观测和推算还有一份可查。'
+            who: banneker_maryland
+            bio: '班纳克有一份分开保管的观测记录。后世读者除了年历里的数字，还能查到他当年如何逐项算出来。'
         vignettes:
           packet: '蕾切尔看见首页排着月份，就要给包裹写上算表。你把信搁在边上，请她读过收件地址，再把签写完。她用一根线把两件包在一起。表随寄件人署名上路，他要说的话也跟着去。'
           handoff: '艾萨克的挎包还能塞进一个薄信包，信上的封蜡还软着。你撑开包纸，让他插一片折纸，把信和表隔开。他两件都带上了。你多站了一会儿，看桌上信包留下的一小块空地。'
@@ -87,6 +120,24 @@ bystanders:
     text: {en: 'A fictional carrier with room for one flat packet.', zh: '虚构送件人艾萨克，包里只剩一个薄信包的位置。'}
 wiki:
   refs:
+    banneker_1792_almanack:
+      order: 814
+      status: checked
+      text:
+        en: 'Library of Congress, Banneker’s 1792 Baltimore almanac, with McHenry’s letter of 20 August 1791. https://tile.loc.gov/storage-services/service/rbc/rbc0001/2019/2019amal50590/2019amal50590.pdf'
+        zh: '美国国会图书馆，班纳克 1792 年巴尔的摩版年历及 1791 年 8 月 20 日推荐信。 https://tile.loc.gov/storage-services/service/rbc/rbc0001/2019/2019amal50590/2019amal50590.pdf'
+    banneker_monticello_record:
+      order: 815
+      status: checked
+      text:
+        en: 'Monticello, Benjamin Banneker, almanacs and the loss of papers in 1806. https://www.monticello.org/encyclopedia/benjamin-banneker'
+        zh: '蒙蒂塞洛，班纳克年历及 1806 年手稿散失记录。 https://www.monticello.org/encyclopedia/benjamin-banneker'
+    banneker_white_house_history:
+      order: 816
+      status: checked
+      text:
+        en: 'White House Historical Association, Benjamin Banneker, publication of the almanacs. https://www.whitehousehistory.org/benjamin-banneker'
+        zh: '白宫历史协会，班纳克年历的出版。 https://www.whitehousehistory.org/benjamin-banneker'
     banneker_maryland_letter:
       order: 833
       status: checked

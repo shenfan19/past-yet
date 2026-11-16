@@ -2,6 +2,7 @@ order: 155
 events:
   pliny_stabiae:
     order: 184
+    build_step: 2
     year: 79
     lon: 14.48
     lat: 40.71
@@ -9,13 +10,13 @@ events:
     field: science
     tier: 2
     channels: {T: 3, L: 2}
-    regret: true
-    refs: [pliny_stabiae_letter]
+    refs: [pliny_stabiae_letter, pliny_stabiae_letter_616, pliny_stabiae_virginia_text]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["wanderer","streetwise"]}}
-        - {id: p2, kind: endure, req: {"any":[{"trait":["bold","hardy"]},{"stat":{"constitution":6}}]}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"cyber_lung"}}
+        - {id: p1, kind: hold, guard: true, day: 15.1, req: {"any":[{"job":["sailor","ferryman","paramedic","archivist"]},{"trait":["bold","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 15.38, req: {"any":[{"job":["archivist","sailor","proofreader"]},{"trait":["bold","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 15.74, req: {"any":[{"job":["archivist","sailor"],"stat":{"wit":7,"will":7}},{"trait":["bold","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: wind, traits: [streetwise, wanderer]}
         - {id: lantern, traits: [bold, hardy, kind]}
@@ -29,9 +30,24 @@ events:
         relic: "A wax tablet"
         relic_desc: "A wooden tablet with wax for notes, scratched with a stylus."
         points:
-          p1: 'Spot the difference between a loaded boat and a departed one'
-          p2: 'Stay with the household and keep track of who is in each room'
-          p3: 'Use your equipment to fetch the porter who went back for the list'
+          p1: 'As the wind carries the ship to Stabiae, help Pomponianus’s people identify it and leave a place for the Elder Pliny’s party to land and meet them'
+          p2: 'When the boats cannot leave, tell both groups who has come ashore and who is still being looked for'
+          p3: 'Ask a witness to leave a short dated account that separates what they saw of the wind and the wait from what they heard later'
+        points_fail:
+          p1: 'The people ashore mistake the boat for another. Both sides wait apart, Pliny does not reach Pomponianus, and the office recalls the employee.'
+          p2: 'Both groups rely on shouts. They mix up those who have returned with those still looking for boats.'
+          p3: 'After people leave, the story combines what they saw and what they were told. The next person cannot tell where any part came from.'
+        shift:
+          p1:
+            was: 'Pliny the Younger later told Tacitus that his uncle reached Pomponianus at Stabiae with a favorable wind, which kept the boats from leaving.'
+          p2:
+            was: 'The letter describes waiting against the wind and changing conditions on the shore.'
+            now: 'There is a list of people who have met up and those still unaccounted for. People in the house know whom to ask when news changes.'
+          p3:
+            was: 'A main surviving account of Stabiae is the Younger Pliny’s letter to Tacitus, composed years after the eruption.'
+            now: 'A survivor’s dated account reaches the family. A later retelling can distinguish what someone saw on the shore from word that came afterward.'
+            who: pliny_stabiae
+            bio: 'The events at Stabiae were related years later in a letter by Pliny the Younger. A witness’s record would make the origin of each part easier to check.'
         vignettes:
           wind: 'Crispus has marked every loaded chest as gone. From the doorway you watch the first newcomer come in with ash on his shoulders while the loaded boats stay in sight. Crispus crosses out the word gone. He asks you to leave him room on the tablet for the next name through the door.'
           lantern: 'Prima has time to make one trip across the room before the lamp goes out. You take her place by the doorway while she calls to the people she can still see. The wax tablet goes dark first. She repeats the last two names aloud and you answer each one back.'
@@ -44,9 +60,24 @@ events:
         relic: "一块蜡板"
         relic_desc: "一块涂蜡的木板，用尖笔划出笔记。"
         points:
-          p1: '看出船已经装好和船已经出港的区别'
-          p2: '留在屋里，记着每间屋有谁'
-          p3: '靠装备帮忙，去接回拿名单的搬运工'
+          p1: '风把船推到斯塔比亚时，帮庞波尼阿努斯的人认出船上是谁，给老普林尼一行留出上岸会合的地方'
+          p2: '船不能出发后，把已经上岸的人和仍在找的人分别告诉屋里和岸边的两组人'
+          p3: '在离开斯塔比亚前后，请一位能转告外界的见证人分开写下自己所见的风向、等待和后来听到的消息'
+        points_fail:
+          p1: '岸边的人误以为来的是别的船，船与房屋各自等候，老普林尼没有到庞波尼阿努斯处，事务所召回员工。'
+          p2: '两组人只靠喊话，谁去找船、谁已经回来几次都弄混了。'
+          p3: '各人离开后，只留下串在一起的口述，下一位转达者说不清哪段来自亲见。'
+        shift:
+          p1:
+            was: '小普林尼后来写给塔西佗，称叔父乘顺风到斯塔比亚见到庞波尼阿努斯，同一阵风却挡住船只离岸。'
+          p2:
+            was: '小普林尼的信描述在逆风中等待、岸边情况不断变化。'
+            now: '岸边留下一份已会合和仍待寻找的记名。随后传开消息时，留在屋中的人知道该找谁核对。'
+          p3:
+            was: '现存对这段经历的主要材料是小普林尼写给塔西佗的信，成信时距火山喷发已有多年。'
+            now: '幸存者的短记连同它的日期留给家人。多年后的转述仍可以区分岸上所见和事后听来的消息。'
+            who: pliny_stabiae
+            bio: '斯塔比亚的事件由小普林尼在后来书信中转述。留出现场见证的边界，可以让读者知道每段消息如何传来。'
         vignettes:
           wind: '克里斯普斯把搬上船的木箱全记成了已离开。你们从门边看见第一位来客肩上带灰走进来，装好东西的船却还看得见。克里斯普斯划掉了已离开几个字，请你给下一位进门的人在蜡板上留一行。'
           lantern: '灯快熄了，普丽玛只来得及穿过屋子一次。你替她守在门边，她点数还能看见的人。先看不清的是蜡板，她大声念出最后两个名字，你一个个应回去。'
@@ -78,6 +109,18 @@ bystanders:
     text: {en: 'A fictional household helper trying to account for the people she can see.', zh: '虚构的帮工普丽玛，在灯灭前点数还能看见的人。'}
 wiki:
   refs:
+    pliny_stabiae_letter_616:
+      order: 10
+      status: checked
+      text:
+        en: 'Pliny’s letter 6.16, annotated edition and date uncertainty https://dcc.dickinson.edu/pliny-letters/6-16'
+        zh: '小普林尼 6.16 信的校注及日期分歧 https://dcc.dickinson.edu/pliny-letters/6-16'
+    pliny_stabiae_virginia_text:
+      order: 11
+      status: checked
+      text:
+        en: 'University of Virginia translation of the two letters https://pompeii.iath.virginia.edu/pliny.html'
+        zh: '弗吉尼亚大学所录书信译文 https://pompeii.iath.virginia.edu/pliny.html'
     pliny_stabiae_letter:
       order: 797
       status: checked

@@ -2,7 +2,10 @@ order: 145
 events:
   newton_cambridge:
     order: 22
+    build_step: 2
     year: 1687
+    date: '1687-05-28'
+    stay: 4
     lon: 0.12
     lat: 52.2
     region: europe
@@ -12,15 +15,16 @@ events:
     tier: 3
     channels: {V: 2, G: 1}
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {stat: {wit: 7}}}
-        - {id: p2, kind: persuade, req: {item: neural_chip}}
-        - {id: p3, kind: hold, req: {stat: {will: 7}}}
+        - {id: p1, kind: hold, guard: true, day: 38, req: {"any":[{"job":["archivist","university_lecturer"]},{"trait":["vigil","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 28, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["vigil","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 67, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["vigil","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: apple, traits: [bold]}
         - {id: hand, traits: [methodical, skeptical]}
         - {id: diagram}
-    refs: [newton_principia_1687, newton_stukeley_ms142, newton_humphrey_letters]
+    refs: [newton_principia_1687, newton_stukeley_ms142, newton_humphrey_letters, newton_cambridge_halley_errata, newton_cambridge_first_edition]
     text:
       en:
         name: One law for the apple and the Moon
@@ -30,9 +34,24 @@ events:
         relic: A glass prism
         relic_desc: A triangle of glass that splits white light into colours.
         points:
-          p1: "Follow the page of the third book where the Moon and a falling body are brought under one law"
-          p2: "Use the translation chip to read the Latin, and learn from a college servant where the copied sheets are bound for"
-          p3: "Wait until the fair copy is packed and sent off to the press"
+          p1: 'Pack Newton’s last corrections by volume and page and get them from Cambridge to Halley before the London press finishes'
+          p2: 'Ask the copyist to check vulnerable figure numbers against the draft. Leave a list matching figures and pages for queries to Newton'
+          p3: 'When the first edition arrives, agree with Newton how readers can submit corrections he can verify by proposition and page'
+        points_fail:
+          p1: 'Two versions of a correction go out. Halley cannot assemble the last errata, and the office recalls the employee.'
+          p2: 'A figure number sits on the edge of the fair copy. The next proof loses the reference and nobody can tell which drawing it meant.'
+          p3: 'Correspondents use their own references. Early corrections remain scattered between letters and Newton’s copy.'
+        shift:
+          p1:
+            was: 'On July 5, 1687, Halley wrote that the Principia was finished and that the last errata had arrived in time.'
+          p2:
+            was: 'Humphrey Newton helped make the fair copy. Proofs and letters about errata show revisions continued during printing.'
+            now: 'Halley receives a list keyed to both versions and can direct a question about a figure to the exact Cambridge draft.'
+          p3:
+            was: 'Newton annotated his own first edition. Preparing a revised edition took years.'
+            now: 'The college keeps a corrections book indexed by proposition. Readers can record a problem and see which changes Newton later approved and when.'
+            who: newton_cambridge
+            bio: 'Newton wrote the Principia in Cambridge and Halley saw it through the press in London. Newton kept revising the work after printing.'
         vignettes:
           apple: '“Did an apple hit him on the head?” you ask a college servant, a man made up for the game. He goes on sweeping. “I could not say. You tell me why the Moon does not come down.” You have no answer ready, and go back to the page. The apple is not written down by anyone for another sixty-five years.'
           hand: 'The fair copy is not in the hand of the man whose name will be on the book. The servant says the one who writes it out is Mr Humphrey, a Newton too and no relation. You note it down and do not disturb him.'
@@ -45,9 +64,24 @@ events:
         relic: 一块玻璃三棱镜
         relic_desc: 一块三角的玻璃，能把白光分成各种颜色。
         points:
-          p1: "读懂第三卷里把月亮和落体放在同一条定律下的那一页"
-          p2: "靠翻译芯片读拉丁文，向学院的杂役问清誊好的稿子要送到哪里去"
-          p3: "等到誊清的稿子装箱，送去付印"
+          p1: '把牛顿最后一批勘误按卷和页打包，从剑桥及时发给伦敦的哈雷'
+          p2: '请誊清人把容易错抄的图号反查原稿，留一张可问牛顿的图、页对照表'
+          p3: '首版送达后，和牛顿约定如何收录读者的更正，让他能在剑桥按命题和页码核验答复'
+        points_fail:
+          p1: '同一处改字邮寄了两个版本，哈雷收不齐末批勘误，事务所因同步失败召回员工。'
+          p2: '一条图号靠边写在誊本上，换一轮校样就找不到原指哪一张图。'
+          p3: '读者信各用各的页码，较早的改动散落在信和自己的样书里。'
+        shift:
+          p1:
+            was: '1687 年 7 月 5 日，哈雷来信说《原理》已经印完，末批勘误及时赶上。'
+          p2:
+            was: '亨弗里·牛顿参与誊清，首版校样和勘误往来记录表明印刷前仍有修订。'
+            now: '哈雷收到一张同号对照表，能把图版的询问直接指到剑桥的底稿。'
+          p3:
+            was: '牛顿在自己的首版留下注记。后来修订再版仍是长期工作。'
+            now: '学院里有一份按命题编号的更正簿。借书的人可以填下所见的错误，得到牛顿同意的修改会连日期另记。'
+            who: newton_cambridge
+            bio: '《原理》在剑桥写成，在伦敦付印。哈雷经办印刷，书出以后牛顿仍修改它。'
         vignettes:
           apple: '你问学院的一位杂役：「听说苹果砸了他的头？」这位杂役是游戏里编出来的。他接着扫地：「砸没砸我不知道。你倒说说，月亮怎么不掉下来？」你一时答不上，回头去看那一页。苹果这件事，要再过六十五年才有人写下来。'
           hand: '誊清的稿子不是书上署名那个人的笔迹。杂役说，抄写的是汉弗莱先生，也姓牛顿，不是亲戚。你把这一条记在本子上，没有去打扰他。'
@@ -112,6 +146,18 @@ bystanders:
     text: {en: 'A college servant made up for the game, who sweeps the court and carries the sheets, and has no name.', zh: 游戏里编出来的一位学院杂役，扫院子，也搬稿子，没有名字。}
 wiki:
   refs:
+    newton_cambridge_halley_errata:
+      order: 10
+      status: checked
+      text:
+        en: 'Cambridge University Library exhibit on Halley’s letters and Newton’s corrections https://wwwe.lib.cam.ac.uk/CUL/exhibitions/Footprints_of_the_Lion/gravity_glory.html'
+        zh: '剑桥大学图书馆哈雷通信与勘误 https://wwwe.lib.cam.ac.uk/CUL/exhibitions/Footprints_of_the_Lion/gravity_glory.html'
+    newton_cambridge_first_edition:
+      order: 11
+      status: checked
+      text:
+        en: 'Library of Congress first edition https://www.loc.gov/item/2021667054/'
+        zh: '美国国会图书馆首版 https://www.loc.gov/item/2021667054/'
     newton_principia_1687:
       order: 110
       status: checked

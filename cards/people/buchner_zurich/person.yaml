@@ -2,20 +2,23 @@ order: 38
 events:
   buchner_zurich:
     order: 147
+    build_step: 2
     year: 1837
+    date: '1837-01-16'
+    stay: 2
     lon: 8.55
     lat: 47.37
     region: europe
     field: literature
     tier: 1
     channels: {E: 2, G: 1}
-    regret: true
-    refs: [buchner_zurich_fragments]
+    refs: [buchner_zurich_fragments, buchner_zurich_woyzeck_drafts, buchner_zurich_january_letter]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"stat":{"wit":6}},{"trait":["methodical","scholarly","streetwise"]},{"trait":["curious","skeptical","handy"]}]}}
-        - {id: p2, kind: care, req: {"any":[{"trait":["cheerful","calm"]},{"trait":["calm","attached","cheerful"]},{"trait":["cheerful"]}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist"]},{"trait":["bold","vigil"]},{"trait":["bold","ambitious","handy"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 26, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 12, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 15, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: order, traits: [methodical, scholarly]}
         - {id: pause, traits: [bold, artistic]}
@@ -29,9 +32,24 @@ events:
         relic: "A bundle of scenes"
         relic_desc: "Loose scenes in a cramped hand, in no fixed order."
         points:
-          p1: 'Identify which exercise page belongs to which draft'
-          p2: 'Help a reader try both orders without discarding a page'
-          p3: 'Keep the interruption visible in the reading copy'
+          p1: 'When Büchner falls ill, keep each group of Woyzeck drafts together as his Zürich papers are handed over'
+          p2: 'Note the first and last page of each group and where names change so a copyist can follow each draft as a whole'
+          p3: 'While Büchner is still well enough, ask him to select scenes an editor can read first and mark the joins he left unfinished'
+        points_fail:
+          p1: 'Different drafts are combined for a single fair copy. The earliest set goes missing, and the office recalls the employee.'
+          p2: 'The copy joins names from different drafts. The next person cannot tell which pages belong together.'
+          p3: 'He hopes to publish several plays. The drafts have no reading order he has approved.'
+        shift:
+          p1:
+            was: 'Büchner left several sets of Woyzeck drafts. The latest is close to a fair copy and remains incomplete.'
+          p2:
+            was: 'The layers of the manuscript troubled early copyists, and the play took years to reach print.'
+            now: 'The first handover includes numbered groups. A copyist can keep alternative wording with the draft it came from.'
+          p3:
+            was: 'In January 1837 Büchner wrote from Zürich that he meant to publish some plays soon. Woyzeck did not reach print through those plans.'
+            now: 'The editor’s copy records Büchner’s order and his marks where the work stops. Readers have a starting sequence and can still see the gaps.'
+            who: buchner_zurich
+            bio: 'Büchner taught in Zürich and worked on plays in his last months. Woyzeck survives in manuscripts without a final version.'
         vignettes:
           order: 'The reader has put the two copies together and numbered the scenes in ink. You add a separate label to each source and write the proposed order on a removable slip. The next reader can undo it. You bring home that slip; you still do not have a final order.'
           pause: 'You know future theatres will have to decide what goes next. The reader asks if your answer is the author’s. You try both beginnings aloud and mark where they leave different questions. You can take two pauses home, and no finished script.'
@@ -44,9 +62,24 @@ events:
         relic: "一叠零散的场景稿"
         relic_desc: "字迹局促的散页，没有固定的顺序。"
         points:
-          p1: '辨认练习纸各属哪一稿'
-          p2: '让试读的人把两种顺序都读一遍，保留每一页'
-          p3: '让试读本看得出文字在哪里断开'
+          p1: '毕希纳病倒以后，趁转交苏黎世住处的纸件时，把《沃伊采克》的几组草稿逐叠留存'
+          p2: '给每组稿纸记起讫和换名处，让后来誊写的人能按同一组阅读'
+          p3: '请毕希纳在身体尚可时挑出适合先给编辑读的场次，并标出只写到一半的接缝'
+        points_fail:
+          p1: '几叠不同稿纸被拿去作一套誊稿，退回来时最早的一组失散。事务所因同步失败召回员工。'
+          p2: '抄本把来自不同草稿的人名并在一起，接手的人找不到哪几页是同一稿。'
+          p3: '他想把几部戏送去出版，留下的几套草稿却没有一份自己的阅读顺序。'
+        shift:
+          p1:
+            was: '毕希纳在去世前留下多组《沃伊采克》草稿，最后一组近乎誊清但仍不完整。'
+          p2:
+            was: '未定稿里的不同层次给早期誊写者留下困难，作品多年后才进入刊本。'
+            now: '初次交接带上按组编号的页次。誊写的人能把不同写法留在对应的稿层。'
+          p3:
+            was: '1837 年一月，毕希纳从苏黎世写信说计划尽快刊出几部戏。《沃伊采克》没有随当时的计划成书。'
+            now: '给编辑的副本留有毕希纳自己的场次次序和未定标记。读者能从这份次序开始，未完成的地方原样留着。'
+            who: buchner_zurich
+            bio: '毕希纳在苏黎世任教，并在去世前继续写戏。《沃伊采克》以多组稿件存下，后人必须决定怎样读这些没有最后定稿的页面。'
         vignettes:
           order: '试读人把两份拢在一起，用墨写好了场次。你为两份抄件各补一张出处签，把试排的顺序另写在能取下的纸上。下一个人还可以改排。你带回纸条，仍没有拿到定稿的场序。'
           pause: '你知道后来的剧院也得选下一场怎么接。试读人问你这是不是作者定的。你把两个起头各念一遍，标明它们各把什么问题留给台下。带回的是两个停顿，没有一本完整剧本。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented reader who wants one order for a fragmented script.', zh: '虚构的试读人，想给支离的场次排出一个读法。'}
 wiki:
   refs:
+    buchner_zurich_woyzeck_drafts:
+      order: 10
+      status: checked
+      text:
+        en: 'Scholarly survey of the Woyzeck manuscripts https://literaturlexikon.uni-saarland.de/lexika/collectanea/werke/georg-buechner-woyzeck-1836/37/vorwort'
+        zh: '《沃伊采克》稿本考证 https://literaturlexikon.uni-saarland.de/lexika/collectanea/werke/georg-buechner-woyzeck-1836/37/vorwort'
+    buchner_zurich_january_letter:
+      order: 11
+      status: checked
+      text:
+        en: 'Münster research citing the Zürich letter and edition history https://lawandliterature.eu/index.php/de/content?catid=11&id=46%3Awoyzeck&view=article'
+        zh: '明斯特研究所引苏黎世书信及版史 https://lawandliterature.eu/index.php/de/content?catid=11&id=46%3Awoyzeck&view=article'
     buchner_zurich_fragments:
       order: 620
       status: checked

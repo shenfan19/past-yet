@@ -2,20 +2,23 @@ order: 48
 events:
   chekhov_badenweiler:
     order: 126
+    build_step: 2
     year: 1904
+    date: '1904-06-21'
+    stay: 1
     lon: 8.21
     lat: 47.8
     region: europe
     field: literature
     tier: 2
     channels: {E: 3, G: 2}
-    regret: true
-    refs: [chekhov_badenweiler_letter]
+    refs: [chekhov_badenweiler_letter, chekhov_complete_letters_1904, chekhov_rossolimo_july]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, req: {"trait":["attached","artistic","sensitive"]}}
-        - {id: p2, kind: notice, req: {"any":[{"job":["physician","nurse"]},{"trait":["quiet","wanderer"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: hold, guard: true, day: 4, req: {"any":[{"job":["translator","archivist","nurse"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 16, req: {"any":[{"job":["translator","proofreader","archivist"]},{"trait":["methodical","patient"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: care, day: 20, req: {"any":[{"job":["translator","archivist"],"stat":{"will":7,"wit":7}},{"trait":["methodical","patient"],"stat":{"will":8}}]}}
       vignettes:
         - {id: address, traits: [methodical, handy]}
         - {id: garden, traits: [kind, charismatic]}
@@ -29,9 +32,24 @@ events:
         relic: "A pince nez"
         relic_desc: "Small round spectacles on a cord."
         points:
-          p1: 'Get a second copy of the return address onto the envelope'
-          p2: 'Find which path from the garden reaches the letter box'
-          p3: 'Prepare the quiet room while the family keeps the writing table free'
+          p1: 'Just after Chekhov settles in, check the return address on his letter to his sister Maria and get it out while he still has the strength to finish it.'
+          p2: 'After the move to the Hotel Sommer, leave forwarding instructions at the villa and check the date on the receipt for his previous registered letter.'
+          p3: 'Turn the questions in his July 11 letter into a short telegram to someone who knows the route. Give him an answer while he is still in Badenweiler.'
+        points_fail:
+          p1: 'The luggage is still being handled under the old hotel’s arrangements. The unfinished letter goes with it. Maria receives no address from the villa, and the office recalls the employee.'
+          p2: 'Both places log their mail as before. Chekhov has to look for replies and write again about the date on the receipt.'
+          p3: 'His questions about sailing dates, a cabin and the length of the crossing go out by ordinary mail. While he waits, he has no answer to read.'
+        shift:
+          p1:
+            was: 'On June 25, 1904 (June 12 in the Russian calendar), Chekhov wrote to Maria from Badenweiler with the full return address at Villa Friederike.'
+          p2:
+            was: 'Chekhov later wrote that he had moved to the Hotel Sommer. In a letter to Maria he also said that he may have written the wrong month on a registered-mail receipt.'
+            now: 'The villa sends replies on to the Hotel Sommer. The number of the registered letter is beside the forwarding entry, so Maria can identify the letter in question.'
+          p3:
+            was: 'On July 11 Chekhov asked Rossolimo about sailing from Marseille to Odessa. He died in Badenweiler on July 15 and never made that journey.'
+            now: 'A reply by telegram gives the departure day, the length of the crossing and a cabin for two. Chekhov and his wife read it at the hotel and talk through which sailing they would choose if they could leave.'
+            who: chekhov_badenweiler
+            bio: 'Chekhov kept writing letters to arrange ordinary business from Badenweiler. He also looked into a route home with his wife.'
         vignettes:
           address: 'The house assistant has copied the town but left off the villa. You put the two slips side by side and catch the missing line before the post goes. You take home a blank address slip with the route sketched on the back. The reply itself is still on its way when you leave.'
           garden: 'The house assistant starts to carry the writing table out to make room. You find a dry place for the spare chair instead. The letter can finish where it began. On your own slip you draw the corner of the table. You will never see the person who opens that envelope.'
@@ -44,9 +62,24 @@ events:
         relic: "一副夹鼻眼镜"
         relic_desc: "一副系着细绳的小圆眼镜。"
         points:
-          p1: '在信封上再抄一份可供核对的回邮地址'
-          p2: '从花园走一遍到邮筒的路'
-          p3: '替家属打点安静的房间，腾出写字桌'
+          p1: '契诃夫刚安顿下来时，把他写给妹妹玛丽娅的回信地址逐字核对，趁他还有力气写完，把信交出去。'
+          p2: '搬往索默旅馆后，在别墅留一张转信通知，再请他确认上一封挂号信的回执日期。'
+          p3: '用他 7 月 11 日列在信里的问题请熟悉航线的人发一封短电报，让他在巴登魏勒得到想问的返程消息。'
+        points_fail:
+          p1: '行李还按上一处旅馆收放，写字桌上的信封被一并带走。玛丽娅没有收到他从别墅寄出的地址，事务所因同步失败召回员工。'
+          p2: '两处旅馆都只照旧登记信件。契诃夫既要找回复，又要另写一封信更正回执日期。'
+          p3: '他关于船期、舱位和航行天数的问题随普通信寄出。等回信的日子里，手边仍没有一份可以读的答复。'
+        shift:
+          p1:
+            was: '1904 年 6 月 25 日（俄历 6 月 12 日），契诃夫从巴登魏勒写信给玛丽娅，写明弗里德里克别墅的详细回信地址。'
+          p2:
+            was: '契诃夫后来写明已搬到索默旅馆。他还在给玛丽娅的信里提及挂号信回执上的月份可能写错。'
+            now: '别墅柜台把写给他的回信交到索默旅馆。挂号信号码也已抄在转信记录旁，玛丽娅可以按号码认出是哪一封。'
+          p3:
+            was: '7 月 11 日，契诃夫写信给罗索利莫询问由马赛乘船去敖德萨的细节。他于 7 月 15 日在巴登魏勒去世，未能作这趟旅行。'
+            now: '负责航线的人回电报来，把开船日、路程和两人可用的舱位写得清楚。契诃夫和妻子在旅馆把这张纸读完，也商量了若能动身最想选哪一班。'
+            who: chekhov_badenweiler
+            bio: '停留在巴登魏勒期间，契诃夫仍写信处理日常事务，并着手查一条和妻子一起回去的路线。'
         vignettes:
           address: '别墅帮工只抄了镇名，漏掉别墅名。你把两份纸条并在一起，在邮差走前补上一行。你带回一张空白地址条，背面画着投信的路线。直到收队，回信还在路上。'
           garden: '帮工想搬走写字桌腾地方。你替那把多出来的椅子找了个干燥的角落，桌上的信得以在原处写完。你在自己的便笺上画下一个桌角。收信的人，你没能见到。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'The boarding-house assistant, carrying ordinary post on a crowded round.', zh: '虚构的别墅帮工，正把旅客寄出的家信凑在一起去投邮。'}
 wiki:
   refs:
+    chekhov_complete_letters_1904:
+      order: 2
+      status: checked
+      text:
+        en: 'Gorky Institute edition of the 1904 letters and their dual dates https://biblio.imli.ru/images/abook/russliteratura/Chehov_PSSiP_v_30_tt_S_v_18tt_S_t_30_P_t_12_1983.pdf'
+        zh: '高尔基世界文学研究所 1904 年书信校本与双历日期 https://biblio.imli.ru/images/abook/russliteratura/Chehov_PSSiP_v_30_tt_S_v_18tt_S_t_30_P_t_12_1983.pdf'
+    chekhov_rossolimo_july:
+      order: 3
+      status: checked
+      text:
+        en: 'July 11 letter to Grigory Rossolimo https://feb-web.ru/feb/chekhov/texts/sp0/pic/pic-1302.htm?cmd=p'
+        zh: '7 月 11 日致格里戈里·罗索利莫的信 https://feb-web.ru/feb/chekhov/texts/sp0/pic/pic-1302.htm?cmd=p'
     chekhov_badenweiler_letter:
       order: 400
       status: checked

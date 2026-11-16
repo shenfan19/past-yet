@@ -2,19 +2,23 @@ order: 226
 events:
   mitchell_nantucket:
     order: 216
+    build_step: 2
     year: 1847
+    date: '1847-09-18'
+    stay: 3
     lon: -70.1
     lat: 41.28
     region: americas
     field: science
     tier: 2
     channels: {C: 1, V: 2}
-    refs: [mitchell_nantucket_comet]
+    refs: [mitchell_nantucket_comet, mitchell_medal_correspondence, mitchell_smithsonian_medal]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: hold, req: {"stat":{"will":6}}}
-        - {id: p3, kind: trust, req: {"trait":["kind","sensitive"]}}
+        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 16, req: {"any":[{"trait":["methodical","scholarly","patient"]},{"job":["archivist","journalist"]}]}}
+        - {id: p3, kind: persuade, day: 15.5, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: field, traits: [methodical, scholarly]}
         - {id: post, traits: [curious, kind]}
@@ -28,9 +32,24 @@ events:
         relic: "A small telescope"
         relic_desc: "A small brass telescope with a trace of sea salt on the tube."
         points:
-          p1: 'Mark two ordinary stars before circling the faint object'
-          p2: 'Keep the first field sketch until a second view is possible'
-          p3: 'Help prepare a dated account for the next reader'
+          p1: 'Get the discovery notice onto the first mail boat so the mainland observatory can follow the comet'
+          p2: 'Put the first sighting and later reports in date order before a faster delivery obscures the earlier observation'
+          p3: 'Send a second notice to the designated Danish recipient on the first boat and spare Mitchell the later medal appeal'
+        points_fail:
+          p1: 'The observations remain in the family''s journal, but the first boat sails without the notice. The observatory misses its first chance to follow it, and the office recalls the employee.'
+          p2: 'The European report circulates first. Editors have to find the first letter to check when the sighting occurred.'
+          p3: 'Only the observatory gets the notice. The judges cannot grant the medal under the usual rules because the designated recipient was not notified.'
+        shift:
+          p1:
+            was: 'On 3 October 1847 Mitchell''s father wrote to the Cambridge observatory about the discovery on the 1st. His letter left on the first mail after the sighting.'
+          p2:
+            was: 'On 9 December 1847 Astronomische Nachrichten printed the Cambridge observations with notice of Mitchell''s sighting on 1 October.'
+            now: '{staff} attaches a dated record before the first confirmation is forwarded, so an editor can check the order while assembling the reports.'
+          p3:
+            was: 'In 1848 the judges ruled that the notice had gone to the wrong recipient. Mitchell eventually received the Danish medal after a separate appeal.'
+            now: '{staff} checks the rules and helps the family put another notice on the same boat. The judges can consider the claim under the usual rules because the notice arrived through the proper channel.'
+            who: mitchell_nantucket
+            bio: 'Mitchell received recognition on the strength of a timely report. She began recording when she saw an object, when she sent the notice, and who received it.'
         vignettes:
           field: 'The helper has drawn the faint spot by itself. You ask what he would use to point the instrument back to it. He adds two stars and a direction before the cloud comes over. You copy those marks. You still do not have a later position to compare.'
           post: 'You know word will have to travel off the island. The helper wants to record a discovery before he has described what was seen. You put the date and the field on a separate slip and leave the next line for verification. It remains blank when the packet goes down to the shore.'
@@ -43,9 +62,24 @@ events:
         relic: "一架小望远镜"
         relic_desc: "一架小小的黄铜望远镜，镜筒上有海盐的痕迹。"
         points:
-          p1: '先标两颗参照星，再圈出暗目标'
-          p2: '留住第一次的星野图，等能再看一遍'
-          p3: '帮下一位读记录的人补好日期和所见'
+          p1: '护住第一次离岛邮船上的发现通知，让大陆天文台来得及追看彗星'
+          p2: '把首见时刻和后来各处的观测按发件日排清，让抢先送达的报道不会盖过更早的观测'
+          p3: '赶在第一班邮船开走前，再寄一份给丹麦方面指定的收件人，免去米切尔后来为金牌补申'
+        points_fail:
+          p1: '家中有观测记录，但第一班邮船把通知落下。天文台没赶上那轮观测，员工因同步失败被召回。'
+          p2: '较快到达的欧洲消息先被传开，编辑只能再去追原信核对发现日期。'
+          p3: '通知只寄给天文台，评奖人因未按要求及时通报而不能按例授奖。'
+        shift:
+          p1:
+            was: '1847 年 10 月 3 日，米切尔的父亲写信把 1 日的发现告知剑桥天文台，信随发现后首班离岛邮件寄出。'
+          p2:
+            was: '1847 年 12 月 9 日，《天文消息》刊出剑桥天文台的资料，注明米切尔在 10 月 1 日已见到彗星。'
+            now: '{staff}在信随第一轮核验材料转寄前附上带日期的发现记录，让编辑在合并报道时能先核对时间。'
+          p3:
+            was: '1848 年，评奖人认定收件人不合规定，米切尔最终是在另行陈请后获得丹麦金牌。'
+            now: '{staff}查清通知应送何处，帮家人把另一个写好地址的信封赶上同一班船。评奖人已有在期限内通报的记录，可以按例审理。'
+            who: mitchell_nantucket
+            bio: '米切尔凭按期送到的发现报告获得认可。她开始在自己的记录里同时保留观测日、发件日和收件人。'
         vignettes:
           field: '帮工只画了一个淡点。你问他下次靠什么把镜头转回这里。云遮上来前，他补了两颗星和一个方向。你把这些抄走，还没有第二次位置可以对照。'
           post: '你知道消息得送出海岛。帮工还没写清看见的东西，就想把发现先记上去。你把日期和星野另写一张，留下一行等复核。纸包送去岸边时，那一行仍空着。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'A fictional assistant whose first drawing has no stars to anchor the faint spot.', zh: '虚构的帮工，第一张图只画暗点，还找不到参照星。'}
 wiki:
   refs:
+    mitchell_medal_correspondence:
+      order: 829
+      status: checked
+      text:
+        en: 'Edward Everett, award correspondence reproduced in Maria Mitchell: Life, Letters, and Journals, chapter 25. https://www.cyberlibrary.org/en/books/maria-mitchell-life-letters-and-journals-10202/chapters/25/'
+        zh: '爱德华·埃弗里特关于彗星金牌的通信，见《玛丽亚·米切尔生平、书信与日记》第 25 章。 https://www.cyberlibrary.org/en/books/maria-mitchell-life-letters-and-journals-10202/chapters/25/'
+    mitchell_smithsonian_medal:
+      order: 830
+      status: checked
+      text:
+        en: 'Smithsonian Institution Archives, Maria Mitchell and the Smithsonian, 1849 medal correspondence pamphlet. https://siarchives.si.edu/blog/maria-mitchell-and-smithsonian'
+        zh: '史密森学会档案馆，玛丽亚·米切尔与史密森学会，含 1849 年奖章通信册。 https://siarchives.si.edu/blog/maria-mitchell-and-smithsonian'
     mitchell_nantucket_comet:
       order: 745
       status: checked

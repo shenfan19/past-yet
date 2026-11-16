@@ -2,19 +2,23 @@ order: 42
 events:
   cajal_barcelona:
     order: 46
+    build_step: 2
     year: 1889
+    date: '1889-09-01'
+    stay: 3
     lon: 2.17
     lat: 41.39
     region: europe
     field: science
     tier: 2
     channels: {V: 2}
-    refs: [cajal_barcelona_primary]
+    refs: [cajal_barcelona_primary, cajal_memories_berlin, cajal_1889_unizar]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["painter"]},{"stat":{"finesse":7}}]}}
-        - {id: p3, kind: endure, req: {"stat":{"will":6}}}
+        - {id: p1, kind: hold, guard: true, day: 25, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 25.2, req: {"any":[{"job":["archivist","translator","illustrator"]},{"trait":["methodical","scholarly"]}]}}
+        - {id: p3, kind: persuade, day: 26, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: crossing, traits: [skeptical, vigil]}
         - {id: legend, traits: [artistic, methodical]}
@@ -28,9 +32,24 @@ events:
         relic: A fine drawing pen
         relic_desc: A pen so fine it drew every branch of a neuron.
         points:
-          p1: 'Follow one branch back to its beginning'
-          p2: 'Keep annotation marks separate from the figure'
-          p3: 'Leave a precise question for another look'
+          p1: 'Assemble the funds and slides after public funding fails and protect Cajal''s demonstration in Berlin'
+          p2: 'Index the slides before they travel so colleagues who miss Berlin can inspect the observations'
+          p3: 'Find a collaborator to translate the illustrated notes so foreign colleagues can check them before the meeting'
+        points_fail:
+          p1: 'He cannot make the trip at his own expense and sends only the written account. The branch falls out of sync and the office recalls the employee.'
+          p2: 'A reader can see the drawing but cannot find the slide and has to wait for a report from the demonstration.'
+          p3: 'Readers abroad only start seeking out the Spanish reports after Berlin and still have to write for explanations one by one.'
+        shift:
+          p1:
+            was: 'On 26 September 1889 Cajal received leave, paid for his own journey, and in October showed slides at the Berlin meeting.'
+          p2:
+            was: 'In 1889 Cajal published research and illustrations in the histology journal he financed himself.'
+            now: '{staff} cross-references the slides and published plates. The next person in Barcelona can find the original images by number.'
+          p3:
+            was: 'In 1889 Cajal reported that his Spanish papers had attracted little attention abroad before the Berlin demonstration helped circulate his results.'
+            now: '{staff} has a translator check the note with Cajal against the figures, then sends it to colleagues willing to examine the slides. After the meeting Cajal has a regular route for circulating illustrations and text.'
+            who: cajal_barcelona
+            bio: 'Cajal developed a regular translation collaboration while in Barcelona. He could find readers abroad willing to check his slides as he sent out later papers.'
         vignettes:
           crossing: 'The student joins two strokes where they cross. You ask them to follow each back to its own beginning. One of the connections comes off the page.'
           legend: 'A bold arrow hides a faint branch. You give the arrow a place outside the figure and ask the student to add a key, so both marks can be read.'
@@ -43,9 +62,24 @@ events:
         relic: 一支极细的绘图笔
         relic_desc: 细到能画出神经元每一条分支的笔。
         points:
-          p1: '沿一根分支找到它的起点'
-          p2: '把标注与组织结构线分开'
-          p3: '留一个明确问题，方便下次复看'
+          p1: '在公费未获准时帮卡哈尔把旅费与玻片分包凑齐，保住柏林会上那次亲手演示'
+          p2: '给外借玻片留下图号，免得没有去柏林的人只读到卡哈尔的结论'
+          p3: '为难以进入外语期刊的图文找一位合译者，让同业在会前就能按图复核'
+        points_fail:
+          p1: '自费凑不齐长途行程，卡哈尔只能把文字寄过去。柏林没有那次演示，员工因同步失败被召回。'
+          p2: '收到图的人找不回相应玻片，只能等别人转述演示结果。'
+          p3: '外地同行会后才有人设法读懂西班牙文稿，复核仍得逐封通信。'
+        shift:
+          p1:
+            was: '1889 年 9 月 26 日，卡哈尔获得出行许可，自筹旅费并在 10 月柏林会议上展示显微切片。'
+          p2:
+            was: '1889 年，卡哈尔在自费办的《正常与病理组织学季刊》刊载研究和图版。'
+            now: '{staff}把玻片和刊出的图逐件对照；巴塞罗那接手的人能按编号复看原来观察的位置。'
+          p3:
+            was: '1889 年，卡哈尔自述先前的西班牙文研究在国外少受注意，柏林演示后来帮助传播他的结果。'
+            now: '{staff}让译者同卡哈尔对照原图校过短文，先寄给愿意核对切片的同行。演示之后，卡哈尔有一条持续寄发图文的渠道。'
+            who: cajal_barcelona
+            bio: '卡哈尔在巴塞罗那为研究图文建立了稳定的外语协作。后来的手稿可以先在国外找到愿意拿切片复核的同行。'
         vignettes:
           crossing: '学生把交叉的两笔连起来。你让他分别往回找起点。两条脉络对过一遍，有一处连线被他擦掉了。'
           legend: '粗箭头盖住了一根细分支。你把箭头移到图外，请学生补图例，两种线就都看得见了。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented student trying to copy a branching figure.', zh: '一位虚构的学生，正试着描一幅有多处分叉的图。'}
 wiki:
   refs:
+    cajal_memories_berlin:
+      order: 839
+      status: checked
+      text:
+        en: 'Santiago Ramón y Cajal, Recuerdos de mi vida, part II, chapter XI, preparations and demonstration in Berlin. https://www.gutenberg.org/files/60675/60675-h/60675-h.htm'
+        zh: '圣地亚哥·拉蒙-卡哈尔，《我的生活回忆》第二部，赴柏林和显微演示。 https://www.gutenberg.org/files/60675/60675-h/60675-h.htm'
+    cajal_1889_unizar:
+      order: 840
+      status: checked
+      text:
+        en: 'University of Zaragoza Library, Cajal’s 1889 histology journal and plates. https://biblioteca.unizar.es/sites/biblioteca/files/users/Medicina.13/boletin_cajal.pdf'
+        zh: '萨拉戈萨大学图书馆，卡哈尔 1889 年组织学季刊及图版。 https://biblioteca.unizar.es/sites/biblioteca/files/users/Medicina.13/boletin_cajal.pdf'
     cajal_barcelona_primary:
       order: 154
       status: checked

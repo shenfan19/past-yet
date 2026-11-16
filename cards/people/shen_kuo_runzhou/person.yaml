@@ -2,6 +2,7 @@ order: 177
 events:
   shen_kuo_runzhou:
     order: 75
+    build_step: 2
     year: 1088
     lon: 119.45
     lat: 32.2
@@ -9,12 +10,13 @@ events:
     field: science
     tier: 2
     channels: {L: 1}
-    refs: [shen_kuo_runzhou_primary]
+    refs: [shen_kuo_runzhou_primary, shen_kuo_runzhou_dream_brook_archive, shen_kuo_runzhou_runzhou_context]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["methodical","curious","wanderer"]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
-        - {id: p3, kind: hold, req: {"any":[{"job":["archivist"]},{"trait":["bold"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["archivist","carpenter"]},{"trait":["curious","handy"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 27, req: {"any":[{"job":["archivist","carpenter","proofreader"]},{"trait":["curious","handy","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 72, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["curious","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: directions, traits: [skeptical, methodical]}
         - {id: ends, traits: [handy, vigil]}
@@ -28,9 +30,24 @@ events:
         relic: A magnetised needle
         relic_desc: A needle that finds the same direction every time.
         points:
-          p1: 'Identify the south-seeking end of the needle'
-          p2: 'Keep the marked direction clear when the sheet is turned'
-          p3: 'Leave a caption that preserves the small deviation'
+          p1: 'Check two readings with Shen in Runzhou and keep the eastward deviation and the reference direction together in his notes'
+          p2: 'Separate observations made under different conditions so the maker can point out where a reading was disturbed'
+          p3: 'Give travelers a short form to return with the place, reference direction and reading they observed'
+        points_fail:
+          p1: 'The scribe replaces the unusual reading with due south, and the office recalls the employee.'
+          p2: 'Only the conclusion survives. Someone repeating the observation cannot see which conditions gave different results.'
+          p3: 'Only the Runzhou notes remain. Other observers have no common way to compare a different result.'
+        shift:
+          p1:
+            was: 'Volume 24 of Dream Pool Essays records that a needle often points slightly east of due south.'
+          p2:
+            was: 'The same passage compares several ways of making an observation and records their drawbacks.'
+            now: 'A record of the conditions lets another observer file their differing result separately.'
+          p3:
+            was: 'Shen recorded the deviation he observed. The passage supplies no register across several sites.'
+            now: 'Several dated reports identify where they came from. Shen can send back a comparison and mark differences the recorded conditions do not yet explain.'
+            who: shen_kuo_runzhou
+            bio: 'In retirement at Dream Brook, Shen collected observations, including differences between customary accounts and what could be seen.'
         vignettes:
           directions: 'You ask the reader which line is due south. He has drawn just one. You add a second line on the paper, and the small angle the passage describes becomes visible.'
           ends: 'The reader turns the paper over to show you the drawing and swaps the two ends as he retells it. You label the south-seeking tip before he copies it into the notebook.'
@@ -43,9 +60,24 @@ events:
         relic: 一根磁化的针
         relic_desc: 每次都指向同一个方向的针。
         points:
-          p1: '认出磁针指南的一端'
-          p2: '纸转动之后仍能认清标记的方向'
-          p3: '把「微微偏东」写进图注'
+          p1: '在润州同沈括重看两次指向，把微偏东的那一次和参照方向一并收入笔记'
+          p2: '把不同摆放条件下的观察分开写，让做针的人可以指出哪次有扰动'
+          p3: '给能辨方向的行旅送一份短表，在下一趟请他们把地点、所用参照和观察差异写回给沈括'
+        points_fail:
+          p1: '写手照熟悉的说法写成正南，把异常的读数删掉，事务所因同步失败召回员工。'
+          p2: '记录只剩结论，重试的人找不到原先安放时遇到的差别。'
+          p3: '只有润州的这组笔记，别处有人遇到不同的偏差也没有现成办法共同核对。'
+        shift:
+          p1:
+            was: '《梦溪笔谈》卷二十四记磁针所指常略偏正南之东。'
+          p2:
+            was: '沈括的同一段笔记比较了几种观察办法及其缺点。'
+            now: '手边有一组写明条件的对照，旁人看到不一样的结果可以把那条单独记下来。'
+          p3:
+            was: '沈括记录所见的偏差，传下来的这一段没有一套跨地观测名录。'
+            now: '几处各有带来处的报告。沈括把异同写给寄回的人，并注明哪些差别还不能从观察条件解释。'
+            who: shen_kuo_runzhou
+            bio: '沈括在润州梦溪园整理笔记。他保留了方家做法与自己的观察差异，给读者留下可追查的描述。'
         vignettes:
           directions: '你问读者哪一条是正南。他纸上只有一道线。你添上另一道，书里那个微小的偏角才看得出来。'
           ends: '读者把纸转过来给你看，口头重述时却换了针的两头。你趁他还没誊进本子，标明哪一头指南。'
@@ -74,6 +106,18 @@ bystanders:
     text: {en: 'An invented reader trying to draw the needle''s direction.', zh: '一位虚构的读者，正照书画针的指向。'}
 wiki:
   refs:
+    shen_kuo_runzhou_dream_brook_archive:
+      order: 10
+      status: checked
+      text:
+        en: 'Facsimile of Dream Pool Essays, volume 24 https://www.shidianguji.com/zh/book/NGJ892411999032499228573/chapter/1lvqhdgfinz8o'
+        zh: '《梦溪笔谈》卷二十四卷影 https://www.shidianguji.com/zh/book/NGJ892411999032499228573/chapter/1lvqhdgfinz8o'
+    shen_kuo_runzhou_runzhou_context:
+      order: 11
+      status: checked
+      text:
+        en: 'China Text Project biography and Runzhou chronology https://ctext.org/datawiki.pl?if=en&remap=gb&res=388420'
+        zh: '中国哲学书电子化计划所录润州年表 https://ctext.org/datawiki.pl?if=en&remap=gb&res=388420'
     shen_kuo_runzhou_primary:
       order: 128
       status: checked

@@ -2,20 +2,23 @@ order: 138
 events:
   miyazawa_kenji_hanamaki:
     order: 165
+    build_step: 2
     year: 1933
+    date: '1933-08-01'
+    stay: 2
     lon: 141.12
     lat: 39.39
     region: asia
     field: literature
     tier: 1
     channels: {C: 3, E: 2}
-    regret: true
-    refs: [miyazawa_kenji_hanamaki_primary]
+    refs: [miyazawa_kenji_hanamaki_primary, miyazawa_hanamaki_timeline, miyazawa_iwate_library]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["streetwise","handy","scholarly"]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p3, kind: care, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["farmer","biologist"],"stat":{"wit":6}},{"trait":["methodical","patient"],"stat":{"will":7}}]}}
+        - {id: p2, kind: care, day: 39, req: {"any":[{"trait":["kind","patient","methodical"]},{"job":["farmer","tutor"]}]}}
+        - {id: p3, kind: notice, day: 49, req: {"any":[{"trait":["scholarly","methodical"],"stat":{"wit":8}},{"trait":["patient","methodical"],"stat":{"will":8}}]}}
       vignettes:
         - {id: call, traits: [artistic, quiet]}
         - {id: window, traits: [curious, wanderer]}
@@ -29,9 +32,24 @@ events:
         relic: "A pocket notebook"
         relic_desc: "A small notebook of poems in pencil."
         points:
-          p1: 'Find where the reader first hears the station'
-          p2: 'Keep the town and the carriage distinct in the notes'
-          p3: 'Read the transition so a listener can follow it'
+          p1: 'Sort out the farmers'' questions so Miyazawa can still hold the fertilizer consultation when he is too ill for a long conversation'
+          p2: 'Arrange for farmers who cannot visit Miyazawa to leave questions that others can take up after him'
+          p3: 'While Miyazawa can still recognize the drafts of Night on the Galactic Railroad, ask him to leave their order clear'
+        points_fail:
+          p1: 'The visitors leave without a consultation, the branch falls out of sync, and the office recalls the employee.'
+          p2: 'The waiting farmers disperse and later visitors have to start their inquiries over.'
+          p3: 'The pages survive, and later editors still have to infer the order from paper and revisions.'
+        shift:
+          p1:
+            was: 'In August 1933, Miyazawa continued advising farmers about fertilizer as his health worsened.'
+          p2:
+            was: 'In September 1933, Miyazawa died and could no longer answer the farmers in person.'
+            now: '{staff} asks farmers who already spoke with Miyazawa to leave written answers for neighbors who missed him.'
+          p3:
+            was: 'In September 1933, Miyazawa died, leaving several unfinished drafts of Night on the Galactic Railroad.'
+            now: '{staff} asks him which stacks came first and records the order on a separate wrapper. Later editors use those notes to keep the versions distinct.'
+            who: miyazawa_kenji_hanamaki
+            bio: 'Miyazawa left a guide to the order of the drafts before he died. When the story appeared after his death, readers could follow his revisions in sequence.'
         vignettes:
           call: 'You read the station call from across the room. The reader looks up before you explain who is there. They leave the explanation for later and keep the call in their reading.'
           window: 'The reader tries to point to where the route enters the sky. You ask what Giovanni can see through the window first. They put the hill and the carriage on separate scraps.'
@@ -44,9 +62,24 @@ events:
         relic: "一本口袋笔记本"
         relic_desc: "一本小笔记本，里面是铅笔写的诗。"
         points:
-          p1: '找出读者第一次听到站名的位置'
-          p2: '在笔记里分清城镇和车厢'
-          p3: '把转换处读到听的人能跟上'
+          p1: '在宫泽无力长谈时，理清来访农户的问题，让这次肥料咨询照常办下去'
+          p2: '替无法当面请教宫泽的农户安排递问答的办法，让后来的人也能查到答复'
+          p3: '趁宫泽还能辨认草稿，请他给《银河铁道之夜》留下各稿的先后'
+        points_fail:
+          p1: '来访的人等不到能问清楚的时候，咨询没办成，这条分支与史实脱节，员工被召回。'
+          p2: '等候的农户各自散去，后来的人只好从头打听。'
+          p3: '稿页留了下来，后来整理的人仍要从纸张和改笔判断稿本先后。'
+        shift:
+          p1:
+            was: '1933 年 8 月，宫泽贤治病情转重，仍应答农户的肥料咨询。'
+          p2:
+            was: '1933 年 9 月，宫泽贤治去世，未能继续亲自答复农户。'
+            now: '{staff}请几名已经来过的农户留下一份书面问答，供没赶上的邻人查阅。'
+          p3:
+            was: '1933 年 9 月，宫泽贤治去世，《银河铁道之夜》留有多次改写的未定稿。'
+            now: '{staff}请宫泽指出哪叠在先、哪叠在后，把次序另记在封纸上。后来整理作品的人照着这份记号把不同稿本分别保存。'
+            who: miyazawa_kenji_hanamaki
+            bio: '宫泽生前留下了《银河铁道之夜》各稿的排序说明。作品身后刊行时，读者可以由早到晚读到他留下的改写。'
         vignettes:
           call: '你在屋子那头念出站名。还没解释谁在那里，读者就抬了头。他再读时把解释往后放，先保留那一声。'
           window: '读者想指出铁道从哪里通进天空。你问乔班尼先从窗里看见了什么。他把小山和车厢分别写在两张纸上。'
@@ -75,6 +108,18 @@ bystanders:
     text: {en: 'An invented reader picturing the transition without a stage.', zh: '一位虚构的读者，试着在没有舞台的情况下想象这次转换。'}
 wiki:
   refs:
+    miyazawa_hanamaki_timeline:
+      order: 804
+      status: checked
+      text:
+        en: 'Hanamaki City, Miyazawa Kenji chronology, 1933 entries. https://www.city.hanamaki.iwate.jp/miyazawakenji/about_kenji/1003946.html'
+        zh: '花卷市，《宫泽贤治年谱》，1933 年条。 https://www.city.hanamaki.iwate.jp/miyazawakenji/about_kenji/1003946.html'
+    miyazawa_iwate_library:
+      order: 805
+      status: checked
+      text:
+        en: 'Iwate Prefectural Library, Kenji Miyazawa, chronology. https://www.library.pref.iwate.jp/english/intro-k.html'
+        zh: '岩手县立图书馆，宫泽贤治生平年表。 https://www.library.pref.iwate.jp/english/intro-k.html'
     miyazawa_kenji_hanamaki_primary:
       order: 196
       status: checked

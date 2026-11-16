@@ -2,20 +2,23 @@ order: 10
 events:
   abel_froland:
     order: 103
+    build_step: 2
     year: 1829
+    date: '1829-01-01'
+    stay: 4
     lon: 8.65
     lat: 58.6
     region: europe
     field: math
     tier: 2
     channels: {E: 2, C: 3, G: 2}
-    regret: true
-    refs: [abel_froland_quintic, abel_froland_berlin]
+    refs: [abel_froland_quintic, abel_froland_berlin, abel_froland_municipal_record, abel_froland_prize_final_years, abel_paris_academy_records]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"trait":["glib","ambitious"]}}
-        - {id: p2, kind: endure, req: {"item":"cyber_lung"}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["vigil","ambitious"]},{"job":["archivist"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 5, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
+        - {id: p2, kind: notice, day: 11, req: {"any":[{"trait":["methodical","patient","scholarly"]},{"job":["archivist","translator"]}]}}
+        - {id: p3, kind: persuade, day: 66, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":8,"will":8}},{"trait":["charismatic","methodical"],"stat":{"will":9}}]}}
       vignettes:
         - {id: example, traits: [methodical, scholarly]}
         - {id: job, traits: [bold, charismatic]}
@@ -29,9 +32,24 @@ events:
         relic: "A sealed letter"
         relic_desc: "An unopened offer, tied with a thread."
         points:
-          p1: 'Explain why a soluble example leaves the general question open'
-          p2: 'Stay long enough to check the copied example by substitution'
-          p3: 'File the worked example alongside the statement it illustrates'
+          p1: 'Help Abel check his last short proof while he is ill so the paper can be sent'
+          p2: 'While the short paper is at hand, tie it to the Paris submission record so anyone searching has a reference'
+          p3: 'Ask the friends seeking a post for Abel to send an interim letter so he knows before he dies that they are still trying'
+        points_fail:
+          p1: 'The paper stops before it can be checked, and the central result of the Paris memoir loses this early public record. The office recalls the employee after a loss of sync.'
+          p2: 'People searching for the Paris memoir still have to work through the old intake records with little more than a title.'
+          p3: 'No word reaches Froland in time. The formal confirmation comes too late.'
+        shift:
+          p1:
+            was: 'On 6 January 1829 at Froland, Abel wrote his last mathematical paper, restating a main result of his Paris memoir.'
+          p2:
+            was: 'Around 1829 Abel restated the Paris memoir''s central result; the manuscript was hard to locate and did not appear in print until 1841.'
+            now: '{staff} links the new paper to the earlier submission date and leaves a reference with each copy, narrowing any later search.'
+          p3:
+            was: 'Abel died on 6 April 1829. The letter confirming a post in Berlin was written two days later.'
+            now: '{staff} asks a contact to report on the efforts already underway. Abel reads that his friends are still working to find him a post.'
+            who: abel_froland
+            bio: 'Before he died, Abel heard how his Berlin friends were trying to keep an opportunity open for him to continue his research. The formal confirmation still came after his death.'
         vignettes:
           example: 'On the practice sheet a copyist has set a fifth power equal to 32. You substitute 2 and get 32, then underline the word ‘general’ on the separate slip about Abel’s result. The copyist files the two together. You can bring back the checked example. The news from Berlin has yet to be written.'
           job: 'Knowing the date of Crelle’s letter, you ask the copyist to leave a place in the file for Berlin. He asks whether to label it as news already received. You leave the pocket empty and write down why. The letter will be written two days after Abel dies.'
@@ -44,9 +62,24 @@ events:
         relic: "一封封着的信"
         relic_desc: "一封没拆开的聘书，用细线系着。"
         points:
-          p1: '说清一道能解的例题为何不能回答一般情形'
-          p2: '留到能把例题答案代回原式核算'
-          p3: '把算例与它所说明的命题放在一起'
+          p1: '在阿贝尔病中写最后一篇短稿时，帮他把证明核对到可以寄出'
+          p2: '趁短稿还在手边，帮阿贝尔把它同巴黎长稿的投递记录对上，给找稿的人留下索引'
+          p3: '请替阿贝尔奔走的人先寄一封进展信，让他生前知道柏林还有人为他的职位努力'
+        points_fail:
+          p1: '短稿停在校对之前，巴黎长稿的要点也没有这份及时的公开记录。行程同步失败，员工被召回。'
+          p2: '寻找巴黎长稿的人只知道大致题目，仍要从旧收件记录一页页找。'
+          p3: '弗罗兰一直等不到柏林的消息，正式的好消息来得太晚。'
+        shift:
+          p1:
+            was: '1829 年 1 月 6 日，阿贝尔在弗罗兰写下最后一篇数学短稿，重述巴黎长稿的主要结果。'
+          p2:
+            was: '1829 年前后，阿贝尔重述巴黎长稿的要点，原稿一度难寻，直到 1841 年才印行。'
+            now: '{staff}把短稿和旧投递日期对在一处，两边各留一份索引。以后查稿的人能凭交件记录缩小范围。'
+          p3:
+            was: '1829 年 4 月 6 日阿贝尔去世，柏林确认职位的信于两日后写成。'
+            now: '{staff}请联系人先把奔走过程写回弗罗兰。阿贝尔读到朋友们正在为他争取职位，知道这件事还有人在做。'
+            who: abel_froland
+            bio: '阿贝尔去世前收到柏林朋友奔走的进展，知道他们还为他留着继续研究的机会。正式任命仍在他去世之后。'
         vignettes:
           example: '抄写人练习纸上有一道五次幂等于 32 的题。你代入 2 得到 32，又在写着阿贝尔结论的另一张纸上划出「一般」二字。抄写人把两张收在一起。你带回这道验过的例题。此时，柏林那封信还没有写。'
           job: '你知道克雷勒哪天写信，便请抄写人在夹里给柏林留一处。他问该不该写成消息已到。你把那一格空着，另记原因。那封信要等到阿贝尔去世两天后才写。'
@@ -84,6 +117,24 @@ bystanders:
     text: {en: 'A fictional copyist binding worked exercises together with short statements.', zh: '虚构的抄写人，正把算例与短命题归在一起。'}
 wiki:
   refs:
+    abel_froland_municipal_record:
+      order: 819
+      status: checked
+      text:
+        en: 'Froland municipality, Niels Henrik Abel, chronology for January 1829. https://www.froland.kommune.no/tjenester/kultur-idrett-og-fritid/frolands-verk/niels-henrik-abel/'
+        zh: '弗罗兰市政府，尼尔斯·亨利克·阿贝尔年表。 https://www.froland.kommune.no/tjenester/kultur-idrett-og-fritid/frolands-verk/niels-henrik-abel/'
+    abel_froland_prize_final_years:
+      order: 820
+      status: checked
+      text:
+        en: 'Norwegian Academy of Science and Letters, The Biography of Niels Henrik Abel: His last years. https://abelprize.no/page/biography-niels-henrik-abel-his-last-years'
+        zh: '挪威科学与文学院，阿贝尔生平最后几年。 https://abelprize.no/page/biography-niels-henrik-abel-his-last-years'
+    abel_paris_academy_records:
+      order: 821
+      status: checked
+      text:
+        en: 'Abel et l’Académie des Sciences, study of academy records and publication in 1841. https://www.persee.fr/doc/rhs_0048-7996_1948_num_1_4_2675'
+        zh: '《阿贝尔与法国科学院》，院务记录与 1841 年刊印研究。 https://www.persee.fr/doc/rhs_0048-7996_1948_num_1_4_2675'
     abel_froland_quintic:
       order: 530
       status: checked

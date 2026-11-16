@@ -2,19 +2,23 @@ order: 126
 events:
   lovelace_london:
     order: 32
+    build_step: 2
     year: 1843
+    date: '1843-07-23'
+    stay: 3
     lon: -0.13
     lat: 51.5
     region: europe
     field: math
     tier: 2
     channels: {V: 2}
-    refs: [lovelace_london_primary]
+    refs: [lovelace_london_primary, lovelace_1843_correspondence, lovelace_print_1843]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":8}}}
-        - {id: p2, kind: persuade, req: {"trait":["ambitious","cosmopolitan","streetwise","scholarly"]}}
-        - {id: p3, kind: care, req: {"trait":["calm","patient","faithful"]}}
+        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["translator","proofreader","archivist"]},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["proofreader","university_lecturer"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 35, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: repeat, traits: [methodical, scholarly]}
         - {id: music, traits: [artistic, curious]}
@@ -28,9 +32,24 @@ events:
         relic: A punched card
         relic_desc: A card of holes, meant to tell an engine what to do.
         points:
-          p1: 'Identify a value that gets used again'
-          p2: 'Explain an operation to the proofreader'
-          p3: 'Leave a reading guide with the corrected copy'
+          p1: 'Deliver the translation and notes to the London printer together, with Lovelace’s authorization to proceed through the withdrawal dispute.'
+          p2: 'Before the last proof goes back, have Lovelace and the compositor read across the table in Note G and mark the entries most likely to slip into another column.'
+          p3: 'Put her division of work in a short proposal for a possible backer. Lovelace would organize the undertaking, Babbage would lead the engineering, and both would agree to a first meeting.'
+        points_fail:
+          p1: 'The printer receives both instructions to proceed and instructions to wait. The translation and notes are pulled from the issue, and the office recalls the employee.'
+          p2: 'The compositor resets several symbols and nobody reads the rows from the beginning. She has to check the formulas and table against each other in the last few hours.'
+          p3: 'Her proposal ends with Babbage’s reply. When someone else asks about backing the work, they have no plan both are willing to hand over.'
+        shift:
+          p1:
+            was: 'In August 1843 Babbage asked her to request the editor’s permission to withdraw. Lovelace refused, and the translation and her initialed notes appeared together that year.'
+          p2:
+            was: 'On August 15 Lovelace told her mother that the printers had summoned her for further supervision and that correcting the mathematical formulas was consuming her time.'
+            now: 'The printer keeps a proof she has checked column by column. When a symbol has to be reset, the compositor can use it to check the neighboring columns.'
+          p3:
+            was: 'On August 14 Lovelace proposed that she and other backers conduct the business so Babbage could devote his time to engineering. He declined her terms.'
+            now: 'They agree to show one prospective backer the drawings and an outline of costs. The visitor takes away an account of who would do what and agrees to decide about money after a technical review.'
+            who: lovelace_london
+            bio: 'Lovelace translated the article and wrote its technical notes. She also looked for a way to organize work on an engine that still existed largely on paper.'
         vignettes:
           repeat: 'You mark where a group of operations repeats. The proofreader has counted only one pass and uses your mark to retrace the later rows.'
           music: 'You ask whether the columns might stand for musical notes. The proofreader asks how the machine would know the rules for them. You jot that question beside the diagram to bring home.'
@@ -43,9 +62,24 @@ events:
         relic: 一张穿孔卡
         relic_desc: 一张打了孔的卡片，用来告诉机器做什么。
         points:
-          p1: '找出一个稍后还会用到的值'
-          p2: '向校对员讲清一项操作'
-          p3: '在校样旁留下阅读提示'
+          p1: '把洛芙莱斯亲自同意付印的译稿和注释一起交给伦敦印坊，护住她在撤稿争议中作出的决定。'
+          p2: '赶在最后一次交校样前，让她和排字工把注 G 的表横着读一遍，逐列标出容易错行的格子。'
+          p3: '把她提议的分工抄成一份可交给潜在出资人的短约，由她组织联络，由巴贝奇负责工程，再请两人议定第一次会面。'
+        points_fail:
+          p1: '印坊收到继续付印与暂缓付印两种指示，最后把译稿与注释一并从本期撤下。事务所因同步失败召回员工。'
+          p2: '排字工换过几格符号，却无人从头对读。她只能在最后几小时重新查公式和对应的表格。'
+          p3: '她写给巴贝奇的建议止于回信。再有意向出资的人打听时，双方没有一份他们都肯交出的工作安排。'
+        shift:
+          p1:
+            was: '1843 年 8 月，巴贝奇要求她请编辑同意撤稿。洛芙莱斯拒绝，译稿与署有她姓名缩写的注释同年合刊。'
+          p2:
+            was: '洛芙莱斯 8 月 15 日写给母亲，说印坊临时召她做最后一轮监督，数学公式的校对十分费力。'
+            now: '印坊留存一份她核过的逐列样表。排字工再改动一格，就能用同一张样表检查邻列。'
+          p3:
+            was: '8 月 14 日，洛芙莱斯向巴贝奇提议由自己和合作者承担组织事务，让他专心工程。巴贝奇未接受这些条件。'
+            now: '两人同意先请一位出资人看设计图与费用草案。来客拿到一份分工清楚的说明，并约定工程评估后再决定是否承担费用。'
+            who: lovelace_london
+            bio: '洛芙莱斯同时写译稿和技术注释。除了说明机器可以怎样工作，她还试着为一项停在纸上的工程寻找继续筹办的办法。'
         vignettes:
           repeat: '你标出一组操作从哪里重复。校对员刚才只数了一遍，便顺着你的记号重走后面的几行。'
           music: '你问这几列能不能代表乐音。校对员反问，机器怎么知道乐音该遵循什么规则？你把这个问题记在图旁，准备带回去。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented proofreader following the table by hand.', zh: '一位虚构的校对员，正在手工跟读表格。'}
 wiki:
   refs:
+    lovelace_1843_correspondence:
+      order: 2
+      status: checked
+      text:
+        en: 'Research with Lovelace’s and Babbage’s August correspondence https://www.scss.tcd.ie/brian.coghlan/repository/J_Byrne/A_Lovelace/J_Fuegi_%26_J_Francis_2003.pdf'
+        zh: '刊有洛芙莱斯与巴贝奇八月通信的研究 https://www.scss.tcd.ie/brian.coghlan/repository/J_Byrne/A_Lovelace/J_Fuegi_%26_J_Francis_2003.pdf'
+    lovelace_print_1843:
+      order: 3
+      status: checked
+      text:
+        en: 'The printed translation and notes in Scientific Memoirs https://www.yorku.ca/pclassic/Lovelace/lovelace.htm'
+        zh: '《科学回忆录》所刊译文与注释 https://www.yorku.ca/pclassic/Lovelace/lovelace.htm'
     lovelace_london_primary:
       order: 120
       status: checked

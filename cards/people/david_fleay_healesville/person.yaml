@@ -1,0 +1,126 @@
+order: 235
+events:
+  david_fleay_healesville:
+    order: 223
+    build_step: 2
+    year: 1943
+    date: '1943-12-20'
+    stay: 3
+    lon: 145.53
+    lat: -37.68
+    region: oceania
+    home: [pacific]
+    field: science
+    tier: 2
+    channels: {L: 1, C: 1}
+    refs: [fleay_platypus_1944, fleay_healesville_breeding, fleay_corrie_monument, fleay_adb]
+    scene:
+      star_rules: 2
+      points:
+        - id: p1
+          kind: hold
+          guard: true
+          day: 14
+          req:
+            any:
+              - {job: [carpenter, shipwright], stat: {finesse: 7}}
+              - {trait: [handy, calm], stat: {finesse: 8}}
+              - {job: [biologist], stat: {wit: 8}}
+        - id: p2
+          kind: care
+          day: 16
+          req: {any: [{trait: [patient, methodical, kind]}, {job: [farmer, biologist]}]}
+        - id: p3
+          kind: persuade
+          day: 83
+          req:
+            any:
+              - {trait: [methodical], stat: {will: 8}}
+              - {trait: [glib, charismatic], stat: {wit: 7}}
+              - {job: [biologist, university_lecturer], stat: {wit: 9}}
+    text:
+      en:
+        name: Let Corrie come out on her own
+        place: Healesville Sanctuary, Victoria
+        figure: David Fleay
+        story: 'In late 1943 Jill, a platypus at Healesville Sanctuary, hatched a young one later named Corrie. David Fleay and his team confirmed the birth in January 1944 when they opened the nest. On 26 February he first observed Corrie come out to swim.'
+        relic: A wooden feed scoop
+        relic_desc: A small wooden scoop with a worn handle.
+        points:
+          p1: 'Keep loose soil clear of the opening long enough for Fleay to get Corrie back into the burrow'
+          p2: 'Get dry leaves to the new entrance so Jill can replace the bedding lost when the nest was opened'
+          p3: 'Persuade the sanctuary to leave the burrow closed when Corrie hides on the day of the family display'
+        points_fail:
+          p1: 'Loose soil covers the opening before Fleay can return Corrie safely. The first successful rearing falls out of sync with history, and the office calls {staff} back that day.'
+          p2: 'Jill moves to a new entrance, and the young platypus has no bedding for weeks, as in the recorded history.'
+          p3: 'The advertised time passes and the sanctuary resorts to shovels. By the time Corrie is brought out, most visitors have gone.'
+        shift:
+          p1:
+            was: 'On 3 January 1944, Fleay returned the young platypus to the disturbed nest, and Jill went on rearing her.'
+          p2:
+            was: 'After the nest was opened on 3 January 1944, Jill cleared out the old bedding and her young went without bedding for weeks.'
+            now: '{staff} leaves dry leaves where Jill passes on her evening feeding rounds, and Jill carries some back to line the nest.'
+          p3:
+            was: 'In March 1944, Corrie retreated into the tunnels during the advertised family display and was dug out after most visitors had left.'
+            now: '{staff} uses the evening observation notes to persuade the keepers to leave the burrow closed and invite visitors to wait quietly by the pool. The sanctuary uses the same arrangement at later displays.'
+            who: david_fleay_healesville
+            bio: 'At Healesville, Fleay began using his evening observations to plan displays that let the animals emerge in their own time. His later demonstrations gave visitors a place to wait by the water.'
+      zh:
+        name: 等科里自己出来
+        place: 维多利亚州希尔斯维尔野生动物保护区
+        figure: 戴维·弗莱
+        story: '1943 年末，希尔斯维尔保护区的鸭嘴兽吉尔孵出一只幼兽，后来取名科里。1944 年 1 月，戴维·弗莱和同事打开巢穴，确认幼兽已经孵出。2 月 26 日，弗莱第一次观察到科里出洞游水。'
+        relic: 一把木饲料勺
+        relic_desc: 一把小木勺，柄已经磨光了。
+        points:
+          p1: '挡住落进洞口的松土，让弗莱来得及把科里送回巢里'
+          p2: '把干叶备在吉尔的新洞口，让它有材料补回开巢时失去的垫窝'
+          p3: '科里在全家亮相前躲进洞里，劝保护区放下铁锹，等它自己出来'
+        points_fail:
+          p1: '弗莱还没来得及把科里送回去，松土就堵住了洞口。这条分支失去了首次成功育成的记录，{staff}当天因同步失败被召回。'
+          p2: '吉尔另挖了洞口，科里像史实中一样，有好几周没有垫窝。'
+          p3: '约好的钟点过了，保护区还是用了铁锹。科里被带出来时，多数观众已经走了。'
+        shift:
+          p1:
+            was: '1944 年 1 月 3 日，弗莱把幼兽送回受扰的巢里，吉尔后来继续把它养大。'
+          p2:
+            was: '1944 年 1 月 3 日开巢后，吉尔清出了原有的垫窝，幼兽有好几周没有垫窝。'
+            now: '{staff}把干叶留在吉尔傍晚外出觅食的路上，吉尔衔了一些回去重新垫窝。'
+          p3:
+            was: '1944 年 3 月，全家亮相时科里躲进地道，保护区动土把它挖出来时，多数观众已经离开。'
+            now: '{staff}拿晚间观察记录说服饲养员收起铁锹，请已经到场的人在池边安静等候。此后的展示也沿用这个办法。'
+            who: david_fleay_healesville
+            bio: '弗莱在希尔斯维尔开始按晚间的观察记录安排展示，让动物自己决定什么时候露面。他后来把供访客等候的位置留在水边。'
+text:
+  en:
+    name: David Fleay
+    text: 'David Fleay (1907–1993) was an Australian naturalist. As director of the sanctuary at Healesville, he led the first successful breeding of a platypus in captivity and documented the young animal’s development in The Victorian Naturalist.'
+  zh:
+    name: 戴维·弗莱
+    text: '戴维·弗莱（1907—1993）是澳大利亚博物学家。任希尔斯维尔保护区主任期间，他主持了首次成功的鸭嘴兽人工繁育，随后在《维多利亚博物学家》记录幼兽的发育。'
+wiki:
+  refs:
+    fleay_platypus_1944:
+      order: 798
+      status: checked
+      text:
+        en: 'David Fleay, Observations on the Breeding of the Platypus in Captivity, The Victorian Naturalist 61 (1944), pp. 8–14, 29–37, 54–57, 74–78. https://upload.wikimedia.org/wikipedia/commons/b/be/The_Victorian_naturalist_%28IA_VictorianNatura61Fiel%29.pdf'
+        zh: '戴维·弗莱，《圈养鸭嘴兽繁育观察》，《维多利亚博物学家》第 61 卷（1944），第 8–14、29–37、54–57、74–78 页。https://upload.wikimedia.org/wikipedia/commons/b/be/The_Victorian_naturalist_%28IA_VictorianNatura61Fiel%29.pdf'
+    fleay_healesville_breeding:
+      order: 799
+      status: checked
+      text:
+        en: 'Queensland Parks and Wildlife Service, The David Fleay Story. https://parks.qld.gov.au/parks/david-fleay/about/culture'
+        zh: '昆士兰公园与野生动物管理部门，戴维·弗莱生平。https://parks.qld.gov.au/parks/david-fleay/about/culture'
+    fleay_corrie_monument:
+      order: 800
+      status: checked
+      text:
+        en: 'Badger Creek Centenary Committee, first platypus bred in captivity plaque (1994), with a transcription of The Herald of 11 March 1944. https://www.monumentaustralia.org/themes/display/113290-first-platypus-born-in-captivity/photo/0'
+        zh: '巴杰溪百年纪念委员会，首次成功繁育鸭嘴兽纪念牌（1994），附 1944 年 3 月 11 日《先驱报》转录。https://www.monumentaustralia.org/themes/display/113290-first-platypus-born-in-captivity/photo/0'
+    fleay_adb:
+      order: 801
+      status: checked
+      text:
+        en: 'Australian Dictionary of Biography, David Howells Fleay. https://adbonline.anu.edu.au/biography/fleay-david-howells-18625'
+        zh: '《澳大利亚传记辞典》，戴维·豪厄尔斯·弗莱。https://adbonline.anu.edu.au/biography/fleay-david-howells-18625'

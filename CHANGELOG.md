@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0, 2026-11-16
+
+- The record runs around a time axis: the date on the axis, history on the left, the employee on the right in a bubble, a won star with a gold edge and the steps of getting there and away set lighter; the buttons are all, history and the employee again.
+- Since 0.8.0: the shift of the timeline sets what history recorded beside what this timeline made of it, person cards keep IF lines for the lives the employees changed, and the record of an employee lists what they changed; test employees King and V in the developer mode; a cleared save or a remembered welcome no longer leaves the founder form dead.
+- Many stories of the catalogue have their making marked with build_step, and a good number have new stars drawn from what history left unresolved, waiting to be checked; a new story, David Fleay at Healesville.
+
 ## 0.8.3, 2026-11-16
 
 - The record is easier to read: the date stands in a column of its own, and in a story with a planned arrival the lines of the employee are dated on the calendar too; history is in the text face and the employee in a kai face with a dot, no coloured rule; a won star, a turn of the story and the cost of a desync are set heavier, the steps of getting there and away lighter, and the brief view, the default, folds those away without cutting a word.

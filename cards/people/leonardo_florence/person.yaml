@@ -2,19 +2,23 @@ order: 121
 events:
   leonardo_florence:
     order: 15
+    build_step: 2
     year: 1503
+    date: '1503-09-19'
+    stay: 4
     lon: 11.25
     lat: 43.78
     region: europe
     field: art
     tier: 3
     channels: {V: 1, S: 1}
-    refs: [leonardo_florence_primary]
+    refs: [leonardo_florence_primary, leonardo_florence_vespucci_note, leonardo_florence_louvre_portrait]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"stat": {"finesse": 7}}}
-        - {id: p2, kind: trust, req: {"gender": "f"}}
-        - {id: p3, kind: notice, req: {"any":[{"trait":["streetwise","skeptical"]},{"job":["musician","painter"]},{"item":"golden_apple"}]}}
+        - {id: p1, kind: hold, guard: true, day: 24, req: {"any":[{"job":["painter","archivist","illustrator"]},{"trait":["artistic","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: notice, day: 37, req: {"any":[{"job":["painter","archivist","proofreader"]},{"trait":["artistic","vigil","curious"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: persuade, day: 77, req: {"any":[{"job":["painter","archivist"],"stat":{"wit":7,"will":7}},{"trait":["artistic","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: shadow, traits: [artistic, quiet]}
         - {id: hands, traits: [curious, methodical]}
@@ -28,9 +32,24 @@ events:
         relic: A mirror-written notebook page
         relic_desc: A page of backwards script that needs a mirror to read.
         points:
-          p1: 'Describe one place where the shading changes'
-          p2: 'Help the apprentice check the position of the hands'
-          p3: 'Keep the sitting ready for a later session'
+          p1: 'Before the workshop takes on another civic painting, reserve a place for Lisa’s portrait where there is light to work and where the panel can be found in storage'
+          p2: 'Ask Leonardo to keep the papers for this portrait together so the panel can be moved and the reference material found later'
+          p3: 'Arrange a viewing of work in progress while the portrait is still in Florence and let Leonardo choose what to show the sitter'
+        points_fail:
+          p1: 'New work arrives and the unfinished panel is squeezed into the old rack. The portrait is damaged and the office recalls the employee.'
+          p2: 'A rack is reassigned to other work. When the panel is moved, the workshop loses the papers filed with it.'
+          p3: 'No time is set aside for a viewing. The people waiting for the picture can only ask the workshop how far it has come.'
+        shift:
+          p1:
+            was: 'Agostino Vespucci’s margin note from October 1503 records Leonardo painting Lisa del Giocondo.'
+          p2:
+            was: 'The Louvre dates the start of the portrait to about 1503 and records that Leonardo continued working on it.'
+            now: 'The incoming workshop hand can find the panel and its papers. They can be set back in order while the painter is away.'
+          p3:
+            was: 'The portrait underwent extended revision, then left Italy with Leonardo and entered the French collection.'
+            now: 'Lisa sees the portrait at this stage. Leonardo can continue to take the panel with him, while the workshop keeps a sketch of the version shown to her.'
+            who: leonardo_florence
+            bio: 'A contemporary Florentine note places the portrait of Lisa in Leonardo’s workshop. The painting continued to change and traveled far from that first setting.'
         vignettes:
           shadow: 'You ask the apprentice to show where the face ends and the background begins. They point, then hesitate. Instead of drawing a heavier line, they leave the transition for a second look.'
           hands: 'The visitor remembers the face but puts the hands in a different place. You set the practice drawing beside their memory sketch and let them find the changed lines.'
@@ -43,9 +62,24 @@ events:
         relic: 一页镜像书写的笔记
         relic_desc: 一页反着写的字，要对着镜子才读得出。
         points:
-          p1: '说清一处明暗过渡在哪里'
-          p2: '帮学徒核对双手的位置'
-          p3: '给下次坐像留好原来的位置'
+          p1: '在工房接下别的市政绘画工作以前，给丽莎的画像留一个白天可用、暂存时可认出的位子'
+          p2: '请画家把这次与丽莎有关的稿纸集中起来，既能搬走画板，也能留下下次继续时的对照'
+          p3: '替画家与经办人议定分段查看的机会，趁画像还在佛罗伦萨，让坐画的人看到一份由画家同意展示的阶段稿'
+        points_fail:
+          p1: '新工作一到，未干的画板被夹进旧架，画像在这次交接中受损，事务所召回员工。'
+          p2: '架子重新分给不同委托。有人挪开画像后，下一次找不回与它同批的稿纸。'
+          p3: '没约定何时可看，画像继续留在画家手中。委托一方只能听工房传来说到了哪一步。'
+        shift:
+          p1:
+            was: '韦斯普奇 1503 年十月的书上批注说，达·芬奇正在画丽莎·德尔·焦孔多。'
+          p2:
+            was: '卢浮宫将这幅画起始时间定在约 1503 年，并指出画家后来继续工作。'
+            now: '接手的人可以把画板与同批稿纸找到一起。画家暂时出门时也能让物件按原次序归位。'
+          p3:
+            was: '这幅肖像历经长时间修改，最终随画家离开意大利并进入法国收藏。'
+            now: '丽莎来时，画家给她看这一阶段已成形的肖像。以后画板仍可随画家带走，工房另留一份双方见过的稿样。'
+            who: leonardo_florence
+            bio: '佛罗伦萨的同时代批注证实画家在做丽莎的肖像。后来画作继续发展，流传远离最初的工房。'
         vignettes:
           shadow: '你请学徒指一指，脸从哪儿结束，背景从哪儿开始。他伸手又犹豫了，没有加重那道线，先把交界处留着再看。'
           hands: '访客记得脸，却把手的位置画变了。你把习作和他凭记忆画的图并排，让他自己找出线条挪到了哪里。'
@@ -74,6 +108,18 @@ bystanders:
     text: {en: 'An invented visitor watching an apprentice draw a practice portrait.', zh: '一位虚构的访客，在作坊看学徒练习画肖像。'}
 wiki:
   refs:
+    leonardo_florence_vespucci_note:
+      order: 10
+      status: checked
+      text:
+        en: 'Heidelberg University Library account of the dated Vespucci note https://www.uni-heidelberg.de/presse/ruca/ruca08-3/mona.html'
+        zh: '海德堡大学所录韦斯普奇纪年批注 https://www.uni-heidelberg.de/presse/ruca/ruca08-3/mona.html'
+    leonardo_florence_louvre_portrait:
+      order: 11
+      status: checked
+      text:
+        en: 'Louvre dating and provenance for the portrait https://collections.louvre.fr/ark:/53355/cl010062370'
+        zh: '卢浮宫年代与流传记录 https://collections.louvre.fr/ark:/53355/cl010062370'
     leonardo_florence_primary:
       order: 179
       status: checked
