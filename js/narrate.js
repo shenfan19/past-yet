@@ -239,8 +239,15 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   const R = T.ui.report;
   const c = T.catalog[ev.id];
   const staff = staffName(D, staffId);
-  // a day of the stay may be a fraction, to order the things of one day; it reads as the day it falls in
-  const dayWord = (d) => R.light_day.replace('{n}', String(Math.max(1, Math.floor(d))));
+  // a day of the stay may be a fraction, to order the things of one day; it reads as the day it falls in. A story with a planned arrival on the calendar
+  // reads its days as dates, like the lines of history beside them; one without, such as a story of the lunar calendar, counts the days from arriving
+  const utc = (y, m, d) => { const at = new Date(Date.UTC(2000, m - 1, d)); at.setUTCFullYear(y); return at; };
+  const [ay, am, ad] = ev.date ? String(ev.date).split('-').map(Number) : [];
+  const dayWord = (d) => {
+    if (!ev.date) return R.light_day.replace('{n}', String(Math.max(1, Math.floor(d))));
+    const at = utc(ay, am, ad); at.setUTCDate(at.getUTCDate() + Math.floor(d));
+    return T.date_day.replace('{m}', String(at.getUTCMonth() + 1)).replace('{mn}', T.month_names[at.getUTCMonth()]).replace('{d}', String(at.getUTCDate()));
+  };
   const lines = [];
   const EF = D.get('encyclopedia.event_facts')?.[ev.id];
   if (EF) {
@@ -250,13 +257,16 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
       const text = D.get('enc_text.fact_lines')?.[EF.module]?.[f.id];
       if (!text) continue;
       const [, mm, dd] = f.date.split('-').map(Number);
-      const onDay = typeof f.stay_day === 'number';
+      // a fact with a full date and no day of the stay is placed by its date against the planned arrival, so a date after the stay follows the leaving
+      const dated = typeof f.stay_day !== 'number' && ev.date && /^\d{4}-\d{2}-\d{2}$/.test(f.date) ? Math.round((utc(year, mm, dd) - utc(ay, am, ad)) / 86400000) : null;
+      const onDay = typeof f.stay_day === 'number' || dated !== null;
+      const stayDay = typeof f.stay_day === 'number' ? f.stay_day : dated;
       // a line written for the record carries its own date, so no label is put before it
       const label = '';
       // a fact is placed on its day of the stay when it says so; otherwise a fact of an earlier year or of the year of the event comes before the arrival, in order,
       // and a fact of a later year after the leaving
-      const after = onDay ? f.stay_day > stayDays : year > ev.year;
-      const order = onDay ? f.stay_day : after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -1e7 + (year - ev.year) * 400 + (mm || 0) * 31 + (dd || 0);
+      const after = onDay ? stayDay > stayDays : year > ev.year;
+      const order = onDay ? stayDay : after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -1e7 + (year - ev.year) * 400 + (mm || 0) * 31 + (dd || 0);
       lines.push({ t: order, year, text: label + text, tag: 'history', kind: 'fact', id: f.id, key: f.id, fact: f.id, after, why: { kind: 'date', expr: f.date + ' · ' + f.id } });
     }
   }

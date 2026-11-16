@@ -746,8 +746,9 @@ export function createUI(D, ctx, DEV = false) {
     const fulfil = ev.scene.points.filter((p) => !p.guard);
     if (c.shift_all && fulfil.length && fulfil.every((p) => pts.find((x) => x.id === p.id)?.hit)) rows.push(`<tr class="all"><td>${esc(U.report.shift.all)}</td><td>${put(c.shift_all)}</td></tr>`);
     const head = out ? U.report.shift.desync : won.length ? U.report.shift.moved.replace('{n}', String(won.length)) : U.report.shift.none;
-    return `<div class="sec">${esc(U.report.shift.title)} <span class="muted">${esc(head)}</span></div>
-      ${rows.length ? `<table class="shift"><thead><tr><th>${esc(U.report.shift.was)}</th><th>${esc(U.report.shift.now)}</th></tr></thead><tbody>${rows.join('')}</tbody></table>` : ''}`;
+    // a card of its own, the turn of the whole report: what history recorded on the left, what this timeline made of it on the right
+    return `<section class="shiftcard${out ? ' desync' : ''}"><div class="shifthead"><span class="shifttitle">${esc(U.report.shift.title)}</span><span class="shiftsub">${esc(head)}</span></div>
+      ${rows.length ? `<table class="shift"><thead><tr><th>${esc(U.report.shift.was)}</th><th>${esc(U.report.shift.now)}</th></tr></thead><tbody>${rows.join('')}</tbody></table>` : ''}</section>`;
   }
 
   // What a report needs from a small story: the record it kept, the words of its catalogue card, no model numbers.
@@ -759,6 +760,8 @@ export function createUI(D, ctx, DEV = false) {
       title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
       sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
       timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
+      // a fact written with care, a death or an illness, is a turn of the story and is set heavier in the record
+      factKey: (fact) => !!(fact && EF && EF.facts.find((f) => f.id === fact)?.level === 'careful'),
       saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
@@ -778,23 +781,41 @@ export function createUI(D, ctx, DEV = false) {
     const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
     const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
     const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
-    const tlLine = (t) => `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><div>${t.star ? '<span class="starmark">★</span> ' : ''}${esc(t.text)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : ''}${DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : ''}</div></li>`;
+    // Three weights, so the eye has somewhere to land: heavy for a won star and a turn of the story, light for the steps of getting there and away,
+    // which the brief view folds away, and the plain weight for the rest. History and the employee are told apart by the type, not by a coloured rule.
+    const LIGHT = ['arrive', 'journey', 'leave'];
+    const weightOf = (t) => (t.star || (t.tag === 'history' && S.factKey?.(t.fact)) || (t.kind === 'point_fail' && cur.report.outcomeId === 'desync') ? 'heavy' : LIGHT.includes(t.kind) && cur.report.outcomeId !== 'desync' ? 'light' : 'plain');
+    // the date goes to a column of its own: the lead of the sentence up to its first comma, when it reads as a date or a day of the stay
+    const splitLead = (text) => {
+      const m = String(text).match(/^([^，。：,:;]{1,24}?)(，|：|, |: )/);
+      if (!m || !/\d|十|廿|元|初|望|朔|晦/.test(m[1]) || !/[年月日天]|day|Day|\d{3,4}|January|February|March|April|May|June|July|August|September|October|November|December/.test(m[1])) return ['', text];
+      return [m[1], text.slice(m[0].length)];
+    };
+    const tlLine = (t) => {
+      const [lead, rest] = splitLead(t.text);
+      const refs = lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : '';
+      const why = DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : '';
+      return `<li class="${lineKind(t)} w-${weightOf(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}"><span class="when">${esc(lead)}</span><div class="what">${t.star ? '<span class="starmark">★</span> ' : ''}${esc(rest)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}</div></li>`;
+    };
     const accepted = cur.report.journey?.accepted !== false;
     const summaryNote = accepted && S.modelNote ? sup([noteOf('model', S.modelNote)]) : '';
     const nowYear = officeDate(cur.startDay).getUTCFullYear();
     const backYear = officeDate(cur.readyDay).getUTCFullYear();
-    const yearLine = (y) => `<li class="year"><div>${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
+    const yearLine = (y) => `<li class="year"><span class="when"></span><div class="what">${esc(U.report.year_mark.replace('{y}', String(y)))}</div></li>`;
     // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
     const via = S.anchor && D.get('antiques.antiques.' + S.anchor)?.kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
-    const departLine = `<li class="travel"><div>${esc(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place))}${S.sources}</div></li>`;
-    const backLine = `<li class="travel"><div>${esc(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff))}${summaryNote}</div></li>`;
+    // the lines of the office, set out like the others: the date in its column, the sentence beside it
+    const officeLi = (text, extra, weight) => { const [lead, rest] = splitLead(text); return `<li class="travel w-${weight}"><span class="when">${esc(lead)}</span><div class="what">${esc(rest)}${extra}</div></li>`; };
+    const departLine = officeLi(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place), S.sources, 'plain');
+    const backLine = officeLi(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff), summaryNote, 'plain');
     const fd = cur.favorDelta || 0;
-    const restLine = `<li class="travel"><div>${esc((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff))}</div></li>`;
+    const restLine = officeLi((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff), '', 'light');
     let lastYear = S.year;
     const record = S.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
     const tl = yearLine(nowYear) + departLine + yearLine(S.year) + record + yearLine(backYear) + backLine + restLine;
-    const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
-    const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', S.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
+    // the brief view is the default: the light steps fold away, every line of the story stays
+    const tlf = st.tlf === 'full' ? 'full' : 'brief';
+    const tlButtons = [['brief', U.report.line_filter.brief], ['full', U.report.line_filter.full]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
     // the body of the employee through the stay as LM reads it, a part of its own that config.ui.report_body turns on always, in the developer mode only, or never
     const bodyHtml = () => {
       const show = D.get('config.ui.report_body');

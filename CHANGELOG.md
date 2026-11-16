@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.3, 2026-11-16
+
+- The record is easier to read: the date stands in a column of its own, and in a story with a planned arrival the lines of the employee are dated on the calendar too; history is in the text face and the employee in a kai face with a dot, no coloured rule; a won star, a turn of the story and the cost of a desync are set heavier, the steps of getting there and away lighter, and the brief view, the default, folds those away without cutting a word.
+- The shift of the timeline is a card of its own after the record, what was on a dim ground and this timeline on a bright one.
+- A fact with a full date and no day of the stay is placed by its date, so the printing of Darwin and Wallace in August follows the leaving instead of opening the record.
+
 ## 0.8.2, 2026-11-16
 
 - Two test employees for the developer mode: King, every attribute at 1 with nothing carried, reads the floor of a story, and V, every attribute at 10 and read as having every job, trait, item and implant, reads its ceiling. They are in the agency only with ?devtools, take no wage, keep their mood, rest no day, are never sent by the automatic mode, and are never written into a save.
