@@ -174,7 +174,11 @@ for (const e of events) {
   if (e.scene?.points?.some((p) => p.guard && p.redeem)) err(`event ${e.id}: a point cannot be both guard and redeem`);
   if (e.scene?.points?.some((p) => p.guard) && !v2) err(`event ${e.id}: guard points need star_rules 2`);
   if (v2) {
-    if (!e.scene.points.some((p) => p.guard)) err(`event ${e.id}: star_rules 2 needs at least one guard point`);
+    // one to five stars by the weight of the story: a story of one star has a fulfil point only, one of three or more holds at least one recorded event
+    const nPts = e.scene.points.length, nGuard = e.scene.points.filter((p) => p.guard).length;
+    if (nPts === 1 && nGuard) err(`event ${e.id}: a story of one star has a fulfil point, not a guard point`);
+    if (nPts >= 3 && !nGuard) err(`event ${e.id}: a story of ${nPts} stars needs at least one guard point`);
+    if (nGuard === nPts) err(`event ${e.id}: every point is a guard point, so nothing can be fulfilled`);
     for (const lang of ['en', 'zh']) {
       const t = (lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {};
       for (const p of e.scene.points) if (!t.points_fail?.[p.id]) err(`event ${e.id} ${lang}: point ${p.id} has no points_fail text`);

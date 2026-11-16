@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.3, 2026-11-16
+
+- A story has one to five stars by its weight: one or two for a light story, three for a middling one, four or five for a heavy one. A story of one star has a fulfil point, one of three or more holds at least one recorded event. Time energy and the chance of an antique follow the share of the full stars, with a table for each count.
+
 ## 0.9.2, 2026-11-16
 
 - On a narrow screen the lines of the employee have a thin frame again instead of a ground. Sharing is the last button of a report and the one lit; sending again is a plain button.
