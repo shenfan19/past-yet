@@ -116,7 +116,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .stepper .n { min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
 .tl { list-style: none; padding: 0; margin: 0; }
 /* The record is one list in time order around a time axis: history on the left, leaning towards the axis, the employee on the right,
-   the date on the axis between them. The one emphasis is a won star. On a narrow screen both sides stand right of the axis, so the employee has a light ground. */
+   the date on the axis between them. The one emphasis is a won star. On a narrow screen both sides stand right of the axis, so the employee has a thin frame. */
 .tl { position: relative; }
 .tl::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--line); }
 .tl li { position: relative; display: grid; grid-template-columns: 1fr 7.6em 1fr; align-items: start; padding: 4px 0; line-height: 1.6; }
@@ -133,7 +133,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   .tl li .what.l:empty, .tl li .what.r:empty { display: none; }
   .tl li .when { grid-column: 1; grid-row: 1; margin-left: 0; }
   .tl li .what.l, .tl li .what.r { grid-column: 2; grid-row: 1; text-align: left; padding: 0 0 0 4px; }
-  .tl li .bubble { display: block; background: var(--paper2); border-radius: 6px; padding: 2px 8px; }
+  .tl li .bubble { display: block; border: 1px solid var(--line); border-radius: 4px 12px 12px 12px; padding: 2px 8px; }
 }
 /* the shift of the timeline: a card of its own, the left column the dim paper of what was, the right the bright card of this timeline */
 .shiftcard { margin: 18px 0 8px; border: 1px solid var(--line); border-top: 3px solid var(--stamp); border-radius: 8px; background: var(--card); padding: 12px 14px 10px; }

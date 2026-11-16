@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.2, 2026-11-16
+
+- On a narrow screen the lines of the employee have a thin frame again instead of a ground. Sharing is the last button of a report and the one lit; sending again is a plain button.
+
 ## 0.9.1, 2026-11-16
 
 - The record is plainer: no frame around the lines of the employee on a wide screen, a light ground on a narrow one where both sides stand right of the axis, and one emphasis only, a won star; the lighter steps and the heavier facts are gone.

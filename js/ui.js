@@ -726,7 +726,8 @@ export function createUI(D, ctx, DEV = false) {
       afterRecord: woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette]),
       numbers: e.report.numbers === false ? '' : numbersHtml(),
       cost: R.accounts.cost, restDays: R.accounts.restDays, pointText: (pid) => T.eras[cur.eraId].star_points[pid], hints: R.hints, warn: '', body: R.body,
-      buttons: `<button class="primary" data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button><button data-act="vs">${U.report.vs_prev}</button>`,
+      // sharing closes the reading of a report, so it comes last and is the one lit; sending again is a plain button
+      buttons: `<button data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="vs">${U.report.vs_prev}</button><button class="primary" data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
     };
   }
 
@@ -763,7 +764,7 @@ export function createUI(D, ctx, DEV = false) {
       saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
-      buttons: `<button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
+      buttons: `<button class="primary" data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
     };
   }
 
