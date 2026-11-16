@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.31, 2026-11-16
+
+- Texcoco 1472, Nezahualcoyotl, is rewritten and turned on: lord of Texcoco from 1431, his death in 1472 and the songs written down under his name in the late sixteenth century, with sync points for keeping time on the drum, keeping the practice sheets in order and helping a learner tell the voice in a song from the name beside it.
+
 ## 0.5.30, 2026-11-15
 
 - Tangier 1325, Ibn Battuta, is rewritten and turned on for one office day from 1 June: his leaving Tangier on 14 June 1325, alone, with neither companion nor caravan, and his coming home some thirty years later to dictate his travels, with sync points for getting the food and water skins ready, writing down the towns of the first stage and walking with him to the gate.

@@ -6,51 +6,54 @@ events:
     lon: -98.88
     lat: 19.51
     region: americas
+    home: [latin_america]
     field: literature
     tier: 2
     channels: {H: 1, L: 1}
     regret: true
-    refs: [nezahualcoyotl_texcoco_setting, nezahualcoyotl_texcoco_cantares]
+    # finished: in the game with release.ready_only. The day of his death is given by one source only, so the stay carries the year.
+    ready: true
+    refs: [nezahualcoyotl_texcoco_setting, nezahualcoyotl_texcoco_cantares, banxico_nezahualcoyotl, wikiwand_nezahualcoyotl]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"trait":["methodical","handy","skeptical"]}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["builder","carpenter","mechanic"]},{"trait":["quiet","vigil"]}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist","student"]},{"trait":["quiet","vigil"]}]}}
+        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["quiet","patient","kind"]},{"job":["musician"]},{"stat":{"finesse":6}}]}}
+        - {id: p2, kind: hold, day: 50, req: {"any":[{"job":["builder","carpenter","mechanic","musician"]},{"trait":["quiet","vigil","methodical"]}]}}
+        - {id: p3, kind: hold, redeem: true, day: 130, req: {"any":[{"job":["archivist","student"]},{"trait":["quiet","vigil","faithful"]}]}}
       vignettes:
-        - {id: voice, traits: [methodical, skeptical, curious]}
-        - {id: drum, traits: [handy, vigil, quiet]}
-        - {id: later}
+        - {id: voice, traits: [methodical, skeptical, curious], day: 60}
+        - {id: drum, traits: [handy, vigil, quiet], day: 40}
+        - {id: later, day: 90}
     text:
       en:
         name: 'The name beside a song'
         place: "Texcoco"
         figure: "Nezahualcoyotl"
-        story: 'Nezahualcoyotl ruled Texcoco until 1472. Later Nahuatl song collections preserve works associated with him. Their editors distinguish a name spoken within a song from a separate attribution.'
+        story: 'Nezahualcoyotl became lord of Texcoco in 1431 and ruled it until his death in 1472. He is remembered as a poet and a builder; a long dike across Lake Texcoco is said to have been laid out by him. Songs in Nahuatl gathered in the sixteenth century are associated with his name, though whether he made them cannot be settled.'
         relic: 'A singer’s cue strip'
-        relic_desc: 'An imagined practice slip with separate places for two names.'
+        relic_desc: 'A practice slip with separate places for two names.'
         points:
-          p1: 'Find whether the name comes from the verse or the singer’s note'
-          p2: 'Keep the practice sheets in order as the singers take turns'
-          p3: 'Help the next learner distinguish the remembered voice from the attribution'
+          p1: 'Be taken in by the singers of the house, then keep time on the drum for their practice'
+          p2: 'While the singers take turns, keep the practice sheets in order'
+          p3: 'In the last months, help a learner tell the voice inside a song from the name written beside it'
         vignettes:
-          voice: 'A singer steps forward when Citlali gets to the line that begins with I. Citlali asks if the practice sheet needs the singer’s name or the name recited in the song. You help her make separate places for them. When the piece starts again, the person who steps forward knows where to come in.'
-          drum: 'Tochtli notices that the paper stays in order while the first singer holds it down, but slides as she stands. You move a spare strip aside as a marker and leave the two pages where the next singer can find them. The second entry comes without someone calling a name across the room.'
-          later: 'You have read a later Nahuatl song collection in which names sometimes occur inside the lyrics. Citlali asks which person handed her this line. You record the name of the singer she actually heard. The later collection will be made after everyone in this room is gone.'
+          voice: '{staff} leaves two places on a practice sheet when a singer steps forward at a line that begins with I: one for the singer, one for the name in the song.'
+          drum: '{staff} lays a spare strip as a marker so the pages stay where the next singer can reach them when the first one stands.'
+          later: '{staff} writes down which singer a line was heard from, and leaves the question of who first made it open.'
       zh:
         name: '歌旁写着的名字'
         place: "特斯科科"
         figure: "内萨瓦尔科约特尔"
-        story: '内萨瓦尔科约特尔统治特斯科科至1472年。晚出的纳瓦特尔语歌集保留了与他有关的歌。整理者区分歌词里说出的名字和另行写下的归属。'
+        story: '内萨瓦尔科约特尔 1431 年成为特斯科科之主，统治到 1472 年去世。人们记得他是诗人，也是营造者，据说横贯特斯科科湖的一道长堤是他规划的。十六世纪收集的纳瓦特尔语歌谣里，有一些和他的名字连在一起，但是否出自他手，已无法确定。'
         relic: '一张接唱提示纸'
         relic_desc: '接唱纸，分开给两种名字留了位置。'
         points:
-          p1: '找出名字是在唱词里，还是歌者另记的'
-          p2: '歌者轮唱时，按次序留好练习页'
-          p3: '帮接手的学徒分清歌中借用的声音和归属'
+          p1: '先让宫里的歌者们认下，再在他们练唱时打鼓定拍'
+          p2: '歌者轮唱时，把练习页按次序留好'
+          p3: '最后那几个月，帮一个学徒分清歌里的“我”和歌旁写的名字'
         vignettes:
-          voice: '西特拉莉唱到以我开头的一句，有位歌者走上前来。她问，练习纸上该记歌者的名，还是歌里念的名。你帮她各留一处。再次唱起时，上前的人知道从哪里接唱。'
-          drum: '托奇特利看见头一位歌者坐着时压得住纸，一起身，纸就滑乱了。你挪一条边角纸作记号，两页都留在接唱人够得着的地方。第二个人按时开口，屋里没人隔着老远喊名字。'
-          later: '你读过后来的纳瓦特尔语歌集，有时名字就出现在歌词里。西特拉莉问，这一句是谁传给她的。你记下她亲耳听过的歌者。等到后来的歌集收成，这屋里的人都已不在。'
+          voice: '一位歌者唱到以“我”开头的那句走上前来，{staff}在练习纸上留了两处，一处记唱的人，一处记歌里念的名字。'
+          drum: '{staff}放了一条边角纸作记号，头一位歌者起身时，纸页仍留在下一位够得着的地方。'
+          later: '{staff}记下这一句是从哪位歌者那里听来的，至于最初是谁作的，留着没写。'
 text:
   en:
     name: Nezahualcoyotl
@@ -60,31 +63,59 @@ text:
     text: 特斯科科统治者，传统生卒年为1402至1472年。晚出的纳瓦特尔语歌集将一些歌曲与他的名字联系起来。歌里的措辞与歌旁的归属题记，各保存了流传过程中的一部分。
 hook: {en: 'A singer says I. Whose voice is it?', zh: '歌里唱的我，是谁的声音？'}
 facts:
+  lord:
+    date: '1431'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [banxico_nezahualcoyotl, wikiwand_nezahualcoyotl]
+    text:
+      en: 'In 1431 Nezahualcoyotl was named lord of Texcoco. The alliance of Texcoco, Tenochtitlan and Tlacopan is dated by some to 1428, by others to 1431.'
+      zh: '1431 年，内萨瓦尔科约特尔成为特斯科科之主。特斯科科、特诺奇蒂特兰与特拉科潘的三方同盟，有的定在 1428 年，有的定在 1431 年。'
+    line:
+      en: '1431: Nezahualcoyotl is named lord of Texcoco.'
+      zh: '1431 年，内萨瓦尔科约特尔成为特斯科科之主。'
+  dike:
+    date: '1450'
+    checked: two_sources
+    level: careful
+    use: [story, wiki]
+    sources: [banxico_nezahualcoyotl, wikiwand_nezahualcoyotl]
+    text:
+      en: 'A dike of some sixteen kilometres across Lake Texcoco, dividing its waters, is said to have been laid out by him; the attribution is hedged in the sources.'
+      zh: '横贯特斯科科湖、把湖水分开的一道约十六公里的长堤，据说是他规划的，史料对此措辞保留。'
   setting:
     date: '1472'
+    stay_day: 150
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [nezahualcoyotl_texcoco_setting]
     text:
       en: 'The study describes early colonial manuscripts relating to the region and gives 1472 as Nezahualcoyotl’s death year.'
       zh: '研究介绍特斯科科地区早期殖民时期抄本，列1472年为内萨瓦尔科约特尔的卒年。'
+    line:
+      en: '1472: Nezahualcoyotl, lord of Texcoco, dies.'
+      zh: '1472 年，特斯科科之主内萨瓦尔科约特尔去世。'
   cantares:
     date: '1590'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [nezahualcoyotl_texcoco_cantares]
     text:
       en: 'The study distinguishes names spoken in the first person inside songs from separate notes of attribution. The approximate date refers to the later manuscript tradition.'
       zh: '研究将歌中用第一人称说出的姓名与独立归属题记分开讨论。所列约年指后出的手稿传统。'
+    line:
+      en: 'The late sixteenth century: songs in Nahuatl are written down in a collection, some of them under his name. Who first sang them is not known.'
+      zh: '十六世纪后期，纳瓦特尔语的歌谣被抄进一部歌集，其中一些写在他的名下。最初是谁唱的，没人知道。'
 bystanders:
   citlali:
     invented: true
-    text: {en: 'A fictional singer preparing a cue for the next person.', zh: '虚构歌者西特拉莉，要给接唱者留一处提示。'}
+    text: {en: 'A singer, made up for the game, who leaves a cue for the next one.', zh: '一位编出来的歌者，给接唱的人留一处提示。'}
   tochtli:
     invented: true
-    text: {en: 'A fictional rehearsal helper keeping the order of the sheets.', zh: '虚构帮工托奇特利，管着练习稿的次序。'}
+    text: {en: 'A helper at the rehearsal, made up for the game, who keeps the sheets in order.', zh: '一位编出来的排练帮工，管着练习稿的次序。'}
 wiki:
   refs:
     nezahualcoyotl_texcoco_setting:
@@ -99,16 +130,28 @@ wiki:
       text:
         en: 'Universidad Nacional Autónoma de México, Cantares mexicanos, introductory study, authorship discussion https://historicas.unam.mx/publicaciones/publicadigital/libros/cantares/cm01/07_estudio_introductorio.pdf'
         zh: '墨西哥国立自治大学，《墨西哥歌集》导论，归属讨论 https://historicas.unam.mx/publicaciones/publicadigital/libros/cantares/cm01/07_estudio_introductorio.pdf'
+    banxico_nezahualcoyotl:
+      order: 991
+      status: checked
+      text:
+        en: 'Banco de México, Nezahualcóyotl, biography. https://www.banxico.org.mx/billetes-y-monedas/nezahualcoyotl-biografia-banc.html'
+        zh: '墨西哥银行，内萨瓦尔科约特尔传略。https://www.banxico.org.mx/billetes-y-monedas/nezahualcoyotl-biografia-banc.html'
+    wikiwand_nezahualcoyotl:
+      order: 992
+      status: checked
+      text:
+        en: 'Wikipedia, Nezahualcoyotl (tlatoani), via Wikiwand. https://www.wikiwand.com/en/articles/Nezahualcoyotl_(tlatoani)'
+        zh: '维基百科，内萨瓦尔科约特尔（特拉托阿尼），经 Wikiwand。https://www.wikiwand.com/en/articles/Nezahualcoyotl_(tlatoani)'
 self_check:
-  fact: setting
-  quote_line: '再次唱起时，上前的人知道从哪里接唱。'
-  regret_choice: 'voice 只留一个名字，下一人会误认它在场景里的用途。'
-  bookend: '从歌中的我开场，到知道谁递出了这句。'
-  share_line: '一句里的我，纸旁还能写另一个人。'
-  share_number: 'voice 有两处虚构记名。'
-  knowing: 'later 员工读过后世纳瓦特尔语歌集。'
-  near: 'setting 人物年代来自研究。'
-  lever: 'drum 保住第二次接唱的位置。'
-  missed: 'later 此行看不到歌集汇编。'
-  brought: 'voice 带回虚构的接唱提示。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: cantares
+  quote_line: '最初是谁唱的，没人知道。'
+  regret_choice: '派会打拍子的去，练唱时鼓点稳，学徒却没人陪着分清歌里的我；派细心的去，名字分清了，歌者那边未必认得下。'
+  bookend: '从他成为特斯科科之主开始，以一百多年后写在他名下的歌集收尾。'
+  share_line: '1472 年，我在特斯科科替一群歌者打过鼓。'
+  share_number: '1472'
+  knowing: 'cantares'
+  near: 'setting'
+  lever: 'p2, p3'
+  missed: 'cantares'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
