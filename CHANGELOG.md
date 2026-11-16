@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2, 2026-11-16
+
+- The welcome and the founder form open only for a game that has not begun, read from the save and never from the remembered state of the page. A save that had already sent a trip, the founder form locked, could open on that form again and leave nothing to type in or click; it now opens on the game. The automatic mode sends nobody before the game has begun.
+
 ## 0.7.1, 2026-11-16
 
 - Clearing the save from the settings starts a new game cleanly: the new save carries an empty log of trips, so the page no longer stops rendering and leaves the founder form dead, and the welcome opens in place of the settings.

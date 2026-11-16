@@ -212,9 +212,12 @@ export function createUI(D, ctx, DEV = false) {
   // with no simulated place open yet, which is the case at the start, the form stands on the first one of the list and is made again when the player picks a place
   st.form = newForm(visibleEras()[0] || eraList()[0]);
   worldMap.attach(view);
+  // The welcome belongs to a game that has not begun: it is opened from the save, never from the remembered state of the page, and it cannot be closed,
+  // so a welcome left over from an earlier visit must not stand over a game that has already sent a trip and locked the founder form
+  const needsWelcome = () => ctx.S().welcomed === false && ctx.S().seq === 0;
   restoreUiState();
-  // a new game opens with the welcome, which stays until it has been read
-  if (ctx.S().welcomed === false && !st.modal) st.modal = { kind: 'welcome' };
+  if (st.modal?.kind === 'welcome' && !needsWelcome()) st.modal = null;
+  if (needsWelcome() && !st.modal) st.modal = { kind: 'welcome' };
 
   // ---------- interface state over a reload or language switch ----------
   let restoringOnNavigation = false;
@@ -224,7 +227,7 @@ export function createUI(D, ctx, DEV = false) {
       view.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
       const key = st.tab;
       sessionStorage.setItem(UI_KEY, JSON.stringify({
-        tab: st.tab, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki', 'welcome', 'report'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
+        tab: st.tab, pager: st.pager, modal: st.modal && ['settings', 'about', 'wiki', 'report'].includes(st.modal.kind) ? st.modal : null, vs: st.vs, opened: [...st.opened], filters: st.filters, cart: st.cart, sort: st.sort,
         wiki: st.wiki, map: { ...st.map, drag: null, justDragged: false }, form: st.form, scrollY: { ...st.scrollY, [key]: window.scrollY }, keeps,
         reloadOnly, modalScroll: modalEl.querySelector('.modalbg')?.scrollTop || 0,
       }));
@@ -240,7 +243,7 @@ export function createUI(D, ctx, DEV = false) {
       if (o.reloadOnly && performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
       if (o.tab in U.tabs) st.tab = o.tab;
       if (o.pager) st.pager = o.pager;
-      if (o.modal && ['settings', 'about', 'wiki', 'welcome', 'report'].includes(o.modal.kind)) st.modal = o.modal;
+      if (o.modal && ['settings', 'about', 'wiki', 'report'].includes(o.modal.kind)) st.modal = o.modal;
       if (!st.modal && o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) st.modal = { kind: 'report', id: o.sub };
       st.vs = !!o.vs;
       st.opened = new Set(o.opened || []);
@@ -1289,7 +1292,8 @@ export function createUI(D, ctx, DEV = false) {
     const fresh = office.advance(D.get('config.ui.refresh_ms') / 1000);
     if (fresh.length) { ctx.audio.sfx('ready'); showReturns(fresh); }
     if (ctx.S().brokeNew) { ctx.S().brokeNew = false; st.modal = { kind: 'broke' }; ctx.save(); render(); }
-    if (ctx.S().clock.auto) office.autoStep();
+    // nothing is sent before the game has begun, so a save never has trips out while the founder form still waits
+    if (ctx.S().clock.auto && !needsWelcome()) office.autoStep();
     if (pressed) return;
     renderClock();
     renderTabs();
