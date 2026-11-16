@@ -20,6 +20,10 @@ Then open http://127.0.0.1:8778/index.html. Any static file server works.
 - `node tools/check_logic.mjs` audits the traits, employees, scenes and items for dead, missing or unreachable parts.
 - `node tools/check_content.mjs` builds thousands of reports and fails on a missing text key or template variable.
 - `node tools/ui_check.mjs` drives the page with Playwright. Set `PLAYWRIGHT_DIR` to a folder that has `playwright` installed.
+- `node tools/check_benchmarks.mjs` runs the benchmark places with the reference employees and checks identities, vignettes and that the employees do not all end the same.
+- `node tools/story_probe.mjs <place> [lang] [seed] [staff,...] [item:n,...]` prints, for each employee, who they were taken for, the stars and the record of one trip.
+- `node tools/pressure_probe.mjs [place,...] [seeds]` prints how often employees are sent home from each story that is turned on, empty handed and with the fitting kit; `BINS=1` adds the empty handed rate by constitution.
+- `node tools/release.cjs <version> "<line>" ...` sets the version, puts the lines on top of `CHANGELOG.md`, rebuilds and refuses when the languages differ in their placeholders.
 
 ## How it is built
 

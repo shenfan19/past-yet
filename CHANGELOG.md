@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.34, 2026-11-16
+
+- The attributes are the general defence against pressure: each channel is felt more or less by the constitution, grief and hostility by the will, in config body.resist; Wanderer and the kit still take whole levels off. The threshold of being sent home reads its numbers from config body.resilience.
+- The release step, the story probe and the pressure probe are kept as tools and listed in the README; the benchmark check counts someone sent home as not taken in.
+
 ## 0.5.33, 2026-11-16
 
 - Pressure is the difficulty: the channels lowered on Keats, Wallace, Tupaia, Rapa Nui, Great Zimbabwe, Machu Picchu and Lalibela are back at their levels, since fitting items, gear and traits take them off.

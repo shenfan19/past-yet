@@ -42,7 +42,7 @@ for (const [id, bm] of Object.entries(B0.benchmarks)) {
 
   if (!isEra) {
     const runs = B0.staff.map((s) => B.runLight(id, s, B0.seeds[0], {}));
-    ok(`${id}: a vignette is read by everyone who is taken in`, runs.every((r) => !r.journey.accepted || !ev.scene?.vignettes || r.vignette));
+    ok(`${id}: a vignette is read by everyone who is taken in`, runs.every((r) => r.evacuation || !r.journey.accepted || !ev.scene?.vignettes || r.vignette));
     ok(`${id}: the employees do not all end the same`, new Set(runs.map((r) => r.stars + ':' + r.vignette)).size >= 2);
     continue;
   }

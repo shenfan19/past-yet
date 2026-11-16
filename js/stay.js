@@ -2,8 +2,16 @@
 import { evalPoint, sceneModel } from './scene_core.js';
 import { historicalDays } from './travel_time.js';
 
-// the value of every handle on a day, from the pressure of the channels the event names and what the earlier points wrote back
-export function dayHandles(D, ev, day, carry, modes) {
+// How much of a channel the body of the traveller feels: the attribute named for the channel, above or below the reference, takes off or adds a share of it, between a floor and a ceiling.
+// The attributes are the general defence against pressure; traits and the kit take whole levels off instead, in effectiveChannels.
+export function feltShare(D, channel, stats) {
+  const R = D.get('config.body.resist');
+  const attr = R.by_channel[channel] || R.attr;
+  return Math.min(R.max, Math.max(R.min, 1 - R.per_point * (stats[attr] - R.ref)));
+}
+
+// the value of every handle on a day, from the pressure of the channels the event names and what the earlier points wrote back; felt is the share of each channel the body feels, all of it when not given
+export function dayHandles(D, ev, day, carry, modes, felt = {}) {
   const C = D.get('config.channels');
   const live = Object.entries(ev.channels).filter(([c]) => !C.off.includes(c));
   const ramp = Math.min(1, day / C.ramp_days);
@@ -14,8 +22,11 @@ export function dayHandles(D, ev, day, carry, modes) {
     const mode = modes[h].mode;
     for (const [c, lv] of live) {
       const spec = C.list[c];
-      const v = spec.level?.[h]?.[lv];
-      const tv = spec.total?.[h]?.[lv];
+      const f = felt[c] ?? 1;
+      const lvv = spec.level?.[h]?.[lv];
+      const tvv = spec.total?.[h]?.[lv];
+      const v = lvv === undefined ? undefined : base + (lvv - base) * f;
+      const tv = tvv === undefined ? undefined : base + (tvv - base) * f;
       if (v !== undefined && (level === null || Math.abs(v - base) > Math.abs(level - base))) level = v;
       if (tv !== undefined) extra += tv - base;
     }
@@ -50,8 +61,10 @@ export function runStay(D, core, ev0, ctx) {
   const C = D.get('config.channels');
   const hello = core.hello();
   const id = 'traveler';
+  const live = Object.keys(ev.channels).filter((k) => !C.off.includes(k));
+  const felt = Object.fromEntries(live.map((c) => [c, feltShare(D, c, ctx.stats)]));
   const context = {};
-  for (const c of Object.keys(ev.channels).filter((k) => !C.off.includes(k))) for (const [h, byLevel] of Object.entries(C.list[c].context || {})) context[h] = Math.max(context[h] || 0, byLevel[ev.channels[c]]);
+  for (const c of live) for (const [h, byLevel] of Object.entries(C.list[c].context || {})) context[h] = Math.max(context[h] || 0, byLevel[ev.channels[c]] * felt[c]);
   // the reference is the same body for the same days with no pressure at all, so the body factor counts only what the pressure added to a body that is not perfectly at rest
   const ref = 'reference';
   core.init({ v: 1, kind: 'init', vocabulary_version: hello.vocabulary_version, subjects: [{ id, seed: ctx.seed, context }, { id: ref, seed: ctx.seed, context: {} }] });
@@ -67,7 +80,7 @@ export function runStay(D, core, ev0, ctx) {
   for (const day of [...checks].sort((a, b) => a - b)) {
     const elapsed = day - prev;
     prev = day;
-    const handles = dayHandles(D, ev, day, carry, hello.handles);
+    const handles = dayHandles(D, ev, day, carry, hello.handles, felt);
     const interval = (writes) => writes.map((h) => h.mode === 'total' ? { ...h, value: h.value * elapsed } : h);
     const msg = core.step({ v: 1, kind: 'step', minutes: B.step_minutes * elapsed, subjects: [{ id, handles: interval(handles) }, { id: ref, handles: interval(dayHandles(D, { channels: {} }, day, {}, hello.handles)) }] });
     const raw = msg.subjects.find((s) => s.id === id).readouts;
@@ -75,7 +88,8 @@ export function runStay(D, core, ev0, ctx) {
     const read = Object.fromEntries(Object.keys(raw).map((r) => [r, Math.max(0, raw[r] - calm[r])]));
     lonely += B.loneliness.per_level_day * grief * elapsed / D.get('config.travel.history_days_per_office_day');
     read.loneliness = Math.min(1, lonely);
-    const resilience = 0.75 + 0.05 * ctx.stats.constitution;
+    const RS = B.resilience;
+    const resilience = RS.base + RS.per_point * ctx.stats[RS.attr];
     const infectionLimit = resilience * B.incapacity.infection_at;
     const reason = B.incapacity.readouts.find((r) => read[r] >= (r === 'infection_burden' ? infectionLimit : resilience * B.incapacity.at));
     const strain = { ...read, infection_burden: Math.min(1, (read.infection_burden || 0) / infectionLimit) };

@@ -2,7 +2,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.5.33
+  version: 0.5.34
   released: '2026-11-15'
   card_authors:
     - AI
@@ -637,6 +637,19 @@ body:
   enabled: true
   step_minutes: 1440
   check_days: 7
+  resist:
+    attr: constitution
+    by_channel:
+      G: will
+      S: will
+    ref: 5
+    per_point: 0.08
+    min: 0.4
+    max: 1.3
+  resilience:
+    attr: constitution
+    base: 0.75
+    per_point: 0.05
   incapacity:
     readouts:
       - injury_burden
