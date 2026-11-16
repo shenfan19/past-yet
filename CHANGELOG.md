@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.1, 2026-11-16
+
+- The shift of the timeline of the twenty one stories with new stars now has what history recorded for every point, the guard points included, each opening with its date, so a trip out of sync shows the event it failed to hold.
+- Ahmad Baba in Timbuktu no longer names a number of volumes that no source gives.
+- These stories move on to the next step of their making.
+
 ## 0.8.0, 2026-11-16
 
 - The shift of the timeline: before the summary, a report sets out what the trip changed, with what history recorded on the left and this timeline on the right, one row for each point that fulfilled something, and one row marked out of sync when a guard point was missed. The record no longer tells the changes as loose lines after the leaving.
