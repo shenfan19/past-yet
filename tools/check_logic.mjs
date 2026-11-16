@@ -10,6 +10,7 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
 const load = (lang) => loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => lang, { drafts: true });
 const D = await load('en');
+const DZ = await load('zh');
 const errors = [];
 const warns = [];
 const err = (m) => errors.push(m);
@@ -64,7 +65,7 @@ function metBy(req, who, carried) {
     if (k === 'job') return who.jobs.some((j) => v.includes(j));
     if (k === 'gender') return D.get('staff.gender_class')[who.gender] === v;
     if (k === 'item') return carried.includes(v);
-    if (k === 'provides') return carried.some((i) => items[i].provides.includes(v));
+    if (k === 'provides') return carried.some((i) => (items[i].provides || []).includes(v));
     if (k === 'luck') return true;
     if (k === 'any') return v.some((r) => metBy(r, who, carried));
     err(`unknown requirement ${k}`);
@@ -84,7 +85,7 @@ const walk = (e, r) => {
   for (const [k, v] of Object.entries(r)) {
     if (k === 'trait') v.forEach((t) => { if (!traits[t]) err(`scene ${e.id}: unknown trait ${t}`); else traitUse[t]++; });
     if (k === 'job') v.forEach((j) => { jobUse[j] = (jobUse[j] || 0) + 1; if (!jobs.has(j)) err(`scene ${e.id}: nobody can have the job ${j}`); });
-    if (k === 'item') { if (!items[v]) err(`scene ${e.id}: unknown item ${v}`); else { if (!items[v].scene) err(`scene ${e.id}: item ${v} is not a scene item`); itemUse[v] = (itemUse[v] || 0) + 1; } }
+    if (k === 'item') { if (!items[v]) err(`scene ${e.id}: unknown item ${v}`); else itemUse[v] = (itemUse[v] || 0) + 1; }
     if (k === 'provides') { const who = sceneItems.filter((i) => items[i].provides.includes(v)); if (!who.length) err('scene ' + e.id + ': no item provides ' + v); who.forEach((i) => itemUse[i]++); }
     if (k === 'any') v.forEach((x) => walk(e, x));
     if (k === 'stat') Object.keys(v).forEach((s) => { if (!attrs.includes(s)) err(`scene ${e.id}: unknown attribute ${s}`); });
@@ -157,11 +158,29 @@ for (const e of events) {
 for (const e of events) {
   if (!(Math.abs(e.lon) <= 180 && Math.abs(e.lat) <= 90)) err(`event ${e.id}: coordinates out of range`);
   const redeem = (e.scene?.points || []).filter((p) => p.redeem);
-  if (e.regret) {
+  // star_rules 2: two kinds of point, a guard point holds a recorded event and its miss is a desync, every other point fulfils something history left undone.
+  // The heart of the old regret stories is not part of it.
+  const v2 = e.scene?.star_rules === 2;
+  if (v2 && redeem.length) err(`event ${e.id}: star_rules 2 has no redeem points`);
+  if (e.regret && !v2) {
     if (!e.scene) err(`regret ${e.id} is not a scene`);
-    else if (redeem.length !== 1) err(`regret ${e.id} needs exactly one redeem point, has ${redeem.length}`);
-    else if (redeem[0].req.luck !== undefined) err(`regret ${e.id}: the redeem point must not be a pure luck roll`);
-  } else if (redeem.length) err(`event ${e.id} has a redeem point but is not a regret`);
+    else if (redeem.length !== 1) err(`${e.regret ? 'regret' : 'event'} ${e.id} needs exactly one redeem point, has ${redeem.length}`);
+    else if (redeem[0].req.luck !== undefined) err(`event ${e.id}: the redeem point must not be a pure luck roll`);
+  } else if (redeem.length && !v2) err(`event ${e.id} has a redeem point but is not a regret`);
+  // build_step: where a story stands in the making, 1 the story checked as worth telling, 2 the stars, 3 the whole story, 4 done and published
+  if (e.build_step !== undefined && ![1, 2, 3, 4].includes(e.build_step)) err(`event ${e.id}: build_step ${e.build_step} is not 1 to 4`);
+  if (e.build_step >= 2 && !v2) err(`event ${e.id}: build_step ${e.build_step} needs the stars of star_rules 2`);
+  if (e.scene?.points?.some((p) => p.guard && p.redeem)) err(`event ${e.id}: a point cannot be both guard and redeem`);
+  if (e.scene?.points?.some((p) => p.guard) && !v2) err(`event ${e.id}: guard points need star_rules 2`);
+  if (v2) {
+    if (!e.scene.points.some((p) => p.guard)) err(`event ${e.id}: star_rules 2 needs at least one guard point`);
+    for (const lang of ['en', 'zh']) {
+      const t = (lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {};
+      for (const p of e.scene.points) if (!t.points_fail?.[p.id]) err(`event ${e.id} ${lang}: point ${p.id} has no points_fail text`);
+      if (!e.scene.points.some((p) => !p.guard && t.branch?.[p.id])) err(`event ${e.id} ${lang}: no fulfil point has branch text`);
+      for (const k of Object.keys(t.branch || {})) if (!e.scene.points.find((p) => p.id === k && !p.guard)) err(`event ${e.id} ${lang}: branch ${k} is not a fulfil point`);
+    }
+  }
 }
 // pressure channels: each event names at most per_event_max of them at the listed levels, items and gear name the channels they work against
 const CH = cfg.channels;

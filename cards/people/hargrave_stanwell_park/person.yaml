@@ -2,6 +2,7 @@ order: 231
 events:
   hargrave_stanwell_park:
     order: 221
+    build_step: 2
     year: 1894
     # one office day from the planned arrival on 1 November 1894
     date: '1894-11-01'
@@ -17,10 +18,11 @@ events:
     ready: true
     refs: [hargrave_stanwell_park_beach, hargrave_stanwell_park_photo, britannica_hargrave, ausgeo_hargrave]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 4, req: {"any":[{"trait":["handy","cheerful","kind"]},{"job":["mechanic","tailor","carpenter"]}]}}
-        - {id: p2, kind: notice, day: 11.2, req: {"any":[{"trait":["methodical","curious","calm"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: hold, day: 11.4, req: {"any":[{"trait":["patient","hardy","vigil"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 11, req: {"any":[{"job":["bush_pilot","flight_instructor","sailor","navigator"]},{"stat":{"constitution":9}},{"trait":["calm","vigil"],"stat":{"finesse":5}}]}}
+        - {id: p2, kind: notice, day: 15, req: {"any":[{"trait":["methodical","scholarly"],"item":"notebook_pen"},{"job":["archivist","illustrator","architecture_intern","civil_engineer","retired_engineer"]}]}}
+        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["bush_pilot","flight_instructor"],"stat":{"will":7}},{"trait":["charismatic"],"stat":{"wit":6}},{"provides":"show"}]}}
       vignettes:
         - {id: four, traits: [methodical, curious, scholarly], day: 11.6}
         - {id: tag, traits: [handy, patient, vigil], day: 8}
@@ -34,9 +36,19 @@ events:
         relic: 'A spare box kite tag'
         relic_desc: 'A spare label for the frame of a box kite.'
         points:
-          p1: 'Be taken in by the helpers on the beach, then stretch and tie the cloth of the kites'
-          p2: 'At the lift, stand by the winch and call out how high the seat has risen'
-          p3: 'When the wind drops, hold the line of the fourth kite steady'
+          p1: 'On 12 November, keep the string of kites steady in the gusts, so that he rises and comes down safely on the sand'
+          p2: 'Help him finish full drawings of the four kites, their sizes and how they are made, and leave one copy in Australia'
+          p3: 'Let him know that his box kite will be remembered'
+        points_fail:
+          p1: 'A gust dragged the string of kites aside and the seat struck the sand, and in this branch there was no lift of 16 feet.'
+          p2: 'The four kites stayed only in his own hands as history has it, and in this branch there was no second record at Stanwell Park.'
+          p3: 'He never saw where the box structure would go, as history has it, and in this branch no one ever told him.'
+        branch:
+          p2:
+            - 'In this branch a set of drawings of the four kites stayed at Stanwell Park and did not go to Munich with the other models.'
+          p3:
+            - 'In history, late in life he sent more than a hundred and seventy models to Munich, and most of them were destroyed in the Second World War; he did not live to see the box structure in many of the early aeroplanes, nor himself on the Australian twenty dollar note from 1966.'
+            - 'In this branch, in November 1894, {staff} told him that his box kites would be in the machines that flew after him, and that Australia would remember his name.'
         vignettes:
           four: '{staff} counts the kites laid out on the sand once more after the lift and writes all four on the page, with a bracket round them, so the next reader knows they flew together.'
           tag: '{staff} follows the wet sand back to find a tag torn off a frame, and ties it on again with a new knot.'
@@ -49,9 +61,19 @@ events:
         relic: '一片箱形风筝的备用签'
         relic_desc: '一片给箱形风筝骨架用的备用签。'
         points:
-          p1: '先让海滩上帮忙的人认下，再帮着绷紧、扎好风筝的布面'
-          p2: '升空时守在绞盘旁，报出座椅离地多高'
-          p3: '风停下来时，稳住第四只风筝的拉绳'
+          p1: '11 月 12 日，在阵风里护住那串风筝，让他升起来，再平安落回沙地'
+          p2: '帮他完成这四只风筝的尺寸和做法图，在澳洲留下一份'
+          p3: '让他知道，他的箱形风筝会被记住'
+        points_fail:
+          p1: '一阵风把风筝串扯偏了，座椅砸回沙地，这条分支里没有那次离地 16 英尺。'
+          p2: '这四只风筝照史实只留在他自己手里，这条分支里斯坦威尔公园没有另一份。'
+          p3: '他照史实没有见到箱形结构后来的去处，这条分支里没有人告诉过他。'
+        branch:
+          p2:
+            - '这条分支里，那四只风筝的图纸在斯坦威尔公园留了一份，没有跟着别的模型去慕尼黑。'
+          p3:
+            - '历史上，他晚年把一百七十多件模型送去了慕尼黑，大多毁于二战；他生前没有看到箱形结构后来出现在许多早期的飞机上，也没有看到自己在 1966 年被印上澳大利亚的二十元钞票。'
+            - '这条分支里，1894 年 11 月{staff}告诉过他，他的箱形风筝会出现在后来飞起来的机器上，澳大利亚会记住他的名字。'
         vignettes:
           four: '升空之后，{staff}把沙滩上铺开的风筝又数了一遍，四只都记在本子上，用括号圈在一起，让下一个读的人知道它们是一起飞的。'
           tag: '一张签从骨架上扯脱了，{staff}沿着湿沙往回找，找到后重新打了个结系上。'

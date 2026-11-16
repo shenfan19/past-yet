@@ -2,6 +2,7 @@ order: 219
 events:
   ino_tadataka_ezo:
     order: 209
+    build_step: 2
     year: 1800
     # the planned arrival is 11 June 1800, the day the first survey set out from Edo
     date: '1800-06-11'
@@ -16,10 +17,11 @@ events:
     ready: true
     refs: [ino_tadataka_ezo_survey, ino_tadataka_ezo_notes, nippon_ino, wikipedia_ino]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 5, req: {"any":[{"trait":["cheerful","hardy","kind"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 70, req: {"any":[{"trait":["methodical","scholarly","vigil"]},{"stat":{"wit":7}}]}}
-        - {id: p3, kind: endure, day: 130, req: {"any":[{"trait":["hardy","patient","bold"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 80, req: {"any":[{"job":["accountant","tax_preparer","shopkeeper","market_trader"],"stat":{"will":5}},{"trait":["methodical","streetwise"],"stat":{"wit":5,"constitution":5}},{"item":"nutrient_synth","stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 60, req: {"any":[{"job":["civil_engineer","retired_engineer","carpenter","shipwright","net_mender"]},{"trait":["handy","methodical"],"stat":{"finesse":6}}]}}
+        - {id: p3, kind: endure, day: 90, req: {"any":[{"trait":["hardy","wanderer"],"stat":{"constitution":8,"will":6}},{"item":"scout_drone","stat":{"constitution":6}},{"job":["navigator","bush_pilot","geologist"],"stat":{"constitution":7}}]}}
       vignettes:
         - {id: bend, traits: [methodical, scholarly], day: 80}
         - {id: repeat, traits: [hardy, curious], day: 100}
@@ -33,9 +35,20 @@ events:
         relic: "A measuring staff"
         relic_desc: "A thin staff for measuring paces, marked with a scale."
         points:
-          p1: 'Be taken in by the bearers of the party, then carry the measuring line'
-          p2: 'On the shore, write down the paces and the bearing of each stretch'
-          p3: 'In the autumn wind, follow one whole stretch of the coast to its end'
+          p1: 'When the money runs low, keep the party on its way so that the line is laid as far as Nishibetsu in time'
+          p2: 'Help him measure one stretch of coast with a cord instead of by paces, so that its numbers are right first'
+          p3: 'Help him lay the line on past Nishibetsu, so that this survey takes in a stretch of coast it never reached'
+        points_fail:
+          p1: 'The party could not hold out and turned back before Nishibetsu, and back in Edo there was no map of that road.'
+          p2: 'In this branch every stretch of Ezo is still only a count of paces.'
+          p3: 'The survey still turned back at Nishibetsu, as in history.'
+        branch:
+          p2:
+            - 'In history, the first survey was measured entirely by paces, and cords came in only from the second.'
+            - 'In this branch, one stretch of the coast of Ezo was measured with a cord first.'
+          p3:
+            - 'In history, the first survey went no further than Nishibetsu, and the rest of the coast of Hokkaido waited for later surveys.'
+            - 'In this branch, the line went on past Nishibetsu for one more stretch, and the sheets he brought back to Edo showed a little more coast.'
         vignettes:
           bend: '{staff} sees a bend of the shore about to be drawn as part of a straight line and asks for one more bearing at the turn, so the bend stays on the page.'
           repeat: '{staff} walks a stretch a second time at the same pace and writes the two counts side by side, without choosing between them.'
@@ -48,9 +61,20 @@ events:
         relic: "一根测杖"
         relic_desc: "一根量步距用的细杖，上面刻着尺度。"
         points:
-          p1: '先让队里背器材的人认下，再替他们扛测绳'
-          p2: '在海边，把每一段的步数和方位记下来'
-          p3: '秋天的海风里，跟着把一整段海岸走到头'
+          p1: '盘缠见底的时候，护住测量队的行程，让测绳按期铺到西别'
+          p2: '帮他把一段海岸从步测换成用绳量，让那一段的数先准起来'
+          p3: '帮他把测绳从西别再往前铺一段，让这一趟多测一截没测到的海岸'
+        points_fail:
+          p1: '队伍在西别之前就撑不下去回了头，回到江户也画不出那一路的图。'
+          p2: '这条分支里，虾夷地的每一段仍只是步数。'
+          p3: '测量照旧在西别回头，这条分支与历史一样。'
+        branch:
+          p2:
+            - '历史上，第一次测量全靠步测，第二次起才用间绳。'
+            - '这条分支里，虾夷地有一段海岸先用上了绳。'
+          p3:
+            - '历史上，第一次测量到西别为止，北海道其余的海岸要等以后的测量补上。'
+            - '这条分支里，测绳越过西别又往前铺了一段，回到江户的那几张图上多了一截海岸。'
         vignettes:
           bend: '一处海湾眼看要被画进一条直线里，{staff}请他们在拐弯处再测一次方位，那个弯就留在了纸上。'
           repeat: '{staff}用同样的步子把一段路又走了一遍，两次的步数并排记着，没去挑哪一个。'

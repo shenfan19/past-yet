@@ -2,9 +2,11 @@ order: 183
 events:
   sor_juana_mexico_city:
     order: 121
+    build_step: 2
     year: 1695
     # the planned arrival is 1 January 1695, in her last months at the convent of San Jerónimo
     date: '1695-01-01'
+    stay: 4
     lon: -99.13
     lat: 19.43
     region: americas
@@ -12,15 +14,15 @@ events:
     field: literature
     tier: 2
     channels: {E: 2, G: 2}
-    regret: true
     # finished: in the game with release.ready_only
     ready: true
     refs: [sor_juana_mexico_city_primary, britannica_sor_juana, poetry_foundation_sor_juana, umass_sor_juana, unl_respuesta]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 15, req: {"any":[{"trait":["quiet","kind","patient"]},{"job":["cook","chef","teacher"]}]}}
-        - {id: p2, kind: notice, day: 40, req: {"any":[{"trait":["quiet","methodical","handy"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: care, redeem: true, day: 100, req: {"any":[{"trait":["faithful","vigil","kind"]},{"job":["nurse","doctor","midwife"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: endure, guard: true, day: 45, req: {"any":[{"job":["nurse","caregiver","midwife","paramedic","doctor","physician","pharmacist","cook","chef"]},{"trait":["vigil","patient"]},{"provides":"vigil"}]}}
+        - {id: p2, kind: care, day: 75, req: {"any":[{"job":["nurse","midwife","paramedic","doctor","physician","pharmacist"]},{"provides":"cure"},{"item":"antibiotic"}]}}
+        - {id: p3, kind: care, day: 92, req: {"any":[{"provides":"cure"},{"job":["doctor","physician"],"item":"antibiotic"}]}}
       vignettes:
         - {id: kitchen, traits: [curious, glib], day: 25}
         - {id: shelf, traits: [methodical, vigil], day: 50}
@@ -34,9 +36,20 @@ events:
         relic: "A quill pen"
         relic_desc: "A quill with a split tip beside an empty shelf."
         points:
-          p1: 'Be taken in by the portress, then work in the convent kitchen'
-          p2: 'Keep one sheet in her hand that is left on the empty shelf, folded into a prayer book'
-          p3: 'In the worst days of the sickness, sit by a sister who has fallen ill'
+          p1: 'In the weeks the sickness spreads, help her keep the sickroom going and hold the nursing of the sisters together'
+          p2: 'Save a sister who has fallen ill in the epidemic'
+          p3: 'When she falls ill herself, cure her'
+        points_fail:
+          p1: 'The hands in the sickroom fall ill one after another and the nursing breaks off; in this branch her care of the sick sisters does not go on as it did in history.'
+          p2: 'She does not pull through and, as in history, is one of the sisters who die in those months; in this branch another bed in the sickroom is empty.'
+          p3: 'As in history, she dies on 17 April. In this branch she does not live through April.'
+        branch:
+          p2:
+            - 'In this branch, the sister lived through April, and once she was well she came back to help in the sickroom.'
+          p3:
+            - 'In history, on 17 April 1695, Sor Juana died after nursing her sisters through the sickness.'
+            - 'In this branch, {staff} cured her with the medicine brought along, and she lived through April.'
+            - 'In this branch, in the years after, she wrote more at the convent; what she wrote is not in the record of this trip.'
         vignettes:
           kitchen: '{staff} watches an egg set in hot butter and drop apart in syrup, and writes down on a scrap which pan did which, for nobody in particular.'
           shelf: '{staff} dusts the empty shelves in the cell and finds the marks where the books stood, darker squares on the wood, and leaves them as they are.'
@@ -49,9 +62,20 @@ events:
         relic: "一支羽毛笔"
         relic_desc: "一支笔尖裂开的羽毛笔，旁边是空书架。"
         points:
-          p1: '先让看门的修女认下，再去修道院的厨房帮工'
-          p2: '空书架上留下一页她的手迹，折进一本经书里收好'
-          p3: '疫病最重的那几天，守在一位病倒的修女床边'
+          p1: '疫病传开的那几周，帮她撑住病房，护住对病倒修女的照料'
+          p2: '救下一位染疫病倒的修女'
+          p3: '她病倒以后，治好她'
+        points_fail:
+          p1: '病房里的人手一个个倒下，照料断了，这条分支里她照顾病倒的修女这件事没能像史实那样做下去。'
+          p2: '她没熬过去，照史实成了那几个月里去世的修女之一，这条分支里病房又空了一张床。'
+          p3: '照史实，她 4 月 17 日去世。这条分支里，她没有熬过四月。'
+        branch:
+          p2:
+            - '这条分支里，那位修女熬过了四月，病好以后又回到了病房帮忙。'
+          p3:
+            - '历史上，1695 年 4 月 17 日，胡安娜修女在照顾病倒的修女之后去世。'
+            - '这条分支里，{staff}用带来的药治好了她，她熬过了四月。'
+            - '这条分支里，后来几年，她在修道院里又写下了一些东西，写了什么，这一趟的记录里没有。'
         vignettes:
           kitchen: '{staff}看着一枚蛋在热油里凝住，在糖浆里却散开，在一张碎纸上记下哪口锅是哪样，也不为给谁看。'
           shelf: '{staff}擦净屋里的空书架，木板上还看得出书立过的地方，一块块颜色深些，没去动它。'

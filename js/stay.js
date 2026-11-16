@@ -100,7 +100,7 @@ export function runStay(D, core, ev0, ctx) {
     carry = Object.fromEntries(Object.entries(carry).map(([h, v]) => [h, v * B.feedback.decay ** elapsed]));
     days.forEach((d, i) => {
       if (d !== day) return;
-      hits[i] = evalPoint(D, ev, i, { staffId: ctx.staffId, seed: ctx.seed, carried: ctx.carried, statsAt: () => stats });
+      hits[i] = evalPoint(D, ev, i, { staffId: ctx.staffId, seed: ctx.seed, carried: [...(ctx.carried || []), ...(ctx.props || [])], statsAt: () => stats });
       for (const [h, v] of Object.entries(B.feedback[hits[i] ? 'hit' : 'miss'])) carry[h] = (carry[h] || 0) + v;
     });
   }

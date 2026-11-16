@@ -2,6 +2,7 @@ order: 102
 events:
   ibn_khaldun_cairo:
     order: 173
+    build_step: 2
     year: 1406
     # the planned arrival is 1 January 1406, the last months of his life, in his sixth term as chief judge
     date: '1406-01-01'
@@ -12,15 +13,15 @@ events:
     field: thought
     tier: 3
     channels: {G: 2, S: 2}
-    regret: true
     # finished: in the game with release.ready_only
     ready: true
     refs: [ibn_khaldun_cairo_method, britannica_ibn_khaldun_later, ahram_ibn_khaldun, encyclopedia_ibn_khaldun]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 12, req: {"any":[{"trait":["cosmopolitan","quiet","patient"]},{"job":["archivist","teacher","student"]}]}}
-        - {id: p2, kind: notice, day: 40, req: {"any":[{"trait":["curious","skeptical","methodical"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: hold, redeem: true, day: 76, req: {"any":[{"trait":["faithful","attached","vigil"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: persuade, guard: true, day: 45, req: {"any":[{"trait":["charismatic","glib","streetwise"],"stat":{"will":5}},{"trait":["cosmopolitan"],"stat":{"wit":7}},{"item":"golden_apple"}]}}
+        - {id: p2, kind: hold, day: 70, req: {"stat":{"wit":6},"any":[{"job":["archivist","translator","proofreader","bookseller","teacher"],"trait":["scholarly","methodical","patient"]},{"item":"neural_chip"}]}}
+        - {id: p3, kind: trust, day: 60, req: {"any":[{"trait":["scholarly","cosmopolitan"],"stat":{"will":4}},{"job":["teacher","university_lecturer","lecturer","tutor"]}]}}
       vignettes:
         - {id: gate, traits: [curious, methodical, skeptical], day: 30}
         - {id: two, traits: [sensitive, artistic, cosmopolitan], day: 50}
@@ -34,9 +35,20 @@ events:
         relic: 'A checked report'
         relic_desc: 'A report of a procession, with the place the watcher stood written in the margin.'
         points:
-          p1: 'Be taken in by the clerks of the court, then copy the day''s judgements fair'
-          p2: 'When a report of a crowd comes in, ask where the teller stood and how long the gate was open'
-          p3: 'On the day of the burial, walk with the bier to the Bab al-Nasr'
+          p1: 'Stop one more push against an outsider as chief judge, and keep his sixth term as chief judge of the Maliki school'
+          p2: 'Before he dies, help him finish this round of revisions to his history, copied fair and put in a student''s hands'
+          p3: 'Let him know while he lives that the Muqaddimah will be read as an early work of social science'
+        points_fail:
+          p1: 'In this branch the sixth appointment went to someone else, and he did not die as chief judge.'
+          p2: 'The half revised pages stopped on 17 March. In this branch nobody copied out that round of revisions.'
+          p3: 'He died without knowing what the book would come to mean, and this branch is the same as before.'
+        branch:
+          p2:
+            - 'In history, he kept revising and correcting his history until he died in Cairo in March 1406.'
+            - 'In this branch, the last round of changes was copied fair and bound before he died, and a student of the court kept it.'
+            - 'In this branch, the copyists who came later worked from that copy.'
+          p3:
+            - 'In this branch, in his last weeks he heard how the book would one day be read.'
         vignettes:
           gate: '{staff} asks a clerk, made up for the game, how long the gate stood open while the crowd went through. He writes the minutes in the margin beside the total, and then changes the total to an estimate.'
           two: '{staff} gives a second watcher, made up for the game, a sheet of her own, so that her account of the street does not end up squeezed into the margin of his.'
@@ -49,9 +61,20 @@ events:
         relic: '一页核对过的记录'
         relic_desc: '一页队伍经过的记录，页边写着看的人当时站在哪里。'
         points:
-          p1: '先让法庭的书吏认下，再替他们誊清当天的判词'
-          p2: '有人报来一群人数时，问他站在哪里、城门开了多久'
-          p3: '出殡那天，跟着灵床走到胜利门外'
+          p1: '拦下又一次冲着外人当首席法官来的排挤，护住他第六次出任马立克派首席法官'
+          p2: '赶在他去世之前，帮他完成这一轮史书的修订，誊清交到学生手里'
+          p3: '让他在生前知道，《历史绪论》会被后人读作社会科学的早期著作'
+        points_fail:
+          p1: '这条分支里，第六次任命落到了别人头上，他去世时已不是首席法官。'
+          p2: '改到一半的书页在 3 月 17 日那天停下，这条分支里，那一轮修订没有人誊清。'
+          p3: '他到死也不知道这本书后来的分量，这条分支和原来一样。'
+        branch:
+          p2:
+            - '历史上，他一直修改、校订自己的史书，直到 1406 年 3 月在开罗去世。'
+            - '这条分支里，最后那一轮改动在他去世前誊清装订，交给法庭里的一个学生收着。'
+            - '这条分支里，后来抄书的人照这一份抄。'
+          p3:
+            - '这条分支里，他在最后几个星期听人说起这本书以后会被人怎样读。'
         vignettes:
           gate: '{staff}问一位编出来的书吏，人群过城门时门开了多久。书吏把时辰写在总数旁的页边，又把总数改成了估算。'
           two: '另一位编出来的见证人站在街对面。{staff}给她另腾一页纸，她说的那段街景就不必挤在书吏那张纸的边上了。'

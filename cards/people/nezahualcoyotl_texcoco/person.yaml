@@ -2,6 +2,7 @@ order: 146
 events:
   nezahualcoyotl_texcoco:
     order: 190
+    build_step: 2
     year: 1472
     lon: -98.88
     lat: 19.51
@@ -10,15 +11,15 @@ events:
     field: literature
     tier: 2
     channels: {H: 1, L: 1}
-    regret: true
     # finished: in the game with release.ready_only. The day of his death is given by one source only, so the stay carries the year.
     ready: true
     refs: [nezahualcoyotl_texcoco_setting, nezahualcoyotl_texcoco_cantares, banxico_nezahualcoyotl, wikiwand_nezahualcoyotl]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["quiet","patient","kind"]},{"job":["musician"]},{"stat":{"finesse":6}}]}}
-        - {id: p2, kind: hold, day: 50, req: {"any":[{"job":["builder","carpenter","mechanic","musician"]},{"trait":["quiet","vigil","methodical"]}]}}
-        - {id: p3, kind: hold, redeem: true, day: 130, req: {"any":[{"job":["archivist","student"]},{"trait":["quiet","vigil","faithful"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 152, req: {"any":[{"trait":["vigil","bold"]},{"provides":"vigil"},{"stat":{"constitution":8,"will":6}}]}}
+        - {id: p2, kind: notice, day: 60, req: {"any":[{"job":["musician","teacher","tutor","sewing_teacher"]},{"trait":["patient","methodical"]},{"item":"voice_recorder"}]}}
+        - {id: p3, kind: care, day: 140, req: {"any":[{"trait":["quiet","faithful"],"stat":{"will":7}},{"job":["caregiver","former_monk"],"stat":{"will":6}},{"provides":"show","stat":{"will":6}}]}}
       vignettes:
         - {id: voice, traits: [methodical, skeptical, curious], day: 60}
         - {id: drum, traits: [handy, vigil, quiet], day: 40}
@@ -32,9 +33,19 @@ events:
         relic: 'A singer’s cue strip'
         relic_desc: 'A practice slip with separate places for two names.'
         points:
-          p1: 'Be taken in by the singers of the house, then keep time on the drum for their practice'
-          p2: 'While the singers take turns, keep the practice sheets in order'
-          p3: 'In the last months, help a learner tell the voice inside a song from the name written beside it'
+          p1: 'In the days after his death, while the nobles choose the heir, keep seven year old Nezahualpilli safe'
+          p2: 'Help a learner of the house learn every line of the songs tied to his name from an old singer'
+          p3: 'In his last days, let him know that his name is still remembered more than five hundred years on'
+        points_fail:
+          p1: 'Before the choosing, harm comes to the boy, and in this branch Texcoco does not receive its seven year old lord as it did in history.'
+          p2: 'The old singer falls ill before the teaching is done, and in this branch only part of those songs is handed on, as before.'
+          p3: 'As in history he dies in 1472, and in this branch he never learns that later people will remember him.'
+        branch:
+          p2:
+            - 'In this branch, the learner learned the songs from beginning to end, and later taught them to a learner of their own.'
+          p3:
+            - 'In history, Nezahualcoyotl died at Texcoco in 1472; the songs tied to his name were copied into a songbook about a hundred years later, and his face on the Mexican hundred peso note came more than five hundred years after.'
+            - 'In this branch, {staff} sat with him in his last days and told him all this.'
         vignettes:
           voice: '{staff} leaves two places on a practice sheet when a singer steps forward at a line that begins with I: one for the singer, one for the name in the song.'
           drum: '{staff} lays a spare strip as a marker so the pages stay where the next singer can reach them when the first one stands.'
@@ -47,9 +58,19 @@ events:
         relic: '一张接唱提示纸'
         relic_desc: '接唱纸，分开给两种名字留了位置。'
         points:
-          p1: '先让宫里的歌者们认下，再在他们练唱时打鼓定拍'
-          p2: '歌者轮唱时，把练习页按次序留好'
-          p3: '最后那几个月，帮一个学徒分清歌里的“我”和歌旁写的名字'
+          p1: '他去世后贵族推举继承人的那几天，护住七岁的内萨瓦尔皮利'
+          p2: '帮宫里的一位学徒把与他名字连在一起的那几首歌，从老歌者那里一句不落地学全'
+          p3: '在他最后的日子里，让他知道五百多年后人们还记得他的名字'
+        points_fail:
+          p1: '推举之前孩子出了事，这条分支里特斯科科没有照史实迎来七岁的新主。'
+          p2: '老歌者病倒前没教完，这条分支里那几首歌照旧只传下来一部分。'
+          p3: '他照史实在 1472 年去世，这条分支里，他到最后也不知道后人会记得他。'
+        branch:
+          p2:
+            - '这条分支里，那位学徒把几首歌从头到尾学全，后来又教给了自己的徒弟。'
+          p3:
+            - '历史上，内萨瓦尔科约特尔 1472 年在特斯科科去世，与他名字连在一起的歌一百来年后才抄进歌集，墨西哥的百元钞票印他的像，是五百多年以后的事。'
+            - '这条分支里，{staff}在他最后的日子里坐在他身边，把这些告诉了他。'
         vignettes:
           voice: '一位歌者唱到以“我”开头的那句走上前来，{staff}在练习纸上留了两处，一处记唱的人，一处记歌里念的名字。'
           drum: '{staff}放了一条边角纸作记号，头一位歌者起身时，纸页仍留在下一位够得着的地方。'

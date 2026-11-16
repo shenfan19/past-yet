@@ -1,7 +1,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.6.0
+  version: 0.7.0
   released: '2026-11-15'
   card_authors: [AI, Fan Shen]
   links:
@@ -192,7 +192,7 @@ stars:
 # changed gives a kinder stamp where no star was won but the branch still came out different by more than changed_margin.
 stamp:
   default_return: normal
-  returns: {gave_up: early, near_death: rough, scramble: rough}
+  returns: {gave_up: early, near_death: rough, scramble: rough, desync: early}
   recalled: early
   evacuated: rough
   changed_margin: 0.5
@@ -212,8 +212,9 @@ light:
   cuts: {reach: -0.1, meet: 0.08, impress: 0.2}
   kinds: [endure, persuade, trust]
   pay: {1: {energy: 4}, 2: {energy: 8}, 3: {energy: 16}}
-  rest_days: {success: 1, partial: 1, missed: 2}
-  favor: {success: 0.03, partial: 0.01, missed: -0.03}
+  # desync: a guard point was missed and the traveller was sent back early
+  rest_days: {success: 1, partial: 1, missed: 2, desync: 3}
+  favor: {success: 0.03, partial: 0.01, missed: -0.03, desync: -0.05}
   field_weights:
     science: {"wit": 0.8, "finesse": 0.2}
     technology: {"wit": 0.8, "constitution": 0.2}

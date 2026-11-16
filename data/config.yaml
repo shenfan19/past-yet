@@ -2,7 +2,7 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.6.0
+  version: 0.7.0
   released: '2026-11-15'
   card_authors:
     - AI
@@ -288,6 +288,7 @@ stamp:
     gave_up: early
     near_death: rough
     scramble: rough
+    desync: early
   recalled: early
   evacuated: rough
   changed_margin: 0.5
@@ -329,10 +330,12 @@ light:
     success: 1
     partial: 1
     missed: 2
+    desync: 3
   favor:
     success: 0.03
     partial: 0.01
     missed: -0.03
+    desync: -0.05
   field_weights:
     science:
       wit: 0.8

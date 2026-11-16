@@ -2,6 +2,7 @@ order: 128
 events:
   machu_picchu:
     order: 90
+    build_step: 2
     year: 1450
     lon: -72.55
     lat: -13.16
@@ -14,10 +15,11 @@ events:
     ready: true
     refs: [machu_picchu_water, machu_picchu_series, britannica_machu_picchu, ancient_history_machu_picchu]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","handy"]},{"job":["builder","carpenter"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 80, req: {"any":[{"trait":["methodical","scholarly","curious"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: endure, day: 150, req: {"any":[{"trait":["hardy","patient","vigil"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 58, req: {"any":[{"job":["builder","scaffolder","carpenter","civil_engineer"]},{"provides":"strength"},{"stat":{"constitution":8}}]}}
+        - {id: p2, kind: trust, day: 25, req: {"any":[{"provides":"translate"},{"job":["translator","teacher","tutor","sewing_teacher"]},{"trait":["kind","patient"]}]}}
+        - {id: p3, kind: endure, day: 120, req: {"any":[{"job":["builder","scaffolder","carpenter","woodcarver","restorer","civil_engineer"],"provides":"strength"},{"job":["builder","scaffolder","carpenter","woodcarver","restorer","civil_engineer"],"stat":{"finesse":8}},{"trait":["handy"],"stat":{"finesse":9}}]}}
       vignettes:
         - {id: wet, traits: [methodical, scholarly], day: 85}
         - {id: steps, traits: [hardy, curious], day: 120}
@@ -31,9 +33,20 @@ events:
         relic: A carved stone
         relic_desc: A palm sized stone with a straight, true edge.
         points:
-          p1: 'Be taken in by the stone workers, then carry stone up the terraces'
-          p2: 'Follow the water from the spring down the sixteen basins, and note where it ran'
-          p3: 'In the rains, keep the channel above the basins clear of mud'
+          p1: 'On the day of the earthquake, keep the canal from the spring from breaking apart'
+          p2: 'See that a helper brought alone from the eastern forests has someone here who understands him'
+          p3: 'Help the masons rebuild the cracked walls with the old fitted stones'
+        points_fail:
+          p1: 'The stone channel slips apart in the shaking, the water spills down the slope, the sixteen basins run dry one by one, and in this branch the estate is without water.'
+          p2: 'He still carries stone alone and nobody answers what he says; in this branch he is as he was when he came.'
+          p3: 'As in history, the cracked walls are built up again in small stones, and in this branch the fitted stonework stops at these walls.'
+        branch:
+          p2:
+            - 'In this branch, {staff} worked out a few words with the helper, and later he had people among the masons he could talk to.'
+          p3:
+            - 'In history, after the earthquakes during the building, the masons of Machu Picchu turned to walls of small stones that took less work, and stopped cutting large blocks fitted to one another.'
+            - 'In this branch, {staff} and the masons rebuilt the cracked walls in the old way.'
+            - 'In this branch, in the decades after, those walls came through several more tremors.'
         vignettes:
           wet: '{staff} walks from one basin to the next before marking it wet, and leaves the second box blank until the water is seen.'
           steps: '{staff} counts the basins from the top of the stair, as the water runs, and not from where the morning''s work began.'
@@ -46,9 +59,20 @@ events:
         relic: 一块切好的石头
         relic_desc: 一块巴掌大的石头，边是直的、正的。
         points:
-          p1: '先让石匠们认下，再把石料一层层背上梯田'
-          p2: '从泉眼顺着水走过十六口石池，记下水流到了哪里'
-          p3: '雨季里，把石池上方的水渠里的泥清干净'
+          p1: '地震那天，护住从泉眼下来的水渠'
+          p2: '让一位独自从东边林地被带来的帮工，在这里有人听得懂他的话'
+          p3: '帮石匠们把震裂的大墙照原来的咬合砌法修回去'
+        points_fail:
+          p1: '石槽在摇晃里错开，水从半山泼了出去，十六口石池一口口干了，这条分支里的庄园断了水。'
+          p2: '他还是一个人背石头，说的话没人接，这条分支里他和来时一样。'
+          p3: '震裂的墙照史实改用小石块垒了起来，这条分支里，咬合的大石砌法在这几面墙上停了。'
+        branch:
+          p2:
+            - '这条分支里，{staff}陪那位帮工把几句话说通了，后来他在石匠中间有了能说话的人。'
+          p3:
+            - '历史上，施工期间的地震之后，马丘比丘的工匠改用更省工的小石块垒砌，不再一块块切出互相咬合的大石。'
+            - '这条分支里，{staff}和石匠们一起把震裂的几面墙照原来的砌法修了回去。'
+            - '这条分支里，后来的几十年，这几面墙又扛过了几回摇晃。'
         vignettes:
           wet: '{staff}走到下一口池才落笔标“有水”，没见到水之前，第二个格子空着。'
           steps: '{staff}从台阶顶上顺着水流的方向数石池，不从早上开工的地方数。'

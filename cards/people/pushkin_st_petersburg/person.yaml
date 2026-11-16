@@ -2,6 +2,7 @@ order: 158
 events:
   pushkin_st_petersburg:
     order: 125
+    build_step: 2
     year: 1837
     # two office days from the planned arrival on 1 January 1837 by the new calendar; the lines give both calendars, Russia kept the old one
     date: '1837-01-01'
@@ -14,15 +15,15 @@ events:
     field: literature
     tier: 2
     channels: {C: 2, G: 2, L: 1}
-    regret: true
     # finished: in the game with release.ready_only
     ready: true
     refs: [pushkin_st_petersburg_address, pushkin_st_petersburg_apartment, poetry_foundation_pushkin, gw2ru_last_duel, poets_graves_pushkin]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["kind","charismatic","quiet"]},{"stat":{"finesse":6}}]}}
-        - {id: p2, kind: endure, day: 38.5, req: {"any":[{"stat":{"will":6}},{"trait":["calm","hardy","bold"]}]}}
-        - {id: p3, kind: care, redeem: true, day: 39, req: {"any":[{"job":["doctor","physician","nurse"]},{"trait":["calm","kind","vigil"]}]}}
+        - {id: p1, kind: notice, day: 20, req: {"any":[{"job":["accountant","tax_preparer","shopkeeper","antique_dealer","market_trader"]},{"trait":["methodical"],"stat":{"wit":6}}]}}
+        - {id: p2, kind: hold, guard: true, day: 38.5, req: {"any":[{"job":["doctor","physician","nurse","paramedic"]},{"item":"first_aid_kit","trait":["calm","vigil","hardy","bold"]}]}}
+        - {id: p3, kind: care, day: 39, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic"},{"job":["doctor","physician","nurse","paramedic"],"item":"nano_kit"}]}}
       vignettes:
         - {id: number, traits: [bold, curious], day: 20}
         - {id: queue, traits: [methodical, kind], day: 39.5}
@@ -36,9 +37,20 @@ events:
         relic: "A book of his verse"
         relic_desc: "A small book with a pressed leaf at one poem."
         points:
-          p1: 'Be taken in by the servants of the house, then run its errands to the bridge and back'
-          p2: 'On the day of the duel, wait in the cold by the Black River and help bring the sleigh back to town'
-          p3: 'In the two days after, keep the hall and write down the name of everyone who comes to ask'
+          p1: 'Help him sort out his growing debts, so that his wife and children no longer live from one bill to the next'
+          p2: 'After he is shot, keep him alive on the road back from the Black River, so that he reaches his apartment on the Moika'
+          p3: 'Heal the gunshot wound in his stomach, hold back the infection, and keep him alive'
+        points_fail:
+          p1: 'In this branch the bills of that winter still lay on his desk, and nobody ever sorted them for him.'
+          p2: 'He did not live to reach the Moika, and in this branch there are no two days in the apartment.'
+          p3: 'On the afternoon of 10 February he died in the apartment as he did in history, and in this branch he was not kept even one more day.'
+        branch:
+          p1:
+            - 'In this branch, the debts were written out on one sheet, which to pay first and which could wait, and the household knew where it stood.'
+          p3:
+            - 'In history, on 10 February 1837 he died of peritonitis in the apartment at thirty seven, leaving his wife and four children.'
+            - 'In this branch, the medicine {staff} brought held back the infection in the wound, and when February was over he was still recovering by the Moika.'
+            - 'In this branch, he went on writing for a few more years, and The Contemporary stayed in his hands.'
         vignettes:
           number: '{staff} nearly gives a visitor a house number from a museum plaque that does not exist yet, then crosses it out and draws the bridge on the slip instead.'
           queue: '{staff} writes the same answer on several slips so that the people waiting in the hall can read it without asking again.'
@@ -51,9 +63,20 @@ events:
         relic: "一本诗集"
         relic_desc: "一本小书，某首诗里夹着一片压干的叶子。"
         points:
-          p1: '先让这户人家的仆人认下，再替他们往桥那头跑腿'
-          p2: '决斗那天，在黑溪边的寒风里等着，帮着把雪橇赶回城'
-          p3: '那之后的两天，守在门厅，把来问消息的人一个个记下名字'
+          p1: '帮他把越欠越多的债理出头绪，让妻子和孩子的日子不再悬着'
+          p2: '中弹以后，护住从黑溪回城那一路，让他活着回到莫伊卡河畔的寓所'
+          p3: '治好他腹部的枪伤，压住伤口里的感染，让他活下来'
+        points_fail:
+          p1: '这条分支里，那个冬天的欠单照旧压在书桌上，没有人替他理过。'
+          p2: '他没能撑到莫伊卡河畔，这条分支里没有寓所里的那两天。'
+          p3: '2 月 10 日下午，他照史实在寓所里去世，这条分支里也没能多留他一天。'
+        branch:
+          p1:
+            - '这条分支里，欠账理成了一张单子，哪笔先还、哪笔能缓，家里心里有了数。'
+          p3:
+            - '历史上，1837 年 2 月 10 日他在寓所里死于腹膜炎，三十七岁，留下妻子和四个孩子。'
+            - '这条分支里，{staff}带去的药压住了伤口的感染，二月过去时他还在莫伊卡河畔养伤。'
+            - '这条分支里，他又写了几年，《同时代人》仍在他手里办下去。'
         vignettes:
           number: '{staff}差点把一块博物馆门牌上的号码告诉来访的人，可那块牌子这时还没有，便划掉数字，在纸条上画了那座桥。'
           queue: '{staff}把同一句回答抄在几张纸条上，门厅里等着的人看了就不用再问。'

@@ -97,9 +97,12 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => { const e = lightEvent(eventId); return officeStay(D, e.stay || L.stay_by_tier[e.tier]); };
+  const namedIn = (req, id) => Object.entries(req || {}).some(([k, v]) => (k === 'item' && v === id) || (k === 'any' && v.some((r) => namedIn(r, id))));
+  const namedBy = (ev, id) => !!ev?.scene?.points?.some((p) => namedIn(p.req, id));
   const lightKitAllowed = (eventId, itemId) => {
     const it = D.get('items.' + itemId);
-    return !it.implant && (it.scene || it.channels.some((c) => lightEvent(eventId).channels?.[c] && !D.get('config.channels.off').includes(c)));
+    // a plain item may come along when it eases a channel of the story or a sync point of the story asks for it, such as antibiotics to heal someone
+    return !it.implant && (it.scene || it.channels.some((c) => lightEvent(eventId).channels?.[c] && !D.get('config.channels.off').includes(c)) || namedBy(lightEvent(eventId), itemId));
   };
   // the pressure of a story the traveller would feel: the live channels of the event at their level, and what is left of them after the kit, the gear worn and the traits
   const pressureOf = (eventId, staffId = null, items = {}, favor = null) => {
@@ -168,8 +171,17 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const { stats, carried, exposure } = sceneKit(staffId, items, favor);
     // the sync points are met by the scene sub core. With the body on, the stay is stepped through the core of the traveller and each point is met on the attributes of its day;
     // with it off, or when the caller gives its own attributes of the day, the attributes do not change in the stay
-    const hits = health?.hits ?? evalScene(D, ev, { staffId, seed, carried, statsAt: () => stats });
-    const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    const { props } = sceneKit(staffId, items, favor);
+    // a sync point reads every item carried, the scene items and gear and also the plain items, so a point may ask for antibiotics
+    const hits = health?.hits ?? evalScene(D, ev, { staffId, seed, carried: [...carried, ...props], statsAt: () => stats });
+    const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}), ...(p.guard ? { guard: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    // a guard point holds a recorded event in place. When it is missed the branch falls out of step with history: the traveller is sent back on that day,
+    // and the points after it are never reached
+    // the points are listed in any order, so the first missed guard is the one with the earliest day, and the points cut are those that fall after it
+    const days = pointDays(D, ev);
+    const missed = points.map((p, i) => i).filter((i) => points[i].guard && !points[i].hit);
+    const cutAt = missed.length ? missed.reduce((a, i) => (days[i] < days[a] ? i : a)) : -1;
+    if (cutAt >= 0) for (let i = 0; i < points.length; i++) if (days[i] > days[cutAt]) points[i] = { ...points[i], hit: false, bonus: false, cut: true };
     let stars = points.filter((p) => p.hit).length;
     // being found out: the more equipment shows and the more suspicious the time, the likelier
     const chance = Math.min(SC.max_discovery, Math.max(0, exposure) * SC.suspicion_by_tier[ev.tier]);
@@ -181,10 +193,13 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const f = found ? SC.found[found] : null;
     if (f) stars = Math.max(0, stars - f.stars_cost);
     const pay = L.pay[ev.tier];
-    const kind = outcomeOf(stars, points.length);
+    const kind = cutAt >= 0 ? 'desync' : outcomeOf(stars, points.length);
     const vignette = vignetteFor(ev.scene.vignettes, staffId);
+    // sent back on the day of the guard point, so the stay is cut to the office days it took
+    const cutDay = cutAt >= 0 ? days[cutAt] : null;
+    const stay = cutAt >= 0 ? Math.min(lightStay(ev.id), Math.max(1, Math.ceil(cutDay / D.get('config.travel.history_days_per_office_day')))) : lightStay(ev.id);
     return { points, stars, found, vignette, keepAntique: f ? f.keep_antique : true, extraRest: f ? f.rest_days : 0, extraFavor: f ? f.favor : 0,
-      energyBase: pay.energy, restDays: L.rest_days[kind] + (f ? f.rest_days : 0), stay: lightStay(ev.id) };
+      energyBase: pay.energy, restDays: L.rest_days[kind] + (f ? f.rest_days : 0), stay, outcome: kind, cutDay };
   }
   function runLight(eventId, staffId, seed, items, favor = null, { estimate = false } = {}) {
     const ev = lightEvent(eventId);
@@ -202,8 +217,10 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
           journey, vignette: null, found: null, extraFavor: 0, restDays: L.rest_days.missed, keepAntique: false, outcome: 'missed' };
         return { ...missedTrip, timeline: lightRecord(D, ev, missedTrip, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
       }
-      const done = { ...r, points: timed, journey, outcome: outcomeOf(r.stars, ev.scene.points.length) };
-      return { ...done, timeline: lightRecord(D, ev, done, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
+      const done = { ...r, points: timed, journey };
+      // after a desync the record and the body stop on the day the traveller was sent back
+      const lastDay = r.cutDay ?? historicalDays(D, lightStay(eventId));
+      return { ...done, timeline: lightRecord(D, ev, done, staffId, lastDay), body: health ? health.trace.filter((x) => x.day <= lastDay).map((x) => ({ day: x.day, ...x.readouts })) : null };
     }
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);

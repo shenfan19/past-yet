@@ -65,7 +65,7 @@ export function evalPoint(D, ev, i, ctx) {
   for (const t of staff.traits) v['trait_' + t] = 1;
   for (const j of staff.jobs) v['job_' + j] = 1;
   v['gender_' + klass] = 1;
-  for (const id of ctx.carried) { v['item_' + id] = 1; for (const pr of D.get('items.' + id).provides) v['has_' + pr] = 1; }
+  for (const id of ctx.carried) { v['item_' + id] = 1; for (const pr of D.get('items.' + id).provides || []) v['has_' + pr] = 1; }
   for (const r of model.rolls) v[r.name] = draw(ctx.seed, r.key, ev.id);
   return fns[i](v) ? true : false;
 }

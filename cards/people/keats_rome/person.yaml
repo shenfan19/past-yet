@@ -2,9 +2,11 @@ order: 113
 events:
   keats_rome:
     order: 114
+    build_step: 2
     # the stay begins on 15 November 1820, the planned arrival, and the days of the facts and the points are counted from it
     year: 1820
     date: '1820-11-15'
+    stay: 4
     lon: 12.48
     lat: 41.9
     region: europe
@@ -12,15 +14,15 @@ events:
     field: literature
     tier: 1
     channels: {E: 3, G: 3}
-    regret: true
     # finished: in the game with release.ready_only
     ready: true
     refs: [keats_rome_primary, keats_locations_house, wordsworth_keats_death, romeartlover_keats]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, day: 20, req: {"any":[{"trait":["kind","patient","cheerful"]},{"job":["chef","baker","nurse"]}]}}
-        - {id: p2, kind: endure, day: 99, req: {"any":[{"trait":["vigil","patient","faithful"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: care, redeem: true, day: 103, req: {"any":[{"trait":["attached","faithful","kind","quiet"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: endure, guard: true, day: 61, req: {"any":[{"job":["nurse","caregiver"],"stat":{"will":5}},{"trait":["vigil","patient"],"stat":{"will":7}},{"item":"sleep_regulator","stat":{"will":5}}]}}
+        - {id: p2, kind: care, day: 22, req: {"any":[{"job":["doctor","physician","nurse","pharmacist","paramedic"]},{"item":"handbook"}]}}
+        - {id: p3, kind: persuade, day: 96, req: {"any":[{"trait":["scholarly","sensitive","faithful"],"stat":{"will":6}},{"job":["translator","proofreader","bookseller","teacher","writer"],"stat":{"will":6}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
       vignettes:
         - {id: stairs, traits: [methodical, vigil], day: 40}
         - {id: window, traits: [kind, quiet, artistic, charismatic], day: 70}
@@ -34,9 +36,19 @@ events:
         relic: "A pressed violet"
         relic_desc: "A dried flower kept in a book."
         points:
-          p1: 'Be taken in by the house, then carry the bread and milk up the stairs each morning'
-          p2: 'In the last nights, sit up in Severn''s place so he can sleep a few hours'
-          p3: 'On the day of the burial, stand by the grave in the Protestant Cemetery'
+          p1: 'Keep Severn on his feet through the stopped money and the sleepless nights, so that he stays by Keats to the end'
+          p2: 'Stop Dr Clark''s starvation diet and bleeding, so that he can eat and keep his blood'
+          p3: 'Before he dies, let him know that his poems will be read for generations'
+        points_fail:
+          p1: 'Severn collapsed in January, and in the last days nobody was at the bedside in his place.'
+          p2: 'On 9 December he was bled another eight ounces as before, and each day he still had only one anchovy and a piece of bread.'
+          p3: 'He still believed he had left nothing behind. In this branch nobody told him otherwise in those last days.'
+        branch:
+          p2:
+            - 'In this branch, he could eat in those last months and was bled several times less, and he suffered somewhat less than in history.'
+          p3:
+            - 'In history, he believed to the end that he had left no lasting work, and at his wish his gravestone does not carry his name.'
+            - 'In this branch, {staff} let him know in those last days that his odes would go on being read and learned by heart, and that this room in Rome would be kept for him.'
         vignettes:
           stairs: '{staff} counts the steps from the door to the room, so as to know how long the tray will stay warm, and writes the number in the margin of a shopping list.'
           window: '{staff} props the window a little so the sound of the fountain in the square comes in. Nobody in the room says anything about it, and nobody closes it.'
@@ -49,9 +61,19 @@ events:
         relic: "一朵压干的紫罗兰"
         relic_desc: "夹在书里的一朵干花。"
         points:
-          p1: '先让这栋房子里的人认下，再每天早上把面包和牛奶送上楼'
-          p2: '最后那几夜，替塞文守着，让他睡上几个钟头'
-          p3: '下葬那天，在新教徒公墓的墓旁站着'
+          p1: '护住塞文，钱断了、人熬垮了也让他守在济慈身边到最后'
+          p2: '拦下克拉克医生的饥饿疗法和放血，让他吃得上饭'
+          p3: '去世之前让他知道，他的诗会被一代代人读下去'
+        points_fail:
+          p1: '塞文在一月里倒下了，最后那些日子床边没有他。'
+          p2: '12 月 9 日他照旧又被放了八盎司血，每天仍只有一条凤尾鱼和一片面包。'
+          p3: '他照旧相信自己什么也没留下，这条分支里没有人在最后那几天告诉过他。'
+        branch:
+          p2:
+            - '这条分支里，最后那几个月他吃得上东西，少放了好几次血，比历史上少受了些苦。'
+          p3:
+            - '历史上，他到死都相信自己没有留下不朽的作品，照他的意思，墓碑上不刻名字。'
+            - '这条分支里，{staff}在最后那几天让他知道，他的颂诗以后会一直被人读、被人背，罗马这间屋子以后会为他留着。'
         vignettes:
           stairs: '{staff}数了从门口到房间的台阶，好知道托盘端上去时还热不热，把数字记在买菜单的边上。'
           window: '{staff}把窗推开一道缝，让广场上泉水的声音进来。屋里没人说什么，也没人去关。'

@@ -2,7 +2,9 @@ order: 184
 events:
   su_shi_huangzhou:
     order: 155
+    build_step: 2
     year: 1082
+    stay: 7
     lon: 114.88
     lat: 30.45
     region: asia
@@ -10,16 +12,16 @@ events:
     field: literature
     tier: 3
     channels: {L: 2, Y: 1}
-    regret: true
     # finished: in the game with release.ready_only. The planned arrival is the first day of the seventh month of the fifth Yuanfeng year;
     # the facts of that year are placed by their day of the stay, counted on the lunar calendar from that day.
     ready: true
     refs: [su_shi_huangzhou_primary, wikipedia_crow_terrace, wikipedia_former_ode, wikisource_later_ode]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 60, req: {"any":[{"trait":["kind","cheerful","attached"]},{"job":["chef","farmer","baker"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 12, req: {"any":[{"trait":["wanderer","streetwise","curious"]},{"job":["sailor","fisher"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: hold, redeem: true, day: 104, req: {"any":[{"trait":["vigil","patient","faithful"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: endure, day: 60, req: {"any":[{"job":["farmer","potato_farmer","dairy_farmer","coffee_farmer","villager","farmhand","shepherd"]},{"trait":["hardy"],"stat":{"constitution":6}}]}}
+        - {id: p2, kind: hold, guard: true, day: 104, req: {"any":[{"trait":["hardy","bold"],"stat":{"constitution":6}},{"job":["geologist","scaffolder","builder","navigator"]},{"item":"headlamp","stat":{"constitution":7}}]}}
+        - {id: p3, kind: care, day: 150, req: {"any":[{"job":["midwife","nurse","doctor","physician","paramedic"],"trait":["kind","patient","calm","vigil"]},{"trait":["kind","faithful"],"stat":{"will":8}}]}}
       vignettes:
         - {id: slope, traits: [kind, attached, cheerful]}
         - {id: lamp, traits: [vigil, patient, quiet]}
@@ -33,9 +35,19 @@ events:
         relic: "A straw cloak"
         relic_desc: "A rough rain cloak of the kind a farmer wore on the slope."
         points:
-          p1: 'Be taken in by the neighbours on the slope, then bring a meal to the field at harvest'
-          p2: 'Before the night on the river, tell the boatman where the current runs below the cliff'
-          p3: 'On the night of the walk home, keep a lamp lit on the road from the Snow Hall to Lingao'
+          p1: 'Help his family bring in a harvest from the waste land on the eastern slope, and get through the days when the savings run out'
+          p2: 'On the night of the full moon of the tenth month, keep him safe on the cliff above the river, so that he comes back down to the boat'
+          p3: 'Save the newborn children in the villages who were to be drowned in a basin of water'
+        points_fail:
+          p1: 'In this branch there was no extra pair of hands on the eastern slope at the autumn harvest, and the strings of coins on the beam went on getting fewer one by one.'
+          p2: 'That night he lost his footing on the cliff, and in this branch there is no return to the boat.'
+          p3: 'In this branch the basins in the villages stayed as they were, and {staff} did not move a single family to keep that child.'
+        branch:
+          p1:
+            - 'In this branch, the eastern slope gave a few more loads of grain that autumn, and strings of coins were still left on the beam at the end of the year.'
+          p3:
+            - 'In history, he heard of the drowning of infants around Yue and E, wrote to the prefect of Ezhou asking him to forbid it by law, and in Huangzhou proposed a society for raising children, asking the wealthy for money to help poor families keep their newborns.'
+            - 'In this branch, {staff} went from door to door with the society, and that winter a few more families kept the children just born to them.'
         vignettes:
           slope: '{staff} carries water up the slope for the hired hands. At dusk a neighbour, made up for the game, leaves a bowl of cooked beans at the edge of the field and says the newcomer can have the second bowl tomorrow.'
           lamp: '{staff} sits on a stone by the road with a lamp shaded against the wind. Footsteps come down from the slope long after the third watch; {staff} turns the lamp towards the path and says nothing.'
@@ -48,9 +60,19 @@ events:
         relic: "一件蓑衣"
         relic_desc: "一件粗糙的雨衣，是农人在坡地上穿的那种。"
         points:
-          p1: '先让坡上的邻里认下，再在收成时把饭送到地头'
-          p2: '泛舟那夜之前，告诉船家赤壁下哪段水流平缓'
-          p3: '夜归那晚，在雪堂到临皋的路上守一盏灯'
+          p1: '帮他一家把东坡那块荒地种出收成，撑过积蓄见底的日子'
+          p2: '十月之望那夜，护住他攀上赤壁断岸，让他平安回到船上'
+          p3: '救下乡间那些一落地就要被按进水盆的孩子'
+        points_fail:
+          p1: '这条分支里，秋收时东坡的地头没有多一个帮手，梁上的钱串照旧一串一串地少下去。'
+          p2: '那夜他在断岸上失了脚，这条分支里没有回到船上的那一段。'
+          p3: '这条分支里，乡间的水盆照旧，{staff}没能让哪一家留下那个孩子。'
+        branch:
+          p1:
+            - '这条分支里，那年秋天东坡的地多打了几担粮，梁上的钱串剩到了年底。'
+          p3:
+            - '历史上，他听说岳鄂一带溺婴，写信请鄂州知州依律禁止，又在黄州倡议育儿会，请富户出钱，帮贫家养活新生的孩子。'
+            - '这条分支里，{staff}跟着育儿会挨家去走，那个冬天又有几户人家把刚生下的孩子留了下来。'
         vignettes:
           slope: '{staff}替雇来的帮工往坡上挑水。天黑时，一位编出来的邻里在地头放下一碗煮豆，说明天第二碗给这个外乡人。'
           lamp: '{staff}在路边的石头上坐着，手护着一盏灯挡风。三更过了很久，坡上才有脚步声下来。{staff}把灯转向小路，什么也没说。'

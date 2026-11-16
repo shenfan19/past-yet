@@ -2009,6 +2009,7 @@ events:
       - AI
       - Fan Shen
   - id: lalibela_rock
+    build_step: 1
     year: 1200
     lon: 39.04
     lat: 12.03
@@ -2079,6 +2080,7 @@ events:
       - AI
       - Fan Shen
   - id: ife_bronzes
+    build_step: 1
     year: 1300
     lon: 4.56
     lat: 7.48
@@ -2146,6 +2148,7 @@ events:
       - AI
       - Fan Shen
   - id: great_zimbabwe
+    build_step: 1
     year: 1300
     lon: 30.93
     lat: -20.27
@@ -2404,6 +2407,7 @@ events:
       - AI
       - Fan Shen
   - id: omar_khayyam_nishapur
+    build_step: 2
     year: 1079
     date: '1079-02-13'
     lon: 58.8
@@ -2424,46 +2428,65 @@ events:
       - st_andrews_khayyam
       - wikipedia_isfahan_observatory
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 8
-          req:
-            any:
-              - job:
-                  - archivist
-                  - teacher
-              - trait:
-                  - quiet
-                  - patient
-                  - methodical
-              - stat:
-                  finesse: 6
-        - id: p2
           kind: notice
+          guard: true
           day: 28
           req:
             any:
               - trait:
                   - methodical
                   - vigil
-                  - scholarly
-              - stat:
+                stat:
                   wit: 7
-        - id: p3
+                  will: 5
+              - job:
+                  - data_analyst
+                  - modelling_scientist
+                  - programmer
+                  - sysadmin
+              - item: ar_glasses
+                stat:
+                  wit: 6
+        - id: p2
           kind: persuade
           day: 60
           req:
             any:
-              - trait:
-                  - charismatic
-                  - cheerful
-                  - patient
               - job:
                   - farmer
-                  - teacher
-              - stat:
-                  will: 6
+                  - potato_farmer
+                  - dairy_farmer
+                  - villager
+                  - shepherd
+              - trait:
+                  - patient
+                  - charismatic
+                  - cheerful
+                stat:
+                  will: 5
+        - id: p3
+          kind: hold
+          day: 120
+          req:
+            any:
+              - job:
+                  - archivist
+                  - translator
+                  - proofreader
+                  - bookseller
+                stat:
+                  wit: 7
+              - trait:
+                  - scholarly
+                item: neural_chip
+              - trait:
+                  - methodical
+                item: neural_chip
+                stat:
+                  finesse: 6
       vignettes:
         - id: spring
           traits:
@@ -2531,9 +2554,10 @@ events:
       - AI
       - Fan Shen
   - id: ibn_battuta_tangier
+    build_step: 2
     year: 1325
     date: '1325-06-01'
-    stay: 1
+    stay: 4
     lon: -5.8
     lat: 35.78
     region: africa
@@ -2555,43 +2579,51 @@ events:
       - orias_ibn_battuta
       - worldhistory_ibn_battuta
     scene:
+      star_rules: 2
       points:
         - id: p1
+          kind: endure
+          guard: true
+          day: 70
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - caregiver
+              - stat:
+                  constitution: 9
+              - item: painkiller
+                stat:
+                  will: 6
+        - id: p2
+          kind: care
+          day: 40
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: ors_pack
+                any:
+                  - item: water_flask
+              - provides: heal
+        - id: p3
           kind: trust
-          day: 8
+          day: 100
           req:
             any:
               - trait:
                   - kind
                   - cheerful
                   - attached
-              - job:
-                  - cook
-                  - chef
+                  - cosmopolitan
               - stat:
-                  constitution: 6
-        - id: p2
-          kind: notice
-          day: 12
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - scholarly
-                  - wanderer
-              - stat:
-                  wit: 6
-        - id: p3
-          kind: trust
-          day: 13.2
-          req:
-            any:
-              - trait:
-                  - curious
-                  - attached
-                  - faithful
-              - stat:
-                  will: 6
+                  will: 7
       vignettes:
         - id: distance
           traits:
@@ -2609,6 +2641,7 @@ events:
       - AI
       - Fan Shen
   - id: ulugh_beg_samarkand
+    build_step: 1
     year: 1428
     lon: 66.98
     lat: 39.65
@@ -3268,6 +3301,7 @@ events:
       - AI
       - Fan Shen
   - id: sejong_hangul
+    build_step: 2
     year: 1443
     lon: 126.98
     lat: 37.57
@@ -3286,42 +3320,58 @@ events:
       - languagelog_choe
       - languages_numbers_hangul
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: hold
+          guard: true
+          day: 106
           req:
             any:
+              - job:
+                  - archivist
+                  - translator
+                  - proofreader
+                stat:
+                  will: 6
               - trait:
-                  - quiet
-                  - patient
-                  - kind
-              - stat:
-                  finesse: 6
+                  - methodical
+                  - vigil
+                  - faithful
+                stat:
+                  wit: 6
+                  will: 6
         - id: p2
-          kind: persuade
-          day: 50
+          kind: trust
+          day: 150
           req:
             any:
               - job:
                   - teacher
+                  - tutor
+                  - sewing_teacher
               - trait:
                   - patient
                   - cheerful
-                  - kind
-              - stat:
-                  wit: 7
+                stat:
+                  wit: 5
         - id: p3
-          kind: hold
-          day: 92
+          kind: care
+          day: 125
           req:
             any:
-              - trait:
-                  - faithful
-                  - methodical
-                  - vigil
-              - stat:
-                  will: 6
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+              - job:
+                  - nurse
+                  - pharmacist
+                  - caregiver
+                item: handbook
+              - item: nano_kit
+                stat:
+                  wit: 6
       vignettes:
         - id: gesture
           traits:
@@ -3575,6 +3625,7 @@ events:
       - AI
       - Fan Shen
   - id: ramanujan_madras
+    build_step: 2
     year: 1913
     date: '1913-01-01'
     lon: 80.27
@@ -3596,47 +3647,63 @@ events:
       - imsc_ramanujan_letter
       - st_andrews_ramanujan
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 8
-          req:
-            any:
-              - job:
-                  - accountant
-                  - archivist
-              - trait:
-                  - methodical
-                  - quiet
-                  - patient
-              - stat:
-                  finesse: 6
-        - id: p2
-          kind: notice
-          day: 14
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - scholarly
-                  - curious
-              - stat:
-                  wit: 7
-        - id: p3
           kind: care
-          day: 60
+          guard: true
+          day: 55
           req:
             any:
               - job:
                   - chef
                   - cook
+                  - caregiver
                   - nurse
+                stat:
+                  will: 5
+              - item: nutrient_synth
+                stat:
+                  will: 7
               - trait:
                   - kind
-                  - attached
                   - patient
-              - stat:
-                  will: 6
+                stat:
+                  constitution: 6
+        - id: p2
+          kind: endure
+          day: 100
+          req:
+            any:
+              - job:
+                  - accountant
+                  - tax_preparer
+                  - shopkeeper
+                  - market_trader
+                  - cook
+              - trait:
+                  - methodical
+                  - streetwise
+                stat:
+                  wit: 5
+              - item: gift_box
+        - id: p3
+          kind: care
+          day: 150
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                item: nano_kit
+              - job:
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                item: nano_kit
+                stat:
+                  wit: 6
       vignettes:
         - id: sums
           traits:
@@ -3786,6 +3853,7 @@ events:
       - AI
       - Fan Shen
   - id: wright_kitty_hawk
+    build_step: 2
     year: 1903
     lon: -75.7
     lat: 36
@@ -3806,42 +3874,46 @@ events:
       - nasm_telegraph_key
       - loc_today_dec17
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 6
+          kind: hold
+          guard: true
+          day: 16.05
           req:
             any:
               - trait:
                   - hardy
-                  - cheerful
-                  - kind
+                  - bold
               - stat:
-                  constitution: 6
+                  constitution: 8
+              - provides: strength
         - id: p2
-          kind: notice
-          day: 16.2
+          kind: persuade
+          day: 16.5
           req:
             any:
               - trait:
-                  - curious
-                  - calm
-                  - methodical
-              - stat:
-                  wit: 6
+                  - charismatic
+                  - glib
+                  - streetwise
+              - job:
+                  - journalist
+                  - radio_host
+              - item: golden_apple
         - id: p3
           kind: hold
-          day: 16.6
+          day: 16.35
           req:
             any:
-              - trait:
-                  - methodical
-                  - vigil
-                  - patient
-              - job:
-                  - mechanic
+              - provides: strength
               - stat:
-                  will: 6
+                  constitution: 9
+                trait:
+                  - bold
+                  - vigil
+                  - hardy
+                  - calm
       vignettes:
         - id: numbers
           traits:
@@ -3907,6 +3979,7 @@ events:
       - AI
       - Fan Shen
   - id: machu_picchu
+    build_step: 2
     year: 1450
     lon: -72.55
     lat: -13.16
@@ -3925,43 +3998,62 @@ events:
       - britannica_machu_picchu
       - ancient_history_machu_picchu
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: hold
+          guard: true
+          day: 58
           req:
             any:
-              - trait:
-                  - hardy
-                  - cheerful
-                  - handy
               - job:
                   - builder
+                  - scaffolder
                   - carpenter
+                  - civil_engineer
+              - provides: strength
               - stat:
-                  constitution: 6
+                  constitution: 8
         - id: p2
-          kind: notice
-          day: 80
+          kind: trust
+          day: 25
           req:
             any:
+              - provides: translate
+              - job:
+                  - translator
+                  - teacher
+                  - tutor
+                  - sewing_teacher
               - trait:
-                  - methodical
-                  - scholarly
-                  - curious
-              - stat:
-                  wit: 6
+                  - kind
+                  - patient
         - id: p3
           kind: endure
-          day: 150
+          day: 120
           req:
             any:
+              - job:
+                  - builder
+                  - scaffolder
+                  - carpenter
+                  - woodcarver
+                  - restorer
+                  - civil_engineer
+                provides: strength
+              - job:
+                  - builder
+                  - scaffolder
+                  - carpenter
+                  - woodcarver
+                  - restorer
+                  - civil_engineer
+                stat:
+                  finesse: 8
               - trait:
-                  - hardy
-                  - patient
-                  - vigil
-              - stat:
-                  will: 6
+                  - handy
+                stat:
+                  finesse: 9
       vignettes:
         - id: wet
           traits:
@@ -4021,6 +4113,7 @@ events:
       - AI
       - Fan Shen
   - id: sequoyah_syllabary
+    build_step: 2
     year: 1821
     lon: -85
     lat: 34.5
@@ -4038,44 +4131,52 @@ events:
       - tennessee_encyclopedia_phoenix
       - wikipedia_sequoyah
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 8
-          req:
-            any:
-              - trait:
-                  - quiet
-                  - patient
-                  - kind
-              - job:
-                  - teacher
-              - stat:
-                  finesse: 6
-        - id: p2
           kind: persuade
-          day: 40
+          guard: true
+          day: 58
           req:
             any:
               - trait:
-                  - cheerful
                   - charismatic
-                  - patient
-              - job:
-                  - teacher
+                  - calm
               - stat:
-                  will: 6
-        - id: p3
-          kind: trust
-          day: 60.5
+                  will: 9
+              - item: golden_apple
+        - id: p2
+          kind: care
+          day: 30
           req:
             any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                  - caregiver
+              - provides: heal
+              - item: painkiller
+        - id: p3
+          kind: endure
+          day: 100
+          req:
+            any:
+              - job:
+                  - farmer
+                  - potato_farmer
+                  - dairy_farmer
+                  - coffee_farmer
+                  - villager
+                  - shepherd
+                stat:
+                  will: 6
               - trait:
-                  - methodical
-                  - vigil
-                  - faithful
-              - stat:
-                  wit: 6
+                  - kind
+                stat:
+                  constitution: 8
       vignettes:
         - id: sound
           traits:
@@ -4293,6 +4394,7 @@ events:
       - AI
       - Fan Shen
   - id: van_gogh_auvers
+    build_step: 2
     year: 1890
     date: '1890-05-20'
     stay: 3
@@ -4306,7 +4408,6 @@ events:
     channels:
       H: 2
       G: 3
-    regret: true
     ready: true
     refs:
       - van_gogh_auvers_primary
@@ -4314,46 +4415,56 @@ events:
       - wikipedia_death_van_gogh
       - collector_gachet
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: hold
+          guard: true
+          day: 49
           req:
             any:
               - job:
                   - painter
+                  - illustrator
               - trait:
                   - hardy
-                  - cheerful
-                  - kind
-              - stat:
+                  - handy
+                  - patient
+                stat:
                   constitution: 6
         - id: p2
-          kind: notice
-          day: 51
+          kind: persuade
+          day: 55
           req:
             any:
               - trait:
-                  - quiet
-                  - vigil
-                  - patient
+                  - artistic
+                  - sensitive
+                  - charismatic
+                  - kind
               - job:
                   - painter
-              - stat:
-                  will: 6
+                  - illustrator
+                  - antique_dealer
         - id: p3
           kind: care
-          redeem: true
-          day: 68.5
+          day: 66
           req:
             any:
-              - trait:
-                  - kind
-                  - patient
-                  - faithful
               - job:
-                  - nurse
                   - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                stat:
+                  will: 6
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - caregiver
+                item: calm_patch
       vignettes:
         - id: sky
           traits:
@@ -4940,8 +5051,10 @@ events:
       - AI
       - Fan Shen
   - id: keats_rome
+    build_step: 2
     year: 1820
     date: '1820-11-15'
+    stay: 4
     lon: 12.48
     lat: 41.9
     region: europe
@@ -4952,7 +5065,6 @@ events:
     channels:
       E: 3
       G: 3
-    regret: true
     ready: true
     refs:
       - keats_rome_primary
@@ -4960,44 +5072,64 @@ events:
       - wordsworth_keats_death
       - romeartlover_keats
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: care
-          day: 20
-          req:
-            any:
-              - trait:
-                  - kind
-                  - patient
-                  - cheerful
-              - job:
-                  - chef
-                  - baker
-                  - nurse
-        - id: p2
           kind: endure
-          day: 99
+          guard: true
+          day: 61
           req:
             any:
+              - job:
+                  - nurse
+                  - caregiver
+                stat:
+                  will: 5
               - trait:
                   - vigil
                   - patient
-                  - faithful
-              - stat:
-                  will: 6
-        - id: p3
+                stat:
+                  will: 7
+              - item: sleep_regulator
+                stat:
+                  will: 5
+        - id: p2
           kind: care
-          redeem: true
-          day: 103
+          day: 22
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - pharmacist
+                  - paramedic
+              - item: handbook
+        - id: p3
+          kind: persuade
+          day: 96
           req:
             any:
               - trait:
-                  - attached
+                  - scholarly
+                  - sensitive
                   - faithful
-                  - kind
-                  - quiet
-              - stat:
+                stat:
                   will: 6
+              - job:
+                  - translator
+                  - proofreader
+                  - bookseller
+                  - teacher
+                  - writer
+                stat:
+                  will: 6
+              - item: golden_apple
+                trait:
+                  - kind
+                  - sensitive
+                  - scholarly
+                  - artistic
       vignettes:
         - id: stairs
           traits:
@@ -5354,8 +5486,10 @@ events:
       - AI
       - Fan Shen
   - id: sor_juana_mexico_city
+    build_step: 2
     year: 1695
     date: '1695-01-01'
+    stay: 4
     lon: -99.13
     lat: 19.43
     region: americas
@@ -5366,7 +5500,6 @@ events:
     channels:
       E: 2
       G: 2
-    regret: true
     ready: true
     refs:
       - sor_juana_mexico_city_primary
@@ -5375,47 +5508,52 @@ events:
       - umass_sor_juana
       - unl_respuesta
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 15
+          kind: endure
+          guard: true
+          day: 45
           req:
             any:
-              - trait:
-                  - quiet
-                  - kind
-                  - patient
-              - job:
-                  - cook
-                  - chef
-                  - teacher
-        - id: p2
-          kind: notice
-          day: 40
-          req:
-            any:
-              - trait:
-                  - quiet
-                  - methodical
-                  - handy
-              - stat:
-                  wit: 6
-        - id: p3
-          kind: care
-          redeem: true
-          day: 100
-          req:
-            any:
-              - trait:
-                  - faithful
-                  - vigil
-                  - kind
               - job:
                   - nurse
-                  - doctor
+                  - caregiver
                   - midwife
-              - stat:
-                  will: 6
+                  - paramedic
+                  - doctor
+                  - physician
+                  - pharmacist
+                  - cook
+                  - chef
+              - trait:
+                  - vigil
+                  - patient
+              - provides: vigil
+        - id: p2
+          kind: care
+          day: 75
+          req:
+            any:
+              - job:
+                  - nurse
+                  - midwife
+                  - paramedic
+                  - doctor
+                  - physician
+                  - pharmacist
+              - provides: cure
+              - item: antibiotic
+        - id: p3
+          kind: care
+          day: 92
+          req:
+            any:
+              - provides: cure
+              - job:
+                  - doctor
+                  - physician
+                item: antibiotic
       vignettes:
         - id: kitchen
           traits:
@@ -5433,6 +5571,7 @@ events:
       - AI
       - Fan Shen
   - id: mary_anning_lyme_regis
+    build_step: 2
     year: 1823
     date: '1823-11-15'
     stay: 2
@@ -5447,48 +5586,63 @@ events:
       C: 1
       L: 2
       T: 1
-    regret: true
     ready: true
     refs:
       - mary_anning_lyme_regis_primary
       - museum_earth_anning
       - discover_wildlife_anning
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 8
-          req:
-            any:
-              - trait:
-                  - hardy
-                  - cheerful
-                  - kind
-              - stat:
-                  constitution: 6
-        - id: p2
-          kind: notice
-          day: 20.5
+          kind: hold
+          guard: true
+          day: 25
           req:
             any:
               - job:
                   - geologist
+                  - mining_consultant
+                  - builder
+                  - scaffolder
               - trait:
-                  - methodical
-                  - quiet
-                  - artistic
-              - stat:
-                  wit: 6
-        - id: p3
-          kind: trust
-          redeem: true
+                  - hardy
+                  - handy
+                stat:
+                  constitution: 6
+        - id: p2
+          kind: notice
           day: 40
           req:
-            trait:
-              - attached
-              - charismatic
-              - kind
-              - bold
+            any:
+              - job:
+                  - geologist
+                  - biologist
+                  - illustrator
+                  - painter
+                  - architecture_intern
+              - trait:
+                  - methodical
+                  - scholarly
+                stat:
+                  wit: 7
+              - item: magnifier
+                stat:
+                  wit: 6
+        - id: p3
+          kind: persuade
+          day: 55
+          req:
+            any:
+              - trait:
+                  - charismatic
+                  - kind
+                  - bold
+                stat:
+                  will: 7
+              - item: hologram_projector
+                stat:
+                  will: 4
       vignettes:
         - id: stone
           traits:
@@ -5624,6 +5778,7 @@ events:
       - AI
       - Fan Shen
   - id: pushkin_st_petersburg
+    build_step: 2
     year: 1837
     date: '1837-01-01'
     stay: 2
@@ -5640,7 +5795,6 @@ events:
       C: 2
       G: 2
       L: 1
-    regret: true
     ready: true
     refs:
       - pushkin_st_petersburg_address
@@ -5649,43 +5803,55 @@ events:
       - gw2ru_last_duel
       - poets_graves_pushkin
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: notice
+          day: 20
           req:
             any:
+              - job:
+                  - accountant
+                  - tax_preparer
+                  - shopkeeper
+                  - antique_dealer
+                  - market_trader
               - trait:
-                  - kind
-                  - charismatic
-                  - quiet
-              - stat:
-                  finesse: 6
+                  - methodical
+                stat:
+                  wit: 6
         - id: p2
-          kind: endure
+          kind: hold
+          guard: true
           day: 38.5
-          req:
-            any:
-              - stat:
-                  will: 6
-              - trait:
-                  - calm
-                  - hardy
-                  - bold
-        - id: p3
-          kind: care
-          redeem: true
-          day: 39
           req:
             any:
               - job:
                   - doctor
                   - physician
                   - nurse
-              - trait:
+                  - paramedic
+              - item: first_aid_kit
+                trait:
                   - calm
-                  - kind
                   - vigil
+                  - hardy
+                  - bold
+        - id: p3
+          kind: care
+          day: 39
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                item: antibiotic
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: nano_kit
       vignettes:
         - id: number
           traits:
@@ -6131,8 +6297,10 @@ events:
       - AI
       - Fan Shen
   - id: wallace_ternate
+    build_step: 2
     year: 1858
     date: '1858-02-01'
+    stay: 6
     lon: 127.38
     lat: 0.79
     region: asia
@@ -6143,7 +6311,6 @@ events:
     channels:
       E: 3
       H: 3
-    regret: true
     ready: true
     refs:
       - wallace_ternate_primary
@@ -6151,49 +6318,54 @@ events:
       - mun_darwin_wallace
       - victorianweb_wallace
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 6
+          kind: hold
+          guard: true
+          day: 10
           req:
             any:
-              - trait:
-                  - handy
-                  - quiet
-                  - patient
               - job:
-                  - farmer
-              - stat:
-                  finesse: 6
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - midwife
+                  - caregiver
+                  - pharmacist
+              - trait:
+                  - vigil
+                  - patient
+                stat:
+                  will: 8
         - id: p2
           kind: care
-          day: 12
+          day: 100
           req:
             any:
               - job:
-                  - nurse
                   - doctor
+                  - physician
+                  - nurse
+                  - paramedic
                   - midwife
-              - trait:
-                  - kind
-                  - vigil
-                  - patient
-              - stat:
-                  will: 6
+              - item: first_aid_kit
+              - item: antibiotic
         - id: p3
-          kind: hold
-          redeem: true
-          day: 60
+          kind: care
+          day: 140
           req:
             any:
-              - trait:
-                  - handy
-                  - vigil
-                  - methodical
               - job:
-                  - sailor
-              - stat:
-                  wit: 6
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                any:
+                  - item: antibiotic
+                  - item: ors_pack
+              - provides: cure
       vignettes:
         - id: places
           traits:
@@ -7026,7 +7198,9 @@ events:
       - AI
       - Fan Shen
   - id: su_shi_huangzhou
+    build_step: 2
     year: 1082
+    stay: 7
     lon: 114.88
     lat: 30.45
     region: asia
@@ -7037,7 +7211,6 @@ events:
     channels:
       L: 2
       'Y': 1
-    regret: true
     ready: true
     refs:
       - su_shi_huangzhou_primary
@@ -7045,48 +7218,65 @@ events:
       - wikipedia_former_ode
       - wikisource_later_ode
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
+          kind: endure
           day: 60
           req:
             any:
-              - trait:
-                  - kind
-                  - cheerful
-                  - attached
               - job:
-                  - chef
                   - farmer
-                  - baker
-              - stat:
+                  - potato_farmer
+                  - dairy_farmer
+                  - coffee_farmer
+                  - villager
+                  - farmhand
+                  - shepherd
+              - trait:
+                  - hardy
+                stat:
                   constitution: 6
         - id: p2
-          kind: notice
-          day: 12
-          req:
-            any:
-              - trait:
-                  - wanderer
-                  - streetwise
-                  - curious
-              - job:
-                  - sailor
-                  - fisher
-              - stat:
-                  wit: 6
-        - id: p3
           kind: hold
-          redeem: true
+          guard: true
           day: 104
           req:
             any:
               - trait:
-                  - vigil
+                  - hardy
+                  - bold
+                stat:
+                  constitution: 6
+              - job:
+                  - geologist
+                  - scaffolder
+                  - builder
+                  - navigator
+              - item: headlamp
+                stat:
+                  constitution: 7
+        - id: p3
+          kind: care
+          day: 150
+          req:
+            any:
+              - job:
+                  - midwife
+                  - nurse
+                  - doctor
+                  - physician
+                  - paramedic
+                trait:
+                  - kind
                   - patient
+                  - calm
+                  - vigil
+              - trait:
+                  - kind
                   - faithful
-              - stat:
-                  will: 6
+                stat:
+                  will: 8
       vignettes:
         - id: slope
           traits:
@@ -7973,6 +8163,7 @@ events:
       - AI
       - Fan Shen
   - id: ibn_khaldun_cairo
+    build_step: 2
     year: 1406
     date: '1406-01-01'
     lon: 31.24
@@ -7985,7 +8176,6 @@ events:
     channels:
       G: 2
       S: 2
-    regret: true
     ready: true
     refs:
       - ibn_khaldun_cairo_method
@@ -7993,43 +8183,58 @@ events:
       - ahram_ibn_khaldun
       - encyclopedia_ibn_khaldun
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 12
+          kind: persuade
+          guard: true
+          day: 45
           req:
             any:
+              - trait:
+                  - charismatic
+                  - glib
+                  - streetwise
+                stat:
+                  will: 5
               - trait:
                   - cosmopolitan
-                  - quiet
-                  - patient
+                stat:
+                  wit: 7
+              - item: golden_apple
+        - id: p2
+          kind: hold
+          day: 70
+          req:
+            stat:
+              wit: 6
+            any:
               - job:
                   - archivist
+                  - translator
+                  - proofreader
+                  - bookseller
                   - teacher
-                  - student
-        - id: p2
-          kind: notice
-          day: 40
-          req:
-            any:
-              - trait:
-                  - curious
-                  - skeptical
+                trait:
+                  - scholarly
                   - methodical
-              - stat:
-                  wit: 6
+                  - patient
+              - item: neural_chip
         - id: p3
-          kind: hold
-          redeem: true
-          day: 76
+          kind: trust
+          day: 60
           req:
             any:
               - trait:
-                  - faithful
-                  - attached
-                  - vigil
-              - stat:
-                  will: 6
+                  - scholarly
+                  - cosmopolitan
+                stat:
+                  will: 4
+              - job:
+                  - teacher
+                  - university_lecturer
+                  - lecturer
+                  - tutor
       vignettes:
         - id: gate
           traits:
@@ -8102,6 +8307,7 @@ events:
       - AI
       - Fan Shen
   - id: ahmed_baba_timbuktu
+    build_step: 2
     year: 1594
     lon: -3
     lat: 16.77
@@ -8113,51 +8319,64 @@ events:
     channels:
       S: 2
       'Y': 2
-    regret: true
     ready: true
     refs:
       - ahmed_baba_timbuktu_manuscripts
       - britannica_ahmad_baba
       - btu_ahmad_baba
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 12
-          req:
-            any:
-              - trait:
-                  - quiet
-                  - patient
-                  - kind
-              - job:
-                  - archivist
-                  - teacher
-        - id: p2
           kind: hold
-          day: 55
+          guard: true
+          day: 58
           req:
             any:
               - trait:
-                  - faithful
-                  - methodical
-                  - quiet
+                  - bold
+                  - vigil
+                stat:
+                  constitution: 5
+              - stat:
+                  constitution: 9
+                  will: 7
+              - item: holo_cloak
+        - id: p2
+          kind: notice
+          day: 50
+          req:
+            any:
               - job:
                   - archivist
-              - stat:
-                  wit: 7
+                  - bookseller
+                  - restorer
+                stat:
+                  wit: 5
+              - trait:
+                  - scholarly
+                  - methodical
+                stat:
+                  wit: 8
+                  luck: 3
         - id: p3
-          kind: trust
-          redeem: true
-          day: 60
+          kind: care
+          day: 75
           req:
             any:
+              - job:
+                  - midwife
+                  - nurse
+                  - paramedic
+                  - doctor
+                  - physician
+                  - pharmacist
+                  - caregiver
               - trait:
-                  - vigil
-                  - attached
-                  - faithful
-              - stat:
-                  will: 6
+                  - kind
+                stat:
+                  constitution: 6
+              - item: water_station
       vignettes:
         - id: same_name
           traits:
@@ -8851,6 +9070,7 @@ events:
       - AI
       - Fan Shen
   - id: nezahualcoyotl_texcoco
+    build_step: 2
     year: 1472
     lon: -98.88
     lat: 19.51
@@ -8862,7 +9082,6 @@ events:
     channels:
       H: 1
       L: 1
-    regret: true
     ready: true
     refs:
       - nezahualcoyotl_texcoco_setting
@@ -8870,47 +9089,53 @@ events:
       - banxico_nezahualcoyotl
       - wikiwand_nezahualcoyotl
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: hold
+          guard: true
+          day: 152
           req:
             any:
               - trait:
-                  - quiet
-                  - patient
-                  - kind
-              - job:
-                  - musician
+                  - vigil
+                  - bold
+              - provides: vigil
               - stat:
-                  finesse: 6
+                  constitution: 8
+                  will: 6
         - id: p2
-          kind: hold
-          day: 50
+          kind: notice
+          day: 60
           req:
             any:
               - job:
-                  - builder
-                  - carpenter
-                  - mechanic
                   - musician
+                  - teacher
+                  - tutor
+                  - sewing_teacher
               - trait:
-                  - quiet
-                  - vigil
+                  - patient
                   - methodical
+              - item: voice_recorder
         - id: p3
-          kind: hold
-          redeem: true
-          day: 130
+          kind: care
+          day: 140
           req:
             any:
-              - job:
-                  - archivist
-                  - student
               - trait:
                   - quiet
-                  - vigil
                   - faithful
+                stat:
+                  will: 7
+              - job:
+                  - caregiver
+                  - former_monk
+                stat:
+                  will: 6
+              - provides: show
+                stat:
+                  will: 6
       vignettes:
         - id: voice
           traits:
@@ -9174,6 +9399,7 @@ events:
       - AI
       - Fan Shen
   - id: tupaia_tahiti
+    build_step: 1
     year: 1769
     date: '1769-07-01'
     lon: -149.5
@@ -9349,6 +9575,7 @@ events:
       - AI
       - Fan Shen
   - id: savitribai_phule_pune
+    build_step: 2
     year: 1848
     date: '1848-01-01'
     lon: 73.86
@@ -9362,7 +9589,6 @@ events:
     channels:
       S: 3
       L: 1
-    regret: true
     ready: true
     refs:
       - savitribai_phule_pune_early
@@ -9371,44 +9597,59 @@ events:
       - janata_savitribai
       - theprint_sari
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
-          req:
-            any:
-              - trait:
-                  - kind
-                  - patient
-                  - quiet
-              - job:
-                  - teacher
-                  - nurse
-        - id: p2
           kind: endure
-          day: 30
+          guard: true
+          day: 24
           req:
             any:
               - trait:
                   - bold
+                  - vigil
                   - hardy
-                  - faithful
-              - stat:
+                stat:
                   will: 6
-        - id: p3
-          kind: care
-          redeem: true
-          day: 90
+              - stat:
+                  constitution: 8
+                  will: 7
+              - item: holo_cloak
+                stat:
+                  will: 5
+        - id: p2
+          kind: persuade
+          day: 60
           req:
             any:
               - job:
                   - teacher
+                  - tutor
+                  - caregiver
               - trait:
                   - patient
-                  - faithful
                   - kind
-              - stat:
-                  wit: 6
+                  - charismatic
+                stat:
+                  will: 5
+        - id: p3
+          kind: hold
+          day: 90
+          req:
+            any:
+              - trait:
+                  - charismatic
+                stat:
+                  will: 8
+              - trait:
+                  - bold
+                job:
+                  - union_organizer
+                  - teacher
+                  - journalist
+              - item: golden_apple
+                stat:
+                  will: 7
       vignettes:
         - id: slate
           traits:
@@ -9976,6 +10217,7 @@ events:
       - AI
       - Fan Shen
   - id: ino_tadataka_ezo
+    build_step: 2
     year: 1800
     date: '1800-06-11'
     lon: 143
@@ -9996,40 +10238,66 @@ events:
       - nippon_ino
       - wikipedia_ino
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 5
+          kind: hold
+          guard: true
+          day: 80
           req:
             any:
+              - job:
+                  - accountant
+                  - tax_preparer
+                  - shopkeeper
+                  - market_trader
+                stat:
+                  will: 5
               - trait:
-                  - cheerful
-                  - hardy
-                  - kind
-              - stat:
+                  - methodical
+                  - streetwise
+                stat:
+                  wit: 5
+                  constitution: 5
+              - item: nutrient_synth
+                stat:
                   constitution: 6
         - id: p2
           kind: notice
-          day: 70
+          day: 60
           req:
             any:
+              - job:
+                  - civil_engineer
+                  - retired_engineer
+                  - carpenter
+                  - shipwright
+                  - net_mender
               - trait:
+                  - handy
                   - methodical
-                  - scholarly
-                  - vigil
-              - stat:
-                  wit: 7
+                stat:
+                  finesse: 6
         - id: p3
           kind: endure
-          day: 130
+          day: 90
           req:
             any:
               - trait:
                   - hardy
-                  - patient
-                  - bold
-              - stat:
+                  - wanderer
+                stat:
+                  constitution: 8
                   will: 6
+              - item: scout_drone
+                stat:
+                  constitution: 6
+              - job:
+                  - navigator
+                  - bush_pilot
+                  - geologist
+                stat:
+                  constitution: 7
       vignettes:
         - id: bend
           traits:
@@ -10513,6 +10781,7 @@ events:
       - AI
       - Fan Shen
   - id: rapa_nui_moai
+    build_step: 2
     year: 1500
     lon: -109.29
     lat: -27.12
@@ -10530,44 +10799,58 @@ events:
       - newworld_moai
       - history_easter_island
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: hold
+          guard: true
+          day: 60
           req:
             any:
               - job:
                   - builder
                   - scaffolder
+                  - civil_engineer
+                  - site_manager
                   - carpenter
-                  - woodcarver
+                  - shipwright
+              - stat:
+                  constitution: 9
+              - provides: strength
+        - id: p2
+          kind: endure
+          day: 100
+          req:
+            any:
+              - job:
+                  - builder
+                  - scaffolder
+                  - civil_engineer
+                  - retired_engineer
+                  - mechanic
+              - provides: strength
               - trait:
                   - handy
-                  - patient
-              - stat:
-                  finesse: 6
-        - id: p2
-          kind: notice
-          day: 60
-          req:
-            any:
-              - stat:
-                  wit: 6
-              - trait:
-                  - curious
-                  - methodical
-        - id: p3
-          kind: endure
-          day: 120
-          req:
-            any:
-              - stat:
+                stat:
                   constitution: 6
-              - trait:
-                  - hardy
-                  - vigil
-              - stat:
-                  will: 6
+        - id: p3
+          kind: notice
+          day: 150
+          req:
+            any:
+              - job:
+                  - geologist
+                  - mining_consultant
+                stat:
+                  constitution: 6
+              - provides: scan
+                any:
+                  - provides: strength
+                  - job:
+                      - builder
+                      - scaffolder
+                      - woodcarver
+                      - carpenter
       vignettes:
         - id: pair
           traits:
@@ -10585,6 +10868,7 @@ events:
       - AI
       - Fan Shen
   - id: hargrave_stanwell_park
+    build_step: 2
     year: 1894
     date: '1894-11-01'
     stay: 1
@@ -10606,42 +10890,56 @@ events:
       - britannica_hargrave
       - ausgeo_hargrave
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 4
+          kind: hold
+          guard: true
+          day: 11
           req:
             any:
-              - trait:
-                  - handy
-                  - cheerful
-                  - kind
               - job:
-                  - mechanic
-                  - tailor
-                  - carpenter
+                  - bush_pilot
+                  - flight_instructor
+                  - sailor
+                  - navigator
+              - stat:
+                  constitution: 9
+              - trait:
+                  - calm
+                  - vigil
+                stat:
+                  finesse: 5
         - id: p2
           kind: notice
-          day: 11.2
+          day: 15
           req:
             any:
               - trait:
                   - methodical
-                  - curious
-                  - calm
-              - stat:
-                  wit: 6
+                  - scholarly
+                item: notebook_pen
+              - job:
+                  - archivist
+                  - illustrator
+                  - architecture_intern
+                  - civil_engineer
+                  - retired_engineer
         - id: p3
-          kind: hold
-          day: 11.4
+          kind: persuade
+          day: 25
           req:
             any:
+              - job:
+                  - bush_pilot
+                  - flight_instructor
+                stat:
+                  will: 7
               - trait:
-                  - patient
-                  - hardy
-                  - vigil
-              - stat:
-                  will: 6
+                  - charismatic
+                stat:
+                  wit: 6
+              - provides: show
       vignettes:
         - id: four
           traits:
@@ -10661,6 +10959,7 @@ events:
       - AI
       - Fan Shen
   - id: sun_yat_sen_guangzhou
+    build_step: 1
     year: 1924
     lon: 113.27
     lat: 23.13

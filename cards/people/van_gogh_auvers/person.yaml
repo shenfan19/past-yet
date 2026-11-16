@@ -2,6 +2,7 @@ order: 197
 events:
   van_gogh_auvers:
     order: 102
+    build_step: 2
     year: 1890
     # three office days from the planned arrival on 20 May 1890, the day he came to Auvers
     date: '1890-05-20'
@@ -13,15 +14,15 @@ events:
     field: art
     tier: 3
     channels: {H: 2, G: 3}
-    regret: true
     # finished: in the game with release.ready_only
     ready: true
     refs: [van_gogh_auvers_primary, van_gogh_museum_final_months, wikipedia_death_van_gogh, collector_gachet]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"job":["painter"]},{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 51, req: {"any":[{"trait":["quiet","vigil","patient"]},{"job":["painter"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: care, redeem: true, day: 68.5, req: {"any":[{"trait":["kind","patient","faithful"]},{"job":["nurse","doctor"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 49, req: {"any":[{"job":["painter","illustrator"]},{"trait":["hardy","handy","patient"],"stat":{"constitution":6}}]}}
+        - {id: p2, kind: persuade, day: 55, req: {"any":[{"trait":["artistic","sensitive","charismatic","kind"]},{"job":["painter","illustrator","antique_dealer"]}]}}
+        - {id: p3, kind: care, day: 66, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"stat":{"will":6}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch"}]}}
       vignettes:
         - {id: sky, traits: [artistic, curious], day: 40}
         - {id: wind, traits: [quiet, vigil], day: 52}
@@ -35,9 +36,20 @@ events:
         relic: "A tube of chrome yellow"
         relic_desc: "A squeezed tin tube of the colour he used for the fields."
         points:
-          p1: 'Be taken in at the Auberge Ravoux, then carry his easel and paint box out to the fields'
-          p2: 'By the wheatfield under a stormy sky, hold the canvas down against the wind while he paints'
-          p3: 'In the two days in the room upstairs, sit outside the door and bring water'
+          p1: 'Under a stormy sky, help him finish the wheatfield, and keep the canvas from falling into the wheat'
+          p2: 'Let him know that his paintings will be remembered'
+          p3: 'Before 27 July, heal his body and his mind, and keep him alive'
+        points_fail:
+          p1: 'The canvas went down into the wheat in the wind, and in this branch there is no Wheatfield under Thunderclouds.'
+          p2: 'He still felt his paintings were a burden on Theo. In this branch nobody ever told him where these wheatfields would end up.'
+          p3: '27 July happened as it did in history. In this branch he did not paint another season.'
+        branch:
+          p2:
+            - 'In this branch, someone told him that these wheatfields would one day hang on museum walls, and that many people would travel to see them.'
+          p3:
+            - 'In history, he was wounded by a gunshot on 27 July 1890 and died at Auvers two days later, having painted for only about a decade.'
+            - 'In this branch, {staff} stayed with him through that July, the illness did not crush him again, and when the summer was over he was still at the Auberge Ravoux.'
+            - 'In this branch, he painted for a few more years, and after the wheatfields there were other seasons.'
         vignettes:
           sky: '{staff} draws the same field twice in a notebook, first with a strip of sky and then with much more, and sees something in the second that the first had hidden.'
           wind: '{staff} waits for the next gust over the wheat and watches the dark patch move across it, without rubbing out the first look.'
@@ -50,9 +62,20 @@ events:
         relic: "一管铬黄颜料"
         relic_desc: "一支挤瘪的锡管，里面是他画麦田用的那种黄。"
         points:
-          p1: '先让拉武客栈的人认下，再替他把画架和颜料箱扛到田里'
-          p2: '暴风雨般的天空下，在麦田边替他按住被风掀动的画布'
-          p3: '他躺在楼上那两天，守在门外，端水进去'
+          p1: '暴风雨般的天空下，帮他把那幅麦田画完，不让画布倒进麦田'
+          p2: '让他知道自己的画会被记住'
+          p3: '7 月 27 日之前，治好他的身体和心病，让他活下来'
+        points_fail:
+          p1: '那幅画在风里倒进了麦田，这条分支里没有《麦田上空的乌云》。'
+          p2: '他照旧觉得自己的画是提奥的负担，这条分支里没有人告诉过他这些麦田后来的去处。'
+          p3: '7 月 27 日照史实发生，这条分支里他没能多画一个季节。'
+        branch:
+          p2:
+            - '这条分支里，有人告诉过他，这些麦田以后会挂在博物馆的墙上，有很多人专程去看。'
+          p3:
+            - '历史上，1890 年 7 月 27 日他受了枪伤，两天后在奥维尔去世，只画了大约十年。'
+            - '这条分支里，{staff}陪他过了那个七月，病没有再把他压垮，那个夏天过去时他还在拉武客栈。'
+            - '这条分支里，他又画了几年，麦田之后还有别的季节。'
         vignettes:
           sky: '{staff}在本子上把同一片田画了两遍，头一遍只留一条天，第二遍留得多，从第二幅里看出了头一幅藏住的东西。'
           wind: '{staff}等下一阵风吹过麦田，看着那块暗影从田上移过去，没有擦掉头一眼画下的。'

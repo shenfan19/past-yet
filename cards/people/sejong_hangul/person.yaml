@@ -2,6 +2,7 @@ order: 174
 events:
   sejong_hangul:
     order: 77
+    build_step: 2
     year: 1443
     lon: 126.98
     lat: 37.57
@@ -15,10 +16,11 @@ events:
     ready: true
     refs: [sejong_hangul_primary, wikipedia_hunminjeongeum, languagelog_choe, languages_numbers_hangul]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["quiet","patient","kind"]},{"stat":{"finesse":6}}]}}
-        - {id: p2, kind: persuade, day: 50, req: {"any":[{"job":["teacher"]},{"trait":["patient","cheerful","kind"]},{"stat":{"wit":7}}]}}
-        - {id: p3, kind: hold, day: 92, req: {"any":[{"trait":["faithful","methodical","vigil"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 106, req: {"any":[{"job":["archivist","translator","proofreader"],"stat":{"will":6}},{"trait":["methodical","vigil","faithful"],"stat":{"wit":6,"will":6}}]}}
+        - {id: p2, kind: trust, day: 150, req: {"any":[{"job":["teacher","tutor","sewing_teacher"]},{"trait":["patient","cheerful"],"stat":{"wit":5}}]}}
+        - {id: p3, kind: care, day: 125, req: {"any":[{"job":["doctor","physician","medical_teacher"]},{"job":["nurse","pharmacist","caregiver"],"item":"handbook"},{"item":"nano_kit","stat":{"wit":6}}]}}
       vignettes:
         - {id: gesture, traits: [curious, scholarly], day: 40}
         - {id: spacing, traits: [methodical, artistic], day: 60}
@@ -32,9 +34,19 @@ events:
         relic: A woodblock of letters
         relic_desc: A block carved with the first letters, ready to ink.
         points:
-          p1: 'Be taken in by the servants of the Hall of Worthies, then grind the ink and lay out the paper for the scholars'
-          p2: 'Teach a stallholder who cannot read to spell her own name in the new letters'
-          p3: 'In the days of the memorial against them, keep a fair copy of the new letters safe'
+          p1: 'In the days of the memorial, keep the draft translation of the rhyme book Yunhui into the new letters safe in the council hall, so that the work goes on'
+          p2: 'Let him see with his own eyes someone who never went to school write their own name in the new letters'
+          p3: 'At Chojeong, ease the trouble in his eyes so that he can still see the new letters clearly'
+        points_fail:
+          p1: 'In those days the draft was scattered and the work stopped, and the new letters lost their first use.'
+          p2: 'In this branch, until the promulgation he never saw anyone among the people use the new letters.'
+          p3: 'He went back to the palace with his eyes no better, as in history.'
+        branch:
+          p2:
+            - 'In this branch, a stallholder outside the travelling palace at Chojeong learned to write her own name, and someone reported it to the court.'
+          p3:
+            - 'In history, Sejong suffered for years with his eyes, went to Chojeong in the spring of 1444 to recover, grew weaker from then on and died in 1450.'
+            - 'In this branch, a stranger by the springs at Chojeong made his eyes a little better, and when he went back to the palace that summer he could still read memorials and the proofs of the new letters himself.'
         vignettes:
           gesture: '{staff} watches a scholar shape his lips before he draws a letter, and copies the shape of the mouth in the margin beside it.'
           spacing: '{staff} rules a sheet into squares so that the parts of each syllable sit together in one square, and leaves it on the table without a word.'
@@ -47,9 +59,19 @@ events:
         relic: 一块刻着字母的木板
         relic_desc: 刻着最早几个字母的木板，等着上墨。
         points:
-          p1: '先让集贤殿的杂役认下，再替学士们研墨铺纸'
-          p2: '教集市上一个不识字的摊主用新字拼出自己的名字'
-          p3: '有人上疏反对的那些天，把新字的誊本收好'
+          p1: '上疏那几天，护住议事厅里用新字译《韵会》的草稿，让这件事照常往下做'
+          p2: '让他亲眼看到一个从没念过书的百姓用新字写出自己的名字'
+          p3: '在初水，减轻他的眼疾，让他还看得清新字'
+        points_fail:
+          p1: '译稿在那几天散了、停了，新字少了第一件用场。'
+          p2: '这条分支里，他到颁布之前都没见过一个百姓用上新字。'
+          p3: '他照旧带着眼疾回宫，这条分支与历史一样。'
+        branch:
+          p2:
+            - '这条分支里，初水的行宫外有个摊主会写自己的名字了，有人把这事报了上去。'
+          p3:
+            - '历史上，世宗多年患眼疾，1444 年春去初水养病，此后身体每况愈下，1450 年去世。'
+            - '这条分支里，初水边一个外乡人帮他把眼睛治得轻了些，那年夏天他回宫时还能自己看奏章和新字的校样。'
         vignettes:
           gesture: '{staff}看见一位学士画一个字母之前先比了比嘴形，便把嘴的样子描在那个字母旁边的页边上。'
           spacing: '{staff}把一张纸打成方格，让一个音节的几部分落在同一格里，什么也没说，放在了桌上。'

@@ -2,9 +2,11 @@ order: 200
 events:
   wallace_ternate:
     order: 134
+    build_step: 2
     year: 1858
     # the planned arrival is 1 February 1858, the month the essay is signed
     date: '1858-02-01'
+    stay: 6
     lon: 127.38
     lat: 0.79
     region: asia
@@ -12,15 +14,15 @@ events:
     field: science
     tier: 2
     channels: {E: 3, H: 3}
-    regret: true
     # finished: in the game with release.ready_only
     ready: true
     refs: [wallace_ternate_primary, wallace_online_s043, mun_darwin_wallace, victorianweb_wallace]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 6, req: {"any":[{"trait":["handy","quiet","patient"]},{"job":["farmer"]},{"stat":{"finesse":6}}]}}
-        - {id: p2, kind: care, day: 12, req: {"any":[{"job":["nurse","doctor","midwife"]},{"trait":["kind","vigil","patient"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: hold, redeem: true, day: 60, req: {"any":[{"trait":["handy","vigil","methodical"]},{"job":["sailor"]},{"stat":{"wit":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 10, req: {"any":[{"job":["doctor","physician","nurse","paramedic","midwife","caregiver","pharmacist"]},{"trait":["vigil","patient"],"stat":{"will":8}}]}}
+        - {id: p2, kind: care, day: 100, req: {"any":[{"job":["doctor","physician","nurse","paramedic","midwife"]},{"item":"first_aid_kit"},{"item":"antibiotic"}]}}
+        - {id: p3, kind: care, day: 140, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"any":[{"item":"antibiotic"},{"item":"ors_pack"}]},{"provides":"cure"}]}}
       vignettes:
         - {id: places, traits: [methodical, vigil], day: 25}
         - {id: claim, traits: [curious, skeptical], day: 35}
@@ -34,9 +36,19 @@ events:
         relic: "A beetle in a pin box"
         relic_desc: "A collected beetle in a small tin box."
         points:
-          p1: 'Be taken in by the household he lodges with, then pin and dry the day''s specimens'
-          p2: 'In the days of the fever, keep the water boiled and the cloths changed'
-          p3: 'On the day of the mail steamer, wrap the essay against the damp and see it aboard'
+          p1: 'In the days of the malaria, see the essay through to its end'
+          p2: 'Heal the ankle he hurt at Dorey before it turns to an ulcer'
+          p3: 'Save the young hunter Jumaat from the fever and the dysentery'
+        points_fail:
+          p1: 'The fever never broke and the draft was not finished in February. The letters the mail boat took did not hold it, and in this branch the Linnean Society had no such paper on 1 July.'
+          p2: 'The wound festered as history has it, and he sat in the hut on a crutch for more than a month. In this branch the insects of the Dorey forest were still caught only by his servants.'
+          p3: 'Jumaat died on 26 June as history has it, and in this branch the boat that left Dorey in July went without him.'
+        branch:
+          p2:
+            - 'In this branch the wound did not fester, and in the days the steamer was in port he went into the forest every day as before.'
+          p3:
+            - 'In history, on 26 June 1858, Jumaat, a youth of about eighteen, died at Dorey; Wallace wrote of him as a quiet lad who did his work well.'
+            - 'In this branch {staff} sat with him until the fever fell and the illness stopped, and when they left Dorey at the end of July he was on the boat too.'
         vignettes:
           places: '{staff} copies the labels of the day''s birds and writes the island beside each one, so that the drawer of skins can be read without its collector.'
           claim: '{staff} sorts a tray of beetles from two islands that look alike, and keeps them in two rows with a gap between, without being asked.'
@@ -49,9 +61,19 @@ events:
         relic: "针盒里的一只甲虫"
         relic_desc: "一只收集来的甲虫，放在小锡盒里。"
         points:
-          p1: '先让他借住的那户人家认下，再替他把当天的标本钉好晾干'
-          p2: '他发烧那几天，烧好开水，换好湿布'
-          p3: '邮船来的那天，把论文包好防潮，送上船'
+          p1: '疟疾发作的那几天，护住那篇论文写完'
+          p2: '治好他在多雷伤的那只脚踝，不让它溃烂'
+          p3: '救下猎手朱马特，治好他的高烧和痢疾'
+        points_fail:
+          p1: '烧一直没退下去，二月里稿子没有写完，邮船带走的信里没有它，这条分支里 7 月 1 日的林奈学会没有这篇论文。'
+          p2: '伤口照史实溃了，他在小屋里拄着拐坐了一个多月，这条分支里多雷林子里那些虫子还是只有仆人替他去捉。'
+          p3: '6 月 26 日朱马特照史实病逝，这条分支里七月离开多雷的船上少了他。'
+        branch:
+          p2:
+            - '这条分支里，伤口没有溃，汽船到港那些天他照旧每天进林子。'
+          p3:
+            - '历史上，1858 年 6 月 26 日，十八岁上下的朱马特在多雷病逝，华莱士写他是个安静的小伙子，活干得踏实。'
+            - '这条分支里，{staff}守着他退了烧、止住了病，七月底离开多雷时，他也在船上。'
         vignettes:
           places: '{staff}抄写当天鸟类标本的签条，在每张旁边写上岛名，这一抽屉皮子没有采集人在旁边也读得懂。'
           claim: '两座岛上的甲虫长得很像，{staff}把一盘甲虫分成两排，中间留出空隙，没人吩咐。'

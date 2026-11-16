@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0, 2026-11-16
+
+- Two kinds of star, drawn from what history left unresolved. A guard point holds a recorded event against a real threat; when it is missed the trip falls out of sync with history, the traveller is sent back on that day and the points after it are never reached, with three days of rest and a loss of mood. Every other point fulfils something history left undone and a miss costs only its star.
+- Each sync point says what its miss cost, read right after it in the record, and a fulfilled point tells what came of it in this branch, apart from the lines of history.
+- A sync point may ask for a plain item, such as antibiotics, and an item a point names may be taken on that story.
+- Twenty one of the stories that are on have new stars: Van Gogh is helped to finish the wheatfield under the storm and healed, Keats is spared the starvation diet, Wallace's hunter Jumaat is saved, and so on. An event card marks where its story stands in the making with build_step.
+
 ## 0.6.0, 2026-11-16
 
 - The trips are meant to be hard. The game grew out of Life Matters to let the traveller live through the hardship of the past, and the About page now says so; the design document has a section on pressure and the body.

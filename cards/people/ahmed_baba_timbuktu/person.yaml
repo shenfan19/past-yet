@@ -2,6 +2,7 @@ order: 12
 events:
   ahmed_baba_timbuktu:
     order: 175
+    build_step: 2
     year: 1594
     lon: -3.0
     lat: 16.77
@@ -10,15 +11,15 @@ events:
     field: literature
     tier: 1
     channels: {S: 2, Y: 2}
-    regret: true
     # finished: in the game with release.ready_only. No month of 1594 is recorded for the deportation, so the facts of the stay carry the year only.
     ready: true
     refs: [ahmed_baba_timbuktu_manuscripts, britannica_ahmad_baba, btu_ahmad_baba]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 12, req: {"any":[{"trait":["quiet","patient","kind"]},{"job":["archivist","teacher"]}]}}
-        - {id: p2, kind: hold, day: 55, req: {"any":[{"trait":["faithful","methodical","quiet"]},{"job":["archivist"]},{"stat":{"wit":7}}]}}
-        - {id: p3, kind: trust, redeem: true, day: 60, req: {"any":[{"trait":["vigil","attached","faithful"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 58, req: {"any":[{"trait":["bold","vigil"],"stat":{"constitution":5}},{"stat":{"constitution":9,"will":7}},{"item":"holo_cloak"}]}}
+        - {id: p2, kind: notice, day: 50, req: {"any":[{"job":["archivist","bookseller","restorer"],"stat":{"wit":5}},{"trait":["scholarly","methodical"],"stat":{"wit":8,"luck":3}}]}}
+        - {id: p3, kind: care, day: 75, req: {"any":[{"job":["midwife","nurse","paramedic","doctor","physician","pharmacist","caregiver"]},{"trait":["kind"],"stat":{"constitution":6}},{"item":"water_station"}]}}
       vignettes:
         - {id: same_name, traits: [methodical, scholarly], day: 30}
         - {id: courtyard, traits: [curious, quiet], day: 40}
@@ -32,9 +33,20 @@ events:
         relic: "A leather bound manuscript"
         relic_desc: "A manuscript in a worn leather cover with a flap."
         points:
-          p1: 'Be taken in by the household, then help list the volumes one by one'
-          p2: 'Before the departure, give a few volumes into the keeping of a family in the town'
-          p3: 'On the day he is taken away, write down the day and the road, and leave it with his family'
+          p1: 'Before he is taken away, stop the blades turned on the arrested scholars, and keep Ahmed Baba alive for the road north'
+          p2: 'Before the soldiers take the books, save a few chests from the sixteen hundred volumes and leave them hidden with a family in the town'
+          p3: 'Treat the kinsmen who fall ill or hurt in the desert, share out the water, and keep the household from falling behind'
+        points_fail:
+          p1: 'In this branch he did not leave Timbuktu alive, and the biographical dictionaries of Marrakesh and the twenty nine books written in Morocco are gone.'
+          p2: 'All sixteen hundred volumes were taken, and in this branch, when he came back to Timbuktu fourteen years later, not one of his own books was left.'
+          p3: 'Nobody helped up those who fell on the road, and in this branch the family''s journey north was as hard as it had been.'
+        branch:
+          p2:
+            - 'In history, his library of some sixteen hundred volumes was taken by the Moroccans, or by another account lost on the way north, and when he came back to Timbuktu in 1608 the books were gone.'
+            - 'In this branch, before he was taken away, a few chests of books were moved under a bed in a house in the town.'
+            - 'In this branch, when he came home fourteen years later, that family carried the chests out.'
+          p3:
+            - 'In this branch, the kinsmen who travelled with him reached Marrakesh having suffered a little less.'
         vignettes:
           same_name: '{staff} finds one name written two ways in two volumes and keeps both spellings on the list, with a mark between them, instead of choosing one.'
           courtyard: '{staff} sets the volumes out in the shade of the courtyard to air them after the rains, and turns each one at noon so the covers dry evenly.'
@@ -47,9 +59,20 @@ events:
         relic: "一部皮面手稿"
         relic_desc: "一部手稿，皮面磨旧了，带一片护舌。"
         points:
-          p1: '先让学者家里的人认下，再帮着把书一卷一卷登记'
-          p2: '押走之前，把几卷书托给城里一户人家收着'
-          p3: '押走那天，记下日子和去的路，留给他的家人'
+          p1: '押走之前，拦下冲着被捕学者来的刀兵，护住艾哈迈德·巴巴活着走上北去的路'
+          p2: '抢在士兵收书之前，从一千六百卷里救下几箱，托给城里一户人家藏好'
+          p3: '替在沙漠里病倒受伤的族人治伤、分水，护着一家老小不掉队'
+        points_fail:
+          p1: '这条分支里他没能活着离开廷巴克图，马拉喀什的人物辞书和在摩洛哥写成的二十九部书都没有了。'
+          p2: '一千六百卷全被收走，这条分支里他十四年后回到廷巴克图，自己的书一卷也没剩下。'
+          p3: '路上倒下的人没人扶，这条分支里一家人北上的路和原来一样苦。'
+        branch:
+          p2:
+            - '历史上，他约一千六百卷藏书被摩洛哥人收走，另一说在北上途中散失，1608 年回到廷巴克图时书已不在。'
+            - '这条分支里，押走之前有几箱书被挪进城里一户人家的床底。'
+            - '这条分支里，十四年后他回到家，那户人家把箱子抬了出来。'
+          p3:
+            - '这条分支里，同行的族人走到马拉喀什时少受了些罪。'
         vignettes:
           same_name: '{staff}发现两卷书里同一个名字有两种写法，没有挑一种，两种都记在单子上，中间画了个记号。'
           courtyard: '雨季过后，{staff}把书摊在院子的阴凉里晾，正午翻一次，让封皮干得匀。'

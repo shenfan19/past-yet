@@ -398,10 +398,12 @@ ui:
       success: Met them
       partial: A brief encounter
       missed: Missed them
+      desync: Out of sync
     summary:
       success: '{staff} reached {place}, stood where it happened, and met {figure}. It went as it should.'
       partial: '{staff} reached {place} and caught only a glimpse of {figure}, but it was enough to bring something home.'
       missed: '{staff} reached {place} too early or too late and missed {figure}. Not much came back.'
+      desync: '{staff} could not hold what history needed at {place}, and was sent back before the end.'
     note: 'This scene has no full simulation yet, so it is played in brief: the traveller against the event, without a branch timeline or a kit, paid by how it went.'
     points:
       reach: Reached the place
@@ -665,6 +667,9 @@ ui:
     light_leave: '{day}: {staff} is recalled.'
     point_hit: '{day}: {staff} managed it: {text}.'
     point_miss: '{day}: {staff} did not manage it: {text}.'
+    point_desync: '{day}: {staff} did not manage it: {text}. The branch falls out of step with history.'
+    light_sent_back: '{day}: the synchronisation fails and {staff} is sent back.'
+    branch_line: '{text}'
     why:
       date: Recorded date
       when: Condition
@@ -675,6 +680,7 @@ ui:
       vignette: Scene by trait
       epilogue: Recorded after leaving
       point: Requirement
+      branch: Won in this branch
     stamp:
       normal_full: Home in full
       normal_part: Well worth it
@@ -2455,9 +2461,19 @@ catalog:
     relic: A calendar leaf with two headings
     relic_desc: A comparison sheet with the old and the new new year written side by side.
     points:
-      p1: Be taken in by the copyists of almanacs in the town, then copy the month table of the new calendar
-      p2: In the days around the equinox, mark each morning where the sun comes up
-      p3: After the new year, persuade an old farmer to write his sowing day in the new calendar
+      p1: In the days before the equinox, keep the shadow readings that fix it safe, so that the new calendar begins on the day set for it
+      p2: After the new year, bring an old farmer who sows by the old months round to writing his sowing day in the new calendar
+      p3: Help him get one more copy made of his book on extracting roots and send it to another city for safe keeping, so that in this branch it survives
+    points_fail:
+      p1: The equinox readings did not line up, and the new calendar did not begin on 15 March.
+      p2: In this branch that field was still sown by the old calendar, and the new one had one user fewer in the country.
+      p3: The book was lost all the same, as in history.
+    branch:
+      p2:
+        - In this branch, there was one field outside the town sown by the new calendar.
+      p3:
+        - In history, Khayyam's book on the binomial and on extracting roots did not survive, and is known only from a mention in his Algebra.
+        - In this branch, one copy was sent to another city and put in a library, and people could still read it centuries later.
     vignettes:
       spring: '{staff} lays the old table and the new one side by side and writes against each date which reckoning it belongs to, so that the next reader does not have to guess.'
       carry: '{staff} copies the two headings of a folded sheet onto its outside, so whoever carries it can see which columns to compare without unfolding it.'
@@ -2485,9 +2501,20 @@ catalog:
     relic: A travel-worn sandal
     relic_desc: A leather sandal resoled many times.
     points:
-      p1: Be taken in by his household, then help get the food and water skins ready for the road
-      p2: On the eve of leaving, write down the towns of the first stage in order on one sheet
-      p3: At dawn on the day he leaves, walk with him to the gate of the town
+      p1: On the road from Bejaia, keep him in the saddle through the fever until he reaches Tunis
+      p2: At Miliana, save the envoy of Tunis who fell ill in the heat
+      p3: On the day he enters Tunis, let him know he is not alone in a strange town
+    points_fail:
+      p1: Halfway through the fever he fell from the saddle, and in this branch he never reached Tunis.
+      p2: The envoy died by the stream outside Miliana as history has it, and in this branch only one envoy went on towards Tunis.
+      p3: He wept aloud at the gate as history has it, and in this branch the only one who walked into the town with him that day was the fellow pilgrim.
+    branch:
+      p2:
+        - In history, in the summer of 1325, both envoys of the sultan of Tunis fell ill from the heat at Miliana, and one of them died after three nights by a stream outside the town.
+        - In this branch {staff} sat with him by the stream until he cooled and drank, and when they left Miliana both envoys were with the caravan.
+        - In this branch he later came home to Tunis; what came after is not recorded.
+      p3:
+        - In this branch, on the day he entered the town, he had at his side someone he had come to know on the road, and in the two months he stayed in Tunis he was no longer alone.
     vignettes:
       distance: '{staff} writes the far destination on one slip and the first night''s stop on another, so a porter can use the second today.'
       departure: '{staff} keeps the heading of a packing list but leaves a blank line under it for where the traveller will truly stop.'
@@ -2710,9 +2737,19 @@ catalog:
     relic: A woodblock of letters
     relic_desc: A block carved with the first letters, ready to ink.
     points:
-      p1: Be taken in by the servants of the Hall of Worthies, then grind the ink and lay out the paper for the scholars
-      p2: Teach a stallholder who cannot read to spell her own name in the new letters
-      p3: In the days of the memorial against them, keep a fair copy of the new letters safe
+      p1: In the days of the memorial, keep the draft translation of the rhyme book Yunhui into the new letters safe in the council hall, so that the work goes on
+      p2: Let him see with his own eyes someone who never went to school write their own name in the new letters
+      p3: At Chojeong, ease the trouble in his eyes so that he can still see the new letters clearly
+    points_fail:
+      p1: In those days the draft was scattered and the work stopped, and the new letters lost their first use.
+      p2: In this branch, until the promulgation he never saw anyone among the people use the new letters.
+      p3: He went back to the palace with his eyes no better, as in history.
+    branch:
+      p2:
+        - In this branch, a stallholder outside the travelling palace at Chojeong learned to write her own name, and someone reported it to the court.
+      p3:
+        - In history, Sejong suffered for years with his eyes, went to Chojeong in the spring of 1444 to recover, grew weaker from then on and died in 1450.
+        - In this branch, a stranger by the springs at Chojeong made his eyes a little better, and when he went back to the palace that summer he could still read memorials and the proofs of the new letters himself.
     vignettes:
       gesture: '{staff} watches a scholar shape his lips before he draws a letter, and copies the shape of the mouth in the margin beside it.'
       spacing: '{staff} rules a sheet into squares so that the parts of each syllable sit together in one square, and leaves it on the table without a word.'
@@ -2800,9 +2837,21 @@ catalog:
     relic: A slate
     relic_desc: A school slate, wiped and written on many times.
     points:
-      p1: Be taken in by the clerks of the Port Trust, then copy the day's accounts fair
-      p2: On the eve of the letter, put his pages of formulas in order
-      p3: In the weeks of working day and night, cook for him and see that he eats
+      p1: Through the hungry weeks of working by night, keep him on his feet so that the reply of 27 February to Hardy is written and sent
+      p2: Help his family through the months on thirty rupees a month, until the scholarship comes
+      p3: Before he leaves for England, see the old illness that keeps coming back and cure it
+    points_fail:
+      p1: On 27 February he collapsed under the lamp, the reply was never written, and Hardy heard nothing more.
+      p2: In this branch the family's food money still weighed on him beside each night's working, and the record is one line short.
+      p3: He set out with the illness still in him, fell ill in 1917 and died in Kumbakonam in 1920, as in history.
+    branch:
+      p2:
+        - In history, until the scholarship came in May the family lived on his pay of thirty rupees a month.
+        - In this branch, the rice jar did not run empty in those months.
+      p3:
+        - In history, he fell gravely ill in England in 1917, was never firmly diagnosed, went back to India in 1919 and died the next April, aged 32.
+        - In this branch, a stranger in Madras recognised the old illness in him and cured it before he travelled.
+        - In this branch, he did not go into a sanatorium in Cambridge, and after his return to India he did mathematics for many more years.
     vignettes:
       sums: '{staff} works out 1, 3, 6 and 10 as the first sums of a row of whole numbers beside a single total written at the end, and gives the column of sums its own heading.'
       future: '{staff} knows what will be written of this letter one day, and asks only what a man opening it for the first time will understand, and puts the covering page in front.'
@@ -2860,9 +2909,20 @@ catalog:
     relic: A propeller blade
     relic_desc: A wooden blade shaped like a twisted wing.
     points:
-      p1: Be taken in by the men of the life saving station, then help carry the launching rail up the dune
-      p2: At the first flight, stand by the camera so the shutter is pressed at the right moment
-      p3: At the telegraph, write the duration of the longest flight on a slip and hand it over with the message
+      p1: In the cold wind on the morning of 17 December, help the brothers steady the Flyer and keep the first take off safe
+      p2: Talk round the man passing on the telegram and stop the news from leaking
+      p3: After the fourth flight, hold the Flyer down on the sand and save Daniels and the machine
+    points_fail:
+      p1: Before the take off a gust lifts one wing and drags it in the sand, and the machine never leaves the rail; in this branch there are no twelve seconds.
+      p2: As in history the message leaks, and the next day the Virginian-Pilot prints a story that is mostly wrong; in this branch that story speaks for the brothers first.
+      p3: The wind turns the Flyer over, Daniels is caught in the wings and tumbled along with it, and as in history the machine is too broken to fly again. In this branch it never leaves the ground after that afternoon.
+    branch:
+      p2:
+        - In this branch, the next day's paper has no wrong story, and the brothers told how the flights went themselves once they were back in Dayton.
+      p3:
+        - In history, after the fourth flight a gust turned the Flyer over, John T. Daniels was caught between the wings, and the machine was so badly damaged it never flew again.
+        - In this branch, {staff} and the men of the station held it down on the sand, and Daniels was not caught.
+        - In this branch, that winter the brothers flew it a few more times over the dunes before they crated it for Dayton.
     vignettes:
       numbers: '{staff} copies the four flights into a notebook in the order they were made, the seconds in one column and the feet in the other, and adds them up twice before the light goes.'
       sand: '{staff} digs the rail out of the drift after the night wind and stamps the sand flat at its foot. A helper from the station, made up for the game, says the wind will drop by morning, and it does not.'
@@ -2890,9 +2950,20 @@ catalog:
     relic: A carved stone
     relic_desc: A palm sized stone with a straight, true edge.
     points:
-      p1: Be taken in by the stone workers, then carry stone up the terraces
-      p2: Follow the water from the spring down the sixteen basins, and note where it ran
-      p3: In the rains, keep the channel above the basins clear of mud
+      p1: On the day of the earthquake, keep the canal from the spring from breaking apart
+      p2: See that a helper brought alone from the eastern forests has someone here who understands him
+      p3: Help the masons rebuild the cracked walls with the old fitted stones
+    points_fail:
+      p1: The stone channel slips apart in the shaking, the water spills down the slope, the sixteen basins run dry one by one, and in this branch the estate is without water.
+      p2: He still carries stone alone and nobody answers what he says; in this branch he is as he was when he came.
+      p3: As in history, the cracked walls are built up again in small stones, and in this branch the fitted stonework stops at these walls.
+    branch:
+      p2:
+        - In this branch, {staff} worked out a few words with the helper, and later he had people among the masons he could talk to.
+      p3:
+        - In history, after the earthquakes during the building, the masons of Machu Picchu turned to walls of small stones that took less work, and stopped cutting large blocks fitted to one another.
+        - In this branch, {staff} and the masons rebuilt the cracked walls in the old way.
+        - In this branch, in the decades after, those walls came through several more tremors.
     vignettes:
       wet: '{staff} walks from one basin to the next before marking it wet, and leaves the second box blank until the water is seen.'
       steps: '{staff} counts the basins from the top of the stair, as the water runs, and not from where the morning''s work began.'
@@ -2920,9 +2991,20 @@ catalog:
     relic: A syllabary chart
     relic_desc: A sheet with eighty-odd characters laid out in rows.
     points:
-      p1: Be taken in by his household, then keep his sheets of signs in order
-      p2: Teach a neighbour to write her own name in the new signs
-      p3: On the day of the council, carry a written slip from one side to the other
+      p1: On the day he shows it, stop the charge that the writing is witchcraft, and keep him and six year old Ayoka safe
+      p2: Ease the pain in his lame leg so he can walk to the towns to teach
+      p3: Help his wife bring the neglected fields back, and talk the family out of the quarrel the writing has caused
+    points_fail:
+      p1: The charge drowns out the showing, Ayoka is never called back to read the word, and in this branch nobody sees that the signs can carry speech.
+      p2: The leg hurts as before, and in this branch he has to stop and rest after every stretch of road.
+      p3: The fields stay neglected and the family still begs him to give it up; in this branch the writing is still what it has cost this household for years.
+    branch:
+      p2:
+        - In this branch, the pain in his leg eased for those six months, and he walked faster on the road to the next town to teach.
+      p3:
+        - In history, for years he left the work of the fields to his wife, his family begged him again and again to give up the writing, and his wife once burned his papers.
+        - In this branch, {staff} kept the fields planted for the household those six months, and the quarrels grew fewer.
+        - In this branch, his wife later learned to write with the signs as well.
     vignettes:
       sound: '{staff} listens to a learner say a word at his usual speed and then slowly, and points to one sign for each syllable until he can go on alone.'
       lookalike: '{staff} catches a sign that looks like an English letter, and crosses out the letter pencilled beside it before it can mislead anyone.'
@@ -2995,9 +3077,20 @@ catalog:
     relic: A tube of chrome yellow
     relic_desc: A squeezed tin tube of the colour he used for the fields.
     points:
-      p1: Be taken in at the Auberge Ravoux, then carry his easel and paint box out to the fields
-      p2: By the wheatfield under a stormy sky, hold the canvas down against the wind while he paints
-      p3: In the two days in the room upstairs, sit outside the door and bring water
+      p1: Under a stormy sky, help him finish the wheatfield, and keep the canvas from falling into the wheat
+      p2: Let him know that his paintings will be remembered
+      p3: Before 27 July, heal his body and his mind, and keep him alive
+    points_fail:
+      p1: The canvas went down into the wheat in the wind, and in this branch there is no Wheatfield under Thunderclouds.
+      p2: He still felt his paintings were a burden on Theo. In this branch nobody ever told him where these wheatfields would end up.
+      p3: 27 July happened as it did in history. In this branch he did not paint another season.
+    branch:
+      p2:
+        - In this branch, someone told him that these wheatfields would one day hang on museum walls, and that many people would travel to see them.
+      p3:
+        - In history, he was wounded by a gunshot on 27 July 1890 and died at Auvers two days later, having painted for only about a decade.
+        - In this branch, {staff} stayed with him through that July, the illness did not crush him again, and when the summer was over he was still at the Auberge Ravoux.
+        - In this branch, he painted for a few more years, and after the wheatfields there were other seasons.
     vignettes:
       sky: '{staff} draws the same field twice in a notebook, first with a strip of sky and then with much more, and sees something in the second that the first had hidden.'
       wind: '{staff} waits for the next gust over the wheat and watches the dark patch move across it, without rubbing out the first look.'
@@ -3160,9 +3253,19 @@ catalog:
     relic: A pressed violet
     relic_desc: A dried flower kept in a book.
     points:
-      p1: Be taken in by the house, then carry the bread and milk up the stairs each morning
-      p2: In the last nights, sit up in Severn's place so he can sleep a few hours
-      p3: On the day of the burial, stand by the grave in the Protestant Cemetery
+      p1: Keep Severn on his feet through the stopped money and the sleepless nights, so that he stays by Keats to the end
+      p2: Stop Dr Clark's starvation diet and bleeding, so that he can eat and keep his blood
+      p3: Before he dies, let him know that his poems will be read for generations
+    points_fail:
+      p1: Severn collapsed in January, and in the last days nobody was at the bedside in his place.
+      p2: On 9 December he was bled another eight ounces as before, and each day he still had only one anchovy and a piece of bread.
+      p3: He still believed he had left nothing behind. In this branch nobody told him otherwise in those last days.
+    branch:
+      p2:
+        - In this branch, he could eat in those last months and was bled several times less, and he suffered somewhat less than in history.
+      p3:
+        - In history, he believed to the end that he had left no lasting work, and at his wish his gravestone does not carry his name.
+        - In this branch, {staff} let him know in those last days that his odes would go on being read and learned by heart, and that this room in Rome would be kept for him.
     vignettes:
       stairs: '{staff} counts the steps from the door to the room, so as to know how long the tray will stay warm, and writes the number in the margin of a shopping list.'
       window: '{staff} props the window a little so the sound of the fountain in the square comes in. Nobody in the room says anything about it, and nobody closes it.'
@@ -3265,9 +3368,20 @@ catalog:
     relic: A quill pen
     relic_desc: A quill with a split tip beside an empty shelf.
     points:
-      p1: Be taken in by the portress, then work in the convent kitchen
-      p2: Keep one sheet in her hand that is left on the empty shelf, folded into a prayer book
-      p3: In the worst days of the sickness, sit by a sister who has fallen ill
+      p1: In the weeks the sickness spreads, help her keep the sickroom going and hold the nursing of the sisters together
+      p2: Save a sister who has fallen ill in the epidemic
+      p3: When she falls ill herself, cure her
+    points_fail:
+      p1: The hands in the sickroom fall ill one after another and the nursing breaks off; in this branch her care of the sick sisters does not go on as it did in history.
+      p2: She does not pull through and, as in history, is one of the sisters who die in those months; in this branch another bed in the sickroom is empty.
+      p3: As in history, she dies on 17 April. In this branch she does not live through April.
+    branch:
+      p2:
+        - In this branch, the sister lived through April, and once she was well she came back to help in the sickroom.
+      p3:
+        - In history, on 17 April 1695, Sor Juana died after nursing her sisters through the sickness.
+        - In this branch, {staff} cured her with the medicine brought along, and she lived through April.
+        - In this branch, in the years after, she wrote more at the convent; what she wrote is not in the record of this trip.
     vignettes:
       kitchen: '{staff} watches an egg set in hot butter and drop apart in syrup, and writes down on a scrap which pan did which, for nobody in particular.'
       shelf: '{staff} dusts the empty shelves in the cell and finds the marks where the books stood, darker squares on the wood, and leaves them as they are.'
@@ -3280,9 +3394,19 @@ catalog:
     relic: An ammonite
     relic_desc: A coiled fossil shell split from the blue lias.
     points:
-      p1: Be taken in by the Annings, then go with them under the cliffs at low tide
-      p2: Under a fresh fall of the cliff, help tell which curves are bone and which are cracks
-      p3: When the buyers come to see the plesiosaur, say plainly who dug it out
+      p1: On 10 December, keep the plesiosaur under the cliff safe, and get it out whole before the next fall and the returning tide
+      p2: Help her count and draw the long neck bone by bone, so that the sketch sent to London stands up to questions
+      p3: Let her know in her lifetime that these bones will one day carry her name
+    points_fail:
+      p1: The returning tide carried off half of the skeleton, and in this branch there is no first complete plesiosaur.
+      p2: In this branch the sketch of 26 December went off as it was, with no second check marked on the neck bones.
+      p3: In this branch she still did not know she would be remembered, and nobody told her that winter.
+    branch:
+      p2:
+        - In this branch, every neck bone on the sketch that reached London had its number, and when the doubts came later, the drawing already held the answer.
+      p3:
+        - In history, she died in 1847 at forty seven, still short of money; the papers on her finds seldom gave her name, and the Geological Society admitted women only long after her death.
+        - In this branch, someone told her that winter that the bones she dug out would one day carry her name in a London museum, and that a statue of her would stand by the sea at Lyme Regis.
     vignettes:
       stone: '{staff} follows a crack past the neck of the skeleton until the line leaves the bones, and lifts the pencil there.'
       vertebrae: '{staff} counts the neck from the other end, and where the two counts do not meet, leaves a bracket instead of adding a bone.'
@@ -3325,9 +3449,20 @@ catalog:
     relic: A book of his verse
     relic_desc: A small book with a pressed leaf at one poem.
     points:
-      p1: Be taken in by the servants of the house, then run its errands to the bridge and back
-      p2: On the day of the duel, wait in the cold by the Black River and help bring the sleigh back to town
-      p3: In the two days after, keep the hall and write down the name of everyone who comes to ask
+      p1: Help him sort out his growing debts, so that his wife and children no longer live from one bill to the next
+      p2: After he is shot, keep him alive on the road back from the Black River, so that he reaches his apartment on the Moika
+      p3: Heal the gunshot wound in his stomach, hold back the infection, and keep him alive
+    points_fail:
+      p1: In this branch the bills of that winter still lay on his desk, and nobody ever sorted them for him.
+      p2: He did not live to reach the Moika, and in this branch there are no two days in the apartment.
+      p3: On the afternoon of 10 February he died in the apartment as he did in history, and in this branch he was not kept even one more day.
+    branch:
+      p1:
+        - In this branch, the debts were written out on one sheet, which to pay first and which could wait, and the household knew where it stood.
+      p3:
+        - In history, on 10 February 1837 he died of peritonitis in the apartment at thirty seven, leaving his wife and four children.
+        - In this branch, the medicine {staff} brought held back the infection in the wound, and when February was over he was still recovering by the Moika.
+        - In this branch, he went on writing for a few more years, and The Contemporary stayed in his hands.
     vignettes:
       number: '{staff} nearly gives a visitor a house number from a museum plaque that does not exist yet, then crosses it out and draws the bridge on the slip instead.'
       queue: '{staff} writes the same answer on several slips so that the people waiting in the hall can read it without asking again.'
@@ -3460,9 +3595,19 @@ catalog:
     relic: A beetle in a pin box
     relic_desc: A collected beetle in a small tin box.
     points:
-      p1: Be taken in by the household he lodges with, then pin and dry the day's specimens
-      p2: In the days of the fever, keep the water boiled and the cloths changed
-      p3: On the day of the mail steamer, wrap the essay against the damp and see it aboard
+      p1: In the days of the malaria, see the essay through to its end
+      p2: Heal the ankle he hurt at Dorey before it turns to an ulcer
+      p3: Save the young hunter Jumaat from the fever and the dysentery
+    points_fail:
+      p1: The fever never broke and the draft was not finished in February. The letters the mail boat took did not hold it, and in this branch the Linnean Society had no such paper on 1 July.
+      p2: The wound festered as history has it, and he sat in the hut on a crutch for more than a month. In this branch the insects of the Dorey forest were still caught only by his servants.
+      p3: Jumaat died on 26 June as history has it, and in this branch the boat that left Dorey in July went without him.
+    branch:
+      p2:
+        - In this branch the wound did not fester, and in the days the steamer was in port he went into the forest every day as before.
+      p3:
+        - In history, on 26 June 1858, Jumaat, a youth of about eighteen, died at Dorey; Wallace wrote of him as a quiet lad who did his work well.
+        - In this branch {staff} sat with him until the fever fell and the illness stopped, and when they left Dorey at the end of July he was on the boat too.
     vignettes:
       places: '{staff} copies the labels of the day''s birds and writes the island beside each one, so that the drawer of skins can be read without its collector.'
       claim: '{staff} sorts a tray of beetles from two islands that look alike, and keeps them in two rows with a gap between, without being asked.'
@@ -3700,9 +3845,19 @@ catalog:
     relic: A straw cloak
     relic_desc: A rough rain cloak of the kind a farmer wore on the slope.
     points:
-      p1: Be taken in by the neighbours on the slope, then bring a meal to the field at harvest
-      p2: Before the night on the river, tell the boatman where the current runs below the cliff
-      p3: On the night of the walk home, keep a lamp lit on the road from the Snow Hall to Lingao
+      p1: Help his family bring in a harvest from the waste land on the eastern slope, and get through the days when the savings run out
+      p2: On the night of the full moon of the tenth month, keep him safe on the cliff above the river, so that he comes back down to the boat
+      p3: Save the newborn children in the villages who were to be drowned in a basin of water
+    points_fail:
+      p1: In this branch there was no extra pair of hands on the eastern slope at the autumn harvest, and the strings of coins on the beam went on getting fewer one by one.
+      p2: That night he lost his footing on the cliff, and in this branch there is no return to the boat.
+      p3: In this branch the basins in the villages stayed as they were, and {staff} did not move a single family to keep that child.
+    branch:
+      p1:
+        - In this branch, the eastern slope gave a few more loads of grain that autumn, and strings of coins were still left on the beam at the end of the year.
+      p3:
+        - In history, he heard of the drowning of infants around Yue and E, wrote to the prefect of Ezhou asking him to forbid it by law, and in Huangzhou proposed a society for raising children, asking the wealthy for money to help poor families keep their newborns.
+        - In this branch, {staff} went from door to door with the society, and that winter a few more families kept the children just born to them.
     vignettes:
       slope: '{staff} carries water up the slope for the hired hands. At dusk a neighbour, made up for the game, leaves a bowl of cooked beans at the edge of the field and says the newcomer can have the second bowl tomorrow.'
       lamp: '{staff} sits on a stone by the road with a lamp shaded against the wind. Footsteps come down from the slope long after the third watch; {staff} turns the lamp towards the path and says nothing.'
@@ -3970,9 +4125,20 @@ catalog:
     relic: A checked report
     relic_desc: A report of a procession, with the place the watcher stood written in the margin.
     points:
-      p1: Be taken in by the clerks of the court, then copy the day's judgements fair
-      p2: When a report of a crowd comes in, ask where the teller stood and how long the gate was open
-      p3: On the day of the burial, walk with the bier to the Bab al-Nasr
+      p1: Stop one more push against an outsider as chief judge, and keep his sixth term as chief judge of the Maliki school
+      p2: Before he dies, help him finish this round of revisions to his history, copied fair and put in a student's hands
+      p3: Let him know while he lives that the Muqaddimah will be read as an early work of social science
+    points_fail:
+      p1: In this branch the sixth appointment went to someone else, and he did not die as chief judge.
+      p2: The half revised pages stopped on 17 March. In this branch nobody copied out that round of revisions.
+      p3: He died without knowing what the book would come to mean, and this branch is the same as before.
+    branch:
+      p2:
+        - In history, he kept revising and correcting his history until he died in Cairo in March 1406.
+        - In this branch, the last round of changes was copied fair and bound before he died, and a student of the court kept it.
+        - In this branch, the copyists who came later worked from that copy.
+      p3:
+        - In this branch, in his last weeks he heard how the book would one day be read.
     vignettes:
       gate: '{staff} asks a clerk, made up for the game, how long the gate stood open while the crowd went through. He writes the minutes in the margin beside the total, and then changes the total to an estimate.'
       two: '{staff} gives a second watcher, made up for the game, a sheet of her own, so that her account of the street does not end up squeezed into the margin of his.'
@@ -4000,9 +4166,20 @@ catalog:
     relic: A leather bound manuscript
     relic_desc: A manuscript in a worn leather cover with a flap.
     points:
-      p1: Be taken in by the household, then help list the volumes one by one
-      p2: Before the departure, give a few volumes into the keeping of a family in the town
-      p3: On the day he is taken away, write down the day and the road, and leave it with his family
+      p1: Before he is taken away, stop the blades turned on the arrested scholars, and keep Ahmed Baba alive for the road north
+      p2: Before the soldiers take the books, save a few chests from the sixteen hundred volumes and leave them hidden with a family in the town
+      p3: Treat the kinsmen who fall ill or hurt in the desert, share out the water, and keep the household from falling behind
+    points_fail:
+      p1: In this branch he did not leave Timbuktu alive, and the biographical dictionaries of Marrakesh and the twenty nine books written in Morocco are gone.
+      p2: All sixteen hundred volumes were taken, and in this branch, when he came back to Timbuktu fourteen years later, not one of his own books was left.
+      p3: Nobody helped up those who fell on the road, and in this branch the family's journey north was as hard as it had been.
+    branch:
+      p2:
+        - In history, his library of some sixteen hundred volumes was taken by the Moroccans, or by another account lost on the way north, and when he came back to Timbuktu in 1608 the books were gone.
+        - In this branch, before he was taken away, a few chests of books were moved under a bed in a house in the town.
+        - In this branch, when he came home fourteen years later, that family carried the chests out.
+      p3:
+        - In this branch, the kinsmen who travelled with him reached Marrakesh having suffered a little less.
     vignettes:
       same_name: '{staff} finds one name written two ways in two volumes and keeps both spellings on the list, with a mark between them, instead of choosing one.'
       courtyard: '{staff} sets the volumes out in the shade of the courtyard to air them after the rains, and turns each one at noon so the covers dry evenly.'
@@ -4225,9 +4402,19 @@ catalog:
     relic: A singer’s cue strip
     relic_desc: A practice slip with separate places for two names.
     points:
-      p1: Be taken in by the singers of the house, then keep time on the drum for their practice
-      p2: While the singers take turns, keep the practice sheets in order
-      p3: In the last months, help a learner tell the voice inside a song from the name written beside it
+      p1: In the days after his death, while the nobles choose the heir, keep seven year old Nezahualpilli safe
+      p2: Help a learner of the house learn every line of the songs tied to his name from an old singer
+      p3: In his last days, let him know that his name is still remembered more than five hundred years on
+    points_fail:
+      p1: Before the choosing, harm comes to the boy, and in this branch Texcoco does not receive its seven year old lord as it did in history.
+      p2: The old singer falls ill before the teaching is done, and in this branch only part of those songs is handed on, as before.
+      p3: As in history he dies in 1472, and in this branch he never learns that later people will remember him.
+    branch:
+      p2:
+        - In this branch, the learner learned the songs from beginning to end, and later taught them to a learner of their own.
+      p3:
+        - In history, Nezahualcoyotl died at Texcoco in 1472; the songs tied to his name were copied into a songbook about a hundred years later, and his face on the Mexican hundred peso note came more than five hundred years after.
+        - In this branch, {staff} sat with him in his last days and told him all this.
     vignettes:
       voice: '{staff} leaves two places on a practice sheet when a singer steps forward at a line that begins with I: one for the singer, one for the name in the song.'
       drum: '{staff} lays a spare strip as a marker so the pages stay where the next singer can reach them when the first one stands.'
@@ -4360,9 +4547,19 @@ catalog:
     relic: A slate
     relic_desc: A small slate with a first row of letters in chalk.
     points:
-      p1: Be taken in by the household at Bhide Wada, then sweep the room and set out the slates each morning
-      p2: Walk beside her to the school and carry the bag with the spare sari
-      p3: Sit with one girl until she can write her own name for her family to see
+      p1: On the hardest morning of the first month, keep her road to Bhide Wada clear so that the day's lessons begin
+      p2: Bring back a girl whose family has called her home, so that she sits at her slate again
+      p3: Stop the people on that road who throw things at her, so that she no longer needs a spare sari in her bag
+    points_fail:
+      p1: That day she did not reach the school, and the door at Bhide Wada stayed shut.
+      p2: In this branch there was one girl fewer at the slates in Bhide Wada.
+      p3: She still carried a spare sari in her bag every day, as in history.
+    branch:
+      p2:
+        - In this branch, the girl came back to her lessons.
+      p3:
+        - In history, on the way to school she was pelted with stones and dung, and she carried a spare sari to change into when she got there.
+        - In this branch, from one spring morning on nobody by the road threw anything at her again, and the spare sari stayed folded in the bag.
     vignettes:
       slate: '{staff} turns the slate sideways so two girls can reach it at once. When they are called home, each has left a mark the other can point to.'
       road: '{staff} walks half a step behind on the road to Budhwar Peth and keeps the bag on the side away from the doorways. Nobody in the street says anything that morning.'
@@ -4540,9 +4737,20 @@ catalog:
     relic: A measuring staff
     relic_desc: A thin staff for measuring paces, marked with a scale.
     points:
-      p1: Be taken in by the bearers of the party, then carry the measuring line
-      p2: On the shore, write down the paces and the bearing of each stretch
-      p3: In the autumn wind, follow one whole stretch of the coast to its end
+      p1: When the money runs low, keep the party on its way so that the line is laid as far as Nishibetsu in time
+      p2: Help him measure one stretch of coast with a cord instead of by paces, so that its numbers are right first
+      p3: Help him lay the line on past Nishibetsu, so that this survey takes in a stretch of coast it never reached
+    points_fail:
+      p1: The party could not hold out and turned back before Nishibetsu, and back in Edo there was no map of that road.
+      p2: In this branch every stretch of Ezo is still only a count of paces.
+      p3: The survey still turned back at Nishibetsu, as in history.
+    branch:
+      p2:
+        - In history, the first survey was measured entirely by paces, and cords came in only from the second.
+        - In this branch, one stretch of the coast of Ezo was measured with a cord first.
+      p3:
+        - In history, the first survey went no further than Nishibetsu, and the rest of the coast of Hokkaido waited for later surveys.
+        - In this branch, the line went on past Nishibetsu for one more stretch, and the sheets he brought back to Edo showed a little more coast.
     vignettes:
       bend: '{staff} sees a bend of the shore about to be drawn as part of a straight line and asks for one more bearing at the turn, so the bend stays on the page.'
       repeat: '{staff} walks a stretch a second time at the same pace and writes the two counts side by side, without choosing between them.'
@@ -4705,9 +4913,20 @@ catalog:
     relic: A stone adze
     relic_desc: A hand sized blade of dark basalt, ground to a clean edge.
     points:
-      p1: Be taken in by the carvers, then grind their basalt adzes sharp
-      p2: Walk round a figure in the rock and draw it once from the front and once from the side
-      p3: Help cut away the tuff behind a figure, through a whole hot day
+      p1: Keep a figure on its way to the coast from toppling on the road
+      p2: Help the carvers raise a figure that fell on the road, so that it walks the rest of the way
+      p3: Help the carvers read the rock behind Te Tokanga, and free more of its back from the hill
+    points_fail:
+      p1: The figure toppled halfway and broke in two, and in this branch the coast has one figure fewer of those history saw raised.
+      p2: The figure stayed by the road as history has it, and in this branch it never reached the coast.
+      p3: Te Tokanga stopped halfway as history has it, and in this branch its back is still joined to the hill, as it is today.
+    branch:
+      p2:
+        - In this branch there is one fallen figure fewer by the road; it reached the coast.
+      p3:
+        - In history, Te Tokanga was never finished; its back is still joined to the hill, and it lies in the quarry of Rano Raraku today.
+        - In this branch {staff} found the run of the rock for the carvers, and more of its back was cut free from the hill.
+        - In this branch, whether it ever left the hill is not recorded.
     vignettes:
       pair: '{staff} labels which sketch is the front and which the side before laying them together, so a ridge in the rock is not taken for the edge of the face.'
       surface: '{staff} walks back to the first place on the slope and adds an arrow to the drawing, showing where it was seen from.'
@@ -4720,9 +4939,19 @@ catalog:
     relic: A spare box kite tag
     relic_desc: A spare label for the frame of a box kite.
     points:
-      p1: Be taken in by the helpers on the beach, then stretch and tie the cloth of the kites
-      p2: At the lift, stand by the winch and call out how high the seat has risen
-      p3: When the wind drops, hold the line of the fourth kite steady
+      p1: On 12 November, keep the string of kites steady in the gusts, so that he rises and comes down safely on the sand
+      p2: Help him finish full drawings of the four kites, their sizes and how they are made, and leave one copy in Australia
+      p3: Let him know that his box kite will be remembered
+    points_fail:
+      p1: A gust dragged the string of kites aside and the seat struck the sand, and in this branch there was no lift of 16 feet.
+      p2: The four kites stayed only in his own hands as history has it, and in this branch there was no second record at Stanwell Park.
+      p3: He never saw where the box structure would go, as history has it, and in this branch no one ever told him.
+    branch:
+      p2:
+        - In this branch a set of drawings of the four kites stayed at Stanwell Park and did not go to Munich with the other models.
+      p3:
+        - In history, late in life he sent more than a hundred and seventy models to Munich, and most of them were destroyed in the Second World War; he did not live to see the box structure in many of the early aeroplanes, nor himself on the Australian twenty dollar note from 1966.
+        - In this branch, in November 1894, {staff} told him that his box kites would be in the machines that flew after him, and that Australia would remember his name.
     vignettes:
       four: '{staff} counts the kites laid out on the sand once more after the lift and writes all four on the page, with a bracket round them, so the next reader knows they flew together.'
       tag: '{staff} follows the wet sand back to find a tag torn off a frame, and ties it on again with a new knot.'

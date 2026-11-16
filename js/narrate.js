@@ -271,21 +271,33 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
     if (j.reached) say(j.accepted ? 'accepted' : 'declined', j.recognitionDay, 'accept');
   }
   const n = (r.points || []).length;
+  const desync = r.outcome === 'desync';
   (r.points || []).forEach((p, i) => {
+    // a point after a desync was never reached, so it has no line
+    if (p.cut) return;
     const day = p.day ?? stayDays * (i + 1) / (n + 1);
     const what = ev.scene ? c.points[p.id] : T.ui.light.points[p.id];
     const spec = ev.scene?.points?.[i]?.req;
+    const miss = p.guard ? R.point_desync : R.point_miss;
     lines.push({ t: day, year: ev.year, kind: 'point', id: p.id, key: p.id, tag: null, after: false, star: !!p.hit,
-      text: (p.hit ? R.point_hit : R.point_miss).replace('{day}', dayWord(day)).replace('{staff}', staff).replace('{text}', what),
+      text: (p.hit ? R.point_hit : miss).replace('{day}', dayWord(day)).replace('{staff}', staff).replace('{text}', what),
       why: { kind: 'point', expr: (spec ? JSON.stringify(spec) : p.id) + (p.bonus ? ' · bonus' : '') } });
+    // what the miss costs in this branch, written by the card, read right after the point
+    const cost = !p.hit && ev.scene ? c.points_fail?.[p.id] : null;
+    if (cost) lines.push({ t: day + 0.001, year: ev.year, kind: 'point_fail', id: p.id + '_fail', key: p.id + '_fail', tag: null, after: false, text: cost.split('{staff}').join(staff), why: null });
   });
+  // a point that was won may have rewritten what history left unresolved; what came of it in this branch is told after the leaving, as the employee's lines, never as history
+  const branch = ev.scene ? (r.points || []).filter((p) => p.hit).flatMap((p) => [].concat(c.branch?.[p.id] || [])) : [];
   // a scene names the employee with {staff}
   const vignette = r.vignette && c.vignettes ? c.vignettes[r.vignette]?.split('{staff}').join(staff) : null;
   // a scene falls in the middle of the stay, or on the day its entry names
   const vDay = ev.scene?.vignettes?.find((x) => x.id === r.vignette)?.day;
   if (vignette) lines.push({ t: typeof vDay === 'number' ? vDay : stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
     why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
-  lines.push({ t: stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: R.light_leave.replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
+  // after a desync the cost of the missed guard point is read before the line of being sent back
+  lines.push({ t: desync ? stayDays + 0.002 : stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: (desync ? R.light_sent_back : R.light_leave).replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
+  branch.forEach((text, i) => lines.push({ t: stayDays + 0.01 * (i + 1), year: ev.year, kind: 'branch', id: 'branch_' + i, key: 'branch_' + i, tag: null, after: false,
+    text: R.branch_line.replace('{text}', text.split('{staff}').join(staff)), why: { kind: 'branch', expr: 'won' } }));
   // with `date`, the planned arrival on the calendar, the lines of the employee carry the year their day falls in, so a stay that runs into a new year marks it
   if (ev.date) {
     const [y, m, d] = String(ev.date).split('-').map(Number);

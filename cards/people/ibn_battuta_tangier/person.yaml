@@ -2,10 +2,11 @@ order: 101
 events:
   ibn_battuta_tangier:
     order: 60
+    build_step: 2
     year: 1325
-    # one office day from the planned arrival on 1 June 1325, two weeks before he set out
+    # four office days from the planned arrival on 1 June 1325, two weeks before he set out
     date: '1325-06-01'
-    stay: 1
+    stay: 4
     lon: -5.8
     lat: 35.78
     region: africa
@@ -19,10 +20,11 @@ events:
     ready: true
     refs: [ibn_battuta_tangier_departure, orias_ibn_battuta, worldhistory_ibn_battuta]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 8, req: {"any":[{"trait":["kind","cheerful","attached"]},{"job":["cook","chef"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 12, req: {"any":[{"trait":["methodical","scholarly","wanderer"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: trust, day: 13.2, req: {"any":[{"trait":["curious","attached","faithful"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: endure, guard: true, day: 70, req: {"any":[{"job":["doctor","physician","nurse","paramedic","caregiver"]},{"stat":{"constitution":9}},{"item":"painkiller","stat":{"will":6}}]}}
+        - {id: p2, kind: care, day: 40, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"item":"ors_pack","any":[{"item":"water_flask"}]},{"provides":"heal"}]}}
+        - {id: p3, kind: trust, day: 100, req: {"any":[{"trait":["kind","cheerful","attached","cosmopolitan"]},{"stat":{"will":7}}]}}
       vignettes:
         - {id: distance, traits: [bold, curious], day: 10}
         - {id: departure, traits: [methodical, scholarly], day: 11}
@@ -36,9 +38,20 @@ events:
         relic: A travel-worn sandal
         relic_desc: A leather sandal resoled many times.
         points:
-          p1: 'Be taken in by his household, then help get the food and water skins ready for the road'
-          p2: 'On the eve of leaving, write down the towns of the first stage in order on one sheet'
-          p3: 'At dawn on the day he leaves, walk with him to the gate of the town'
+          p1: 'On the road from Bejaia, keep him in the saddle through the fever until he reaches Tunis'
+          p2: 'At Miliana, save the envoy of Tunis who fell ill in the heat'
+          p3: 'On the day he enters Tunis, let him know he is not alone in a strange town'
+        points_fail:
+          p1: 'Halfway through the fever he fell from the saddle, and in this branch he never reached Tunis.'
+          p2: 'The envoy died by the stream outside Miliana as history has it, and in this branch only one envoy went on towards Tunis.'
+          p3: 'He wept aloud at the gate as history has it, and in this branch the only one who walked into the town with him that day was the fellow pilgrim.'
+        branch:
+          p2:
+            - 'In history, in the summer of 1325, both envoys of the sultan of Tunis fell ill from the heat at Miliana, and one of them died after three nights by a stream outside the town.'
+            - 'In this branch {staff} sat with him by the stream until he cooled and drank, and when they left Miliana both envoys were with the caravan.'
+            - 'In this branch he later came home to Tunis; what came after is not recorded.'
+          p3:
+            - 'In this branch, on the day he entered the town, he had at his side someone he had come to know on the road, and in the two months he stayed in Tunis he was no longer alone.'
         vignettes:
           distance: '{staff} writes the far destination on one slip and the first night''s stop on another, so a porter can use the second today.'
           departure: '{staff} keeps the heading of a packing list but leaves a blank line under it for where the traveller will truly stop.'
@@ -51,9 +64,20 @@ events:
         relic: 一只走旧的凉鞋
         relic_desc: 一只补过很多次底的皮凉鞋。
         points:
-          p1: '先让他家里的人认下，再帮着备好路上的干粮和水囊'
-          p2: '出发前一晚，把第一程要经过的城镇按先后写在一张纸上'
-          p3: '他出门那天清早，陪他走到城门'
+          p1: '从贝贾亚往突尼斯那一路，护住他带着高烧撑在鞍上，走到突尼斯'
+          p2: '在米利亚纳救下那位病倒在暑热里的突尼斯使节'
+          p3: '进突尼斯那天，让他知道他在异乡不是一个人'
+        points_fail:
+          p1: '烧到一半他从鞍上栽了下来，这条分支里他没有走到突尼斯。'
+          p2: '那位使节照史实死在米利亚纳外的溪边，这条分支里往突尼斯去的只剩一位使节。'
+          p3: '他照史实在城门口哭出声来，这条分支里那天陪他进城的只有那位同行的朝圣者。'
+        branch:
+          p2:
+            - '历史上，1325 年夏天，突尼斯苏丹的两位使节在米利亚纳都因暑热病倒，其中一位在城外的溪边停了三夜后去世。'
+            - '这条分支里，{staff}在溪边守着他降了温、喝下了水，离开米利亚纳时两位使节都在队伍里。'
+            - '这条分支里，他后来回到了突尼斯，此后的事没有记载。'
+          p3:
+            - '这条分支里，进城那天他身边多了一个一路认识的人，在突尼斯住下的两个月里他不再是一个人。'
         vignettes:
           distance: '{staff}把最远的目的地写在一张纸条上，今晚落脚的地方另写一张，挑夫今天用得上第二张。'
           departure: '{staff}留着行李单上的题头，底下空出一行，给旅人真正落脚的地方。'

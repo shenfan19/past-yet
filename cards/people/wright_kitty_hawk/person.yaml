@@ -2,6 +2,7 @@ order: 203
 events:
   wright_kitty_hawk:
     order: 88
+    build_step: 2
     year: 1903
     lon: -75.7
     lat: 36
@@ -16,10 +17,11 @@ events:
     ready: true
     refs: [wright_kitty_hawk_primary, nps_first_flight, henryford_first_flight, nasm_telegraph_key, loc_today_dec17]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 6, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 16.2, req: {"any":[{"trait":["curious","calm","methodical"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: hold, day: 16.6, req: {"any":[{"trait":["methodical","vigil","patient"]},{"job":["mechanic"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 16.05, req: {"any":[{"trait":["hardy","bold"]},{"stat":{"constitution":8}},{"provides":"strength"}]}}
+        - {id: p2, kind: persuade, day: 16.5, req: {"any":[{"trait":["charismatic","glib","streetwise"]},{"job":["journalist","radio_host"]},{"item":"golden_apple"}]}}
+        - {id: p3, kind: hold, day: 16.35, req: {"any":[{"provides":"strength"},{"stat":{"constitution":9},"trait":["bold","vigil","hardy","calm"]}]}}
       vignettes:
         - {id: numbers, traits: [methodical, vigil], day: 16.8}
         - {id: sand, traits: [hardy, cheerful], day: 10}
@@ -33,9 +35,20 @@ events:
         relic: A propeller blade
         relic_desc: A wooden blade shaped like a twisted wing.
         points:
-          p1: 'Be taken in by the men of the life saving station, then help carry the launching rail up the dune'
-          p2: 'At the first flight, stand by the camera so the shutter is pressed at the right moment'
-          p3: 'At the telegraph, write the duration of the longest flight on a slip and hand it over with the message'
+          p1: 'In the cold wind on the morning of 17 December, help the brothers steady the Flyer and keep the first take off safe'
+          p2: 'Talk round the man passing on the telegram and stop the news from leaking'
+          p3: 'After the fourth flight, hold the Flyer down on the sand and save Daniels and the machine'
+        points_fail:
+          p1: 'Before the take off a gust lifts one wing and drags it in the sand, and the machine never leaves the rail; in this branch there are no twelve seconds.'
+          p2: 'As in history the message leaks, and the next day the Virginian-Pilot prints a story that is mostly wrong; in this branch that story speaks for the brothers first.'
+          p3: 'The wind turns the Flyer over, Daniels is caught in the wings and tumbled along with it, and as in history the machine is too broken to fly again. In this branch it never leaves the ground after that afternoon.'
+        branch:
+          p2:
+            - 'In this branch, the next day''s paper has no wrong story, and the brothers told how the flights went themselves once they were back in Dayton.'
+          p3:
+            - 'In history, after the fourth flight a gust turned the Flyer over, John T. Daniels was caught between the wings, and the machine was so badly damaged it never flew again.'
+            - 'In this branch, {staff} and the men of the station held it down on the sand, and Daniels was not caught.'
+            - 'In this branch, that winter the brothers flew it a few more times over the dunes before they crated it for Dayton.'
         vignettes:
           numbers: '{staff} copies the four flights into a notebook in the order they were made, the seconds in one column and the feet in the other, and adds them up twice before the light goes.'
           sand: '{staff} digs the rail out of the drift after the night wind and stamps the sand flat at its foot. A helper from the station, made up for the game, says the wind will drop by morning, and it does not.'
@@ -48,9 +61,20 @@ events:
         relic: 一片螺旋桨叶
         relic_desc: 一片木头叶子，像一只扭过的翅膀。
         points:
-          p1: '先让救生站的人认下，再帮着把滑轨抬上沙丘'
-          p2: '第一次飞行时守在相机旁，让快门按在该按的那一刻'
-          p3: '发电报时，把最长一次的秒数写在纸条上，随电文一起递过去'
+          p1: '12 月 17 日上午的冷风里，帮兄弟俩稳住飞行者号，护住第一次起飞'
+          p2: '劝住电报那头转发的人，拦下走漏的消息'
+          p3: '第四次飞行落地后，把飞行者号按在沙地上，救下丹尼尔斯和这架飞机'
+        points_fail:
+          p1: '起飞前一阵风把一侧机翼掀起来擦了沙，飞机没离开滑轨，这条分支里没有那 12 秒。'
+          p2: '电文照史实走漏，第二天《弗吉尼亚领航报》登出的报道大半是错的，这条分支里先替兄弟俩说话的是那篇报道。'
+          p3: '风把飞行者号掀翻，丹尼尔斯被卷在机翼里滚了出去，飞机照史实坏得再也飞不了。这条分支里，这架飞机在那天下午之后没有再离开过地面。'
+        branch:
+          p2:
+            - '这条分支里，第二天的报纸上没有那篇错报，飞行的经过等兄弟俩回到代顿自己说了出来。'
+          p3:
+            - '历史上，第四次飞行后一阵风掀翻了飞行者号，约翰·丹尼尔斯被卷在机翼中间，飞机损坏严重，从此再没飞过。'
+            - '这条分支里，{staff}和救生站的人把它按在了沙地上，丹尼尔斯没被卷进去。'
+            - '这条分支里，那年冬天，兄弟俩又让它在沙丘上飞了几回，才把它装箱运回代顿。'
         vignettes:
           numbers: '天黑之前，{staff}把四次飞行按先后抄进本子，秒数一栏，英尺一栏，加了两遍。'
           sand: '夜里风大，{staff}把滑轨从沙里刨出来，在滑轨脚下把沙踩平。一位编出来的救生站帮手说，天亮风就会停。天亮了，风没停。'

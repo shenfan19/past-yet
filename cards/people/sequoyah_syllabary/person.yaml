@@ -2,6 +2,7 @@ order: 175
 events:
   sequoyah_syllabary:
     order: 92
+    build_step: 2
     year: 1821
     lon: -85
     lat: 34.5
@@ -14,10 +15,11 @@ events:
     ready: true
     refs: [sequoyah_syllabary_primary, encyclopedia_alabama_sequoyah, tennessee_encyclopedia_phoenix, wikipedia_sequoyah]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 8, req: {"any":[{"trait":["quiet","patient","kind"]},{"job":["teacher"]},{"stat":{"finesse":6}}]}}
-        - {id: p2, kind: persuade, day: 40, req: {"any":[{"trait":["cheerful","charismatic","patient"]},{"job":["teacher"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: trust, day: 60.5, req: {"any":[{"trait":["methodical","vigil","faithful"]},{"stat":{"wit":6}}]}}
+        - {id: p1, kind: persuade, guard: true, day: 58, req: {"any":[{"trait":["charismatic","calm"]},{"stat":{"will":9}},{"item":"golden_apple"}]}}
+        - {id: p2, kind: care, day: 30, req: {"any":[{"job":["doctor","physician","nurse","paramedic","pharmacist","caregiver"]},{"provides":"heal"},{"item":"painkiller"}]}}
+        - {id: p3, kind: endure, day: 100, req: {"any":[{"job":["farmer","potato_farmer","dairy_farmer","coffee_farmer","villager","shepherd"],"stat":{"will":6}},{"trait":["kind"],"stat":{"constitution":8}}]}}
       vignettes:
         - {id: sound, traits: [patient, quiet], day: 30}
         - {id: lookalike, traits: [curious, skeptical], day: 20}
@@ -31,9 +33,20 @@ events:
         relic: A syllabary chart
         relic_desc: A sheet with eighty-odd characters laid out in rows.
         points:
-          p1: 'Be taken in by his household, then keep his sheets of signs in order'
-          p2: 'Teach a neighbour to write her own name in the new signs'
-          p3: 'On the day of the council, carry a written slip from one side to the other'
+          p1: 'On the day he shows it, stop the charge that the writing is witchcraft, and keep him and six year old Ayoka safe'
+          p2: 'Ease the pain in his lame leg so he can walk to the towns to teach'
+          p3: 'Help his wife bring the neglected fields back, and talk the family out of the quarrel the writing has caused'
+        points_fail:
+          p1: 'The charge drowns out the showing, Ayoka is never called back to read the word, and in this branch nobody sees that the signs can carry speech.'
+          p2: 'The leg hurts as before, and in this branch he has to stop and rest after every stretch of road.'
+          p3: 'The fields stay neglected and the family still begs him to give it up; in this branch the writing is still what it has cost this household for years.'
+        branch:
+          p2:
+            - 'In this branch, the pain in his leg eased for those six months, and he walked faster on the road to the next town to teach.'
+          p3:
+            - 'In history, for years he left the work of the fields to his wife, his family begged him again and again to give up the writing, and his wife once burned his papers.'
+            - 'In this branch, {staff} kept the fields planted for the household those six months, and the quarrels grew fewer.'
+            - 'In this branch, his wife later learned to write with the signs as well.'
         vignettes:
           sound: '{staff} listens to a learner say a word at his usual speed and then slowly, and points to one sign for each syllable until he can go on alone.'
           lookalike: '{staff} catches a sign that looks like an English letter, and crosses out the letter pencilled beside it before it can mislead anyone.'
@@ -46,9 +59,20 @@ events:
         relic: 一张音节表
         relic_desc: 一张纸，八十多个字符排成行。
         points:
-          p1: '先让他家里的人认下，再替他把写满符号的纸理好'
-          p2: '教一位邻家妇人用这套符号写出自己的名字'
-          p3: '议会那天，把一张写好的纸条从一边送到另一边'
+          p1: '演示那天，拦下把这套文字当成巫术的指控，护住他和六岁的阿约卡'
+          p2: '减轻他那条跛腿的疼，让他走得动去各镇教字'
+          p3: '帮他的妻子把荒下的地种起来，劝住家里因为这套文字而起的争执'
+        points_fail:
+          p1: '指控压过了演示，阿约卡没被叫回来念出那个词，这条分支里没人看见这套符号能把话传出去。'
+          p2: '那条腿照旧疼着，这条分支里他每走一段路都要停下来歇。'
+          p3: '地照旧荒着，家里人照旧劝他放手，这条分支里，这套文字仍旧是这个家多年的代价。'
+        branch:
+          p2:
+            - '这条分支里，他那半年腿疼得轻了些，去邻镇教字的路走得快了些。'
+          p3:
+            - '历史上，他多年把地里的活丢给妻子，家里人一再劝他放下造字，妻子还烧过他的稿子。'
+            - '这条分支里，{staff}那半年替这个家把地种了下来，家里的争执少了。'
+            - '这条分支里，后来，他的妻子也学会了用这套符号写字。'
         vignettes:
           sound: '{staff}听一个学字的人照平常的快慢念一个词，再慢慢念一遍，一个音节指一个符号，直到他自己能指着念下去。'
           lookalike: '{staff}看出有个符号长得像英文字母，把旁边铅笔标的那个字母划掉了，免得把人带偏。'
