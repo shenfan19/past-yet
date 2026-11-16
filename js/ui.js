@@ -128,6 +128,8 @@ export function createUI(D, ctx, DEV = false) {
     if (k === 'luck') return S_.need_luck;
     return v.map((r) => reqClauses(r).join(S_.need_and)).join(S_.need_or);
   });
+  // the pressure channels of a story in words: the name of each channel and how hard it presses
+  const pressureText = (chs) => Object.entries(chs).map(([c, lv]) => U.dispatch.channel_names[c] + ' ' + U.dispatch.channel_levels[lv]).join(' · ');
   const reqHint = (req) => { const c = reqClauses(req); return c.length ? ` <span class="muted">${esc(U.stars.need.replace('{x}', c.join(U.stars.need_and)))}</span>` : ''; };
   const statsLine = (stats) => D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
   // what a trait does at the sync points, as percent per kind of point, for example persuading +35%
@@ -486,6 +488,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="muted">${U.dispatch.relic}${COLON}${D.get('antiques.antiques.' + relicId).kind === 'medium' ? esc(c.relic) : wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
+      ${Object.keys(ctx.backend.pressureOf(id).base).length ? `<div class="muted">${U.dispatch.pressure}${COLON}${esc(pressureText(ctx.backend.pressureOf(id).base))}</div><p class="muted">${U.dispatch.pressure_hint}</p>` : ''}
       ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
       <p class="muted" style="margin-top:8px">${esc(travelTime(ctx.backend.lightStay(id)))} · ${esc(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story)}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
@@ -535,10 +538,14 @@ export function createUI(D, ctx, DEV = false) {
     const story = !!st.map.cat;
     // only what can be taken is listed: what is in stock, and anything already chosen
     const carryRows = story ? Object.keys(D.get('items')).filter((id) => ctx.backend.lightKitAllowed(st.map.cat, id) && ((S.inv[id] || 0) > 0 || (f.items[id] || 0) > 0)).map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id), stock: S.inv[id] || 0 })) : Object.keys(e.itemBindings).filter((id) => (S.inv[id] || 0) > 0 || f.items[id] > 0).map((id) => ({ id, name: itemText(D, e.id, id).name, it: D.get('items.' + id), stock: S.inv[id] || 0 }));
+    // what the story presses with, and what is left of it for the employee picked with the kit chosen
+    const press = story ? ctx.backend.pressureOf(st.map.cat, f.staffId, sceneKit(), S.staff[f.staffId]?.favor) : { base: {}, left: {} };
+    const pressed = Object.keys(press.base).length > 0;
+    const pressFoot = pressed ? ` · <span class="${Object.keys(press.left).length ? 'delta down' : ''}">${U.dispatch.pressure_left}${COLON}${esc(Object.keys(press.left).length ? pressureText(press.left) : U.dispatch.pressure_none)}</span>` : '';
     const carryBox = listbox.html({
-      id: 'carry', scroll: true, maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? U.dispatch.no_kit_needed : U.dispatch.no_stock,
+      id: 'carry', scroll: true, maxH: D.get('config.ui.box_h.carry'), rows: carryRows, pinTitle: U.dispatch.carrying, empty: story ? (pressed ? U.dispatch.no_kit_stock : U.dispatch.no_kit_needed) : U.dispatch.no_stock,
       pinned: (r) => f.items[r.id] > 0,
-      foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${r1(tot.cap)}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>`,
+      foot: `<span class="${overW ? 'delta down' : ''}">${U.dispatch.weight} ${r1(tot.weight)} / ${r1(tot.cap)}</span> · <span>${U.dispatch.kit_value} ${ri(tot.cost)}</span>${pressFoot}`,
       cols: [
         { k: 'name', label: U.shop.col_name, w: '44%', val: (r) => r.name, cell: (r) => { const tx = story ? T.items[r.id] : itemText(D, e.id, r.id); return `${wl('items:' + r.id, tx.name, `${tx.desc}\n${U.dispatch.weight} ${r.it.weight} · ${U.dispatch.cost} ${r.it.cost}${r.it.scene ? '\n' + U.dispatch.exposure + COLON + r.it.exposure : ''}`)}<div class="oneline muted">${esc(firstSentence(tx.desc))}</div>`; } },
         { k: 'stock', label: U.shop.stock, w: '16%', cls: 'num', val: (r) => r.stock, cell: (r) => r.stock },
@@ -621,13 +628,21 @@ export function createUI(D, ctx, DEV = false) {
       </tbody></table>`;
   }
 
+  // why a small story sent the traveller home: the pressure that was still on them after the kit, and the ways to take it off
+  function evacuationCause(cur) {
+    if (!cur.light) return '';
+    const left = ctx.backend.pressureOf(cur.eraId, cur.spec.staffId, cur.spec.items, cur.spec.favor).left;
+    if (!Object.keys(left).length) return '';
+    return `<p>${esc(U.report.evacuation_cause.replace('{list}', pressureText(left)))}</p><p class="muted">${U.dispatch.pressure_hint}</p>`;
+  }
+
   function reportHtml(id) {
     const cur = ctx.S().dispatches.find((d) => d.id === id);
     if (!cur) return `<p class="muted">${U.report.none}</p>`;
     if (cur.recalled) return recalledHtml(cur);
     if (cur.evacuation) return `<p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
-      <p>${esc(U.report.evacuation_text.replace('{day}', String(cur.evacuation.day)))}</p>
+      <p>${esc(U.report.evacuation_text.replace('{day}', String(cur.evacuation.day)))}</p>${evacuationCause(cur)}
       <p>${esc(U.report.rest)} ${cur.paid.restDays} ${esc(U.report.days)}</p>`;
     // a small story written before it kept a record is shown the old way
     if (cur.light && !cur.report.timeline) return lightHtml(cur);

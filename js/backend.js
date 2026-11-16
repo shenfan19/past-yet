@@ -5,7 +5,7 @@ import * as sim from './sim.js';
 import { buildReport, weaveJourney, lightRecord } from './narrate.js';
 import { draw } from './rng.js';
 import { evalScene, pointDays } from './scene_core.js';
-import { runStay } from './stay.js';
+import { runStay, effectiveChannels } from './stay.js';
 import { officeStay, historicalDays } from './travel_time.js';
 import { participation } from './participation.js';
 import { LMCore } from '../vendor/lm_core/index.js';
@@ -100,6 +100,15 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const lightKitAllowed = (eventId, itemId) => {
     const it = D.get('items.' + itemId);
     return !it.implant && (it.scene || it.channels.some((c) => lightEvent(eventId).channels?.[c] && !D.get('config.channels.off').includes(c)));
+  };
+  // the pressure of a story the traveller would feel: the live channels of the event at their level, and what is left of them after the kit, the gear worn and the traits
+  const pressureOf = (eventId, staffId = null, items = {}, favor = null) => {
+    const ev = lightEvent(eventId);
+    const off = D.get('config.channels.off');
+    const live = Object.fromEntries(Object.entries(ev?.channels || {}).filter(([c]) => !off.includes(c)));
+    if (!staffId || !D.get('config.body.enabled')) return { base: live, left: live };
+    const kit = sceneKit(staffId, items, favor);
+    return { base: live, left: effectiveChannels(D, { channels: live }, staffId, kit.props, kit.carried.filter((id) => D.get('items.' + id).scene)) };
   };
   const eraStay = (id) => officeStay(D, info[id].vars[info[id].roles.stay].value);
   const travelHealth = (id, spec, stay, ev = lightEvent(id)) => {
@@ -211,7 +220,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
-    runLight, lightStay, lightKitAllowed, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
+    runLight, lightStay, lightKitAllowed, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
     findOdds, findAntique, stampOf,

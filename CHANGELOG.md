@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.33, 2026-11-16
+
+- Pressure is the difficulty: the channels lowered on Keats, Wallace, Tupaia, Rapa Nui, Great Zimbabwe, Machu Picchu and Lalibela are back at their levels, since fitting items, gear and traits take them off.
+- The story card names the pressure of the place and how hard it presses, the desk shows what is left of it for the employee and kit chosen, and a report of someone sent home names what wore them down, each with one line on how to ease it.
+
 ## 0.5.32, 2026-11-16
 
 - Lyme Regis 1823, Mary Anning, is rewritten and turned on for two office days from 15 November: the ichthyosaur she dug out at thirteen, the first complete plesiosaur in December 1823, the first English pterosaur of 1828 and her death in 1847, still short of money, with sync points for going under the cliffs at low tide, telling bone from crack and saying who dug the plesiosaur out.
