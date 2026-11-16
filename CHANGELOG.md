@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0, 2026-11-16
+
+- The trips are meant to be hard. The game grew out of Life Matters to let the traveller live through the hardship of the past, and the About page now says so; the design document has a section on pressure and the body.
+- Since 0.5.0: thirty stories rewritten from checked sources and turned on, across every part of the world; the record of a small story told on the days of the stay; pressure kept as the history has it, eased by constitution and will, by Wanderer and by items and gear, and named on the story card, the desk and the report of someone sent home.
+
 ## 0.5.34, 2026-11-16
 
 - The attributes are the general defence against pressure: each channel is felt more or less by the constitution, grief and hostility by the will, in config body.resist; Wanderer and the kit still take whole levels off. The threshold of being sent home reads its numbers from config body.resilience.

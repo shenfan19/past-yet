@@ -8,6 +8,18 @@ You run a small agency that sends people into the past. History cannot be change
 
 The goal is to collect enough time energy to go back to your own time and see your family.
 
+The game grew out of Life Matters, LM, and was meant from the start to let the traveller live through the hardship of the past. Disease, heat, cold, hunger, sleepless nights, grief and hostility press on the employee every day of a stay, the LM core reads what they do to the body, and someone who can no longer go on is sent home. The pressure of a place is written as the history has it and is not lowered to make a trip easy. Where it presses hard, getting through is the difficulty.
+
+## Pressure and the body
+
+An event card names at most three pressure channels, each at level 1 to 3, in `channels`. Defence against them comes in three layers:
+
+- Attributes: the general defence. Each channel is felt at 1 - 0.08 × (attribute - 5) of its pull on the body, kept between 0.4 and 1.3. Bodily channels are met with the constitution, grief and hostility with the will. The numbers are in `config.body.resist`. The threshold at which a body cannot go on also rises with the constitution, `config.body.resilience`.
+- Traits: a trait such as Wanderer takes whole levels off the channels it names, `resist` on the trait card.
+- Items and gear: every item that names a channel takes a level off it, at most two levels from items together, and a piece of gear worn takes one more, `config.channels.relief`. A level 3 channel can be cleared only with items, gear and traits together.
+
+The story card names the pressure of the place and how hard it presses, the dispatch desk shows what is left of it for the employee and the kit chosen, and a report of someone sent home names what wore them down. All three add one line on how to ease it.
+
 ## Game loop
 
 1. Pick a place and a time on the world map.
