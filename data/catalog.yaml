@@ -5433,10 +5433,14 @@ events:
       - AI
       - Fan Shen
   - id: mary_anning_lyme_regis
-    year: 1847
+    year: 1823
+    date: '1823-11-15'
+    stay: 2
     lon: -2.93
     lat: 50.72
     region: europe
+    home:
+      - europe_west
     field: science
     tier: 2
     channels:
@@ -5444,12 +5448,27 @@ events:
       L: 2
       T: 1
     regret: true
+    ready: true
     refs:
       - mary_anning_lyme_regis_primary
+      - museum_earth_anning
+      - discover_wildlife_anning
     scene:
       points:
         - id: p1
+          kind: trust
+          day: 8
+          req:
+            any:
+              - trait:
+                  - hardy
+                  - cheerful
+                  - kind
+              - stat:
+                  constitution: 6
+        - id: p2
           kind: notice
+          day: 20.5
           req:
             any:
               - job:
@@ -5457,31 +5476,32 @@ events:
               - trait:
                   - methodical
                   - quiet
-              - trait:
                   - artistic
-        - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 5
+              - stat:
+                  wit: 6
         - id: p3
           kind: trust
           redeem: true
+          day: 40
           req:
             trait:
               - attached
               - charismatic
               - kind
+              - bold
       vignettes:
         - id: stone
           traits:
             - vigil
             - skeptical
+          day: 21
         - id: vertebrae
           traits:
             - curious
             - scholarly
+          day: 25
         - id: pose
+          day: 30
     authors:
       - AI
       - Fan Shen

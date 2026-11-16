@@ -2,55 +2,61 @@ order: 131
 events:
   mary_anning_lyme_regis:
     order: 122
-    year: 1847
+    # two office days from the planned arrival on 15 November 1823, a few weeks before the plesiosaur
+    year: 1823
+    date: '1823-11-15'
+    stay: 2
     lon: -2.93
     lat: 50.72
     region: europe
+    home: [europe_west]
     field: science
     tier: 2
     channels: {C: 1, L: 2, T: 1}
     regret: true
-    refs: [mary_anning_lyme_regis_primary]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [mary_anning_lyme_regis_primary, museum_earth_anning, discover_wildlife_anning]
     scene:
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["geologist"]},{"trait":["methodical","quiet"]},{"trait":["artistic"]}]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":5}}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["attached","charismatic","kind"]}}
+        - {id: p1, kind: trust, day: 8, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
+        - {id: p2, kind: notice, day: 20.5, req: {"any":[{"job":["geologist"]},{"trait":["methodical","quiet","artistic"]},{"stat":{"wit":6}}]}}
+        - {id: p3, kind: trust, redeem: true, day: 40, req: {"trait":["attached","charismatic","kind","bold"]}}
       vignettes:
-        - {id: stone, traits: [vigil, skeptical]}
-        - {id: vertebrae, traits: [curious, scholarly]}
-        - {id: pose}
+        - {id: stone, traits: [vigil, skeptical], day: 21}
+        - {id: vertebrae, traits: [curious, scholarly], day: 25}
+        - {id: pose, day: 30}
     text:
       en:
         name: "Bones in the cliff"
         place: "Lyme Regis"
         figure: "Mary Anning"
-        story: 'Mary Anning discovered a complete plesiosaur skeleton at Lyme Regis in December 1823. Her sketch records the remarkably long neck.'
+        story: 'In about 1811 Mary Anning''s brother Joseph found the skull of an ichthyosaur in the cliffs at Lyme Regis, and in November 1812 Mary dug out its skeleton, some five metres long. In December 1823 she found the first complete skeleton of a plesiosaur, and in December 1828 the first pterosaur found in England. She died in 1847, aged 47, still short of money; she was seldom credited in the papers written on her finds.'
         relic: "An ammonite"
         relic_desc: "A coiled fossil shell split from the blue lias."
         points:
-          p1: 'Distinguish a crack from an outline'
-          p2: 'Follow the neck on the sketch without skipping a joint'
-          p3: 'Leave a useful copy with the discovery credited'
+          p1: 'Be taken in by the Annings, then go with them under the cliffs at low tide'
+          p2: 'Under a fresh fall of the cliff, help tell which curves are bone and which are cracks'
+          p3: 'When the buyers come to see the plesiosaur, say plainly who dug it out'
         vignettes:
-          stone: 'The visitor traces a crack as though it were bone. You ask them to keep following it past the neck. When the line leaves the skeleton, they lift their pencil.'
-          vertebrae: 'You and the visitor trace the neck from opposite ends. Their counts disagree at the same place. You leave a bracket there instead of silently adding a bone.'
-          pose: 'You rotate the copy until the visitor can find the head without your help. They turn it back before writing the specimen''s name below.'
+          stone: '{staff} follows a crack past the neck of the skeleton until the line leaves the bones, and lifts the pencil there.'
+          vertebrae: '{staff} counts the neck from the other end, and where the two counts do not meet, leaves a bracket instead of adding a bone.'
+          pose: '{staff} turns a copy of the sketch until the head can be found without help, and writes under it who found it.'
       zh:
         name: "崖壁里的骨头"
         place: "莱姆里吉斯"
         figure: "玛丽·安宁"
-        story: '1823 年 12 月，玛丽·安宁在莱姆里吉斯发现一具完整的蛇颈龙骨架，她的草图记下了那条长颈。'
+        story: '约 1811 年，玛丽·安宁的哥哥约瑟夫在莱姆里吉斯的海崖里找到一个鱼龙头骨，1812 年 11 月，玛丽把五米来长的骨架挖了出来。1823 年 12 月，她找到第一具完整的蛇颈龙骨架；1828 年 12 月，又找到英格兰发现的第一具翼龙。她 1847 年去世，年仅 47 岁，一直手头拮据；写她那些发现的论文里，很少提到她的名字。'
         relic: "一枚菊石"
         relic_desc: "一枚从蓝色里亚斯岩里敲出来的螺旋形化石。"
         points:
-          p1: '分清裂纹和骨骼轮廓'
-          p2: '沿着草图找颈部，别漏掉关节'
-          p3: '留下一张注明发现者的可用抄图'
+          p1: '先让安宁一家认下，再趁退潮跟着去崖下'
+          p2: '崖壁刚塌下来的地方，帮着分清哪道弯线是骨头、哪道是裂缝'
+          p3: '买主来看蛇颈龙那天，在一旁说清是谁把它挖出来的'
         vignettes:
-          stone: '访客把一条裂缝描成了骨头。你请他沿线继续往下找。那道线离开骨架时，他抬起了笔。'
-          vertebrae: '你和访客从颈部两头相向数，偏偏在同一处数不到一起。你在那里留了括号，没有顺手添上一块骨头。'
-          pose: '你转动抄图，直到访客不靠你指也能找出头部。他再把纸转回来，在下面补上标本名。'
+          stone: '{staff}顺着一道裂缝描过骨架的颈部，一直描到它离开骨头的地方，在那里抬起了笔。'
+          vertebrae: '{staff}从另一头数颈骨，两边数不到一起的地方，留了一个括号，没有顺手添上一块骨头。'
+          pose: '{staff}把抄图转来转去，直到不用人指也能找到头部，又在下面写上是谁发现的。'
 text:
   en:
     name: Mary Anning
@@ -60,32 +66,93 @@ text:
     text: 英国化石采集者，1799 年生，1847 年去世，莱姆里吉斯人。她在海边悬崖挖出了第一批完整的鱼龙和蛇颈龙骨架。作为一个家境普通的女性，她生前很少在科学论文里被署名。
 hook: {en: 'Which curve belongs to the skeleton?', zh: '哪一道弯线真是骨头'}
 facts:
+  ichthyosaur:
+    date: '1812-11'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mary_anning_lyme_regis_primary, museum_earth_anning]
+    text:
+      en: 'Her brother Joseph found the skull of an ichthyosaur in about 1811; in November 1812 Mary dug out its skeleton, some five metres long.'
+      zh: '约 1811 年，她的哥哥约瑟夫找到一个鱼龙头骨；1812 年 11 月，玛丽挖出了它五米来长的骨架。'
+    line:
+      en: 'November 1812: Mary Anning, twelve or thirteen, digs a skeleton five metres long out of the cliff. Her brother had found its skull.'
+      zh: '1812 年 11 月，十三岁上下的玛丽·安宁从崖壁里挖出一具五米来长的骨架，头骨是哥哥先找到的。'
   plesiosaur:
     date: '1823-12'
-    checked: official_record
+    stay_day: 20
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [mary_anning_lyme_regis_primary]
+    use: [story, history, wiki]
+    sources: [mary_anning_lyme_regis_primary, museum_earth_anning]
     text:
       en: 'Mary Anning discovered a complete plesiosaur skeleton at Lyme Regis in December 1823. Her sketch records the remarkably long neck.'
       zh: '1823 年 12 月，玛丽·安宁在莱姆里吉斯发现一具完整的蛇颈龙骨架，她的草图记下了那条长颈。'
+    line:
+      en: 'December 1823: under the cliffs Mary Anning finds a whole skeleton with a neck longer than its body. She draws it.'
+      zh: '1823 年 12 月，玛丽·安宁在崖下找到一整具骨架，脖子比身子还长。她把它画了下来。'
+  pterosaur:
+    date: '1828-12'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mary_anning_lyme_regis_primary, discover_wildlife_anning]
+    text:
+      en: 'In December 1828 she found the first pterosaur skeleton found in England, described by William Buckland the next year.'
+      zh: '1828 年 12 月，她找到英格兰发现的第一具翼龙骨架，次年由威廉·巴克兰描述发表。'
+    line:
+      en: 'December 1828: she finds a jumble of bones with a long tail and wings, the first pterosaur found in England.'
+      zh: '1828 年 12 月，她找到一堆带长尾和翅膀的骨头，是英格兰发现的第一具翼龙。'
+  death:
+    date: '1847'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [discover_wildlife_anning, museum_earth_anning]
+    text:
+      en: 'She died of breast cancer in 1847, aged 47, still short of money.'
+      zh: '她 1847 年因乳腺癌去世，年仅 47 岁，生活一直拮据。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '1847: Mary Anning dies, aged 47, still short of money.'
+      zh: '1847 年，玛丽·安宁去世，年仅 47 岁，手头一直拮据。'
 bystanders:
   mary_anning_lyme_regis_reader:
     invented: true
-    text: {en: 'An invented visitor who wants to take a copy of the fossil sketch home.', zh: '一位虚构的访客，想把化石草图抄回去。'}
+    text: {en: 'A visitor, made up for the game, who wants to take a copy of the fossil sketch home.', zh: '一位编出来的访客，想把化石草图抄回去。'}
+  buyer:
+    invented: true
+    text: {en: 'A buyer, made up for the game, who asks the price before he asks who found it.', zh: '一位编出来的买主，先问价钱，再问是谁找到的。'}
 wiki:
   refs:
     mary_anning_lyme_regis_primary:
       order: 150
       status: checked
       text:
-        en: 'Mary Anning''s sketch of her 1823 plesiosaur discovery, reproduced by the Natural History Museum. https://www.nhm.ac.uk/discover/mary-anning-unsung-hero.html'
-        zh: 'Mary Anning''s sketch of her 1823 plesiosaur discovery, reproduced by the Natural History Museum. https://www.nhm.ac.uk/discover/mary-anning-unsung-hero.html'
+        en: 'Natural History Museum, Mary Anning: the unsung hero of fossil discovery, with her sketch of the 1823 plesiosaur. https://www.nhm.ac.uk/discover/mary-anning-unsung-hero.html'
+        zh: '伦敦自然史博物馆，玛丽·安宁：化石发现中被忽略的英雄，附她 1823 年的蛇颈龙草图。https://www.nhm.ac.uk/discover/mary-anning-unsung-hero.html'
+    museum_earth_anning:
+      order: 151
+      status: checked
+      text:
+        en: 'Museum of the Earth, Mary Anning. https://www.museumoftheearth.org/daring-to-dig/bio/anning'
+        zh: '地球博物馆，玛丽·安宁。https://www.museumoftheearth.org/daring-to-dig/bio/anning'
+    discover_wildlife_anning:
+      order: 152
+      status: checked
+      text:
+        en: 'BBC Wildlife, Mary Anning. https://www.discoverwildlife.com/people/mary-anning'
+        zh: 'BBC Wildlife，玛丽·安宁。https://www.discoverwildlife.com/people/mary-anning'
 self_check:
-  quote_line: '访客把一条裂缝描成了骨头。'
   fact: plesiosaur
-  regret_choice: '略过「分清裂纹和骨骼轮廓」，这处细节便留给下一位核对。'
-  bookend: '从「哪一道弯线真是骨头」开始，以员工留下的观察或更正收尾。'
-  share_line: '哪一道弯线真是骨头'
-  share_number: '1823-12'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '脖子比身子还长。她把它画了下来。'
+  regret_choice: '派力气大的去，退潮时跟得上，崖下的弯线却分不清；派爱说话的去，买主面前把名字说清了，崖下那趟没人陪。'
+  bookend: '从一个十三岁女孩挖出的骨架开始，以她死时仍然拮据收尾。'
+  share_line: '1823 年冬天，我在莱姆里吉斯的崖下帮人分清哪道线是骨头。'
+  share_number: '47'
+  knowing: 'pterosaur'
+  near: 'plesiosaur'
+  lever: 'p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

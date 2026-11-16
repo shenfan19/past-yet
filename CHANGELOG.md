@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.32, 2026-11-16
+
+- Lyme Regis 1823, Mary Anning, is rewritten and turned on for two office days from 15 November: the ichthyosaur she dug out at thirteen, the first complete plesiosaur in December 1823, the first English pterosaur of 1828 and her death in 1847, still short of money, with sync points for going under the cliffs at low tide, telling bone from crack and saying who dug the plesiosaur out.
+
 ## 0.5.31, 2026-11-16
 
 - Texcoco 1472, Nezahualcoyotl, is rewritten and turned on: lord of Texcoco from 1431, his death in 1472 and the songs written down under his name in the late sixteenth century, with sync points for keeping time on the drum, keeping the practice sheets in order and helping a learner tell the voice in a song from the name beside it.
