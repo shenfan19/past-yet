@@ -318,6 +318,23 @@ export function createUI(D, ctx, DEV = false) {
   }
 
   // ---------- agency: employees and hiring ----------
+  // The record of an employee: each point that fulfilled something, once, on the earliest trip that won it, with the year, the place and the words of the star,
+  // opening the report while it is kept; the guard points held are one line of their count. A trip out of sync adds nothing of its own. See 5.12 of the story outline.
+  function recordHtml(id) {
+    const P = U.staffpage;
+    const wins = office.winsOf((t) => t.staffId === id);
+    const kept = new Set(ctx.S().dispatches.filter((d) => d.claimed).map((d) => d.id));
+    const done = wins.filter((w) => !w.guard).map((w) => {
+      const ev = D.get('catalog.events').find((x) => x.id === w.event);
+      const c = T.catalog[w.event];
+      const text = `${fmtYear(D, ev.year)} ${c.place}${COLON}${c.points[w.point]}`;
+      return `<li>${kept.has(w.trip.id) ? `<a class="wl" data-act="open" data-id="${w.trip.id}">${esc(text)}</a>` : esc(text)}</li>`;
+    });
+    const held = wins.filter((w) => w.guard).length;
+    if (!done.length && !held) return `<p class="muted">${P.record_none}</p>`;
+    return `${done.length ? `<ul class="iflines">${done.join('')}</ul>` : ''}${held ? `<p class="muted">${esc(P.record_guard.replace('{n}', String(held)))}</p>` : ''}`;
+  }
+
   const moodMult = (v) => 1 + D.get('config.favor.buff') * (2 * v - 1);
   const favorCell = (id) => { const v = ctx.S().staff[id].favor; return `<span class="favor"${tip(U.office.favor_tip + ' ' + U.office.mood_mult.replace('{m}', moodMult(v).toFixed(2)))}>♥ ${Math.round(v * 100)}<span class="fbar"><i style="width:${v * 100}%"></i></span></span>`; };
   const stateLabel = () => ({ ready: U.office.ready, away: U.office.away, resting: U.office.resting, secretary: U.office.secretary_state });
@@ -712,6 +729,26 @@ export function createUI(D, ctx, DEV = false) {
     };
   }
 
+  // The shift of the timeline: what this trip changed, set out beside what history recorded. Each won point that fulfils something has a row,
+  // a missed guard point has one row of its own marked out of sync, and a trip that changed nothing says so. Guard points that held are not shown,
+  // since history went on as it was. The words are text.<language>.shift of the card, read in the language of the page, see 5.12 of the story outline.
+  function shiftHtml(cur, ev, c) {
+    if (ev.scene?.star_rules !== 2 || cur.report.journey?.accepted === false) return '';
+    const staff = staffName(D, cur.spec.staffId);
+    const put = (x) => esc(String(x || '').split('{staff}').join(staff));
+    const pts = cur.report.points || [];
+    const rows = [];
+    const out = cur.report.outcomeId === 'desync' ? pts.filter((p) => p.guard && !p.hit && !p.cut).sort((a, b) => a.day - b.day)[0] : null;
+    if (out) rows.push(`<tr class="desync"><td>${put(c.shift?.[out.id]?.was || c.points[out.id])}</td><td><span class="chip">${esc(U.report.shift.desync)}</span> ${put(c.points_fail?.[out.id])}</td></tr>`);
+    const won = pts.filter((p) => p.hit && !p.guard && c.shift?.[p.id]?.now);
+    for (const p of won) rows.push(`<tr><td>${put(c.shift[p.id].was)}</td><td>${put(c.shift[p.id].now)}</td></tr>`);
+    const fulfil = ev.scene.points.filter((p) => !p.guard);
+    if (c.shift_all && fulfil.length && fulfil.every((p) => pts.find((x) => x.id === p.id)?.hit)) rows.push(`<tr class="all"><td>${esc(U.report.shift.all)}</td><td>${put(c.shift_all)}</td></tr>`);
+    const head = out ? U.report.shift.desync : won.length ? U.report.shift.moved.replace('{n}', String(won.length)) : U.report.shift.none;
+    return `<div class="sec">${esc(U.report.shift.title)} <span class="muted">${esc(head)}</span></div>
+      ${rows.length ? `<table class="shift"><thead><tr><th>${esc(U.report.shift.was)}</th><th>${esc(U.report.shift.now)}</th></tr></thead><tbody>${rows.join('')}</tbody></table>` : ''}`;
+  }
+
   // What a report needs from a small story: the record it kept, the words of its catalogue card, no model numbers.
   function lightStory(cur) {
     const c = T.catalog[cur.eraId];
@@ -721,7 +758,7 @@ export function createUI(D, ctx, DEV = false) {
       title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
       sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
       timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
-      saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '',
+      saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
       buttons: `<button data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
@@ -781,6 +818,7 @@ export function createUI(D, ctx, DEV = false) {
       ${S.afterRecord}${S.warn}
       ${S.numbers}
       ${bodyHtml()}
+      ${S.shift || ''}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
         ${S.cost != null ? `<tr><td>${U.report.spent}</td><td class="num">${ri(S.cost)}</td></tr>` : ''}
@@ -905,7 +943,8 @@ export function createUI(D, ctx, DEV = false) {
       ${gearRows ? `<table class="plain gear"><tbody>${gearRows}</tbody></table>` : `<p class="muted">${P.no_gear}</p>`}
       ${away ? `<p class="muted">${P.away_note}</p>` : ''}
       <div class="sec">${P.story}</div><p>${esc(T.staff[id].story || '')}</p>
-      <div class="sec" style="clear:both">${U.office.staff_trips}</div>${list}`;
+      <div class="sec" style="clear:both">${P.record_title}</div>${recordHtml(id)}
+      <div class="sec">${U.office.staff_trips}</div>${list}`;
   }
 
   // ---------- the welcome of a new game ----------

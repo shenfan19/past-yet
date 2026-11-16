@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0, 2026-11-16
+
+- The shift of the timeline: before the summary, a report sets out what the trip changed, with what history recorded on the left and this timeline on the right, one row for each point that fulfilled something, and one row marked out of sync when a guard point was missed. The record no longer tells the changes as loose lines after the leaving.
+- IF lines: a person card keeps its history apart and adds the lives the employees changed, marked as fiction, each shown once a trip has won it. A card can give the life to the person it was changed for.
+- The record of an employee lists the stars they won that changed something, once each, opening the report while it is kept, and counts the recorded events they held in place.
+- The cards write the shift as was, now, who and bio in place of branch; the twenty one stories with new stars are moved over.
+
 ## 0.7.3, 2026-11-16
 
 - The line at the foot of the share card no longer calls the game a simulation: the stories are fiction drawn from history, for entertainment only.

@@ -118,6 +118,15 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 /* the report is one list in time order: a thin rule at the left tells history from the crossing, nothing more */
 .tl li { padding: 3px 0 3px 10px; border-left: 2px solid var(--line); margin-left: 2px; }
 .tl li.history { border-left-color: rgba(138, 106, 31, 0.45); }
+.shift { width: 100%; table-layout: fixed; border-collapse: collapse; }
+.shift th { text-align: left; font-weight: 600; font-size: 12px; letter-spacing: .08em; color: var(--ink); opacity: .7; border-bottom: 1px solid var(--line); padding: 4px 8px; }
+.shift td { vertical-align: top; padding: 6px 8px; border-bottom: 1px dashed var(--line); line-height: 1.55; }
+.shift td:first-child { opacity: .62; }
+.shift td:last-child { border-left: 2px solid var(--stamp); }
+.shift tr.desync td:last-child { border-left-color: var(--warn); }
+.shift tr.all td { font-weight: 600; opacity: 1; }
+.iflines li { margin: 4px 0; }
+.iflines .from { font-size: 12px; opacity: .7; }
 .tl li.travel { border-left-color: rgba(47, 79, 111, 0.45); }
 .tl li.after { opacity: 0.8; }
 .tl.f-history li.travel, .tl.f-travel li.history { display: none; }

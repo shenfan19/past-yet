@@ -11,6 +11,7 @@ const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.
 const load = (lang) => loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => lang, { drafts: true });
 const D = await load('en');
 const DZ = await load('zh');
+const peopleIds = new Set((D.get('encyclopedia.sections.people') || []).map((x) => x.id));
 const errors = [];
 const warns = [];
 const err = (m) => errors.push(m);
@@ -177,8 +178,18 @@ for (const e of events) {
     for (const lang of ['en', 'zh']) {
       const t = (lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {};
       for (const p of e.scene.points) if (!t.points_fail?.[p.id]) err(`event ${e.id} ${lang}: point ${p.id} has no points_fail text`);
-      if (!e.scene.points.some((p) => !p.guard && t.branch?.[p.id])) err(`event ${e.id} ${lang}: no fulfil point has branch text`);
-      for (const k of Object.keys(t.branch || {})) if (!e.scene.points.find((p) => p.id === k && !p.guard)) err(`event ${e.id} ${lang}: branch ${k} is not a fulfil point`);
+      // the shift of the timeline, see 5.12 of the story outline: was is what history recorded, now what this branch made of it; a guard point has only was
+      if (t.branch) err(`event ${e.id} ${lang}: branch is replaced by shift`);
+      if (!e.scene.points.some((p) => !p.guard && t.shift?.[p.id]?.now)) err(`event ${e.id} ${lang}: no fulfil point has a shift with now`);
+      for (const p of e.scene.points.filter((x) => x.guard && !t.shift?.[x.id]?.was)) warn(`event ${e.id} ${lang}: guard point ${p.id} has no shift.was, so an out of sync report shows the star itself as what history recorded`);
+      for (const [k, sh] of Object.entries(t.shift || {})) {
+        const pt = e.scene.points.find((p) => p.id === k);
+        if (!pt) { err(`event ${e.id} ${lang}: shift ${k} is not a point`); continue; }
+        if (!sh.was) err(`event ${e.id} ${lang}: shift ${k} has no was`);
+        if (pt.guard && (sh.now || sh.bio || sh.who)) err(`event ${e.id} ${lang}: shift ${k} of a guard point has only was`);
+        if (sh.who && !peopleIds.has(sh.who)) err(`event ${e.id} ${lang}: shift ${k} names who ${sh.who}, who has no person card`);
+        if (sh.bio && !sh.now) err(`event ${e.id} ${lang}: shift ${k} has a bio but no now`);
+      }
     }
   }
 }

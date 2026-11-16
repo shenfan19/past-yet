@@ -57,6 +57,20 @@ export function createWiki(X) {
     for (const e of sec('places')) add({ id: 'places:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, authors: e.authors, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
     // a person with `events` is the figure of those catalogue events: the page opens with the first event, takes its tags and links to every one
     const personOf = {};
+    // The IF lines of a person: what the employees changed in that life on their branches, apart from the history above and marked as fiction.
+    // A line opens once a trip has won its point; it belongs to the person the card names with who, or else to the figure of the story. See 5.12 of the story outline.
+    const ifLines = (pid, evs) => {
+      const rows = X.office.winsOf().filter((w) => !w.guard).map((w) => {
+        const c = T.catalog[w.event];
+        const sh = c?.shift?.[w.point];
+        if (!sh || !(sh.bio || sh.now) || !(sh.who ? sh.who === pid : evs.includes(w.event))) return '';
+        const ev = D.get('catalog.events').find((x) => x.id === w.event);
+        const staff = staffName(D, w.trip.staffId);
+        const from = U.enc.if_from.replace('{year}', fmtYear(D, ev.year)).replace('{place}', c.place).replace('{staff}', staff);
+        return `<li><div class="from">${esc(from)}</div>${esc(String(sh.bio || sh.now).split('{staff}').join(staff))}</li>`;
+      }).filter(Boolean);
+      return rows.length ? `<div class="sec">${esc(U.enc.if_title)}</div><p class="muted">${esc(U.enc.if_note)}</p><ul class="iflines">${rows.join('')}</ul>` : '';
+    };
     for (const e of sec('people')) {
       const evs = e.events || [];
       for (const ev of evs) personOf[ev] = e.id;
@@ -72,7 +86,7 @@ export function createWiki(X) {
           const pics = D.get('encyclopedia').images ? (D.get('encyclopedia.images')[e.id] || []) : [];
           const pic = pics.find((x) => x.kind === 'portrait') || pics[0];
           const fig = pic ? `<figure class="personpic"><img src="data/people/${esc(e.id)}/images/${esc(pic.file)}" alt="${esc(pic.title[D.lang] || pic.title[D.get('config.i18n.fallback')])}"><figcaption class="muted small">${esc(pic.title[D.lang] || pic.title[D.get('config.i18n.fallback')])} · ${esc(pic.credit)} · ${esc(pic.license)}</figcaption></figure>` : '';
-          return `${fig}<p>${link(e.text)}</p>${total}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
+          return `${fig}<p>${link(e.text)}</p>${total}${ifLines(e.id, evs)}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
         },
       });
     }

@@ -134,8 +134,31 @@ export function createOffice(X) {
       id: d.id, place: d.eraId, light: !!d.light, staffId: d.spec.staffId, day: Math.floor(d.startDay), back: Math.floor(d.recalled ? d.recallDay : d.readyDay),
       stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, stamp: ctx.backend.stampOf(d), energy: d.paid?.energy || 0,
       antique: d.paid?.antique || null, recalled: !!d.recalled, evacuated: !!d.evacuation && !d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
-      redeemed: pts.some((p) => p.redeem && p.hit), archived: false,
+      // won: the points met on this trip, which the timeline of the wiki and the record of the employee read after the full report is dropped
+      redeemed: pts.some((p) => p.redeem && p.hit), won: pts.filter((p) => p.hit).map((p) => p.id), archived: false,
     };
+  }
+  // the points a finished trip met: kept in its summary, or read from the full report for a summary written before it kept them
+  function wonOf(t) {
+    if (Array.isArray(t.won)) return t.won;
+    const d = S().dispatches.find((x) => x.id === t.id);
+    return (d?.report?.points || []).filter((p) => p.hit).map((p) => p.id);
+  }
+  // The stars of small stories won so far, each once, on the earliest trip that won it: { event, point, guard, trip }.
+  // keep(t) narrows the trips, for the record of one employee. A trip sent out of sync keeps the stars it won before.
+  function winsOf(keep = () => true) {
+    const out = new Map();
+    const trips = (S().trips || []).filter((t) => t.light && keep(t)).slice().sort((a, b) => a.back - b.back || a.day - b.day);
+    for (const t of trips) {
+      const ev = D.get('catalog.events').find((x) => x.id === t.place);
+      if (!ev?.scene) continue;
+      for (const pid of wonOf(t)) {
+        const pt = ev.scene.points.find((p) => p.id === pid);
+        const key = t.place + '|' + pid;
+        if (pt && !out.has(key)) out.set(key, { event: t.place, point: pid, guard: !!pt.guard, trip: t });
+      }
+    }
+    return [...out.values()];
   }
   function record(d) {
     const s = S();
@@ -734,5 +757,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { wonOf, winsOf, salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }
