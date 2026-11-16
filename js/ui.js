@@ -1186,7 +1186,8 @@ export function createUI(D, ctx, DEV = false) {
       st.modalStack = [];
       st.modal = { kind: 'dispatch' };
       render();
-    } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); render(); } }
+    // a cleared save is a new game, so the settings give way to the welcome, as on a first visit
+    } else if (act === 'reset') { if (confirm(U.settings.data.reset_confirm)) { ctx.reset(); st.modal = { kind: 'welcome' }; render(); } }
   }
   view.addEventListener('click', onClick);
   toolsEl.addEventListener('click', onClick);

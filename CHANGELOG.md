@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1, 2026-11-16
+
+- Clearing the save from the settings starts a new game cleanly: the new save carries an empty log of trips, so the page no longer stops rendering and leaves the founder form dead, and the welcome opens in place of the settings.
+
 ## 0.7.0, 2026-11-16
 
 - Two kinds of star, drawn from what history left unresolved. A guard point holds a recorded event against a real threat; when it is missed the trip falls out of sync with history, the traveller is sent back on that day and the points after it are never reached, with three days of rest and a loss of mood. Every other point fulfils something history left undone and a miss costs only its star.
