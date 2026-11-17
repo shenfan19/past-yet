@@ -2,91 +2,134 @@ order: 45
 events:
   cao_xueqin_beijing:
     order: 156
-    build_step: 1
+    build_step: 2
     year: 1763
     lon: 116.2
     lat: 39.99
     region: asia
     field: literature
     tier: 3
+    stay: 1
     channels: {C: 3, Y: 2}
-    regret: true
     refs: [cao_xueqin_beijing_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: care, req: {"trait":["sensitive","patient","calm"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["attached","cosmopolitan","sensitive"]}}
+        - {id: p1, kind: hold, guard: true, day: 6, req: {any: [{job: [archivist, bookseller, proofreader, writer]}, {stat: {will: 5}}]}}
+        - {id: p2, kind: care, day: 12, req: {any: [{job: [doctor, nurse, caregiver]}, {trait: [patient, kind]}, {item: warm_blanket}]}}
+        - {id: p3, kind: trust, day: 20, req: {any: [{job: [writer, proofreader, archivist], stat: {wit: 5}}, {trait: [patient, methodical], stat: {wit: 6}}, {item: notebook_pen, stat: {wit: 5}}]}}
       vignettes:
-        - {id: stone, traits: [curious, bold]}
-        - {id: margin, traits: [methodical, vigil]}
-        - {id: loose}
+        - {id: ink, traits: [curious, methodical]}
+        - {id: paper, traits: [patient, quiet]}
+        - {id: empty}
     text:
       en:
-        name: "A novel left at eighty chapters"
-        place: "Western Hills, Beijing"
-        figure: "Cao Xueqin"
-        story: 'An early annotated text of The Story of the Stone names Cao Xueqin in its opening and describes repeated revision within the novel''s frame. The setting uses 1763 without treating the book''s self-description as a dated biography.'
-        relic: "A hand copied chapter"
-        relic_desc: "A chapter copied by friends, with comments in red ink in the margin."
+        name: The blank after the last chapter
+        place: Western Hills, Beijing
+        figure: Cao Xueqin
+        story: An early manuscript of The Story of the Stone attests that annotated copies circulated during Cao Xueqin's lifetime. One later marginal note in that manuscript associates Cao's death with a book left unfinished. The scenario is set in his last winter without fixing the exact date of his death or the number of chapters he wrote.
+        relic: A loose sheet of chapter plans
+        relic_desc: A game keepsake with a proposed order for several chapters and blank space for what Cao had yet to decide.
         points:
-          p1: 'Identify a voice inside the framing story'
-          p2: 'Keep a comment next to the line it discusses'
-          p3: 'Restore the order of two loose pages'
+          p1: Keep the early annotated copy in the copyist's hands while Cao's working pages are returned to him
+          p2: See to the fire and the copying so Cao can spend one good evening thinking through the ending
+          p3: While Cao still has strength to review it, leave a separate copy of the chapter plan he agrees to pass on
+        points_fail:
+          p1: The only copy at this table goes back into the pile of working pages. In this branch the reader leaves without the annotated text.
+          p2: The room grows cold before the papers are ready. The work waits for another evening.
+          p3: The copyist can arrange the loose pages, but has no record of which ending Cao meant to leave.
+        shift:
+          p1:
+            was: The Jiaxu manuscript preserves notes on an early text that was being copied during Cao Xueqin's lifetime.
+          p2:
+            was: A marginal note in the Jiaxu manuscript remembers Cao's death and says the book was left unfinished.
+            now: In this branch someone tends the fire and brings the pages one at a time. Cao gets one evening to work out where he wants the story to go.
+          p3:
+            was: The Jiaxu marginal note calls the book unfinished and gives no final chapter plan approved by Cao.
+            now: The copyist takes away two sheets. One gives the order Cao has approved in this branch. The other lists the fates he has yet to decide. In the next copying the two sheets stay together.
+            who: cao_xueqin_beijing
+            bio: Before his death, Cao reviews a chapter plan with a copyist. In this branch later readers can see which decisions he made and where he left the ending open.
         vignettes:
-          stone: 'You ask whether the stone could name its own copyist. The copyist lifts the first sheet and reads how the story introduces itself. You put the stone under story and the copying question on another slip.'
-          margin: 'Two hands have left marks beside the same passage. You ask the copyist to leave room between the commentary and the line it comments on. The next copy still shows both.'
-          loose: 'You pick up a loose page by the blank edge and read its first few characters aloud. The copyist finds the matching catch in the pile and puts the leaf back.'
+          ink: The copyist sets a slip between the proposed chapter order and a reader's pencilled guess. The pages can now be put back in the right places.
+          paper: '{staff} carries in the lamp. The copyist lifts the manuscript away from the edge of the table to make room.'
+          empty: The last sheet has room for another heading. The copyist leaves the space as it is.
       zh:
-        name: "停在八十回的小说"
-        place: "北京西山"
-        figure: "曹雪芹"
-        story: '脂评本《石头记》开篇提到曹雪芹，并在小说的叙事框架里写到反复增删。书里的自述也以原文中的框架来读。'
-        relic: "一份手抄的章回"
-        relic_desc: "朋友抄下的一回，页边有红笔写的批语。"
+        name: 末回后面的一张白纸
+        place: 北京西山
+        figure: 曹雪芹
+        story: 《石头记》甲戌本留下曹雪芹生前已有带批语抄本流传的线索。卷首一条后加眉批回忆曹雪芹去世时书尚未成。故事设在他晚年的冬天，现存资料不足以确定他的卒日或最后写成了多少回。
+        relic: 两页章回安排
+        relic_desc: 游戏纪念物。一页列着拟好的章回次序，另一页留下作者还未决定的地方。
         points:
-          p1: '认出开篇框架里说话的是谁'
-          p2: '让批语跟着它所批的那一句'
-          p3: '把两张散开的纸排回顺序'
+          p1: 让抄书人留下早期批本，再把等着曹雪芹改的稿页交还给他
+          p2: 替他添火、备好稿页，让曹雪芹有一晚能专心想结尾
+          p3: 趁他还有力气核看，照他认可的次序抄出一份收束提纲，托人带走
+        points_fail:
+          p1: 桌上那份批本混进要退回的改稿里，这条支线里的读者空着手离开。
+          p2: 稿纸还没理齐，炭火已经要熄了。只能改天接着写。
+          p3: 抄书人能理出散页，却不知道哪些结局曹雪芹已经想定。
+        shift:
+          p1:
+            was: 甲戌本留下了曹雪芹生前已有早期批本传抄的记录。
+          p2:
+            was: 甲戌本有一条眉批，回忆曹雪芹去世时书还没有写完。
+            now: 这条支线里，有人看着炭火，一次递一张稿页。曹雪芹多得了一个晚上，能想清楚故事接下来往哪里走。
+          p3:
+            was: 甲戌眉批记书未成，没留下曹雪芹亲自核过的收束提纲。
+            now: 抄书人带走两张纸。一张是曹雪芹在这条支线里点定的次序，一张是他还没拿定的几个人的下场。后来转抄的人把两张纸一直夹在一起。
+            who: cao_xueqin_beijing
+            bio: 曹雪芹生前和抄书人核过一份收束提纲。这条支线的读者看得见哪些结局是他定下的，哪些他仍留着空白。
         vignettes:
-          stone: '你问石头会不会说出是谁抄的。抄书人揭起第一页，把故事如何开头念了一遍。你把石头列在故事里，抄书人的问题另夹一签。'
-          margin: '同一段旁边有两种笔迹。你请抄书人在批语和所批的句子间留空。传下去的新抄件还能看见两边。'
-          loose: '你捏住空白边捡起散页，念出开头几个字。抄书人从纸摞里找到接得上的地方，把这一页夹回去。'
+          ink: 抄书人夹进一张纸签，把拟好的章节次序同读者的猜测隔开。纸页散了也知道各该放回哪一处。
+          paper: '{staff}把灯端进来。抄书人把稿子从桌沿往里收了收，让出一小块地方。'
+          empty: 末页还能写一个回目。抄书人看了看，照原样空着。
 text:
   en:
     name: Cao Xueqin
-    text: Chinese novelist of the Qing, about 1715 to about 1763. He wrote Dream of the Red Chamber, a novel about the rise and fall of a great family, and left it unfinished in his last years in the Western Hills near Beijing.
+    text: Qing novelist associated with Dream of the Red Chamber, also circulated under the title The Story of the Stone. Annotated manuscript copies and later printed editions preserve different states of the novel. A marginal note in the Jiaxu manuscript links his death with the unfinished book.
   zh:
     name: 曹雪芹
-    text: 清代小说家，约 1715 年生，约 1763 年去世。他写下《红楼梦》，讲一个大家族的盛衰，晚年住在北京西山，书稿未能写完。
-hook: {en: 'Whose words are in the margin?', zh: '页边那句究竟是谁写的'}
+    text: 清代小说家，《红楼梦》早期以《石头记》等题名抄传。脂评抄本与后来的刊本呈现不同的文本面貌。甲戌本上的一条眉批回忆他去世时书尚未成。
+hook: {en: 'Will he have one more evening to decide?', zh: '他还能想一晚自己的结尾吗'}
 facts:
-  stone_opening:
+  early_copy:
+    date: '1754'
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [cao_xueqin_beijing_primary, cao_xueqin_beijing_hu]
+    text: {en: 'The Jiaxu collation is evidence that an early annotated form of The Story of the Stone circulated during Cao Xueqin’s lifetime.', zh: '甲戌抄阅重评的题记，是《石头记》早期批本在曹雪芹生前已有传抄的证据。'}
+  unfinished:
     date: '1763'
     checked: official_record
-    level: usable
-    use: [story, wiki]
+    level: careful
+    use: [history, story, wiki]
     sources: [cao_xueqin_beijing_primary]
-    text:
-      en: 'An early annotated text of The Story of the Stone names Cao Xueqin in its opening and describes repeated revision within the novel''s frame. The setting uses 1763 without treating the book''s self-description as a dated biography.'
-      zh: '脂评本《石头记》开篇提到曹雪芹，并在小说的叙事框架里写到反复增删。书里的自述也以原文中的框架来读。'
+    note: 'This dates the setting. The marginal note gives a cyclical date and its chronology is disputed.'
+    text: {en: 'A marginal note in the Jiaxu manuscript recalls that the book was unfinished when Cao died.', zh: '甲戌本一条眉批回忆曹雪芹去世时书尚未成。游戏以此设定场景，卒年仍有争议。'}
 bystanders:
-  cao_xueqin_beijing_reader:
+  copyist:
     invented: true
-    text: {en: 'An invented copyist with a page of text and a page of comments.', zh: '一位虚构的抄书人，手边一页正文、一页批语。'}
+    text: {en: 'A fictional copyist who comes for the pages Cao can let go of.', zh: '虚构的一位抄书人，来取曹雪芹愿意交出去的稿页。'}
 wiki:
   refs:
     cao_xueqin_beijing_primary:
       order: 189
       status: checked
       text:
-        en: 'The Story of the Stone, Rouge Ink annotated text, chapter 1, Wikisource transcription. https://zh.wikisource.org/wiki/脂硯齋重評石頭記/第一回'
-        zh: 'The Story of the Stone, Rouge Ink annotated text, chapter 1, Wikisource transcription. https://zh.wikisource.org/wiki/脂硯齋重評石頭記/第一回'
+        en: 'The Story of the Stone, Jiaxu annotations, chapter 1. https://zh.wikisource.org/wiki/脂硯齋重評石頭記/第一回'
+        zh: '《脂砚斋重评石头记》第一回甲戌本眉批。https://zh.wikisource.org/wiki/脂硯齋重評石頭記/第一回'
+    cao_xueqin_beijing_hu:
+      order: 190
+      status: checked
+      text:
+        en: 'Hu Shih, New Material for the Study of Dream of the Red Chamber. https://zh.wikisource.org/wiki/考證《紅樓夢》的新材料'
+        zh: '胡适《考证〈红楼梦〉的新材料》。https://zh.wikisource.org/wiki/考證《紅樓夢》的新材料'
 self_check:
-  quote_line: '你问石头会不会说出是谁抄的。'
-  fact: stone_opening
-  regret_choice: '略过「认出开篇框架里说话的是谁」，这处细节便留给下一位核对。'
-  bookend: '从「页边那句究竟是谁写的」开始，以员工留下的观察或更正收尾。'
-  share_line: '页边那句究竟是谁写的'
-  share_number: '1763'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '末页还能写一个回目。'
+  fact: unfinished
+  regret_choice: '早本仍供抄读，员工争取一晚保护作者自己的决定。错过这一晚，抄书人只能替他猜。'
+  bookend: '开场桌上是一张白纸，收尾看哪一处由作者亲自填上。'
+  share_line: '他还没定的地方，我们照他的意思空着。'
+  share_number: '两张纸'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

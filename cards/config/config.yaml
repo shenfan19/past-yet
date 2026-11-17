@@ -73,7 +73,9 @@ office:
   market: {period_days: 30, amp: 0.3}
   fatal_outcomes: [near_death]
   # the share of the find chance at a star count, for a story with that many stars; a story has 3 stars unless its scene has more points
-  antique_find: {star_share: {1: {0: 0.25, 1: 1}, 2: {0: 0.25, 1: 0.6, 2: 1}, 3: {0: 0.25, 1: 0.5, 2: 0.75, 3: 1}, 4: {0: 0.25, 1: 0.45, 2: 0.65, 3: 0.85, 4: 1}, 5: {0: 0.25, 1: 0.4, 2: 0.55, 3: 0.75, 4: 0.9, 5: 1}}, k: 0.16, cap: 0.8, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
+  # k is set so that a small agency left on the auto mode is stopped by a wage it cannot pay after some fifty days, sells an antique or two and then earns its way,
+  # while a large one is stopped again and again: the wage grows with the headcount and the finds do not. Measured with tools/in_probe_economy.mjs idle team=N.
+  antique_find: {star_share: {1: {0: 0.25, 1: 1}, 2: {0: 0.25, 1: 0.6, 2: 1}, 3: {0: 0.25, 1: 0.5, 2: 0.75, 3: 1}, 4: {0: 0.25, 1: 0.45, 2: 0.65, 3: 0.85, 4: 1}, 5: {0: 0.25, 1: 0.4, 2: 0.55, 3: 0.75, 4: 0.9, 5: 1}}, k: 1.2, cap: 0.8, tau_years: 120, tau_km: 2500, earth_km: 6371, modelled_place_boost: 12}
   # the places open at the start, besides the events marked start: some of the latest event of the catalogue, which reaches the farthest back, and some at random
   start_scenes: {newest: 0, random: 2}
   # the employees of the start: this many candidates from different regions are offered and the player picks some of them
@@ -178,7 +180,7 @@ ui:
   # every list shows a page of rows, the first size by default, and the player can pick a longer one
   page_sizes: [5, 10, 20, 50]
   box_h: {story: 300, pick_staff: 520, carry: 200, plots: 170}
-  chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1, max_points: 200, body_colors: ['#b3382c', '#2f4f6f', '#8a6a1f', '#5a7f3a', '#7a4f8a', '#3a7f7f', '#8a8272'], body_min_max: 0.05}
+  chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1, max_points: 200, body_colors: ['#b3382c', '#2f4f6f', '#8a6a1f', '#5a7f3a', '#7a4f8a', '#3a7f7f', '#8a8272', '#c2622d', '#3f6fb3', '#a3477a'], body_min_max: 0.05}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
 stars:

@@ -665,13 +665,19 @@ ui:
     line_filter:
       all: All
       history: History
-    body: Body readouts, per cent
+    body: Burdens on the body, per cent, 0 none and 100 the worst. Click the legend to switch a line
+    body_none: Nothing weighed on the body on this trip.
+    body_attrs: What the body could still do, the attributes of each day, lower as the burdens grow
+    chart_all_off: Every line is switched off. Click the legend to bring one back.
     body_readouts:
-      injury_burden: Injury
-      mobility_loss: Mobility
-      infection_burden: Infection
+      fatigue: Fatigue
+      energy_deficit: Hunger
       hydration_deficit: Thirst
-      energy_deficit: Energy
+      nutrient_deficit: Malnutrition
+      oxygen_deficit: Lack of oxygen
+      infection_burden: Infection
+      injury_burden: Injury
+      mobility_loss: Lost mobility
       psychological_strain: Strain
       loneliness: Loneliness
     note_model: A number worked out by the model
@@ -3370,36 +3376,6 @@ catalog:
       source: '{staff} adds a narrow column headed origin to the copyist''s sheet, so that a position taken from the old table and one measured tonight do not sit on the same line.'
       arc: '{staff} lays a cord along the curve of the trench for the arc and walks it end to end with the masons, to see that the curve is true.'
       hold: '{staff} sits by the arc with a brazier and a board, and writes down a reading each time it is called, until the star sinks below the wall.'
-  laozi_hangu:
-    name: The traveller at the pass
-    place: Hangu Pass, China
-    figure: Laozi
-    story: Sima Qian’s much later Shiji tells of a gatekeeper named Yin Xi asking Laozi to leave a written work. It describes two parts and more than five thousand words, and gives variant accounts of Laozi’s identity. Its year, the named pass, and the helpers’ work are settings for the story.
-    relic: A practice slip with a position mark
-    relic_desc: An invented prop from the legendary gate scene.
-    points:
-      p1: Ask the gate helper to let the two bundles lie apart
-      p2: Read the position marks before the bundle is tied
-      p3: Keep the loose slips in order while the cart is called up
-    vignettes:
-      two: Shun has made room on his shelf for one bundle. Another comes across the table with the cord still loose. You set the two bundles end to end and ask which was read first. He makes room for both without tying them into one.
-      tie: Xi has to move the shelf before the gate closes. You hold the loose slips together while she rethreads the cord. She keeps one practice slip aside with the position marked. The next keeper will know where to put it back.
-      ox: You remember pictures of a traveller on an ox. Shun only heard a cart beyond the gate and asks what to enter. You let him write that much. When you turn back for a look yourself, the noise has already passed beyond the wall.
-  confucius_qufu:
-    name: Start with one corner
-    place: Qufu, China
-    figure: Confucius
-    story: In Analects 7.8, the teacher uses one corner and the other three to describe a learner’s participation. The text preserves a teaching saying.
-    relic: A practice board with one corner marked
-    relic_desc: An imagined classroom prop made for the exercise.
-    points:
-      p1: Give the stuck learner a starting hint and time to use it
-      p2: Set out the board with only one corner marked
-      p3: Wait through a first attempt before offering the answer
-    vignettes:
-      corner: Ji holds her stylus above the first mark and waits for you to point to a second. You ask her to turn the board instead. She finds the next corner in her own time. When she hands the board to a classmate, she gives him only the first mark.
-      explain: Qiu can point out all the corners and has already drawn them for Ji. You ask him to hide his own board and listen while she finds a way to describe the next turn. He hears her give a reason he had skipped. When he puts his board down, there is room for her to add it.
-      answer: You know the exercise under the name it will have in other languages. Ji is about to tell you what she thinks comes next. You let her finish before giving the name. There is time to hear the next step, but you will miss how she teaches it to someone else.
   buddha_sarnath:
     name: What the listener carries
     place: Sarnath, India
@@ -3415,67 +3391,6 @@ catalog:
       middle: Nanda has remembered the rejection of two extremes but thinks the speaker stopped there. You wait while Sona recalls that a path was described next. Nanda tries the sequence aloud for the person she will meet later. This time she gets as far as the description of the path.
       pause: Sona repeats three parts in a rush and hesitates on the fourth. You ask where she stopped hearing the speaker and started relying on Nanda. They try the retelling in turns. After that, each knows which part to ask the other about.
       retell: You know later versions of the discourse will travel far. Nanda has to leave to meet someone and wants a short account she can remember on the walk. You listen to her try it once. You leave the park before hearing how the next person receives it.
-  cai_lun_luoyang:
-    name: Paper made cheaply
-    place: Luoyang, China
-    figure: Cai Lun
-    story: The Book of the Later Han reports that Cai Lun presented his papermaking method in 105, listing bark, hemp waste, cloth and fishing nets.
-    relic: A sheet of coarse paper
-    relic_desc: A sheet with bits of fibre still showing.
-    points:
-      p1: Pack usable writing samples apart from the list of materials and deliver both to the receiving office in Luoyang
-      p2: Have one scribe write on each sample and identify its source so the results can be compared
-    points_fail:
-      p1: Only the list reaches the office. There is no sample to test for writing, and the office recalls the employee.
-      p2: Paper from different workshops is mixed together. Nobody can trace which samples took ink cleanly and which blurred.
-    shift:
-      p1:
-        was: In 105 Cai Lun reported his papermaking to the court; the Book of the Later Han names several materials he used.
-      p2:
-        was: In 105 the Later Han history links the new submission to costly silk and bulky slips. Excavated paper also predates 105.
-        now: The receiving office gets writing samples it can trace to their makers and can request the kind that serves its work.
-        who: cai_lun_luoyang
-        bio: The paper Cai Lun presented came with written trials, and the court offices chose their paper by them.
-    vignettes:
-      light: You hold the two trial sheets up to the window. A patch that looked even on the board lets much more light through. The worker pins a mark beside it.
-      ink: The worker passes you the smoother sheet. You ask to try the same brush on both before choosing one. The smaller mark turns out to be the easier one to read.
-      tag: The worker lifts the drying board before you can ask which sample is which. You set two labeled scraps alongside the sheets so they can still be compared later.
-  zhang_heng_luoyang:
-    name: A direction and a later dispatch
-    place: Luoyang, China
-    figure: Zhang Heng
-    story: The Book of the Later Han dates Zhang Heng’s seismoscope to 132. It describes eight dragon heads and reports an occasion when one ball fell although the capital felt no shaking, followed days later by news of an earthquake in Longxi. It does not reconstruct the hidden mechanism or date the Longxi report to 132.
-    relic: A direction record
-    relic_desc: One recorded direction, with a blank to be filled when a dispatch arrives.
-    points:
-      p1: Help Zhang Heng draw and write out the mechanism inside the seismoscope, and lodge it with the instrument, so the workings are not lost with it
-    points_fail:
-      p1: As in history the workings were never written down. In this branch later readers can only guess from the few lines on its outside in the Book of the Later Han.
-    shift:
-      p1:
-        was: In 132 Zhang Heng made the seismoscope; the Book of the Later Han records only its outside and one report from Longxi, the mechanism inside was never written down, the instrument was later lost, and modern reconstructions still disagree.
-        now: '{staff} helped him draw the mechanism and write it out, and the sheets were stored with the instrument at the court office. When the instrument was gone the drawings remained, and later makers could build it again from them.'
-        who: zhang_heng_luoyang
-        bio: In this line Zhang Heng's seismoscope came down together with drawings of its workings, and later craftsmen built more than one from them.
-    vignettes:
-      register: The record keeper hears the signal in the exercise and reaches for a place name. You draw a space for the indicated direction and another for news received from outside the capital. Only the direction goes in. You take that two-part record home. There is no corroborating message before you leave.
-      later: You know a later biography will say that a dispatch came from Longxi. The helper asks if it belongs on the present line. You leave a slip beside the record marked ‘awaiting word’. He can write on it when somebody arrives; your trip ends while the road is still quiet.
-      direction: You mark the line for what was noticed at the instrument and leave the remaining space for a witness. When the helper folds the exercise, the blank stays visible. You take home just the direction. The name of the place is still on the road.
-  zu_chongzhi_jiankang:
-    name: Two bounds and a handy fraction
-    place: Jiankang, China
-    figure: Zu Chongzhi
-    story: The Treatise on Pitch and Calendar in the Book of Sui records Zu Chongzhi’s lower and upper bounds for π, equivalent to 3.1415926 and 3.1415927. It lists the close fraction 355/113 separately. The surviving record does not give the full computation that produced the bounds.
-    relic: A set of counting rods
-    relic_desc: A bundle of slim rods that are numbers when laid out.
-    points:
-      p1: Identify the upper and lower bounds on the copied table
-      p2: Stay to check the two bounds without losing the last place
-      p3: Teach the difference between a bound and a convenient fraction
-    vignettes:
-      compare: A copyist has pencilled the fraction into the box meant for the upper bound. You compare 355 with 113 times 3.1415927. The product falls just short of 355, so the fraction goes on a line of its own. You keep the check. The steps that led to the two bounds are beyond your visit.
-      digit: You know later readers will remember seven digits after the point, but the copyist is about to drop the last place of the lower bound. You mark where the two bounds first differ and have him read both again. You can copy the result. There is no time to reconstruct the calculation behind it.
-      ratio: 'You make three spaces on one slip: lower, upper and handy ratio. The copyist can place all three entries without overwriting any of them. You bring back the slip. The complete calculation is still a blank in your notes.'
   aryabhata_patna:
     name: The circle in three steps
     place: Kusumapura, India
@@ -3566,48 +3481,6 @@ catalog:
       nickname: You hear someone use a name from the tale and look around for the wrong person. The attendant catches your mistake and asks whether you have been listening in the doorway again.
       voice: You notice the attendant changes her voice when she reads a letter in the story. You ask her to read the same line plainly. It sounds less certain the second time.
       return: A page gets passed to you halfway through the reading. You keep your finger where she stopped so nobody has to guess where the story should resume.
-  su_song_kaifeng:
-    name: A great water-driven clock tower
-    place: Kaifeng, China
-    figure: Su Song
-    story: Su Song's illustrated treatise describes a water-driven tower with astronomical instruments and figures that announce time.
-    relic: A gear tooth
-    relic_desc: One bronze tooth of a gear as tall as a person.
-    points:
-      p1: Help Su Song and Han Gonglian write down, piece by piece, how the wooden model is made, so that later craftsmen could build another from it
-    points_fail:
-      p1: As in history the tower is carried off after 1127, and when the court sends for Su Song's son and his father's papers, he cannot make sense of them; in this branch too nobody can build it again.
-    shift:
-      p1:
-        was: After the Jingkang disaster of 1127 the instruments went to the Jin; when the Southern Song court sent for Su Song's son Su Xie and his father's papers to study the old method, Su Xie could not understand it either.
-        now: After the court moved south, craftsmen worked from the written method and built a water-driven armillary tower again.
-        who: su_song_kaifeng
-        bio: In this timeline Su Song and Han Gonglian left an account that craftsmen could build from, and the tower was made again after the move south.
-    vignettes:
-      listen: You stand beyond the door where the figures cannot be seen. The keeper strikes two practice signals. You repeat them in order and he checks them against their labels.
-      layers: The keeper points to one figure but describes the one above it. You trace each storey on the drawing and ask him to assign one sound to each line before the next demonstration.
-      marker: You put a marker outside the model where visitors should stand. The next pair can see the doors open without blocking the keeper's own view.
-  shen_kuo_runzhou:
-    name: A notebook of everything he saw
-    place: Runzhou, China
-    figure: Shen Kuo
-    story: In Dream Pool Essays Shen Kuo records that the south-seeking end of a magnetized needle points slightly east of due south.
-    relic: A magnetised needle
-    relic_desc: A needle that finds the same direction every time.
-    points:
-      p1: Before he presents the map of the empire to the court, help him draw a second set and keep it in his own hands
-    points_fail:
-      p1: As in history the map goes to the court and is lost after the Yuan; in this branch he keeps no copy of his own.
-    shift:
-      p1:
-        was: '1088: Shen Kuo presented the map of the prefectures and counties he had been ordered to make in 1077, and was allowed to move about freely; the map was lost after the Yuan dynasty.'
-        now: A second set of the map stayed with him and went with him to the Dream Brook garden at Runzhou.
-        who: shen_kuo_runzhou
-        bio: In this timeline Shen Kuo kept a copy of his map of the empire when he presented it, and took it with him to Dream Brook.
-    vignettes:
-      directions: You ask the reader which line is due south. He has drawn just one. You add a second line on the paper, and the small angle the passage describes becomes visible.
-      ends: The reader turns the paper over to show you the drawing and swaps the two ends as he retells it. You label the south-seeking tip before he copies it into the notebook.
-      copy: You ask the reader to keep the word slightly in the caption. The drawing takes up a whole page; the difference described in the book need not.
   angkor_wat:
     name: The path marked on two sheets
     place: Angkor, Cambodia
@@ -5483,20 +5356,35 @@ catalog:
       lamp: '{staff} sits on a stone by the road with a lamp shaded against the wind. Footsteps come down from the slope long after the third watch; {staff} turns the lamp towards the path and says nothing.'
       ferry: '{staff} helps a boatman, made up for the game, coil the rope at the landing. He says the water under the cliff is slow on a still night, and that the guests always ask for the far side.'
   cao_xueqin_beijing:
-    name: A novel left at eighty chapters
+    name: The blank after the last chapter
     place: Western Hills, Beijing
     figure: Cao Xueqin
-    story: An early annotated text of The Story of the Stone names Cao Xueqin in its opening and describes repeated revision within the novel's frame. The setting uses 1763 without treating the book's self-description as a dated biography.
-    relic: A hand copied chapter
-    relic_desc: A chapter copied by friends, with comments in red ink in the margin.
+    story: An early manuscript of The Story of the Stone attests that annotated copies circulated during Cao Xueqin's lifetime. One later marginal note in that manuscript associates Cao's death with a book left unfinished. The scenario is set in his last winter without fixing the exact date of his death or the number of chapters he wrote.
+    relic: A loose sheet of chapter plans
+    relic_desc: A game keepsake with a proposed order for several chapters and blank space for what Cao had yet to decide.
     points:
-      p1: Identify a voice inside the framing story
-      p2: Keep a comment next to the line it discusses
-      p3: Restore the order of two loose pages
+      p1: Keep the early annotated copy in the copyist's hands while Cao's working pages are returned to him
+      p2: See to the fire and the copying so Cao can spend one good evening thinking through the ending
+      p3: While Cao still has strength to review it, leave a separate copy of the chapter plan he agrees to pass on
+    points_fail:
+      p1: The only copy at this table goes back into the pile of working pages. In this branch the reader leaves without the annotated text.
+      p2: The room grows cold before the papers are ready. The work waits for another evening.
+      p3: The copyist can arrange the loose pages, but has no record of which ending Cao meant to leave.
+    shift:
+      p1:
+        was: The Jiaxu manuscript preserves notes on an early text that was being copied during Cao Xueqin's lifetime.
+      p2:
+        was: A marginal note in the Jiaxu manuscript remembers Cao's death and says the book was left unfinished.
+        now: In this branch someone tends the fire and brings the pages one at a time. Cao gets one evening to work out where he wants the story to go.
+      p3:
+        was: The Jiaxu marginal note calls the book unfinished and gives no final chapter plan approved by Cao.
+        now: The copyist takes away two sheets. One gives the order Cao has approved in this branch. The other lists the fates he has yet to decide. In the next copying the two sheets stay together.
+        who: cao_xueqin_beijing
+        bio: Before his death, Cao reviews a chapter plan with a copyist. In this branch later readers can see which decisions he made and where he left the ending open.
     vignettes:
-      stone: You ask whether the stone could name its own copyist. The copyist lifts the first sheet and reads how the story introduces itself. You put the stone under story and the copying question on another slip.
-      margin: Two hands have left marks beside the same passage. You ask the copyist to leave room between the commentary and the line it comments on. The next copy still shows both.
-      loose: You pick up a loose page by the blank edge and read its first few characters aloud. The copyist finds the matching catch in the pile and puts the leaf back.
+      ink: The copyist sets a slip between the proposed chapter order and a reader's pencilled guess. The pages can now be put back in the right places.
+      paper: '{staff} carries in the lamp. The copyist lifts the manuscript away from the edge of the table to make room.'
+      empty: The last sheet has room for another heading. The copyist leaves the space as it is.
   tang_xianzu_linchuan:
     name: A play on love beyond death
     place: Linchuan
@@ -5548,35 +5436,35 @@ catalog:
       later: You know later readers will see the work as a whole. The copyist cannot tell which part of his practice sheet is finished today. Together you fold a narrow slip around the one row that still needs checking. It will open first for the next reader. You leave before another register arrives.
       fold: You copy the name and its line number together, then leave an empty space above. The copyist can see that you meant to leave it. You take one copy back. Someone else will have to decide what belongs there.
   xu_xiake_lijiang:
-    name: The direction of the view
+    name: The path he did not have time to climb
     place: Lijiang
     figure: Xu Xiake
-    story: Xu Xiake’s Travel Diaries describe Jietuo Lin on a slope during his 1639 stay in Lijiang, noting how the site faces the landscape.
-    relic: A travel notebook
-    relic_desc: Pages of dense notes on caves, rivers and rocks, written at the end of each day.
+    story: In the second lunar month of 1639, Xu Xiake stayed at Jietuo Lin in Lijiang, collating books for Mu Zeng, who sent him food and later gifts in thanks. Xu heard that Gongshou Terrace and Lion Cliff lay above the monastery. He wrote that the pressure of the work left him no time to climb either one.
+    relic: A route sketch from Jietuo Lin
+    relic_desc: A game keepsake with a line for the way walked and blank space for the walks still to come.
     points:
-      p1: Return the books Xu checked for Mu Zeng volume by volume so the request to continue the Gazetteer of Mount Ji can be handed over as recorded
-      p2: Keep travel observations in the route book. Return the notes on the work he checked and ask each custodian to verify their papers
-      p3: Before leaving Lijiang, have local readers check several place names and keep a marked copy on each side
+      p1: Help finish the collating and return the volumes so Mu Zeng can send his thanks and his request for the Gazetteer of Mount Ji
+      p2: Free up half a day, find a local guide and an escort, and walk from Jietuo Lin to Gongshou Terrace with Xu
+      p3: Walk the fork below Lion Cliff with Xu and leave a copy of the new route notes with the monastery
     points_fail:
       p1: The returned volumes lack receipts. The messenger cannot confirm the earlier work was done, the handover is missed, and the office recalls the employee.
-      p2: Material borrowed for the gazetteer is mixed with the diary and copied later as a firsthand observation.
-      p3: The only notebook leaves with Xu. A name changes in a later copy and nobody there has a chance to check it.
+      p2: The day's copying fills the afternoon. Gongshou Terrace stays in the diary as a place Xu heard about.
+      p3: Xu leaves Lijiang without a route from his own steps to set down beside the directions he heard.
     shift:
       p1:
-        was: The Yunnan travel diary records that Mu Zeng sent thanks for editorial work and wrote again asking Xu to compile the gazetteer.
+        was: On the ninth day of the second lunar month in 1639, Mu Zeng sent gifts in thanks for the collating and again asked Xu to compile the Gazetteer of Mount Ji.
       p2:
-        was: Xu recorded observations around Lijiang and also edited papers for Mu Zeng.
-        now: The route book identifies places Xu visited. The returned sheets show which passages he checked.
+        was: On the sixth day of the second lunar month in 1639, Xu wrote that he had been too busy collating to climb to Gongshou Terrace or Lion Cliff.
+        now: In this branch, the collation is done and the guide and escort wait at the monastery. Xu climbs to the terrace on foot and writes down where the slope first gives way to a view.
       p3:
-        was: The travel diaries reached later readers through manuscripts and printed editions. Original notes are missing for parts of the Yunnan journey.
-        now: A local copy is checked against familiar names, and the travel book carries the same corrections. Later copyists have two records to compare.
+        was: In 1639, the Lijiang diary mentioned Lion Cliff as somewhere Xu heard lay higher up and had no time to climb.
+        now: The way back was longer than the directions made it sound. Xu walks the fork again, marks where the path doubles back, and leaves a copy of the route at the monastery before taking the other copy home.
         who: xu_xiake_lijiang
-        bio: Xu left firsthand notes on his stay in Lijiang and also worked on papers for Mu Zeng. Later editors transmitted his travel diary.
+        bio: Xu's Lijiang diary carries an extra firsthand entry between the collation and his departure. A second copy of his sketch stays with Jietuo Lin.
     vignettes:
-      view: The guide turns the east-facing view into an arrow for where you walked. You draw the place where your feet stopped, then add a short line for what you could see from it. He keeps both marks. By the time you return downhill, the view itself is out of sight.
-      trail: At Jietuo Lin the guide tells you about a distant mountain called Gugang. You recall that Xu also described learning about it from a wall picture here. On the sheet you distinguish a place drawn on the wall from a stretch you have actually walked. When you leave, the path to Gugang is still only a question in the margin.
-      slope: You copy the location before copying what faces it. On one slip there is a point on the slope and an arrow that begins at the point. It is enough to reconstruct what you meant. Beyond that arrow the diary goes on without you.
+      view: The guide describes a bend by the mountain it faces. {staff} asks him how many turns there are before it. The view and the way to get there go on different lines.
+      trail: At Jietuo Lin the attendant sees the escort waiting by the steps and sets aside a bundle of dry cloth. There is still wet ink on the sheets Xu is due to return.
+      slope: At the monastery steps {staff} pulls out a fresh leaf. The dispatch for Mu Zeng goes back in its box. The blank leaf is for the route.
   song_yingxing_fengxin:
     name: A book of how things are made
     place: Jiangxi
@@ -5668,21 +5556,6 @@ catalog:
       notice: Ajin heard there was a volume and has written it under items received. You ask her to touch the shelf where it would go. She moves the line to a report column, leaves the space on the shelf empty and keeps the source of the report beside it.
       shift: Achang wants to close the book before calling the next keeper. You ask him to read the entries aloud one time. When he reaches the unwitnessed delivery, they agree to leave that line waiting. The next keeper can see what has yet to be confirmed.
       later: You know a historian will tell a story about a book. Ajin wants to know if a real volume has come through this room. You show her where a confirmed delivery would be written. The page leaves her desk with that place still open.
-  bi_sheng_printer:
-    name: Type made of clay
-    place: Hangzhou
-    figure: Bi Sheng
-    story: Shen Kuo's Dream Pool Essays describes Bi Sheng making individual clay types during the Qingli era, 1041–1048, and keeping unused types by rhyme.
-    relic: A clay type character
-    relic_desc: A small baked piece with one reversed character.
-    points:
-      p1: Pick out a piece with the wrong face
-      p2: Return the types to their rhyme groups
-      p3: Set aside enough repeated characters before composing the line
-    vignettes:
-      rhyme: A type is going back under the wrong rhyme. You read the word aloud, and the helper shifts the label before another handful follows it.
-      surface: The helper blames the ink for a pale mark. You hold the proof at eye level and ask which letters stood even with their neighbours.
-      duplicates: You count how often one word comes up in a trial line. When the tray runs short, the helper finally understands why there are several pieces for the same character.
   miyazawa_kenji_hanamaki:
     name: Stories few had read
     place: Hanamaki
@@ -6305,21 +6178,6 @@ catalog:
       orientation: The helper turns the plain practice board and mistakes the second sketch for the first. You put a small arrow on the paper before comparing either sketch. The two marks can be reviewed in their proper orientation. You keep the exercise; it gives you no reading of an inscription.
       label: You know later people will ask how the surviving objects were oriented. The helper tells you which position he drew from. You keep his description apart from your drawing. When you leave, the placement is clear and nothing has been guessed about what the signs mean.
       copies: You mark the upper edge on both slips before they are put together. The helper turns them back the way you saw them. You bring home two study views. The writing that inspired the exercise stays beyond the page.
-  dunhuang_library_cave:
-    name: A loose slip for two kinds of scroll
-    place: Mogao Caves
-    figure: Dunhuang monks
-    story: Mogao Cave 17 held manuscripts, printed works and paintings. One of the printed objects found there is the Diamond Sutra dated 868 in its colophon. The date marks the production of the scroll, and does not establish the reason or exact year the cave was closed.
-    relic: A scroll
-    relic_desc: A rolled sheet of paper with a sutra copied in a steady hand.
-    points:
-      p1: Give each practice bundle its own removable label
-      p2: Check the dated colophon before naming a year on the label
-      p3: Keep the copy of the label with the bundle during handover
-    vignettes:
-      date: The bundle keeper puts the date on a slip marked ‘when put away’. You ask to see where the date actually appears. The year comes from a printed scroll’s closing line. He moves that number to the line for the object. There is still no date for the closing of the room.
-      types: You know that people will find both handwriting and printing in this cave. The keeper has called both practice rolls ‘copies’. You make him a pair of removable slips, one for each kind of mark. When you leave, the bundles are still waiting to be put away.
-      twine: You let the keeper finish tying the bundles and copy the slips on a spare sheet. The two copies identify different rolls. In your report there is a line for what you saw and a blank for why the room was closed.
   nalanda_library:
     name: A leaf number for the next lesson
     place: Nalanda
@@ -6465,46 +6323,6 @@ catalog:
       rotate: Two learners have copied the same board from opposite sides. You mark the bottom before comparing their sheets. The earth and human groups exchange places on one copy. You keep the corrected diagram. The long elimination is still ahead of them.
       hand: You ask why the learner has put all four names in one line. He says he can remember the names that way. You keep his line but place four markers around a centre so he can also recover the layout. By the time he clears the board, you have seen how to begin, and not how his exercise ends.
       outline: Before the counters go back into their box, you draw four short lines around the centre and note which end is the bottom. You can reproduce the arrangement when you get home. You leave the larger calculation on the learner’s board.
-  xuanzang_changan:
-    name: Six hundred texts from the west
-    place: Chang'an
-    figure: Xuanzang
-    story: Xuanzang's early biography places his return to the capital in 645 and lists 657 works carried in 520 bundles.
-    relic: A palm leaf from a sutra
-    relic_desc: A palm leaf written in Sanskrit, its edges gone dark.
-    points:
-      p1: When the scriptures and images he brought back are carried into the capital through the crowds, keep them safe all the way into Hongfu Monastery
-      p2: Heal the illness he brought back from the long road, so it no longer goes with him
-    points_fail:
-      p1: The crowd pressed in and the bundles were scattered and trampled on the way, and they did not reach Hongfu Monastery as recorded. This branch came loose from history, and the office recalled the employee.
-      p2: The illness stayed with him as in history. In this branch nobody cured it after he came home.
-    shift:
-      p1:
-        was: In the first month of 645 the scriptures and images Xuanzang brought back were carried to Hongfu Monastery; the crowds were so thick that the officials, fearing people would trample one another, ordered everyone to burn incense and scatter flowers where they stood and not to move.
-      p2:
-        was: In the second month of 645 Xuanzang met Emperor Taizong at Luoyang, and declined to go east with the court, saying he had come a long way and was also ill.
-        now: The illness left him that spring, and he sat down to the translation at Hongfu lighter in body.
-        who: xuanzang_changan
-        bio: In this line Xuanzang was cured of the illness he brought back in 645, and began the translation at Hongfu in better health.
-    vignettes:
-      totals: The clerk has carried the bundle total into the column for works. You point to the unit before they seal the new copy. The discrepancy disappears without a single bundle changing hands.
-      names: Two slips carry titles that look alike to you. The clerk reads them back and has you copy the distinguishing characters before the bundles are carried away.
-      space: You clear room for the clerk to lay out one bundle at a time. The person carrying the last stack can set it down without covering the checklist.
-  jia_sixie_gaoyang:
-    name: A note for the high field and the low one
-    place: Gaoyang, Shandong
-    figure: Jia Sixie
-    story: In the first volume of Qimin Yaoshu, Jia Sixie discusses ploughing on high and low ground and stresses working at suitable soil moisture. The visit year is an approximate setting for the compilation.
-    relic: A farming book scroll
-    relic_desc: A hand copied scroll of farming methods, with notes in the margin made out in the fields.
-    points:
-      p1: Read the ground separately in the two fields
-      p2: Walk out to the lower field before the plough is moved
-      p3: Get the farm hand to record a second observation beside the first
-    vignettes:
-      moisture: The farm hand has made one mark on the board for both plots. You walk the bank and hold up two different clods, one sticking to your fingers, one falling apart. He records one observation per plot. You carry that pair back. The crop will ripen after you have left.
-      timing: You know later readers will copy out the rule about moisture. The farm hand asks which patch you mean when you say the ground is ready. You draw a line down the middle of his board and point to the higher plot first. Only one row is filled when you leave.
-      bank: You carry the board to the edge of the lower field. The farm hand writes the name of the plot before adding what he sees. You copy the location beside his mark. When the plough finally reaches the other field you are already gone.
   qin_jiushao_huzhou:
     name: The answer must pass both rows
     place: Huzhou
@@ -6571,21 +6389,34 @@ catalog:
       cloth: Mira is about to put the rougher piece in the scrap pile. You show her where Ananda marked his first try. She compares the marks with the piece he made later and leaves both on the bench. Ananda can now point to the one difference he worked on.
       turn: Ananda keeps explaining his own cloth while Mira waits to touch it. You put both pieces on the table where she can reach them and ask him to let her point first. Her question is about a part he had skipped. They keep the piece at the bench for the next learner.
       text: You know later readers will find a chapter about practice models. Mira only has a piece of cloth and a small mark she cannot place. You listen while she finds the earlier piece for herself. By the time the next lesson starts, you have already left.
-  zhuge_liang_longzhong:
-    name: Three visits to the thatched cottage
-    place: Longzhong area
+  zhuge_liang_wuzhang:
+    name: An answer before the lamp goes out
+    place: Wuzhang Plains
     figure: Zhuge Liang
-    story: Chen Shou's biography says Zhuge Liang worked his own fields and liked to sing the Song of Liangfu. Xu Shu told Liu Bei that this was a man one goes to see and cannot summon. Liu Bei went three times before he met him, and when they met he sent the others out of the room before he spoke. A different account, quoted in Pei Songzhi's notes, has Zhuge Liang seek Liu Bei out first. The trip uses the first account and the conventional year 207 for its setting.
-    relic: A sheet with a tune noted on it
-    relic_desc: A keepsake made up for the game, the tune of a slow song noted down at the edge of a field, with half the words missing.
+    story: In 234 Zhuge Liang fell ill and died with the army at Wuzhang Plains, his last campaign unfinished. He had privately recommended Jiang Wan to the emperor as his successor. Jiang was appointed after Zhuge Liang died. The record does not say that Zhuge Liang lived to see a reply.
+    relic: A scribe's unused tally
+    relic_desc: A game keepsake. The tally has one space for the outgoing letter and one for the reply.
     points:
-      p1: Find a place in Longzhong and work in the fields until the third visit
-      p2: Hear the song across the field and note the tune
-      p3: When the guest asks the others to leave, go out and wait until the door opens again
+      p1: Help the scribe keep the written recommendation with the letters going to Chengdu
+      p2: Have routine papers held at the desk and give the sick man an afternoon to rest
+      p3: Put Jiang Wan's acknowledgment in Zhuge Liang's hands while he can still read it
+    points_fail:
+      p1: In this branch the recommendation is misfiled and misses the regular dispatch. The court has to wait for it.
+      p2: Even in the sickroom, routine papers keep arriving at his bedside.
+      p3: By the time the answer arrives, there is nobody left to read it.
+    shift:
+      p1:
+        was: The biography records Zhuge Liang's private recommendation to the emperor without describing how a reply would have reached the camp.
+      p2:
+        was: Zhuge Liang fell ill and died with the army.
+        now: The routine papers wait at the desk and the sickroom stays quiet for one afternoon.
+      p3:
+        was: Jiang Wan took office after Zhuge Liang's death. The biographies do not record an acknowledgment reaching the camp during his life.
+        now: In this branch, Chengdu sends a private acknowledgment early. Zhuge Liang reads that Jiang Wan has agreed to take over. After his death, Jiang still takes office.
     vignettes:
-      future_novel: You ask the neighbour who works the next field, a man made up for the game, whether the one in the cottage will some day borrow arrows under cover of a river fog. He straightens his back. “He has not so much as a boat. Where did you hear that?” In your report you mark the arrows as an episode from a much later novel.
-      door: The guest comes a third time, and once inside he asks the others to leave. You and the neighbour go out beyond the fence. You do not hear a word of what is said behind the door. The books have it, later.
-      song: Someone is singing at the far end of the field, a slow tune. The neighbour says the man often sings that one, the Song of Liangfu. You note the tune down and do not get all the words.
+      bowl: The attendant changes the bowl of water at the bedside. The water from the last visit is still warm.
+      register: The scribe leaves the return column empty. The date can go in when something arrives.
+      empty: '{staff} lays the closed register beside the lamp, within reach of the bed.'
   borobudur_java:
     name: From squares to circles
     place: Java

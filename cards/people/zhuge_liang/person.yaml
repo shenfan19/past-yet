@@ -1,139 +1,143 @@
 order: 233
 events:
-  zhuge_liang_longzhong:
+  zhuge_liang_wuzhang:
     order: 206
-    build_step: 1
-    year: 207
-    lon: 112.01
-    lat: 31.98
+    build_step: 2
+    year: 234
+    lon: 107.62
+    lat: 34.31
     region: asia
     home: [china]
-    field: literature
+    field: history
     tier: 1
-    channels: {}
+    stay: 1
+    channels: {G: 1}
     draft: true
-    refs: [sanguozhi_zhuge, chushi_biao, sanguo_yanyi_arrows]
+    refs: [sanguozhi_zhuge, sanguozhi_jiang_wan]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {any: [{trait: [hardy, patient]}, {stat: {constitution: 4}}]}}
-        - {id: p2, kind: notice, req: {any: [{trait: [curious, artistic]}, {stat: {wit: 5}}]}}
-        - {id: p3, kind: hold, req: {any: [{trait: [patient, faithful, quiet]}, {stat: {will: 6}}]}}
+        - {id: p1, kind: trust, guard: true, day: 7, req: {any: [{job: [archivist, courier]}, {stat: {will: 5}}]}}
+        - {id: p2, kind: care, day: 10, req: {any: [{job: [doctor, nurse, caregiver]}, {trait: [kind], stat: {constitution: 5}}]}}
+        - {id: p3, kind: hold, day: 18, req: {any: [{job: [archivist, courier, translator], stat: {wit: 5}}, {stat: {will: 7, finesse: 6}}]}}
       vignettes:
-        - {id: future_novel, traits: [bold, curious]}
-        - {id: door, traits: [patient, faithful, quiet]}
-        - {id: song}
+        - {id: bowl, traits: [kind, quiet], day: 2}
+        - {id: register, traits: [methodical, scholarly], day: 7}
+        - {id: empty, day: 16}
     text:
       en:
-        name: Three visits to the thatched cottage
-        place: Longzhong area
+        name: An answer before the lamp goes out
+        place: Wuzhang Plains
         figure: Zhuge Liang
-        story: Chen Shou's biography says Zhuge Liang worked his own fields and liked to sing the Song of Liangfu. Xu Shu told Liu Bei that this was a man one goes to see and cannot summon. Liu Bei went three times before he met him, and when they met he sent the others out of the room before he spoke. A different account, quoted in Pei Songzhi's notes, has Zhuge Liang seek Liu Bei out first. The trip uses the first account and the conventional year 207 for its setting.
-        relic: A sheet with a tune noted on it
-        relic_desc: A keepsake made up for the game, the tune of a slow song noted down at the edge of a field, with half the words missing.
+        story: In 234 Zhuge Liang fell ill and died with the army at Wuzhang Plains, his last campaign unfinished. He had privately recommended Jiang Wan to the emperor as his successor. Jiang was appointed after Zhuge Liang died. The record does not say that Zhuge Liang lived to see a reply.
+        relic: A scribe's unused tally
+        relic_desc: A game keepsake. The tally has one space for the outgoing letter and one for the reply.
         points:
-          p1: Find a place in Longzhong and work in the fields until the third visit
-          p2: Hear the song across the field and note the tune
-          p3: When the guest asks the others to leave, go out and wait until the door opens again
+          p1: Help the scribe keep the written recommendation with the letters going to Chengdu
+          p2: Have routine papers held at the desk and give the sick man an afternoon to rest
+          p3: Put Jiang Wan's acknowledgment in Zhuge Liang's hands while he can still read it
+        points_fail:
+          p1: In this branch the recommendation is misfiled and misses the regular dispatch. The court has to wait for it.
+          p2: Even in the sickroom, routine papers keep arriving at his bedside.
+          p3: By the time the answer arrives, there is nobody left to read it.
+        shift:
+          p1:
+            was: The biography records Zhuge Liang's private recommendation to the emperor without describing how a reply would have reached the camp.
+          p2:
+            was: Zhuge Liang fell ill and died with the army.
+            now: The routine papers wait at the desk and the sickroom stays quiet for one afternoon.
+          p3:
+            was: Jiang Wan took office after Zhuge Liang's death. The biographies do not record an acknowledgment reaching the camp during his life.
+            now: In this branch, Chengdu sends a private acknowledgment early. Zhuge Liang reads that Jiang Wan has agreed to take over. After his death, Jiang still takes office.
         vignettes:
-          future_novel: 'You ask the neighbour who works the next field, a man made up for the game, whether the one in the cottage will some day borrow arrows under cover of a river fog. He straightens his back. “He has not so much as a boat. Where did you hear that?” In your report you mark the arrows as an episode from a much later novel.'
-          door: 'The guest comes a third time, and once inside he asks the others to leave. You and the neighbour go out beyond the fence. You do not hear a word of what is said behind the door. The books have it, later.'
-          song: 'Someone is singing at the far end of the field, a slow tune. The neighbour says the man often sings that one, the Song of Liangfu. You note the tune down and do not get all the words.'
+          bowl: The attendant changes the bowl of water at the bedside. The water from the last visit is still warm.
+          register: The scribe leaves the return column empty. The date can go in when something arrives.
+          empty: '{staff} lays the closed register beside the lamp, within reach of the bed.'
       zh:
-        name: 草庐三访
-        place: 隆中一带
+        name: 灯灭以前的一封回信
+        place: 五丈原
         figure: 诸葛亮
-        story: 《三国志·诸葛亮传》记诸葛亮躬耕陇亩，好为《梁父吟》。徐庶对刘备说，此人可就见，不可屈致。刘备三次前往才见到他，见面时先屏退旁人，然后开口。裴松之注另引《魏略》，记的是诸葛亮先去见刘备。
-        relic: 一页记着调子的纸
-        relic_desc: 田边记下的一支慢歌的调子，词缺了一半。
+        story: 建兴十二年，诸葛亮在五丈原患病，北伐未竟，病逝军中。他曾密表后主，建议由蒋琬接手。蒋琬在他死后受任。史书没有记载诸葛亮生前是否收到回音。
+        relic: 一枚没填完的信牍
+        relic_desc: 游戏中的纪念物。木牍上划了两格，一格记去信，一格记回音。
         points:
-          p1: 在隆中落脚，下田干活，等到第三次来访
-          p2: 听见田那头的歌，把调子记下来
-          p3: 客人请旁人退出时，退到门外，守到门再打开
+          p1: 帮书佐把密表归到送往成都的文书里，赶上这班信使
+          p2: 请书佐暂缓送进例行文书，照料病中的诸葛亮，让他安静歇一下午
+          p3: 趁诸葛亮还看得清字，把蒋琬愿意接手的回信交到他手上
+        points_fail:
+          p1: 这条分支里密表搁错了地方，误了这班信使。朝廷要等下一班才能收到。
+          p2: 日常文书照样一摞摞送到病榻边。
+          p3: 回信送到时，等它的人已经不在了。
+        shift:
+          p1:
+            was: 本传记下了诸葛亮密表后主，回程文书如何收领未见记载。
+          p2:
+            was: 诸葛亮在军中病逝。
+            now: 例行文书暂放在案上，病榻边安静了一个下午。
+          p3:
+            was: 蒋琬在诸葛亮死后受任，两篇本传都未记载诸葛亮生前收到答复。
+            now: 这条分支里，成都提前回了私信。诸葛亮亲眼看到蒋琬愿意接手。他死后，蒋琬仍受任。
         vignettes:
-          future_novel: '你问一同下田的邻人，草庐里那位将来会不会趁江上起雾去借箭。这位邻人是游戏里编出来的。他直起腰：「他连船都没有。你上哪儿听来的？」你在归来报告里把借箭那段另标为后世小说的情节。'
-          door: '客人第三次来，进门后请旁人都出去。你和邻人退到篱笆外。门里说了什么，你一句也没听见，后来的书上记着。'
-          song: '田那头有人唱歌，调子很慢。邻人说，那位常唱这个，叫《梁父吟》。你把调子记了下来，词没有记全。'
+          bowl: 侍从来换榻边一碗清水，上一碗还温着。
+          register: 书佐把回文那一栏空着，等有信来再补日期。
+          empty: '{staff}把合上的收文簿搁到灯边，榻上伸手能够着。'
 text:
   en:
     name: Zhuge Liang
-    text: An adviser to Liu Bei who later served as chancellor of Shu Han. His biography in the Records of the Three Kingdoms says he worked his own fields at Longzhong and liked to sing the Song of Liangfu, and both the biography and his own memorial preserve the account of Liu Bei's three visits. The story of Zhuge Liang borrowing arrows with straw boats belongs to chapter 46 of Romance of the Three Kingdoms.
+    text: Chancellor of Shu Han. Chen Shou records his last campaign at Wuzhang Plains and his death with the army. The biography of Jiang Wan records the private recommendation and the appointment that followed.
   zh:
     name: 诸葛亮
-    text: 刘备的谋臣，后来任蜀汉丞相。陈寿《三国志》记他在隆中躬耕陇亩，好为《梁父吟》，《三国志》和他自己的《前出师表》都留下了三顾的说法。诸葛亮草船借箭是《三国演义》第四十六回的情节。
-hook: {en: 'Three visits, and then the door is shut', zh: 三次来访，然后门关上了}
+    text: 蜀汉丞相。陈寿《三国志》记他最后一次北伐驻五丈原，患病而卒于军。《蒋琬传》另载他密表推荐蒋琬，以及蒋琬在他死后受任。
+hook: {en: 'Will the answer reach him before he dies?', zh: '成都的回信赶得上吗'}
 facts:
-  visits:
-    date: '207'
+  death:
+    date: '234'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [sanguozhi_zhuge, chushi_biao]
-    note: The date is the conventional scenario year. The memorial is Zhuge Liang's own official account, preserved by Chen Shou. The two texts need not be independent. Pei Songzhi preserves a competing account.
-    text:
-      en: Chen Shou describes Liu Bei going three times, and Zhuge Liang's earlier memorial also mentions three visits.
-      zh: 陈寿记刘备三往乃见，诸葛亮此前的《前出师表》也写到三顾。
-  farming:
-    date: '207'
-    checked: official_record
-    level: usable
-    use: [story, wiki]
-    sources: [sanguozhi_zhuge, chushi_biao]
-    note: A habit, with no date of its own. The memorial says he ploughed his own land at Nanyang.
-    text:
-      en: Chen Shou writes that Zhuge Liang worked his own fields and liked to sing the Song of Liangfu.
-      zh: 陈寿记诸葛亮躬耕陇亩，好为《梁父吟》。
-  recommended:
-    date: '207'
-    checked: official_record
-    level: usable
-    use: [story]
+    use: [history, story, wiki]
     sources: [sanguozhi_zhuge]
-    text:
-      en: Xu Shu tells Liu Bei that Zhuge Liang is a man one goes to see and cannot summon, and that the general should call on him in person.
-      zh: 徐庶对刘备说，此人可就见，不可屈致，将军宜枉驾顾之。
-  screened:
-    date: '207'
+    text: {en: 'Zhuge Liang fell ill and died with the army at Wuzhang Plains during his last campaign.', zh: '诸葛亮最后一次北伐驻五丈原，患病而卒于军。'}
+  recommendation:
+    date: '234'
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [sanguozhi_jiang_wan]
+    note: 'The biography gives the order of events but does not date the recommendation precisely.'
+    text: {en: 'Zhuge Liang privately asked the emperor to entrust affairs to Jiang Wan if he died.', zh: '诸葛亮曾密表后主，建议自己若有不测，由蒋琬接手。'}
+  appointment:
+    date: '234'
     checked: official_record
     level: usable
-    use: [story]
-    sources: [sanguozhi_zhuge]
-    text:
-      en: When Liu Bei at last meets Zhuge Liang, he sends the others away before he asks his question.
-      zh: 刘备见到诸葛亮后，先屏退旁人，然后发问。
+    use: [history, story, wiki]
+    sources: [sanguozhi_jiang_wan]
+    text: {en: 'After Zhuge Liang died, Jiang Wan was appointed Director of the Imperial Secretariat.', zh: '诸葛亮死后，蒋琬被任为尚书令。'}
 bystanders:
-  longzhong_neighbour:
+  camp_scribe:
     invented: true
-    text: {en: 'A neighbour made up for the game, who works the next field and has no name.', zh: 游戏里编出来的一位邻人，种着旁边的田，没有名字。}
+    text: {en: 'A fictional camp scribe who receives letters and copies routine papers.', zh: '游戏虚构的一位军中书佐，负责收信和抄写日常文书。'}
+  attendant:
+    invented: true
+    text: {en: 'A fictional attendant who changes the water in the sickroom.', zh: '游戏虚构的一位侍从，给病榻边换水。'}
 wiki:
   refs:
     sanguozhi_zhuge:
       order: 112
       status: checked
       text:
-        en: 'Chen Shou, Records of the Three Kingdoms, vol. 35, Biography of Zhuge Liang, with Pei Songzhi’s annotations. https://zh.wikisource.org/wiki/三國志/卷35'
-        zh: '陈寿，《三国志》卷三十五《诸葛亮传》，含裴松之注。https://zh.wikisource.org/wiki/三國志/卷35'
-    chushi_biao:
+        en: 'Chen Shou, Records of the Three Kingdoms, vol. 35, Biography of Zhuge Liang. https://zh.wikisource.org/wiki/三國志/卷35'
+        zh: '陈寿，《三国志》卷三十五《诸葛亮传》。https://zh.wikisource.org/wiki/三國志/卷35'
+    sanguozhi_jiang_wan:
       order: 113
       status: checked
       text:
-        en: 'Zhuge Liang, First Memorial on Taking the Field, composed in 227 and preserved in Records of the Three Kingdoms, vol. 35. https://zh.wikisource.org/wiki/前出師表'
-        zh: '诸葛亮，《前出师表》，作于 227 年，载《三国志》卷三十五。https://zh.wikisource.org/wiki/前出師表'
-    sanguo_yanyi_arrows:
-      order: 114
-      status: checked
-      text:
-        en: 'Romance of the Three Kingdoms, chapter 46. Source for the novel episode. https://zh.wikisource.org/wiki/三國演義/第046回'
-        zh: '《三国演义》第四十六回。草船借箭的小说出处。https://zh.wikisource.org/wiki/三國演義/第046回'
+        en: 'Chen Shou, Records of the Three Kingdoms, vol. 44, Biography of Jiang Wan. https://zh.wikisource.org/wiki/三國志/卷44'
+        zh: '陈寿，《三国志》卷四十四《蒋琬传》。https://zh.wikisource.org/wiki/三國志/卷44'
 self_check:
-  quote_line: '门里说了什么，你一句也没听见，后来的书上记着。'
-  fact: screened
-  regret_choice: '抢着问后世小说里的借箭，就少了一次在田边听那支歌的机会。'
-  bookend: '开场在田里等人来，收尾在门外等门开。'
-  share_line: '他来了三次。第三次，我被请到了门外。'
-  share_number: '三次来访'
-  knowing: 'vignette future_novel: the arrows belong to a novel written more than a thousand years later'
-  near: 'point p2, fact farming: the song across the field'
-  lever: 'point p1: a season of work in the fields of Longzhong'
-  missed: 'point p3, fact screened: the talk behind the door'
-  brought: 'the sheet with the tune'
+  quote_line: '成都的回信赶得上吗？'
+  fact: appointment
+  regret_choice: '等朝廷正式任命已来不及。员工可以赶在病逝前让诸葛亮看到蒋琬愿意接手的回信。'
+  bookend: '开场给回信留一格，收尾看那一格有没有填上。'
+  share_line: '他没等到任命，可他看见了回信。'
+  share_number: '一格回音'
 pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

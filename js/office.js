@@ -21,7 +21,10 @@ export function createOffice(X) {
   // only one employee can be in a place at a time, the simulation cannot yet hold two travellers in one place
   const ST = D.get('config.stars');
   const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
-  const canDispatchTo = (id, light, auto = false) => (X.DEV && !auto) || (light ? X.anchored('relic_' + id) : X.eraOpen(id));
+  const canDispatchTo = (id, light, auto = false) => {
+    if (light && !D.get('catalog.active_events').some((e) => e.id === id)) return false;
+    return (X.DEV && !auto) || (light ? X.anchored('relic_' + id) : X.eraOpen(id));
+  };
 
   // What the secretary gives the agency, one thing from each trait: a share on the sale price, the mood growth or the rest, an attribute lent to every
   // traveller (the attribute of the secretary over attr_divisor, rounded), or a point of a story made sure, a guard point held or a fulfil point won.
@@ -315,7 +318,7 @@ export function createOffice(X) {
     const s = S();
     if (s.seq > 0 || !s.startRandom) return false;
     const out = new Set(s.startRandom);
-    const pool = D.get('catalog.events').filter((e) => !s.locks.includes('relic_' + e.id));
+    const pool = D.get('catalog.active_events').filter((e) => !s.locks.includes('relic_' + e.id));
     const next = [];
     for (let i = 0; i < O.start_scenes.random && pool.length; i++) next.push('relic_' + pool.splice(Math.floor(Math.random() * pool.length), 1)[0].id);
     s.locks = s.locks.filter((x) => !out.has(x)).concat(next);
@@ -732,7 +735,7 @@ export function createOffice(X) {
     if (s.funds < A.sell_spares_below) sellSpares();
     restock();
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
-    const stories = D.get('catalog.events').filter((e) => !e.era).map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
+    const stories = D.get('catalog.active_events').filter((e) => !e.era).map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
     // the automatic mode sends the paid staff only, never the test employees
     for (const staffId of paidIds()) {
       if (staffState(staffId) !== 'ready') continue;

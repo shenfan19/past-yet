@@ -14,6 +14,7 @@ periods:
     until: 3000
 events:
   - id: pythagoras_croton
+    deprecated: true
     build_step: 1
     year: -530
     lon: 17.12
@@ -59,6 +60,7 @@ events:
       - AI
       - Fan Shen
   - id: thales_miletus
+    deprecated: true
     build_step: 1
     year: -585
     lon: 27.28
@@ -191,6 +193,7 @@ events:
       - AI
       - Fan Shen
   - id: hippocrates_kos
+    deprecated: true
     build_step: 1
     year: -400
     lon: 27.09
@@ -248,6 +251,7 @@ events:
       - AI
       - Fan Shen
   - id: plato_academy
+    deprecated: true
     build_step: 1
     year: -387
     lon: 23.71
@@ -294,6 +298,7 @@ events:
       - AI
       - Fan Shen
   - id: aristotle_lyceum
+    deprecated: true
     build_step: 1
     year: -335
     lon: 23.75
@@ -584,6 +589,7 @@ events:
       - AI
       - Fan Shen
   - id: giotto_padua
+    deprecated: true
     build_step: 2
     year: 1305
     date: '1305-01-02'
@@ -1086,6 +1092,7 @@ events:
       - AI
       - Fan Shen
   - id: descartes_leiden
+    deprecated: true
     build_step: 2
     year: 1637
     date: '1637-05-03'
@@ -1398,6 +1405,7 @@ events:
       - AI
       - Fan Shen
   - id: kant_konigsberg
+    deprecated: true
     build_step: 2
     year: 1781
     date: '1781-04-20'
@@ -1465,6 +1473,7 @@ events:
       - AI
       - Fan Shen
   - id: mozart_prague
+    deprecated: true
     build_step: 2
     year: 1787
     date: '1787-10-05'
@@ -2461,6 +2470,7 @@ events:
       - AI
       - Fan Shen
   - id: marconi_bologna
+    deprecated: true
     build_step: 2
     year: 1895
     lon: 11.34
@@ -2512,6 +2522,7 @@ events:
       - AI
       - Fan Shen
   - id: imhotep_saqqara
+    deprecated: true
     build_step: 1
     year: -2650
     lon: 31.22
@@ -2962,6 +2973,7 @@ events:
       - AI
       - Fan Shen
   - id: house_of_wisdom
+    deprecated: true
     build_step: 1
     year: 830
     lon: 44.36
@@ -3385,102 +3397,8 @@ events:
     authors:
       - AI
       - Fan Shen
-  - id: laozi_hangu
-    build_step: 1
-    year: -500
-    lon: 110.5
-    lat: 34.6
-    region: asia
-    field: philosophy
-    tier: 2
-    channels:
-      A: 1
-      C: 1
-    refs:
-      - laozi_hangu_pass
-      - laozi_hangu_ox_story
-    scene:
-      points:
-        - id: p1
-          kind: trust
-          req:
-            trait:
-              - curious
-              - artistic
-        - id: p2
-          kind: notice
-          req:
-            provides: scout
-        - id: p3
-          kind: hold
-          req:
-            stat:
-              will: 6
-      vignettes:
-        - id: two
-          traits:
-            - curious
-            - methodical
-            - handy
-        - id: tie
-          traits:
-            - artistic
-            - patient
-            - quiet
-        - id: ox
-    authors:
-      - AI
-      - Fan Shen
-  - id: confucius_qufu
-    build_step: 1
-    year: -500
-    lon: 117
-    lat: 35.6
-    region: asia
-    field: philosophy
-    tier: 3
-    channels:
-      S: 1
-      'Y': 1
-    refs:
-      - confucius_qufu_corner
-    scene:
-      points:
-        - id: p1
-          kind: trust
-          req:
-            any:
-              - trait:
-                  - sensitive
-                  - kind
-                  - attached
-              - job:
-                  - teacher
-        - id: p2
-          kind: persuade
-          req:
-            provides: show
-        - id: p3
-          kind: endure
-          req:
-            stat:
-              constitution: 5
-      vignettes:
-        - id: corner
-          traits:
-            - kind
-            - sensitive
-            - patient
-        - id: explain
-          traits:
-            - curious
-            - methodical
-            - handy
-        - id: answer
-    authors:
-      - AI
-      - Fan Shen
   - id: buddha_sarnath
+    deprecated: true
     build_step: 1
     year: -528
     lon: 83.02
@@ -3529,161 +3447,8 @@ events:
     authors:
       - AI
       - Fan Shen
-  - id: cai_lun_luoyang
-    build_step: 2
-    year: 105
-    lon: 112.45
-    lat: 34.62
-    region: asia
-    field: technology
-    tier: 3
-    channels:
-      L: 2
-      H: 1
-    refs:
-      - cai_lun_luoyang_primary
-      - cai_lun_luoyang_later_han_volume78
-      - cai_lun_luoyang_early_paper
-    scene:
-      star_rules: 2
-      points:
-        - id: p1
-          kind: hold
-          guard: true
-          day: 19
-          req:
-            any:
-              - job:
-                  - carpenter
-                  - archivist
-              - trait:
-                  - handy
-                  - methodical
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 29
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                  - proofreader
-              - trait:
-                  - handy
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-      vignettes:
-        - id: light
-          traits:
-            - handy
-            - vigil
-        - id: ink
-          traits:
-            - curious
-            - skeptical
-        - id: tag
-    authors:
-      - AI
-      - Fan Shen
-  - id: zhang_heng_luoyang
-    build_step: 2
-    year: 132
-    lon: 112.46
-    lat: 34.62
-    region: asia
-    field: science
-    tier: 2
-    channels:
-      V: 1
-    refs:
-      - zhang_heng_luoyang_instrument
-      - zhang_heng_luoyang_han_text
-      - zhang_heng_luoyang_ihns_records
-    scene:
-      star_rules: 2
-      points:
-        - id: p1
-          kind: notice
-          day: 25
-          req:
-            any:
-              - job:
-                  - retired_engineer
-                  - mechanic
-                  - civil_engineer
-                  - electrician
-                  - pump_repairer
-                stat:
-                  wit: 5
-              - job:
-                  - architecture_intern
-                  - illustrator
-                stat:
-                  finesse: 5
-              - trait:
-                  - handy
-                  - methodical
-                stat:
-                  wit: 8
-      vignettes:
-        - id: register
-          traits:
-            - methodical
-            - scholarly
-        - id: later
-          traits:
-            - bold
-            - curious
-        - id: direction
-    authors:
-      - AI
-      - Fan Shen
-  - id: zu_chongzhi_jiankang
-    build_step: 1
-    year: 480
-    lon: 118.8
-    lat: 32.06
-    region: asia
-    field: math
-    tier: 2
-    channels:
-      V: 2
-    refs:
-      - zu_chongzhi_jiankang_bounds
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            stat:
-              wit: 8
-        - id: p2
-          kind: hold
-          req:
-            provides: vigil
-        - id: p3
-          kind: trust
-          req:
-            job:
-              - teacher
-      vignettes:
-        - id: compare
-          traits:
-            - methodical
-            - scholarly
-        - id: digit
-          traits:
-            - curious
-            - handy
-        - id: ratio
-    authors:
-      - AI
-      - Fan Shen
   - id: aryabhata_patna
+    deprecated: true
     build_step: 2
     year: 499
     lon: 85.14
@@ -3747,6 +3512,7 @@ events:
       - AI
       - Fan Shen
   - id: brahmagupta_bhillamala
+    deprecated: true
     build_step: 2
     year: 628
     lon: 72.27
@@ -3915,103 +3681,8 @@ events:
     authors:
       - AI
       - Fan Shen
-  - id: su_song_kaifeng
-    build_step: 2
-    year: 1088
-    lon: 114.35
-    lat: 34.8
-    region: asia
-    field: technology
-    tier: 2
-    channels:
-      L: 1
-    refs:
-      - su_song_kaifeng_primary
-      - su_song_kaifeng_first_volume
-      - su_song_kaifeng_song_history
-      - su_song_kaifeng_project_history
-    scene:
-      star_rules: 2
-      points:
-        - id: p1
-          kind: hold
-          day: 60
-          req:
-            any:
-              - job:
-                  - carpenter
-                  - mechanic
-                  - retired_engineer
-                  - civil_engineer
-                stat:
-                  wit: 6
-              - trait:
-                  - handy
-                  - methodical
-                stat:
-                  wit: 7
-                  finesse: 6
-      vignettes:
-        - id: listen
-          traits:
-            - quiet
-            - vigil
-        - id: layers
-          traits:
-            - handy
-            - methodical
-        - id: marker
-    authors:
-      - AI
-      - Fan Shen
-  - id: shen_kuo_runzhou
-    build_step: 2
-    year: 1088
-    lon: 119.45
-    lat: 32.2
-    region: asia
-    field: science
-    tier: 2
-    channels:
-      L: 1
-    refs:
-      - shen_kuo_runzhou_primary
-      - shen_kuo_runzhou_dream_brook_archive
-      - shen_kuo_runzhou_runzhou_context
-    scene:
-      star_rules: 2
-      points:
-        - id: p1
-          kind: hold
-          day: 60
-          req:
-            any:
-              - job:
-                  - archivist
-                  - illustrator
-                  - painter
-                stat:
-                  finesse: 6
-              - trait:
-                  - methodical
-                  - handy
-                stat:
-                  finesse: 8
-                  will: 5
-      vignettes:
-        - id: directions
-          traits:
-            - skeptical
-            - methodical
-        - id: ends
-          traits:
-            - handy
-            - vigil
-        - id: copy
-    authors:
-      - AI
-      - Fan Shen
   - id: angkor_wat
+    deprecated: true
     build_step: 1
     year: 1150
     lon: 103.87
@@ -4523,6 +4194,7 @@ events:
       - AI
       - Fan Shen
   - id: franklin_philadelphia
+    deprecated: true
     build_step: 2
     year: 1752
     date: '1752-09-24'
@@ -4574,6 +4246,7 @@ events:
       - AI
       - Fan Shen
   - id: morse_washington
+    deprecated: true
     build_step: 2
     year: 1844
     date: '1844-05-12'
@@ -4639,6 +4312,7 @@ events:
       - AI
       - Fan Shen
   - id: edison_menlo_park
+    deprecated: true
     build_step: 2
     year: 1879
     date: '1879-10-09'
@@ -4769,6 +4443,7 @@ events:
       - AI
       - Fan Shen
   - id: tenochtitlan_lake
+    deprecated: true
     build_step: 1
     year: 1325
     lon: -99.13
@@ -4818,6 +4493,7 @@ events:
       - AI
       - Fan Shen
   - id: machu_picchu
+    deprecated: true
     build_step: 3
     year: 1450
     lon: -72.55
@@ -4910,6 +4586,7 @@ events:
       - AI
       - Fan Shen
   - id: maya_venus_tables
+    deprecated: true
     build_step: 1
     year: 900
     lon: -88.57
@@ -5195,6 +4872,7 @@ events:
       - AI
       - Fan Shen
   - id: budj_bim_eels
+    deprecated: true
     build_step: 1
     year: -4500
     lon: -141.95
@@ -6148,9 +5826,6 @@ events:
                 item: nano_kit
                 stat:
                   wit: 6
-              - item: nano_kit
-                stat:
-                  finesse: 8
       vignettes:
         - id: stack
           traits:
@@ -6740,9 +6415,6 @@ events:
                 stat:
                   constitution: 6
                   will: 6
-              - item: painkiller
-                stat:
-                  will: 8
         - id: p4
           kind: trust
           day: 9
@@ -7798,9 +7470,6 @@ events:
                   - kind
                   - patient
                   - vigil
-              - item: nano_kit
-                stat:
-                  finesse: 8
       vignettes:
         - id: future
           traits:
@@ -8861,10 +8530,6 @@ events:
                   - rideshare_driver
               - stat:
                   luck: 8
-              - trait:
-                  - methodical
-                stat:
-                  will: 8
         - id: p4
           kind: care
           day: 22
@@ -9472,51 +9137,77 @@ events:
       - AI
       - Fan Shen
   - id: cao_xueqin_beijing
-    build_step: 1
+    build_step: 2
     year: 1763
     lon: 116.2
     lat: 39.99
     region: asia
     field: literature
     tier: 3
+    stay: 1
     channels:
       C: 3
       'Y': 2
-    regret: true
     refs:
       - cao_xueqin_beijing_primary
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
+          kind: hold
+          guard: true
+          day: 6
           req:
-            stat:
-              wit: 7
+            any:
+              - job:
+                  - archivist
+                  - bookseller
+                  - proofreader
+                  - writer
+              - stat:
+                  will: 5
         - id: p2
           kind: care
+          day: 12
           req:
-            trait:
-              - sensitive
-              - patient
-              - calm
+            any:
+              - job:
+                  - doctor
+                  - nurse
+                  - caregiver
+              - trait:
+                  - patient
+                  - kind
+              - item: warm_blanket
         - id: p3
           kind: trust
-          redeem: true
+          day: 20
           req:
-            trait:
-              - attached
-              - cosmopolitan
-              - sensitive
+            any:
+              - job:
+                  - writer
+                  - proofreader
+                  - archivist
+                stat:
+                  wit: 5
+              - trait:
+                  - patient
+                  - methodical
+                stat:
+                  wit: 6
+              - item: notebook_pen
+                stat:
+                  wit: 5
       vignettes:
-        - id: stone
+        - id: ink
           traits:
             - curious
-            - bold
-        - id: margin
-          traits:
             - methodical
-            - vigil
-        - id: loose
+        - id: paper
+          traits:
+            - patient
+            - quiet
+        - id: empty
     authors:
       - AI
       - Fan Shen
@@ -9684,38 +9375,41 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
+          kind: endure
           day: 26
           req:
             any:
               - job:
-                  - archivist
-                  - translator
-                  - proofreader
+                  - tour_guide
+                  - geologist
+                  - courier
+                stat:
+                  constitution: 4
               - trait:
                   - wanderer
+                  - hardy
+                stat:
+                  constitution: 5
+              - item: exoskeleton
+        - id: p3
+          kind: notice
+          day: 27
+          req:
+            any:
+              - job:
+                  - geologist
+                  - tour_guide
+                  - archivist
+                stat:
+                  wit: 5
+              - trait:
                   - methodical
                   - curious
                 stat:
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 41
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
+              - item: notebook_pen
                 stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - wanderer
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  wit: 5
       vignettes:
         - id: view
           traits:
@@ -9971,58 +9665,6 @@ events:
             - patient
             - kind
         - id: later
-    authors:
-      - AI
-      - Fan Shen
-  - id: bi_sheng_printer
-    build_step: 1
-    year: 1041
-    lon: 120.15
-    lat: 30.27
-    region: asia
-    field: technology
-    tier: 2
-    channels:
-      L: 1
-    regret: true
-    refs:
-      - bi_sheng_printer_primary
-    scene:
-      points:
-        - id: p1
-          kind: hold
-          req:
-            any:
-              - job:
-                  - carpenter
-                  - builder
-                  - mechanic
-              - trait:
-                  - sensitive
-                  - vigil
-        - id: p2
-          kind: notice
-          req:
-            stat:
-              wit: 7
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            trait:
-              - kind
-              - sensitive
-              - artistic
-      vignettes:
-        - id: rhyme
-          traits:
-            - scholarly
-            - methodical
-        - id: surface
-          traits:
-            - handy
-            - vigil
-        - id: duplicates
     authors:
       - AI
       - Fan Shen
@@ -10287,6 +9929,7 @@ events:
       - AI
       - Fan Shen
   - id: kabir_maghar
+    deprecated: true
     build_step: 1
     year: 1518
     lon: 83.07
@@ -10516,6 +10159,7 @@ events:
       - AI
       - Fan Shen
   - id: al_khwarizmi_baghdad
+    deprecated: true
     build_step: 2
     year: 830
     lon: 44.4
@@ -10892,6 +10536,7 @@ events:
       - AI
       - Fan Shen
   - id: mohenjo_daro_indus
+    deprecated: true
     build_step: 1
     year: -2200
     lon: 68.14
@@ -10940,6 +10585,7 @@ events:
       - AI
       - Fan Shen
   - id: knossos_linear_a
+    deprecated: true
     build_step: 1
     year: -1500
     lon: 25.16
@@ -10984,6 +10630,7 @@ events:
       - AI
       - Fan Shen
   - id: antikythera_rhodes
+    deprecated: true
     build_step: 1
     year: -100
     lon: 28.23
@@ -11088,6 +10735,7 @@ events:
       - AI
       - Fan Shen
   - id: aristarchus_alexandria
+    deprecated: true
     build_step: 1
     year: -270
     lon: 29.92
@@ -11583,6 +11231,7 @@ events:
       - AI
       - Fan Shen
   - id: democritus_abdera
+    deprecated: true
     build_step: 1
     year: -400
     lon: 24.97
@@ -11824,6 +11473,7 @@ events:
       - AI
       - Fan Shen
   - id: rongorongo_rapa_nui
+    deprecated: true
     build_step: 1
     year: 1870
     lon: -109.43
@@ -11871,60 +11521,8 @@ events:
     authors:
       - AI
       - Fan Shen
-  - id: dunhuang_library_cave
-    build_step: 1
-    year: 1000
-    lon: 94.8
-    lat: 40.04
-    region: asia
-    field: literature
-    tier: 2
-    channels:
-      H: 3
-      C: 1
-    regret: true
-    refs:
-      - dunhuang_library_cave_objects
-      - dunhuang_library_cave_colophon
-    scene:
-      points:
-        - id: p1
-          kind: hold
-          req:
-            job:
-              - archivist
-              - journalist
-        - id: p2
-          kind: notice
-          req:
-            trait:
-              - curious
-              - skeptical
-              - scholarly
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            any:
-              - trait:
-                  - attached
-                  - artistic
-              - job:
-                  - archivist
-      vignettes:
-        - id: date
-          traits:
-            - methodical
-            - scholarly
-        - id: types
-          traits:
-            - curious
-            - artistic
-        - id: twine
-    authors:
-      - AI
-      - Fan Shen
   - id: nalanda_library
+    deprecated: true
     build_step: 1
     year: 1190
     lon: 85.44
@@ -11973,6 +11571,7 @@ events:
       - AI
       - Fan Shen
   - id: meroitic_meroe
+    deprecated: true
     build_step: 1
     year: -100
     lon: 33.75
@@ -12372,119 +11971,6 @@ events:
     authors:
       - AI
       - Fan Shen
-  - id: xuanzang_changan
-    build_step: 2
-    year: 645
-    lon: 108.94
-    lat: 34.27
-    region: asia
-    field: thought
-    tier: 3
-    channels:
-      V: 2
-      L: 1
-    refs:
-      - xuanzang_changan_primary
-      - xuanzang_changan_team
-      - xuanzang_changan_tang_account
-    scene:
-      star_rules: 2
-      points:
-        - id: p1
-          kind: hold
-          guard: true
-          day: 15
-          req:
-            any:
-              - trait:
-                  - hardy
-                  - bold
-                  - vigil
-                stat:
-                  constitution: 7
-              - job:
-                  - courier
-                  - warehouse_loader
-                  - builder
-                  - scaffolder
-                  - paramedic
-              - provides: carry
-        - id: p2
-          kind: care
-          day: 37
-          req:
-            any:
-              - job:
-                  - doctor
-                  - physician
-                  - nurse
-                  - paramedic
-                  - pharmacist
-                stat:
-                  will: 5
-              - provides: heal
-              - provides: cure
-      vignettes:
-        - id: totals
-          traits:
-            - methodical
-            - scholarly
-        - id: names
-          traits:
-            - curious
-            - cosmopolitan
-        - id: space
-    authors:
-      - AI
-      - Fan Shen
-  - id: jia_sixie_gaoyang
-    build_step: 1
-    year: 540
-    lon: 118.5
-    lat: 36.8
-    region: asia
-    field: technology
-    tier: 1
-    channels:
-      L: 2
-      H: 1
-    refs:
-      - jia_sixie_gaoyang_tillage
-    scene:
-      points:
-        - id: p1
-          kind: notice
-          req:
-            trait:
-              - wanderer
-              - methodical
-              - curious
-              - vigil
-        - id: p2
-          kind: endure
-          req:
-            stat:
-              constitution: 5
-        - id: p3
-          kind: trust
-          req:
-            trait:
-              - kind
-              - sensitive
-              - attached
-      vignettes:
-        - id: moisture
-          traits:
-            - methodical
-            - curious
-        - id: timing
-          traits:
-            - kind
-            - handy
-        - id: bank
-    authors:
-      - AI
-      - Fan Shen
   - id: qin_jiushao_huzhou
     build_step: 2
     year: 1247
@@ -12534,6 +12020,7 @@ events:
       - AI
       - Fan Shen
   - id: al_biruni_ghazna
+    deprecated: true
     build_step: 1
     year: 1017
     lon: 68.4
@@ -12581,6 +12068,7 @@ events:
       - AI
       - Fan Shen
   - id: al_razi_rayy
+    deprecated: true
     build_step: 1
     year: 900
     lon: 51.43
@@ -12631,6 +12119,7 @@ events:
       - AI
       - Fan Shen
   - id: sushruta_varanasi
+    deprecated: true
     build_step: 1
     year: -600
     lon: 83
@@ -12684,67 +12173,82 @@ events:
     authors:
       - AI
       - Fan Shen
-  - id: zhuge_liang_longzhong
-    build_step: 1
-    year: 207
-    lon: 112.01
-    lat: 31.98
+  - id: zhuge_liang_wuzhang
+    build_step: 2
+    year: 234
+    lon: 107.62
+    lat: 34.31
     region: asia
     home:
       - china
-    field: literature
+    field: history
     tier: 1
-    channels: {}
+    stay: 1
+    channels:
+      G: 1
     draft: true
     refs:
       - sanguozhi_zhuge
-      - chushi_biao
-      - sanguo_yanyi_arrows
+      - sanguozhi_jiang_wan
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: endure
+          kind: trust
+          guard: true
+          day: 7
           req:
             any:
-              - trait:
-                  - hardy
-                  - patient
+              - job:
+                  - archivist
+                  - courier
               - stat:
-                  constitution: 4
+                  will: 5
         - id: p2
-          kind: notice
+          kind: care
+          day: 10
           req:
             any:
+              - job:
+                  - doctor
+                  - nurse
+                  - caregiver
               - trait:
-                  - curious
-                  - artistic
-              - stat:
-                  wit: 5
+                  - kind
+                stat:
+                  constitution: 5
         - id: p3
           kind: hold
+          day: 18
           req:
             any:
-              - trait:
-                  - patient
-                  - faithful
-                  - quiet
+              - job:
+                  - archivist
+                  - courier
+                  - translator
+                stat:
+                  wit: 5
               - stat:
-                  will: 6
+                  will: 7
+                  finesse: 6
       vignettes:
-        - id: future_novel
+        - id: bowl
           traits:
-            - bold
-            - curious
-        - id: door
-          traits:
-            - patient
-            - faithful
+            - kind
             - quiet
-        - id: song
+          day: 2
+        - id: register
+          traits:
+            - methodical
+            - scholarly
+          day: 7
+        - id: empty
+          day: 16
     authors:
       - AI
       - Fan Shen
   - id: borobudur_java
+    deprecated: true
     build_step: 1
     year: 800
     lon: 110.2
@@ -13020,6 +12524,7 @@ events:
       - AI
       - Fan Shen
   - id: djenne_builders
+    deprecated: true
     build_step: 1
     year: 1280
     lon: -4.55
@@ -13067,6 +12572,7 @@ events:
       - AI
       - Fan Shen
   - id: ahmes_thebes
+    deprecated: true
     build_step: 1
     year: -1550
     lon: 32.65
@@ -13111,6 +12617,7 @@ events:
       - AI
       - Fan Shen
   - id: quipu_cusco
+    deprecated: true
     build_step: 1
     year: 1450
     lon: -71.97
@@ -13594,6 +13101,7 @@ events:
       - AI
       - Fan Shen
   - id: chaco_sun_watchers
+    deprecated: true
     build_step: 1
     year: 1000
     lon: -107.96
@@ -13642,6 +13150,7 @@ events:
       - AI
       - Fan Shen
   - id: rapa_nui_moai
+    deprecated: true
     build_step: 2
     year: 1500
     lon: -109.29

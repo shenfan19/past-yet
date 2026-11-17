@@ -45,7 +45,7 @@ export function createUI(D, ctx, DEV = false) {
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
-  const st = { tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null };
+  const st = { chartOff: new Set(), tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -628,7 +628,13 @@ export function createUI(D, ctx, DEV = false) {
   }
 
   // ---------- report ----------
-  function lineChart(series, markers, ymax) {
+  // A line a reader has switched off in the legend is left out of the chart; it is named chart:key, so one switch serves the charts that share a legend.
+  const lineOn = (chart, key) => !st.chartOff.has(chart + ':' + key);
+  // the legend of a chart: each line a button that switches it on and off, and the marks that are not lines as plain text
+  const legendHtml = (chart, lines, marks = []) => `<div class="legend">${lines.map((l) => `<button class="lg${lineOn(chart, l.key) ? '' : ' off'}" data-act="chartline" data-chart="${chart}" data-k="${esc(l.key)}"><i style="border-color:${l.color}${l.dash ? ';border-top-style:dashed' : ''}"></i>${esc(l.label)}</button>`).join('')}${marks.map((m) => `<span><i style="border-color:${m.color};border-top-style:${m.style}"></i>${esc(m.label)}</span>`).join('')}</div>`;
+  function lineChart(series0, markers, ymax, chart = null) {
+    const series = chart ? series0.filter((s) => lineOn(chart, s.key)) : series0;
+    if (!series.length) return `<div class="muted">${U.report.chart_all_off}</div>`;
     const CH = D.get('config.ui.chart');
     const W = CH.w, H = CH.h;
     const m = { l: CH.margin_l, r: CH.margin_r, t: CH.margin_t, b: CH.margin_b };
@@ -638,7 +644,7 @@ export function createUI(D, ctx, DEV = false) {
     let g = '';
     for (let i = 0; i <= CH.y_lines; i++) {
       const v = (ymax * i) / CH.y_lines;
-      g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".12"/><text x="${m.l - 4}" y="${y(v) + 3}" text-anchor="end">${ri(v)}</text>`;
+      g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="currentColor" opacity=".12"/><text x="${m.l - 4}" y="${y(v) + 3}" text-anchor="end">${ymax < 10 ? r1(v) : ri(v)}</text>`;
     }
     for (let d = 0; d <= xmax; d += Math.ceil(xmax / CH.x_labels)) g += `<text x="${x(d)}" y="${H - 6}" text-anchor="middle">${d}</text>`;
     for (const mk of markers) if (mk.x !== null && mk.x !== undefined) g += `<line x1="${x(mk.x)}" x2="${x(mk.x)}" y1="${m.t}" y2="${H - m.b}" stroke="${mk.color}" stroke-dasharray="${mk.dash || '3 3'}" opacity=".7"/>`;
@@ -736,9 +742,12 @@ export function createUI(D, ctx, DEV = false) {
       const mk = [{ x: C.arrive, color: '#2f4f6f' }, { x: C.leave, color: '#2f4f6f' }, { x: C.handleBase, color: '#8a6a1f', dash: '1 3' }, { x: C.handleBranch, color: '#b3382c', dash: '5 3' }].filter((m) => m.x !== null && m.x !== undefined);
       // the two marks of the handle are named by the model, so a model about a university does not speak of a pump
       const handleName = T.eras[cur.eraId].handle_label;
-      const legend = `<div class="legend"><span><i style="border-color:#8a8272;border-top-style:dashed"></i>${U.report.mainline}</span><span><i style="border-color:#b3382c"></i>${U.report.this_branch}</span><span><i style="border-color:#2f4f6f;border-top-style:dotted"></i>${U.report.legend_visit}</span><span><i style="border-color:#8a6a1f;border-top-style:dotted"></i>${esc(U.report.legend_handle_hist.replace('{x}', handleName))}</span><span><i style="border-color:#b3382c;border-top-style:dashed"></i>${esc(U.report.legend_handle_branch.replace('{x}', handleName))}</span></div>`;
-      const charts = `<div class="grid2"><div><div class="muted">${RL.sick}</div>${lineChart([{ pts: pts(C.base, 'cases'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'cases'), color: '#b3382c' }], mk, sickMax)}</div>
-      <div><div class="muted">${RL.dead}</div>${lineChart([{ pts: pts(C.base, 'deaths'), color: '#8a8272', dash: '5 4' }, { pts: pts(C.branch, 'deaths'), color: '#b3382c' }], mk, deadMax)}</div></div>`;
+      // the main timeline and this branch can each be switched off, in both charts at once; the marks of the visit and the handle stay
+      const legend = legendHtml('outbreak', [{ key: 'base', label: U.report.mainline, color: '#8a8272', dash: true }, { key: 'branch', label: U.report.this_branch, color: '#b3382c' }],
+        [{ label: U.report.legend_visit, color: '#2f4f6f', style: 'dotted' }, { label: U.report.legend_handle_hist.replace('{x}', handleName), color: '#8a6a1f', style: 'dotted' }, { label: U.report.legend_handle_branch.replace('{x}', handleName), color: '#b3382c', style: 'dashed' }]);
+      const two = (k) => [{ key: 'base', pts: pts(C.base, k), color: '#8a8272', dash: '5 4' }, { key: 'branch', pts: pts(C.branch, k), color: '#b3382c' }];
+      const charts = `<div class="grid2"><div><div class="muted">${RL.sick}</div>${lineChart(two('cases'), mk, sickMax, 'outbreak')}</div>
+      <div><div class="muted">${RL.dead}</div>${lineChart(two('deaths'), mk, deadMax, 'outbreak')}</div></div>`;
       const led = R.ledger.map((l) => `<tr><td>${l.day}</td><td class="num">${ri(l.sick)}</td><td class="num">${ri(l.baseDead)}</td><td class="num">${ri(l.dead)}</td><td class="num">${ri(l.treated)}</td><td class="num">${ri(l.protected)}</td></tr>`).join('');
       const cmp = R.compare;
       return `<details class="nums"><summary class="sec">${U.report.numbers}</summary>
@@ -868,13 +877,18 @@ export function createUI(D, ctx, DEV = false) {
       const show = D.get('config.ui.report_body');
       const B = S.body;
       if (!B || !B.length || !(show === 'always' || (show === 'dev' && DEV))) return '';
-      const keys = Object.keys(U.report.body_readouts).filter((k) => B.some((x) => x[k] > 0));
       const colors = D.get('config.ui.chart.body_colors');
-      const series = keys.map((k, i) => ({ pts: B.map((x) => [x.day, 100 * (x[k] || 0)]), color: colors[i % colors.length] }));
-      // the readouts run from 0 to 1 and are drawn as percentages, so the axis reads whole numbers
+      // The two kinds are kept apart. What weighs on the body, every readout of LM, runs from 0, nothing, to 1, the worst, and is drawn as a percentage;
+      // only the readouts that rose at all are drawn. What the body can still do is the five attributes of each day, which fall as the burdens rise.
+      const keys = Object.keys(U.report.body_readouts).filter((k) => B.some((x) => x[k] > 0));
       const ymax = 100 * Math.max(D.get('config.ui.chart.body_min_max'), ...B.flatMap((x) => keys.map((k) => x[k] || 0))) * D.get('config.ui.chart.headroom');
-      const legend = `<div class="legend">${keys.map((k, i) => `<span><i style="border-color:${colors[i % colors.length]}"></i>${esc(U.report.body_readouts[k])}</span>`).join('')}</div>`;
-      return `<div class="sec">${U.report.body}</div>${keys.length ? legend + lineChart(series, [], ymax) : ''}`;
+      const lines = keys.map((k, i) => ({ key: k, label: U.report.body_readouts[k], color: colors[i % colors.length], pts: B.map((x) => [x.day, 100 * (x[k] || 0)]) }));
+      const burden = keys.length ? `<div class="sec">${U.report.body}</div>${legendHtml('burden', lines)}${lineChart(lines, [], ymax, 'burden')}` : `<div class="sec">${U.report.body}</div><p class="muted">${U.report.body_none}</p>`;
+      // reports kept from before the attributes were saved with the body have only the burdens
+      if (!B.some((x) => x.attrs)) return burden;
+      const attrs = D.get('staff.attributes');
+      const alines = attrs.map((a, i) => ({ key: a, label: T.stats[a], color: colors[i % colors.length], pts: B.filter((x) => x.attrs).map((x) => [x.day, x.attrs[a]]) }));
+      return burden + `<div class="sec">${U.report.body_attrs}</div>${legendHtml('attrs', alines)}${lineChart(alines, [], ctx.backend.staffAttrMax, 'attrs')}`;
     };
     const vsHtml = st.vs && !cur.light ? vsBlock(cur) : '';
     const page = `
@@ -1285,6 +1299,7 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'go') { st.tab = id; st.modal = null; render(); }
     else if (act === 'vs') { st.vs = !st.vs; render(); }
     else if (act === 'tlf') { st.tlf = b.dataset.k; render(); }
+    else if (act === 'chartline') { const k = b.dataset.chart + ':' + b.dataset.k; if (st.chartOff.has(k)) st.chartOff.delete(k); else st.chartOff.add(k); render(); }
     else if (act === 'fn') { const k = st.modal.id + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
     else if (act === 'again') {

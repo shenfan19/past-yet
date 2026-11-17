@@ -62,7 +62,7 @@ const O = D.get('config.office');
 // The rest are drawn at random from what is left. Each new game draws its own.
 function startAntiques() {
   const out = Object.entries(D.get('antiques.antiques')).filter(([, a]) => a.start_owned).map(([id]) => id);
-  const events = D.get('catalog.events');
+  const events = D.get('catalog.active_events');
   const { newest, random } = O.start_scenes;
   // events marked start are already owned from the start, so they are not drawn again
   const pool = events.filter((e) => !e.start).sort((a, b) => b.year - a.year || a.id.localeCompare(b.id));
