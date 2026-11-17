@@ -23,6 +23,8 @@ export function createShare(X) {
     return chosen.map(({ t }) => ({ text: t.text, star: !!t.star, history: t.tag === 'history' }));
   }
   // what the card says about a trip: its name, how it ended, the story told in a few lines, and the hook
+  // the line the employee says, as the report shows it under the title
+  const said = (d) => { const x = ctx.backend.sayingOf(d); return x ? [U.fmt.quote.replace('{x}', x) + ' ' + U.fmt.dash + staffName(D, d.spec.staffId)] : []; };
   function parts(d) {
     const R = d.report;
     const who = staffName(D, d.spec.staffId);
@@ -46,7 +48,7 @@ export function createShare(X) {
       return {
         name: c.name,
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
-        text: R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
+        text: R.timeline ? said(d) : [...said(d), U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
         lines: R.timeline ? pickLines(R.timeline) : null,
         points: R.points.map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
         hook: hookOf(index),
@@ -55,7 +57,7 @@ export function createShare(X) {
     return {
       name: T.eras[d.eraId].name,
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
-      text: [U.fmt.quote.replace('{x}', R.quote) + ' ' + U.fmt.dash + R.staff, R.summary],
+      text: [...said(d), R.summary],
       lines: pickLines(R.timeline),
       hook: hookOf(index),
     };

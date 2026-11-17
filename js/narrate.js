@@ -1,3 +1,4 @@
+import { draw } from './rng.js';
 // Turns a structured dispatch result into report text. It only reads the log, it never changes a result.
 // This is the one place an optional AI narrator could plug in.
 
@@ -98,6 +99,14 @@ export function staffProfile(D, id) {
 
 export function staffName(D, id) { return D.get(`text.staff.${id}.name`); }
 export function staffTraits(D, id) { return D.get(`staff.staff.${id}.traits`); }
+// The line an employee says on coming back, a catchphrase of their own: the stamp of the trip names the group in config.stamp.saying, and the id of the
+// trip picks one line of the group, so a trip always says the same. An employee without sayings, such as the player's own character, says nothing.
+export function staffSaying(D, staffId, stamp, tripId) {
+  const group = D.get('config.stamp.saying')[stamp];
+  const list = D.get('text.staff')[staffId]?.sayings?.[group];
+  if (!list || !list.length) return '';
+  return list[Math.min(list.length - 1, Math.floor(draw(tripId, 'saying', 0) * list.length))];
+}
 
 const stayDaysOf = (res) => (res.branch.arrivedDay === null ? 0 : (res.branch.leftDay ?? res.branch.digest.length) - res.branch.arrivedDay);
 

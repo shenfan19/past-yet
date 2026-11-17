@@ -1,4 +1,4 @@
-import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying } from './narrate.js';
 import { pointsLeft, founderProblem } from './founder.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
@@ -45,7 +45,7 @@ export function createUI(D, ctx, DEV = false) {
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
-  const st = { tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null };
+  const st = { tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -180,6 +180,8 @@ export function createUI(D, ctx, DEV = false) {
   };
   const protagonistHtml = (d) => { const p = protagonistOf(d); return p.link ? wl(p.link, p.name) : esc(p.name); };
   const staffLine = (id) => `<div class="muted small">${U.report.staff_line.replace('{x}', staffLink(id))}</div>`;
+  // under the title of a report, the employee's own words on coming back with the name; without words, the plain line that names the employee
+  const sayingLine = (d) => { const x = ctx.backend.sayingOf(d); return x ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(x))} <span class="muted">${U.fmt.dash}${staffLink(d.spec.staffId)}</span></p>` : staffLine(d.spec.staffId); };
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
   // how a trip ended is told by its stamp, see stampOf in backend.js
   const outcomeOf = (d) => U.report.stamp[ctx.backend.stampOf(d)];
@@ -320,19 +322,42 @@ export function createUI(D, ctx, DEV = false) {
   // ---------- agency: employees and hiring ----------
   // The record of an employee: each point that fulfilled something, once, on the earliest trip that won it, with the year, the place and the words of the star,
   // opening the report while it is kept; the guard points held are one line of their count. A trip out of sync adds nothing of its own. See 5.12 of the story outline.
+  // The record of an employee: each point that fulfilled something, once, on the earliest trip that won it, with the year, the place and the words of the star,
+  // opening the report while it is kept; the guard points held are one line of their count. A trip out of sync adds nothing of its own. See 5.12 of the story outline.
+  // The record of an employee: what their trips helped bring about, one line to a trip with the fulfil stars it won for the first time, small stories and
+  // full models alike, and after them the words the employee said on coming back. Guard stars are not listed, since holding history is not a deed.
+  // The weightiest come first: a redeemed regret, then the share of the stars of the trip, then the later year; config.ui.record_top show, the rest open on a click.
   function recordHtml(id) {
     const P = U.staffpage;
-    const wins = office.winsOf((t) => t.staffId === id);
     const kept = new Set(ctx.S().dispatches.filter((d) => d.claimed).map((d) => d.id));
-    const done = wins.filter((w) => !w.guard).map((w) => {
-      const ev = D.get('catalog.events').find((x) => x.id === w.event);
-      const c = T.catalog[w.event];
-      const text = `${fmtYear(D, ev.year)} ${c.place}${COLON}${c.points[w.point]}`;
-      return `<li>${kept.has(w.trip.id) ? `<a class="wl" data-act="open" data-id="${w.trip.id}">${esc(text)}</a>` : esc(text)}</li>`;
-    });
-    const held = wins.filter((w) => w.guard).length;
-    if (!done.length && !held) return `<p class="muted">${P.record_none}</p>`;
-    return `${done.length ? `<ul class="iflines">${done.join('')}</ul>` : ''}${held ? `<p class="muted">${esc(P.record_guard.replace('{n}', String(held)))}</p>` : ''}`;
+    const seen = new Set();
+    const done = [];
+    const trips = (ctx.S().trips || []).filter((t) => t.staffId === id).slice().sort((a, b) => a.back - b.back || a.day - b.day);
+    for (const t of trips) {
+      const ev = t.light ? D.get('catalog.events').find((x) => x.id === t.place) : null;
+      if (t.light && !ev?.scene) continue;
+      const texts = [];
+      for (const pid of office.wonOf(t)) {
+        const key = t.place + '|' + pid;
+        const pt = t.light ? ev.scene.points.find((p) => p.id === pid) : null;
+        const text = t.light ? pt && !pt.guard && T.catalog[t.place].points[pid] : T.eras[t.place]?.star_points?.[pid];
+        if (!text || seen.has(key)) continue;
+        seen.add(key);
+        texts.push(text);
+      }
+      if (texts.length) done.push({ t, texts, year: yearOfPlace(t.place, t.light), share: (t.stars || 0) / Math.max(1, ctx.backend.maxStars(t.place)) });
+    }
+    if (!done.length) return `<p class="muted">${P.record_none}</p>`;
+    done.sort((a, b) => Number(!!b.t.redeemed) - Number(!!a.t.redeemed) || b.share - a.share || b.year - a.year);
+    const top = D.get('config.ui.record_top');
+    const all = st.recordAll === id;
+    const line = ({ t, texts, year }) => {
+      const head = `${fmtYear(D, year)} ${shortOfPlace(t.place, t.light)}${COLON}${texts.join(U.fmt.semi)}`;
+      const said = ctx.backend.sayingOfTrip(t);
+      return `<li>${t.redeemed ? '<span class="chip">♥</span> ' : ''}${kept.has(t.id) ? `<a class="wl" data-act="open" data-id="${t.id}">${esc(head)}</a>` : esc(head)}${said ? ` <span class="muted">${esc(U.fmt.quote.replace('{x}', said))}</span>` : ''}</li>`;
+    };
+    const more = done.length > top ? `<p><a class="wl" data-act="recordmore" data-id="${esc(id)}">${esc(all ? P.record_less : P.record_more.replace('{n}', String(done.length)))}</a></p>` : '';
+    return `<ul class="iflines">${(all ? done : done.slice(0, top)).map(line).join('')}</ul>${more}`;
   }
 
   const moodMult = (v) => 1 + D.get('config.favor.buff') * (2 * v - 1);
@@ -618,7 +643,7 @@ export function createUI(D, ctx, DEV = false) {
     const summary = U.light.summary[o].replace('{staff}', staffName(D, cur.spec.staffId)).replace('{place}', c.place).replace('{figure}', c.figure);
     return `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(c.name)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${sayingLine(cur)}
       ${cur.report.journey?.accepted === false || ev.scene?.vignettes ? '' : `<p style="font-size:16px">${esc(summary)}</p>`}
       ${ev.refs ? `<p>${esc(c.story)} ${wl('events:c:' + ev.id, U.light.sources)}</p>` : `<div class="quote">${esc(c.story)}<div class="muted" style="font-family:inherit;font-size:12px">${U.fmt.dash}${esc(c.figure)}</div></div>`}
       ${participationHtml(cur)}
@@ -639,7 +664,7 @@ export function createUI(D, ctx, DEV = false) {
     const P = cur.paid;
     return `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${sayingLine(cur)}
       <p style="font-size:16px">${U.report.recalled_text.replace('{day}', String(Math.floor(cur.recallDay) + 1)).replace('{p}', String(Math.round(P.share * 100)))}</p>
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
@@ -662,7 +687,7 @@ export function createUI(D, ctx, DEV = false) {
     if (!cur) return `<p class="muted">${U.report.none}</p>`;
     if (cur.recalled) return recalledHtml(cur);
     if (cur.evacuation) return `<p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${staffLine(cur.spec.staffId)}
+      <div class="row sp"><h2>${esc(placeName(cur))}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${sayingLine(cur)}
       <p>${esc(U.report.evacuation_text.replace('{day}', String(cur.evacuation.day)))}</p>${evacuationCause(cur)}
       <p>${esc(U.report.rest)} ${cur.paid.restDays} ${esc(U.report.days)}</p>`;
     // a small story written before it kept a record is shown the old way
@@ -720,7 +745,7 @@ export function createUI(D, ctx, DEV = false) {
       place: event ? T.catalog[event.id].place : T.eras[cur.eraId].short, anchor: anchorOf(cur.eraId),
       sources: `${event?.refs ? ' ' + wl('events:c:' + event.id, U.light.sources) : ''}${modelSource ? ' ' + wl('events:' + modelSource, U.light.sources) : ''}`,
       timeline: R.timeline, factRefs: (fact) => (fact ? D.get('encyclopedia.fact_sources')?.[cur.eraId]?.[fact] || [] : []),
-      saying: R.quote, summary: R.summary, modelNote: U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source),
+      summary: R.summary, modelNote: U.report.note_model + COLON + srcLabel(e.vars[e.report.deaths].source),
       stay: R.chart.arrive != null && R.chart.leave != null ? R.chart.leave - R.chart.arrive : null,
       before: woven ? '' : participationHtml(cur),
       afterRecord: woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette]),
@@ -761,7 +786,7 @@ export function createUI(D, ctx, DEV = false) {
       title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
       sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
       timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
-      saying: null, summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
+      summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
       buttons: `<button class="primary" data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
@@ -831,9 +856,8 @@ export function createUI(D, ctx, DEV = false) {
     const vsHtml = st.vs && !cur.light ? vsBlock(cur) : '';
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${accepted && S.saying ? '' : staffLine(spec.staffId)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${sayingLine(cur)}
       ${S.stay != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(S.stay)))}</p>` : ''}
-      ${accepted && S.saying ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(S.saying))} <span class="muted">${U.fmt.dash}${wl('staff:' + spec.staffId, S.staff)}</span></p>` : ''}
       ${S.before}
       <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
       ${S.afterRecord}${S.warn}
@@ -960,9 +984,9 @@ export function createUI(D, ctx, DEV = false) {
       <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span></div>
       <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(O.stars_per_point))}</div></div></div>
       <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
-      <div class="sec">${P.gear_title} <span class="muted">${P.load_meter.replace('{a}', String(used)).replace('{b}', String(cap))}</span></div>
+      ${sf.hired ? `<div class="sec">${P.gear_title} <span class="muted">${P.load_meter.replace('{a}', String(used)).replace('{b}', String(cap))}</span></div>
       ${gearRows ? `<table class="plain gear"><tbody>${gearRows}</tbody></table>` : `<p class="muted">${P.no_gear}</p>`}
-      ${away ? `<p class="muted">${P.away_note}</p>` : ''}
+      ${away ? `<p class="muted">${P.away_note}</p>` : ''}` : `<p class="muted">${P.left_note}</p>`}
       <div class="sec">${P.story}</div><p>${esc(T.staff[id].story || '')}</p>
       <div class="sec" style="clear:both">${P.record_title}</div>${recordHtml(id)}
       <div class="sec">${U.office.staff_trips}</div>${list}`;
@@ -1218,6 +1242,7 @@ export function createUI(D, ctx, DEV = false) {
     }
     else if (act === 'welcomestart' && ctx.S().welcomeAcknowledged && welcomeReady()) { ctx.S().welcomed = true; st.modal = null; ctx.save(); render(); }
     else if (act === 'modalopen') { st.modalStack = []; st.modal = { kind: id }; render(); }
+    else if (act === 'recordmore') { st.recordAll = st.recordAll === id ? null : id; render(); }
     else if (act === 'staffopen') { if (st.pager.staff_trips) st.pager.staff_trips.page = 0; if (st.modal && st.modal.kind !== 'staff') st.modalStack.push(st.modal); st.modal = { kind: 'staff', id }; render(); }
     else if (act === 'equip') { if (st.modal && st.modal.kind === 'staff') office.equip(st.modal.id, id); render(); }
     else if (act === 'unequip') { if (st.modal && st.modal.kind === 'staff') office.unequip(st.modal.id, id); render(); }

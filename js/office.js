@@ -139,6 +139,8 @@ export function createOffice(X) {
       antique: d.paid?.antique || null, recalled: !!d.recalled, evacuated: !!d.evacuation && !d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
       // won: the points met on this trip, which the timeline of the wiki and the record of the employee read after the full report is dropped
       redeemed: pts.some((p) => p.redeem && p.hit), won: pts.filter((p) => p.hit).map((p) => p.id), archived: false,
+      // quote: the words of the card of a full model said on this trip, kept so the record can show them after the full report is dropped
+      quote: (!d.light && d.report.journey?.accepted !== false && d.report.quote) || null,
     };
   }
   // the points a finished trip met: kept in its summary, or read from the full report for a summary written before it kept them

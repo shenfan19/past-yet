@@ -61,6 +61,9 @@ for (const [id, st] of Object.entries(staffAll)) {
     const tx = D.o.text.staff[id];
     if (lang === 'en' && !(tx.name && tx.ethnicity && tx.bio && tx.story && Array.isArray(tx.jobs) && tx.jobs.length === st.jobs.length)) { console.log(id + ' lacks a name, ethnicity, bio, story or the titles of its jobs'); bad++; }
   }
+  // every employee has a catchphrase for each group a stamp can call for, see config.stamp.saying; check_i18n holds the other language to the same keys
+  const groups = new Set(Object.values(D.get('config.stamp.saying')));
+  for (const g of groups) if (!(Array.isArray(D.o.text.staff[id].sayings?.[g]) && D.o.text.staff[id].sayings[g].length && D.o.text.staff[id].sayings[g].every((x) => typeof x === 'string' && x))) { console.log(id + ' has no sayings for ' + g); bad++; }
   if (!regionIds.has(st.region)) { console.log(id + ' has an unknown region ' + st.region); bad++; }
   if (!D.get('hiring.skin_tones')[st.skin]) { console.log(id + ' has an unknown skin tone ' + st.skin); bad++; }
   if (!(st.age >= 18 && st.age <= 80)) { console.log(id + ' has an age out of 18 to 80'); bad++; }
@@ -72,6 +75,7 @@ for (const [id, st] of Object.entries(staffAll)) {
   if (Object.values(stats).some((v) => !(v >= 0))) { console.log(id + ' has a bad stat'); bad++; }
   buildReport(D, E1, sim.runDispatch(E1, D, { seed: 1, staffId: id, items: {} }));
 }
+for (const k of Object.keys(D.o.text.ui.report.stamp)) if (!D.get('config.stamp.saying')[k]) { console.log('the stamp ' + k + ' has no group in config.stamp.saying'); bad++; }
 if (names.size !== Object.keys(staffAll).length) { console.log('two employees share a name'); bad++; }
 console.log(`employees: ${Object.keys(staffAll).length}, ${seenRegion.size} regions, ${seenSkin.size} skin tones`);
 if (seenRegion.size < regionIds.size || seenSkin.size < Object.keys(D.get('hiring.skin_tones')).length) { console.log('some region or skin tone is used by nobody'); bad++; }

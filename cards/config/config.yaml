@@ -170,6 +170,8 @@ ui:
   # a return shows a note this many seconds before it fades; the reports wait on the home page
   toast_seconds: 8
   timeline_max: 9
+  # the record of an employee shows this many trips at first, the weightiest: a redeemed regret first, then the share of the stars won, then the year
+  record_top: 5
   # the body of the traveller through the stay as LM reads it, its own part of the report: always, dev for the developer mode only, or never
   report_body: dev
   recent_reports: 8
@@ -198,6 +200,20 @@ stamp:
   evacuated: rough
   changed_margin: 0.5
   changed: {normal_none: normal_none_changed, early_none: early_none_changed}
+  # saying picks the group of the sayings of the employee card a stamp calls for: full, part, none, or rough for a trip that came back hurt.
+  # A stamp with no star but a changed branch counts as part, since something was left behind.
+  saying:
+    normal_full: full
+    normal_part: part
+    normal_none_changed: part
+    normal_none: none
+    early_full: full
+    early_part: part
+    early_none_changed: part
+    early_none: none
+    rough_full: rough
+    rough_part: rough
+    rough_none: rough
 travel:
   max_office_days: 7
   history_days_per_office_day: 30

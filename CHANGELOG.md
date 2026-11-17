@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+
+- Every employee has catchphrases of their own, drawn from their work and where they come from, and says one on coming back: for every star won, for some, for nothing done, or for coming home hurt. The line opens the report and the share card; a full model keeps the words its card gives for the ending.
+- The record of an employee lists what their trips helped bring about, one line to a trip, full models included, with the words said on coming back. The weightiest come first, a redeemed regret, then the share of stars, and five show until the rest are opened. Guard stars that held are no longer counted there.
+- A dismissed employee's card still opens from the trip records, with the record and the trips kept.
+- The English stamp for a close call reads in full again: 'A close call, still a gain'.
+
 ## 0.9.5, 2026-11-17
 
 - Twenty one more stories have stars of the new kind, from Ban Zhao and Sima Qian to Scott, Seacole, Nightingale, Wegener and Sophie Germain, waiting to be checked; stories whose year holds nothing that history left unresolved stay at the first step, with a suggested window.

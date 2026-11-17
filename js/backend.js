@@ -2,7 +2,7 @@
 // simulation itself and reads only the plain fields listed in eraInfo. This local version calls the engine in the same page.
 // A server version would offer the same methods over fetch, with the yaml data and the engine on the server, and the page would only carry data.
 import * as sim from './sim.js';
-import { buildReport, weaveJourney, lightRecord } from './narrate.js';
+import { buildReport, weaveJourney, lightRecord, staffSaying } from './narrate.js';
 import { draw } from './rng.js';
 import { evalScene, pointDays } from './scene_core.js';
 import { runStay, effectiveChannels } from './stay.js';
@@ -100,6 +100,11 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const key = back + '_' + won;
     return changed && ST.changed[key] ? ST.changed[key] : key;
   }
+  // The line the employee says at the head of a report: the words the card of a full model gives for this ending, when the employee was let in,
+  // otherwise the catchphrase of the employee for the stamp, see staffSaying in narrate.js.
+  // the same for a trip whose full report is gone: the words kept in its summary, or the catchphrase for its stamp
+  const sayingOfTrip = (t) => t.quote || staffSaying(D, t.staffId, t.stamp, t.id);
+  const sayingOf = (d) => (!d.light && d.report?.journey?.accepted !== false && d.report?.quote) || staffSaying(D, d.spec.staffId, stampOf(d), d.id);
   const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => { const e = lightEvent(eventId); return officeStay(D, e.stay || L.stay_by_tier[e.tier]); };
@@ -250,7 +255,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     runLight, lightStay, lightKitAllowed, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
-    findOdds, findAntique, stampOf,
+    findOdds, findAntique, stampOf, sayingOf, sayingOfTrip,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],
