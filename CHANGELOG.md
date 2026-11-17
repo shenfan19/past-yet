@@ -8,6 +8,7 @@
 - The English stamp for a close call reads in full again: 'A close call, still a gain'.
 - The secretary is remade: each trait lends one thing, a higher sale price, faster mood growth, shorter rest, one attribute for every traveller (the secretary's own over five, rounded), or a sure star, the earliest missed guard star held or, when no fulfil star was won, the earliest one won if the guard holds until its day. The secretary no longer adds time energy, which the stars fix, and has no preference. Its effect stays in the navigation bar on every page, and a star it made sure says so in the record.
 - The rest after a trip grows with the stay: the rest of the outcome, now two to four days for a story, plus half a day for each day away, rounded up.
+- The design notes in `docs/README_design.md` describe the catchphrases, the record of an employee, the remade secretary and the rest after a trip.
 - Trips to Guangzhou 1924 no longer break the time energy: six modelled places had no energy base, and a missing one is now an error.
 
 ## 0.9.5, 2026-11-17
