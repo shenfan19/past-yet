@@ -2,6 +2,7 @@ order: 53
 events:
   darwin_galapagos:
     order: 31
+    build_step: 2
     year: 1835
     lon: -90.3
     lat: -0.6
@@ -10,12 +11,12 @@ events:
     tier: 3
     era: darwin_galapagos_1835
     channels: {Y: 3, H: 2}
-    refs: [darwin_beagle_bird_notes, darwin_galapagos_log]
+    refs: [darwin_galapagos_journal, darwin_galapagos_sulloway, darwin_beagle_bird_notes, darwin_galapagos_log]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["curious","streetwise","handy"]}}
-        - {id: p2, kind: endure, req: {"stat": {"constitution": 5}}}
-        - {id: p3, kind: care, req: {"any": [{"stat": {"wit": 6}}, {"job": ["archivist", "data_analyst"]}]}}
+        - {id: p1, kind: endure, guard: true, day: 23, req: {"any":[{"trait":["hardy","wanderer"],"stat":{"constitution":7,"will":5}},{"provides":"clean_water","stat":{"constitution":5,"will":5}},{"job":["fisher","fisherman","sailor","navigator","shepherd"],"stat":{"constitution":5,"will":5}}]}}
+        - {id: p2, kind: notice, day: 10, req: {"any":[{"job":["biologist","geologist","archivist","university_lecturer"],"stat":{"wit":7,"will":5}},{"trait":["curious","skeptical","methodical"],"stat":{"wit":8,"will":6}}]}}
       vignettes:
         - {id: two_tags, traits: [methodical, vigil]}
         - {id: differences, traits: [curious, skeptical]}
@@ -25,13 +26,23 @@ events:
         name: Islands and the variety of life
         place: Galápagos Islands
         figure: Charles Darwin
-        story: 'Darwin visited the Galápagos on the Beagle in 1835. His bird notes associate mockingbird specimens with particular islands.'
+        story: 'Darwin visited the Galápagos on the Beagle from September to October 1835. On Charles Island the vice-governor Lawson told him the tortoises differed from island to island; Darwin later wrote that he did not pay enough attention at the time, and had already mixed the collections of two islands. From 8 to 17 October he, Bynoe and their servants camped on James Island while the ship went for water, with only a poor little spring near the tent. His bird notes associate mockingbird specimens with particular islands.'
         relic: A finch feather
         relic_desc: A small brown feather from the islands.
         points:
-          p1: "Notice what others miss"
-          p2: "Survive the voyage"
-          p3: "Help him sort the specimens (a sharp mind or a record keeper)"
+          p1: 'On James Island, where the camp has one poor little spring, keep the shore party going until the ship returns, and see the island''s collecting done'
+          p2: 'When Lawson says the tortoises differ from island to island, make Darwin take note there and then, and keep the birds of each island labelled and packed apart'
+        points_fail:
+          p1: 'The shore party runs out of water and the James Island collecting is never made. This branch has come loose from history, and the office recalls the employee that day.'
+          p2: 'As in history Darwin pays little heed to Lawson. The collections of Chatham and Charles Islands are already mixed, and most of the finches carry no island.'
+        shift:
+          p1:
+            was: '8 to 17 October 1835: Darwin, Bynoe and their servants camped on James Island with a tent and provisions while the Beagle went for water; near the camp there was only a poor little spring.'
+          p2:
+            was: 'Late September 1835: on Charles Island the vice-governor Lawson told Darwin the tortoises of each island could be told apart. Darwin later wrote that he had not paid enough attention, had already mixed the collections of two islands, and had mixed most of his finches.'
+            now: 'He took Lawson at his word that day, and brought the birds of each island home to England labelled and packed apart.'
+            who: darwin_galapagos
+            bio: 'In this timeline Darwin listened to Lawson on the Galápagos, and collected and labelled the finches and mockingbirds island by island before taking them home to England.'
         vignettes:
           two_tags: 'One tag says only ''island''. You set it aside until the helper can find the separate landing note. The two specimens stay apart even after the trays are put away.'
           differences: 'The helper points to two similar-looking birds and wants one entry for both. You ask which island each came from. They leave both labels in the book so the likeness can be considered again later.'
@@ -40,13 +51,23 @@ events:
         name: 岛屿与生命的多样
         place: 加拉帕戈斯群岛
         figure: 查尔斯·达尔文
-        story: '达尔文 1835 年随小猎犬号到访加拉帕戈斯。他的鸟类笔记把嘲鸫标本和各自采集的岛对应起来。'
+        story: '1835 年 9 月到 10 月，达尔文随小猎犬号到访加拉帕戈斯。在查尔斯岛，副总督劳森告诉他各岛的龟彼此不同；达尔文后来写道，他当时没有留心，已把两座岛的采集混在一起。10 月 8 日到 17 日，他和拜诺几人带着帐篷留在詹姆斯岛，船去别处取水，营地旁只有一眼可怜的小泉。他的鸟类笔记把嘲鸫标本和各自采集的岛对应起来。'
         relic: 一根雀的羽毛
         relic_desc: 来自群岛的一根小小的褐色羽毛。
         points:
-          p1: "注意到别人没注意到的"
-          p2: "熬过远航"
-          p3: "帮他整理标本（头脑好的人或管档案的人）"
+          p1: '詹姆斯岛营地旁只有一眼小泉，护住岸上这一小队撑到船回来，把岛上的采集做完'
+          p2: '劳森说各岛的龟一看就分得出时，让达尔文当场留了心，把各岛的鸟分岛记下、分开装好'
+        points_fail:
+          p1: '岸上小队断了水，詹姆斯岛的采集没能做成，这条分支与历史脱了节，事务所当天召回员工。'
+          p2: '他照史实没把劳森的话放在心上，查塔姆岛和查尔斯岛的采集已经混在一起，雀的标本大多没记岛名。'
+        shift:
+          p1:
+            was: '1835 年 10 月 8 日至 17 日，达尔文、拜诺和随从带着帐篷和口粮留在詹姆斯岛，小猎犬号去别处取水；营地旁只有一眼小泉。'
+          p2:
+            was: '1835 年 9 月下旬，查尔斯岛的副总督劳森告诉达尔文，各岛的龟一看就分得出来。达尔文后来写道，他当时没有留心，已把两座岛的采集混在一起，雀的标本也大多混了。'
+            now: '他当天就记住了劳森的话，各岛的鸟分岛记下、分开装好，带回了英国。'
+            who: darwin_galapagos
+            bio: '这条时间线里，达尔文在加拉帕戈斯听进了劳森那句话，把各岛的雀和嘲鸫分岛采集、分岛标注，带回英国。'
         vignettes:
           two_tags: '一张签只写了「岛上」。你把它搁到一边，等帮手找来另记的上岸记录。盘子即便收好，两件标本也还能分清。'
           differences: '帮手指着两只相似的鸟，准备合写一条。你问它们各来自哪座岛。他把两个标签都留在册上，下次好重新比较。'
@@ -120,6 +141,18 @@ wiki:
         en: 'An invented handoff. The employee’s response habit determines whether they send the available copy or make time to check it.'
         zh: '虚构文书交接。员工的应对习惯决定是先交手里的记录，还是多留一点时间核对。'
   refs:
+    darwin_galapagos_journal:
+      order: 140
+      status: checked
+      text:
+        en: 'Charles Darwin, Journal of Researches, chapter on the Galápagos Archipelago, New Zealand Electronic Text Collection, Victoria University of Wellington https://nzetc.victoria.ac.nz/tm/scholarly/tei-DarJour-_N74072.html'
+        zh: '查尔斯·达尔文，《研究日志》加拉帕戈斯群岛一章，惠灵顿维多利亚大学新西兰电子文本库 https://nzetc.victoria.ac.nz/tm/scholarly/tei-DarJour-_N74072.html'
+    darwin_galapagos_sulloway:
+      order: 141
+      status: checked
+      text:
+        en: 'Frank J. Sulloway, The Beagle collections of Darwin''s finches (Geospizinae), Bulletin of the British Museum (Natural History), Zoology series 43 (1982), at Darwin Online https://darwin-online.org.uk/converted/Ancillary/1982_SullowayFinches_A86.html'
+        zh: '弗兰克·萨洛韦，《小猎犬号上的达尔文雀标本》，《大英博物馆（自然史）通报·动物学》第 43 卷（1982），达尔文在线 https://darwin-online.org.uk/converted/Ancillary/1982_SullowayFinches_A86.html'
     darwin_galapagos_log:
       order: 995
       status: checked
@@ -356,6 +389,32 @@ era_text:
 
 hook: {en: 'The island name travels with the packet.', zh: '那包标本，得带着岛名走。'}
 facts:
+  lawson:
+    date: '1835-09-25'
+    stay_day: 10
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [darwin_galapagos_journal, darwin_galapagos_sulloway]
+    text:
+      en: 'On Charles Island the vice-governor Lawson told Darwin he could tell from which island a tortoise came. Darwin later wrote that he had not paid enough attention to this, had already partly mixed the collections of two islands, and had mixed most of his finches; he did not begin to keep his birds apart by island while in the archipelago.'
+      zh: '在查尔斯岛，副总督劳森告诉达尔文，他一看就知道一只龟出自哪座岛。达尔文后来写道，他当时没有留心，已把两座岛的采集混在一起，雀的标本也大多混了；他在群岛期间没有开始把鸟分岛收存。'
+    line:
+      en: 'On Charles Island the vice-governor Lawson says he can tell which island a tortoise comes from.'
+      zh: '查尔斯岛的副总督劳森说，一只龟出自哪座岛，他一看就知道。'
+  james_island:
+    date: '1835-10-08'
+    stay_day: 23
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [darwin_galapagos_log, darwin_galapagos_journal]
+    text:
+      en: 'From 8 to 17 October 1835 Darwin, the surgeon Bynoe and their servants were left on James Island with provisions and a tent while the Beagle went for water; near their camp there was only a poor little spring.'
+      zh: '1835 年 10 月 8 日至 17 日，达尔文、随船医生拜诺和随从带着口粮和帐篷留在詹姆斯岛，小猎犬号去别处取水；营地旁只有一眼小泉。'
+    line:
+      en: '8 October 1835: Darwin and a small party are set ashore on James Island with a tent, while the Beagle goes for water.'
+      zh: '1835 年 10 月 8 日，达尔文一小队带着帐篷登上詹姆斯岛，小猎犬号去别处取水。'
   surveying:
     date: '1835-09-15'
     checked: official_record
@@ -382,7 +441,7 @@ bystanders:
     invented: true
     text: {en: 'Joan, a fictional copyist holding the note that names the island.', zh: '虚构抄写员琼，手里有写着岛名的纸签。'}
 self_check:
-  fact: surveying
+  fact: lawson
   quote_line: '下一班可以把标本和核过的签一起带走。'
   regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
   bookend: '那包标本，得带着岛名走。 结尾还可看到交出的记录有没有待查一栏。'

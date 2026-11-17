@@ -2,6 +2,7 @@ order: 223
 events:
   humboldt_chimborazo:
     order: 213
+    build_step: 2
     year: 1802
     lon: -78.82
     lat: -1.47
@@ -10,43 +11,54 @@ events:
     tier: 2
     era: humboldt_chimborazo_1802
     channels: {A: 3, C: 2, L: 2}
-    refs: [humboldt_diary_1802, humboldt_plants_table, humboldt_calpi_history]
+    refs: [humboldt_dhm, humboldt_chimborazo_wikipedia, humboldt_diary_1802, humboldt_plants_table, humboldt_calpi_history]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {"any":[{"stat":{"constitution":6}},{"provides":"endurance"}]}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: hold, req: {"trait":["bold","vigil"]}}
+        - {id: p1, kind: endure, day: 7, req: {"any":[{"trait":["hardy","bold"],"stat":{"constitution":8,"will":5}},{"item":"exoskeleton","stat":{"constitution":5,"will":6}},{"provides":"endurance","trait":["hardy","bold","wanderer","calm"],"stat":{"constitution":6,"will":5}}]}}
       vignettes:
         - {id: turn, traits: [skeptical, curious]}
         - {id: units, traits: [methodical, vigil]}
         - {id: names}
     text:
       en:
-        name: "Reading a whole mountain from the snow line"
+        name: "The gully above the snow line"
         place: "Mount Chimborazo, Ecuador"
         figure: "Alexander von Humboldt"
-        story: 'Humboldt''s travel diary describes the 23 June 1802 attempted ascent of Chimborazo. Aimé Bonpland and Carlos Montúfar were with him, and they did not reach the summit.'
+        story: 'On 23 June 1802 Humboldt climbed Chimborazo with Aimé Bonpland and Carlos Montúfar. The porters would go no further; the three went on with nosebleeds, vomiting and dizziness, until a deep gully below the summit stopped them, and they turned back.'
         relic: "A barometer"
         relic_desc: "A mercury barometer with heights marked on the glass."
         points:
-          p1: "Keep walking on the snow line"
-          p2: "Read the barometer and the boiling point"
-          p3: "Finish the last stretch"
+          p1: 'Before the deep gully blocks the way on 23 June, help the party hold out against the mountain sickness, find a way across, reach the summit of Chimborazo and come down safely'
+        points_fail:
+          p1: 'As in history they turn back at the gully, below the summit.'
+        shift:
+          p1:
+            was: '23 June 1802: Humboldt, Bonpland and Carlos Montúfar climbed Chimborazo with nosebleeds, vomiting and dizziness, until a deep gully below the summit stopped them and they turned back.'
+            now: 'They crossed the gully, stood on the summit of Chimborazo, and came back down to camp safely.'
+            who: humboldt_chimborazo
+            bio: 'In this timeline Humboldt reached the summit of Chimborazo with Bonpland and Montúfar on 23 June 1802, and came down safely.'
         vignettes:
           turn: 'A fictional reader has drawn the summit at the end of the route. You ask where the diary stops describing the ascent. They move their last mark down the slope and leave the top untouched.'
           units: 'The reader wants to copy a height without its unit. You keep it attached to the original measurement and leave space for a separate modern conversion.'
           names: 'You ask the reader to leave space beside Humboldt for the other travellers'' names. When the note is folded, the list still follows the account of the day''s attempt.'
       zh:
-        name: "在雪线下量出一座山的全貌"
+        name: "雪线以上的那道深沟"
         place: "厄瓜多尔钦博拉索山"
         figure: "亚历山大·冯·洪堡"
-        story: '洪堡的旅行日记记下了 1802 年 6 月 23 日攀登钦博拉索山的尝试。同行有埃梅·邦普兰和卡洛斯·蒙图法尔，一行人没有登顶。'
+        story: '1802 年 6 月 23 日，洪堡与埃梅·邦普兰、卡洛斯·蒙图法尔攀登钦博拉索山。挑夫不肯再往上走，三人流着鼻血、呕吐、头晕，继续向上，直到山顶以下一道深沟挡住去路，只得折返。'
         relic: "一支气压计"
         relic_desc: "一支装着水银的气压计，玻璃管上刻着高度。"
         points:
-          p1: "在雪线上继续走"
-          p2: "读气压计和沸点"
-          p3: "走完最后一段"
+          p1: '6 月 23 日那道深沟挡住去路之前，帮一行人顶住高山病，找到越过去的路，登上钦博拉索山顶再平安下来'
+        points_fail:
+          p1: '他们照史实在那道深沟前折返，没有登顶。'
+        shift:
+          p1:
+            was: '1802 年 6 月 23 日，洪堡、邦普兰和卡洛斯·蒙图法尔攀登钦博拉索山，一路流鼻血、呕吐、头晕，在山顶以下被一道深沟挡住，只得折返。'
+            now: '他们越过那道深沟，站上了钦博拉索山顶，又平安回到营地。'
+            who: humboldt_chimborazo
+            bio: '这条时间线里，洪堡 1802 年 6 月 23 日与邦普兰、蒙图法尔一同登上钦博拉索山顶，平安下山。'
         vignettes:
           turn: '虚构读者把线路一路画上山顶。你问日记写到哪里就停止往上走了。他把最后一记往山坡下移，没再碰山顶。'
           units: '读者要只抄一个高度，把单位省掉。你请他把原单位和测数放在一起，另留一行给今天的换算。'
@@ -113,6 +125,18 @@ wiki:
           name: 攀登的计划
           text: 爬多快、歇多久，是队伍在山坡上自己的选择。
   refs:
+    humboldt_dhm:
+      order: 140
+      status: checked
+      text:
+        en: 'Deutsches Historisches Museum, Alexander von Humboldt and the ascent of Chimborazo https://www.dhm.de/journal/en/post/alexander-von-humboldt-and-the-ascent-of-chimborazo'
+        zh: '德国历史博物馆，亚历山大·冯·洪堡与钦博拉索之攀 https://www.dhm.de/journal/en/post/alexander-von-humboldt-and-the-ascent-of-chimborazo'
+    humboldt_chimborazo_wikipedia:
+      order: 141
+      status: checked
+      text:
+        en: 'Wikipedia, Chimborazo https://en.wikipedia.org/wiki/Chimborazo'
+        zh: '维基百科，钦博拉索山 https://en.wikipedia.org/wiki/Chimborazo'
     humboldt_plants_table:
       order: 997
       status: checked
@@ -353,10 +377,11 @@ era_text:
       ally_gap: 亚历山大·冯·洪堡的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
 
-hook: {en: 'Keep the reading and the place together.', zh: '读数要留，在哪里读的也要留。'}
+hook: {en: 'The summit is just above, and a gully lies across the way.', zh: '山顶就在上面，脚下横着一道深沟'}
 facts:
   approach:
     date: '1802-06-22'
+    stay_day: 7
     checked: official_record
     level: usable
     use: [history, story, wiki]
@@ -366,13 +391,30 @@ facts:
       zh: '攀登前一天，一行人向钦博拉索山进发。'
   crevasse:
     date: '1802-06-23'
-    checked: official_record
+    stay_day: 8
+    checked: two_sources
     level: usable
     use: [history, story, wiki]
-    sources: [humboldt_plants_table, humboldt_diary_1802]
+    sources: [humboldt_dhm, humboldt_chimborazo_wikipedia, humboldt_diary_1802]
     text:
       en: 'Humboldt, Bonpland and Carlos Montúfar climb Chimborazo and turn back below the summit.'
       zh: '洪堡、邦普朗与卡洛斯·蒙图法尔攀登钦博拉索，在山顶以下折返。'
+    line:
+      en: '23 June 1802: below the summit of Chimborazo a deep gully stops the climbers, and they turn back.'
+      zh: '1802 年 6 月 23 日，钦博拉索山顶以下，一道深沟挡住了攀登的人，他们折返。'
+  sickness:
+    date: '1802-06-23'
+    stay_day: 8
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [humboldt_dhm]
+    text:
+      en: 'On the climb the porters would go no further; Humboldt, Bonpland and Montúfar went on suffering nosebleeds, vomiting and dizziness, which Humboldt later called mountain sickness.'
+      zh: '攀登途中挑夫不肯再往上走；洪堡、邦普兰和蒙图法尔继续向上，流鼻血、呕吐、头晕，洪堡后来称之为高山病。'
+    line:
+      en: 'Higher up the porters stop; the three go on, with nosebleeds and dizziness.'
+      zh: '再往上，挑夫停下了；三人继续走，流着鼻血，头晕得厉害。'
 bystanders:
   ines:
     invented: true
@@ -381,7 +423,7 @@ bystanders:
     invented: true
     text: {en: 'Diego, a fictional carrier who needs to leave before fog closes in.', zh: '虚构挑夫迭戈，得赶在雾合拢前走。'}
 self_check:
-  fact: approach
+  fact: crevasse
   quote_line: '纸上只留最后核实的地点，下一次读数得等。'
   regret_choice: 'expedition_send 先交记录保住一趟交接，expedition_handoff 多等一会儿能复核遗漏的一处。'
   bookend: '读数要留，在哪里读的也要留。 结尾还可看到交出的记录有没有待查一栏。'

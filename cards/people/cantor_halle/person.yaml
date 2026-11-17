@@ -3,8 +3,8 @@ events:
   cantor_halle:
     order: 110
     build_step: 2
-    year: 1884
-    date: '1884-11-11'
+    year: 1917
+    date: '1917-07-15'
     stay: 6
     lon: 11.97
     lat: 51.48
@@ -12,63 +12,65 @@ events:
     field: math
     tier: 2
     channels: {G: 3, S: 2}
-    refs: [cantor_halle_primary, cantor_halle_unpublished_material, cantor_halle_letter_index]
+    refs: [cantor_halle_mactutor, cantor_halle_wikipedia, cantor_halle_primary, cantor_halle_unpublished_material, cantor_halle_letter_index]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 124, req: {"any":[{"job":["archivist","university_lecturer"]},{"trait":["methodical","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 145, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 60, req: {"any":[{"job":["doctor","physician","nurse","caregiver"],"stat":{"will":6}},{"trait":["kind","patient","charismatic"],"stat":{"wit":5,"will":7}}]}}
+        - {id: p2, kind: care, day: 150, req: {"any":[{"job":["doctor","physician"],"stat":{"will":8}},{"job":["nurse","caregiver","cook","chef"],"provides":"ration","stat":{"will":5}},{"provides":"cure","trait":["kind","patient","vigil"],"stat":{"will":6}}]}}
       vignettes:
         - {id: list, traits: [curious, scholarly]}
         - {id: after, traits: [methodical, vigil]}
         - {id: end}
     text:
       en:
-        name: "Sizes of infinity"
+        name: "Letters from the clinic"
         place: "Halle"
         figure: "Georg Cantor"
-        story: 'Cantor''s 1874 paper gives a way to enumerate the real algebraic numbers and shows that a list cannot contain all real numbers in an interval.'
+        story: 'Cantor retired in 1913 and spent his last years ill and short of food under the war conditions in Germany. In June 1917 he entered the clinic in Halle for the last time, and wrote to his wife again and again asking to be allowed home. On 6 January 1918 he died there of a heart attack.'
         relic: "A set of index cards"
         relic_desc: "Cards covered with lists that never end."
         points:
-          p1: 'In Halle, match Cantor’s successive corrections to the final draft so Mittag-Leffler can receive and review the complete submission'
-          p2: 'Have Cantor approve a copy for a small group. Mark what can be demonstrated on its own and which parts remain proposals'
+          p1: 'Persuade the clinic and his family to let him go home to recover'
+          p2: 'Through the last winter of the war, keep him fed and look after his heart, and save him'
         points_fail:
-          p1: 'The editor receives only the previous round of corrections. The final submission cannot be read, and the office recalls the employee.'
-          p2: 'Once withdrawn, the work stays in the correspondence. A group willing to read it has no complete copy or stable page references.'
+          p1: 'As in history he stays in the clinic. His letters asking to come home go out one after another and are never granted.'
+          p2: 'On 6 January 1918, as in history, he dies of a heart attack in the clinic.'
         shift:
           p1:
-            was: 'In late 1884 and into spring 1885 Cantor sent a draft and successive changes from Halle. The two corresponded about the editor’s review.'
+            was: 'June 1917: Cantor entered the clinic in Halle for the last time and wrote to his wife again and again asking to come home; he was not allowed to.'
+            now: 'He went home and recovered among his family.'
           p2:
-            was: 'In 1885 the early paper on order types was withdrawn. Researchers later edited it from surviving archives.'
-            now: 'The circulating copy carries readers’ queries and keeps the dates and authorship of the open sections. Later readers can recover what the first group asked.'
+            was: '6 January 1918: Cantor died of a heart attack in the clinic in Halle, after years of wartime hunger.'
+            now: 'That winter he had enough to eat and someone to look after him, and he lived on past January 1918.'
             who: cantor_halle
-            bio: 'Cantor worked on sets and order in Halle. Whether readers could follow his new terms was part of his exchange with an editor.'
+            bio: 'In this timeline Cantor had food and care through the last winter of the war, and lived on past January 1918.'
         vignettes:
           list: 'The learner says the list is already endless. You ask what would show that everything is on it. They leave a second line for the reasoning rather than merely extending the first.'
           after: 'The learner copies several numbers and forgets the rule for getting the next. You ask them to put the rule first so another person can carry on where the slate ends.'
           end: 'You move the sample list to the side of the slate and let the learner add a line describing which numbers it is meant to include.'
       zh:
-        name: "无穷的大小"
+        name: "疗养院寄出的信"
         place: "哈雷"
         figure: "格奥尔格·康托尔"
-        story: '康托尔 1874 年的论文给出了逐一列举实代数数的方法，并说明一张这样排出的名单无法包含区间内所有实数。'
+        story: '康托尔 1913 年退休，战时的德国缺粮，他最后几年多病，也吃不饱。1917 年 6 月他最后一次住进哈雷的疗养院，一再写信给妻子，请求让他回家。1918 年 1 月 6 日，他在那里死于心脏病发作。'
         relic: "一叠索引卡片"
         relic_desc: "卡片上写满了永远列不完的清单。"
         points:
-          p1: '在哈雷把坎托尔连寄的修改与最后稿配齐，护住米塔格－莱夫勒确实能收到并回读这项稿件'
-          p2: '请坎托尔核准一份小范围传阅本，标出已经能独立说明的部分和仍在拟议的部分'
+          p1: '劝院方和他的家人答应，让他回到家里调养'
+          p2: '战时最后一个冬天里，让他吃饱、照看好他的心脏，救下他'
         points_fail:
-          p1: '编辑只收到上一轮的改页，最终稿无法审阅，事务所召回员工。'
-          p2: '撤稿后材料只留在编辑往来中，愿意核对的小组没有完整抄本与页次。'
+          p1: '他照史实留在疗养院里，求回家的信一封封寄出去，始终没有获准。'
+          p2: '1918 年 1 月 6 日，他照史实在疗养院里死于心脏病发作。'
         shift:
           p1:
-            was: '1884 年秋冬到 1885 年春，坎托尔从哈雷寄稿并续寄改动，后续通信谈及编辑对稿件的评估。'
+            was: '1917 年 6 月，康托尔最后一次住进哈雷的疗养院，一再写信给妻子请求回家，没有获准。'
+            now: '他回到了家里，在家人身边养病。'
           p2:
-            was: '1885 年，这篇有关次序类型的早期稿件被撤回，后来由研究者从档案重新整理。'
-            now: '小范围传阅本留下阅读意见，未解决的地方仍带原来的署名与日期。日后档案里也能找到当时读者的问题。'
+            was: '1918 年 1 月 6 日，康托尔在哈雷的疗养院里死于心脏病发作，此前几年他一直吃不饱。'
+            now: '那个冬天他吃得饱，也有人照看，活过了 1918 年 1 月。'
             who: cantor_halle
-            bio: '坎托尔在哈雷研究集合与次序。他的新术语能否让读者跟上，是与编辑协商的一部分。'
+            bio: '这条时间线里，康托尔在战时最后一个冬天有饭食、有人照看，活过了 1918 年 1 月。'
         vignettes:
           list: '学算者说这张表已经写不到头。你问怎样才知道什么都在上面。他另留一行记理由，没只顾把第一行续长。'
           after: '学算者抄了几个数，却忘了下一个该怎么算。你请他先写规则，石板写到边，换个人也能接下去。'
@@ -76,17 +78,54 @@ events:
 text:
   en:
     name: Georg Cantor
-    text: German mathematician, 1845 to 1918, who taught at Halle. He created set theory and showed that infinite sets come in different sizes. His ideas met fierce criticism and he suffered long periods of depression.
+    text: German mathematician, 1845 to 1918, who taught at Halle. He created set theory and showed that infinite sets come in different sizes. His ideas met fierce criticism and he suffered long periods of depression. He died in a clinic in Halle in January 1918.
   zh:
     name: 格奥尔格·康托尔
-    text: 德国数学家，1845 年生，1918 年去世，在哈雷任教。他创立集合论，证明无穷集合有不同的大小。他的想法遭到强烈批评，他本人长期受抑郁困扰。
-hook: {en: 'Being infinite leaves a question open.', zh: '都是无穷，还能一一排开吗'}
+    text: 德国数学家，1845 年生，1918 年去世，在哈雷任教。他创立集合论，证明无穷集合有不同的大小。他的想法遭到强烈批评，他本人长期受抑郁困扰。1918 年 1 月他在哈雷的疗养院去世。
+hook: {en: 'Letter after letter, he asks to be taken home.', zh: '他一封接一封写信，求家里接他回去'}
 facts:
+  hunger:
+    date: '1913'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [cantor_halle_mactutor, cantor_halle_wikipedia]
+    text:
+      en: 'Cantor retired in 1913 and spent his last years ill and short of food under the war conditions in Germany.'
+      zh: '康托尔 1913 年退休，最后几年多病，又因战时德国的处境吃不饱。'
+    line:
+      en: 'The war has emptied the larders; Cantor is ill and short of food.'
+      zh: '战时缺粮，康托尔病着，也吃不饱。'
+  clinic:
+    date: '1917-06'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [cantor_halle_mactutor, cantor_halle_wikipedia]
+    text:
+      en: 'In June 1917 Cantor entered a clinic in Halle for the last time and wrote to his wife again and again asking to be allowed home.'
+      zh: '1917 年 6 月，康托尔最后一次住进哈雷的疗养院，一再写信给妻子，请求让他回家。'
+    line:
+      en: 'From the clinic Cantor writes to his wife again: he asks to come home.'
+      zh: '康托尔又从疗养院写信给妻子，请求回家。'
+  death:
+    date: '1918-01-06'
+    stay_day: 175
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [cantor_halle_mactutor, cantor_halle_wikipedia]
+    text:
+      en: 'Cantor died of a heart attack in the clinic in Halle on 6 January 1918.'
+      zh: '1918 年 1 月 6 日，康托尔在哈雷的疗养院里死于心脏病发作。'
+    line:
+      en: '6 January 1918: Cantor dies in the clinic in Halle.'
+      zh: '1918 年 1 月 6 日，康托尔在哈雷的疗养院去世。'
   countability:
     date: '1874'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [cantor_halle_primary]
     text:
       en: 'Cantor''s 1874 paper gives a way to enumerate the real algebraic numbers and shows that a list cannot contain all real numbers in an interval.'
@@ -97,6 +136,18 @@ bystanders:
     text: {en: 'An invented learner copying a sequence onto a slate.', zh: '一位虚构的学算者，正往石板上抄一个数列。'}
 wiki:
   refs:
+    cantor_halle_mactutor:
+      order: 140
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Georg Cantor https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/'
+        zh: '圣安德鲁斯大学 MacTutor 数学史档案，格奥尔格·康托尔 https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/'
+    cantor_halle_wikipedia:
+      order: 141
+      status: checked
+      text:
+        en: 'Wikipedia, Georg Cantor https://en.wikipedia.org/wiki/Georg_Cantor'
+        zh: '维基百科，格奥尔格·康托尔 https://en.wikipedia.org/wiki/Georg_Cantor'
     cantor_halle_unpublished_material:
       order: 10
       status: checked
@@ -117,9 +168,9 @@ wiki:
         zh: 'Georg Cantor, On a Property of the Collection of All Real Algebraic Numbers, Journal für die reine und angewandte Mathematik 77 (1874), 258–262. Göttingen scan. https://gdz.sub.uni-goettingen.de/id/PPN243919689_0077?tify=%7B%22view%22%3A%22info%22%2C%22pages%22%3A%5B266%5D%7D'
 self_check:
   quote_line: '学算者说这张表已经写不到头。'
-  fact: countability
+  fact: clinic
   regret_choice: '略过「说明例表打算列进哪些数」，这处细节便留给下一位核对。'
-  bookend: '从「都是无穷，还能一一排开吗」开始，以员工留下的观察或更正收尾。'
-  share_line: '都是无穷，还能一一排开吗'
-  share_number: '1874'
+  bookend: '从「他一封接一封写信，求家里接他回去」开始，以员工留下的观察或更正收尾。'
+  share_line: '他一封接一封写信，求家里接他回去'
+  share_number: '1917-06'
 pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

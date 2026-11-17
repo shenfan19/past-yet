@@ -2,52 +2,64 @@ order: 89
 events:
   hertz_bonn:
     order: 123
-    build_step: 1
-    year: 1894
+    build_step: 2
+    year: 1893
+    date: '1893-09-05'
+    stay: 4
     lon: 7.1
     lat: 50.73
     region: europe
     field: science
     tier: 2
     channels: {G: 2}
-    regret: true
-    refs: [hertz_bonn_resonator]
+    refs: [hertz_bonn_mactutor, hertz_bonn_nature, hertz_bonn_wikipedia, hertz_bonn_resonator]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["civil_engineer","retired_engineer","electrician"]},{"stat":{"wit":7}}]}}
-        - {id: p2, kind: care, req: {"trait":["faithful","cheerful","calm"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"item":"elixir"}}
+        - {id: p1, kind: care, day: 80, req: {"any":[{"job":["doctor","physician"],"provides":"cure","stat":{"will":5}},{"job":["doctor","physician","medical_teacher"],"stat":{"wit":8,"will":8}},{"job":["nurse","paramedic"],"provides":"cure","stat":{"will":6}}]}}
       vignettes:
         - {id: repeat, traits: [methodical, handy]}
         - {id: signal, traits: [bold, curious]}
         - {id: gap}
     text:
       en:
-        name: 'A spark that is easy to miss'
+        name: 'The last term'
         place: "Bonn"
         figure: "Heinrich Hertz"
-        story: 'Hertz’s earlier electromagnetic experiments used small sparks in a resonator as evidence of electrical oscillations. Fraunhofer HHI’s experiment chronology records that he also used a microscope to watch the spark. The 1894 Bonn scene is an imagined repeat by a workshop assistant. It is set after the original experiments.'
+        story: 'From early 1892 Hertz suffered again and again from a painful illness of the nose and throat, so bad at times that he could not work. In 1893 he went back to lecturing in Bonn while undergoing several operations, and finished his Principles of Mechanics. He died in Bonn on 1 January 1894, aged thirty six; the book came out after his death.'
         relic: "A spark gap"
         relic_desc: "A small brass spark gap from his experiments."
         points:
-          p1: 'Identify the tiny spark that signals a response in the receiving loop'
-          p2: 'Ask the assistant to keep the viewing position steady for a second trial'
-          p3: 'Keep an uncertain observation separate from a negative result'
+          p1: 'Before the illness gets worse, cure the long illness of his nose and jaw, and save him'
+        points_fail:
+          p1: 'On 1 January 1894, as in history, he dies in Bonn, aged thirty six.'
+        shift:
+          p1:
+            was: '1 January 1894: Hertz died in Bonn, aged thirty six. From 1892 a painful illness of his nose and throat had kept returning, and several operations had not cured it.'
+            now: 'His illness was cured and the pain stopped, and he went on lecturing in Bonn.'
+            who: hertz_bonn
+            bio: 'In this timeline Hertz was cured at the end of 1893 of the illness he had carried for two years, and lived on in Bonn past 1894.'
         vignettes:
           repeat: 'The assistant is writing ‘none’ after one glance. You put the receiver back where it was and ask him to watch through the lens again. A brief spark appears on the second look. You change the first entry to ‘uncertain’. Its cause is still open when you leave.'
           signal: 'You know later devices will carry signals much farther. The assistant asks if the spark itself can carry a sentence. You leave two empty columns on his page, one for a recognised spark and one for any pattern he can reproduce. There is time to fill only the first.'
           gap: 'You hold the written record at the bench and let the assistant call out what he sees. One entry remains blank because neither of you had a decent view of the gap. You bring back that honest blank. Further trials are still on his list.'
       zh:
-        name: '很容易看漏的一点火花'
+        name: '最后一个学期'
         place: "波恩"
         figure: "海因里希·赫兹"
-        story: '赫兹早先做电磁实验时，用谐振器里的细小火花来察看电振荡。弗劳恩霍夫海因里希·赫兹研究所的实验年表也记载他曾用显微镜观察火花。'
+        story: '1892 年初起，赫兹的鼻子和喉咙反复剧痛，有时痛得无法工作。1893 年他一边做了几次手术，一边回到波恩大学讲课，写完了《力学原理》。1894 年 1 月 1 日，他在波恩去世，年仅三十六岁，书在他死后出版。'
         relic: "一个火花隙"
         relic_desc: "他做实验用过的一个小铜火花隙。"
         points:
-          p1: '在接收环上认出表示响应的一点火花'
-          p2: '请帮工稳住观察位置再试一回'
-          p3: '把没看清与确认没有分开记录'
+          p1: '病再重下去之前，治好他鼻子和颌骨里久治不愈的病，救下他'
+        points_fail:
+          p1: '1894 年 1 月 1 日，他照史实在波恩去世，年仅三十六岁。'
+        shift:
+          p1:
+            was: '1894 年 1 月 1 日，赫兹在波恩去世，年仅三十六岁。1892 年起他的鼻子和喉咙反复剧痛，做过几次手术也没有治好。'
+            now: '他的病治好了，痛也止住了，接着在波恩讲课。'
+            who: hertz_bonn
+            bio: '这条时间线里，赫兹在 1893 年底治好了缠身两年的病，在波恩活过了 1894 年。'
         vignettes:
           repeat: '帮工瞥一眼就要写「无」。你把接收环放回原处，请他透过镜头再看一遍。第二眼见到一点短促火花。你把第一条改成「未看清」。第一回究竟有没有，收队时仍无法断定。'
           signal: '你知道后来的装置会把信号送到更远处。帮工问这么一点火花能不能送一句话。你在他的记录上各留一栏，一栏记认出的火花，一栏记能重现的变化。收队前，只来得及填第一栏。'
@@ -59,13 +71,50 @@ text:
   zh:
     name: 海因里希·赫兹
     text: 德国物理学家，1857 年生，1894 年去世。1887 至 1888 年他产生并探测到无线电波，证实了麦克斯韦的电磁理论。频率单位以他命名，他年纪轻轻就在波恩去世。
-hook: {en: 'Is the missing spark a missing signal?', zh: '没看见火花，就没有信号吗？'}
+hook: {en: 'The book is nearly written. The illness is not going away.', zh: '书稿快写完了，病却一直不好'}
 facts:
+  illness:
+    date: '1892'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [hertz_bonn_mactutor, hertz_bonn_nature]
+    text:
+      en: 'From early 1892 a painful illness of Hertz''s nose and throat kept returning; in 1893 he lectured again while undergoing several operations.'
+      zh: '1892 年初起，赫兹的鼻子和喉咙反复剧痛；1893 年他一边做了几次手术，一边重新讲课。'
+    line:
+      en: 'Hertz is lecturing again this term, between operations on his nose and throat.'
+      zh: '这个学期赫兹又在讲课，鼻子和喉咙的手术做了一次又一次。'
+  mechanics:
+    date: '1894'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hertz_bonn_mactutor, hertz_bonn_wikipedia]
+    text:
+      en: 'Hertz finished The Principles of Mechanics in 1893; it was published after his death, in 1894.'
+      zh: '赫兹在 1893 年写完《力学原理》，书在他死后于 1894 年出版。'
+    line:
+      en: 'Hertz finishes the manuscript of The Principles of Mechanics.'
+      zh: '赫兹写完了《力学原理》的书稿。'
+  death:
+    date: '1894-01-01'
+    stay_day: 118
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [hertz_bonn_mactutor, hertz_bonn_nature]
+    text:
+      en: 'Hertz died in Bonn on 1 January 1894, aged thirty six.'
+      zh: '1894 年 1 月 1 日，赫兹在波恩去世，年仅三十六岁。'
+    line:
+      en: '1 January 1894: Heinrich Hertz dies in Bonn.'
+      zh: '1894 年 1 月 1 日，海因里希·赫兹在波恩去世。'
   resonator:
     date: '1887'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [hertz_bonn_resonator]
     text:
       en: 'The chronology lists Hertz’s spark observations and an experiment with a smaller circular resonator and a microscope.'
@@ -76,6 +125,24 @@ bystanders:
     text: {en: 'An invented assistant watching the narrow gap of the receiving apparatus.', zh: '虚构的帮工，盯着接收装置上那条细缝。'}
 wiki:
   refs:
+    hertz_bonn_mactutor:
+      order: 140
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Heinrich Hertz https://mathshistory.st-andrews.ac.uk/Biographies/Hertz_Heinrich/'
+        zh: '圣安德鲁斯大学 MacTutor 数学史档案，海因里希·赫兹 https://mathshistory.st-andrews.ac.uk/Biographies/Hertz_Heinrich/'
+    hertz_bonn_nature:
+      order: 141
+      status: checked
+      text:
+        en: 'Heinrich Hertz, obituary, Nature 49 (1894), 265 https://www.nature.com/articles/049265a0'
+        zh: '《自然》讣告，海因里希·赫兹，第 49 卷（1894），265 页 https://www.nature.com/articles/049265a0'
+    hertz_bonn_wikipedia:
+      order: 142
+      status: checked
+      text:
+        en: 'Wikipedia, Heinrich Hertz https://en.wikipedia.org/wiki/Heinrich_Hertz'
+        zh: '维基百科，海因里希·赫兹 https://en.wikipedia.org/wiki/Heinrich_Hertz'
     hertz_bonn_resonator:
       order: 612
       status: checked
@@ -83,7 +150,7 @@ wiki:
         en: 'Fraunhofer Heinrich Hertz Institute, The most important experiments of Heinrich Hertz, 1886–1888 chronology https://www.hhi.fraunhofer.de/en/fraunhofer-hhi-the-institute/about-us/history-of-hhi/the-most-important-experiments-of-heinrich-hertz.html'
         zh: '弗劳恩霍夫海因里希·赫兹研究所，赫兹主要实验年表 https://www.hhi.fraunhofer.de/en/fraunhofer-hhi-the-institute/about-us/history-of-hhi/the-most-important-experiments-of-heinrich-hertz.html'
 self_check:
-  fact: resonator
+  fact: illness
   quote_line: '你把第一条改成「未看清」。'
   regret_choice: '只看一次就填无，会把没看清当成阴性结果。'
   bookend: '从一个写得太早的无，到分清空白和观察记号。'

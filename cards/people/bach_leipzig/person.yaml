@@ -3,72 +3,63 @@ events:
   bach_leipzig:
     order: 23
     build_step: 2
-    year: 1723
-    date: '1723-04-22'
-    stay: 4
+    year: 1750
+    date: '1750-03-01'
+    stay: 2
     lon: 12.37
     lat: 51.34
     region: europe
     field: music
     tier: 2
     channels: {V: 2, L: 1}
-    refs: [bach_leipzig_primary, bach_leipzig_leipzig_council, bach_leipzig_choir, bach_leipzig_chronology]
+    refs: [bach_leipzig_zegers, bach_leipzig_britannica, bach_leipzig_taylor, bach_leipzig_primary, bach_leipzig_leipzig_council, bach_leipzig_choir, bach_leipzig_chronology]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 38, req: {"any":[{"job":["musician","archivist"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 71, req: {"any":[{"job":["musician","archivist"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 20, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
       vignettes:
         - {id: entry, traits: [artistic, quiet]}
         - {id: rest, traits: [methodical, patient]}
         - {id: light}
     text:
       en:
-        name: A cantor writes for every Sunday
+        name: The spring the oculist came
         place: Leipzig
         figure: Johann Sebastian Bach
-        story: 'Bach introduced himself to Leipzig with the cantata Die Elenden sollen essen, BWV 75, on 30 May 1723.'
+        story: 'By the spring of 1750 Bach''s eyes had failed so far that he could hardly read or write. At the end of March the travelling English oculist John Taylor came to Leipzig and operated twice on his cataracts. After the operations Bach was blind, and he died in Leipzig on 28 July.'
         relic: An organ pipe cut from quill
         relic_desc: A small pipe, tuned and tested, left unsold.
         points:
-          p1: 'Check Bach’s first set of performing parts against the roster so the chorus and players have enough readable copies for May 30'
-          p2: 'Work out next month’s copying, rehearsals and replacements with Bach. Take the schedule and expected hours to the school to secure regular help'
+          p1: 'Before the oculist Taylor operates, talk Bach out of the operation and treat the cataracts properly'
         points_fail:
-          p1: 'Several parts are left among the appointment papers. The set is incomplete on the day, and the office recalls the employee.'
-          p2: 'When several jobs land in one week, copying still depends on whoever can take it and rehearsals wait for the parts.'
+          p1: 'As in history Taylor operates twice at the end of March and in early April. Bach is left blind, and he dies in July.'
         shift:
           p1:
-            was: 'The Leipzig council appointed Bach in 1723. On May 30 he performed BWV 75 in Leipzig.'
-          p2:
-            was: 'The Leipzig post required regular performances, and Bach organized new music almost every week after his appointment.'
-            now: 'The school sets aside hours for copying and covering missing parts. When performances come close together, players see the parts before their first rehearsal.'
+            was: 'End of March to early April 1750: the English oculist John Taylor operated twice on Bach''s cataracts in Leipzig. Bach was blind afterwards, and he died on 28 July that year.'
+            now: 'He never let Taylor operate. His cataracts were treated, and he could see the music on the page again.'
             who: bach_leipzig
-            bio: 'Bach took over as Leipzig’s Thomaskantor in 1723. Teaching, copying and performing had to fit the same timetable.'
+            bio: 'In this timeline Bach kept away from the two operations of spring 1750. His cataracts were treated, and he could see again in Leipzig.'
         vignettes:
           entry: 'You hear the lower part arrive a breath before the singer expects it. You have them listen from the other side of the room. This time they raise their head before the cue.'
           rest: 'The singer loses count during the rest. You copy the line they can hear while waiting, and they mark the word that comes just before their own entrance.'
           light: 'Two singers share one page. You tilt it towards the light and hold it there until both can see the place where their lines separate.'
       zh:
-        name: 一位乐长为每个礼拜日写曲
+        name: 眼医进城的那个春天
         place: 莱比锡
         figure: 约翰·塞巴斯蒂安·巴赫
-        story: '1723 年 5 月 30 日，巴赫在莱比锡以康塔塔《困苦人必得吃饱》BWV 75 开启任职后的演出。'
+        story: '到 1750 年春，巴赫的眼睛已坏到难以读写。3 月底，英国游方眼医约翰·泰勒来到莱比锡，接连两次给他做白内障手术。手术之后他双目失明，7 月 28 日在莱比锡去世。'
         relic: 一根小风琴管
         relic_desc: 一根调好音、试过音的小管子，没有卖掉。
         points:
-          p1: '把新任乐长巴赫的首套演出分谱按人核齐，赶在 5 月 30 日前给合唱和乐手留齐可读的份数'
-          p2: '和巴赫定好下一月的抄谱、排练与补缺时间，拿一份写明实际工时的计划向校方争取固定名额'
+          p1: '泰勒进城动刀之前，劝巴赫别让他动刀，把他的白内障好好治好'
         points_fail:
-          p1: '几份声部谱夹在新任交接文件里，演出当天没凑齐，事务所因同步失败召回员工。'
-          p2: '遇见同周几件工作时，抄谱仍靠临时叫人，排练只能等分谱陆续送到。'
+          p1: '泰勒照史实在三月底、四月初给他动了两次刀，他双目失明，七月病逝。'
         shift:
           p1:
-            was: '1723 年，巴赫经莱比锡市议会选任。5 月 30 日，他在当地演出 BWV 75。'
-          p2:
-            was: '莱比锡的职务要求常为不同场合准备演出，巴赫到任后几乎每周要组织新的曲目。'
-            now: '校方给抄谱和声部补缺留固定时数。碰上连着两次演出时，乐手能在第一次排练前看到分谱。'
+            was: '1750 年 3 月底至 4 月初，英国眼医约翰·泰勒在莱比锡两次为巴赫做白内障手术，术后他双目失明，同年 7 月 28 日去世。'
+            now: '他没让泰勒动刀，白内障治好了，又看得清谱纸上的音符。'
             who: bach_leipzig
-            bio: '巴赫 1723 年接任莱比锡圣托马斯乐长，教学、抄谱和演出必须按同一张日程推行。'
+            bio: '这条时间线里，巴赫在 1750 年春避开了那两次手术，白内障治好，在莱比锡重新看得清东西。'
         vignettes:
           entry: '你听出低声部比歌者预想的早到一口气。你请他换到屋子另一边听。这次，提示还没来，他就抬起了头。'
           rest: '歌者一唱到休止就数乱。你抄下等待时能听到的另一行，他在自己开口前的那个字上做了记号。'
@@ -76,17 +67,51 @@ events:
 text:
   en:
     name: Johann Sebastian Bach
-    text: German composer and organist, 1685 to 1750. From 1723 he was cantor of the St Thomas Church in Leipzig, where he wrote cantatas, passions and keyboard works. His music was little known outside a circle of musicians until the revival of the nineteenth century.
+    text: German composer and organist, 1685 to 1750. From 1723 he was cantor of the St Thomas Church in Leipzig, where he wrote cantatas, passions and keyboard works. In 1750 he went blind after two eye operations and died that July. His music was little known outside a circle of musicians until the revival of the nineteenth century.
   zh:
     name: 约翰·塞巴斯蒂安·巴赫
-    text: 德国作曲家与管风琴家，1685 年生，1750 年去世。1723 年起他担任莱比锡圣托马斯教堂的乐长，写下清唱剧、受难曲和键盘作品。他的音乐在十九世纪复兴之前，除音乐圈外鲜为人知。
-hook: {en: 'Come back in at the right word.', zh: '等到那个字再进声'}
+    text: 德国作曲家与管风琴家，1685 年生，1750 年去世。1723 年起他担任莱比锡圣托马斯教堂的乐长，写下清唱剧、受难曲和键盘作品。1750 年两次眼科手术后他双目失明，同年 7 月去世。他的音乐在十九世纪复兴之前，除音乐圈外鲜为人知。
+hook: {en: 'The oculist is in town, and the notes are blurring.', zh: '眼医进城了，谱纸上的音符越来越模糊'}
 facts:
+  eyes:
+    date: '1750-03'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [bach_leipzig_zegers, bach_leipzig_britannica]
+    text:
+      en: 'By early 1750 Bach''s eyesight had failed so badly that he could hardly read or write.'
+      zh: '到 1750 年初，巴赫的视力坏到几乎无法读写。'
+    line:
+      en: 'Spring 1750: Bach can hardly read or write for his eyes.'
+      zh: '1750 年春，巴赫的眼睛已几乎不能读写。'
+  operations:
+    date: '1750-03-28'
+    stay_day: 27
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [bach_leipzig_zegers, bach_leipzig_taylor]
+    text:
+      en: 'Between the end of March and early April 1750 the English oculist John Taylor operated twice on Bach''s cataracts in Leipzig; afterwards Bach was blind.'
+      zh: '1750 年 3 月底到 4 月初，英国眼医约翰·泰勒在莱比锡两次为巴赫做白内障手术，术后巴赫双目失明。'
+    line:
+      en: 'End of March 1750: the oculist John Taylor operates on Bach''s eyes, and a week later operates again.'
+      zh: '1750 年 3 月底，眼医约翰·泰勒为巴赫的眼睛动刀，约一周后又动了一次。'
+  death:
+    date: '1750-07-28'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [bach_leipzig_britannica, bach_leipzig_zegers]
+    text:
+      en: 'Bach died in Leipzig on 28 July 1750.'
+      zh: '1750 年 7 月 28 日，巴赫在莱比锡去世。'
   cantata:
     date: '1723-05-30'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [bach_leipzig_primary]
     text:
       en: 'Bach introduced himself to Leipzig with the cantata Die Elenden sollen essen, BWV 75, on 30 May 1723.'
@@ -97,6 +122,24 @@ bystanders:
     text: {en: 'An invented singer whose entrance comes after a rest.', zh: '一位虚构的歌者，要在一段休止后进声。'}
 wiki:
   refs:
+    bach_leipzig_zegers:
+      order: 140
+      status: checked
+      text:
+        en: 'Richard H. C. Zegers, The eyes of Johann Sebastian Bach, Archives of Ophthalmology 123 (2005), 1427–1430 https://www.musebaroque.fr/archives/Downloads/zegers_eyes_bach.pdf'
+        zh: '理查德·泽格斯，《约翰·塞巴斯蒂安·巴赫的眼睛》，《眼科学文献》第 123 卷（2005），1427–1430 页 https://www.musebaroque.fr/archives/Downloads/zegers_eyes_bach.pdf'
+    bach_leipzig_britannica:
+      order: 141
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Johann Sebastian Bach https://www.britannica.com/biography/Johann-Sebastian-Bach'
+        zh: '《不列颠百科全书》，约翰·塞巴斯蒂安·巴赫 https://www.britannica.com/biography/Johann-Sebastian-Bach'
+    bach_leipzig_taylor:
+      order: 142
+      status: checked
+      text:
+        en: 'Wikipedia, John Taylor (oculist) https://en.wikipedia.org/wiki/John_Taylor_(oculist)'
+        zh: '维基百科，约翰·泰勒（眼科医生） https://en.wikipedia.org/wiki/John_Taylor_(oculist)'
     bach_leipzig_leipzig_council:
       order: 10
       status: checked
@@ -123,9 +166,9 @@ wiki:
         zh: 'Johann Sebastian Bach, Die Elenden sollen essen, BWV 75. Text and first-performance record, University of Illinois Music and Performing Arts Library. https://scalar.library.illinois.edu/scalar/bachcantatas/bdii'
 self_check:
   quote_line: '你听出低声部比歌者预想的早到一口气。'
-  fact: cantata
+  fact: eyes
   regret_choice: '略过「听出另一个声部给的提示」，这处细节便留给下一位核对。'
-  bookend: '从「等到那个字再进声」开始，以员工留下的观察或更正收尾。'
-  share_line: '等到那个字再进声'
-  share_number: '1723-05-30'
+  bookend: '从「眼医进城了，谱纸上的音符越来越模糊」开始，以员工留下的观察或更正收尾。'
+  share_line: '眼医进城了，谱纸上的音符越来越模糊'
+  share_number: '1750-03'
 pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}

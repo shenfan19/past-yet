@@ -3,70 +3,74 @@ events:
   lavoisier_paris:
     order: 27
     build_step: 2
-    year: 1789
+    year: 1793
+    date: '1793-10-25'
+    stay: 2
     lon: 2.35
     lat: 48.86
     region: europe
     field: science
     tier: 2
     channels: {E: 1, S: 1}
-    refs: [lavoisier_paris_primary, lavoisier_paris_illustrated_first, lavoisier_paris_first_plates, lavoisier_paris_preface]
+    refs: [lavoisier_paris_historytoday, lavoisier_paris_herodote, lavoisier_paris_britannica, lavoisier_paris_wikipedia, lavoisier_paris_primary, lavoisier_paris_illustrated_first, lavoisier_paris_first_plates, lavoisier_paris_preface]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","artistic"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 53, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 22, req: {"any":[{"trait":["charismatic","glib","streetwise"],"stat":{"wit":5,"will":5}},{"job":["accountant","tax_preparer"],"stat":{"wit":5,"will":5}}]}}
+        - {id: p2, kind: persuade, day: 26, req: {"any":[{"trait":["charismatic","streetwise","cosmopolitan"],"stat":{"wit":6,"will":7}},{"provides":"disguise","trait":["streetwise","glib","bold","charismatic"],"stat":{"will":6}}]}}
       vignettes:
         - {id: units, traits: [methodical, vigil]}
         - {id: air, traits: [curious, skeptical]}
         - {id: proof}
     text:
       en:
-        name: A new language for chemistry
+        name: Before the arrest order
         place: Paris
         figure: Antoine Lavoisier
-        story: 'Lavoisier''s 1789 treatise uses mass measurements to account for chemical changes and treats oxygen as a participant in combustion.'
+        story: 'On 24 November 1793 the arrest of all the former tax farmers was ordered, and Lavoisier and his father-in-law Jacques Paulze were among those imprisoned. On 8 May 1794 the two of them and other former tax farmers were condemned and put to death in Paris on the same day.'
         relic: A precision balance
         relic_desc: A fine balance that kept the books of chemistry.
         points:
-          p1: 'Match the folded plates to the figure references so the Paris printer can deliver the first edition with all of them'
-          p2: 'Set a separate index for students to look up older and newer terms. Where a match is uncertain, point to the relevant definition'
+          p1: 'Before the arrest order comes, persuade his father-in-law Paulze to leave Paris, and save him'
+          p2: 'Before the arrest order comes, persuade Lavoisier to leave Paris and keep out of sight, and save him'
         points_fail:
-          p1: 'The text points to folded leaves that are missing from the volume. The illustrated edition cannot be delivered, and the office recalls the employee.'
-          p2: 'Readers taught the former names can only guess whether two words refer to the same thing.'
+          p1: 'As in history Paulze is imprisoned at the end of November, and on 8 May 1794 he is put to death on the same day as his son-in-law.'
+          p2: 'As in history Lavoisier is imprisoned at the end of November, and on 8 May 1794 he is put to death in Paris.'
         shift:
           p1:
-            was: 'The Traité élémentaire de chimie appeared in Paris in 1789. Surviving first editions contain signed folding plates engraved by Marie-Anne Paulze Lavoisier.'
+            was: '24 November 1793: the arrest of all the former tax farmers was ordered, Jacques Paulze among them. On 8 May 1794 he was put to death on the same day as his son-in-law Lavoisier.'
+            now: 'He left Paris before the arrest order came, and lived.'
           p2:
-            was: 'The preface links improving chemical terminology to organizing the subject and acknowledges earlier work on naming by several collaborators.'
-            now: 'Students use the index to find the definitions. Where there is no simple match, a line explains the difficulty and records who contributed to the earlier nomenclature.'
+            was: '24 November 1793: the arrest of all the former tax farmers was ordered, and Lavoisier was imprisoned. On 8 May 1794 he was put to death in Paris.'
+            now: 'He left Paris ahead of the arrest order, lived through those months, and went back to his laboratory.'
             who: lavoisier_paris
-            bio: 'The Paris edition put changing chemical terminology and folding plates into one elementary book. Several people contributed to its text and illustrations.'
+            bio: 'In this timeline Lavoisier left Paris before the arrest order of November 1793, and lived on past 1794.'
         vignettes:
           units: 'Two numbers line up beautifully, but the unit on one row has slipped. You catch it before the compositor locks the columns in place.'
           air: 'You ask why the table accounts for something the reader cannot see. The compositor taps the headings for what entered and what remained, then leaves both headings in the proof.'
           proof: 'You put a scrap of paper under the current row as the compositor reads. A number that looked like part of the next example finds its own heading again.'
       zh:
-        name: 化学有了新语言
+        name: 逮捕令下来之前
         place: 巴黎
         figure: 拉瓦锡
-        story: '拉瓦锡 1789 年出版的《化学基础论》用质量测量解释化学变化，把氧视为参与燃烧的物质。'
+        story: '1793 年 11 月 24 日，所有前包税官被下令逮捕，拉瓦锡和岳父雅克·保尔兹都在其中，先后入狱。1794 年 5 月 8 日，两人与其他前包税官同日在巴黎被判处死刑并处死。'
         relic: 一台精密天平
         relic_desc: 一台精细的天平，给化学记账。
         points:
-          p1: '把首版折页图按书里所引的图号点齐，护住巴黎印坊交付带齐图版的《化学基础论》'
-          p2: '给初学者另外排一页旧称与新称的索引，注明对应不全时先回查哪段定义'
+          p1: '逮捕令下来之前，劝岳父保尔兹先离开巴黎，救下他'
+          p2: '逮捕令下来之前，劝拉瓦锡离开巴黎、避开风头，救下他'
         points_fail:
-          p1: '书中几处指向没有装入的折页，印坊无法交付带全图的首版，事务所因同步失败召回员工。'
-          p2: '按旧名称学过的人拿到新书，只能凭习惯猜两种叫法是不是同一指代。'
+          p1: '保尔兹照史实在 11 月下旬入狱，1794 年 5 月 8 日与女婿同日被处死。'
+          p2: '拉瓦锡照史实在 11 月下旬入狱，1794 年 5 月 8 日在巴黎被处死。'
         shift:
           p1:
-            was: '《化学基础论》1789 年在巴黎付印。现存首版含署了玛丽－安娜·波尔兹·拉瓦锡名字的折页图。'
+            was: '1793 年 11 月 24 日，前包税官一律被下令逮捕，雅克·保尔兹在内；1794 年 5 月 8 日，他与女婿拉瓦锡同日被处死。'
+            now: '他在逮捕令下来之前离开了巴黎，活了下来。'
           p2:
-            was: '拉瓦锡序言把改进化学名称与整理知识相连，也说明沿用了此前几位合作者的命名工作。'
-            now: '附页让初学者按旧称回到定义。仍无一一对应的地方，加印一行说明并记明原有命名工作由哪些人参与。'
+            was: '1793 年 11 月 24 日，前包税官一律被下令逮捕，拉瓦锡随后入狱；1794 年 5 月 8 日，他在巴黎被处死。'
+            now: '他赶在逮捕令之前离开了巴黎，平安度过那几个月，又回到他的实验室。'
             who: lavoisier_paris
-            bio: '巴黎首版把一套正在更替的术语和折页图放进同一部入门书，文字与图版由多位合作者完成。'
+            bio: '这条时间线里，拉瓦锡在 1793 年 11 月的逮捕令下来之前离开巴黎，活过了 1794 年。'
         vignettes:
           units: '两个数字对得很齐，其中一行的单位却串了列。排字工固定版面之前，你把它指了出来。'
           air: '你问表格为什么还要记下看不见的东西。排字工指了指「加入」和「剩余」两栏，把两个栏头都保留在校样上。'
@@ -74,17 +78,39 @@ events:
 text:
   en:
     name: Antoine Lavoisier
-    text: French chemist, 1743 to 1794. He showed the role of oxygen in burning, helped found the modern system of chemical names, and stated the conservation of mass. He was guillotined during the Terror.
+    text: French chemist, 1743 to 1794. He showed the role of oxygen in burning, helped found the modern system of chemical names, and stated the conservation of mass. He was put to death in Paris in May 1794.
   zh:
     name: 拉瓦锡
-    text: 法国化学家，1743 年生，1794 年去世。他阐明氧在燃烧中的作用，参与建立现代化学命名体系，并陈述了质量守恒。他在恐怖时期被送上断头台。
-hook: {en: 'What belongs on the balance?', zh: '天平上究竟该称什么'}
+    text: 法国化学家，1743 年生，1794 年去世。他阐明氧在燃烧中的作用，参与建立现代化学命名体系，并陈述了质量守恒。1794 年 5 月他在巴黎被处死。
+hook: {en: 'The arrest order has not come yet. There is still time to leave.', zh: '逮捕令还没下来，还来得及走'}
 facts:
+  arrest:
+    date: '1793-11-24'
+    stay_day: 30
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [lavoisier_paris_historytoday, lavoisier_paris_herodote]
+    text:
+      en: 'On 24 November 1793 the arrest of all the former tax farmers was ordered; Lavoisier and his father-in-law Jacques Paulze were among those imprisoned.'
+      zh: '1793 年 11 月 24 日，所有前包税官被下令逮捕，拉瓦锡和岳父雅克·保尔兹都在入狱者之中。'
+    line:
+      en: '24 November 1793: the arrest of all the former tax farmers is ordered.'
+      zh: '1793 年 11 月 24 日，所有前包税官被下令逮捕。'
+  execution:
+    date: '1794-05-08'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [lavoisier_paris_britannica, lavoisier_paris_wikipedia]
+    text:
+      en: 'On 8 May 1794 Lavoisier, his father-in-law Jacques Paulze and other former tax farmers were condemned and put to death in Paris on the same day.'
+      zh: '1794 年 5 月 8 日，拉瓦锡、岳父雅克·保尔兹与其他前包税官同日在巴黎被判处死刑并处死。'
   balance:
     date: '1789'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [lavoisier_paris_primary]
     text:
       en: 'Lavoisier''s 1789 treatise uses mass measurements to account for chemical changes and treats oxygen as a participant in combustion.'
@@ -95,6 +121,30 @@ bystanders:
     text: {en: 'An invented compositor reading a table in proof.', zh: '一位虚构的排字工，正在校对表格。'}
 wiki:
   refs:
+    lavoisier_paris_historytoday:
+      order: 140
+      status: checked
+      text:
+        en: 'History Today, Antoine Lavoisier guillotined https://www.historytoday.com/archive/months-past/antoine-lavoisier-guillotined'
+        zh: '《今日历史》，拉瓦锡之死 https://www.historytoday.com/archive/months-past/antoine-lavoisier-guillotined'
+    lavoisier_paris_herodote:
+      order: 141
+      status: checked
+      text:
+        en: 'Hérodote, Lavoisier (1743–1794) https://www.herodote.net/Chimiste_et_homme_de_coeur-synthese-534-314.php'
+        zh: 'Hérodote 历史网，拉瓦锡（1743–1794） https://www.herodote.net/Chimiste_et_homme_de_coeur-synthese-534-314.php'
+    lavoisier_paris_britannica:
+      order: 142
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Antoine Lavoisier: the French Revolution and Lavoisier''s execution https://www.britannica.com/biography/Antoine-Lavoisier/The-French-Revolution-and-Lavoisiers-execution'
+        zh: '《不列颠百科全书》，拉瓦锡：法国大革命与拉瓦锡之死 https://www.britannica.com/biography/Antoine-Lavoisier/The-French-Revolution-and-Lavoisiers-execution'
+    lavoisier_paris_wikipedia:
+      order: 143
+      status: checked
+      text:
+        en: 'Wikipedia, Antoine Lavoisier https://en.wikipedia.org/wiki/Antoine_Lavoisier'
+        zh: '维基百科，安托万·拉瓦锡 https://en.wikipedia.org/wiki/Antoine_Lavoisier'
     lavoisier_paris_illustrated_first:
       order: 10
       status: checked
@@ -121,9 +171,9 @@ wiki:
         zh: 'Antoine Lavoisier, Traité élémentaire de chimie, vol. 1, Paris, 1789. Smithsonian Libraries scan. https://library.si.edu/digital-library/book/traiteyeyleyment1lavo'
 self_check:
   quote_line: '两个数字对得很齐，其中一行的单位却串了列。'
-  fact: balance
+  fact: arrest
   regret_choice: '略过「把数字对回各自栏头」，这处细节便留给下一位核对。'
-  bookend: '从「天平上究竟该称什么」开始，以员工留下的观察或更正收尾。'
-  share_line: '天平上究竟该称什么'
-  share_number: '1789'
+  bookend: '从「逮捕令还没下来，还来得及走」开始，以员工留下的观察或更正收尾。'
+  share_line: '逮捕令还没下来，还来得及走'
+  share_number: '1793-11-24'
 pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
