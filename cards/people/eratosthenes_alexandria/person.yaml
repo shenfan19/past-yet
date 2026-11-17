@@ -2,29 +2,36 @@ order: 65
 events:
   eratosthenes_alexandria:
     order: 9
-    build_step: 2
+    build_step: 4
     year: -240
+    # one office day around midsummer; the year of the measurement is not recorded, so the stay is counted from the arrival
+    stay: 1
     lon: 29.9
     lat: 31.19
     region: africa
+    home: [north_africa]
+    near: [europe_east, middle_east]
+    crossroads: true
     field: science
     tier: 2
-    channels: {H: 3, L: 2}
-    refs: [eratosthenes_alexandria_cleomedes]
+    channels: {H: 2, V: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [eratosthenes_alexandria_cleomedes, eratosthenes_alexandria_mactutor, eratosthenes_alexandria_britannica, eratosthenes_alexandria_osu]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, day: 30, req: {"any":[{"job":["archivist","translator","proofreader","bookseller","data_analyst"],"stat":{"wit":7}},{"trait":["scholarly","curious"],"stat":{"wit":8,"will":5}}]}}
+        - {id: p1, kind: hold, day: 28, req: {"any":[{"job":["archivist","translator","proofreader","bookseller","data_analyst"],"stat":{"wit":7}},{"trait":["scholarly","curious"],"stat":{"wit":8,"will":5}}]}}
       vignettes:
-        - {id: scale, traits: [methodical, scholarly]}
-        - {id: noon, traits: [curious, handy]}
-        - {id: arc}
+        - {id: noon, traits: [curious, handy, methodical, patient], day: 25.2}
+        - {id: beta, traits: [cheerful, glib, streetwise, bold, cosmopolitan], day: 12}
+        - {id: shelves, day: 18}
     text:
       en:
-        name: 'One fiftieth of the Earth'
-        place: Alexandria and Syene
+        name: 'The book that measured the Earth'
+        place: Alexandria
         figure: Eratosthenes
-        story: 'In Cleomedes’ later account, Eratosthenes compares the Sun at noon at Syene and Alexandria. A difference treated as one fiftieth of a circle, with a distance of 5,000 stadia, yields a circumference of 250,000 stadia in this account.'
+        story: 'Eratosthenes of Cyrene came to Alexandria about 245 BC as tutor to the son of Ptolemy III, and about 240 BC became librarian there. Comparing the noon shadows at midsummer in Syene and in Alexandria, he worked out the circumference of the Earth as 250,000 stadia. His book On the Measurement of the Earth was later lost, and the method is known mainly from the shorter account of Cleomedes.'
         relic: A gnomon rod
         relic_desc: A plain upright rod whose shadow told him the angle of the sun.
         points:
@@ -38,14 +45,14 @@ events:
             who: eratosthenes_alexandria
             bio: 'In this line the book in which Eratosthenes measured the Earth was not lost, and later readers could check his method in his own words.'
         vignettes:
-          scale: 'The helper has written fifty beside the distance and is ready to divide. You draw the small arc first and ask how often it fits around the circle. He turns the operation around and gets 250,000 in the exercise. You carry away the multiplication and the assumed distance; the length of a single stade is still outside the drawing.'
-          noon: 'You have seen the two cities together on a later map. The helper is about to compare a noon mark with one made after the shadow had moved away. You take the later mark out of the comparison. A place on the sheet stays empty until the proper hour. That hour comes after you have left.'
-          arc: 'You copy the small arc with its share of the circle, then write the distance on another line. The helper can now tell which number is a fraction and which a length. You take home the pair. You have not walked what lies between those cities.'
+          noon: 'At noon on midsummer day {staff} crouches by an upright rod and scratches the tip of its shadow into the ground with a fingernail. A little later the shadow has moved a finger''s width away.'
+          beta: '{staff} hears the copyists of the Library call the librarian Beta behind his back, second in everything. {staff} knows that what later centuries will remember of him is the whole round of the Earth he measured, and keeps a straight face.'
+          shelves: '{staff} helps a porter of the Library carry the rolls up to the shelves in bundles, each tied with a little wooden tag. The porter says that even a man who cannot read can tell the marks on the tags apart.'
       zh:
-        name: '地球的一整圈要摆几段'
-        place: 亚历山大与赛伊尼
+        name: '量地球的那部书'
+        place: 亚历山大
         figure: 埃拉托色尼
-        story: '克莱奥梅德斯后来记述，埃拉托色尼比较塞伊尼与亚历山大城的正午日照。按这份记述，两处差角取全圆的五十分之一，城间距离取 5000 斯塔迪亚，推得全周 250000 斯塔迪亚。'
+        story: '昔兰尼人埃拉托色尼约公元前 245 年应托勒密三世之请来到亚历山大，给王子当老师，约公元前 240 年做了亚历山大图书馆的馆长。他对照夏至正午塞伊尼和亚历山大两地的日影，算出地球周长 250000 斯塔迪亚。他写这件事的《论地球的测量》后来失传，方法主要靠克莱奥梅德斯简化过的转述留下。'
         relic: 一根日晷针
         relic_desc: 一根朴素的立杆，影子告诉他太阳的角度。
         points:
@@ -59,9 +66,9 @@ events:
             who: eratosthenes_alexandria
             bio: 'IF 线里，埃拉托色尼测量地球的那部书没有失传，后人能照他自己的话核对他的方法。'
         vignettes:
-          scale: '帮工在路程旁写了五十，准备拿去除。你先画出小弧，问这样的弧要摆几段才围一圈。他把算式倒过来，这回得了 250000。你带走乘法和取用的路程，单个斯塔迪亚究竟多长，图上却看不出来。'
-          noon: '你见过后世把两城放在一张地图上。帮工正要用正午那笔去对照日影已经移开后才取的一笔。你把后来这笔移出对照，纸上留一格等合适的时刻。那个时刻要在你收队以后才到。'
-          arc: '你把小弧所占的比例抄好，另起一行记距离。帮工能分清哪个数是份额，哪个数是长度。两项你都带回来了，两城之间的路却没有走过。'
+          noon: '夏至正午，{staff}蹲在一根立杆旁，用指甲在地上划下影子的尖。过一会儿再看，影子已经挪开了一指宽。'
+          beta: '{staff}听图书馆的抄书人背地里管馆长叫"贝塔"，说他样样都只排第二。{staff}知道后世记住他的，偏偏是他量出来的那一整圈地球，憋着没笑出声。'
+          shelves: '{staff}帮图书馆的杂役把卷子一捆捆扛上架，每捆系一块小木牌。杂役说，不识字的人也认得牌上的记号。'
 text:
   en:
     name: Eratosthenes
@@ -69,21 +76,83 @@ text:
   zh:
     name: 埃拉托色尼
     text: 希腊学者，约公元前 276 年生，约公元前 194 年去世，曾任亚历山大图书馆馆长。据后出的记述，他对照塞伊尼与亚历山大城的日照来估算地球周长。换算成现代单位要看取哪一种斯塔迪亚长度。
-hook: {en: 'Can a short shadow stand for a whole circle?', zh: '一小段影子，怎样算出一整圈？'}
+hook: {en: 'The whole round of the Earth, in a book that was lost', zh: '一整圈地球，写在一部丢了的书里'}
 facts:
-  cleomedes:
+  tutor:
+    date: '-245'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [eratosthenes_alexandria_mactutor, eratosthenes_alexandria_britannica]
+    text:
+      en: 'About 245 BC Ptolemy III brought Eratosthenes, born at Cyrene, to Alexandria as tutor to his son.'
+      zh: '约公元前 245 年，托勒密三世请生于昔兰尼的埃拉托色尼到亚历山大，给王子当老师。'
+    line:
+      en: 'About 245 BC: Ptolemy III brings Eratosthenes to Alexandria to teach his son.'
+      zh: '约前 245 年，托勒密三世请埃拉托色尼到亚历山大，给王子当老师。'
+  librarian:
     date: '-240'
-    checked: official_record
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [eratosthenes_alexandria_mactutor, eratosthenes_alexandria_britannica]
+    text:
+      en: 'About 240 BC, after Callimachus, he became librarian of the Library of Alexandria.'
+      zh: '约公元前 240 年，卡利马科斯之后，他做了亚历山大图书馆的馆长。'
+    line:
+      en: 'About 240 BC: Eratosthenes becomes librarian of the Library of Alexandria.'
+      zh: '约前 240 年，埃拉托色尼做了亚历山大图书馆的馆长。'
+  beta:
+    date: '-240'
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [eratosthenes_alexandria_cleomedes]
+    sources: [eratosthenes_alexandria_mactutor, eratosthenes_alexandria_britannica]
     text:
-      en: 'Cleomedes relates a comparison using one fiftieth of a circle and 5,000 stadia, yielding 250,000 stadia. This is a later witness; the event year locates the approximate setting.'
-      zh: '克莱奥梅德斯转述全圆五十分之一与 5000 斯塔迪亚的比例，推得全周 250000 斯塔迪亚。这是后出的记述。'
+      en: 'He was nicknamed Beta, because in each field he was thought to fall just short of the first place.'
+      zh: '他有个外号叫"贝塔"，意思是他在每一门学问里都差一点才到第一。'
+  midsummer:
+    date: '-240'
+    stay_day: 25
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [eratosthenes_alexandria_cleomedes, eratosthenes_alexandria_osu]
+    text:
+      en: 'In the account of Cleomedes, at noon on midsummer day the upright pointers at Syene cast no shadow, while at Alexandria the shadow marks one fiftieth of a circle. The year of the measurement is not recorded.'
+      zh: '据克莱奥梅德斯记述，夏至正午，塞伊尼的日晷针不投影子，亚历山大的影子量得全圆的五十分之一。测量在哪一年做的，没有记载。'
+    line:
+      en: 'Noon, midsummer day: at Syene the pointers of the sundials cast no shadow; at Alexandria the shadow marks one fiftieth of a circle.'
+      zh: '夏至正午，塞伊尼的日晷针下没有影子；亚历山大的影子，量得全圆的五十分之一。'
+  cleomedes:
+    date: '-240'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [eratosthenes_alexandria_cleomedes, eratosthenes_alexandria_mactutor]
+    text:
+      en: 'Cleomedes relates a comparison using one fiftieth of a circle and 5,000 stadia between the two cities, giving 250,000 stadia for the whole circumference. The book of Eratosthenes, On the Measurement of the Earth, is lost.'
+      zh: '克莱奥梅德斯转述，两城之间取 5000 斯塔迪亚，差角取全圆的五十分之一，推得全周 250000 斯塔迪亚。埃拉托色尼自己写的《论地球的测量》已经失传。'
+  death:
+    date: '-194'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [eratosthenes_alexandria_mactutor, eratosthenes_alexandria_britannica]
+    text:
+      en: 'Blind in old age, he died at Alexandria about 194 BC.'
+      zh: '他晚年失明，约公元前 194 年在亚历山大去世。'
+    note: 'Blindness and death: written as plain facts.'
+    line:
+      en: 'About 194 BC: Eratosthenes, blind in his old age, dies in Alexandria.'
+      zh: '约前 194 年，晚年失明的埃拉托色尼在亚历山大去世。'
 bystanders:
-  helper:
+  porter:
     invented: true
-    text: {en: 'A fictional assistant keeping two figures on a scale drawing.', zh: '虚构的帮工，要把比例和距离标在草图上。'}
+    text: {en: 'A porter of the Library, made up for the game, who cannot read and knows every tag.', zh: '一个编出来的图书馆杂役，不识字，却认得每一块木牌。'}
+  copyist:
+    invented: true
+    text: {en: 'A copyist of the Library, made up for the game, quick with a nickname.', zh: '一个编出来的图书馆抄书人，爱给人起外号。'}
 wiki:
   refs:
     eratosthenes_alexandria_cleomedes:
@@ -92,16 +161,34 @@ wiki:
       text:
         en: 'Cleomedes, On the Circular Motions of the Celestial Bodies, I.10, T. L. Heath translation https://www.roger-pearse.com/weblog/2017/04/15/cleomedes-how-big-is-the-earth/'
         zh: '克莱奥梅德斯《论天体的圆周运动》卷一第十章，托马斯·希思英译 https://www.roger-pearse.com/weblog/2017/04/15/cleomedes-how-big-is-the-earth/'
+    eratosthenes_alexandria_mactutor:
+      order: 726
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Eratosthenes of Cyrene. https://mathshistory.st-andrews.ac.uk/Biographies/Eratosthenes/'
+        zh: '圣安德鲁斯大学 MacTutor 数学史，昔兰尼的埃拉托色尼。https://mathshistory.st-andrews.ac.uk/Biographies/Eratosthenes/'
+    eratosthenes_alexandria_britannica:
+      order: 727
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Eratosthenes. https://www.britannica.com/biography/Eratosthenes'
+        zh: '大英百科全书，埃拉托色尼。https://www.britannica.com/biography/Eratosthenes'
+    eratosthenes_alexandria_osu:
+      order: 728
+      status: checked
+      text:
+        en: 'Ohio State University, Department of Astronomy, Eratosthenes measures the Earth. https://www.astronomy.ohio-state.edu/thompson.1847/161/measearth.html'
+        zh: '俄亥俄州立大学天文系，埃拉托色尼测量地球。https://www.astronomy.ohio-state.edu/thompson.1847/161/measearth.html'
 self_check:
-  fact: cleomedes
-  quote_line: '他把算式倒过来，这回得了 250000。'
-  regret_choice: '用五十去除，会把一小段算得更小。'
-  bookend: '从一段小弧起，最后问它要摆多少段才是一整圈。'
-  share_line: '五十是要摆的段数，不能拿去除城间距离。'
-  share_number: '250000 斯塔迪亚'
-  knowing: 'noon 员工见过可把两城并看的后世地图。'
-  near: 'cleomedes 锚定比例和计算。'
-  lever: '改正一处乘除方向。'
-  missed: '没有走过两城之间。'
-  brought: '一张配着距离的弧图。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: midsummer
+  quote_line: '夏至正午，塞伊尼的日晷针下没有影子；亚历山大的影子，量得全圆的五十分之一。'
+  regret_choice: '派好奇的去，夏至正午的影子看得真切，那部书却没人帮他多抄；派会抄书的去，书多抄了几部，立杆旁那一刻也许就错过了。'
+  bookend: '从托勒密三世请他来亚历山大开始，以他失明后在同一座城里去世收尾，书在他身后失传。'
+  share_line: '公元前三世纪的夏至正午，我在亚历山大看着一根立杆的影子挪开一指宽。'
+  share_number: '250000'
+  knowing: 'beta'
+  near: 'midsummer'
+  lever: 'p1'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

@@ -2,29 +2,36 @@ order: 70
 events:
   fibonacci_pisa:
     order: 11
-    build_step: 2
+    build_step: 4
     year: 1202
+    # two office days in the year the first version was finished; no day of that year is recorded, so the stay is counted from the arrival
+    stay: 2
     lon: 10.4
     lat: 43.72
     region: europe
+    home: [europe_west]
+    near: [north_africa, europe_east]
+    crossroads: true
     field: math
     tier: 2
-    channels: {Y: 1}
-    refs: [fibonacci_pisa_primary, fibonacci_pisa_liber_abaci_versions, fibonacci_pisa_manuscript_versions]
+    channels: {V: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [fibonacci_pisa_primary, fibonacci_pisa_mactutor, fibonacci_pisa_dsb, fibonacci_pisa_liber_abaci_versions, fibonacci_pisa_manuscript_versions, fibonacci_pisa_wiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, day: 51, req: {"any":[{"job":["archivist","tutor","bookseller"],"stat":{"wit":7,"will":6}},{"trait":["curious","scholarly"],"stat":{"wit":8,"will":6}}]}}
       vignettes:
-        - {id: gap, traits: [methodical, vigil]}
-        - {id: tokens, traits: [curious, handy]}
-        - {id: copy}
+        - {id: rabbits, traits: [curious, cheerful, kind, scholarly], day: 34}
+        - {id: zero, traits: [methodical, vigil, skeptical, patient], day: 21}
+        - {id: quay, day: 9}
     text:
       en:
-        name: Hindu-Arabic numerals reach Europe
+        name: 'The first version of 1202'
         place: Pisa
         figure: Fibonacci
-        story: 'Leonardo of Pisa wrote the Liber abaci in 1202. Its surviving 1228 revision explains the nine Indian digits and zero.'
+        story: 'Leonardo of Pisa learned to reckon with the nine Indian figures as a boy in Bugia, on the coast of North Africa, where his father worked for the merchants of Pisa. In 1202, back in Pisa, he finished the Liber abaci, which teaches the new figures and zero for counting and trade. In 1228 he revised the book, and the copies that survive come from that second version.'
         relic: A wax tablet of numerals
         relic_desc: A tablet with the ten new numerals set out beside the old Roman ones.
         points:
@@ -33,19 +40,19 @@ events:
           p1: 'After the author revises the work, borrowers know only the new copy and cannot recover the first compilation.'
         shift:
           p1:
-            was: 'No complete first version is known to survive. The main manuscript tradition reflects the later revision.'
+            was: '1202: Leonardo of Pisa finished the first version of the Liber abaci; no complete copy of it is known to survive, and the manuscripts that came down reflect the revision of 1228.'
             now: 'The early set retains its date and examples. Later readers can put the two compilations side by side and identify newly added work.'
             who: fibonacci_pisa
             bio: 'The 1202 first version of Leonardo of Pisa''s book survived in a complete copy beside the 1228 revision, so later readers could see what he changed over those years.'
         vignettes:
-          gap: 'The clerk skips the empty column when copying the total. You put zero back into the gap and ask him to read the number again. It now agrees with the earlier reckoning.'
-          tokens: 'You arrange a few counters in groups on the counter. The clerk moves one to the next column, then explains why the same mark would now mean something different.'
-          copy: 'Two copies of a total are about to leave the market. You have the clerk read both back before the carriers go their separate ways.'
+          rabbits: 'In a copy {staff} comes upon the problem of a pair of rabbits that bear a new pair every month. {staff} cannot help counting in the margin to the twelfth month, and the numbers come out exactly as in the schoolbooks of later centuries.'
+          zero: 'In a counting house on the quay {staff} shows an apprentice how to write an empty place as zero. The boy says the little ring is nothing at all and has no right to a column of its own. {staff} has him check two ledgers against each other, and the boy goes quiet.'
+          quay: '{staff} helps unload bales from a boat on the Arno and calls out each one as it comes ashore. On the bank a clerk listens and scratches a mark on his board for every call.'
       zh:
-        name: 印度阿拉伯数字传入欧洲
+        name: '1202 年的初编'
         place: 比萨
         figure: 斐波那契
-        story: '比萨的莱昂纳多于 1202 年写《计算之书》。现传的 1228 年修订本开篇说明九个印度数字和零。'
+        story: '比萨的列奥纳多少年时在北非海岸的布吉亚学会用九个印度数字算账，他父亲在那里替比萨商人办事。1202 年，他回到比萨写成《计算之书》，教人用这些新数字和零来记数、做买卖。1228 年他把书改订了一遍，今天传下来的抄本都出自这第二版。'
         relic: 一块写着数字的蜡板
         relic_desc: 板上把十个新数字和旧的罗马数字并排写在一起。
         points:
@@ -54,14 +61,14 @@ events:
           p1: '等作者改写以后，借书人只认得后来那一套抄本，不能恢复早本。'
         shift:
           p1:
-            was: '早期编本没有完整留存，通行本文本主要来自后来的修订。'
+            was: '1202 年，比萨的列奥纳多写成《计算之书》初编；初编没有完整的抄本留存，传下来的抄本出自 1228 年的修订本。'
             now: '留存的早本注明旧例和编成年份。等修订本出现，两份可并读，读者能查哪些例题是后来才补的。'
             who: fibonacci_pisa
             bio: '比萨的列奥纳多 1202 年的初编留下了一部完整的抄本，与 1228 年的修订本并存，后人能对出他这些年里改了什么。'
         vignettes:
-          gap: '账房照抄合计时跳过空栏。你把零填回空处，请他再读一遍，这才和原先算出的数一致。'
-          tokens: '你把几枚算子分列摆在柜台上。账房把一枚挪到下一列，接着讲给你听，怎么同一个记号这时就表示了另一个数。'
-          copy: '两份合计马上要带出市集。两位送单人分头走之前，你请账房把两份都念一遍。'
+          rabbits: '{staff}在抄本里读到一道题：一对兔子每个月生一对小兔。{staff}忍不住在页边数到第十二个月，数出来的数，和后世课本上的一个也不差。'
+          zero: '{staff}在码头的账房里教学徒把空着的一位写成零。学徒说这个小圈什么也不是，凭什么占一栏。{staff}让他把两本账对一遍，他就不吭声了。'
+          quay: '{staff}在阿诺河边帮人从船上卸货包，一包上岸就报一声数。岸上的账房一边听，一边在板上划一道。'
 text:
   en:
     name: Fibonacci
@@ -69,46 +76,132 @@ text:
   zh:
     name: 斐波那契
     text: 意大利数学家，约 1170 年生，约 1250 年去世，出身比萨。他 1202 年的《计算之书》把印度阿拉伯数字带到欧洲，书中兔子繁殖的问题产生了斐波那契数列。
-hook: {en: 'What does an empty place do?', zh: '空着的一位为什么要写零'}
+hook: {en: 'A book written twice. Where did the first go?', zh: '一部书写了两回，头一回去了哪'}
 facts:
+  bugia:
+    date: '1192'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [fibonacci_pisa_mactutor, fibonacci_pisa_dsb]
+    text:
+      en: 'In the 1190s his father held a post in Bugia, on the coast of North Africa, for the merchants of Pisa, and sent for his son, who was taught there to reckon with the nine Indian figures.'
+      zh: '12 世纪 90 年代，他父亲在北非海岸的布吉亚替比萨商人任职，把儿子叫去，他在那里学会了用九个印度数字算账。'
+    line:
+      en: 'The 1190s: in Bugia, on the coast of North Africa, the young Leonardo of Pisa learns to reckon with the nine Indian figures.'
+      zh: '12 世纪 90 年代，少年列奥纳多在北非海岸的布吉亚，学会用九个印度数字算账。'
   numerals:
     date: '1202'
-    checked: official_record
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [fibonacci_pisa_primary, fibonacci_pisa_mactutor]
+    text:
+      en: 'Leonardo of Pisa wrote the Liber abaci in 1202. Its surviving 1228 revision explains the nine Indian figures and zero, and how to reckon with them in trade.'
+      zh: '比萨的列奥纳多于 1202 年写《计算之书》。现传的 1228 年修订本开篇说明九个印度数字和零，以及做买卖时怎样用它们计算。'
+    line:
+      en: '1202: in Pisa, Leonardo finishes the Liber abaci, a book of reckoning with the nine Indian figures and zero.'
+      zh: '1202 年，列奥纳多在比萨写成《计算之书》，教人用九个印度数字和零来算账。'
+  rabbits:
+    date: '1202'
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [fibonacci_pisa_primary]
+    sources: [fibonacci_pisa_mactutor, fibonacci_pisa_wiki]
     text:
-      en: 'Leonardo of Pisa wrote the Liber abaci in 1202. Its surviving 1228 revision explains the nine Indian digits and zero.'
-      zh: '比萨的莱昂纳多于 1202 年写《计算之书》。现传的 1228 年修订本开篇说明九个印度数字和零。'
+      en: 'The Liber abaci asks how many pairs of rabbits one pair will produce in a year, if each pair bears a new pair every month; the answers give the sequence 1, 1, 2, 3, 5, 8 and on.'
+      zh: '《计算之书》里有一道题：一对兔子每月生一对，一年后共有多少对；答案依次是 1、1、2、3、5、8……'
+  frederick:
+    date: '1225'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [fibonacci_pisa_mactutor, fibonacci_pisa_dsb]
+    text:
+      en: 'About 1225, when the court of Frederick II met in Pisa, Leonardo was presented to the emperor, and Johannes of Palermo set him problems.'
+      zh: '约 1225 年，腓特烈二世的宫廷驻在比萨，列奥纳多被引见给皇帝，宫廷里的约翰内斯出题考他。'
+    line:
+      en: 'About 1225: the court of Frederick II meets in Pisa, and Johannes of Palermo sets Leonardo problems.'
+      zh: '约 1225 年，腓特烈二世的宫廷驻在比萨，巴勒莫的约翰内斯出题考列奥纳多。'
+  revision:
+    date: '1228'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [fibonacci_pisa_liber_abaci_versions, fibonacci_pisa_manuscript_versions]
+    text:
+      en: 'In 1228 he issued a revised Liber abaci, adding new material and cutting what he thought superfluous. The manuscripts that survive come from this revision; no complete copy of the first version of 1202 is known.'
+      zh: '1228 年，他推出《计算之书》修订本，添了新内容，删去他认为多余的部分。传下来的抄本都出自这一版，1202 年的初编没有已知的完整抄本。'
+    line:
+      en: '1228: Leonardo issues a revised Liber abaci. The copies that come down to later centuries are of this version.'
+      zh: '1228 年，列奥纳多推出《计算之书》修订本，后世传下来的都是这一版的抄本。'
+  salary:
+    date: '1240'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [fibonacci_pisa_dsb, fibonacci_pisa_mactutor]
+    text:
+      en: 'In 1240 the Republic of Pisa granted the serious and learned Master Leonardo Bigollo a yearly salary, for his service to the city in matters of accounting and for teaching its citizens.'
+      zh: '1240 年，比萨共和国下令每年发给"审慎博学的列奥纳多·比戈洛老师"一份薪俸，酬谢他在账目上为城市出力、教导市民。'
+    line:
+      en: '1240: the Republic of Pisa grants Master Leonardo Bigollo a yearly salary for his help with the city''s accounts.'
+      zh: '1240 年，比萨共和国给列奥纳多·比戈洛老师定了一份年俸，谢他帮城里理账。'
 bystanders:
   fibonacci_pisa_reader:
     invented: true
-    text: {en: 'An invented market clerk trying a new way to record a total.', zh: '一位虚构的市集账房，正在换一种记合计的写法。'}
+    text: {en: 'An apprentice in a counting house, made up for the game.', zh: '一个编出来的账房学徒。'}
+  boatman:
+    invented: true
+    text: {en: 'A boatman on the Arno, made up for the game, who unloads bales at the quay.', zh: '一个编出来的阿诺河船夫，在码头卸货包。'}
 wiki:
   refs:
     fibonacci_pisa_liber_abaci_versions:
       order: 10
       status: checked
       text:
-        en: 'Research on the early and revised Liber abaci https://rucforsk.ruc.dk/ws/portalfiles/portal/45133181/Hoyrup_2013_e_Fibonacci_Leonardo_S.PDF'
-        zh: '《计算之书》初编及修订本研究 https://rucforsk.ruc.dk/ws/portalfiles/portal/45133181/Hoyrup_2013_e_Fibonacci_Leonardo_S.PDF'
+        en: 'Jens Høyrup, research on the early and revised Liber abaci https://rucforsk.ruc.dk/ws/portalfiles/portal/45133181/Hoyrup_2013_e_Fibonacci_Leonardo_S.PDF'
+        zh: '约恩斯·霍伊鲁普，《计算之书》初编及修订本研究 https://rucforsk.ruc.dk/ws/portalfiles/portal/45133181/Hoyrup_2013_e_Fibonacci_Leonardo_S.PDF'
     fibonacci_pisa_manuscript_versions:
       order: 11
       status: checked
       text:
-        en: 'Max Planck research on the surviving manuscript tradition https://www.mpiwg-berlin.mpg.de/sites/default/files/P510.pdf'
-        zh: '马普研究所《计算之书》传本研究 https://www.mpiwg-berlin.mpg.de/sites/default/files/P510.pdf'
+        en: 'Max Planck Institute for the History of Science, research on the surviving manuscript tradition https://www.mpiwg-berlin.mpg.de/sites/default/files/P510.pdf'
+        zh: '马普科学史研究所，《计算之书》传本研究 https://www.mpiwg-berlin.mpg.de/sites/default/files/P510.pdf'
+    fibonacci_pisa_mactutor:
+      order: 12
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Leonardo Pisano Fibonacci. https://mathshistory.st-andrews.ac.uk/Biographies/Fibonacci/'
+        zh: '圣安德鲁斯大学 MacTutor 数学史，比萨的列奥纳多·斐波那契。https://mathshistory.st-andrews.ac.uk/Biographies/Fibonacci/'
+    fibonacci_pisa_dsb:
+      order: 13
+      status: checked
+      text:
+        en: 'Dictionary of Scientific Biography, Fibonacci, Leonardo, or Leonardo of Pisa, at Encyclopedia.com. https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/fibonacci-leonardo-or-leonardo-pisa'
+        zh: '《科学传记辞典》斐波那契条，Encyclopedia.com 所收。https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/fibonacci-leonardo-or-leonardo-pisa'
+    fibonacci_pisa_wiki:
+      order: 14
+      status: checked
+      text:
+        en: 'Wikipedia, Fibonacci. https://en.wikipedia.org/wiki/Fibonacci'
+        zh: '维基百科，斐波那契。https://en.wikipedia.org/wiki/Fibonacci'
     fibonacci_pisa_primary:
       order: 142
       status: checked
       text:
         en: 'Leonardo of Pisa, Liber abaci, first chapter, surviving 1228 revision. Manuscript tradition described by Treccani. https://www.treccani.it/enciclopedia/leonardo-fibonacci_(Il-Contributo-italiano-alla-storia-del-Pensiero:-Scienze)/'
-        zh: 'Leonardo of Pisa, Liber abaci, first chapter, surviving 1228 revision. Manuscript tradition described by Treccani. https://www.treccani.it/enciclopedia/leonardo-fibonacci_(Il-Contributo-italiano-alla-storia-del-Pensiero:-Scienze)/'
+        zh: '比萨的列奥纳多《计算之书》第一章，现传 1228 年修订本，特雷卡尼百科所述抄本传统。https://www.treccani.it/enciclopedia/leonardo-fibonacci_(Il-Contributo-italiano-alla-storia-del-Pensiero:-Scienze)/'
 self_check:
-  quote_line: '账房照抄合计时跳过空栏。'
-  fact: numerals
-  regret_choice: '略过「读合计时把零所在的位也算进去」，这处细节便留给下一位核对。'
-  bookend: '从「空着的一位为什么要写零」开始，以员工留下的观察或更正收尾。'
-  share_line: '空着的一位为什么要写零'
+  fact: revision
+  quote_line: '1228 年，列奥纳多推出《计算之书》修订本，后世传下来的都是这一版的抄本。'
+  regret_choice: '派好奇的去，兔子那道题数得开心，初编却没人劝他留一部；派会说服人的书商去，初编签名留下了，码头账房里那个零也许没人教。'
+  bookend: '从少年在布吉亚学九个印度数字开始，以 1240 年比萨给他定年俸收尾，那时初编已经让位给了修订本。'
+  share_line: '1202 年，我在比萨劝一个人把他的初稿留下一部。'
   share_number: '1202'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  knowing: 'revision'
+  near: 'numerals'
+  lever: 'p1'
+  missed: 'revision'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

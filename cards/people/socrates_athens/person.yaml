@@ -2,15 +2,22 @@ order: 180
 events:
   socrates_athens:
     order: 3
-    build_step: 2
+    build_step: 4
     year: -399
+    # two office days from the planned arrival, twenty days before the trial; the ship from Delos came back about thirty days after it
+    stay: 2
     lon: 23.73
     lat: 37.97
     region: europe
+    home: [europe_east]
+    near: [europe_west, middle_east, north_africa]
+    crossroads: true
     field: philosophy
     tier: 2
-    channels: {S: 2, G: 1}
-    refs: [socrates_athens_apology, socrates_athens_trial_sources, socrates_athens_last_visits]
+    channels: {G: 2, S: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [socrates_athens_apology, socrates_athens_last_visits, socrates_athens_crito, socrates_athens_memorabilia, socrates_athens_laertius, socrates_athens_sep, socrates_athens_trial_wiki, socrates_athens_phaedo_wiki, socrates_athens_trial_sources]
     scene:
       star_rules: 2
       points:
@@ -18,17 +25,17 @@ events:
         - {id: p2, kind: hold, day: 40, req: {"any":[{"job":["writer","translator","proofreader","musician"]},{"trait":["artistic","scholarly"],"stat":{"wit":6}}]}}
         - {id: p3, kind: care, day: 49, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":6}},{"job":["nurse","pharmacist","paramedic"],"item":"handbook"},{"item":"nano_kit","stat":{"will":6}}]}}
       vignettes:
-        - {id: handoff, traits: [artistic, sensitive, attached]}
-        - {id: charges, traits: [scholarly, skeptical, quiet]}
-        - {id: verdict}
+        - {id: rumours, traits: [skeptical, scholarly, curious, streetwise], day: 19}
+        - {id: harbour, traits: [vigil, patient, quiet, attached, sensitive], day: 32}
+        - {id: gate, day: 44}
     text:
       en:
-        name: 'What the court heard'
+        name: 'Before the ship comes back'
         place: Athens
         figure: Socrates
-        story: 'In Plato’s Apology, Socrates distinguishes long-standing rumours about him from the charges at his trial, which include corrupting the young. Their notes are imagined; Plato’s account is a later literary source.'
-        relic: 'The listener’s clay cup'
-        relic_desc: 'A cup from the fictional pottery seller’s stall.'
+        story: 'In 399 BC Socrates was tried in Athens and sentenced to death. The ship Athens sent to Delos each year had just sailed, and no one could be put to death before it came home, so he waited about thirty days in prison. There he put fables of Aesop into verse, and his friends came to see him every day. On the last day they were all there except Plato, who was ill, and in the evening he drank the hemlock.'
+        relic: 'A clay cup from the market'
+        relic_desc: 'An Athenian cup with a black glaze and a small chip in the rim.'
         points:
           p1: 'When the clamour of the jurors keeps rising against him, keep the court quiet enough for him to finish his defence'
           p2: 'Help him finish the Aesop fables he is putting into verse in prison and the hymn to Apollo, and get a copy out of the prison'
@@ -39,26 +46,26 @@ events:
           p3: 'As in history Plato is ill that day and does not come; in this branch too he is not with his teacher.'
         shift:
           p1:
-            was: '399 BCE: Socrates was tried in Athens; in Plato''s Apology he asks the jurors again and again not to make a disturbance while he speaks, and he is found guilty and sentenced to death.'
+            was: '399 BC: Socrates was tried in Athens; in Plato''s Apology he asks the jurors again and again not to make a disturbance while he speaks, and he is found guilty and sentenced to death.'
           p2:
-            was: '399 BCE: waiting in prison for the execution, Socrates obeyed a recurring dream by putting Aesop''s fables into verse and composing a hymn to Apollo; none of it survives.'
+            was: '399 BC: waiting in prison for the execution, Socrates obeyed a recurring dream by putting Aesop''s fables into verse and composing a hymn to Apollo; none of it survives whole.'
             now: 'The verses were copied into a roll and carried out of the prison by a friend, and they stayed in Athens.'
           p3:
-            was: '399 BCE: on the day Socrates drank the hemlock in prison his friends were with him; Plato was ill and did not come.'
+            was: '399 BC: on the day Socrates drank the hemlock in prison his friends were with him; Plato was ill and did not come.'
             now: 'Plato was well again and in the prison that day among the friends, and stayed to the end.'
             who: plato_academy
             bio: 'In this timeline Plato was cured of the illness that kept him away, and was in the prison with Socrates on his last day.'
         vignettes:
-          handoff: 'Kleio has to leave for her pottery stall before she can hear the speech through. You find her at the gate and let her recount the opening in her own order. She leaves a space for the portion she missed. Her brother will hear where she had to stop.'
-          charges: 'Pheidon has put a market rumour at the top of his report as if it had been read to the court. You ask him to name its speaker. He can point to one man in the market and one voice inside. The report leaves their words on separate lines.'
-          verdict: 'You know how this trial ends. Pheidon wants to hurry the news to someone who could not come. If you tell him now, he will repeat it as something the court has already decided. You give him only what has been heard so far. You will miss the moment he delivers it.'
+          rumours: 'The day before the trial {staff} asks three stalls in the agora what the old man is charged with and gets three different answers. {staff} writes all three down and waits to hear which one is read out in court.'
+          harbour: 'Every evening {staff} walks down to the harbour at Piraeus and asks the fishmonger whether the ship from Delos is in yet. Every evening the answer is the same, and {staff} cannot say whether to hope it comes or hope it does not.'
+          gate: '{staff} carries water for the woman who sells lamp oil by the prison wall, and is given a place to sit at the foot of the wall in return. The visitors wait at the door from first light each day, and {staff} comes to know their faces.'
       zh:
-        name: '散庭后还剩哪句话'
+        name: '船回来之前'
         place: 雅典
         figure: 苏格拉底
-        story: '柏拉图的《申辩篇》区分针对苏格拉底的旧传闻和庭上的正式控告，后者包括败坏青年。'
-        relic: '听众的陶杯'
-        relic_desc: '卖陶器人的摊上留下的一只杯子。'
+        story: '前 399 年，苏格拉底在雅典受审，被判死刑。雅典每年派往提洛岛的船刚刚出发，船回港以前城里不处决人，他在狱中等了约三十天。这些日子里他把伊索寓言改写成诗，朋友们天天来看他。最后那天朋友们都在，只有柏拉图病了没来，傍晚他饮下了毒芹汁。'
+        relic: '集市上的陶杯'
+        relic_desc: '一只雅典的黑釉陶杯，杯沿磕掉了一小块。'
         points:
           p1: '陪审席上的喧哗一阵阵压过来时，护住他把申辩讲完'
           p2: '帮他把狱中改写成诗的伊索寓言和献给阿波罗的颂歌写完，抄一份带出狱外'
@@ -71,7 +78,7 @@ events:
           p1:
             was: '前 399 年，苏格拉底在雅典受审，柏拉图《申辩篇》里他一再请陪审员不要喧哗，把话听完；他被判有罪，判处死刑。'
           p2:
-            was: '前 399 年，苏格拉底在狱中等待行刑时，照一个反复出现的梦的吩咐，把伊索寓言改写成诗，又作了一首献给阿波罗的颂歌；这些诗没有传世。'
+            was: '前 399 年，苏格拉底在狱中等待行刑时，照一个反复出现的梦的吩咐，把伊索寓言改写成诗，又作了一首献给阿波罗的颂歌；这些诗没有完整传下来。'
             now: '几首诗抄成一卷，由朋友带出狱门，留在了雅典。'
           p3:
             was: '前 399 年，苏格拉底在狱中饮毒芹去世那天，朋友们都在，柏拉图因病没来。'
@@ -79,9 +86,9 @@ events:
             who: plato_academy
             bio: '这条时间线里，柏拉图那场病治好了，苏格拉底最后一天，他在狱中陪着老师。'
         vignettes:
-          handoff: '克莱奥急着回陶器摊，听不到辩词结束。你在门边找到她，请她照自己的次序说开头。她把没听见的那一段空了下来，弟弟听她复述时，会知道她听到哪儿就走了。'
-          charges: '费冬把集市听来的闲话写在最上方，仿佛有人在庭上宣读过。你请他认一认证人。他指得出集市上的一个人，也说得出庭里听到的一把嗓音。两人的话分成两行才带走。'
-          verdict: '你知道这场审判怎么收场。费冬急着把消息送给来不了的人。现在告诉他结局，他就会当成已经宣判去传。你只说到眼前听过的那一段，之后他怎样转述，你已赶不上了。'
+          rumours: '开庭前一天，{staff}在集市上问了三个摊子，这老头犯的是什么事，得了三种说法。{staff}一样记一行，等明天听庭上念的是哪一条。'
+          harbour: '{staff}每天傍晚走到比雷埃夫斯港，问卖鱼的提洛岛的船回来没有。天天是同一个回答，{staff}说不清自己是盼它来，还是盼它别来。'
+          gate: '{staff}替狱墙外卖灯油的女人挑水，换来墙根下一块歇脚的地方。探视的人每天天一亮就等在门口，{staff}渐渐认得了他们的脸。'
 text:
   en:
     name: Socrates
@@ -89,24 +96,118 @@ text:
   zh:
     name: 苏格拉底
     text: 雅典的希腊哲学家，公元前 470 年生，公元前 399 年去世。他自己没有留下著作，后人通过柏拉图和色诺芬了解他。他向同胞追问美德，被控不敬神和败坏青年，饮毒芹汁而死。
-hook: {en: 'What will you repeat when the court empties?', zh: '散庭后，你会复述哪一句？'}
+hook: {en: 'Thirty days until the ship comes home', zh: '船回港以前，还有三十天'}
 facts:
   apology:
     date: '-399'
-    checked: official_record
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [socrates_athens_apology]
+    sources: [socrates_athens_apology, socrates_athens_trial_sources]
     text:
-      en: 'Plato’s account has Socrates address the older accusers before turning to the affidavit led by Meletus.'
-      zh: '柏拉图笔下，苏格拉底先回应旧指责，随后才谈以墨勒托为首的控告。'
+      en: 'Plato’s account has Socrates answer the older accusers before turning to the formal charge led by Meletus.'
+      zh: '柏拉图笔下，苏格拉底先回应多年来的旧指责，随后才谈以墨勒托为首的正式控告。'
+  trial:
+    date: '-399'
+    stay_day: 20.1
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [socrates_athens_apology, socrates_athens_sep]
+    text:
+      en: 'In 399 BC Socrates was tried before a jury in Athens on charges of impiety and of corrupting the young, and was found guilty.'
+      zh: '前 399 年，苏格拉底在雅典的陪审法庭受审，被控不敬神和败坏青年，被判有罪。'
+    line:
+      en: '399 BC: Socrates stands trial before a jury in Athens and is found guilty.'
+      zh: '前 399 年，苏格拉底在雅典的陪审法庭受审，被判有罪。'
+  surety:
+    date: '-399'
+    stay_day: 20.2
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [socrates_athens_apology, socrates_athens_trial_wiki]
+    text:
+      en: 'After the verdict the accused proposed his own penalty. In the Apology Socrates at last offers a fine of thirty minae, for which Plato, Crito, Critobulus and Apollodorus will stand surety; the jury sentences him to death.'
+      zh: '定罪后由被告自己提出刑罚。《申辩篇》里他最后提出罚银三十明那，由柏拉图、克里同、克里托布卢斯和阿波罗多洛斯作保；陪审团判了死刑。'
+    note: 'A death sentence: written as a plain fact.'
+    line:
+      en: 'The same day he offers a fine of thirty minae, with Plato, Crito and two other friends standing surety; the jury sentences him to death.'
+      zh: '同一天，他提出罚银三十明那，柏拉图、克里同等几个朋友当庭作保；陪审团判了死刑。'
+  ship:
+    date: '-399'
+    stay_day: 20.3
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [socrates_athens_last_visits, socrates_athens_memorabilia]
+    text:
+      en: 'Each year Athens sent a ship to Delos, and while it was away no one was put to death in the city. It had sailed the day before the trial, so Socrates lived on in prison for about thirty days.'
+      zh: '雅典每年派一条船去提洛岛，船在外的日子城里不处决人。船在审判前一天出发，所以苏格拉底在狱中又活了约三十天。'
+    line:
+      en: 'The ship to Delos sailed the day before the trial, and until it is home no one may be put to death; Socrates is taken to prison to wait.'
+      zh: '派往提洛岛的船审判前一天刚出发，船回来以前不行刑，苏格拉底被押进狱中等着。'
+  verses:
+    date: '-399'
+    stay_day: 36
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [socrates_athens_last_visits, socrates_athens_laertius]
+    text:
+      en: 'In prison he put fables of Aesop into verse and wrote a hymn, doing what a recurring dream had told him; Diogenes Laertius later quotes the opening of a hymn and of a fable, and nothing more survives.'
+      zh: '狱中，他照一个反复出现的梦的吩咐，把伊索寓言改写成诗，又作了一首颂歌；后来第欧根尼·拉尔修只引了一首颂歌和一则寓言的开头，其余没有传下来。'
+    line:
+      en: 'In prison Socrates begins to put fables of Aesop into verse, as a dream that keeps coming back has told him to.'
+      zh: '狱中，苏格拉底开始把伊索寓言改写成诗，说这是一个反复做的梦叫他做的。'
+  crito:
+    date: '-399'
+    stay_day: 48
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [socrates_athens_crito, socrates_athens_sep]
+    text:
+      en: 'Shortly before the end Crito came to the prison very early, told him the ship would soon be in, and urged him to escape; Socrates refused.'
+      zh: '行刑前不久，克里同一大早来到狱中，告诉他船就要回来了，劝他逃走，苏格拉底没有答应。'
+    line:
+      en: 'Very early one morning Crito comes to the prison, says the ship will soon be in and urges him to escape. He will not.'
+      zh: '一个清晨，天还没亮透，克里同来到狱中，说船就要回来了，劝他逃走。他没有答应。'
+  plato_ill:
+    date: '-399'
+    stay_day: 50
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [socrates_athens_last_visits, socrates_athens_phaedo_wiki]
+    text:
+      en: 'In the Phaedo his friends gathered at the prison early on the last day; Plato was ill and did not come.'
+      zh: '据《斐多篇》，最后那天朋友们一早聚到狱中，柏拉图病了，没有来。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: 'On the last day his friends gather at the prison at first light. Plato is ill and does not come.'
+      zh: '最后那天，朋友们天一亮就聚到狱中。柏拉图病了，没有来。'
+  death:
+    date: '-399'
+    stay_day: 50.5
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [socrates_athens_last_visits, socrates_athens_sep]
+    text:
+      en: 'Towards evening he drank the hemlock in prison and died, with his friends around him.'
+      zh: '傍晚，他在狱中饮下毒芹汁去世，朋友们在他身边。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: 'Towards evening Socrates drinks the hemlock in prison and dies.'
+      zh: '傍晚，苏格拉底在狱中饮下毒芹汁去世。'
 bystanders:
-  kleio:
+  oil_seller:
     invented: true
-    text: {en: 'A fictional pottery seller with a stall to reopen before the speech ends.', zh: '虚构的卖陶器人克莱奥，辩词讲完前得回去开摊。'}
-  pheidon:
+    text: {en: 'A woman, made up for the game, who sells lamp oil by the prison wall.', zh: '一个编出来的卖灯油的女人，摊子摆在狱墙外。'}
+  fishmonger:
     invented: true
-    text: {en: 'A fictional messenger taking news to someone who could not attend.', zh: '虚构的传话人费冬，要把消息带给一位没到场的人。'}
+    text: {en: 'A fishmonger at Piraeus, made up for the game, who sees every ship come in.', zh: '一个编出来的比雷埃夫斯卖鱼人，进港的船他都看得见。'}
 wiki:
   refs:
     socrates_athens_trial_sources:
@@ -119,24 +220,60 @@ wiki:
       order: 11
       status: checked
       text:
-        en: 'Phaedo, literary account of the final visits https://www-current.chs.harvard.edu/primary-source/plato-phaedo-sb/'
-        zh: '《斐多篇》所载临终探视 https://www-current.chs.harvard.edu/primary-source/plato-phaedo-sb/'
+        en: 'Plato, Phaedo 58a–61b and 116a–118a, Harvard Center for Hellenic Studies https://www-current.chs.harvard.edu/primary-source/plato-phaedo-sb/'
+        zh: '柏拉图《斐多篇》58a—61b、116a—118a，哈佛大学希腊研究中心 https://www-current.chs.harvard.edu/primary-source/plato-phaedo-sb/'
+    socrates_athens_crito:
+      order: 12
+      status: checked
+      text:
+        en: 'Plato, Crito 43a–44b, H. N. Fowler translation, Perseus Digital Library https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0170:text=Crito:section=43a'
+        zh: '柏拉图《克里同篇》43a—44b，福勒英译，珀尔修斯数字图书馆 https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0170:text=Crito:section=43a'
+    socrates_athens_memorabilia:
+      order: 13
+      status: checked
+      text:
+        en: 'Xenophon, Memorabilia 4.8.2, E. C. Marchant translation, Perseus https://cts.perseids.org/read/greekLit/tlg0032/tlg002/perseus-eng2/4.8.1-4.8.10'
+        zh: '色诺芬《回忆苏格拉底》4.8.2，马钱特英译，珀尔修斯 https://cts.perseids.org/read/greekLit/tlg0032/tlg002/perseus-eng2/4.8.1-4.8.10'
+    socrates_athens_laertius:
+      order: 14
+      status: checked
+      text:
+        en: 'Diogenes Laertius, Lives of Eminent Philosophers 2.42, R. D. Hicks translation, Perseus https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0258:book=2:chapter=5'
+        zh: '第欧根尼·拉尔修《名哲言行录》2.42，希克斯英译，珀尔修斯 https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0258:book=2:chapter=5'
+    socrates_athens_sep:
+      order: 15
+      status: checked
+      text:
+        en: 'Stanford Encyclopedia of Philosophy, Socrates https://plato.stanford.edu/entries/socrates/'
+        zh: '斯坦福哲学百科，苏格拉底 https://plato.stanford.edu/entries/socrates/'
+    socrates_athens_trial_wiki:
+      order: 16
+      status: checked
+      text:
+        en: 'Wikipedia, Trial of Socrates https://en.wikipedia.org/wiki/Trial_of_Socrates'
+        zh: '维基百科，苏格拉底之死与审判 https://en.wikipedia.org/wiki/Trial_of_Socrates'
+    socrates_athens_phaedo_wiki:
+      order: 17
+      status: checked
+      text:
+        en: 'Wikipedia, Phaedo https://en.wikipedia.org/wiki/Phaedo'
+        zh: '维基百科，斐多篇 https://en.wikipedia.org/wiki/Phaedo'
     socrates_athens_apology:
       order: 793
       status: checked
       text:
-        en: 'Plato, Apology 18a–19b and 24b–c, Harvard Center for Hellenic Studies https://chs.harvard.edu/primary-source/plato-the-apology-of-socrates-sb/'
-        zh: '柏拉图《申辩篇》18a—19b、24b—c，哈佛大学希腊研究中心 https://chs.harvard.edu/primary-source/plato-the-apology-of-socrates-sb/'
+        en: 'Plato, Apology 17a–42a, Harvard Center for Hellenic Studies https://chs.harvard.edu/primary-source/plato-the-apology-of-socrates-sb/'
+        zh: '柏拉图《申辩篇》17a—42a，哈佛大学希腊研究中心 https://chs.harvard.edu/primary-source/plato-the-apology-of-socrates-sb/'
 self_check:
-  fact: apology
-  quote_line: '两人的话分成两行才带走。'
-  regret_choice: 'verdict 若抢先讲判决，费冬会当即时消息带走。'
-  bookend: '问的是散庭后复述什么，结局留下复述者的两行。'
-  share_line: '一句街谈，一条庭上指控。'
-  share_number: '两种不同的说法。'
-  knowing: 'verdict 知道审判结局。'
-  near: 'apology 可在记载的审判中听到区分。'
-  lever: 'charges 让同一行变成两行。'
-  missed: 'verdict 未看到费冬送达消息。'
-  brought: 'handoff 留下未听完处的记录。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: plato_ill
+  quote_line: '最后那天，朋友们天一亮就聚到狱中。柏拉图病了，没有来。'
+  regret_choice: '派会说话的去，庭上的喧哗压得住，狱里那些诗却没人帮他抄出去；派懂医的去，柏拉图那场病治得好，开庭那天却未必有人护得住他把话讲完。'
+  bookend: '从开庭前一天集市上三种说法的罪名开始，以三十天后傍晚狱中的那杯毒芹汁收尾。'
+  share_line: '前 399 年，我在比雷埃夫斯港等过一条船，说不清盼它来还是盼它别来。'
+  share_number: '30'
+  knowing: 'ship'
+  near: 'trial, surety'
+  lever: 'p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

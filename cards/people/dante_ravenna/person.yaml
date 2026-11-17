@@ -2,30 +2,36 @@ order: 52
 events:
   dante_ravenna:
     order: 13
-    build_step: 2
+    build_step: 4
     year: 1320
+    # three office days from the start of 1320, in the months of the Latin exchange with Bologna and the lecture at Verona on 20 January
+    date: '1320-01-01'
+    stay: 3
     lon: 12.2
     lat: 44.42
     region: europe
+    home: [europe_west]
     field: literature
     tier: 2
-    channels: {E: 2, V: 1}
-    refs: [dante_ravenna_primary, boccaccio_dante_tradition, dante_ravenna_eclogue_research]
+    channels: {E: 1, V: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [dante_ravenna_primary, dante_ravenna_britannica, dante_ravenna_wiki, dante_ravenna_eclogue_research, dante_ravenna_questio, dante_ravenna_loc_rehabilitation, boccaccio_dante_tradition]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 26, req: {"any":[{"job":["translator","archivist"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
         - {id: p2, kind: trust, day: 77, req: {"any":[{"trait":["scholarly","sensitive","faithful","artistic"],"stat":{"will":7}},{"job":["translator","teacher","bookseller","writer","proofreader"],"stat":{"will":7}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
       vignettes:
-        - {id: dream, traits: [bold, curious]}
-        - {id: ear, traits: [artistic, quiet]}
-        - {id: stars}
+        - {id: latin, traits: [scholarly, artistic, sensitive, curious], day: 24}
+        - {id: pinewood, traits: [wanderer, hardy, quiet, vigil, patient], day: 52}
+        - {id: ink, day: 40}
     text:
       en:
         name: A poem in the language of the street
         place: Ravenna
         figure: Dante Alighieri
-        story: 'The closing lines of Dante''s Paradiso invoke the Sun and the other stars. Boccaccio''s later account of missing cantos found after a dream is a literary tradition.'
+        story: 'Exiled from Florence in 1302, Dante Alighieri settled in Ravenna about 1318 and there finished the Paradiso, the last part of the Comedy, written in the Tuscan of everyday speech. About 1319 Giovanni del Virgilio, a scholar of Bologna, sent him a Latin poem urging him to write in Latin and come to Bologna for the laurel, and Dante answered in Latin verse. On 20 January 1320 he gave a lecture at Verona. In September 1321, back from an embassy to Venice, he fell ill and died in Ravenna.'
         relic: A laurel leaf
         relic_desc: A dried leaf of the poet's crown.
         points:
@@ -43,14 +49,14 @@ events:
             who: dante_ravenna
             bio: 'In his last years in Ravenna the exiled Dante came to know that his poem would last, and that Florence would one day be proud of him.'
         vignettes:
-          dream: 'You ask whether a dream can tell the copyist where a missing canto went. They put down the lamp. “A dream may tell you where to look. What will you read when you get there?” You mark the story as a later tradition in the report.'
-          ear: 'The copyist stops when a verse ends. You ask them to keep reading just long enough to hear the next rhyme arrive. The new page no longer sounds like a fresh start.'
-          stars: 'You help the copyist find the last line before the lamp goes out. The word for stars is the one they remember when you step into the street.'
+          latin: 'In the copying room {staff} sees two piles of paper: the Paradiso in Tuscan, and the Latin verse bound for Bologna, whose sender says only Latin is worthy of the laurel. {staff} knows which pile everyone will be reading seven hundred years on, and swallows the words.'
+          pinewood: '{staff} follows the wood gatherers into the pine forest by the sea outside Ravenna, rests on the sandy ground, and hears the waves beyond the trees.'
+          ink: '{staff} helps an ink seller carry his jars off a boat. The ink is boiled from oak galls and rusty iron, and the seller says the copyists of the town buy the most of it.'
       zh:
         name: 用街头的语言写一部长诗
         place: 拉文纳
         figure: 但丁
-        story: '但丁《天堂篇》末尾写到太阳和其他星辰。薄伽丘后来讲过梦中得知遗稿下落的故事，属于流传下来的文学轶闻。'
+        story: '但丁 1302 年被逐出佛罗伦萨，约 1318 年移居拉文纳，在那里写完《神曲》的最后一部《天堂篇》，用的是托斯卡纳的日常口语。1319 年前后，博洛尼亚的学者乔万尼·德尔·维尔吉利奥寄来拉丁诗，劝他改用拉丁文写作、到博洛尼亚接受桂冠，但丁用拉丁诗作答。1320 年 1 月 20 日，他在维罗纳作了一场讲演。1321 年 9 月，他从威尼斯出使回来后病倒，在拉文纳去世。'
         relic: 一片月桂叶
         relic_desc: 诗人桂冠上的一片干叶。
         points:
@@ -68,31 +74,108 @@ events:
             who: dante_ravenna
             bio: '流放中的但丁在拉文纳的晚年得知，他的诗会长久流传，佛罗伦萨终会以他为荣。'
         vignettes:
-          dream: '你问誊写员，做个梦能不能知道丢了的诗章在哪儿。他放下灯：「梦兴许能叫你去找。到了地方，你打算读什么？」你在报告里注明，托梦是后来流传的故事。'
-          ear: '一行诗念完，誊写员正要停。你请他再念几行，听见下一个韵落下再说。翻页以后，这回听着像刚才的话还在往下走。'
-          stars: '熄灯前，你帮誊写员找到最后一行。走到街上时，他还记得诗里的星辰。'
+          latin: '{staff}在誊写间看见两叠纸：一叠是托斯卡纳话写的《天堂篇》，一叠是要寄往博洛尼亚的拉丁诗，来信说只有拉丁文才配得上桂冠。{staff}知道七百年后人人读的是哪一叠，话到嘴边，又咽了回去。'
+          pinewood: '{staff}跟着拾柴的人走进拉文纳城外靠海的松林，在沙地上歇脚，听得见林子那头的海浪。'
+          ink: '{staff}帮卖墨水的人把一罐罐墨从船上搬下来。墨是用栎树瘿和铁锈熬的，卖墨的说，城里誊写的人买得最多。'
 text:
   en:
     name: Dante Alighieri
     text: Italian poet, 1265 to 1321, from Florence. Exiled from his city in 1302, he wrote the Divine Comedy in the Tuscan language and died at Ravenna, where he is buried.
   zh:
     name: 但丁
-    text: 意大利诗人，1265 年生，1321 年去世，出身佛罗伦萨。1302 年被逐出故城，他用托斯卡纳语写下《神曲》，在拉韦纳去世并葬在那里。
-hook: {en: 'What does the poem leave you looking at?', zh: '诗读完以后眼睛看向哪里'}
+    text: 意大利诗人，1265 年生，1321 年去世，出身佛罗伦萨。1302 年被逐出故城，他用托斯卡纳语写下《神曲》，在拉文纳去世并葬在那里。
+hook: {en: 'The laurel in Bologna, the poem in Ravenna', zh: '桂冠在博洛尼亚，诗在拉文纳'}
 facts:
+  exile:
+    date: '1302'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [dante_ravenna_britannica, dante_ravenna_wiki]
+    text:
+      en: 'In 1302 Florence sentenced Dante to exile, and later that year to death should he return; he never went back to the city.'
+      zh: '1302 年，佛罗伦萨判但丁流放，同年又判他回城即处死；他再没回过佛罗伦萨。'
+    note: 'A sentence: written as a plain fact.'
+    line:
+      en: '1302: Florence sentences Dante to exile, and then to death should he ever come back.'
+      zh: '1302 年，佛罗伦萨判但丁流放，又判他回城即处死。'
+  ravenna:
+    date: '1318'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [dante_ravenna_britannica, dante_ravenna_wiki]
+    text:
+      en: 'About 1318 Dante settled in Ravenna at the invitation of its lord, Guido Novello da Polenta, and there he finished the Paradiso.'
+      zh: '约 1318 年，但丁应拉文纳领主圭多·诺韦洛·达·波伦塔之邀移居拉文纳，在那里写完《天堂篇》。'
+    line:
+      en: 'About 1318: Dante settles in Ravenna, at the invitation of Guido Novello da Polenta.'
+      zh: '约 1318 年，但丁应圭多·诺韦洛·达·波伦塔之邀，移居拉文纳。'
+  bologna_letter:
+    date: '1319'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [dante_ravenna_eclogue_research, dante_ravenna_wiki]
+    text:
+      en: 'About 1319 Giovanni del Virgilio, who taught at Bologna, sent Dante a Latin poem urging him to write in Latin and to come to Bologna to be crowned with the laurel; Dante answered with a Latin eclogue, and the exchange went on into 1320 and after.'
+      zh: '1319 年前后，在博洛尼亚执教的乔万尼·德尔·维尔吉利奥寄给但丁一首拉丁诗，劝他改用拉丁文写作，到博洛尼亚接受桂冠；但丁用一首拉丁牧歌作答，往来一直延续到 1320 年以后。'
+    line:
+      en: 'About 1319: from Bologna, Giovanni del Virgilio sends Dante a Latin poem, urging him to write in Latin and come to Bologna for the laurel.'
+      zh: '1319 年前后，博洛尼亚的乔万尼·德尔·维尔吉利奥寄来一首拉丁诗，劝但丁改用拉丁文写作，来博洛尼亚戴桂冠。'
+  questio:
+    date: '1320-01-20'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [dante_ravenna_questio, dante_ravenna_wiki]
+    text:
+      en: 'On 20 January 1320, at Verona, Dante gave the lecture later written up as the Questio de aqua et terra, on the place of water and earth on the globe.'
+      zh: '1320 年 1 月 20 日，但丁在维罗纳作了一场讲演，后来写成《水与土之辩》，讨论地球上水与陆地的位置。'
+    line:
+      en: '20 January 1320: at Verona, Dante lectures on the place of water and earth on the globe.'
+      zh: '1320 年 1 月 20 日，但丁在维罗纳讲演，谈地球上水与陆地的位置。'
   paradiso:
     date: '1320'
-    checked: official_record
+    checked: two_sources
     level: usable
     use: [story, wiki]
     sources: [dante_ravenna_primary, boccaccio_dante_tradition]
     text:
       en: 'The closing lines of Dante''s Paradiso invoke the Sun and the other stars. Boccaccio''s later account of missing cantos found after a dream is a literary tradition.'
       zh: '但丁《天堂篇》末尾写到太阳和其他星辰。薄伽丘后来讲过梦中得知遗稿下落的故事，属于流传下来的文学轶闻。'
+  death:
+    date: '1321-09-14'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [dante_ravenna_britannica, dante_ravenna_wiki]
+    text:
+      en: 'In the summer of 1321 Dante went to Venice on an embassy for Ravenna; he fell ill on the way back and died in Ravenna on the night of 13 to 14 September 1321.'
+      zh: '1321 年夏，但丁替拉文纳出使威尼斯，回程中病倒，9 月 13 日夜到 14 日凌晨在拉文纳去世。'
+    note: 'Illness and death: written as plain facts.'
+    line:
+      en: '14 September 1321: back ill from an embassy to Venice, Dante dies in Ravenna.'
+      zh: '1321 年 9 月 14 日，从威尼斯出使回来后病倒的但丁，在拉文纳去世。'
+  rehabilitation:
+    date: '2008-06'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [dante_ravenna_loc_rehabilitation, dante_ravenna_wiki]
+    text:
+      en: 'In June 2008 the city council of Florence passed a motion asking the mayor to rehabilitate Dante and revoke the sentence of 1302.'
+      zh: '2008 年 6 月，佛罗伦萨市议会通过动议，请市长为但丁恢复名誉，撤销 1302 年的判决。'
+    line:
+      en: 'June 2008: the city council of Florence votes to revoke the sentence it passed on Dante in 1302.'
+      zh: '2008 年 6 月，佛罗伦萨市议会表决，撤销 1302 年对但丁的判决。'
 bystanders:
   dante_ravenna_reader:
     invented: true
-    text: {en: 'An invented copyist reading a poem aloud while checking the pages.', zh: '一位虚构的誊写员，边看纸页边把诗读出来。'}
+    text: {en: 'An ink seller, made up for the game, whose best customers are the copyists.', zh: '一个编出来的卖墨水的人，最好的主顾是誊写的人。'}
+  wood_gatherer:
+    invented: true
+    text: {en: 'A wood gatherer, made up for the game, who goes out to the pine forest by the sea.', zh: '一个编出来的拾柴人，常去海边的松林。'}
 wiki:
   refs:
     dante_ravenna_eclogue_research:
@@ -101,6 +184,30 @@ wiki:
       text:
         en: 'UCL research on the eclogue correspondence and Ravenna dating https://discovery.ucl.ac.uk/id/eprint/10076200/1/Ethics-Politics-and-Justice-in-Dante.pdf'
         zh: '伦敦大学学院拉文纳时期与牧歌通信研究 https://discovery.ucl.ac.uk/id/eprint/10076200/1/Ethics-Politics-and-Justice-in-Dante.pdf'
+    dante_ravenna_britannica:
+      order: 11
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Dante. https://www.britannica.com/biography/Dante-Alighieri'
+        zh: '大英百科全书，但丁。https://www.britannica.com/biography/Dante-Alighieri'
+    dante_ravenna_wiki:
+      order: 12
+      status: checked
+      text:
+        en: 'Wikipedia, Dante Alighieri. https://en.wikipedia.org/wiki/Dante_Alighieri'
+        zh: '维基百科，但丁·阿利吉耶里。https://en.wikipedia.org/wiki/Dante_Alighieri'
+    dante_ravenna_questio:
+      order: 13
+      status: checked
+      text:
+        en: 'Princeton Dante Project, Questio de aqua et terra. https://dante.princeton.edu/dante/pdp/questiohead.html'
+        zh: '普林斯顿但丁项目，《水与土之辩》。https://dante.princeton.edu/dante/pdp/questiohead.html'
+    dante_ravenna_loc_rehabilitation:
+      order: 14
+      status: checked
+      text:
+        en: 'Library of Congress, In Custodia Legis, The Rehabilitation of Dante Alighieri Seven Centuries Later. https://blogs.loc.gov/law/2016/04/the-rehabilitation-of-dante-alighieri-seven-centuries-later/'
+        zh: '美国国会图书馆法律图书馆博客，七百年后为但丁恢复名誉。https://blogs.loc.gov/law/2016/04/the-rehabilitation-of-dante-alighieri-seven-centuries-later/'
     boccaccio_dante_tradition:
       order: 192
       status: checked
@@ -112,12 +219,17 @@ wiki:
       status: checked
       text:
         en: 'Dante Alighieri, Paradiso, canto 33, Italian text in Dartmouth Dante Lab. https://dantelab.dartmouth.edu/reader?reader%5Bcantica%5D=3&reader%5Bcanto%5D=33'
-        zh: 'Dante Alighieri, Paradiso, canto 33, Italian text in Dartmouth Dante Lab. https://dantelab.dartmouth.edu/reader?reader%5Bcantica%5D=3&reader%5Bcanto%5D=33'
+        zh: '但丁《天堂篇》第 33 歌，意大利文原文，达特茅斯但丁实验室。https://dantelab.dartmouth.edu/reader?reader%5Bcantica%5D=3&reader%5Bcanto%5D=33'
 self_check:
-  quote_line: '你问誊写员，做个梦能不能知道丢了的诗章在哪儿。'
-  fact: paradiso
-  regret_choice: '略过「翻页时跟住上一行诗」，这处细节便留给下一位核对。'
-  bookend: '从「诗读完以后眼睛看向哪里」开始，以员工留下的观察或更正收尾。'
-  share_line: '诗读完以后眼睛看向哪里'
-  share_number: '1320'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: bologna_letter
+  quote_line: '1319 年前后，博洛尼亚的乔万尼·德尔·维尔吉利奥寄来一首拉丁诗，劝但丁改用拉丁文写作，来博洛尼亚戴桂冠。'
+  regret_choice: '派懂行的译者去，答诗和《天堂篇》分得清清楚楚，却未必有人肯坐下来，把七百年后的事讲给他听；派有心的去，话说得到，誊写间里那两叠纸却可能混在一起。'
+  bookend: '从 1302 年佛罗伦萨的判决开始，以 2008 年同一座城撤销这份判决收尾，中间他死在拉文纳。'
+  share_line: '1320 年冬天，我在拉文纳的誊写间里，看着一部用街头话写的诗。'
+  share_number: '706'
+  knowing: 'rehabilitation'
+  near: 'questio'
+  lever: 'p1, p2'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

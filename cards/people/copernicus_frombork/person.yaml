@@ -2,17 +2,22 @@ order: 50
 events:
   copernicus_frombork:
     order: 16
-    build_step: 2
+    build_step: 4
     year: 1543
+    # four office days from the planned arrival on 8 April 1543, through his death on 24 May and Giese's letter of 26 July
     date: '1543-04-08'
     stay: 4
     lon: 19.68
     lat: 54.36
     region: europe
+    home: [europe_east]
+    near: [europe_west]
     field: science
     tier: 3
-    channels: {C: 2, V: 2}
-    refs: [copernicus_frombork_primary, copernicus_autograph_provenance, copernicus_first_edition_prefaces, copernicus_giese_letters]
+    channels: {C: 1, V: 2, G: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [copernicus_frombork_primary, copernicus_mactutor, copernicus_torun, copernicus_giese_letters, copernicus_reception_study, copernicus_first_edition_prefaces, copernicus_autograph_provenance, copernicus_wiki, copernicus_remains_pnas]
     scene:
       star_rules: 2
       points:
@@ -20,15 +25,15 @@ events:
         - {id: p2, kind: persuade, day: 109, req: {"any":[{"job":["archivist","translator"],"stat":{"will":7,"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
         - {id: p3, kind: care, day: 30, req: {"any":[{"job":["doctor","physician","nurse","caregiver","medical_teacher"],"stat":{"will":6}},{"job":["courier","bookseller","driver"],"stat":{"constitution":8}},{"trait":["kind","patient","vigil"],"stat":{"will":8,"wit":6}}]}}
       vignettes:
-        - {id: walk, traits: [curious, bold]}
-        - {id: frame, traits: [methodical, skeptical]}
-        - {id: diagram}
+        - {id: preface, traits: [methodical, scholarly, skeptical, curious], day: 55}
+        - {id: window, traits: [kind, patient, vigil, attached, sensitive], day: 40}
+        - {id: nets, day: 12}
     text:
       en:
         name: The Sun at the centre
         place: Frombork, Poland
         figure: Nicolaus Copernicus
-        story: 'In 1543 De revolutionibus was printed in Nuremberg with an account in which Earth rotates and orbits the Sun.'
+        story: 'In 1539 the young mathematician Rheticus came to Frombork and urged Nicolaus Copernicus to publish his book. In 1543 De revolutionibus, in which the Earth turns and goes round the Sun, was printed in Nuremberg, with an unsigned address to the reader at its front. Copernicus had been ill since the end of 1542 and died in Frombork on 24 May 1543. His friend Tiedemann Giese later wrote that the printed book reached him only on the day he died.'
         relic: A brass quadrant
         relic_desc: A quarter circle for measuring the height of stars.
         points:
@@ -51,14 +56,14 @@ events:
             who: copernicus_frombork
             bio: 'Copernicus received the printed De revolutionibus some weeks before he died, and knew that the book he had worked on for decades was in print.'
         vignettes:
-          walk: 'You ask the reader to keep looking at a point across the room while walking around a stool. He stops halfway, surprised by how far the stool has seemed to move against the wall.'
-          frame: 'You put the labels for observer and observed on separate scraps. The reader turns over one scrap at a time while he compares two possible accounts of the same apparent motion.'
-          diagram: 'You turn the page so the reader can see the orbit in full. He holds his finger on Earth while you follow the direction that changes during the year.'
+          preface: '{staff} opens a printed copy. The unsigned address at the front says the book''s account is only a supposition convenient for reckoning. {staff} knows it will be some fifty years before Kepler makes known who wrote it, and closes the book with a finger still on that page.'
+          window: '{staff} keeps the water hot outside the sickroom. The people inside say the old man hardly knows anyone now, so {staff} pushes the window open a crack to let in the spring air.'
+          nets: '{staff} helps the fishermen at the foot of the hill mend their nets with the Vistula Lagoon in view. A fisherman says that up on the hill there is an old canon who watches the stars at night.'
       zh:
         name: 太阳在中心
         place: 波兰弗龙堡
         figure: 哥白尼
-        story: '《天体运行论》于 1543 年在纽伦堡印行，书中论述地球自转并绕太阳运行。'
+        story: '1539 年，年轻的数学家雷蒂库斯来到弗龙堡，劝尼古拉·哥白尼把书付印。1543 年，《天体运行论》在纽伦堡印成，书中地球自转并绕太阳运行，卷首多了一篇不署名的《告读者》。哥白尼从 1542 年底起一直病着，1543 年 5 月 24 日在弗龙堡去世。他的朋友蒂德曼·吉泽后来写信说，印好的书到他去世那天才送到他手上。'
         relic: 一个黄铜象限仪
         relic_desc: 四分之一圆，用来量星星的高度。
         points:
@@ -81,31 +86,127 @@ events:
             who: copernicus_frombork
             bio: '哥白尼在去世前几周收到了印好的《天体运行论》，知道这部写了几十年的书已经印成。'
         vignettes:
-          walk: '你请读者绕着凳子走，眼睛一直看着对面墙上的一点。他走到一半停住了，没想到凳子对着墙看起来挪了那么远。'
-          frame: '你把「观察者」和「被观察者」写在两张纸上。读者一张一张翻过去，比较同一个视运动的两种解释。'
-          diagram: '你把书页转过去，让读者看见整个轨道。他按住地球的位置，你沿着图找一年中视线方向怎样变化。'
+          preface: '{staff}翻开一本印好的书。卷首那篇不署名的《告读者》说，书里的说法只是便于计算的假设。{staff}知道要再过五十年左右，开普勒才会说出是谁写的，合上书时，手指还压在那一页上。'
+          window: '{staff}在病房外守着一壶热水。屋里的人说，老人已经认不太清人了。{staff}把窗推开一条缝，让春天的风吹进去。'
+          nets: '{staff}在山脚的渔村帮人补网，望得见维斯瓦潟湖。渔夫说，山上住着一位老教士，夜里常看星星。'
 text:
   en:
     name: Nicolaus Copernicus
-    text: Polish astronomer and canon, 1473 to 1543, who worked at Frombork. His book On the Revolutions of the Heavenly Spheres, printed in 1543, put the sun at the centre of the planets. He is said to have received the first printed copy on his deathbed.
+    text: Polish astronomer and canon, 1473 to 1543, who worked at Frombork. His book On the Revolutions of the Heavenly Spheres, printed in 1543, put the sun at the centre of the planets. His friend Tiedemann Giese wrote that the printed book reached him only on the day he died.
   zh:
     name: 哥白尼
-    text: 波兰天文学家与教士，1473 年生，1543 年去世，在弗龙堡工作。他的《天体运行论》于 1543 年印行，把太阳放在行星运行的中心。据说他在临终前才拿到第一本印好的书。
-hook: {en: 'Try looking from the moving Earth.', zh: '站在会动的地球上看'}
+    text: 波兰天文学家与教士，1473 年生，1543 年去世，在弗龙堡工作。他的《天体运行论》于 1543 年印行，把太阳放在行星运行的中心。他的朋友蒂德曼·吉泽写信说，印好的书到他去世那天才送到他手上。
+hook: {en: 'The book was printed. Did he see it?', zh: '书印成了，他看见了吗'}
 facts:
+  rheticus:
+    date: '1539'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [copernicus_mactutor, copernicus_torun]
+    text:
+      en: 'In 1539 Georg Joachim Rheticus, a young mathematician from Wittenberg, came to Frombork, stayed about two years with Copernicus and persuaded him to publish his book.'
+      zh: '1539 年，维滕贝格的年轻数学家格奥尔格·约阿希姆·雷蒂库斯来到弗龙堡，在哥白尼身边待了约两年，劝他把书出版。'
+    line:
+      en: '1539: Rheticus, a young mathematician from Wittenberg, comes to Frombork and urges Copernicus to publish his book.'
+      zh: '1539 年，维滕贝格的年轻数学家雷蒂库斯来到弗龙堡，劝哥白尼把书付印。'
+  giese_worry:
+    date: '1542-12-08'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [copernicus_torun, copernicus_giese_letters]
+    text:
+      en: 'On 8 December 1542 Tiedemann Giese wrote that he was deeply worried about the poor health of the venerable old man, Copernicus.'
+      zh: '1542 年 12 月 8 日，蒂德曼·吉泽写信说，他很担心这位可敬的老人哥白尼的身体。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: '8 December 1542: Tiedemann Giese writes that he is deeply worried about the health of the old man, Copernicus.'
+      zh: '1542 年 12 月 8 日，蒂德曼·吉泽写信说，他很担心老人哥白尼的身体。'
   revolutions:
     date: '1543'
-    checked: official_record
+    stay_day: -1
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [copernicus_frombork_primary]
+    use: [story, history, wiki]
+    sources: [copernicus_mactutor, copernicus_first_edition_prefaces]
     text:
-      en: 'In 1543 De revolutionibus was printed in Nuremberg with an account in which Earth rotates and orbits the Sun.'
-      zh: '《天体运行论》于 1543 年在纽伦堡印行，书中论述地球自转并绕太阳运行。'
+      en: 'In 1543 De revolutionibus was printed by Johannes Petreius in Nuremberg, with an account in which the Earth turns and goes round the Sun. An unsigned address to the reader stood at the front; Kepler later made known that Andreas Osiander had written it.'
+      zh: '1543 年，《天体运行论》在纽伦堡佩特赖乌斯的印坊印成，书中论述地球自转并绕太阳运行。卷首有一篇不署名的《告读者》，后来开普勒指出作者是奥西安德。'
+    line:
+      en: '1543: in Nuremberg De revolutionibus is printed, with an unsigned address to the reader at the front.'
+      zh: '1543 年，《天体运行论》在纽伦堡印成，卷首多了一篇不署名的《告读者》。'
+  book_reached:
+    date: '1543-05-24'
+    stay_day: 45.9
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [copernicus_mactutor, copernicus_torun]
+    text:
+      en: 'Giese wrote that the printed book reached Copernicus only on the day he died; the Copernicus centre at Toruń holds it likely that the book came to Frombork after his death.'
+      zh: '吉泽写信说，印好的书到哥白尼去世那天才送到他手上；托伦的哥白尼中心认为，书很可能在他死后才到弗龙堡。'
+    line:
+      en: 'About 24 May: the printed De revolutionibus reaches Frombork. Giese will write that it came on the day he died; it may have come after.'
+      zh: '5 月 24 日前后，印好的《天体运行论》送到弗龙堡。吉泽后来说，书在他去世那天才到；也可能到得更晚。'
+  death:
+    date: '1543-05-24'
+    stay_day: 46
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [copernicus_mactutor, copernicus_giese_letters]
+    text:
+      en: 'Copernicus died in Frombork on 24 May 1543, after several days without consciousness.'
+      zh: '1543 年 5 月 24 日，哥白尼昏迷数日后在弗龙堡去世。'
+    note: 'Death: written as a plain fact.'
+    line:
+      en: '24 May 1543: Nicolaus Copernicus dies in Frombork.'
+      zh: '1543 年 5 月 24 日，尼古拉·哥白尼在弗龙堡去世。'
+  giese_letter:
+    date: '1543-07-26'
+    stay_day: 109.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [copernicus_giese_letters, copernicus_reception_study]
+    text:
+      en: 'On 26 July 1543 Giese wrote to Rheticus, thanked him for the two copies of the book, objected to the unsigned preface, and asked him to forward a letter to the city council of Nuremberg requesting an amended edition.'
+      zh: '1543 年 7 月 26 日，吉泽写信给雷蒂库斯，谢他寄来两本书，反对那篇不署名的序言，请他把要求改版的信转交纽伦堡市议会。'
+    line:
+      en: '26 July: Giese writes to Rheticus, thanks him for two copies, and asks him to take a request for an amended edition to the council of Nuremberg.'
+      zh: '7 月 26 日，吉泽写信给雷蒂库斯，谢他寄来两本书，请他把要求改版的信转交纽伦堡市议会。'
+  autograph:
+    date: '1999'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [copernicus_autograph_provenance, copernicus_wiki]
+    text:
+      en: 'The autograph manuscript of De revolutionibus passed through the hands of Rheticus and survives in the Jagiellonian Library in Kraków; in 1999 it was entered in the Memory of the World register.'
+      zh: '《天体运行论》的亲笔原稿经雷蒂库斯之手流传下来，今藏克拉科夫雅盖隆图书馆，1999 年列入世界记忆名录。'
+    line:
+      en: '1999: the autograph of De revolutionibus, kept in the Jagiellonian Library in Kraków, enters the Memory of the World register.'
+      zh: '1999 年，藏在克拉科夫雅盖隆图书馆的《天体运行论》亲笔原稿列入世界记忆名录。'
+  remains:
+    date: '2008'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [copernicus_remains_pnas, copernicus_wiki]
+    text:
+      en: 'Remains found under the floor of Frombork Cathedral in 2005 were identified in 2008 as those of Copernicus by a DNA comparison, published in 2009.'
+      zh: '2005 年在弗龙堡大教堂地下找到的遗骨，2008 年经 DNA 比对确认是哥白尼，结果次年发表。'
+    line:
+      en: '2008: a DNA comparison shows that remains found under the floor of Frombork Cathedral are those of Copernicus.'
+      zh: '2008 年，DNA 比对证实，弗龙堡大教堂地下找到的遗骨是哥白尼的。'
 bystanders:
   copernicus_frombork_reader:
     invented: true
-    text: {en: 'An invented reader trying to follow the diagrams.', zh: '一位虚构的读者，正在试着看懂图解。'}
+    text: {en: 'A fisherman at the foot of the hill, made up for the game.', zh: '一个编出来的山脚渔夫。'}
+  water_boy:
+    invented: true
+    text: {en: 'A servant of the house, made up for the game, who carries water up to the sickroom.', zh: '一个编出来的仆役，往病房里送水。'}
 wiki:
   refs:
     copernicus_autograph_provenance:
@@ -126,17 +227,52 @@ wiki:
       text:
         en: 'Linda Hall Library on Giese’s letters and the requested correction https://www.lindahall.org/about/news/scientist-of-the-day/tiedemann-giese/'
         zh: '琳达·霍尔图书馆所录吉泽的信与改版要求 https://www.lindahall.org/about/news/scientist-of-the-day/tiedemann-giese/'
+    copernicus_mactutor:
+      order: 5
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, University of St Andrews, Nicolaus Copernicus. https://mathshistory.st-andrews.ac.uk/Biographies/Copernicus/'
+        zh: '圣安德鲁斯大学 MacTutor 数学史，尼古拉·哥白尼。https://mathshistory.st-andrews.ac.uk/Biographies/Copernicus/'
+    copernicus_torun:
+      order: 6
+      status: checked
+      text:
+        en: 'Copernicus Science Centre, Toruń, Last years spent in Frombork. https://copernicus.torun.pl/en/biography/copernicus-in-warmia-1503-1543/last-years-spent-in-frombork'
+        zh: '托伦哥白尼中心，在弗龙堡的最后几年。https://copernicus.torun.pl/en/biography/copernicus-in-warmia-1503-1543/last-years-spent-in-frombork'
+    copernicus_reception_study:
+      order: 7
+      status: checked
+      text:
+        en: 'Medievalists.net, The reception of Copernicus as reflected in biographies, on Giese''s letter of 26 July 1543. https://www.medievalists.net/2011/03/the-reception-of-copernicus-as-reflected-in-biographies/'
+        zh: 'Medievalists.net，从传记看哥白尼的接受史，述及吉泽 1543 年 7 月 26 日的信。https://www.medievalists.net/2011/03/the-reception-of-copernicus-as-reflected-in-biographies/'
+    copernicus_wiki:
+      order: 8
+      status: checked
+      text:
+        en: 'Wikipedia, Nicolaus Copernicus. https://en.wikipedia.org/wiki/Nicolaus_Copernicus'
+        zh: '维基百科，尼古拉·哥白尼。https://en.wikipedia.org/wiki/Nicolaus_Copernicus'
+    copernicus_remains_pnas:
+      order: 9
+      status: checked
+      text:
+        en: 'Bogdanowicz and others, Genetic identification of putative remains of the famous astronomer Nicolaus Copernicus, PNAS 2009. https://www.pnas.org/doi/10.1073/pnas.0901848106'
+        zh: '博格达诺维奇等，著名天文学家哥白尼疑似遗骨的遗传鉴定，《美国国家科学院院刊》2009。https://www.pnas.org/doi/10.1073/pnas.0901848106'
     copernicus_frombork_primary:
       order: 122
       status: checked
       text:
         en: 'Nicolaus Copernicus, De revolutionibus orbium coelestium, Nuremberg, 1543. Library of Congress facsimile. https://www.loc.gov/exhibits/exploring-the-early-americas/documenting-new-knowledge.html'
-        zh: 'Nicolaus Copernicus, De revolutionibus orbium coelestium, Nuremberg, 1543. Library of Congress facsimile. https://www.loc.gov/exhibits/exploring-the-early-americas/documenting-new-knowledge.html'
+        zh: '尼古拉·哥白尼《天体运行论》，纽伦堡 1543 年，美国国会图书馆影印。https://www.loc.gov/exhibits/exploring-the-early-americas/documenting-new-knowledge.html'
 self_check:
-  quote_line: '你请读者绕着凳子走，眼睛一直看着对面墙上的一点。'
-  fact: revolutions
-  regret_choice: '略过「找出观察者站在哪里」，这处细节便留给下一位核对。'
-  bookend: '从「站在会动的地球上看」开始，以员工留下的观察或更正收尾。'
-  share_line: '站在会动的地球上看'
-  share_number: '1543'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: book_reached
+  quote_line: '5 月 24 日前后，印好的《天体运行论》送到弗龙堡。吉泽后来说，书在他去世那天才到；也可能到得更晚。'
+  regret_choice: '派懂医护的去，五月初书能送到他床前，桌上那几叠稿纸却可能没人分清；派会整理档案的去，原稿交到了吉泽手里，那本印好的书照旧来迟了。'
+  bookend: '从 1539 年雷蒂库斯来劝他付印开始，以七月吉泽为那篇不署名的序言写信抗议收尾，书印成了，写书的人没等到。'
+  share_line: '1543 年春天，我在弗龙堡替一位老人等一本从纽伦堡寄来的书。'
+  share_number: '46'
+  knowing: 'remains'
+  near: 'giese_letter'
+  lever: 'p1, p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
