@@ -2,10 +2,11 @@ order: 102
 events:
   ibn_khaldun_cairo:
     order: 173
-    build_step: 3
-    year: 1406
-    # the planned arrival is 1 January 1406, the last months of his life, in his sixth term as chief judge
-    date: '1406-01-01'
+    build_step: 2
+    year: 1384
+    # the planned arrival is 15 July 1384, before his first appointment as chief judge and the loss of the ship off Alexandria
+    date: '1384-07-15'
+    stay: 7
     lon: 31.24
     lat: 30.04
     region: africa
@@ -13,72 +14,63 @@ events:
     field: thought
     tier: 3
     channels: {G: 2, S: 2}
-    # finished: in the game with release.ready_only
-    ready: true
-    refs: [ibn_khaldun_cairo_method, britannica_ibn_khaldun_later, ahram_ibn_khaldun, encyclopedia_ibn_khaldun]
+    refs: [ibn_khaldun_cairo_morimoto, ibn_khaldun_cairo_broadbridge, britannica_ibn_khaldun_later, ahram_ibn_khaldun, encyclopedia_ibn_khaldun, ibn_khaldun_cairo_method]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: persuade, guard: true, day: 45, req: {"any":[{"trait":["charismatic","glib","streetwise"],"stat":{"will":5}},{"trait":["cosmopolitan"],"stat":{"wit":7}},{"item":"golden_apple"}]}}
-        - {id: p2, kind: hold, day: 70, req: {"stat":{"wit":6},"any":[{"job":["archivist","translator","proofreader","bookseller","teacher"],"trait":["scholarly","methodical","patient"]},{"item":"neural_chip"}]}}
-        - {id: p3, kind: trust, day: 60, req: {"any":[{"trait":["scholarly","cosmopolitan"],"stat":{"will":4}},{"job":["teacher","university_lecturer","lecturer","tutor"]}]}}
+        - {id: p1, kind: persuade, guard: true, day: 23, req: {"any":[{"trait":["charismatic","glib","streetwise"],"stat":{"will":6}},{"trait":["cosmopolitan","scholarly"],"stat":{"wit":8,"will":5}},{"item":"golden_apple","stat":{"will":5}}]}}
+        - {id: p2, kind: endure, day: 110, req: {"any":[{"job":["sailor","navigator","ferry_pilot","ferryman","fisher","fisherman"],"stat":{"constitution":5,"will":5}},{"trait":["bold","hardy"],"stat":{"constitution":9,"will":5}}]}}
       vignettes:
         - {id: gate, traits: [curious, methodical, skeptical], day: 30}
         - {id: two, traits: [sensitive, artistic, cosmopolitan], day: 50}
         - {id: copy, day: 20}
     text:
       en:
-        name: 'How long the gate was open'
+        name: 'The ship off Alexandria'
         place: "Cairo"
         figure: "Ibn Khaldun"
-        story: 'Ibn Khaldun came to Cairo in 1382 at the invitation of Sultan Barquq and in 1384 was made chief judge of the Maliki school; that year his wife and daughters died in a shipwreck off Alexandria. Early in 1401 he met Timur outside Damascus. He died in Cairo on 17 March 1406 and was buried outside the Bab al-Nasr. In the Muqaddimah he asks historians to test reports against what could happen in the society they describe.'
+        story: 'Ibn Khaldun came to Cairo in 1382 at the invitation of Sultan Barquq. In 1384 the sultan asked the ruler of Tunis to let his family follow him, and on 8 August made him chief judge of the Maliki school, a high post for a newcomer from the west, and rivals in the city soon set to work to unseat him. That year the ship bringing his wife and daughters went down at Alexandria. In the Muqaddimah he asks historians to test reports against what could happen in the society they describe.'
         relic: 'A checked report'
         relic_desc: 'A report of a procession, with the place the watcher stood written in the margin.'
         points:
-          p1: 'Stop one more push against an outsider as chief judge, and keep his sixth term as chief judge of the Maliki school'
-          p2: 'Before he dies, help him finish this round of revisions to his history, copied fair and put in a student''s hands'
-          p3: 'Let him know while he lives that the Muqaddimah will be read as an early work of social science'
+          p1: 'When his rivals move to keep a newcomer out of the bench, keep his appointment as chief judge of the Maliki school on 8 August'
+          p2: 'When the ship bringing his wife and daughters goes down at Alexandria, pull the people on board out of the water and save them'
         points_fail:
-          p1: 'In this branch the sixth appointment went to someone else, and he did not die as chief judge.'
-          p2: 'The half revised pages stopped on 17 March. In this branch nobody copied out that round of revisions.'
-          p3: 'He died without knowing what the book would come to mean, and this branch is the same as before.'
+          p1: 'In this branch the appointment of 8 August went to someone else. This branch has come loose from history, and the office recalls the employee that day.'
+          p2: 'As in history the ship goes down at Alexandria with everyone on board, and his wife and daughters do not reach Cairo.'
         shift:
           p1:
-            was: 'Early in 1406 Ibn Khaldun took office as chief Maliki judge of Cairo for the sixth time.'
+            was: '8 August 1384: Sultan Barquq appointed Ibn Khaldun chief judge of the Maliki school in Cairo; rivals in the city worked against him, and he lost the post the next year.'
           p2:
-            was: 'Ibn Khaldun died in Cairo on 17 March 1406, his history still being revised to the end.'
-            now: 'The last round of changes was copied fair and bound before he died, and a student of the court kept it. The copyists who came later worked from that copy.'
-          p3:
-            was: 'He died in Cairo on 17 March 1406; the Muqaddimah came to be read as an early work of social science centuries later.'
-            now: 'In his last weeks he heard how the book would one day be read.'
+            was: '1384: the ship bringing Ibn Khaldun''s wife and daughters from Tunis went down at Alexandria, and no one on board survived.'
+            now: 'The people on the ship were pulled from the water at Alexandria. His wife and daughters came on to Cairo, and the family lived together again.'
+            who: ibn_khaldun_cairo
+            bio: 'In this timeline the ship that went down at Alexandria in 1384 did not take his family with it: his wife and daughters were saved and joined him in Cairo.'
         vignettes:
           gate: '{staff} asks a clerk, made up for the game, how long the gate stood open while the crowd went through. He writes the minutes in the margin beside the total, and then changes the total to an estimate.'
           two: '{staff} gives a second watcher, made up for the game, a sheet of her own, so that her account of the street does not end up squeezed into the margin of his.'
           copy: '{staff} copies a page of the Muqaddimah for a student of the court and leaves a finger''s width between the lines, for the notes the student will want to make.'
       zh:
-        name: '城门开了多久'
+        name: '亚历山大港的那条船'
         place: "开罗"
         figure: "伊本·赫勒敦"
-        story: '伊本·赫勒敦 1382 年应苏丹巴尔库克之邀来到开罗，1384 年任马立克派首席法官，同年妻女在亚历山大港外沉船遇难。1401 年初，他在大马士革城外见到帖木儿。1406 年 3 月 17 日他在开罗去世，葬在胜利门外。他在《历史绪论》中提出，史家要用所写社会中可能发生的事情检验传闻。'
+        story: '伊本·赫勒敦 1382 年应苏丹巴尔库克之邀来到开罗。1384 年，苏丹请突尼斯的君主放他的家人来埃及，8 月 8 日又任命他为马立克派首席法官。从西边来的外人坐上这个高位，城里的对手很快就开始设法把他拉下来。同年，载着他妻女的船在亚历山大港沉没。他在《历史绪论》中提出，史家要用所写社会中可能发生的事情检验传闻。'
         relic: '一页核对过的记录'
         relic_desc: '一页队伍经过的记录，页边写着看的人当时站在哪里。'
         points:
-          p1: '拦下又一次冲着外人当首席法官来的排挤，护住他第六次出任马立克派首席法官'
-          p2: '赶在他去世之前，帮他完成这一轮史书的修订，誊清交到学生手里'
-          p3: '让他在生前知道，《历史绪论》会被后人读作社会科学的早期著作'
+          p1: '对手要把外来的人挡在法官席外时，护住他 8 月 8 日出任马立克派首席法官'
+          p2: '载着他妻女的船在亚历山大港沉没时，把船上的人从水里拉上来，救下她们'
         points_fail:
-          p1: '这条分支里，第六次任命落到了别人头上，他去世时已不是首席法官。'
-          p2: '改到一半的书页在 3 月 17 日那天停下，这条分支里，那一轮修订没有人誊清。'
-          p3: '他到死也不知道这本书后来的分量，这条分支和原来一样。'
+          p1: '这条分支里，8 月 8 日的任命落到了别人头上，与历史脱了节，事务所当天召回员工。'
+          p2: '那条船照史实在亚历山大港沉没，船上的人无一生还，他的妻女没能到开罗。'
         shift:
           p1:
-            was: '1406 年初，伊本·赫勒敦第六次出任开罗马立克派首席法官。'
+            was: '1384 年 8 月 8 日，苏丹巴尔库克任命伊本·赫勒敦为开罗马立克派首席法官；城里的对手处处与他为难，第二年他就丢了这个职位。'
           p2:
-            was: '1406 年 3 月 17 日，伊本·赫勒敦在开罗去世，他的史书到最后还在修改。'
-            now: '最后那一轮改动在他去世前誊清装订，交给法庭里的一个学生收着。后来抄书的人照这一份抄。'
-          p3:
-            was: '1406 年 3 月 17 日他在开罗去世；《历史绪论》被读作社会科学的早期著作，是几百年后的事。'
-            now: '他在最后几个星期听人说起这本书以后会被人怎样读。'
+            was: '1384 年，载着伊本·赫勒敦妻女从突尼斯来埃及的船在亚历山大港沉没，船上的人无一生还。'
+            now: '船上的人在亚历山大港被救了上来。他的妻女随后到了开罗，一家人又住在了一起。'
+            who: ibn_khaldun_cairo
+            bio: '这条时间线里，1384 年在亚历山大港沉没的那条船没有带走他的家人，妻女获救，到开罗与他团聚。'
         vignettes:
           gate: '{staff}问一位编出来的书吏，人群过城门时门开了多久。书吏把时辰写在总数旁的页边，又把总数改成了估算。'
           two: '另一位编出来的见证人站在街对面。{staff}给她另腾一页纸，她说的那段街景就不必挤在书吏那张纸的边上了。'
@@ -90,7 +82,7 @@ text:
   zh:
     name: 伊本·赫勒敦
     text: 阿拉伯历史学家与政治家，1332 年生，1406 年去世，生于突尼斯。他的《历史绪论》分析王朝的兴衰和群体凝聚力的作用，被视为社会科学的早期著作。他在开罗去世。
-hook: {en: 'A large number sounds right. Can it fit?', zh: '数字听着可信，可城门容得下吗？'}
+hook: {en: 'A new judge, a ship on its way.', zh: '新任的法官，海上的一条船。'}
 facts:
   cairo:
     date: '1382'
@@ -104,31 +96,56 @@ facts:
     line:
       en: '1382: Ibn Khaldun comes to Cairo at the invitation of Sultan Barquq.'
       zh: '1382 年，伊本·赫勒敦应苏丹巴尔库克之邀来到开罗。'
-  qadi:
+  family_release:
     date: '1384'
     checked: two_sources
     level: usable
     use: [story, history, wiki]
     sources: [ahram_ibn_khaldun, encyclopedia_ibn_khaldun]
     text:
-      en: 'In 1384 he became chief judge of the Maliki school in Cairo, a post he held six times in all.'
-      zh: '1384 年他出任开罗马立克派首席法官，前后共六次担任此职。'
+      en: 'Sultan Barquq asked the ruler of Tunis to let the family of Ibn Khaldun leave and join him in Egypt.'
+      zh: '苏丹巴尔库克请突尼斯的君主放行伊本·赫勒敦的家人，让他们来埃及与他团聚。'
     line:
-      en: '1384: he is made chief judge of the Maliki school.'
-      zh: '1384 年，他出任马立克派首席法官。'
+      en: '1384: at the sultan''s request, Tunis lets his wife and daughters sail for Egypt.'
+      zh: '1384 年，突尼斯应苏丹之请，放他的妻女乘船来埃及。'
+  qadi:
+    date: '1384-08-08'
+    stay_day: 24
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [ibn_khaldun_cairo_morimoto, encyclopedia_ibn_khaldun]
+    text:
+      en: 'On 8 August 1384 (19 Jumada II 786) Sultan Barquq made him chief judge of the Maliki school in Cairo, a post he held six times in all.'
+      zh: '1384 年 8 月 8 日（伊斯兰历 786 年 6 月 19 日），苏丹巴尔库克任命他为开罗马立克派首席法官，他前后共六次担任此职。'
+    line:
+      en: '8 August 1384: he is made chief judge of the Maliki school.'
+      zh: '1384 年 8 月 8 日，他出任马立克派首席法官。'
+  rivals:
+    date: '1385'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [ibn_khaldun_cairo_broadbridge, britannica_ibn_khaldun_later]
+    text:
+      en: 'Rivals among the judges and scholars of Cairo worked against the newcomer, and in 1385, after some ten months, he left the post.'
+      zh: '开罗的法官与学者里有人处处与这个外来人为难，1385 年，任职约十个月后，他离开了这个职位。'
+    line:
+      en: '1385: after some ten months, under pressure from his rivals, he leaves the bench.'
+      zh: '1385 年，任职约十个月后，他在对手的排挤下离开了法官席。'
   shipwreck:
     date: '1384'
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [encyclopedia_ibn_khaldun, ahram_ibn_khaldun]
+    sources: [britannica_ibn_khaldun_later, encyclopedia_ibn_khaldun, ahram_ibn_khaldun]
     text:
-      en: 'In 1384 his wife and daughters, on their way to join him, died in a shipwreck off Alexandria.'
-      zh: '1384 年，他的妻女在亚历山大港外沉船遇难。'
+      en: 'In 1384 the ship bringing his wife and daughters from Tunis went down at Alexandria, and no one on board survived.'
+      zh: '1384 年，载着他妻女从突尼斯来埃及的船在亚历山大港沉没，船上的人无一生还。'
     note: 'Death: written as a plain fact.'
     line:
-      en: 'The same year his wife and daughters die in a shipwreck off Alexandria.'
-      zh: '同年，他的妻女在亚历山大港外沉船遇难。'
+      en: 'The same year the ship bringing his wife and daughters goes down at Alexandria.'
+      zh: '同年，载着他妻女的船在亚历山大港沉没。'
   timur:
     date: '1401'
     checked: two_sources
@@ -143,7 +160,6 @@ facts:
       zh: '1401 年初，在被围的大马士革城外，伊本·赫勒敦见到了帖木儿。'
   death:
     date: '1406-03-17'
-    stay_day: 75
     checked: two_sources
     level: careful
     use: [story, history, wiki]
@@ -157,7 +173,6 @@ facts:
       zh: '1406 年 3 月 17 日，伊本·赫勒敦在开罗去世。'
   burial:
     date: '1406'
-    stay_day: 76
     checked: two_sources
     level: careful
     use: [story, history, wiki]
@@ -186,6 +201,18 @@ bystanders:
     text: {en: 'A witness, made up for the game, who saw another part of the street.', zh: '一位编出来的见证人，在街对面看见另一段。'}
 wiki:
   refs:
+    ibn_khaldun_cairo_morimoto:
+      order: 921
+      status: checked
+      text:
+        en: 'Kosei Morimoto, What Ibn Khaldun Saw: The Judiciary of Mamluk Egypt, Mamluk Studies Review 6 (2002), University of Chicago https://knowledge.uchicago.edu/record/1037/files/MSR_VI_2002-Morimoto_pp109-131.pdf'
+        zh: '森本公诚，《伊本·赫勒敦所见的马穆鲁克埃及司法》，《马穆鲁克研究评论》第 6 期（2002），芝加哥大学 https://knowledge.uchicago.edu/record/1037/files/MSR_VI_2002-Morimoto_pp109-131.pdf'
+    ibn_khaldun_cairo_broadbridge:
+      order: 922
+      status: checked
+      text:
+        en: 'Anne F. Broadbridge, Academic Rivalry and the Patronage System in Fifteenth-Century Egypt, Mamluk Studies Review 3 (1999), University of Chicago https://knowledge.uchicago.edu/record/1000/files/MSR_III_1999-Broadbridge.pdf'
+        zh: '安妮·布罗德布里奇，《十五世纪埃及的学术竞争与庇护制度》，《马穆鲁克研究评论》第 3 期（1999），芝加哥大学 https://knowledge.uchicago.edu/record/1000/files/MSR_III_1999-Broadbridge.pdf'
     ibn_khaldun_cairo_method:
       order: 917
       status: checked

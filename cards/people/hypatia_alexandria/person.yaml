@@ -2,51 +2,64 @@ order: 99
 events:
   hypatia_alexandria:
     order: 10
-    build_step: 1
-    year: 400
+    build_step: 2
+    year: 415
+    date: '0415-01-01'
+    stay: 3
     lon: 29.93
     lat: 31.21
     region: africa
     field: math
     tier: 2
     channels: {S: 3}
-    refs: [hypatia_alexandria_hydroscope]
+    refs: [hypatia_alexandria_socrates, hypatia_alexandria_romana, hypatia_alexandria_ebsco, hypatia_alexandria_hydroscope]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"stat": {"finesse": 7}}}
-        - {id: p2, kind: notice, req: {"stat": {"wit": 7}}}
-        - {id: p3, kind: hold, req: {"item": "holo_cloak"}}
+        - {id: p1, kind: persuade, day: 60, req: {"any":[{"trait":["charismatic","glib","cosmopolitan"],"stat":{"wit":5,"will":6}},{"trait":["scholarly"],"stat":{"wit":8,"will":5}},{"item":"golden_apple","stat":{"will":6}}]}}
       vignettes:
         - {id: scale, traits: [methodical, curious, skeptical]}
         - {id: copy, traits: [scholarly, quiet, attached]}
         - {id: name}
     text:
       en:
-        name: 'Read at the surface'
+        name: 'Alexandria, that March'
         place: Alexandria
         figure: Hypatia
-        story: 'In Letter 15, Synesius asks Hypatia to have a brass instrument made and describes the upright float and its marks for comparing liquids. The letter records a request; the two readers and the instrument they test here belong to the story.'
+        story: 'Early in 415 Hypatia still teaches mathematics and philosophy in Alexandria, and the city magistrates come to hear her. Between the prefect of the city and another faction a feud grows sharper by the week, and she is drawn into it through her ties to the prefect.'
         relic: 'A sketched float scale'
         relic_desc: 'A fictional workshop sketch showing where the mark is read.'
         points:
-          p1: 'Ask the pupil and maker to agree where they took the reading'
-          p2: 'Check whether two readers are using the same notch'
-          p3: 'Use the remaining equipment to keep the trial out of the doorway'
+          p1: 'Before the worst of that March, persuade her to leave Alexandria for a while, or to take another road on the day, and save her'
+        points_fail:
+          p1: 'She goes about the city as before, and in this branch too she is killed that March.'
+        shift:
+          p1:
+            was: 'March 415: Hypatia, mathematician and philosopher, was killed in Alexandria in the unrest of the city.'
+            now: 'That March she was away from the city. When things grew quiet she came back to Alexandria and went on teaching.'
+            who: hypatia_alexandria
+            bio: 'In this timeline Hypatia listened and left Alexandria before March 415, came through that spring, and later went back to teaching in the city.'
         vignettes:
           scale: 'Timon holds his thumb over the mark and calls it the result. Nysa takes a reading from where the float meets the surface. You ask them to put down the tube and look again while it stands free. This time they read the same mark. Nysa adds where they were standing to the record.'
           copy: 'Nysa has one side of a tablet left and wants to copy the result in large letters. You fit the observation on the top half and let her draw the cylinder below it. The next reader will have both the result and a place to look for it on the instrument.'
           name: 'You could offer a future name for the device. Timon has a cloth in one hand and is about to lift the float out of the cup. You use the last quiet moment to ask Nysa for one independent reading. You leave without seeing what the recipient makes of the finished instrument.'
       zh:
-        name: '水面在哪一格'
+        name: '那年三月的亚历山大'
         place: 亚历山大
         figure: 希帕提娅
-        story: '昔涅修斯在第15封信里请希帕提娅找人制作黄铜仪器，并描述能直立漂浮、读刻线比较液体的器具。书信留下的是请求，试读刻线的两人和他们测试的实物属于故事。'
+        story: '415 年初，希帕提娅仍在亚历山大讲授数学与哲学，城里的官员也来听她讲。城中长官与另一股势力的积怨一周比一周深，她因与长官往来，被卷进了这场争执。'
         relic: '一张浮标刻线图'
         relic_desc: '试验台的刻线图，画出了从哪里读数。'
         points:
-          p1: '请学生与工匠对一对各自从哪里读数'
-          p2: '核查两个人读的是不是同一道刻线'
-          p3: '用带来的装备遮住试验台，给门边留出路'
+          p1: '三月风声最紧之前，劝她暂离亚历山大，或那天改走别的路，救下她'
+        points_fail:
+          p1: '她照旧在城里来往，这条分支里，那个三月她仍然遇害。'
+        shift:
+          p1:
+            was: '415 年 3 月，数学家、哲学家希帕提娅在亚历山大城中的动荡里遇害。'
+            now: '那个三月她不在城里，等局势平静下来，才回到亚历山大接着讲课。'
+            who: hypatia_alexandria
+            bio: '这条时间线里，希帕提娅听了劝，415 年三月之前离开亚历山大，躲过了那个春天，后来回城继续教书。'
         vignettes:
           scale: '提蒙用拇指按住一道刻线，说这就是结果。妮萨照浮标接触液面的位置读。你请他们松开手，等浮标自己立稳再看一遍。这次两人报的是同一格。妮萨把读数时站的位置也写了进去。'
           copy: '妮萨只剩一面蜡板，原想用大字把结果一抄。你把观察写在上半边，留给她在下面画仪器。下一个读到的人，既有读数，也有图可循，知道刻线该从哪里看。'
@@ -54,17 +67,55 @@ events:
 text:
   en:
     name: Hypatia
-    text: Greek mathematician and philosopher, about 355 to 415, who taught in Alexandria. She commented on works of mathematics and astronomy. She was murdered by a mob during political and religious conflict in the city.
+    text: Greek mathematician and philosopher, about 355 to 415, who taught in Alexandria. She commented on works of mathematics and astronomy. She was killed in March 415 in the unrest of the city.
   zh:
     name: 希帕提娅
-    text: 希腊数学家与哲学家，约 355 年生，415 年去世，在亚历山大教学。她为数学与天文学著作作注。在城中的政治与宗教冲突里，她被暴徒杀害。
+    text: 希腊数学家与哲学家，约 355 年生，415 年去世，在亚历山大教学。她为数学与天文学著作作注。415 年 3 月，她在城中的动荡里遇害。
 hook: {en: 'Two readers see two marks on one float.', zh: '同一根浮标，两人读出两格。'}
 facts:
+  teaching:
+    date: '0415'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hypatia_alexandria_socrates, hypatia_alexandria_romana]
+    text:
+      en: 'Hypatia taught philosophy in Alexandria to students who came from far away, and she often appeared before the city magistrates.'
+      zh: '希帕提娅在亚历山大讲授哲学，有学生远道而来；她也常在城中官员面前出现。'
+    line:
+      en: 'Early 415: Hypatia still teaches in Alexandria, and the magistrates of the city come to hear her.'
+      zh: '415 年初，希帕提娅仍在亚历山大讲学，城里的官员也来听她讲。'
+  feud:
+    date: '0415'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hypatia_alexandria_socrates, hypatia_alexandria_ebsco]
+    text:
+      en: 'Her ties to the prefect of the city drew her into the feud between him and another faction in Alexandria.'
+      zh: '她与城中长官往来，因此被卷进长官与城中另一股势力的争执。'
+    line:
+      en: 'The feud between the prefect and another faction of the city grows sharper, and Hypatia is drawn into it.'
+      zh: '城中长官与另一股势力的积怨越来越深，希帕提娅被卷了进去。'
+  death:
+    date: '0415-03'
+    stay_day: 73
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [hypatia_alexandria_socrates, hypatia_alexandria_romana]
+    text:
+      en: 'In March 415 Hypatia was killed in Alexandria in the unrest of the city.'
+      zh: '415 年 3 月，希帕提娅在亚历山大城中的动荡里遇害。'
+    note: 'Death: written as a plain fact, no perpetrator and no manner.'
+    line:
+      en: 'March 415: Hypatia is killed in Alexandria.'
+      zh: '415 年 3 月，希帕提娅在亚历山大遇害。'
   hydroscope:
-    date: '400'
+    date: '0400'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [hypatia_alexandria_hydroscope]
     text:
       en: 'The late antique letter requests an instrument from Hypatia and describes its vertical markings and upright flotation. The year gives the approximate setting, rather than a dated delivery.'
@@ -78,6 +129,24 @@ bystanders:
     text: {en: 'A fictional assistant who has space for only one side of a wax tablet.', zh: '虚构帮手妮萨，只剩一面蜡板可用。'}
 wiki:
   refs:
+    hypatia_alexandria_socrates:
+      order: 830
+      status: checked
+      text:
+        en: 'Socrates Scholasticus, Historia ecclesiastica VII.15, Bibliothek der Kirchenväter, University of Fribourg https://bkv.unifr.ch/works/cpg6028/versions/church-history/divisions/224/'
+        zh: '苏格拉底·斯科拉斯提库斯《教会史》第七卷第十五章，弗里堡大学古代教父文献库 https://bkv.unifr.ch/works/cpg6028/versions/church-history/divisions/224/'
+    hypatia_alexandria_romana:
+      order: 831
+      status: checked
+      text:
+        en: 'James Grout, Hypatia, Encyclopaedia Romana, University of Chicago https://penelope.uchicago.edu/encyclopaedia_romana/greece/paganism/hypatia.html'
+        zh: '詹姆斯·格劳特，希帕提娅，芝加哥大学《罗马百科》 https://penelope.uchicago.edu/encyclopaedia_romana/greece/paganism/hypatia.html'
+    hypatia_alexandria_ebsco:
+      order: 832
+      status: checked
+      text:
+        en: 'EBSCO Research Starters, Mathematician and Philosopher Hypatia Is Killed in Alexandria https://www.ebsco.com/research-starters/history/mathematician-and-philosopher-hypatia-killed-alexandria'
+        zh: 'EBSCO 研究入门，数学家与哲学家希帕提娅在亚历山大遇害 https://www.ebsco.com/research-starters/history/mathematician-and-philosopher-hypatia-killed-alexandria'
     hypatia_alexandria_hydroscope:
       order: 829
       status: checked

@@ -2,20 +2,22 @@ order: 84
 events:
   gutenberg_mainz:
     order: 14
-    build_step: 1
-    year: 1450
+    build_step: 2
+    year: 1455
+    date: '1455-06-01'
+    stay: 6
     lon: 8.27
     lat: 50
     region: europe
     field: technology
     tier: 3
     channels: {L: 2, T: 1}
-    refs: [gutenberg_mainz_primary]
+    refs: [gutenberg_mainz_primary, gutenberg_mainz_loc, gutenberg_mainz_helmasperger, gutenberg_mainz_society, gutenberg_mainz_britannica]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: hold, req: {"job": ["mechanic", "carpenter", "builder"]}}
-        - {id: p2, kind: endure, req: {"provides": "strength"}}
-        - {id: p3, kind: notice, req: {"stat": {"wit": 7}}}
+        - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["mechanic","carpenter","woodcarver","proofreader","bookseller"],"stat":{"finesse":5}},{"trait":["handy","methodical"],"stat":{"finesse":7,"will":5}},{"item":"exoskeleton","stat":{"finesse":6}}]}}
+        - {id: p2, kind: persuade, day: 150, req: {"any":[{"job":["accountant","tax_preparer","archivist"],"stat":{"wit":5,"will":5}},{"trait":["skeptical","scholarly"],"stat":{"wit":8,"will":6}}]}}
       vignettes:
         - {id: wrong_sort, traits: [handy, methodical]}
         - {id: reader, traits: [artistic, curious]}
@@ -25,13 +27,23 @@ events:
         name: Printing with movable metal type
         place: Mainz
         figure: Johannes Gutenberg
-        story: 'The surviving 42-line Bible was printed in Mainz around 1454–1455 using movable type.'
+        story: 'The Mainz merchant Johann Fust twice lent Gutenberg 800 guilders for the work of the books. In 1455 the 42-line book was finished in Gutenberg''s workshop, and Fust went to law for his money and interest; on 6 November a notary set down the case. After it the workshop passed to Fust.'
         relic: A lead type sort
         relic_desc: One small letter of lead and tin, backwards.
         points:
-          p1: 'Help the apprentice keep the type in order'
-          p2: 'Carry the practice sheets to the reading table'
-          p3: 'Catch a mistake in a printed line'
+          p1: 'While Fust presses for his money, keep the press running and see the last sheets of the 42-line book printed'
+          p2: 'Before the notary sets down the case on 6 November, help him put the loans, the accounts and the witnesses in order, and keep his workshop and its tools'
+        points_fail:
+          p1: 'The 42-line book stops half printed on the press. This branch has come loose from history, and the office recalls the employee that day.'
+          p2: 'As in history the workshop and its tools pass to Fust after the case, and in this branch too.'
+        shift:
+          p1:
+            was: '1455: the 42-line book was finished in Gutenberg''s workshop in Mainz, printed with movable metal type.'
+          p2:
+            was: '6 November 1455: a notary in Mainz set down the case Johann Fust brought against Gutenberg for his loans and interest; afterwards the workshop passed to Fust.'
+            now: 'He kept his workshop and its tools through the case, and went on printing in Mainz on his own.'
+            who: gutenberg_mainz
+            bio: 'In this timeline Gutenberg came through the case of 1455 with his workshop and tools, and went on printing in Mainz in his own shop.'
         vignettes:
           wrong_sort: 'You spot a wrong sort just before the apprentice returns it to the box. You set it beside its neighbour and let him see how one face would print into the other''s place.'
           reader: 'You ask whether a crowded line can be read from a lectern. The apprentice moves back and reads it aloud. He marks where his eye jumped to the wrong line.'
@@ -40,13 +52,23 @@ events:
         name: 用活动金属字模印书
         place: 美因茨
         figure: 古腾堡
-        story: '现存的四十二行《圣经》约于 1454 至 1455 年在美因茨以活字印成。'
+        story: '美因茨商人约翰·富斯特两次各借给古腾堡八百古尔登，供他做印书的事业。1455 年，四十二行本在古腾堡的印坊里印成，富斯特却打起官司，讨还借款和利息，11 月 6 日公证人把这场官司记了下来。此后印坊归了富斯特。'
         relic: 一粒铅字
         relic_desc: 铅锡合金的一个小字，是反着的。
         points:
-          p1: '帮学徒把拆下的活字分好'
-          p2: '把试印的纸送到读样的桌上'
-          p3: '找出校样里漏掉的字'
+          p1: '富斯特催逼还钱的时候，护住印机不停，让四十二行本最后几帖印完'
+          p2: '11 月 6 日公证人记下官司之前，帮他把借款、账目和证人理清，保住印坊和那套印书的工具'
+        points_fail:
+          p1: '四十二行本印到一半停在印机上，这条分支与历史脱了节，事务所当天召回员工。'
+          p2: '印坊和那套工具照史实在官司后归了富斯特，这条分支里也一样。'
+        shift:
+          p1:
+            was: '1455 年，四十二行本在美因茨古腾堡的印坊里用金属活字印成。'
+          p2:
+            was: '1455 年 11 月 6 日，美因茨的公证人记下约翰·富斯特起诉古腾堡讨还借款和利息一案；此后印坊归了富斯特。'
+            now: '他在官司里保住了印坊和那套工具，在美因茨接着自己印书。'
+            who: gutenberg_mainz
+            bio: '这条时间线里，古腾堡在 1455 年的官司里保住了印坊和工具，在美因茨自己的印坊里接着印书。'
         vignettes:
           wrong_sort: '学徒正要把一枚活字扔回字格，你认出它放错了。你把它和旁边那枚并在一起，让他看看为什么印出来会串成另一个字。'
           reader: '你问字挤成这样，离远一点还能读吗？学徒退后几步念出声，在眼睛跳错行的地方做了记号。'
@@ -58,23 +80,87 @@ text:
   zh:
     name: 古腾堡
     text: 德国印刷商，约 1400 年生，1468 年去世，美因茨人。约 1450 年他发展出金属活字和印刷机，1450 年代印出了《圣经》。他的方法在几十年里传遍欧洲。
-hook: {en: 'One backward letter can spoil a whole line.', zh: '一枚反字，一整行校样'}
+hook: {en: 'The book is nearly printed. The money is called in.', zh: '书快印完了，借款也被催讨了。'}
 facts:
+  loans:
+    date: '1452'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [gutenberg_mainz_loc, gutenberg_mainz_society]
+    text:
+      en: 'The Mainz merchant Johann Fust lent Gutenberg 800 guilders on two separate occasions for his printing work.'
+      zh: '美因茨商人约翰·富斯特两次各借给古腾堡八百古尔登，供他印书。'
+    line:
+      en: 'Fust has twice lent Gutenberg 800 guilders for the work of the books.'
+      zh: '富斯特已两次各借给古腾堡八百古尔登，供他做印书的事业。'
   bible:
     date: '1455'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [gutenberg_mainz_primary]
     text:
       en: 'The surviving 42-line Bible was printed in Mainz around 1454–1455 using movable type.'
       zh: '现存的四十二行《圣经》约于 1454 至 1455 年在美因茨以活字印成。'
+    line:
+      en: '1455: the 42-line book is printed in Mainz with movable metal type.'
+      zh: '1455 年，四十二行本在美因茨用金属活字印成。'
+  lawsuit:
+    date: '1455-11-06'
+    stay_day: 158
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [gutenberg_mainz_helmasperger, gutenberg_mainz_loc]
+    text:
+      en: 'On 6 November 1455 a notary recorded the case Johann Fust brought against Gutenberg for repayment of his loans with interest; the document is kept at the Göttingen State and University Library.'
+      zh: '1455 年 11 月 6 日，公证人记下约翰·富斯特起诉古腾堡、讨还借款和利息一案，文书今藏哥廷根州立与大学图书馆。'
+    line:
+      en: '6 November 1455: a notary sets down the case Fust has brought against Gutenberg for his loans and interest.'
+      zh: '1455 年 11 月 6 日，公证人记下富斯特起诉古腾堡讨还借款和利息一案。'
+  workshop:
+    date: '1455'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [gutenberg_mainz_loc, gutenberg_mainz_britannica]
+    text:
+      en: 'After the dispute Fust took over the workshop and carried on printing.'
+      zh: '这场官司之后，富斯特接手了印坊，接着印书。'
+    line:
+      en: 'After the case the workshop passes to Fust.'
+      zh: '官司之后，印坊归了富斯特。'
 bystanders:
   gutenberg_mainz_reader:
     invented: true
     text: {en: 'An invented apprentice distributing type.', zh: '一位虚构的学徒，正把拆下的活字分回字格。'}
 wiki:
   refs:
+    gutenberg_mainz_loc:
+      order: 124
+      status: checked
+      text:
+        en: 'Library of Congress, Johannes Gutenberg and the Gutenberg Bible: the printer https://guides.loc.gov/gutenberg/the-printer'
+        zh: '美国国会图书馆，古腾堡研究指南：印刷者 https://guides.loc.gov/gutenberg/the-printer'
+    gutenberg_mainz_helmasperger:
+      order: 125
+      status: checked
+      text:
+        en: 'Göttingen State and University Library, Gutenberg digital: the Helmasperger Notarial Instrument, 6 November 1455 https://gutenbergdigital.de/gudi/eframes/texte/framere/notar_1.htm'
+        zh: '哥廷根州立与大学图书馆，古腾堡数字版：赫尔马斯佩格公证书，1455 年 11 月 6 日 https://gutenbergdigital.de/gudi/eframes/texte/framere/notar_1.htm'
+    gutenberg_mainz_society:
+      order: 126
+      status: checked
+      text:
+        en: 'International Gutenberg Society, Gutenberg''s invention https://www.gutenberg-gesellschaft.de/en/johannes-gutenberg/gutenbergs-invention'
+        zh: '国际古腾堡协会，古腾堡的发明 https://www.gutenberg-gesellschaft.de/en/johannes-gutenberg/gutenbergs-invention'
+    gutenberg_mainz_britannica:
+      order: 127
+      status: checked
+      text:
+        en: "Encyclopaedia Britannica, Johannes Gutenberg: printing of the Bible https://www.britannica.com/biography/Johannes-Gutenberg/Printing-of-the-Bible"
+        zh: "《不列颠百科全书》，古腾堡：印刷四十二行本 https://www.britannica.com/biography/Johannes-Gutenberg/Printing-of-the-Bible"
     gutenberg_mainz_primary:
       order: 123
       status: checked
