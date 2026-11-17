@@ -66,6 +66,8 @@ identities:
     name: a stranger who has found lodging
     cover: '{staff} says they are passing through and looking for a place to stay a while.'
 outcomes:
+  desync:
+    name: Out of sync
   near_death:
     name: Recalled near death
   stay_and_gifts:
@@ -185,7 +187,7 @@ ui:
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
           - The models are simplified. Their parameters are game assumptions unless a number is marked historical, and no parameter has been fitted to data. Historical facts in the game are placeholders until their sources are checked, and each entry says whether it has been checked. Please do not cite the game as a source.
-          - 'The 179 events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Half of them are regrets, lives and works that history treated unjustly or lost. History cannot be changed, so the stars of a regret are what you can give them inside it, and the last one is the redemption. That is a choice of this first version, not a claim about what matters most in history.'
+          - 'The events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Every story has a real opponent, a moment of history about to go another way or something history left undone: the first is to be guarded, the second can be mended. That is a choice of a first version, not a claim about what matters more in history.'
           - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. What they say and do in the game is fiction built around the historical record, and does not reflect their real words, views or character. The time travel, the employees, the antiques, the goods and every plot are invented.
           - The fifty employees are invented people, spread over the world roughly as people are. Some of their traits and stories lean on common impressions of a place or a group, and some are written against them, so that no one is only a type, and neither says anything about a real group. The author cannot know every culture well, so the people, their ethnicities and their stories were also checked by an AI for anything that might offend, and that check can be wrong. If something reads as unfair, inaccurate or hurtful, please report it in the Issues of the repository and the author will change it as soon as possible.
           - The people in the events are real figures from the past, chosen because they have been dead for a long time, and what they say and do in the game is fiction. If anything in the game infringes on someone's rights, or the rights of a family, please write to contact@teleporter.uk or open an issue in the repository, and it will be removed.
@@ -387,7 +389,7 @@ ui:
     weight: Weight
     max: Limit
   home:
-    lead: 'You run a time travel agency: send employees into the past, earn time energy, and go home to your family once you have enough.'
+    lead: 'You run a time travel agency: send employees into the past to hold the moments that are slipping and to mend what history left undone, and go home to your family once you have earned enough time energy.'
   lbox:
     chosen: Chosen
     empty: No matching entries
@@ -578,6 +580,8 @@ ui:
       moved: Timeline moved at {n} points
       none: The timeline did not move
       desync: Out of sync
+      held: Held at {n} points
+      held_row: 'Held: it happened as it did'
       was: As it was
       now: This timeline
       all: All of it
@@ -862,7 +866,7 @@ ui:
     f_none: Not completed
     f_up: and up
     points: Sync points
-    regret_note: History cannot be changed. What you can give the people in it is help and a kind thought, and the last star of such a story is a heart.
+    regret_note: Stars are of two kinds. A guard star holds a recorded event so that it happens as it did; missed, the trip falls out of sync and the employee is sent home. A mend star sets right something history left undone in a branch; missed, it costs only that star.
     need: Needs {x}
     need_or: ' or '
     need_and: ', and '
@@ -878,7 +882,7 @@ ui:
     title: Welcome
     office_title: Game setup
     acknowledge: I understand
-    story: You run a small agency that sends people into the past. History cannot be changed, so every trip happens on a branch of its own, and how far the branch differs from the main timeline is paid to you as time energy. Collect enough of it and you can go home to your family.
+    story: 'You run a small agency that sends people into the past. Every trip prises a branch off history, and as the branches multiply the main timeline begins to drift: some moments work loose, and if nobody holds them they go another way, and your road home runs along the main timeline. So the agency does two things. It guards, holding a loosened moment so that what should happen happens and the main timeline stays steady; and it mends, setting right in a branch something history left undone. The moments held and the regrets mended are both paid as time energy. Collect enough of it and you can go home to your family.'
     how_title: How to play
     how:
       - Pick a place on the map and the time you want there. The clock starts when the first trip goes out.

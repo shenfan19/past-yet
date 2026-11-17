@@ -71,8 +71,9 @@ export function createOffice(X) {
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     if (s.seq === 1) startClock();
-    const stay = ctx.backend.eraStay(eraId);
-    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: D.get('config.stars.energy_base.' + eraId), startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
+    // a trip of a full model that fell out of sync comes home on the day it was sent back, with the rest of a desync
+    const stay = report.cutStay ?? ctx.backend.eraStay(eraId);
+    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: D.get('config.stars.energy_base.' + eraId), startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: report.restDays ?? res.restDays, antique } };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -154,14 +155,20 @@ export function createOffice(X) {
   // keep(t) narrows the trips, for the record of one employee. A trip sent out of sync keeps the stars it won before.
   function winsOf(keep = () => true) {
     const out = new Map();
-    const trips = (S().trips || []).filter((t) => t.light && keep(t)).slice().sort((a, b) => a.back - b.back || a.day - b.day);
+    const T = D.get('text');
+    const trips = (S().trips || []).filter((t) => keep(t)).slice().sort((a, b) => a.back - b.back || a.day - b.day);
     for (const t of trips) {
-      const ev = D.get('catalog.events').find((x) => x.id === t.place);
-      if (!ev?.scene) continue;
+      // a small story reads its scene and catalogue card; a full model reads its star points and its own words, and its catalogue event when it has one
+      const ev = D.get('catalog.events').find((x) => (t.light ? x.id === t.place : x.era === t.place));
+      const model = t.light ? null : ctx.backend.modelPoints(t.place);
+      const defs = t.light ? ev?.scene?.points : model?.points;
+      if (!defs) continue;
+      const words = t.light ? T.catalog[t.place] : { points: T.eras[t.place]?.star_points, shift: T.eras[t.place]?.shift };
       for (const pid of wonOf(t)) {
-        const pt = ev.scene.points.find((p) => p.id === pid);
+        const pt = defs.find((p) => p.id === pid);
         const key = t.place + '|' + pid;
-        if (pt && !out.has(key)) out.set(key, { event: t.place, point: pid, guard: !!pt.guard, trip: t });
+        if (pt && !out.has(key)) out.set(key, { event: ev?.id || null, place: t.place, light: !!t.light, point: pid, guard: !!pt.guard, trip: t,
+          year: t.light ? ev.year : model.year, where: ev ? T.catalog[ev.id].place : T.eras[t.place]?.short, star: words?.points?.[pid], shift: words?.shift?.[pid] });
       }
     }
     return [...out.values()];

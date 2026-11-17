@@ -352,8 +352,9 @@ export function createUI(D, ctx, DEV = false) {
       const texts = [];
       for (const pid of office.wonOf(t)) {
         const key = t.place + '|' + pid;
-        const pt = t.light ? ev.scene.points.find((p) => p.id === pid) : null;
-        const text = t.light ? pt && !pt.guard && T.catalog[t.place].points[pid] : T.eras[t.place]?.star_points?.[pid];
+        // a guard point holds history as it was, so it is no change of the employee's own, in a small story or a full model alike
+        const pt = t.light ? ev.scene.points.find((p) => p.id === pid) : ctx.backend.modelPoints(t.place)?.points.find((p) => p.id === pid);
+        const text = pt && !pt.guard && (t.light ? T.catalog[t.place].points[pid] : T.eras[t.place]?.star_points?.[pid]);
         if (!text || seen.has(key)) continue;
         seen.add(key);
         texts.push(text);
@@ -550,7 +551,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${Object.keys(ctx.backend.pressureOf(id).base).length ? `<div class="muted">${U.dispatch.pressure}${COLON}${esc(pressureText(ctx.backend.pressureOf(id).base))}</div><p class="muted">${U.dispatch.pressure_hint}</p>` : ''}
-      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
+      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.guard ? '◇' : p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret || ev.scene.star_rules === 2 ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
       <p class="muted" style="margin-top:8px">${esc(travelTime(ctx.backend.lightStay(id)))} · ${esc(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story)}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
 
@@ -765,6 +766,8 @@ export function createUI(D, ctx, DEV = false) {
       before: woven ? '' : participationHtml(cur),
       afterRecord: woven ? '' : vignetteHtml((T.catalog[event?.id]?.vignettes ?? T.eras[cur.eraId].vignettes)?.[R.vignette]),
       numbers: e.report.numbers === false ? '' : numbersHtml(),
+      // the shift of the timeline of a full model reads its star points and the words of the model, as a small story reads its scene
+      shift: shiftHtml(cur, e.raw.star_points, e.raw.star_rules === 2, { points: T.eras[cur.eraId].star_points, points_fail: T.eras[cur.eraId].points_fail, shift: T.eras[cur.eraId].shift, shift_all: T.eras[cur.eraId].shift_all }),
       cost: R.accounts.cost, restDays: R.accounts.restDays, pointText: (pid) => T.eras[cur.eraId].star_points[pid], hints: R.hints, warn: '', body: R.body,
       // sharing closes the reading of a report, so it comes last and is the one lit; sending again is a plain button
       buttons: `<button data-act="again" data-id="${cur.id}">${U.report.again}</button><button data-act="vs">${U.report.vs_prev}</button><button class="primary" data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
@@ -774,8 +777,10 @@ export function createUI(D, ctx, DEV = false) {
   // The shift of the timeline: what this trip changed, set out beside what history recorded. Each won point that fulfils something has a row,
   // a missed guard point has one row of its own marked out of sync, and a trip that changed nothing says so. Guard points that held are not shown,
   // since history went on as it was. The words are text.<language>.shift of the card, read in the language of the page, see 5.12 of the story outline.
-  function shiftHtml(cur, ev, c) {
-    if (ev.scene?.star_rules !== 2 || cur.report.journey?.accepted === false) return '';
+  // defs: the points of the story with their guard flags, from the scene of a small story or the star_points of a full model; c: their words,
+  // points, points_fail, shift and shift_all, from the catalogue card or the text of the model
+  function shiftHtml(cur, defs, rules2, c) {
+    if (!rules2 || !defs || cur.report.journey?.accepted === false) return '';
     const staff = staffName(D, cur.spec.staffId);
     const put = (x) => esc(String(x || '').split('{staff}').join(staff));
     const pts = cur.report.points || [];
@@ -784,9 +789,12 @@ export function createUI(D, ctx, DEV = false) {
     if (out) rows.push(`<tr class="desync"><td>${put(c.shift?.[out.id]?.was || c.points[out.id])}</td><td><span class="chip">${esc(U.report.shift.desync)}</span> ${put(c.points_fail?.[out.id])}</td></tr>`);
     const won = pts.filter((p) => p.hit && !p.guard && c.shift?.[p.id]?.now);
     for (const p of won) rows.push(`<tr><td>${put(c.shift[p.id].was)}</td><td>${put(c.shift[p.id].now)}</td></tr>`);
-    const fulfil = ev.scene.points.filter((p) => !p.guard);
+    // a guard point held: history went on as it was, and the card says so, so a story that only guards has its own shift
+    const held = out ? [] : pts.filter((p) => p.guard && p.hit);
+    for (const p of held) rows.push(`<tr class="held"><td>${put(c.shift?.[p.id]?.was || c.points[p.id])}</td><td>${esc(U.report.shift.held_row)}</td></tr>`);
+    const fulfil = defs.filter((p) => !p.guard);
     if (c.shift_all && fulfil.length && fulfil.every((p) => pts.find((x) => x.id === p.id)?.hit)) rows.push(`<tr class="all"><td>${esc(U.report.shift.all)}</td><td>${put(c.shift_all)}</td></tr>`);
-    const head = out ? U.report.shift.desync : won.length ? U.report.shift.moved.replace('{n}', String(won.length)) : U.report.shift.none;
+    const head = out ? U.report.shift.desync : [won.length ? U.report.shift.moved.replace('{n}', String(won.length)) : '', held.length ? U.report.shift.held.replace('{n}', String(held.length)) : ''].filter(Boolean).join(U.fmt.sep) || U.report.shift.none;
     // a card of its own, the turn of the whole report: what history recorded on the left, what this timeline made of it on the right
     return `<section class="shiftcard${out ? ' desync' : ''}"><div class="shifthead"><span class="shifttitle">${esc(U.report.shift.title)}</span><span class="shiftsub">${esc(head)}</span></div>
       ${rows.length ? `<table class="shift"><thead><tr><th>${esc(U.report.shift.was)}</th><th>${esc(U.report.shift.now)}</th></tr></thead><tbody>${rows.join('')}</tbody></table>` : ''}</section>`;
@@ -801,7 +809,7 @@ export function createUI(D, ctx, DEV = false) {
       title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
       sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
       timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
-      summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev, c),
+      summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev.scene?.points, ev.scene?.star_rules === 2, c),
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
       buttons: `<button class="primary" data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,

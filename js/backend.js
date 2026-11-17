@@ -39,6 +39,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const allImplants = () => Object.keys(D.get('items')).filter((id) => D.get('items.' + id).implant);
   const gearOf = (staffId) => (devKind(staffId) === 'max' ? allImplants() : devKind(staffId) === 'min' ? [] : gearSource(staffId) || []);
   const kitOf = (staffId, items) => (devKind(staffId) === 'max' ? allItems() : devKind(staffId) === 'min' ? {} : items);
+  // the attributes of a day of the stay, kept with the body for the report, rounded to a tenth so a saved report stays small
+  const bodyAttrs = (stats) => Object.fromEntries(Object.entries(stats || {}).map(([k, v]) => [k, Math.round(v * 10) / 10]));
   const luckFactor = (staffId, mood = null) => LK.base + LK.per_point * sim.staffAttrs(D, staffId, mood, gearOf(staffId)).luck;
   const rad = (x) => (x * Math.PI) / 180;
   const km = (a, b) => {
@@ -238,12 +240,12 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       if (!journey.accepted) {
         const missedTrip = { ...r, points: timed.map((p) => ({ id: p.id, day: p.day, redeem: p.redeem, hit: false })), stars: 0,
           journey, vignette: null, found: null, extraFavor: 0, restDays: L.rest_days.missed, keepAntique: false, outcome: 'missed' };
-        return { ...missedTrip, timeline: lightRecord(D, ev, missedTrip, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
+        return { ...missedTrip, timeline: lightRecord(D, ev, missedTrip, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
       }
       const done = { ...r, points: timed, journey };
       // after a desync the record and the body stop on the day the traveller was sent back
       const lastDay = r.cutDay ?? historicalDays(D, lightStay(eventId));
-      return { ...done, timeline: lightRecord(D, ev, done, staffId, lastDay), body: health ? health.trace.filter((x) => x.day <= lastDay).map((x) => ({ day: x.day, ...x.readouts })) : null };
+      return { ...done, timeline: lightRecord(D, ev, done, staffId, lastDay), body: health ? health.trace.filter((x) => x.day <= lastDay).map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
     }
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
@@ -253,13 +255,15 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];
     const plain = { outcome, stars, points, journey, keepAntique: journey.accepted, energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
-    return { ...plain, timeline: lightRecord(D, ev, plain, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null };
+    return { ...plain, timeline: lightRecord(D, ev, plain, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
   }
   // The market price factor of an antique on a day: one seeded draw per field and per period, so every antique of a field moves together.
   const MK = D.get('config.office.market');
   const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
+    // the star points of a full model with their guard flags, and the year of its place, for the record of an employee and the IF lines
+    modelPoints: (id) => (eras[id] ? { points: eras[id].starPoints, year: info[id].raw.metadata.era.year } : null),
     runLight, lightStay, lightKitAllowed, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
@@ -295,9 +299,25 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       report.journey = journey;
       report.vignette = vignetteId;
       // the body of the traveller through the stay, as LM reads it, for the part of the report that shows it
-      report.body = health ? health.trace.map((x) => ({ day: x.day, ...x.readouts })) : null;
+      report.body = health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null;
       if (!journey.accepted) report.outcomeName = D.get('text.ui.report.participation.title_missed');
       report.points = journey.accepted ? applyBonus(report.points, eras[eraId].starPoints.map((p) => p.kind), spec.staffId, spec.seed, eraId) : report.points.map((p) => ({ ...p, hit: false }));
+      // A guard point of a model holds a recorded event by its day of the stay. Missed, the trip falls out of sync on that day, as in a small story:
+      // the points whose milestones come later are not reached, the lines of the employee after it are dropped, and the traveller comes home that day.
+      const SP = eras[eraId].starPoints;
+      const arrived = res.branch.arrivedDay ?? 0;
+      const milestoneDay = (p) => res.branch.log.find((e) => e.kind === 'milestone' && e.id === p.milestone)?.t;
+      report.points = report.points.map((p, i) => ({ ...p, ...(SP[i].guard ? { guard: true } : {}) }));
+      const missedGuard = journey.accepted ? SP.map((p, i) => ({ p, i })).filter(({ p, i }) => p.guard && !report.points[i].hit && typeof p.day === 'number').sort((a, b) => a.p.day - b.p.day)[0] : null;
+      if (missedGuard) {
+        const cut = arrived + missedGuard.p.day;
+        report.points = report.points.map((p, i) => (i !== missedGuard.i && (milestoneDay(SP[i]) ?? Infinity) > cut ? { ...p, hit: false, cut: true } : p));
+        report.timeline = report.timeline.filter((x) => x.tag === 'history' || x.t <= cut);
+        report.outcomeId = 'desync';
+        report.outcomeName = D.get('text.ui.light.outcome.desync');
+        report.cutStay = Math.max(1, Math.ceil(missedGuard.p.day / D.get('config.travel.history_days_per_office_day')));
+        report.restDays = (res.restDays || 0) + L.rest_days.desync;
+      }
       report.stars = report.points.filter((p) => p.hit).length;
       return { res, report };
     },

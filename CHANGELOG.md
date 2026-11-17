@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.7, 2026-11-17
+
+- The premise is new: history is drifting. Every trip prises a branch off history, the main timeline loosens, and a key moment goes another way unless someone holds it. The agency does two things: a guard star holds a recorded moment so that history happens as it did, and a mend star mends a regret in the branch the trip made. Both pay time energy; a missed guard star sends the employee home out of sync, a missed mend star costs only the star. The welcome, the home page, the star note and the about page say so.
+- A story may be one of three kinds: guarding only, with two stars at least, mending, or both.
+- Full models have guard stars too: a guard point names the day of the stay it must hold by, and missing it sends the employee home that day out of sync, with a rest and a small loss of favour. Their reports show how the timeline moved, as small stories do, and their wins reach the record and the IF lines of the encyclopedia.
+- The shift card of a report lists the guard points held, 'Held: it happened as it did', beside the moments that moved, and a story of guarding only has a shift card of its own.
+- The dispatch card marks a guard star with ◇ and a mend star with ☆.
+
 ## 0.9.6, 2026-11-17
 
 - Every employee has catchphrases of their own, drawn from their work and where they come from, and says one on coming back: for every star won, for some, for nothing done, or for coming home hurt. The line opens the report and the share card; a full model keeps the words its card gives for the ending.

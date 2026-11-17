@@ -1,6 +1,6 @@
 # The Teleporter
 
-You run a small staffing agency that sends people into the past. History cannot be changed, so every trip creates a branch timeline. The staff come home with stories and time energy, and you spend the energy on getting back to your own family.
+You run a small staffing agency that sends people into the past. History is drifting: every trip prises a branch off it, so the agency holds the moments that are slipping and mends, in a branch, what history left undone. The staff come home with stories and time energy, and you spend the energy on getting back to your own family.
 
 It is a travel-frog style game: send people out, wait, read what happened. Each trip is an automatic simulation of the traveller and the protagonist of the era, driven by traits and the conditions of that era. Every report is set against a baseline run of the same seed without the traveller.
 

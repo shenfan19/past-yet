@@ -60,13 +60,12 @@ export function createWiki(X) {
     // The IF lines of a person: what the employees changed in that life on their branches, apart from the history above and marked as fiction.
     // A line opens once a trip has won its point; it belongs to the person the card names with who, or else to the figure of the story. See 5.12 of the story outline.
     const ifLines = (pid, evs) => {
+      // a win carries its own words, from a small story or a full model alike: the shift of the point, the year and the place
       const rows = X.office.winsOf().filter((w) => !w.guard).map((w) => {
-        const c = T.catalog[w.event];
-        const sh = c?.shift?.[w.point];
+        const sh = w.shift;
         if (!sh || !(sh.bio || sh.now) || !(sh.who ? sh.who === pid : evs.includes(w.event))) return '';
-        const ev = D.get('catalog.events').find((x) => x.id === w.event);
         const staff = staffName(D, w.trip.staffId);
-        const from = U.enc.if_from.replace('{year}', fmtYear(D, ev.year)).replace('{place}', c.place).replace('{staff}', staff);
+        const from = U.enc.if_from.replace('{year}', fmtYear(D, w.year)).replace('{place}', w.where || '').replace('{staff}', staff);
         return `<li><div class="from">${esc(from)}</div>${esc(String(sh.bio || sh.now).split('{staff}').join(staff))}</li>`;
       }).filter(Boolean);
       return rows.length ? `<div class="sec">${esc(U.enc.if_title)}</div><p class="muted">${esc(U.enc.if_note)}</p><ul class="iflines">${rows.join('')}</ul>` : '';

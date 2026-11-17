@@ -178,13 +178,14 @@ for (const e of events) {
     const nPts = e.scene.points.length, nGuard = e.scene.points.filter((p) => p.guard).length;
     if (nPts === 1 && nGuard) err(`event ${e.id}: a story of one star has a fulfil point, not a guard point`);
     if (nPts >= 3 && !nGuard) err(`event ${e.id}: a story of ${nPts} stars needs at least one guard point`);
-    if (nGuard === nPts) err(`event ${e.id}: every point is a guard point, so nothing can be fulfilled`);
+    // a story of guarding only holds history as it was; it needs two stars at least, since one missed guard would leave it nothing
+    if (nGuard === nPts && nPts < 2) err(`event ${e.id}: a story of guarding only has two stars at least`);
     for (const lang of ['en', 'zh']) {
       const t = (lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {};
       for (const p of e.scene.points) if (!t.points_fail?.[p.id]) err(`event ${e.id} ${lang}: point ${p.id} has no points_fail text`);
       // the shift of the timeline, see 5.12 of the story outline: was is what history recorded, now what this branch made of it; a guard point has only was
       if (t.branch) err(`event ${e.id} ${lang}: branch is replaced by shift`);
-      if (!e.scene.points.some((p) => !p.guard && t.shift?.[p.id]?.now)) err(`event ${e.id} ${lang}: no fulfil point has a shift with now`);
+      if (e.scene.points.some((p) => !p.guard) && !e.scene.points.some((p) => !p.guard && t.shift?.[p.id]?.now)) err(`event ${e.id} ${lang}: no mend point has a shift with now`);
       for (const p of e.scene.points.filter((x) => x.guard && !t.shift?.[x.id]?.was)) warn(`event ${e.id} ${lang}: guard point ${p.id} has no shift.was, so an out of sync report shows the star itself as what history recorded`);
       for (const [k, sh] of Object.entries(t.shift || {})) {
         const pt = e.scene.points.find((p) => p.id === k);
@@ -195,6 +196,29 @@ for (const e of events) {
         if (sh.bio && !sh.now) err(`event ${e.id} ${lang}: shift ${k} has a bio but no now`);
       }
     }
+  }
+}
+// full models on the new stars, star_rules 2 beside star_points: the same rules as a small story, and a guard point names its day of the stay,
+// since a model's milestone has no day of its own and the trip falls out of sync on that day when it is missed
+for (const id of cfg.eras) {
+  const raw = D.get('era_raw.' + id);
+  if (raw.star_rules !== 2) continue;
+  const pts = raw.star_points, nG = pts.filter((p) => p.guard).length;
+  if (!cfg.stars.counts.includes(pts.length)) err(`model ${id}: ${pts.length} star points, the tables know ${cfg.stars.counts}`);
+  if (pts.length === 1 && nG) err(`model ${id}: a story of one star has a fulfil point`);
+  if (pts.length >= 3 && !nG) err(`model ${id}: a story of ${pts.length} stars needs at least one guard point`);
+  if (nG === pts.length && pts.length < 2) err(`model ${id}: a story of guarding only has two stars at least`);
+  for (const p of pts.filter((x) => x.guard && typeof x.day !== 'number')) err(`model ${id}: guard point ${p.id} needs a day of the stay`);
+  for (const lang of ['en', 'zh']) {
+    const t = (lang === 'en' ? D : DZ).get('text.eras')[id] || {};
+    for (const p of pts) {
+      if (!t.points_fail?.[p.id]) err(`model ${id} ${lang}: point ${p.id} has no points_fail text`);
+      const sh = t.shift?.[p.id];
+      if (!sh?.was) err(`model ${id} ${lang}: point ${p.id} has no shift.was`);
+      if (p.guard && (sh?.now || sh?.bio || sh?.who)) err(`model ${id} ${lang}: shift ${p.id} of a guard point has only was`);
+      if (sh?.who && !peopleIds.has(sh.who)) err(`model ${id} ${lang}: shift ${p.id} names who ${sh.who}, who has no person card`);
+    }
+    if (pts.some((p) => !p.guard) && !pts.some((p) => !p.guard && t.shift?.[p.id]?.now)) err(`model ${id} ${lang}: no mend point has a shift with now`);
   }
 }
 // pressure channels: each event names at most per_event_max of them at the listed levels, items and gear name the channels they work against
