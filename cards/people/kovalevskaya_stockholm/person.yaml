@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 32, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["methodical","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 61, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","scholarly","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 82, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 82, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: conditions, traits: [methodical, scholarly]}
         - {id: diagram, traits: [curious, handy]}
@@ -33,19 +32,14 @@ events:
         relic_desc: "A brass spinning top with a number cut into its axis."
         points:
           p1: 'Keep a Stockholm copy of the anonymous entry. Check that its identifying envelope matches before sending it to the Paris judges'
-          p2: 'After the award, have her review the pages whose conclusions depend on extra conditions. Leave a reference for the assumptions a reader might confuse'
-          p3: 'Bring the prize record and her existing duties to the Stockholm university. Ask for written terms and pay before her old appointment expires'
+          p2: 'Bring the prize record and her existing duties to the Stockholm university. Ask for written terms and pay before her old appointment expires'
         points_fail:
           p1: 'The entry has the wrong identifying envelope and cannot be matched to its author after judging. The office recalls the employee.'
-          p2: 'A few pages omit their assumptions. One reader takes the results to apply to any rigid body.'
-          p3: 'The news reaches the university. Her teaching hours and pay are still discussed only informally.'
+          p2: 'The news reaches the university. Her teaching hours and pay are still discussed only informally.'
         shift:
           p1:
             was: 'Kovalevskaya won the Paris Academy’s 1888 Prix Bordin for work on rigid-body rotation.'
           p2:
-            was: 'The Acta Mathematica paper of 1889 states conditions on the moments of inertia and the center of mass and made the work available in print.'
-            now: 'The printed proof makes the conditions easy to find and signals at the start where the conclusions apply.'
-          p3:
             was: 'She became a full professor in Stockholm in 1889. Private correspondence also records questions about the length of her appointment and pay.'
             now: 'The university sets out the dates and pay in writing early. She can plan the next semester and the department has a commitment it can consult.'
             who: kovalevskaya_stockholm
@@ -63,19 +57,14 @@ events:
         relic_desc: "一只铜陀螺，轴上刻着编号。"
         points:
           p1: '在斯德哥尔摩留备份，核对匿名参赛稿和分存的身份封后，再发给巴黎的评委'
-          p2: '奖讯传回后，请她和编辑把刊稿中依赖额外条件的段落逐页对清，留出读者最容易混淆的假设'
-          p3: '拿着奖项记录与她已经承担的工作清单，请斯德哥尔摩的校方在旧聘期结束前书面定下续聘和课酬'
+          p2: '拿着奖项记录与她已经承担的工作清单，请斯德哥尔摩的校方在旧聘期结束前书面定下续聘和课酬'
         points_fail:
           p1: '匿名稿附错了识别封，无法在评定后认回作者，事务所因同步失败召回员工。'
-          p2: '待刊稿几页省去了假设，试读的人误以为结论适用于所有刚体。'
-          p3: '荣誉已转达给学校，新的课时和薪酬仍只靠私下转述。'
+          p2: '荣誉已转达给学校，新的课时和薪酬仍只靠私下转述。'
         shift:
           p1:
             was: '柯瓦列夫斯卡娅以刚体转动问题的研究获得巴黎科学院 1888 年博尔丹奖。'
           p2:
-            was: '1889 年的《数学学报》刊本有明确的惯量与质心条件，全文比参赛成果更易公开取得。'
-            now: '排印时把关键条件移到读者容易回查的位置，并在开头指明其适用范围。'
-          p3:
             was: '她在斯德哥尔摩工作多年，于 1889 年获正式教授职位。私人通信还记有关于聘期和薪酬的争议。'
             now: '校方提前给出书面聘期及课酬。她可以据此安排下一学期的教学和研究，系里也有可查的承诺。'
             who: kovalevskaya_stockholm

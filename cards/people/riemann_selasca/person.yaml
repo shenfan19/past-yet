@@ -16,9 +16,8 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 26, req: {"any":[{"job":["archivist","nurse"]},{"trait":["methodical","patient"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 18, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["methodical","patient","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 20, req: {"any":[{"job":["university_lecturer","lecturer","modelling_scientist","proofreader"],"stat":{"wit":7}},{"trait":["scholarly","patient"],"stat":{"wit":7,"will":5}}]}}
+        - {id: p2, kind: care, day: 24, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}}]}}
       vignettes:
         - {id: surface, traits: [handy, artistic]}
         - {id: assumption, traits: [skeptical, curious]}
@@ -32,24 +31,20 @@ events:
         relic: "A page of notes"
         relic_desc: "A page of unfinished formulas in a small hand."
         points:
-          p1: 'Keep an uninterrupted period for Riemann’s last work. Give the new pages and related drafts to his family in the same folder'
-          p2: 'Put a list beside the outgoing letters showing which notes are here and which remain in Göttingen'
-          p3: 'While Riemann can decide, have him mark a set of results colleagues can read and a separate set of questions he hopes they will check'
+          p1: 'As his strength fails at Selasca, take down what he dictates and keep the pages in order, helping him carry his last paper further than history left it'
+          p2: 'Cure the tuberculosis that is killing him, and save Riemann'
         points_fail:
-          p1: 'New sheets slip into the luggage with the old drafts. No identifiable record of the last session survives, and the office recalls the employee.'
-          p2: 'The family remembers only that some papers stayed behind. Later searches have to recover each item from memory.'
-          p3: 'The files have only a partial list. Later editors have to decide which pages are working notes and which might be published.'
+          p1: 'The last paper stopped where history left it.'
+          p2: 'He died at Selasca on 20 July as history has it, and in this branch too he could not be kept.'
         shift:
           p1:
-            was: 'Riemann reached the Lake Maggiore area on June 23, 1866. A Royal Society obituary says he studied the mechanism of hearing the day before he died in Selasca.'
+            was: 'The Royal Society obituary and Dedekind''s account say that the day before he died, resting under a fig tree at Selasca, Riemann was still working on his last paper, which was left unfinished.'
+            now: 'The last paper went several pages further in his own words, and it was printed with them.'
           p2:
-            was: 'After his death, manuscripts, letters and working notes passed between family and scholars.'
-            now: 'Two columns give the locations. When colleagues reply, the family can check who has which pages.'
-          p3:
-            was: 'Dedekind and Weber later collected and edited Riemann’s works. Surviving letters document searches for correspondence and its return.'
-            now: 'Readers receive the two sets he marked. They reply first about the results they can check and keep the open questions on a separate list.'
+            was: 'Riemann died of tuberculosis at Selasca on Lake Maggiore on 20 July 1866, aged 39.'
+            now: '{staff} brought the cure for the disease that had worn him down since 1862. That autumn he went back north and taught again in Göttingen.'
             who: riemann_selasca
-            bio: 'Riemann kept working in his last month. Editors later depended on colleagues and relatives to find papers in several places.'
+            bio: 'In this line Riemann recovered from tuberculosis in the summer of 1866. He went home to Göttingen and worked on for many years.'
         vignettes:
           surface: 'The reader stretches a strip across two points and lets it leave the surface in between. You press a second strip down against the curve and ask which journey each one measures.'
           assumption: 'The reader says the distance is obvious. You ask how they decided which paths to allow. They add that choice above the drawing and begin measuring again.'
@@ -62,24 +57,20 @@ events:
         relic: "一页笔记"
         relic_desc: "一页写着没完成公式的纸，字很小。"
         points:
-          p1: '替黎曼给最后一项研究留一段不受打扰的时段，把写下的几页与正在查的旧稿一并交给家人保管'
-          p2: '给能寄出的信附一张清单，记明各份笔记现在放在当地还是哥廷根'
-          p3: '请黎曼趁还能决定时标出一两组可供同行审读的笔记，一组是已有推算，一组是接下去希望有人检验的问题'
+          p1: '他在塞拉斯卡力气一天天衰下去时，替他记下口述、理好稿页，帮他把最后那篇论文往下写一段'
+          p2: '治好拖垮他的肺结核，救下黎曼'
         points_fail:
-          p1: '沿用旧稿夹的几张新纸被收进行李，最后一次工作没有留下可辨的记录，事务所因同步失败召回员工。'
-          p2: '家人只记得有一批稿件留在别处，日后查找时要凭记忆逐件辨认。'
-          p3: '各页只有零散目录。身后编辑要先自行判断哪些仍是工作笔记、哪些可以发表。'
+          p1: '最后那篇论文照史实停在原处。'
+          p2: '他照史实在 7 月 20 日死在塞拉斯卡，这条分支里也没能留住他。'
         shift:
           p1:
-            was: '黎曼 1866 年 6 月 23 日抵达马焦雷湖一带。皇家学会悼文记他在塞拉斯卡去世的前一天仍在研究听觉器官。'
+            was: '皇家学会悼文和戴德金的记述都说，去世前一天他在塞拉斯卡的无花果树下休息，仍在写最后那篇论文，论文没有写完。'
+            now: '最后那篇论文用他自己的话多写了几页，后来连同这几页一起印出。'
           p2:
-            was: '黎曼去世后，遗稿、书信和研究记录经家属与不同学者转交。'
-            now: '两处的存稿各有一栏。家人收到同事回信时，可以一项项确认谁手里有哪张纸。'
-          p3:
-            was: '戴德金与韦伯后来整理黎曼的文稿并出版全集。现存通信记载了寻找和归还书信的工作。'
-            now: '审读人收到由他分好的两组纸，先对能核对的部分写下意见。余下的问题保留在一张可回查的清单里。'
+            was: '1866 年 7 月 20 日，黎曼在马焦雷湖畔的塞拉斯卡死于肺结核，三十九岁。'
+            now: '{staff}带去的药治好了从 1862 年起拖着他的病。那年秋天他回到北边，又在哥廷根上起了课。'
             who: riemann_selasca
-            bio: '黎曼最后一个月仍设法继续研究。身后编辑要依靠家人和同行找齐分处几地的纸张。'
+            bio: '这条时间线里，黎曼在 1866 年夏天治好了肺结核。他回到哥廷根，又工作了许多年。'
         vignettes:
           surface: '读者把纸带从一点拉到另一点，中间却离开了曲面。你把另一条沿弧面按下去，请他分清两条量的是哪种走法。'
           assumption: '读者说距离一看就知道。你问哪些走法算数，是怎么定的。他把这个条件添在图上方，重新开始量。'

@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["mechanic","electrician"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":7}}]}}
-        - {id: p2, kind: notice, day: 14, req: {"any":[{"trait":["methodical","vigil","scholarly"]},{"job":["mechanic","electrician","archivist"]}]}}
-        - {id: p3, kind: persuade, day: 30, req: {"any":[{"job":["mechanic","electrician"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 30, req: {"any":[{"job":["mechanic","electrician"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: blind, traits: [methodical, scholarly]}
         - {id: future, traits: [bold, charismatic]}
@@ -33,19 +32,14 @@ events:
         relic_desc: A wooden handpiece with a thin diaphragm.
         points:
           p1: 'Keep the speech experiment going while the backers press for a multiple telegraph, so the full sentence reaches the next room'
-          p2: 'Record what went into the instrument and what came out while both men are present, so the next trial can target the lost sounds'
-          p3: 'Use the successful trial to secure paid workshop time for Bell so Watson can improve the prototypes on a regular schedule'
+          p2: 'Use the successful trial to secure paid workshop time for Bell so Watson can improve the prototypes on a regular schedule'
         points_fail:
           p1: 'The workshop goes back to the telegraph work and the March speech trial is cut short. The branch loses sync and the office recalls the employee.'
-          p2: 'The notes preserve the success. Later trials still depend on repeating simple sentences.'
-          p3: 'The machinist still has to finish the shop''s other orders first. The telephone trials take place in whatever hours remain.'
+          p2: 'The machinist still has to finish the shop''s other orders first. The telephone trials take place in whatever hours remain.'
         shift:
           p1:
             was: 'On 10 March 1876 in Boston, Bell used the experimental apparatus to transmit an intelligible sentence to Watson in the next room.'
           p2:
-            was: 'In the summer of 1876, Watson recalled, they sometimes had to repeat simple sentences several times to be understood.'
-            now: '{staff} has each end write down what was said or heard and keeps a list of sounds that repeatedly disappear for the next trial.'
-          p3:
             was: 'In 1876 Watson was still employed at his old workshop while making the Philadelphia exhibition instruments; he later got terms to devote his time to Bell''s experiments.'
             now: '{staff} uses the trial notes to persuade the backers to reserve regular paid workshop hours. Watson can make progress in longer stretches and Bell can compare successive prototypes.'
             who: bell_boston
@@ -63,19 +57,14 @@ events:
         relic_desc: 一个木制听筒，里面有一片薄薄的振膜。
         points:
           p1: '在资助人催多路电报时保住贝尔的传声试验，让隔壁的人听到那句完整的话'
-          p2: '趁两头的人都在场，把发出的字和听到的字分开记录，找出下一轮该解决的失真'
-          p3: '拿已经听清的句子为贝尔争取一段单独计酬的工坊时间，让沃森能按固定时段改试验机'
+          p2: '拿已经听清的句子为贝尔争取一段单独计酬的工坊时间，让沃森能按固定时段改试验机'
         points_fail:
           p1: '工坊改回原来的电报工作，三月的传声试验没做完。历史脱节，员工被召回。'
-          p2: '能听懂时大家只记了成功，后来重试仍要靠人反复念简单句。'
-          p3: '工匠还要在别的订单完成后才有空做样机，试验仍得拆成零碎的时段。'
+          p2: '工匠还要在别的订单完成后才有空做样机，试验仍得拆成零碎的时段。'
         shift:
           p1:
             was: '1876 年 3 月 10 日，贝尔在波士顿用实验装置把一句完整清楚的话传给了隔壁的沃森。'
           p2:
-            was: '1876 年夏，沃森回忆，他们有时要把简单句重说几遍才能听清。'
-            now: '{staff}请两端各自写下发出和听见的内容，把常丢的音留给下一轮试验核查。'
-          p3:
             was: '1876 年，沃森在做费城展会样机时仍受雇于原工坊，后来才得到条件投入贝尔的试验。'
             now: '{staff}拿试验记录请资助人提前买下工坊的固定时段，沃森有了整段时间试制。贝尔可以在不同样机之间连续安排对照试验。'
             who: bell_boston

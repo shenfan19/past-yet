@@ -14,9 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 30, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 46, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 80, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: hold, day: 80, req: {"any":[{"job":["musician","proofreader","writer"],"stat":{"wit":6}},{"trait":["artistic","methodical"],"stat":{"wit":6,"will":6}}]}}
       vignettes:
         - {id: empty_garden, traits: [artistic, curious]}
         - {id: cue, traits: [methodical, vigil]}
@@ -30,24 +28,15 @@ events:
         relic: "A printed songbook"
         relic_desc: "Printed arias for singers, with the tune named above each."
         points:
-          p1: 'Bind the preface and scenes of The Peony Pavilion separately in Linchuan. Retain the autumn date on the preface'
-          p2: 'List passages the singers find difficult. Let Tang indicate which may be cut and where the wording is deliberate'
-          p3: 'Have Tang approve a complete text to lend to friends. Leave a separate copy a company can adapt for performance'
+          p1: 'Help him settle a fair copy of The Peony Pavilion in his own corrected words and put it in the hands of the Yihuang company, so that they rehearse from his text'
         points_fail:
-          p1: 'The copy keeps the play, but the dated preface is lost. The office recalls the employee.'
-          p2: 'Difficulty in rehearsal becomes a deletion in the next copy. The author cannot find out what was changed.'
-          p3: 'One copy goes to friends and is used for rehearsal. A later scribe treats performance cuts as the original text.'
+          p1: 'As in history the altered versions spread later, and all he can do is write to the Yihuang players not to sing them; this branch is as history was.'
         shift:
           p1:
-            was: 'Tang Xianzu’s preface to The Peony Pavilion is dated to the autumn of 1598. Printed texts of the play later circulated.'
-          p2:
-            was: 'Tang later wrote to friends about revisions he had not approved and expressed his displeasure.'
-            now: 'The copy keeps the original words. Performers get instructions he has approved and can see where disagreement remains.'
-          p3:
-            was: 'Tang later gave a manuscript to a friend. The play continued to circulate in handwritten, printed and adapted forms.'
-            now: 'Friends receive a checked full text. The company marks its decisions in another copy, and readers can consult both.'
+            was: 'After The Peony Pavilion was written, Lü Yusheng and others altered its lyrics to suit singing in the Wu style, and Tang wrote telling the Yihuang company to keep to his original and not to follow the Lü version.'
+            now: 'The Yihuang company had a copy he had corrected himself before any altered version appeared, and went on singing from it.'
             who: tang_xianzu_linchuan
-            bio: 'After returning home, Tang continued to send his work to friends in manuscript. Later adaptations made keeping track of his own words a practical issue.'
+            bio: 'In this timeline the text of The Peony Pavilion that Tang Xianzu had corrected himself reached the Yihuang company first, and they kept singing from it.'
         vignettes:
           empty_garden: 'You ask the player to rehearse the garden without anything on the stage. After a few lines, a listener points to where they imagined a flower. The player keeps the line that put it there.'
           cue: 'A cut takes away the other player''s entrance signal. You catch it in rehearsal and put the cue where both can hear, without having to restore the whole cut.'
@@ -60,24 +49,15 @@ events:
         relic: "一册刻印的曲本"
         relic_desc: "给歌者用的刻本，每支曲牌的名字写在上方。"
         points:
-          p1: '在临川把《牡丹亭》的题词与各出曲文分开装订，在题词上留戊戌秋的署款'
-          p2: '把排练时觉得难唱的地方逐一抄给汤显祖，让他在旁注中指出哪里可以缩、哪里是有意这样写'
-          p3: '让汤显祖签认一套用于送友的全本，为戏班另留一份可改动的演出副本'
+          p1: '帮他把亲手核过的《牡丹亭》原本抄定，交到宜黄戏班手里，让他们照原本排唱'
         points_fail:
-          p1: '传抄本只留下正文，署有年月的题词找不着，事务所因同步失败召回员工。'
-          p2: '试唱提出的难处直接变成抄本删文，作者连哪句被改也查不到。'
-          p3: '同一抄本既被送人又被用来排戏，演出删节随后被抄作原文。'
+          p1: '后来的改本照史实传开，他只能写信叮嘱宜黄的伶人别照改本唱，这条分支与历史一样。'
         shift:
           p1:
-            was: '《牡丹亭记》有署万历戊戌秋的汤显祖题词，也有后来刊刻流传的剧本。'
-          p2:
-            was: '汤显祖后来在给友人的信中谈到未经自己同意的改本，并表达不满。'
-            now: '抄本保住原句。排练的人拿到一份作者认可的处理方式，也能看到尚有异议的地方。'
-          p3:
-            was: '汤显祖后来曾把抄本赠人。作品通过抄写、刊刻与多种改本继续传播。'
-            now: '朋友收到作者核过的全本，戏班在另一套上记下自己的删改。有人想复核时，能分别借到两种本子。'
+            was: '《牡丹亭》写成后，吕玉绳等人为便于吴地演唱改动曲文，汤显祖写信叮嘱宜黄班要依他的原本，吕家改的不可照用。'
+            now: '改本出来之前，宜黄班手里已经有了一部他亲手核过的原本，班里一直照原本唱。'
             who: tang_xianzu_linchuan
-            bio: '汤显祖回乡后仍借抄本把作品送给友人。后来的演出和改编让作者原文如何保存成为实际问题。'
+            bio: '这条时间线里，汤显祖亲手核定的《牡丹亭》原本先到了宜黄戏班，班里一直照原本唱。'
         vignettes:
           empty_garden: '你请演员在空台上排游园。几句之后，听的人指出想象中花开在什么地方。演员留下了让他看见那朵花的一句。'
           cue: '删词连另一个演员上场的信号也删掉了。你在排练时发现，把那个字留在两人都听得到的位置，余下的删节仍能保留。'

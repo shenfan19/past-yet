@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 7, req: {"any":[{"job":["nurse","archivist","translator"]},{"trait":["patient","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 7.5, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["patient","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 8, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 8, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: address, traits: [skeptical, quiet, methodical]}
         - {id: privacy, traits: [faithful, patient, attached]}
@@ -33,19 +32,14 @@ events:
         relic_desc: 'A fictional label copied without reproducing private correspondence.'
         points:
           p1: 'Verify the Turin address so Overbeck can find his friend on January 8 and arrange for someone to stay with him'
-          p2: 'Help Overbeck inventory original letters, informal notes and manuscripts intended for publishers in separate packets'
-          p3: 'Leave incoming custodians a record of which manuscripts were meant for publication. Keep private letters separately with controlled access'
+          p2: 'Leave incoming custodians a record of which manuscripts were meant for publication. Keep private letters separately with controlled access'
         points_fail:
           p1: 'Overbeck gets the previous address and cannot find him in Turin. The office recalls the employee.'
-          p2: 'In the rush to leave, loose notes go in with the manuscripts. At the next handover nobody can tell what the pieces were for.'
-          p3: 'A later editor reads one isolated paper into an unrelated draft. The first custodians left no record of its purpose.'
+          p2: 'A later editor reads one isolated paper into an unrelated draft. The first custodians left no record of its purpose.'
         shift:
           p1:
             was: 'Nietzsche wrote to the Overbecks from Turin. Franz Overbeck arrived there on January 8, 1889, to find him.'
           p2:
-            was: 'The manuscripts and notes were kept in several places. Overbeck and others helped protect them after the crisis.'
-            now: 'The papers from Turin have a packet list with their expected recipients. Later readers can use it to trace an original letter.'
-          p3:
             was: 'Different people took charge of the papers. Some items were later abridged or altered for print.'
             now: 'Editors receive the papers with records of their purpose. Private letters stay intact, and any cuts to the published text are recorded for later comparison.'
             who: nietzsche_turin
@@ -63,19 +57,14 @@ events:
         relic_desc: '留底签，抄写时保留了私信内容的隐私。'
         points:
           p1: '把都灵住址核给奥韦尔贝克，让他能在 1 月 8 日找到旧友并安排有人陪着'
-          p2: '陪奥韦尔贝克把住处能找到的原信、随记和准备交出版社的稿分包核点'
-          p3: '让接手的人留一张说明，把有证据表明待刊的稿定出来，将属于私人通信的纸另外存放并限定查阅'
+          p2: '让接手的人留一张说明，把有证据表明待刊的稿定出来，将属于私人通信的纸另外存放并限定查阅'
         points_fail:
           p1: '他拿到的是上一个住址，到了都灵仍找不到人，事务所因同步失败召回员工。'
-          p2: '急着离开时，手边的便纸混入拟刊稿，下一次转交时没有人能辨别各自用途。'
-          p3: '日后有人依据孤立的一张纸给别的稿补意，而当时接手的人没留下用途说明。'
+          p2: '日后有人依据孤立的一张纸给别的稿补意，而当时接手的人没留下用途说明。'
         shift:
           p1:
             was: '尼采从都灵写信给奥韦尔贝克夫妇。奥韦尔贝克于 1889 年 1 月 8 日到都灵寻找他。'
           p2:
-            was: '尼采的稿件与笔记散存在数地。奥韦尔贝克等人在病发后协助保存材料。'
-            now: '都灵带走的纸有分包单，也记录先前拟交给谁。以后找原信时可以从这份单查起。'
-          p3:
             was: '病发后遗稿经不同人管理。若干后来出版材料曾删节或改编。'
             now: '出书的人只能领到有相应说明的稿。私人纸件原样存放，编辑删节另有记录，之后读者能区分原件和刊本。'
             who: nietzsche_turin

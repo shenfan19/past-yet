@@ -2,7 +2,7 @@ order: 203
 events:
   wright_kitty_hawk:
     order: 88
-    build_step: 3
+    build_step: 2
     year: 1903
     lon: -75.7
     lat: 36
@@ -20,8 +20,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 16.05, req: {"any":[{"trait":["hardy","bold"]},{"stat":{"constitution":8}},{"provides":"strength"}]}}
-        - {id: p2, kind: persuade, day: 16.5, req: {"any":[{"trait":["charismatic","glib","streetwise"]},{"job":["journalist","radio_host"]},{"item":"golden_apple"}]}}
-        - {id: p3, kind: hold, day: 16.35, req: {"any":[{"provides":"strength"},{"stat":{"constitution":9},"trait":["bold","vigil","hardy","calm"]}]}}
+        - {id: p2, kind: hold, day: 16.35, req: {"any":[{"provides":"strength"},{"stat":{"constitution":9},"trait":["bold","vigil","hardy","calm"]}]}}
       vignettes:
         - {id: numbers, traits: [methodical, vigil], day: 16.8}
         - {id: sand, traits: [hardy, cheerful], day: 10}
@@ -36,19 +35,14 @@ events:
         relic_desc: A wooden blade shaped like a twisted wing.
         points:
           p1: 'In the cold wind on the morning of 17 December, help the brothers steady the Flyer and keep the first take off safe'
-          p2: 'Talk round the man passing on the telegram and stop the news from leaking'
-          p3: 'After the fourth flight, hold the Flyer down on the sand and save Daniels and the machine'
+          p2: 'After the fourth flight, hold the Flyer down on the sand and save Daniels and the machine'
         points_fail:
           p1: 'Before the take off a gust lifts one wing and drags it in the sand, and the machine never leaves the rail; in this branch there are no twelve seconds.'
-          p2: 'As in history the message leaks, and the next day the Virginian-Pilot prints a story that is mostly wrong; in this branch that story speaks for the brothers first.'
-          p3: 'The wind turns the Flyer over, Daniels is caught in the wings and tumbled along with it, and as in history the machine is too broken to fly again. In this branch it never leaves the ground after that afternoon.'
+          p2: 'The wind turns the Flyer over, Daniels is caught in the wings and tumbled along with it, and as in history the machine is too broken to fly again. In this branch it never leaves the ground after that afternoon.'
         shift:
           p1:
             was: 'On the morning of 17 December 1903 Orville flew for 12 seconds and 120 feet.'
           p2:
-            was: 'On 18 December 1903, after the telegram leaked, the Virginian Pilot ran a story that was mostly wrong.'
-            now: 'The next day''s paper has no wrong story, and the brothers told how the flights went themselves once they were back in Dayton.'
-          p3:
             was: 'On 17 December 1903, after the fourth flight, a gust overturned the Flyer with John Daniels caught between the wings, and the machine, badly broken, never flew again.'
             now: '{staff} and the men of the station held it down on the sand, and Daniels was not caught. That winter the brothers flew it a few more times over the dunes before they crated it for Dayton.'
         vignettes:
@@ -64,19 +58,14 @@ events:
         relic_desc: 一片木头叶子，像一只扭过的翅膀。
         points:
           p1: '12 月 17 日上午的冷风里，帮兄弟俩稳住飞行者号，护住第一次起飞'
-          p2: '劝住电报那头转发的人，拦下走漏的消息'
-          p3: '第四次飞行落地后，把飞行者号按在沙地上，救下丹尼尔斯和这架飞机'
+          p2: '第四次飞行落地后，把飞行者号按在沙地上，救下丹尼尔斯和这架飞机'
         points_fail:
           p1: '起飞前一阵风把一侧机翼掀起来擦了沙，飞机没离开滑轨，这条分支里没有那 12 秒。'
-          p2: '电文照史实走漏，第二天《弗吉尼亚领航报》登出的报道大半是错的，这条分支里先替兄弟俩说话的是那篇报道。'
-          p3: '风把飞行者号掀翻，丹尼尔斯被卷在机翼里滚了出去，飞机照史实坏得再也飞不了。这条分支里，这架飞机在那天下午之后没有再离开过地面。'
+          p2: '风把飞行者号掀翻，丹尼尔斯被卷在机翼里滚了出去，飞机照史实坏得再也飞不了。这条分支里，这架飞机在那天下午之后没有再离开过地面。'
         shift:
           p1:
             was: '1903 年 12 月 17 日上午，奥维尔飞了 12 秒，120 英尺。'
           p2:
-            was: '1903 年 12 月 18 日，电文走漏，《弗吉尼亚领航报》登出的报道大半是错的。'
-            now: '第二天的报纸上没有那篇错报，飞行的经过等兄弟俩回到代顿自己说了出来。'
-          p3:
             was: '1903 年 12 月 17 日，第四次飞行后一阵风掀翻了飞行者号，约翰·丹尼尔斯被卷在机翼中间，飞机损坏严重，从此再没飞过。'
             now: '{staff}和救生站的人把它按在了沙地上，丹尼尔斯没被卷进去。那年冬天，兄弟俩又让它在沙丘上飞了几回，才把它装箱运回代顿。'
         vignettes:
@@ -223,7 +212,7 @@ self_check:
   share_number: '59'
   knowing: 'telegram'
   near: 'first_flight, fourth_flight'
-  lever: 'p2, p3'
+  lever: 'p2'
   missed: 'dayton'
   brought: 'relic'
 pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 29, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 48, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 48, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: nickname, traits: [glib, curious]}
         - {id: voice, traits: [quiet, artistic]}
@@ -31,19 +30,14 @@ events:
         relic_desc: A small box with brushes, a stone and water.
         points:
           p1: 'Assign paper by chapter and check delivery of the volumes copied for Shōshi so the set can be assembled'
-          p2: 'Have Murasaki identify the first and last pages of the sections she still plans to revise. Give the copyists the list'
-          p3: 'Offer early readers a loan copy she approves. Keep the unfinished papers with her and have new copyists draw from the approved set'
+          p2: 'Offer early readers a loan copy she approves. Keep the unfinished papers with her and have new copyists draw from the approved set'
         points_fail:
           p1: 'Finished chapters are packed with unchecked ones. The set remains incomplete, and the office recalls the employee.'
-          p2: 'Two versions of a chapter circulate. The copyists take the unfinished one for the newer text.'
-          p3: 'The draft is lent out. Later copyists do not know the author intended to revise it.'
+          p2: 'The draft is lent out. Later copyists do not know the author intended to revise it.'
         shift:
           p1:
             was: 'Murasaki’s diary records women around Shōshi copying The Tale of Genji with writing materials provided by Michinaga.'
           p2:
-            was: 'Murasaki recorded that Michinaga took a draft and that its circulation troubled her.'
-            now: 'The copyists check the list as they borrow a draft and know which pages she still wants to review.'
-          p3:
             was: 'Genji comes down through different manuscript traditions. No final copy in Murasaki’s own hand survives.'
             now: 'The first borrowers read a set she has checked. Later copies still vary, but that loan set records which chapters she approved.'
             who: murasaki_kyoto
@@ -61,19 +55,14 @@ events:
         relic_desc: 一只小盒子，里面有笔、砚和水。
         points:
           p1: '按章分配抄纸，逐册验收给彰子的《源氏物语》抄本，护住这次成册'
-          p2: '请紫式部给仍待本人改定的册页另记起讫，给参与抄写的人一份可查的清单'
-          p3: '给想先读的人准备一份她愿意借出的抄本，并把未定稿留在本人处，让新抄人只按签认本领书'
+          p2: '给想先读的人准备一份她愿意借出的抄本，并把未定稿留在本人处，让新抄人只按签认本领书'
         points_fail:
           p1: '抄完的章和待核章混装，成套的书一直缺一册，事务所因同步失败召回员工。'
-          p2: '同一章流出两份，抄写的人把还没改完的一份当成了最新本。'
-          p3: '借去的仍是那份未定稿。后来的抄手不知道作者曾想再改。'
+          p2: '借去的仍是那份未定稿。后来的抄手不知道作者曾想再改。'
         shift:
           p1:
             was: '紫式部的日记记有彰子身边的人分纸抄写《源氏物语》，道长为此提供纸笔。'
           p2:
-            was: '紫式部记道长取走过自己尚未定稿的一份。她为不完善的抄本流通忧心。'
-            now: '参与抄写的人拿着清单借稿，知道哪几页应该等紫式部先看。'
-          p3:
             was: '后世留存的是经长期传抄下来的不同抄本，紫式部手定稿没有传到今天。'
             now: '早期几名读者看到的是她核过的一套。以后各处传抄仍会有变化，但这份借本记下了曾由她核过的章节。'
             who: murasaki_kyoto

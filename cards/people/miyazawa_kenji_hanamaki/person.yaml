@@ -17,8 +17,9 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["farmer","biologist"],"stat":{"wit":6}},{"trait":["methodical","patient"],"stat":{"will":7}}]}}
-        - {id: p2, kind: care, day: 39, req: {"any":[{"trait":["kind","patient","methodical"]},{"job":["farmer","tutor"]}]}}
-        - {id: p3, kind: notice, day: 49, req: {"any":[{"trait":["scholarly","methodical"],"stat":{"wit":8}},{"trait":["patient","methodical"],"stat":{"will":8}}]}}
+        - {id: p2, kind: notice, day: 49, req: {"any":[{"trait":["scholarly","methodical"],"stat":{"wit":8}},{"trait":["patient","methodical"],"stat":{"will":8}}]}}
+        - {id: p3, kind: trust, day: 45, req: {"any":[{"trait":["kind","patient","quiet"],"stat":{"will":7}},{"item":"hologram_projector","stat":{"will":5}}]}}
+        - {id: p4, kind: care, day: 48, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}}]}}
       vignettes:
         - {id: call, traits: [artistic, quiet]}
         - {id: window, traits: [curious, wanderer]}
@@ -33,23 +34,30 @@ events:
         relic_desc: "A small notebook of poems in pencil."
         points:
           p1: 'Sort out the farmers'' questions so Miyazawa can still hold the fertilizer consultation when he is too ill for a long conversation'
-          p2: 'Arrange for farmers who cannot visit Miyazawa to leave questions that others can take up after him'
-          p3: 'While Miyazawa can still recognize the drafts of Night on the Galactic Railroad, ask him to leave their order clear'
+          p2: 'While Miyazawa can still recognize the drafts of Night on the Galactic Railroad, ask him to leave their order clear'
+          p3: 'Let him know, while he is still alive, that many people will one day read his poems and stories'
+          p4: 'Cure the lung disease before the pneumonia of 20 September takes him'
         points_fail:
           p1: 'The visitors leave without a consultation, the branch falls out of sync, and the office recalls the employee.'
-          p2: 'The waiting farmers disperse and later visitors have to start their inquiries over.'
-          p3: 'The pages survive, and later editors still have to infer the order from paper and revisions.'
+          p2: 'The pages survive, and later editors still have to infer the order from paper and revisions.'
+          p3: 'In this branch he dies known to only a few poets. Nobody has told him that his books will be read.'
+          p4: 'In this branch the illness runs as it did. He dies in Hanamaki on 21 September, aged 37.'
         shift:
           p1:
             was: 'In August 1933, Miyazawa continued advising farmers about fertilizer as his health worsened.'
           p2:
-            was: 'In September 1933, Miyazawa died and could no longer answer the farmers in person.'
-            now: '{staff} asks farmers who already spoke with Miyazawa to leave written answers for neighbors who missed him.'
-          p3:
             was: 'In September 1933, Miyazawa died, leaving several unfinished drafts of Night on the Galactic Railroad.'
             now: '{staff} asks him which stacks came first and records the order on a separate wrapper. Later editors use those notes to keep the versions distinct.'
             who: miyazawa_kenji_hanamaki
             bio: 'Miyazawa left a guide to the order of the drafts before he died. When the story appeared after his death, readers could follow his revisions in sequence.'
+          p3:
+            was: 'In 1924 Miyazawa published a book of poems and a book of children''s stories at his own expense. In his lifetime he was almost unknown outside a few poets.'
+            now: '{staff} tells him at his bedside that his poems and stories will be read by many people after him.'
+          p4:
+            was: 'On 20 September 1933 Miyazawa developed acute pneumonia after years of lung disease, and he died in Hanamaki the next day, aged 37.'
+            now: '{staff} brings a medicine that clears the disease from his lungs, and by autumn he is up again. In this timeline he stays in Hanamaki for many more years, advising farmers on soil and fertilizer and going on revising his manuscripts.'
+            who: miyazawa_kenji_hanamaki
+            bio: 'Miyazawa recovered in the autumn of 1933. He kept advising the farmers of Hanamaki and lived to see his books reach many readers.'
         vignettes:
           call: 'You read the station call from across the room. The reader looks up before you explain who is there. They leave the explanation for later and keep the call in their reading.'
           window: 'The reader tries to point to where the route enters the sky. You ask what Giovanni can see through the window first. They put the hill and the carriage on separate scraps.'
@@ -63,23 +71,30 @@ events:
         relic_desc: "一本小笔记本，里面是铅笔写的诗。"
         points:
           p1: '在宫泽无力长谈时，理清来访农户的问题，让这次肥料咨询照常办下去'
-          p2: '替无法当面请教宫泽的农户安排递问答的办法，让后来的人也能查到答复'
-          p3: '趁宫泽还能辨认草稿，请他给《银河铁道之夜》留下各稿的先后'
+          p2: '趁宫泽还能辨认草稿，请他给《银河铁道之夜》留下各稿的先后'
+          p3: '趁他还在，让他知道以后会有很多人读他的诗和童话'
+          p4: '赶在 9 月 20 日那场急性肺炎之前，治好他的肺病'
         points_fail:
           p1: '来访的人等不到能问清楚的时候，咨询没办成，这条分支与史实脱节，员工被召回。'
-          p2: '等候的农户各自散去，后来的人只好从头打听。'
-          p3: '稿页留了下来，后来整理的人仍要从纸张和改笔判断稿本先后。'
+          p2: '稿页留了下来，后来整理的人仍要从纸张和改笔判断稿本先后。'
+          p3: '这条分支里，他到最后只为少数诗人所知，没有人告诉过他，他的书以后会有人读。'
+          p4: '这条分支里病照旧发展，9 月 21 日他在花卷去世，三十七岁。'
         shift:
           p1:
             was: '1933 年 8 月，宫泽贤治病情转重，仍应答农户的肥料咨询。'
           p2:
-            was: '1933 年 9 月，宫泽贤治去世，未能继续亲自答复农户。'
-            now: '{staff}请几名已经来过的农户留下一份书面问答，供没赶上的邻人查阅。'
-          p3:
             was: '1933 年 9 月，宫泽贤治去世，《银河铁道之夜》留有多次改写的未定稿。'
             now: '{staff}请宫泽指出哪叠在先、哪叠在后，把次序另记在封纸上。后来整理作品的人照着这份记号把不同稿本分别保存。'
             who: miyazawa_kenji_hanamaki
             bio: '宫泽生前留下了《银河铁道之夜》各稿的排序说明。作品身后刊行时，读者可以由早到晚读到他留下的改写。'
+          p3:
+            was: '1924 年，宫泽贤治自费出版了诗集和童话集各一本，生前除少数诗人外几乎无人知道他。'
+            now: '{staff}在他病床边告诉他，他的诗和童话以后会有很多人读。'
+          p4:
+            was: '1933 年 9 月 20 日，多年肺病的宫泽贤治又患上急性肺炎，次日在花卷去世，三十七岁。'
+            now: '{staff}带去的药治好了他的肺病，入秋以后他又能下床了。这条时间线里，他在花卷又活了许多年，继续给农户看土、配肥料，也继续改他的稿子。'
+            who: miyazawa_kenji_hanamaki
+            bio: '宫泽贤治在 1933 年秋天病愈，继续给花卷的农户做肥料咨询，活着看到自己的书有了许多读者。'
         vignettes:
           call: '你在屋子那头念出站名。还没解释谁在那里，读者就抬了头。他再读时把解释往后放，先保留那一声。'
           window: '读者想指出铁道从哪里通进天空。你问乔班尼先从窗里看见了什么。他把小山和车厢分别写在两张纸上。'

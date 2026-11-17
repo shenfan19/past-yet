@@ -18,7 +18,8 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 5, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
         - {id: p2, kind: notice, day: 11, req: {"any":[{"trait":["methodical","patient","scholarly"]},{"job":["archivist","translator"]}]}}
-        - {id: p3, kind: persuade, day: 66, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":8,"will":8}},{"trait":["charismatic","methodical"],"stat":{"will":9}}]}}
+        - {id: p3, kind: care, day: 30, req: {"any":[{"job":["nurse","doctor","physician","caregiver","paramedic","midwife"]},{"trait":["kind","patient"],"stat":{"constitution":5}},{"item":"warm_blanket","trait":["kind","patient","attached"]}]}}
+        - {id: p4, kind: persuade, day: 66, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":8,"will":8}},{"trait":["charismatic","methodical"],"stat":{"will":9}}]}}
       vignettes:
         - {id: example, traits: [methodical, scholarly]}
         - {id: job, traits: [bold, charismatic]}
@@ -34,11 +35,13 @@ events:
         points:
           p1: 'Help Abel check his last short proof while he is ill so the paper can be sent'
           p2: 'While the short paper is at hand, tie it to the Paris submission record so anyone searching has a reference'
-          p3: 'Ask the friends seeking a post for Abel to send an interim letter so he knows before he dies that they are still trying'
+          p3: 'Through the twelve weeks Abel lies in bed at Froland, keep the cold from his room and ease his cough and his pain'
+          p4: 'Ask the friends seeking a post for Abel to send an interim letter so he knows before he dies that they are still trying'
         points_fail:
           p1: 'The paper stops before it can be checked, and the central result of the Paris memoir loses this early public record. The office recalls the employee after a loss of sync.'
           p2: 'People searching for the Paris memoir still have to work through the old intake records with little more than a title.'
-          p3: 'No word reaches Froland in time. The formal confirmation comes too late.'
+          p3: 'Nobody eases the cold and the cough, and in this branch his last weeks at Froland are as hard as they were.'
+          p4: 'No word reaches Froland in time. The formal confirmation comes too late.'
         shift:
           p1:
             was: 'On 6 January 1829 at Froland, Abel wrote his last mathematical paper, restating a main result of his Paris memoir.'
@@ -46,6 +49,9 @@ events:
             was: 'Around 1829 Abel restated the Paris memoir''s central result; the manuscript was hard to locate and did not appear in print until 1841.'
             now: '{staff} links the new paper to the earlier submission date and leaves a reference with each copy, narrowing any later search.'
           p3:
+            was: 'At Christmas 1828 Abel travelled by sledge to Froland, cold and coughing, and began to cough up blood; he lay in bed there for twelve weeks.'
+            now: '{staff} keeps the stove going and the bed warm, and sits up with him through the worst nights. Abel suffers a little less in his last weeks.'
+          p4:
             was: 'Abel died on 6 April 1829. The letter confirming a post in Berlin was written two days later.'
             now: '{staff} asks a contact to report on the efforts already underway. Abel reads that his friends are still working to find him a post.'
             who: abel_froland
@@ -64,11 +70,13 @@ events:
         points:
           p1: '在阿贝尔病中写最后一篇短稿时，帮他把证明核对到可以寄出'
           p2: '趁短稿还在手边，帮阿贝尔把它同巴黎长稿的投递记录对上，给找稿的人留下索引'
-          p3: '请替阿贝尔奔走的人先寄一封进展信，让他生前知道柏林还有人为他的职位努力'
+          p3: '阿贝尔在弗罗兰卧床的十二周里，替他挡住屋里的冷，减轻他的咳嗽和病痛'
+          p4: '请替阿贝尔奔走的人先寄一封进展信，让他生前知道柏林还有人为他的职位努力'
         points_fail:
           p1: '短稿停在校对之前，巴黎长稿的要点也没有这份及时的公开记录。行程同步失败，员工被召回。'
           p2: '寻找巴黎长稿的人只知道大致题目，仍要从旧收件记录一页页找。'
-          p3: '弗罗兰一直等不到柏林的消息，正式的好消息来得太晚。'
+          p3: '冷和咳嗽没人减轻，这条分支里他在弗罗兰的最后几周和原来一样难熬。'
+          p4: '弗罗兰一直等不到柏林的消息，正式的好消息来得太晚。'
         shift:
           p1:
             was: '1829 年 1 月 6 日，阿贝尔在弗罗兰写下最后一篇数学短稿，重述巴黎长稿的主要结果。'
@@ -76,6 +84,9 @@ events:
             was: '1829 年前后，阿贝尔重述巴黎长稿的要点，原稿一度难寻，直到 1841 年才印行。'
             now: '{staff}把短稿和旧投递日期对在一处，两边各留一份索引。以后查稿的人能凭交件记录缩小范围。'
           p3:
+            was: '1828 年圣诞，阿贝尔受着寒、咳着嗽坐雪橇到弗罗兰，随后开始咳血，此后在那里卧床十二周。'
+            now: '{staff}守着炉火，把床铺焐暖，最难熬的几夜一直坐在床边。阿贝尔最后几周少受了些罪。'
+          p4:
             was: '1829 年 4 月 6 日阿贝尔去世，柏林确认职位的信于两日后写成。'
             now: '{staff}请联系人先把奔走过程写回弗罗兰。阿贝尔读到朋友们正在为他争取职位，知道这件事还有人在做。'
             who: abel_froland

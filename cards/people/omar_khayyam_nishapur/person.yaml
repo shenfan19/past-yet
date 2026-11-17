@@ -2,7 +2,7 @@ order: 150
 events:
   omar_khayyam_nishapur:
     order: 58
-    build_step: 3
+    build_step: 2
     year: 1079
     # the planned arrival is thirty days before the new calendar began on 15 March 1079; the date sets only the year of the lines
     date: '1079-02-13'
@@ -20,8 +20,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: notice, guard: true, day: 28, req: {"any":[{"trait":["methodical","vigil"],"stat":{"wit":7,"will":5}},{"job":["data_analyst","modelling_scientist","programmer","sysadmin"]},{"item":"ar_glasses","stat":{"wit":6}}]}}
-        - {id: p2, kind: persuade, day: 60, req: {"any":[{"job":["farmer","potato_farmer","dairy_farmer","villager","shepherd"]},{"trait":["patient","charismatic","cheerful"],"stat":{"will":5}}]}}
-        - {id: p3, kind: hold, day: 120, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":7}},{"trait":["scholarly"],"item":"neural_chip"},{"trait":["methodical"],"item":"neural_chip","stat":{"finesse":6}}]}}
+        - {id: p2, kind: hold, day: 120, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":7}},{"trait":["scholarly"],"item":"neural_chip"},{"trait":["methodical"],"item":"neural_chip","stat":{"finesse":6}}]}}
       vignettes:
         - {id: spring, traits: [methodical, curious, scholarly], day: 31}
         - {id: carry, traits: [faithful, patient, handy], day: 45}
@@ -36,21 +35,18 @@ events:
         relic_desc: 'A comparison sheet with the old and the new new year written side by side.'
         points:
           p1: 'In the days before the equinox, keep the shadow readings that fix it safe, so that the new calendar begins on the day set for it'
-          p2: 'After the new year, bring an old farmer who sows by the old months round to writing his sowing day in the new calendar'
-          p3: 'Help him get one more copy made of his book on extracting roots and send it to another city for safe keeping, so that in this branch it survives'
+          p2: 'Help him get one more copy made of his book on extracting roots and send it to another city for safe keeping, so that in this branch it survives'
         points_fail:
           p1: 'The equinox readings did not line up, and the new calendar did not begin on 15 March.'
-          p2: 'In this branch that field was still sown by the old calendar, and the new one had one user fewer in the country.'
-          p3: 'The book was lost all the same, as in history.'
+          p2: 'The book was lost all the same, as in history.'
         shift:
           p1:
             was: 'On 15 March 1079 the new calendar of Sultan Malik Shah came into use on its set day, the year beginning at the spring equinox.'
           p2:
-            was: 'The new calendar came into use on 15 March 1079 and was kept for some eight hundred years.'
-            now: 'There was one field outside the town sown by the new calendar.'
-          p3:
             was: 'Khayyam''s book on extracting roots is lost, known only from a mention in his Algebra.'
             now: 'One copy was sent to another city and put in a library, and people could still read it centuries later.'
+            who: omar_khayyam_nishapur
+            bio: 'In this line his book on roots did not vanish with the observatory years. A copy kept in another city went on being read and copied after his death.'
         vignettes:
           spring: '{staff} lays the old table and the new one side by side and writes against each date which reckoning it belongs to, so that the next reader does not have to guess.'
           carry: '{staff} copies the two headings of a folded sheet onto its outside, so whoever carries it can see which columns to compare without unfolding it.'
@@ -64,21 +60,18 @@ events:
         relic_desc: '一张对照表，新旧两种新年并排写着。'
         points:
           p1: '春分前那几天，护住观测台上定春分的日影读数，让新历照定的日子启用'
-          p2: '新年过后，劝一位照旧月份下种的老农改用新历记下播种的日子'
-          p3: '帮他把那部讲开方的书多抄一份，送到别的城里收好，让它在这条分支里留下来'
+          p2: '帮他把那部讲开方的书多抄一份，送到别的城里收好，让它在这条分支里留下来'
         points_fail:
           p1: '春分的读数没能对齐，新历没能在 3 月 15 日启用。'
-          p2: '这条分支里，那块地仍照旧历下种，新历在乡下少了一个用的人。'
-          p3: '这部书照旧失传，这条分支与历史一样。'
+          p2: '这部书照旧失传，这条分支与历史一样。'
         shift:
           p1:
             was: '1079 年 3 月 15 日，苏丹马立克沙的新历照定的日子启用，一年从春分开始。'
           p2:
-            was: '1079 年 3 月 15 日新历启用，这部历法后来沿用了约八百年。'
-            now: '城外有一块地是照新历下的种。'
-          p3:
             was: '海亚姆那部论开方的书没有传下来，只在他的《代数》里留下一句提及。'
             now: '有一份抄本被送到别的城里收进了书库，几百年后还有人读得到。'
+            who: omar_khayyam_nishapur
+            bio: '这条时间线里，他那部讲开方的书没有随着岁月散失。存在别城的那份抄本，在他身后仍有人读、有人转抄。'
         vignettes:
           spring: '{staff}把旧历表和新历表并排摆好，在每个日期旁写明属于哪种纪法，下一个读表的人不用再猜。'
           carry: '一张折起来的纸，两栏标题正好分在折痕两边。{staff}把两种题头抄到外面，带着它的人不用打开也知道该比哪两栏。'
@@ -192,7 +185,7 @@ self_check:
   share_number: '1079'
   knowing: 'lasting'
   near: 'reform'
-  lever: 'p1, p3'
+  lever: 'p1, p2'
   missed: 'closed'
   brought: 'relic'
 pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

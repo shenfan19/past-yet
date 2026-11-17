@@ -18,7 +18,7 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","translator"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
         - {id: p2, kind: notice, day: 36, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 150, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p3, kind: care, day: 130, req: {"any":[{"job":["nurse","caregiver","midwife","physician","doctor","paramedic"],"stat":{"will":6}},{"item":"warm_blanket","trait":["kind","patient","faithful"],"stat":{"will":6}}]}}
       vignettes:
         - {id: heard, traits: [skeptical, methodical, scholarly]}
         - {id: compare, traits: [bold, faithful, vigil]}
@@ -34,11 +34,11 @@ events:
         points:
           p1: 'After Katharina is brought to Leonberg, have the keeper of the defense papers file a second copy so her written response reaches the proceedings'
           p2: 'Help the family sort firsthand testimony, hearsay and later inferences into separate columns'
-          p3: 'Keep a signed witness index and handover dates with the lawyer in Leonberg so Katharina''s family knows where to ask next'
+          p3: 'Get thick bedding and hot food into the cell at Güglingen, so that Katharina, seventy three and in chains, comes through this winter'
         points_fail:
           p1: 'The only copy the family can find is never delivered. The file has only the accusations, and the office recalls the employee.'
           p2: 'The copy puts all three together. Once it reaches the file, the defense still has to ask who originally said what.'
-          p3: 'After the file moves, relatives make separate inquiries. Written replies stay in different places.'
+          p3: 'In this branch she spent the winter in chains as history has it, with only the two men who guarded her day and night, and the family paying for the guard.'
         shift:
           p1:
             was: 'Katharina was arrested in August 1620. Through lawyers, Johannes Kepler insisted on a written record of the proceedings.'
@@ -46,10 +46,9 @@ events:
             was: 'Testimony and written defenses survive. The defense answered claims one by one and challenged inferences used to link them.'
             now: 'The lawyer can compare the three columns and point to claims the witnesses could not verify for themselves.'
           p3:
-            was: 'The case passed between Leonberg and Güglingen and met delays. Katharina was released in 1621.'
-            now: 'Delivery dates let the lawyer trace several unanswered items and obtain a written response to one. The family can cite the date when following up.'
-            who: kepler_leonberg
-            bio: 'Kepler''s defense of his mother involved checking testimony and insisting on written proceedings. The family still needed access to the papers after the case moved.'
+            was: 'On 7 August 1620 Katharina Kepler was arrested and taken to Güglingen, where she was held in chains for fourteen months under two guards, at her family''s cost. She was released in the autumn of 1621 and died about six months later.'
+            now: '{staff} settled things with the guards for the family. That winter she had thick bedding and hot food; the chains stayed on, but she held up better than in history.'
+            bio: 'In this timeline Katharina Kepler had warm bedding and hot food through her first winter in the cell at Güglingen, and was stronger when she was released in the autumn of 1621.'
         vignettes:
           heard: 'Margarete has written that a neighbour saw something. When you ask which neighbour, she can only name the man who repeated it at the door. She copies the two claims onto separate lines and leaves a place for a first-hand account if one comes.'
           compare: 'Matthias wants to send the first copy now and keep the second at the desk. You read one against the other and find that a date has lost a digit. He waits while Margarete checks the original. The messenger takes the corrected copy as the bells finish striking.'
@@ -64,11 +63,11 @@ events:
         points:
           p1: '卡塔琳娜被带到莱昂贝格以后，请保管申辩书的人立刻另抄并交存一份，护住书面申辩继续进入程序'
           p2: '让家人整理原证词，逐项区分证人亲眼所见、由人转述和后来附上的推断'
-          p3: '在莱昂贝格留一份经律师签收的证词对照和转交日期，让卡塔琳娜的家人能查下一步该问哪个衙署'
+          p3: '给居格林根牢里戴着锁链的卡塔琳娜送进厚衣被和热饭，让七十三岁的她熬过这个冬天'
         points_fail:
           p1: '家里能找到的那份申辩书没能转交。案卷只剩指控人的陈述，事务所因同步失败召回员工。'
           p2: '三种说法抄在同一栏。送进案卷以后，辩护人还要再追问最早是谁说的。'
-          p3: '案卷转走以后，家人仍各自托人询问，书面答复散在不同地方。'
+          p3: '这条分支里，她照史实戴着锁链过冬，身边只有日夜看守的两个人，看守的费用还要家里出。'
         shift:
           p1:
             was: '卡塔琳娜于 1620 年 8 月被捕。约翰内斯·开普勒随后经律师坚持把程序落实在书面记录上。'
@@ -76,10 +75,9 @@ events:
             was: '审理留下证词及书面辩护。辩方逐项回应并反对把猜测当作说法之间的因果。'
             now: '送给律师的抄本可以按栏核查。辩护人先指出证人未能亲验的数项。'
           p3:
-            was: '诉讼跨越莱昂贝格和居格林根。辩护及审理拖延，直至 1621 年卡塔琳娜方获释放。'
-            now: '律师从接收和转交的日期查出几件久无回音的材料，先收到一项书面说明。家人以后据此追问案程。'
-            who: kepler_leonberg
-            bio: '开普勒为母亲的辩护重视逐项核对证词和书面程序。家人还须在案件移交后继续取得材料。'
+            was: '1620 年 8 月 7 日卡塔琳娜·开普勒被捕，押到居格林根，戴着锁链关押十四个月，两人日夜看守，费用由她和家人承担；1621 年秋获释，约半年后去世。'
+            now: '{staff}替家里打点好看守，那个冬天她有厚被和热饭，锁链没有卸下，身子却比历史上撑得住些。'
+            bio: '这条时间线里，卡塔琳娜·开普勒在居格林根牢里的第一个冬天有厚被和热饭，1621 年秋获释时身子比历史上硬朗些。'
         vignettes:
           heard: '玛格丽特写着有邻居亲眼看见。你问是哪位邻居，她只叫得出在门边转述的那个人。她把两种说法分成两行，又给可能收到的亲历说法留个位置。'
           compare: '马蒂亚斯想先送出一份，另一份留桌上。你照着念了两遍，发现有个日期漏了一位数字。他等玛格丽特找原稿核对。钟声刚停，送件人带着改好的副本走了。'

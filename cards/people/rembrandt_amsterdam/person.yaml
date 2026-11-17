@@ -16,9 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["painter","archivist","illustrator"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 18, req: {"any":[{"job":["archivist","painter","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","painter"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 15, req: {"any":[{"job":["painter","illustrator","restorer"],"stat":{"finesse":7}},{"trait":["artistic"],"stat":{"finesse":8}}]}}
       vignettes:
         - {id: mirror, traits: [artistic, curious]}
         - {id: seat, traits: [handy, methodical]}
@@ -32,24 +30,15 @@ events:
         relic: "A brush"
         relic_desc: "A worn brush with the paint dried in the hairs."
         points:
-          p1: 'Keep a usable easel in Amsterdam for Rembrandt’s late self-portrait. Move dated canvases separately from early studies'
-          p2: 'Have the painter record the pose and clothing he intends to keep so the workshop can tell the portraits from that year apart'
-          p3: 'Have relatives and the inventory clerk list current paintings separately from tools. Check any revisions the painter had left visible or marked'
+          p1: 'In his last weeks, help Rembrandt carry Simeon in the Temple on his easel further, so that his last painting is not left where his strength gave out'
         points_fail:
-          p1: 'The canvas is taken away as an old study. He cannot continue working on it, and the office recalls the employee.'
-          p2: 'The records use the same description for several portraits. A later reader cannot tell which is which.'
-          p3: 'The inventory groups objects by room and type. No usable note identifies which portrait was being revised.'
+          p1: 'Simeon in the Temple was left unfinished in his studio as history has it.'
         shift:
           p1:
-            was: 'More than one surviving self-portrait dates from 1669, the year Rembrandt died.'
-          p2:
-            was: 'A painting dated to 1669 today was long assigned to an earlier period, until its date was read on the painting.'
-            now: 'Each portrait has a visible detail in the register. Someone receiving a picture with an unclear date has a starting point for identifying it.'
-          p3:
-            was: 'Rembrandt’s possessions were inventoried after his death. Paintings entered different collections and some inscriptions have been hard to read.'
-            now: 'The family keeps a page registering the date and workshop history as the painting is handed over. A later borrower can trace its last stage in the workshop.'
+            was: 'Rembrandt died in Amsterdam on 4 October 1669. Simeon in the Temple, his last painting, was left unfinished at his death.'
+            now: '{staff} ground his colours and steadied the canvas through the last weeks. Simeon in the Temple was carried further in his own hand before October.'
             who: rembrandt_amsterdam
-            bio: 'Rembrandt painted himself repeatedly in his last year. Portraits dated 1669 in different collections can be distinguished through inscriptions and technical study.'
+            bio: 'In this line Rembrandt worked on his last painting through September 1669 and took it further than history left it. It went out of his studio closer to how he meant it.'
         vignettes:
           mirror: 'The apprentice keeps drawing the face they expected to see. You ask them to turn a little and wait until they can describe the light before drawing again.'
           seat: 'You put a chalk mark beside the stool before the apprentice takes a break. On returning they find the angle again without moving the whole table.'
@@ -62,24 +51,15 @@ events:
         relic: "一支画笔"
         relic_desc: "一支磨旧的画笔，笔毛里的颜料已经干了。"
         points:
-          p1: '在阿姆斯特丹给伦勃朗晚年的自画像留出能继续用的画架，换地方时让已署年的画布和旧习作分开归置'
-          p2: '请画家在工房册旁补上自己打算留下的姿态和衣帽，辨出同年各幅画像'
-          p3: '请家人和接手清点者把正在绘制的作品和工具分别记入临时交接册，再把画家留下的改笔一并核对'
+          p1: '在他最后几周里，帮伦勃朗把画架上的《圣殿里的西面》往下画一段，别让最后一幅画停在他力气断掉的地方'
         points_fail:
-          p1: '搬画时把这幅画当成早年习作收走，画家无法继续，事务所因同步失败召回员工。'
-          p2: '几幅画以同一说法登记，几十年后看册的人已分不出是哪幅。'
-          p3: '清点只按屋里放的东西归大类，尚待修改的画像没有一处可用的说明。'
+          p1: '《圣殿里的西面》照史实没画完，留在他的画室里。'
         shift:
           p1:
-            was: '现存不止一件 1669 年的伦勃朗自画像，说明他在去世那年仍画自画像。'
-          p2:
-            was: '有一幅今天定年 1669 年的自画像长期曾被看作早期作品，直到人们辨认出画上的署年。'
-            now: '几幅画各有可查的外观记载。后来拿到无清楚署年的一幅时，至少能用册页辨认是哪一件。'
-          p3:
-            was: '伦勃朗死后有住处物品清理，现存画作各自进入收藏，署记有的难辨。'
-            now: '家人交出画时仍留有一页署年和在工房的记录。后来借出画像的人能查到作品还在画架上的阶段。'
+            was: '1669 年 10 月 4 日，伦勃朗在阿姆斯特丹去世。他最后一幅画《圣殿里的西面》在他去世时没有画完。'
+            now: '{staff}替他研好颜料、扶稳画布，陪他过了最后几周。十月之前，《圣殿里的西面》在他自己手里又往下走了一段。'
             who: rembrandt_amsterdam
-            bio: '伦勃朗最后一年反复画自己的肖像。不同馆所藏的 1669 年画作可从署年和技术考察加以辨别。'
+            bio: '这条时间线里，伦勃朗在 1669 年 9 月一直画着最后那幅画，把它画得比历史上更远。它离开画室时，更接近他想要的样子。'
         vignettes:
           mirror: '学徒总画成自己想象的样子。你请他稍微转过脸，等能说清光落在哪儿，再往下画。'
           seat: '学徒歇手前，你在凳脚旁画了道粉笔记号。他回来时不用挪整张桌子，也能坐回原来的角度。'

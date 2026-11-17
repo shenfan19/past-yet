@@ -18,8 +18,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 38, req: {"any":[{"job":["archivist","university_lecturer"]},{"trait":["vigil","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 28, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["vigil","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 67, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["vigil","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 67, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["vigil","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: apple, traits: [bold]}
         - {id: hand, traits: [methodical, skeptical]}
@@ -35,19 +34,14 @@ events:
         relic_desc: A triangle of glass that splits white light into colours.
         points:
           p1: 'Pack Newton’s last corrections by volume and page and get them from Cambridge to Halley before the London press finishes'
-          p2: 'Ask the copyist to check vulnerable figure numbers against the draft. Leave a list matching figures and pages for queries to Newton'
-          p3: 'When the first edition arrives, agree with Newton how readers can submit corrections he can verify by proposition and page'
+          p2: 'When the first edition arrives, agree with Newton how readers can submit corrections he can verify by proposition and page'
         points_fail:
           p1: 'Two versions of a correction go out. Halley cannot assemble the last errata, and the office recalls the employee.'
-          p2: 'A figure number sits on the edge of the fair copy. The next proof loses the reference and nobody can tell which drawing it meant.'
-          p3: 'Correspondents use their own references. Early corrections remain scattered between letters and Newton’s copy.'
+          p2: 'Correspondents use their own references. Early corrections remain scattered between letters and Newton’s copy.'
         shift:
           p1:
             was: 'On July 5, 1687, Halley wrote that the Principia was finished and that the last errata had arrived in time.'
           p2:
-            was: 'Humphrey Newton helped make the fair copy. Proofs and letters about errata show revisions continued during printing.'
-            now: 'Halley receives a list keyed to both versions and can direct a question about a figure to the exact Cambridge draft.'
-          p3:
             was: 'Newton annotated his own first edition. Preparing a revised edition took years.'
             now: 'The college keeps a corrections book indexed by proposition. Readers can record a problem and see which changes Newton later approved and when.'
             who: newton_cambridge
@@ -65,19 +59,14 @@ events:
         relic_desc: 一块三角的玻璃，能把白光分成各种颜色。
         points:
           p1: '把牛顿最后一批勘误按卷和页打包，从剑桥及时发给伦敦的哈雷'
-          p2: '请誊清人把容易错抄的图号反查原稿，留一张可问牛顿的图、页对照表'
-          p3: '首版送达后，和牛顿约定如何收录读者的更正，让他能在剑桥按命题和页码核验答复'
+          p2: '首版送达后，和牛顿约定如何收录读者的更正，让他能在剑桥按命题和页码核验答复'
         points_fail:
           p1: '同一处改字邮寄了两个版本，哈雷收不齐末批勘误，事务所因同步失败召回员工。'
-          p2: '一条图号靠边写在誊本上，换一轮校样就找不到原指哪一张图。'
-          p3: '读者信各用各的页码，较早的改动散落在信和自己的样书里。'
+          p2: '读者信各用各的页码，较早的改动散落在信和自己的样书里。'
         shift:
           p1:
             was: '1687 年 7 月 5 日，哈雷来信说《原理》已经印完，末批勘误及时赶上。'
           p2:
-            was: '亨弗里·牛顿参与誊清，首版校样和勘误往来记录表明印刷前仍有修订。'
-            now: '哈雷收到一张同号对照表，能把图版的询问直接指到剑桥的底稿。'
-          p3:
             was: '牛顿在自己的首版留下注记。后来修订再版仍是长期工作。'
             now: '学院里有一份按命题编号的更正簿。借书的人可以填下所见的错误，得到牛顿同意的修改会连日期另记。'
             who: newton_cambridge

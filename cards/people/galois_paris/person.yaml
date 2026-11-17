@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 9, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 10, req: {"any":[{"job":["proofreader","archivist","musician"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 104, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 104, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p3, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","paramedic"],"item":"first_aid_kit"},{"job":["nurse"],"item":"antibiotic","stat":{"will":6}},{"provides":"cure","stat":{"constitution":6}}]}}
       vignettes:
         - {id: check, traits: [curious, scholarly, skeptical]}
         - {id: sequence, traits: [methodical, vigil]}
@@ -32,24 +32,24 @@ events:
         relic: "A hurried letter"
         relic_desc: "Pages crossed with figures and the words that he had no time."
         points:
-          p1: 'While Galois can still check the pages, wrap his May 29 letter to Chevalier separately from the papers it mentions and deliver both.'
-          p2: 'In Chevalier’s copy, give established results and open questions separate columns keyed to the pages of the letter.'
-          p3: 'When the letter is printed in September, ask the editor to print a manuscript index beside it. Find a mathematician willing to read the surviving pages in order.'
+          p1: 'On the night of 29 May, while Galois can still check the pages, wrap his letter to Chevalier separately from the papers it mentions and see both delivered'
+          p2: 'When the letter is printed in September, have the editor print a manuscript index beside it and find a mathematician willing to read the surviving pages in order'
+          p3: 'After the duel on the morning of 30 May, get Galois to a doctor at once and save him from the wound in his abdomen'
         points_fail:
           p1: 'The handover is repeatedly put off and the letter is separated from the papers. Chevalier never receives the May 29 letter, and the office recalls the employee.'
-          p2: 'The text survives in a copy, but page numbers of the associated drafts are lost. A reader cannot tell which items are only outlines.'
-          p3: 'Only the letter appears in September. Readers who want to go further still have to find the friend holding the manuscripts.'
+          p2: 'Only the letter appears in September. Readers who want to go further still have to find the friend holding the manuscripts.'
+          p3: 'He lies wounded and alone until a passer by finds him, and dies in the Cochin hospital on 31 May, aged twenty. In this branch there is no Galois after that.'
         shift:
           p1:
             was: 'On May 29, 1832, Galois wrote to Auguste Chevalier to outline his research and ask him to handle the papers and publish the letter.'
           p2:
-            was: 'The letter gives results obtained and questions left to pursue. Chevalier later copied several manuscripts.'
-            now: 'Readers can use the columns to find the original pages and tell which passages admit a step-by-step check.'
-          p3:
             was: 'The letter appeared in September 1832. Chevalier passed manuscripts to Liouville in 1843, and Liouville published them in 1846.'
             now: 'Anyone reading the letter in September can use the index to ask for a copy. Questions come back to Chevalier with page numbers, leaving a record for the next reader.'
+          p3:
+            was: 'On 30 May 1832 Galois was shot in the abdomen in a duel and left lying where he fell. He died in the Cochin hospital on 31 May, aged twenty.'
+            now: '{staff} reaches him within minutes, stops the bleeding and keeps the wound from turning septic. Galois recovers, returns to mathematics and explains his theory himself to the mathematicians who had not understood it.'
             who: galois_paris
-            bio: 'Galois used the letter to explain his work on solving equations. The papers reached other mathematicians through several hands that kept, copied and published them.'
+            bio: 'Galois survived the duel of May 1832. He went on working in mathematics in Paris and saw his theory of equations read and discussed in his own lifetime.'
         vignettes:
           check: 'The copyist puts a question among the conclusions. You trace it back to the request at the end of the letter. They mark what the next reader is being asked to check.'
           sequence: 'Two pages both begin with the same symbol. You read the last line of each and find which one the argument needs first. The copyist adds a page mark.'
@@ -62,24 +62,24 @@ events:
         relic: "一封匆忙写就的信"
         relic_desc: "写满算式的信页，页边写着没有时间了。"
         points:
-          p1: '在伽罗瓦还能逐页核对时，把 5 月 29 日写给舍瓦利耶的信和信中提到的论文分别包好，交给收信人。'
-          p2: '在舍瓦利耶的抄本旁，按信上的说法把得到的结论和仍待研究的问题标在不同栏。'
-          p3: '趁九月刊信，请编辑一并刊出索引，约一位能逐页核查的数学同行先读留存稿。'
+          p1: '5 月 29 日夜里趁伽罗瓦还能逐页核对，把写给舍瓦利耶的信和信中提到的论文分别包好，送到收信人手上'
+          p2: '趁九月刊信，请编辑一并刊出手稿索引，约一位能逐页核查的数学同行先读留存稿'
+          p3: '5 月 30 日清晨决斗以后，立刻把伽罗瓦送到医生手里，救下中了腹部一枪的他'
         points_fail:
           p1: '约定的交接一再推迟，信与待寄的草稿被分开。舍瓦利耶收不到 5 月 29 日的信，事务所因同步失败召回员工。'
-          p2: '抄本保住了文字，却丢掉几处对应手稿的页次。收到稿子的人分不清哪些只有一段提纲。'
-          p3: '九月的刊物只有信件。愿意往下核对的人仍须先找到保管手稿的朋友。'
+          p2: '九月的刊物只有信件。愿意往下核对的人仍须先找到保管手稿的朋友。'
+          p3: '他中枪后被丢在原地，直到有路人发现，5 月 31 日死在科钦医院，年仅二十岁。这条分支里此后没有伽罗瓦。'
         shift:
           p1:
             was: '伽罗瓦 1832 年 5 月 29 日写信给奥古斯特·舍瓦利耶，概述研究，并托他处理稿件和刊出书信。'
           p2:
-            was: '信里既有已经得到的结果，也有尚待进一步研究的问题。后来舍瓦利耶为若干手稿制作了抄本。'
-            now: '读者可以按栏找回原稿，知道哪些部分能逐步检查，哪些只是留给后来的人做。'
-          p3:
             was: '信在 1832 年 9 月刊出。舍瓦利耶到 1843 年才把若干稿件交给刘维尔，刘维尔于 1846 年刊行。'
             now: '九月读到这封信的同行可以按刊出的索引申请借看一份抄本。所提问题和对应页码回到舍瓦利耶手中，给下一轮审阅留下记录。'
+          p3:
+            was: '1832 年 5 月 30 日，伽罗瓦在决斗中腹部中枪，被丢在原地；5 月 31 日他死在科钦医院，年仅二十岁。'
+            now: '{staff}几分钟内赶到，止住了血，又没让伤口感染。伽罗瓦活了下来，回到数学上，亲自向那些没读懂他的数学家讲清自己的理论。'
             who: galois_paris
-            bio: '伽罗瓦留下的信介绍了求解方程的研究。信和论文经过不同的人保管、抄录和刊行，才逐渐进入更多数学家的视野。'
+            bio: '伽罗瓦挺过了 1832 年 5 月的决斗。他在巴黎继续做数学，生前就看到自己关于方程的理论被人读懂、讨论。'
         vignettes:
           check: '誊写员把一个问题夹进了结论。你顺着信查到末尾的请求，他另标出下一个读信人要核对哪件事。'
           sequence: '两页都从同一个符号起笔。你分别读了末行，找出论证先用哪一页。誊写员补上页码。'

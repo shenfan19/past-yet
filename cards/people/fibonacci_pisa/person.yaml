@@ -14,9 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","bookseller","tutor"]},{"trait":["curious","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 25, req: {"any":[{"job":["archivist","tutor","proofreader"]},{"trait":["curious","scholarly","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 51, req: {"any":[{"job":["archivist","tutor"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 51, req: {"any":[{"job":["archivist","tutor","bookseller"],"stat":{"wit":7,"will":6}},{"trait":["curious","scholarly"],"stat":{"wit":8,"will":6}}]}}
       vignettes:
         - {id: gap, traits: [methodical, vigil]}
         - {id: tokens, traits: [curious, handy]}
@@ -30,24 +28,15 @@ events:
         relic: A wax tablet of numerals
         relic_desc: A tablet with the ten new numerals set out beside the old Roman ones.
         points:
-          p1: 'Keep the beginning, ending and examples of Leonardo’s first Liber abaci together so the compilation of 1202 can be completed'
-          p2: 'Have an apprentice in Pisa work through an example and point out the step that needs another line of explanation'
-          p3: 'Secure a complete early copy in Pisa and have Leonardo mark it so later examples can be compared separately'
+          p1: 'Persuade Leonardo to sign and leave a complete copy of the 1202 first version in Pisa, so the later revision does not replace it'
         points_fail:
-          p1: 'Only scattered examples circulate, and the complete compilation cannot be handed over. The office recalls the employee.'
-          p2: 'The apprentice remembers the answer but cannot start a transaction in a different form.'
-          p3: 'After the author revises the work, borrowers know only the new copy and cannot recover the first compilation.'
+          p1: 'After the author revises the work, borrowers know only the new copy and cannot recover the first compilation.'
         shift:
           p1:
-            was: 'The surviving revision refers to an initial version composed in 1202. Most surviving manuscripts reflect the revision of 1228.'
-          p2:
-            was: 'Liber abaci uses many worked examples, including problems that arise in trade.'
-            now: 'The author hears exactly where an apprentice stopped. The next learner has an extra line to check their work.'
-          p3:
             was: 'No complete first version is known to survive. The main manuscript tradition reflects the later revision.'
             now: 'The early set retains its date and examples. Later readers can put the two compilations side by side and identify newly added work.'
             who: fibonacci_pisa
-            bio: 'Leonardo of Pisa drew on calculation he learned while traveling and eventually revised his first compilation substantially.'
+            bio: 'The 1202 first version of Leonardo of Pisa''s book survived in a complete copy beside the 1228 revision, so later readers could see what he changed over those years.'
         vignettes:
           gap: 'The clerk skips the empty column when copying the total. You put zero back into the gap and ask him to read the number again. It now agrees with the earlier reckoning.'
           tokens: 'You arrange a few counters in groups on the counter. The clerk moves one to the next column, then explains why the same mark would now mean something different.'
@@ -60,24 +49,15 @@ events:
         relic: 一块写着数字的蜡板
         relic_desc: 板上把十个新数字和旧的罗马数字并排写在一起。
         points:
-          p1: '替列奥纳多留齐《计算之书》初稿的首尾和面向读者的例题，护住 1202 年那次编成'
-          p2: '请比萨的学徒用一份例题自己算完，让他指出哪一行必须多写一步才看得懂'
-          p3: '说服作者把一整套早本留在比萨，签写它以后可与新编的例题分开对照'
+          p1: '说服列奥纳多把 1202 年初编的一整套抄本签好名留在比萨，让它不被后来的修订本取代'
         points_fail:
-          p1: '流出去的试读页只剩几个例子，没有能够交出的整卷，事务所因同步失败召回员工。'
-          p2: '学徒能背下答案，碰到样式不同的一笔账，仍不知道从哪里起算。'
-          p3: '等作者改写以后，借书人只认得后来那一套抄本，不能恢复早本。'
+          p1: '等作者改写以后，借书人只认得后来那一套抄本，不能恢复早本。'
         shift:
           p1:
-            was: '存世修订本提到《计算之书》最初写于 1202 年。现存抄本主要反映 1228 年修订。'
-          p2:
-            was: '《计算之书》用大量范例介绍不同计算，商贸问题居于其中。'
-            now: '作者可从一个做过题的学徒那里听到具体卡住的位置，再补一行给下一位学徒核对。'
-          p3:
             was: '早期编本没有完整留存，通行本文本主要来自后来的修订。'
             now: '留存的早本注明旧例和编成年份。等修订本出现，两份可并读，读者能查哪些例题是后来才补的。'
             who: fibonacci_pisa
-            bio: '比萨的列奥纳多从学习和旅行中带回计算经验。他的书经历了初编和大幅改编。'
+            bio: '比萨的列奥纳多 1202 年的初编留下了一部完整的抄本，与 1228 年的修订本并存，后人能对出他这些年里改了什么。'
         vignettes:
           gap: '账房照抄合计时跳过空栏。你把零填回空处，请他再读一遍，这才和原先算出的数一致。'
           tokens: '你把几枚算子分列摆在柜台上。账房把一枚挪到下一列，接着讲给你听，怎么同一个记号这时就表示了另一个数。'

@@ -16,9 +16,9 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["nurse","physician","doctor"],"stat":{"will":6}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
-        - {id: p2, kind: notice, day: 13.5, req: {"any":[{"job":["nurse","archivist"]},{"trait":["methodical","patient","vigil"]}]}}
-        - {id: p3, kind: care, day: 14, req: {"any":[{"job":["nurse","physician","doctor"],"stat":{"will":7}},{"trait":["methodical","patient"],"stat":{"wit":7,"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["nurse","physician","doctor","paramedic"],"stat":{"will":6}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p2, kind: care, day: 14, req: {"any":[{"job":["nurse","caregiver","courier","journalist"]},{"trait":["kind","patient","methodical"],"stat":{"will":5}},{"item":"notebook_pen","stat":{"wit":5}}]}}
+        - {id: p3, kind: care, day: 15, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":8,"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"elixir","stat":{"will":6}}]}}
       vignettes:
         - {id: witness, traits: [methodical, skeptical]}
         - {id: dispatch, traits: [bold, charismatic, glib]}
@@ -32,24 +32,24 @@ events:
         relic: "A walking cane"
         relic_desc: "A plain cane with a worn handle."
         points:
-          p1: 'Use the request for help to find someone who can get Poe from the tavern area to the hospital'
-          p2: 'Record where he was found, when he reached the hospital, and who brought him on one dated slip'
-          p3: 'Send word to the family before there is a diagnosis so Maria Clemm still has time to write back'
+          p1: 'Use the note asking for help to find someone who can get Poe from the polling place to the hospital in time'
+          p2: 'Get word to Maria Clemm while he is still in the ward, so that she does not have to learn it from the paper'
+          p3: 'In Washington College Hospital, bring him through the delirium and save Poe'
         points_fail:
-          p1: 'The note goes into the crowd and no one comes in time to bring Poe to the hospital. The branch falls out of sync and the office recalls the employee.'
-          p2: 'Later recollections disagree about the time and date, with no contemporaneous admission record to check.'
-          p3: 'His family still expects him to come home, and Maria has to ask what happened after she reads of his death in the paper.'
+          p1: 'The note was lost in the crowd and nobody came in time to take Poe to the hospital. The branch came apart from history and the office recalled the employee.'
+          p2: 'The family went on waiting for him to come home, and Maria Clemm read of his death in the paper.'
+          p3: 'He died in the hospital on 7 October as history has it, and in this branch too he could not be kept.'
         shift:
           p1:
-            was: 'On 3 October 1849 Poe was found in need of help. After a note was sent, he was taken to a hospital in Baltimore.'
+            was: 'On 3 October 1849 Poe was found in need of help at a polling place in Baltimore. After a note was sent, he was taken to Washington College Hospital.'
           p2:
-            was: 'In early October 1849 Poe was hospitalized in Baltimore. Later accounts differ on when he was admitted.'
-            now: '{staff} asks the receiving clerk and the people who brought him to confirm the time on one slip and records what they know without inferring a cause.'
+            was: 'On 9 October 1849 Maria Clemm wrote to Neilson Poe that she had just learned of his death from the newspaper.'
+            now: '{staff} sent her word of what the hospital knew and an address to write to. Her answer reached the ward while he was still there.'
           p3:
-            was: 'Poe died in Baltimore on 7 October 1849. On 9 October Maria Clemm wrote that she had just learned of his death from the newspaper.'
-            now: '{staff} sends a brief account of what the hospital knows and provides an address where the family can write back. An answer reaches the hospital before Poe dies.'
+            was: 'Poe died at Washington College Hospital in Baltimore on 7 October 1849, aged 40. The cause of his death is still unknown.'
+            now: '{staff} stayed by him through the worst nights and he came through. In late October he left the hospital and went on north to his home in New York.'
             who: poe_baltimore
-            bio: 'During Poe''s last days his family knew where he was and got their reply to the hospital.'
+            bio: 'In this line Poe came through his days in a Baltimore hospital in October 1849. He went home to New York and went on writing and editing for some years.'
         vignettes:
           witness: 'A print-shop helper has heard three reasons for the man''s condition. You ask which one he saw. He can give you a place and one man''s name. On the spare slip you keep those two details. Four days later there will still be people filling in the rest.'
           dispatch: 'The print-shop helper wants to wait for someone who knows Poe. You send him with the address he already has. He comes back able to say the note reached the right door. You keep the route on a scrap. He has nothing to tell you about the days before that afternoon.'
@@ -62,24 +62,24 @@ events:
         relic: "一根手杖"
         relic_desc: "一根朴素的手杖，握柄已被磨旧。"
         points:
-          p1: '凭求助条尽快找到能接应的人，护住坡从酒馆附近到医院的那段路'
-          p2: '在送院时把发现地点、送达时刻和经手人记在同一张单上'
-          p3: '让通知亲属的信在诊断未明时就发出去，给玛丽亚·克莱姆一次及早回信的机会'
+          p1: '凭那张求助条尽快找到能接应的人，护住坡从投票点到医院的那段路'
+          p2: '趁他还在病房里，把消息送到玛丽亚·克莱姆手上，别让她从报上读到'
+          p3: '在华盛顿学院医院里守着他熬过谵妄，救下坡'
         points_fail:
-          p1: '求助递进人群里就断了，没有人赶到接他进医院。行程同步失败，员工被召回。'
-          p2: '事后几个回忆说法的日期和时刻合不起来，没有同一份当日记录可以核对。'
-          p3: '家里继续等他自行回来，玛丽亚只能在报上读到噩耗后再打听他出了什么事。'
+          p1: '求助条递进人群里就断了，没有人及时把他送进医院。分支与历史脱了节，事务所因同步失败召回员工。'
+          p2: '家里继续等他自己回来，玛丽亚·克莱姆是从报上读到噩耗的。'
+          p3: '他照史实在 10 月 7 日死在医院里，这条分支里也没能留住他。'
         shift:
           p1:
-            was: '1849 年 10 月 3 日，有人发现坡急需帮助，写条求援后，坡被送到巴尔的摩的医院。'
+            was: '1849 年 10 月 3 日，有人在巴尔的摩的一处投票点发现坡急需帮助，写条求援后，他被送进华盛顿学院医院。'
           p2:
-            was: '1849 年 10 月上旬坡在巴尔的摩住院，此后回忆对送达的日期与时刻有出入。'
-            now: '{staff}请接诊方和送来的人在同一张纸上各自确认时间，只记经过，不推断发病原因。'
+            was: '1849 年 10 月 9 日，玛丽亚·克莱姆写信给尼尔森·坡，说刚从报上得知他的死讯。'
+            now: '{staff}把院方知道的情况和回信地址寄给了她。她的回信在他还在病房时送到了。'
           p3:
-            was: '1849 年 10 月 7 日坡在巴尔的摩去世，10 月 9 日玛丽亚·克莱姆写信说刚从报上得知。'
-            now: '{staff}先按院方能确认的情况代发短讯，再留地址让家人直接问到病房。坡去世前已有亲属的回函送到。'
+            was: '1849 年 10 月 7 日，坡在巴尔的摩的华盛顿学院医院去世，四十岁，死因至今不明。'
+            now: '{staff}守着他熬过了最难的几夜，他挺了过来。十月底他出了院，往北回纽约的家。'
             who: poe_baltimore
-            bio: '坡在巴尔的摩最后几天，家里及时知道他在哪里，并把回函送到了医院。'
+            bio: '这条时间线里，坡挺过了 1849 年 10 月在巴尔的摩医院里的那几天。他回到纽约，又写了、编了几年。'
         vignettes:
           witness: '印刷铺帮工听了三种说法。你问他哪一种是亲眼见的。他能说准一个地点、一个人名。你在备用纸条上只留这两项。四天后，仍有人试着把空下的地方填满。'
           dispatch: '印刷铺帮工想等个认识坡的人来。你请他先按已有的地址跑一趟。他回来时，能说清纸条已经送对了门。你把路记在纸角。至于那天下午以前发生过什么，他也说不上来。'

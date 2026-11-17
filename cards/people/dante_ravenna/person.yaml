@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 26, req: {"any":[{"job":["translator","archivist"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 47, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 77, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: trust, day: 77, req: {"any":[{"trait":["scholarly","sensitive","faithful","artistic"],"stat":{"will":7}},{"job":["translator","teacher","bookseller","writer","proofreader"],"stat":{"will":7}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
       vignettes:
         - {id: dream, traits: [bold, curious]}
         - {id: ear, traits: [artistic, quiet]}
@@ -31,23 +30,18 @@ events:
         relic_desc: A dried leaf of the poet's crown.
         points:
           p1: 'Set aside time for Dante to send his Latin reply to Giovanni from Ravenna. Keep it apart from the Paradiso pages being copied'
-          p2: 'Mark vernacular passages still being revised separately from those already copied for readers. Ask Dante which ones he still needs on his desk'
-          p3: 'Agree with Dante how to keep a reference copy of unfinished vernacular passages. Ask the correspondent to return comments about genre separately'
+          p2: 'Let Dante in exile know that the Comedy will be read for generations, and that Florence will one day want him back'
         points_fail:
           p1: 'The recipient gets loose narrative pages. The reply remains among the drafts, and the office recalls the employee.'
-          p2: 'Pages of both kinds go out with the reply. Copyists treat lines still under revision as final.'
-          p3: 'Readers debate which language suits the work. Comments on individual passages still have no page references.'
+          p2: 'He goes on writing in Ravenna with no answer to his hope of going home. In this branch nobody tells him what came after.'
         shift:
           p1:
-            was: 'While writing the Paradiso in Ravenna, Dante exchanged Latin verse with Giovanni del Virgilio in Bologna. Research dates the first exchange to late 1319 or early 1320.'
+            was: 'In late 1319 or early 1320, while writing the Paradiso in Ravenna, Dante exchanged Latin verse with Giovanni del Virgilio in Bologna.'
           p2:
-            was: 'Dante continued work on the Paradiso in Ravenna. The Latin exchange survives as a distinct body of verse.'
-            now: 'Readers can see where each text begins and ends and tell the reply from the longer poem still in progress.'
-          p3:
-            was: 'Giovanni’s verse commented on Dante’s choice of language and invited him to Bologna. The exchanged poems survive.'
-            now: 'Dante has a checked copy of the long poem. Correspondence that returns distinguishes the debate about language from comments keyed to passages he is still writing.'
+            was: 'In September 1321 Dante died in Ravenna without ever returning to Florence; around 1519 Florence asked for his remains, and the friars of Ravenna hid his bones in a wall.'
+            now: '{staff} let him know in Ravenna that the Comedy would always have readers, and that his city would one day want to bring him home.'
             who: dante_ravenna
-            bio: 'Dante continued the Comedy in Ravenna while answering a reader elsewhere in Latin verse. The two works reached readers in different ways.'
+            bio: 'In his last years in Ravenna the exiled Dante came to know that his poem would last, and that Florence would one day be proud of him.'
         vignettes:
           dream: 'You ask whether a dream can tell the copyist where a missing canto went. They put down the lamp. “A dream may tell you where to look. What will you read when you get there?” You mark the story as a later tradition in the report.'
           ear: 'The copyist stops when a verse ends. You ask them to keep reading just long enough to hear the next rhyme arrive. The new page no longer sounds like a fresh start.'
@@ -61,23 +55,18 @@ events:
         relic_desc: 诗人桂冠上的一片干叶。
         points:
           p1: '给但丁腾出从拉文纳寄出答诗的时间，把他答乔万尼的拉丁诗单独封存，别夹入正在誊写的《天堂篇》'
-          p2: '将正在改的俗语诗段与已经抄给读者的部分分别画线，请他确认哪些仍要留在自己手边'
-          p3: '和但丁约定让俗语长诗的未定部分有留底，请收信人把书信里的文体意见单独记回'
+          p2: '让流放中的但丁知道，《神曲》会被一代代人读下去，佛罗伦萨后来也想把他迎回去'
         points_fail:
           p1: '收信人只拿到正文散页，答诗仍在抄稿夹里，事务所因同步失败召回员工。'
-          p2: '两种稿纸随答诗借出，抄写人把还会改的诗句也抄成定本。'
-          p3: '旁人讨论哪种语言适合写作，给长诗的实际校读意见却没有留下可用的页次。'
+          p2: '他照旧在拉文纳写诗，回佛罗伦萨的盼望没有着落，这条分支里没人告诉过他后来的事。'
         shift:
           p1:
-            was: '但丁在拉文纳写《天堂篇》时，与博洛尼亚的乔万尼·德尔·维尔吉利奥有拉丁诗通信。学界将初次通信置于 1319 年下半年至 1320 年初。'
+            was: '1319 年下半年至 1320 年初，但丁在拉文纳写《天堂篇》时，与博洛尼亚的乔万尼·德尔·维尔吉利奥开始拉丁诗通信，这是学界的推定。'
           p2:
-            was: '但丁在拉文纳继续写《天堂篇》，拉丁通信另成一组作品。'
-            now: '两份作品各有可查的抄写边界，读者能知道手里是答诗还是正在写的长诗。'
-          p3:
-            was: '乔万尼来诗评及但丁此前选用的语言，并邀请他赴博洛尼亚。两人的诗信后来传世。'
-            now: '但丁留了一份可核的长诗底本。回到拉文纳的评语分为诗信讨论和具体读诗意见，仍然在写的部分可以逐次对读。'
+            was: '1321 年 9 月，但丁在拉文纳去世，到死没能回到佛罗伦萨；1519 年前后佛罗伦萨请求迁回他的遗骨，拉文纳的修士把遗骨藏进了墙里。'
+            now: '{staff}在拉文纳让他知道，《神曲》往后会一直有人读，他的城市终有一天想把他接回去。'
             who: dante_ravenna
-            bio: '晚年但丁在拉文纳继续写《神曲》，同时用拉丁诗回应别处的读者。两类作品有各自的传阅过程。'
+            bio: '流放中的但丁在拉文纳的晚年得知，他的诗会长久流传，佛罗伦萨终会以他为荣。'
         vignettes:
           dream: '你问誊写员，做个梦能不能知道丢了的诗章在哪儿。他放下灯：「梦兴许能叫你去找。到了地方，你打算读什么？」你在报告里注明，托梦是后来流传的故事。'
           ear: '一行诗念完，誊写员正要停。你请他再念几行，听见下一个韵落下再说。翻页以后，这回听着像刚才的话还在往下走。'

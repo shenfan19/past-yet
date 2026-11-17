@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.4, 2026-11-17
+
+- The stars of 116 stories are set again by their weight: light stories have one or two, heavy ones four, such as Van Gogh, Vermeer, Kafka, Büchner, Dickinson, Bizet, Modigliani and Miyazawa Kenji, and the stars that only sorted papers give way to what history left unresolved. These stories go back to the step of checking their stars.
+
 ## 0.9.3, 2026-11-16
 
 - A story has one to five stars by its weight: one or two for a light story, three for a middling one, four or five for a heavy one. A story of one star has a fulfil point, one of three or more holds at least one recorded event. Time energy and the chance of an antique follow the share of the full stars, with a table for each count.

@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 11, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 21, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 54, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 54, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: margin, traits: [sensitive, quiet, scholarly]}
         - {id: label, traits: [handy, skeptical, methodical]}
@@ -33,19 +32,14 @@ events:
         relic_desc: 'A fictional label with the first edition year in the margin.'
         points:
           p1: 'Prepare the addresses and enclosure for Kant in Königsberg so his letter about the Critique of Pure Reason reaches Herz'
-          p2: 'Ask readers to send back difficult passages with page numbers so Kant can check which concepts they repeatedly confuse'
-          p3: 'Help Kant draft an introduction cross-referenced to the first edition and arrange for Herz and a few readers to try it'
+          p2: 'Help Kant draft an introduction cross-referenced to the first edition and arrange for Herz and a few readers to try it'
         points_fail:
           p1: 'The addresses are mixed up. The enclosure comes back, Herz misses the news during the book fair, and the office recalls the employee.'
-          p2: 'Letters call the book difficult without identifying a passage. Kant has no usable list of questions keyed to the book.'
-          p3: 'The new text circulates on its own, and readers cannot tell which first-edition questions it answers.'
+          p2: 'The new text circulates on its own, and readers cannot tell which first-edition questions it answers.'
         shift:
           p1:
             was: 'On May 1, 1781, Kant wrote to Herz that the Critique of Pure Reason would appear at the book fair and asked him to deliver an enclosed letter.'
           p2:
-            was: 'Kant began considering a shorter introduction soon after the first edition appeared.'
-            now: 'The replies are entered by page. Kant can see which definitions readers ask about before deciding where a shorter work should begin.'
-          p3:
             was: 'The Prolegomena later appeared separately. Its development was also affected by the critical response to the Critique.'
             now: 'The guide has page references and a set of trial readers’ responses. Kant can see which explanations still need examples.'
             who: kant_konigsberg
@@ -63,19 +57,14 @@ events:
         relic_desc: '书签，页边写着初版年份。'
         points:
           p1: '在柯尼斯堡给康德备齐随信寄出的新书去向，护住他让赫尔茨接到《纯粹理性批判》消息的这次通邮'
-          p2: '组织读者把读不懂的段落连同页码寄回，让康德按首版对读哪些概念经常被混用'
-          p3: '给短篇导读留首版的互见页码，并请康德在小范围内先给赫尔茨等人读一遍'
+          p2: '给短篇导读留首版的互见页码，并请康德在小范围内先给赫尔茨等人读一遍'
         points_fail:
           p1: '地址夹错了，装着转交说明的信折回，赫尔茨赶不上书会期间收到他的消息，事务所因同步失败召回员工。'
-          p2: '来信只说全书难解，康德没有一份能找回首版句子的疑问表。'
-          p3: '新稿再次单独传送，收稿的人不知道哪段是给首版的具体问题作答。'
+          p2: '新稿再次单独传送，收稿的人不知道哪段是给首版的具体问题作答。'
         shift:
           p1:
             was: '1781 年 5 月 1 日，康德致信赫尔茨，提到即将在书会面世的《纯粹理性批判》，并请他转交另一封信。'
           p2:
-            was: '康德在首版出版后很快便考虑另写一部较短的介绍。'
-            now: '几位读者的问题按页后附记。康德能先挑出重复问到的定义，再决定短文怎样从那里讲起。'
-          p3:
             was: '《未来形而上学导论》后来单独出版，写法还受到书评回应的影响。'
             now: '手头有一份带页码的导读和一轮试读答复。康德能看出哪些解释仍需要补例。'
             who: kant_konigsberg

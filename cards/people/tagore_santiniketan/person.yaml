@@ -16,9 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
-        - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["journalist","translator"]},{"trait":["methodical","scholarly","patient"]}]}}
-        - {id: p3, kind: persuade, day: 44, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p1, kind: persuade, day: 22, req: {"any":[{"trait":["charismatic","calm","kind"],"stat":{"will":7}},{"job":["teacher","journalist","radio_host","tour_guide"],"stat":{"wit":6,"will":5}},{"item":"golden_apple","stat":{"will":5}}]}}
       vignettes:
         - {id: headline, traits: [bold, charismatic]}
         - {id: pause, traits: [methodical, artistic]}
@@ -32,24 +30,15 @@ events:
         relic: A hand-copied songbook
         relic_desc: A small book of songs in his own hand.
         points:
-          p1: 'Keep a place for Tagore to reply in person when the reception grows crowded'
-          p2: 'Give the school a full account of a speech that might otherwise circulate as one sentence'
-          p3: 'While congratulations are still arriving, help Tagore turn some of the goodwill into regular gifts of books for the school'
+          p1: 'After the reception breaks up, bring back the guests his reply has stung, and get him and these people, many of them his friends, to talk it out'
         points_fail:
-          p1: 'The crowd overwhelms the schedule. The organizers read their congratulations and close the gathering without a reply. The branch falls out of sync and the employee is recalled.'
-          p2: 'The guests carry away the most disputed line, and the school has nothing fuller to show people who were absent.'
-          p3: 'Most letters are filed once the ceremony ends, and the school adds books slowly from the funds it already has.'
+          p1: 'As in history the guests go home aggrieved, and the distance between him and many of his countrymen stays; this branch is as history was.'
         shift:
           p1:
-            was: 'On 23 November 1913 visitors reached the area by special train, and Tagore replied at the celebration at his school in Santiniketan.'
-          p2:
-            was: 'At the November 1913 reception, some visitors were disappointed by Tagore''s reply.'
-            now: '{staff} leaves the organizers a record with the surrounding remarks intact and has the school use it to answer inquiries in his own words.'
-          p3:
-            was: 'After the 1913 prize, Tagore used some of the prize money to support his Santiniketan school.'
-            now: '{staff} asks willing correspondents to make regular gifts and lets teachers choose books. The prize funds are used as Tagore planned, and the school gains a separate source of support.'
+            was: '23 November 1913: a trainload of well-wishers came from Calcutta; in his reply Tagore said he could not accept without diffidence the honour offered in the country''s name, the guests were largely hurt, and a deep estrangement grew between him and many of his countrymen.'
+            now: 'That evening some of the departing guests were asked back in and sat down with him to talk it out. The quarrel did not spread from that day.'
             who: tagore_santiniketan
-            bio: 'Tagore turned some of the interest following his prize into regular gifts for the school. Teachers could keep its books aligned with what they taught.'
+            bio: 'In this timeline Tagore and the guests of the 1913 reception talked things out the same evening, and his reply did not set him apart from his countrymen.'
         vignettes:
           headline: 'You tell a student helping with the reading that the prize will bring readers who know only the English. The student asks which sheet they will reach for first. You leave both on the desk and label the English as the author’s rendering. You have time to hear only the first reading.'
           pause: 'The student keeps stopping at the ends of the printed lines. You read a sentence aloud and mark one pause that comes earlier. The next reader gets through the whole thought. You keep a copy of the marked sheet, but leave before you can hear how the other version sounds.'
@@ -62,24 +51,15 @@ events:
         relic: 一本手抄的歌集
         relic_desc: 一本小小的歌本，是他的亲笔。
         points:
-          p1: '在接待临时挤满人时给泰戈尔留出亲自发言的时段，让来访者听到他的答辞'
-          p2: '把容易被只摘一句的答辞送给校方留全稿，让没到的人也能看到上下文'
-          p3: '趁各地来信还在，帮泰戈尔把临时贺意变成给学校的常年图书支持'
+          p1: '祝贺会散场后，劝回被他的答辞刺伤的来客，让他和这些多半是朋友的人把话说开'
         points_fail:
-          p1: '到访人数压乱议程，组织者只读贺词就散场，泰戈尔的答辞没有讲出。事务所因同步失败召回员工。'
-          p2: '来客只把现场最有争议的一句带走，学校没有材料给没听到的人核对。'
-          p3: '来信多数随着典礼结束收存，学校仍要从既有经费里慢慢添书。'
+          p1: '来客照史实带着怨气散去，此后他与许多同胞之间照旧隔着一层，这条分支与历史一样。'
         shift:
           p1:
-            was: '1913 年 11 月 23 日，来客乘专车抵达圣蒂尼克坦附近，泰戈尔在校内的祝贺会上作了答辞。'
-          p2:
-            was: '1913 年 11 月的祝贺会上，泰戈尔的答辞让部分来客感到失望。'
-            now: '{staff}在组织者手边留一份连着前后文的记录，请校方用它答复来信而不代他重写。'
-          p3:
-            was: '1913 年获奖后，泰戈尔后来用部分奖金扶持圣蒂尼克坦的学校。'
-            now: '{staff}请愿意帮助学校的人各认一项常年供书，并把书目交给教师选择。奖金仍可照泰戈尔的安排使用，学校另外得到一份持续的支持。'
+            was: '1913 年 11 月 23 日，一列火车从加尔各答载来祝贺的人，泰戈尔在答辞里说，自己不能毫无保留地接受这份以国家名义献上的荣誉，来客多半不快，此后他与许多同胞之间生了很深的隔阂。'
+            now: '那天傍晚，散去的来客里有几位又被请回屋里，和他坐下来把话说开。这场不快没有从那天传开去。'
             who: tagore_santiniketan
-            bio: '泰戈尔把获奖后收到的一部分支持转成学校的定期赠书。日后教师可以按课程补足图书。'
+            bio: '这条时间线里，1913 年那场祝贺会散场后，泰戈尔当晚就和来客把话说开，没有因那篇答辞与同胞生出隔阂。'
         vignettes:
           headline: '你告诉管朗读的学生，奖项会带来只读得懂英文的新读者。学生问他们会先拿哪张。你把两张都留在桌上，给英文那张标明是作者自己译写。轮到第二遍时，你已得收队。'
           pause: '学生每到印刷行尾就停。你念了一整句，把该停的一处标在更前面。下一位朗读的人念完了整句的意思。你留了一份带停顿记号的纸，但没能听到另一种语言的读法。'

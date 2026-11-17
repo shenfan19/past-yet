@@ -18,7 +18,8 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
         - {id: p2, kind: care, day: 20, req: {"any":[{"job":["nurse","physician"]},{"trait":["kind","patient","methodical"]}]}}
-        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p3, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","nurse","pharmacist","paramedic"],"item":"painkiller"},{"job":["doctor","physician"],"stat":{"wit":7}}]}}
+        - {id: p4, kind: persuade, day: 25, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: sound, traits: [artistic, curious]}
         - {id: mark, traits: [methodical, vigil]}
@@ -34,11 +35,13 @@ events:
         points:
           p1: 'Keep Kafka''s place each time illness interrupts the proofing and protect the stories he was correcting'
           p2: 'Share errands and correspondence among helpers so the people staying in Kierling have time to rest'
-          p3: 'Have the Berlin publisher bind an advance copy and send it to Kierling so Kafka can see his four stories together'
+          p3: 'Ease the pain in his throat, so that in his last weeks he can still swallow water and a few mouthfuls of soft food'
+          p4: 'Have the Berlin publisher bind an advance copy and send it to Kierling so Kafka can see his four stories together'
         points_fail:
           p1: 'The proofs go back to Berlin without his final corrections. The branch loses sync and the office recalls the employee.'
           p2: 'The same people are left to keep watch, answer letters and run errands, with no break while waiting for replies.'
-          p3: 'Kafka never sees the book. The publisher sends it out only after his death.'
+          p3: 'The pain in his throat still kept him from eating. In this branch he spent his last weeks speaking through notes and could hardly swallow.'
+          p4: 'Kafka never sees the book. The publisher sends it out only after his death.'
         shift:
           p1:
             was: 'In May 1924 Kafka continued correcting proofs for A Hunger Artist while ill in Kierling.'
@@ -46,6 +49,9 @@ events:
             was: 'In May 1924 a friend came to Kierling to help care for the seriously ill Kafka and relieve some of the work his partner had been doing.'
             now: '{staff} gives the helpers turns taking letters, sending pages and keeping company. When one of them arrives, the person keeping watch can step outside.'
           p3:
+            was: 'In the spring of 1924 tuberculosis reached Kafka''s larynx. Swallowing was so painful that he could hardly eat or sleep, and his doctor injected the laryngeal nerve every eight to ten days against the pain. He died at Kierling on 3 June.'
+            now: '{staff} helped the doctor time the pain relief before meals. In his last weeks he could drink water and take a few mouthfuls of soft food, and suffered somewhat less than in history.'
+          p4:
             was: 'Kafka died on 3 June 1924. The collection A Hunger Artist was published that August.'
             now: '{staff} gets Berlin to bind a single copy of the corrected sheets and send it ahead. Kafka turns through it in Kierling and recognizes the four stories and the order he chose.'
             who: kafka_kierling
@@ -64,11 +70,13 @@ events:
         points:
           p1: '病中校稿一中断就给他留下接续的位置，护住卡夫卡最后校过的故事集'
           p2: '把跑腿与通信交接给轮换的帮手，给守在基尔灵的人留出一段歇息时间'
-          p3: '让柏林出版人先装订一本寄到基尔灵，让卡夫卡生前看到自己选定的四篇小说合在一起'
+          p3: '减轻他喉头的痛，让他在最后几个星期还咽得下水和几口软食'
+          p4: '让柏林出版人先装订一本寄到基尔灵，让卡夫卡生前看到自己选定的四篇小说合在一起'
         points_fail:
           p1: '校样寄回柏林时缺了作者最后一轮批改，印本失去这次校订。行程与史实脱节，员工被召回。'
           p2: '照料者仍同时守病房、收信和跑腿，连等回信的空当都抽不开身。'
-          p3: '作者来不及看到书，出版者在他去世后才把它交给读者。'
+          p3: '喉头的痛照旧让他吃不下东西，这条分支里他最后几个星期仍靠纸条说话，几乎咽不下一口。'
+          p4: '作者来不及看到书，出版者在他去世后才把它交给读者。'
         shift:
           p1:
             was: '1924 年 5 月，卡夫卡在基尔灵养病时仍在校订《饥饿艺术家》的校样。'
@@ -76,6 +84,9 @@ events:
             was: '1924 年 5 月，有朋友前往基尔灵协助照料已经病重的卡夫卡，分担伴侣原先承担的工作。'
             now: '{staff}把送印、送信和陪伴所需的人手分时安排，帮手到时，原来守着的人可以出门走一会儿。'
           p3:
+            was: '1924 年春，结核侵入卡夫卡的喉头，吞咽剧痛，吃不下也睡不好，医生每隔八到十天给喉上神经注射一次止痛；6 月 3 日他在基尔灵去世。'
+            now: '{staff}帮医生把止痛排在饭前，他在最后几个星期还喝得下水、吃得下几口软食，比历史上少受了些苦。'
+          p4:
             was: '1924 年 6 月 3 日卡夫卡去世，同年 8 月《饥饿艺术家》故事集出版。'
             now: '{staff}请柏林先把已经改完的印张装成一本随邮寄回。卡夫卡在基尔灵翻过它，认得出自己定的四篇和次序。'
             who: kafka_kierling

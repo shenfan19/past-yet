@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["archivist","carpenter"]},{"trait":["methodical","handy"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 16, req: {"any":[{"job":["archivist","carpenter","proofreader"]},{"trait":["methodical","handy","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 36, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["methodical","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 36, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["methodical","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: sequence, traits: [handy, methodical]}
         - {id: viewer, traits: [curious, artistic]}
@@ -33,19 +32,14 @@ events:
         relic_desc: A shaped wheel that turns a spin into a stroke.
         points:
           p1: 'At the handover in Amid, check the descriptions and illustrations against the contents so the manuscript can be delivered complete'
-          p2: 'Give the copyist a caption for illustrations still unfinished so a blank leaf is not mistaken for a lost page'
-          p3: 'Choose a reference copy with the author. List the notes, captions and blank spaces that later copyists should keep distinct'
+          p2: 'Choose a reference copy with the author. List the notes, captions and blank spaces that later copyists should keep distinct'
         points_fail:
           p1: 'Several diagrams can no longer be matched to their sections. The manuscript cannot be handed over as a set, and the office recalls the employee.'
-          p2: 'A blank portion looks like a gap to the copyist. It drops out of the next copy, leaving the text without a place for its figure.'
-          p3: 'The next copyist works from a draft that has accumulated other notes. Readers cannot tell the author''s description from later additions.'
+          p2: 'The next copyist works from a draft that has accumulated other notes. Readers cannot tell the author''s description from later additions.'
         shift:
           p1:
             was: 'The colophon of an early Topkapı manuscript gives January 16, 1206, as its completion date. Al-Jazari’s book was associated with the Artuqid court in Amid.'
           p2:
-            was: 'An early manuscript has a completion colophon and also contains unfinished diagrams.'
-            now: 'The next copy keeps the empty space in its original chapter and identifies the kind of illustration still missing.'
-          p3:
             was: 'Later manuscripts do not all descend through the same branch. Some have different illustrations and wording.'
             now: 'The collection keeps a copy checked by the author. A later scribe can record their own changes separately and then check captions against it.'
             who: al_jazari_diyarbakir
@@ -63,19 +57,14 @@ events:
         relic_desc: 一个有形状的轮子，把转动变成往复。
         points:
           p1: '在阿米德交稿时，按目录把装置说明和对应图页逐册核齐，护住书稿完成'
-          p2: '请抄写人给未画完的示意图留题名，不要把空页误当作缺页撤去'
-          p3: '和作者一起选一册留作传抄底本，列出旁注、图题与后来抄写人不得合并的空白栏'
+          p2: '和作者一起选一册留作传抄底本，列出旁注、图题与后来抄写人不得合并的空白栏'
         points_fail:
           p1: '几幅图无从对回章节，书稿无法成套交付，事务所因同步失败召回员工。'
-          p2: '抄写人只看见一处留白。复抄时这页被拿掉，对应的说明失去图位。'
-          p3: '下一位抄手只能从已混入不同注记的工作本起抄，读者分不开作者所见与后来补记。'
+          p2: '下一位抄手只能从已混入不同注记的工作本起抄，读者分不开作者所见与后来补记。'
         shift:
           p1:
             was: '托普卡帕所藏早期抄本的题记给出 1206 年 1 月 16 日的完成日期。贾扎里的书与阿米德的阿尔图格宫廷相连。'
           p2:
-            was: '一份很早的贾扎里书稿有完成题记，也仍有未完成的图。'
-            now: '新版把图未完处留在该章，后来补图的人知道缺的是哪一类图。'
-          p3:
             was: '研究所见的后代抄本并非全从同一传抄支系而来，有的图与文本都出现差异。'
             now: '库房留下一册有作者核验记号的样本。后来抄写人能在抄本前另记自己的修订，也能拿图题对照底本。'
             who: al_jazari_diyarbakir

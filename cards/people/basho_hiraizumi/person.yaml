@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 0.2, req: {"any":[{"job":["archivist","translator"]},{"trait":["vigil","patient"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 0.32, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["vigil","patient","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 0.48, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["vigil","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 0.48, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["vigil","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: grass, traits: [artistic, quiet]}
         - {id: accounts, traits: [curious, skeptical]}
@@ -33,19 +32,14 @@ events:
         relic_desc: A woven hat grey with rain.
         points:
           p1: 'Check Sora’s return route and turning points so the two travelers can make their same-day visit to Hiraizumi'
-          p2: 'Have Sora list the places they could reach that day. Leave Bashō separate columns for sights and places described by others'
-          p3: 'When the keeper is away, find out who can show visitors around the exterior. Ask what they are allowed to see before passing the route to the two travelers'
+          p2: 'When the keeper is away, find out who can show visitors around the exterior. Ask what they are allowed to see before passing the route to the two travelers'
         points_fail:
           p1: 'A turn sends both travelers the wrong way. By the time they find the approach they cannot make the return, and the office recalls the employee.'
-          p2: 'The notes taken in haste mingle places they saw with local directions to old sites. Back in Ichinoseki those entries are hard to untangle.'
-          p3: 'Nobody knows when the keeper will return. The two pass outside and the entrance remains closed.'
+          p2: 'Nobody knows when the keeper will return. The two pass outside and the entrance remains closed.'
         shift:
           p1:
             was: 'Sora’s diary records a journey from Ichinoseki to Hiraizumi and back that day, the thirteenth day of the fifth lunar month in 1689.'
           p2:
-            was: 'Sora’s diary records the route. Bashō later made a literary work out of travel and the history of Hiraizumi.'
-            now: 'Bashō has a route book to consult. As he writes later, he can keep the places he visited distinct from the past they evoked.'
-          p3:
             was: 'Sora recorded that the keeper was away and neither hall opened. Bashō wrote about the Golden Hall in his travel account.'
             now: 'A local guide confirms they can walk outside and shows them the covering structure from the permitted side. Bashō returns with an architectural detail he can check from his own notes.'
             who: basho_hiraizumi
@@ -63,19 +57,14 @@ events:
         relic_desc: 被雨淋灰了的编织草帽。
         points:
           p1: '把曾良记下的回程站点和折返点核给两人，护住芭蕉与曾良当天往返平泉的行程'
-          p2: '请曾良把当天能走到的地点逐个写下，另给芭蕉留听说的旧迹与眼见地点的分栏'
-          p3: '得知看守不在时，去确认当天有谁能带访客走外廊。先问当地人哪些地方可以看，再把路线交给两位访客'
+          p2: '得知看守不在时，去确认当天有谁能带访客走外廊。先问当地人哪些地方可以看，再把路线交给两位访客'
         points_fail:
           p1: '一条路指错了来处，两人到看旧迹的路口时已经赶不及往返。事务所因同步失败召回员工。'
-          p2: '匆忙记下的地点混着别人指给他们的旧迹，回到一关后难再分开。'
-          p3: '没人知道看守何时回来，两人只能从外侧经过，入口仍关着。'
+          p2: '没人知道看守何时回来，两人只能从外侧经过，入口仍关着。'
         shift:
           p1:
             was: '曾良的行程日记记元禄二年农历五月十三日，两人从一关去平泉，当日折回。'
           p2:
-            was: '曾良的日记记行程。《奥之细道》后来把平泉见闻和当地往事写成文学作品。'
-            now: '芭蕉有一份能对照的路簿，后来写作时可以把路上所见与自己联想到的往事各安在一处。'
-          p3:
             was: '曾良记到中尊寺时看守不在，两个堂没有打开。芭蕉的纪行把光堂写入平泉一节。'
             now: '附近的人确认外廊可走，并带两人从允许的地方看覆盖屋。芭蕉回到住处时有一项自己能核对的建筑笔记。'
             who: basho_hiraizumi

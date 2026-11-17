@@ -16,9 +16,10 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 57, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 90, req: {"any":[{"job":["archivist","painter"]},{"trait":["methodical","artistic"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 103, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p1, kind: hold, guard: true, day: 3, req: {"any":[{"job":["archivist","antique_dealer","restorer"]},{"trait":["vigil","methodical"],"stat":{"will":7}}]}}
+        - {id: p2, kind: persuade, day: 6, req: {"any":[{"job":["antique_dealer","market_trader","bookseller","shopkeeper"],"stat":{"luck":5}},{"trait":["glib","charismatic","streetwise"],"stat":{"wit":5}}]}}
+        - {id: p3, kind: persuade, day: 9, req: {"any":[{"trait":["artistic","sensitive","kind"]},{"job":["painter","illustrator","antique_dealer","restorer"]}]}}
+        - {id: p4, kind: care, day: 12, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"calm_patch"},{"provides":"cure"}]}}
       vignettes:
         - {id: motif, traits: [artistic, vigil]}
         - {id: pledge, traits: [methodical, skeptical]}
@@ -32,24 +33,29 @@ events:
         relic: "A pearl earring"
         relic_desc: "A small pearl of the kind he painted so often."
         points:
-          p1: 'When Catharina offers the baker two paintings for the bread debt, check that both parties agree which works are listed and how much debt the agreement covers.'
-          p2: 'As the notary inventories the rooms, ask Catharina to distinguish the paintings still in the house from those already transferred. Put the receipts in a separate column.'
-          p3: 'Before the remaining debts go to court, help Catharina use the receipts to negotiate a short agreement with other creditors covering household expenses and deadlines for the pictures.'
+          p1: 'Before the year ends, keep The Art of Painting in his studio so it is not taken by creditors for his debts'
+          p2: 'Help him sell some of the paintings left on his hands since the war, and ease the household''s debts'
+          p3: 'Let him know that his paintings will be remembered'
+          p4: 'Before mid December, heal him and keep him alive'
         points_fail:
-          p1: 'The same painting goes under two names on separate sheets. The baker will not sign, the agreement falls through, and the office recalls the employee.'
-          p2: 'Works still in the house and works already transferred are entered together. Later readers have to go by very short descriptions of the pictures.'
-          p3: 'Creditors still press their separate deadlines. The family has to wait for the court to discover which household items it can keep in use.'
+          p1: 'The Art of Painting went to a creditor at the end of the year, and in February Catharina had no painting to pass to her mother. This branch came loose from history, and the office recalled the employee.'
+          p2: 'The paintings stayed on his hands and not one sold. In this branch the household''s debts kept growing day by day.'
+          p3: 'He never knew what would become of these paintings. In this branch nobody told him that two centuries later people would trace them back one by one.'
+          p4: 'December went as it did in history: within a day and a half he went from healthy to dead. In this branch Catharina still faced the debts alone with eleven children.'
         shift:
           p1:
-            was: 'Vermeer died in Delft in 1675. In January of the next year Catharina Bolnes transferred two works to the baker Hendrick van Buyten against the debt.'
+            was: 'On 24 February 1676 Catharina Bolnes passed The Art of Painting to her mother Maria Thins so that it would not be sold to satisfy creditors; Vermeer had never sold it, even in debt.'
           p2:
-            was: 'The 1676 inventory lists items by room. Some paintings are described only by what they depict.'
-            now: 'A supplement to the inventory gives the paperwork for each painting already transferred. Catharina can check whether a later claim refers to a work she has already handed over.'
+            was: 'From the war of 1672 Vermeer could not sell his art, and was left holding the paintings of other masters he dealt in; Catharina later gave this as the cause of the household''s debts.'
+            now: 'A few of the paintings found buyers that December, and the bread bill and the other debts stopped growing for a while.'
           p3:
-            was: 'The war made paintings difficult to sell. Vermeer’s household was left in debt, and Catharina petitioned the court to address it.'
-            now: 'Several creditors agree to leave certain listed items alone until the court checks the papers. A short payment schedule leaves Catharina enough for household needs while she decides which remaining paintings she can offer through a dealer.'
+            was: 'After his death in 1675 Vermeer was all but forgotten for nearly two centuries; only in the 1860s did Thoré-Bürger''s research bring his work back to notice.'
+            now: 'Someone told him that these quiet rooms would one day be sought out and traced back, picture by picture.'
+          p4:
+            was: 'In December 1675, Catharina later wrote, under the weight of the debts and the children he went within a day and a half from healthy to dead; he was buried in Delft on 15 December, aged 43.'
+            now: '{staff} stayed with him through that December, and the day and a half never came. He went back to his studio in Delft and painted for some more years, and Catharina and the eleven children did not lose him that winter.'
             who: vermeer_delft
-            bio: 'Vermeer painted and traded in art. The inventory and Catharina’s petition preserve the household’s attempts to settle its debts after the market slumped.'
+            bio: 'In this line Vermeer lived through December 1675, painted in Delft for some more years, and saw his household through its debts.'
         vignettes:
           motif: 'The clerk remembers the light in one picture but cannot tell you which picture it was. You ask what the figure was doing. They write down the action beside the title, so the next person has two clues.'
           pledge: 'Someone has copied a pledged picture into the column for sold goods. You find the earlier entry and ask the clerk what each word puts on the record.'
@@ -62,24 +68,29 @@ events:
         relic: "一枚珍珠耳环"
         relic_desc: "一颗小珍珠，是他常画的那种。"
         points:
-          p1: '卡塔琳娜用两幅画抵偿面包债时，请她和面包商逐项核对画名、数目与债款，让这份协议能成立。'
-          p2: '公证人清点房间时，请卡塔琳娜指出哪些画还在这间屋里、哪些已经交给别人，把交付凭据和清册分栏。'
-          p3: '在请法院处理余债前，协助卡塔琳娜拿着已交付的凭据找其他债权人，谈出一份家用开支与画作处分各有期限的短约。'
+          p1: '年底之前，护住画室里那幅《绘画艺术》，不让它被债主拿去抵债'
+          p2: '帮他把战后压在手里的几幅画卖出去，缓一缓这家人的债'
+          p3: '让他知道自己的画会被记住'
+          p4: '十二月中旬之前，治好他，让他活下来'
         points_fail:
-          p1: '同一幅画在两张纸上用了不同叫法，面包商不肯签认。协议未能成立，事务所因同步失败召回员工。'
-          p2: '房里还挂着的作品和已经交付的画被记作同一拨。日后核单时，各方只能靠过于简略的画面描述来猜。'
-          p3: '各人仍按自己的期限催缴，家人要等法院处理才能知道还有哪些家用之物可周转。'
+          p1: '《绘画艺术》在年底被债主拿去抵了债，次年二月卡塔琳娜无画可转给母亲，这条分支与历史脱了节，员工被送回。'
+          p2: '画照旧压在手里，一幅也没卖出去，这条分支里这家人的债照旧一天天重下去。'
+          p3: '他照旧不知道这些画以后会怎样，这条分支里没有人告诉过他，两百年后会有人把它们一幅幅找回来。'
+          p4: '十二月照史实过去，他在一天半里由好好的人到了去世，这条分支里卡塔琳娜照旧一个人带着十一个孩子面对那些债。'
         shift:
           p1:
-            was: '维米尔 1675 年在代尔夫特去世。次年 1 月，卡塔琳娜·博尔内斯把两幅画交给面包商亨德里克·范·拜滕抵偿欠款。'
+            was: '1676 年 2 月 24 日，卡塔琳娜·博尔内斯把《绘画艺术》转到母亲玛丽亚·廷斯名下，免得被拿去抵债；维米尔负债时也没有卖掉它。'
           p2:
-            was: '1676 年的财产清册记有家中不同房间的物品，其中一些画只写了画面里的事物。'
-            now: '清册附件可查到每幅已交付作品的凭据。卡塔琳娜后来面对新的债权请求时，可以先核对是否指向早已交出的一幅画。'
+            was: '1672 年战事以后，维米尔自己的画卖不出去，经手的别家画作也压在手里；卡塔琳娜后来说这是家里欠债的缘由。'
+            now: '那个十二月有几幅画找到了买主，面包账和别的欠债暂时不再往上涨。'
           p3:
-            was: '战争期间画作难以出手，维米尔去世后给家庭留下债务。卡塔琳娜曾向法院请愿处理这些债务。'
-            now: '几名债权人同意在法院核单前暂停追索清册里指定的物品。一份短期的付款安排让她先把家用开支留出，再决定哪几幅未交付的画可另行托售。'
+            was: '1675 年去世以后，维米尔被冷落了将近两百年，到 1860 年代托雷-比尔热的研究才让他的画重新被人认出。'
+            now: '有人告诉过他，这些安静的屋子以后会被人一幅幅找出来、认回来。'
+          p4:
+            was: '1675 年 12 月，据卡塔琳娜后来的陈述，他被债务和孩子压着，一天半里由好好的人到了去世；12 月 15 日葬于代尔夫特，年四十三。'
+            now: '{staff}陪他过了那个十二月，那一天半没有到来。他回到代尔夫特的画室，又画了些年，卡塔琳娜和十一个孩子没有在那个冬天失去他。'
             who: vermeer_delft
-            bio: '维米尔既作画，也买卖画。留存的清册和卡塔琳娜的请愿留下了这个家庭在画市萧条后处理债务的记录。'
+            bio: 'IF 线里，维米尔挺过了 1675 年的十二月，又在代尔夫特画了些年，陪这一家把债慢慢还清。'
         vignettes:
           motif: '账房记得一幅画里的光，却说不准是哪幅。你问画里的人在做什么。他把动作记在画名旁，后来查的人便有两条线索。'
           pledge: '有人把抵押的画抄进了已出售一栏。你翻到早一页，请账房分别说清两个词在账上记的是什么。'

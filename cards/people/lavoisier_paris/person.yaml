@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","artistic"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 22, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","artistic","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 53, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 53, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: units, traits: [methodical, vigil]}
         - {id: air, traits: [curious, skeptical]}
@@ -31,19 +30,14 @@ events:
         relic_desc: A fine balance that kept the books of chemistry.
         points:
           p1: 'Match the folded plates to the figure references so the Paris printer can deliver the first edition with all of them'
-          p2: 'Have Marie-Anne and the compositor compare captions, letters on the engravings and the pages that cite them. Put errors on a separate sheet'
-          p3: 'Set a separate index for students to look up older and newer terms. Where a match is uncertain, point to the relevant definition'
+          p2: 'Set a separate index for students to look up older and newer terms. Where a match is uncertain, point to the relevant definition'
         points_fail:
           p1: 'The text points to folded leaves that are missing from the volume. The illustrated edition cannot be delivered, and the office recalls the employee.'
-          p2: 'A label is corrected on the plate, but the text points to the old reference. The reader cannot locate the illustration.'
-          p3: 'Readers taught the former names can only guess whether two words refer to the same thing.'
+          p2: 'Readers taught the former names can only guess whether two words refer to the same thing.'
         shift:
           p1:
             was: 'The Traité élémentaire de chimie appeared in Paris in 1789. Surviving first editions contain signed folding plates engraved by Marie-Anne Paulze Lavoisier.'
           p2:
-            was: 'The first edition includes her engravings of instruments. The book uses illustrations and passages of text together.'
-            now: 'A reader can trace the letters on the plate back to the right passage. The compositor keeps the correction sheet Marie-Anne checked.'
-          p3:
             was: 'The preface links improving chemical terminology to organizing the subject and acknowledges earlier work on naming by several collaborators.'
             now: 'Students use the index to find the definitions. Where there is no simple match, a line explains the difficulty and records who contributed to the earlier nomenclature.'
             who: lavoisier_paris
@@ -61,19 +55,14 @@ events:
         relic_desc: 一台精细的天平，给化学记账。
         points:
           p1: '把首版折页图按书里所引的图号点齐，护住巴黎印坊交付带齐图版的《化学基础论》'
-          p2: '请玛丽－安娜和排字工把图题、图内小字和正文页互相对照，把错位的例次留在单独一张更正纸上'
-          p3: '给初学者另外排一页旧称与新称的索引，注明对应不全时先回查哪段定义'
+          p2: '给初学者另外排一页旧称与新称的索引，注明对应不全时先回查哪段定义'
         points_fail:
           p1: '书中几处指向没有装入的折页，印坊无法交付带全图的首版，事务所因同步失败召回员工。'
-          p2: '图上纠正了一处写法，正文仍按旧图号指路。后来翻页的人找不到示意图。'
-          p3: '按旧名称学过的人拿到新书，只能凭习惯猜两种叫法是不是同一指代。'
+          p2: '按旧名称学过的人拿到新书，只能凭习惯猜两种叫法是不是同一指代。'
         shift:
           p1:
             was: '《化学基础论》1789 年在巴黎付印。现存首版含署了玛丽－安娜·波尔兹·拉瓦锡名字的折页图。'
           p2:
-            was: '初版有她雕刻的装置图。书中用图和正文共同说明一些观察所用的器具。'
-            now: '每幅图可以按小字在正文中找回。排字工留下一张她确认过的改字号说明。'
-          p3:
             was: '拉瓦锡序言把改进化学名称与整理知识相连，也说明沿用了此前几位合作者的命名工作。'
             now: '附页让初学者按旧称回到定义。仍无一一对应的地方，加印一行说明并记明原有命名工作由哪些人参与。'
             who: lavoisier_paris

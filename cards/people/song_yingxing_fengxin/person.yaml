@@ -14,9 +14,8 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
-        - {id: p2, kind: notice, day: 22, req: {"any":[{"job":["archivist","illustrator"]},{"trait":["methodical","handy","artistic"]}]}}
-        - {id: p3, kind: persuade, day: 25, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p1, kind: hold, guard: true, day: 25, req: {"any":[{"job":["accountant","bookseller","shopkeeper"],"stat":{"wit":5}},{"trait":["methodical","charismatic"],"stat":{"will":7}}]}}
+        - {id: p2, kind: persuade, day: 20, req: {"any":[{"job":["archivist","university_lecturer","lecturer"],"stat":{"wit":8,"will":6}},{"trait":["scholarly"],"stat":{"wit":8,"will":7}},{"item":"golden_apple","stat":{"wit":7}}]}}
       vignettes:
         - {id: strainer, traits: [handy, curious]}
         - {id: drying, traits: [methodical, patient]}
@@ -30,24 +29,19 @@ events:
         relic: "A page of tool drawings"
         relic_desc: "A woodblock print of a loom with every part labelled."
         points:
-          p1: 'Give the printing sponsor a clear count of volumes and costs so Song can send the book for carving'
-          p2: 'Match each picture of a process to its text before carving so someone borrowing a volume can restore the pictures correctly'
-          p3: 'Get Song to approve and deposit a numbered proof so the first printing he reviewed remains identifiable'
+          p1: 'While the money for the carving is still short, get Tiangong kaiwu to the block cutters so that the book is printed'
+          p2: 'Just before the book goes to the carvers, talk him out of cutting the two chapters On Observing the Heavens and On Music, and have them carved with the rest'
         points_fail:
-          p1: 'The funds cover paper but never produce a complete book with its text and images. The branch falls out of sync and the office recalls the employee.'
-          p2: 'One volume circulates without the contents list and the borrower cannot match similar-looking pictures to the proper steps.'
-          p3: 'As editions are handled and rebound, reconstructing the first edition''s original order becomes harder.'
+          p1: 'The book is not printed. This branch has come loose from history, and the office recalls the employee.'
+          p2: 'As in history the two chapters are cut before printing and later lost; in this branch they are lost too.'
         shift:
           p1:
-            was: 'In 1637 Song wrote the preface in Fengxin. Exploitation of the Works of Nature was printed in Jiangxi with a friend''s support.'
+            was: '1637, fourth month: Song Yingxing wrote his preface, and Tiangong kaiwu was printed with money from his friend Tu Boju.'
           p2:
-            was: 'The 1637 first edition set woodblock illustrations alongside accounts of production practices.'
-            now: '{staff} and Song mark the volume and passage for images likely to be misplaced, so another copy can use the same references.'
-          p3:
-            was: 'Copies of the first edition of 1637 and a later printing survive. Some copies were subsequently rebound.'
-            now: '{staff} gets Song to deposit a checked copy and a separate list of its pages. Later readers can use the list to identify the order he approved.'
+            was: '1637: in his preface Song wrote that the chapters On Observing the Heavens and On Music were too subtle for him and that he cut them as the book went to the carvers; both were later lost.'
+            now: 'The two chapters were carved into the first printing and came down with the eighteen chapters of the book.'
             who: song_yingxing_fengxin
-            bio: 'Song left a proof copy with the page order of the first edition. Readers could compare later printings to the copy he had reviewed.'
+            bio: 'In this timeline Song Yingxing kept the chapters On Observing the Heavens and On Music, and the first printing of Tiangong kaiwu carried them.'
         vignettes:
           strainer: 'You ask which side of the illustrated screen the wet sheet ends up on. The reader turns the print round to mimic the worker''s hands and finally points to the right surface.'
           drying: 'The reader tells the stages out of order. You ask him to trace the wet sheet from the screen to the drying surface. He pauses and moves one caption to the next drawing.'
@@ -60,24 +54,19 @@ events:
         relic: "一页工具图"
         relic_desc: "一张木刻版画，织机的每个部件都标了名。"
         points:
-          p1: '给资助刻书的人列清卷数和工钱，让缺印资的宋应星能把书送去刊刻'
-          p2: '付梓前把画过的工序同正文逐项对上，让异处借来抄书的人能配回图页'
-          p3: '请宋应星核准一套带卷次的样书另存，让后世还能分清他亲自审过的初刻'
+          p1: '刻书的钱还没凑齐时，帮他把《天工开物》送进刻坊，让书照常刊刻'
+          p2: '临付梓前，劝住他删去《观象》《乐律》两卷，让这两卷和全书一起刻出来'
         points_fail:
-          p1: '资助只够备纸，正文和插图没有印成一部完整的书。事务所因同步失败召回员工。'
-          p2: '借到单卷的人只有图没有目录，遇到相似的图就不知道应对哪一步。'
-          p3: '几份刻本后来换开本、改装帧，初版原来的卷页组合更难复原。'
+          p1: '书没能付梓，这条分支与历史脱了节，事务所召回员工。'
+          p2: '两卷照史实临梓删去，后来失传，这条分支里也没有。'
         shift:
           p1:
-            was: '1637 年，宋应星在奉新写下书序，《天工开物》得到友人资助后在江西刊印。'
+            was: '崇祯十年孟夏，宋应星写成自序，《天工开物》由友人涂伯聚出资刊刻。'
           p2:
-            was: '1637 年《天工开物》初刊本把生产经验写入正文，并搭配木刻插图。'
-            now: '{staff}同宋应星把几处容易错配的图分别记上卷次和正文位置，后来的抄本也能按此配图。'
-          p3:
-            was: '1637 年初刻本和稍晚刻本的实物都存有传本，其中部分后来重新装帧。'
-            now: '{staff}请宋应星把校过的样书封存，并另存卷页清单。后来的整理者能据此辨认初刻中的原有次序。'
+            was: '崇祯十年，宋应星在自序里说《观象》《乐律》两卷道理太精，自认不是自己的本分，临付梓时删去；这两卷后来失传。'
+            now: '《观象》《乐律》两卷刻进了初刊本，和全书十八卷一起传了下来。'
             who: song_yingxing_fengxin
-            bio: '宋应星留下了一套标明初刻卷页次序的样书。不同印本流传后，读者仍能核对他审过的那一版。'
+            bio: '这条时间线里，宋应星没有删去《观象》《乐律》两卷，《天工开物》初刊时就有它们。'
         vignettes:
           strainer: '你问图里的纸帘，湿纸最后留在哪一面。读者把图转过来，照着图里人的手势比了一遍，这才指准。'
           drying: '读者把几道工序说串了。你请他顺着湿纸，从纸帘跟到烘干处。他停下来，把一处图注挪到了下一幅图。'

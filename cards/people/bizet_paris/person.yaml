@@ -17,8 +17,9 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 18, req: {"any":[{"job":["proofreader","archivist","musician"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 40, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 40, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p3, kind: trust, day: 45, req: {"any":[{"trait":["bold","charismatic"],"stat":{"will":6}},{"job":["musician","journalist"],"stat":{"wit":5}},{"trait":["kind","sensitive"],"stat":{"wit":6,"will":6}}]}}
+        - {id: p4, kind: care, day: 103, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic"},{"job":["nurse","paramedic","caregiver"],"item":"antibiotic","stat":{"will":5}},{"item":"nano_kit","trait":["kind","patient","vigil"]},{"item":"nano_kit","stat":{"finesse":8}}]}}
       vignettes:
         - {id: future, traits: [bold, charismatic]}
         - {id: label, traits: [methodical, handy]}
@@ -33,23 +34,30 @@ events:
         relic_desc: "A painted paper fan from the stalls."
         points:
           p1: 'Before the premiere, give the conductor, chorus and stage staff the same list of changes to the score.'
-          p2: 'After the premiere, have Bizet mark which cuts were made for this run and which should be carried into the new score.'
-          p3: 'Have Bizet give the publisher a playable version with the original dialogue. Ask the publisher to number any later additions separately.'
+          p2: 'Have Bizet give the publisher a playable version with the original dialogue. Ask the publisher to number any later additions separately.'
+          p3: 'When the cold notices after the premiere have sunk Bizet into gloom, let him know that Carmen will go on being played in theatres everywhere'
+          p4: 'Stop the fever that follows his swim in the Seine at Bougival from reaching his heart, and save Bizet at thirty six'
         points_fail:
           p1: 'The chorus enters from an old score after the scene has moved on. The theatre calls off that evening’s performance, and the office recalls the employee.'
-          p2: 'The only mark is a line through the conductor’s score. When the score is recopied, nobody can tell why the passage disappeared.'
-          p3: 'Replacement passages go onto the same pages as the old score. The people who rehearse it later have trouble identifying who wrote the additions.'
+          p2: 'Replacement passages go onto the same pages as the old score. The people who rehearse it later have trouble identifying who wrote the additions.'
+          p3: 'In this branch Bizet goes on believing that Carmen has failed, and spends the spring low in spirits.'
+          p4: 'In this branch Bizet still dies at Bougival in the early hours of 3 June, at thirty six.'
         shift:
           p1:
             was: 'Carmen premiered at the Opéra-Comique in Paris on March 3, 1875. The rehearsals demanded considerable work from the chorus.'
           p2:
-            was: 'The surviving score shows cuts and revisions made during rehearsal, alongside editorial marks added after Bizet’s death.'
-            now: 'The theatre keeps a list Bizet checked. The next rehearsal can use its page numbers to recover a temporarily cut passage.'
-          p3:
             was: 'After Bizet’s death, Guiraud supplied recitatives for publication and later performance. The work circulated in different versions.'
             now: 'The publisher keeps a dialogue version signed off by the composer. A theatre that chooses the recitatives can still identify Guiraud’s additions page by page.'
             who: bizet_paris
             bio: 'Bizet revised Carmen with the theatre. The scores left by its performers show how often the version used on stage changed.'
+          p3:
+            was: 'Carmen opened on 3 March 1875 to a largely hostile press; Bizet was convinced it had failed and stayed low in spirits through the spring.'
+            now: '{staff} tells Bizet at the end of March that this opera will be played in theatres in many countries. He goes on attending the performances, and the spring weighs less on him.'
+          p4:
+            was: 'At the end of May 1875 Bizet swam in the Seine at Bougival and fell ill with a high fever; after a heart attack on 1 June he died in the early hours of 3 June, at thirty six.'
+            now: 'The fever of June passed and Bizet spent the rest of the summer recovering at Bougival. In the autumn he went to Vienna to see Carmen at the Court Opera, and he went on writing for the theatre for many years.'
+            who: bizet_paris
+            bio: 'Bizet survived the illness of the summer of 1875. He saw Carmen staged in Vienna that autumn and kept writing operas for years after.'
         vignettes:
           future: 'You tell the attendant that later audiences will know this opera in cities he has never visited. He asks why he should keep an extra programme tonight. You show him where the first night and Galli-Marié’s name are printed. One copy goes into his drawer. You leave before it gets a second reader.'
           label: 'The attendant has filed two sheets under the same title. You split them by date and mark the first night on a spare wrapper. A later reader can now ask for the right sheet. You miss the audience coming out.'
@@ -63,23 +71,30 @@ events:
         relic_desc: "一把来自池座的彩绘纸扇。"
         points:
           p1: '开演前给指挥、合唱和舞台各发一份从同一总谱抄出的改动表，护住《卡门》的首演。'
-          p2: '首演后请比才给删过的唱段批注，告诉抄谱员哪些只为这轮演出删节，哪些要从新谱撤掉。'
-          p3: '请比才交给出版商一套能照演的原对白版，请出版商把任何后来补写的唱段单独编号。'
+          p2: '请比才交给出版商一套能照演的原对白版，请出版商把任何后来补写的唱段单独编号。'
+          p3: '首演遭冷评后比才消沉，让他知道《卡门》会在各地的剧院一直演下去'
+          p4: '布日瓦尔下河游泳后的高烧烧到心上之前治好他，救下三十六岁的比才'
         points_fail:
           p1: '合唱按旧谱接唱，台上已进入下一段。剧院撤下当晚的演出，事务所因同步失败召回员工。'
-          p2: '排练删节只在指挥的总谱上划了一笔。重新抄谱时，删过的唱段没有留下可追查的说明。'
-          p3: '改过的唱段直接抄进旧谱同一页。日后找来排练的人很难判断新增的部分是谁写的。'
+          p2: '改过的唱段直接抄进旧谱同一页。日后找来排练的人很难判断新增的部分是谁写的。'
+          p3: '这条分支里比才一直以为《卡门》失败了，消沉着过完这个春天。'
+          p4: '这条分支里比才仍在 6 月 3 日凌晨死于布日瓦尔，三十六岁。'
         shift:
           p1:
             was: '《卡门》于 1875 年 3 月 3 日在巴黎喜歌剧院首演，合唱在排练中承担了大量工作。'
           p2:
-            was: '留存总谱可看到排练期间的删改，也有作曲家身后的编辑笔迹。'
-            now: '剧院拿到一份由比才核过的删节表，下次排练可以凭页码找回暂时拿掉的一段。'
-          p3:
             was: '比才去世后，吉罗为出版和后来演出另写宣叙调，作品由此以不同版本流传。'
             now: '出版商留下有作者签认的对白本。后来有剧院选用宣叙调，也能按页注明吉罗的增写。'
             who: bizet_paris
             bio: '比才与剧院反复调整《卡门》的乐谱。演出人员留下的谱本显示，舞台上用过的版本经历多次修改。'
+          p3:
+            was: '1875 年 3 月 3 日《卡门》首演，报刊多是恶评，比才认定这部戏失败了，整个春天情绪低落。'
+            now: '三月底{staff}告诉比才，这部戏日后会在许多国家的剧院上演。他照常去剧院看演出，这个春天对他轻了些。'
+          p4:
+            was: '1875 年 5 月底，比才在布日瓦尔下塞纳河游泳后发起高烧，6 月 1 日心脏病发作，6 月 3 日凌晨去世，三十六岁。'
+            now: '六月的高烧退了，比才在布日瓦尔养完这个夏天。秋天他去维也纳，看《卡门》在宫廷歌剧院上演，此后又为剧院写了许多年。'
+            who: bizet_paris
+            bio: '比才熬过了 1875 年夏天的病，那年秋天看到《卡门》在维也纳上演，之后又写了多年歌剧。'
         vignettes:
           future: '你告诉帮工，以后连他没去过的城市也会有人知道这部戏。他问今夜有何必要多留一张。你指给他看首演日期和加利-马里耶的名字。一张节目单收进抽屉。你走时还没有第二个人来翻看。'
           label: '帮工把两张节目单按同一个剧名收了。你按日期把它们分开，给首演那张单独做了个写有日期的纸套。回头要查的人现在能拿准。只是你赶不上散场了。'

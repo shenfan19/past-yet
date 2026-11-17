@@ -16,9 +16,10 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["archivist","painter","illustrator"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 27, req: {"any":[{"job":["archivist","painter","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 58, req: {"any":[{"job":["archivist","painter"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: trust, day: 8, req: {"any":[{"trait":["charismatic","kind","artistic"],"stat":{"will":7}},{"item":"hologram_projector","stat":{"will":5}}]}}
+        - {id: p2, kind: hold, guard: true, day: 15, req: {"any":[{"job":["paramedic","nurse","doctor","physician","caregiver"]},{"trait":["vigil","kind"],"stat":{"constitution":7,"will":6}}]}}
+        - {id: p3, kind: care, day: 16.5, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}}]}}
+        - {id: p4, kind: care, day: 19, req: {"any":[{"job":["midwife","nurse","caregiver","doctor","physician"],"stat":{"will":7}},{"job":["midwife","nurse","caregiver","doctor","physician"],"item":"calm_patch"},{"trait":["kind","calm"],"stat":{"will":9}}]}}
       vignettes:
         - {id: line, traits: [artistic, curious]}
         - {id: reverse, traits: [methodical, handy]}
@@ -32,24 +33,30 @@ events:
         relic: "A charcoal stick"
         relic_desc: "A stub of charcoal black to the fingers."
         points:
-          p1: 'List the late paintings left in Modigliani’s Paris studio separately and give Zborowski a receipt he can check'
-          p2: 'Ask people from the studio to check sitters’ names and working titles separately, leaving unconfirmed cases open'
-          p3: 'Have Zborowski and potential lenders keep copies of the exhibition and return records. Discuss a small display first'
+          p1: 'While he is still clear-headed, let him know that the people he painted will be remembered by many'
+          p2: 'When he lies ill in the studio and nobody has called for days, make sure he is taken to the Charité hospital'
+          p3: 'At the Charité, cure his tuberculous meningitis'
+          p4: 'In the days after his death, stay with Jeanne Hébuterne, eight months pregnant, so that she and the child live'
         points_fail:
-          p1: 'Unmarked work leaves the studio during the clearing. Several pieces cannot be located for later display, and the office recalls the employee.'
-          p2: 'Similar labels are treated as the same person. Later witnesses cannot tell which painting they are being asked about.'
-          p3: 'Loan requests rely on what friends remember, and lenders receive no confirmation of the owner or return date.'
+          p1: 'In this branch he has had one solo exhibition, at which nothing sold, and nobody has told him what comes later.'
+          p2: 'In this branch nobody comes through the door in time and he is not taken to the Charité. The branch falls out of step with history and the office recalls the employee.'
+          p3: 'In this branch the illness runs as it did. He dies at the Charité on 24 January, aged 35.'
+          p4: 'In this branch 26 January happens as it did. Jeanne and the child she is carrying do not live.'
         shift:
           p1:
-            was: 'Modigliani died in January 1920. Zborowski subsequently handled work from his estate and organized exhibitions.'
+            was: 'In 1917 the nudes were taken down from Modigliani''s only solo exhibition in his lifetime after the police intervened, and not one painting sold. He died destitute.'
+            now: '{staff} tells him, before he falls ill, that the people he painted will hang in museums around the world.'
           p2:
-            was: 'He often painted people he knew. Collection research continues to compare the pictures and records to identify some sitters.'
-            now: 'The dealer keeps a list of identifications already verified. A new identification can be recorded with its evidence.'
+            was: 'In January 1920 Modigliani, gravely ill, was taken to the Charité hospital in Paris, where he died on 24 January.'
           p3:
-            was: 'Zborowski arranged Paris exhibitions in 1920. The artist had had few opportunities to exhibit during his life.'
-            now: 'A small list of loans is agreed earlier. Owners can see the return arrangements, and the venue can check how long the works are available.'
+            was: 'On 24 January 1920 Modigliani died of tuberculous meningitis at the Charité hospital in Paris, aged 35.'
+            now: '{staff} brings a medicine that cures him. He leaves the hospital and goes back to the studio.'
             who: modigliani_paris
-            bio: 'Modigliani spent part of his last years painting portraits of people he knew in Paris. Dealers, collectors and exhibitions continued to circulate the work after his death.'
+            bio: 'Modigliani recovered in the winter of 1920 and painted for many more years, still painting the people around him.'
+          p4:
+            was: 'On 26 January 1920, two days after Modigliani''s death, Jeanne Hébuterne, eight months pregnant, died at her parents'' home, leaving a daughter of fourteen months.'
+            now: '{staff} stays at her side through those days. In this timeline Jeanne gives birth to the child, raises her son and daughter, and later takes up painting again.'
+            bio: 'Jeanne Hébuterne lived through the winter of 1920, gave birth to her second child, raised both children and went on painting.'
         vignettes:
           line: 'You recognise the angle of the head before the painting has been fully uncovered. The attendant compares it with your thumbnail sketch and moves one label to the other pile. You keep the pencil line. By the time there is room to see the whole face, the canvas has been covered again.'
           reverse: 'The labels come loose when the frames are set down. You copy one distinctive line from each portrait before the attendant covers them. Now both labels can be put back. An earlier owner’s handwriting stays unidentified.'
@@ -62,24 +69,30 @@ events:
         relic: "一截炭条"
         relic_desc: "一截能把手指染黑的炭条。"
         points:
-          p1: '把莫迪利亚尼最后留在巴黎工房的几幅画分开核点，给经手的兹博罗夫斯基交一份可查的单'
-          p2: '在交接时请画家身边的人分别核认坐画者和作品暂名，给仍不能肯定的情况留空'
-          p3: '给兹博罗夫斯基和愿出借画的人各留一份展品的资料和可归还的记录，先讨论小规模展出'
+          p1: '趁他还清醒，让他知道他画的这些人以后会被很多人记住'
+          p2: '他在画室里病重、几天没人来问的时候，护住他被送进慈善医院的那一程'
+          p3: '在慈善医院里，治好他的结核性脑膜炎'
+          p4: '他去世以后的那几天，陪住怀孕八个月的让娜·埃比泰纳，让她和腹中的孩子留下来'
         points_fail:
-          p1: '工房清理时有人拿走没有标名的画。经手人拿不到后续可展出的几件，事务所召回员工。'
-          p2: '几个相近的称谓混成了一个人。采访到熟人时已不知道该用哪幅画去问。'
-          p3: '邀请借画只能凭熟人转述，出借者迟迟等不到物主和归还期的说明。'
+          p1: '这条分支里，他到最后只办过一次个展，那次一幅也没卖出，没有人告诉过他以后的事。'
+          p2: '这条分支里没有人及时进门，他没能被送到慈善医院，与史实脱节，事务所召回员工。'
+          p3: '这条分支里病照旧发展，1 月 24 日他在慈善医院去世，三十五岁。'
+          p4: '这条分支里，1 月 26 日照史实发生，让娜和腹中的孩子没有留下来。'
         shift:
           p1:
-            was: '莫迪利亚尼 1920 年 1 月去世，画商兹博罗夫斯基之后经手其遗作并继续安排展览。'
+            was: '1917 年，莫迪利亚尼生前唯一的个展因警方干涉撤下了裸体画，一幅也没卖出；他去世时一贫如洗。'
+            now: '{staff}在他病倒以前告诉他，他画的这些人以后会挂进世界各地的美术馆。'
           p2:
-            was: '他晚年主要画身边的人。馆藏研究仍需依据作品和记录核对部分画中的人物。'
-            now: '画商留了一张标明哪些身份已核实的表。新认出一幅时可以另补证据。'
+            was: '1920 年 1 月，莫迪利亚尼病重，被送进巴黎慈善医院，1 月 24 日在那里去世。'
           p3:
-            was: '兹博罗夫斯基安排了 1920 年巴黎的多次展出。此前画家的展览机会有限。'
-            now: '小范围的出借清单提前准备好，各物主能查到如何取回自己的画，展场也有一份写明可借期限的清单。'
+            was: '1920 年 1 月 24 日，莫迪利亚尼因结核性脑膜炎在巴黎慈善医院去世，三十五岁。'
+            now: '{staff}带去的药治好了他的病，他出了院，回到画室。'
             who: modigliani_paris
-            bio: '莫迪利亚尼晚年在巴黎画身边熟人的肖像。作品在他去世后经画商、藏家和展场继续流传。'
+            bio: '莫迪利亚尼在 1920 年冬天病愈，又画了许多年，画的仍是身边的人。'
+          p4:
+            was: '1920 年 1 月 26 日，莫迪利亚尼去世两天后，怀孕八个月的让娜·埃比泰纳在父母家中去世，留下十四个月大的女儿。'
+            now: '{staff}那几天一直守在她身边。这条时间线里，让娜生下了孩子，带着一儿一女长大，后来又拿起了画笔。'
+            bio: '让娜·埃比泰纳在 1920 年冬天活了下来，生下第二个孩子，带大两个孩子，并继续画画。'
         vignettes:
           line: '画布还没完全揭开，你先认出了头偏向的角度。帮工对着你的小草图，把一张纸签挪到另一摞。你把那道铅笔线留在本子上。等你腾出位置好看整张脸，画又被蒙上了。'
           reverse: '画框刚放下，两张纸签就掉了。你趁帮工还没蒙布，各描一道最容易认出的线。这下两张签都能放回原处。纸角有一行前人写的字，仍不知是谁的笔迹。'

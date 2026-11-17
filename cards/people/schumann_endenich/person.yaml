@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["nurse","physician","archivist"]},{"trait":["patient","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 20, req: {"any":[{"job":["musician","archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: care, day: 16, req: {"any":[{"job":["nurse","archivist"],"stat":{"will":7}},{"trait":["patient","methodical"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 16, req: {"any":[{"job":["doctor","physician","nurse"],"stat":{"will":6}},{"trait":["patient","calm","charismatic"],"stat":{"will":7}},{"item":"golden_apple","stat":{"will":5}}]}}
+        - {id: p3, kind: care, day: 23, req: {"any":[{"job":["nurse","caregiver"],"trait":["vigil","patient"]},{"provides":"vigil","stat":{"will":7}},{"trait":["vigil"],"stat":{"will":8}}]}}
       vignettes:
         - {id: key, traits: [artistic, curious, scholarly]}
         - {id: envelope, traits: [kind, quiet, attached]}
@@ -32,24 +32,24 @@ events:
         relic: 'A labelled practice score'
         relic_desc: 'A fictional page marked for a comparison of keys.'
         points:
-          p1: 'After Brahms sends news of Robert’s condition, get the doctor’s visiting time to Clara so she can make the July 27 visit.'
-          p2: 'Set the B-flat Papillon No. 10 apart from the loose sheets. Give the person receiving the music a list with its original key and the new one.'
-          p3: 'Ask the doctor for a short visit earlier in July. Ask Robert if he wants it first, then find a quiet time when either person can end the visit.'
+          p1: 'After Brahms sends news of Robert’s condition, get the doctor’s visiting time to Clara so she can make the visit of 27 July'
+          p2: 'Talk the director of the asylum into letting Clara see Robert earlier in July, after she has twice been turned away'
+          p3: 'On 29 July keep watch at his bed and call Clara back in time, so that she is with him when he dies'
         points_fail:
           p1: 'The visiting time is not passed to Clara. She arrives too late, and the office recalls the employee.'
-          p2: 'The recipient has only the title. Faced with two different scores, they file the transposition as an ordinary copy.'
-          p3: 'Clara receives accounts of Robert’s condition and still has to wait until the end of July to see him.'
+          p2: 'Clara receives accounts of Robert’s condition and still has to wait until 27 July to see him.'
+          p3: 'At four that afternoon he dies alone, and Clara sees him only half an hour later, as in history.'
         shift:
           p1:
             was: 'Clara visited Robert Schumann at Endenich on July 27, 1856. Robert died there on July 29.'
           p2:
-            was: 'The Library of Congress holds a copy of Papillon No. 10 that Schumann transposed to B-flat while at Endenich.'
-            now: 'Clara receives a list that identifies the transposition. Anyone sorting the pages later can file it separately and recover the piece it came from.'
+            was: '27 July 1856: after nearly two and a half years at Endenich, and after being twice turned away, Clara saw Robert for the first time.'
+            now: 'Clara was let in for a short visit in the third week of July and sat with him for a while. She came again as planned on 27 July.'
           p3:
-            was: 'Clara did not see Robert at Endenich until July 27, 1856. She wrote about the visit to Joseph Joachim.'
-            now: 'Both agree to an earlier short visit. Clara brings a page of familiar music and sits with him for a little while. She returns as planned on July 27.'
+            was: '29 July 1856: at four in the afternoon Robert Schumann died alone at Endenich; Clara saw him half an hour later.'
+            now: '{staff} kept watch at the bed and called Clara back before the end. When he died she was beside him.'
             who: schumann_endenich
-            bio: 'Letters and a surviving transposition from Robert’s time at Endenich record some of his connections with family and music during his stay.'
+            bio: 'In this timeline Clara saw Robert earlier that July, and she was at his side when he died at Endenich.'
         vignettes:
           key: 'Lina thinks the first note was copied wrong. You ask her to start each version on its own note and play a few bars. She can hear the tune go the same way from a different pitch. Instead of rubbing either page out, she writes the key above each.'
           envelope: 'Emil has an envelope ready for only one page. You fold a wider wrapper so he can carry both without covering Lina’s headings. At the door he reads the two key names back to her. She can put the keyboard cover down without wondering which copy went away.'
@@ -62,24 +62,24 @@ events:
         relic: '一页写明调号的练习谱'
         relic_desc: '练习谱，标明了对照用的调号。'
         points:
-          p1: '布拉姆斯发出病况消息后，把医生同意的探视时段送到克拉拉手里，护住她 7 月 27 日的探视。'
-          p2: '把降 B 大调《蝴蝶》第十首的抄谱页从杂纸中抽出，在原稿旁另记原调与移调，给来接稿的人一份清单。'
-          p3: '向医生申请让克拉拉在七月下旬更早有一次短访。先请罗伯特表示愿意，再安排安静、随时能结束的会面。'
+          p1: '布拉姆斯发出病况消息后，把医生同意的探视时段送到克拉拉手里，护住她 7 月 27 日的探视'
+          p2: '劝动疗养院院长，让两次被挡在门外的克拉拉在七月里早些见到罗伯特'
+          p3: '7 月 29 日守在他床边，及时把克拉拉叫回来，让他走的时候她在身旁'
         points_fail:
           p1: '医生给出的探视时段没有转到克拉拉手中。她赶到时已经错过，事务所因同步失败召回员工。'
-          p2: '来接稿的人只知道曲名，面对两份不同的谱页，误把这份移调稿当成普通抄件混收。'
-          p3: '克拉拉能收到病况转述，仍要等到月底才可见面。'
+          p2: '克拉拉只能收到病况转述，仍要等到 7 月 27 日才见得到他。'
+          p3: '那天下午四点他独自去世，克拉拉半小时后才见到他，这条分支与历史一样。'
         shift:
           p1:
             was: '1856 年 7 月 27 日，克拉拉到恩德尼希见罗伯特·舒曼。罗伯特在 7 月 29 日去世。'
           p2:
-            was: '美国国会图书馆藏有舒曼在恩德尼希期间把《蝴蝶》第十首移至降 B 大调的抄谱。'
-            now: '克拉拉接到一份能辨认移调稿的清单。以后整理谱页的人能把它单列，并找回原来对应的一首。'
+            was: '1856 年 7 月 27 日，罗伯特在恩德尼希住了将近两年半，克拉拉两次被挡回之后，才第一次见到他。'
+            now: '七月第三周，克拉拉获准进去短短见了他一面，在床边坐了一会儿。7 月 27 日她照原来的安排又去了一趟。'
           p3:
-            was: '克拉拉直到 1856 年 7 月 27 日才在恩德尼希见到罗伯特。有关这一趟探视，有她写给约阿希姆的信。'
-            now: '双方先同意一次短访。克拉拉把一页他熟悉的曲谱带去，两人有片刻可以安静坐在一起；7 月 27 日她照样再去探视。'
+            was: '1856 年 7 月 29 日下午四点，罗伯特·舒曼在恩德尼希独自去世，克拉拉半小时后才见到他。'
+            now: '{staff}守在床边，在最后那一刻之前把克拉拉叫了回来。他走的时候，她在身旁。'
             who: schumann_endenich
-            bio: '罗伯特在恩德尼希仍有书信和留存的抄谱。这些纸页记录了他住院期间与家人及音乐的一些联系。'
+            bio: '这条时间线里，克拉拉在那年七月更早见到了罗伯特，他在恩德尼希去世时，她守在他身边。'
         vignettes:
           key: '莉娜以为起音抄错了。你请她照两份谱各自写的起音，弹几小节。她听出起音不同，旋律的走向却一样。两页都不必擦，她在各自上面标了调。'
           envelope: '埃米尔备好的信封只能放一页。你另折了张宽一点的包纸，他把两份都带走，莉娜的题头也不用折进去。到门口他把两个调名念给她听。她可以安心盖好琴盖了。'

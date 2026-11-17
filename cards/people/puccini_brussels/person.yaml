@@ -16,9 +16,9 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 24, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 21, req: {"any":[{"job":["proofreader","archivist","musician"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 14, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p1, kind: hold, guard: true, day: 12, req: {"any":[{"job":["archivist","translator","proofreader","musician"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: persuade, day: 16, req: {"any":[{"job":["musician"],"stat":{"wit":5}},{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical"],"stat":{"wit":7,"will":7}}]}}
+        - {id: p3, kind: care, day: 24, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":8,"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"first_aid_kit","stat":{"wit":7,"will":6}}]}}
       vignettes:
         - {id: divider, traits: [methodical, handy]}
         - {id: future, traits: [bold, charismatic]}
@@ -32,24 +32,24 @@ events:
         relic: "A sketch page"
         relic_desc: "A page of musical sketches in soft pencil."
         points:
-          p1: 'While Puccini is in hospital, list the pages of the Turandot finale he brought to Brussels and hand them to Tonio one by one.'
-          p2: 'Have Tonio separate consecutive bars from individual motifs and keep the original numbering on both groups.'
-          p3: 'While Puccini can still indicate choices on paper, let him circle two joins he wants to keep. Have Tonio file those pages with the drafts.'
+          p1: 'While Puccini moves into the clinic in Brussels, keep the pages of the Turandot finale he brought together and hand them to Tonio one by one'
+          p2: 'While he can still write, help him mark on his sketches the two joins in the final duet he wants kept, so the unfinished ending goes one step further in his own hand'
+          p3: 'Through the nights after the radium operation, stop the bleeding and the strain on his heart, and save Puccini'
         points_fail:
-          p1: 'Loose sketches are put away with travel papers. Several pages of the finale are missing at handover, and the office recalls the employee.'
-          p2: 'A sheet of only a few bars is filed inside the continuous draft. The next reader takes it for a passage the composer had already placed there.'
-          p3: 'The inventory only lists the pages that came on the journey. The next composer still has to decide how the two passages fit together.'
+          p1: 'Loose sketches went in with the travel papers and several pages of the finale were missing at handover. The branch came apart from history and the office recalled the employee.'
+          p2: 'The sketches stayed as they were, and whoever finished the opera had to decide alone how the passages joined.'
+          p3: 'He died in Brussels on 29 November as history has it, and in this branch too he could not be kept.'
         shift:
           p1:
-            was: 'When Puccini went to Brussels in November 1924, the final duet existed in unfinished draft and loose sketches. The papers survived, and Alfano later completed the ending.'
+            was: 'On 4 November 1924 Puccini left for Brussels with the unfinished sketches for the final duet of Turandot. The sketches survived, and Alfano later completed the ending from them.'
           p2:
-            was: 'The Puccini Study Centre’s catalogue distinguishes the continuous draft from separate leaves of sketches.'
-            now: 'The next musician can find each loose leaf in its own group and tell which joins Puccini wrote and which are still open.'
+            was: 'Puccini left the finale incomplete, and Alfano had to choose how to continue from the surviving sketches.'
+            now: 'Two joins in the duet are marked in Puccini''s hand. Whoever finished the ending began from them.'
           p3:
-            was: 'Puccini left the finale incomplete. Alfano subsequently had to decide how to continue from the surviving sketches.'
-            now: 'Alfano can see the two joins Puccini circled and use them to begin his continuation. The rehearsal score identifies who supplied the passages that were still open.'
+            was: 'On 24 November 1924 Puccini underwent radium treatment for throat cancer in Brussels; he died there on 29 November of complications after the operation, aged 65.'
+            now: '{staff} kept watch through the nights after the operation and he came through the strain on his heart. He spent December recovering in Brussels, then went home to Italy and went back to the end of Turandot.'
             who: puccini_brussels
-            bio: 'Puccini was still working out the end of Turandot when he traveled to Brussels. His papers combine continuous sections with ideas he had yet to place in the score.'
+            bio: 'In this line Puccini survived the treatment in Brussels in November 1924. He went home and worked on for some years more.'
         vignettes:
           divider: 'The copyist has laid a sketch after a clean score page as if they belong to one continuous copy. You insert a divider and label each side. He can now retrieve either without mistaking it for the other. The missing stage ending will be someone else’s task.'
           future: 'You almost tell the copyist how the opera will end. He asks which sheet you are reading that from. You put the later ending out of your own notes and write down what is actually in front of you. There are two packets and no final page you can copy.'
@@ -62,24 +62,24 @@ events:
         relic: "一页草稿"
         relic_desc: "一页用软铅笔写的乐谱草稿。"
         points:
-          p1: '普契尼住院期间，把他带到布鲁塞尔的《图兰朵》末场草稿逐张登记，离开病房时逐页交给托尼奥。'
-          p2: '请托尼奥把有连续小节的草稿与只有动机的散页分开，给两组都留原来的页码。'
-          p3: '趁普契尼还可用手势和笔记确认，让他从自己带来的草稿里圈出有意保留的两个接缝，请托尼奥一并留存。'
+          p1: '普契尼住进布鲁塞尔的诊所时，护住他带来的《图兰朵》末场草稿，逐页交到托尼奥手上'
+          p2: '趁他还能动笔，帮他在草稿上标出末场二重唱里要留的两处接缝，让没写完的结尾在他自己手里多走一步'
+          p3: '镭针手术后的那几夜，止住出血、托住他的心脏，救下普契尼'
         points_fail:
-          p1: '散页和旅途中收起的纸放到一起，交接时缺了末场的几张草稿。事务所因同步失败召回员工。'
-          p2: '一页只有几小节的纸被排进连续草稿。后来读谱的人误以为作者已决定把它接在那里。'
-          p3: '交接本只能记下带来了哪些纸。后来接手的作曲家仍得自己解释两段应该如何相接。'
+          p1: '散页混进了行李里的旅途文件，交接时缺了末场的几张草稿。分支与历史脱了节，事务所因同步失败召回员工。'
+          p2: '草稿照旧，后来补写的人只能自己决定几段怎样相接。'
+          p3: '他照史实在 11 月 29 日死在布鲁塞尔，这条分支里也没能留住他。'
         shift:
           p1:
-            was: '普契尼 1924 年 11 月前往布鲁塞尔时，末场二重唱已有未完草稿和散页。草稿留存下来，结尾后来由阿尔法诺补写。'
+            was: '1924 年 11 月 4 日，普契尼带着《图兰朵》末场二重唱的未完草稿去布鲁塞尔。草稿留存下来，结尾后来由阿尔法诺据此补写。'
           p2:
-            was: '普契尼研究中心的目录把连续草稿与另外的构想散页分别记载。'
-            now: '后续接手的人能把散页找回原组，辨认哪些接续是作者写下的，哪些还要自己选择。'
+            was: '普契尼没有写完末场，阿尔法诺只能从留下的草稿里自己选择怎样续写。'
+            now: '二重唱里有两处接缝是普契尼亲手标定的。补写结尾的人从这两处起笔。'
           p3:
-            was: '末场并未由普契尼完成。后来选定阿尔法诺时，他必须从原有草稿中选择怎样续写。'
-            now: '铺开草稿时，阿尔法诺能看到普契尼圈定的两处接缝，并把这两处作为续写起点。其余未定处在排练本上注明由谁补写。'
+            was: '1924 年 11 月 24 日，普契尼在布鲁塞尔接受喉癌的镭针放疗手术，11 月 29 日因术后并发症在那里去世，六十五岁。'
+            now: '{staff}守住了术后那几夜，他挺过了心脏那一关。十二月他还在布鲁塞尔养病，之后回到意大利，又回到《图兰朵》的结尾上。'
             who: puccini_brussels
-            bio: '普契尼去布鲁塞尔时仍在构思《图兰朵》的末场。他留下的稿纸既有连续段落，也有尚未接入总谱的想法。'
+            bio: '这条时间线里，普契尼挺过了 1924 年 11 月在布鲁塞尔的治疗。他回到家，又工作了几年。'
         vignettes:
           divider: '抄谱人把一页草稿接在誊清谱后头，好像它们属于一份连贯的谱。你插进分隔纸，分别标了两边。往后两份都找得到，也不必认错。舞台上缺的结尾，要留给后来的人。'
           future: '你差点把后来演出时的结尾告诉抄谱人。他问你是照哪张读的。你从自己的便笺里划去那个未来的结尾，改记眼前的东西。手上是两叠纸，里面没有一张能让你照抄成末页。'

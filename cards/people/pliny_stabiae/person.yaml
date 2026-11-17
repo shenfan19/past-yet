@@ -14,9 +14,9 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 15.1, req: {"any":[{"job":["sailor","ferryman","paramedic","archivist"]},{"trait":["bold","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 15.38, req: {"any":[{"job":["archivist","sailor","proofreader"]},{"trait":["bold","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 15.74, req: {"any":[{"job":["archivist","sailor"],"stat":{"wit":7,"will":7}},{"trait":["bold","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: hold, day: 15.1, req: {"any":[{"job":["sailor","navigator","ferryman","ferry_pilot","fisherman","fisher"],"stat":{"will":5}},{"trait":["bold","vigil"],"stat":{"wit":6}},{"item":"scout_drone","stat":{"will":5}}]}}
+        - {id: p2, kind: hold, guard: true, day: 15.38, req: {"any":[{"job":["sailor","navigator","ferryman","ferry_pilot"],"stat":{"will":7}},{"trait":["bold","hardy"],"stat":{"constitution":7,"will":6}},{"item":"exoskeleton","stat":{"will":6}}]}}
+        - {id: p3, kind: care, day: 15.74, req: {"any":[{"job":["paramedic","doctor","physician","nurse"],"item":"gas_mask"},{"job":["paramedic","doctor","physician","nurse"],"item":"oxygen_can","stat":{"constitution":6}},{"trait":["hardy","vigil"],"item":"gas_mask","stat":{"constitution":8}}]}}
       vignettes:
         - {id: wind, traits: [streetwise, wanderer]}
         - {id: lantern, traits: [bold, hardy, kind]}
@@ -30,24 +30,24 @@ events:
         relic: "A wax tablet"
         relic_desc: "A wooden tablet with wax for notes, scratched with a stylus."
         points:
-          p1: 'As the wind carries the ship to Stabiae, help Pomponianus’s people identify it and leave a place for the Elder Pliny’s party to land and meet them'
-          p2: 'When the boats cannot leave, tell both groups who has come ashore and who is still being looked for'
-          p3: 'Ask a witness to leave a short dated account that separates what they saw of the wind and the wait from what they heard later'
+          p1: 'When the shallows and the debris from the mountain block the shore, help the Elder Pliny bring the ship in to Rectina’s coast and take her aboard'
+          p2: 'Under the falling pumice and stones, keep the Elder Pliny’s ship on its course to Stabiae, so that he lands and reaches Pomponianus'
+          p3: 'When the smell of sulphur and the dust close in on the beach at Stabiae, keep his breathing clear and save the Elder Pliny, getting him off the shore alive'
         points_fail:
-          p1: 'The people ashore mistake the boat for another. Both sides wait apart, Pliny does not reach Pomponianus, and the office recalls the employee.'
-          p2: 'Both groups rely on shouts. They mix up those who have returned with those still looking for boats.'
-          p3: 'After people leave, the story combines what they saw and what they were told. The next person cannot tell where any part came from.'
+          p1: 'The ship could not come in to her shore, and in this branch nobody took Rectina aboard.'
+          p2: 'The ship was turned back before Stabiae and Pliny never reached Pomponianus. The branch came apart from history and the office recalled the employee.'
+          p3: 'He fell on the beach at Stabiae as history has it, and in this branch too he could not be kept.'
         shift:
           p1:
-            was: 'Pliny the Younger later told Tacitus that his uncle reached Pomponianus at Stabiae with a favorable wind, which kept the boats from leaving.'
+            was: 'On the day of the eruption in 79, the Elder Pliny changed his plans after a message from Rectina begging to be taken away; shallows and debris from the mountain blocked the shore, and he turned for Pomponianus at Stabiae.'
+            now: 'The ship came in to her shore and Rectina was taken aboard. She went on with the ship to Stabiae.'
           p2:
-            was: 'The letter describes waiting against the wind and changing conditions on the shore.'
-            now: 'There is a list of people who have met up and those still unaccounted for. People in the house know whom to ask when news changes.'
+            was: 'Pliny the Younger later told Tacitus that his uncle reached Pomponianus at Stabiae on a following wind, the same wind that kept the boats from leaving.'
           p3:
-            was: 'A main surviving account of Stabiae is the Younger Pliny’s letter to Tacitus, composed years after the eruption.'
-            now: 'A survivor’s dated account reaches the family. A later retelling can distinguish what someone saw on the shore from word that came afterward.'
+            was: 'The next day, as the smell of sulphur and the flames came near, the Elder Pliny rose on the beach at Stabiae with two slaves supporting him and collapsed; his nephew wrote that the dust laden air obstructed his breathing. His body was found two days later.'
+            now: '{staff} kept the dust from his breathing and got him off the beach. When the wind turned he went back by ship to Misenum, and lived some years more.'
             who: pliny_stabiae
-            bio: 'The events at Stabiae were related years later in a letter by Pliny the Younger. A witness’s record would make the origin of each part easier to check.'
+            bio: 'In this line the Elder Pliny came back alive from the beach at Stabiae. He returned to the fleet at Misenum and lived on for some years.'
         vignettes:
           wind: 'Crispus has marked every loaded chest as gone. From the doorway you watch the first newcomer come in with ash on his shoulders while the loaded boats stay in sight. Crispus crosses out the word gone. He asks you to leave him room on the tablet for the next name through the door.'
           lantern: 'Prima has time to make one trip across the room before the lamp goes out. You take her place by the doorway while she calls to the people she can still see. The wax tablet goes dark first. She repeats the last two names aloud and you answer each one back.'
@@ -60,24 +60,24 @@ events:
         relic: "一块蜡板"
         relic_desc: "一块涂蜡的木板，用尖笔划出笔记。"
         points:
-          p1: '风把船推到斯塔比亚时，帮庞波尼阿努斯的人认出船上是谁，给老普林尼一行留出上岸会合的地方'
-          p2: '船不能出发后，把已经上岸的人和仍在找的人分别告诉屋里和岸边的两组人'
-          p3: '在离开斯塔比亚前后，请一位能转告外界的见证人分开写下自己所见的风向、等待和后来听到的消息'
+          p1: '浅滩和山上落下的碎石挡住海岸时，帮老普林尼把船靠上雷克蒂娜那片海岸，把她接上船'
+          p2: '浮石和碎石砸向船身时，护住老普林尼的船一路驶向斯塔比亚，让他上岸见到庞波尼阿努斯'
+          p3: '硫磺气味和烟尘压到斯塔比亚的海滩上时，替他护住呼吸，救下老普林尼，让他活着离开海滩'
         points_fail:
-          p1: '岸边的人误以为来的是别的船，船与房屋各自等候，老普林尼没有到庞波尼阿努斯处，事务所召回员工。'
-          p2: '两组人只靠喊话，谁去找船、谁已经回来几次都弄混了。'
-          p3: '各人离开后，只留下串在一起的口述，下一位转达者说不清哪段来自亲见。'
+          p1: '船没能靠上她那片海岸，这条分支里没有人把雷克蒂娜接上船。'
+          p2: '船在斯塔比亚之前被逼回，老普林尼没有见到庞波尼阿努斯。分支与历史脱了节，事务所因同步失败召回员工。'
+          p3: '他照史实倒在斯塔比亚的海滩上，这条分支里也没能留住他。'
         shift:
           p1:
-            was: '小普林尼后来写给塔西佗，称叔父乘顺风到斯塔比亚见到庞波尼阿努斯，同一阵风却挡住船只离岸。'
+            was: '公元 79 年喷发那天，老普林尼收到雷克蒂娜请他救她离开的信，改了计划出海；浅滩和山上落下的碎石挡住海岸，他转去斯塔比亚找庞波尼阿努斯。'
+            now: '船靠上了她那片海岸，雷克蒂娜被接上船，随船到了斯塔比亚。'
           p2:
-            was: '小普林尼的信描述在逆风中等待、岸边情况不断变化。'
-            now: '岸边留下一份已会合和仍待寻找的记名。随后传开消息时，留在屋中的人知道该找谁核对。'
+            was: '小普林尼后来写信告诉塔西佗，舅舅乘顺风到斯塔比亚见到庞波尼阿努斯，同一阵风挡住了船离岸。'
           p3:
-            was: '现存对这段经历的主要材料是小普林尼写给塔西佗的信，成信时距火山喷发已有多年。'
-            now: '幸存者的短记连同它的日期留给家人。多年后的转述仍可以区分岸上所见和事后听来的消息。'
+            was: '第二天硫磺气味和火光逼近，老普林尼在斯塔比亚的海滩上由两名奴隶扶起，随即倒下；小普林尼信里说是浓重的烟尘堵住了他的呼吸。两天后遗体在原处找到。'
+            now: '{staff}替他挡住了烟尘，扶他离开海滩。风转向以后，他随船回到米塞努姆，又活了些年。'
             who: pliny_stabiae
-            bio: '斯塔比亚的事件由小普林尼在后来书信中转述。留出现场见证的边界，可以让读者知道每段消息如何传来。'
+            bio: '这条时间线里，老普林尼从斯塔比亚的海滩上活着回来。他回到米塞努姆的舰队，又过了些年。'
         vignettes:
           wind: '克里斯普斯把搬上船的木箱全记成了已离开。你们从门边看见第一位来客肩上带灰走进来，装好东西的船却还看得见。克里斯普斯划掉了已离开几个字，请你给下一位进门的人在蜡板上留一行。'
           lantern: '灯快熄了，普丽玛只来得及穿过屋子一次。你替她守在门边，她点数还能看见的人。先看不清的是蜡板，她大声念出最后两个名字，你一个个应回去。'

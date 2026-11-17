@@ -14,9 +14,8 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["translator","archivist"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 37, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 102, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"trait":["hardy","bold","vigil"],"stat":{"constitution":7}},{"job":["courier","warehouse_loader","builder","scaffolder","paramedic"]},{"provides":"carry"}]}}
+        - {id: p2, kind: care, day: 37, req: {"any":[{"job":["doctor","physician","nurse","paramedic","pharmacist"],"stat":{"will":5}},{"provides":"heal"},{"provides":"cure"}]}}
       vignettes:
         - {id: totals, traits: [methodical, scholarly]}
         - {id: names, traits: [curious, cosmopolitan]}
@@ -30,24 +29,19 @@ events:
         relic: "A palm leaf from a sutra"
         relic_desc: "A palm leaf written in Sanskrit, its edges gone dark."
         points:
-          p1: 'After reaching Chang’an, hand over the returned manuscripts bundle by bundle and leave a receipt so work can begin at Hongfu Monastery'
-          p2: 'Give the readers separate columns for original titles, fascicles and variant readings, with space for terms still undecided'
-          p3: 'Leave incoming translators an index to the source manuscripts. Mark translated pages whose originals cannot yet be traced'
+          p1: 'When the scriptures and images he brought back are carried into the capital through the crowds, keep them safe all the way into Hongfu Monastery'
+          p2: 'Heal the illness he brought back from the long road, so it no longer goes with him'
         points_fail:
-          p1: 'After the transfer nobody can locate the first manuscripts needed. Work is put off, and the office recalls the employee.'
-          p2: 'The list treats several provisional titles as settled. Collation later shows that one title was used for different fascicles.'
-          p3: 'The team can keep copying translations, but only someone present that day knows which original is missing.'
+          p1: 'The crowd pressed in and the bundles were scattered and trampled on the way, and they did not reach Hongfu Monastery as recorded. This branch came loose from history, and the office recalled the employee.'
+          p2: 'The illness stayed with him as in history. In this branch nobody cured it after he came home.'
         shift:
           p1:
-            was: 'Early biographies date Xuanzang’s return with many manuscripts to 645. Tang accounts place his first translation work that year at Hongfu Monastery.'
+            was: 'In the first month of 645 the scriptures and images Xuanzang brought back were carried to Hongfu Monastery; the crowds were so thick that the officials, fearing people would trample one another, ordered everyone to burn incense and scatter flowers where they stood and not to move.'
           p2:
-            was: 'Accounts of the Hongfu team describe different work performed by its members. Texts passed through collation and revision.'
-            now: 'The first checklist keeps disputed entries open. At the next reading the team can find which words still need discussion.'
-          p3:
-            was: 'Xuanzang continued to translate for years, and the work moved between sites with changes in collaborators.'
-            now: 'When the team moves, the source index goes with the copies. A later translator can find the fascicle and the passage to check.'
+            was: 'In the second month of 645 Xuanzang met Emperor Taizong at Luoyang, and declined to go east with the court, saying he had come a long way and was also ill.'
+            now: 'The illness left him that spring, and he sat down to the translation at Hongfu lighter in body.'
             who: xuanzang_changan
-            bio: 'Several people translated the manuscripts Xuanzang brought to Chang’an. How the sources passed between them shaped what later readers could verify.'
+            bio: 'In this line Xuanzang was cured of the illness he brought back in 645, and began the translation at Hongfu in better health.'
         vignettes:
           totals: 'The clerk has carried the bundle total into the column for works. You point to the unit before they seal the new copy. The discrepancy disappears without a single bundle changing hands.'
           names: 'Two slips carry titles that look alike to you. The clerk reads them back and has you copy the distinguishing characters before the bundles are carried away.'
@@ -60,24 +54,19 @@ events:
         relic: "一片贝叶经"
         relic_desc: "一片写着梵文的贝叶，边缘已经发黑。"
         points:
-          p1: '入长安后把带回的书卷按包交接，先留可追查的纸单，护住弘福寺译场能按计划开工'
-          p2: '给对读的人另开一栏记原题、卷数和异读，留出尚未商定的字词'
-          p3: '让各组留下一份能交给后来译者的原卷索引，凡找不到原卷的译文暂注底本待查'
+          p1: '经像穿过人群送进长安时，护住它们一路完好地进到弘福寺'
+          p2: '治好他远行带回来的疾疹，不让病跟着他'
         points_fail:
-          p1: '交接后有人寻不回第一批要用的原卷，译场开工中止，事务所因同步失败召回员工。'
-          p2: '清单把尚须核对的几个题目抄成已定，后来有人发现同名处指的是不同卷。'
-          p3: '译本可以继续抄，手边少了哪一卷却只能去问当天在场的人。'
+          p1: '人群挤上来，经夹在路上散落、被踩，没有照记载送进弘福寺，这条分支与历史脱了节，员工被送回。'
+          p2: '疾疹照史实跟着他，这条分支里他回来以后没有人替他把病治好。'
         shift:
           p1:
-            was: '早期传记记玄奘 645 年回到长安并带回大批书卷，唐代记载将这一年初译工作系于弘福寺。'
+            was: '贞观十九年正月，玄奘带回的经像送往弘福寺，围观的人太多，官府怕人群相互践踏，令各人原地烧香散花，不得走动。'
           p2:
-            was: '传记与史料载弘福寺译场多人分任不同工作。原稿需要经过对读和修订。'
-            now: '初次核对表仍留空栏。下一次对读时能指出哪一处是仍有分歧的译词。'
-          p3:
-            was: '玄奘之后仍长期从事翻译，工作地点与协作者随时间变动。'
-            now: '译场换地点时，原卷索引随抄本一起交过去。后来的译者遇到不确定的词，可以先找到哪卷、哪一处待查。'
+            was: '贞观十九年二月，玄奘在洛阳见唐太宗，以远来兼有疾疹为由，推辞随驾东行。'
+            now: '那年春天疾疹好了，他坐进弘福寺的译场时，身上轻了许多。'
             who: xuanzang_changan
-            bio: '玄奘从西行带回的书卷在长安由多人参与翻译。文本如何交接直接影响后来的人能核对到什么。'
+            bio: 'IF 线里，玄奘在 645 年治好了远行带回的病，带着好些的身子在弘福寺开译。'
         vignettes:
           totals: '书吏把夹数抄进了部数那栏。封好新抄之前，你指明两个单位。没有一夹需要挪动，两份数却对上了。'
           names: '你看着两个签上的名目很像。书吏念给你听，趁经夹还没搬走，请你把不同的几个字另抄下来。'

@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 12, req: {"any":[{"job":["painter","carpenter","archivist"]},{"trait":["artistic","handy"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 28, req: {"any":[{"job":["painter","archivist","proofreader"]},{"trait":["artistic","handy","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 69, req: {"any":[{"job":["painter","archivist"],"stat":{"wit":7,"will":7}},{"trait":["artistic","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 69, req: {"any":[{"job":["painter","restorer","archivist"],"stat":{"wit":7,"will":7}},{"trait":["artistic","handy","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: eye, traits: [artistic, curious]}
         - {id: register, traits: [methodical, vigil]}
@@ -33,23 +32,18 @@ events:
         relic_desc: Ground blue, the colour of the chapel vault.
         points:
           p1: 'After the neighboring house objects to the building, have the patron record exterior work separately from Giotto’s painted walls. Keep time for the painters to care for their work'
-          p2: 'Before the scaffolding comes down, mark which painted areas the workshop has finished checking and where it still needs access. Keep track of the joins'
-          p3: 'Match Giotto’s color samples to wall locations, and leave the booklet with two people who can care for the paintings after the workshop leaves'
+          p2: 'Match Giotto’s color samples to wall locations, and leave the booklet with two people who can care for the paintings after the workshop leaves'
         points_fail:
           p1: 'A stop order closes access to the painted surfaces too. The painters cannot attend to them, a section is damaged, and the office recalls the employee.'
-          p2: 'A new worker sees one wall. The scaffold comes away from an area still awaiting inspection.'
-          p3: 'The workshop takes its samples away. Those who take over must infer the older materials from the wall’s current appearance.'
+          p2: 'The workshop takes its samples away. Those who take over must infer the older materials from the wall’s current appearance.'
         shift:
           p1:
             was: 'On January 9, 1305, the neighboring friars complained about the scale and use of the Scrovegni building. Giotto’s fresco cycle survived.'
           p2:
-            was: 'Researchers use the building and painted layers to study the stages of the commission. Several people worked on the cycle.'
-            now: 'The workshop removes scaffolding wall by wall according to its record. It can still reach and compare the joins that need checking.'
-          p3:
             was: 'The frescoes have been conserved and restored more than once. Surviving layers and the building itself provide evidence of earlier work.'
             now: 'The incoming crew have samples keyed to the walls. Before a repair they can check where an early layer was recorded.'
             who: giotto_padua
-            bio: 'Giotto’s frescoes were part of a building commissioned at Padua. Their survival also depended on the workshop’s care of individual painted surfaces.'
+            bio: 'Giotto left in Padua a booklet of colour samples keyed to the walls of the chapel. Centuries of repairs could go back to it to find the colours he had first laid.'
         vignettes:
           eye: 'The visitor always starts where the faces are easiest to see. You ask what their eyes do when you send them back to the corner. They follow a gesture into the next part of the picture.'
           register: 'The visitor tries to continue on the band just below. You trace the route around the wall in the air. They walk a few steps and find the scene they were looking for.'
@@ -63,23 +57,18 @@ events:
         relic_desc: 磨好的蓝色，是礼拜堂穹顶的颜色。
         points:
           p1: '邻院提出异议后，请委托人把外部工程与乔托已画的墙面分别登记，给画工留出能继续照管画面的窗口'
-          p2: '趁脚手架撤开以前，与画工核出几段已经收工、几段还要动用作业面，并整理每天的接缝'
-          p3: '请乔托把用于后续修补的颜色样与墙面位置配成册，交给两个能继续照管绘画的人'
+          p2: '请乔托把用于后续修补的颜色样与墙面位置配成册，交给两个能继续照管绘画的人'
         points_fail:
           p1: '停工单把壁画养护也一并撤下。画工进不去，尚需照管的画面受损，事务所召回员工。'
-          p2: '新来的工人只看见一整面墙，收架时把仍等检查的一段也挡住了。'
-          p3: '工房收走颜色样，接手的人只按墙面现状判断先前用过的材料。'
+          p2: '工房收走颜色样，接手的人只按墙面现状判断先前用过的材料。'
         shift:
           p1:
             was: '1305 年 1 月 9 日，邻近修院对斯克罗韦尼建筑的规模和使用提出投诉。乔托的壁画组仍然留存。'
           p2:
-            was: '学者通过墙体和画层考察工程如何分期。壁画组由工房多人参与。'
-            now: '撤架次序按墙面画层登记。仍待检查的地方保持可到达，最后再从当天的接缝对照。'
-          p3:
             was: '这组壁画后来经多次保护与修复，现存画层和建筑痕迹留下许多可研究的信息。'
             now: '接手的人手里有一册写了位置的样纸，可以在修补前先看哪里保留了最早的一层。'
             who: giotto_padua
-            bio: '乔托的帕多瓦壁画与委托方的建筑工程紧密相连。图像能保存下来，也与画工分段照料墙面有关。'
+            bio: '乔托在帕多瓦留下一册注明墙面位置的颜色样。后来几百年的修补都能照着它，找回他当初上的颜色。'
         vignettes:
           eye: '访客总从面孔最清楚的地方看。你请他把视线拉回画角，看看接下来会往哪儿去。他顺着画中人的手势，看到了下一部分。'
           register: '访客要直接往正下方一层接着看。你在空中沿墙比出看画的顺序。他往前走几步，找到了刚才在找的那一幕。'

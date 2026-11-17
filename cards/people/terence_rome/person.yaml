@@ -14,9 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["musician","archivist","courier"]},{"trait":["artistic","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 17.3, req: {"any":[{"job":["archivist","musician","proofreader"]},{"trait":["artistic","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 23, req: {"any":[{"job":["archivist","musician"],"stat":{"wit":7,"will":7}},{"trait":["artistic","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 17, req: {"any":[{"trait":["charismatic","glib"],"stat":{"will":6}},{"job":["musician","radio_host","tour_guide","street_vendor"],"stat":{"will":5}},{"provides":"show"}]}}
       vignettes:
         - {id: warning, traits: [bold, charismatic]}
         - {id: audibility, traits: [methodical, curious]}
@@ -30,24 +28,15 @@ events:
         relic: "A comic mask"
         relic_desc: "A linen mask with a raised brow, worn by an actor."
         points:
-          p1: 'When another show draws the crowd, get the company started as agreed and collect every actor’s part when the performance stops'
-          p2: 'After the interruption, collect the actors’ parts and mark in the company book the last passage that reached the audience'
-          p3: 'Have the company leader set aside a paid trial of the unplayed scenes for a small invited audience'
+          p1: 'When the rumour of a tightrope walker and boxers draws the crowd away, hold the audience in their seats and help the company play The Mother-in-Law through to the end the first time'
         points_fail:
-          p1: 'The cast loses its parts before opening. There is no first attempt to record, and the office recalls the employee.'
-          p2: 'Several pages go home with the actors. The company has to reconstruct the next rehearsal from the scenes people remember.'
-          p3: 'The scenes wait for a large public slot. Several actors take other work before the company can reassemble.'
+          p1: 'The audience left as in history and the play broke off. In this branch the first staging of The Mother-in-Law still ended halfway.'
         shift:
           p1:
-            was: 'The prologue to The Mother-in-Law recalls an early performance interrupted by noise and rival acts, conventionally dated to 165 BCE.'
-          p2:
-            was: 'Later prologues recall two interruptions. The company eventually brought the same comedy back.'
-            now: 'The company has records both of what it performed and of what was still to come. A new cast can distinguish a scene it never reached from a deliberate cut.'
-          p3:
-            was: 'The play received a full public performance in 160 BCE. Ambivius Turpio addressed the audience to help secure a hearing.'
-            now: 'Before a small invited audience, the actors finish the unplayed section and collect the pay agreed with the leader. The later public performance and its prologue still follow.'
+            was: 'In 165 BC The Mother-in-Law was first staged; a rumour that a tightrope walker and boxers were about to perform drew the audience away, and the play could not be finished.'
+            now: '{staff} kept the people in their seats, and the company played The Mother-in-Law to its last line at the first attempt. The play did not have to wait five more years and two more stagings to be heard to the end.'
             who: terence_rome
-            bio: 'Terence’s comedy depended on a company leader, performers and festival organizers. Its prologues record the difficulty of keeping time on a stage.'
+            bio: 'In this line, Terence''s The Mother-in-Law was played to the end at its first staging in 165 BC, and did not go through two more interruptions.'
         vignettes:
           warning: 'You tell a stagehand that people will still read how the crowd left, two thousand years after it happened. He asks whether they will know what the actors were saying when they left. You stay for the rehearsal and write down the last line you could hear. The rehearsal ends with one more listener than it began with. The public performance is still ahead of you.'
           audibility: 'You listen from beside the entrance and miss the reply to a line you heard clearly. The stagehand moves one bench and asks you to listen again. This time you hear both halves. You take home a sketch of the bench’s two positions. The street has grown too loud for you to hear the ending from outside.'
@@ -60,24 +49,15 @@ events:
         relic: "一副喜剧面具"
         relic_desc: "一副亚麻面具，眉毛高挑，演员戴的。"
         points:
-          p1: '隔壁有表演吸走观众时，先让剧团照约定开场，再把能交接的分角本一份不少地收回'
-          p2: '停演后收齐各演员用过的段落，在剧团的场次簿记清哪里还来不及演'
-          p3: '请剧团领队为停演的一段安排一次有约定时段的小场试演，给演员和场务明确补偿'
+          p1: '走绳艺人和拳击手的传言引走观众时，留住看台上的人，帮剧团把《婆母》头一回演完'
         points_fail:
-          p1: '消息传来时，剧团尚未开场就丢了分角本。这一次连有据可查的尝试都没有，事务所召回员工。'
-          p2: '剩下的页夹在演员手上，下一回只能从记得的一两段重新找起。'
-          p3: '停下的段落仍等一个大场次，演员先去接别的演出，重聚时已有几人换掉。'
+          p1: '观众照史实散去，戏演到一半收场，这条分支里《婆母》头一回上演仍没有演完。'
         shift:
           p1:
-            was: '《婆母》序场回顾头一次演出被剧场外的声响和其他节目打断，通常系于公元前 165 年。'
-          p2:
-            was: '后来序场保留了两次中断的记忆。剧团又将同一部戏带回演出场地。'
-            now: '原来演到的位置和未演部分有了两份记录，复排的人不用把未演段误认成删节。'
-          p3:
-            was: '《婆母》到公元前 160 年才获一次完整公开演出。安比维乌斯·图尔皮奥为它再次上演向观众说明缘由。'
-            now: '演员在一小群邀请来的人面前把未演段走完，并从领队领到约定的工钱。公开演出的历史和后来的序场都保留下来。'
+            was: '公元前 165 年，《婆母》头一回上演，传言有走绳艺人和拳击手要来，观众散去，戏没能演完。'
+            now: '{staff}留住了看台上的人，剧团头一回就把《婆母》演到了最后一句。这部戏不必再等五年、再经两回上演才被人听完。'
             who: terence_rome
-            bio: '泰伦提乌斯的戏要由领队、演员与节庆场务协作。《婆母》的序场记录了争取台上时间的困难。'
+            bio: 'IF 线里，泰伦提乌斯的《婆母》在公元前 165 年头一回上演就演完了，没有再经历两次中断。'
         vignettes:
           warning: '你告诉虚构的舞台帮工，两千年后还有人读到观众离场这件事。他问后人知不知道观众走时演员说到哪儿。你留下听排练，记下最后一句听清的话。排练结束时比开头多了你这一个听众，正式演出还没到。'
           audibility: '你靠门听，听清了一句，却漏掉了接它的那句。帮工挪了一条长凳，请你再听一遍。这回你把两句都听到了。你带回画着长凳两个位置的草图。等你退到街上，末尾的话已被街声盖住。'

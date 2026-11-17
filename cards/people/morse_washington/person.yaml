@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 12, req: {"any":[{"job":["electrician","mechanic"],"stat":{"wit":6}},{"trait":["handy","methodical"],"stat":{"finesse":8}}]}}
-        - {id: p2, kind: notice, day: 12.5, req: {"any":[{"trait":["methodical","vigil","scholarly"]},{"job":["archivist","journalist"]}]}}
-        - {id: p3, kind: persuade, day: 27, req: {"any":[{"job":["electrician","teacher","tutor"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 27, req: {"any":[{"job":["electrician","teacher","tutor"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"will":8}}]}}
       vignettes:
         - {id: gap, traits: [methodical, vigil]}
         - {id: credit, traits: [curious, bold]}
@@ -33,19 +32,14 @@ events:
         relic_desc: A brass lever worn bright where a thumb rested.
         points:
           p1: 'Clear a fault with a test signal before the Capitol sends its first formal demonstration to Baltimore'
-          p2: 'Link the original message and its return receipt before the two endpoints file their tapes'
-          p3: 'Use the operating notes to persuade Morse to teach a class so other people can run the line'
+          p2: 'Use the operating notes to persuade Morse to teach a class so other people can run the line'
         points_fail:
           p1: 'The far end cannot return the signal, the opening demonstration fails, and the office recalls the employee that day.'
-          p2: 'The tapes are filed apart. Readers need to find both pieces to tell the outgoing message from the reply.'
-          p3: 'In June only Morse and Vail can operate it, and one end has to wait whenever the other has no operator.'
+          p2: 'In June only Morse and Vail can operate it, and one end has to wait whenever the other has no operator.'
         shift:
           p1:
             was: 'On 24 May 1844, Morse sent the formal demonstration message from the U.S. Capitol to Baltimore.'
           p2:
-            was: 'On 24 May 1844, paper tapes recorded both the Washington-to-Baltimore message and the message sent back from Baltimore.'
-            now: '{staff} gets both ends to use matching register numbers and include the source of the wording in the entry.'
-          p3:
             was: 'On 9 June 1844, Vail wrote that only he and Morse could operate the telegraph.'
             now: '{staff} has Morse teach a small class with real test messages and lets trainees check the replies at both ends. By the time the line gets busy they can take shifts.'
             who: morse_washington
@@ -63,19 +57,14 @@ events:
         relic_desc: 一根黄铜杠杆，拇指放的地方磨亮了。
         points:
           p1: '在发报前用试信号排掉线路故障，护住国会大厦通往巴尔的摩的首场演示'
-          p2: '在两端纸带各自归档前，留下能把原文、发报方和回执合起来查的登记'
-          p3: '拿操作记录劝莫尔斯开一班练习，让线路在两位发明者以外也有人会用'
+          p2: '拿操作记录劝莫尔斯开一班练习，让线路在两位发明者以外也有人会用'
         points_fail:
           p1: '对端没能回收信号，预告的首场正式发送落空，这条分支与史实脱节，员工当天被召回。'
-          p2: '纸带分别收存，查阅的人得翻找两份东西才知道哪段是去信，哪段是回告。'
-          p3: '到六月仍只有莫尔斯和韦尔能操作，谁不能值班，另一端就得等。'
+          p2: '到六月仍只有莫尔斯和韦尔能操作，谁不能值班，另一端就得等。'
         shift:
           p1:
             was: '1844 年 5 月 24 日，莫尔斯从华盛顿国会大厦向巴尔的摩发出了正式演示电报。'
           p2:
-            was: '1844 年 5 月 24 日，华盛顿发往巴尔的摩的电文和巴尔的摩回传的电文各留下纸带。'
-            now: '{staff}促成两端用对应的登记号收存纸带，并在登记上写下文句出自谁。'
-          p3:
             was: '1844 年 6 月 9 日，韦尔在信中写道，当时只有莫尔斯和他自己会操作电报。'
             now: '{staff}让莫尔斯用实收的试报教一小班学员，由两端的人互相核对回执。线路忙起来后，学员已经能接班。'
             who: morse_washington

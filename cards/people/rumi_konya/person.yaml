@@ -16,9 +16,8 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["translator","archivist"]},{"trait":["patient","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 10, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["patient","scholarly","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 26, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["patient","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 10, req: {"any":[{"job":["translator","archivist"]},{"trait":["patient","scholarly"],"stat":{"will":6}}]}}
+        - {id: p2, kind: care, day: 16, req: {"any":[{"job":["translator","bookseller","former_monk"],"stat":{"wit":7,"will":6}},{"trait":["patient","faithful","scholarly"],"stat":{"wit":7,"will":7}},{"item":"neural_chip","trait":["patient","scholarly","faithful"],"stat":{"will":6}}]}}
       vignettes:
         - {id: reed, traits: [artistic, wanderer, curious]}
         - {id: hand, traits: [patient, sensitive, calm]}
@@ -33,23 +32,18 @@ events:
         relic_desc: 'An imagined reading sheet marking the opening of a verse.'
         points:
           p1: 'Put the pages of the Masnavi that Rumi checked in book order in Konya, ready for later copying'
-          p2: 'Separate loose pages awaiting review from complete sequences. Have the scribe mark the order at the beginning of each book'
-          p3: 'Arrange for two copyists in Konya to keep checked copies separately. Leave readers a way to consult both'
+          p2: 'When he falls ill in December, help Husam al-Din Chalabi take down what Rumi still dictates, so the end of the sixth book goes a little further before he dies'
         points_fail:
-          p1: 'Different reading copies are mixed. Later the copyists cannot recover a set checked by Rumi, and the office recalls the employee.'
-          p2: 'An opening circulates by itself. A later scribe cannot tell which book it introduces.'
-          p3: 'After Rumi dies a reader can borrow only one set. To verify an earlier reading, they have to trace a different circle of readers.'
+          p1: 'Different reading copies were mixed and nobody could recover a set checked by Rumi. The branch came apart from history and the office recalled the employee.'
+          p2: 'The sixth book ended where history left it.'
         shift:
           p1:
             was: 'Konya holds a Masnavi manuscript dated 1278. Collection research traces it to a copy that Rumi checked.'
           p2:
-            was: 'Surviving manuscripts divide the poem into six books, usually with separate openings.'
-            now: 'The first page identifies its book. A scribe copying one passage can still locate it in the longer text.'
-          p3:
-            was: 'Rumi died in Konya in 1273. Early related copies and manuscripts from other textual traditions survive.'
-            now: 'A second checked copy remains with another reader. When a different wording appears, it can be compared against both copies and the earlier marks.'
+            was: 'Rumi fell ill in December 1273 and died in Konya on 17 December. The sixth book of the Masnavi ends inconclusively; whether it was finished, accounts differ.'
+            now: 'In his last days a few more couplets were taken down, and the sixth book closes the story it had begun.'
             who: rumi_konya
-            bio: 'Rumi’s work passed through reading, copying and a number of manuscript traditions. Early Konya copies show how it continued to circulate after his death.'
+            bio: 'In this line Rumi''s last dictation in December 1273 was taken down to the end of the story he was telling. The six books went on being read in Konya after his death.'
         vignettes:
           reed: 'Narin has performed both parts with the same voice. You ask where the reed first speaks as itself. She lets the next line begin after a breath. When Hasan listens with his eyes shut, he can hear the moment the reed takes over.'
           hand: 'Hasan has to leave the reading bench, and Narin reaches for his page while he is still speaking. You hold its corner until he completes the couplet and can put his finger on the next line. She begins there when it is her turn. The passage has passed between them without a gap.'
@@ -63,23 +57,18 @@ events:
         relic_desc: '读书页，在起句处做了记号。'
         points:
           p1: '在科尼亚把鲁米已经核过的《玛斯纳维》抄页按卷收好，留作后来重抄的底稿'
-          p2: '将等人校读的散页与已经收齐的长篇分开，请誊写者给卷首留次序'
-          p3: '请两名留在科尼亚的抄写人让核过的本子各有存处，并给以后想参读另一套的人写下借抄依据'
+          p2: '他十二月病倒以后，帮侯赛姆·切莱比记下他还在口述的诗句，让第六卷的结尾在他去世前多走一段'
         points_fail:
-          p1: '抄写人的数份读本混在一起，后来拿不出一套可以查回鲁米亲自核过的稿子，事务所召回员工。'
-          p2: '开篇抄页单独传出，后来抄写人不知道它接的是哪一卷。'
-          p3: '鲁米去世后，较晚的读者只有借来的其中一套，想核早期读法便得另找一批人。'
+          p1: '几份读本混在一起，后来拿不出一套鲁米亲自核过的稿子。分支与历史脱了节，事务所因同步失败召回员工。'
+          p2: '第六卷照史实停在原处。'
         shift:
           p1:
             was: '科尼亚保存一份 1278 年的《玛斯纳维》手稿。馆藏研究认为它依据鲁米本人核过的一份抄本。'
           p2:
-            was: '存世写本将诗分为六卷，每卷通常另有卷首。'
-            now: '抄本从题页查得到对应的卷。誊写者即使只抄一段，也能把它放回合适的位置。'
-          p3:
-            was: '鲁米于 1273 年在科尼亚去世。早期同源抄本与其他文本支系均有流传。'
-            now: '一份核定抄本留在另一位读者手里。将来出现异文时，读者可以比两本哪里不同，并从较早的记号追问来处。'
+            was: '1273 年 12 月鲁米病倒，17 日在科尼亚去世。《玛斯纳维》第六卷的结尾没有收束，是否写完，各家说法不一。'
+            now: '他最后几天又记下了几联，第六卷把开了头的那个故事讲完了。'
             who: rumi_konya
-            bio: '鲁米的作品经朗读、誊写和不同手稿转达。科尼亚留存的早期抄本记录了作品能够怎样在作者身后继续传阅。'
+            bio: '这条时间线里，鲁米 1273 年 12 月最后的口述被记到那个故事的结尾。他去世后，六卷在科尼亚继续有人读。'
         vignettes:
           reed: '娜琳把两处用同一种声音读过去。你问，芦管从哪里开始用自己的口吻说话。她换过一口气，才念下一句。哈桑闭着眼，也听得出哪里换成了芦管。'
           hand: '哈桑得离开读书凳，还没念完，娜琳手已够到那页。你按住纸角，等他把一联念完，手指落到下一行。轮到她时，她从那儿起句，一段诗从一人手里递到了另一人。'

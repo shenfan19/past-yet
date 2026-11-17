@@ -17,8 +17,9 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}},{"trait":["methodical"],"stat":{"will":8}}]}}
-        - {id: p2, kind: notice, day: 26, req: {"any":[{"trait":["methodical","artistic","scholarly"]},{"job":["archivist","translator"]}]}}
-        - {id: p3, kind: persuade, day: 38, req: {"any":[{"job":["archivist","translator"],"stat":{"will":8}},{"trait":["methodical","charismatic"],"stat":{"wit":9}}]}}
+        - {id: p2, kind: persuade, day: 38, req: {"any":[{"job":["archivist","translator"],"stat":{"will":8}},{"trait":["methodical","charismatic"],"stat":{"wit":9}}]}}
+        - {id: p3, kind: care, day: 5, req: {"any":[{"job":["doctor","physician","nurse","caregiver","medical_teacher"]},{"trait":["kind","patient"],"item":"painkiller"},{"trait":["kind","patient","vigil"],"stat":{"constitution":6,"will":6}},{"item":"painkiller","stat":{"will":8}}]}}
+        - {id: p4, kind: trust, day: 9, req: {"any":[{"trait":["scholarly","sensitive","artistic"],"stat":{"will":7}},{"job":["translator","proofreader","writer","teacher","bookseller"],"stat":{"will":7,"wit":6}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
       vignettes:
         - {id: pause, traits: [artistic, quiet]}
         - {id: variant, traits: [methodical, vigil]}
@@ -33,23 +34,28 @@ events:
         relic_desc: "A few pages sewn by hand with a poem on each."
         points:
           p1: 'Help Lavinia separate the letters to be destroyed from the bound poems and protect the unpublished work'
-          p2: 'Before the papers pass into several hands, help the family record which sheets contain variants of the same poem'
-          p3: 'Persuade Lavinia to keep the sewn books at home and send only copies that preserve the layout'
+          p2: 'Persuade Lavinia to keep the sewn books at home and send only copies that preserve the layout'
+          p3: 'Ease her illness in her last weeks, so that she can sleep at night'
+          p4: 'Before she dies, let her know that her poems will be printed and read for generations'
         points_fail:
           p1: 'The poems are mixed with the correspondence and much of the unpublished work is lost. The branch falls out of sync and the office recalls the employee.'
-          p2: 'The sheets go their separate ways and editors have to recover variants from their first lines.'
-          p3: 'The books are taken apart for editing. Later readers have to reconstruct the order from stitch marks and paper.'
+          p2: 'The books are taken apart for editing. Later readers have to reconstruct the order from stitch marks and paper.'
+          p3: 'In mid May she fell into a coma and did not wake again.'
+          p4: 'Fewer than a dozen of her poems were printed in her lifetime, all without her name. In this branch nobody told her otherwise in those last days.'
         shift:
           p1:
             was: 'In 1886, after Dickinson died, Lavinia destroyed the incoming letters as requested and discovered hundreds of poems.'
           p2:
-            was: 'After 1886 Dickinson''s manuscripts passed among family members and editors, and variants came to be held in different collections.'
-            now: '{staff} has the people handling the sheets record the first lines and variant words so that copies of the same poem can be compared.'
-          p3:
-            was: 'After 1886, Dickinson''s hand-sewn books were disbound during the early editing of her poems.'
+            was: 'From 1886 on, Dickinson''s hand-sewn books were disbound during the early editing of her poems.'
             now: '{staff} helps Lavinia copy the pages as laid out and keep the originals at home. Later readers can still see which poems Dickinson stitched together.'
+          p3:
+            was: 'In May 1886, after two and a half years of illness, Dickinson fell into a coma and died on 15 May.'
+            now: 'She suffered less in those last weeks and slept at night.'
+          p4:
+            was: 'When Dickinson died on 15 May 1886, fewer than a dozen of her nearly eighteen hundred poems had been printed, all without her name.'
+            now: '{staff} let her know while she was still awake that those poems would be printed as books and read for a long time to come.'
             who: dickinson_amherst
-            bio: 'Editors worked from copies after Dickinson''s death. Her sewn books remained intact, and readers could read the poems in the order she set.'
+            bio: 'In her last days Dickinson learned that her poems would be read for generations, and she died at home in Amherst.'
         vignettes:
           pause: 'The reader makes the dash disappear as they read aloud. You ask them to pause where the pencil broke off. They try the line again and hear a different ending.'
           variant: 'You see a word written above the line. The reader wants to choose one version and move on. You make room in the margin for both and label which comes from where.'
@@ -63,23 +69,28 @@ events:
         relic_desc: "几页手工缝起来的纸，每页一首诗。"
         points:
           p1: '帮拉维尼娅分开要销毁的来信和姐姐捆好的诗稿，护住那批尚未刊行的诗'
-          p2: '在不同人手里的复稿分开前，帮家属记下同一首诗有哪些改写'
-          p3: '劝拉维尼娅把原册留在家中，只把保留手稿版面的副本交出去编辑'
+          p2: '劝拉维尼娅把原册留在家中，只把保留手稿版面的副本交出去编辑'
+          p3: '她病重的最后几周，减轻她的病痛，让她夜里睡得着'
+          p4: '去世之前让她知道，她的诗会印成书，一代代有人读'
         points_fail:
           p1: '诗稿和来信混进同一摞纸，大批未刊诗跟着消失。这条分支与史实脱节，员工被召回。'
-          p2: '各处的手稿照旧分开，校订时又得凭首句逐一找回异稿。'
-          p3: '编诗时原册被拆，后来的读者只能靠针孔和纸张重排册序。'
+          p2: '编诗时原册被拆，后来的读者只能靠针孔和纸张重排册序。'
+          p3: '五月中旬她陷入昏迷，再没有醒来。'
+          p4: '她生前只有十来首诗印出来，都没署她的名字；这条分支里没人在最后那些天告诉过她以后的事。'
         shift:
           p1:
             was: '1886 年，狄金森去世后，拉维尼娅按姐姐的要求销毁来信，另外发现了成批诗稿。'
           p2:
-            was: '1886 年以后，狄金森的诗稿在家属和编辑之间分散流传，异稿后来分藏各处。'
-            now: '{staff}让经手人分别注明首句和不同用词，把能够互相对读的版本记在同一张清单上。'
-          p3:
             was: '1886 年以后，狄金森亲手缝成的诗册在早期编辑阶段被拆开。'
             now: '{staff}帮拉维尼娅把摊开的页面逐页照原样副抄，原册留在家里。后来读者能看到哪些诗是狄金森自己缝在一起的。'
+          p3:
+            was: '1886 年 5 月，狄金森病了两年半之后陷入昏迷，5 月 15 日去世。'
+            now: '最后那几周她少受了些苦，夜里睡得着。'
+          p4:
+            was: '1886 年 5 月 15 日狄金森去世时，她写下的近一千八百首诗只有十来首印出过，都没有署名。'
+            now: '{staff}在她还清醒时让她知道，那些诗会印成书，往后一直有人读。'
             who: dickinson_amherst
-            bio: '狄金森身后刊行的诗集有副本可供编辑。她亲手编的诗册仍成册保存，读者可以按她当时排的顺序读。'
+            bio: '狄金森在最后几天知道了她的诗会被一代代人读下去，在阿默斯特的家中去世。'
         vignettes:
           pause: '读者朗读时把破折号滑了过去。你请他在笔迹断开的地方停一停。再读那一行，他听出了另一种收尾。'
           variant: '你看见行上还写了一个词。读者想挑一个抄完就算，你腾出页边，把两个都留着，并注明各在何处。'

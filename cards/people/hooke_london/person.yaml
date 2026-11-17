@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 25, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 58, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 58, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p3, kind: trust, day: 12, req: {"any":[{"trait":["scholarly","sensitive","faithful"],"stat":{"will":7}},{"job":["teacher","university_lecturer","lecturer","writer","biologist","bookseller"],"stat":{"will":7}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
       vignettes:
         - {id: edge, traits: [artistic, vigil]}
         - {id: analogy, traits: [curious, skeptical]}
@@ -33,23 +33,23 @@ events:
         relic_desc: "A fine engraving of a flea under glass."
         points:
           p1: 'Keep Hooke’s lecture papers and the accounts he read at the Royal Society in a chest that can be checked. Leave Waller an inventory and access to it'
-          p2: 'Number illustrations and lecture pages against each other. Identify plates that the publisher supplied later'
-          p3: 'Ask Waller to record where papers left out of the new collection will be kept under searchable titles'
+          p2: 'Ask Waller to record where papers left out of the new collection will be kept under searchable titles'
+          p3: 'Before he dies, let him know that the little cells he named and his law of springs will go on being remembered under his name'
         points_fail:
           p1: 'Lectures go off with loose papers. Waller cannot recover the pieces for the later edition, and the office recalls the employee.'
-          p2: 'Illustrations and texts come from separate bundles. The editor has to guess which meeting a figure went with.'
-          p3: 'The inventory covers only what is going to the printer. The rest goes back to separate people.'
+          p2: 'The inventory covers only what is going to the printer. The rest goes back to separate people.'
+          p3: 'He still died on 3 March, and no authenticated portrait of him was left. In this branch nobody told him in those last days that he would be remembered.'
         shift:
           p1:
             was: 'Hooke died in 1703. Richard Waller prepared the collection of posthumous works published in 1705.'
           p2:
-            was: 'The 1705 edition includes engravings and distinguishes the Cutlerian lectures from other papers read to the Royal Society.'
-            now: 'The editor can use a number to find an illustration cited in a lecture. New engravings have their own entries.'
-          p3:
             was: 'Waller’s book preserved some of the papers. Parts of Hooke’s diaries and other work appeared later through other editors.'
             now: 'The first editorial inventory includes a page for papers set aside. Later editors can still trace what can be seen even if they work on a different subject.'
+          p3:
+            was: 'On 3 March 1703 Hooke died in London. No authenticated portrait of him survives, and his reputation was restored only at the end of the twentieth century.'
+            now: '{staff} let him know in those last days that the little cells in the cork would keep the name he gave them, and that his law of springs would carry his name into textbooks.'
             who: hooke_london
-            bio: 'Hooke worked in London for years. His collections of lectures, writings and diaries were edited and transmitted by different people.'
+            bio: 'In this timeline Hooke heard before he died that he would be remembered, and his last days were easier.'
         vignettes:
           edge: 'The reader closes every incomplete edge. You cover half the plate and ask which outlines they can still defend. When the cover comes away, they leave several marks unfinished.'
           analogy: 'You ask where the cork stops looking like a honeycomb. The reader puts the two pictures together and starts pointing out differences instead of naming more similarities.'
@@ -63,23 +63,23 @@ events:
         relic_desc: "一幅玻璃下跳蚤的精细版画。"
         points:
           p1: '在伦敦把胡克讲课留存的手稿与皇家学会宣读过的另纸放在可点清的箱中，给后来接手的沃勒留一份钥匙和清单'
-          p2: '给原先课上用过的图与演讲文本相互编号，指明哪些是后来书商备下的刻图'
-          p3: '在伦敦请沃勒给未选入书的稿件留存处和可查题名，让曾参与的人能确认自己的记录去了哪里'
+          p2: '在伦敦请沃勒给未选入书的稿件留存处和可查题名，让曾参与的人能确认自己的记录去了哪里'
+          p3: '去世之前让他知道，他起名的小格和那条弹性定律会一直带着他的名字被人记着'
         points_fail:
           p1: '几套文稿跟零散纸件同箱运走，沃勒找不齐后来编辑要用的册页，事务所因同步失败召回员工。'
-          p2: '图与讲稿出于不同的包裹，后来只好按题目猜原属哪次宣读。'
-          p3: '收集工作只形成将付印的目录，未进书的记录重新散在不同人手里。'
+          p2: '收集工作只形成将付印的目录，未进书的记录重新散在不同人手里。'
+          p3: '他照旧在 3 月 3 日去世，没有留下一幅经认证的画像，这条分支里没有人在最后那几天告诉过他，后人会记得他。'
         shift:
           p1:
             was: '胡克 1703 年去世。由理查德·沃勒整理的遗著汇编于 1705 年刊行。'
           p2:
-            was: '1705 年版包含演讲稿和刻图，题名区分卡特勒讲座及其他皇家学会宣读稿。'
-            now: '编辑按编号即可找回讲稿引到的图；后来补的刻图也能在同册另列。'
-          p3:
             was: '沃勒的汇编只保存部分遗稿。胡克的部分日记及其他遗留文献经另一些编辑才陆续出版。'
             now: '初版整理时另有一页列出暂留的本子。之后来的编者即使只编另一题，也能追查哪些手稿还可借看。'
+          p3:
+            was: '1703 年 3 月 3 日胡克在伦敦去世，没有一幅经认证的画像传下来，他的名声到二十世纪末才重新被人看重。'
+            now: '{staff}在最后那几天让他知道，软木里的小格会一直叫他起的名字，那条弹性定律会带着他的名字写进课本。'
             who: hooke_london
-            bio: '胡克长期在伦敦工作。身后的文集、讲稿与日记经过不同人整理，流传各有路径。'
+            bio: '这条时间线里，胡克去世前听说了自己会被后人记住，最后那几天走得安心些。'
         vignettes:
           edge: '读者把每一处断开的边都补成了整格。你盖住半张图，问他哪些线还能从图上认出。再揭开时，他留了几处断线。'
           analogy: '你问软木在哪儿就不像蜂房了。读者把图凑到一起，开始指两幅图哪里不同。'

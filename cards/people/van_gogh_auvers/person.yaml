@@ -2,7 +2,7 @@ order: 197
 events:
   van_gogh_auvers:
     order: 102
-    build_step: 3
+    build_step: 2
     year: 1890
     # three office days from the planned arrival on 20 May 1890, the day he came to Auvers
     date: '1890-05-20'
@@ -21,8 +21,9 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 49, req: {"any":[{"job":["painter","illustrator"]},{"trait":["hardy","handy","patient"],"stat":{"constitution":6}}]}}
-        - {id: p2, kind: persuade, day: 55, req: {"any":[{"trait":["artistic","sensitive","charismatic","kind"]},{"job":["painter","illustrator","antique_dealer"]}]}}
-        - {id: p3, kind: care, day: 66, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"stat":{"will":6}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch"}]}}
+        - {id: p2, kind: care, day: 50, req: {"any":[{"job":["accountant","tax_preparer","antique_dealer","market_trader"],"stat":{"will":5}},{"trait":["kind","sensitive","patient"],"stat":{"will":7}}]}}
+        - {id: p3, kind: persuade, day: 55, req: {"any":[{"trait":["artistic","sensitive","charismatic","kind"]},{"job":["painter","illustrator","antique_dealer"]}]}}
+        - {id: p4, kind: care, day: 66, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"stat":{"will":6}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch"}]}}
       vignettes:
         - {id: sky, traits: [artistic, curious], day: 40}
         - {id: wind, traits: [quiet, vigil], day: 52}
@@ -37,19 +38,24 @@ events:
         relic_desc: "A squeezed tin tube of the colour he used for the fields."
         points:
           p1: 'Under a stormy sky, help him finish the wheatfield, and keep the canvas from falling into the wheat'
-          p2: 'Let him know that his paintings will be remembered'
-          p3: 'Before 27 July, heal his body and his mind, and keep him alive'
+          p2: 'After the visit to Paris, help him get Theo''s money troubles talked through, so that storm does not weigh on him'
+          p3: 'Let him know that his paintings will be remembered'
+          p4: 'Before 27 July, heal his body and his mind, and keep him alive'
         points_fail:
           p1: 'The canvas went down into the wheat in the wind, and in this branch there is no Wheatfield under Thunderclouds.'
-          p2: 'He still felt his paintings were a burden on Theo. In this branch nobody ever told him where these wheatfields would end up.'
-          p3: '27 July happened as it did in history. In this branch he did not paint another season.'
+          p2: 'He came back from Paris still feeling the storm that threatened Theo weighing on him too. In this branch nobody helped him get the money matter clear.'
+          p3: 'He still felt his paintings were a burden on Theo. In this branch nobody ever told him where these wheatfields would end up.'
+          p4: '27 July happened as it did in history. In this branch he did not paint another season.'
         shift:
           p1:
             was: 'In early July 1890 Van Gogh painted vast wheatfields under troubled skies, and wrote of them to Theo and Jo about 10 July.'
           p2:
+            was: 'In early July 1890 Van Gogh visited Theo''s family in Paris and learned that Theo was thinking of leaving his post to set up on his own; back in Auvers he wrote that the storm threatening Theo weighed on him too.'
+            now: 'When he came back from Paris he knew how Theo''s household would manage, and he went back out to the fields with one weight fewer.'
+          p3:
             was: 'In July 1890 Van Gogh wrote that he felt a failure and saw no good future; he sold few paintings in his life.'
             now: 'Someone told him that these wheatfields would one day hang on museum walls, and that many people would travel to see them.'
-          p3:
+          p4:
             was: 'He was wounded by a gunshot on 27 July 1890 and died at Auvers two days later, having painted for only about a decade.'
             now: '{staff} stayed with him through that July, the illness did not crush him again, and when the summer was over he was still at the Auberge Ravoux. He painted for a few more years, and after the wheatfields there were other seasons.'
         vignettes:
@@ -65,19 +71,24 @@ events:
         relic_desc: "一支挤瘪的锡管，里面是他画麦田用的那种黄。"
         points:
           p1: '暴风雨般的天空下，帮他把那幅麦田画完，不让画布倒进麦田'
-          p2: '让他知道自己的画会被记住'
-          p3: '7 月 27 日之前，治好他的身体和心病，让他活下来'
+          p2: '从巴黎回来以后，帮他把提奥一家的钱和生计问清、说开，不让那场风暴压在他身上'
+          p3: '让他知道自己的画会被记住'
+          p4: '7 月 27 日之前，治好他的身体和心病，让他活下来'
         points_fail:
           p1: '那幅画在风里倒进了麦田，这条分支里没有《麦田上空的乌云》。'
-          p2: '他照旧觉得自己的画是提奥的负担，这条分支里没有人告诉过他这些麦田后来的去处。'
-          p3: '7 月 27 日照史实发生，这条分支里他没能多画一个季节。'
+          p2: '他从巴黎回来，照旧觉得那场威胁提奥的风暴也压在自己身上，这条分支里没有人帮他把钱的事理清。'
+          p3: '他照旧觉得自己的画是提奥的负担，这条分支里没有人告诉过他这些麦田后来的去处。'
+          p4: '7 月 27 日照史实发生，这条分支里他没能多画一个季节。'
         shift:
           p1:
             was: '1890 年 7 月初，梵高在不安的天空下画成了大片的麦田，7 月 10 日前后写信给提奥和乔说起它。'
           p2:
+            was: '1890 年 7 月初，梵高去巴黎看提奥一家，得知提奥想辞去做了多年的画廊职位、自己开业；回奥维尔后他写信说，那场威胁提奥的风暴也压在自己身上。'
+            now: '他从巴黎回来时已经知道提奥家撑得住，回到麦田里画画时，心上少压了一件事。'
+          p3:
             was: '1890 年 7 月，梵高在信里说觉得自己是个失败者，看不到好的前途；他生前卖出的画很少。'
             now: '有人告诉过他，这些麦田以后会挂在博物馆的墙上，有很多人专程去看。'
-          p3:
+          p4:
             was: '1890 年 7 月 27 日他受了枪伤，两天后在奥维尔去世，只画了大约十年。'
             now: '{staff}陪他过了那个七月，病没有再把他压垮，那个夏天过去时他还在拉武客栈。他又画了几年，麦田之后还有别的季节。'
         vignettes:

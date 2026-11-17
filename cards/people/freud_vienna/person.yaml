@@ -16,9 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 13, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 40, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 40, req: {"any":[{"job":["bookseller","journalist","doctor","physician","medical_teacher"],"stat":{"will":6}},{"trait":["charismatic","glib","cosmopolitan"],"stat":{"wit":6}}]}}
       vignettes:
         - {id: imprint, traits: [quiet, curious, methodical]}
         - {id: reader, traits: [kind, patient, sensitive]}
@@ -32,24 +30,15 @@ events:
         relic: 'A dated bookseller’s slip'
         relic_desc: 'An invented slip that preserves the imprint and the arrival year.'
         points:
-          p1: 'In Vienna, reconcile the copies received by shops with those still in transit so the first edition of The Interpretation of Dreams can go on sale'
-          p2: 'Record when the advance copies and the published sheets actually leave. Keep both dates in the bookseller’s ledger'
-          p3: 'Have the editor read the anonymous examples for details that might identify a person. Mark possible omissions for the author to approve'
+          p1: 'In the quiet weeks after the book appears, get The Interpretation of Dreams into the hands of colleagues who will read it to the end'
         points_fail:
-          p1: 'Advance copies are mistaken for the whole shipment. The Vienna seller has no stock on publication day, and the office recalls the employee.'
-          p2: 'The catalogue copies only the title-page year. Then the letters and the printing date seem to be in the wrong order.'
-          p3: 'The names are gone, but several details can still be matched. The author has to wait until another edition to review them.'
+          p1: 'The book draws little notice. The first printing of 600 copies takes eight years to sell.'
         shift:
           p1:
-            was: 'Freud wrote on November 5, 1899, that the book had appeared the day before. The first edition’s title page gives 1900.'
-          p2:
-            was: 'Fliess received an advance copy. The preserved first edition and Freud’s correspondence give different ways of dating the book.'
-            now: 'Early readers can match the dispatch dates to the title-page year. Later correspondence can be filed in the right sequence.'
-          p3:
-            was: 'The book includes case material and accounts used as examples. Later editions expanded it.'
-            now: 'The bookseller retains approved edits without attaching names to copies in circulation. Before expanding an example in a new edition, the editor can check whether it remains recognizable.'
+            was: 'On 4 November 1899 The Interpretation of Dreams appeared in Vienna in a first printing of 600 copies, dated 1900. They took eight years to sell.'
+            now: '{staff} carries copies to a few colleagues who read the whole book that winter. Letters and argument about it start years earlier, and the first printing does not wait eight years.'
             who: freud_vienna
-            bio: 'Freud wrote in Vienna. The book passed through a publisher and several later editions. Tracking versions and protecting people described in examples call for separate editorial decisions.'
+            bio: 'Freud''s book on dreams found serious readers in its first year. The discussion he waited years for began in the winter of 1899.'
         vignettes:
           imprint: 'Grete sees 1900 on the title page and wants to change the arrival ledger. You bring the delivery slip over from the counter. She writes the printed year on the label and keeps today’s year in the ledger. The two records now answer different questions.'
           reader: 'A customer thinks Emil has brought next year’s book by mistake. You invite him to compare the slip with the title page at the counter. The customer leaves with a copy and asks Emil to keep the slip in the shop so the next reader can see it too.'
@@ -62,24 +51,15 @@ events:
         relic: '一张注明日期的书店存根'
         relic_desc: '书店存根，两处年份都保留。'
         points:
-          p1: '在维也纳核清书商已经收货和仍在途的份数，护住《梦的解析》能以首版的面貌开始发售'
-          p2: '给预寄本和正式印张分记实际日期，将跨年标注留在维也纳的书商账上'
-          p3: '请编辑为使用过的匿名案例做一次识别风险校读。凡可从多处细节认出当事人的，留下能删去的地方供作者确认'
+          p1: '在书面世后无人问津的那几周，把《梦的解析》送到会认真读完它的同行手里'
         points_fail:
-          p1: '预寄本被当成全批发货。到开售日，维也纳书商没有可售的份数，事务所因同步失败召回员工。'
-          p2: '书目只抄扉页年份。转查来往信件时，时间先后对不上。'
-          p3: '手稿略去姓名，仍留有几项能互相拼对的个人细节。作者得在下一版才有机会复查。'
+          p1: '书出来以后少有人理会，首印六百册要八年才卖完。'
         shift:
           p1:
-            was: '弗洛伊德 1899 年 11 月 5 日写信说书在前一天面世，首版扉页印的是 1900 年。'
-          p2:
-            was: '弗里斯收到过先行本，馆藏首版与来信采用了不同的纪年方式。'
-            now: '早期收书人能对照发运日期和扉页年份。往后汇集来信时，也能放回正确次序。'
-          p3:
-            was: '书中包含以个案或叙述举例的材料，并经过多次增订。'
-            now: '书商留存经作者核准的删改痕迹，不在流通本里补录身份。新版改写叙述时，校对者先检查是否仍可辨认个案。'
+            was: '1899 年 11 月 4 日，《梦的解析》在维也纳面世，首印六百册，扉页印 1900 年，八年才卖完。'
+            now: '{staff}把书送到几位同行手里，他们那个冬天就读完了全书。关于它的来信和争论早来了好几年，首印也不用等八年。'
             who: freud_vienna
-            bio: '弗洛伊德在维也纳写作，书经出版商刊行，后来多次增订。保存版本和保护被举例者需要编辑作出两种不同的决定。'
+            bio: '弗洛伊德那本讲梦的书在头一年就有了认真的读者。他等了多年的讨论，1899 年冬天就开始了。'
         vignettes:
           imprint: '格雷特看了扉页上的1900年，就想改掉到货簿。你从柜台拿来送货单。她把印在书上的年份写给题签，簿上仍记今天是哪一年。两张纸各回答一个问题。'
           reader: '有客人以为埃米尔错拿了明年的书。你请他在柜台上把到货单和扉页对着看。客人带书走时，请埃米尔把单留下，好给再来的人看看。'

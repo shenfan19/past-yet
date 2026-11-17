@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 23, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}}]}}
-        - {id: p2, kind: notice, day: 9, req: {"any":[{"job":["musician","archivist"]},{"trait":["artistic","methodical","vigil"]}]}}
-        - {id: p3, kind: persuade, day: 24, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 24, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: cue, traits: [curious, quiet, methodical]}
         - {id: swap, traits: [kind, artistic, attached]}
@@ -33,19 +32,14 @@ events:
         relic_desc: 'A fictional part with one rest crossed out.'
         points:
           p1: 'Reschedule the opening rehearsal after illness hits the small company and protect the 29 October premiere of Don Giovanni'
-          p2: 'Put the changed dates and programs on a record before the wrong announcement circulates again'
-          p3: 'Have Mozart approve a complete Prague copy while the premiere parts are still in the theater'
+          p2: 'Have Mozart approve a complete Prague copy while the premiere parts are still in the theater'
         points_fail:
           p1: 'The choir and orchestra cannot fit in another rehearsal and the 29 October premiere is canceled again. The office recalls the employee after a loss of sync.'
-          p2: 'The old date remains on the notice. Listeners have to reach the theater to learn that another opera is being performed.'
-          p3: 'Vienna''s revisions and the older Prague passage readings circulate together and a later company has to piece the versions together.'
+          p2: 'Vienna''s revisions and the older Prague passage readings circulate together and a later company has to piece the versions together.'
         shift:
           p1:
             was: 'On 29 October 1787 Don Giovanni premiered in Prague after inadequate preparation and a singer''s illness forced postponements.'
           p2:
-            was: 'On 14 October 1787 The Marriage of Figaro was performed in place of the scheduled Don Giovanni.'
-            now: '{staff} lists the original date and the substitute in the theater register and posts a dated correction. Later readers can trace how the premiere moved.'
-          p3:
             was: 'In 1788 Mozart made changes for the Vienna production of Don Giovanni.'
             now: '{staff} gets a copy checked against the Prague performance and has the replacement pages kept separately. When another city changes the score, the Prague stage version remains legible.'
             who: mozart
@@ -63,19 +57,14 @@ events:
         relic_desc: '排练用谱，划掉了一个休止。'
         points:
           p1: '在小剧团有人病倒后重新排练开场，保住 10 月 29 日的《唐璜》首演'
-          p2: '在临时定下的剧目和日期又传错之前，帮剧院留下可查的换戏公告'
-          p3: '趁首演用的分谱仍在台上，请莫扎特核准一份注明布拉格版的完整副本'
+          p2: '趁首演用的分谱仍在台上，请莫扎特核准一份注明布拉格版的完整副本'
         points_fail:
           p1: '狭窄的排练时间挤不出合唱和乐队重来一次，29 日的首演再度取消。行程同步失败，员工被召回。'
-          p2: '公告仍用原来的日期，观众得到了剧院才知道当天换演了另一部戏。'
-          p3: '后来为维也纳改写的段落和布拉格旧稿混着流传，排演的人得去找不同的分谱拼。'
+          p2: '后来为维也纳改写的段落和布拉格旧稿混着流传，排演的人得去找不同的分谱拼。'
         shift:
           p1:
             was: '1787 年 10 月 29 日，在排练准备不足及歌手患病造成延期后，《唐璜》在布拉格首演。'
           p2:
-            was: '1787 年 10 月 14 日原订演《唐璜》，当天实际演了《费加罗的婚礼》。'
-            now: '{staff}把日期和替演剧目一起登进剧院的演出清册，重贴一份有日期的公告。后来查首演记录的人也能看到原来的改期。'
-          p3:
             was: '1788 年《唐璜》在维也纳上演时，莫扎特为当地演出另作改动。'
             now: '{staff}请莫扎特在首演后核准一份照布拉格演出保留的副本，并把后来替换的页另装。另一座城市改谱时，仍可以读到这份原来的演出版本。'
             who: mozart
@@ -103,6 +92,7 @@ events:
         - {id: p1, kind: hold, guard: true, day: 6, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"finesse":7}}]}}
         - {id: p2, kind: notice, day: 10, req: {"any":[{"trait":["methodical","artistic","scholarly"]},{"job":["musician","archivist"]}]}}
         - {id: p3, kind: care, day: 19, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"job":["archivist"],"trait":["methodical"],"stat":{"wit":8,"will":8}}]}}
+        - {id: p4, kind: care, day: 7, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}},{"item":"nano_kit","stat":{"finesse":8}}]}}
       vignettes:
         - {id: stack, traits: [faithful, cheerful, calm]}
         - {id: hand, traits: [artistic, methodical, scholarly]}
@@ -119,10 +109,12 @@ events:
           p1: 'Keep the finished opening of the Requiem together when illness forces a handover'
           p2: 'Before the handover, have a copyist keep a checked score marking where Mozart''s writing ends'
           p3: 'While Mozart can still guide a copyist, help him leave a few bars beyond the break in the Lacrimosa'
+          p4: 'After he takes to his bed on 20 November, cure the fever that keeps him there'
         points_fail:
           p1: 'The opening parts get mixed with loose drafts and the first movement can no longer be reassembled. The office recalls the employee after the branch falls out of sync.'
           p2: 'Later copies still run the additions into the original, and checking any error means finding the manuscript again.'
           p3: 'Mozart''s contribution stops at the eighth bar and another hand has to continue from there.'
+          p4: 'In this branch the illness does not lift. He dies in Vienna on 5 December, aged 35.'
         shift:
           p1:
             was: 'In December 1791, Mozart died with the opening of the Requiem fully orchestrated and much of the rest unfinished.'
@@ -134,6 +126,11 @@ events:
             now: '{staff} has the copyist ask only for the next phrase and write the few bars Mozart indicates on a separate work sheet. Later orchestration takes up where those bars leave off.'
             who: mozart
             bio: 'Before he died, Mozart left a few more bars of his Lacrimosa. Later performances kept a little more of what he wrote.'
+          p4:
+            was: 'From 20 November 1791 Mozart was confined to bed. He died in Vienna on 5 December, and the parish register gave the cause as severe miliary fever.'
+            now: '{staff} brings a medicine that breaks the fever, and in December he sits up again. In this timeline he finishes the Requiem in his own hand and goes on composing and performing in Vienna for many years.'
+            who: mozart
+            bio: 'Mozart recovered in the winter of 1791, finished the Requiem himself and went on composing and performing in Vienna for many years.'
         vignettes:
           stack: 'Greta is clearing the table and sets an empty-looking leaf aside. You hold the stack while Emil checks the page before it. The empty staff belongs in the sequence. Greta puts it back with a loose slip marking where it came from.'
           hand: 'Emil can copy the line in front of him and is ready to carry straight on into an unwritten staff. You have him rule a small mark in the margin at the point where copying stops. In the finished handoff, the next reader can see exactly where a new hand would have to begin.'
@@ -149,10 +146,12 @@ events:
           p1: '在病中交接时，护住莫扎特已经配完器的《安魂曲》开篇，别让散页错放'
           p2: '在交给续作者前，请抄谱员保留一份注明原稿笔迹界线的校本'
           p3: '趁莫扎特还能指点谱子，请他把断在第八小节的《落泪之日》往下留几小节'
+          p4: '他 11 月 20 日卧床不起以后，治好那场让他起不了身的高烧'
         points_fail:
           p1: '第一段的分谱和草页混在一起，再拼不回完整的开篇。这条分支与史实脱节，员工被召回。'
           p2: '后来的抄谱仍把补写和原稿接成一份，勘误只能再去找原件。'
           p3: '莫扎特自己的谱停在第八小节，后面依然只能由续作者接写。'
+          p4: '这条分支里那场病没有退，12 月 5 日他在维也纳去世，三十五岁。'
         shift:
           p1:
             was: '1791 年 12 月，莫扎特去世时，《安魂曲》的开篇已经配完器，其余多处仍是未完稿。'
@@ -164,6 +163,11 @@ events:
             now: '{staff}让抄谱员只问下一句怎么走，并把莫扎特点明的几小节另记在工作页上。后来的配器从这几小节接下去。'
             who: mozart
             bio: '莫扎特去世前为《落泪之日》多留了几小节自己的写法。后来被传唱的乐句因此多保留了一小段他的原稿。'
+          p4:
+            was: '1791 年 11 月 20 日起莫扎特卧床不起，12 月 5 日在维也纳去世，教区登记的死因是急性粟粒热。'
+            now: '{staff}带去的药退了他的高烧，12 月里他从床上坐了起来。这条时间线里，他亲手写完了《安魂曲》，又在维也纳作曲、演出了许多年。'
+            who: mozart
+            bio: '莫扎特在 1791 年冬天病愈，亲手写完《安魂曲》，此后在维也纳又作曲、演出了许多年。'
         vignettes:
           stack: '格蕾塔收拾桌面，顺手拿开一页看着空白的纸。你扶住一叠谱，让埃米尔去对它前一页。原来那行空谱也该收在原来的次序里。格蕾塔把它放了回去，夹一张小条记下原来的位置。'
           hand: '眼前的乐句埃米尔抄得出，顺着写下去就要越过原来空着的一行。你请他在抄写停住的地方划个边记。交稿后，下一个人翻到这里，就知道另一只手得从哪儿起笔。'

@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"trait":["methodical","charismatic"],"stat":{"will":7}}]}}
-        - {id: p2, kind: notice, day: 15, req: {"any":[{"job":["musician","archivist"]},{"trait":["methodical","artistic","patient"]}]}}
-        - {id: p3, kind: persuade, day: 203, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"job":["archivist","translator"],"stat":{"wit":7,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 203, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"job":["archivist","translator","bookseller"],"stat":{"wit":7,"will":7}}]}}
+        - {id: p3, kind: care, day: 170, req: {"any":[{"job":["doctor","physician"],"item":"nano_kit"},{"provides":"cure","stat":{"will":6}}]}}
       vignettes:
         - {id: timing, traits: [methodical, quiet]}
         - {id: memory, traits: [bold, charismatic]}
@@ -33,23 +33,23 @@ events:
         relic_desc: "A song in a quick hand with the ink still dark."
         points:
           p1: 'Get the volunteer players and the society''s hall onto the same evening and protect Schubert''s own concert'
-          p2: 'While the Trio''s performance is still fresh, give the interested publisher a record of the pieces the audience heard'
-          p3: 'Turn the inquiry into an agreement while Schubert can still settle publication and the dedication for his last three sonatas'
+          p2: 'Turn the inquiry into an agreement while Schubert can still settle publication and the dedication for his last three sonatas'
+          p3: 'Before he moves to his brother Ferdinand''s, cure the illness he has carried for years, so that he lives through that autumn'
         points_fail:
           p1: 'The players and the available hall are booked for different days. The friends'' concert is canceled, and the office recalls the employee after a loss of sync.'
-          p2: 'The publisher hears that the concert went well but cannot tell which version of the Trio was played.'
-          p3: 'The inquiry is left waiting for a reply. The sonatas appear years after his death with a different dedication.'
+          p2: 'The inquiry is left waiting for a reply. The sonatas appear years after his death with a different dedication.'
+          p3: 'As in history, he moves to his brother''s still ill on 1 September, and dies there on 19 November.'
         shift:
           p1:
             was: 'On 26 March 1828 Schubert gave a Vienna concert of his own music with help from friends and performers.'
           p2:
-            was: 'After the March 1828 concert Schubert offered the Trio to publishers and referred to its reception.'
-            now: '{staff} has the players check the parts used that evening and leaves Schubert a list he can compare with what he sends to the publisher.'
-          p3:
             was: 'On 2 October 1828 Schubert offered his final three sonatas and named his intended dedicatee. They were first published in 1839.'
             now: '{staff} gets all three scores and the dedication sent together and asks for written confirmation. Schubert receives it while he is alive, and the dedication stays with the music.'
+          p3:
+            was: '1 September 1828: Schubert, already ill, moved into his brother Ferdinand''s flat in a new house in Wieden, and died there on 19 November, aged thirty one.'
+            now: 'The medicine {staff} brought cured him. He did not fall ill that November, and went on living and writing music in Vienna for years. What he wrote is not in the record of this trip.'
             who: schubert_vienna
-            bio: 'Schubert received a publication commitment for his final sonatas before his death. Their later printers followed the dedication he had chosen.'
+            bio: 'In this timeline Schubert was cured in the autumn he was thirty one, lived on for many years and kept composing in Vienna.'
         vignettes:
           timing: 'The usher wants to open the door as soon as the visitor comes. You count the pieces on the programme and ask them both to wait for the next pause. One person finds a seat and the musicians play on. You hear the ending from the corridor.'
           memory: 'You tell the usher that people will look for this invitation long after the chairs are gone. He asks you to keep a clean copy away from the door. You put it aside and pencil the date on your own note. By the time you return, you have missed the opening.'
@@ -63,23 +63,23 @@ events:
         relic_desc: "一首运笔很快的歌，墨迹还很深。"
         points:
           p1: '把临时凑到的演奏者和音乐协会的场地约到同一晚，护住舒伯特自己的音乐会'
-          p2: '趁三重奏得到掌声，把观众想再听的曲目按原谱记给有意付印的出版人'
-          p3: '把出版问询变成可交稿的约定，让舒伯特赶得及为最后三首钢琴奏鸣曲定下出版与题献'
+          p2: '把出版问询变成可交稿的约定，让舒伯特赶得及为最后三首钢琴奏鸣曲定下出版与题献'
+          p3: '在他搬去哥哥费迪南德家之前，治好缠了他多年的病，让他熬过那年秋天'
         points_fail:
           p1: '出场的人和空出的场地错了日期，靠朋友帮忙才排成的音乐会取消。行程同步失败，员工被召回。'
-          p2: '出版人只知道音乐会成功，不知道台上弹过三重奏的哪一版。'
-          p3: '来信仍停在等回音的阶段，三首奏鸣曲在他去世多年后才出版，题献也换了人。'
+          p2: '来信仍停在等回音的阶段，三首奏鸣曲在他去世多年后才出版，题献也换了人。'
+          p3: '他照旧带着病在 9 月 1 日搬去哥哥家，11 月 19 日在那里去世，这条分支与历史一样。'
         shift:
           p1:
             was: '1828 年 3 月 26 日，舒伯特获朋友和演奏者协助，在维也纳以自己的作品举办专场音乐会。'
           p2:
-            was: '1828 年 3 月音乐会后，舒伯特向出版商推荐三重奏，并提及音乐会反响。'
-            now: '{staff}请演奏者核对当晚的声部谱，再为舒伯特留一份能同寄稿核对的曲目和版本清单。'
-          p3:
             was: '1828 年 10 月 2 日舒伯特致函推荐最后三首奏鸣曲并提出题献意愿，三曲直到 1839 年才刊印。'
             now: '{staff}帮舒伯特把三份谱和题献要求随交稿清单送出，请出版方先回一封能核对的确认。舒伯特生前收到了确认，题献随乐谱保留。'
+          p3:
+            was: '1828 年 9 月 1 日，病中的舒伯特搬进哥哥费迪南德在维登一幢新房子里的住处，11 月 19 日在那里去世，年三十一岁。'
+            now: '{staff}带来的药治好了他的病。那年十一月他没有病倒，此后多年仍在维也纳作曲。写了什么，这一趟的记录里没有。'
             who: schubert_vienna
-            bio: '舒伯特生前为最后三首奏鸣曲留下了出版确认与题献说明。后来付印的人沿用他亲自留下的要求。'
+            bio: '这条时间线里，舒伯特三十一岁那年秋天病好了，又活了许多年，在维也纳继续作曲。'
         vignettes:
           timing: '引座人见客人一到就想开门。你照节目单数过曲目，请两人等到下一次停顿。迟到的人找到座位，台上接着演。末尾那一段，你站在走廊里听完。'
           memory: '你告诉虚构的引座人，多年后人们还会找这张请柬，到时这些椅子早就不在了。他请你留一张没折的。你收到一边，在自己的纸条上记下日期。回来时，开场已经过去。'

@@ -14,9 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 31, req: {"any":[{"job":["archivist","teacher","tutor"]},{"trait":["scholarly","curious"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 38, req: {"any":[{"job":["archivist","teacher","proofreader"]},{"trait":["scholarly","curious","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 67, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","curious","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 67, req: {"any":[{"job":["archivist","teacher","tutor","bookseller"],"stat":{"wit":7}},{"trait":["scholarly","methodical"],"stat":{"wit":7,"will":6}}]}}
       vignettes:
         - {id: witness, traits: [methodical, scholarly]}
         - {id: rows, traits: [curious, handy]}
@@ -30,24 +28,15 @@ events:
         relic: "A counting rod"
         relic_desc: "A bamboo counting rod worn smooth."
         points:
-          p1: 'Check the problems and solutions against Qin’s categories. Leave the copyist in Huzhou the complete sequence'
-          p2: 'Ask two readers to check the same remainder problem independently and record which line to check again'
-          p3: 'Have Qin preserve one full example from rough calculation through the error and the final check. Ask a teacher to use it with a beginner'
+          p1: 'Help Qin Jiushao have more fair copies of the Mathematical Treatise in Nine Sections made and get the book into a printer''s hands, so that it does not pass down only in manuscript'
         points_fail:
-          p1: 'A category is bound with answers but its explanations are filed in another volume. The compilation cannot be assembled, and the office recalls the employee.'
-          p2: 'The copied text has only a final number. When it fails a second remainder, a reader cannot tell which line to recalculate.'
-          p3: 'A reader receives only the polished solution. When a result fails, they can do little but copy the answer.'
+          p1: 'The book went on as a manuscript as history has it, and waited almost six hundred years for a printed edition.'
         shift:
           p1:
-            was: 'Qin’s preface records choosing eighty-one problems for the Mathematical Treatise in Nine Sections, associated with 1247.'
-          p2:
-            was: 'Volume one presents the method for problems involving remainders, with worked procedures.'
-            now: 'Both readers can trace the remainder that fails back to a line of arithmetic. Qin adds the check to the proof.'
-          p3:
-            was: 'Qin grouped problems by subject. The surviving text gives both statements and methods.'
-            now: 'The reader working with a teacher can recover the step after a check fails. A copy Qin reviewed is kept for later copyists.'
+            was: 'The Mathematical Treatise in Nine Sections existed in manuscript in 1247. It was copied into the Yongle Encyclopedia in 1421 and the Siku Quanshu in 1787, and a woodblock edition appeared only in 1842.'
+            now: 'Several fair copies left Huzhou, and a printed edition was cut within his lifetime. Readers in other cities could study it in his own order.'
             who: qin_jiushao_huzhou
-            bio: 'Qin worked on the book during his mourning period in Huzhou. It presents problems, answers and procedures together.'
+            bio: 'In this line Qin Jiushao''s treatise was printed while he lived. It was read and taught in more than one place in the Song.'
         vignettes:
           witness: 'The learner puts five counters down. Groups of three leave two, just as requested, but groups of five leave none. You ask him to test eight. That leaves two in the first row and three in the second. He crosses out one answer. You leave before they start a problem with a third row.'
           rows: 'You know the procedure will be studied long after the learner forgets this exercise. He asks why two remainders cannot be written in one box. You have him label the one for groups of three and the one for groups of five. He can now test the next answer on his own. That next answer is still out of reach when you go.'
@@ -60,24 +49,15 @@ events:
         relic: "一枚算筹"
         relic_desc: "一根磨得发亮的竹算筹。"
         points:
-          p1: '照秦九韶手中的题类核齐《数书九章》的题解，在湖州给会誊写的人留成套次序'
-          p2: '请两位读者用相同的余数题分别验算，把哪一行需回验写进各自的算纸'
-          p3: '让秦九韶挑一题从初算、错算到回验逐步留下，交给带新手的人按这个例子试教'
+          p1: '帮秦九韶把《数书九章》多誊几部，交到刻书人手里，别让它只靠抄本传下去'
         points_fail:
-          p1: '装订时有一类题只有答案，解说散在别卷。书不能按原来安排合成，事务所召回员工。'
-          p2: '誊稿只有一个最终数。用另一条余数检查出问题时，读者不知道应追回哪一行。'
-          p3: '传给下一位的人只有整理过的正确演算，初学者遇到坏结果便跳到书后照抄。'
+          p1: '这部书照史实只以抄本流传，近六百年后才有刻本。'
         shift:
           p1:
-            was: '秦九韶自序记从许多题中选出八十一题，编入成于 1247 年前后的《数书九章》。'
-          p2:
-            was: '《数书九章》卷一叙述处理有关余数问题的大衍方法，并展示解题步骤。'
-            now: '两人可以把出错的那条余数指回算纸的一行。作者再把检查写在抄本边。'
-          p3:
-            was: '秦九韶按题类整理问题。现存传本显示题设与解法并列。'
-            now: '试教的读者面对一次真实验算失败，能找到应重做的一步。之后仍保留秦九韶校过的例题，便于新抄人对读。'
+            was: '《数书九章》1247 年以抄本存世，1421 年收入《永乐大典》，1787 年收入《四库全书》，1842 年才有木刻本。'
+            now: '几部誊本离开了湖州，他在世时书就刻了版。别处的人也能照他排定的次序读这部书。'
             who: qin_jiushao_huzhou
-            bio: '秦九韶在湖州居丧期间整理数学著作。作品将实际题目、答数与步骤放进同一个可学习的文本。'
+            bio: '这条时间线里，秦九韶的书在他生前就刻印出来，在宋代不止一处有人读、有人教。'
         vignettes:
           witness: '学算人摆了五根筹。三根一组的确剩二，但五根一组剩零。你请他试八，第一行剩二，第二行剩三。他划去一个答案。再加第三行的题，你没等到。'
           rows: '你知道以后还有人研究这套算法，学算人却只想知道两个余数能不能填进同一格。你请他分别标明按三分组与按五分组的两行。他下次能自己验了，那个新答案你仍没赶上。'

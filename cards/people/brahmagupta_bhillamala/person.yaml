@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["accountant","teacher","archivist"]},{"trait":["scholarly","curious"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 31, req: {"any":[{"job":["archivist","teacher","proofreader"]},{"trait":["scholarly","curious","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 74, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","curious","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 74, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","curious","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: debt, traits: [methodical, scholarly]}
         - {id: limit, traits: [curious, skeptical]}
@@ -31,19 +30,14 @@ events:
         relic_desc: A leaf with a small round mark for nothing.
         points:
           p1: 'Keep the account examples with the rules of arithmetic so the compilation made in 628 includes this section'
-          p2: 'Have a reader try an account and mark when a debt is to be subtracted'
-          p3: 'Have the author and a second calculator record separate examples and show a reader with a fragment where to recover the full passage'
+          p2: 'Have the author and a second calculator record separate examples and show a reader with a fragment where to recover the full passage'
         points_fail:
           p1: 'The examples are removed as old accounts. The rules are missing from the completed manuscript, and the office recalls the employee.'
-          p2: 'The reader understands the words but counts the debt as an incoming payment and cannot verify the result.'
-          p3: 'Copyists transmit the result and a line of rules. Later readers cannot see the conditions of the example.'
+          p2: 'Copyists transmit the result and a line of rules. Later readers cannot see the conditions of the example.'
         shift:
           p1:
             was: 'Brahmagupta’s work of 628 gives operations on debts, fortunes and zero. A later commentator calls him a teacher from Bhillamala.'
           p2:
-            was: 'The text uses debts and fortunes to illustrate calculations with signed quantities.'
-            now: 'The clerk checks the rule with a new example and can trace which amounts count as debts or fortunes.'
-          p3:
             was: 'Descriptions of the manuscript tradition note differences in the copies, including the copy of chapter eighteen used for Colebrooke’s translation.'
             now: 'Both worked examples identify the passage they come from. A later copyist can recover the rule and keep genuine variant readings visible.'
             who: brahmagupta_bhillamala
@@ -61,19 +55,14 @@ events:
         relic_desc: 一片叶子，上面有个代表“没有”的小圆圈。
         points:
           p1: '在毗罗摩罗把历算稿中的账例和数的规则抄在同一组页上，护住 628 年的编成能保有这一篇'
-          p2: '拿一笔收付给读书的人试算，请他在账上标明什么时候要减去一笔债'
-          p3: '请作者与第二名算手合写一份分栏试例，给只读到残抄章的人留回查原段的办法'
+          p2: '请作者与第二名算手合写一份分栏试例，给只读到残抄章的人留回查原段的办法'
         points_fail:
           p1: '整理的人把账例当成无关旧账取走，成稿漏了这一组规则，事务所召回员工。'
-          p2: '读者读懂了字面，把债当作同向收入时仍得不到要核的数。'
-          p3: '抄手只传答数和一句规则，后来的读者无从核对用于哪种情形。'
+          p2: '抄手只传答数和一句规则，后来的读者无从核对用于哪种情形。'
         shift:
           p1:
             was: '婆罗摩笈多的 628 年著作包含对债、财、零的运算。较晚注家称他是毗罗摩罗的老师。'
           p2:
-            was: '原书用债和财来说明不同符号量的运算。'
-            now: '做账的人用自己的例子核回题意，能查到什么时候应按债、什么时候应按财。'
-          p3:
             was: '各本传抄后来留下差异；科尔布鲁克所据第十八章不完全同于校注所述的其他稿。'
             now: '两份张贴给读者的算例都带出自哪段。后来的抄写人能找回完整规则，也保留确实有差异的写法。'
             who: brahmagupta_bhillamala

@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
-        - {id: p2, kind: notice, day: 16, req: {"any":[{"trait":["methodical","scholarly","patient"]},{"job":["archivist","journalist"]}]}}
-        - {id: p3, kind: persuade, day: 15.5, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 15.5, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: field, traits: [methodical, scholarly]}
         - {id: post, traits: [curious, kind]}
@@ -33,19 +32,14 @@ events:
         relic_desc: "A small brass telescope with a trace of sea salt on the tube."
         points:
           p1: 'Get the discovery notice onto the first mail boat so the mainland observatory can follow the comet'
-          p2: 'Put the first sighting and later reports in date order before a faster delivery obscures the earlier observation'
-          p3: 'Send a second notice to the designated Danish recipient on the first boat and spare Mitchell the later medal appeal'
+          p2: 'Send a second notice to the designated Danish recipient on the first boat and spare Mitchell the later medal appeal'
         points_fail:
           p1: 'The observations remain in the family''s journal, but the first boat sails without the notice. The observatory misses its first chance to follow it, and the office recalls the employee.'
-          p2: 'The European report circulates first. Editors have to find the first letter to check when the sighting occurred.'
-          p3: 'Only the observatory gets the notice. The judges cannot grant the medal under the usual rules because the designated recipient was not notified.'
+          p2: 'Only the observatory gets the notice. The judges cannot grant the medal under the usual rules because the designated recipient was not notified.'
         shift:
           p1:
             was: 'On 3 October 1847 Mitchell''s father wrote to the Cambridge observatory about the discovery on the 1st. His letter left on the first mail after the sighting.'
           p2:
-            was: 'On 9 December 1847 Astronomische Nachrichten printed the Cambridge observations with notice of Mitchell''s sighting on 1 October.'
-            now: '{staff} attaches a dated record before the first confirmation is forwarded, so an editor can check the order while assembling the reports.'
-          p3:
             was: 'In 1848 the judges ruled that the notice had gone to the wrong recipient. Mitchell eventually received the Danish medal after a separate appeal.'
             now: '{staff} checks the rules and helps the family put another notice on the same boat. The judges can consider the claim under the usual rules because the notice arrived through the proper channel.'
             who: mitchell_nantucket
@@ -63,19 +57,14 @@ events:
         relic_desc: "一架小小的黄铜望远镜，镜筒上有海盐的痕迹。"
         points:
           p1: '护住第一次离岛邮船上的发现通知，让大陆天文台来得及追看彗星'
-          p2: '把首见时刻和后来各处的观测按发件日排清，让抢先送达的报道不会盖过更早的观测'
-          p3: '赶在第一班邮船开走前，再寄一份给丹麦方面指定的收件人，免去米切尔后来为金牌补申'
+          p2: '赶在第一班邮船开走前，再寄一份给丹麦方面指定的收件人，免去米切尔后来为金牌补申'
         points_fail:
           p1: '家中有观测记录，但第一班邮船把通知落下。天文台没赶上那轮观测，员工因同步失败被召回。'
-          p2: '较快到达的欧洲消息先被传开，编辑只能再去追原信核对发现日期。'
-          p3: '通知只寄给天文台，评奖人因未按要求及时通报而不能按例授奖。'
+          p2: '通知只寄给天文台，评奖人因未按要求及时通报而不能按例授奖。'
         shift:
           p1:
             was: '1847 年 10 月 3 日，米切尔的父亲写信把 1 日的发现告知剑桥天文台，信随发现后首班离岛邮件寄出。'
           p2:
-            was: '1847 年 12 月 9 日，《天文消息》刊出剑桥天文台的资料，注明米切尔在 10 月 1 日已见到彗星。'
-            now: '{staff}在信随第一轮核验材料转寄前附上带日期的发现记录，让编辑在合并报道时能先核对时间。'
-          p3:
             was: '1848 年，评奖人认定收件人不合规定，米切尔最终是在另行陈请后获得丹麦金牌。'
             now: '{staff}查清通知应送何处，帮家人把另一个写好地址的信封赶上同一班船。评奖人已有在期限内通报的记录，可以按例审理。'
             who: mitchell_nantucket

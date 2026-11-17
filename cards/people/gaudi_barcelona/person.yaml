@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 24, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","artistic"],"stat":{"finesse":5}}]}}
-        - {id: p3, kind: persuade, day: 40, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":6}},{"trait":["methodical","handy"],"stat":{"will":7}}]}}
+        - {id: p2, kind: persuade, day: 40, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":6}},{"trait":["methodical","handy"],"stat":{"will":7}}]}}
+        - {id: p3, kind: care, day: 12, req: {"any":[{"job":["paramedic","doctor","physician","nurse"],"item":"first_aid_kit"},{"trait":["vigil","kind"],"stat":{"constitution":8,"will":5}},{"provides":"heal","stat":{"will":6}}]}}
       vignettes:
         - {id: outline, traits: [handy, methodical]}
         - {id: street, traits: [artistic, curious]}
@@ -32,24 +32,24 @@ events:
         relic: "A plaster model"
         relic_desc: "A small hanging model of a vault."
         points:
-          p1: 'After Gaudí is hospitalized, give Domènec Sugranyes the active works list and the workshop keys so he can take over construction in June.'
-          p2: 'Have the incoming team photograph the faces and orientation of each plaster model in a single sequence. Mark the related drawings with the same model number.'
-          p3: 'Ask Sugranyes to keep photographs, scales and related drawings for the main models in a second location. Leave the workshop a signed list of what went there.'
+          p1: 'While Gaudí is in hospital, give Domènec Sugranyes the list of works in progress and the workshop keys so the building goes on in June'
+          p2: 'Ask Sugranyes to keep photographs, scales and drawings of the main plaster models in a second place, with a signed list left in the workshop'
+          p3: 'On the evening of 7 June, when the tram knocks down an old man nobody recognises on the Gran Via, get Gaudí to hospital at once and save him'
         points_fail:
           p1: 'The workshop waits for Gaudí to sign off, and his colleague cannot retrieve the list of active work. The handover stops and the office recalls the employee.'
-          p2: 'There are photos of the models, but the drawings still use workshop shorthand. A new person handling them cannot match some of the images to the drawings.'
-          p3: 'The photographs and drawings stay in the same row of cupboards. When the workshop is damaged, the comparison material is lost with the plaster models.'
+          p2: 'The photographs and drawings stay in the same row of cupboards. When the workshop is damaged, the comparison material is lost with the plaster models.'
+          p3: 'Taken for a beggar, he lies in the street while taxis pass, reaches a dispensary and then the Santa Creu hospital late, and dies there on 10 June.'
         shift:
           p1:
             was: 'A tram accident put Gaudí in hospital in June 1926, where he died. His colleague Sugranyes took charge of the Sagrada Família project.'
           p2:
-            was: 'Gaudí’s workshop held models and drawings. Published photographs and plans later helped the team reconstruct parts of the design.'
-            now: 'The team can find the drawing with the same number as a photograph and tell which way the model faced after the handover.'
-          p3:
             was: 'In 1936 much of the workshop’s original drawings and plaster models were lost. The project later drew on fragments and published images for reconstruction.'
             now: 'Ten years later the workshop cupboards burn. The team retrieves an album and the drawings from the second site. Two model faces they would otherwise have to piece together from fragments now have contemporary dimensions for comparison.'
+          p3:
+            was: 'On 7 June 1926 Gaudí was struck by a tram on the Gran Via. With no papers and in worn clothes he was taken for a beggar, and he died in the Hospital de la Santa Creu on 10 June, aged seventy three.'
+            now: '{staff} kneels beside him within a minute, says who he is and gets him straight to a surgeon. Gaudí recovers, and goes back to the workshop at the Sagrada Família for some years more.'
             who: gaudi_barcelona
-            bio: 'Gaudí concentrated his later work in the Sagrada Família and its workshop. Drawings and plaster models both guided the design, and his collaborators continued building after his death.'
+            bio: 'Gaudí survived the tram accident of June 1926. He returned to the Sagrada Família workshop and went on directing the work with Sugranyes for several more years.'
         vignettes:
           outline: 'The clerk holds a plan so the visitor can see all the towers together. You shade the one that already stands. The visitor now has a landmark to look for outside.'
           street: 'You ask the visitor to step to the next corner before looking up again. A finished shape on the plan was hidden from the first position. They mark where they stood.'
@@ -62,24 +62,24 @@ events:
         relic: "一个石膏模型"
         relic_desc: "一个小小的悬挂式穹顶模型。"
         points:
-          p1: '高迪入院后，把进行中的工程清单和工房钥匙交给多梅内克·苏格拉涅斯，让他在六月接手施工。'
-          p2: '让接手的工匠把石膏模型的各面和指向拍在同一组照片里，再把模型号写到相应的图纸上。'
-          p3: '请苏格拉涅斯在另一处存放关键模型的照片、标尺与相应图纸，给工房留有签收的副本清单。'
+          p1: '高迪住院期间，把进行中的工程清单和工房钥匙交给多梅内克·苏格拉涅斯，让施工在六月接着往下走'
+          p2: '请苏格拉涅斯把关键石膏模型的照片、标尺和图纸另存一处，在工房留一份签收的清单'
+          p3: '6 月 7 日傍晚，大道上的电车撞倒一个没人认得的老人时，立刻把高迪送进医院，救下他'
         points_fail:
           p1: '工房等着高迪回来核准，接手的同事拿不到进行中的工程清单。施工交接中断，事务所因同步失败召回员工。'
-          p2: '模型拍了照，图纸上仍只有工房熟悉的简称。换了人整理时，部分照片找不到相应的纸本。'
-          p3: '照片和图纸仍收在工房同一排柜里。后来工房毁损时，对照材料随石膏模型一起散失。'
+          p2: '照片和图纸仍收在工房同一排柜里。后来工房毁损时，对照材料随石膏模型一起散失。'
+          p3: '他被当成乞丐躺在街上，几辆出租车都不停，先到一处诊所才转进圣十字医院，6 月 10 日在那里去世。'
         shift:
           p1:
             was: '高迪 1926 年 6 月遭遇电车事故，在医院去世。他的合作者苏格拉涅斯接掌圣家堂工程。'
           p2:
-            was: '高迪的工房留有模型和图纸。后来继续工程时，已经发表的照片与图纸提供了部分复原依据。'
-            now: '工匠查照片时也能找到同号的图纸，交接以后仍能辨认模型朝向。'
-          p3:
             was: '1936 年工房毁损，原图和石膏模型多有损失。工程团队后来从残件和已刊照片等材料重建。'
             now: '十年后工房里的柜子烧毁，团队从另一处取回照相册和有签收的图纸。以前只能靠残件拼的两个模型面，现在有当年的尺寸可作对照。'
+          p3:
+            was: '1926 年 6 月 7 日，高迪在大道上被电车撞倒，没带证件，衣着破旧，被当成乞丐；6 月 10 日他在圣十字医院去世，年七十三岁。'
+            now: '{staff}一分钟内跪到他身边，说出他是谁，直接把他送到外科医生手里。高迪活了下来，又回圣家堂的工房干了几年。'
             who: gaudi_barcelona
-            bio: '晚年高迪把大部分工作集中在圣家堂与工房。图纸和石膏模型都参与设计，工程在他去世后靠协作者继续。'
+            bio: '高迪挺过了 1926 年 6 月的电车事故。他回到圣家堂的工房，和苏格拉涅斯一起又主持了几年工程。'
         vignettes:
           outline: '办事员举起图，让访客一次看见所有塔。你把已经立着的那座涂深一点。出去后，访客便有一处可以先找。'
           street: '你请访客先走到下一个街角再抬头。图上那道已经完成的轮廓，在刚才的位置看不见。他记下了自己站在哪里。'

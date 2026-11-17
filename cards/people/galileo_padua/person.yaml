@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 11, req: {"any":[{"job":["archivist","university_lecturer"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 28, req: {"any":[{"job":["archivist","university_lecturer","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 65, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: notice, day: 110, req: {"any":[{"job":["university_lecturer","teacher","tutor"],"stat":{"finesse":6}},{"trait":["methodical","patient"],"stat":{"finesse":7,"wit":6}},{"trait":["handy"],"stat":{"finesse":8,"wit":5}}]}}
       vignettes:
         - {id: alignment, traits: [methodical, vigil]}
         - {id: telescope, traits: [bold, curious]}
@@ -33,23 +32,18 @@ events:
         relic_desc: A small glass lens, polished by hand.
         points:
           p1: 'Keep Galileo’s dated sketches of Jupiter and its points of light in order for the copy going to Venice'
-          p2: 'Have him mark east and west on each illustration and keep a reference set in Padua'
-          p3: 'Before the first copies circulate, have Galileo prepare a blank chart readers can use to send back observations in the same format'
+          p2: 'At Bologna in late April, help Magini''s guests see the moons of Jupiter through Galileo''s telescope'
         points_fail:
           p1: 'The loose sketches lose their order. The printer’s copy puts the nights out of sequence, and the office recalls the employee.'
-          p2: 'The direction of one drawing is legible only in an old marginal note. Once the copy leaves the desk, nobody can verify its orientation.'
-          p3: 'Readers argue over what they can see, but their loose drawings are missing comparable dates and directions.'
+          p2: 'The guests look and say they see nothing. Horký writes to Kepler and prints a pamphlet against the Sidereus Nuncius in June.'
         shift:
           p1:
             was: 'Galileo observed Jupiter over successive nights from January 1610 and printed positional records in Sidereus Nuncius.'
           p2:
-            was: 'Surviving drafts and printed pages both plot the points of light beside Jupiter.'
-            now: 'The printer can ask about the corresponding night in the retained set and check the orientation again when reprinting.'
-          p3:
-            was: 'The first edition sold quickly. Kepler supported Galileo and other observers gradually reported what they could see.'
-            now: 'Early readers receive a blank chart with the book. Galileo can line up responses by night and identify an observation still needing a check.'
+            was: 'In late April 1610 Galileo showed his telescope to Magini and other guests at the Palazzo Caprara in Bologna. They said they could not see the satellites, and Martin Horký, who was there, printed a pamphlet against Galileo in June.'
+            now: '{staff} sets the tube steady and shows the guests where to look. Several of them see the points of light beside Jupiter that night, and Horký''s pamphlet finds less ground. The new stars are accepted sooner.'
             who: galileo_padua
-            bio: 'The Padua sketches record how observations over several nights distinguished Jupiter’s companions. Their sequence mattered more than any single drawing.'
+            bio: 'At Bologna in April 1610 Magini''s guests saw the moons of Jupiter through Galileo''s telescope. The doubt that followed the Sidereus Nuncius was shorter.'
         vignettes:
           alignment: 'You stop the copyist from aligning the pages by their edges. Line up Jupiter instead, you suggest. The dots no longer sit on top of one another.'
           telescope: 'You ask which dot is the fourth. The copyist sets out the sheets from several nights and asks which should be trusted when the dots seem to merge.'
@@ -63,23 +57,18 @@ events:
         relic_desc: 一片小小的玻璃透镜，是手工磨出来的。
         points:
           p1: '把一月连夜画下的木星与光点位置按日期装好，护住送往威尼斯付印时的观测日序'
-          p2: '请伽利略在送印图上逐页标注东西方向，留一套帕多瓦的可对照底稿'
-          p3: '首批短册在外传阅前，请他给能观测的人预备一张空白图表，交代怎样把各夜位置用同一格式寄回'
+          p2: '四月下旬在博洛尼亚，帮马吉尼的客人们从伽利略的望远镜里看见木星的卫星'
         points_fail:
           p1: '几夜的简图散开后只剩大致次序，排印稿的日序错位，事务所因同步失败召回员工。'
-          p2: '一幅图的方向只靠页边旧字辨认，抄件离开书桌便没人记得图的朝向。'
-          p3: '读者争论光点能否复见，寄来的零散图却没有可并排的日期和方向。'
+          p2: '客人们看过以后说什么也没看见。霍尔基写信给开普勒，六月印出反驳《星际信使》的小册子。'
         shift:
           p1:
             was: '伽利略从 1610 年 1 月起连续观测木星，随后在《星际信使》刊出位置记录。'
           p2:
-            was: '留存的底稿和刊本均以小图记录星点与木星的相对位置。'
-            now: '威尼斯收到图稿后可以回问底稿上的同一晚，重印时仍能查回图的方向。'
-          p3:
-            was: '首版很快售完。开普勒随后支持伽利略，同行逐渐报告独立观察。'
-            now: '先收到书的人也收到一张空表。数封来信能按夜排在一起，伽利略可以标出哪一晚还有待复核。'
+            was: '1610 年 4 月下旬，伽利略在博洛尼亚的卡普拉拉宫把望远镜给马吉尼等客人看，他们说看不到那几颗卫星；在场的马丁·霍尔基六月印出了反驳伽利略的小册子。'
+            now: '{staff}把镜筒架稳，教客人往哪里看。好几位客人当晚看见了木星旁边的光点，霍尔基的小册子少了立足的地方，这几颗新星早一些得到承认。'
             who: galileo_padua
-            bio: '帕多瓦的草图保存了从多夜记录辨认木星伴星的过程，观测年表比任何一张孤立图更重要。'
+            bio: '1610 年 4 月在博洛尼亚，马吉尼的客人们从伽利略的望远镜里看见了木星的卫星。《星际信使》之后的怀疑短了许多。'
         vignettes:
           alignment: '你拦住正要把两页按纸边对齐的誊写员。先对齐木星吧。纸一挪，几个光点就错开了。'
           telescope: '你追问第四个光点是哪一个。誊写员摊开几晚的图，反问你：有两个点挨得看不清时，该相信哪一夜？'

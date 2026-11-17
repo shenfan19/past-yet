@@ -18,7 +18,8 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["teacher","journalist"],"stat":{"wit":7}},{"trait":["methodical","streetwise"],"stat":{"will":7}}]}}
         - {id: p2, kind: trust, day: 14.5, req: {"any":[{"trait":["kind","charismatic","patient"]},{"job":["teacher","tutor","flight_instructor"]}]}}
-        - {id: p3, kind: notice, day: 15, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"finesse":9}}]}}
+        - {id: p3, kind: persuade, day: 12, req: {"any":[{"job":["teacher","market_trader","accountant"],"stat":{"will":6}},{"trait":["charismatic","glib"],"stat":{"wit":5}},{"job":["bush_pilot","flight_instructor"]}]}}
+        - {id: p4, kind: notice, day: 15, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"finesse":9}}]}}
       vignettes:
         - {id: proof, traits: [methodical, handy, curious]}
         - {id: school, traits: [artistic, kind, charismatic]}
@@ -34,11 +35,13 @@ events:
         points:
           p1: 'Keep the air show preparations from displacing Coleman''s visits with Jacksonville students'
           p2: 'Help Coleman and the teachers set up a follow-up lesson while the students are still asking about flying'
-          p3: 'Use the fault found during the ground check to stop the Paxon test flight and keep both aviators on the ground'
+          p3: 'While she lectures in Florida to raise money, help Coleman gather enough pledges to open the flight school for Black students she has been saving for'
+          p4: 'Use the fault found during the ground check to stop the Paxon test flight and keep both aviators on the ground'
         points_fail:
           p1: 'The organizers drop the visits to make up time. The branch falls out of sync and the office recalls the employee that day.'
           p2: 'The students go home with their questions and no teacher has agreed to a follow-up lesson.'
-          p3: 'The old aircraft takes off as planned. Coleman and the pilot die on the practice flight.'
+          p3: 'The lecture fees come in a little at a time, and in this branch the flight school is still only a plan.'
+          p4: 'The old aircraft takes off as planned. Coleman and the pilot die on the practice flight.'
         shift:
           p1:
             was: 'On 29 April 1926, Coleman visited students at Jacksonville''s Black public schools.'
@@ -46,6 +49,9 @@ events:
             was: 'On 29 April 1926, Coleman visited the schools, and the next day she died on a practice flight.'
             now: '{staff} asks a teacher to collect the questions and set aside a lesson on how to learn to fly.'
           p3:
+            was: 'In 1926 Coleman was touring Florida with lectures and exhibitions to raise money for her own school for Black fliers; she wrote to a sister that she would at last earn enough to open it, and died before it opened.'
+            now: '{staff} helps her set the pledges of the Jacksonville audiences down on one list. By May she has enough promised to rent a field and a training aircraft.'
+          p4:
             was: 'On 30 April 1926, Coleman and the pilot died in a practice flight accident at Paxon Field.'
             now: '{staff} has the ground crew double-check the controls. They find a fault and call off the flight, and Coleman goes on speaking to Black students about aviation.'
             who: bessie_coleman_jacksonville
@@ -64,11 +70,13 @@ events:
         points:
           p1: '护住科尔曼的学校行程，别让赶着筹备试飞的人取消她和学生见面的时间'
           p2: '趁学生还在问怎么学飞，帮科尔曼和老师约好一堂后续课'
-          p3: '凭检查时发现的问题叫停帕克森机场的试飞，让科尔曼和飞行员留在地面'
+          p3: '趁她在佛罗里达巡回演讲筹款，帮科尔曼凑齐认捐，把她一直攒钱要办的黑人飞行学校办起来'
+          p4: '凭检查时发现的问题叫停帕克森机场的试飞，让科尔曼和飞行员留在地面'
         points_fail:
           p1: '临时筹备挤掉了约好的到访，科尔曼赶不到学校，这条分支与史实脱节，员工当天被召回。'
           p2: '孩子们问过学飞的事，散场时还没有老师答应接着教。'
-          p3: '旧飞机按原安排升空，科尔曼和驾驶员在试飞中遇难。'
+          p3: '讲座的钱一点点攒，这条分支里飞行学校仍只是个计划。'
+          p4: '旧飞机按原安排升空，科尔曼和驾驶员在试飞中遇难。'
         shift:
           p1:
             was: '1926 年 4 月 29 日，科尔曼到杰克逊维尔的黑人公立学校拜访学生。'
@@ -76,6 +84,9 @@ events:
             was: '1926 年 4 月 29 日，科尔曼进校拜访，次日试飞遇难。'
             now: '{staff}请一位老师把课堂上的问题收齐，安排一堂课继续讲学飞的门槛。'
           p3:
+            was: '1926 年科尔曼在佛罗里达巡回演讲和表演，为她要办的黑人飞行学校攒钱，写信告诉姐妹终于快攒够了；学校没办起来她就去世了。'
+            now: '{staff}帮她把杰克逊维尔听众的认捐记在同一张单子上。到五月，认下的钱已够租一块场地和一架教练机。'
+          p4:
             was: '1926 年 4 月 30 日，科尔曼和驾驶员在帕克森机场的试飞事故中遇难。'
             now: '{staff}请机务人员复核飞行操纵，发现故障后取消当天的试飞。科尔曼往后继续办面向黑人学生的航空讲座。'
             who: bessie_coleman_jacksonville

@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","artistic"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 18, req: {"any":[{"job":["proofreader","archivist","proofreader"]},{"trait":["methodical","artistic","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 44, req: {"any":[{"job":["proofreader","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 44, req: {"any":[{"job":["proofreader","archivist","bookseller"],"stat":{"wit":7,"will":7}},{"trait":["methodical","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p3, kind: care, day: 100, req: {"any":[{"provides":"cure","stat":{"will":5}},{"job":["doctor","physician"],"item":"antibiotic"},{"job":["nurse","pharmacist"],"item":"antibiotic","stat":{"wit":5}}]}}
       vignettes:
         - {id: index, traits: [methodical, skeptical]}
         - {id: reserve, traits: [kind, charismatic, patient]}
@@ -33,23 +33,23 @@ events:
         relic_desc: "A diary kept for years in careful brush writing."
         points:
           p1: 'Gather all seven installments from Bungakukai and check the collected proofs with Higuchi so the revised work can appear in April'
-          p2: 'Record the seams between installments separately from Ichiyō’s revisions. Keep a proof that can be checked against the original issues'
-          p3: 'When the collected text appears, help Higuchi negotiate a separate edition with a payment in advance and the proofs of her choice'
+          p2: 'When the collected text appears, help Higuchi negotiate a separate edition with a payment in advance and the proofs of her choice'
+          p3: 'When Ichiyō''s fever will not break in July, find the tuberculosis early and cure her'
         points_fail:
           p1: 'One issue is missing from the pile. The editor gets an incomplete collected text, and the office recalls the employee.'
-          p2: 'The compositor corrects a few passages and discards the old sheet. The next reader cannot tell what the author rewrote.'
-          p3: 'The collected version can be borrowed, but the bookseller keeps her waiting without agreeing a fee or a text to use.'
+          p2: 'The collected version can be borrowed, but the bookseller keeps her waiting without agreeing a fee or a text to use.'
+          p3: 'The illness goes on. The doctors who come in August say there is no hope, and she dies at home in Maruyama Fukuyama-chō on 23 November, aged twenty four.'
         shift:
           p1:
             was: 'Takekurabe ran in seven installments. Bungei Kurabu printed the revised work together on April 10, 1896.'
           p2:
-            was: 'The collected version differs from the serialization, which ran in 1895 and 1896.'
-            now: 'The editor can check the author’s revisions and the removed installment seams in separate columns.'
-          p3:
             was: 'Ichiyō faced financial hardship late in life. Takekurabe later appeared in her collected works in 1897.'
             now: 'The bookseller advances part of the fee and keeps the approved proofs. She can use the money for household expenses, and the next compositor knows what text to follow.'
+          p3:
+            was: 'From July 1896 Ichiyō ran a fever that would not go down. In August the doctors called to her judged that she could not recover, and she died of tuberculosis at home on 23 November, aged twenty four.'
+            now: '{staff} has a doctor find the tuberculosis in July and brings medicine that holds it back. She lives through that year and goes on writing fiction in Tokyo for many years.'
             who: higuchi_ichiyo_tokyo
-            bio: 'Higuchi wrote to support her household. She drew on her working life and the Tokyo neighborhoods she knew, and revised the novel after serialization.'
+            bio: 'Higuchi Ichiyō recovered from the tuberculosis found in the summer of 1896. She went on writing in Tokyo for many more years and lived to see her stories collected.'
         vignettes:
           index: 'Someone has pencilled ‘complete’ on a single issue. You compare its ending to the April printing and find where it breaks off. The bookstall keeper lets you put a removable slip in it. You take home a list of seven instalments. You never find out who wrote the first label.'
           reserve: 'The keeper has a reader who followed the story from issue to issue and hasn’t come back for the last one. You point out that other customers can buy the April printing now. The last instalment goes under the counter with a reservation slip. You leave before that reader returns.'
@@ -63,23 +63,23 @@ events:
         relic_desc: "一本写了多年的日记，毛笔字端正。"
         points:
           p1: '拿齐《文学界》七次连载的旧刊，同樋口一叶核全《文艺俱乐部》的合刊校样，让改过的全篇能在四月刊出'
-          p2: '把连载接缝和一叶自己改过的句子分开记，留一套能与原杂志对读的样张'
-          p3: '趁合刊新出，请一叶与书商定一份带预付稿酬的单行本约定，由她指定所用校本'
+          p2: '趁合刊新出，请一叶与书商定一份带预付稿酬的单行本约定，由她指定所用校本'
+          p3: '七月一叶发热不退时，及早查出结核，治好她'
         points_fail:
           p1: '零散旧刊少了一期，编辑只收到不全的合刊稿，事务所因同步失败召回员工。'
-          p2: '排字工改正几处后把旧样丢开，下一次核稿的人分不清哪些是作者改写的。'
-          p3: '已有合刊可以借阅，书商仍只让她等后续消息，稿酬与使用哪个底本都没有定。'
+          p2: '已有合刊可以借阅，书商仍只让她等后续消息，稿酬与使用哪个底本都没有定。'
+          p3: '病一路加重，八月请来的医生说已无法挽回，11 月 23 日她在丸山福山町的家中去世，年二十四。'
         shift:
           p1:
             was: '《青梅竹马》分七次刊载，1896 年 4 月 10 日由《文艺俱乐部》刊出修订后的全篇。'
           p2:
-            was: '合刊与先前连载分属不同版本，连载跨 1895 年和 1896 年。'
-            now: '一叶自己的改笔和删去的连载接缝各有一栏，编辑能据此复核。'
-          p3:
             was: '一叶晚年仍面对生计压力。《青梅竹马》后来收入 1897 年刊行的全集。'
             now: '书商先付一笔稿酬并留下签认的校样。她能用这笔收入周转；往后排版的人也知道这版应照哪一份稿。'
+          p3:
+            was: '1896 年 7 月起一叶发热不退，8 月请来的医生诊断已无法挽回；11 月 23 日她在家中死于肺结核，年二十四。'
+            now: '{staff}七月就请医生查出了结核，带去的药压住了病。她熬过了那一年，又在东京写了许多年小说。'
             who: higuchi_ichiyo_tokyo
-            bio: '樋口一叶曾为一家生计写作，也留下店铺生活和东京街区的经验。连载到合刊时，她仍有机会修改小说。'
+            bio: '樋口一叶挺过了 1896 年夏天查出的结核。她在东京又写了许多年，生前看到自己的小说结集。'
         vignettes:
           index: '有人在一期杂志上用铅笔写了「全」。你翻到那一期的末尾，拿四月刊本一对，找到了断在何处。摊主让你夹张能取下来的纸签。你带回七期的清单，却没能问到原来的字是谁写的。'
           reserve: '有位读者一期期追下来，末回还没来取。你指给摊主看，别的客人如今可以买四月的全文刊本。末回连同预留的小条一起放进柜台底下。那位读者回来以前，你先收队了。'

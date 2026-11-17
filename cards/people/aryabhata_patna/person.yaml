@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","teacher","tutor"]},{"trait":["curious","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 26, req: {"any":[{"job":["archivist","teacher","proofreader"]},{"trait":["curious","scholarly","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 52, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 52, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: scale, traits: [methodical, scholarly]}
         - {id: measure, traits: [handy, curious]}
@@ -31,19 +30,14 @@ events:
         relic_desc: A thin leaf with verses scratched in.
         points:
           p1: 'At Kusumapura, check that the mathematics and its dated passage are both present in the compilation'
-          p2: 'Have an apprentice use the verse to find a circumference and write down that it gives an approximation'
-          p3: 'Ask the author and a teacher to use one example to check when the approximation is enough. Copy it alongside the original verse'
+          p2: 'Ask the author and a teacher to use one example to check when the approximation is enough. Copy it alongside the original verse'
         points_fail:
           p1: 'The rules are copied without the leaves recording the date. The office recalls the employee.'
-          p2: 'People remember the answer and omit the qualification when repeating it.'
-          p3: 'The verse survives separately from the exercise used to check the approximation.'
+          p2: 'The verse survives separately from the exercise used to check the approximation.'
         shift:
           p1:
             was: 'The Aryabhatiya names Kusumapura. Its chronological passage is conventionally read as 499 CE.'
           p2:
-            was: 'The mathematics section gives a rule for circumference and describes it as approximate.'
-            now: 'The apprentice records both the diameter used and the approximation, so a different problem can be worked afresh.'
-          p3:
             was: 'Several commentary traditions developed around the concise verses.'
             now: 'Students circulate a copy with a worked example checked by the author. A later commentator can still distinguish the words of the verse.'
             who: aryabhata_patna
@@ -61,19 +55,14 @@ events:
         relic_desc: 一片薄叶，上面刻着诗句。
         points:
           p1: '在拘苏摩补罗核齐《阿耶波多历数书》的数学篇和写有纪年的段落，让初编能成册'
-          p2: '请一位学徒照颂文算完圆周，再在答数旁写清取的是近似'
-          p3: '让作者和教习用一题检查近似何时足够，并把试讲用的算例与原颂合抄'
+          p2: '让作者和教习用一题检查近似何时足够，并把试讲用的算例与原颂合抄'
         points_fail:
           p1: '抄完的一组只见口诀，没有写年代的篇页，事务所因同步失败召回员工。'
-          p2: '人们记住了答数，复述时省掉近似的提示。'
-          p3: '短颂传下来了，课堂上用来检查近似的例子却不见了。'
+          p2: '短颂传下来了，课堂上用来检查近似的例子却不见了。'
         shift:
           p1:
             was: '《阿耶波多历数书》提及拘苏摩补罗，纪年部分通常折为 499 年。'
           p2:
-            was: '数学篇有一条求圆周的规则，传本文字表示这是近似值。'
-            now: '学徒写下用的是哪一个直径和哪一种近似，不同的问题可以照办法重算。'
-          p3:
             was: '简练的颂文后来成为不同注释传统的对象。'
             now: '一套供学习者传看的本子带有作者核过的例子。后来作注的人还能识别哪些词出自原颂。'
             who: aryabhata_patna

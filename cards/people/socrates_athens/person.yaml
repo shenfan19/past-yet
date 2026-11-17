@@ -14,9 +14,9 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["archivist","translator","tutor"]},{"trait":["vigil","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 25, req: {"any":[{"job":["translator","tutor","proofreader"]},{"trait":["vigil","scholarly","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 41, req: {"any":[{"job":["translator","tutor"],"stat":{"wit":7,"will":7}},{"trait":["vigil","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"trait":["bold","charismatic","calm"],"stat":{"will":7}},{"job":["union_organizer","teacher","radio_host"],"stat":{"will":6}},{"item":"golden_apple","stat":{"will":5}}]}}
+        - {id: p2, kind: hold, day: 40, req: {"any":[{"job":["writer","translator","proofreader","musician"]},{"trait":["artistic","scholarly"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: care, day: 49, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":6}},{"job":["nurse","pharmacist","paramedic"],"item":"handbook"},{"item":"nano_kit","stat":{"will":6}}]}}
       vignettes:
         - {id: handoff, traits: [artistic, sensitive, attached]}
         - {id: charges, traits: [scholarly, skeptical, quiet]}
@@ -30,24 +30,24 @@ events:
         relic: 'The listener’s clay cup'
         relic_desc: 'A cup from the fictional pottery seller’s stall.'
         points:
-          p1: 'Keep the public charges distinct from older rumors so listeners can hear Socrates make his own defense'
-          p2: 'Ask two listeners to record the defense independently and leave gaps for anything they heard only secondhand'
-          p3: 'Give friends who have permission to visit one short question each. Ask them to check the part of the defense they may have misunderstood'
+          p1: 'When the clamour of the jurors keeps rising against him, keep the court quiet enough for him to finish his defence'
+          p2: 'Help him finish the Aesop fables he is putting into verse in prison and the hymn to Apollo, and get a copy out of the prison'
+          p3: 'Before the last day, cure Plato of his illness so that he can come to the prison and be with his teacher at the end'
         points_fail:
-          p1: 'The charges and rumors are treated as the same claim and listeners leave before hearing the defense. The office recalls the employee.'
-          p2: 'Two accounts are merged and a report from someone absent is filed as firsthand testimony.'
-          p3: 'Friends pass on different interpretations. Their listeners can no longer ask Socrates what he meant.'
+          p1: 'The noise drowns the defence and he cannot finish it. This branch has come loose from history, and the office recalls the employee.'
+          p2: 'As in history none of the verses survives, and in this branch none does either.'
+          p3: 'As in history Plato is ill that day and does not come; in this branch too he is not with his teacher.'
         shift:
           p1:
-            was: 'Plato and Xenophon both describe the trial and defense of 399 BCE. Plato distinguishes the formal charges from older rumors.'
+            was: '399 BCE: Socrates was tried in Athens; in Plato''s Apology he asks the jurors again and again not to make a disturbance while he speaks, and he is found guilty and sentenced to death.'
           p2:
-            was: 'Plato and Xenophon give different accounts. No verbatim record of the trial survives.'
-            now: 'Later readers can see which listener was present. Where the two accounts differ, both remain available.'
+            was: '399 BCE: waiting in prison for the execution, Socrates obeyed a recurring dream by putting Aesop''s fables into verse and composing a hymn to Apollo; none of it survives.'
+            now: 'The verses were copied into a roll and carried out of the prison by a friend, and they stayed in Athens.'
           p3:
-            was: 'Ancient dialogues depict friends continuing to speak with Socrates in his last days. No written work by him survives.'
-            now: 'Several friends bring out a brief note naming those present and the questions they checked. They still give their own accounts, but readers can trace what was clarified.'
-            who: socrates_athens
-            bio: 'What survives of the trial comes from later accounts written by different people. This branch follows what listeners heard and could verify.'
+            was: '399 BCE: on the day Socrates drank the hemlock in prison his friends were with him; Plato was ill and did not come.'
+            now: 'Plato was well again and in the prison that day among the friends, and stayed to the end.'
+            who: plato_academy
+            bio: 'In this timeline Plato was cured of the illness that kept him away, and was in the prison with Socrates on his last day.'
         vignettes:
           handoff: 'Kleio has to leave for her pottery stall before she can hear the speech through. You find her at the gate and let her recount the opening in her own order. She leaves a space for the portion she missed. Her brother will hear where she had to stop.'
           charges: 'Pheidon has put a market rumour at the top of his report as if it had been read to the court. You ask him to name its speaker. He can point to one man in the market and one voice inside. The report leaves their words on separate lines.'
@@ -60,24 +60,24 @@ events:
         relic: '听众的陶杯'
         relic_desc: '卖陶器人的摊上留下的一只杯子。'
         points:
-          p1: '把集市上张贴的指控和较早的传言分开记，让来听的人留在庭上听到苏格拉底自己的辩说'
-          p2: '请两名听过的人各自记一遍听见的答辩，哪些只听到转述就另留空栏'
-          p3: '给获准探视的朋友准备简短问题，请他们当面向苏格拉底核对自己最可能听错的一处'
+          p1: '陪审席上的喧哗一阵阵压过来时，护住他把申辩讲完'
+          p2: '帮他把狱中改写成诗的伊索寓言和献给阿波罗的颂歌写完，抄一份带出狱外'
+          p3: '最后那天之前，治好病中的柏拉图，让他赶到狱中送老师最后一程'
         points_fail:
-          p1: '两种说法都被当成已提出的罪名，听众离开前没有听到他的答辩，事务所召回员工。'
-          p2: '两份笔记合成时，把一位未到庭者的说法抄进了亲闻一栏。'
-          p3: '朋友依各自理解把话转述出去，来听的人已不能问他是否有这个意思。'
+          p1: '喧哗盖过了申辩，他没能把话讲完，这条分支与历史脱了节，事务所召回员工。'
+          p2: '这些诗照史实一首也没有传下来，这条分支里也没有。'
+          p3: '那天柏拉图照史实病着没来，这条分支里他也没在老师身边。'
         shift:
           p1:
-            was: '柏拉图和色诺芬都写到前 399 年的审判与辩护。柏拉图区分正式指控与早先的传言。'
+            was: '前 399 年，苏格拉底在雅典受审，柏拉图《申辩篇》里他一再请陪审员不要喧哗，把话听完；他被判有罪，判处死刑。'
           p2:
-            was: '柏拉图与色诺芬的叙述有不同形式和内容，现存材料并无逐字庭录。'
-            now: '事后读到笔记的人能看见谁在哪段在场。听法不同的地方保留两种。'
+            was: '前 399 年，苏格拉底在狱中等待行刑时，照一个反复出现的梦的吩咐，把伊索寓言改写成诗，又作了一首献给阿波罗的颂歌；这些诗没有传世。'
+            now: '几首诗抄成一卷，由朋友带出狱门，留在了雅典。'
           p3:
-            was: '古代对话描绘朋友在最后一段时间继续和他谈话。苏格拉底没有著作传世。'
-            now: '几位朋友带出一份注明在场者和所核问题的简录。各人还能继续写自己的理解，但有人追问时有一次可查的核对。'
-            who: socrates_athens
-            bio: '雅典审判留下的是后来作者各自写的辩护与记述。游戏分支把重点放在谁听到什么、能不能当面核对。'
+            was: '前 399 年，苏格拉底在狱中饮毒芹去世那天，朋友们都在，柏拉图因病没来。'
+            now: '柏拉图病好了，那天也在狱中，坐在朋友们中间，一直待到最后。'
+            who: plato_academy
+            bio: '这条时间线里，柏拉图那场病治好了，苏格拉底最后一天，他在狱中陪着老师。'
         vignettes:
           handoff: '克莱奥急着回陶器摊，听不到辩词结束。你在门边找到她，请她照自己的次序说开头。她把没听见的那一段空了下来，弟弟听她复述时，会知道她听到哪儿就走了。'
           charges: '费冬把集市听来的闲话写在最上方，仿佛有人在庭上宣读过。你请他认一认证人。他指得出集市上的一个人，也说得出庭里听到的一把嗓音。两人的话分成两行才带走。'

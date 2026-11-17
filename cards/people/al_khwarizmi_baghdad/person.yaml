@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["archivist","tutor","accountant"]},{"trait":["curious","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 39, req: {"any":[{"job":["archivist","tutor","proofreader"]},{"trait":["curious","scholarly","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 69, req: {"any":[{"job":["archivist","tutor"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 69, req: {"any":[{"job":["archivist","tutor"],"stat":{"wit":7,"will":7}},{"trait":["curious","scholarly","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: balance, traits: [methodical, scholarly]}
         - {id: tiles, traits: [handy, curious]}
@@ -31,19 +30,14 @@ events:
         relic_desc: "A sheet of sums solved step by step with squares and roots."
         points:
           p1: 'At the Baghdad handover, keep the practical examples with the text that explains how to put a calculation in order'
-          p2: 'Ask a shop apprentice to solve a proportion example. Find the step most likely to go wrong while turning an account into a problem'
-          p3: 'Leave copyists a reference volume that links examples to the parts of the text they use. Ask readers who have tried an example to flag any omissions'
+          p2: 'Leave copyists a reference volume that links examples to the parts of the text they use. Ask readers who have tried an example to flag any omissions'
         points_fail:
           p1: 'The copy has the calculations but lacks the applications. The compilation cannot be handed over intact, and the office recalls the employee.'
-          p2: 'The apprentice copies a result. Faced with a different account, they still cannot tell which quantities to compare.'
-          p3: 'The next group of copies carries the mathematical chapters alone. Readers trying to divide property have no worked example to consult.'
+          p2: 'The next group of copies carries the mathematical chapters alone. Readers trying to divide property have no worked example to consult.'
         shift:
           p1:
             was: 'Al-Khwarizmi compiled his book on calculation around 830. Its preface names trade, land measurement and division of property among its uses.'
           p2:
-            was: 'The book contains transaction problems involving proportion, as well as practical geometry and other topics.'
-            now: 'The author clarifies the line where the apprentice stopped. Another reader can try the corrected example against a different account.'
-          p3:
             was: 'Later manuscripts and translations vary. Some omit parts of the material on practical applications.'
             now: 'A cross-referenced copy stays available to apprentices and scribes. If someone copies an example on its own, its place in the whole can still be verified.'
             who: al_khwarizmi_baghdad
@@ -61,19 +55,14 @@ events:
         relic_desc: "一张逐步解出平方与根的演算纸。"
         points:
           p1: '在巴格达交抄时把实用例题与如何归整算式的正文合入同一册'
-          p2: '请识字的商铺学徒自己做完一个比例题，找出从账面转成可算的问题时最容易抄错的一项'
-          p3: '给后来的抄写人留一册把题例与它应用的正文相连的底本，让实际用过的读者也能指出抄漏'
+          p2: '给后来的抄写人留一册把题例与它应用的正文相连的底本，让实际用过的读者也能指出抄漏'
         points_fail:
           p1: '抄成的纸只记录算式，没有后面的实用题，原拟成册的著作没能完整交出，事务所召回员工。'
-          p2: '学徒能跟着书抄结果，换一份账到手仍旧没找出哪些量相比较。'
-          p3: '后一批抄本只传数学正文，试着拿去算分割的人没有例子可查。'
+          p2: '后一批抄本只传数学正文，试着拿去算分割的人没有例子可查。'
         shift:
           p1:
             was: '花剌子密约在 830 年编写《还原与对消计算概要》。作者序列举经商、测地和财物分配等用途。'
           p2:
-            was: '书里确有比例交易及实用几何等不同类型的题目。'
-            now: '作者把学徒卡住的那一行补清楚，下一位读者可以用另一份账重算。'
-          p3:
             was: '后世传抄和翻译时曾出现章节差异。某些传本没有保留全部实用部分。'
             now: '一份有互见的完整本可留给学徒和抄写者核对。后来分抄时也能查到哪一段来自整体中的哪一类题。'
             who: al_khwarizmi_baghdad

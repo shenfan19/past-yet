@@ -2,7 +2,7 @@ order: 230
 events:
   rapa_nui_moai:
     order: 220
-    build_step: 3
+    build_step: 2
     year: 1500
     lon: -109.29
     lat: -27.12
@@ -18,8 +18,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 60, req: {"any":[{"job":["builder","scaffolder","civil_engineer","site_manager","carpenter","shipwright"]},{"stat":{"constitution":9}},{"provides":"strength"}]}}
-        - {id: p2, kind: endure, day: 100, req: {"any":[{"job":["builder","scaffolder","civil_engineer","retired_engineer","mechanic"]},{"provides":"strength"},{"trait":["handy"],"stat":{"constitution":6}}]}}
-        - {id: p3, kind: notice, day: 150, req: {"any":[{"job":["geologist","mining_consultant"],"stat":{"constitution":6}},{"provides":"scan","any":[{"provides":"strength"},{"job":["builder","scaffolder","woodcarver","carpenter"]}]}]}}
+        - {id: p2, kind: notice, day: 150, req: {"any":[{"job":["geologist","mining_consultant"],"stat":{"constitution":6}},{"provides":"scan","any":[{"provides":"strength"},{"job":["builder","scaffolder","woodcarver","carpenter"]}]}]}}
       vignettes:
         - {id: pair, traits: [methodical, scholarly], day: 65}
         - {id: surface, traits: [hardy, curious], day: 100}
@@ -34,19 +33,14 @@ events:
         relic_desc: "A hand sized blade of dark basalt, ground to a clean edge."
         points:
           p1: 'Keep a figure on its way to the coast from toppling on the road'
-          p2: 'Help the carvers raise a figure that fell on the road, so that it walks the rest of the way'
-          p3: 'Help the carvers read the rock behind Te Tokanga, and free more of its back from the hill'
+          p2: 'Help the carvers read the rock behind Te Tokanga, and free more of its back from the hill'
         points_fail:
           p1: 'The figure toppled halfway and broke in two, and in this branch the coast has one figure fewer of those history saw raised.'
-          p2: 'The figure stayed by the road as history has it, and in this branch it never reached the coast.'
-          p3: 'Te Tokanga stopped halfway as history has it, and in this branch its back is still joined to the hill, as it is today.'
+          p2: 'Te Tokanga stopped halfway as history has it, and in this branch its back is still joined to the hill, as it is today.'
         shift:
           p1:
             was: 'From about the thirteenth century the people of Rapa Nui moved statue after statue from the quarry to the platforms by the sea.'
           p2:
-            was: 'More than sixty statues still lie along the roads to the sea; whether they fell on the way or were set up there, scholars hold two views.'
-            now: 'There is one fallen figure fewer by the road; it reached the coast.'
-          p3:
             was: 'Te Tokanga was never finished; its back is still joined to the hill, and it lies in the quarry of Rano Raraku today.'
             now: '{staff} found the run of the rock for the carvers, and more of its back was cut free from the hill. Whether it ever left the hill is not recorded.'
         vignettes:
@@ -62,19 +56,14 @@ events:
         relic_desc: "一片手掌大的深色玄武岩刃，磨出了干净的刃口。"
         points:
           p1: '护住一尊运往海边的石像，不让它在路上扑倒'
-          p2: '帮匠人们把一尊在路上倒下的石像重新扶起来，走完剩下的路'
-          p3: '帮匠人们读懂 Te Tokanga 背后的岩层，把它的背从山体上多凿开一段'
+          p2: '帮匠人们读懂 Te Tokanga 背后的岩层，把它的背从山体上多凿开一段'
         points_fail:
           p1: '石像在半路扑倒，断成了两截，这条分支里海边少了一尊照史实立起来的石像。'
-          p2: '那尊石像照史实留在路旁，这条分支里它没有走到海边。'
-          p3: 'Te Tokanga 照史实停在半途，这条分支里它的背还和山连着，和今天一样。'
+          p2: 'Te Tokanga 照史实停在半途，这条分支里它的背还和山连着，和今天一样。'
         shift:
           p1:
             was: '大约从十三世纪起，拉帕努伊人把一尊尊石像从采石场运到海边的平台上。'
           p2:
-            was: '通往海边的路旁至今倒着六十多尊石像，是运输途中倒下的，还是原本就立在那里，学界有两种说法。'
-            now: '路旁少了一尊倒下的石像，它走到了海边。'
-          p3:
             was: 'Te Tokanga 一直没有凿完，背脊连着山体，今天仍躺在拉诺拉拉库的采石场里。'
             now: '{staff}替匠人们找准了岩层的走向，它的背从山上多凿开了一段。它后来有没有离开山体，没有记载。'
         vignettes:

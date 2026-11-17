@@ -14,9 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist","tutor","teacher"]},{"trait":["scholarly","curious"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 33, req: {"any":[{"job":["archivist","teacher","proofreader"]},{"trait":["scholarly","curious","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 67, req: {"any":[{"job":["archivist","teacher"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","curious","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: notice, day: 33, req: {"any":[{"job":["woodcarver","bookseller","archivist"],"stat":{"will":6}},{"job":["teacher","tutor","university_lecturer","lecturer"],"stat":{"wit":7}},{"trait":["scholarly"],"stat":{"wit":8,"will":6}}]}}
       vignettes:
         - {id: rotate, traits: [methodical, scholarly]}
         - {id: hand, traits: [curious, handy]}
@@ -30,24 +28,15 @@ events:
         relic: "A set of counting rods"
         relic_desc: "Slender rods laid in rows to stand for numbers."
         points:
-          p1: 'At Yangzhou, keep a board diagram with the preface by Mo Ruo and the book’s groups of problems'
-          p2: 'Let a student lay out an example and label on the same sketch the two positions most easily reversed'
-          p3: 'Leave a checked set of examples with the students. Mark the line to consult when changing the main unknown and retain the diagram captions'
+          p1: 'Help Zhu Shijie get more copies of the Jade Mirror of the Four Unknowns cut and copied in Yangzhou and into his students'' hands, so the book is not lost in later times'
         points_fail:
-          p1: 'The preface circulates on its own. The next copy loses the description of the four positions, and the office recalls the employee.'
-          p2: 'A copy preserves only the words. Using a different viewpoint, students reverse left and right.'
-          p3: 'Students take away only the final lines. In a different problem they cannot work from the original positions.'
+          p1: 'As in history only a few copies went round. In this branch the book still could not be found in China by the late eighteenth century, and Ruan Yuan had to search for it.'
         shift:
           p1:
-            was: 'The Jade Mirror of the Four Unknowns has a 1303 preface by Mo Ruo. Another preface records that Zhu visited Guangling and attracted students.'
-          p2:
-            was: 'Mo Ruo’s preface states where the four unknowns go around the center.'
-            now: 'The copy identifies where to stand when reading the board. A student can check the sketch after reversing two positions.'
-          p3:
-            was: 'Surviving copies have prefaces, grouped problems and calculations, and come from different periods.'
-            now: 'A student can borrow a copy with both sketch and page references. Recopied exercises can still be matched to their board examples.'
+            was: 'In 1303 the Jade Mirror of the Four Unknowns came out with a preface by Mo Ruo; by the second half of the eighteenth century it was lost in China, and Ruan Yuan could not find it when compiling his Biographies of Astronomers and Mathematicians in 1799, only coming on a copy some years later.'
+            now: '{staff} helped him get more copies made and handed to the students who came to learn from him. In this branch the book always had readers, and nobody had to go looking for it.'
             who: zhu_shijie_yangzhou
-            bio: 'Zhu grouped problems involving several unknowns. The preface’s placement of each unknown helps readers follow the calculations.'
+            bio: 'In this line more copies of the Jade Mirror were made when it came out in 1303, and they stayed with his students in many places and came down without a break.'
         vignettes:
           rotate: 'Two learners have copied the same board from opposite sides. You mark the bottom before comparing their sheets. The earth and human groups exchange places on one copy. You keep the corrected diagram. The long elimination is still ahead of them.'
           hand: 'You ask why the learner has put all four names in one line. He says he can remember the names that way. You keep his line but place four markers around a centre so he can also recover the layout. By the time he clears the board, you have seen how to begin, and not how his exercise ends.'
@@ -60,24 +49,15 @@ events:
         relic: "一套算筹"
         relic_desc: "一根根细棍，排成行来代表数。"
         points:
-          p1: '在扬州手边备好四元算板的对照，把莫若的序同正文题类收成一套'
-          p2: '请从学者试摆一题，把最容易左右颠倒的两栏标回同一张简图'
-          p3: '请朱世杰在扬州留给同学一册对照算板的例题，标清换元时需要回到哪一行，给后续互抄留下图题'
+          p1: '帮朱世杰在扬州把《四元玉鉴》多刻、多抄几部，送到跟他学算的人手里，不让这本书在后世失传'
         points_fail:
-          p1: '前序独自传出，后来抄手脱去四方所指的说明，事务所召回员工。'
-          p2: '只抄下几个字，学者以自己的位置看图，算板左右对不上。'
-          p3: '各人只把例题的尾几行抄走，换一题便不知道怎样从原来的方位起算。'
+          p1: '书照史实只有少数几部流传，这条分支里到十八世纪后半它在中国还是找不到了，要等阮元四处去访。'
         shift:
           p1:
-            was: '《四元玉鉴》有大德癸卯（1303）莫若序。另一篇序记朱世杰曾游广陵，有学者聚而从学。'
-          p2:
-            was: '莫若的序明确给了四元在中央四周的布置。'
-            now: '学者在抄图旁注明看板的方向。误把左右交换时可以从简图查出。'
-          p3:
-            was: '传世书有前序、分类题目与演算内容，传本跨越多个时期。'
-            now: '同学能借出一册带简图与互见页码的抄本，续抄时仍能把题和原来的算板例子配在一起。'
+            was: '1303 年《四元玉鉴》刊出，前有莫若序；到十八世纪后半，这本书在中国已经失传，1799 年阮元编《畴人传》时遍寻不得，几年后才访得一部。'
+            now: '{staff}帮他多刻、多抄了几部，分到来学算的人手里。这条分支里，这本书一直有人在读，不用等人四处去找。'
             who: zhu_shijie_yangzhou
-            bio: '朱世杰的书把多元问题按类别安排。序文说明了记算位置，为读者保留了理解演算的一条线索。'
+            bio: 'IF 线里，《四元玉鉴》在 1303 年刊出时多印了几部，留在各地学生手里，一直传了下来。'
         vignettes:
           rotate: '两位学算人从算板两侧各抄了一份。你先标出从哪边算作下，再把两张摆在一起。有一张把地元和人元挪回正确位置。你抄走订正的图，还没轮到做那串长长的消元。'
           hand: '你问学算人为什么四个名都写在一排。他说这样背得住。你让原来那行留着，另绕中央摆四个记号，好叫他也记得位置。等他收筹，你只看见了起手，还没看到题怎样算完。'

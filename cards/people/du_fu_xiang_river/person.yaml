@@ -15,8 +15,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 16, req: {"any":[{"job":["archivist","translator","caregiver"]},{"trait":["patient","artistic"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 27, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["patient","artistic","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 38, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["patient","artistic","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","nurse","caregiver","pharmacist"]},{"trait":["kind","patient"],"item":"warm_blanket"}]}}
+        - {id: p3, kind: endure, day: 40, req: {"any":[{"job":["ferry_pilot","navigator","sailor","ferryman"],"stat":{"constitution":7}},{"job":["doctor","physician","nurse","caregiver"],"stat":{"will":7}},{"trait":["hardy","wanderer"],"item":"compass","stat":{"constitution":8}}]}}
       vignettes:
         - {id: shore, traits: [artistic, quiet]}
         - {id: delivery, traits: [kind, streetwise]}
@@ -31,23 +31,23 @@ events:
         relic_desc: "A small clay lamp that burned late over a few lines of verse."
         points:
           p1: 'Keep a place for Du Fu’s pages on the boat so the long poem for friends in Hunan can be assembled'
-          p2: 'Ask the poet to check the places in the dispatch copy and keep a set he can compare with his route'
-          p3: 'Leave checked copies with two sets of friends. Preserve the title and author’s changes for later collectors'
+          p2: 'Nurse him through his illness on the boat and ease his pain'
+          p3: 'See the boat north, so that he and his family get home safely'
         points_fail:
           p1: 'Only the first and last leaves turn up after a hurried move. The poem cannot be assembled and the office recalls the employee.'
-          p2: 'The copy for friends loses a marginal place name, leaving no reference to consult.'
-          p3: 'Only one friend keeps a copy. A later scribe drops the words addressed to the author’s friends.'
+          p2: 'He lies on his pillow in the winter boat, and grows worse day by day.'
+          p3: 'The boat never got north. He died that winter far from home, and his coffin was laid in temporary burial at Yueyang.'
         shift:
           p1:
-            was: 'A surviving poem attributed to Du Fu has thirty-six rhymes and is headed as written in illness on a boat for friends in Hunan.'
+            was: 'In 770 Du Fu, ill on a boat, wrote a poem of thirty six rhymes for his friends and kin in Hunan, as its title says.'
           p2:
-            was: 'The poem describes life aboard and scenes along the river. Its title identifies the people it addresses.'
-            now: 'The pages distinguish places already visited from entries still to be checked. The poet can compare the dispatch against his copy.'
+            was: 'In the winter of 770 Du Fu lay ill on a boat on the Xiang, and died soon after away from home, at fifty nine.'
+            now: 'That winter he suffered less on the boat.'
           p3:
-            was: 'Later collections transmit the poem. Its dating and route are studied through the title and related records.'
-            now: 'Copies held in two places give the same heading and page sequence. Later editors can compare them while leaving uncertain route details open.'
+            was: 'In the winter of 770 Du Fu died far from home and was laid in temporary burial at Yueyang; more than forty years later his grandson Du Siye begged the money to rebury him at Yanshi.'
+            now: 'The boat reached the north the next spring, and Du Fu and his family came home. He lived some more years there.'
             who: du_fu_xiang_river
-            bio: 'Du Fu spent parts of his last years traveling by boat. This poem’s heading preserves something of how it was written and whom he meant to read it.'
+            bio: 'Du Fu drifted through Hunan in his last years, came home to the north in 771, and spent the rest of his life with his family.'
         vignettes:
           shore: 'The traveller writes that the shore looks gloomy. You ask what made them look up from the boat. They pause, then write down one thing that was actually there.'
           delivery: 'You hear that the next boat goes only partway to the friend''s town. The traveller nearly folds the note without a second name on it. You help them find someone who can take it onwards.'
@@ -61,23 +61,23 @@ events:
         relic_desc: "一盏小小的陶油灯，为了几行诗亮到很晚。"
         points:
           p1: '在船上给杜甫留一处可以收好诗纸的位置，护住寄湖南亲友的长诗从零散纸页连成全篇'
-          p2: '请作者确定寄送稿中按旅程提到的几处地方，给自己另留一套便于沿路核对的稿纸'
-          p3: '请两边的亲友各留一份可核作者改笔的抄稿，给后来选诗者指到诗题原来如何署'
+          p2: '舟中照料他的风疾和旧病，减轻他的病痛'
+          p3: '护着这条船北上，让他一家平安回到故乡'
         points_fail:
           p1: '匆忙挪舱时只找到头尾几张，长诗没能成篇，事务所因同步失败召回员工。'
-          p2: '抄给友人的一套把借写在边上的地名漏掉，后来没有办法回查。'
-          p3: '只有受信的友人留了一套抄稿，抄手再传时把题里关于亲友的字漏掉。'
+          p2: '他伏在枕上，在冬天的船里一天比一天病重。'
+          p3: '船没能北上，他在那个冬天客死他乡，灵柩暂殡岳阳。'
         shift:
           p1:
-            was: '传世杜诗有一首题为舟中抱病时写给湖南亲友的三十六韵。'
+            was: '大历五年，杜甫在舟中抱病，写下寄湖南亲友的三十六韵长诗，诗题记下了这些。'
           p2:
-            was: '这首诗写及舟中处境与两岸景物，诗题给出了收信范围。'
-            now: '抄页仍分出所经地点和准备另查之处。作者能从原稿核定寄本。'
+            was: '大历五年冬，杜甫在湘江的船上病重，不久客死他乡，享年五十九。'
+            now: '那个冬天他在船上少受了些病痛。'
           p3:
-            was: '诗经后来的杜集和唐诗总集传下，舟中寄呈的时间和行程需要依据诗题与其他资料考证。'
-            now: '两份不同处保存的抄稿标着相同的诗题与页次，编集者可以对读。有些航行细节依然留待考证。'
+            was: '大历五年冬，杜甫客死他乡，灵柩暂殡岳阳；四十多年后，孙子杜嗣业四处乞借，才把他迁回偃师安葬。'
+            now: '那条船第二年开春到了北方，杜甫一家回到故乡，他在家中又过了几年。'
             who: du_fu_xiang_river
-            bio: '杜甫晚年多在舟中转徙。这首作品把写诗时的处境和希望送给谁都留在题里。'
+            bio: '杜甫晚年漂泊湖湘，大历六年回到北方故乡，在家人身边度过余年。'
         vignettes:
           shore: '旅人写岸上阴沉。你问刚才是什么让他从舱里抬起头。他想了一会儿，只写下一样真正看见的东西。'
           delivery: '你听说下一条船只去半程。旅人差点没写转交人的名字就折起信。你帮他找了一个能再往前带的人。'

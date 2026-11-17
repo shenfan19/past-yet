@@ -14,9 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 53, req: {"any":[{"job":["translator","archivist"]},{"trait":["patient","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 39, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["patient","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 86, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 30, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","faithful"],"stat":{"wit":7,"will":8}},{"trait":["charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: opening, traits: [methodical, quiet, artistic]}
         - {id: wait, traits: [faithful, calm, attached]}
@@ -30,24 +28,15 @@ events:
         relic: 'A chant practice page'
         relic_desc: 'An invented page with a thread marking its opening.'
         points:
-          p1: 'Match the names and place in Bingen’s appeal and the written response so the notice lifting the restriction can reach the community in March'
-          p2: 'Have the secretary Guibert match outgoing appeals with written replies. Mark reports heard by word of mouth and keep a local copy'
-          p3: 'File the appeal and the resolution together in the local chest. Ask Guibert to identify originals and later revisions by recipient'
+          p1: 'Get the testimony that the dead man had been reconciled with the Church to Mainz early, so the community can sing again months sooner'
         points_fail:
-          p1: 'The copied response cannot be matched to the right house. The notice goes back to the messenger, and the office recalls the employee.'
-          p2: 'An oral message is entered as an official response. The next reader cannot check when it was received.'
-          p3: 'Years later, a revised passage is easy to find, but the appeal and response are kept apart. The ending is hard to follow.'
+          p1: 'The interdict runs on until March 1179, and through those months the nuns may not sing the office.'
         shift:
           p1:
-            was: 'The Rupertsberg community faced an interdict. Hildegard appealed to the church authorities in Mainz, and the restriction ended in March 1179.'
-          p2:
-            was: 'Guibert served as Hildegard’s secretary. He later arranged a collection that preserves part of her correspondence.'
-            now: 'The copies now match appeals and replies. On a separate line the community can record which messages still need written confirmation.'
-          p3:
-            was: 'Hildegard’s letters circulated in collections and survive in more than one manuscript tradition.'
-            now: 'The people compiling the letters receive both sides of the exchange. The house keeps a list of originals, so later readers can check the correspondence after revision.'
+            was: 'In 1178 the Mainz prelates placed Rupertsberg under interdict because a man once excommunicated was buried in its cemetery. Hildegard held that he had been reconciled before he died and would not have him dug up. The interdict was lifted only in March 1179.'
+            now: '{staff} carries the witnesses'' word to Mainz early and the interdict is lifted sooner. In the last year of her life the community sings for months longer.'
             who: hildegard_bingen
-            bio: 'Secretaries, copyists and editors helped carry Hildegard’s extensive correspondence into later collections.'
+            bio: 'When her community was forbidden to sing in her eightieth year, the interdict in this timeline was lifted within weeks. Singing at Rupertsberg hardly stopped in her last year.'
         vignettes:
           opening: 'Agnes can still find the first word but no longer reads the damaged mark above it. You ask her to compare the spare page with the line she knows. She sets a thread by the right place. Now the next person can open straight to the same beginning.'
           wait: 'Adelheid has the words by heart and is about to file the damaged sheet away. You hold it where Agnes can trace the line once more. Adelheid copies the opening onto a spare leaf, then keeps the old page beside it. The next reader will have both.'
@@ -60,24 +49,15 @@ events:
         relic: '一页圣咏练习稿'
         relic_desc: '练习页，一根夹线标明起句。'
         points:
-          p1: '把宾根一方的申诉来回件按同一地点和称谓核清，护住三月解除限制的书面通知能送达'
-          p2: '与书记吉贝尔把发出的信和各次答复配成对，标明哪些只是转述，给修院留自己的抄本'
-          p3: '把这次申诉和结案凭据一起交入本地书箱，请吉贝尔按收件人注明原件与后来的修订'
+          p1: '把死者生前已与教会和解的证词早些送到美因茨，让修院早几个月重新唱起来'
         points_fail:
-          p1: '抄出的回应没有写清适用的修院。通知回到信使手里，事务所因同步失败召回员工。'
-          p2: '书记听过的一次口信被抄作正式答复，后面读信的人不能确认它何时传到。'
-          p3: '多年以后只有一段改过的文字可以翻读，原信和答复分藏，难对出事情怎样结束。'
+          p1: '禁令照旧拖到 1179 年 3 月才解除，这几个月里修女们不能唱日课。'
         shift:
           p1:
-            was: '宾根鲁珀茨贝格团体受到限制，希尔德加德曾写信向美因茨教会当局申诉。1179 年三月限制解除。'
-          p2:
-            was: '吉贝尔任希尔德加德的书记。后来编成的书信集保留部分往来，也经过他整理。'
-            now: '抄本各存一套发信与回信，闻讯日期单列。修院查到哪一条仍等书面确认。'
-          p3:
-            was: '后世经编订流传希尔德加德的书信，留下多种抄本。'
-            now: '后来编书的人领到两面都齐的档案。修院留一份原件清单，书信改订后仍能查回当时的往来。'
+            was: '1178 年，因修院墓地葬了一位曾被绝罚的男子，美因茨的教长对鲁珀茨贝格下了禁令；希尔德加德申明他生前已与教会和解，不肯掘墓，禁令到 1179 年 3 月才解除。'
+            now: '{staff}早早把证人的话送到美因茨，禁令提前解除。她生命的最后一年里，修院的歌多唱了几个月。'
             who: hildegard_bingen
-            bio: '希尔德加德留下大量书信，书信由代笔、誊抄与后来的整理进入更大的手稿集。'
+            bio: '希尔德加德八十岁那年修院被禁唱，在这条时间线里禁令几周就解除了，她最后一年里鲁珀茨贝格的歌声几乎没有断过。'
         vignettes:
           opening: '阿格内斯还认得出第一个词，词上方磨坏的记号却看不清。你请她把知道的那句与备用纸对一遍。她夹一根线在对应处。下一个人翻开，也能找到同一个开头。'
           wait: '阿德尔海德背得出词，正要把损坏的那页收起来。你托住纸，让阿格内斯沿着那行再走一遍。阿德尔海德把开头抄到备用页上，旧纸放在旁边。下一个人来时，两份都还在。'

@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["translator","archivist"]},{"trait":["methodical","patient"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 9, req: {"any":[{"job":["translator","archivist","proofreader"]},{"trait":["methodical","patient","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 14, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 14, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p3, kind: care, day: 15, req: {"any":[{"job":["midwife","doctor","physician","nurse","paramedic"],"item":"nano_kit"},{"job":["midwife","doctor","physician"],"item":"antibiotic","stat":{"wit":6}}]}}
       vignettes:
         - {id: source, traits: [methodical, scholarly]}
         - {id: diagram, traits: [curious, artistic]}
@@ -33,23 +33,23 @@ events:
         relic_desc: "A small inkwell from a desk worked at through the night."
         points:
           p1: 'In Lunéville, list the three packets of commentary before sending them with her request to the Royal Library'
-          p2: 'While she is still editing, number the translation and the independent commentary separately and identify the revisions to each'
-          p3: 'Have her leave Clairaut decisions on the two hardest passages, identifying where her translation should stand and where a later revision should be listed separately'
+          p2: 'Have her leave Clairaut decisions on the two hardest passages, identifying where her translation should stand and where a later revision should be listed separately'
+          p3: 'Watch over her in the days after the birth, cure her, and keep her alive'
         points_fail:
           p1: 'The packet with the commentary stays behind. The Library receives only the letter, and the office recalls the employee.'
-          p2: 'The clean copy has a single set of numbers. A later editor has to guess which additions belong to her own commentary.'
-          p3: 'Two drafts reach the editor, but her decisions about how to print the revised passages do not.'
+          p2: 'Two drafts reach the editor, but her decisions about how to print the revised passages do not.'
+          p3: 'On 10 September she died in Lunéville, six days after her daughter was born.'
         shift:
           p1:
             was: 'On September 10, 1749, the Royal Library issued a receipt for three packets of Du Châtelet’s commentary on Newton.'
           p2:
-            was: 'The working papers preserve copying by secretaries as well as her corrections and inserted sheets.'
-            now: 'Each inserted sheet points back to a translation or commentary passage. The next editor checks that entry before setting type.'
-          p3:
-            was: 'Clairaut helped prepare the work after Du Châtelet’s death. The complete French edition appeared in 1759.'
+            was: 'In 1759, after Du Châtelet’s death, the complete French edition appeared, with Clairaut having helped prepare it.'
             now: 'The editor has two decisions she approved and describes any later changes on another page. Readers can distinguish her commentary from editorial additions.'
+          p3:
+            was: 'On the night of 4 September 1749 Du Châtelet gave birth to a daughter, and on 10 September she died in Lunéville; the cause is given as childbed fever by some and as a pulmonary embolism by others.'
+            now: 'She came through the days after the birth and recovered over the autumn. She saw her Newton translation into print herself and went on with her research for many years.'
             who: du_chatelet_luneville
-            bio: 'She translated Newton from Latin into French and wrote a commentary that helped readers follow the reasoning.'
+            bio: 'Du Châtelet survived the birth of 1749, took her French Newton and its commentary to the printer herself, and kept writing and researching for years after.'
         vignettes:
           source: 'The reader follows one sentence straight into the next. You stop them where the commentary begins. Back at the first page, they can now tell who is doing the explaining.'
           diagram: 'You ask what the words would look like on paper. The reader sketches a direction, then goes back to the text to check where the arrow belongs.'
@@ -63,23 +63,23 @@ events:
         relic_desc: "一只小墨水瓶，来自一张通宵写字的书桌。"
         points:
           p1: '在吕内维尔把三包评注稿逐包登记，连同她写给王家图书馆的请求交运'
-          p2: '趁她仍在校订，把译文和独立评注分开标出页码及各自的改稿'
-          p3: '请她把最难厘清的两项留给克莱罗，说明哪里要保留原译，哪里需另列后续校改'
+          p2: '请她把最难厘清的两项留给克莱罗，说明哪里要保留原译，哪里需另列后续校改'
+          p3: '产后那几天守着她，治好她的病，让她活下来'
         points_fail:
           p1: '夹有评注的稿包留在宅邸，图书馆只收到信，事务所因同步失败召回员工。'
-          p2: '誊本只有统一页码，日后编辑必须猜哪几个增补属于她自己的评注。'
-          p3: '两份相关草稿一起送达，改过的位置却没有留下她想怎样印的说明。'
+          p2: '两份相关草稿一起送达，改过的位置却没有留下她想怎样印的说明。'
+          p3: '9 月 10 日，她在吕内维尔去世，离生下女儿只有六天。'
         shift:
           p1:
             was: '1749 年 9 月 10 日，王家图书馆为杜·夏特莱寄存的三包牛顿评注稿开出收据。'
           p2:
-            was: '她留下的工作稿保有秘书的笔迹，也有自己的改字和补页。'
-            now: '每个补页能查回它对应的译文或评注。后来编辑先核对这一栏，再动排字。'
-          p3:
-            was: '杜·夏特莱去世后，克莱罗参与整理，法语全本于 1759 年出版。'
+            was: '1759 年，法语全本出版，杜·夏特莱去世后由克莱罗参与整理。'
             now: '编辑手里有她核过的两份决定，后来附上的修改在另页说明。读者可以区分她的评注与编辑的补充。'
+          p3:
+            was: '1749 年 9 月 4 日夜里，杜·夏特莱生下一个女儿，9 月 10 日在吕内维尔去世，死因一说产褥热，一说肺栓塞。'
+            now: '她熬过了产后那几天，秋天里身体慢慢复原。她亲自看着牛顿译本付印，此后又做了多年研究。'
             who: du_chatelet_luneville
-            bio: '她把牛顿的拉丁文著作译为法语，也写了帮助读者追踪推算的评注。'
+            bio: '杜·夏特莱在 1749 年产后活了下来，亲自把牛顿《原理》的法译与评注送进印坊，此后继续写作与研究多年。'
         vignettes:
           source: '读者顺着一句直接念到下一句。到评注开头处，你请他停一下。再翻回第一页，他已能认出是哪一位作者在解释。'
           diagram: '你问这段话画出来该是什么样。读者先画了个方向，又回去翻文字，确认箭头该落在哪儿。'

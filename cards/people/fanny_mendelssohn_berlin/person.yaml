@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","artistic"],"stat":{"wit":8}}]}}
-        - {id: p2, kind: notice, day: 17.25, req: {"any":[{"job":["musician","archivist"]},{"trait":["methodical","artistic","patient"]}]}}
-        - {id: p3, kind: care, day: 17.5, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"job":["archivist"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: persuade, day: 10, req: {"any":[{"job":["musician","archivist"],"stat":{"wit":6}},{"trait":["methodical","artistic","patient"],"stat":{"will":6}}]}}
+        - {id: p3, kind: care, day: 18, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":7}},{"job":["paramedic","nurse"],"item":"handbook"},{"provides":"heal","stat":{"will":7}}]}}
       vignettes:
         - {id: cover, traits: [methodical, curious]}
         - {id: forward, traits: [bold, charismatic]}
@@ -33,23 +33,23 @@ events:
         relic_desc: "A handwritten song marked Fanny."
         points:
           p1: 'Protect Hensel''s writing time amid rehearsal preparations so she can finish her last song'
-          p2: 'While the Trio parts are still together, bring Hensel the markings from the trial performance for her to choose between'
-          p3: 'Bring the publisher to Hensel with proofs and let her settle the version of the Trio readers will receive'
+          p2: 'Bring the publisher to Hensel with proofs and let her settle the version of the Trio readers will receive'
+          p3: 'When the stroke comes during the rehearsal on 14 May, recognise it at once and save her'
         points_fail:
           p1: 'Rehearsal takes up the hours she had set aside and the song stops at the draft. The branch falls out of sync and the office recalls the employee.'
-          p2: 'The players take their copies away and later editors have to guess which markings the composer accepted.'
-          p3: 'The Trio appears only after her death, so she never reviews the printed text herself.'
+          p2: 'The Trio appears only after her death, so she never reviews the printed text herself.'
+          p3: 'She is taken ill at the piano and dies that same day, aged forty one. In this branch the Sunday concerts end there.'
         shift:
           p1:
             was: 'In late April 1847 Hensel wrote that composition had stalled after the Trio; in May she finished her final song shortly before her death.'
           p2:
-            was: 'In 1850 Hensel''s Piano Trio in D minor was printed as a posthumous work.'
-            now: '{staff} copies the different markings onto one sheet and has Hensel indicate which she wants to keep.'
-          p3:
             was: 'Hensel died on 14 May 1847. The Piano Trio first appeared in print in 1850.'
             now: '{staff} persuades a publisher to bring proofs while they can still be changed. Her family later has the revisions she settled herself when they see the score into print.'
+          p3:
+            was: 'On 14 May 1847, rehearsing her brother Felix''s cantata Die erste Walpurgisnacht at home, Hensel suffered a stroke and died the same day.'
+            now: '{staff} sees the attack begin, has her lie down and sends for a doctor at once. She recovers, and goes on running the Sunday concerts in Berlin for years, composing and publishing under her own name.'
             who: fanny_mendelssohn_berlin
-            bio: 'Hensel reviewed the Trio for publication before her death. Her version appeared with her posthumous works, with the changes she chose still visible.'
+            bio: 'Hensel survived the stroke of May 1847. She kept the Sunday concerts going in Berlin for many more years and went on publishing her music under her own name.'
         vignettes:
           cover: 'A singer has opened the score in the middle and asks whose music this is. You fetch its loose title sheet and set it beside the score. The initials on the title sheet are enough to settle what to write on the sleeve. You miss the first song while putting the papers together.'
           forward: 'You start to tell the singer how collectors will search for these songs in the future. She points to the loose cover and asks whether they will still have it. You ask for the cover to go out with the next copy. It goes with one reader. You cannot follow it any further.'
@@ -63,23 +63,23 @@ events:
         relic_desc: "一页手写的歌谱，署名范妮。"
         points:
           p1: '在亨泽尔为排练忙碌时替她守住写谱的时间，让她完成最后一首歌'
-          p2: '趁三重奏的分谱还在一处，把试奏时改过的记号交给亨泽尔挑选'
-          p3: '让出版人带着校样来见亨泽尔，请她亲手确认三重奏交到读者手中的版本'
+          p2: '让出版人带着校样来见亨泽尔，请她亲手确认三重奏交到读者手中的版本'
+          p3: '5 月 14 日排练中她突然发病时，当场认出是中风，救下她'
         points_fail:
           p1: '排练占完了时间，最后的歌停在草稿。行程与史实脱节，员工被召回。'
-          p2: '奏过的几份分谱各自带走，日后准备印本时只好再猜哪些标记是作者采用的。'
-          p3: '三重奏直到她去世后才出版，作者没能亲自审定印本。'
+          p2: '三重奏直到她去世后才出版，作者没能亲自审定印本。'
+          p3: '她在钢琴旁发病，当天去世，年四十一岁。这条分支里星期日音乐会到此为止。'
         shift:
           p1:
             was: '1847 年 4 月下旬，亨泽尔在日记中写到三重奏之后创作一度停滞，5 月去世前她完成了最后一首歌。'
           p2:
-            was: '1850 年，亨泽尔的《D 小调钢琴三重奏》作为遗作付印。'
-            now: '{staff}把试奏分谱上的不同记号摘在一页，让亨泽尔勾出自己要留的几处。'
-          p3:
             was: '1847 年 5 月 14 日亨泽尔去世，钢琴三重奏的初版直到 1850 年才问世。'
             now: '{staff}请出版人提前带来可改动的校样。家人后来付印时带着她亲手定下的修订页。'
+          p3:
+            was: '1847 年 5 月 14 日，亨泽尔在家中排练弟弟费利克斯的康塔塔《第一个瓦尔普吉斯之夜》时中风，当天去世。'
+            now: '{staff}看出她发病，当即让她躺下，立刻请来医生。她恢复过来，又在柏林主持了许多年星期日音乐会，继续以自己的名字作曲出版。'
             who: fanny_mendelssohn_berlin
-            bio: '亨泽尔生前审过三重奏的付印稿。她的版本随遗作出版，演奏者可以辨出哪些改动出自她本人。'
+            bio: '亨泽尔挺过了 1847 年 5 月那次中风。她在柏林把星期日音乐会又办了许多年，继续以自己的名字出版作品。'
         vignettes:
           cover: '虚构的歌手从中间翻开乐谱，问是谁写的。你找来散开的题名页放在旁边。封面上署的名字足够确定纸套上该写什么。等你把纸理齐，第一首已经唱完。'
           forward: '你刚要说后来的收藏者会怎样找这六首歌，歌手指着散开的封面，问他们还找不找得到它。你请她把封面随下一份谱一起交出去。一位读者带着它走了，再往下的去向你够不着。'

@@ -18,7 +18,6 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 36, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
         - {id: p2, kind: notice, day: 34, req: {"any":[{"job":["proofreader","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 56, req: {"any":[{"job":["proofreader","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: parts, traits: [methodical, scholarly]}
         - {id: claim, traits: [skeptical, curious]}
@@ -34,22 +33,17 @@ events:
         points:
           p1: 'Check the last proofs of the Discourse and its three essays at the Leiden press so all four parts can appear together'
           p2: 'Use Descartes’s errata to check the text against the figures. Enter late changes in the retained proof'
-          p3: 'Leave the Leiden bookseller directions for readers’ questions. Ask Mersenne to pass them on by subject and keep the replies with page numbers'
         points_fail:
           p1: 'Several figures are still missing from an essay. The printer has to split the volume, and the office recalls the employee.'
           p2: 'The first proof has gone out. Late errata survive as a slip without page numbers.'
-          p3: 'Objections arrive mixed with other letters. Another reader has to ask about a page already discussed.'
         shift:
           p1:
-            was: 'Jan Maire printed the Discourse in Leiden in 1637 with essays on optics, meteorology and geometry.'
+            was: 'In 1637 Jan Maire printed the Discourse in Leiden with essays on optics, meteorology and geometry.'
           p2:
-            was: 'In a letter two days before printing ended, Descartes mentioned a packet of errata.'
+            was: 'In early June 1637, in a letter two days before printing ended, Descartes mentioned a packet of errata.'
             now: 'The printer logs late corrections by page. A query about how the text matches a figure can be traced to that copy.'
-          p3:
-            was: 'Mersenne relayed objections to Descartes. A first edition he annotated preserves some corrections attributed to the author.'
-            now: 'The bookseller sends a monthly packet arranged by subject. Readers can get a checked reply and locate any point that remains contested.'
             who: descartes_leiden
-            bio: 'Descartes published the method and three essays together in French. Readers’ objections circulated through books and letters.'
+            bio: 'The first edition of 1637 went out with the corrections Descartes sent, and readers found the figures and the text in agreement.'
         vignettes:
           parts: 'The reader is stuck on the whole problem. You mark a smaller one that can be settled first. They finish that part before opening the page with the answer.'
           claim: 'A second reader calls the result obvious. You ask them to name the step that makes it so. They reread the middle of the example, where neither of them had stopped before.'
@@ -64,22 +58,17 @@ events:
         points:
           p1: '给莱顿印坊核齐正文和三篇附论的末次校样，护住四部分能一起刊行'
           p2: '照笛卡尔寄出的勘误单逐项查图和正文，把晚到的更正也标进留底本'
-          p3: '在莱顿给书商留答复读者的收件说明，请梅森把不同学科的疑问分项转交并保留答复和页码'
         points_fail:
           p1: '印坊发现一篇附论的几张图还缺着，整卷只能拆开处理，事务所因同步失败召回员工。'
           p2: '首轮校样已交，晚到勘误只剩一张没有页码的便条。'
-          p3: '异议跟一般书信混寄，下一位来信人又要从头问已经讨论过的一页。'
         shift:
           p1:
             was: '1637 年，莱顿的扬·迈尔印行《方法论》，书中合刊光学、气象及几何三篇附论。'
           p2:
-            was: '笛卡尔在付印完成前两天的信里提到一包勘误。'
+            was: '1637 年 6 月初，笛卡尔在付印完成前两天的信里提到一包勘误。'
             now: '印坊把晚到的勘误按页登记，日后问到图和正文如何相对，可以翻出同一位置。'
-          p3:
-            was: '梅森为笛卡尔传递读者的异议。他的一本首版还留下与笛卡尔改笔相合的旁注。'
-            now: '书商每月寄出一份按论题归档的来信。读者可以拿到上一次核对过的解释，仍有分歧的地方也有页次可查。'
             who: descartes_leiden
-            bio: '笛卡尔以法语合刊方法说明和三篇附论，读者的异议随后经出版和通信继续传递。'
+            bio: '笛卡尔 1637 年的初版带着他寄去的勘误一起印出，读者手里的图和正文对得上。'
         vignettes:
           parts: '读者卡在整道题里。你标出能先解决的一小问。他先做完这一部分，才翻到写答案的那页。'
           claim: '另一位读者说结果显而易见。你请他指出究竟是哪一步让结果这样明白。他们重读例子中段，两人之前都没在这里停过。'

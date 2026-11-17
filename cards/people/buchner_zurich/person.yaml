@@ -17,8 +17,9 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 26, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 12, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 15, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p2, kind: hold, day: 20, req: {"any":[{"job":["archivist","proofreader","translator"]},{"trait":["methodical","scholarly"],"stat":{"finesse":6}},{"item":"notebook_pen","stat":{"finesse":7}}]}}
+        - {id: p3, kind: care, day: 19, req: {"any":[{"trait":["kind","attached","vigil"],"stat":{"will":5}},{"job":["courier","driver","rideshare_driver"]},{"stat":{"luck":8}},{"trait":["methodical"],"stat":{"will":8}}]}}
+        - {id: p4, kind: care, day: 22, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic"},{"job":["doctor","physician","nurse","paramedic","medical_teacher"],"item":"nano_kit"}]}}
       vignettes:
         - {id: order, traits: [methodical, scholarly]}
         - {id: pause, traits: [bold, artistic]}
@@ -33,23 +34,28 @@ events:
         relic_desc: "Loose scenes in a cramped hand, in no fixed order."
         points:
           p1: 'When Büchner falls ill, keep each group of Woyzeck drafts together as his Zürich papers are handed over'
-          p2: 'Note the first and last page of each group and where names change so a copyist can follow each draft as a whole'
-          p3: 'While Büchner is still well enough, ask him to select scenes an editor can read first and mark the joins he left unfinished'
+          p2: 'While the manuscript is still by him, make a second copy of his play Pietro Aretino and give it to his family to keep'
+          p3: 'Send word to Strasbourg in the first days of his fever, so that Minna reaches him days earlier'
+          p4: 'Stop the typhus and cure him, so that he lives through this February'
         points_fail:
           p1: 'Different drafts are combined for a single fair copy. The earliest set goes missing, and the office recalls the employee.'
-          p2: 'The copy joins names from different drafts. The next person cannot tell which pages belong together.'
-          p3: 'He hopes to publish several plays. The drafts have no reading order he has approved.'
+          p2: 'The play existed in a single manuscript, and it did not survive.'
+          p3: 'The news reached Minna late. When she came to Zürich he was already dying.'
+          p4: 'The fever rose day by day, and on 19 February he died in Zürich at twenty three.'
         shift:
           p1:
-            was: 'Büchner left several sets of Woyzeck drafts. The latest is close to a fair copy and remains incomplete.'
+            was: 'In February 1837 Büchner left several sets of Woyzeck drafts. The latest is close to a fair copy and remains incomplete.'
           p2:
-            was: 'The layers of the manuscript troubled early copyists, and the play took years to reach print.'
-            now: 'The first handover includes numbered groups. A copyist can keep alternative wording with the draft it came from.'
+            was: 'From 1837 on, after his death, the manuscript of his play about Pietro Aretino did not survive.'
+            now: 'A second copy stayed with his family, and the play was later printed with the rest of his papers.'
           p3:
-            was: 'In January 1837 Büchner wrote from Zürich that he meant to publish some plays soon. Woyzeck did not reach print through those plans.'
-            now: 'The editor’s copy records Büchner’s order and his marks where the work stops. Readers have a starting sequence and can still see the gaps.'
+            was: 'In February 1837 his fiancée Minna Jaeglé hurried from Strasbourg to Zürich, arriving when he was already dying; he died soon after with her beside him.'
+            now: 'Minna arrived in Zürich days earlier and was there through the days when he could still talk with her.'
+          p4:
+            was: 'On 19 February 1837 Büchner died of typhus in Zürich, at twenty three.'
+            now: 'His fever broke, and in spring he was back at the university. He went on teaching and writing plays for years, and sent the plays on his desk to print one after another.'
             who: buchner_zurich
-            bio: 'Büchner taught in Zürich and worked on plays in his last months. Woyzeck survives in manuscripts without a final version.'
+            bio: 'Büchner came through the typhus of 1837 in Zürich. He taught at the university for many years, doing research and writing plays.'
         vignettes:
           order: 'The reader has put the two copies together and numbered the scenes in ink. You add a separate label to each source and write the proposed order on a removable slip. The next reader can undo it. You bring home that slip; you still do not have a final order.'
           pause: 'You know future theatres will have to decide what goes next. The reader asks if your answer is the author’s. You try both beginnings aloud and mark where they leave different questions. You can take two pauses home, and no finished script.'
@@ -63,23 +69,28 @@ events:
         relic_desc: "字迹局促的散页，没有固定的顺序。"
         points:
           p1: '毕希纳病倒以后，趁转交苏黎世住处的纸件时，把《沃伊采克》的几组草稿逐叠留存'
-          p2: '给每组稿纸记起讫和换名处，让后来誊写的人能按同一组阅读'
-          p3: '请毕希纳在身体尚可时挑出适合先给编辑读的场次，并标出只写到一半的接缝'
+          p2: '趁手稿还在他身边，把他写的戏《彼得罗·阿雷蒂诺》誊出一份副本，交给他的家人保存'
+          p3: '他发烧的头几天就往斯特拉斯堡送信，让明娜早几天赶到他身边'
+          p4: '拦下伤寒，治好他的病，让他活过这个二月'
         points_fail:
           p1: '几叠不同稿纸被拿去作一套誊稿，退回来时最早的一组失散。事务所因同步失败召回员工。'
-          p2: '抄本把来自不同草稿的人名并在一起，接手的人找不到哪几页是同一稿。'
-          p3: '他想把几部戏送去出版，留下的几套草稿却没有一份自己的阅读顺序。'
+          p2: '这部戏只有一份手稿，后来没有传下来。'
+          p3: '消息到得晚，明娜赶到苏黎世时，他已经病危。'
+          p4: '高烧一天天加重，2 月 19 日他在苏黎世去世，年仅二十三岁。'
         shift:
           p1:
-            was: '毕希纳在去世前留下多组《沃伊采克》草稿，最后一组近乎誊清但仍不完整。'
+            was: '1837 年 2 月，毕希纳去世时留下多组《沃伊采克》草稿，最后一组近乎誊清但仍不完整。'
           p2:
-            was: '未定稿里的不同层次给早期誊写者留下困难，作品多年后才进入刊本。'
-            now: '初次交接带上按组编号的页次。誊写的人能把不同写法留在对应的稿层。'
+            was: '1837 年他去世以后，他写的戏《彼得罗·阿雷蒂诺》手稿没有传下来。'
+            now: '这部戏另有一份副本留在家人手里，后来同他的其他遗稿一起印了出来。'
           p3:
-            was: '1837 年一月，毕希纳从苏黎世写信说计划尽快刊出几部戏。《沃伊采克》没有随当时的计划成书。'
-            now: '给编辑的副本留有毕希纳自己的场次次序和未定标记。读者能从这份次序开始，未完成的地方原样留着。'
+            was: '1837 年 2 月，未婚妻明娜从斯特拉斯堡赶到苏黎世时，他已病危，不久在她身边去世。'
+            now: '明娜早几天到了苏黎世，他还能和她说话的那些日子，她都在。'
+          p4:
+            was: '1837 年 2 月 19 日，毕希纳在苏黎世死于伤寒，年仅二十三岁。'
+            now: '他退了烧，春天回到大学讲台。此后多年他一边教书一边写戏，把桌上的几部戏陆续送去付印。'
             who: buchner_zurich
-            bio: '毕希纳在苏黎世任教，并在去世前继续写戏。《沃伊采克》以多组稿件存下，后人必须决定怎样读这些没有最后定稿的页面。'
+            bio: '毕希纳熬过了 1837 年苏黎世的那场伤寒，此后在大学任教多年，一边研究，一边写戏。'
         vignettes:
           order: '试读人把两份拢在一起，用墨写好了场次。你为两份抄件各补一张出处签，把试排的顺序另写在能取下的纸上。下一个人还可以改排。你带回纸条，仍没有拿到定稿的场序。'
           pause: '你知道后来的剧院也得选下一场怎么接。试读人问你这是不是作者定的。你把两个起头各念一遍，标明它们各把什么问题留给台下。带回的是两个停顿，没有一本完整剧本。'

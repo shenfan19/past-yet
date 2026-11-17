@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["electrician","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":7}}]}}
-        - {id: p2, kind: notice, day: 14, req: {"any":[{"job":["electrician","university_lecturer","archivist"]},{"trait":["methodical","scholarly"]}]}}
-        - {id: p3, kind: persuade, day: 103, req: {"any":[{"job":["electrician","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 103, req: {"any":[{"job":["electrician","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil"],"stat":{"will":8}}]}}
       vignettes:
         - {id: instant, traits: [methodical, vigil]}
         - {id: skeptic, traits: [skeptical, curious]}
@@ -33,19 +32,14 @@ events:
         relic_desc: Two coils of wire on a ring of soft iron.
         points:
           p1: 'Watch the switching and the needle separately to preserve the fleeting deflection in Faraday''s ring experiment'
-          p2: 'Set the unsuccessful arrangement beside the successful one so nobody has to repeat the same false start'
-          p3: 'Before review delays the printed paper, persuade the Royal Society to circulate an abstract with the date it received the work'
+          p2: 'Before review delays the printed paper, persuade the Royal Society to circulate an abstract with the date it received the work'
         points_fail:
           p1: 'The needle is back at rest before anyone looks. The experiment is entered as a null result, and the office recalls the employee after a loss of sync.'
-          p2: 'Only the result that worked reaches the next observer, who repeats an arrangement that does not give the same deflection.'
-          p3: 'Printing remains slow. Faraday has to write again, and readers struggle to place the various accounts in order.'
+          p2: 'Printing remains slow. Faraday has to write again, and readers struggle to place the various accounts in order.'
         shift:
           p1:
             was: 'On 29 August 1831 Faraday observed a brief induced current when the iron-ring apparatus was switched on and off.'
           p2:
-            was: 'In 1831 Faraday logged both experiments that showed induction and trials that gave no visible result.'
-            now: '{staff} asks Faraday to pick out two comparable arrangements from the diary and puts their different results side by side for colleagues.'
-          p3:
             was: 'On 24 November 1831 the Royal Society heard Faraday''s paper. Printing was delayed into the next year, and Faraday wrote to hurry it along.'
             now: '{staff} has the Society send a dated abstract while the review runs its course. Readers can check which results Faraday had reported by the date of the reading.'
             who: faraday_london
@@ -63,19 +57,14 @@ events:
         relic_desc: 软铁环上绕着两组线圈。
         points:
           p1: '两人分看接通时刻和表针，护住铁环实验里转瞬即逝的偏转'
-          p2: '把失败的接线与确实有效的试验分栏记下，省去后来重复一次已经走过的弯路'
-          p3: '在审稿拖慢刊印前，劝皇家学会发出一份有接收日期的实验摘要'
+          p2: '在审稿拖慢刊印前，劝皇家学会发出一份有接收日期的实验摘要'
         points_fail:
           p1: '表针摆回去才有人抬头，这一趟把实验记成无结果。行程同步失败，员工被召回。'
-          p2: '交接时只剩成功的结果，后来接手的人又试了一遍得不出同样偏转的布置。'
-          p3: '刊印仍然拖延，法拉第只能另去催问，读者也难判断几封先后传出的通信。'
+          p2: '刊印仍然拖延，法拉第只能另去催问，读者也难判断几封先后传出的通信。'
         shift:
           p1:
             was: '1831 年 8 月 29 日，法拉第在铁环装置接通和断开时观察到了短暂的感应电流。'
           p2:
-            was: '1831 年，法拉第的实验日记把观察到感应的试验与没有可见结果的试验分别逐次记下。'
-            now: '{staff}请法拉第从散在日记里的试验里划出彼此最接近的两种布置，把不同结果并排留给同事。'
-          p3:
             was: '1831 年 11 月 24 日论文在皇家学会宣读，刊印延至翌年，法拉第在等候期间致信催促。'
             now: '{staff}让学会在不动正式审稿程序的情况下附发注明宣读日期的摘要。读者可以从有日期的版本核对法拉第公布了哪些结果。'
             who: faraday_london

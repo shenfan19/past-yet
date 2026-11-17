@@ -127,48 +127,54 @@ events:
           day: 20
           req:
             any:
-              - job:
-                  - archivist
-                  - translator
-                  - tutor
               - trait:
-                  - vigil
-                  - scholarly
+                  - bold
+                  - charismatic
+                  - calm
+                stat:
+                  will: 7
+              - job:
+                  - union_organizer
+                  - teacher
+                  - radio_host
                 stat:
                   will: 6
+              - item: golden_apple
+                stat:
+                  will: 5
         - id: p2
-          kind: notice
-          day: 25
+          kind: hold
+          day: 40
           req:
             any:
               - job:
+                  - writer
                   - translator
-                  - tutor
                   - proofreader
+                  - musician
               - trait:
-                  - vigil
+                  - artistic
                   - scholarly
-                  - curious
                 stat:
                   wit: 6
         - id: p3
-          kind: persuade
-          day: 41
+          kind: care
+          day: 49
           req:
             any:
               - job:
-                  - translator
-                  - tutor
+                  - doctor
+                  - physician
                 stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - vigil
-                  - scholarly
-                  - scholarly
+                  wit: 6
+              - job:
+                  - nurse
+                  - pharmacist
+                  - paramedic
+                item: handbook
+              - item: nano_kit
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 6
       vignettes:
         - id: handoff
           traits:
@@ -535,36 +541,6 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 21
-          req:
-            any:
-              - job:
-                  - archivist
-                  - bookseller
-                  - tutor
-              - trait:
-                  - curious
-                  - scholarly
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 25
-          req:
-            any:
-              - job:
-                  - archivist
-                  - tutor
-                  - proofreader
-              - trait:
-                  - curious
-                  - scholarly
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 51
           req:
@@ -572,16 +548,16 @@ events:
               - job:
                   - archivist
                   - tutor
+                  - bookseller
                 stat:
                   wit: 7
-                  will: 7
+                  will: 6
               - trait:
                   - curious
                   - scholarly
-                  - scholarly
                 stat:
                   wit: 8
-                  will: 7
+                  will: 6
       vignettes:
         - id: gap
           traits:
@@ -630,27 +606,13 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 28
-          req:
-            any:
-              - job:
-                  - painter
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - handy
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 69
           req:
             any:
               - job:
                   - painter
+                  - restorer
                   - archivist
                 stat:
                   wit: 7
@@ -708,38 +670,31 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 47
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
+          kind: trust
           day: 77
           req:
             any:
+              - trait:
+                  - scholarly
+                  - sensitive
+                  - faithful
+                  - artistic
+                stat:
+                  will: 7
               - job:
                   - translator
-                  - archivist
+                  - teacher
+                  - bookseller
+                  - writer
+                  - proofreader
                 stat:
-                  wit: 7
                   will: 7
-              - trait:
-                  - artistic
-                  - methodical
+              - item: golden_apple
+                trait:
+                  - kind
+                  - sensitive
                   - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  - artistic
       vignettes:
         - id: dream
           traits:
@@ -833,21 +788,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 37
-          req:
-            any:
-              - job:
-                  - painter
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - vigil
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 77
           req:
@@ -914,20 +854,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 63
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - translator
-                  - archivist
-              - trait:
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 7
-        - id: p3
           kind: persuade
           day: 109
           req:
@@ -943,6 +869,32 @@ events:
                   - scholarly
                 stat:
                   wit: 8
+        - id: p3
+          kind: care
+          day: 30
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                  - medical_teacher
+                stat:
+                  will: 6
+              - job:
+                  - courier
+                  - bookseller
+                  - driver
+                stat:
+                  constitution: 8
+              - trait:
+                  - kind
+                  - patient
+                  - vigil
+                stat:
+                  will: 8
+                  wit: 6
       vignettes:
         - id: walk
           traits:
@@ -1088,37 +1040,26 @@ events:
                   will: 6
         - id: p2
           kind: notice
-          day: 28
+          day: 110
           req:
             any:
               - job:
-                  - archivist
                   - university_lecturer
-                  - proofreader
+                  - teacher
+                  - tutor
+                stat:
+                  finesse: 6
               - trait:
                   - methodical
-                  - vigil
-                  - curious
+                  - patient
                 stat:
+                  finesse: 7
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 65
-          req:
-            any:
-              - job:
-                  - archivist
-                  - university_lecturer
-                stat:
-                  wit: 7
-                  will: 7
               - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
+                  - handy
                 stat:
-                  wit: 8
-                  will: 7
+                  finesse: 8
+                  wit: 5
       vignettes:
         - id: alignment
           traits:
@@ -1180,24 +1121,6 @@ events:
                   - curious
                 stat:
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 56
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - translator
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
       vignettes:
         - id: parts
           traits:
@@ -1245,21 +1168,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 16
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - curious
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 40
           req:
@@ -1324,21 +1232,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 28
-          req:
-            any:
-              - job:
-                  - archivist
-                  - university_lecturer
-                  - proofreader
-              - trait:
-                  - vigil
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 67
           req:
@@ -1410,21 +1303,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 40
-          req:
-            any:
-              - job:
-                  - musician
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 71
           req:
@@ -1475,52 +1353,25 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 16
+          kind: persuade
+          day: 12
           req:
             any:
               - job:
-                  - archivist
                   - bookseller
-              - trait:
-                  - methodical
-                  - skeptical
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 23
-          req:
-            any:
-              - job:
                   - translator
                   - archivist
-                  - proofreader
+                stat:
+                  will: 7
               - trait:
-                  - methodical
-                  - skeptical
-                  - curious
+                  - charismatic
+                  - bold
                 stat:
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 56
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                stat:
-                  wit: 7
                   will: 7
-              - trait:
-                  - methodical
-                  - skeptical
-                  - scholarly
+              - item: golden_apple
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 5
       vignettes:
         - id: queue
           traits:
@@ -1569,21 +1420,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 21
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - methodical
-                  - vigil
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 54
           req:
@@ -1651,18 +1487,6 @@ events:
                 stat:
                   wit: 7
         - id: p2
-          kind: notice
-          day: 9
-          req:
-            any:
-              - job:
-                  - musician
-                  - archivist
-              - trait:
-                  - artistic
-                  - methodical
-                  - vigil
-        - id: p3
           kind: persuade
           day: 24
           req:
@@ -1725,21 +1549,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 22
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - methodical
-                  - artistic
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 53
           req:
@@ -1931,18 +1740,6 @@ events:
                 stat:
                   wit: 7
         - id: p2
-          kind: notice
-          day: 14
-          req:
-            any:
-              - job:
-                  - electrician
-                  - university_lecturer
-                  - archivist
-              - trait:
-                  - methodical
-                  - scholarly
-        - id: p3
           kind: persuade
           day: 103
           req:
@@ -2420,18 +2217,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 18
-          req:
-            any:
-              - job:
-                  - archivist
-                  - biologist
-              - trait:
-                  - methodical
-                  - scholarly
-                  - patient
-        - id: p3
           kind: persuade
           day: 177
           req:
@@ -2447,6 +2232,25 @@ events:
                   - charismatic
                 stat:
                   will: 8
+        - id: p3
+          kind: care
+          day: 60
+          req:
+            any:
+              - item: radiation_shield
+                trait:
+                  - methodical
+                  - skeptical
+                  - scholarly
+                  - vigil
+              - item: radiation_shield
+                job:
+                  - doctor
+                  - physician
+                  - biologist
+                  - geologist
+                  - pharmacist
+                  - nurse
       vignettes:
         - id: two_notices
           traits:
@@ -2484,52 +2288,24 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 22
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - archivist
-              - trait:
-                  - methodical
-                  - vigil
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 13
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - methodical
-                  - vigil
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 40
           req:
             any:
               - job:
-                  - translator
-                  - archivist
+                  - bookseller
+                  - journalist
+                  - doctor
+                  - physician
+                  - medical_teacher
                 stat:
-                  wit: 7
-                  will: 7
+                  will: 6
               - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
+                  - charismatic
+                  - glib
+                  - cosmopolitan
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 6
       vignettes:
         - id: imprint
           traits:
@@ -2581,18 +2357,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 25.2
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - illustrator
-              - trait:
-                  - methodical
-                  - scholarly
-        - id: p3
           kind: persuade
           day: 26
           req:
@@ -2640,35 +2404,6 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 12
-          req:
-            any:
-              - job:
-                  - electrician
-                  - archivist
-              - trait:
-                  - handy
-                  - methodical
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 33
-          req:
-            any:
-              - job:
-                  - archivist
-                  - electrician
-                  - proofreader
-              - trait:
-                  - handy
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 84
           req:
@@ -3234,21 +2969,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 46
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - scholarly
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 71
           req:
@@ -3262,7 +2982,6 @@ events:
               - trait:
                   - scholarly
                   - methodical
-                  - scholarly
                 stat:
                   wit: 8
                   will: 7
@@ -3282,7 +3001,7 @@ events:
       - AI
       - Fan Shen
   - id: omar_khayyam_nishapur
-    build_step: 3
+    build_step: 2
     year: 1079
     date: '1079-02-13'
     lon: 58.8
@@ -3326,23 +3045,6 @@ events:
                 stat:
                   wit: 6
         - id: p2
-          kind: persuade
-          day: 60
-          req:
-            any:
-              - job:
-                  - farmer
-                  - potato_farmer
-                  - dairy_farmer
-                  - villager
-                  - shepherd
-              - trait:
-                  - patient
-                  - charismatic
-                  - cheerful
-                stat:
-                  will: 5
-        - id: p3
           kind: hold
           day: 120
           req:
@@ -3415,21 +3117,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 16
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                  - proofreader
-              - trait:
-                  - methodical
-                  - handy
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 36
           req:
@@ -3812,24 +3499,6 @@ events:
                   - curious
                 stat:
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 76
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - handy
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
       vignettes:
         - id: light
           traits:
@@ -3861,53 +3530,28 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
+          kind: notice
           day: 25
           req:
             any:
               - job:
-                  - archivist
-                  - carpenter
+                  - retired_engineer
                   - mechanic
-              - trait:
-                  - methodical
-                  - handy
+                  - civil_engineer
+                  - electrician
+                  - pump_repairer
                 stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 40
-          req:
-            any:
+                  wit: 5
               - job:
-                  - archivist
-                  - mechanic
-                  - proofreader
-              - trait:
-                  - methodical
-                  - handy
-                  - curious
+                  - architecture_intern
+                  - illustrator
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 73
-          req:
-            any:
-              - job:
-                  - archivist
-                  - mechanic
-                stat:
-                  wit: 7
-                  will: 7
+                  finesse: 5
               - trait:
-                  - methodical
                   - handy
-                  - scholarly
+                  - methodical
                 stat:
                   wit: 8
-                  will: 7
       vignettes:
         - id: register
           traits:
@@ -3995,21 +3639,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 26
-          req:
-            any:
-              - job:
-                  - archivist
-                  - teacher
-                  - proofreader
-              - trait:
-                  - curious
-                  - scholarly
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 52
           req:
@@ -4073,21 +3702,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 31
-          req:
-            any:
-              - job:
-                  - archivist
-                  - teacher
-                  - proofreader
-              - trait:
-                  - scholarly
-                  - curious
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 74
           req:
@@ -4194,20 +3808,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 29
-          req:
-            any:
-              - job:
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 48
           req:
@@ -4258,51 +3858,22 @@ events:
       points:
         - id: p1
           kind: hold
-          guard: true
-          day: 42
+          day: 60
           req:
             any:
               - job:
                   - carpenter
-                  - archivist
-              - trait:
-                  - handy
-                  - methodical
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 47
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                  - proofreader
-              - trait:
-                  - handy
-                  - methodical
-                  - curious
+                  - mechanic
+                  - retired_engineer
+                  - civil_engineer
                 stat:
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 83
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                stat:
-                  wit: 7
-                  will: 7
               - trait:
                   - handy
                   - methodical
-                  - scholarly
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 7
+                  finesse: 6
       vignettes:
         - id: listen
           traits:
@@ -4335,51 +3906,21 @@ events:
       points:
         - id: p1
           kind: hold
-          guard: true
-          day: 18
+          day: 60
           req:
             any:
               - job:
                   - archivist
-                  - carpenter
+                  - illustrator
+                  - painter
+                stat:
+                  finesse: 6
               - trait:
-                  - curious
+                  - methodical
                   - handy
                 stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 27
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                  - proofreader
-              - trait:
-                  - curious
-                  - handy
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 72
-          req:
-            any:
-              - job:
-                  - archivist
-                  - carpenter
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - curious
-                  - handy
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  finesse: 8
+                  will: 5
       vignettes:
         - id: directions
           traits:
@@ -4617,21 +4158,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 0.32
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - vigil
-                  - patient
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 0.48
           req:
@@ -4694,19 +4220,6 @@ events:
                 stat:
                   finesse: 5
         - id: p2
-          kind: notice
-          day: 40
-          req:
-            any:
-              - job:
-                  - painter
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                stat:
-                  finesse: 5
-        - id: p3
           kind: persuade
           day: 71
           req:
@@ -4802,49 +4315,27 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
+          kind: persuade
           day: 22
           req:
             any:
-              - job:
-                  - archivist
-                  - university_lecturer
-                stat:
-                  wit: 7
               - trait:
-                  - methodical
-                  - vigil
-                stat:
-                  will: 7
-        - id: p2
-          kind: notice
-          day: 23
-          req:
-            any:
-              - job:
-                  - journalist
-                  - translator
-              - trait:
-                  - methodical
-                  - scholarly
-                  - patient
-        - id: p3
-          kind: persuade
-          day: 44
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
                   - charismatic
+                  - calm
+                  - kind
                 stat:
-                  will: 8
+                  will: 7
+              - job:
+                  - teacher
+                  - journalist
+                  - radio_host
+                  - tour_guide
+                stat:
+                  wit: 6
+                  will: 5
+              - item: golden_apple
+                stat:
+                  will: 5
       vignettes:
         - id: headline
           traits:
@@ -4974,53 +4465,24 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 9
+          kind: persuade
+          day: 20
           req:
             any:
               - job:
-                  - archivist
-                  - proofreader
                   - journalist
-              - trait:
-                  - vigil
-                  - curious
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 25
-          req:
-            any:
-              - job:
                   - archivist
-                  - translator
                   - proofreader
-              - trait:
-                  - vigil
-                  - curious
-                  - curious
                 stat:
                   wit: 6
-        - id: p3
-          kind: persuade
-          day: 46
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                stat:
-                  wit: 7
-                  will: 7
+                  will: 6
               - trait:
-                  - vigil
-                  - curious
+                  - methodical
+                  - skeptical
                   - scholarly
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 7
+                  will: 6
       vignettes:
         - id: cloud
           traits:
@@ -5071,18 +4533,6 @@ events:
                 stat:
                   finesse: 8
         - id: p2
-          kind: notice
-          day: 12.5
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
-              - job:
-                  - archivist
-                  - journalist
-        - id: p3
           kind: persuade
           day: 27
           req:
@@ -5148,18 +4598,6 @@ events:
                 stat:
                   wit: 7
         - id: p2
-          kind: notice
-          day: 14
-          req:
-            any:
-              - job:
-                  - mechanic
-                  - archivist
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
-        - id: p3
           kind: persuade
           day: 80
           req:
@@ -5189,7 +4627,7 @@ events:
       - AI
       - Fan Shen
   - id: wright_kitty_hawk
-    build_step: 3
+    build_step: 2
     year: 1903
     lon: -75.7
     lat: 36
@@ -5225,19 +4663,6 @@ events:
                   constitution: 8
               - provides: strength
         - id: p2
-          kind: persuade
-          day: 16.5
-          req:
-            any:
-              - trait:
-                  - charismatic
-                  - glib
-                  - streetwise
-              - job:
-                  - journalist
-                  - radio_host
-              - item: golden_apple
-        - id: p3
           kind: hold
           day: 16.35
           req:
@@ -5618,19 +5043,6 @@ events:
                 stat:
                   wit: 7
         - id: p2
-          kind: notice
-          day: 14
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
-              - job:
-                  - mechanic
-                  - electrician
-                  - archivist
-        - id: p3
           kind: persuade
           day: 30
           req:
@@ -5748,20 +5160,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 10
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - archivist
-                  - musician
-              - trait:
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 104
           req:
@@ -5777,6 +5175,24 @@ events:
                   - charismatic
                 stat:
                   will: 8
+        - id: p3
+          kind: care
+          day: 10
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - paramedic
+                item: first_aid_kit
+              - job:
+                  - nurse
+                item: antibiotic
+                stat:
+                  will: 6
+              - provides: cure
+                stat:
+                  constitution: 6
       vignettes:
         - id: check
           traits:
@@ -5792,7 +5208,7 @@ events:
       - AI
       - Fan Shen
   - id: van_gogh_auvers
-    build_step: 3
+    build_step: 2
     year: 1890
     date: '1890-05-20'
     stay: 3
@@ -5831,6 +5247,24 @@ events:
                 stat:
                   constitution: 6
         - id: p2
+          kind: care
+          day: 50
+          req:
+            any:
+              - job:
+                  - accountant
+                  - tax_preparer
+                  - antique_dealer
+                  - market_trader
+                stat:
+                  will: 5
+              - trait:
+                  - kind
+                  - sensitive
+                  - patient
+                stat:
+                  will: 7
+        - id: p3
           kind: persuade
           day: 55
           req:
@@ -5844,7 +5278,7 @@ events:
                   - painter
                   - illustrator
                   - antique_dealer
-        - id: p3
+        - id: p4
           kind: care
           day: 66
           req:
@@ -5931,6 +5365,28 @@ events:
                   - archivist
                   - translator
         - id: p3
+          kind: care
+          day: 30
+          req:
+            any:
+              - job:
+                  - nurse
+                  - doctor
+                  - physician
+                  - caregiver
+                  - paramedic
+                  - midwife
+              - trait:
+                  - kind
+                  - patient
+                stat:
+                  constitution: 5
+              - item: warm_blanket
+                trait:
+                  - kind
+                  - patient
+                  - attached
+        - id: p4
           kind: persuade
           day: 66
           req:
@@ -5981,52 +5437,40 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 26
+          kind: care
+          day: 20
           req:
             any:
               - job:
-                  - archivist
-                  - nurse
-              - trait:
-                  - methodical
-                  - patient
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 18
-          req:
-            any:
-              - job:
-                  - archivist
                   - university_lecturer
+                  - lecturer
+                  - modelling_scientist
                   - proofreader
-              - trait:
-                  - methodical
-                  - patient
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 25
-          req:
-            any:
-              - job:
-                  - archivist
-                  - university_lecturer
                 stat:
                   wit: 7
-                  will: 7
               - trait:
-                  - methodical
-                  - patient
                   - scholarly
+                  - patient
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 7
+                  will: 5
+        - id: p2
+          kind: care
+          day: 24
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                item: nano_kit
+              - job:
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                item: nano_kit
+                stat:
+                  wit: 6
       vignettes:
         - id: surface
           traits:
@@ -6075,21 +5519,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 9
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - methodical
-                  - patient
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 14
           req:
@@ -6107,6 +5536,25 @@ events:
                 stat:
                   wit: 8
                   will: 7
+        - id: p3
+          kind: care
+          day: 15
+          req:
+            any:
+              - job:
+                  - midwife
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: nano_kit
+              - job:
+                  - midwife
+                  - doctor
+                  - physician
+                item: antibiotic
+                stat:
+                  wit: 6
       vignettes:
         - id: source
           traits:
@@ -6156,19 +5604,6 @@ events:
                 stat:
                   wit: 6
         - id: p2
-          kind: notice
-          day: 62
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - university_lecturer
-              - trait:
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 151
           req:
@@ -6345,21 +5780,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 128
-          req:
-            any:
-              - job:
-                  - archivist
-                  - university_lecturer
-                  - proofreader
-              - trait:
-                  - methodical
-                  - scholarly
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 145
           req:
@@ -6542,6 +5962,26 @@ events:
                 stat:
                   wit: 8
                   will: 8
+        - id: p4
+          kind: care
+          day: 7
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                item: nano_kit
+              - job:
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                item: nano_kit
+                stat:
+                  wit: 6
+              - item: nano_kit
+                stat:
+                  finesse: 8
       vignettes:
         - id: stack
           traits:
@@ -6595,18 +6035,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 15
-          req:
-            any:
-              - job:
-                  - musician
-                  - archivist
-              - trait:
-                  - methodical
-                  - artistic
-                  - patient
-        - id: p3
           kind: persuade
           day: 203
           req:
@@ -6618,9 +6046,22 @@ events:
               - job:
                   - archivist
                   - translator
+                  - bookseller
                 stat:
                   wit: 7
                   will: 7
+        - id: p3
+          kind: care
+          day: 170
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                item: nano_kit
+              - provides: cure
+                stat:
+                  will: 6
       vignettes:
         - id: timing
           traits:
@@ -6756,46 +6197,67 @@ events:
         - id: p1
           kind: hold
           guard: true
-          day: 57
+          day: 3
           req:
             any:
               - job:
                   - archivist
-                  - proofreader
+                  - antique_dealer
+                  - restorer
               - trait:
-                  - methodical
                   - vigil
+                  - methodical
                 stat:
-                  will: 6
+                  will: 7
         - id: p2
-          kind: notice
-          day: 90
+          kind: persuade
+          day: 6
           req:
             any:
               - job:
-                  - archivist
-                  - painter
-              - trait:
-                  - methodical
-                  - artistic
+                  - antique_dealer
+                  - market_trader
+                  - bookseller
+                  - shopkeeper
                 stat:
-                  wit: 6
+                  luck: 5
+              - trait:
+                  - glib
+                  - charismatic
+                  - streetwise
+                stat:
+                  wit: 5
         - id: p3
           kind: persuade
-          day: 103
+          day: 9
+          req:
+            any:
+              - trait:
+                  - artistic
+                  - sensitive
+                  - kind
+              - job:
+                  - painter
+                  - illustrator
+                  - antique_dealer
+                  - restorer
+        - id: p4
+          kind: care
+          day: 12
           req:
             any:
               - job:
-                  - archivist
-                  - translator
+                  - doctor
+                  - physician
                 stat:
-                  wit: 7
                   will: 7
-              - trait:
-                  - methodical
-                  - charismatic
-                stat:
-                  will: 8
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: calm_patch
+              - provides: cure
       vignettes:
         - id: motif
           traits:
@@ -6831,53 +6293,20 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 13
+          kind: care
+          day: 15
           req:
             any:
               - job:
                   - painter
-                  - archivist
                   - illustrator
+                  - restorer
+                stat:
+                  finesse: 7
               - trait:
                   - artistic
-                  - methodical
                 stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 18
-          req:
-            any:
-              - job:
-                  - archivist
-                  - painter
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 25
-          req:
-            any:
-              - job:
-                  - archivist
-                  - painter
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - artistic
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  finesse: 8
       vignettes:
         - id: mirror
           traits:
@@ -6926,19 +6355,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 24
-          req:
-            any:
-              - job:
-                  - carpenter
-                  - archivist
-              - trait:
-                  - handy
-                  - artistic
-                stat:
-                  finesse: 5
-        - id: p3
           kind: persuade
           day: 40
           req:
@@ -6953,6 +6369,26 @@ events:
                   - handy
                 stat:
                   will: 7
+        - id: p3
+          kind: care
+          day: 12
+          req:
+            any:
+              - job:
+                  - paramedic
+                  - doctor
+                  - physician
+                  - nurse
+                item: first_aid_kit
+              - trait:
+                  - vigil
+                  - kind
+                stat:
+                  constitution: 8
+                  will: 5
+              - provides: heal
+                stat:
+                  will: 6
       vignettes:
         - id: outline
           traits:
@@ -7015,6 +6451,23 @@ events:
                   - patient
                   - methodical
         - id: p3
+          kind: care
+          day: 10
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - pharmacist
+                  - paramedic
+                item: painkiller
+              - job:
+                  - doctor
+                  - physician
+                stat:
+                  wit: 7
+        - id: p4
           kind: persuade
           day: 25
           req:
@@ -7082,18 +6535,6 @@ events:
                 stat:
                   will: 8
         - id: p2
-          kind: notice
-          day: 26
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - artistic
-                  - scholarly
-              - job:
-                  - archivist
-                  - translator
-        - id: p3
           kind: persuade
           day: 38
           req:
@@ -7108,6 +6549,57 @@ events:
                   - charismatic
                 stat:
                   wit: 9
+        - id: p3
+          kind: care
+          day: 5
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                  - medical_teacher
+              - trait:
+                  - kind
+                  - patient
+                item: painkiller
+              - trait:
+                  - kind
+                  - patient
+                  - vigil
+                stat:
+                  constitution: 6
+                  will: 6
+              - item: painkiller
+                stat:
+                  will: 8
+        - id: p4
+          kind: trust
+          day: 9
+          req:
+            any:
+              - trait:
+                  - scholarly
+                  - sensitive
+                  - artistic
+                stat:
+                  will: 7
+              - job:
+                  - translator
+                  - proofreader
+                  - writer
+                  - teacher
+                  - bookseller
+                stat:
+                  will: 7
+                  wit: 6
+              - item: golden_apple
+                trait:
+                  - kind
+                  - sensitive
+                  - scholarly
+                  - artistic
       vignettes:
         - id: pause
           traits:
@@ -7152,6 +6644,7 @@ events:
                   - nurse
                   - physician
                   - doctor
+                  - paramedic
                 stat:
                   will: 6
               - trait:
@@ -7160,34 +6653,43 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 13.5
-          req:
-            any:
-              - job:
-                  - nurse
-                  - archivist
-              - trait:
-                  - methodical
-                  - patient
-                  - vigil
-        - id: p3
           kind: care
           day: 14
           req:
             any:
               - job:
                   - nurse
-                  - physician
-                  - doctor
-                stat:
-                  will: 7
+                  - caregiver
+                  - courier
+                  - journalist
               - trait:
-                  - methodical
+                  - kind
                   - patient
+                  - methodical
                 stat:
-                  wit: 7
+                  will: 5
+              - item: notebook_pen
+                stat:
+                  wit: 5
+        - id: p3
+          kind: care
+          day: 15
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                stat:
+                  wit: 8
                   will: 7
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: elixir
+                stat:
+                  will: 6
       vignettes:
         - id: witness
           traits:
@@ -7477,23 +6979,26 @@ events:
                 stat:
                   wit: 6
         - id: p3
-          kind: persuade
-          day: 150
+          kind: care
+          day: 130
           req:
             any:
               - job:
-                  - archivist
-                  - translator
+                  - nurse
+                  - caregiver
+                  - midwife
+                  - physician
+                  - doctor
+                  - paramedic
                 stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
+                  will: 6
+              - item: warm_blanket
+                trait:
+                  - kind
+                  - patient
+                  - faithful
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 6
       vignettes:
         - id: heard
           traits:
@@ -7636,20 +7141,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 16
-          req:
-            any:
-              - job:
-                  - translator
-                  - proofreader
-                  - archivist
-              - trait:
-                  - methodical
-                  - patient
-                stat:
-                  wit: 6
-        - id: p3
           kind: care
           day: 20
           req:
@@ -7665,6 +7156,23 @@ events:
                   - patient
                 stat:
                   will: 8
+        - id: p3
+          kind: care
+          day: 18
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                item: nano_kit
+              - job:
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                item: nano_kit
+                stat:
+                  wit: 6
       vignettes:
         - id: address
           traits:
@@ -7701,37 +7209,28 @@ events:
         - id: p1
           kind: hold
           guard: true
-          day: 24
+          day: 12
           req:
             any:
               - job:
                   - archivist
                   - translator
                   - proofreader
+                  - musician
               - trait:
                   - methodical
                   - vigil
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 21
+          kind: persuade
+          day: 16
           req:
             any:
               - job:
-                  - proofreader
-                  - archivist
                   - musician
-              - trait:
-                  - methodical
-                  - scholarly
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 14
-          req:
-            any:
+                  wit: 5
               - job:
                   - archivist
                   - translator
@@ -7739,10 +7238,31 @@ events:
                   wit: 7
                   will: 7
               - trait:
+                  - artistic
                   - methodical
-                  - charismatic
                 stat:
-                  will: 8
+                  wit: 7
+                  will: 7
+        - id: p3
+          kind: care
+          day: 24
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                stat:
+                  wit: 8
+                  will: 7
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: first_aid_kit
+                stat:
+                  wit: 7
+                  will: 6
       vignettes:
         - id: divider
           traits:
@@ -7793,32 +7313,41 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 20
-          req:
-            any:
-              - job:
-                  - musician
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                stat:
-                  wit: 6
-        - id: p3
-          kind: care
+          kind: persuade
           day: 16
           req:
             any:
               - job:
+                  - doctor
+                  - physician
                   - nurse
-                  - archivist
+                stat:
+                  will: 6
+              - trait:
+                  - patient
+                  - calm
+                  - charismatic
+                stat:
+                  will: 7
+              - item: golden_apple
+                stat:
+                  will: 5
+        - id: p3
+          kind: care
+          day: 23
+          req:
+            any:
+              - job:
+                  - nurse
+                  - caregiver
+                trait:
+                  - vigil
+                  - patient
+              - provides: vigil
                 stat:
                   will: 7
               - trait:
-                  - patient
-                  - methodical
+                  - vigil
                 stat:
                   will: 8
       vignettes:
@@ -7873,21 +7402,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 7.5
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - patient
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 8
           req:
@@ -8005,20 +7519,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 18
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - archivist
-                  - musician
-              - trait:
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 40
           req:
@@ -8034,6 +7534,51 @@ events:
                   - charismatic
                 stat:
                   will: 8
+        - id: p3
+          kind: trust
+          day: 45
+          req:
+            any:
+              - trait:
+                  - bold
+                  - charismatic
+                stat:
+                  will: 6
+              - job:
+                  - musician
+                  - journalist
+                stat:
+                  wit: 5
+              - trait:
+                  - kind
+                  - sensitive
+                stat:
+                  wit: 6
+                  will: 6
+        - id: p4
+          kind: care
+          day: 103
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                item: antibiotic
+              - job:
+                  - nurse
+                  - paramedic
+                  - caregiver
+                item: antibiotic
+                stat:
+                  will: 5
+              - item: nano_kit
+                trait:
+                  - kind
+                  - patient
+                  - vigil
+              - item: nano_kit
+                stat:
+                  finesse: 8
       vignettes:
         - id: future
           traits:
@@ -8070,53 +7615,79 @@ events:
       star_rules: 2
       points:
         - id: p1
+          kind: trust
+          day: 8
+          req:
+            any:
+              - trait:
+                  - charismatic
+                  - kind
+                  - artistic
+                stat:
+                  will: 7
+              - item: hologram_projector
+                stat:
+                  will: 5
+        - id: p2
           kind: hold
           guard: true
+          day: 15
+          req:
+            any:
+              - job:
+                  - paramedic
+                  - nurse
+                  - doctor
+                  - physician
+                  - caregiver
+              - trait:
+                  - vigil
+                  - kind
+                stat:
+                  constitution: 7
+                  will: 6
+        - id: p3
+          kind: care
+          day: 16.5
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                item: nano_kit
+              - job:
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                item: nano_kit
+                stat:
+                  wit: 6
+        - id: p4
+          kind: care
           day: 19
           req:
             any:
               - job:
-                  - archivist
-                  - painter
-                  - illustrator
-              - trait:
-                  - artistic
-                  - methodical
+                  - midwife
+                  - nurse
+                  - caregiver
+                  - doctor
+                  - physician
                 stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 27
-          req:
-            any:
-              - job:
-                  - archivist
-                  - painter
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 58
-          req:
-            any:
-              - job:
-                  - archivist
-                  - painter
-                stat:
-                  wit: 7
                   will: 7
+              - job:
+                  - midwife
+                  - nurse
+                  - caregiver
+                  - doctor
+                  - physician
+                item: calm_patch
               - trait:
-                  - artistic
-                  - methodical
-                  - scholarly
+                  - kind
+                  - calm
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 9
       vignettes:
         - id: line
           traits:
@@ -8165,20 +7736,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 13
-          req:
-            any:
-              - job:
-                  - archivist
-                  - proofreader
-              - trait:
-                  - patient
-                  - vigil
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 18
           req:
@@ -8196,6 +7753,27 @@ events:
                 stat:
                   wit: 8
                   will: 7
+        - id: p3
+          kind: care
+          day: 9
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                item: antibiotic
+              - job:
+                  - nurse
+                  - paramedic
+                  - caregiver
+                item: antibiotic
+                stat:
+                  will: 5
+              - item: nano_kit
+                trait:
+                  - kind
+                  - patient
+                  - vigil
       vignettes:
         - id: repeat
           traits:
@@ -8330,21 +7908,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 25
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - methodical
-                  - vigil
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 58
           req:
@@ -8362,6 +7925,32 @@ events:
                 stat:
                   wit: 8
                   will: 7
+        - id: p3
+          kind: trust
+          day: 12
+          req:
+            any:
+              - trait:
+                  - scholarly
+                  - sensitive
+                  - faithful
+                stat:
+                  will: 7
+              - job:
+                  - teacher
+                  - university_lecturer
+                  - lecturer
+                  - writer
+                  - biologist
+                  - bookseller
+                stat:
+                  will: 7
+              - item: golden_apple
+                trait:
+                  - kind
+                  - sensitive
+                  - scholarly
+                  - artistic
       vignettes:
         - id: edge
           traits:
@@ -8411,18 +8000,6 @@ events:
                 stat:
                   wit: 8
         - id: p2
-          kind: notice
-          day: 14.5
-          req:
-            any:
-              - job:
-                  - university_lecturer
-                  - archivist
-              - trait:
-                  - methodical
-                  - patient
-                  - scholarly
-        - id: p3
           kind: persuade
           day: 15
           req:
@@ -8502,6 +8079,25 @@ events:
                   - tutor
                   - flight_instructor
         - id: p3
+          kind: persuade
+          day: 12
+          req:
+            any:
+              - job:
+                  - teacher
+                  - market_trader
+                  - accountant
+                stat:
+                  will: 6
+              - trait:
+                  - charismatic
+                  - glib
+                stat:
+                  wit: 5
+              - job:
+                  - bush_pilot
+                  - flight_instructor
+        - id: p4
           kind: notice
           day: 15
           req:
@@ -8670,30 +8266,37 @@ events:
                 stat:
                   wit: 8
         - id: p2
-          kind: notice
-          day: 17.25
+          kind: persuade
+          day: 10
           req:
             any:
               - job:
                   - musician
                   - archivist
+                stat:
+                  wit: 6
               - trait:
                   - methodical
                   - artistic
                   - patient
+                stat:
+                  will: 6
         - id: p3
           kind: care
-          day: 17.5
+          day: 18
           req:
             any:
               - job:
-                  - musician
+                  - doctor
+                  - physician
                 stat:
-                  finesse: 9
+                  wit: 7
               - job:
-                  - archivist
+                  - paramedic
+                  - nurse
+                item: handbook
+              - provides: heal
                 stat:
-                  wit: 8
                   will: 7
       vignettes:
         - id: cover
@@ -8870,37 +8473,59 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 12
+          kind: hold
+          day: 20
           req:
             any:
               - job:
                   - archivist
                   - proofreader
+                  - translator
               - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 15
-          req:
-            any:
-              - job:
-                  - archivist
-                  - proofreader
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - artistic
                   - methodical
                   - scholarly
                 stat:
-                  wit: 8
-                  will: 7
+                  finesse: 6
+              - item: notebook_pen
+                stat:
+                  finesse: 7
+        - id: p3
+          kind: care
+          day: 19
+          req:
+            any:
+              - trait:
+                  - kind
+                  - attached
+                  - vigil
+                stat:
+                  will: 5
+              - job:
+                  - courier
+                  - driver
+                  - rideshare_driver
+              - stat:
+                  luck: 8
+              - trait:
+                  - methodical
+                stat:
+                  will: 8
+        - id: p4
+          kind: care
+          day: 22
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                item: antibiotic
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - medical_teacher
+                item: nano_kit
       vignettes:
         - id: order
           traits:
@@ -8966,7 +8591,7 @@ events:
                   - artistic
         - id: p3
           kind: persuade
-          day: 150
+          day: 80
           req:
             any:
               - job:
@@ -8980,6 +8605,27 @@ events:
                   - charismatic
                 stat:
                   will: 8
+        - id: p4
+          kind: care
+          day: 130
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                stat:
+                  will: 8
+              - job:
+                  - nurse
+                  - caregiver
+                trait:
+                  - patient
+                  - kind
+                stat:
+                  will: 7
+              - provides: cure
+                stat:
+                  will: 6
       vignettes:
         - id: witness
           traits:
@@ -9188,38 +8834,45 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 27
+          kind: care
+          day: 10
           req:
             any:
               - job:
-                  - archivist
-                  - translator
-                  - proofreader
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                  - pharmacist
               - trait:
+                  - kind
                   - patient
-                  - artistic
-                  - curious
-                stat:
-                  wit: 6
+                item: warm_blanket
         - id: p3
-          kind: persuade
-          day: 38
+          kind: endure
+          day: 40
           req:
             any:
               - job:
-                  - archivist
-                  - translator
+                  - ferry_pilot
+                  - navigator
+                  - sailor
+                  - ferryman
                 stat:
-                  wit: 7
+                  constitution: 7
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                stat:
                   will: 7
               - trait:
-                  - patient
-                  - artistic
-                  - scholarly
+                  - hardy
+                  - wanderer
+                item: compass
                 stat:
-                  wit: 8
-                  will: 7
+                  constitution: 8
       vignettes:
         - id: shore
           traits:
@@ -9447,51 +9100,21 @@ events:
       points:
         - id: p1
           kind: hold
-          guard: true
-          day: 30
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - archivist
-              - trait:
-                  - artistic
-                  - methodical
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 46
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
           day: 80
           req:
             any:
               - job:
-                  - archivist
-                  - translator
+                  - musician
+                  - proofreader
+                  - writer
                 stat:
-                  wit: 7
-                  will: 7
+                  wit: 6
               - trait:
                   - artistic
                   - methodical
-                  - scholarly
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 6
+                  will: 6
       vignettes:
         - id: empty_garden
           traits:
@@ -9661,47 +9284,40 @@ events:
         - id: p1
           kind: hold
           guard: true
-          day: 19
+          day: 25
+          req:
+            any:
+              - job:
+                  - accountant
+                  - bookseller
+                  - shopkeeper
+                stat:
+                  wit: 5
+              - trait:
+                  - methodical
+                  - charismatic
+                stat:
+                  will: 7
+        - id: p2
+          kind: persuade
+          day: 20
           req:
             any:
               - job:
                   - archivist
                   - university_lecturer
+                  - lecturer
+                stat:
+                  wit: 8
+                  will: 6
+              - trait:
+                  - scholarly
+                stat:
+                  wit: 8
+                  will: 7
+              - item: golden_apple
                 stat:
                   wit: 7
-              - trait:
-                  - methodical
-                  - vigil
-                stat:
-                  will: 7
-        - id: p2
-          kind: notice
-          day: 22
-          req:
-            any:
-              - job:
-                  - archivist
-                  - illustrator
-              - trait:
-                  - methodical
-                  - handy
-                  - artistic
-        - id: p3
-          kind: persuade
-          day: 25
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
-                  - charismatic
-                stat:
-                  will: 8
       vignettes:
         - id: strainer
           traits:
@@ -9800,21 +9416,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 39
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - handy
-                  - patient
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 81
           req:
@@ -9998,18 +9599,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: care
-          day: 39
-          req:
-            any:
-              - trait:
-                  - kind
-                  - patient
-                  - methodical
-              - job:
-                  - farmer
-                  - tutor
-        - id: p3
           kind: notice
           day: 49
           req:
@@ -10024,6 +9613,37 @@ events:
                   - methodical
                 stat:
                   will: 8
+        - id: p3
+          kind: trust
+          day: 45
+          req:
+            any:
+              - trait:
+                  - kind
+                  - patient
+                  - quiet
+                stat:
+                  will: 7
+              - item: hologram_projector
+                stat:
+                  will: 5
+        - id: p4
+          kind: care
+          day: 48
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                item: nano_kit
+              - job:
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                item: nano_kit
+                stat:
+                  wit: 6
       vignettes:
         - id: call
           traits:
@@ -10072,21 +9692,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 18
-          req:
-            any:
-              - job:
-                  - proofreader
-                  - archivist
-                  - proofreader
-              - trait:
-                  - methodical
-                  - artistic
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 44
           req:
@@ -10094,6 +9699,7 @@ events:
               - job:
                   - proofreader
                   - archivist
+                  - bookseller
                 stat:
                   wit: 7
                   will: 7
@@ -10104,6 +9710,24 @@ events:
                 stat:
                   wit: 8
                   will: 7
+        - id: p3
+          kind: care
+          day: 100
+          req:
+            any:
+              - provides: cure
+                stat:
+                  will: 5
+              - job:
+                  - doctor
+                  - physician
+                item: antibiotic
+              - job:
+                  - nurse
+                  - pharmacist
+                item: antibiotic
+                stat:
+                  wit: 5
       vignettes:
         - id: index
           traits:
@@ -10119,7 +9743,7 @@ events:
       - AI
       - Fan Shen
   - id: sei_shonagon_kyoto
-    build_step: 2
+    build_step: 1
     year: 1000
     lon: 135.76
     lat: 35.01
@@ -10319,7 +9943,7 @@ events:
         - id: p1
           kind: hold
           guard: true
-          day: 17
+          day: 10
           req:
             any:
               - job:
@@ -10331,38 +9955,31 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 10
+          kind: care
+          day: 16
           req:
             any:
               - job:
-                  - archivist
                   - translator
-                  - proofreader
+                  - bookseller
+                  - former_monk
+                stat:
+                  wit: 7
+                  will: 6
               - trait:
                   - patient
+                  - faithful
                   - scholarly
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 26
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
                 stat:
                   wit: 7
                   will: 7
-              - trait:
+              - item: neural_chip
+                trait:
                   - patient
                   - scholarly
-                  - scholarly
+                  - faithful
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 6
       vignettes:
         - id: reed
           traits:
@@ -10469,21 +10086,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 39
-          req:
-            any:
-              - job:
-                  - archivist
-                  - tutor
-                  - proofreader
-              - trait:
-                  - curious
-                  - scholarly
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 69
           req:
@@ -10691,7 +10293,7 @@ events:
       - AI
       - Fan Shen
   - id: ahmed_baba_timbuktu
-    build_step: 3
+    build_step: 2
     year: 1594
     lon: -3
     lat: 16.77
@@ -10727,23 +10329,6 @@ events:
                   will: 7
               - item: holo_cloak
         - id: p2
-          kind: notice
-          day: 50
-          req:
-            any:
-              - job:
-                  - archivist
-                  - bookseller
-                  - restorer
-                stat:
-                  wit: 5
-              - trait:
-                  - scholarly
-                  - methodical
-                stat:
-                  wit: 8
-                  luck: 3
-        - id: p3
           kind: care
           day: 75
           req:
@@ -10761,6 +10346,23 @@ events:
                 stat:
                   constitution: 6
               - item: water_station
+        - id: p3
+          kind: notice
+          day: 50
+          req:
+            any:
+              - job:
+                  - archivist
+                  - bookseller
+                  - restorer
+                stat:
+                  wit: 5
+              - trait:
+                  - scholarly
+                  - methodical
+                stat:
+                  wit: 8
+                  luck: 3
       vignettes:
         - id: same_name
           traits:
@@ -10795,53 +10397,23 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
+          kind: persuade
           day: 17
           req:
             any:
-              - job:
-                  - musician
-                  - archivist
-                  - courier
               - trait:
-                  - artistic
-                  - vigil
+                  - charismatic
+                  - glib
                 stat:
                   will: 6
-        - id: p2
-          kind: notice
-          day: 17.3
-          req:
-            any:
               - job:
-                  - archivist
                   - musician
-                  - proofreader
-              - trait:
-                  - artistic
-                  - vigil
-                  - curious
+                  - radio_host
+                  - tour_guide
+                  - street_vendor
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 23
-          req:
-            any:
-              - job:
-                  - archivist
-                  - musician
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - artistic
-                  - vigil
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  will: 5
+              - provides: show
       vignettes:
         - id: warning
           traits:
@@ -11213,53 +10785,73 @@ events:
       points:
         - id: p1
           kind: hold
-          guard: true
           day: 15.1
           req:
             any:
               - job:
                   - sailor
+                  - navigator
                   - ferryman
-                  - paramedic
-                  - archivist
+                  - ferry_pilot
+                  - fisherman
+                  - fisher
+                stat:
+                  will: 5
               - trait:
                   - bold
                   - vigil
                 stat:
-                  will: 6
+                  wit: 6
+              - item: scout_drone
+                stat:
+                  will: 5
         - id: p2
-          kind: notice
+          kind: hold
+          guard: true
           day: 15.38
           req:
             any:
               - job:
-                  - archivist
                   - sailor
-                  - proofreader
+                  - navigator
+                  - ferryman
+                  - ferry_pilot
+                stat:
+                  will: 7
               - trait:
                   - bold
-                  - vigil
-                  - curious
+                  - hardy
                 stat:
-                  wit: 6
+                  constitution: 7
+                  will: 6
+              - item: exoskeleton
+                stat:
+                  will: 6
         - id: p3
-          kind: persuade
+          kind: care
           day: 15.74
           req:
             any:
               - job:
-                  - archivist
-                  - sailor
+                  - paramedic
+                  - doctor
+                  - physician
+                  - nurse
+                item: gas_mask
+              - job:
+                  - paramedic
+                  - doctor
+                  - physician
+                  - nurse
+                item: oxygen_can
                 stat:
-                  wit: 7
-                  will: 7
+                  constitution: 6
               - trait:
-                  - bold
+                  - hardy
                   - vigil
-                  - scholarly
+                item: gas_mask
                 stat:
-                  wit: 8
-                  will: 7
+                  constitution: 8
       vignettes:
         - id: wind
           traits:
@@ -11517,37 +11109,8 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 53
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-              - trait:
-                  - patient
-                  - methodical
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 39
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - patient
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
-          day: 86
+          day: 30
           req:
             any:
               - job:
@@ -11559,10 +11122,14 @@ events:
               - trait:
                   - patient
                   - methodical
-                  - scholarly
+                  - faithful
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 7
+                  will: 8
+              - trait:
+                  - charismatic
+                stat:
+                  will: 8
       vignettes:
         - id: opening
           traits:
@@ -12229,53 +11796,28 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 17
-          req:
-            any:
-              - job:
-                  - archivist
-                  - tutor
-                  - teacher
-              - trait:
-                  - scholarly
-                  - curious
-                stat:
-                  will: 6
-        - id: p2
           kind: notice
           day: 33
           req:
             any:
               - job:
+                  - woodcarver
+                  - bookseller
                   - archivist
-                  - teacher
-                  - proofreader
-              - trait:
-                  - scholarly
-                  - curious
-                  - curious
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 67
-          req:
-            any:
+                  will: 6
               - job:
-                  - archivist
                   - teacher
+                  - tutor
+                  - university_lecturer
+                  - lecturer
                 stat:
                   wit: 7
-                  will: 7
               - trait:
-                  - scholarly
-                  - curious
                   - scholarly
                 stat:
                   wit: 8
-                  will: 7
+                  will: 6
       vignettes:
         - id: rotate
           traits:
@@ -12313,47 +11855,34 @@ events:
           day: 15
           req:
             any:
-              - job:
-                  - translator
-                  - archivist
               - trait:
-                  - methodical
+                  - hardy
+                  - bold
                   - vigil
                 stat:
-                  will: 6
+                  constitution: 7
+              - job:
+                  - courier
+                  - warehouse_loader
+                  - builder
+                  - scaffolder
+                  - paramedic
+              - provides: carry
         - id: p2
-          kind: notice
+          kind: care
           day: 37
           req:
             any:
               - job:
-                  - translator
-                  - archivist
-                  - proofreader
-              - trait:
-                  - methodical
-                  - vigil
-                  - curious
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - pharmacist
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 102
-          req:
-            any:
-              - job:
-                  - translator
-                  - archivist
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  will: 5
+              - provides: heal
+              - provides: cure
       vignettes:
         - id: totals
           traits:
@@ -12433,36 +11962,6 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 31
-          req:
-            any:
-              - job:
-                  - archivist
-                  - teacher
-                  - tutor
-              - trait:
-                  - scholarly
-                  - curious
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 38
-          req:
-            any:
-              - job:
-                  - archivist
-                  - teacher
-                  - proofreader
-              - trait:
-                  - scholarly
-                  - curious
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 67
           req:
@@ -12470,16 +11969,16 @@ events:
               - job:
                   - archivist
                   - teacher
+                  - tutor
+                  - bookseller
                 stat:
                   wit: 7
-                  will: 7
               - trait:
                   - scholarly
-                  - curious
-                  - scholarly
+                  - methodical
                 stat:
-                  wit: 8
-                  will: 7
+                  wit: 7
+                  will: 6
       vignettes:
         - id: witness
           traits:
@@ -13335,18 +12834,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 16
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - scholarly
-                  - patient
-              - job:
-                  - archivist
-                  - journalist
-        - id: p3
           kind: persuade
           day: 15.5
           req:
@@ -13412,18 +12899,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 15
-          req:
-            any:
-              - trait:
-                  - patient
-                  - methodical
-                  - scholarly
-              - job:
-                  - university_lecturer
-                  - archivist
-        - id: p3
           kind: persuade
           day: 112
           req:
@@ -13489,21 +12964,6 @@ events:
                 stat:
                   will: 6
         - id: p2
-          kind: notice
-          day: 61
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - methodical
-                  - scholarly
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
           day: 82
           req:
@@ -13516,7 +12976,6 @@ events:
                   will: 7
               - trait:
                   - methodical
-                  - scholarly
                   - scholarly
                 stat:
                   wit: 8
@@ -13583,7 +13042,7 @@ events:
       - AI
       - Fan Shen
   - id: rapa_nui_moai
-    build_step: 3
+    build_step: 2
     year: 1500
     lon: -109.29
     lat: -27.12
@@ -13620,22 +13079,6 @@ events:
                   constitution: 9
               - provides: strength
         - id: p2
-          kind: endure
-          day: 100
-          req:
-            any:
-              - job:
-                  - builder
-                  - scaffolder
-                  - civil_engineer
-                  - retired_engineer
-                  - mechanic
-              - provides: strength
-              - trait:
-                  - handy
-                stat:
-                  constitution: 6
-        - id: p3
           kind: notice
           day: 150
           req:
@@ -13670,7 +13113,7 @@ events:
       - AI
       - Fan Shen
   - id: hargrave_stanwell_park
-    build_step: 3
+    build_step: 2
     year: 1894
     date: '1894-11-01'
     stay: 1
@@ -13721,27 +13164,16 @@ events:
                   - methodical
                   - scholarly
                 item: notebook_pen
+                stat:
+                  wit: 6
               - job:
                   - archivist
                   - illustrator
                   - architecture_intern
                   - civil_engineer
                   - retired_engineer
-        - id: p3
-          kind: persuade
-          day: 25
-          req:
-            any:
-              - job:
-                  - bush_pilot
-                  - flight_instructor
-                stat:
-                  will: 7
-              - trait:
-                  - charismatic
                 stat:
                   wit: 6
-              - provides: show
       vignettes:
         - id: four
           traits:

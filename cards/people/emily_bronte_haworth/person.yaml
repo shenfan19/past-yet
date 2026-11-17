@@ -18,7 +18,8 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
         - {id: p2, kind: notice, day: 21, req: {"any":[{"job":["proofreader","archivist"]},{"trait":["methodical","scholarly","artistic"]}]}}
-        - {id: p3, kind: persuade, day: 150, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p3, kind: persuade, day: 80, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p4, kind: care, day: 130, req: {"any":[{"job":["doctor","physician"],"stat":{"will":8}},{"job":["nurse","caregiver"],"trait":["patient","kind"],"stat":{"will":7}},{"provides":"cure","stat":{"will":6}}]}}
       vignettes:
         - {id: witness, traits: [curious, skeptical]}
         - {id: voices, traits: [artistic, quiet]}
@@ -35,10 +36,12 @@ events:
           p1: 'When London letters mix up the Bells'' books, help the sisters assemble papers that identify each author''s work'
           p2: 'When a printer''s error changes a line, help Emily leave corrections that a later printer can check'
           p3: 'While Emily can still check how her characters speak, have her prepare a dialect copy for a later edition'
+          p4: 'Persuade Emily to let a doctor near her, and cure the lung illness that grows worse each week after Branwell''s funeral'
         points_fail:
           p1: 'The letters still attribute the books to one pen name and the sisters cannot take separate proof to London. The clarification is lost, and the office recalls the employee.'
           p2: 'The next printer must guess which readings were intentional, and errors carry forward.'
           p3: 'Her family must decide which lines to change when the book is reissued, with no way to establish which spellings the author wanted.'
+          p4: 'She refuses every doctor through the autumn and dies at the parsonage on 19 December. In this branch the winter goes as it did.'
         shift:
           p1:
             was: 'In July 1848 Charlotte and Anne Brontë went to London from Haworth to explain to a publisher that the Bell pen names belonged to different writers.'
@@ -50,6 +53,11 @@ events:
             now: '{staff} puts the dialect pages in front of Emily separately and records the spellings she approves apart from printing errors. Charlotte has that copy when she prepares the next edition.'
             who: emily_bronte_haworth
             bio: 'Emily left an annotated copy of Wuthering Heights with the dialect checked in her own hand. Later printers could preserve the way she had written her characters'' voices.'
+          p4:
+            was: 'On 19 December 1848 Emily died at Haworth parsonage. Through her illness she had refused to see a doctor, and agreed only on the day she died.'
+            now: '{staff} persuades her in November to let a doctor in, and brings medicine that works on the lungs. She comes through the winter and lives on at the parsonage for many years, still walking the moors and writing.'
+            who: emily_bronte_haworth
+            bio: 'Emily recovered from the illness that began after her brother''s funeral in 1848. She lived on at Haworth, walking the moors and writing for many more years.'
         vignettes:
           witness: 'The reader thinks the person telling the story saw it all. You ask how she learned one particular detail. They trace the sentence back to the speaker who supplied it.'
           voices: 'The reader gives the whole page one voice. You ask them to try again from the place Nelly takes over. A listener can now tell when one speaker is passing the story to another.'
@@ -65,10 +73,12 @@ events:
           p1: '在伦敦来函把几位贝尔的作品混起来时，帮哈沃思的姐妹从书信中理出能各自认领的作品'
           p2: '发现初版里不同于原句的误字时，帮艾米莉留下逐条可查的勘误'
           p3: '趁艾米莉还能核对人物说话的声音，请她定一份以后重印时可照用的方言校本'
+          p4: '劝艾米莉肯让医生近身，治好她在布兰韦尔葬礼后一天天加重的肺病'
         points_fail:
           p1: '几份来函仍把书归到同一个笔名下，姐妹带不出能分开认领的文件。澄清落空，员工因同步失败被召回。'
           p2: '下次排印的人只能从初版猜测哪些字本来就这样写，排字错误继续传下去。'
           p3: '再版时只能由家人判断哪里读不顺，改字里分不清哪些是作者原意。'
+          p4: '整个秋天她拒绝所有医生，12 月 19 日在牧师住宅去世，这条分支里那个冬天照旧。'
         shift:
           p1:
             was: '1848 年 7 月，夏洛蒂与安妮·勃朗特从哈沃思到伦敦，向出版人澄清几个贝尔笔名并非同一作者。'
@@ -80,6 +90,11 @@ events:
             now: '{staff}把方言页分开请艾米莉逐句审过，将她亲自核准的拼写和仍可改的排印错误分明标记。夏洛蒂后来再版时有了这份依据。'
             who: emily_bronte_haworth
             bio: '艾米莉的《呼啸山庄》留下一部她亲自核过方言的印本。后来的重印能够保留人物的原有说话方式。'
+          p4:
+            was: '1848 年 12 月 19 日，艾米莉在霍沃斯的牧师住宅去世。病中她一直拒绝看医生，到去世当天才答应。'
+            now: '{staff}在十一月劝她让医生进了门，也带去了治肺病的药。她熬过了那个冬天，又在牧师住宅里住了许多年，照旧在荒原上散步、写作。'
+            who: emily_bronte_haworth
+            bio: '1848 年布兰韦尔葬礼后染上的那场病，艾米莉挺了过来。她继续住在霍沃斯，在荒原上散步、写作，又过了许多年。'
         vignettes:
           witness: '读者以为讲故事的人什么都看见了。你问有一件事她是从哪儿知道的。他把那句话往回找，找到了先说这事的人。'
           voices: '读者整页只用一个声音。你请他从内莉接过话头处再念。听的人这回听得出，故事什么时候交到了另一个人手上。'

@@ -16,9 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 9, req: {"any":[{"job":["archivist","proofreader","journalist"]},{"trait":["vigil","curious"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 25, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["vigil","curious","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 46, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["vigil","curious","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, day: 20, req: {"any":[{"job":["journalist","archivist","proofreader"],"stat":{"wit":6,"will":6}},{"trait":["methodical","skeptical","scholarly"],"stat":{"wit":7,"will":6}}]}}
       vignettes:
         - {id: cloud, traits: [skeptical, curious]}
         - {id: date, traits: [vigil, methodical]}
@@ -32,24 +30,15 @@ events:
         relic: A silk ribbon and key
         relic_desc: A key tied to a kite string with a dry silk ribbon.
         points:
-          p1: 'Before Franklin’s October dispatch leaves Philadelphia, check that the dated pages and Collinson’s address are together'
-          p2: 'When the newspaper prepares the report, keep an attribution and the date of printing that another editor can consult'
-          p3: 'Have Franklin distinguish what the correspondence reports and what still needs an independent witness. Leave a way for readers to reply'
+          p1: 'Before the account goes to the Gazette on 19 October, persuade Franklin to write down the day of the kite trial, the place and who was with him'
         points_fail:
-          p1: 'An enclosure goes with a different shipment. Collinson receives a report with no context, and the office recalls the employee.'
-          p2: 'Another paper takes the short report. Later readers cannot identify where or when it first appeared.'
-          p3: 'The reports are merged, and later readers mistake a letter’s date for the date of the observation.'
+          p1: 'The account goes out without a date, a place or a witness, and is written as directions for what would happen. Later readers argue over whether he ever flew the kite.'
         shift:
           p1:
-            was: 'The Royal Society holds Franklin’s electrical report to Collinson from Philadelphia in October 1752.'
-          p2:
-            was: 'A Philadelphia newspaper printed the account on October 19, 1752, and versions appeared elsewhere.'
-            now: 'A reprint still identifies where the report came from. An editor can compare it with the letter if the two differ.'
-          p3:
-            was: 'The newspaper and letters provide dates of reporting. These do not establish a day for the observation itself.'
-            now: 'The archive keeps the reporting date apart from the unresolved observation date. Independent replies can be entered separately.'
+            was: 'On 19 October 1752 the Pennsylvania Gazette printed Franklin''s account of the kite with no date, place or witness. The date of June 1752 comes only from Joseph Priestley''s history of 1767.'
+            now: '{staff} has Franklin add the day, the field and the witness to the account before it goes to print. The trial has a dated record from the year it was made, and the later doubts have less to stand on.'
             who: franklin_philadelphia
-            bio: 'Franklin’s electrical work traveled through correspondence and the press. Details of how a report reached print did not always travel with it.'
+            bio: 'Franklin''s account of the kite trial in 1752 carried its date, place and witness. The experiment entered the record as an event, not as a set of directions.'
         vignettes:
           cloud: 'The printer says the kite must have taken a direct strike. You ask which line reports that. They turn the sheet over and put the street story in a separate note.'
           date: 'You catch the date going into the headline as the day of the event. The printer moves it back beside the address so readers can tell it is the date of the letter.'
@@ -62,24 +51,15 @@ events:
         relic: 一条丝带和一把钥匙
         relic_desc: 一把钥匙系在风筝线上，线头接着一条干丝带。
         points:
-          p1: '从费城寄出富兰克林十月的通信前，把稿纸日序和给科林森的收件页核对'
-          p2: '报纸准备转刊时另加一句说明，标出这是作者报告的内容，并保留刊报日期以供别处校对'
-          p3: '让富兰克林把尚待独立见证和已经通信说明的部分各列一行，再发给有意回信的读者'
+          p1: '在 10 月 19 日的《宾夕法尼亚公报》付印之前，劝富兰克林写明放风筝那次试验的日子、地点和在场的人'
         points_fail:
-          p1: '书信附页夹入另一批邮件，科林森只收到一段无来处的报道，事务所因同步失败召回员工。'
-          p2: '短文被另一家报纸抄走，后来的读者不知道原来何日、何地刊过。'
-          p3: '报道只剩一种笼统说法，后人把寄信日期当成那次观察的当天。'
+          p1: '报道照旧没有日期、地点和见证人，写成了照做会如何的说明。后人一直争论他到底有没有放过那只风筝。'
         shift:
           p1:
-            was: '英国皇家学会藏有富兰克林 1752 年 10 月从费城写给科林森的电学报告。'
-          p2:
-            was: '费城报纸在 1752 年 10 月 19 日刊出了相关报道，后来有别处重印。'
-            now: '重印时仍可查到原刊日期与来处。遇到和信件不同的地方，编辑能把两本对读。'
-          p3:
-            was: '报纸与寄出书信可查日期。具体观察的确日无法由刊行时间推出。'
-            now: '存档的说明把公开报告与待核日期分开。后续读者可以回信说明自己的独立观察，编辑也知道该在哪处分开记。'
+            was: '1752 年 10 月 19 日，《宾夕法尼亚公报》刊出富兰克林关于风筝的说明，没有日期、地点和见证人。1752 年 6 月这个日子只来自约瑟夫·普里斯特利 1767 年的书。'
+            now: '{staff}让富兰克林在付印前补上那天的日子、那片空地和在场的人。这次试验在当年就有了带日期的记录，后来的怀疑少了立足的地方。'
             who: franklin_philadelphia
-            bio: '历史上，富兰克林的电学研究通过私人通信及报纸传递。同一报道在重印后未必带着原来形成的完整时间线。'
+            bio: '富兰克林 1752 年关于风筝试验的说明写明了日期、地点和见证人。这件事作为一次做过的试验进入记录，不再只是一段做法说明。'
         vignettes:
           cloud: '印工说风筝定是挨了一道雷。你请他找出报告里哪一行这么写。他翻过纸，把街上传的那段另记了一笔。'
           date: '你看见信上的日期被排作事情发生的日子。印工把它移回地址旁，读者便能分清这是写信的日期。'
