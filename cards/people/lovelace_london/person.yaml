@@ -2,17 +2,21 @@ order: 126
 events:
   lovelace_london:
     order: 32
-    build_step: 2
+    build_step: 4
     year: 1843
+    # three office days from the planned arrival on 23 July 1843, through her refusal to withdraw on 6 August, her proposal of 14 August and the printed Notes late in August
     date: '1843-07-23'
     stay: 3
     lon: -0.13
     lat: 51.5
     region: europe
+    home: [europe_west]
     field: math
     tier: 2
     channels: {V: 2}
-    refs: [lovelace_london_primary, lovelace_1843_correspondence, lovelace_print_1843]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [lovelace_london_primary, lovelace_1843_correspondence, lovelace_print_1843, lovelace_wiki, lovelace_essinger, lovelace_britannica]
     scene:
       star_rules: 2
       points:
@@ -20,25 +24,25 @@ events:
         - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["proofreader","university_lecturer"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
         - {id: p3, kind: persuade, day: 35, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
-        - {id: repeat, traits: [methodical, scholarly]}
-        - {id: music, traits: [artistic, curious]}
-        - {id: row}
+        - {id: messenger, traits: [patient, vigil, streetwise, wanderer], day: 5}
+        - {id: compositor, traits: [handy, methodical, scholarly, quiet], day: 23}
+        - {id: loom, day: 40}
     text:
       en:
         name: The first program
         place: London
         figure: Ada Lovelace
-        story: 'Note G of Lovelace''s 1843 published translation includes a table for calculating Bernoulli numbers with the proposed Analytical Engine.'
+        story: 'In 1842 the Italian engineer Luigi Menabrea published in French an account of Charles Babbage''s Analytical Engine. Ada Lovelace translated it and added seven notes, about three times as long as the article; the last, Note G, sets out how the engine could work out the Bernoulli numbers. In August 1843 Babbage wanted the paper to carry his own complaint against the government, and asked her to withdraw it when the editor would not print it unsigned. She refused, and the translation and Notes, signed A.A.L., appeared in Taylor''s Scientific Memoirs that year. On 14 August she offered to organise the business of building the engine if Babbage would keep to the engineering; he refused her conditions.'
         relic: A punched card
         relic_desc: A card of holes, meant to tell an engine what to do.
         points:
-          p1: 'Deliver the translation and notes to the London printer together, with Lovelace’s authorization to proceed through the withdrawal dispute.'
-          p2: 'Before the last proof goes back, have Lovelace and the compositor read across the table in Note G and mark the entries most likely to slip into another column.'
-          p3: 'Put her division of work in a short proposal for a possible backer. Lovelace would organize the undertaking, Babbage would lead the engineering, and both would agree to a first meeting.'
+          p1: 'Deliver the translation and notes to the London printer together, with Lovelace’s authorization to proceed through the withdrawal dispute'
+          p2: 'Before the last proof goes back, have Lovelace and the compositor read across the table in Note G and mark the entries most likely to slip into another column'
+          p3: 'Put her division of work in a short proposal for a possible backer. Lovelace would organize the undertaking, Babbage would lead the engineering, and both would agree to a first meeting'
         points_fail:
-          p1: 'The printer receives both instructions to proceed and instructions to wait. The translation and notes are pulled from the issue, and the office recalls the employee.'
-          p2: 'The compositor resets several symbols and nobody reads the rows from the beginning. She has to check the formulas and table against each other in the last few hours.'
-          p3: 'Her proposal ends with Babbage’s reply. When someone else asks about backing the work, they have no plan both are willing to hand over.'
+          p1: 'The printer receives both instructions to proceed and instructions to wait. The translation and notes are pulled from the issue, and the office recalls the employee'
+          p2: 'The compositor resets several symbols and nobody reads the rows from the beginning. She has to check the formulas and table against each other in the last few hours'
+          p3: 'Her proposal ends with Babbage’s reply. When someone else asks about backing the work, they have no plan both are willing to hand over'
         shift:
           p1:
             was: 'In August 1843 Babbage asked her to request the editor’s permission to withdraw. Lovelace refused, and the translation and her initialed notes appeared together that year.'
@@ -51,24 +55,24 @@ events:
             who: lovelace_london
             bio: 'Lovelace translated the article and wrote its technical notes. She also looked for a way to organize work on an engine that still existed largely on paper.'
         vignettes:
-          repeat: 'You mark where a group of operations repeats. The proofreader has counted only one pass and uses your mark to retrace the later rows.'
-          music: 'You ask whether the columns might stand for musical notes. The proofreader asks how the machine would know the rules for them. You jot that question beside the diagram to bring home.'
-          row: 'You cover the next row with a scrap until you can explain the current one. The proofreader can see exactly where a value will be used again.'
+          messenger: '{staff} waits under the portico of a house in St James''s Square as the messenger, and a messenger does not sit. Inside, someone writes, crosses out and writes again; at dusk a letter with the wax still soft is put into {staff}''s hand, for Dorset Street.'
+          compositor: '{staff} helps the compositor pick type. This issue is all Greek letters, indices and little numbers set above the line, he grumbles, the sigma box is nearly empty, and whoever wrote it ought to come and set it herself.'
+          loom: '{staff} stops at a weaver''s door in Spitalfields. On the Jacquard loom the punched cards turn over one after another, and a flower comes up in the silk. The weaver says the cards know the pattern better than he does.'
       zh:
         name: 第一段程序
         place: 伦敦
         figure: 阿达·洛芙莱斯
-        story: '洛芙莱斯 1843 年发表的译注中，注 G 用表格列出了拟议中的分析机计算伯努利数的操作。'
+        story: '1842 年，意大利工程师路易吉·梅纳布雷亚用法文发表了一篇介绍查尔斯·巴贝奇分析机的文章。阿达·洛芙莱斯把它译成英文，又加了七条注释，篇幅约有原文的三倍；最后的注 G 写出了这台机器怎样算伯努利数。1843 年 8 月，巴贝奇想在文中附上他对政府的不满，编辑不肯不署名刊出，他便要她撤稿。她拒绝了，署名 A.A.L. 的译文与注释当年刊在《泰勒科学回忆录》上。8 月 14 日，她提出由自己张罗造机器的事务，请巴贝奇专管工程，巴贝奇拒绝了她的条件。'
         relic: 一张穿孔卡
         relic_desc: 一张打了孔的卡片，用来告诉机器做什么。
         points:
-          p1: '把洛芙莱斯亲自同意付印的译稿和注释一起交给伦敦印坊，护住她在撤稿争议中作出的决定。'
-          p2: '赶在最后一次交校样前，让她和排字工把注 G 的表横着读一遍，逐列标出容易错行的格子。'
-          p3: '把她提议的分工抄成一份可交给潜在出资人的短约，由她组织联络，由巴贝奇负责工程，再请两人议定第一次会面。'
+          p1: '把洛芙莱斯亲自同意付印的译稿和注释一起交给伦敦印坊，护住她在撤稿争议中作出的决定'
+          p2: '赶在最后一次交校样前，让她和排字工把注 G 的表横着读一遍，逐列标出容易错行的格子'
+          p3: '把她提议的分工抄成一份可交给潜在出资人的短约，由她组织联络，由巴贝奇负责工程，再请两人议定第一次会面'
         points_fail:
-          p1: '印坊收到继续付印与暂缓付印两种指示，最后把译稿与注释一并从本期撤下。事务所因同步失败召回员工。'
-          p2: '排字工换过几格符号，却无人从头对读。她只能在最后几小时重新查公式和对应的表格。'
-          p3: '她写给巴贝奇的建议止于回信。再有意向出资的人打听时，双方没有一份他们都肯交出的工作安排。'
+          p1: '印坊收到继续付印与暂缓付印两种指示，最后把译稿与注释一并从本期撤下。事务所因同步失败召回员工'
+          p2: '排字工换过几格符号，却无人从头对读。她只能在最后几小时重新查公式和对应的表格'
+          p3: '她写给巴贝奇的建议止于回信。再有意向出资的人打听时，双方没有一份他们都肯交出的工作安排'
         shift:
           p1:
             was: '1843 年 8 月，巴贝奇要求她请编辑同意撤稿。洛芙莱斯拒绝，译稿与署有她姓名缩写的注释同年合刊。'
@@ -81,56 +85,137 @@ events:
             who: lovelace_london
             bio: '洛芙莱斯同时写译稿和技术注释。除了说明机器可以怎样工作，她还试着为一项停在纸上的工程寻找继续筹办的办法。'
         vignettes:
-          repeat: '你标出一组操作从哪里重复。校对员刚才只数了一遍，便顺着你的记号重走后面的几行。'
-          music: '你问这几列能不能代表乐音。校对员反问，机器怎么知道乐音该遵循什么规则？你把这个问题记在图旁，准备带回去。'
-          row: '你拿纸挡住下一行，先把眼前这行讲明白。校对员这才看清，刚写出的值在哪儿还会再用。'
+          messenger: '{staff}在圣詹姆斯广场一座宅子的门廊下等回信，当信差的规矩是不能坐。屋里的人写了划，划了又写，天擦黑才把一封火漆还软着的信塞到{staff}手里，送多塞特街。'
+          compositor: '{staff}帮排字工拣铅字。排字工抱怨这一期满版都是希腊字母、角标和架在行上的小数字，西格玛那一格都快拣空了，写这东西的人该自己来排。'
+          loom: '{staff}在斯皮塔佛德一家织坊门口停下。提花机上的穿孔纸板一张接一张翻过去，丝面上慢慢起了一朵花。织工说，这些纸板比他还认得花样。'
 text:
   en:
     name: Ada Lovelace
-    text: English mathematician, 1815 to 1852, daughter of Lord Byron. In 1843 she published notes on Charles Babbage's Analytical Engine that include a method for computing Bernoulli numbers, often called the first program, and suggested such machines could work with more than numbers.
+    text: English mathematician, 1815 to 1852, daughter of Lord Byron. In 1843 she published notes on Charles Babbage's Analytical Engine that include a method for computing Bernoulli numbers, often called the first program, and suggested such machines could work with more than numbers. She died in London on 27 November 1852, at thirty six.
   zh:
     name: 阿达·洛芙莱斯
-    text: 英国数学家，1815 年生，1852 年去世，拜伦勋爵之女。1843 年她发表了为查尔斯·巴贝奇分析机所作的注释，其中有计算伯努利数的方法，常被称为第一个程序，并提出这类机器可以处理数以外的东西。
-hook: {en: 'Read the table one operation at a time.', zh: '一行行跟着机器算'}
+    text: 英国数学家，1815 年生，1852 年去世，拜伦勋爵之女。1843 年她发表了为查尔斯·巴贝奇分析机所作的注释，其中有计算伯努利数的方法，常被称为第一个程序，并提出这类机器可以处理数以外的东西。1852 年 11 月 27 日，她在伦敦去世，年仅三十六岁。
+hook: {en: 'She would not take it back', zh: '她不肯撤稿'}
 facts:
-  note_g:
-    date: '1843'
-    checked: official_record
+  menabrea:
+    date: '1842-10'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [lovelace_london_primary]
+    use: [story, history, wiki]
+    sources: [lovelace_wiki, lovelace_print_1843]
     text:
-      en: 'Note G of Lovelace''s 1843 published translation includes a table for calculating Bernoulli numbers with the proposed Analytical Engine.'
-      zh: '洛芙莱斯 1843 年发表的译注中，注 G 用表格列出了拟议中的分析机计算伯努利数的操作。'
+      en: 'In October 1842 Luigi Menabrea''s French account of Babbage''s Analytical Engine, drawn from Babbage''s lectures at Turin in 1840, was published in the Bibliothèque universelle de Genève.'
+      zh: '1842 年 10 月，路易吉·梅纳布雷亚根据巴贝奇 1840 年在都灵的讲演写成的分析机介绍，用法文刊在《日内瓦万有文库》上。'
+    line:
+      en: 'October 1842: in Geneva Luigi Menabrea publishes, in French, an account of Babbage''s Analytical Engine.'
+      zh: '1842 年 10 月，路易吉·梅纳布雷亚在日内瓦用法文发表巴贝奇分析机的介绍。'
+  refused_withdraw:
+    date: '1843-08-06'
+    stay_day: 14
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lovelace_1843_correspondence, lovelace_wiki]
+    text:
+      en: 'Babbage wanted his complaint about the government''s treatment of the engine printed with the paper; the editor would not print it unsigned, and Babbage asked Lovelace to withdraw her translation. On 6 August 1843 she wrote to him that on not withdrawing the translation and Notes she was entirely and finally decided.'
+      zh: '巴贝奇想把他对政府的不满随文刊出，编辑不肯不署名登，巴贝奇就要洛芙莱斯撤稿。1843 年 8 月 6 日，她写信告诉他，不撤回译文与注释，这件事她已完全拿定了主意。'
+    line:
+      en: '6 August 1843: Lovelace writes to Babbage that she will not withdraw the translation and Notes.'
+      zh: '1843 年 8 月 6 日，洛芙莱斯写信给巴贝奇，说译文与注释不撤。'
+  proposal:
+    date: '1843-08-14'
+    stay_day: 22
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lovelace_1843_correspondence, lovelace_essinger]
+    text:
+      en: 'On 14 August 1843, from Ockham Park, Lovelace wrote to Babbage offering, with others his friends approved, to conduct the business of executing his engine while his own energies went undivided to the work. Babbage noted on the letter that he had seen her and refused all the conditions.'
+      zh: '1843 年 8 月 14 日，洛芙莱斯从奥卡姆庄园写信给巴贝奇，提出由她和巴贝奇的朋友认可的人张罗造机器的事务，让他把精力全放在工程上。巴贝奇在信边批了一句，说见过她，所有条件都拒绝了。'
+    line:
+      en: '14 August 1843: Lovelace offers to run the business of building the engine, if Babbage will keep to the engineering.'
+      zh: '1843 年 8 月 14 日，洛芙莱斯提出替巴贝奇张罗造机器的事务，请他只管工程。'
+  printed:
+    date: '1843-08-24'
+    stay_day: 32
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lovelace_1843_correspondence, lovelace_wiki]
+    text:
+      en: 'By 24 August 1843 the volume of Taylor''s Scientific Memoirs with her translation and Notes, signed A.A.L., had appeared; the Notes ran to about three times the length of the article. Some accounts give it as the September number.'
+      zh: '到 1843 年 8 月 24 日，载有她的译文与注释的《泰勒科学回忆录》已经印出，署名 A.A.L.，注释的篇幅约为原文的三倍。也有记作 9 月号的。'
+    line:
+      en: 'Late August 1843: Taylor''s Scientific Memoirs comes out with the translation and the Notes, signed A.A.L.'
+      zh: '1843 年 8 月下旬，《泰勒科学回忆录》印出，译文与注释署着 A.A.L. 三个字母。'
+  death:
+    date: '1852-11-27'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [lovelace_wiki, lovelace_britannica]
+    text:
+      en: 'Ada Lovelace died of cancer in London on 27 November 1852, at thirty six, and was buried beside her father at Hucknall.'
+      zh: '1852 年 11 月 27 日，阿达·洛芙莱斯因癌症在伦敦去世，年仅三十六岁，葬在哈克诺尔她父亲的身旁。'
+    note: 'A death and an illness: written as plain facts.'
+    line:
+      en: '27 November 1852: Ada Lovelace dies in London, at thirty six.'
+      zh: '1852 年 11 月 27 日，阿达·洛芙莱斯在伦敦去世，年仅三十六岁。'
 bystanders:
   lovelace_london_reader:
     invented: true
-    text: {en: 'An invented proofreader following the table by hand.', zh: '一位虚构的校对员，正在手工跟读表格。'}
+    text: {en: 'A compositor at the printer''s, made up for the game.', zh: '一个编出来的印坊排字工。'}
+  spitalfields_weaver:
+    invented: true
+    text: {en: 'A silk weaver in Spitalfields, made up for the game.', zh: '一个编出来的斯皮塔佛德丝织工。'}
 wiki:
   refs:
     lovelace_1843_correspondence:
       order: 2
       status: checked
       text:
-        en: 'Research with Lovelace’s and Babbage’s August correspondence https://www.scss.tcd.ie/brian.coghlan/repository/J_Byrne/A_Lovelace/J_Fuegi_%26_J_Francis_2003.pdf'
-        zh: '刊有洛芙莱斯与巴贝奇八月通信的研究 https://www.scss.tcd.ie/brian.coghlan/repository/J_Byrne/A_Lovelace/J_Fuegi_%26_J_Francis_2003.pdf'
+        en: 'John Fuegi and Jo Francis, Lovelace and Babbage and the creation of the 1843 Notes, IEEE Annals of the History of Computing, 2003, with the letters of July and August 1843 https://www.scss.tcd.ie/brian.coghlan/repository/J_Byrne/A_Lovelace/J_Fuegi_%26_J_Francis_2003.pdf'
+        zh: '约翰·富吉与乔·弗朗西斯，《洛芙莱斯、巴贝奇与 1843 年注释的写成》，《IEEE 计算史年刊》2003，录有 1843 年 7、8 月的通信 https://www.scss.tcd.ie/brian.coghlan/repository/J_Byrne/A_Lovelace/J_Fuegi_%26_J_Francis_2003.pdf'
     lovelace_print_1843:
       order: 3
       status: checked
       text:
         en: 'The printed translation and notes in Scientific Memoirs https://www.yorku.ca/pclassic/Lovelace/lovelace.htm'
         zh: '《科学回忆录》所刊译文与注释 https://www.yorku.ca/pclassic/Lovelace/lovelace.htm'
+    lovelace_wiki:
+      order: 4
+      status: checked
+      text:
+        en: 'Wikipedia, Ada Lovelace. https://en.wikipedia.org/wiki/Ada_Lovelace'
+        zh: '维基百科，阿达·洛芙莱斯。https://en.wikipedia.org/wiki/Ada_Lovelace'
+    lovelace_essinger:
+      order: 5
+      status: checked
+      text:
+        en: 'James Essinger, Ada''s Algorithm, Melville House, 2014, on her letter to Babbage of 14 August 1843.'
+        zh: '詹姆斯·埃辛格，《阿达的算法》，梅尔维尔出版社 2014，述 1843 年 8 月 14 日致巴贝奇的信。'
+    lovelace_britannica:
+      order: 6
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Ada Lovelace. https://www.britannica.com/biography/Ada-Lovelace'
+        zh: '大英百科全书，阿达·洛芙莱斯。https://www.britannica.com/biography/Ada-Lovelace'
     lovelace_london_primary:
       order: 120
       status: checked
       text:
         en: 'Luigi Menabrea, Sketch of the Analytical Engine, translated and annotated by Ada Lovelace, Scientific Memoirs 3, 1843, Note G. https://archive.org/details/scientificmemoir03memo'
-        zh: 'Luigi Menabrea, Sketch of the Analytical Engine, translated and annotated by Ada Lovelace, Scientific Memoirs 3, 1843, Note G. https://archive.org/details/scientificmemoir03memo'
+        zh: '路易吉·梅纳布雷亚《分析机概述》，阿达·洛芙莱斯译注，《科学回忆录》第三卷，1843，注 G。https://archive.org/details/scientificmemoir03memo'
 self_check:
-  quote_line: '你标出一组操作从哪里重复。'
-  fact: note_g
-  regret_choice: '略过「找出一个稍后还会用到的值」，这处细节便留给下一位核对。'
-  bookend: '从「一行行跟着机器算」开始，以员工留下的观察或更正收尾。'
-  share_line: '一行行跟着机器算'
-  share_number: '1843'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: refused_withdraw
+  quote_line: '1843 年 8 月 6 日，洛芙莱斯写信给巴贝奇，说译文与注释不撤。'
+  regret_choice: '派校对员去，注 G 那张表一格不错地印了出来；派会谈判的人去，她那份分工的提议才有机会走到出资人面前。两件事都在八月，一个人只能守一头。'
+  bookend: '从日内瓦一篇法文介绍开始，以八月下旬署名 A.A.L. 的注释印出收尾，书印成了，机器还停在纸上。'
+  share_line: '1843 年夏天，我在伦敦一家印坊帮人排第一段程序。'
+  share_number: '3'
+  knowing: 'menabrea'
+  near: 'refused_withdraw, proposal, printed'
+  lever: 'p1, p2, p3'
+  missed: 'proposal'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

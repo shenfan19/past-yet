@@ -2,17 +2,22 @@ order: 27
 events:
   beethoven_vienna:
     order: 29
-    build_step: 2
+    build_step: 4
     year: 1824
+    # two office days from the planned arrival on 22 April 1824, through the combined rehearsal of 5 May, the premiere of 7 May and the second concert of 23 May
     date: '1824-04-22'
     stay: 2
     lon: 16.37
     lat: 48.21
     region: europe
+    home: [europe_west]
+    near: [europe_east]
     field: music
     tier: 3
     channels: {G: 2, S: 1}
-    refs: [beethoven_vienna_primary, beethoven_house_ninth, beethoven_conversation_rehearsals]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [beethoven_vienna_primary, beethoven_house_ninth, beethoven_conversation_rehearsals, beethoven_ninth_wiki, beethoven_ninth_cambridge, beethoven_wiki, beethoven_britannica]
     scene:
       star_rules: 2
       points:
@@ -20,15 +25,15 @@ events:
         - {id: p2, kind: notice, day: 14, req: {"any":[{"job":["musician","translator"]},{"trait":["methodical","artistic","scholarly"]}]}}
         - {id: p3, kind: persuade, day: 27, req: {"any":[{"job":["musician"],"stat":{"finesse":9}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
-        - {id: voice, traits: [artistic, curious]}
-        - {id: step, traits: [kind, patient]}
-        - {id: programme}
+        - {id: parts, traits: [methodical, artistic, scholarly, handy], day: 10}
+        - {id: prater, traits: [cheerful, wanderer, streetwise, curious], day: 31}
+        - {id: stools, day: 14}
     text:
       en:
         name: The Ninth Symphony
         place: Vienna
         figure: Ludwig van Beethoven
-        story: 'A concert poster records the premiere of Beethoven''s Ninth Symphony on 7 May 1824 at Vienna''s Kärntnertor Theatre.'
+        story: 'In the spring of 1824 Beethoven, almost entirely deaf, prepared a concert of his new works in Vienna. The chorus and orchestra rehearsed apart, and there were only two full rehearsals before the night. On 7 May 1824 the Ninth Symphony was first performed at the Kärntnertor Theatre, with the theatre''s Kapellmeister Michael Umlauf conducting and Beethoven on the stage beside him. The repeat on 23 May in the great Redoutensaal drew a thin house, and the receipts disappointed him.'
         relic: An ear trumpet
         relic_desc: A horn he held to his ear as the world went quiet.
         points:
@@ -51,14 +56,14 @@ events:
             who: beethoven_vienna
             bio: 'Beethoven had advance revenue when he arranged repeat concerts in Vienna. He could cover more of their costs before the doors opened.'
         vignettes:
-          voice: 'You point out the singers to the usher. The guest starts to ask why there is a chorus at a symphony, then stops when the first voice comes in.'
-          step: 'The late guest keeps missing the step down. You stay by the door and wait for his eyes to adjust, then show him to a place without making the row stand.'
-          programme: 'The usher lends you his programme. You keep one finger on the current item so the guest can tell which piece is still to come.'
+          parts: '{staff} sits at the copyists'' table pressing parts flat while the ink dries. The horn parts are snatched away to the rehearsal room before they are dry, and {staff} spends the afternoon blotting the smudges out of the second set.'
+          prater: 'On Sunday {staff} walks the long avenue of the Prater. Every bench is taken by people come out of town for the air, a sausage seller is shouting himself hoarse, and nobody seems to be on the way to a concert.'
+          stools: '{staff} carries stools for the chorus behind the theatre. A soprano rubs her throat and says the high notes in the last movement are written as if to haul a singer up to the ceiling, and the whole row laughs and agrees.'
       zh:
         name: 第九交响曲
         place: 维也纳
         figure: 路德维希·凡·贝多芬
-        story: '音乐会海报记录了贝多芬《第九交响曲》于 1824 年 5 月 7 日在维也纳克恩特纳门剧院首演。'
+        story: '1824 年春天，几乎全聋的贝多芬在维也纳筹办一场新作音乐会。合唱和乐队分开排练，正式演出前只有两次全体排练。5 月 7 日，《第九交响曲》在克恩特纳门剧院首演，剧院乐长米夏埃尔·乌姆劳夫指挥，贝多芬在台上站在他旁边。5 月 23 日在大雷杜滕厅的第二场，听众稀落，票房让他失望。'
         relic: 一只助听喇叭
         relic_desc: 世界静下来的时候，他举到耳边的号角。
         points:
@@ -81,31 +86,77 @@ events:
             who: beethoven_vienna
             bio: '贝多芬在维也纳安排重演时有了预订收入，演出开支不必全押给当天买票的人。'
         vignettes:
-          voice: '你指给引座员看台上的歌者。客人正要问交响曲里为什么有人唱，第一声响起，他便把话咽了回去。'
-          step: '迟到的客人一直没看清脚下那级台阶。你陪他在门边站了一会儿，等他看清，再把人领进去，一整排座位都不用起身。'
-          programme: '引座员把节目单借给你。你用手指按住眼下这一项，客人就知道哪首还在后头。'
+          parts: '{staff}坐在抄谱人的桌边，替他们压平刚抄好的分谱等墨干。圆号的分谱还没干透就被人抢去了排练厅，{staff}一下午都在给第二份吸墨渍。'
+          prater: '星期天，{staff}在普拉特的林荫长道上走。长椅上坐满了出城透气的人，卖香肠的嗓子都喊哑了，看不出有谁要去听音乐会。'
+          stools: '{staff}在剧院后头给合唱队搬凳子。一个女高音揉着喉咙说，末乐章那几个高音写得像要把人往天花板上拽，一排人都笑着点头。'
 text:
   en:
     name: Ludwig van Beethoven
-    text: German composer, 1770 to 1827, who spent most of his working life in Vienna. His hearing declined from his late twenties and was almost gone by the time of the Ninth Symphony, first performed in 1824.
+    text: German composer, 1770 to 1827, born in Bonn, who spent most of his working life in Vienna. His hearing declined from his late twenties and was almost gone by the time of the Ninth Symphony, first performed in Vienna on 7 May 1824. He died in Vienna on 26 March 1827.
   zh:
     name: 路德维希·凡·贝多芬
-    text: 德国作曲家，1770 年生，1827 年去世，大半生在维也纳工作。他从二十多岁末起听力渐退，1824 年首演《第九交响曲》时已几乎全聋。
-hook: {en: 'When does the chorus come in?', zh: '等到合唱开口'}
+    text: 德国作曲家，1770 年生于波恩，1827 年去世，大半生在维也纳工作。他从二十多岁末起听力渐退，1824 年 5 月 7 日《第九交响曲》在维也纳首演时已几乎全聋。1827 年 3 月 26 日，他在维也纳去世。
+hook: {en: 'After the applause, the second night', zh: '掌声过后，第二场呢'}
 facts:
+  full_rehearsals:
+    date: '1824-05-05'
+    stay_day: 13
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [beethoven_conversation_rehearsals, beethoven_ninth_wiki]
+    text:
+      en: 'Chorus and orchestra rehearsed in separate rooms until the first combined rehearsal on 5 May 1824; with the dress rehearsal of 6 May there were only two full rehearsals before the premiere.'
+      zh: '合唱与乐队分屋排练，直到 1824 年 5 月 5 日才第一次合排，加上 6 日的总排，首演前只有两次全体排练。'
+    line:
+      en: '5 May 1824: chorus and orchestra rehearse together for the first time, two days before the concert.'
+      zh: '1824 年 5 月 5 日，合唱与乐队第一次合在一起排练，离演出只剩两天。'
   premiere:
     date: '1824-05-07'
-    checked: official_record
+    stay_day: 15
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [beethoven_vienna_primary]
+    use: [story, history, wiki]
+    sources: [beethoven_vienna_primary, beethoven_ninth_wiki, beethoven_conversation_rehearsals]
     text:
-      en: 'A concert poster records the premiere of Beethoven''s Ninth Symphony on 7 May 1824 at Vienna''s Kärntnertor Theatre.'
-      zh: '音乐会海报记录了贝多芬《第九交响曲》于 1824 年 5 月 7 日在维也纳克恩特纳门剧院首演。'
+      en: 'On the evening of 7 May 1824 Beethoven''s Ninth Symphony was first performed at the Kärntnertor Theatre in Vienna, after the overture The Consecration of the House and three parts of the Missa solemnis. Michael Umlauf conducted, and Beethoven stood on the stage beside him; Henriette Sontag and Caroline Unger were among the soloists.'
+      zh: '1824 年 5 月 7 日晚，贝多芬的《第九交响曲》在维也纳克恩特纳门剧院首演，前面演了《献堂式》序曲和《庄严弥撒》的三个乐章。乌姆劳夫指挥，贝多芬站在台上他的身旁，独唱有亨丽埃特·桑塔格和卡罗琳·翁格尔。'
+    line:
+      en: '7 May 1824: at the Kärntnertor Theatre the Ninth Symphony is played for the first time, with Beethoven on the stage.'
+      zh: '1824 年 5 月 7 日，《第九交响曲》在克恩特纳门剧院首演，贝多芬站在台上。'
+  second_concert:
+    date: '1824-05-23'
+    stay_day: 31
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [beethoven_conversation_rehearsals, beethoven_ninth_cambridge]
+    text:
+      en: 'The concert was given again on Sunday 23 May 1824 in the great Redoutensaal. The hall was poorly attended and Beethoven''s receipts disappointed him; Schindler''s claim that it was not even half full is repeated in later accounts and has been questioned.'
+      zh: '1824 年 5 月 23 日星期天，音乐会在大雷杜滕厅重演一场。听众稀落，票房让贝多芬失望；辛德勒说厅里坐不到一半，这话后人常引，也有人存疑。'
+    line:
+      en: '23 May 1824: the concert is repeated in the great Redoutensaal; the hall is thin and the takings disappoint Beethoven.'
+      zh: '1824 年 5 月 23 日，音乐会在大雷杜滕厅重演，座位空了不少，票房让贝多芬失望。'
+  death:
+    date: '1827-03-26'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [beethoven_wiki, beethoven_britannica]
+    text:
+      en: 'Beethoven died in Vienna on 26 March 1827.'
+      zh: '1827 年 3 月 26 日，贝多芬在维也纳去世。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '26 March 1827: Ludwig van Beethoven dies in Vienna.'
+      zh: '1827 年 3 月 26 日，路德维希·凡·贝多芬在维也纳去世。'
 bystanders:
   beethoven_vienna_reader:
     invented: true
-    text: {en: 'An invented usher with a late arrival at the door.', zh: '一位虚构的引座员，门外还有一位迟到的客人。'}
+    text: {en: 'A soprano of the chorus, made up for the game.', zh: '一个编出来的合唱队女高音。'}
+  sausage_seller:
+    invented: true
+    text: {en: 'A sausage seller in the Prater, made up for the game.', zh: '一个编出来的普拉特卖香肠的人。'}
 wiki:
   refs:
     beethoven_house_ninth:
@@ -120,17 +171,46 @@ wiki:
       text:
         en: 'Theodore Albrecht, International Horn Society, rehearsal accounts and the second concert. https://www.hornsociety.org/publications/horn-call/horn-call-archive/142-ec-lewy-and-beethovens-ninth-symphony-premiere?showall=1'
         zh: '国际圆号协会，首演排练记录及第二场演出。 https://www.hornsociety.org/publications/horn-call/horn-call-archive/142-ec-lewy-and-beethovens-ninth-symphony-premiere?showall=1'
+    beethoven_ninth_wiki:
+      order: 819
+      status: checked
+      text:
+        en: 'Wikipedia, Symphony No. 9 (Beethoven). https://en.wikipedia.org/wiki/Symphony_No._9_(Beethoven)'
+        zh: '维基百科，第九交响曲（贝多芬）。https://en.wikipedia.org/wiki/Symphony_No._9_(Beethoven)'
+    beethoven_ninth_cambridge:
+      order: 820
+      status: checked
+      text:
+        en: 'Beethoven''s Ninth Symphony, chapter One more time, on the concert of 23 May 1824, Cambridge Core. https://resolve.cambridge.org/core/books/beethovens-ninth-symphony/one-more-time/D13AD065DBF4035DC8D9E9EF3974B2BF'
+        zh: '《贝多芬的第九交响曲》，“再演一场”一章，述 1824 年 5 月 23 日的音乐会，剑桥大学出版社。https://resolve.cambridge.org/core/books/beethovens-ninth-symphony/one-more-time/D13AD065DBF4035DC8D9E9EF3974B2BF'
+    beethoven_wiki:
+      order: 821
+      status: checked
+      text:
+        en: 'Wikipedia, Ludwig van Beethoven. https://en.wikipedia.org/wiki/Ludwig_van_Beethoven'
+        zh: '维基百科，路德维希·凡·贝多芬。https://en.wikipedia.org/wiki/Ludwig_van_Beethoven'
+    beethoven_britannica:
+      order: 822
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Ludwig van Beethoven. https://www.britannica.com/biography/Ludwig-van-Beethoven'
+        zh: '大英百科全书，路德维希·凡·贝多芬。https://www.britannica.com/biography/Ludwig-van-Beethoven'
     beethoven_vienna_primary:
       order: 126
       status: checked
       text:
         en: 'Vienna concert poster for Beethoven''s academy, 7 May 1824, documented by Beethoven-Haus Bonn. https://internet.beethoven.de/pdf-sonderausstellung/Von-Herzen-Moege-es-wieder-zu-Herzen-gehen-Brief-Guide.pdf'
-        zh: 'Vienna concert poster for Beethoven''s academy, 7 May 1824, documented by Beethoven-Haus Bonn. https://internet.beethoven.de/pdf-sonderausstellung/Von-Herzen-Moege-es-wieder-zu-Herzen-gehen-Brief-Guide.pdf'
+        zh: '贝多芬 1824 年 5 月 7 日维也纳音乐会海报，波恩贝多芬故居博物馆整理。https://internet.beethoven.de/pdf-sonderausstellung/Von-Herzen-Moege-es-wieder-zu-Herzen-gehen-Brief-Guide.pdf'
 self_check:
-  quote_line: '你指给引座员看台上的歌者。'
-  fact: premiere
-  regret_choice: '略过「给迟到的客人找个地方等候」，这处细节便留给下一位核对。'
-  bookend: '从「等到合唱开口」开始，以员工留下的观察或更正收尾。'
-  share_line: '等到合唱开口'
-  share_number: '1824-05-07'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: second_concert
+  quote_line: '1824 年 5 月 23 日，音乐会在大雷杜滕厅重演，座位空了不少，票房让贝多芬失望。'
+  regret_choice: '派乐手去，5 月 5 日的合排对得齐，首演稳住了；派会张罗的人去，第二场前就有人包下座位，贝多芬那一场没白忙。一个人很难两头都顾上。'
+  bookend: '从分屋排练的乐队与合唱开始，以 5 月 23 日空了不少座位的第二场收尾，首演的掌声没有变成他的收入。'
+  share_line: '1824 年 5 月，我在维也纳替一位听不见的作曲家把座位卖出去。'
+  share_number: '2'
+  knowing: 'full_rehearsals'
+  near: 'premiere, second_concert'
+  lever: 'p1, p2, p3'
+  missed: 'second_concert'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

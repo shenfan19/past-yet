@@ -2,17 +2,22 @@ order: 136
 events:
   mendeleev_petersburg:
     order: 35
-    build_step: 2
+    build_step: 4
     year: 1869
+    # four office days from the planned arrival on 7 March 1869, Gregorian, through the meeting of 18 March, the next meeting of 15 April and the German abstract in May; the society kept the Russian calendar, twelve days behind
     date: '1869-03-07'
     stay: 4
     lon: 30.31
     lat: 59.93
     region: europe
+    home: [europe_east]
+    near: [europe_west]
     field: science
     tier: 2
     channels: {C: 3, V: 2}
-    refs: [mendeleev_petersburg_primary, mendeleev_minutes_translation]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [mendeleev_petersburg_primary, mendeleev_minutes_translation, mendeleev_jensen_flu_cheese, mendeleev_giunta_abstract, mendeleev_wiki, mendeleev_britannica]
     scene:
       star_rules: 2
       points:
@@ -20,21 +25,21 @@ events:
         - {id: p2, kind: persuade, day: 39, req: {"any":[{"job":["university_lecturer","translator"]},{"trait":["scholarly","charismatic"],"stat":{"wit":6}}]}}
         - {id: p3, kind: notice, day: 87, req: {"any":[{"job":["translator","proofreader"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
       vignettes:
-        - {id: blank, traits: [methodical, vigil]}
-        - {id: similarity, traits: [curious, skeptical]}
-        - {id: heading}
+        - {id: flyers, traits: [methodical, handy, scholarly, quiet], day: 22}
+        - {id: neva, traits: [cheerful, curious, wanderer, streetwise], day: 45}
+        - {id: samovar, day: 15}
     text:
       en:
         name: The periodic table
         place: Saint Petersburg
         figure: Dmitri Mendeleev
-        story: 'Mendeleev published an early periodic system in 1869, grouping elements using atomic weights and chemical similarities. The surviving 1871 table shows the later development of the arrangement.'
+        story: 'On 1 March 1869 Dmitri Mendeleev finished a one-page table, an attempt at a system of the elements by their atomic weights and chemical likeness, and had it printed as a flyer. At the meeting of the Russian Chemical Society on 18 March he was absent, and Nikolai Menshutkin read his paper for him; the minutes put off the discussion to the next meeting, and it was not taken up again. In May he sent a short abstract to a German journal, and in the translation the word for a periodic recurrence of properties became a word for a stepwise change.'
         relic: A deck of element cards
         relic_desc: Hand written cards that can be dealt like patience.
         points:
-          p1: 'With Mendeleev already out of town, get the paper and table he left for Menshutkin to the Chemical Society meeting together.'
-          p2: 'When the author returns, recover the item set aside for discussion and give him time at the next meeting to answer questions about the table.'
-          p3: 'Before the German abstract goes to press, have Mendeleev check its first conclusion and restore the word that says properties recur periodically.'
+          p1: 'With Mendeleev already out of town, get the paper and table he left for Menshutkin to the Chemical Society meeting together'
+          p2: 'When the author returns, recover the item set aside for discussion and give him time at the next meeting to answer questions about the table'
+          p3: 'Before the German abstract goes to press, have Mendeleev check its first conclusion and restore the word that says properties recur periodically'
         points_fail:
           p1: 'Menshutkin receives only the table. The paper is still packed with the author’s things, so the society drops the item and the office recalls the employee.'
           p2: 'The deferred item stays on the previous page of minutes. The next meeting sets aside no time to discuss the elements.'
@@ -51,20 +56,20 @@ events:
             who: mendeleev_petersburg
             bio: 'Mendeleev put together an early table in St. Petersburg and circulated it through a society meeting, loose sheets and journals. As the work crossed languages, a central term changed meaning.'
         vignettes:
-          blank: 'You rule the columns lightly in pencil before the reader copies them. At a blank he starts sliding the next entry back. The lines let you show him which group it belongs with.'
-          similarity: 'You ask why two entries with similar weights sit apart. The reader hunts through the notes for what each substance does and writes one more property next to each weight.'
-          heading: 'You help the reader label a copied row before he cuts the page to fit his notebook. When he folds it back open, the row still makes sense.'
+          flyers: '{staff} helps at the printer''s, hanging the fresh sheets of a table on a line to dry. The compositor grumbles that he has never set a page with so many empty boxes and question marks, and asks whether the gentleman forgot to fill them in.'
+          neva: 'The ice on the Neva has gone. {staff} stands with the crowd on the embankment as a boat crosses from the fortress to the palace, and a man alongside says that until that boat crosses, nobody may.'
+          samovar: '{staff} learns to draw tea from a samovar at the inn. The keeper says foreigners always turn the tap the wrong way and scald their boots, and watches {staff}''s feet the whole time.'
       zh:
         name: 元素周期表
         place: 圣彼得堡
         figure: 门捷列夫
-        story: '门捷列夫在 1869 年发表早期元素周期系统，把原子量和化学性质的相似性用来排列元素。现存的 1871 年版记录了随后调整的排法。'
+        story: '1869 年 3 月 1 日，德米特里·门捷列夫排好一张单页的表，按原子量和化学上的相近把元素排成一个体系，印成散页。3 月 18 日俄国化学学会开会时他不在场，由尼古拉·缅舒特金代为宣读；会议记录把讨论推到下次会议，后来再没有人提起。5 月，他给德国的期刊寄去一份短摘要，译成德文时，表示性质周期性重现的词被译成了表示逐级变化的词。'
         relic: 一副元素卡片
         relic_desc: 手写的卡片，可以像摆纸牌一样摆。
         points:
-          p1: '门捷列夫已经离城。把他留给缅舒特金的论文和附表合在一起交到会场，赶上俄国化学学会宣读。'
-          p2: '趁作者从外地回来，把下次会议原留待讨论的一项重新排进议程，让他逐一回应来问排表依据的人。'
-          p3: '德文摘要付印前，请门捷列夫确认第一条结论的译法，把表示性质周期性重现的词改回去。'
+          p1: '门捷列夫已经离城。把他留给缅舒特金的论文和附表合在一起交到会场，赶上俄国化学学会宣读'
+          p2: '趁作者从外地回来，把下次会议原留待讨论的一项重新排进议程，让他逐一回应来问排表依据的人'
+          p3: '德文摘要付印前，请门捷列夫确认第一条结论的译法，把表示性质周期性重现的词改回去'
         points_fail:
           p1: '报告人只接到附表，原稿还压在门捷列夫的行李里。学会划掉这一项，事务所因同步失败召回员工。'
           p2: '上一回记录的待议事项留在旧页上。到下次会议，没有人再为元素表留一段可讨论的时间。'
@@ -81,31 +86,101 @@ events:
             who: mendeleev_petersburg
             bio: '门捷列夫在圣彼得堡写成早期元素表，经学会会议、散印表和期刊让其他化学家见到它。俄文原稿的关键概念在跨语言传递时曾被改变。'
         vignettes:
-          blank: '你趁读者还没开抄，先用铅笔轻轻划出栏线。遇到空格，他想把下一项挪回来，你顺着栏线指给他看，那项该和谁排在一起。'
-          similarity: '你问为什么原子量相近的两项分开排。读者翻找各自的性质，在两个数旁各补记一项化学性质。'
-          heading: '读者要裁纸贴进笔记，你帮他先把抄来的那行加上行名。折页再次展开时，他仍看得懂那几个数。'
+          flyers: '{staff}在印刷所帮忙，把刚印出的表一张张晾在绳上。排字工嘀咕，他排了半辈子版，没见过这么多空格和问号的，问是不是那位先生忘了填。'
+          neva: '涅瓦河的冰化了。{staff}挤在河岸上看一条小船从要塞划向宫殿，旁边的人说，那条船没过河之前，谁也不许下水。'
+          samovar: '{staff}在客栈里学着从茶炊里接茶。掌柜说外国人总把龙头拧反，烫了靴子，一边说一边盯着{staff}的脚。'
 text:
   en:
     name: Dmitri Mendeleev
-    text: Russian chemist, 1834 to 1907. In 1869 in St Petersburg he published a periodic table that arranged the elements by atomic weight and left gaps for elements not yet found.
+    text: Russian chemist, 1834 to 1907. In 1869 in St Petersburg he published a periodic table that arranged the elements by atomic weight and left gaps for elements not yet found. He died in St Petersburg on 2 February 1907.
   zh:
     name: 门捷列夫
-    text: 俄国化学家，1834 年生，1907 年去世。1869 年他在圣彼得堡发表周期表，按原子量排列元素，并为尚未发现的元素留出空位。
-hook: {en: 'The blank belongs in the table.', zh: '这个空格应该留下'}
+    text: 俄国化学家，1834 年生，1907 年去世。1869 年他在圣彼得堡发表周期表，按原子量排列元素，并为尚未发现的元素留出空位。1907 年 2 月 2 日，他在圣彼得堡去世。
+hook: {en: 'The evening he was not there', zh: '他不在场的那一晚'}
 facts:
-  periodic_system:
-    date: '1869'
+  flyer:
+    date: '1869-03-01'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendeleev_minutes_translation, mendeleev_jensen_flu_cheese]
+    text:
+      en: 'On 1 March 1869 (17 February in the Russian calendar) Mendeleev finished his first table, An attempt at a system of the elements based on their atomic weights and chemical likeness, and had it printed as a flyer without explanations, for chemists in Russia and abroad.'
+      zh: '1869 年 3 月 1 日（俄历 2 月 17 日），门捷列夫排成第一张表，题为《按原子量和化学相似性排列的元素体系尝试》，不加说明印成散页，寄给国内外的化学家。'
+    line:
+      en: '1 March 1869: Mendeleev finishes a one-page table of the elements by their atomic weights.'
+      zh: '1869 年 3 月 1 日，门捷列夫排好一张单页的元素表，按原子量排列。'
+  meeting:
+    date: '1869-03-18'
+    stay_day: 11
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendeleev_minutes_translation, mendeleev_jensen_flu_cheese, mendeleev_giunta_abstract]
+    text:
+      en: 'At the meeting of the Russian Chemical Society on 18 March 1869 (6 March in the Russian calendar) Nikolai Menshutkin read Mendeleev''s paper for him. Why Mendeleev was absent is told two ways: a trip to inspect cheese dairies in Tver province, or illness, which Menshutkin''s son gave in 1934. The minutes put the discussion off until the next meeting because the author was absent.'
+      zh: '1869 年 3 月 18 日（俄历 3 月 6 日），俄国化学学会开会，尼古拉·缅舒特金代门捷列夫宣读论文。门捷列夫为什么不在场有两种说法：一说去特维尔省考察奶酪作坊，一说生病，后一说出自缅舒特金的儿子 1934 年的回忆。会议记录写明，因作者不在，讨论推到下次会议。'
+    line:
+      en: '18 March 1869: at the Russian Chemical Society Menshutkin reads Mendeleev''s paper for him; the discussion is put off until the author is present.'
+      zh: '1869 年 3 月 18 日，俄国化学学会开会，缅舒特金替门捷列夫宣读论文，讨论推到作者在场的时候。'
+  next_meeting:
+    date: '1869-04-15'
+    stay_day: 39
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [mendeleev_petersburg_primary]
+    use: [story, history, wiki]
+    sources: [mendeleev_minutes_translation]
     text:
-      en: 'Mendeleev published an early periodic system in 1869, grouping elements using atomic weights and chemical similarities. The surviving 1871 table shows the later development of the arrangement.'
-      zh: '门捷列夫在 1869 年发表早期元素周期系统，把原子量和化学性质的相似性用来排列元素。现存的 1871 年版记录了随后调整的排法。'
+      en: 'At the next meeting of the society, on 15 April 1869 (3 April in the Russian calendar), the classification of the elements was not taken up, nor at the meetings after it.'
+      zh: '1869 年 4 月 15 日（俄历 4 月 3 日）学会再开会，元素的分类没有被提起，此后几次会议也没有。'
+    line:
+      en: '15 April 1869: the society meets again, and nobody brings up the table of the elements.'
+      zh: '1869 年 4 月 15 日，学会再次开会，没有人提起那张元素表。'
+  german_abstract:
+    date: '1869-05'
+    stay_day: 66
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendeleev_minutes_translation, mendeleev_giunta_abstract]
+    text:
+      en: 'In May 1869 Mendeleev prepared a short abstract of his paper for the German Zeitschrift für Chemie. In the German translation his first conclusion, that the elements in order of atomic weight show a periodicity of properties, came out as a stepwise change of properties.'
+      zh: '1869 年 5 月，门捷列夫为德国《化学杂志》备了一份论文摘要。译成德文时，他的第一条结论，按原子量排列的元素在性质上呈现周期性，被译成了性质逐级变化。'
+    line:
+      en: 'May 1869: Mendeleev sends a short abstract of his paper to a German journal, and it goes to a translator.'
+      zh: '1869 年 5 月，门捷列夫给德国的期刊寄去一份论文摘要，交人译成德文。'
+  gallium:
+    date: '1875'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendeleev_wiki, mendeleev_britannica]
+    text:
+      en: 'In 1875 gallium was discovered, an element with the properties Mendeleev had foretold for one of the gaps in his table.'
+      zh: '1875 年，镓被发现，它的性质与门捷列夫为表中一个空位预言的元素相合。'
+    line:
+      en: '1875: gallium is found, and it fills one of the gaps Mendeleev left in his table.'
+      zh: '1875 年，镓被发现，填上了门捷列夫在表里留下的一个空位。'
+  death:
+    date: '1907-02-02'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [mendeleev_wiki, mendeleev_britannica]
+    text:
+      en: 'Dmitri Mendeleev died in St Petersburg on 2 February 1907.'
+      zh: '1907 年 2 月 2 日，德米特里·门捷列夫在圣彼得堡去世。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '2 February 1907: Dmitri Mendeleev dies in St Petersburg.'
+      zh: '1907 年 2 月 2 日，德米特里·门捷列夫在圣彼得堡去世。'
 bystanders:
   mendeleev_petersburg_reader:
     invented: true
-    text: {en: 'An invented reader checking a working copy of a table.', zh: '一位虚构的读者，正在核对表格的试排稿。'}
+    text: {en: 'A compositor at the printer''s, made up for the game.', zh: '一个编出来的印刷所排字工。'}
+  innkeeper:
+    invented: true
+    text: {en: 'The keeper of an inn with a samovar, made up for the game.', zh: '一个编出来的客栈掌柜，守着一只茶炊。'}
 wiki:
   refs:
     mendeleev_minutes_translation:
@@ -114,17 +189,46 @@ wiki:
       text:
         en: 'Archival study citing society minutes, drafts and the German abstract https://www.scfh.ru/en/papers/mendeleev-on-a-path-to-the-law/'
         zh: '引学会会议记录、草稿与德文摘要的档案研究 https://www.scfh.ru/en/papers/mendeleev-on-a-path-to-the-law/'
+    mendeleev_jensen_flu_cheese:
+      order: 3
+      status: checked
+      text:
+        en: 'William B. Jensen, Flu or Cheese?, Bulletin for the History of Chemistry 32, 2007, on the meeting of 18 March 1869 and why Mendeleev was absent. https://homepages.uc.edu/~jensenwb/reprints/143.%20Flu%20or%20Cheese.pdf'
+        zh: '威廉·詹森，《流感还是奶酪》，《化学史通报》第 32 卷，2007，述 1869 年 3 月 18 日的会议与门捷列夫缺席的原因。https://homepages.uc.edu/~jensenwb/reprints/143.%20Flu%20or%20Cheese.pdf'
+    mendeleev_giunta_abstract:
+      order: 4
+      status: checked
+      text:
+        en: 'Carmen Giunta, Elements and Atoms, chapter 12, Mendeleev''s 1869 abstract in Zeitschrift für Chemie, translated and annotated, Le Moyne College. https://web.lemoyne.edu/GIUNTA/EA/MENDELEEVann.HTML'
+        zh: '卡门·詹塔，《元素与原子》第 12 章，门捷列夫 1869 年刊于德国《化学杂志》的摘要译注，勒莫因学院。https://web.lemoyne.edu/GIUNTA/EA/MENDELEEVann.HTML'
+    mendeleev_wiki:
+      order: 5
+      status: checked
+      text:
+        en: 'Wikipedia, Dmitri Mendeleev. https://en.wikipedia.org/wiki/Dmitri_Mendeleev'
+        zh: '维基百科，德米特里·门捷列夫。https://en.wikipedia.org/wiki/Dmitri_Mendeleev'
+    mendeleev_britannica:
+      order: 6
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Dmitri Mendeleev. https://www.britannica.com/biography/Dmitri-Mendeleev'
+        zh: '大英百科全书，德米特里·门捷列夫。https://www.britannica.com/biography/Dmitri-Mendeleev'
     mendeleev_petersburg_primary:
       order: 125
       status: checked
       text:
         en: 'Dmitri Mendeleev''s 1869 periodic system and the surviving 1871 table, Science History Institute collection and publication history. https://digital.sciencehistory.org/works/9c67wp122'
-        zh: 'Dmitri Mendeleev''s 1869 periodic system and the surviving 1871 table, Science History Institute collection and publication history. https://digital.sciencehistory.org/works/9c67wp122'
+        zh: '门捷列夫 1869 年的周期系统与现存 1871 年表，科学史研究所藏品与出版史。https://digital.sciencehistory.org/works/9c67wp122'
 self_check:
-  quote_line: '你趁读者还没开抄，先用铅笔轻轻划出栏线。'
-  fact: periodic_system
-  regret_choice: '略过「沿着表格找出同一组元素」，这处细节便留给下一位核对。'
-  bookend: '从「这个空格应该留下」开始，以员工留下的观察或更正收尾。'
-  share_line: '这个空格应该留下'
-  share_number: '1869'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: meeting
+  quote_line: '1869 年 3 月 18 日，俄国化学学会开会，缅舒特金替门捷列夫宣读论文，讨论推到作者在场的时候。'
+  regret_choice: '派会讲课的去，四月那次会上元素表重新排进了议程；派懂德文的去，六月付印前那个词改回了周期性。两件事隔了一个多月，一个人要从冬天一直守到夏天。'
+  bookend: '从 3 月 1 日印成的一页散表开始，以 1875 年镓被发现填上空位收尾，中间是一场作者缺席的会和一个译错的词。'
+  share_line: '1869 年春天，我在圣彼得堡替一个不在场的人把元素表送进会场。'
+  share_number: '18'
+  knowing: 'flyer'
+  near: 'meeting, next_meeting, german_abstract'
+  lever: 'p1, p2, p3'
+  missed: 'next_meeting'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

@@ -2,33 +2,37 @@ order: 179
 events:
   smith_kirkcaldy:
     order: 24
-    build_step: 2
+    build_step: 4
     year: 1776
+    # three office days from the planned arrival on 28 October 1776, through Smith's letters to Strahan of 9 and 13 November
     date: '1776-10-28'
     stay: 3
     lon: -3.16
     lat: 56.11
     region: europe
+    home: [europe_west]
     field: thought
     tier: 2
-    channels: {S: 1}
-    refs: [smith_kirkcaldy_primary, smith_kirkcaldy_strahan_autograph, smith_kirkcaldy_glasgow_letters]
+    channels: {S: 1, G: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [smith_kirkcaldy_primary, smith_wiki, smith_hume_texts_dialogues, smith_dnb_hume, smith_letter_econlib, smith_kirkcaldy_strahan_autograph, smith_kirkcaldy_glasgow_letters, smith_dialogues_wiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, day: 12, req: {"any":[{"job":["bookseller","translator","archivist"],"stat":{"will":7}},{"trait":["charismatic","bold"],"stat":{"wit":6,"will":7}},{"item":"golden_apple","stat":{"wit":5}}]}}
       vignettes:
-        - {id: queue, traits: [methodical, curious]}
-        - {id: handoff, traits: [handy, kind]}
-        - {id: walk}
+        - {id: nails, traits: [curious, streetwise, methodical, skeptical], day: 20}
+        - {id: post, traits: [kind, patient, vigil, attached, sensitive], day: 16}
+        - {id: firth, day: 40}
     text:
       en:
         name: How a nation grows rich
         place: Kirkcaldy, Scotland
         figure: Adam Smith
-        story: 'The opening chapter of Adam Smith''s Wealth of Nations (1776) uses pin-making to illustrate the division of labour.'
+        story: 'In March 1776 Adam Smith''s Wealth of Nations came out in London. On 25 August his friend David Hume died in Edinburgh. Hume had first named Smith to see his Dialogues Concerning Natural Religion into print; Smith made difficulties, and Hume left the work to the printer William Strahan instead, asking for it to appear within two years. That November, back in Kirkcaldy, Smith wrote Strahan an account of Hume''s last months. Strahan in the end declined, and the Dialogues came out in 1779 through Hume''s nephew.'
         relic: A pin from the pin factory
-        relic_desc: The pin he used to show what dividing a job can do.
+        relic_desc: The kind of pin he used to show what dividing a job can do.
         points:
           p1: 'While the Dialogues Hume left in trust lie unprinted, talk Smith and Strahan into publishing them as Hume asked'
         points_fail:
@@ -37,15 +41,17 @@ events:
           p1:
             was: '7 August 1776: in a codicil Hume asked Strahan to publish the Dialogues Concerning Natural Religion within two years of his death; Smith would not take it on, Strahan in the end declined, and the book came out in 1779 through Hume''s nephew, without the author''s name.'
             now: 'Strahan printed the Dialogues within the two years Hume had asked for.'
+            who: david_hume
+            bio: 'Within two years of his death the Dialogues he had kept back for a quarter of a century were printed by Strahan, as he had asked in his last codicil.'
         vignettes:
-          queue: 'The worker adds more counters at the fastest station. You ask them to count how many are still waiting at the slower one. They change their plan before the second demonstration.'
-          handoff: 'Two people both reach for the same tray; no one takes the one behind it. You set the finished pieces where the next worker can reach them and hear the clatter stop.'
-          walk: 'You watch each person describe their one small job. To trace the whole route, you have to walk from one end of the bench to the other.'
+          nails: '{staff} queues at the baker''s. The nailer ahead pays with a handful of nails, the baker counts them and takes them. Weeks later {staff} reads in a thick book out this spring that there is a village in Scotland where workmen still carry nails to the baker''s instead of money, and laughs at the page.'
+          post: '{staff} helps the carrier tie up the London post. One packet is for Mr Strahan, the printer, and is thicker than the rest; {staff} slips it under the others so the rain will not reach it.'
+          firth: '{staff} walks the sands at low tide. Across the Firth of Forth the smoke of Edinburgh hangs low, and the woman gathering mussels nearby says that is where the clever folk live.'
       zh:
         name: 一个国家怎样变富
         place: 苏格兰柯卡尔迪
         figure: 亚当·斯密
-        story: '亚当·斯密 1776 年出版的《国富论》开篇用制针来说明分工。'
+        story: '1776 年 3 月，亚当·斯密的《国富论》在伦敦出版。8 月 25 日，他的朋友大卫·休谟在爱丁堡去世。休谟起先托斯密把《自然宗教对话录》印出来，斯密有顾虑，休谟改托印书商威廉·斯特拉恩，要他在身后两年内出版。这年 11 月，斯密在柯卡尔迪给斯特拉恩写信，记下休谟最后几个月的样子。斯特拉恩最终作罢，《对话录》到 1779 年才由休谟的侄子印出。'
         relic: 一枚别针
         relic_desc: 他用来说明分工威力的那种别针。
         points:
@@ -56,32 +62,127 @@ events:
           p1:
             was: '1776 年 8 月 7 日，休谟在遗嘱附件里请斯特拉恩在他身后两年内出版《自然宗教对话录》；斯密不肯经手，斯特拉恩最终也作罢，书在 1779 年由休谟的侄子不署名出版。'
             now: '斯特拉恩在休谟要求的两年之内把《对话录》印了出来。'
+            who: david_hume
+            bio: '他压了二十多年的《对话录》，在他去世后两年之内由斯特拉恩印了出来，照的是他最后那份遗嘱附件。'
         vignettes:
-          queue: '工人给最快的那道工序多放了几枚算子。你请他数一数慢的那道前还积了多少，第二遍他就换了排法。'
-          handoff: '两个人同时去够同一只盘，后头那只却没人拿。你把做完的件移到下一人随手能取的地方，碰撞声这才停下。'
-          walk: '你听每个人讲自己负责的一小段。要弄清一根针经过哪些手，你得从桌子一头走到另一头。'
+          nails: '{staff}在面包铺排队，前面一个打钉的工人掏出一把铁钉付账，铺主数了数就收下了。过了几个礼拜，{staff}在一本今年春天出的厚书里读到，苏格兰有个村子的工人至今拿钉子去面包铺当钱用，对着那一页笑出了声。'
+          post: '{staff}帮驿车夫捆寄往伦敦的邮包。有一封写着印书商斯特拉恩先生收，比别的都厚，{staff}把它塞到最底下，免得淋了雨。'
+          firth: '{staff}趁退潮在沙滩上走。福斯湾对岸，爱丁堡的炊烟压得很低，旁边拾贻贝的妇人说，那边住的都是读书的聪明人。'
 text:
   en:
     name: Adam Smith
-    text: Scottish philosopher and economist, 1723 to 1790, born in Kirkcaldy. His The Wealth of Nations, published in 1776, argued that the division of labour and free exchange raise a country's wealth. He also wrote The Theory of Moral Sentiments.
+    text: Scottish philosopher and economist, 1723 to 1790, born in Kirkcaldy. His The Wealth of Nations, published in 1776, argued that the division of labour and free exchange raise a country's wealth. He also wrote The Theory of Moral Sentiments. He was a close friend of David Hume, and after Hume's death in 1776 wrote the account of his last months that was printed with Hume's own short life.
   zh:
     name: 亚当·斯密
-    text: 苏格兰哲学家与经济学家，1723 年生，1790 年去世，生于柯卡尔迪。1776 年出版的《国富论》论证了分工和自由交换会增加国家的财富。他还写了《道德情操论》。
-hook: {en: 'Which task is holding up the rest?', zh: '哪一步让后面的人一直等'}
+    text: 苏格兰哲学家与经济学家，1723 年生，1790 年去世，生于柯卡尔迪。1776 年出版的《国富论》论证了分工和自由交换会增加国家的财富。他还写了《道德情操论》。他与大卫·休谟是挚友，1776 年休谟去世后，他写下休谟最后几个月的经过，与休谟的自传一同印出。
+hook: {en: 'A friend''s last wish, and a book nobody would print', zh: '朋友的遗愿，和一本没人肯印的书'}
 facts:
-  division:
-    date: '1776'
-    checked: official_record
+  wealth:
+    date: '1776-03-09'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [smith_kirkcaldy_primary]
+    use: [story, history, wiki]
+    sources: [smith_wiki, smith_kirkcaldy_primary]
     text:
-      en: 'The opening chapter of Adam Smith''s Wealth of Nations (1776) uses pin-making to illustrate the division of labour.'
-      zh: '亚当·斯密 1776 年出版的《国富论》开篇用制针来说明分工。'
+      en: 'On 9 March 1776 Adam Smith''s An Inquiry into the Nature and Causes of the Wealth of Nations was published in London; its first chapter uses pin-making to show the division of labour.'
+      zh: '1776 年 3 月 9 日，亚当·斯密的《国富论》在伦敦出版，第一章用制针来说明分工。'
+    line:
+      en: '9 March 1776: Adam Smith''s Wealth of Nations is published in London; its first chapter is about making pins.'
+      zh: '1776 年 3 月 9 日，亚当·斯密的《国富论》在伦敦出版，第一章讲的是做别针。'
+  will:
+    date: '1776-01-04'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [smith_dnb_hume, smith_hume_texts_dialogues]
+    text:
+      en: 'In a will of 4 January 1776 David Hume named Adam Smith his literary executor and first meant him to see the Dialogues Concerning Natural Religion into print; Smith was reluctant to publish them.'
+      zh: '1776 年 1 月 4 日，大卫·休谟立遗嘱，指定亚当·斯密为遗稿执行人，起先要他把《自然宗教对话录》印出来；斯密不愿经手。'
+    line:
+      en: '4 January 1776: David Hume makes his will and names Adam Smith to look after his papers.'
+      zh: '1776 年 1 月 4 日，大卫·休谟立下遗嘱，把遗稿托给亚当·斯密。'
+  codicil:
+    date: '1776-08-07'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [smith_hume_texts_dialogues, smith_dnb_hume]
+    text:
+      en: 'In a codicil of 7 August 1776 Hume left his manuscripts to his printer William Strahan, asking that the Dialogues be published within two years of his death; if they were not out within two and a half years, they were to pass to his nephew David.'
+      zh: '1776 年 8 月 7 日，休谟在遗嘱附件里把手稿留给印书商威廉·斯特拉恩，请他在身后两年内出版《对话录》；两年半内不出，就归他的侄子大卫。'
+    line:
+      en: '7 August 1776: in a codicil Hume leaves the Dialogues to the printer William Strahan, to be published within two years of his death.'
+      zh: '1776 年 8 月 7 日，休谟在遗嘱附件里把《对话录》托给印书商威廉·斯特拉恩，要他在身后两年内印出。'
+  hume_death:
+    date: '1776-08-25'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [smith_dnb_hume, smith_letter_econlib]
+    text:
+      en: 'David Hume died in Edinburgh on 25 August 1776 and was buried on Calton Hill.'
+      zh: '1776 年 8 月 25 日，大卫·休谟在爱丁堡去世，葬在卡尔顿山。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '25 August 1776: David Hume dies in Edinburgh.'
+      zh: '1776 年 8 月 25 日，大卫·休谟在爱丁堡去世。'
+  letter_strahan:
+    date: '1776-11-09'
+    stay_day: 12
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [smith_letter_econlib, smith_kirkcaldy_glasgow_letters]
+    text:
+      en: 'On 9 November 1776, at Kirkcaldy, Smith wrote a letter to William Strahan giving an account of Hume''s last illness and death, to stand after the short life Hume had written of himself.'
+      zh: '1776 年 11 月 9 日，斯密在柯卡尔迪给威廉·斯特拉恩写信，记下休谟最后的病与去世，准备附在休谟自己写的小传后面。'
+    line:
+      en: '9 November 1776: in Kirkcaldy Smith writes to Strahan an account of Hume''s last months.'
+      zh: '1776 年 11 月 9 日，斯密在柯卡尔迪给斯特拉恩写信，记下休谟最后几个月。'
+  copy_money:
+    date: '1776-11-13'
+    stay_day: 16
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [smith_kirkcaldy_strahan_autograph, smith_kirkcaldy_glasgow_letters]
+    text:
+      en: 'On 13 November 1776 Smith sent Strahan from Kirkcaldy his addition to Hume''s account of his own life, noted that he had received 300 pounds of copy money for the Wealth of Nations, asked for an account of what was still due, and proposed a second edition in four octavo volumes.'
+      zh: '1776 年 11 月 13 日，斯密从柯卡尔迪把给休谟小传的补记寄给斯特拉恩，说《国富论》的稿酬已收到三百镑，请对方算一算还欠多少，又提议出四卷八开本的第二版。'
+    line:
+      en: '13 November 1776: Smith posts the account to Strahan, with a note on his 300 pounds of copy money and a plan for a cheaper second edition.'
+      zh: '1776 年 11 月 13 日，斯密把补记寄给斯特拉恩，信里提到已收到三百镑稿酬，还想出一版便宜些的八开本。'
+  own_life:
+    date: '1777'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [smith_dnb_hume, smith_letter_econlib]
+    text:
+      en: 'In 1777 Hume''s short autobiography was published with Smith''s letter on his last illness; the calm the letter described gave offence to many readers.'
+      zh: '1777 年，休谟的自传连同斯密记述他最后病况的信一起出版，信里写他从容赴死，惹恼了不少读者。'
+    line:
+      en: '1777: Hume''s short life of himself is printed with Smith''s letter, and the letter draws angry replies.'
+      zh: '1777 年，休谟的小传连同斯密那封信一起印出，信招来了不少骂声。'
+  dialogues:
+    date: '1779'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [smith_hume_texts_dialogues, smith_dialogues_wiki]
+    text:
+      en: 'Strahan in the end declined, and the Dialogues Concerning Natural Religion were published in 1779 by Hume''s nephew David, with neither the author''s nor the publisher''s name.'
+      zh: '斯特拉恩最终作罢，《自然宗教对话录》在 1779 年由休谟的侄子大卫出版，书上没有作者名，也没有出版者名。'
+    line:
+      en: '1779: the Dialogues come out through Hume''s nephew, with no name on the title page.'
+      zh: '1779 年，《对话录》由休谟的侄子印出，扉页上没有署名。'
 bystanders:
   smith_kirkcaldy_reader:
     invented: true
-    text: {en: 'An invented worker arranging counters to stand for jobs at a bench.', zh: '一位虚构的工人，用算子表示几项工序。'}
+    text: {en: 'A nailer at the baker''s, made up for the game.', zh: '一个编出来的打钉工人，在面包铺排队。'}
+  mussel_gatherer:
+    invented: true
+    text: {en: 'A woman gathering mussels on the sands, made up for the game.', zh: '一个编出来的拾贻贝的妇人。'}
 wiki:
   refs:
     smith_kirkcaldy_strahan_autograph:
@@ -96,6 +197,36 @@ wiki:
       text:
         en: 'Glasgow edition of Smith’s correspondence https://pratclif.com/liberty/smith/Smith_0141-07_EBk_v4.pdf'
         zh: '格拉斯哥版斯密通信 https://pratclif.com/liberty/smith/Smith_0141-07_EBk_v4.pdf'
+    smith_hume_texts_dialogues:
+      order: 12
+      status: checked
+      text:
+        en: 'Hume Texts Online, notes to the Dialogues Concerning Natural Religion, on the manuscript, the codicil of 7 August 1776 and the 1779 edition. https://davidhume.org/texts/d/notes'
+        zh: 'Hume Texts Online，《自然宗教对话录》注释，述及手稿、1776 年 8 月 7 日的遗嘱附件与 1779 年版。https://davidhume.org/texts/d/notes'
+    smith_dnb_hume:
+      order: 13
+      status: checked
+      text:
+        en: 'Dictionary of National Biography, volume 28, Hume, David, page 230, on Wikisource. https://en.wikisource.org/wiki/Page:Dictionary_of_National_Biography_volume_28.djvu/230'
+        zh: '《英国人名词典》第 28 卷，大卫·休谟条，第 230 页，维基文库。https://en.wikisource.org/wiki/Page:Dictionary_of_National_Biography_volume_28.djvu/230'
+    smith_letter_econlib:
+      order: 14
+      status: checked
+      text:
+        en: 'Liberty Fund, Letter from Adam Smith to William Strahan, Kirkaldy, 9 November 1776. https://www.econlib.org/book-chapters/chapter-letter-from-adam-smith-l-l-d-to-william-strahan-esq/'
+        zh: '自由基金，亚当·斯密致威廉·斯特拉恩的信，柯卡尔迪，1776 年 11 月 9 日。https://www.econlib.org/book-chapters/chapter-letter-from-adam-smith-l-l-d-to-william-strahan-esq/'
+    smith_wiki:
+      order: 15
+      status: checked
+      text:
+        en: 'Wikipedia, Adam Smith. https://en.wikipedia.org/wiki/Adam_Smith'
+        zh: '维基百科，亚当·斯密。https://en.wikipedia.org/wiki/Adam_Smith'
+    smith_dialogues_wiki:
+      order: 16
+      status: checked
+      text:
+        en: 'Wikipedia, Dialogues Concerning Natural Religion. https://en.wikipedia.org/wiki/Dialogues_Concerning_Natural_Religion'
+        zh: '维基百科，《自然宗教对话录》。https://en.wikipedia.org/wiki/Dialogues_Concerning_Natural_Religion'
     smith_kirkcaldy_primary:
       order: 159
       status: checked
@@ -103,10 +234,15 @@ wiki:
         en: 'Adam Smith, An Inquiry into the Nature and Causes of the Wealth of Nations, 1776, book I, chapter 1. https://www.econlib.org/library/Smith/smWN.html?chapter_num=2'
         zh: 'Adam Smith, An Inquiry into the Nature and Causes of the Wealth of Nations, 1776, book I, chapter 1. https://www.econlib.org/library/Smith/smWN.html?chapter_num=2'
 self_check:
-  quote_line: '工人给最快的那道工序多放了几枚算子。'
-  fact: division
-  regret_choice: '略过「说清桌边演示里的一道工序」，这处细节便留给下一位核对。'
-  bookend: '从「哪一步让后面的人一直等」开始，以员工留下的观察或更正收尾。'
-  share_line: '哪一步让后面的人一直等'
-  share_number: '1776'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: letter_strahan
+  quote_line: '1776 年 11 月 9 日，斯密在柯卡尔迪给斯特拉恩写信，记下休谟最后几个月。'
+  regret_choice: '派会说话的书商去，斯特拉恩点了头，《对话录》两年内印成；派不善言辞的去，只能在驿车旁捆好那封厚信，看着书再搁三年。'
+  bookend: '从春天《国富论》出版开始，以 1779 年《对话录》不署名印出收尾，朋友的遗愿等了三年。'
+  share_line: '1776 年冬天，我在柯卡尔迪替一位去世的哲学家劝人印他的书。'
+  share_number: '2'
+  knowing: 'codicil'
+  near: 'letter_strahan, copy_money'
+  lever: 'p1'
+  missed: 'dialogues'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

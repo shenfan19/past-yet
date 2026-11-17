@@ -2,17 +2,22 @@ order: 135
 events:
   mendel_brno:
     order: 34
-    build_step: 2
+    build_step: 4
     year: 1865
+    # three office days from the planned arrival on 26 January 1865, through his two talks of 8 February and 8 March
     date: '1865-01-26'
     stay: 3
     lon: 16.6
     lat: 49.2
     region: europe
+    home: [europe_east]
+    near: [europe_west]
     field: science
     tier: 2
     channels: {L: 1}
-    refs: [mendel_brno_primary, mendel_brno_manuscript_1865, mendel_brno_lecture_sources, mendel_brno_replication_letters]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [mendel_brno_primary, mendel_brno_manuscript_1865, mendel_brno_lecture_sources, mendel_brno_replication_letters, mendel_wiki, mendel_britannica]
     scene:
       star_rules: 2
       points:
@@ -20,15 +25,15 @@ events:
         - {id: p2, kind: notice, day: 41, req: {"any":[{"job":["teacher","biologist"]},{"trait":["methodical","scholarly","patient"]}]}}
         - {id: p3, kind: persuade, day: 45, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
-        - {id: ratio, traits: [skeptical, scholarly]}
-        - {id: label, traits: [methodical, handy]}
-        - {id: tally}
+        - {id: straw, traits: [kind, handy, hardy, quiet], day: 13}
+        - {id: market, traits: [curious, patient, methodical, scholarly, skeptical], day: 30}
+        - {id: furrow, day: 62}
     text:
       en:
         name: Peas and the rules of heredity
         place: Brno
         figure: Gregor Mendel
-        story: 'Mendel''s paper, published in 1866 after his 1865 presentations, reports pea-cross counts and compares the resulting ratios.'
+        story: 'From 1856 to 1863 Gregor Mendel crossed pea plants in the garden of his house in Brno and counted their offspring. On 8 February and 8 March 1865 he reported the results in two talks to the Natural History Society of Brno, and the paper was printed in the society''s proceedings in 1866. It was hardly taken up in his lifetime. Mendel died in 1884, and in 1900 three botanists came upon his paper while working on heredity themselves.'
         relic: A pea pod
         relic_desc: A dried pod from the monastery garden.
         points:
@@ -51,14 +56,14 @@ events:
             who: mendel_brno
             bio: 'Mendel''s paper eventually appeared in the proceedings. A replication set in motion at the talks brought him earlier results he could check independently.'
         vignettes:
-          ratio: 'The reader rounds the tally until it looks exact. You leave the counts in the margin and ask him to work the ratio back from those numbers.'
-          label: 'Two paper labels look alike. You turn both over and find that one belongs to the parent plants. The reader moves it away from the counts for the offspring.'
-          tally: 'You read the two shapes out loud as the reader makes tally marks. At the end you leave the tally beside its total for someone else to check.'
+          straw: '{staff} helps the porter lay straw mats at the door of the meeting room. Snow melts off every pair of boots, and the porter says the gentlemen would sooner hear about peas than wipe their feet.'
+          market: '{staff} helps an old woman at the Cabbage Market sort dried peas, the round ones in one heap and the wrinkled in another. The round ones sell better, she says; {staff} counts both heaps anyway and comes out at nearly three to one, and laughs first.'
+          furrow: 'At the end of March {staff} walks the field paths outside the town. A farmer is spreading the winter''s dung and says the peas must go in early this year, ahead of the late frosts.'
       zh:
         name: 豌豆与遗传的规律
         place: 布尔诺
         figure: 格雷戈尔·孟德尔
-        story: '孟德尔在 1865 年报告豌豆杂交结果，1866 年刊出的论文列了计数并比较所得比例。'
+        story: '1856 年到 1863 年，格雷戈尔·孟德尔在布尔诺住处的园子里杂交豌豆，一代代数它们的后代。1865 年 2 月 8 日和 3 月 8 日，他在布尔诺自然科学学会分两场报告了结果，论文 1866 年刊在学会的会刊上。他生前，这篇论文几乎没人接着做下去。孟德尔 1884 年去世，1900 年，三位植物学家在研究遗传时各自找到了他的论文。'
         relic: 一只豌豆荚
         relic_desc: 修道院花园里的一只干豆荚。
         points:
@@ -81,9 +86,9 @@ events:
             who: mendel_brno
             bio: '孟德尔的报告后来随年刊刊行。跟随报告启动的异地复测让他较早收到一组可以独立核对的结果。'
         vignettes:
-          ratio: '听讲人把数约成了一个整齐的比例。你把原始计数留在页边，请他从这些数重新算一遍。'
-          label: '两张纸签看着很像。你翻过来才发现，其中一张写的是亲代。听讲人把它从后代的计数旁移开。'
-          tally: '听讲人画正字时，你逐粒念出两种形状。数完，你把正字留在合计旁，让别人也能复核。'
+          straw: '{staff}帮看门人在会场门口铺草垫。每双靴子上的雪都化在地上，看门人说，这些先生宁可听人讲豌豆，也懒得在门口跺跺脚。'
+          market: '{staff}在白菜市场帮一个老太太分拣干豌豆，圆的一堆，皱的一堆。她说圆的好卖。{staff}还是把两堆都数了一遍，差不多三比一，自己先笑了。'
+          furrow: '三月底，{staff}在城外的田埂上走。农人正把攒了一冬的粪摊开，说今年豌豆得早点下种，赶在倒春寒前头。'
 text:
   en:
     name: Gregor Mendel
@@ -91,21 +96,90 @@ text:
   zh:
     name: 格雷戈尔·孟德尔
     text: 捷克与奥地利的修士与科学家，1822 年生，1884 年去世，布尔诺人。他在修道院花园里杂交豌豆，发现性状按固定比例遗传，成果 1866 年发表，到 1900 年前后才受到注意。
-hook: {en: 'Count the peas before rounding the ratio.', zh: '先数豆子，再说比例'}
+hook: {en: 'Two evenings of talks, then thirty five years', zh: '讲了两个晚上，等了三十五年'}
 facts:
-  peas:
-    date: '1866'
-    checked: official_record
+  experiments:
+    date: '1856'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [mendel_brno_primary]
+    use: [story, history, wiki]
+    sources: [mendel_brno_replication_letters, mendel_wiki]
     text:
-      en: 'Mendel''s paper, published in 1866 after his 1865 presentations, reports pea-cross counts and compares the resulting ratios.'
-      zh: '孟德尔在 1865 年报告豌豆杂交结果，1866 年刊出的论文列了计数并比较所得比例。'
+      en: 'From 1856 to 1863 Mendel grew and crossed pea plants in the garden at Brno, eight years of experiments by his own account.'
+      zh: '1856 年到 1863 年，孟德尔在布尔诺的园子里种豌豆、做杂交，按他自己的说法前后八年。'
+    line:
+      en: '1856: Mendel begins crossing pea plants in the garden at Brno; he will keep at it for eight years.'
+      zh: '1856 年，孟德尔在布尔诺的园子里开始杂交豌豆，一做就是八年。'
+  first_talk:
+    date: '1865-02-08'
+    stay_day: 13
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendel_brno_manuscript_1865, mendel_brno_lecture_sources]
+    text:
+      en: 'On 8 February 1865 Mendel gave the first of two talks to the Natural History Society of Brno, on plant hybrids made by artificial fertilisation.'
+      zh: '1865 年 2 月 8 日，孟德尔在布尔诺自然科学学会作两场报告中的第一场，讲人工授粉得来的植物杂种。'
+    line:
+      en: '8 February 1865: Mendel gives the first of his two talks on pea hybrids to the Brno society.'
+      zh: '1865 年 2 月 8 日，孟德尔在布尔诺学会讲豌豆杂交，这是两场里的第一场。'
+  second_talk:
+    date: '1865-03-08'
+    stay_day: 41
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendel_brno_manuscript_1865, mendel_brno_lecture_sources, mendel_brno_replication_letters]
+    text:
+      en: 'On 8 March 1865 Mendel gave the second talk, on fertilisation and the forming of seeds, and set out how the offspring of hybrids divide.'
+      zh: '1865 年 3 月 8 日，孟德尔作第二场报告，讲受精和种子的形成，列出杂种后代怎样分离。'
+    line:
+      en: '8 March 1865: Mendel gives his second talk and sets out how the offspring of hybrids divide.'
+      zh: '1865 年 3 月 8 日，孟德尔作第二场报告，讲杂种的后代怎样分开。'
+  printed:
+    date: '1866'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendel_brno_primary, mendel_brno_replication_letters]
+    text:
+      en: 'In 1866 the paper Versuche über Pflanzen-Hybriden was printed in the proceedings of the Natural History Society of Brno, volume 4, about a year after the talks.'
+      zh: '1866 年，《植物杂交实验》刊在布尔诺自然科学学会会刊第 4 卷，离两场报告约一年。'
+    line:
+      en: '1866: the paper Experiments on Plant Hybrids is printed in the proceedings of the Brno society.'
+      zh: '1866 年，《植物杂交实验》刊在布尔诺学会的会刊上。'
+  death:
+    date: '1884-01-06'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [mendel_wiki, mendel_britannica]
+    text:
+      en: 'Gregor Mendel died in Brno on 6 January 1884.'
+      zh: '1884 年 1 月 6 日，格雷戈尔·孟德尔在布尔诺去世。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '6 January 1884: Gregor Mendel dies in Brno.'
+      zh: '1884 年 1 月 6 日，格雷戈尔·孟德尔在布尔诺去世。'
+  rediscovery:
+    date: '1900'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [mendel_wiki, mendel_britannica]
+    text:
+      en: 'In 1900 Hugo de Vries, Carl Correns and Erich von Tschermak, each working on heredity, came upon Mendel''s paper and brought it to notice.'
+      zh: '1900 年，雨果·德弗里斯、卡尔·科伦斯和埃里希·冯·切尔马克各自研究遗传时找到了孟德尔的论文，让它重新为人所知。'
+    line:
+      en: '1900: three botanists, working apart, come upon Mendel''s paper of 1866.'
+      zh: '1900 年，三位植物学家各自找到了孟德尔 1866 年的那篇论文。'
 bystanders:
   mendel_brno_reader:
     invented: true
-    text: {en: 'An invented reader checking a practice tally before the talk.', zh: '一位虚构的听讲人，会前正在核对一张练习计数表。'}
+    text: {en: 'An old woman selling dried peas at the Cabbage Market, made up for the game.', zh: '一个编出来的老太太，在白菜市场卖干豌豆。'}
+  porter:
+    invented: true
+    text: {en: 'The porter at the meeting room, made up for the game.', zh: '一个编出来的会场看门人。'}
 wiki:
   refs:
     mendel_brno_manuscript_1865:
@@ -126,17 +200,34 @@ wiki:
       text:
         en: 'Mendelism: New Insights from Gregor Mendel’s Lectures in Brno, analysis of contemporary papers and letters. https://pmc.ncbi.nlm.nih.gov/articles/PMC5586364/'
         zh: '《重新认识孟德尔在布尔诺的报告》，核对同时期报道与通信。 https://pmc.ncbi.nlm.nih.gov/articles/PMC5586364/'
+    mendel_wiki:
+      order: 846
+      status: checked
+      text:
+        en: 'Wikipedia, Gregor Mendel. https://en.wikipedia.org/wiki/Gregor_Mendel'
+        zh: '维基百科，格雷戈尔·孟德尔。https://en.wikipedia.org/wiki/Gregor_Mendel'
+    mendel_britannica:
+      order: 847
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Gregor Mendel. https://www.britannica.com/biography/Gregor-Mendel'
+        zh: '大英百科全书，格雷戈尔·孟德尔。https://www.britannica.com/biography/Gregor-Mendel'
     mendel_brno_primary:
       order: 121
       status: checked
       text:
         en: 'Gregor Mendel, Versuche über Pflanzen-Hybriden, Brünn, 1866. Smithsonian copy, Biodiversity Heritage Library. https://www.biodiversitylibrary.org/item/124139'
-        zh: 'Gregor Mendel, Versuche über Pflanzen-Hybriden, Brünn, 1866. Smithsonian copy, Biodiversity Heritage Library. https://www.biodiversitylibrary.org/item/124139'
+        zh: '格雷戈尔·孟德尔《植物杂交实验》，布尔诺 1866 年，史密森学会藏本，生物多样性遗产图书馆。https://www.biodiversitylibrary.org/item/124139'
 self_check:
-  quote_line: '听讲人把数约成了一个整齐的比例。'
-  fact: peas
-  regret_choice: '略过「计数时分清两种形状」，这处细节便留给下一位核对。'
-  bookend: '从「先数豆子，再说比例」开始，以员工留下的观察或更正收尾。'
-  share_line: '先数豆子，再说比例'
-  share_number: '1866'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: second_talk
+  quote_line: '1865 年 3 月 8 日，孟德尔作第二场报告，讲杂种的后代怎样分开。'
+  regret_choice: '派会讲课的去，两场报告都讲完了，听众手里还有分代的表；派会谈判的去，散会前就有人答应回去种一季豌豆复测。冬天里两样都做到的人不多。'
+  bookend: '从 1856 年园子里的第一批杂交开始，以 1900 年三位植物学家找到这篇论文收尾，中间隔着两场报告和三十五年。'
+  share_line: '1865 年冬天，我在布尔诺听一个人讲了两晚上的豌豆。'
+  share_number: '35'
+  knowing: 'experiments'
+  near: 'first_talk, second_talk'
+  lever: 'p1, p2, p3'
+  missed: 'rediscovery'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

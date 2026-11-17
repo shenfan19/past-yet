@@ -2,17 +2,23 @@ order: 51
 events:
   curie_paris:
     order: 37
-    build_step: 2
+    build_step: 4
     year: 1898
+    # seven office days from the planned arrival on 30 June 1898, through the polonium note of 18 July and the radium note of 26 December
     date: '1898-06-30'
     stay: 7
     lon: 2.34
     lat: 48.85
     region: europe
+    home: [europe_west]
+    near: [europe_east]
+    crossroads: true
     field: science
     tier: 3
     channels: {T: 3, L: 1}
-    refs: [curie_paris_primary, curie_academy_july_1898, curie_academy_dec_1898, curie_nobel_lab_conditions]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [curie_paris_primary, curie_academy_july_1898, curie_academy_dec_1898, curie_nobel_lab_conditions, curie_wiki, curie_europeana, pierre_curie_nobel]
     scene:
       star_rules: 2
       points:
@@ -20,15 +26,15 @@ events:
         - {id: p2, kind: persuade, day: 177, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
         - {id: p3, kind: care, day: 60, req: {"any":[{"item":"radiation_shield","trait":["methodical","skeptical","scholarly","vigil"]},{"item":"radiation_shield","job":["doctor","physician","biologist","geologist","pharmacist","nurse"]}]}}
       vignettes:
-        - {id: two_notices, traits: [methodical, vigil]}
-        - {id: word, traits: [skeptical, scholarly, curious]}
-        - {id: heading}
+        - {id: shed, traits: [methodical, vigil, hardy, kind, patient], day: 150}
+        - {id: borscht, traits: [cosmopolitan, cheerful, curious, wanderer], day: 25}
+        - {id: bookstall, day: 90}
     text:
       en:
         name: Two new elements
         place: Paris
         figure: Marie Curie
-        story: 'Polonium and radium were announced in 1898. Marie Curie''s 1911 lecture looks back on the discoveries and the later work needed to establish radium''s properties.'
+        story: 'In April 1898 Marie Curie reported that pitchblende gave off stronger rays than its uranium could explain. Working with Pierre Curie at the School of Industrial Physics and Chemistry in Paris, she separated its parts and followed the rays. On 18 July 1898 they announced a new element and named it polonium, after her native Poland; on 26 December, with Gustave Bémont, they announced radium. They handled the material with bare hands for years. Marie Curie died in 1934 of aplastic anaemia, generally linked to her long exposure to radiation.'
         relic: A tube of pitchblende
         relic_desc: A glass tube of dark ore that left a faint glow in the dark.
         points:
@@ -51,14 +57,14 @@ events:
             who: curie_paris
             bio: 'Marie Curie worked with radioactive material behind shielding from 1898 on. She was spared the heavy radiation damage of her later years and worked some years longer.'
         vignettes:
-          two_notices: 'The typesetter has set the two notices under one date. You put the earlier and later sheets apart and mark their months before the form is locked.'
-          word: 'You notice that the headline promises a finished result. The typesetter reads the announcement aloud and leaves a narrower claim in the heading.'
-          heading: 'You hold the second proof until its element name is checked. The typesetter leaves both notices readable rather than moving one into the other''s column.'
+          shed: 'Rain comes through the roof of the shed in the school yard. {staff} sets out basins under the leaks and moves a bench of glassware away from the drips, and the stove in the corner hardly warms the room.'
+          borscht: '{staff} eats at a small place in the Latin Quarter. At the next table two Polish students argue in Polish until their beetroot soup goes cold, and the owner says there are more Poles round here than pigeons on the Seine.'
+          bookstall: 'At a bookstall on the Seine {staff} turns up a pamphlet about the new rays that pass through flesh. The stallholder says people these days will pay for anything they cannot see.'
       zh:
         name: 两种新元素
         place: 巴黎
         figure: 玛丽·居里
-        story: '钋和镭的发现公布于 1898 年。玛丽·居里 1911 年的诺贝尔演讲回顾了这两项发现，以及随后为确定镭的性质所做的工作。'
+        story: '1898 年 4 月，玛丽·居里报告说，沥青铀矿放出的射线比其中的铀能解释的更强。她与皮埃尔·居里在巴黎的工业物理化学学校把矿石一份份分开，追着射线走。1898 年 7 月 18 日，他们宣布发现一种新元素，以她的祖国波兰命名为钋；12 月 26 日，又与古斯塔夫·贝蒙一起宣布了镭。此后多年，他们一直徒手处理这些材料。玛丽·居里 1934 年死于再生障碍性贫血，一般认为与她长年受辐射有关。'
         relic: 一管沥青铀矿
         relic_desc: 一支装着黑色矿石的玻璃管，在黑暗里有一点微光。
         points:
@@ -81,9 +87,9 @@ events:
             who: curie_paris
             bio: '玛丽·居里从 1898 年起在防护下做放射性研究，晚年没有受到那样重的辐射损伤，多工作了些年。'
         vignettes:
-          two_notices: '排字工把两条消息排在同一天名下。固定版面之前，你把先后两张纸分开，各自标上月份。'
-          word: '你发现标题把话说成了工作已经全做完。排字工把报告念了一遍，最后在标题里只留报告能支持的话。'
-          heading: '你扶着第二张校样，等上面的元素名核过一遍。排字工让两条都能单独读清，没把谁移进另一栏。'
+          shed: '雨从学校院里那间棚屋的顶上漏下来。{staff}在漏处摆了几只盆，把一台摆满玻璃器皿的桌子挪开，角落里那只炉子几乎烘不暖屋子。'
+          borscht: '{staff}在拉丁区一家小馆子吃饭。邻桌两个波兰学生用波兰话争得面红耳赤，红菜汤凉了也没顾上喝。老板娘说，这一带的波兰人比塞纳河边的鸽子还多。'
+          bookstall: '{staff}在塞纳河边的旧书摊上翻到一本讲那种能穿过皮肉的新射线的小册子。摊主说，这年头的人，看不见的东西最肯掏钱。'
 text:
   en:
     name: Marie Curie
@@ -91,21 +97,91 @@ text:
   zh:
     name: 玛丽·居里
     text: 波兰出生的物理学家与化学家，1867 年生，1934 年去世，在巴黎工作。她与皮埃尔·居里研究放射性，1898 年发现钋和镭。她 1903 年获诺贝尔物理学奖，1911 年获化学奖，死于与辐射有关的疾病。
-hook: {en: 'A new name, a separate claim.', zh: '名字写下，证据另记'}
+hook: {en: 'After the discovery, the rays', zh: '发现之后，那些射线'}
 facts:
-  announcements:
-    date: '1898'
+  april_note:
+    date: '1898-04-12'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [curie_wiki, curie_paris_primary]
+    text:
+      en: 'On 12 April 1898 a note by Marie Curie on the rays given off by compounds of uranium and thorium was presented to the Academy of Sciences by Gabriel Lippmann, since she was not a member; it observed that pitchblende was more active than uranium itself.'
+      zh: '1898 年 4 月 12 日，玛丽·居里关于铀、钍化合物所放射线的短文由加布里埃尔·李普曼代为提交科学院，因为她不是院士；文中指出沥青铀矿比铀本身更活跃。'
+    line:
+      en: '12 April 1898: Marie Curie reports to the Academy of Sciences that pitchblende gives off stronger rays than uranium.'
+      zh: '1898 年 4 月 12 日，玛丽·居里向科学院报告，沥青铀矿放出的射线比铀还强。'
+  polonium:
+    date: '1898-07-18'
+    stay_day: 18
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [curie_paris_primary]
+    use: [story, history, wiki]
+    sources: [curie_academy_july_1898, curie_wiki]
     text:
-      en: 'Polonium and radium were announced in 1898. Marie Curie''s 1911 lecture looks back on the discoveries and the later work needed to establish radium''s properties.'
-      zh: '钋和镭的发现公布于 1898 年。玛丽·居里 1911 年的诺贝尔演讲回顾了这两项发现，以及随后为确定镭的性质所做的工作。'
+      en: 'On 18 July 1898 Pierre and Marie Curie reported to the Academy of Sciences a new radioactive substance in pitchblende, and proposed to call it polonium, after the country of one of them.'
+      zh: '1898 年 7 月 18 日，皮埃尔与玛丽·居里向科学院报告沥青铀矿里有一种新的放射性物质，提议以其中一人的祖国命名为钋。'
+    line:
+      en: '18 July 1898: the Curies announce a new element in pitchblende and name it polonium, after Poland.'
+      zh: '1898 年 7 月 18 日，居里夫妇宣布在沥青铀矿里找到一种新元素，以波兰命名为钋。'
+  radium:
+    date: '1898-12-26'
+    stay_day: 179
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [curie_academy_dec_1898, curie_wiki]
+    text:
+      en: 'On 26 December 1898 Pierre Curie, Marie Curie and Gustave Bémont reported a second, strongly radioactive substance in pitchblende and named it radium; Eugène Demarçay''s spectroscopic observation of a new line was published with it.'
+      zh: '1898 年 12 月 26 日，皮埃尔·居里、玛丽·居里与古斯塔夫·贝蒙报告沥青铀矿里另一种强放射性物质，命名为镭；欧仁·德马尔赛观察到一条新光谱线，随文刊出。'
+    line:
+      en: '26 December 1898: the Curies and Bémont announce radium to the Academy of Sciences.'
+      zh: '1898 年 12 月 26 日，居里夫妇与贝蒙向科学院宣布了镭。'
+  shed:
+    date: '1902'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [curie_wiki, curie_nobel_lab_conditions]
+    text:
+      en: 'The Curies worked in a converted shed beside the School of Industrial Physics and Chemistry, poorly ventilated and not fully waterproof; by 1902 they had separated a tenth of a gram of radium chloride from about a tonne of pitchblende.'
+      zh: '居里夫妇在工业物理化学学校旁一间改作实验室的棚屋里工作，通风差，屋顶也不完全挡雨；到 1902 年，他们从约一吨沥青铀矿里分出了十分之一克氯化镭。'
+    line:
+      en: '1902: from about a tonne of pitchblende the Curies have separated a tenth of a gram of radium chloride.'
+      zh: '1902 年，居里夫妇从约一吨沥青铀矿里分出了十分之一克氯化镭。'
+  pierre_death:
+    date: '1906-04-19'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [curie_wiki, pierre_curie_nobel]
+    text:
+      en: 'Pierre Curie died in Paris on 19 April 1906, struck by a horse-drawn vehicle in the Rue Dauphine.'
+      zh: '1906 年 4 月 19 日，皮埃尔·居里在巴黎多菲内街被马车撞倒身亡。'
+    note: 'A death in an accident: written as a plain fact.'
+    line:
+      en: '19 April 1906: Pierre Curie is killed by a horse-drawn vehicle in Paris.'
+      zh: '1906 年 4 月 19 日，皮埃尔·居里在巴黎街头被马车撞倒身亡。'
+  death:
+    date: '1934-07-04'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [curie_wiki, curie_europeana]
+    text:
+      en: 'Marie Curie died on 4 July 1934 at the sanatorium of Sancellemoz in Haute-Savoie, of aplastic anaemia, generally linked to her long exposure to radiation.'
+      zh: '1934 年 7 月 4 日，玛丽·居里在上萨瓦省桑塞勒莫疗养院去世，死于再生障碍性贫血，一般认为与她长年受辐射有关。'
+    note: 'A death and an illness: written as plain facts.'
+    line:
+      en: '4 July 1934: Marie Curie dies of aplastic anaemia in Haute-Savoie.'
+      zh: '1934 年 7 月 4 日，玛丽·居里在上萨瓦省因再生障碍性贫血去世。'
 bystanders:
   curie_paris_reader:
     invented: true
-    text: {en: 'An invented typesetter setting two separate notices.', zh: '一位虚构的排字工，正在排两份不同的消息。'}
+    text: {en: 'The owner of a small eating house in the Latin Quarter, made up for the game.', zh: '一个编出来的拉丁区小馆子老板娘。'}
+  bookseller:
+    invented: true
+    text: {en: 'A bookstall keeper on the Seine, made up for the game.', zh: '一个编出来的塞纳河边旧书摊摊主。'}
 wiki:
   refs:
     curie_academy_july_1898:
@@ -126,17 +202,40 @@ wiki:
       text:
         en: 'Nobel Prize archive, the Curies’ early workspace and the research following the 1898 reports. https://www.nobelprize.org/prizes/themes/marie-and-pierre-curie-and-the-discovery-of-polonium-and-radium/'
         zh: '诺贝尔奖档案，居里夫妇早期场地及 1898 年通报后的研究。 https://www.nobelprize.org/prizes/themes/marie-and-pierre-curie-and-the-discovery-of-polonium-and-radium/'
+    curie_wiki:
+      order: 860
+      status: checked
+      text:
+        en: 'Wikipedia, Marie Curie, archived copy. https://webarchive.library.unt.edu/web/20201214215200/https://en.wikipedia.org/wiki/Marie_Curie'
+        zh: '维基百科，玛丽·居里，存档本。https://webarchive.library.unt.edu/web/20201214215200/https://en.wikipedia.org/wiki/Marie_Curie'
+    curie_europeana:
+      order: 861
+      status: checked
+      text:
+        en: 'Europeana, Pioneers exhibition, Maria Skłodowska-Curie. https://www.europeana.eu/eu/exhibitions/pioneers/maria-sklodowska-curie'
+        zh: '欧洲数字图书馆，“先驱者”展，玛丽亚·斯克沃多夫斯卡-居里。https://www.europeana.eu/eu/exhibitions/pioneers/maria-sklodowska-curie'
+    pierre_curie_nobel:
+      order: 862
+      status: checked
+      text:
+        en: 'The Nobel Prize, Pierre Curie, biographical. https://www.nobelprize.org/prizes/physics/1903/pierre-curie/biographical/'
+        zh: '诺贝尔奖官网，皮埃尔·居里生平。https://www.nobelprize.org/prizes/physics/1903/pierre-curie/biographical/'
     curie_paris_primary:
       order: 164
       status: checked
       text:
         en: 'Marie Curie, Nobel lecture, 1911, recalling the discoveries of polonium and radium. Nobel Prize archive. https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/lecture/'
-        zh: 'Marie Curie, Nobel lecture, 1911, recalling the discoveries of polonium and radium. Nobel Prize archive. https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/lecture/'
+        zh: '玛丽·居里 1911 年诺贝尔演讲，回顾钋与镭的发现，诺贝尔奖档案。https://www.nobelprize.org/prizes/chemistry/1911/marie-curie/lecture/'
 self_check:
-  quote_line: '排字工把两条消息排在同一天名下。'
-  fact: announcements
-  regret_choice: '略过「分清两次发现的报告」，这处细节便留给下一位核对。'
-  bookend: '从「名字写下，证据另记」开始，以员工留下的观察或更正收尾。'
-  share_line: '名字写下，证据另记'
-  share_number: '1898'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: polonium
+  quote_line: '1898 年 7 月 18 日，居里夫妇宣布在沥青铀矿里找到一种新元素，以波兰命名为钋。'
+  regret_choice: '派懂档案的去，年末那份镭的报告和光谱观察对得上，还争到了一间屋子；派带着防护的医护或学者去，八月起两人的手隔开了射线。前一种护住了发现，后一种护住了发现的人。'
+  bookend: '从四月那份说沥青铀矿比铀更强的短文开始，以 1934 年她死于再生障碍性贫血收尾，两种新元素陪了她三十多年。'
+  share_line: '1898 年夏天，我在巴黎一间漏雨的棚屋里，给一对夫妇隔开了射线。'
+  share_number: '2'
+  knowing: 'april_note'
+  near: 'polonium, radium'
+  lever: 'p1, p2, p3'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
