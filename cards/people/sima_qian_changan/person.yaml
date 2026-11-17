@@ -2,7 +2,7 @@ order: 178
 events:
   sima_qian_changan:
     order: 152
-    build_step: 1
+    build_step: 2
     year: -98
     lon: 108.95
     lat: 34.27
@@ -10,13 +10,13 @@ events:
     field: literature
     tier: 3
     channels: {S: 3, G: 2}
-    regret: true
     refs: [sima_qian_changan_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"trait":["attached","cheerful","patient"]}}
-        - {id: p2, kind: notice, req: {"any":[{"stat":{"wit":7}},{"job":["archivist","journalist"]}]}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"trait":["patient","vigil","quiet"]},{"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":7}},{"trait":["scholarly","methodical"],"stat":{"wit":8}},{"item":"period_costume","trait":["scholarly","methodical","quiet"],"stat":{"wit":6}}]}}
+        - {id: p2, kind: care, day: 60, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","caregiver"],"stat":{"will":5}},{"trait":["kind","patient"],"stat":{"will":7}},{"item":"gift_box","trait":["kind","patient","streetwise","glib"]}]}}
+        - {id: p3, kind: persuade, day: 120, req: {"any":[{"job":["accountant","market_trader","antique_dealer","shopkeeper","bookseller"],"stat":{"will":6,"luck":6}},{"trait":["charismatic","glib"],"stat":{"will":8}},{"item":"golden_apple","stat":{"wit":5,"will":6}}]}}
       vignettes:
         - {id: dates, traits: [methodical, vigil]}
         - {id: witness, traits: [curious, skeptical]}
@@ -30,9 +30,24 @@ events:
         relic: "A bundle of bamboo slips"
         relic_desc: "Slips tied with cord, each carrying a column of characters."
         points:
-          p1: 'Identify what two accounts really disagree about'
-          p2: 'Keep the order of the dates clear'
-          p3: 'Leave a readable note where the evidence does not decide'
+          p1: 'While Sima Qian is in prison, keep the unfinished drafts of his history whole and in order at his home'
+          p2: 'Bring food and clothing into the prison and spare him the worst of the jailers'' humiliations'
+          p3: 'Raise the money that the law allows to redeem his sentence, so that Sima Qian is spared the punishment of castration'
+        points_fail:
+          p1: 'The bundles at his home come loose and are scattered, and the drafts are not there when he comes out. This branch falls out of step with history and the office recalls the employee.'
+          p2: 'Nobody reaches him in prison, and in this branch he bows his head to the jailers as he later wrote that he did.'
+          p3: 'The family is poor and no friend speaks for him. In this branch, as in history, he cannot redeem himself and is castrated.'
+        shift:
+          p1:
+            was: 'In about 98 BC, when Sima Qian was imprisoned after the Li Ling affair, his history was, in his own words, only roughly begun and not yet finished.'
+          p2:
+            was: 'In about 98 BC Sima Qian was imprisoned for defending Li Ling; in his letter to Ren An he wrote of how he had to abase himself before the jailers.'
+            now: '{staff} brings him food and warm clothing and pays the gatekeepers to leave him alone. He passes the months in prison in somewhat less shame.'
+          p3:
+            was: 'In about 98 BC Sima Qian was sentenced for defending Li Ling; his family was too poor to redeem the sentence, no friend spoke for him, and he was punished by castration.'
+            now: '{staff} raises the redemption money from merchants and old acquaintances and it is paid before the sentence is carried out. Sima Qian leaves prison unharmed in body. He goes home to the bamboo slips and finishes the history.'
+            who: sima_qian_changan
+            bio: 'In this timeline Sima Qian redeemed his sentence and was not castrated. He still finished his history of the past down to his own day.'
         vignettes:
           dates: 'The clerk starts to merge two entries under one year. You ask them to leave the dates with their respective accounts. It becomes possible to see exactly where the mismatch begins.'
           witness: 'The clerk wants the better story to go first. You ask how each account got to the desk. They mark the origins before deciding what order a reader should see.'
@@ -45,9 +60,24 @@ events:
         relic: "一捆竹简"
         relic_desc: "用绳子编起来的竹简，每一片写着一行字。"
         points:
-          p1: '找出两种说法到底在哪一点相冲'
-          p2: '把年次的前后理清'
-          p3: '证据分不出时，留下看得明白的存疑说明'
+          p1: '司马迁下狱期间，护住他家中尚未写完的史稿，不散不乱'
+          p2: '往狱里送饭送衣，让他少受狱吏的折辱'
+          p3: '凑足依律赎罪的钱，让司马迁免受宫刑'
+        points_fail:
+          p1: '家中的竹简绳断简散，等他出狱时草稿已不全。这条分支与历史脱节，员工被送回。'
+          p2: '没人进得了狱门，这条分支里他照样像后来信里写的那样，见了狱吏便低头叩地。'
+          p3: '家里穷，朋友没有一个出面。这条分支里和历史上一样，他无钱自赎，受了宫刑。'
+        shift:
+          p1:
+            was: '约公元前 98 年，司马迁因李陵之事下狱，按他自己的话，书当时只是草创，还没写完。'
+          p2:
+            was: '约公元前 98 年，司马迁因替李陵辩解下狱，他在《报任安书》里写到自己在狱吏面前受的屈辱。'
+            now: '{staff} 往狱里送去饭食和冬衣，又打点了看守。他在狱中的几个月少受了些屈辱。'
+          p3:
+            was: '约公元前 98 年，司马迁因替李陵辩解获罪，家贫无钱自赎，亲友没有人替他说话，受了宫刑。'
+            now: '{staff} 向商人和旧识四处凑钱，赶在行刑前交上了赎金。司马迁出狱时身体完好。他回到家中的竹简前，把书写完。'
+            who: sima_qian_changan
+            bio: '这条时间线里，司马迁交钱赎罪，没有受宫刑。他照样把从上古写到当代的那部史书写完了。'
         vignettes:
           dates: '书吏要把两条合到同一年。你请他各留原来的年次。重新看过，分歧从哪里开始便看得清。'
           witness: '书吏想把好听些的故事放在前头。你问两个说法各是怎样到桌上的。他先写明来处，再想该让读者先读哪条。'

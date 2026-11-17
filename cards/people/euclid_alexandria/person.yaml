@@ -2,7 +2,7 @@ order: 66
 events:
   euclid_alexandria:
     order: 7
-    build_step: 1
+    build_step: 2
     year: -300
     lon: 29.92
     lat: 31.2
@@ -12,10 +12,9 @@ events:
     channels: {V: 1}
     refs: [euclid_alexandria_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: hold, req: {"job":["archivist","teacher"]}}
-        - {id: p3, kind: persuade, req: {"job":["teacher"]}}
+        - {id: p1, kind: hold, day: 20, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"will":5}},{"job":["teacher","tutor","university_lecturer","lecturer"],"stat":{"wit":7}},{"trait":["scholarly","methodical"],"stat":{"wit":8,"will":6}}]}}
       vignettes:
         - {id: intersection, traits: [handy, artistic]}
         - {id: reason, traits: [skeptical, scholarly]}
@@ -29,9 +28,15 @@ events:
         relic: A bronze compass
         relic_desc: Two arms and a pivot, enough to draw every figure in the book.
         points:
-          p1: 'Follow the construction from the given segment'
-          p2: 'Keep the two centres distinct in the copy'
-          p3: 'Explain why the finished triangle has equal sides'
+          p1: 'Help him copy the three books of the Porisms several times over and put them in his students'' hands, so the work is not lost'
+        points_fail:
+          p1: 'The Porisms still existed in a single line of copies. In this branch it was lost all the same, and only the few lines Pappus wrote about it remained.'
+        shift:
+          p1:
+            was: 'Around 300 BC Euclid wrote the Porisms in three books; the work was later lost, and all that is known of it is the count of 171 propositions and the short account that Pappus gave in the fourth century AD.'
+            now: '{staff} helped him copy the Porisms several times and hand the copies to those who studied geometry with him. In this timeline the work came down to later readers.'
+            who: euclid_alexandria
+            bio: 'In this line the Porisms of Euclid were copied more widely and did not disappear, and later readers had more of him than the Elements.'
         vignettes:
           intersection: 'The learner puts the third point where it looks right. You draw the second arc. When the arcs cross, they can see precisely where the point belongs.'
           reason: 'You ask why the sides should be equal before the learner reaches for a rule. They look again at the centers of the circles and trace each side back to a radius.'
@@ -44,9 +49,15 @@ events:
         relic: 一把青铜圆规
         relic_desc: 两条臂和一个轴，足够画出书里的每一个图形。
         points:
-          p1: '从给定线段跟着作图'
-          p2: '誊图时分清两个圆心'
-          p3: '说清作出的三角形为什么三边相等'
+          p1: '帮他把《推论集》三卷多抄几部，交到学生手里，不让这部书失传'
+        points_fail:
+          p1: '《推论集》照旧只有一路抄本，这条分支里它还是失传了，只剩帕普斯留下的几句介绍。'
+        shift:
+          p1:
+            was: '约公元前 300 年，欧几里得写成《推论集》三卷；原书后来失传，今天只知道公元四世纪帕普斯记下的命题数 171 和一段简短的介绍。'
+            now: '{staff}帮他把《推论集》多抄了几部，交给跟他学几何的人，这条时间线里这部书传到了后世。'
+            who: euclid_alexandria
+            bio: 'IF 线里，欧几里得的《推论集》多抄了几部，没有失传，后人读到的他不只有《几何原本》。'
         vignettes:
           intersection: '学生凭眼力点出第三点。你添画第二道弧，两弧一交，他就看得出那个点该落在哪儿。'
           reason: '学生伸手摸尺以前，你先问三边为何相等。他回头看两个圆心，沿着每一边找回一段半径。'

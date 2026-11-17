@@ -2,6 +2,7 @@ order: 148
 events:
   nightingale_scutari:
     order: 33
+    build_step: 2
     year: 1855
     lon: 29.02
     lat: 41.02
@@ -12,10 +13,11 @@ events:
     channels: {E: 3, G: 2, L: 2}
     refs: [nightingale_army_report, scutari_commission_report]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"job": ["nurse", "midwife", "physician", "paramedic", "doctor"]}}
-        - {id: p2, kind: trust, req: {"trait":["kind","attached"]}}
-        - {id: p3, kind: endure, req: {"stat": {"constitution": 6}}}
+        - {id: p1, kind: endure, guard: true, day: 13, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","caregiver"],"stat":{"constitution":4}},{"trait":["vigil","hardy"],"stat":{"constitution":7}},{"item":"face_mask","job":["nurse","midwife","physician","paramedic","doctor","caregiver"]}]}}
+        - {id: p2, kind: notice, day: 59, req: {"any":[{"trait":["vigil","skeptical","methodical"],"stat":{"wit":7}},{"job":["paramedic","sailor","driver"],"stat":{"wit":6}}]}}
+        - {id: p3, kind: care, day: 78, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic","stat":{"wit":8}},{"job":["nurse","paramedic","doctor","physician","midwife"],"item":"nano_kit","stat":{"will":5}}]}}
       vignettes:
         - {id: totals, traits: [methodical, vigil]}
         - {id: name, traits: [kind, patient]}
@@ -29,9 +31,24 @@ events:
         relic: A small oil lamp
         relic_desc: The lamp from her night rounds.
         points:
-          p1: "Know the ward work (medical staff)"
-          p2: "Keep the men calm"
-          p3: "Last the long night shifts"
+          p1: 'Through the typhus and cholera on the wards, keep the Sanitary Commission’s inspection of the Scutari hospitals going from 6 March'
+          p2: 'Stop the revolver going off in the tent at Balaklava and save the sanitary commissioner Hector Gavin'
+          p3: 'Cure the Crimean fever Nightingale catches at Balaklava in May, before it can stay with her for the rest of her life'
+        points_fail:
+          p1: 'The inspection stalls in the sick wards and the blocked sewers are not opened in time. This branch falls out of step with history and the office recalls the employee.'
+          p2: 'The shot is fired in the tent, and in this branch too the commission loses one of its three members a month after landing.'
+          p3: 'The fever runs its course. She is out of danger by the end of May, but in this branch, as in history, the illness stays with her.'
+        shift:
+          p1:
+            was: 'On 6 March 1855 the Sanitary Commission reached Constantinople and began that afternoon to examine the hospitals at Scutari.'
+          p2:
+            was: 'On 21 April 1855 the sanitary commissioner Hector Gavin was killed in the Crimea when his revolver went off as he handed it to his brother.'
+            now: '{staff} takes the revolver from the hand-over and unloads it. Gavin goes on with the commission’s work in the camps and returns to Britain.'
+          p3:
+            was: 'In May 1855 Nightingale went to inspect the hospitals at Balaklava and caught Crimean fever within days; she was dangerously ill for about twelve days, and was an invalid for much of her later life.'
+            now: '{staff} treats the fever in its first days with medicine the century does not have. Nightingale is on her feet within the week and goes back to Scutari without the illness that followed her home.'
+            who: nightingale_scutari
+            bio: 'In this branch Nightingale was cured of the fever she caught at Balaklava in 1855. She carried her work on hospitals and army health in person, on her feet rather than from a sickroom.'
         vignettes:
           totals: 'A fictional clerk adds the transfer list to the admissions total. You ask which names are newly admitted. They leave the transfers in their own column before sending the return.'
           name: 'The clerk cannot hear a name over the room''s noise. You wait beside the person who gave it until they can say it again. The next copy spells it as they asked.'
@@ -44,9 +61,24 @@ events:
         relic: 一盏小油灯
         relic_desc: 她夜里查房时用的那盏灯。
         points:
-          p1: "懂病房的活儿（医护人员）"
-          p2: "安抚伤员"
-          p3: "撑过漫长的夜班"
+          p1: '在病房的伤寒和霍乱里，护住卫生委员会 3 月 6 日起对斯库塔里各医院的查看'
+          p2: '在巴拉克拉瓦的帐篷里拦下走火的左轮枪，救下卫生委员赫克托·加文'
+          p3: '治好南丁格尔 5 月在巴拉克拉瓦染上的克里米亚热，不让这场病跟她一辈子'
+        points_fail:
+          p1: '查看在病房里拖住，堵着的下水道没能及时打开。这条分支与历史脱节，员工被送回。'
+          p2: '帐篷里那一枪还是响了，这条分支里委员会登岸一个月就少了一位委员。'
+          p3: '热病照原样走完。五月底她脱离了危险，这条分支里这场病和历史上一样留在她身上。'
+        shift:
+          p1:
+            was: '1855 年 3 月 6 日，卫生委员会抵达君士坦丁堡，当天下午开始查看斯库塔里各医院。'
+          p2:
+            was: '1855 年 4 月 21 日，卫生委员赫克托·加文在克里米亚把左轮枪递给弟弟时枪走了火，中弹身亡。'
+            now: '{staff}在交接时接过那支枪，先退了子弹。加文接着在营地里做委员会的事，后来回到英国。'
+          p3:
+            was: '1855 年 5 月，南丁格尔去巴拉克拉瓦查看医院，几天内染上克里米亚热，病危约十二天，此后大半生病弱。'
+            now: '{staff}在发病头几天用这个世纪还没有的药治住了热病。南丁格尔一周内下了床，回到斯库塔里，那场跟她回家的病没有留下。'
+            who: nightingale_scutari
+            bio: '在这条分支里，南丁格尔 1855 年在巴拉克拉瓦染上的热病被治好。她关于医院和军队卫生的工作，是自己站着去做的，不是在病榻上做的。'
         vignettes:
           totals: '虚构书记员把转房名单也算进新收治人数。你问哪些名字是刚入院的。他另留一栏记转房，再把报表送出去。'
           name: '书记员隔着嘈杂声没听清名字。你在报名字的人身旁等他再说一遍，下一份抄件就照他给的拼法写。'

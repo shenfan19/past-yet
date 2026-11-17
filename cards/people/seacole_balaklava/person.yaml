@@ -2,6 +2,7 @@ order: 225
 events:
   seacole_balaklava:
     order: 215
+    build_step: 2
     year: 1855
     lon: 33.6
     lat: 44.5
@@ -10,13 +11,14 @@ events:
     tier: 2
     era: seacole_balaklava_1855
     channels: {E: 3, L: 2, S: 2}
-    regret: true
     refs: [seacole_memoir_hotel, seacole_memoir_june]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
-        - {id: p2, kind: persuade, req: {"trait":["streetwise","cosmopolitan","charismatic","skeptical"]}}
-        - {id: p3, kind: endure, redeem: true, req: {"provides":"clean_water"}}
+        - {id: p1, kind: endure, guard: true, day: 6, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","caregiver"],"stat":{"constitution":5}},{"trait":["hardy","bold"],"stat":{"constitution":8}},{"item":"first_aid_kit","trait":["kind","calm","hardy","bold"],"stat":{"constitution":6}}]}}
+        - {id: p2, kind: care, day: 7, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"]},{"item":"first_aid_kit","trait":["handy","patient"],"stat":{"finesse":7}}]}}
+        - {id: p3, kind: notice, day: 60, req: {"any":[{"trait":["vigil","streetwise"],"stat":{"will":5}},{"item":"headlamp","trait":["vigil","methodical"]}]}}
+        - {id: p4, kind: persuade, day: 100, req: {"any":[{"job":["accountant","tax_preparer","market_trader","shopkeeper","bookseller"],"stat":{"wit":5,"will":5}},{"trait":["charismatic"],"stat":{"will":9}},{"item":"golden_apple","stat":{"will":5}}]}}
       vignettes:
         - {id: meal, traits: [kind, patient]}
         - {id: counter, traits: [streetwise, methodical]}
@@ -30,9 +32,29 @@ events:
         relic: "A medicine chest"
         relic_desc: "An old wooden chest with compartments for herbs and gauze."
         points:
-          p1: "Tend the dysentery and cholera patients"
-          p2: "Ask the quartermaster for a chest of medicine"
-          p3: "Get through a whole summer"
+          p1: "On 18 June, the day the assault on the Redan fails, keep Seacole at her work under fire beside the temporary hospital on the Woronzoff Road"
+          p2: "When she throws herself down from a shell and dislocates her right thumb, set the joint and splint it on the spot"
+          p3: "Stop the thieves who come in the night for the horses of the British Hotel"
+          p4: "After Sevastopol falls, persuade Seacole and Thomas Day to stop buying stock and settle their accounts, so that peace does not leave them bankrupt"
+        points_fail:
+          p1: "She never reaches the temporary hospital that day and the wounded wait by the road unbandaged. This branch falls out of step with history and the office recalls the employee."
+          p2: "The thumb is only bound up in haste, and in this branch, as in history, it never returns to its proper shape."
+          p3: "Half the stable is empty by morning, and the hotel has to borrow animals from the Land Transport camp to fetch its goods."
+          p4: "When the army leaves after the peace the stock will not sell, and in November 1856 the two partners are declared bankrupt in London."
+        shift:
+          p1:
+            was: "On 18 June 1855, the day the allied assault on the Redan failed, Seacole carried bandages and food under fire to the temporary hospital by the Woronzoff Road and helped the doctors with the wounded."
+          p2:
+            was: "On 18 June 1855 Seacole threw herself down to escape a shell and dislocated her right thumb; it was bound up on the spot and never returned to its proper shape."
+            now: "{staff} sets the joint and splints it there and then. A few weeks later her right hand mixes medicines and ties bandages as before."
+          p3:
+            was: "In 1855 the British Hotel at Spring Hill was robbed again and again; one morning most of its horses were gone."
+            now: "{staff} stops the men leading the horses away during the night watch. The next day the hotel carts go down to Balaklava as usual."
+          p4:
+            was: "After the peace of March 1856 the army left quickly and Seacole and Day were left with unsold stock and debts; a bankruptcy petition was filed against them in October 1856 and they were declared bankrupt in November."
+            now: "{staff} persuades the two partners in the autumn to stop the large orders and to collect what they are owed. When the peace comes their stock is small, they leave the Crimea with their accounts settled, and they never stand before the bankruptcy court."
+            who: seacole_balaklava
+            bio: "In this timeline Seacole came home from the Crimea without being bankrupt and with some capital of her own. She did not have to live on a public subscription and went on nursing and travelling on her own money."
         vignettes:
           meal: 'A fictional customer has been standing so long that they cannot explain what they came for. You find a seat first. By the time the attendant returns, the customer can ask for supper in their own words.'
           counter: 'Two customers repeat the same order, each thinking the other has not been heard. You ask the attendant to read back what they wrote. One tray turns out to be enough.'
@@ -45,9 +67,29 @@ events:
         relic: "一只药箱"
         relic_desc: "一只旧木药箱，里面分格放着草药和纱布。"
         points:
-          p1: "照看痢疾和霍乱病人"
-          p2: "向军需官要一箱药"
-          p3: "撑过一整个夏天"
+          p1: "6 月 18 日进攻棱堡失利那天，在炮火下护住西科尔在沃龙佐夫路临时医院旁照看伤员"
+          p2: "她为躲炮弹扑倒摔脱了右手拇指，当场替她复位、上夹板"
+          p3: "拦下夜里来偷英国旅馆马匹的贼"
+          p4: "塞瓦斯托波尔陷落以后，劝西科尔和托马斯·戴停下进货、结清账目，不让和约一来他们就破产"
+        points_fail:
+          p1: "那天她没能走到临时医院，伤员在路边等不到包扎。这条分支与历史脱节，员工被送回。"
+          p2: "拇指只是当场草草包上，这条分支里和历史上一样，再也没长回原来的样子。"
+          p3: "一夜之间马厩空了大半，旅馆还得去陆军运输营借牲口下山拉货。"
+          p4: "和约之后军队撤走，存货卖不出去，1856 年 11 月两人在伦敦被宣告破产。"
+        shift:
+          p1:
+            was: "1855 年 6 月 18 日，联军进攻棱堡失利，西科尔带着绷带和食物冒着炮火走到沃龙佐夫路旁的临时医院，帮医生照看伤员。"
+          p2:
+            was: "1855 年 6 月 18 日，西科尔为躲炮弹扑倒在地，摔脱了右手拇指，当场包扎，此后再没恢复原形。"
+            now: "{staff} 当场把关节复位、上了夹板。几周后她的右手照常调药、包扎。"
+          p3:
+            was: "1855 年，春山的英国旅馆屡遭偷窃，有一天早上起来，马厩里的马大半不见了。"
+            now: "{staff} 守夜时拦住了牵马的人。第二天旅馆的车照常下巴拉克拉瓦取货。"
+          p4:
+            was: "1856 年 3 月和约签订后军队很快撤离，西科尔与戴剩下卖不掉的存货和欠款，同年 10 月被人申请破产，11 月在伦敦被宣告破产。"
+            now: "{staff} 在秋天说动两人停了大宗订货，把赊账一笔笔收回。和约来时存货已经不多，他们清了账离开克里米亚，没有走进破产法庭。"
+            who: seacole_balaklava
+            bio: "这条时间线里，西科尔从克里米亚回来时没有破产，手里还有一笔本钱。她不必靠众人捐款度日，用自己的钱继续行医和远行。"
         vignettes:
           meal: '一位虚构的来客站了太久，一时说不清来做什么。你先找了个座位，等店员回来，来客已能自己开口问晚饭。'
           counter: '两个人都以为店员没听见对方，便把同一份点单各报了一次。你请店员把写下来的念回来，原来只要备一盘。'

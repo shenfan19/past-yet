@@ -2,7 +2,7 @@ order: 160
 events:
   qu_yuan_miluo:
     order: 151
-    build_step: 1
+    build_step: 2
     year: -278
     lon: 113
     lat: 28.9
@@ -10,13 +10,13 @@ events:
     field: literature
     tier: 3
     channels: {L: 2, G: 2}
-    regret: true
     refs: [qu_yuan_miluo_primary, qu_yuan_miluo_shiji]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["quiet","scholarly","methodical"]},{"stat":{"wit":6}}]}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"stat":{"will":7}},{"job":["archivist","student"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 30, req: {"any":[{"trait":["bold","hardy","vigil"],"stat":{"constitution":7}},{"job":["archivist","bookseller","ferryman","ferry_pilot","fisher","navigator"],"stat":{"will":7}},{"provides":"scout","trait":["vigil","quiet","methodical"]}]}}
+        - {id: p2, kind: care, day: 90, req: {"any":[{"job":["nurse","doctor","physician","caregiver","paramedic","cook","chef"]},{"trait":["kind","patient","attached"],"stat":{"constitution":5}}]}}
+        - {id: p3, kind: persuade, day: 150, req: {"any":[{"trait":["kind","patient","calm","attached"],"stat":{"will":9}},{"job":["doctor","physician","nurse","caregiver"],"stat":{"will":8}}]}}
       vignettes:
         - {id: two_tales, traits: [curious, skeptical]}
         - {id: refrain, traits: [artistic, quiet]}
@@ -30,9 +30,24 @@ events:
         relic: "A bamboo slip of verse"
         relic_desc: "A slip of bamboo carrying a few lines of a long poem."
         points:
-          p1: 'Recognize the two voices in the literary dialogue'
-          p2: 'Listen for what changes in a second telling'
-          p3: 'Keep a line of poetry with the account that preserves it'
+          p1: 'When the Qin army takes Ying and the war comes south, keep safe the poems Qu Yuan has written in exile'
+          p2: 'While Qu Yuan wanders the marshes worn and wasted, see that he eats, sleeps and is looked after'
+          p3: 'Stay with Qu Yuan by the Miluo River and keep him in this world'
+        points_fail:
+          p1: 'The slips are lost in the flight from the war and his poems do not come down. This branch falls out of step with history and the office recalls the employee.'
+          p2: 'No one looks after him, and in this branch he walks the river banks as worn as the records say.'
+          p3: 'In this branch, as in history, he goes into the Miluo River.'
+        shift:
+          p1:
+            was: 'In 278 BC the Qin general Bai Qi took Ying, the capital of Chu; the poems attributed to Qu Yuan were later collected in the Songs of Chu.'
+          p2:
+            was: 'The Records of the Grand Historian say that Qu Yuan, in exile, walked the marsh banks with his hair unbound, his face haggard and his body wasted.'
+            now: '{staff} keeps him fed and sheltered through the wet season. He is less worn when he comes to the river.'
+          p3:
+            was: 'The Records of the Grand Historian say Qu Yuan drowned himself in the Miluo River; the year is usually given as about 278 BC, and accounts differ.'
+            now: '{staff} stays with him at the river through those days. Qu Yuan lives on in the south of Chu and goes on writing.'
+            who: qu_yuan_miluo
+            bio: 'In this branch Qu Yuan did not go into the Miluo River. He lived out his years by the rivers of the south of Chu and kept writing poems.'
         vignettes:
           two_tales: 'The ferryman has heard a different ending from the one you brought. You listen as they tell it through and mark whose telling it is before comparing the lines.'
           refrain: 'The ferryman starts humming after the question in the tale. You wait until the tune ends before asking where they first heard the words.'
@@ -45,9 +60,24 @@ events:
         relic: "一片写诗的竹简"
         relic_desc: "一片竹简，上面是一首长诗中的几行。"
         points:
-          p1: '认出文辞问答里两种声音'
-          p2: '听出换个人讲以后哪里变了'
-          p3: '把诗句和保存它的传本放在一起'
+          p1: '秦军拔郢、战事南下时，护住屈原流放中写下的诗稿'
+          p2: '屈原在泽畔憔悴枯槁时，照看他的吃住，让他有人照应'
+          p3: '在汨罗江边陪着屈原，把他留在人世'
+        points_fail:
+          p1: '竹简在逃难里散失，他的诗没有传下来。这条分支与历史脱节，员工被送回。'
+          p2: '没有人照看他，这条分支里他照记载那样憔悴地行走在江边。'
+          p3: '这条分支里，他和历史上一样投了汨罗江。'
+        shift:
+          p1:
+            was: '公元前 278 年，秦将白起攻下楚都郢；归于屈原的诗作后来收进《楚辞》。'
+          p2:
+            was: '《史记》记屈原流放时披发行吟泽畔，颜色憔悴，形容枯槁。'
+            now: '{staff}在雨季里给他张罗吃住。他走到江边时，没有原来那样憔悴。'
+          p3:
+            was: '《史记》记屈原自投汨罗江而死，年份通常定在公元前 278 年前后，各家说法不一。'
+            now: '{staff}在江边陪他度过了那些日子。屈原在楚国南方活了下来，接着写诗。'
+            who: qu_yuan_miluo
+            bio: '在这条分支里，屈原没有投江。他在楚国南方的江水边度过余年，一直写诗。'
         vignettes:
           two_tales: '渡船人听来的收尾跟你带来的不同。你听他把整段讲完，先记是谁传的，再对照两处词句。'
           refrain: '故事讲到问话，渡船人接着哼起来。你等曲子完了才问，他最早从哪里听到这些话。'

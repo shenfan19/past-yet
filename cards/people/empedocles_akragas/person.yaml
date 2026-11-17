@@ -2,7 +2,7 @@ order: 63
 events:
   empedocles_akragas:
     order: 187
-    build_step: 1
+    build_step: 2
     year: -440
     lon: 13.59
     lat: 37.29
@@ -10,13 +10,12 @@ events:
     field: philosophy
     tier: 2
     channels: {T: 1, H: 2}
-    regret: true
     refs: [empedocles_akragas_roots, empedocles_akragas_etna]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["skeptical","wanderer"]}}
-        - {id: p2, kind: persuade, req: {"luck":0.4}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["charismatic","attached","wanderer"]}}
+        - {id: p1, kind: hold, day: 15, req: {"any":[{"trait":["vigil","methodical","attached"],"stat":{"will":5}},{"job":["archivist","translator","proofreader","bookseller","writer"]}]}}
+        - {id: p2, kind: hold, day: 40, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":8}},{"trait":["scholarly"],"stat":{"wit":8,"will":6}},{"provides":"scan","stat":{"wit":7}}]}}
       vignettes:
         - {id: cue, traits: [skeptical, wanderer, methodical]}
         - {id: handoff, traits: [charismatic, attached, kind]}
@@ -30,9 +29,20 @@ events:
         relic: "A scrap of verse"
         relic_desc: A strip from the imagined rehearsal, marked at two turns in the verse.
         points:
-          p1: 'Mark which lines describe joining and which describe parting'
-          p2: 'Settle which reader starts before the room is needed'
-          p3: 'Earn the readers’ trust and carry away their rehearsal cue'
+          p1: 'Make a second copy of his hymn to Apollo and put it away safe, so the copy his household later burned by mistake is not the only one'
+          p2: 'Help him have his poem On Nature copied out in full several times, so it does not come down to us only in fragments'
+        points_fail:
+          p1: 'The hymn to Apollo stayed a single copy. In this branch his household still burned it without meaning to.'
+          p2: 'On Nature stayed in the copies it had. In this branch it was still lost, and later readers had only the lines others quoted and a few scraps of papyrus.'
+        shift:
+          p1:
+            was: 'In the fifth century BC Empedocles wrote a hymn to Apollo; according to Diogenes Laertius, citing Aristotle, his sister, or his daughter as Hieronymus says, later burned it without meaning to.'
+            now: 'A second copy of the hymn was kept apart, and in this timeline it outlasted the fire.'
+          p2:
+            was: 'In the fifth century BC Empedocles set out his teaching in the poem On Nature; the poem was later lost, and it survives only in fragments quoted by later authors and in the Strasbourg papyrus published in 1999.'
+            now: '{staff} helped him have On Nature copied in full several times. In this timeline the whole poem came down to later readers, and no one had to piece it together from quotations.'
+            who: empedocles_akragas
+            bio: 'In this line Empedocles'' poem On Nature survived whole, and later readers could follow his four roots, Love and Strife from the first line to the last.'
         vignettes:
           cue: 'Phaon has saved only the loudest line and both readers come in together. You mark the two places where the sense turns. At the first mark they draw their stools together; at the second they each take a step back. This time the reader facing the door can tell where she is without seeing the sheet.'
           handoff: 'Eirenē can reach the second verse but keeps jumping straight to the last. Phaon offers to finish alone. You ask her to take the first cue and let him answer from across the room. When supper is called, she closes the rehearsal instead of leaving it halfway.'
@@ -45,9 +55,20 @@ events:
         relic: "一片诗稿"
         relic_desc: 排练用的纸莎草条，在诗句的两处转折做过记号。
         points:
-          p1: '标出哪几行写聚合，哪几行写分离'
-          p2: '腾屋之前，商量好谁先念'
-          p3: '赢得两位诵读者信任，带走排练用的提示片'
+          p1: '把他的《阿波罗颂》另抄一份收好，日后家里人误烧时，烧掉的不是唯一的一份'
+          p2: '帮他把长诗《论自然》完整地多抄几部，不让它只剩残篇传世'
+        points_fail:
+          p1: '《阿波罗颂》照旧只有一份，这条分支里它还是被家里人无意中烧掉了。'
+          p2: '《论自然》照旧只有原来那几部抄本，这条分支里它还是失传了，后人只读得到别人引过的句子和几片纸草。'
+        shift:
+          p1:
+            was: '公元前五世纪，恩培多克勒写过一首阿波罗颂；据第欧根尼·拉尔修引亚里士多德，后来被他的姐妹，希罗尼穆斯说是女儿，无意中烧掉了。'
+            now: '那首颂诗另有一份抄本收在别处，这条时间线里它躲过了那把火。'
+          p2:
+            was: '公元前五世纪，恩培多克勒把他的学说写成长诗《论自然》；原诗后来失传，只剩后世作者引用的残篇和 1999 年刊布的斯特拉斯堡纸草。'
+            now: '{staff}帮他把《论自然》完整地多抄了几部，这条时间线里整首诗传到了后世，不用再从引文里一句句拼回来。'
+            who: empedocles_akragas
+            bio: 'IF 线里，恩培多克勒的《论自然》完整传了下来，后人能从第一行读到最后一行，看他怎样讲四根和爱与争。'
         vignettes:
           cue: '法翁只记住声音最高的一句，结果两个人同时起了头。你在意思转折的两处做记号。到头一处，两人把凳子挪近，到了第二处，各退一步。这回面朝门的读者不用看稿，也知道念到哪儿。'
           handoff: '埃瑞涅能念到第二段，却总是一下跳到末尾。法翁说他一个人念完算了。你请她给第一个提示，让法翁在屋子另一边接腔。喊开饭时，收住这一遍的是她，终于没有半途离开。'

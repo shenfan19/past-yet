@@ -2,21 +2,23 @@ order: 182
 events:
   sophie_germain_paris:
     order: 130
-    build_step: 1
+    build_step: 2
     year: 1831
+    date: '1831-03-01'
+    stay: 4
     lon: 2.35
     lat: 48.85
     region: europe
     field: math
     tier: 2
     channels: {E: 1, G: 2}
-    regret: true
     refs: [sophie_germain_paris_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: persuade, req: {"luck":0.4}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"trait":["faithful","calm","cheerful"]},{"job":["nurse"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["translator","proofreader","archivist","lecturer","university_lecturer","teacher","tutor"],"stat":{"wit":7}},{"trait":["scholarly","methodical"],"stat":{"wit":8}},{"item":"magnifier","trait":["scholarly","methodical","patient"],"stat":{"wit":6}}]}}
+        - {id: p2, kind: care, day: 60, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","caregiver"]},{"item":"painkiller","trait":["kind","patient"]}]}}
+        - {id: p3, kind: trust, day: 100, req: {"any":[{"job":["translator","archivist","lecturer","university_lecturer","journalist"],"stat":{"wit":8,"will":6}},{"trait":["scholarly","cosmopolitan"],"stat":{"wit":8,"will":7}},{"item":"neural_chip","trait":["scholarly","cosmopolitan","curious"],"stat":{"will":6}}]}}
       vignettes:
         - {id: quiet_lines, traits: [artistic, curious]}
         - {id: edges, traits: [methodical, vigil]}
@@ -30,9 +32,24 @@ events:
         relic: "A letter signed Le Blanc"
         relic_desc: "A letter to Gauss in a borrowed name."
         points:
-          p1: 'Find the indicated still lines in the figure'
-          p2: 'Keep track of how each plate is described'
-          p3: 'Tell what the figure shows and what the text explains'
+          p1: 'While she is ill, keep her memoir on the curvature of surfaces on its way to Crelle''s journal in Berlin'
+          p2: 'Ease the pain of the cancer in her last months in Paris'
+          p3: 'Let Germain know before she dies that Gauss has asked Göttingen to give her an honorary degree'
+        points_fail:
+          p1: 'The memoir stays unfinished on her desk and the 1831 volume appears without it. This branch falls out of step with history and the office recalls the employee.'
+          p2: 'Nobody eases the pain, and in this branch her last months are as hard as they were.'
+          p3: 'No word reaches her, and she dies without knowing what Gauss had done for her.'
+        shift:
+          p1:
+            was: 'In 1831 Germain''s memoir on the curvature of surfaces appeared in volume 7 of Crelle''s journal, the year she died.'
+          p2:
+            was: 'From about 1829 Germain was ill with breast cancer; she went on working and died in Paris on 27 June 1831.'
+            now: '{staff} keeps the pain down with modern medicine and sits with her in the worst hours. She suffers less in her last months and keeps working at her desk.'
+          p3:
+            was: 'Gauss had urged the University of Göttingen to give Germain an honorary degree; when she died on 27 June 1831 it had not been conferred.'
+            now: '{staff} brings her word of what Gauss has done. Germain hears that the university she could never attend means to honour her.'
+            who: sophie_germain_paris
+            bio: 'In this timeline Germain learned before she died that Gauss had put her forward for an honorary degree at Göttingen. The degree itself still came too late.'
         vignettes:
           quiet_lines: 'The reader points to the darkest line and guesses that it moves the most. You ask what was still when the pattern appeared. They look back to the description before drawing another arrow.'
           edges: 'The two figures look almost alike until you check how the edges are treated in the text. The reader adds each condition beside its matching figure.'
@@ -45,9 +62,24 @@ events:
         relic: "一封署名勒布朗的信"
         relic_desc: "一封用借来的名字写给高斯的信。"
         points:
-          p1: '辨认图中所示的静止线'
-          p2: '记清每块薄板在文中怎样说明'
-          p3: '分别说出图上看得见什么、文字又解释了什么'
+          p1: '在她病中护住那篇论曲面曲率的论文，让它寄到柏林克雷尔的杂志'
+          p2: '减轻她最后几个月在巴黎的癌痛'
+          p3: '让热尔曼生前知道，高斯在为她向哥廷根大学争取名誉博士学位'
+        points_fail:
+          p1: '论文没写完，留在她的书桌上，1831 年那一卷里没有它。这条分支与历史脱节，员工被送回。'
+          p2: '没人替她压住疼痛，这条分支里她最后几个月和历史上一样难熬。'
+          p3: '消息没送到她手里，她到去世都不知道高斯为她做了什么。'
+        shift:
+          p1:
+            was: '1831 年，热尔曼论曲面曲率的论文刊于克雷尔杂志第七卷，同年她去世。'
+          p2:
+            was: '约 1829 年起热尔曼患乳腺癌，仍坚持工作，1831 年 6 月 27 日在巴黎去世。'
+            now: '{staff} 用现代的药压住疼痛，在最难熬的时候陪着她。她最后几个月少受了些苦，还能坐到书桌前。'
+          p3:
+            was: '高斯曾推动哥廷根大学授予热尔曼名誉博士学位，1831 年 6 月 27 日她去世时，学位尚未授出。'
+            now: '{staff} 把高斯所做的事带给她。热尔曼得知，那所她从没能进去读书的大学要给她这份荣誉。'
+            who: sophie_germain_paris
+            bio: '这条时间线里，热尔曼生前得知高斯推荐她获得哥廷根的名誉博士学位。学位本身仍然来得太迟。'
         vignettes:
           quiet_lines: '读者指着最深的线，猜它动得最厉害。你问当图样出现时，哪一处反而是静的。他回头翻说明，先没再添箭头。'
           edges: '两张图看着差不多，直到你们读到文字是怎样处理边缘的。读者把两个条件各自写回对应的图。'

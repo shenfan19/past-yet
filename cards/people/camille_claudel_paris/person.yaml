@@ -2,7 +2,7 @@ order: 43
 events:
   camille_claudel_paris:
     order: 145
-    build_step: 1
+    build_step: 2
     year: 1913
     lon: 2.36
     lat: 48.85
@@ -10,13 +10,12 @@ events:
     field: art
     tier: 3
     channels: {S: 2, G: 3}
-    regret: true
     refs: [camille_claudel_paris_variants]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["painter","carpenter","builder"]},{"stat":{"finesse":7}}]}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","streetwise","ambitious"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+        - {id: p1, kind: trust, day: 40, req: {"any":[{"trait":["kind","sensitive","attached"],"stat":{"will":5}},{"job":["nurse","caregiver"],"stat":{"will":4}}]}}
+        - {id: p2, kind: care, day: 46, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"calm_patch","stat":{"will":7}},{"job":["nurse","caregiver","paramedic"],"item":"calm_patch","stat":{"will":5,"wit":4}}]}}
       vignettes:
         - {id: light, traits: [curious, artistic]}
         - {id: mark, traits: [methodical, handy]}
@@ -30,9 +29,21 @@ events:
         relic: "A bronze hand"
         relic_desc: "A small bronze study of a hand."
         points:
-          p1: 'Compare the sweep of the drapery at the two figures’ feet'
-          p2: 'Convince the packer to give the two versions separate labels'
-          p3: 'Read the underside label without shifting the cast'
+          p1: 'Her family tells her nothing of her father. Get her back to Villeneuve before 3 March to see the father who always protected her one last time'
+          p2: 'Before 10 March, cure her illness, so she does not spend her last thirty years in an asylum'
+        points_fail:
+          p1: 'Her father died and was buried without her knowing. In this branch she never saw again the one person who had always protected her.'
+          p2: '10 March happened as it did in history. In this branch she never went back to her studio.'
+        shift:
+          p1:
+            was: 'On 3 March 1913 her father, Louis-Prosper Claudel, died at Villeneuve; the family did not tell Camille, and she was not at the funeral.'
+            now: 'She reached Villeneuve before her father died, saw him one last time, and was at his funeral.'
+          p2:
+            was: 'On 10 March 1913 Camille was committed to the asylum of Ville-Évrard at her family''s request; moved to Montdevergues in 1914, she never left, and died there on 19 October 1943.'
+            now: '{staff} stayed with her through that spring, the illness slowly eased, and she was not taken away. She stayed in her studio in Paris and went on sculpting for many years.'
+            who: camille_claudel_paris
+            bio: 'In this line Camille Claudel recovered in the spring of 1913, was never committed, went on sculpting in Paris, and in her later years held exhibitions of her own.'
+        shift_all: 'She said goodbye to her father, her illness eased, and after that spring she was still sculpting in her own studio.'
         vignettes:
           light: 'You have seen a later museum display, but only now can you watch the shadow change as you walk around the skirt. The packer is about to write the same description on both cards. You draw the two curves in the margins. The crates will leave separately, and you will see neither unpacked.'
           mark: 'The packer finds two labels with the same title. You add one detail to each, where the drapery ends, before the lids go on. You keep both notes in your own hand. The marble commission you read about never arrives.'
@@ -45,9 +56,21 @@ events:
         relic: "一只青铜手"
         relic_desc: "一件小小的青铜手部习作。"
         points:
-          p1: '从两人脚边比较衣褶转过的弧线'
-          p2: '请装箱人把两个版本分别挂牌'
-          p3: '在不挪动铸件的情况下核对底下的纸签'
+          p1: '家里不把父亲的消息告诉她，赶在 3 月 3 日之前带她回维尔纳夫，见那个一直护着她的父亲最后一面'
+          p2: '3 月 10 日之前，治好她的病，让她不必在精神病院度过最后三十年'
+        points_fail:
+          p1: '父亲去世、下葬，她都不知道，这条分支里她没有见到那个一直护着她的人。'
+          p2: '3 月 10 日照史实发生，这条分支里她再没有回到工作室。'
+        shift:
+          p1:
+            was: '1913 年 3 月 3 日，父亲路易-普罗斯佩·克洛岱尔在维尔纳夫去世，家里没有告诉卡米耶，她没有去送葬。'
+            now: '她在父亲去世前回到了维尔纳夫，见了他最后一面，也去送了葬。'
+          p2:
+            was: '1913 年 3 月 10 日，卡米耶由家人申请送进维尔-埃夫拉尔精神病院，1914 年转到蒙德维尔格，此后再没有出来，1943 年 10 月 19 日在那里去世。'
+            now: '{staff}陪她过了那个春天，病一点点缓下来，她没有被送走。她留在巴黎的工作室里，又做了许多年雕塑。'
+            who: camille_claudel_paris
+            bio: 'IF 线里，卡米耶·克洛岱尔 1913 年春天病情好转，没有进精神病院，在巴黎接着做雕塑，晚年还办过自己的展览。'
+        shift_all: '她送走了父亲，病也好了，那年春天以后仍在自己的工作室里雕塑。'
         vignettes:
           light: '你见过后来的博物馆陈列，直到绕着裙摆走一圈，才看见影子怎样转。装箱人正要在两张标签上写同一句，你在边角各添了一道不同的弧线。箱子要分头走，开箱的时候你一处也看不到。'
           mark: '装箱人找来两张写着同一标题的纸签。趁箱盖还没合，你各补一项，衣褶收在哪儿。两项也都抄进自己的本子里。你在资料里读过的那笔大理石委托，终究没有成。'

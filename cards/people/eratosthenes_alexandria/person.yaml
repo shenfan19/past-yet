@@ -2,7 +2,7 @@ order: 65
 events:
   eratosthenes_alexandria:
     order: 9
-    build_step: 1
+    build_step: 2
     year: -240
     lon: 29.9
     lat: 31.19
@@ -12,10 +12,9 @@ events:
     channels: {H: 3, L: 2}
     refs: [eratosthenes_alexandria_cleomedes]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p3, kind: hold, req: {"any":[{"stat":{"will":6}},{"trait":["hardy"]}]}}
+        - {id: p1, kind: hold, day: 30, req: {"any":[{"job":["archivist","translator","proofreader","bookseller","data_analyst"],"stat":{"wit":7}},{"trait":["scholarly","curious"],"stat":{"wit":8,"will":5}}]}}
       vignettes:
         - {id: scale, traits: [methodical, scholarly]}
         - {id: noon, traits: [curious, handy]}
@@ -29,9 +28,15 @@ events:
         relic: A gnomon rod
         relic_desc: A plain upright rod whose shadow told him the angle of the sun.
         points:
-          p1: 'Find the small arc on the same circle as the whole circumference'
-          p2: 'Carry the distance slip to the shadow diagram before doing the scaling'
-          p3: 'Keep the angular share and the length together until the result is copied'
+          p1: 'Help him have On the Measurement of the Earth copied for the Library and beyond, so his own account of the method is not lost'
+        points_fail:
+          p1: 'The book stayed in the copies it already had. In this branch it was lost all the same, and later readers knew his method only from the simplified retelling of Cleomedes.'
+        shift:
+          p1:
+            was: 'In the third century BC Eratosthenes set out his measurement in On the Measurement of the Earth; the book was later lost, and the method survives mainly in the simplified account of Cleomedes, who says the original was more involved.'
+            now: '{staff} helped him have the book copied several times. In this timeline his own account came down to later readers alongside the retelling.'
+            who: eratosthenes_alexandria
+            bio: 'In this line the book in which Eratosthenes measured the Earth was not lost, and later readers could check his method in his own words.'
         vignettes:
           scale: 'The helper has written fifty beside the distance and is ready to divide. You draw the small arc first and ask how often it fits around the circle. He turns the operation around and gets 250,000 in the exercise. You carry away the multiplication and the assumed distance; the length of a single stade is still outside the drawing.'
           noon: 'You have seen the two cities together on a later map. The helper is about to compare a noon mark with one made after the shadow had moved away. You take the later mark out of the comparison. A place on the sheet stays empty until the proper hour. That hour comes after you have left.'
@@ -44,9 +49,15 @@ events:
         relic: 一根日晷针
         relic_desc: 一根朴素的立杆，影子告诉他太阳的角度。
         points:
-          p1: '在同一个圆上找出小弧所占的位置'
-          p2: '做比例之前，把两城距离的纸条送到影图旁'
-          p3: '抄完结果前，让角度比例和路程留在同一处'
+          p1: '帮他把《论地球的测量》多抄几部，存进图书馆也送出城去，不让他亲笔写下的方法失传'
+        points_fail:
+          p1: '这部书照旧只有原来那几部抄本，这条分支里它还是失传了，后人只能从克莱奥梅德斯简化过的转述里认识他的方法。'
+        shift:
+          p1:
+            was: '公元前三世纪，埃拉托色尼把测地的方法写进《论地球的测量》；原书后来失传，方法主要靠克莱奥梅德斯简化过的转述留下，克莱奥梅德斯自己也说原法更繁。'
+            now: '{staff}帮他把这部书多抄了几部，这条时间线里他亲笔写的方法和后来的转述一起传了下来。'
+            who: eratosthenes_alexandria
+            bio: 'IF 线里，埃拉托色尼测量地球的那部书没有失传，后人能照他自己的话核对他的方法。'
         vignettes:
           scale: '帮工在路程旁写了五十，准备拿去除。你先画出小弧，问这样的弧要摆几段才围一圈。他把算式倒过来，这回得了 250000。你带走乘法和取用的路程，单个斯塔迪亚究竟多长，图上却看不出来。'
           noon: '你见过后世把两城放在一张地图上。帮工正要用正午那笔去对照日影已经移开后才取的一笔。你把后来这笔移出对照，纸上留一格等合适的时刻。那个时刻要在你收队以后才到。'

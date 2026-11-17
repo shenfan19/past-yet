@@ -2,6 +2,7 @@ order: 71
 events:
   finlay_havana:
     order: 93
+    build_step: 2
     year: 1881
     lon: -82.37
     lat: 23.13
@@ -12,10 +13,11 @@ events:
     channels: {E: 3}
     refs: [finlay_1881_archive, finlay_wellcome_address]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["methodical","skeptical","handy"]}}
-        - {id: p2, kind: care, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"]},{"trait":["calm"]}]}}
-        - {id: p3, kind: hold, req: {"provides":"clean_water"}}
+        - {id: p1, kind: hold, guard: true, day: 1, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","pharmacist","caregiver"],"stat":{"will":5}},{"trait":["vigil","methodical"],"stat":{"constitution":5,"will":5}},{"provides":"vigil","stat":{"will":5}}]}}
+        - {id: p2, kind: persuade, day: 3, req: {"any":[{"trait":["charismatic","glib"],"stat":{"wit":5}},{"job":["doctor","physician","medical_teacher","lecturer","university_lecturer"],"stat":{"will":7}}]}}
+        - {id: p3, kind: notice, day: 6, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":9}},{"trait":["skeptical","methodical"],"stat":{"wit":9,"will":7}},{"job":["doctor","physician","nurse","pharmacist","paramedic","biologist"],"provides":"scan"}]}}
       vignettes:
         - {id: headline, traits: [curious, skeptical]}
         - {id: columns, traits: [methodical, vigil]}
@@ -29,9 +31,24 @@ events:
         relic: A glass slide of mosquitoes
         relic_desc: A mounted slide with a mosquito wing.
         points:
-          p1: "Watch the moment the mosquito bites"
-          p2: "Tend the yellow fever patients"
-          p3: "Keep a daily record of cases for a whole year"
+          p1: 'Through the fever season, keep his paper and his case notes safe, so that he reads the paper to the Academy on 14 August as planned'
+          p2: 'After the reading, persuade a few members of the Academy to stay and look at his cases, so the paper is not set aside in silence'
+          p3: 'Help him put the mosquitoes and the cases into evidence that convinces, so the city starts fighting the mosquito years sooner'
+        points_fail:
+          p1: 'The case notes were lost in the fever season and the paper was not read on 14 August. This branch came loose from history, and the office recalled the employee.'
+          p2: 'The hall stayed silent and no one asked to see a single case. In this branch the paper was set aside, as it was in history.'
+          p3: 'His evidence stayed as thin as before. In this branch the city still waited about twenty years before acting on the mosquito, and the fever came back every summer until then.'
+        shift:
+          p1:
+            was: 'On 14 August 1881 Carlos Finlay read his paper on the mosquito as the hypothetical agent of yellow fever to the Royal Academy of Sciences in Havana.'
+          p2:
+            was: 'On 14 August 1881 his reading was met with silence, and for years afterwards the idea was ridiculed.'
+            now: 'A few members stayed behind that evening and asked to see his case notes.'
+          p3:
+            was: 'From 1881 Finlay spent nearly twenty years trying to prove that the mosquito carried yellow fever; only in 1900 did the United States Army board, using mosquitoes bred from his eggs, show that he was right.'
+            now: '{staff} helped him set the mosquitoes and the cases side by side until the evidence held. In this timeline Havana began to fight the mosquito years earlier, and the fever left the city sooner. Finlay was believed in his own time.'
+            who: finlay_havana
+            bio: 'In this line Finlay''s mosquito idea was accepted within a few years of 1881, and Havana acted on it long before 1900.'
         vignettes:
           headline: 'A fictional editor turns a suggestion into a certainty in the heading. You read the title back slowly. They put the word hypothesis back in before passing the proof on.'
           columns: 'The editor reads their notes as if each line meant the same thing. You rule two columns for what was observed and what was proposed. A sentence changes columns.'
@@ -44,9 +61,24 @@ events:
         relic: 一片蚊子的玻片标本
         relic_desc: 一片标本，里面有一只蚊子的翅。
         points:
-          p1: "看蚊子叮咬的时刻"
-          p2: "照看黄热病人"
-          p3: "逐日记录一整年的病例"
+          p1: '黄热病季里护住他的论文稿和病例笔记，让他 8 月 14 日照期在科学院宣读'
+          p2: '宣读之后，劝几位院士留下来看他的病例，不让论文在一片沉默里被搁下'
+          p3: '帮他把蚊子和病例整理成能让人信服的证据，让这座城早些年开始防蚊'
+        points_fail:
+          p1: '病例笔记在黄热病季里散失，8 月 14 日没有宣读，这条分支与历史脱了节，员工被送回。'
+          p2: '会场照旧一片沉默，没有人要看一份病例，这条分支里论文照旧被搁在一边。'
+          p3: '他的证据照旧单薄，这条分支里这座城照旧又等了二十年才对蚊子动手，在那之前黄热病每年夏天照旧回来。'
+        shift:
+          p1:
+            was: '1881 年 8 月 14 日，卡洛斯·芬莱在哈瓦那皇家科学院宣读《作为黄热病传播媒介的蚊子假说》。'
+          p2:
+            was: '1881 年 8 月 14 日的宣读之后，会场一片沉默，这个说法此后多年被人嘲笑。'
+            now: '那天散会后，有几位院士留了下来，要看他的病例笔记。'
+          p3:
+            was: '1881 年以后，芬莱用了将近二十年去证明蚊子传播黄热病，直到 1900 年美国陆军黄热病委员会用他培育的蚊子做实验，才证实他是对的。'
+            now: '{staff}帮他把蚊子和病例一一对上，直到证据站得住。这条时间线里哈瓦那早了些年开始防蚊，黄热病也早些离开了这座城，芬莱在自己的年代就被人相信了。'
+            who: finlay_havana
+            bio: 'IF 线里，芬莱的蚊媒说法在 1881 年后几年内就被接受，哈瓦那远在 1900 年以前就照着它防蚊。'
         vignettes:
           headline: '虚构的编辑把一个推测写成了确定的事。你慢慢念回原题，他在校样交出去前把「假说」两字补回去。'
           columns: '编辑把笔记里每一行都照同一种意思念。你划成所见和所推两栏，有一句移到了另一边。'

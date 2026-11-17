@@ -2,7 +2,7 @@ order: 85
 events:
   hammurabi_babylon:
     order: 50
-    build_step: 1
+    build_step: 2
     year: -1754
     lon: 44.42
     lat: 32.54
@@ -12,10 +12,9 @@ events:
     channels: {H: 1, S: 1}
     refs: [hammurabi_babylon_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"provides":"scan"}}
-        - {id: p2, kind: persuade, req: {"trait":["charismatic","streetwise","scholarly"]}}
-        - {id: p3, kind: hold, req: {"any":[{"job":["archivist"]},{"trait":["vigil"]}]}}
+        - {id: p1, kind: hold, day: 25, req: {"any":[{"job":["archivist","translator","proofreader","writer","woodcarver"],"stat":{"finesse":5}},{"trait":["scholarly","methodical"],"stat":{"finesse":7,"will":5}},{"provides":"scan"}]}}
       vignettes:
         - {id: condition, traits: [scholarly, methodical]}
         - {id: case, traits: [curious, skeptical]}
@@ -29,9 +28,15 @@ events:
         relic: A clay cylinder seal
         relic_desc: A small stone cylinder that rolls a signature into clay.
         points:
-          p1: 'Follow the clause from its opening condition'
-          p2: 'Explain a rule through an invented example'
-          p3: 'Check where the two copies part company'
+          p1: 'Help the scribes copy the whole text of the stele onto more clay tablets and send them to other cities, so that every law can still be read after part of the stone is scraped away'
+        points_fail:
+          p1: 'The full text stayed in the copies there already were. In this branch, after the stone was carried to Susa and part of it scraped, some of the laws were still lost.'
+        shift:
+          p1:
+            was: 'In the twelfth century BC the stele was carried off to Susa and several columns of its text were scraped away; clay copies have restored about thirty of the missing laws, and the rest are still unknown.'
+            now: '{staff} helped the scribes make more full copies and send them to other cities. In this timeline every law on the stele can still be read.'
+            who: hammurabi_babylon
+            bio: 'In this line every one of Hammurabi''s laws came down complete, and nothing that was scraped from the stone was lost.'
         vignettes:
           condition: 'The apprentice skips a sign when he reads the condition aloud. You ask him to start the clause again. The listener now catches when the obligation applies.'
           case: 'The apprentice gives you the same answer twice. You change one detail in the imaginary example and ask him to decide again. He has to go back to the line about the kind of property.'
@@ -44,9 +49,15 @@ events:
         relic: 一枚泥印滚筒
         relic_desc: 一个小石柱，在泥上一滚就留下签名。
         points:
-          p1: '从条文开头的条件读起'
-          p2: '用虚构例子讲明一条规则'
-          p3: '找出两份抄本从哪里开始不同'
+          p1: '帮书吏把石碑全文多抄几块泥板，送到别的城里存放，后世石上被磨掉的那几栏也能读全'
+        points_fail:
+          p1: '全文照旧只有原来那些抄本，这条分支里石碑被搬到苏萨、磨去几栏以后，还是有几条法律再也读不到。'
+        shift:
+          p1:
+            was: '公元前十二世纪，石碑被埃兰人搬到苏萨，碑文被磨去几栏；靠泥板抄本补回了约三十条，其余至今不知道写的是什么。'
+            now: '{staff}帮书吏多抄了几份全文，送到别的城里存放，这条时间线里石碑上的每一条法律都还读得到。'
+            who: hammurabi_babylon
+            bio: 'IF 线里，汉谟拉比的法律一条不缺地传了下来，石上磨掉的部分也没有失去。'
         vignettes:
           condition: '学徒念条件时漏过一个字。你请他从条首重念，听的人这才弄清什么时候才有这项义务。'
           case: '学徒两次答得一样。你换了假设例子里的一个细节再问，他只好回去看写明财物种类的那一行。'

@@ -2,7 +2,7 @@ order: 81
 events:
   ghalib_delhi:
     order: 198
-    build_step: 1
+    build_step: 2
     year: 1850
     lon: 77.23
     lat: 28.65
@@ -10,13 +10,11 @@ events:
     field: literature
     tier: 2
     channels: {S: 1, Y: 1}
-    regret: true
     refs: [ghalib_delhi_divan]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"luck":0.4}}
-        - {id: p2, kind: notice, req: {"any":[{"trait":["methodical","handy"]},{"job":["musician"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"trait":["faithful","cheerful","calm"]}}
+        - {id: p1, kind: trust, day: 20, req: {"any":[{"job":["archivist","translator","proofreader","bookseller","writer"],"stat":{"will":5}},{"trait":["scholarly","cosmopolitan"],"stat":{"wit":7,"will":5}},{"provides":"translate","stat":{"will":6}}]}}
       vignettes:
         - {id: refrain, traits: [methodical, scholarly]}
         - {id: future, traits: [bold, curious]}
@@ -30,9 +28,15 @@ events:
         relic: "A page of ghazals"
         relic_desc: "A page of Urdu verse in his own hand, with corrections."
         points:
-          p1: 'Ask a bookseller to check a remembered ending against the printed divan'
-          p2: 'Write down a refrain and a page reference together'
-          p3: 'Wait for the reader to repeat the ending before filing the slip'
+          p1: 'Help him gather and sort the sources for the second half of the Timurid history the king has asked of him, so that he carries the work on past its first part'
+        points_fail:
+          p1: 'The sources for the second half stayed scattered. In this branch he still wrote only the first part, and the sequel he had planned was never written.'
+        shift:
+          p1:
+            was: 'On 4 July 1850 Bahadur Shah engaged Ghalib to write a history of the Timurid house; the first part, Mehr-e nimroz, came out in 1854 or 1855 and ends with the death of Humayun, and the sequel he planned was never written.'
+            now: '{staff} helped him put the sources for the later reigns in order while the commission was new. In this timeline he went on past the first part and finished the history he had been asked for.'
+            who: ghalib_delhi
+            bio: 'In this line Ghalib finished the whole of the history Bahadur Shah had asked him to write, not only its first part.'
         vignettes:
           refrain: 'The bookseller remembers the image in the verse and keeps looking for it in the wrong place. You ask for the words he heard repeated. He gives you the ending, and you find the right group in the printed book. You write one page reference. Who first brought the verse into the shop is still a mystery to him.'
           future: 'You tell the bookseller that later readers will compare several editions. He asks if that will help him find the line he needs today. You add the edition year to his slip, then mark the ending. You leave before he can check it against another copy.'
@@ -45,9 +49,15 @@ events:
         relic: "一页格扎勒诗稿"
         relic_desc: "一页他亲笔写的乌尔都语诗，有修改的痕迹。"
         points:
-          p1: '请卖书人拿刊本核对一句只记得结尾的诗'
-          p2: '把叠句结尾和页码记在同一张条上'
-          p3: '等读者再念一遍结尾，才把条子夹回书里'
+          p1: '帮他把国王托付的帖木儿王朝史后半部的材料收齐理好，让他写完上半部以后接着写下去'
+        points_fail:
+          p1: '后半部的材料照旧散在各处，这条分支里他还是只写成了上半部，计划中的续篇始终没有动笔。'
+        shift:
+          p1:
+            was: '1850 年 7 月 4 日，巴哈杜尔·沙请迦利布撰写帖木儿王朝史；上半部《正午的太阳》1854 至 1855 年间刊行，写到胡马雍去世为止，他计划中的续篇没有写成。'
+            now: '{staff}趁这份差事刚接下时，帮他把后几朝的材料理出了头绪，这条时间线里他写完上半部又接着写了下去，把国王托付的史书写完了。'
+            who: ghalib_delhi
+            bio: 'IF 线里，迦利布写完了巴哈杜尔·沙托付的整部王朝史，不只是上半部。'
         vignettes:
           refrain: '卖书人记得诗里的意象，却一直翻错地方。你问他反复听到的是什么词。他念出结尾，你才在刊本里翻到对应的一组。你记下一个页码。最早把这一句念进店里的人是谁，他仍说不上来。'
           future: '你告诉卖书人，以后的读者会把几个版本摆在一起对。他问那能不能帮他找到今天这一句。你在他的条子上补了版本年份，又标出结尾。等他有另一本可核对时，你已经走了。'

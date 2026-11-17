@@ -2,6 +2,7 @@ order: 129
 events:
   mallory_everest:
     order: 143
+    build_step: 2
     year: 1924
     lon: 86.93
     lat: 27.99
@@ -10,13 +11,14 @@ events:
     tier: 3
     era: mallory_everest_1924
     channels: {A: 3, C: 3}
-    regret: true
     refs: [mallory_letters_1924, mallory_magdalene_timeline]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p2, kind: trust, req: {"trait":["sensitive","cosmopolitan","charismatic"]}}
-        - {id: p3, kind: endure, redeem: true, req: {"item":"cyber_lung"}}
+        - {id: p1, kind: hold, guard: true, day: 3, req: {"any":[{"job":["doctor","physician","paramedic","nurse"],"stat":{"constitution":5}},{"item":"oxygen_can","trait":["hardy","bold","vigil"],"stat":{"constitution":8}}]}}
+        - {id: p2, kind: care, day: 4, req: {"any":[{"job":["doctor","physician","paramedic","nurse","pharmacist","caregiver","midwife"]},{"trait":["kind","patient"],"item":"first_aid_kit"}]}}
+        - {id: p3, kind: notice, day: 6, req: {"any":[{"item":"compass","stat":{"constitution":7}},{"trait":["hardy","wanderer"],"stat":{"constitution":9}}]}}
+        - {id: p4, kind: endure, day: 7, req: {"any":[{"item":"cyber_lung","stat":{"will":7}},{"item":"thermal_suit","job":["paramedic","doctor","physician","nurse"],"stat":{"constitution":8}}]}}
       vignettes:
         - {id: date, traits: [methodical, vigil]}
         - {id: question, traits: [curious, skeptical]}
@@ -30,9 +32,29 @@ events:
         relic: "An ice axe"
         relic_desc: "A plain wooden ice axe with a worn head."
         points:
-          p1: "Keep pace on the long approach"
-          p2: "Share the camp and the plan with them"
-          p3: "Go as high as they do to see them off"
+          p1: 'When Somervell chokes on the descent, help him get his breath back and see the attempt he made with Norton end safely'
+          p2: 'Cure Norton of his snow blindness'
+          p3: 'Get the compass Mallory left at Camp V into his hands'
+          p4: 'Turn Mallory and Irvine back, or meet them on the way down, so that both reach the North Col alive'
+        points_fail:
+          p1: 'Somervell sits down in the snow and does not get up. Only one of the two climbers comes back. This branch has come loose from history, and the office recalls the employee.'
+          p2: 'Norton''s eyes hurt too much to open, and for the next days he sees nothing.'
+          p3: 'The compass is still in the tent at Camp V. When the two climb on 8 June, they do not have it.'
+          p4: 'Some time after noon on 8 June Odell last sees the two high on the ridge, still climbing. They do not come back.'
+        shift:
+          p1:
+            was: 'On 4 June 1924 Norton and Somervell set out from Camp VI and reached about 8,570 m; on the way down Somervell''s throat was blocked by frostbitten tissue and he nearly choked, coughed it up, and both reached camp.'
+          p2:
+            was: 'On the night of 4 June 1924 Norton went badly snow blind and could hardly see after he got back to the North Col.'
+            now: 'Norton''s eyes had cleared by the next day, and he could see the people coming and going on the North Col.'
+          p3:
+            was: 'On 7 June 1924 Mallory sent a note down from Camp VI to Odell saying he had left his compass in the tent at Camp V and they were without one.'
+            now: 'When they set out early on 8 June, Mallory had his compass in his own pocket.'
+          p4:
+            was: 'On 8 June 1924 Odell last saw Mallory and Irvine climbing high on the northeast ridge, and neither came back; Mallory''s body was found in 1999 at about 8,160 m.'
+            now: 'On 9 June the two came down to the North Col, frostbitten but alive. Mallory went home to England, to Ruth and their three children. Where they got to that day, this timeline does not answer either.'
+            who: mallory_everest
+            bio: 'In 1924 he and Irvine came down from Everest alive. He went home to his wife Ruth and their three children and lived for many more years.'
         vignettes:
           date: 'A fictional messenger has two letters from different camps but one shared date on the carrying slip. You ask them to check the headings separately. Each letter leaves with its own place and date.'
           question: 'The messenger reads an intended departure as a promise. You stop at the sentence where the letter talks about the weather. This time they repeat the plan with the condition still attached.'
@@ -45,9 +67,29 @@ events:
         relic: "一把冰镐"
         relic_desc: "一把朴素的木柄冰镐，镐头磨旧了。"
         points:
-          p1: "在漫长的攀登路上跟上队伍"
-          p2: "和他们一起分享营地与计划"
-          p3: "陪他们爬到足够高处送他们出发"
+          p1: '萨默维尔下山时喉头被堵住，帮他喘过这口气，护住他和诺顿那次冲顶平安收尾'
+          p2: '治好诺顿的雪盲'
+          p3: '把马洛里落在五号营地的指南针送到他手上'
+          p4: '劝回马洛里和欧文，或在他们下撤时接住，让两人活着回到北坳'
+        points_fail:
+          p1: '萨默维尔在雪里坐下，再没有站起来。冲顶的两个人只回来一个，这条分支与历史脱了节，事务所召回员工。'
+          p2: '诺顿的眼睛疼得睁不开，接下来几天他什么也看不见。'
+          p3: '指南针还留在五号营地的帐篷里。6 月 8 日两人往上走时，身边没有它。'
+          p4: '6 月 8 日中午过后，奥德尔最后一次看见两人在山脊高处往上走。他们没有回来。'
+        shift:
+          p1:
+            was: '1924 年 6 月 4 日，诺顿和萨默维尔从六号营地出发，到达约 8570 米；下山时萨默维尔的喉头被冻坏的组织堵住，几乎窒息，咳出后两人回到营地。'
+          p2:
+            was: '1924 年 6 月 4 日夜里，诺顿患上严重的雪盲，回到北坳后几乎看不见东西。'
+            now: '诺顿的眼睛第二天就消了肿，他看得见北坳上来来往往的人。'
+          p3:
+            was: '1924 年 6 月 7 日，马洛里从六号营地托挑夫带条子给奥德尔，说指南针落在了五号营地的帐篷里，他们身边没有指南针。'
+            now: '6 月 8 日清早出发时，马洛里的指南针在他自己口袋里。'
+          p4:
+            was: '1924 年 6 月 8 日，奥德尔最后看见马洛里和欧文在东北山脊高处向上攀登，两人再没有回来；1999 年马洛里的遗体在约 8160 米处被找到。'
+            now: '6 月 9 日两人下到北坳，冻伤了，但活着。马洛里回到英国，回到露丝和三个孩子身边。他们那天到了哪里，这条时间线也没有答案。'
+            who: mallory_everest
+            bio: '1924 年他和欧文从珠峰活着下来。他回到妻子露丝和三个孩子身边，又活了许多年。'
         vignettes:
           date: '虚构的送信人拿着来自两个营地的信，交接单上却只写一个日期。你请他各自看信头，两封信出发时便各带着自己的地名和日期。'
           question: '送信人把预定出发念成了准会出发。你在信中说到天气的地方请他停一下。他再念这项计划时，连同那个条件一起说出来。'

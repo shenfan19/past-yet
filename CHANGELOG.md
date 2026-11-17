@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.5, 2026-11-17
+
+- Twenty one more stories have stars of the new kind, from Ban Zhao and Sima Qian to Scott, Seacole, Nightingale, Wegener and Sophie Germain, waiting to be checked; stories whose year holds nothing that history left unresolved stay at the first step, with a suggested window.
+
 ## 0.9.4, 2026-11-17
 
 - The stars of 116 stories are set again by their weight: light stories have one or two, heavy ones four, such as Van Gogh, Vermeer, Kafka, Büchner, Dickinson, Bizet, Modigliani and Miyazawa Kenji, and the stars that only sorted papers give way to what history left unresolved. These stories go back to the step of checking their stars.

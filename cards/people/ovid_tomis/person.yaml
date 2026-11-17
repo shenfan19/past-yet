@@ -2,7 +2,7 @@ order: 151
 events:
   ovid_tomis:
     order: 186
-    build_step: 1
+    build_step: 2
     year: 9
     lon: 28.65
     lat: 44.18
@@ -10,13 +10,13 @@ events:
     field: literature
     tier: 2
     channels: {C: 3, S: 2, G: 3}
-    regret: true
     refs: [ovid_tomis_tristia]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: care, req: {"trait":["calm","attached","patient"]}}
-        - {id: p2, kind: notice, req: {"trait":["scholarly","skeptical","handy"]}}
-        - {id: p3, kind: persuade, redeem: true, req: {"item":"neural_chip"}}
+        - {id: p1, kind: care, day: 25, req: {"any":[{"job":["nurse","doctor","physician","caregiver","paramedic","midwife","pharmacist"]},{"trait":["kind","patient","attached"],"stat":{"constitution":5}},{"provides":"clean_water","trait":["kind","patient","attached","calm"]}]}}
+        - {id: p2, kind: hold, guard: true, day: 120, req: {"any":[{"trait":["bold","hardy","vigil"],"stat":{"constitution":7,"will":5}},{"job":["sailor","navigator","ferryman","ferry_pilot","fisher"],"stat":{"will":7}},{"provides":"scout","stat":{"will":6}}]}}
+        - {id: p3, kind: persuade, day: 170, req: {"any":[{"job":["archivist","bookseller","translator","teacher","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","cosmopolitan"],"stat":{"wit":8,"will":8}}]}}
       vignettes:
         - {id: rumor, traits: [bold, charismatic]}
         - {id: verify, traits: [methodical, skeptical]}
@@ -30,9 +30,24 @@ events:
         relic: "A wax writing tablet"
         relic_desc: "A tablet of letters in verse begun on the road to exile."
         points:
-          p1: 'Keep the copied sheets in order until the carrier returns'
-          p2: 'Mark the passage where the writer passes over the error'
-          p3: 'Use the translation chip to check the Latin before sealing the packet'
+          p1: 'Nurse Ovid through the illness he falls into at Tomis, with no doctor, no fit food and water he cannot drink'
+          p2: 'When the riders cross the frozen Danube, keep the third book of the Tristia safe until it leaves for Rome'
+          p3: 'Let Ovid know that the poems shut out of the public libraries are still copied and read in Rome'
+        points_fail:
+          p1: 'He lies ill with no one to ease him, and in this branch the first months at Tomis are as hard as he wrote them.'
+          p2: 'The book is lost in the raid and never reaches Rome. This branch falls out of step with history and the office recalls the employee.'
+          p3: 'No word of his readers reaches Tomis. He goes on writing as if Rome had forgotten him.'
+        shift:
+          p1:
+            was: 'Around AD 9 Ovid fell ill at Tomis; in Tristia III.3 he wrote that there was no doctor, no fit food, and water he could not get used to.'
+            now: '{staff} finds him clean water and food he can keep down, and sits with him through the fever. He is on his feet again sooner.'
+          p2:
+            was: 'Around AD 9 to 10 Ovid finished the third book of the Tristia at Tomis and sent it to Rome; in it he describes riders crossing the frozen Danube to raid the land.'
+          p3:
+            was: 'In Tristia III.1 Ovid has his book turned away from the public libraries of Rome; he was never recalled and died at Tomis in AD 17 or 18.'
+            now: '{staff} tells him that his poems, kept out of the public shelves, are still copied by hand and read in Roman houses. He keeps writing to Rome knowing someone is waiting for the words.'
+            who: ovid_tomis
+            bio: 'In this branch Ovid learned in Tomis that his banned books were still read in Rome. He spent his remaining years in exile writing to readers he knew were there.'
         vignettes:
           rumor: 'You tell the carrier that readers centuries from now will still ask what the error was. He points to an open place on the spare sheet and asks what he should put there. You add the destination on the wrapper and leave the space in the copy. The packet leaves with its uncertainty intact.'
           verify: 'The carrier remembers a version with an extra name. You ask to see which sheet it came from. He can point to the poem and the error, and the passage ends there. You mark that line on your own wax tablet. You still have no name when the packet goes.'
@@ -45,9 +60,24 @@ events:
         relic: "一块写字蜡板"
         relic_desc: "一块板，上面是流放路上起笔的诗体书信。"
         points:
-          p1: '在行人回来前按顺序看住抄好的诗页'
-          p2: '圈出作者避谈过失的那一段'
-          p3: '封包前用翻译芯片核对拉丁文'
+          p1: '奥维德在托米斯病倒，没有医生、没有合用的吃食、水喝不惯，照看他把病养好'
+          p2: '骑兵踏着封冻的多瑙河过来劫掠时，护住《哀歌》第三卷，直到它启程去罗马'
+          p3: '让奥维德知道，被公共书库拒之门外的诗，罗马仍有人在抄、在读'
+        points_fail:
+          p1: '他病中无人照看，这条分支里他在托米斯的头几个月和他诗里写的一样难熬。'
+          p2: '诗卷在劫掠里丢了，没有到罗马。这条分支与历史脱节，员工被送回。'
+          p3: '罗马读者的消息没有传到托米斯。他照旧以为罗马已经忘了他。'
+        shift:
+          p1:
+            was: '公元 9 年前后，奥维德在托米斯病倒，他在《哀歌》第三卷第三首里写，这里没有医生，没有合用的吃食，水也喝不惯。'
+            now: '{staff}给他找来干净的水和吃得下的东西，在他发热的日子里守着。他比原来早些下了床。'
+          p2:
+            was: '公元 9 年至 10 年前后，奥维德在托米斯写成《哀歌》第三卷寄回罗马，卷中写冬天骑兵踏着封冻的多瑙河过河劫掠。'
+          p3:
+            was: '《哀歌》第三卷开篇写这卷书到了罗马，被各处公共书库拒之门外；奥维德终未获召回，公元 17 或 18 年死于托米斯。'
+            now: '{staff}告诉他，进不了公共书架的诗，罗马人家里仍在一卷卷抄着读。他再往罗马写信写诗时，知道有人在等这些字。'
+            who: ovid_tomis
+            bio: '在这条分支里，奥维德在托米斯得知被禁的诗卷在罗马仍有人读。流放的余年里，他是写给知道在那里的读者的。'
         vignettes:
           rumor: '你告诉捎信人，几个世纪以后还有人追问那个过失。他指指抄本空出来的地方，问该写些什么。你把目的地添在封套上，把空处留在正文里。人带着这份说不清的稿子走了。'
           verify: '捎信人记得一个多了人名的版本。你请他指出是哪张纸上的。他能指出那首诗和那个过失，往后便指不出什么了。你在自己的蜡板上记下断在这里。抄本启程时，你仍然没得到那个名字。'

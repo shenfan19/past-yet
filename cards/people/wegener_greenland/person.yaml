@@ -2,6 +2,7 @@ order: 202
 events:
   wegener_greenland:
     order: 108
+    build_step: 2
     year: 1930
     lon: -39.93
     lat: 71.18
@@ -10,13 +11,14 @@ events:
     tier: 2
     era: wegener_greenland_1930
     channels: {C: 3, L: 3}
-    regret: true
     refs: [wegener_eismitte_archive, wegener_nasa_expedition]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p2, kind: notice, req: {"trait":["curious","skeptical","wanderer"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"provides":"strength"}}
+        - {id: p1, kind: endure, guard: true, day: 10, req: {"any":[{"trait":["hardy","wanderer"],"stat":{"constitution":7}},{"item":"thermal_suit","stat":{"constitution":5,"will":5}}]}}
+        - {id: p2, kind: care, day: 11, req: {"any":[{"job":["doctor","physician","nurse","paramedic"]},{"item":"handbook","stat":{"finesse":7}}]}}
+        - {id: p3, kind: hold, day: 12, req: {"any":[{"trait":["hardy","wanderer"],"stat":{"constitution":8,"will":6}},{"item":"scout_drone","stat":{"constitution":6}}]}}
+        - {id: p4, kind: care, day: 25, req: {"any":[{"job":["doctor","physician","paramedic"],"stat":{"constitution":7}},{"job":["doctor","physician","paramedic","nurse"],"item":"exoskeleton","stat":{"will":6}}]}}
       vignettes:
         - {id: names, traits: [kind, cosmopolitan]}
         - {id: count, traits: [methodical, vigil]}
@@ -30,9 +32,31 @@ events:
         relic: "A sledge strap"
         relic_desc: "A frozen leather strap from a loaded sledge."
         points:
-          p1: "Keep pace in the cold"
-          p2: "Notice the weather turning"
-          p3: "Haul the sledge to the end of the march"
+          p1: 'Keep the relief party going through the last stretch of ice, so that Wegener, Loewe and Villumsen reach Eismitte on 30 October'
+          p2: 'Treat Loewe''s frostbitten feet, so that his toes do not have to be cut off in the ice cave'
+          p3: 'Keep Villumsen safe on the way west, so that he reaches the camp with Wegener''s diary'
+          p4: 'Treat Wegener on the ice on the way back, so that he walks into the western camp alive'
+        points_fail:
+          p1: 'The party is held on the ice by the cold and does not reach the station on 30 October. This branch has come loose from history, and the office recalls the employee.'
+          p2: 'Loewe''s frostbitten toes could not be saved. They were cut off at the station that winter, and he could not walk until spring.'
+          p3: 'Villumsen buried Wegener and went on west with the diary. Nobody saw him again, and the diary was lost with him.'
+          p4: 'Wegener died on the way back, about the middle of November, in a tent on the ice. He was found in May of the next year.'
+        shift:
+          p1:
+            was: '30 October 1930: after forty days on the ice, Wegener, Loewe and Villumsen reach the Eismitte station in the middle of the ice sheet.'
+          p2:
+            was: 'Winter 1930: at Eismitte, Loewe''s frostbitten toes are cut off with a pocket knife, and he cannot walk for the rest of the winter.'
+            now: 'Loewe kept his toes. He spent the winter at the station on his own feet.'
+          p3:
+            was: 'November 1930: Villumsen buries Wegener on the ice, takes his diary and goes on west. He is never found.'
+            now: 'Villumsen reached the western camp and put Wegener''s diary into the hands of the expedition.'
+            bio: 'Rasmus Villumsen came back from the ice in November 1930 and went home to his family in Greenland.'
+          p4:
+            was: '1 November 1930: Wegener leaves Eismitte on his fiftieth birthday. He dies on the ice about the middle of November, and his body is found on 12 May 1931.'
+            now: '{staff} stayed with him all the way back and watched his strength each night. He walked into the western camp alive, and lived to see the measurements of the expedition worked out.'
+            who: wegener_greenland
+            bio: 'Wegener came back alive from the middle of the ice sheet in November 1930. He lived for many more years and saw the observations of the expedition worked out.'
+        shift_all: 'In this timeline everyone who went in and out of Eismitte that autumn came back to the coast alive.'
         vignettes:
           names: 'A fictional clerk lists the expedition under only one surname. You ask who handed over the load. They leave a line for the other people involved instead of recording just the best-known name.'
           count: 'The clerk has made the first count look like the quantity delivered. You ask them to mark which station each figure came from. The two totals no longer sit under the same heading.'
@@ -45,9 +69,31 @@ events:
         relic: "一条雪橇皮带"
         relic_desc: "一条冻硬的皮带，系过满载的雪橇。"
         points:
-          p1: "在严寒里跟上队伍"
-          p2: "留意天气正在变"
-          p3: "把雪橇拉到行程的尽头"
+          p1: '护住救援队走完最后一段冰路，让魏格纳、勒韦和维卢姆森在 10 月 30 日到达艾斯米特'
+          p2: '治好勒韦冻坏的脚，让他不必在冰洞里被截去脚趾'
+          p3: '护住维卢姆森往西的路，让他带着魏格纳的日记走回营地'
+          p4: '在回程的冰上治好魏格纳，让他活着走回西边的营地'
+        points_fail:
+          p1: '队伍被严寒困在冰上，没能在 10 月 30 日到站，这条分支与历史脱了节，事务所召回员工。'
+          p2: '勒韦冻坏的脚趾没保住，那年冬天在站上被截去，直到开春都下不了地。'
+          p3: '维卢姆森埋好魏格纳，带着日记继续往西走，此后再没有人见过他，日记也跟着不见了。'
+          p4: '魏格纳在回程的冰上去世，约在 11 月中旬，遗体到第二年 5 月才找到。'
+        shift:
+          p1:
+            was: '1930 年 10 月 30 日，魏格纳、勒韦和维卢姆森在冰上走了四十天，到达冰盖中央的艾斯米特站。'
+          p2:
+            was: '1930 年冬天，勒韦冻坏的脚趾在艾斯米特站被人用小刀截去，整个冬天不能走路。'
+            now: '勒韦保住了脚趾，那个冬天他在站上自己走动。'
+          p3:
+            was: '1930 年 11 月，维卢姆森在冰上埋葬了魏格纳，带着他的日记继续往西，此后下落不明。'
+            now: '维卢姆森走回了西边的营地，把魏格纳的日记交到考察队手里。'
+            bio: '拉斯穆斯·维卢姆森 1930 年 11 月从冰盖上走了回来，回到自己在格陵兰的家人身边。'
+          p4:
+            was: '1930 年 11 月 1 日，魏格纳在五十岁生日这天离开艾斯米特，约在 11 月中旬死在回程的冰盖上，遗体 1931 年 5 月 12 日才被找到。'
+            now: '{staff}一路跟着他往回走，每晚看着他的体力。他活着走进了西边的营地，后来亲眼看到这次考察的测量一项项整理出来。'
+            who: wegener_greenland
+            bio: '魏格纳 1930 年 11 月从冰盖中央活着走了回来。他又活了许多年，看着这次考察的观测整理出来。'
+        shift_all: '这条时间线里，那年秋天进出艾斯米特的人都活着回到了海岸。'
         vignettes:
           names: '虚构的办事员只在远征一栏写下一个姓。你问是谁把那份东西交到站上的。他给其他参与的人另留了一行，没有只记最著名的姓名。'
           count: '办事员把出发的数写得像到站的数。你请他在每项数字旁标上是哪一站的记录，两项合计便不再挤在同一个栏头下。'

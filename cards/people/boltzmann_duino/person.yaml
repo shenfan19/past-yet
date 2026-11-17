@@ -2,7 +2,7 @@ order: 33
 events:
   boltzmann_duino:
     order: 109
-    build_step: 1
+    build_step: 2
     year: 1906
     lon: 13.61
     lat: 45.77
@@ -10,13 +10,12 @@ events:
     field: science
     tier: 2
     channels: {G: 3}
-    regret: true
     refs: [boltzmann_duino_counting]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"any":[{"trait":["glib","charismatic"]},{"trait":["glib","ambitious","streetwise"]}]}}
-        - {id: p2, kind: trust, req: {"any":[{"trait":["charismatic","artistic","sensitive"]},{"trait":["cosmopolitan","charismatic","artistic"]}]}}
-        - {id: p3, kind: care, redeem: true, req: {"any":[{"job":["physician","nurse"]},{"trait":["calm","patient"]},{"trait":["calm","attached","cheerful"]}]}}
+        - {id: p1, kind: persuade, day: 60, req: {"any":[{"job":["lecturer","university_lecturer","teacher","tutor","modelling_scientist"],"stat":{"wit":7}},{"trait":["scholarly","curious"],"stat":{"wit":8,"will":4}}]}}
+        - {id: p2, kind: care, day: 90, req: {"any":[{"job":["doctor","physician","medical_teacher"],"stat":{"will":7}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch","stat":{"will":5}}]}}
       vignettes:
         - {id: six, traits: [methodical, scholarly]}
         - {id: swap, traits: [curious, artistic]}
@@ -30,9 +29,21 @@ events:
         relic: "A chalk stub"
         relic_desc: "A worn stub of lecture chalk."
         points:
-          p1: 'Show which marks matter when you swap two labelled counters'
-          p2: 'Have the learner separate the total from the arrangements on the sheet'
-          p3: 'Keep the counting example simple enough to reconstruct after the visit'
+          p1: 'Let him know that within a few years experiments will show atoms are real, and the theory he defended for half his life will stand'
+          p2: 'Before the Duino holiday ends, cure his illness and see him back to Vienna'
+        points_fail:
+          p1: 'He spends the summer still among the doubters. In this branch nobody told him that experiments on Brownian motion would bear witness to atoms.'
+          p2: '5 September happened as it did in history. In this branch he never returned to his lectern in Vienna.'
+        shift:
+          p1:
+            was: 'When Boltzmann died on 5 September 1906, many physicists and chemists still doubted that atoms were real; from 1908 Perrin''s experiments on Brownian motion confirmed Einstein''s 1905 predictions, and atoms came to be generally accepted.'
+            now: 'That summer he already knew that within a few years someone would settle the question of atoms by experiment.'
+          p2:
+            was: 'In May 1906 Boltzmann went on sick leave and Stefan Meyer took over his lectures; on 5 September he died while on holiday at Duino, aged sixty two.'
+            now: '{staff} stayed with him through that summer at Duino, and the illness slowly eased. In the autumn he went home to Vienna with his family, taught again, and lived to see atoms confirmed by experiment.'
+            who: boltzmann_duino
+            bio: 'In this line Boltzmann recovered in the autumn of 1906, went back to Vienna, taught for some years more, and saw Perrin''s experiments win acceptance for atoms.'
+        shift_all: 'He knew his theory would stand, his illness eased, and in the autumn he went back to Vienna to teach.'
         vignettes:
           six: 'The learner counts one way to put two of four labelled counters in the left box. You name the two chosen counters on each line, and find six choices giving the same two-and-two count. He changes one total. You copy the list, though it cannot settle the questions the full paper asks.'
           swap: 'You know the drawing alone will survive better than your explanation. You exchange one marked counter in each box and sketch the two results. Both still have two counters on each side. The learner can see what changed. You leave before a third box is added.'
@@ -45,9 +56,21 @@ events:
         relic: "一截粉笔"
         relic_desc: "一截用得很短的讲课粉笔。"
         points:
-          p1: '交换有标签的两枚筹，指出哪些记号变了'
-          p2: '请学算人把数量分布与具体摆法分开写'
-          p3: '把例题留得简明，收队后还能重摆'
+          p1: '让他知道，原子的存在过不了几年就会被实验证实，他为之争了半辈子的学说站得住'
+          p2: '在杜伊诺的假期结束之前，治好他的病，让他回到维也纳'
+        points_fail:
+          p1: '他照旧在怀疑声里过完这个夏天，这条分支里没有人告诉过他布朗运动的实验会替原子作证。'
+          p2: '9 月 5 日照史实发生，这条分支里他没有回到维也纳的讲台。'
+        shift:
+          p1:
+            was: '1906 年 9 月 5 日玻尔兹曼去世时，原子是否真实存在仍有不少物理学家和化学家怀疑；1908 年起佩兰的布朗运动实验验证了爱因斯坦 1905 年的预言，原子才被普遍接受。'
+            now: '那个夏天他已经知道，原子的事过几年就会有人用实验定下来。'
+          p2:
+            was: '1906 年 5 月玻尔兹曼因病停课，课由斯特凡·迈尔代讲；同年 9 月 5 日他在杜伊诺度假时去世，终年六十二岁。'
+            now: '{staff}陪他过了杜伊诺的那个夏天，病一点点缓下来。秋天他带着家人回到维也纳，又站上了讲台，还亲眼看到原子被实验证实。'
+            who: boltzmann_duino
+            bio: 'IF 线里，玻尔兹曼 1906 年秋天病好了回到维也纳，又教了几年书，看到了佩兰的实验让原子学说被普遍接受。'
+        shift_all: '他知道自己的学说站得住，病也好了，秋天回到维也纳接着讲课。'
         vignettes:
           six: '学算人从四枚有记号的筹里挑两枚放左盒，只数了一种。你每行写明挑哪两枚，找到了六种同为两边各二的摆法。他改了一个总数。你抄得走清单，论文里真正要问的事却还没算到。'
           swap: '你知道图比口头解释留得久，便把左右各一枚有记号的筹互换，分别画下前后。左右仍各有两枚，学算人却看得出哪里变了。还未添第三只盒子，你就走了。'

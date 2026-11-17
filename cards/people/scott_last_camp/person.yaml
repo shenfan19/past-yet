@@ -2,6 +2,7 @@ order: 172
 events:
   scott_last_camp:
     order: 142
+    build_step: 2
     year: 1912
     lon: 169
     lat: -79.67
@@ -10,13 +11,14 @@ events:
     tier: 3
     era: scott_ross_ice_shelf_1912
     channels: {C: 3, Y: 3, L: 3}
-    regret: true
     refs: [scott_last_diary, scott_archive_final, scott_1912_text]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {"trait":["bold","cheerful","hardy"]}}
-        - {id: p2, kind: care, req: {"trait":["patient","attached","cheerful"]}}
-        - {id: p3, kind: hold, redeem: true, req: {"provides":"strength"}}
+        - {id: p1, kind: hold, guard: true, day: 2, req: {"any":[{"trait":["hardy","bold"],"stat":{"constitution":8}},{"item":"exoskeleton","stat":{"constitution":5}},{"item":"pack_frame","trait":["hardy","bold","methodical"],"stat":{"constitution":6}}]}}
+        - {id: p2, kind: care, day: 6, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"],"item":"warm_blanket"},{"job":["nurse","midwife","physician","paramedic","doctor"],"item":"hand_warmer"},{"job":["doctor","physician"],"stat":{"wit":7}}]}}
+        - {id: p3, kind: care, day: 16, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"],"stat":{"constitution":5}},{"item":"first_aid_kit","trait":["kind","patient"],"stat":{"constitution":6}},{"item":"thermal_suit","job":["nurse","midwife","physician","paramedic","doctor"]}]}}
+        - {id: p4, kind: endure, day: 20, req: {"any":[{"item":"thermal_suit","stat":{"constitution":8,"will":6}},{"item":"exoskeleton","trait":["hardy","bold","vigil"],"stat":{"constitution":7}}]}}
       vignettes:
         - {id: distance, traits: [methodical, vigil]}
         - {id: blank, traits: [patient, quiet]}
@@ -30,9 +32,29 @@ events:
         relic: "A diary"
         relic_desc: "A small pencilled diary, stiff with cold."
         points:
-          p1: "Keep going through the cold"
-          p2: "Look after the weakest of them"
-          p3: "Drag the sledge so the diary and records come home"
+          p1: "In a March of short fuel and failing strength, keep the diaries and the rock specimens from the Beardmore Glacier on the sledge"
+          p2: "Heal Oates's frostbitten feet so he can keep up with the party and does not walk out of the tent around 16 March"
+          p3: "Before 18 March, save Scott's right foot from the frostbite that slows the whole party"
+          p4: "Bring the three men through the blizzard that begins on 21 March and across the last eleven miles to One Ton Depot"
+        points_fail:
+          p1: "The specimens are left on the ice shelf and the diaries do not reach the last day. This branch falls out of step with history and the office recalls the employee."
+          p2: "His feet get worse each day, and in this branch too he walks out into the drift around 16 March and does not come back."
+          p3: "The foot freezes, and in this branch, as in history, the march slows to a crawl."
+          p4: "The blizzard holds the tent where it is, and after 29 March the diary has no new page."
+        shift:
+          p1:
+            was: "In March 1912, short of fuel on the way back, the party kept the diaries and the Glossopteris fossils from the Beardmore Glacier on the sledge; the search party found them with the tent on 12 November."
+          p2:
+            was: "In early March 1912 Oates's feet were badly frostbitten and he slowed; on 16 or 17 March he walked out of the tent and was not seen again."
+            now: "{staff} warms his feet and changes his socks every night and the frostbite gets no worse. Oates keeps pace beside the sledge and is still with the party at the last camp."
+          p3:
+            was: "On 18 March 1912 Scott wrote that nearly all the toes of his right foot were gone, and the march slowed further."
+            now: "{staff} warms and wraps his right foot at every camp. Scott keeps the foot, and the party goes on north at its old pace."
+          p4:
+            was: "From 21 March 1912 a blizzard held Scott, Wilson and Bowers in their tent eleven miles from One Ton Depot; the last diary entry is dated 29 March, and the search party found the tent on 12 November."
+            now: "{staff} leads the three men north in a lull of the wind and breaks the last eleven miles into short stages. They find fuel and food at One Ton Depot and outlast the blizzard. Before the winter they are back at Cape Evans."
+            who: scott_last_camp
+            bio: "In this timeline Scott came back alive from the Pole with Wilson and Bowers and reached Cape Evans. He returned to Britain and edited the diaries and the scientific results of the expedition himself."
         vignettes:
           distance: 'Back at the Agency, the fictional clerk copies a distance into a column headed as distance travelled. You show them that it was the distance still to go. They move the entry before filing the copy.'
           blank: 'Back at the Agency, the clerk stops at the final date. You wait while they decide how to mark the blank beyond it. They write that the record ends here, then put the pencil down.'
@@ -45,9 +67,29 @@ events:
         relic: "一本日记"
         relic_desc: "一本用铅笔写的小日记，被冻得发硬。"
         points:
-          p1: "在严寒里继续前进"
-          p2: "照顾他们当中最虚弱的人"
-          p3: "拉动雪橇，让日记和记录能带回家"
+          p1: "在燃油见底、人人力竭的三月，护住雪橇上的日记和比尔德莫尔冰川采回的岩石标本"
+          p2: "治好奥茨冻坏的双脚，让他跟得上队伍，不必在 3 月 16 日前后走出帐篷"
+          p3: "在 3 月 18 日之前保住斯科特的右脚，不让冻伤拖住整支队伍"
+          p4: "带三人冒着 3 月 21 日起的暴风雪，走完离一吨仓库的最后十一英里"
+        points_fail:
+          p1: "标本被卸在冰架上，日记也没能留到最后一天。这条分支与历史脱节，员工被送回。"
+          p2: "他的脚一天比一天坏，这条分支里他照样在 3 月 16 日前后走进风雪，再没回来。"
+          p3: "右脚冻坏了，这条分支里和历史上一样，队伍越走越慢。"
+          p4: "暴风雪把帐篷困在原地，3 月 29 日以后日记再没有新的一页。"
+        shift:
+          p1:
+            was: "1912 年 3 月，回程燃油短缺，队伍仍把日记和采自比尔德莫尔冰川的舌羊齿化石留在雪橇上，11 月 12 日搜救队在帐篷旁找到它们。"
+          p2:
+            was: "1912 年 3 月初奥茨双脚严重冻伤，越走越慢，3 月 16 日或 17 日他走出帐篷，再没回来。"
+            now: "{staff} 每晚给他焐脚、换干袜，冻伤没再坏下去。奥茨跟着雪橇走，到最后一个营地仍在队里。"
+          p3:
+            was: "1912 年 3 月 18 日，斯科特在日记里写右脚的脚趾几乎全冻坏了，此后队伍走得更慢。"
+            now: "{staff} 每次宿营都给他焐暖右脚、裹好。斯科特的脚保住了，队伍照原来的速度往北走。"
+          p4:
+            was: "1912 年 3 月 21 日起，暴风雪把斯科特、威尔逊和鲍尔斯困在离一吨仓库十一英里的帐篷里，日记最后一则署 3 月 29 日，搜救队 11 月 12 日找到帐篷。"
+            now: "{staff} 趁风势稍弱领着三人往北，把最后十一英里分成几段走完。他们在一吨仓库找到燃油和口粮，熬过了这场风雪。入冬之前，他们回到了埃文斯角。"
+            who: scott_last_camp
+            bio: "这条时间线里，斯科特和威尔逊、鲍尔斯从极点活着回到了埃文斯角。他回到英国，亲自整理了这次远征的日记和科学成果。"
         vignettes:
           distance: '回到事务所，虚构书记员把一个数抄进已走路程一栏。你指出那是还没走完的距离。他在抄件入档前把数移了过去。'
           blank: '回到事务所，书记员念到最后一个日期停了笔。你等他想好后面的空白该怎么标。他写下「记录到此为止」，才搁下笔。'

@@ -2,6 +2,7 @@ order: 107
 events:
   jenner_berkeley:
     order: 28
+    build_step: 2
     year: 1796
     lon: -2.46
     lat: 51.69
@@ -12,10 +13,10 @@ events:
     channels: {E: 2}
     refs: [jenner_inquiry_original, jenner_gutenberg_case]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"provides":"cure"}}
-        - {id: p2, kind: care, req: {"job":["nurse","midwife","physician","paramedic","doctor"]}}
-        - {id: p3, kind: persuade, req: {"trait":["streetwise","ambitious","charismatic","skeptical"]}}
+        - {id: p1, kind: care, day: 5, req: {"any":[{"job":["nurse","midwife","doctor","physician","paramedic","caregiver","pharmacist","medical_teacher"]},{"trait":["kind","patient"],"item":"first_aid_kit"}]}}
+        - {id: p2, kind: notice, day: 15, req: {"any":[{"job":["doctor","physician","medical_teacher"],"stat":{"wit":7}},{"job":["nurse","midwife","paramedic","pharmacist"],"item":"handbook"}]}}
       vignettes:
         - {id: firsthand, traits: [curious, skeptical]}
         - {id: order, traits: [methodical, vigil]}
@@ -29,9 +30,20 @@ events:
         relic: A glass lancet
         relic_desc: A thin blade for the first small scratch.
         points:
-          p1: "Hear the milkmaid speak of cowpox"
-          p2: "Tend the children after the inoculation"
-          p3: "Persuade a doubtful mother"
+          p1: 'Dress the cowpox sores on Sarah Nelmes''s hand, so the milkmaid does not suffer them alone'
+          p2: 'Pass the cowpox on from arm to arm, so the work does not stop after one boy'
+        points_fail:
+          p1: 'The sores on her hand ran their course with nobody to dress them. In this branch nobody eased the milkmaid''s days.'
+          p2: 'The matter on the boy''s arm dried up with no one to take it on. In this branch Jenner waited for the cowpox to come back to the dairies, as in history.'
+        shift:
+          p1:
+            was: 'In May 1796 the dairymaid Sarah Nelmes caught cowpox from her master''s cows, and a large pustular sore formed on her hand with the usual symptoms of the disease.'
+            now: '{staff} kept her hand clean and bound, and she was back at the dairy a few days sooner.'
+          p2:
+            was: 'On 1 July 1796 Jenner inoculated the boy with smallpox matter and no disease followed; then his inquiry stopped, and he took it up again only in the spring of 1798, when cowpox broke out again in the dairies.'
+            now: '{staff} helped take the matter from the boy''s arm on to the next arm, and that summer Jenner had more cases in his notebook. He did not have to wait for the dairies.'
+            who: jenner_berkeley
+            bio: 'In this timeline Jenner kept the cowpox going from arm to arm in the summer of 1796, and did not have to wait two years for it to return to the dairies.'
         vignettes:
           firsthand: 'A fictional copyist has written every account in the same voice. You ask which one the writer actually saw. The copyist adds a note beside the rest rather than giving every line the same weight.'
           order: 'Two observations have traded places in the copy. You check the dates, and the copyist reverses the slips before using the order to tell a story.'
@@ -44,9 +56,20 @@ events:
         relic: 一把玻璃小刀
         relic_desc: 一片很薄的刀片，划下第一道小口。
         points:
-          p1: "听挤奶女工说起牛痘"
-          p2: "照看接种后的孩子"
-          p3: "说服疑虑的母亲"
+          p1: '替挤奶女工萨拉·内尔姆斯包扎手上的牛痘疮，不让她一个人硬熬'
+          p2: '把牛痘一臂接一臂传下去，不让这项研究停在一个男孩身上'
+        points_fail:
+          p1: '她手上的疮没人照料，自己慢慢熬过去，这条分支里没有人让她少受几天罪。'
+          p2: '男孩臂上的痘浆干了，没人接着往下传，这条分支里詹纳照史实等着奶场再出牛痘。'
+        shift:
+          p1:
+            was: '1796 年 5 月，挤奶女工萨拉·内尔姆斯从主人家的牛身上染上牛痘，手上长出一大块脓疱，也有这病常见的症状。'
+            now: '{staff}替她把手洗净包好，她早几天回到了奶场。'
+          p2:
+            was: '1796 年 7 月 1 日，詹纳给这个男孩种人痘，没有发病；之后他的研究中断，直到 1798 年春附近奶场又出了牛痘才接着做。'
+            now: '{staff}帮着把男孩臂上的痘浆接到下一个人的手臂上，那个夏天詹纳的本子里多了几个病例，不必再等奶场。'
+            who: jenner_berkeley
+            bio: '在这条时间线里，1796 年夏天詹纳把牛痘一臂接一臂地传了下去，没有空等两年让牛痘回到奶场。'
         vignettes:
           firsthand: '虚构的誊写员把每则记载都誊成了同一种口气。你问哪一件是记述者亲眼见过的。他在其余条目旁补上说明，没把每一行都当成同一等证据。'
           order: '抄件里两条观察换了位置。你核对日期，誊写员先把纸签调回来，才照先后讲述。'
