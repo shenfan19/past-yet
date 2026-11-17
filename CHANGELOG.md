@@ -1,11 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## 0.9.6, 2026-11-17
 
 - Every employee has catchphrases of their own, drawn from their work and where they come from, and says one on coming back: for every star won, for some, for nothing done, or for coming home hurt. The line opens the report and the share card; a full model keeps the words its card gives for the ending.
 - The record of an employee lists what their trips helped bring about, one line to a trip, full models included, with the words said on coming back. The weightiest come first, a redeemed regret, then the share of stars, and five show until the rest are opened. Guard stars that held are no longer counted there.
 - A dismissed employee's card still opens from the trip records, with the record and the trips kept.
 - The English stamp for a close call reads in full again: 'A close call, still a gain'.
+- The secretary is remade: each trait lends one thing, a higher sale price, faster mood growth, shorter rest, one attribute for every traveller (the secretary's own over five, rounded), or a sure star, the earliest missed guard star held or, when no fulfil star was won, the earliest one won if the guard holds until its day. The secretary no longer adds time energy, which the stars fix, and has no preference. Its effect stays in the navigation bar on every page, and a star it made sure says so in the record.
+- The rest after a trip grows with the stay: the rest of the outcome, now two to four days for a story, plus half a day for each day away, rounded up.
+- Trips to Guangzhou 1924 no longer break the time energy: six modelled places had no energy base, and a missing one is now an error.
 
 ## 0.9.5, 2026-11-17
 

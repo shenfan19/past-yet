@@ -23,33 +23,34 @@ export function createOffice(X) {
   const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
   const canDispatchTo = (id, light, auto = false) => (X.DEV && !auto) || (light ? X.anchored('relic_' + id) : X.eraOpen(id));
 
+  // What the secretary gives the agency, one thing from each trait: a share on the sale price, the mood growth or the rest, an attribute lent to every
+  // traveller (the attribute of the secretary over attr_divisor, rounded), or a point of a story made sure, a guard point held or a fulfil point won.
+  const SEC = D.get('config.office.secretary');
+  const PERK_SHARES = ['sale_mult', 'rest_cut', 'favor_gain'];
   function perks() {
-    const out = { sale_mult: 0, energy_mult: 0, rest_cut: 0, favor_gain: 0 };
+    const out = { sale_mult: 0, rest_cut: 0, favor_gain: 0, attrs: {}, sure: [] };
     const id = S().secretary;
     if (!id) return out;
-    for (const t of staffTraits(D, id)) for (const [k, v] of Object.entries(D.get('staff.traits.' + t).secretary || {})) out[k] += v;
+    const own = ctx.backend.staffBase(id);
+    for (const t of staffTraits(D, id)) {
+      for (const [k, v] of Object.entries(D.get('staff.traits.' + t).secretary)) {
+        if (PERK_SHARES.includes(k)) out[k] += v;
+        else if (k === 'attr') out.attrs[v] = (out.attrs[v] || 0) + Math.round(own[v] / SEC.attr_divisor);
+        else if (k === 'sure') { if (!out.sure.includes(v)) out.sure.push(v); }
+        else throw new Error('未知的秘书能力 ' + k + '，特质 ' + t);
+      }
+    }
     return out;
   }
-
-  // What the secretary wants from the auto mode: the preference of their highest priority trait that has one.
-  function secretaryAim() {
-    const id = S().secretary;
-    if (!id) return null;
-    let best = null, bp = -Infinity;
-    for (const t of staffTraits(D, id)) {
-      const tr = D.get('staff.traits.' + t);
-      if (tr.prefer && tr.priority > bp) { bp = tr.priority; best = tr.prefer; }
-    }
-    return best;
-  }
-  function aimMet(aim, d) {
-    const R = A.secretary_rules;
-    if (aim === 'antiques') return !!d.paid.antique;
-    if (aim === 'lives') return d.report.accounts.lives >= R.lives_min;
-    if (aim === 'energy') return d.paid.energy >= R.energy_min;
-    if (aim === 'safety') return !R.safety_bad.includes(d.report.outcomeId);
-    throw new Error('未知的秘书偏好 ' + aim);
-  }
+  // what the secretary lends one traveller; the secretary lends nothing to themselves, and the test employees take nothing
+  const lent = (staffId) => (!S().secretary || staffId === S().secretary || isDev(staffId) ? null : perks());
+  const boostOf = (staffId) => lent(staffId)?.attrs || {};
+  const sureOf = (staffId) => lent(staffId)?.sure || [];
+  // the attributes and the stories read these, so every trip, estimate and sheet sees the secretary of the moment
+  D.staffBoost = boostOf;
+  ctx.backend.setSureSource(sureOf);
+  // The rest after a trip: the rest of its outcome and rest_per_stay_day for each office day away, rounded up, then cut by the secretary.
+  const restOf = (d, outcomeRest, rest_cut) => Math.round((outcomeRest + Math.ceil((d.readyDay - d.startDay) * O.rest_per_stay_day)) * (1 - rest_cut));
 
   function staffState(id) {
     if (S().secretary === id) return 'secretary';
@@ -71,7 +72,7 @@ export function createOffice(X) {
     s.seq += 1;
     if (s.seq === 1) startClock();
     const stay = ctx.backend.eraStay(eraId);
-    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: ST.energy_base[eraId], startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
+    const d = { id: 'd' + s.seq, eraId, spec: full, report, stars: report.stars, baseEnergy: D.get('config.stars.energy_base.' + eraId), startDay: day(), readyDay: day() + stay, claimed: false, notified: false, auto: !!opts.auto, payout: { energy: 0, funds: res.funds, restDays: res.restDays, antique } };
     s.dispatches.push(d);
     ctx.save();
     return d;
@@ -269,7 +270,7 @@ export function createOffice(X) {
     const energy = d.newBest ? d.baseEnergy * (ST.energy_share[top][d.stars] - ST.energy_share[top][best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
     const sf0 = s.staff[d.spec.staffId];
-    d.paid = { energy: Math.round(energy * (1 + p.energy_mult)), restDays: Math.round(d.payout.restDays * (1 - p.rest_cut)) };
+    d.paid = { energy: Math.round(energy), restDays: restOf(d, d.payout.restDays, p.rest_cut), restCut: p.rest_cut };
     s.energy += d.paid.energy;
     sf0.tally ||= { 3: 0, 2: 0, 1: 0 };
     // the tally counts in thirds of the stars of the place, so a five star story fills the same three cells
@@ -283,14 +284,6 @@ export function createOffice(X) {
     const delta = (d.light || d.evacuation ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId]) + (d.report.extraFavor || 0);
     d.favorDelta = delta > 0 ? delta * (1 + p.favor_gain) : delta;
     if (!isDev(d.spec.staffId)) sf.favor = clamp(sf.favor + d.favorDelta, F.min, F.max);
-    const aim = secretaryAim();
-    if (d.auto && aim) {
-      const R = A.secretary_rules;
-      const met = aimMet(aim, d);
-      const sec = s.staff[s.secretary];
-      sec.favor = clamp(sec.favor + (met ? R.favor_match : R.favor_miss), F.min, F.max);
-      s.secretaryLast = { aim, met, dispatchId: d.id };
-    }
     record(d);
     s.dispatches.sort((a, b) => (a.claimedAt ?? Infinity) - (b.claimedAt ?? Infinity));
     pruneReports();
@@ -453,7 +446,7 @@ export function createOffice(X) {
     d.claimedAt = ctx.now();
     if (!s.visited.includes(d.eraId)) s.visited.push(d.eraId);
     d.stars = 0;
-    d.paid = { energy: 0, restDays: Math.ceil(d.payout.restDays * f), share: f };
+    d.paid = { energy: 0, restDays: Math.ceil(restOf(d, d.payout.restDays, p.rest_cut) * f), share: f };
     s.energy += d.paid.energy;
     d.paid.antique = d.payout.antique && ctx.backend.recallKeeps(d.spec.seed, f) ? d.payout.antique : null;
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
@@ -763,5 +756,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wonOf, winsOf, salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, secretaryAim, perks, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { wonOf, winsOf, salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
 }

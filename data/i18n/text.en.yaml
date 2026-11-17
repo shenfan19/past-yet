@@ -230,7 +230,7 @@ ui:
     pause: Pause
     speed: Speed
     auto: Auto
-    auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses. The secretary has a preference too - if the auto results suit it, mood goes up, otherwise down.
+    auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses whether it is on or off.
     paused_report: A report is waiting, paused
     start_hint: The clock starts at the first trip
     start_tip: Until the first trip goes out nothing happens, and the wages would only run down the funds, so the clock stands still. Pick a place on the map and send someone.
@@ -507,7 +507,7 @@ ui:
     recruit: Recruit
     mainline: Main line
     secretary: Secretary
-    no_secretary: None appointed. An appointed employee stays at the agency, no longer travels, and their traits give the agency bonuses.
+    no_secretary: None appointed. An appointed employee stays at the agency, no longer travels, and each of their traits gives the agency one bonus.
     secretary_state: Secretary
     appoint: Appoint secretary
     dismiss: Dismiss
@@ -526,19 +526,18 @@ ui:
     per_day: /day
     archive_tip: Archiving hides a trip from the log. Its report is kept, up to 200 of them, and its line and stars stay.
     col_favor: Mood
-    aims:
-      antiques: antiques found
-      lives: lives saved
-      energy: time energy
-      safety: staff safety
-    secretary_pref: Secretary preference
-    verdict_match: The last auto result suited the secretary, mood up
-    verdict_miss: The last auto result did not suit the secretary, mood down
     perks:
       sale_mult: Research grants
-      energy_mult: Time energy income
       rest_cut: Rest time
       favor_gain: Mood growth
+      attr: '{attr} of travellers +{n}'
+      attr_trait: Every traveller's {attr} rises by 1/{d} of the secretary's {attr}, rounded
+      sure_guard: Holds the earliest missed guard star
+      sure_fulfil: When no fulfil star was won, wins the earliest one, if the guard holds until that day
+      sure_guard_short: Sure guard star
+      sure_fulfil_short: Sure fulfil star
+    secretary_effect: Secretary effect
+    secretary_as: As secretary
     recruit_hint_short: Known after hiring
     col_staff: Employee
     col_contact: Historical contact
@@ -874,6 +873,7 @@ ui:
     need_luck: a little luck
     by_trait: made up by a trait
     lost_by_trait: lost to a trait
+    by_secretary: made sure by the secretary
   welcome:
     title: Welcome
     office_title: Game setup

@@ -87,7 +87,6 @@ function fresh() {
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
-    secretaryLast: null,
     // the office keeps a calendar: day 0 is the real date this game began, so the days of the office read as dates
     calendarStart: new Date().toISOString().slice(0, 10),
     // places that have had a trip come back, their names are shown on the map

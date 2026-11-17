@@ -2,8 +2,8 @@
 meta:
   app: The Teleporter
   logo: T
-  version: 0.9.5
-  released: '2026-11-15'
+  version: 0.9.6
+  released: '2026-11-17'
   card_authors:
     - AI
     - Fan Shen
@@ -58,6 +58,9 @@ office:
     base: 2.4
     step: 0.5
     unpaid_favor: -0.02
+  rest_per_stay_day: 0.5
+  secretary:
+    attr_divisor: 5
   max_archived_reports: 200
   luck:
     base: 0.6
@@ -189,15 +192,6 @@ auto:
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40
-  secretary_rules:
-    lives_min: 10
-    energy_min: 40
-    safety_bad:
-      - near_death
-      - scramble
-      - gave_up
-    favor_match: 0.03
-    favor_miss: -0.03
   kit_order:
     - handbook
     - recall_charm
@@ -211,6 +205,7 @@ ui:
     funds: 💰
     energy: ⚡
     wage: 🧾
+    secretary: 📋
   tab_icons:
     home: 🏠
     buy: 🛒
@@ -285,6 +280,12 @@ stars:
     finlay_havana_1881: 80
     jenner_berkeley_1796: 80
     seacole_balaklava_1855: 80
+    sun_yat_sen_1924: 80
+    tupaia_tahiti_1769: 80
+    darwin_galapagos_1835: 80
+    humboldt_chimborazo_1802: 80
+    mallory_everest_1924: 80
+    scott_ross_ice_shelf_1912: 80
     wegener_greenland_1930: 80
   energy_share:
     '1':
@@ -369,10 +370,10 @@ light:
     '3':
       energy: 16
   rest_days:
-    success: 1
-    partial: 1
-    missed: 2
-    desync: 3
+    success: 2
+    partial: 2
+    missed: 3
+    desync: 4
   favor:
     success: 0.03
     partial: 0.01

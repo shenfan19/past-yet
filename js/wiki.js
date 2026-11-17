@@ -147,7 +147,7 @@ export function createWiki(X) {
           const mods = Object.entries(tr.points).map(([k, v]) => `${esc(T.point_kinds[k])} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
           const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}${COLON}${esc(T.strategies[grp][key].name)}`).join('${U.fmt.semi}');
           const who = Object.keys(D.get('staff.staff')).filter((id) => known(id) && staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
-          const pref = tr.prefer ? `<div>${U.office.secretary_pref}${COLON}${esc(U.office.aims[tr.prefer])}</div>` : '';
+          const pref = `<div>${U.office.secretary_as}${COLON}${esc(X.traitPerk(t))}</div>`;
           const note = T.trait_notes[t];
           return `<div class="traitline"><span class="pro">+ ${esc(note.pro)}</span></div><div class="traitline"><span class="con">− ${esc(note.con)}</span></div><div>${U.enc.modified_by}${COLON}${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
         },

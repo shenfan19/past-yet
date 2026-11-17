@@ -405,6 +405,9 @@ try {
   await sub('staff');
   await page.click('[data-act=appoint][data-id=s_zhou]');
   ok('secretary is appointed', (await page.evaluate(() => window.__game.ctx.S().secretary)) === 's_zhou');
+  // the bar is redrawn on the tick, so wait for it
+  ok('secretary effect stays in the top bar', await page.waitForFunction(() => document.getElementById('res').textContent.includes(window.__game.D.get('config.ui.currency_icons.secretary')), null, { timeout: 5000 }).then(() => true, () => false));
+  ok('secretary lends to travellers, not to themselves', await page.evaluate(() => { const o = window.__game.ui.office, pk = o.perks(); return JSON.stringify(o.boostOf('s_ning')) === JSON.stringify(pk.attrs) && Object.keys(o.boostOf('s_zhou')).length === 0 && o.sureOf('s_zhou').length === 0; }));
   const favor0 = await page.evaluate(() => window.__game.ctx.S().staff.s_ning.favor);
   await page.click('[data-act=gift][data-id=s_ning]');
   ok('gift raises favor', (await page.evaluate(() => window.__game.ctx.S().staff.s_ning.favor)) > favor0);
@@ -459,7 +462,7 @@ try {
   await page.waitForTimeout(800);
   await page.selectOption('[data-clk=speed]', '0');
   ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
-  ok('the funds with the wages a day, and the energy, are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === 2 && (await page.locator('#navrow #res .rv').first().innerText()).includes('−'));
+  ok('the funds with the wages a day, and the energy, are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === (await page.evaluate(() => (window.__game.ctx.S().secretary ? 3 : 2))) && (await page.locator('#navrow #res .rv').first().innerText()).includes('−'));
   // stars: time energy is paid only for stars above the best of the place, funds every time
   const sr = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
@@ -554,10 +557,7 @@ try {
   await page.waitForFunction((b) => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length > b, claimedBefore, { timeout: 60000 });
   ok('auto mode dispatches and claims by itself', true);
   ok('auto mode anchors a found antique and sells spares when funds are short', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('clinic_bell') && S.locks.includes('relic_newton_cambridge') && S.antiques.filter((x) => x === 'relic_newton_cambridge').length === 1; }));
-  const sec = await page.evaluate(() => window.__game.ctx.S().secretaryLast);
-  ok('secretary verdict recorded after auto results', !!sec && typeof sec.met === 'boolean');
   await go('shop');
-  ok('verdict chip shows', (await page.locator('.chip:has-text("他的意")').count()) === 1);
   await page.click('[data-act=appoint][data-id=s_zhou]');
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '0');

@@ -134,13 +134,27 @@ export function createUI(D, ctx, DEV = false) {
   const statsLine = (stats) => D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
   // what a trait does at the sync points, as percent per kind of point, for example persuading +35%
   const pointsText = (tr) => Object.entries(tr.points).map(([k, v]) => `${T.point_kinds[k]} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
+  // What a secretary gives, in words: shares as percent, an attribute lent as its points, a sure star by its kind. perkParts reads office.perks(),
+  // traitPerk the card of one trait, which has no secretary yet, so an attribute is told as the share of the secretary's own.
+  const PK = () => U.office.perks;
+  const shareText = (k, v) => `${PK()[k]} ${k === 'rest_cut' ? '−' : '+'}${Math.round(v * 100)}%`;
+  const perkParts = (pk) => [
+    ...['sale_mult', 'rest_cut', 'favor_gain'].filter((k) => pk[k]).map((k) => shareText(k, pk[k])),
+    ...Object.entries(pk.attrs).filter(([, n]) => n).map(([a, n]) => PK().attr.replace('{attr}', T.stats[a]).replace('{n}', String(n))),
+    ...pk.sure.map((s) => PK()['sure_' + s + '_short']),
+  ];
+  function traitPerk(t) {
+    const [[k, v]] = Object.entries(D.get('staff.traits.' + t).secretary);
+    if (k === 'attr') return PK().attr_trait.split('{attr}').join(T.stats[v]).replace('{d}', String(D.get('config.office.secretary.attr_divisor')));
+    if (k === 'sure') return PK()['sure_' + v];
+    return shareText(k, v);
+  }
   function traitTip(t) {
     const tr = D.get('staff.traits.' + t);
     const mods = pointsText(tr);
     const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}${COLON}${T.strategies[grp][key].name}`).join('${U.fmt.semi}');
-    const pref = tr.prefer ? `${U.office.secretary_pref}${COLON}${U.office.aims[tr.prefer]}` : '';
     const note = T.trait_notes[t];
-    return [T.traits[t], `+ ${note.pro}`, `− ${note.con}`, mods, pol, pref].filter(Boolean).join('\n');
+    return [T.traits[t], `+ ${note.pro}`, `− ${note.con}`, mods, pol, `${U.office.secretary_as}${COLON}${traitPerk(t)}`].filter(Boolean).join('\n');
   }
   function staffTip(id) {
     const stats = ctx.backend.staffStats(id);
@@ -161,7 +175,7 @@ export function createUI(D, ctx, DEV = false) {
   const starRow = (n, STAR_MAX) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
   // a point that a trait made up for, or that a trait lost, says so, because the timeline shows what happened and the traits then changed the count
-  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}${p.lost ? ' lost' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${p.day ? `<span class="muted">${esc(U.report.participation.day.replace('{day}', String(p.day)))} · </span>` : ''}${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}</li>`).join('')}</ul>`;
+  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}${p.lost ? ' lost' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${p.day ? `<span class="muted">${esc(U.report.participation.day.replace('{day}', String(p.day)))} · </span>` : ''}${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}</li>`).join('')}</ul>`;
   const yearOfPlace = (id, light) => (light ? D.get('catalog.events').find((x) => x.id === id).year : ctx.era(id).raw.metadata.era.year);
   const shortOfPlace = (id, light) => (light ? T.catalog[id].place : T.eras[id].short);
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
@@ -201,6 +215,7 @@ export function createUI(D, ctx, DEV = false) {
   const listbox = X.listbox;
   const wiki = createWiki(X);
   X.office = office;
+  X.traitPerk = traitPerk;
   const shop = createShop(X);
   const worldMap = createWorldMap(X);
   const settingsPage = createSettingsPage(X);
@@ -322,8 +337,6 @@ export function createUI(D, ctx, DEV = false) {
   // ---------- agency: employees and hiring ----------
   // The record of an employee: each point that fulfilled something, once, on the earliest trip that won it, with the year, the place and the words of the star,
   // opening the report while it is kept; the guard points held are one line of their count. A trip out of sync adds nothing of its own. See 5.12 of the story outline.
-  // The record of an employee: each point that fulfilled something, once, on the earliest trip that won it, with the year, the place and the words of the star,
-  // opening the report while it is kept; the guard points held are one line of their count. A trip out of sync adds nothing of its own. See 5.12 of the story outline.
   // The record of an employee: what their trips helped bring about, one line to a trip with the fulfil stars it won for the first time, small stories and
   // full models alike, and after them the words the employee said on coming back. Guard stars are not listed, since holding history is not a deed.
   // The weightiest come first: a redeemed regret, then the share of the stars of the trip, then the later year; config.ui.record_top show, the rest open on a click.
@@ -380,10 +393,9 @@ export function createUI(D, ctx, DEV = false) {
       const tl = tallyOf(id);
       return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: tl[3] * 3 + tl[2] * 2 + tl[1] };
     });
-    const pk = office.perks();
-    const perkText = Object.entries(pk).filter(([, v]) => v !== 0).map(([k, v]) => `${U.office.perks[k]} ${k === 'rest_cut' ? '−' : (v > 0 ? '+' : '')}${Math.round(Math.abs(v) * 100)}%`).join(' · ');
+    const perkText = perkParts(office.perks()).join(' · ');
     const sec = S.secretary
-      ? `<div class="muted">${U.office.secretary}${COLON}${staffLink(S.secretary)} · ${perkText || U.enc.edge_none} · ${U.office.secretary_pref}${COLON}${U.office.aims[office.secretaryAim()] || U.enc.edge_none}${S.secretaryLast ? ` <span class="chip ${S.secretaryLast.met ? '' : 'warn'}">${S.secretaryLast.met ? U.office.verdict_match : U.office.verdict_miss}</span>` : ''}</div>`
+      ? `<div class="muted">${U.office.secretary}${COLON}${staffLink(S.secretary)} · ${esc(perkText) || U.enc.edge_none}</div>`
       : `<div class="muted">${U.office.secretary}${COLON}${U.office.no_secretary}</div>`;
     const total = office.wageTotal();
     const wage = `${U.office.wage}${COLON}${ri(total)} ${D.get('config.ui.currency_icons.funds')}${S.funds < total ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}`;
@@ -439,8 +451,11 @@ export function createUI(D, ctx, DEV = false) {
     const S = ctx.S();
     const I = D.get('config.ui.currency_icons');
     const home = S.energy >= O.home_cost ? `<span class="chip"${tip(U.office.reached_home)}>🏠</span>` : '';
+    // the effect of the secretary stays in sight on every page, the person in the tip
+    const perk = S.secretary ? perkParts(office.perks()) : [];
+    const sec = perk.length ? `<span class="rv"${tip(`${U.office.secretary_effect}${COLON}${staffName(D, S.secretary)}\n${perk.join('\n')}`)}>${I.secretary} <span class="muted">${esc(perk.join(' · '))}</span></span>` : '';
     return `<span class="rv"${tip(U.office.funds + ' · ' + U.office.wage_total)}>${I.funds} <b>${ri(S.funds)}</b><span class="muted"> − ${ri(office.wageTotal())}${U.office.per_day}</span></span>`
-      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}`;
+      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}${sec}`;
   }
 
   // One table for the dispatches: the ones still out come first, with what can be done to them, then the finished ones with their report.

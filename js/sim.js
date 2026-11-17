@@ -19,7 +19,7 @@ export function tagNames(D) {
 export function staffTags(D, staffId, place = null) {
   const R = D.get('staff');
   const st = R.staff[staffId];
-  const a = staffAttrs(D, staffId);
+  const a = staffAttrs(D, staffId, null, [], { boost: false });
   const out = new Set();
   for (const [t, rule] of Object.entries(R.tags)) if ((rule.min === undefined || a[rule.stat] >= rule.min) && (rule.max === undefined || a[rule.stat] <= rule.max)) out.add(t);
   const classes = Object.entries(R.job_classes).filter(([, jobs]) => (st.jobs || []).some((j) => jobs.includes(j))).map(([c]) => c);
@@ -232,12 +232,14 @@ export function compileEra(raw, D, id) {
 // With a mood the attributes are the ones of that day: up to buff more at full mood, up to buff less at none. Without it they are the ones on the card.
 export const STAFF_ATTR_MAX = 10;
 
-export function staffAttrs(D, staffId, mood = null, gear = []) {
+// The secretary lends every traveller a little of one attribute; boost: false gives the attributes of the person alone, for their card.
+export function staffAttrs(D, staffId, mood = null, gear = [], { boost = true } = {}) {
   const a = { ...D.get('staff.default_base'), ...D.get('staff.staff.' + staffId + '.base') };
   for (const [k, v] of Object.entries(D.staffGrowth?.(staffId) || {})) if (Object.hasOwn(a, k)) a[k] += v;
   for (const k of Object.keys(a)) a[k] = Math.min(STAFF_ATTR_MAX, a[k]);
   // an implant adds to the attributes while it is worn
   for (const id of gear) for (const [k, v] of Object.entries(D.get('items.' + id).stat_add || {})) a[k] += v;
+  if (boost) for (const [k, v] of Object.entries(D.staffBoost?.(staffId) || {})) if (Object.hasOwn(a, k)) a[k] += v;
   const f = mood === null ? 1 : 1 + D.get('config.favor.buff') * (2 * mood - 1);
   return Object.fromEntries(Object.entries(a).map(([k, v]) => [k, Math.min(STAFF_ATTR_MAX, v * f)]));
 }

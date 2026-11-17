@@ -31,6 +31,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const LK = D.get('config.office.luck');
   // what an employee wears is kept in the game state, so the backend asks for it through a function the page sets
   let gearSource = () => [];
+  // the points the secretary makes sure of for a traveller, guard and fulfil, also set by the page
+  let sureSource = () => [];
   // The test employees of the developer mode: V, dev_only max, carries every item and wears every implant, whatever was packed; King, dev_only min, carries and wears nothing.
   const devKind = (staffId) => D.get('staff.staff')[staffId]?.dev_only || null;
   const allItems = () => Object.fromEntries(Object.keys(D.get('items')).filter((id) => !D.get('items.' + id).implant).map((id) => [id, 1]));
@@ -190,13 +192,19 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     // a sync point reads every item carried, the scene items and gear and also the plain items, so a point may ask for antibiotics
     const hits = health?.hits ?? evalScene(D, ev, { staffId, seed, carried: [...carried, ...props], statsAt: () => stats });
     const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}), ...(p.guard ? { guard: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    const days = pointDays(D, ev);
+    // The secretary can make one point sure. guard holds the earliest guard point that was missed. fulfil wins the earliest fulfil point when none was won,
+    // and it still has to be reached: a missed guard before it sends the traveller back first, below.
+    const earliest = (test) => points.map((p, i) => i).filter((i) => test(points[i])).reduce((a, i) => (a < 0 || days[i] < days[a] ? i : a), -1);
+    const sure = sureSource(staffId) || [];
+    if (sure.includes('guard')) { const i = earliest((p) => p.guard && !p.hit); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
+    if (sure.includes('fulfil') && !points.some((p) => !p.guard && p.hit)) { const i = earliest((p) => !p.guard); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
     // a guard point holds a recorded event in place. When it is missed the branch falls out of step with history: the traveller is sent back on that day,
     // and the points after it are never reached
     // the points are listed in any order, so the first missed guard is the one with the earliest day, and the points cut are those that fall after it
-    const days = pointDays(D, ev);
     const missed = points.map((p, i) => i).filter((i) => points[i].guard && !points[i].hit);
     const cutAt = missed.length ? missed.reduce((a, i) => (days[i] < days[a] ? i : a)) : -1;
-    if (cutAt >= 0) for (let i = 0; i < points.length; i++) if (days[i] > days[cutAt]) points[i] = { ...points[i], hit: false, bonus: false, cut: true };
+    if (cutAt >= 0) for (let i = 0; i < points.length; i++) if (days[i] > days[cutAt]) points[i] = { ...points[i], hit: false, bonus: false, sure: false, cut: true };
     let stars = points.filter((p) => p.hit).length;
     // being found out: the more equipment shows and the more suspicious the time, the likelier
     const chance = Math.min(SC.max_discovery, Math.max(0, exposure) * SC.suspicion_by_tier[ev.tier]);
@@ -265,8 +273,9 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     staffTags: (id, staffId) => [...sim.staffTags(D, staffId, info[id] ? eras[id].place : placeOfEvent(lightEvent(id)))],
     staffStats: (staffId, mood = null) => sim.staffAttrs(D, staffId, mood, gearOf(staffId)),
     staffAttrMax: sim.STAFF_ATTR_MAX,
-    staffBase: (staffId) => sim.staffAttrs(D, staffId),
+    staffBase: (staffId) => sim.staffAttrs(D, staffId, null, [], { boost: false }),
     setGearSource: (fn) => { gearSource = fn; },
+    setSureSource: (fn) => { sureSource = fn; },
     staffHabit: (staffId) => sim.staffHabit(D, staffId),
     itemTotals: (items) => sim.itemTotals(D, items),
     // returns an error code, or null when the dispatch is allowed
