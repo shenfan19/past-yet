@@ -2,7 +2,7 @@ order: 198
 events:
   vermeer_delft:
     order: 115
-    build_step: 2
+    build_step: 4
     year: 1675
     date: '1675-12-01'
     stay: 4
@@ -12,24 +12,25 @@ events:
     field: art
     tier: 2
     channels: {G: 2, S: 1}
-    refs: [vermeer_delft_primary, vermeer_delft_inventory, vermeer_estate_archives, vermeer_baker_document]
+    ready: true
+    refs: [vermeer_delft_primary, vermeer_delft_inventory, vermeer_estate_archives, vermeer_baker_document, vermeer_essential_life, vermeer_wiki, vermeer_art_of_painting_wiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 3, req: {"any":[{"job":["archivist","antique_dealer","restorer"]},{"trait":["vigil","methodical"],"stat":{"will":7}}]}}
         - {id: p2, kind: persuade, day: 6, req: {"any":[{"job":["antique_dealer","market_trader","bookseller","shopkeeper"],"stat":{"luck":5}},{"trait":["glib","charismatic","streetwise"],"stat":{"wit":5}}]}}
         - {id: p3, kind: persuade, day: 9, req: {"any":[{"trait":["artistic","sensitive","kind"]},{"job":["painter","illustrator","antique_dealer","restorer"]}]}}
-        - {id: p4, kind: care, day: 12, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"calm_patch"},{"provides":"cure"}]}}
+        - {id: p4, kind: care, day: 12, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"calm_patch"},{"provides":"cure"}]}, overturns: [burial, baker, inventory, petition, trustee]}
       vignettes:
-        - {id: motif, traits: [artistic, vigil]}
-        - {id: pledge, traits: [methodical, skeptical]}
-        - {id: cover}
+        - {id: bread, traits: [kind, cheerful, attached, patient, hardy], day: 5}
+        - {id: frames, traits: [artistic, handy, curious, methodical, sensitive], day: 40}
+        - {id: peat, day: 75}
     text:
       en:
         name: "The painter in debt"
         place: "Delft"
         figure: "Johannes Vermeer"
-        story: 'Vermeer died in Delft in 1675. The Rijksmuseum''s exhibition documents the debts his household faced and the paintings Catharina Bolnes pledged to the baker.'
+        story: 'After the war of 1672 Johannes Vermeer could hardly sell a painting, and in July 1675 he went to Amsterdam to borrow a thousand guilders. In December 1675, his widow later wrote, he went within a day and a half from healthy to dead; he was buried in Delft on 15 December, aged forty three, leaving eleven children. Early in 1676 Catharina Bolnes gave two of his paintings to the baker against a bread debt, and on 24 February she passed The Art of Painting to her mother Maria Thins. On 29 February the house was inventoried, and in April she asked the High Court to relieve her of the debts.'
         relic: "A pearl earring"
         relic_desc: "A small pearl of the kind he painted so often."
         points:
@@ -57,14 +58,14 @@ events:
             who: vermeer_delft
             bio: 'In this line Vermeer lived through December 1675, painted in Delft for some more years, and saw his household through its debts.'
         vignettes:
-          motif: 'The clerk remembers the light in one picture but cannot tell you which picture it was. You ask what the figure was doing. They write down the action beside the title, so the next person has two clues.'
-          pledge: 'Someone has copied a pledged picture into the column for sold goods. You find the earlier entry and ask the clerk what each word puts on the record.'
-          cover: 'You hold the ledger open while the clerk looks across the room for the description they need. When they return, the right page is still waiting.'
+          bread: 'On the fifth of December {staff} helps the baker''s boy carry the morning loaves along the Oude Langendijk. At one door the boy hands in the bread without being paid and makes a mark in his little book. He says his master grumbles about that page every Saturday, and every Monday sends the bread all the same.'
+          frames: 'In January {staff} spends a morning in a frame maker''s shop, holding mitred corners while the glue sets. Half the frames against the wall are empty. The frame maker says that since the French came in seventy two people buy frames for mirrors, not for paintings, and a mirror at least never asks to be paid for twice.'
+          peat: 'In the middle of February {staff} helps a peat seller stack wet turves on the market square. She blows on her fingers and says this is the winter everyone in Delft burns the cheap stuff, so the whole town smells like a wet dog by the fire.'
       zh:
         name: "负债的画家"
         place: "代尔夫特"
         figure: "约翰内斯·维米尔"
-        story: '维米尔 1675 年在代尔夫特去世。阿姆斯特丹国立博物馆的展览记录了他家留下的债务，以及卡塔琳娜·博尔内斯向面包商抵押画作的事。'
+        story: '1672 年战事以后，约翰内斯·维米尔的画几乎卖不出去，1675 年 7 月他去阿姆斯特丹借了一千荷兰盾。据他的遗孀后来陈述，那年 12 月他在一天半里由好好的人到了去世；12 月 15 日他葬在代尔夫特，四十三岁，留下十一个孩子。1676 年初，卡塔琳娜·博尔内斯把他的两幅画交给面包商抵面包钱，2 月 24 日又把《绘画艺术》转到母亲玛丽亚·廷斯名下。2 月 29 日，公证人来家里清点遗产；4 月，她请求高等法院免去她的债务。'
         relic: "一枚珍珠耳环"
         relic_desc: "一颗小珍珠，是他常画的那种。"
         points:
@@ -92,9 +93,9 @@ events:
             who: vermeer_delft
             bio: 'IF 线里，维米尔挺过了 1675 年的十二月，又在代尔夫特画了些年，陪这一家把债慢慢还清。'
         vignettes:
-          motif: '账房记得一幅画里的光，却说不准是哪幅。你问画里的人在做什么。他把动作记在画名旁，后来查的人便有两条线索。'
-          pledge: '有人把抵押的画抄进了已出售一栏。你翻到早一页，请账房分别说清两个词在账上记的是什么。'
-          cover: '账房去屋子另一头找画的描述，你替他扶着账本。回来时，该核对的那一页还翻着。'
+          bread: '12 月 5 日早上，{staff}帮面包铺的伙计沿着老朗恩代克街送面包。到了一家门口，伙计把面包递进去，没收钱，在小本子上画了一道。他说老板每个星期六都对着这一页嘟囔，每个星期一照样叫他把面包送来。'
+          frames: '一月里，{staff}在一家画框铺里待了一上午，替师傅按住斜角，等胶干。靠墙的画框有一半空着。师傅说自从七二年法国人打进来，人们买框子是为了装镜子，不是装画，镜子至少不会让人付两回钱。'
+          peat: '二月中旬，{staff}帮一个卖泥炭的女人在集市广场上码湿泥炭块。她朝手指哈气，说今年冬天全代尔夫特都在烧便宜货，整座城闻起来像一条趴在炉边的湿狗。'
 text:
   en:
     name: Johannes Vermeer
@@ -102,21 +103,137 @@ text:
   zh:
     name: 约翰内斯·维米尔
     text: 荷兰画家，1632 年生，1675 年去世，代尔夫特人。他画光线柔和的静谧室内场景，如《戴珍珠耳环的少女》，留存的作品只有约四十件，去世时家人负债。
-hook: {en: 'A painting can stay after the painter.', zh: '画留下来，账也留下来'}
+hook: {en: 'A day and a half, she wrote', zh: '她后来写，只有一天半'}
 facts:
-  delft_records:
-    date: '1675'
-    checked: official_record
+  war:
+    date: '1672'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [vermeer_delft_primary, vermeer_delft_inventory]
+    use: [story, history, wiki]
+    sources: [vermeer_estate_archives, vermeer_wiki]
     text:
-      en: 'Vermeer died in Delft in 1675. The Rijksmuseum''s exhibition documents the debts his household faced and the paintings Catharina Bolnes pledged to the baker.'
-      zh: '维米尔 1675 年在代尔夫特去世。阿姆斯特丹国立博物馆的展览记录了他家留下的债务，以及卡塔琳娜·博尔内斯向面包商抵押画作的事。'
+      en: 'From 1672, when the Dutch Republic went to war with France and England, the art trade collapsed. Catharina Bolnes later said that during the war Vermeer could sell hardly any of his own work, and the paintings he had bought to deal in had to be sold at a great loss.'
+      zh: '1672 年荷兰共和国与法国、英国开战，画市随之崩塌。卡塔琳娜·博尔内斯后来说，战事期间维米尔自己的画几乎卖不出去，他买来经手的别家画作也只能大亏着卖。'
+    line:
+      en: '1672: war with France and England, and the art trade of the Republic collapses.'
+      zh: '1672 年，荷兰与法国、英国开战，画市一落千丈。'
+  loan:
+    date: '1675-07'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_essential_life, vermeer_wiki]
+    text:
+      en: 'In July 1675 Vermeer travelled to Amsterdam and borrowed 1,000 guilders from the silk trader Jacob Romboutsz, with property of his mother-in-law as surety.'
+      zh: '1675 年 7 月，维米尔去阿姆斯特丹，向丝绸商雅各布·龙布茨借了一千荷兰盾，以岳母的产业作保。'
+    line:
+      en: 'July 1675: Vermeer goes to Amsterdam to borrow a thousand guilders.'
+      zh: '1675 年 7 月，维米尔去阿姆斯特丹借了一千荷兰盾。'
+  day_and_half:
+    date: '1675-12'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [vermeer_essential_life, vermeer_wiki]
+    text:
+      en: 'Catharina Bolnes later wrote that, under the burden of the children and the debts, he fell into such decay that within a day and a half he went from being healthy to being dead. He left eleven children, ten of them under age.'
+      zh: '卡塔琳娜·博尔内斯后来写道，他被孩子和债务压着，垮得很快，一天半里由好好的人到了去世。他留下十一个孩子，十个还未成年。'
+    note: 'A death: written as a plain fact.'
+  burial:
+    date: '1675-12-15'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [vermeer_estate_archives, vermeer_essential_life]
+    text:
+      en: 'Vermeer was buried in Delft on 15 December 1675, aged forty three, in a grave his mother-in-law had bought years before.'
+      zh: '1675 年 12 月 15 日，维米尔葬在代尔夫特岳母早年买下的墓穴里，四十三岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '15 December 1675: Johannes Vermeer is buried in Delft, aged forty three.'
+      zh: '1675 年 12 月 15 日，约翰内斯·维米尔葬于代尔夫特，四十三岁。'
+  baker:
+    date: '1676-01'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_baker_document, vermeer_essential_life]
+    text:
+      en: 'Early in 1676 Catharina Bolnes handed two of his paintings, a woman writing a letter and a figure playing an instrument, to the Delft baker Hendrick van Buyten against a bread debt of 617 guilders, about three years of bread. She could redeem them in yearly payments of fifty guilders.'
+      zh: '1676 年初，卡塔琳娜·博尔内斯把他的两幅画，一幅写信的女子、一幅弹琴的人，交给代尔夫特面包商亨德里克·范·拜滕，抵 617 荷兰盾的面包钱，约是三年的面包。她可以每年付五十盾把画赎回。'
+    line:
+      en: 'Early 1676: Catharina gives two of his paintings to the baker against 617 guilders of bread.'
+      zh: '1676 年初，卡塔琳娜把他的两幅画交给面包商，抵 617 荷兰盾的面包钱。'
+  art_of_painting:
+    date: '1676-02-24'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_estate_archives, vermeer_art_of_painting_wiki]
+    text:
+      en: 'On 24 February 1676 Catharina Bolnes transferred The Art of Painting to her mother Maria Thins so that it would not be sold for the creditors. The receiver later judged the transfer wrongful, and the painting was handed back on 23 March 1677.'
+      zh: '1676 年 2 月 24 日，卡塔琳娜·博尔内斯把《绘画艺术》转到母亲玛丽亚·廷斯名下，免得被拿去抵债。遗产管理人后来认定这次转让不当，1677 年 3 月 23 日画被交了回去。'
+    line:
+      en: '24 February 1676: Catharina passes The Art of Painting to her mother Maria Thins.'
+      zh: '1676 年 2 月 24 日，卡塔琳娜把《绘画艺术》转到母亲玛丽亚·廷斯名下。'
+  inventory:
+    date: '1676-02-29'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_estate_archives, vermeer_delft_inventory]
+    text:
+      en: 'On 29 February 1676 a notary came to the house on the Oude Langendijk to inventory the estate. No unfinished paintings were listed.'
+      zh: '1676 年 2 月 29 日，公证人来到老朗恩代克街的家里清点遗产，清册里没有一幅未完成的画。'
+    line:
+      en: '29 February 1676: a notary inventories the house on the Oude Langendijk.'
+      zh: '1676 年 2 月 29 日，公证人到老朗恩代克街的家里清点遗产。'
+  petition:
+    date: '1676-04'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_estate_archives, vermeer_wiki]
+    text:
+      en: 'In April 1676 Catharina Bolnes asked the High Court to relieve her of the debts owed to the creditors, giving the war as the reason her husband had earned so little.'
+      zh: '1676 年 4 月，卡塔琳娜·博尔内斯请求高等法院免去欠债主的债，说丈夫挣得那么少，是因为战事。'
+    line:
+      en: 'April 1676: Catharina asks the High Court to relieve her of the debts.'
+      zh: '1676 年 4 月，卡塔琳娜请求高等法院免去她的债。'
+  trustee:
+    date: '1676-09-30'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_estate_archives, vermeer_essential_life]
+    text:
+      en: 'On 30 September 1676 Antonie van Leeuwenhoek of Delft was appointed trustee of the estate on behalf of the creditors.'
+      zh: '1676 年 9 月 30 日，代尔夫特的安东尼·范·列文虎克被指定为这份遗产的管理人，代表债主。'
+    line:
+      en: '30 September 1676: Antonie van Leeuwenhoek is made trustee of the estate.'
+      zh: '1676 年 9 月 30 日，安东尼·范·列文虎克被指定为这份遗产的管理人。'
+  rediscovery:
+    date: '1866'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vermeer_wiki, vermeer_delft_primary]
+    text:
+      en: 'In 1866 Théophile Thoré-Bürger published a catalogue of the works of Vermeer in the Gazette des Beaux-Arts, which drew wide attention back to the painter.'
+      zh: '1866 年，泰奥菲勒·托雷-比尔热在《美术报》上发表维米尔作品目录，让这位画家重新引起广泛注意。'
+    line:
+      en: '1866: Thoré-Bürger publishes a catalogue of the works of Vermeer.'
+      zh: '1866 年，托雷-比尔热发表维米尔作品目录。'
 bystanders:
-  vermeer_delft_reader:
+  baker_boy:
     invented: true
-    text: {en: 'An invented clerk trying to identify pictures in a ledger.', zh: '一位虚构的账房，想查明账页写的是哪些画。'}
+    text: {en: 'A baker''s boy carrying loaves in Delft, made up for the game.', zh: '一个编出来的代尔夫特面包铺伙计。'}
+  frame_maker:
+    invented: true
+    text: {en: 'A frame maker in Delft, made up for the game.', zh: '一个编出来的代尔夫特画框师傅。'}
+  peat_seller:
+    invented: true
+    text: {en: 'A peat seller on the market square, made up for the game.', zh: '一个编出来的集市上卖泥炭的女人。'}
 wiki:
   refs:
     vermeer_estate_archives:
@@ -131,6 +248,24 @@ wiki:
       text:
         en: 'Max Rooses’s publication of the January 1676 transfer https://www.dbnl.org/tekst/_els001189801_01/_els001189801_01_0032.php'
         zh: '马克斯·罗斯所录 1676 年 1 月画作交付 https://www.dbnl.org/tekst/_els001189801_01/_els001189801_01_0032.php'
+    vermeer_essential_life:
+      order: 5
+      status: checked
+      text:
+        en: 'Essential Vermeer, Vermeer''s life, part four. http://www.essentialvermeer.com/vermeer%27s_life_04.html'
+        zh: 'Essential Vermeer，维米尔生平第四部分。 http://www.essentialvermeer.com/vermeer%27s_life_04.html'
+    vermeer_wiki:
+      order: 6
+      status: checked
+      text:
+        en: 'Wikipedia, Johannes Vermeer. https://en.wikipedia.org/wiki/Johannes_Vermeer'
+        zh: '维基百科，约翰内斯·维米尔。 https://en.wikipedia.org/wiki/Johannes_Vermeer'
+    vermeer_art_of_painting_wiki:
+      order: 7
+      status: checked
+      text:
+        en: 'Wikipedia, The Art of Painting. https://en.wikipedia.org/wiki/The_Art_of_Painting'
+        zh: '维基百科，《绘画艺术》。 https://en.wikipedia.org/wiki/The_Art_of_Painting'
     vermeer_delft_primary:
       order: 177
       status: checked
@@ -144,10 +279,15 @@ wiki:
         en: 'Erfgoed Delft, images of the 1676 inventory of Vermeer’s estate. https://erfgoeddelft.nl/verhalen/johannes-vermeer'
         zh: '代尔夫特市档案，1676 年维米尔遗产清册影像。https://erfgoeddelft.nl/verhalen/johannes-vermeer'
 self_check:
-  quote_line: '账房记得一幅画里的光，却说不准是哪幅。'
-  fact: delft_records
-  regret_choice: '略过「找出能辨认一幅画的细节」，这处细节便留给下一位核对。'
-  bookend: '从「画留下来，账也留下来」开始，以员工留下的观察或更正收尾。'
-  share_line: '画留下来，账也留下来'
-  share_number: '1675'
+  fact: day_and_half
+  quote_line: '镜子至少不会让人付两回钱。'
+  regret_choice: '派古董商去，画卖得出去，《绘画艺术》也护得住，可他照旧在一天半里去世；派医生带舒缓贴去，他活过了十二月，家里的债却没有松。四颗要同一趟做齐，得带对路的东西。'
+  bookend: '从 1672 年画市崩塌开始，以 1866 年托雷-比尔热的作品目录收尾，中间是一个冬天里的债。'
+  share_line: '他在一天半里由好好的人到了去世，留下十一个孩子和一屋子卖不出去的画。'
+  share_number: '617'
+  knowing: 'rediscovery'
+  near: 'baker'
+  lever: 'p4'
+  missed: 'trustee'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

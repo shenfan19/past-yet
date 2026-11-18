@@ -281,7 +281,9 @@ export function lightRecord(D, ev, r, staffId, stayDays, tags = new Set()) {
       // with a planned arrival every fact, a full date, a year and month or a year alone, is ordered by its own date against the arrival, so the record runs
       // in the order of the calendar; without one, as in a story of the lunar calendar or before the common era, a fact of an earlier year or of the year
       // of the event comes before the arrival and a fact of a later year after the leaving
-      const since = !onDay && ev.date && Number.isFinite(year) ? Math.round((utc(year, mm || 1, dd || 1) - utc(ay, am, ad)) / 86400000) : null;
+      // a date known only to the year or the month is placed at the middle of what it covers, the first of July or the fifteenth, so it neither runs ahead of
+      // the dated facts of that year nor falls behind them all; a card that knows better gives stay_day
+      const since = !onDay && ev.date && Number.isFinite(year) ? Math.round((utc(year, mm || 7, dd || (mm ? 15 : 1)) - utc(ay, am, ad)) / 86400000) : null;
       const after = onDay ? stayDay > stayDays : since !== null ? since > stayDays : year > ev.year;
       const order = onDay ? stayDay : since !== null ? since : after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -1e7 + (year - ev.year) * 400 + (mm || 0) * 31 + (dd || 0);
       lines.push({ t: order, year, text: label + text, tag: 'history', kind: 'fact', id: f.id, key: f.id, fact: f.id, after, why: { kind: 'date', expr: f.date + ' · ' + f.id } });

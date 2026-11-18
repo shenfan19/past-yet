@@ -2,7 +2,7 @@ order: 80
 events:
   gaudi_barcelona:
     order: 117
-    build_step: 2
+    build_step: 4
     year: 1926
     date: '1926-05-26'
     stay: 2
@@ -12,23 +12,24 @@ events:
     field: architecture
     tier: 2
     channels: {L: 1, S: 1}
-    refs: [gaudi_barcelona_primary, gaudi_june_dates_archive, gaudi_workshop_chronology]
+    ready: true
+    refs: [gaudi_barcelona_primary, gaudi_june_dates_archive, gaudi_workshop_chronology, gaudi_bellesguard, gaudi_wiki, gaudi_sugranyes_cawiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["carpenter","archivist"]},{"trait":["handy","methodical"],"stat":{"will":6}}]}}
         - {id: p2, kind: persuade, day: 40, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":6}},{"trait":["methodical","handy"],"stat":{"will":7}}]}}
-        - {id: p3, kind: care, day: 12, req: {"any":[{"job":["paramedic","doctor","physician","nurse"],"item":"first_aid_kit"},{"trait":["vigil","kind"],"stat":{"constitution":8,"will":5}},{"provides":"heal","stat":{"will":6}}]}}
+        - {id: p3, kind: care, day: 12, req: {"any":[{"job":["paramedic","doctor","physician","nurse"],"item":"first_aid_kit"},{"trait":["vigil","kind"],"stat":{"constitution":8,"will":5}},{"provides":"heal","stat":{"will":6}}]}, overturns: [death, burial]}
       vignettes:
-        - {id: outline, traits: [handy, methodical]}
-        - {id: street, traits: [artistic, curious]}
-        - {id: copy}
+        - {id: tram, traits: [bold, streetwise, cheerful, wanderer, cosmopolitan, curious], day: 3}
+        - {id: stone, traits: [handy, methodical, patient, artistic, hardy], day: 6}
+        - {id: water, day: 45}
     text:
       en:
         name: "Struck by a tram"
         place: "Barcelona"
         figure: "Antoni Gaudí"
-        story: 'The Saint Barnabas tower on the Nativity façade was completed in 1925. The Sagrada Família was still unfinished when Gaudí died in 1926.'
+        story: 'On the evening of 7 June 1926 Antoni Gaudí, seventy three, was struck by a tram on the Gran Via in Barcelona. With no papers and in plain clothes he was taken for a beggar, and the taxis that were hailed would not stop. He died in the Hospital de la Santa Creu on 10 June and was buried at the Sagrada Família on 12 June. Domènec Sugranyes took over the direction of the works. On 20 July 1936 the workshop was set on fire, and most of the drawings and plaster models were lost.'
         relic: "A plaster model"
         relic_desc: "A small hanging model of a vault."
         points:
@@ -51,14 +52,14 @@ events:
             who: gaudi_barcelona
             bio: 'Gaudí survived the tram accident of June 1926. He returned to the Sagrada Família workshop and went on directing the work with Sugranyes for several more years.'
         vignettes:
-          outline: 'The clerk holds a plan so the visitor can see all the towers together. You shade the one that already stands. The visitor now has a landmark to look for outside.'
-          street: 'You ask the visitor to step to the next corner before looking up again. A finished shape on the plan was hidden from the first position. They mark where they stood.'
-          copy: 'You hand the plan back while it is still folded on the place the clerk showed you. They add a mark for the next visitor, who will approach from a different street.'
+          tram: 'On 29 May {staff} rides the length of the Gran Via on a tram, standing on the back platform. The conductor says the worst part of his job is not the fares but the people who cross reading the paper, and he rings the bell at every corner as if he were scolding the whole street.'
+          stone: 'On 1 June {staff} helps two masons at the site lower a carved block onto its bed of mortar. When the wind comes up, it whistles through the openings of the tower overhead, and the younger mason swears it hits the same note every afternoon, and that he has started to hum along.'
+          water: 'On 10 July, the hottest day yet, {staff} carries jugs for the water seller who comes to the site at noon. She says the stonecutters drink a barrel before the bell and then complain the water tastes of dust, which, she points out, it does because they do.'
       zh:
         name: "被电车撞倒"
         place: "巴塞罗那"
         figure: "安东尼·高迪"
-        story: '圣家堂诞生立面的圣巴拿巴钟塔于 1925 年完工。1926 年高迪去世时，整座教堂仍未完成。'
+        story: '1926 年 6 月 7 日傍晚，七十三岁的安东尼·高迪在巴塞罗那的大道上被电车撞倒。他没带证件，衣着朴素，被当成乞丐，路人拦了几辆出租车都不停。6 月 10 日，他在圣十字医院去世，12 日安葬在圣家堂。多梅内克·苏格拉涅斯接手主持工程。1936 年 7 月 20 日，工房被人放火，图纸和石膏模型大多毁掉。'
         relic: "一个石膏模型"
         relic_desc: "一个小小的悬挂式穹顶模型。"
         points:
@@ -81,9 +82,9 @@ events:
             who: gaudi_barcelona
             bio: '高迪挺过了 1926 年 6 月的电车事故。他回到圣家堂的工房，和苏格拉涅斯一起又主持了几年工程。'
         vignettes:
-          outline: '办事员举起图，让访客一次看见所有塔。你把已经立着的那座涂深一点。出去后，访客便有一处可以先找。'
-          street: '你请访客先走到下一个街角再抬头。图上那道已经完成的轮廓，在刚才的位置看不见。他记下了自己站在哪里。'
-          copy: '你把图折回办事员指给你看的那一面交还。他补了个记号，留给下一位从别条街走来的人。'
+          tram: '5 月 29 日，{staff}站在电车后平台上，从大道这头坐到那头。售票员说这份差事最难的不是收钱，是那些边看报边过马路的人。他每到一个路口就拉一下铃，像在数落整条街。'
+          stone: '6 月 1 日，{staff}帮工地上两个石匠把一块雕好的石头放到灰浆上。起风时，风从头顶塔身的孔洞里穿过去，吹出哨音。年轻的那个石匠发誓每天下午都是同一个音，他已经开始跟着哼了。'
+          water: '7 月 10 日，入夏最热的一天，{staff}替中午来工地的卖水女人提水罐。她说石匠们不到收工铃响就喝掉一整桶，喝完还嫌水里有灰味。她说那是当然，灰就是从他们身上掉进去的。'
 text:
   en:
     name: Antoni Gaudí
@@ -91,21 +92,87 @@ text:
   zh:
     name: 安东尼·高迪
     text: 加泰罗尼亚建筑师，1852 年生，1926 年去世。他在巴塞罗那的建筑，包括巴特略之家和圣家堂，使用取自自然的曲线形态。他 1926 年被电车撞死，圣家堂至今未完工。
-hook: {en: 'Which tower is already standing?', zh: '先认出已经立起的那座塔'}
+hook: {en: 'Nobody knew the old man on the tracks', zh: '倒在电车道上的老人没人认得'}
 facts:
   tower:
-    date: '1926'
+    date: '1925'
     checked: official_record
     level: usable
     use: [story, wiki]
     sources: [gaudi_barcelona_primary]
     text:
-      en: 'The Saint Barnabas tower on the Nativity façade was completed in 1925. The Sagrada Família was still unfinished when Gaudí died in 1926.'
-      zh: '圣家堂诞生立面的圣巴拿巴钟塔于 1925 年完工。1926 年高迪去世时，整座教堂仍未完成。'
+      en: 'The first of the bell towers on the east façade was completed in 1925. The Sagrada Família was still unfinished when Gaudí died in 1926.'
+      zh: '东立面的第一座钟塔在 1925 年完工。1926 年高迪去世时，圣家堂仍未完成。'
+  accident:
+    date: '1926-06-07'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [gaudi_bellesguard, gaudi_wiki]
+    text:
+      en: 'On the evening of 7 June 1926 Gaudí, crossing the Gran Via between Bailèn and Girona streets, was struck by a tram. Taken for a beggar, he was left lying; the taxis hailed for him would not stop, until a civil guard made one take him to a dispensary in the Ronda de Sant Pere, and from there he was moved to the Hospital de la Santa Creu.'
+      zh: '1926 年 6 月 7 日傍晚，高迪在大道上穿过拜伦街与赫罗纳街之间时被电车撞倒。他被当成乞丐，倒在那里没人管；路人拦了几辆出租车都不停，直到一名国民警卫逼一辆车把他送到圣佩雷环路的诊所，再转进圣十字医院。'
+    note: 'An accident: written as a plain fact.'
+    line:
+      en: '7 June 1926: on the Gran Via a tram knocks Gaudí down; taken for a beggar, he lies in the street while taxis pass.'
+      zh: '1926 年 6 月 7 日傍晚，高迪在大道上被电车撞倒，被当成乞丐，几辆出租车都不停。'
+  death:
+    date: '1926-06-10'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [gaudi_bellesguard, gaudi_wiki]
+    text:
+      en: 'Gaudí died in the Hospital de la Santa Creu at eight minutes past five in the afternoon of 10 June 1926, aged seventy three.'
+      zh: '1926 年 6 月 10 日下午五点零八分，高迪在圣十字医院去世，七十三岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '10 June 1926: Antoni Gaudí dies in the Hospital de la Santa Creu, aged seventy three.'
+      zh: '1926 年 6 月 10 日，安东尼·高迪在圣十字医院去世，七十三岁。'
+  burial:
+    date: '1926-06-12'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [gaudi_bellesguard, gaudi_wiki]
+    text:
+      en: 'On 12 June 1926 Gaudí was buried beneath the Sagrada Família.'
+      zh: '1926 年 6 月 12 日，高迪安葬在圣家堂地下。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '12 June 1926: Gaudí is buried beneath the Sagrada Família.'
+      zh: '1926 年 6 月 12 日，高迪安葬在圣家堂地下。'
+  succession:
+    date: '1926'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [gaudi_workshop_chronology, gaudi_sugranyes_cawiki]
+    text:
+      en: 'After the death of Gaudí in 1926 his disciple Domènec Sugranyes took over the direction of the works, which he led for ten years.'
+      zh: '1926 年高迪去世后，他的弟子多梅内克·苏格拉涅斯接手主持工程，主持了十年。'
+  workshop:
+    date: '1936-07-20'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [gaudi_sugranyes_cawiki, gaudi_workshop_chronology]
+    text:
+      en: 'On 20 July 1936, at the outbreak of the Spanish Civil War, the workshop Gaudí had used at the site was set on fire, and its documents, plans and many plaster models were destroyed.'
+      zh: '1936 年 7 月 20 日，西班牙内战爆发，高迪在工地上用过的工房被人放火，里面的文件、图纸和许多石膏模型都毁了。'
+    line:
+      en: '20 July 1936: the workshop is set on fire, and most of Gaudí''s drawings and models are lost.'
+      zh: '1936 年 7 月 20 日，工房被人放火，高迪的图纸和模型大多毁掉。'
 bystanders:
-  gaudi_barcelona_reader:
+  conductor:
     invented: true
-    text: {en: 'An invented site clerk taking a visitor past the drawings.', zh: '一位虚构的工地办事员，带访客看图。'}
+    text: {en: 'A tram conductor on the Gran Via, made up for the game.', zh: '一个编出来的大道电车售票员。'}
+  mason:
+    invented: true
+    text: {en: 'A young mason at the site, made up for the game.', zh: '一个编出来的工地年轻石匠。'}
+  water_seller:
+    invented: true
+    text: {en: 'A woman who sells water at the site at noon, made up for the game.', zh: '一个编出来的中午来工地卖水的女人。'}
 wiki:
   refs:
     gaudi_june_dates_archive:
@@ -120,17 +187,40 @@ wiki:
       text:
         en: 'Sagrada Família building chronology, succession and 1936 damage https://sagradafamilia.org/es/historia-del-templo/'
         zh: '圣家堂工程年表、接任与 1936 年损毁 https://sagradafamilia.org/es/historia-del-templo/'
+    gaudi_bellesguard:
+      order: 4
+      status: checked
+      text:
+        en: 'Bellesguard Gaudí, how and at what age the architect Antoni Gaudí died. https://bellesguardgaudi.com/en/how-and-at-what-age-did-the-architect-antoni-gaudi-die/'
+        zh: '高迪贝列斯瓜德故居，建筑师高迪怎样去世、去世时几岁。 https://bellesguardgaudi.com/en/how-and-at-what-age-did-the-architect-antoni-gaudi-die/'
+    gaudi_wiki:
+      order: 5
+      status: checked
+      text:
+        en: 'Wikipedia, Antoni Gaudí. https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD'
+        zh: '维基百科，安东尼·高迪。 https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD'
+    gaudi_sugranyes_cawiki:
+      order: 6
+      status: checked
+      text:
+        en: 'Viquipèdia, Domènec Sugrañes i Gras. https://ca.wikipedia.org/wiki/Dom%C3%A8nec_Sugra%C3%B1es_i_Gras'
+        zh: '加泰罗尼亚语维基百科，多梅内克·苏格拉涅斯。 https://ca.wikipedia.org/wiki/Dom%C3%A8nec_Sugra%C3%B1es_i_Gras'
     gaudi_barcelona_primary:
       order: 181
       status: checked
       text:
-        en: 'Sagrada Família, Brief History, archival photograph and chronology of the Nativity façade and Saint Barnabas bell tower. https://sagradafamilia.org/documents/20142/1205286/SF_Booklet_02_20240405_digital_AF.pdf/'
-        zh: 'Sagrada Família, Brief History, archival photograph and chronology of the Nativity façade and Saint Barnabas bell tower. https://sagradafamilia.org/documents/20142/1205286/SF_Booklet_02_20240405_digital_AF.pdf/'
+        en: 'Sagrada Família, Brief History, archival photograph and chronology of the east façade and its first bell tower. https://sagradafamilia.org/documents/20142/1205286/SF_Booklet_02_20240405_digital_AF.pdf/'
+        zh: '圣家堂《简史》，东立面与第一座钟塔的档案照片和年表。 https://sagradafamilia.org/documents/20142/1205286/SF_Booklet_02_20240405_digital_AF.pdf/'
 self_check:
-  quote_line: '办事员举起图，让访客一次看见所有塔。'
-  fact: tower
-  regret_choice: '略过「在图上认出一处已经完工的部位」，这处细节便留给下一位核对。'
-  bookend: '从「先认出已经立起的那座塔」开始，以员工留下的观察或更正收尾。'
-  share_line: '先认出已经立起的那座塔'
-  share_number: '1926'
+  fact: accident
+  quote_line: '他每到一个路口就拉一下铃，像在数落整条街。'
+  regret_choice: '派带急救包的护士去，6 月 7 日傍晚他被立刻送医、活了下来，可工房的交接和照片另存要会做木工或理档的人；只派一个人，往往只顾得上一头。'
+  bookend: '从 1925 年第一座钟塔完工开始，以 1936 年工房被烧收尾，中间是他最后一个六月。'
+  share_line: '世界上最有名的建筑师之一，倒在电车道上时被当成了乞丐。'
+  share_number: '73'
+  knowing: 'workshop'
+  near: 'accident'
+  lever: 'p3'
+  missed: 'burial'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

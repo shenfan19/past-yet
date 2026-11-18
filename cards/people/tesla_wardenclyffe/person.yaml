@@ -2,7 +2,7 @@ order: 191
 events:
   tesla_wardenclyffe:
     order: 111
-    build_step: 2
+    build_step: 4
     year: 1901
     date: '1901-09-07'
     stay: 4
@@ -12,7 +12,8 @@ events:
     field: technology
     tier: 2
     channels: {T: 1, V: 1}
-    refs: [tesla_wardenclyffe_white, tesla_wardenclyffe_site, tesla_wardenclyffe_white_quotes, tesla_wardenclyffe_site_history, tesla_wardenclyffe_nps_lab]
+    ready: true
+    refs: [tesla_wardenclyffe_white, tesla_wardenclyffe_site, tesla_wardenclyffe_white_quotes, tesla_wardenclyffe_site_history, tesla_wardenclyffe_nps_lab, tesla_wardenclyffe_wiki, tesla_wardenclyffe_society, tesla_marconi_parks_canada, tesla_marconi_ethw]
     scene:
       star_rules: 2
       points:
@@ -20,17 +21,17 @@ events:
         - {id: p2, kind: notice, day: 23, req: {"any":[{"job":["archivist","carpenter","proofreader"]},{"trait":["handy","methodical","curious"],"stat":{"wit":6}}]}}
         - {id: p3, kind: persuade, day: 55, req: {"any":[{"job":["archivist","carpenter"],"stat":{"wit":7,"will":7}},{"trait":["handy","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
-        - {id: revision, traits: [methodical, handy, curious]}
-        - {id: print, traits: [ambitious, glib, scholarly]}
-        - {id: empty}
+        - {id: timber, traits: [handy, hardy, cheerful, streetwise], day: 30}
+        - {id: signal, traits: [curious, scholarly, bold, cosmopolitan, ambitious], day: 99}
+        - {id: watch, day: 110}
     text:
       en:
         name: 'The line marked proposed'
         place: "Shoreham, Long Island"
         figure: "Nikola Tesla"
-        story: 'Tesla’s 1901 correspondence with architect Stanford White concerns the Wardenclyffe buildings. The site was intended for a wireless system for communications and energy.'
-        relic: 'A retained drawing copy'
-        relic_desc: 'A fictional copy filed during the Wardenclyffe works.'
+        story: 'In March 1901 J. Pierpont Morgan agreed to put 150,000 dollars into a wireless station for Nikola Tesla. The architect Stanford White designed the buildings at Wardenclyffe on Long Island, and that year Tesla wrote to him several times about the tower and the laboratory. Building began in September. In December Marconi heard a signal sent across the Atlantic. Tesla moved his laboratory into the brick building in June 1902; in July 1903 Morgan wrote that he would advance no more money. The tower was blown up in 1917.'
+        relic: 'A drawing copy'
+        relic_desc: 'A copy of a Wardenclyffe plan sheet, folded twice, with a date in pencil under the fold.'
         points:
           p1: 'When the September bids come in high, register the original and revised drawings separately at Wardenclyffe so the work can still start that year'
           p2: 'Have White list the laboratory work already agreed apart from the tower work still awaiting bids and give the foreman a separate account for each'
@@ -51,16 +52,16 @@ events:
             who: tesla_wardenclyffe
             bio: 'Tesla envisioned Wardenclyffe as part of a wireless communication and power system. Turning it into a site also required bids, financing and building schedules.'
         vignettes:
-          revision: 'The foreman has a page that says to use the latest drawing. Mabel lays two drawings on the desk; both bear the same heading. You find the pencilled date under a fold and send the newer copy to the yard. You mark the older one as superseded before anyone can collect it by mistake.'
-          print: 'Joe has set a line saying power is being sent from the site. He needs a full line to keep the notice balanced. You give him a sentence about what the site is being built to test. He reads the notice aloud, once as it was and once as it will go out, and keeps the new line.'
-          empty: 'You remember what will later remain of the tower. Mabel wants a place to file the result that nobody has brought from the yard. You make a folder for the proposed building and leave its results sleeve empty. You will not be there if the next shift brings anything to put in it.'
+          timber: 'Early in October {staff} helps a carter get a load of planks up the sandy track to the site, one shoulder under the tailboard each time the wheels sink. The carter says the farmers down the road have started timing their hens by the hammering, and they lay best on the days the yard is quiet.'
+          signal: 'In mid December a boy comes up from the station waving a paper: Marconi has heard a signal from across the ocean. The foreman holds the page at arm''s length and asks {staff} whether a dot can really get that far. {staff} says it can, and the foreman folds the paper into his coat and tells the men to keep hammering.'
+          watch: 'Late in December {staff} sits a night out with the watchman in the plank shed on the bluff, stuffing old newspapers into the cracks against the wind off the Sound. The watchman reads out the price of coal from one of them and says a tower that tall had better be worth the draught.'
       zh:
         name: '那一行写着拟建'
         place: "长岛肖勒姆"
         figure: "尼古拉·特斯拉"
-        story: '特斯拉1901年与建筑师斯坦福·怀特的通信涉及沃登克里弗的建筑工程。这个场地为计划中的无线通信与传能系统而建。'
-        relic: '一份留底的图纸'
-        relic_desc: '沃登克里弗工地图纸副本。'
+        story: '1901 年 3 月，J.P. 摩根答应出资十五万美元，给尼古拉·特斯拉建一座无线电站。建筑师斯坦福·怀特设计了长岛沃登克里弗的房子，这一年特斯拉为塔和实验楼几次写信给他。9 月工地动工。12 月，马可尼收到了一个越过大西洋的信号。1902 年 6 月，特斯拉把实验室搬进砖楼；1903 年 7 月，摩根回信说不再追加款项。1917 年，塔被炸掉。'
+        relic: '一份图纸副本'
+        relic_desc: '一张沃登克里弗图纸的副本，折了两道，折角底下有铅笔写的日期。'
         points:
           p1: '九月收到超支估价后，在沃登克里弗把旧图及修订图分别签收，护住当年仍能开工的建筑'
           p2: '请怀特把已能确定的实验楼工程和仍待换报价的塔身分开给工头，两套账各有一页'
@@ -81,9 +82,9 @@ events:
             who: tesla_wardenclyffe
             bio: '特斯拉把沃登克里弗设想为无线通信和输电系统的一环。建设过程还要面对各轮报价、筹款和施工安排。'
         vignettes:
-          revision: '工头那一页写着按新图施工。梅布尔在桌上摊开两份图，抬头一模一样。你掀开折角，找到铅笔写的日期，把较新的那张送去场上，并在旧图上标出作废，免得有人拿错。'
-          print: '乔已经排了一行，说场地正在把电能送出去。他需要一整行来撑住版面。你给他一句话，写场地建起来准备试什么。他把原句和要印出的句子各念一遍，最后留下新的一行。'
-          empty: '你记得后来塔会剩下什么。梅布尔想找个地方放试验结果，可场上还没人送来。你替拟建工程建了一册档，结果袋留空。下一班若真有人拿来东西，你已不在。'
+          timber: '十月初，{staff}帮一个车夫把一车木板拉上通往工地的沙路，轮子每陷一回，就拿肩膀顶一回后挡板。车夫说路那头的农户已经拿这边的锤子声给母鸡定钟点了，工地歇工那几天，鸡下蛋下得最勤。'
+          signal: '十二月中旬，一个男孩挥着报纸从车站跑上来：马可尼收到了大洋那边发来的信号。工头把报纸举得老远，问{staff}一个点真能跑那么远吗。{staff}说能。工头把报纸折好塞进外套，叫工人接着敲。'
+          watch: '十二月下旬，{staff}陪守夜人在崖上的木板棚里坐了一夜，把旧报纸往墙缝里塞，挡海湾吹来的风。守夜人从一张报纸上念出煤价，说塔盖这么高，最好值得这么漏风。'
 text:
   en:
     name: Nikola Tesla
@@ -91,17 +92,92 @@ text:
   zh:
     name: 尼古拉·特斯拉
     text: 塞尔维亚裔美国发明家，1856 年生，1943 年去世。他发展了交流电系统和感应电动机。1901 年他在长岛沃登克里弗开始建造一座用于无线传输的大塔，项目后来因资金耗尽而中止。
-hook: {en: 'One stamp will send a promise to print.', zh: '盖一下章，承诺就要付印。'}
+hook: {en: 'Two drawings, the same heading', zh: '两张图，抬头一模一样'}
 facts:
+  morgan:
+    date: '1901-03'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tesla_wardenclyffe_wiki, tesla_wardenclyffe_society]
+    text:
+      en: 'In March 1901 J. Pierpont Morgan signed a contract with Tesla to provide 150,000 dollars for a wireless station on Long Island.'
+      zh: '1901 年 3 月，J.P. 摩根与特斯拉签约，出资十五万美元在长岛建一座无线电站。'
+    line:
+      en: 'March 1901: Morgan agrees to put 150,000 dollars into a wireless station for Tesla.'
+      zh: '1901 年 3 月，摩根答应出资十五万美元，给特斯拉建一座无线电站。'
   white:
     date: '1901'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [tesla_wardenclyffe_white]
     text:
       en: 'The archival finding aid lists three 1901 letters to Stanford White about the construction of the Wardenclyffe tower and building.'
       zh: '档案指南列有三封1901年致斯坦福·怀特、涉及沃登克里弗塔和实验楼施工的信。'
+    line:
+      en: '1901: Tesla writes to the architect Stanford White about the Wardenclyffe tower and building.'
+      zh: '1901 年，特斯拉为沃登克里弗的塔和实验楼写信给建筑师斯坦福·怀特。'
+  building:
+    date: '1901-09'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tesla_wardenclyffe_wiki, tesla_wardenclyffe_site_history]
+    text:
+      en: 'Construction of the Wardenclyffe laboratory and tower began in 1901; Wikipedia gives September.'
+      zh: '沃登克里弗的实验楼和塔在 1901 年动工，维基百科写 9 月。'
+    line:
+      en: 'September 1901: building begins at Wardenclyffe.'
+      zh: '1901 年 9 月，沃登克里弗工地动工。'
+  marconi:
+    date: '1901-12-12'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tesla_marconi_parks_canada, tesla_marconi_ethw]
+    text:
+      en: 'On 12 December 1901 Guglielmo Marconi, at Signal Hill in St. John''s, Newfoundland, received the Morse letter S sent by wireless from Poldhu in Cornwall.'
+      zh: '1901 年 12 月 12 日，古列尔莫·马可尼在纽芬兰圣约翰斯的信号山，收到从英国康沃尔的波尔杜无线发出的摩尔斯字母 S。'
+    line:
+      en: '12 December 1901: at Signal Hill in Newfoundland, Marconi hears the letter S sent from Cornwall.'
+      zh: '1901 年 12 月 12 日，马可尼在纽芬兰的信号山收到从康沃尔发来的字母 S。'
+  laboratory:
+    date: '1902-06'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tesla_wardenclyffe_wiki, tesla_wardenclyffe_nps_lab]
+    text:
+      en: 'In June 1902 Tesla began moving his laboratory work into the brick building at Wardenclyffe, where he worked until 1906.'
+      zh: '1902 年 6 月，特斯拉开始把实验室搬进沃登克里弗的砖楼，在那里一直工作到 1906 年。'
+    line:
+      en: 'June 1902: Tesla moves his laboratory into the brick building at Wardenclyffe.'
+      zh: '1902 年 6 月，特斯拉把实验室搬进沃登克里弗的砖楼。'
+  no_more:
+    date: '1903-07'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tesla_wardenclyffe_wiki, tesla_wardenclyffe_society]
+    text:
+      en: 'In July 1903, after letters from Tesla asking for help, Morgan replied that he did not feel disposed at present to make any further advances; by then the backing of the project was coming to an end.'
+      zh: '1903 年 7 月，特斯拉几次写信求助之后，摩根回信说眼下不打算再追加款项；工程的资金到这时已经难以为继。'
+    line:
+      en: 'July 1903: Morgan writes that he will make no further advances.'
+      zh: '1903 年 7 月，摩根回信说不再追加款项。'
+  demolished:
+    date: '1917-07-04'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tesla_wardenclyffe_wiki, tesla_wardenclyffe_society]
+    text:
+      en: 'On 4 July 1917 the Smiley Steel Company began blowing up the Wardenclyffe tower; the work went on into September.'
+      zh: '1917 年 7 月 4 日，斯迈利钢铁公司开始炸毁沃登克里弗的塔，一直拆到 9 月。'
+    line:
+      en: '4 July 1917: the Wardenclyffe tower is blown up.'
+      zh: '1917 年 7 月 4 日，沃登克里弗的塔被炸掉。'
   site:
     date: '1902'
     checked: official_record
@@ -112,12 +188,15 @@ facts:
       en: 'The laboratory and tower site survive. The Register account describes the proposed wireless delivery of power and communications and lists the use of the laboratory from 1902 to 1906.'
       zh: '实验室与塔址尚存。遗址资料记载拟议中的无线供能和通信系统，也列出实验室在1902至1906年间的使用。'
 bystanders:
-  mabel:
+  carter:
     invented: true
-    text: {en: 'A fictional clerk routing plan sheets to the yard.', zh: '虚构文员梅布尔，把图纸送到工地。'}
-  joe:
+    text: {en: 'A carter hauling planks up to the site, made up for the game.', zh: '一个编出来的车夫，往工地拉木板。'}
+  foreman:
     invented: true
-    text: {en: 'A fictional compositor who needs a replacement line before the print goes out.', zh: '虚构排字工乔，开印前还缺一句替换句。'}
+    text: {en: 'A foreman at Wardenclyffe, made up for the game.', zh: '一个编出来的沃登克里弗工头。'}
+  watchman:
+    invented: true
+    text: {en: 'A night watchman in the plank shed on the bluff, made up for the game.', zh: '一个编出来的守夜人，守在崖上的木板棚里。'}
 wiki:
   refs:
     tesla_wardenclyffe_white_quotes:
@@ -138,6 +217,30 @@ wiki:
       text:
         en: 'National Park Service property record https://www.nps.gov/places/wardenclyffe-laboratory.htm'
         zh: '美国国家公园管理局遗址档案 https://www.nps.gov/places/wardenclyffe-laboratory.htm'
+    tesla_wardenclyffe_wiki:
+      order: 13
+      status: checked
+      text:
+        en: 'Wikipedia, Wardenclyffe Tower. https://en.wikipedia.org/wiki/Wardenclyffe_Tower'
+        zh: '维基百科，沃登克里弗塔。 https://en.wikipedia.org/wiki/Wardenclyffe_Tower'
+    tesla_wardenclyffe_society:
+      order: 14
+      status: checked
+      text:
+        en: 'Tesla Memorial Society of New York, Wardenclyffe, with reports from the Port Jefferson Echo and the New York Sun. https://teslasociety.com/warden.htm'
+        zh: '纽约特斯拉纪念协会，沃登克里弗，附当年地方报纸的报道。 https://teslasociety.com/warden.htm'
+    tesla_marconi_parks_canada:
+      order: 15
+      status: checked
+      text:
+        en: 'Parks Canada, Signal Hill National Historic Site, transatlantic wireless of 12 December 1901. https://parks.canada.ca/culture/designation/lieu-site/signal-hill'
+        zh: '加拿大国家公园管理局，信号山国家历史遗址，1901 年 12 月 12 日跨大西洋无线电。 https://parks.canada.ca/culture/designation/lieu-site/signal-hill'
+    tesla_marconi_ethw:
+      order: 16
+      status: checked
+      text:
+        en: 'IEEE Milestones, Reception of Transatlantic Radio Signals, 1901. https://ethw.org/Milestones:Reception_of_Transatlantic_Radio_Signals,_1901'
+        zh: 'IEEE 里程碑，1901 年接收跨大西洋无线电信号。 https://ethw.org/Milestones:Reception_of_Transatlantic_Radio_Signals,_1901'
     tesla_wardenclyffe_white:
       order: 849
       status: checked
@@ -151,15 +254,15 @@ wiki:
         en: 'U.S. National Park Service, Wardenclyffe Laboratory historic site https://www.nps.gov/places/wardenclyffe-laboratory.htm'
         zh: '美国国家公园管理局，沃登克里弗实验室遗址 https://www.nps.gov/places/wardenclyffe-laboratory.htm'
 self_check:
-  fact: white
-  quote_line: '结果袋留空。'
-  regret_choice: 'print 保住好看的整行，可能把目标印成业绩。'
-  bookend: '从一行印字到一只等报告的袋子。'
-  share_line: '拟建是一行字，试验结果还没到。'
-  share_number: 'revision 两版图，保留一版执行。'
-  knowing: 'empty 知道后世只剩塔址。'
-  near: 'white 年份与工地在馆藏档案中有据。'
-  lever: 'revision 让工头收到正确图。'
-  missed: 'empty 看不到下一班送来的结果。'
-  brought: 'revision 带回一页虚构的图纸副本。'
+  fact: marconi
+  quote_line: '工头把报纸折好塞进外套，叫工人接着敲。'
+  regret_choice: '派会看图的木匠去，图纸和分账都理得清，可最后那颗分段拨款要才智和意志都够；派只会干力气活的人，九月那一摞估价就让工地停了季。'
+  bookend: '从 1901 年 3 月摩根答应出钱开始，以 1917 年塔被炸掉收尾，中间是员工在工地上的四个月。'
+  share_line: '他们在盖一座塔，那一年马可尼先收到了大洋对岸的信号。'
+  share_number: '150000'
+  knowing: 'demolished'
+  near: 'building'
+  lever: 'p3'
+  missed: 'no_more'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -2,7 +2,7 @@ order: 111
 events:
   kafka_kierling:
     order: 118
-    build_step: 2
+    build_step: 4
     year: 1924
     date: '1924-05-01'
     stay: 2
@@ -12,7 +12,8 @@ events:
     field: literature
     tier: 1
     channels: {E: 3, G: 2}
-    refs: [kafka_kierling_primary, kafka_morgan_proofs, kafka_kierling_chronology]
+    ready: true
+    refs: [kafka_kierling_primary, kafka_morgan_proofs, kafka_kierling_chronology, kafka_wiki, kafka_larynx_pmc]
     scene:
       star_rules: 2
       points:
@@ -21,15 +22,15 @@ events:
         - {id: p3, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","nurse","pharmacist","paramedic"],"item":"painkiller"},{"job":["doctor","physician"],"stat":{"wit":7}}]}}
         - {id: p4, kind: persuade, day: 25, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
-        - {id: sound, traits: [artistic, curious]}
-        - {id: mark, traits: [methodical, vigil]}
-        - {id: packet}
+        - {id: lilac, traits: [kind, sensitive, attached, patient, quiet, calm], day: 12}
+        - {id: post, traits: [methodical, curious, bold, cheerful, streetwise, wanderer], day: 22}
+        - {id: rain, day: 45}
     text:
       en:
         name: "Proofs in the sanatorium"
         place: "Kierling"
         figure: "Franz Kafka"
-        story: 'The 1924 edition of A Hunger Artist contains four stories, including Josephine the Singer, or the Mouse Folk.'
+        story: 'In March 1924 tuberculosis reached the larynx of Franz Kafka, and swallowing became hard. On 19 April he came to the Hoffmann sanatorium at Kierling near Klosterneuburg, with Dora Diamant; he was told not to speak, and talked mostly on slips of paper. Around 6 May the medical student Robert Klopstock came to help care for him. On 2 June he was still correcting the proofs of his collection A Hunger Artist. He died around noon on 3 June, aged forty, and was buried in Prague on 11 June. The book of four stories came out in Berlin at the end of August.'
         relic: "A page of proofs"
         relic_desc: "A galley proof with small corrections in pencil."
         points:
@@ -57,14 +58,14 @@ events:
             who: kafka_kierling
             bio: 'Kafka saw a copy bound from the final proofs before he died. The printed edition kept the selection and order he approved.'
         vignettes:
-          sound: 'The messenger reads the singer''s title aloud and asks why anyone would doubt what they hear. You have them read the same line to two listeners. The answers differ before you say a word.'
-          mark: 'A proof mark sits between two lines. You ask the messenger which line they would change if all they had was this page. They move the mark before it can be taken the wrong way.'
-          packet: 'You straighten the loose sheets while the messenger checks the contents. The last story goes in its own fold, with the page number showing.'
+          lilac: 'On 13 May {staff} helps the sanatorium gardener cut back the lilac by the fence. The gardener says it flowered a week late this year and the bees have not forgiven it; he swears they come to the kitchen window now just to complain.'
+          post: 'On 23 May {staff} walks down to the post office in Klosterneuburg with the sanatorium''s errand boy. The boy says he can tell where a letter comes from without reading it: the ones from Berlin are fat and stiff with paper, the ones from Prague thin and come every day.'
+          rain: 'In the middle of June {staff} shelters from a cloudburst in the doorway of the village baker. The baker''s wife watches the street turn into a stream and says the Kierling brook only ever floods when she has just scrubbed the step.'
       zh:
         name: "疗养院里的校样"
         place: "基尔灵"
         figure: "弗朗茨·卡夫卡"
-        story: '卡夫卡 1924 年的《饥饿艺术家》收四篇小说，包括《女歌手约瑟芬，或鼠族》。'
+        story: '1924 年 3 月，结核侵入弗朗茨·卡夫卡的喉头，他咽东西越来越难。4 月 19 日，他和朵拉·迪亚曼特来到克洛斯特新堡附近基尔灵的霍夫曼疗养院；医生让他少说话，他多半靠纸条交谈。5 月 6 日前后，医学生罗伯特·克洛普施托克赶来帮着照料。6 月 2 日，他还在校故事集《饥饿艺术家》的校样。6 月 3 日中午前后，他去世，四十岁，11 日葬于布拉格。这本收了四篇小说的书，8 月底在柏林出版。'
         relic: "一页校样"
         relic_desc: "一页印刷校样，上面有铅笔改的小字。"
         points:
@@ -92,31 +93,115 @@ events:
             who: kafka_kierling
             bio: '卡夫卡生前看到一册按最后校样装订的故事集。正式出版时出版社保留了他选定的篇目和次序。'
         vignettes:
-          sound: '送稿人念出女歌手的篇名，问听见了还有什么可怀疑。你让他把同一句念给两个人听。你还没说话，两人的回答已经不一样。'
-          mark: '校样上一处记号落在两行之间。你问送稿人，如果手头只有这张纸，他会改哪行。他先把记号移准，免得带回去被人改错。'
-          packet: '送稿人查目录时，你理平散页。最后一篇另折进去，页码露在外面。'
+          lilac: '5 月 13 日，{staff}帮疗养院的园丁修剪篱笆边的丁香。园丁说今年丁香晚开了一个星期，蜜蜂到现在还没原谅它，天天飞到厨房窗口来抱怨。'
+          post: '5 月 23 日，{staff}跟疗养院跑腿的男孩走下坡去克洛斯特新堡的邮局。男孩说他不用看就知道信从哪儿来：柏林来的又厚又硬，全是纸；布拉格来的薄，天天都有。'
+          rain: '六月中旬，{staff}被一场急雨堵在村里面包铺的门洞下。面包师的妻子看着街面变成一条河，说基尔灵的小溪只在她刚刷完门口台阶的时候才漫上来。'
 text:
   en:
     name: Franz Kafka
     text: Writer of Prague who wrote in German, 1883 to 1924. He worked in an insurance office and left most of his work unpublished, asking a friend to burn it. Max Brod published The Trial and The Castle. He died of tuberculosis in a sanatorium at Kierling.
   zh:
     name: 弗朗茨·卡夫卡
-    text: 用德语写作的布拉格作家，1883 年生，1924 年去世。他在保险公司工作，大部分作品没有发表，并请朋友烧掉。马克斯·布罗德出版了《审判》和《城堡》。他在基尔林的疗养院死于肺结核。
-hook: {en: 'Can the next reader see the small change?', zh: '下一位读者能看出改过吗'}
+    text: 用德语写作的布拉格作家，1883 年生，1924 年去世。他在保险公司工作，大部分作品没有发表，并请朋友烧掉。马克斯·布罗德出版了《审判》和《城堡》。他在基尔灵的疗养院死于肺结核。
+hook: {en: 'He talked on slips of paper', zh: '他靠一张张纸条说话'}
 facts:
-  four_stories:
-    date: '1924'
+  larynx:
+    date: '1924-03'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [kafka_kierling_chronology, kafka_larynx_pmc]
+    text:
+      en: 'Around 20 March 1924 Kafka first had trouble swallowing, and tuberculosis of the larynx was suspected; examinations in April confirmed it. Swallowing became so painful that he could hardly eat, and his doctors injected the laryngeal nerve against the pain every eight to ten days.'
+      zh: '1924 年 3 月 20 日前后，卡夫卡开始吞咽困难，医生怀疑是喉结核，4 月的检查证实了。后来吞咽痛得他几乎吃不下东西，医生每隔八到十天给他的喉上神经注射一次止痛。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: 'March 1924: Kafka begins to have trouble swallowing; tuberculosis has reached his larynx.'
+      zh: '1924 年 3 月，卡夫卡开始咽东西困难，结核到了喉头。'
+  kierling:
+    date: '1924-04-19'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [kafka_kierling_chronology, kafka_wiki]
+    text:
+      en: 'Kafka came to the sanatorium of Hugo Hoffmann at Kierling near Klosterneuburg, the Kafka Society chronology gives 19 April 1924, and had a room with a balcony over the garden. Dora Diamant took a guest room and was allowed to cook for him. Ordered to rest his voice, he talked mostly on small slips of paper.'
+      zh: '卡夫卡住进克洛斯特新堡附近基尔灵的胡戈·霍夫曼疗养院，卡夫卡协会的年表记在 1924 年 4 月 19 日，房间带阳台，望得见花园。朵拉·迪亚曼特住进一间客房，获准给他做饭。医生让他禁声，他多半在小纸条上写字交谈。'
+    line:
+      en: '19 April 1924: Kafka and Dora Diamant come to the Hoffmann sanatorium at Kierling; he talks on slips of paper.'
+      zh: '1924 年 4 月 19 日，卡夫卡和朵拉·迪亚曼特住进基尔灵的霍夫曼疗养院，他开始靠纸条说话。'
+  klopstock:
+    date: '1924-05-06'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [kafka_kierling_primary]
+    use: [story, history, wiki]
+    sources: [kafka_kierling_chronology]
     text:
-      en: 'The 1924 edition of A Hunger Artist contains four stories, including Josephine the Singer, or the Mouse Folk.'
-      zh: '卡夫卡 1924 年的《饥饿艺术家》收四篇小说，包括《女歌手约瑟芬，或鼠族》。'
+      en: 'Around 6 May 1924 Robert Klopstock, a Hungarian medical student whom Kafka had met in a sanatorium in the High Tatras in 1921, came to Kierling to share the nursing and relieve Dora Diamant.'
+      zh: '1924 年 5 月 6 日前后，匈牙利医学生罗伯特·克洛普施托克来到基尔灵，帮着照料，替朵拉·迪亚曼特分担。卡夫卡 1921 年在高塔特拉山的疗养院认识了他。'
+    line:
+      en: 'About 6 May 1924: the medical student Robert Klopstock comes to Kierling to help with the nursing.'
+      zh: '1924 年 5 月 6 日前后，医学生罗伯特·克洛普施托克来到基尔灵，帮着照料。'
+  last_proofs:
+    date: '1924-06-02'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [kafka_kierling_chronology, kafka_morgan_proofs]
+    text:
+      en: 'On 2 June 1924 Kafka was still working on the corrections of the proofs of his collection A Hunger Artist. In his last letter, finished by Dora Diamant when he grew too tired, he asked his parents not to visit.'
+      zh: '1924 年 6 月 2 日，卡夫卡还在校故事集《饥饿艺术家》的校样。他在最后一封信里请父母不要来看他，写到一半没了力气，由朵拉·迪亚曼特替他写完。'
+    line:
+      en: '2 June 1924: Kafka is still correcting the proofs of A Hunger Artist.'
+      zh: '1924 年 6 月 2 日，卡夫卡还在校《饥饿艺术家》的校样。'
+  death:
+    date: '1924-06-03'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [kafka_kierling_chronology, kafka_wiki]
+    text:
+      en: 'Kafka died at Kierling around noon on 3 June 1924, a month before his forty first birthday.'
+      zh: '1924 年 6 月 3 日中午前后，卡夫卡在基尔灵去世，离四十一岁生日还差一个月。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '3 June 1924: Franz Kafka dies at Kierling, aged forty.'
+      zh: '1924 年 6 月 3 日，弗朗茨·卡夫卡在基尔灵去世，四十岁。'
+  burial:
+    date: '1924-06-11'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [kafka_kierling_chronology, kafka_wiki]
+    text:
+      en: 'His body was taken back to Prague, with Dora Diamant and Robert Klopstock on the same train, and he was buried there on 11 June 1924.'
+      zh: '他的遗体运回布拉格，朵拉·迪亚曼特和罗伯特·克洛普施托克坐同一班火车同行，6 月 11 日葬在那里。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '11 June 1924: Kafka is buried in Prague.'
+      zh: '1924 年 6 月 11 日，卡夫卡葬于布拉格。'
+  four_stories:
+    date: '1924-08'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [kafka_kierling_primary, kafka_kierling_chronology]
+    text:
+      en: 'At the end of August 1924 the last book Kafka had prepared himself, Ein Hungerkünstler, four stories, came out from Die Schmiede in Berlin. It includes Josephine the Singer, or the Mouse Folk.'
+      zh: '1924 年 8 月底，卡夫卡生前亲手编定的最后一本书《饥饿艺术家，四篇小说》由柏林的铁匠铺出版社出版，其中收了《女歌手约瑟芬，或鼠族》。'
+    line:
+      en: 'End of August 1924: A Hunger Artist, four stories, comes out in Berlin.'
+      zh: '1924 年 8 月底，《饥饿艺术家》四篇小说集在柏林出版。'
 bystanders:
-  kafka_kierling_reader:
+  gardener:
     invented: true
-    text: {en: 'An invented messenger collecting proof sheets.', zh: '一位虚构的送稿人，来收校样。'}
+    text: {en: 'The gardener of the sanatorium at Kierling, made up for the game.', zh: '一个编出来的基尔灵疗养院园丁。'}
+  errand_boy:
+    invented: true
+    text: {en: 'The errand boy of the sanatorium, made up for the game.', zh: '一个编出来的疗养院跑腿男孩。'}
+  baker_wife:
+    invented: true
+    text: {en: 'The wife of the village baker at Kierling, made up for the game.', zh: '一个编出来的基尔灵面包师的妻子。'}
 wiki:
   refs:
     kafka_morgan_proofs:
@@ -131,17 +216,34 @@ wiki:
       text:
         en: 'Austrian Franz Kafka Society, 1924 Kierling chronology. https://www.franzkafka.at/studien-gedenkraum/kafka-in-kierling/1924'
         zh: '奥地利弗朗茨·卡夫卡协会，1924 年基尔灵年表。 https://www.franzkafka.at/studien-gedenkraum/kafka-in-kierling/1924'
+    kafka_wiki:
+      order: 838
+      status: checked
+      text:
+        en: 'Wikipedia, Franz Kafka. https://en.wikipedia.org/wiki/Franz_Kafka'
+        zh: '维基百科，弗朗茨·卡夫卡。 https://en.wikipedia.org/wiki/Franz_Kafka'
+    kafka_larynx_pmc:
+      order: 839
+      status: checked
+      text:
+        en: 'Felisati and Sperati, Franz Kafka (1883-1924), Acta Otorhinolaryngologica Italica 25, 2005. https://pmc.ncbi.nlm.nih.gov/articles/PMC2639911'
+        zh: '费利萨蒂与斯佩拉蒂，《弗朗茨·卡夫卡（1883-1924）》，《意大利耳鼻喉科学报》2005 年第 25 卷。 https://pmc.ncbi.nlm.nih.gov/articles/PMC2639911'
     kafka_kierling_primary:
       order: 193
       status: checked
       text:
         en: 'Franz Kafka, Ein Hungerkünstler: Vier Geschichten, Berlin, 1924, first-edition scan and transcription. https://de.wikisource.org/wiki/Ein_Hungerk%C3%BCnstler_(Sammelband)'
-        zh: 'Franz Kafka, Ein Hungerkünstler: Vier Geschichten, Berlin, 1924, first-edition scan and transcription. https://de.wikisource.org/wiki/Ein_Hungerk%C3%BCnstler_(Sammelband)'
+        zh: '卡夫卡《饥饿艺术家，四篇小说》，柏林，1924 年，初版扫描与转录。 https://de.wikisource.org/wiki/Ein_Hungerk%C3%BCnstler_(Sammelband)'
 self_check:
-  quote_line: '送稿人念出女歌手的篇名，问听见了还有什么可怀疑。'
-  fact: four_stories
-  regret_choice: '略过「把目录上的篇名对回正文」，这处细节便留给下一位核对。'
-  bookend: '从「下一位读者能看出改过吗」开始，以员工留下的观察或更正收尾。'
-  share_line: '下一位读者能看出改过吗'
-  share_number: '1924'
+  fact: kierling
+  quote_line: '柏林来的又厚又硬，全是纸；布拉格来的薄，天天都有。'
+  regret_choice: '派带止痛药的护士去，他最后几个星期咽得下水，可校样与装订要会校对、意志够硬的人；四颗要同一趟做齐，得有人医护和编校都顾得上。'
+  bookend: '从 1924 年 3 月喉头出事开始，以 8 月底四篇小说集出版收尾，中间是基尔灵的五月。'
+  share_line: '他最后几个星期靠纸条说话，6 月 2 日还在改校样。'
+  share_number: '40'
+  knowing: 'four_stories'
+  near: 'last_proofs'
+  lever: 'p3'
+  missed: 'death'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}
