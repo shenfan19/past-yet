@@ -484,8 +484,6 @@ item_bindings:
   mosquito_net: {protect_room: 6}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  detox_water: {ors_stock: 3}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   microscope: {character: finlay, tech: 4, bindings: {finlay.evidence: 0.2}}
@@ -536,5 +534,3 @@ optimization:
       - {item: mosquito_net, variable: protect_room, delivery: total, optimize: {value: [0, 40], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: detox_water, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

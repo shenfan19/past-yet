@@ -463,7 +463,6 @@ item_bindings:
   chlorine_tablet: {protect_room: 12}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   case_book: {character: jenner, tech: 4, bindings: {jenner.evidence: 0.2}}
@@ -515,4 +514,3 @@ optimization:
       - {item: chlorine_tablet, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

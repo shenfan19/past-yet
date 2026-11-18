@@ -442,7 +442,6 @@ item_bindings:
   chlorine_tablet: {wash_supply: 3}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   forceps: {character: semmelweis, tech: 4, bindings: {forceps_given: 1}}
@@ -488,4 +487,3 @@ optimization:
       - {item: chlorine_tablet, variable: wash_supply, delivery: total, optimize: {value: [0, 80], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

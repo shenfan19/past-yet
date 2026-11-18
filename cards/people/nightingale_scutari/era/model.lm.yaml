@@ -484,9 +484,7 @@ item_bindings:
   chlorine_tablet: {protect_room: 5}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  detox_water: {ors_stock: 3}
   antibiotic: {ors_stock: 4}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   statistics: {character: nightingale, tech: 4, bindings: {nightingale.evidence: 0.2}}
@@ -537,6 +535,4 @@ optimization:
       - {item: chlorine_tablet, variable: protect_room, delivery: total, optimize: {value: [0, 60], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: detox_water, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: antibiotic, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}
