@@ -258,9 +258,12 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
     return T.date_day.replace('{m}', String(at.getUTCMonth() + 1)).replace('{mn}', T.month_names[at.getUTCMonth()]).replace('{d}', String(at.getUTCDate()));
   };
   const lines = [];
+  // a won point may overturn facts of history, such as the death of the person it saved: in this branch they did not happen, so the record leaves them out
+  const overturned = new Set((r.points || []).flatMap((p, i) => (p.hit && !p.cut ? ev.scene?.points?.[i]?.overturns || [] : [])));
   const EF = D.get('encyclopedia.event_facts')?.[ev.id];
   if (EF) {
     for (const f of EF.facts) {
+      if (overturned.has(f.id)) continue;
       // a date is a year, a year and month or a full date; a year before the common era carries a minus sign and may have four digits
       const [year, mm, dd] = (f.date.match(/^(-?\d+)(?:-(\d+))?(?:-(\d+))?$/) || []).slice(1).map((x) => (x === undefined ? undefined : Number(x)));
       // only the line written for the record is told, never the text of the fact, which is for the wiki
@@ -274,8 +277,12 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
       const label = '';
       // a fact is placed on its day of the stay when it says so; otherwise a fact of an earlier year or of the year of the event comes before the arrival, in order,
       // and a fact of a later year after the leaving
-      const after = onDay ? stayDay > stayDays : year > ev.year;
-      const order = onDay ? stayDay : after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -1e7 + (year - ev.year) * 400 + (mm || 0) * 31 + (dd || 0);
+      // with a planned arrival every fact, a full date, a year and month or a year alone, is ordered by its own date against the arrival, so the record runs
+      // in the order of the calendar; without one, as in a story of the lunar calendar or before the common era, a fact of an earlier year or of the year
+      // of the event comes before the arrival and a fact of a later year after the leaving
+      const since = !onDay && ev.date && Number.isFinite(year) ? Math.round((utc(year, mm || 1, dd || 1) - utc(ay, am, ad)) / 86400000) : null;
+      const after = onDay ? stayDay > stayDays : since !== null ? since > stayDays : year > ev.year;
+      const order = onDay ? stayDay : since !== null ? since : after ? stayDays + (year - ev.year) * 366 + (mm || 1) * 31 + (dd || 0) : -1e7 + (year - ev.year) * 400 + (mm || 0) * 31 + (dd || 0);
       lines.push({ t: order, year, text: label + text, tag: 'history', kind: 'fact', id: f.id, key: f.id, fact: f.id, after, why: { kind: 'date', expr: f.date + ' · ' + f.id } });
     }
   }
@@ -309,10 +316,11 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   const vignette = r.vignette && c.vignettes ? c.vignettes[r.vignette]?.split('{staff}').join(staff) : null;
   // a scene falls in the middle of the stay, or on the day its entry names
   const vDay = ev.scene?.vignettes?.find((x) => x.id === r.vignette)?.day;
-  if (vignette) lines.push({ t: typeof vDay === 'number' ? vDay : stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
+  // after a desync the employee is gone, so a scene of a later day never happened
+  if (vignette && !(desync && typeof vDay === 'number' && vDay > stayDays)) lines.push({ t: typeof vDay === 'number' ? vDay : stayDays / 2, year: ev.year, kind: 'vignette', id: 'vignette', key: 'vignette', tag: null, after: false, text: vignette,
     why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
-  // after a desync the cost of the missed guard point is read before the line of being sent back
-  lines.push({ t: desync ? stayDays + 0.002 : stayDays, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: (desync ? R.light_sent_back : R.light_leave).replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
+  // the leaving is read after everything of its last day, so the cost of a point missed on that day, a missed guard point above all, comes before it
+  lines.push({ t: stayDays + 0.002, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: (desync ? R.light_sent_back : R.light_leave).replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
   // what a won point changed is not told in the record: the report sets it out beside what history recorded, under the shift of the timeline
   // with `date`, the planned arrival on the calendar, the lines of the employee carry the year their day falls in, so a stay that runs into a new year marks it
   if (ev.date) {

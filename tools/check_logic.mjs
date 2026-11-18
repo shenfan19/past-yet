@@ -180,6 +180,12 @@ for (const e of events) {
     if (nPts >= 3 && !nGuard) err(`event ${e.id}: a story of ${nPts} stars needs at least one guard point`);
     // a story of guarding only holds history as it was; it needs two stars at least, since one missed guard would leave it nothing
     if (nGuard === nPts && nPts < 2) err(`event ${e.id}: a story of guarding only has two stars at least`);
+    // a mend point may overturn facts of history in its branch, which the record then leaves out: the facts must be this event's, and a guard point overturns nothing
+    const factIds = new Set((D.get('encyclopedia.event_facts')?.[e.id]?.facts || []).map((f) => f.id));
+    for (const p of e.scene.points) for (const f of p.overturns || []) {
+      if (p.guard) err(`event ${e.id}: guard point ${p.id} cannot overturn history`);
+      else if (!factIds.has(f)) err(`event ${e.id}: point ${p.id} overturns ${f}, which is not a fact of this event`);
+    }
     for (const lang of ['en', 'zh']) {
       const t = (lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {};
       for (const p of e.scene.points) if (!t.points_fail?.[p.id]) err(`event ${e.id} ${lang}: point ${p.id} has no points_fail text`);
