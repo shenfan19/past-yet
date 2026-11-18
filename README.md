@@ -56,11 +56,11 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Languages
 
-- The language selector offers English, Simplified Chinese (`zh`), Traditional Chinese (`zh-Hant`), French, Spanish, Japanese and Korean. The five new locales currently cover navigation and the language picker; untranslated interface, story and encyclopedia text falls back to English key by key.
+- The language selector offers English, Simplified Chinese (`zh`), Traditional Chinese (`zh-Hant`), French, Spanish, Japanese and Korean. Untranslated interface, story and encyclopedia text falls back to English key by key.
 - Selection priority is `?lang=`, saved choice, browser preferences, then English. Existing `?lang=zh` links and saved choices still work. Browser tags such as `zh-TW` and `zh-HK` select Traditional Chinese; `zh-CN` and `zh-Hans` select Simplified Chinese. Follow browser clears the saved choice. Switching language reloads and restores the current page and UI state.
 - Configure selectable languages in `cards/config/config.yaml` under `i18n.locales`. Only the locales in `i18n.story_locales` currently require story translations at build time; keep optional locales out of this list until their stories are ready.
-- Add interface strings in `cards/text/<code>/` and story or encyclopedia translations in the corresponding source cards. Use the same keys and placeholders as English. Run `node tools/build_data.mjs` to generate `data/i18n/text.<code>.yaml` and `data/i18n/encyclopedia.<code>.yaml`. For the offline page, run `node tools/build_offline.mjs` after rebuilding data.
-- `node tools/check_i18n.mjs` checks locale matching, fallback, unexpected keys and placeholder consistency. Missing keys are reported as translation coverage, not errors.
+- Add interface strings in `cards/text/<code>/` and encyclopedia translations in the corresponding source cards. Story translation batches can add `catalog` and `eras` mappings in `cards/text/<code>/`, indexed by event and era ID respectively. Text defined on a source card for the same ID and locale takes precedence; keep a translation in one place. Use the same keys and placeholders as English.
+- Run `node tools/build_data.mjs` to generate the language packs and `node tools/check_i18n.mjs` to check placeholders, fallback and complete story-card and era coverage in normal mode. Missing translations are reported, not errors. Rebuild the offline page with `node tools/build_offline.mjs` when preparing a release.
 
 ## Catalogue and employees
 

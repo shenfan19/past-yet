@@ -75,4 +75,27 @@ for (const [code, agency] of Object.entries({ 'zh-Hant': '事務所', fr: 'Agenc
   const localized = await loadData(reader, (t) => yaml.load(t), () => code);
   check(`${code} uses its own navigation`, localized.lang === code && localized.get('text.ui.tabs.shop') === agency);
 }
+
+function covers(base, translated) {
+  if (Array.isArray(base)) return Array.isArray(translated) && base.length === translated.length && base.every((entry, index) => covers(entry, translated[index]));
+  if (isObj(base)) return isObj(translated) && Object.entries(base).every(([key, value]) => Object.hasOwn(translated, key) && covers(value, translated[key]));
+  return typeof translated === typeof base && (typeof translated !== 'string' || !base.trim() || !!translated.trim());
+}
+
+const activeStories = en.get('catalog.active_events');
+const activeEras = en.get('config.eras');
+const opening = activeStories.find((event) => event.start);
+for (const code of Object.keys(I.locales)) {
+  const file = `data/i18n/text.${code}.yaml`;
+  if (!fs.existsSync(path.join(root, file))) continue;
+  const raw = yaml.load(read(file));
+  const cards = activeStories.filter(({ id }) => covers(en.get('text.catalog.' + id), raw.catalog?.[id]));
+  const eras = activeEras.filter((id) => covers(en.get('text.eras.' + id), raw.eras?.[id]));
+  console.log(`${code} story coverage: ${cards.length}/${activeStories.length} complete catalogue cards, ${eras.length}/${activeEras.length} complete era texts`);
+  if (!opening || !['zh-Hant', 'fr', 'es', 'ja', 'ko'].includes(code)) continue;
+  const localized = await loadData(reader, (t) => yaml.load(t), () => code);
+  check(`${code} opening story and relic use the locale's text`, !!raw.catalog?.[opening.id]?.story
+    && localized.get('text.catalog.' + opening.id).story === raw.catalog[opening.id].story
+    && localized.get('text.antiques.relic_' + opening.id).name === raw.catalog[opening.id].relic);
+}
 process.exit(bad ? 1 : 0);
