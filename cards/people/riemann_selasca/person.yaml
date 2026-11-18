@@ -2,32 +2,37 @@ order: 164
 events:
   riemann_selasca:
     order: 104
-    build_step: 2
+    build_step: 4
     year: 1866
+    # two office days from the planned arrival on 23 June 1866, through the last work of 19 July and the death of 20 July
     date: '1866-06-23'
     stay: 2
     lon: 8.57
     lat: 45.95
     region: europe
+    home: [europe_west]
+    near: [europe_east]
     field: math
     tier: 2
     channels: {E: 1, G: 2}
-    refs: [riemann_selasca_primary, riemann_selasca_royal_obituary, riemann_selasca_gottingen_papers, riemann_selasca_nachlass_research]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [riemann_selasca_primary, riemann_selasca_royal_obituary, riemann_selasca_gottingen_papers, riemann_selasca_nachlass_research, riemann_mactutor, riemann_wiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: care, day: 20, req: {"any":[{"job":["university_lecturer","lecturer","modelling_scientist","proofreader"],"stat":{"wit":7}},{"trait":["scholarly","patient"],"stat":{"wit":7,"will":5}}]}}
         - {id: p2, kind: care, day: 24, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}}]}}
       vignettes:
-        - {id: surface, traits: [handy, artistic]}
-        - {id: assumption, traits: [skeptical, curious]}
-        - {id: paper}
+        - {id: figs, traits: [kind, patient, calm, quiet, sensitive, attached], day: 25.5}
+        - {id: boat, traits: [bold, cheerful, wanderer, cosmopolitan, hardy, handy, streetwise], day: 10}
+        - {id: chair, day: 40}
     text:
       en:
         name: "The last paper"
         place: "Selasca"
         figure: "Bernhard Riemann"
-        story: 'Riemann''s 1854 lecture manuscript examines the assumptions underlying geometry and how distances can be defined.'
+        story: 'In the autumn of 1862 a heavy cold turned into tuberculosis for Bernhard Riemann, and he went south to Italy more than once to recover. In June 1866 he came for the third time, to Selasca on Lake Maggiore. On 19 July, resting under a fig tree, he was still working on his last paper, which he did not finish. He died there the next day, aged thirty nine. Ten years later his collected works came out, with Richard Dedekind among the editors.'
         relic: "A page of notes"
         relic_desc: "A page of unfinished formulas in a small hand."
         points:
@@ -46,14 +51,14 @@ events:
             who: riemann_selasca
             bio: 'In this line Riemann recovered from tuberculosis in the summer of 1866. He went home to Göttingen and worked on for many years.'
         vignettes:
-          surface: 'The reader stretches a strip across two points and lets it leave the surface in between. You press a second strip down against the curve and ask which journey each one measures.'
-          assumption: 'The reader says the distance is obvious. You ask how they decided which paths to allow. They add that choice above the drawing and begin measuring again.'
-          paper: 'You help the reader keep the starting points marked when the practice sheet bends. They can now compare their two readings without having to find the points again.'
+          figs: 'On the evening of 18 July {staff} helps the landlord''s small daughter clear fallen figs from under the tree. The chair there is for the German gentleman, she explains, and if she misses one, his papers come out purple.'
+          boat: 'Early in July {staff} helps a boatman unload a cargo of lemons at Pallanza. There are half as many boats on the lake this summer, the boatman says; the young men have all been called up, and he has had to teach his wife to row.'
+          chair: 'In August {staff} helps the landlord carry the chair in from under the fig tree. He wipes it down with his sleeve again and again, and says the tree has never borne so many figs as this year, and nobody left to sit under it.'
       zh:
         name: "最后一篇论文"
         place: "塞拉斯卡"
         figure: "伯恩哈德·黎曼"
-        story: '黎曼 1854 年的讲稿讨论几何的基本假设及距离如何定义。'
+        story: '1862 年秋，伯恩哈德·黎曼受了一场重寒，转成肺结核，此后几次南下意大利养病。1866 年 6 月，他第三次来，住进马焦雷湖畔的塞拉斯卡。7 月 19 日，他在无花果树下休息，仍在写最后一篇论文，没有写完。第二天，他在那里去世，三十九岁。十年后，他的全集出版，理查德·戴德金参与了编订。'
         relic: "一页笔记"
         relic_desc: "一页写着没完成公式的纸，字很小。"
         points:
@@ -72,9 +77,9 @@ events:
             who: riemann_selasca
             bio: '这条时间线里，黎曼在 1866 年夏天治好了肺结核。他回到哥廷根，又工作了许多年。'
         vignettes:
-          surface: '读者把纸带从一点拉到另一点，中间却离开了曲面。你把另一条沿弧面按下去，请他分清两条量的是哪种走法。'
-          assumption: '读者说距离一看就知道。你问哪些走法算数，是怎么定的。他把这个条件添在图上方，重新开始量。'
-          paper: '练习纸弯起来时，你帮读者留住起讫两点的记号。现在比较两次读数时，不必重新找点。'
+          figs: '7 月 18 日傍晚，{staff}帮房东的小女儿把无花果树下的落果捡干净。她说树下那把椅子是给德国先生摆的，漏掉一个，他的稿纸就要染成紫的。'
+          boat: '七月初，{staff}帮湖上的船夫把一船柠檬卸到帕兰扎码头。船夫说今年夏天湖上的船少了一半，年轻人都被叫去当兵了，他只好教老婆划桨。'
+          chair: '八月，{staff}帮房东把无花果树下那把椅子搬进屋。房东用袖子擦了又擦，说这树从没结过今年这么多的果子，树底下却没人坐了。'
 text:
   en:
     name: Bernhard Riemann
@@ -82,21 +87,106 @@ text:
   zh:
     name: 伯恩哈德·黎曼
     text: 德国数学家，1826 年生，1866 年去世。他在弯曲空间的几何和素数分布上的工作开辟了重要领域，黎曼猜想至今未解。他在马焦雷湖畔的塞拉斯卡死于肺结核。
-hook: {en: 'A flat sheet gives only one answer.', zh: '换个表面，量法会变吗'}
+hook: {en: 'Under the fig tree, writing to the last day', zh: '无花果树下写到最后一天'}
 facts:
   geometry_lecture:
-    date: '1854'
-    checked: official_record
+    date: '1854-06'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [riemann_selasca_primary]
+    use: [story, history, wiki]
+    sources: [riemann_selasca_primary, riemann_mactutor]
     text:
-      en: 'Riemann''s 1854 lecture manuscript examines the assumptions underlying geometry and how distances can be defined.'
-      zh: '黎曼 1854 年的讲稿讨论几何的基本假设及距离如何定义。'
+      en: 'On 10 June 1854 Riemann gave his habilitation lecture at Göttingen, on the hypotheses that lie at the foundations of geometry, which examines how distances can be defined.'
+      zh: '1854 年 6 月 10 日，黎曼在哥廷根作任教资格讲演，题为论几何基础中的假设，讨论距离可以怎样定义。'
+    line:
+      en: '10 June 1854: in Göttingen Riemann lectures on the hypotheses at the foundations of geometry.'
+      zh: '1854 年 6 月 10 日，黎曼在哥廷根讲论几何基础中的假设。'
+  primes:
+    date: '1859'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [riemann_mactutor, riemann_wiki]
+    text:
+      en: 'In 1859 Riemann sent the Berlin Academy his paper on the number of primes less than a given magnitude, which studies the zeta function as a function of a complex variable.'
+      zh: '1859 年，黎曼向柏林科学院呈交论小于给定值的素数个数的论文，把 ζ 函数当作复变函数来研究。'
+    line:
+      en: '1859: Riemann sends the Berlin Academy his paper on the number of primes below a given size.'
+      zh: '1859 年，黎曼向柏林科学院呈交论小于给定值的素数个数的论文。'
+  illness:
+    date: '1862'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [riemann_mactutor, riemann_wiki]
+    text:
+      en: 'In the autumn of 1862 a heavy cold turned into tuberculosis for Riemann. He spent the following winter in Sicily and went back to Italy more than once.'
+      zh: '1862 年秋，黎曼受了一场重寒，转成肺结核。他在西西里过了那个冬天，此后又几次去意大利。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: 'Autumn 1862: a heavy cold turns into tuberculosis for Riemann.'
+      zh: '1862 年秋，黎曼受了一场重寒，转成肺结核。'
+  selasca:
+    date: '1866-06'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [riemann_mactutor, riemann_selasca_royal_obituary]
+    text:
+      en: 'In June 1866, on his third journey to Italy, Riemann came to Selasca on Lake Maggiore; MacTutor gives 16 June, the Royal Society obituary 23 June.'
+      zh: '1866 年 6 月，黎曼第三次来意大利，住进马焦雷湖畔的塞拉斯卡。抵达日麦克图托写 6 月 16 日，皇家学会悼文写 6 月 23 日。'
+    line:
+      en: 'June 1866: on his third journey south, Riemann comes to Selasca on Lake Maggiore.'
+      zh: '1866 年 6 月，黎曼第三次南下，住进马焦雷湖畔的塞拉斯卡。'
+  last_work:
+    date: '1866-07-19'
+    stay_day: 26
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [riemann_mactutor, riemann_selasca_royal_obituary]
+    text:
+      en: 'By the account of Dedekind, the day before he died Riemann lay resting under a fig tree and worked on his last paper, which was left unfinished.'
+      zh: '据戴德金记述，去世前一天，黎曼躺在无花果树下休息，仍在写最后一篇论文，论文没有写完。'
+    line:
+      en: '19 July 1866: under a fig tree at Selasca, Riemann works on his last paper.'
+      zh: '1866 年 7 月 19 日，黎曼在塞拉斯卡的无花果树下写他最后一篇论文。'
+  death:
+    date: '1866-07-20'
+    stay_day: 27
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [riemann_mactutor, riemann_wiki]
+    text:
+      en: 'Riemann died of tuberculosis at Selasca on 20 July 1866, aged thirty nine.'
+      zh: '1866 年 7 月 20 日，黎曼在塞拉斯卡死于肺结核，三十九岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '20 July 1866: Bernhard Riemann dies at Selasca, aged thirty nine.'
+      zh: '1866 年 7 月 20 日，伯恩哈德·黎曼在塞拉斯卡去世，三十九岁。'
+  werke:
+    date: '1876'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [riemann_wiki, richard_dedekind_mactutor]
+    text:
+      en: 'In 1876 the collected mathematical works of Riemann were published in Leipzig, edited by Heinrich Weber with Richard Dedekind.'
+      zh: '1876 年，黎曼的数学全集在莱比锡出版，由海因里希·韦伯编订，理查德·戴德金参与。'
+    line:
+      en: '1876: the collected works of Riemann come out in Leipzig, with Dedekind among the editors.'
+      zh: '1876 年，黎曼全集在莱比锡出版，戴德金参与了编订。'
 bystanders:
-  riemann_selasca_reader:
+  daughter:
     invented: true
-    text: {en: 'An invented reader with a strip of paper and two curved surfaces.', zh: '一位虚构的读者，手边有纸带和两个曲面。'}
+    text: {en: 'The small daughter of the landlord at Selasca, made up for the game.', zh: '一个编出来的塞拉斯卡房东家的小女儿。'}
+  boatman:
+    invented: true
+    text: {en: 'A boatman on Lake Maggiore, made up for the game.', zh: '一个编出来的马焦雷湖船夫。'}
+  landlord:
+    invented: true
+    text: {en: 'The landlord of the house at Selasca, made up for the game.', zh: '一个编出来的塞拉斯卡房东。'}
 wiki:
   refs:
     riemann_selasca_royal_obituary:
@@ -122,12 +212,29 @@ wiki:
       status: checked
       text:
         en: 'Bernhard Riemann, On the Hypotheses Underlying Geometry, 1854 habilitation lecture manuscript, Göttingen University Library. https://gdz.sub.uni-goettingen.de/id/DE-611-HS-3206822'
-        zh: 'Bernhard Riemann, On the Hypotheses Underlying Geometry, 1854 habilitation lecture manuscript, Göttingen University Library. https://gdz.sub.uni-goettingen.de/id/DE-611-HS-3206822'
+        zh: '黎曼《论几何基础中的假设》，1854 年任教资格讲演手稿，哥廷根大学图书馆。 https://gdz.sub.uni-goettingen.de/id/DE-611-HS-3206822'
+    riemann_mactutor:
+      order: 1315
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, Bernhard Riemann. https://mathshistory.st-andrews.ac.uk/Biographies/Riemann/'
+        zh: '麦克图托数学史，伯恩哈德·黎曼。 https://mathshistory.st-andrews.ac.uk/Biographies/Riemann/'
+    riemann_wiki:
+      order: 1316
+      status: checked
+      text:
+        en: 'Wikipedia, Bernhard Riemann. https://en.wikipedia.org/wiki/Bernhard_Riemann'
+        zh: '维基百科，伯恩哈德·黎曼。 https://en.wikipedia.org/wiki/Bernhard_Riemann'
 self_check:
-  quote_line: '读者把纸带从一点拉到另一点，中间却离开了曲面。'
-  fact: geometry_lecture
-  regret_choice: '略过「沿着表面走完一条线」，这处细节便留给下一位核对。'
-  bookend: '从「换个表面，量法会变吗」开始，以员工留下的观察或更正收尾。'
-  share_line: '换个表面，量法会变吗'
-  share_number: '1854'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: last_work
+  quote_line: '1866 年 7 月 19 日，黎曼在塞拉斯卡的无花果树下写他最后一篇论文。'
+  regret_choice: '派带纳米医疗箱的医生去，他秋天回了哥廷根；派会记口述的讲师去，论文多写了几页，第二天他照旧去世。两样都要，得派既懂医又能理稿的人，或者带齐东西。'
+  bookend: '从 1854 年那场讲几何假设的讲演开始，以 1876 年全集出版收尾，中间是无花果树下的最后一天。'
+  share_line: '去世前一天，他还在无花果树下写论文。'
+  share_number: '39'
+  knowing: 'death'
+  near: 'last_work'
+  lever: 'p1'
+  missed: 'werke'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

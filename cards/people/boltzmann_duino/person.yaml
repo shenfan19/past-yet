@@ -2,30 +2,36 @@ order: 33
 events:
   boltzmann_duino:
     order: 109
-    build_step: 2
+    build_step: 4
     year: 1906
+    # three office days of the summer at Duino; his death on 5 September falls a few days after the stay
+    stay: 3
     lon: 13.61
     lat: 45.77
     region: europe
+    home: [europe_west]
+    near: [europe_east]
     field: science
     tier: 2
     channels: {G: 3}
-    refs: [boltzmann_duino_counting]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [boltzmann_duino_counting, boltzmann_mactutor, boltzmann_wien_geschichte, boltzmann_standard, boltzmann_physics_today, boltzmann_einstein_brownian, jean_perrin_lindahall, jean_perrin_nobel]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, day: 60, req: {"any":[{"job":["lecturer","university_lecturer","teacher","tutor","modelling_scientist"],"stat":{"wit":7}},{"trait":["scholarly","curious"],"stat":{"wit":8,"will":4}}]}}
         - {id: p2, kind: care, day: 90, req: {"any":[{"job":["doctor","physician","medical_teacher"],"stat":{"will":7}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch","stat":{"will":5}}]}}
       vignettes:
-        - {id: six, traits: [methodical, scholarly]}
-        - {id: swap, traits: [curious, artistic]}
-        - {id: boxes}
+        - {id: pebbles, traits: [curious, scholarly, methodical, skeptical, artistic], day: 45}
+        - {id: nets, traits: [bold, hardy, cheerful, handy, wanderer, streetwise, cosmopolitan], day: 30}
+        - {id: towels, day: 80}
     text:
       en:
         name: 'Same count, different arrangements'
         place: "Duino"
         figure: "Ludwig Boltzmann"
-        story: 'Boltzmann’s 1877 paper on probability and thermal equilibrium counts how many assignments of particles can yield the same distribution of energy. The Duino visit is set much later, in 1906.'
+        story: 'In 1877 Ludwig Boltzmann tied the laws of heat to the statistics of atoms by counting the ways a distribution of energy can arise, but into the twentieth century many still doubted that atoms were real. In May 1906, ill with what was called severe neurasthenia, he stopped lecturing, and that summer he went with his family to Duino near Trieste. He died there on 5 September, aged sixty two. Two years later the experiments of Jean Perrin on Brownian motion began to confirm the predictions of Einstein, and atoms came to be accepted.'
         relic: "A chalk stub"
         relic_desc: "A worn stub of lecture chalk."
         points:
@@ -45,14 +51,14 @@ events:
             bio: 'In this line Boltzmann recovered in the autumn of 1906, went back to Vienna, taught for some years more, and saw Perrin''s experiments win acceptance for atoms.'
         shift_all: 'He knew his theory would stand, his illness eased, and in the autumn he went back to Vienna to teach.'
         vignettes:
-          six: 'The learner counts one way to put two of four labelled counters in the left box. You name the two chosen counters on each line, and find six choices giving the same two-and-two count. He changes one total. You copy the list, though it cannot settle the questions the full paper asks.'
-          swap: 'You know the drawing alone will survive better than your explanation. You exchange one marked counter in each box and sketch the two results. Both still have two counters on each side. The learner can see what changed. You leave before a third box is added.'
-          boxes: 'You write two beside each box and circle the names of the counters inside. The learner keeps both descriptions on one sheet. You bring back a two-box example. The larger count is still on the table.'
+          pebbles: 'In July {staff} helps a fisherman''s small son count a bucket of pebbles on the beach. The boy asks whether things too small to count are there at all. {staff} says they are there whether anyone counts them or not; the boy thinks about it, and throws in another handful.'
+          nets: 'Early in July {staff} helps a fisherman bring in the nets drying on the shore. Slovene, Italian, German, the fisherman says, you hear them all round this bay, and the fish do not care which one you curse them in.'
+          towels: 'In August {staff} helps the hotel maid bring in the towels drying by the sea. The water warmed early this year, she says, the guests from the city stay the whole season, and the salt has taken the skin off her hands.'
       zh:
         name: '同一个数，几种排法'
         place: "杜伊诺"
         figure: "路德维希·玻尔兹曼"
-        story: '玻尔兹曼 1877 年关于概率与热平衡的论文，计算同一种能量分布可由多少种粒子分配方式得到。'
+        story: '1877 年，路德维希·玻尔兹曼数出同一种能量分布可以有多少种排法，把热的规律和原子的统计联系起来，可直到二十世纪初，原子是否真实存在仍有许多人怀疑。1906 年 5 月，他因所谓严重的神经衰弱停课，夏天和家人到的里雅斯特附近的杜伊诺度假。9 月 5 日，他在那里去世，六十二岁。两年后，让·佩兰的布朗运动实验开始证实爱因斯坦的预言，原子渐渐被人接受。'
         relic: "一截粉笔"
         relic_desc: "一截用得很短的讲课粉笔。"
         points:
@@ -69,12 +75,12 @@ events:
             was: '1906 年 5 月玻尔兹曼因病停课，课由斯特凡·迈尔代讲；同年 9 月 5 日他在杜伊诺度假时去世，终年六十二岁。'
             now: '{staff}陪他过了杜伊诺的那个夏天，病一点点缓下来。秋天他带着家人回到维也纳，又站上了讲台，还亲眼看到原子被实验证实。'
             who: boltzmann_duino
-            bio: 'IF 线里，玻尔兹曼 1906 年秋天病好了回到维也纳，又教了几年书，看到了佩兰的实验让原子学说被普遍接受。'
+            bio: '这条时间线里，玻尔兹曼 1906 年秋天病好了回到维也纳，又教了几年书，看到了佩兰的实验让原子学说被普遍接受。'
         shift_all: '他知道自己的学说站得住，病也好了，秋天回到维也纳接着讲课。'
         vignettes:
-          six: '学算人从四枚有记号的筹里挑两枚放左盒，只数了一种。你每行写明挑哪两枚，找到了六种同为两边各二的摆法。他改了一个总数。你抄得走清单，论文里真正要问的事却还没算到。'
-          swap: '你知道图比口头解释留得久，便把左右各一枚有记号的筹互换，分别画下前后。左右仍各有两枚，学算人却看得出哪里变了。还未添第三只盒子，你就走了。'
-          boxes: '你在两个盒旁各写一个二，再圈出盒里的筹号。学算人把两种记法留在同一张纸上。你带回的是二盒例题，更多的摆法还留在桌边。'
+          pebbles: '七月，{staff}在海滩上帮渔夫的小儿子数一桶小石子。孩子问，太小、数不清的东西，是不是就不算有。{staff}说没人数它也在那儿。孩子想了想，又往桶里扔了一把。'
+          nets: '七月初，{staff}帮渔夫把晾在岸边的网收起来。渔夫说这一湾斯洛文尼亚话、意大利话、德国话都听得到，鱼可不管你用哪种话骂它。'
+          towels: '八月，{staff}帮旅馆的女招待把海边晾干的浴巾收回来。她说今年海水暖得早，城里来的客人一住就是一整季，她的手让盐水泡得起了皮。'
 text:
   en:
     name: Ludwig Boltzmann
@@ -82,21 +88,94 @@ text:
   zh:
     name: 路德维希·玻尔兹曼
     text: 奥地利物理学家，1844 年生，1906 年去世。他用原子的统计解释热的规律，熵公式刻在他的墓碑上。面对对原子存在的怀疑，又受抑郁困扰，他 1906 年在杜伊诺去世。
-hook: {en: 'How many ways can four marked counters look the same?', zh: '四枚筹有几种摆法，看起来都一样？'}
+hook: {en: 'Atoms would be proved, and he did not wait', zh: '原子会被证实，他没等到'}
 facts:
   counting:
     date: '1877'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [boltzmann_duino_counting]
     text:
-      en: 'The paper counts assignments for a given distribution.'
-      zh: '论文对得到同种分布的分配方式进行计数。'
+      en: 'Boltzmann''s 1877 paper on probability and thermal equilibrium counts how many assignments of particles yield the same distribution of energy.'
+      zh: '玻尔兹曼 1877 年关于概率与热平衡的论文，计算同一种能量分布可由多少种粒子分配方式得到。'
+    line:
+      en: '1877: Boltzmann counts how many arrangements of particles give the same distribution of energy.'
+      zh: '1877 年，玻尔兹曼数出同一种能量分布可由多少种粒子排法得到。'
+  leave:
+    date: '1906-05'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [boltzmann_wien_geschichte, boltzmann_standard]
+    text:
+      en: 'In May 1906 Boltzmann was given leave from the University of Vienna for what was called severe neurasthenia.'
+      zh: '1906 年 5 月，玻尔兹曼因所谓严重的神经衰弱，向维也纳大学告假停课。'
+    note: 'An illness: written as a plain fact, in the words of the record.'
+    line:
+      en: 'May 1906: ill with what is called severe neurasthenia, Boltzmann stops lecturing in Vienna.'
+      zh: '1906 年 5 月，玻尔兹曼因所谓严重的神经衰弱，在维也纳停了课。'
+  duino:
+    date: '1906'
+    stay_day: 0
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [boltzmann_mactutor, boltzmann_standard]
+    text:
+      en: 'In the summer of 1906 Boltzmann went on holiday with his wife and daughter to the bay of Duino near Trieste.'
+      zh: '1906 年夏，玻尔兹曼和妻子、女儿到的里雅斯特附近的杜伊诺海湾度假。'
+    line:
+      en: 'Summer 1906: Boltzmann comes with his wife and daughter to Duino near Trieste.'
+      zh: '1906 年夏，玻尔兹曼和妻子、女儿来到的里雅斯特附近的杜伊诺。'
+  death:
+    date: '1906-09-05'
+    stay_day: 96
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [boltzmann_wien_geschichte, boltzmann_physics_today]
+    text:
+      en: 'Ludwig Boltzmann died at Duino on 5 September 1906, aged sixty two.'
+      zh: '1906 年 9 月 5 日，路德维希·玻尔兹曼在杜伊诺去世，六十二岁。'
+    note: 'A death: written as a plain fact, without the manner of it.'
+    line:
+      en: '5 September 1906: Ludwig Boltzmann dies at Duino, aged sixty two.'
+      zh: '1906 年 9 月 5 日，路德维希·玻尔兹曼在杜伊诺去世，六十二岁。'
+  perrin:
+    date: '1908'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [boltzmann_einstein_brownian, jean_perrin_lindahall]
+    text:
+      en: 'From 1908 Jean Perrin''s experiments on Brownian motion confirmed the predictions Einstein had made in 1905, and the reality of atoms came to be generally accepted.'
+      zh: '1908 年起，让·佩兰的布朗运动实验证实了爱因斯坦 1905 年的预言，原子的真实存在渐渐被普遍接受。'
+    line:
+      en: '1908: Jean Perrin''s experiments on Brownian motion begin to confirm Einstein''s predictions about atoms.'
+      zh: '1908 年，让·佩兰的布朗运动实验开始证实爱因斯坦关于原子的预言。'
+  perrin_nobel:
+    date: '1926'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [jean_perrin_nobel, jean_perrin_lindahall]
+    text:
+      en: 'In 1926 Jean Perrin received the Nobel Prize in Physics for his work on the discontinuous structure of matter.'
+      zh: '1926 年，让·佩兰因研究物质的不连续结构获得诺贝尔物理学奖。'
+    line:
+      en: '1926: Jean Perrin receives the Nobel Prize in Physics for his work on the discontinuous structure of matter.'
+      zh: '1926 年，让·佩兰因研究物质的不连续结构获得诺贝尔物理学奖。'
 bystanders:
-  learner:
+  fisher_boy:
     invented: true
-    text: {en: 'A fictional student testing a simpler question with four marked counters.', zh: '虚构的学算人，拿四枚有记号的筹练一个小问题。'}
+    text: {en: 'The small son of a fisherman at Duino, made up for the game.', zh: '一个编出来的杜伊诺渔夫的小儿子。'}
+  fisherman:
+    invented: true
+    text: {en: 'A fisherman of the bay of Duino, made up for the game.', zh: '一个编出来的杜伊诺海湾渔夫。'}
+  maid:
+    invented: true
+    text: {en: 'A maid at a hotel by the sea at Duino, made up for the game.', zh: '一个编出来的杜伊诺海边旅馆女招待。'}
 wiki:
   refs:
     boltzmann_duino_counting:
@@ -105,16 +184,58 @@ wiki:
       text:
         en: 'Ludwig Boltzmann, paper on the relation of the second law to probability, English translation in Entropy https://doi.org/10.3390/E17041971'
         zh: '玻尔兹曼 1877 年论热力学第二定律与概率，英译载《Entropy》 https://doi.org/10.3390/E17041971'
+    boltzmann_mactutor:
+      order: 1321
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, Ludwig Boltzmann. https://mathshistory.st-andrews.ac.uk/Biographies/Boltzmann/'
+        zh: '麦克图托数学史，路德维希·玻尔兹曼。 https://mathshistory.st-andrews.ac.uk/Biographies/Boltzmann/'
+    boltzmann_wien_geschichte:
+      order: 1322
+      status: checked
+      text:
+        en: 'Wien Geschichte Wiki, the history wiki of the City of Vienna, Ludwig Boltzmann. https://www.geschichtewiki.wien.gv.at/Ludwig_Boltzmann'
+        zh: '维也纳市历史维基，路德维希·玻尔兹曼。 https://www.geschichtewiki.wien.gv.at/Ludwig_Boltzmann'
+    boltzmann_standard:
+      order: 1323
+      status: checked
+      text:
+        en: 'Der Standard, Ludwig Boltzmann und das Ende der alten Physik. https://derstandard.at/2000098201464/Ludwig-Boltzmann-und-das-Ende-der-alten-Physik'
+        zh: '《标准报》，《路德维希·玻尔兹曼与旧物理学的终结》。 https://derstandard.at/2000098201464/Ludwig-Boltzmann-und-das-Ende-der-alten-Physik'
+    boltzmann_physics_today:
+      order: 1324
+      status: checked
+      text:
+        en: 'Physics Today, Boltzmann honored on death centenary. https://physicstoday.aip.org/news/boltzmann-honored-on-death-centenary'
+        zh: '《今日物理》，玻尔兹曼逝世一百周年纪念。 https://physicstoday.aip.org/news/boltzmann-honored-on-death-centenary'
+    boltzmann_einstein_brownian:
+      order: 1325
+      status: checked
+      text:
+        en: 'The Collected Papers of Albert Einstein, volume 2, editorial note on Einstein''s work on Brownian motion. https://einsteinpapers.press.princeton.edu/vol2-doc/257'
+        zh: '《爱因斯坦全集》第 2 卷，布朗运动研究编者按。 https://einsteinpapers.press.princeton.edu/vol2-doc/257'
+    jean_perrin_lindahall:
+      order: 1326
+      status: checked
+      text:
+        en: 'Linda Hall Library, Scientist of the Day, Jean Perrin. https://www.lindahall.org/about/news/scientist-of-the-day/jean-perrin/'
+        zh: '琳达·霍尔图书馆，今日科学家，让·佩兰。 https://www.lindahall.org/about/news/scientist-of-the-day/jean-perrin/'
+    jean_perrin_nobel:
+      order: 1327
+      status: checked
+      text:
+        en: 'Nobel Prize, Jean Baptiste Perrin, facts. https://www.nobelprize.org/prizes/physics/1926/perrin/facts/'
+        zh: '诺贝尔奖官网，让·巴蒂斯特·佩兰生平要点。 https://www.nobelprize.org/prizes/physics/1926/perrin/facts/'
 self_check:
-  fact: counting
-  quote_line: '左右仍各有两枚，学算人却看得出哪里变了。'
-  regret_choice: '只写两边各二，会漏掉六种可以重摆的分配。'
-  bookend: '从一份总数开始，结尾还能摆出总数背后的换法。'
-  share_line: '两个盒里数目一样，摆法有六种。'
-  share_number: '六种'
-  knowing: '员工拿后世常见的微观排列解释来做二盒练习。'
-  near: 'counting 给出原论文的计数方法。'
-  lever: '点出同一数量分布下的六种选择。'
-  missed: '没赶上下一个盒子的题。'
-  brought: '可以重摆的两盒图。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: perrin
+  quote_line: '1908 年，让·佩兰的布朗运动实验开始证实爱因斯坦关于原子的预言。'
+  regret_choice: '派意志硬的医生去，或带情绪稳定贴片的护工去，秋天他回了维也纳；派只会讲课的去，他知道了原子会被证实，9 月 5 日却照旧到来。'
+  bookend: '从 1877 年他数排法开始，以 1926 年佩兰为原子领到诺贝尔奖收尾，中间是杜伊诺的一个夏天。'
+  share_line: '他去世两年后，原子被实验证实了。'
+  share_number: '2'
+  knowing: 'perrin'
+  near: 'duino'
+  lever: 'p1'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

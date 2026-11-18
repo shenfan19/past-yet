@@ -2,17 +2,22 @@ order: 10
 events:
   abel_froland:
     order: 103
-    build_step: 2
+    build_step: 4
     year: 1829
+    # four office days from the planned arrival on 1 January 1829, through the last paper of 6 January, the death of 6 April and Crelle's letter of 8 April
     date: '1829-01-01'
     stay: 4
     lon: 8.65
     lat: 58.6
     region: europe
+    home: [europe_west]
+    near: [europe_east]
     field: math
     tier: 2
     channels: {E: 2, C: 3, G: 2}
-    refs: [abel_froland_quintic, abel_froland_berlin, abel_froland_municipal_record, abel_froland_prize_final_years, abel_paris_academy_records]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [abel_froland_quintic, abel_froland_berlin, abel_froland_municipal_record, abel_froland_prize_final_years, abel_paris_academy_records, abel_mactutor, abel_wiki]
     scene:
       star_rules: 2
       points:
@@ -21,15 +26,15 @@ events:
         - {id: p3, kind: care, day: 30, req: {"any":[{"job":["nurse","doctor","physician","caregiver","paramedic","midwife"]},{"trait":["kind","patient"],"stat":{"constitution":5}},{"item":"warm_blanket","trait":["kind","patient","attached"]}]}}
         - {id: p4, kind: persuade, day: 66, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":8,"will":8}},{"trait":["charismatic","methodical"],"stat":{"will":9}}]}}
       vignettes:
-        - {id: example, traits: [methodical, scholarly]}
-        - {id: job, traits: [bold, charismatic]}
-        - {id: margin}
+        - {id: firewood, traits: [kind, patient, attached, calm, sensitive, hardy], day: 31}
+        - {id: sledge, traits: [bold, cheerful, wanderer, cosmopolitan, streetwise, glib, handy], day: 12}
+        - {id: post, day: 110}
     text:
       en:
         name: 'The example and the claim'
         place: "Froland"
         figure: "Niels Henrik Abel"
-        story: 'Abel’s 1824 paper proves that there is no general solution by radicals for equations of degree five. Particular equations can still be solved that way. Abel died in Froland on 6 April 1829. On 8 April, unaware of his death, Crelle wrote from Berlin with news of a permanent post.'
+        story: 'At Christmas 1828 Niels Henrik Abel came by sledge to the ironworks at Froland, cold and coughing, to visit his fiancée, and he lay ill there for twelve weeks. On 6 January 1829 he wrote his last paper, two or three pages restating the main result of the long memoir he had given to the Paris Academy. He died of tuberculosis on 6 April, aged twenty six. Two days later, not knowing, August Leopold Crelle wrote from Berlin that a post for him was secured.'
         relic: "A sealed letter"
         relic_desc: "An unopened offer, tied with a thread."
         points:
@@ -57,14 +62,14 @@ events:
             who: abel_froland
             bio: 'Before he died, Abel heard how his Berlin friends were trying to keep an opportunity open for him to continue his research. The formal confirmation still came after his death.'
         vignettes:
-          example: 'On the practice sheet a copyist has set a fifth power equal to 32. You substitute 2 and get 32, then underline the word ‘general’ on the separate slip about Abel’s result. The copyist files the two together. You can bring back the checked example. The news from Berlin has yet to be written.'
-          job: 'Knowing the date of Crelle’s letter, you ask the copyist to leave a place in the file for Berlin. He asks whether to label it as news already received. You leave the pocket empty and write down why. The letter will be written two days after Abel dies.'
-          margin: 'You copy a worked example on the back of a spare slip and put the more general statement on the front. A reader can turn it over instead of searching for a second sheet. The space for Berlin remains blank when you leave.'
+          firewood: 'In the coldest days of February {staff} helps the kitchen maid carry firewood upstairs. When the gentleman upstairs coughs all night, she says, she lies downstairs counting, and by morning she has lost count.'
+          sledge: 'In January {staff} helps the groom fit a new shaft to the sledge. At Christmas he fetched a gentleman out from town, the groom says, wrapped in three blankets and coughing the whole way; on arrival the man could not lift his own trunk, and the groom carried it up and refused the coin.'
+          post: 'In April {staff} helps the clerk of the ironworks sort a bag of post. He turns up a letter with a Berlin mark, holds it to the window a while, and says that this one has come at a bad time, because the man it is for is no longer here.'
       zh:
         name: '一道算得出的五次方程'
         place: "弗罗兰"
         figure: "尼尔斯·亨里克·阿贝尔"
-        story: '阿贝尔于 1824 年证明，一般五次方程没有根式解法。某些具体的五次方程仍可用根式求解。1829 年 4 月 6 日，阿贝尔在弗罗兰去世。4 月 8 日，尚不知情的克雷勒从柏林寄信告知他有一份长期教职。'
+        story: '1828 年圣诞，尼尔斯·亨里克·阿贝尔受着寒、咳着嗽坐雪橇来到弗罗兰铁厂看望未婚妻，此后在那里卧床十二周。1829 年 1 月 6 日，他写下最后一篇论文，两三页，重述他交给巴黎科学院的那篇长稿的要点。4 月 6 日，他死于肺结核，二十六岁。两天后，尚不知情的奥古斯特·利奥波德·克雷勒从柏林来信，说替他谋的职位已经落实。'
         relic: "一封封着的信"
         relic_desc: "一封没拆开的聘书，用细线系着。"
         points:
@@ -92,9 +97,9 @@ events:
             who: abel_froland
             bio: '阿贝尔去世前收到柏林朋友奔走的进展，知道他们还为他留着继续研究的机会。正式任命仍在他去世之后。'
         vignettes:
-          example: '抄写人练习纸上有一道五次幂等于 32 的题。你代入 2 得到 32，又在写着阿贝尔结论的另一张纸上划出「一般」二字。抄写人把两张收在一起。你带回这道验过的例题。此时，柏林那封信还没有写。'
-          job: '你知道克雷勒哪天写信，便请抄写人在夹里给柏林留一处。他问该不该写成消息已到。你把那一格空着，另记原因。那封信要等到阿贝尔去世两天后才写。'
-          margin: '你把一道算好的例题抄在纸条背面，正面留下那条一般结论。后来的人把纸翻面就能对照。离开时，留给柏林消息的地方仍空着。'
+          firewood: '二月最冷的那几天，{staff}帮厨房女佣往楼上搬劈柴。女佣说，楼上那位先生咳一夜，她就在楼下数一夜，数到天亮也没数清。'
+          sledge: '一月，{staff}帮马夫给雪橇换一根断了的辕木。马夫说圣诞那趟从城里接来一位先生，裹着三层毯子一路咳，下车时连自己的箱子都提不动，是他扛上楼的，赏钱他没要。'
+          post: '四月，{staff}帮铁厂的账房先生分拣邮包。他翻出一封盖着柏林邮戳的信，对着窗户看了半天，说这一封来得不巧，收信的人已经不在了。'
 text:
   en:
     name: Niels Henrik Abel
@@ -102,30 +107,107 @@ text:
   zh:
     name: 尼尔斯·亨里克·阿贝尔
     text: 挪威数学家，1802 年生，1829 年去世。他证明了一般五次方程不能用根式求解，并在椭圆函数上取得早期进展。他二十六岁死于肺结核，不久之后他的工作才获得承认。
-hook: {en: 'Can a simple fifth power fool you?', zh: '解得出一道，就能解出全部？'}
+hook: {en: 'The letter from Berlin came two days late', zh: '柏林的信晚到了两天'}
 facts:
   quintic:
     date: '1824'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [abel_froland_quintic]
     text:
       en: 'Abel proves the absence of a general radical solution for equations of degree five.'
       zh: '阿贝尔证明一般五次方程不能用根式求解。'
+    line:
+      en: '1824: Abel proves that the general equation of the fifth degree cannot be solved by radicals.'
+      zh: '1824 年，阿贝尔证明一般五次方程不能用根式求解。'
+  sledge:
+    date: '1828-12'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [abel_froland_prize_final_years, abel_mactutor]
+    text:
+      en: 'At Christmas 1828 Abel travelled by sledge to Froland to visit his fiancée, a governess there, and fell ill on the way. After a ball at Christmas he began to cough up blood, and he lay in bed for twelve weeks under the care of the district doctor.'
+      zh: '1828 年圣诞，阿贝尔坐雪橇到弗罗兰看望在那里做家庭教师的未婚妻，路上病倒。圣诞舞会之后他开始咳血，此后在当地医生的照看下卧床十二周。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: 'Christmas 1828: cold and coughing, Abel comes by sledge to Froland to see his fiancée.'
+      zh: '1828 年圣诞，阿贝尔受着寒、咳着嗽，坐雪橇到弗罗兰看望未婚妻。'
+  last_paper:
+    date: '1829-01-06'
+    stay_day: 5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [abel_froland_municipal_record, abel_froland_prize_final_years]
+    text:
+      en: 'On 6 January 1829 at Froland Abel wrote his last mathematical paper, two or three pages setting out the main idea of his Paris memoir.'
+      zh: '1829 年 1 月 6 日，阿贝尔在弗罗兰写下最后一篇数学论文，两三页，写的是巴黎长稿的主要思想。'
+    line:
+      en: '6 January 1829: in bed at Froland, Abel writes his last paper, two or three pages on the main idea of his Paris memoir.'
+      zh: '1829 年 1 月 6 日，阿贝尔在弗罗兰的病床上写下最后一篇论文，两三页，写的是巴黎长稿的主要思想。'
+  death:
+    date: '1829-04-06'
+    stay_day: 95
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [abel_mactutor, abel_wiki]
+    text:
+      en: 'Abel died of tuberculosis at Froland at eleven in the forenoon of 6 April 1829, aged twenty six.'
+      zh: '1829 年 4 月 6 日上午十一点，阿贝尔在弗罗兰死于肺结核，二十六岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '6 April 1829: Niels Henrik Abel dies at Froland, aged twenty six.'
+      zh: '1829 年 4 月 6 日，尼尔斯·亨里克·阿贝尔在弗罗兰去世，二十六岁。'
   berlin:
     date: '1829-04-08'
-    checked: official_record
+    stay_day: 97
+    checked: two_sources
     level: careful
-    use: [story, wiki]
-    sources: [abel_froland_berlin]
+    use: [story, history, wiki]
+    sources: [abel_froland_berlin, abel_wiki]
     text:
       en: 'Abel died on 6 April. Crelle wrote from Berlin on 8 April with news of a guaranteed post.'
       zh: '阿贝尔于 4 月 6 日去世。4 月 8 日，克雷勒从柏林写信报告职位已落实。'
+    line:
+      en: '8 April 1829: not knowing, Crelle writes from Berlin that the post for Abel is secured.'
+      zh: '1829 年 4 月 8 日，尚不知情的克雷勒从柏林写信，说替阿贝尔谋的职位已经落实。'
+  prize:
+    date: '1830'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [abel_mactutor, abel_froland_prize_final_years]
+    text:
+      en: 'In 1830 the Paris Academy gave its Grand Prix to Abel, after his death, and to Carl Jacobi.'
+      zh: '1830 年，巴黎科学院把大奖授给已故的阿贝尔和卡尔·雅可比。'
+    line:
+      en: '1830: the Paris Academy gives its Grand Prix to Abel, who is dead, and to Jacobi.'
+      zh: '1830 年，巴黎科学院把大奖授给已经去世的阿贝尔和雅可比。'
+  memoir:
+    date: '1841'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [abel_mactutor, abel_paris_academy_records]
+    text:
+      en: 'The long memoir Abel had given to the Paris Academy in 1826 was found again in 1830 and printed in 1841.'
+      zh: '阿贝尔 1826 年交给巴黎科学院的长稿在 1830 年被找到，1841 年印出。'
+    line:
+      en: '1841: the memoir Abel gave the Paris Academy is printed at last.'
+      zh: '1841 年，阿贝尔交给巴黎科学院的那篇长稿终于印出。'
 bystanders:
-  copyist:
+  maid:
     invented: true
-    text: {en: 'A fictional copyist binding worked exercises together with short statements.', zh: '虚构的抄写人，正把算例与短命题归在一起。'}
+    text: {en: 'A kitchen maid in the house at Froland, made up for the game.', zh: '一个编出来的弗罗兰宅子里的厨房女佣。'}
+  groom:
+    invented: true
+    text: {en: 'The groom who drives the sledge, made up for the game.', zh: '一个编出来的赶雪橇的马夫。'}
+  clerk:
+    invented: true
+    text: {en: 'The clerk of the ironworks who sorts the post, made up for the game.', zh: '一个编出来的铁厂账房先生，管分拣邮包。'}
 wiki:
   refs:
     abel_froland_municipal_record:
@@ -158,16 +240,28 @@ wiki:
       text:
         en: 'The Abel Prize, biography, His last years https://abelprize.no/page/biography-niels-henrik-abel-his-last-years'
         zh: '阿贝尔奖官网，阿贝尔传记·最后几年 https://abelprize.no/page/biography-niels-henrik-abel-his-last-years'
+    abel_mactutor:
+      order: 1313
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, Niels Henrik Abel. https://mathshistory.st-andrews.ac.uk/Biographies/Abel/'
+        zh: '麦克图托数学史，尼尔斯·亨里克·阿贝尔。 https://mathshistory.st-andrews.ac.uk/Biographies/Abel/'
+    abel_wiki:
+      order: 1314
+      status: checked
+      text:
+        en: 'Wikipedia, Niels Henrik Abel. https://en.wikipedia.org/wiki/Niels_Henrik_Abel'
+        zh: '维基百科，尼尔斯·亨里克·阿贝尔。 https://en.wikipedia.org/wiki/Niels_Henrik_Abel'
 self_check:
-  fact: quintic
-  quote_line: '你把那一格空着，另记原因。'
-  regret_choice: '在对照算例和收存来信的时间差之间取舍。'
-  bookend: '纸的正反面对照命题和例题，另一格留给还没写的信。'
-  share_line: '我算对了一道五次方程，却留了一格空白。'
-  share_number: '两天'
-  knowing: 'job 知道克雷勒写信比阿贝尔去世晚两天。'
-  near: 'quintic 原论文和 berlin 的书信日期。'
-  lever: 'example 把一道验过的例题和一般命题并列。'
-  missed: '信写得太晚。'
-  brought: '一张正反可读的练习纸。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: berlin
+  quote_line: '1829 年 4 月 8 日，尚不知情的克雷勒从柏林写信，说替阿贝尔谋的职位已经落实。'
+  regret_choice: '派会劝人的档案员或译员去，三月里柏林的进展信先到了弗罗兰；派只会守炉火的去，他少受了些罪，却到死也不知道柏林有人在奔走。'
+  bookend: '从 1828 年圣诞那趟雪橇开始，以 1841 年长稿终于印出收尾，中间是一封晚到两天的信。'
+  share_line: '他死后两天，柏林来信说职位落实了。'
+  share_number: '2'
+  knowing: 'berlin'
+  near: 'last_paper, death'
+  lever: 'p4'
+  missed: 'memoir'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

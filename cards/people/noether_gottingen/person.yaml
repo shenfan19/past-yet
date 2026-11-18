@@ -2,37 +2,42 @@ order: 149
 events:
   noether_gottingen:
     order: 106
-    build_step: 2
+    build_step: 4
     year: 1918
+    # six office days from the planned arrival on 12 July 1918, through the presentation of 26 July and the final manuscript of late September, into the winter semester
     date: '1918-07-12'
     stay: 6
     lon: 9.93
     lat: 51.53
     region: europe
+    home: [europe_west]
+    near: [europe_east]
     field: math
     tier: 3
-    channels: {S: 3}
-    refs: [noether_gottingen_primary, noether_paper_title_page, noether_habilitation_archives, noether_university_teaching]
+    channels: {S: 3, E: 2}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [noether_gottingen_primary, noether_paper_title_page, noether_habilitation_archives, noether_university_teaching, noether_mactutor, noether_wiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["university_lecturer","archivist","proofreader"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
         - {id: p2, kind: persuade, day: 151, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"will":7,"wit":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
-        - {id: clock, traits: [curious, scholarly]}
-        - {id: assumption, traits: [skeptical, methodical]}
-        - {id: board}
+        - {id: notice, traits: [methodical, scholarly, skeptical, curious, vigil], day: 93}
+        - {id: turnips, traits: [kind, patient, cheerful, attached, hardy, handy], day: 105}
+        - {id: snow, day: 165}
     text:
       en:
         name: "A lecture under another name"
         place: "Göttingen"
         figure: "Emmy Noether"
-        story: 'In her 1918 paper Noether connects continuous symmetries of a variational problem with corresponding conservation relations under stated conditions.'
+        story: 'In 1915 David Hilbert and Felix Klein brought Emmy Noether to Göttingen, but the university would not let a woman qualify to lecture, and from the winter of 1916 her courses were announced under the name of Hilbert. On 26 July 1918 Klein presented her paper Invariant Variational Problems to the Göttingen society of sciences, and she handed in its final version at the end of September. The paper ties each continuous symmetry to a conserved quantity. She was admitted to lecture in June 1919, and only in 1923 was she first paid a small fixed salary for teaching.'
         relic: "A lecture notice"
         relic_desc: "A hall notice with Hilbert's name where hers should be."
         points:
-          p1: 'Get Noether’s signed paper and its summary to Klein together so he can submit the work at the scheduled Göttingen meeting.'
-          p2: 'Give the department a record of the classes Noether has taught and a copy of her signed paper. Ask the department to budget payment for the next seminar and file it with the new application.'
+          p1: 'Get Noether’s signed paper and its summary to Klein together so he can submit the work at the scheduled Göttingen meeting'
+          p2: 'Give the department a record of the classes Noether has taught and a copy of her signed paper. Ask the department to budget payment for the next seminar and file it with the new application'
         points_fail:
           p1: 'The list has the presenter’s name, but the manuscript and its author’s page cannot be matched. The society puts the paper off to another meeting, and the office recalls the employee.'
           p2: 'The department agrees to keep the seminar running. It uses the old schedule and sets aside no pay for the hours Noether teaches.'
@@ -45,19 +50,19 @@ events:
             who: noether_gottingen
             bio: 'Göttingen’s rules blocked Noether’s first application to qualify as a lecturer. She continued her research and later taught students in her own classes.'
         vignettes:
-          clock: 'You ask whether starting the same example later changes its rule. The listener moves the clock''s starting mark and redraws the margin figure without touching the rule itself.'
-          assumption: 'The listener remembers the conclusion but skips its assumptions. You write those on a separate slip and ask which change would make that slip cease to apply.'
-          board: 'You copy two headings before the board is wiped. The listener puts the transformation under one and the quantity that stays constant under the other.'
+          notice: 'Before the winter semester {staff} helps the porter pin the timetable to the board. He taps one line, Professor Hilbert with the assistance of Dr Noether, and says he has pinned that line up for several terms now, and the one who goes in to teach has always been the lady doctor.'
+          turnips: 'In October {staff} helps the landlady dig turnips in the back yard. The influenza is back in town, she says, half the student lodgings are empty, and she has stopped counting the bread coupons because there is nothing left to count.'
+          snow: 'Late in December {staff} helps the porter of the mathematics building sweep snow from the steps. So many students have come back from the war, the porter says, that the halls have no seats left and some are listening from the corridor.'
       zh:
         name: "署着别人名字的课"
         place: "哥廷根"
         figure: "埃米·诺特"
-        story: '诺特在 1918 年的论文中说明，在给定条件下，变分问题的连续对称性与相应守恒关系之间的联系。'
+        story: '1915 年，大卫·希尔伯特和费利克斯·克莱因把埃米·诺特请到哥廷根，可大学不让女性取得任教资格，从 1916 年冬季学期起，她的课在课表上署的是希尔伯特的名字。1918 年 7 月 26 日，克莱因把她的论文《不变变分问题》呈交给哥廷根科学学会，9 月底她交了终稿。这篇论文把每一种连续对称性与一个守恒量联系起来。1919 年 6 月，她获准任教，直到 1923 年才第一次领到一小笔固定的教学薪酬。'
         relic: "一张课程通告"
         relic_desc: "一张厅里的通告，应该写她名字的地方写着希尔伯特。"
         points:
-          p1: '把诺特署名的文稿和提要同时交到克莱因手上，让他能按期将论文呈交给哥廷根学术团体。'
-          p2: '把本学期由诺特实际授课的记录和署名论文一并交给系里，请系里先为下一轮讨论课核定课酬，再随新申请存档。'
+          p1: '把诺特署名的文稿和提要同时交到克莱因手上，让他能按期将论文呈交给哥廷根学术团体'
+          p2: '把本学期由诺特实际授课的记录和署名论文一并交给系里，请系里先为下一轮讨论课核定课酬，再随新申请存档'
         points_fail:
           p1: '名册上只有呈交人的名字，讲义与作者页没能对回同一份。会议把论文退到下一次，事务所因同步失败召回员工。'
           p2: '系里同意有人继续带讨论课，但依然用原来的排课办法，没有经费支付诺特这部分工时。'
@@ -70,9 +75,9 @@ events:
             who: noether_gottingen
             bio: '哥廷根的任教规则曾让诺特的第一份申请受阻。她仍开展研究，后来以一系列论文和自己的课堂培养学生。'
         vignettes:
-          clock: '你问把同一个例子往后推一会开始，规则会不会变。听讲者挪了钟上的起点，在页边重画图，原规则一笔没动。'
-          assumption: '听讲者记住了结论，却跳过了前提。你把前提另写一条，请他说出怎样改例子，这张纸条就不再适用。'
-          board: '黑板要擦时，你先抄下两个栏头。听讲者把所做的变换和保持恒定的量分列记在下面。'
+          notice: '冬季学期开课前，{staff}帮工友往布告栏上钉课表。工友指着一行念：希尔伯特教授，在诺特博士协助下。他说这一行他钉了好几个学期，进教室讲课的一直是那位女博士。'
+          turnips: '十月，{staff}帮房东太太在后院挖萝卜。她说城里流感又起来了，学生公寓空了一半，面包票她早就不数了，反正也没什么可数的。'
+          snow: '十二月底，{staff}帮数学楼的门房扫台阶上的雪。门房说打完仗回来的学生太多，讲堂里没座位了，有人站在走廊里听。'
 text:
   en:
     name: Emmy Noether
@@ -80,21 +85,118 @@ text:
   zh:
     name: 埃米·诺特
     text: 德国数学家，1882 年生，1935 年去世。她在哥廷根证明了物理系统的每种对称性对应一个守恒量，并塑造了现代抽象代数。1933 年她丢掉职位，移居美国。
-hook: {en: 'What changes, and what is conserved?', zh: '什么变了，什么守恒'}
+hook: {en: 'Her course, under another man''s name', zh: '课表上写着别人的名字'}
 facts:
-  symmetry:
-    date: '1918'
-    checked: official_record
+  invited:
+    date: '1915'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [noether_gottingen_primary]
+    use: [story, history, wiki]
+    sources: [noether_mactutor, noether_university_teaching]
     text:
-      en: 'In her 1918 paper Noether connects continuous symmetries of a variational problem with corresponding conservation relations under stated conditions.'
-      zh: '诺特在 1918 年的论文中说明，在给定条件下，变分问题的连续对称性与相应守恒关系之间的联系。'
+      en: 'In 1915 David Hilbert and Felix Klein invited Noether to Göttingen. Her first application to qualify as a lecturer, that year, was blocked by the rule that women could not.'
+      zh: '1915 年，大卫·希尔伯特和费利克斯·克莱因请诺特到哥廷根。同年她第一次申请任教资格，因女性不得任教的规定受阻。'
+    line:
+      en: '1915: Hilbert and Klein bring Noether to Göttingen; her application to lecture is blocked because she is a woman.'
+      zh: '1915 年，希尔伯特和克莱因把诺特请到哥廷根。她申请任教资格，因为是女性而受阻。'
+  hilbert_name:
+    date: '1916'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [noether_mactutor, noether_habilitation_archives]
+    text:
+      en: 'The course catalogue for the winter semester of 1916 and 1917 announced a seminar in mathematical physics by Professor Hilbert, with the assistance of Dr E. Noether, on Mondays from four to six, without fees.'
+      zh: '1916 至 1917 年冬季学期的课表上写着：数学物理讨论课，希尔伯特教授主讲，诺特博士协助，周一四点到六点，免费。'
+    line:
+      en: 'Winter 1916: the timetable lists her seminar as given by Professor Hilbert, with the assistance of Dr Noether.'
+      zh: '1916 年冬季学期，课表上她的讨论课写的是希尔伯特教授主讲，诺特博士协助。'
+  presented:
+    date: '1918-07-26'
+    stay_day: 14
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [noether_paper_title_page, noether_habilitation_archives]
+    text:
+      en: 'At the meeting of 26 July 1918 Felix Klein presented Invariant Variational Problems by Emmy Noether to the Göttingen society of sciences. In it she connects continuous symmetries of a variational problem with corresponding conservation laws.'
+      zh: '1918 年 7 月 26 日，费利克斯·克莱因在哥廷根科学学会的会议上呈交埃米·诺特的《不变变分问题》。她在文中把变分问题的连续对称性与相应的守恒律联系起来。'
+    line:
+      en: '26 July 1918: Felix Klein presents her paper Invariant Variational Problems to the Göttingen society of sciences.'
+      zh: '1918 年 7 月 26 日，费利克斯·克莱因把她的论文《不变变分问题》呈交给哥廷根科学学会。'
+  final_version:
+    date: '1918-09'
+    stay_day: 80
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [noether_paper_title_page, noether_habilitation_archives]
+    text:
+      en: 'A note on the first page of the printed paper says that the final version of the manuscript was handed in only at the end of September 1918.'
+      zh: '论文印本首页的脚注说，手稿的终稿到 1918 年 9 月底才交上。'
+    line:
+      en: 'End of September 1918: Noether hands in the final version of the paper.'
+      zh: '1918 年 9 月底，诺特交上论文的终稿。'
+  habilitation:
+    date: '1919-06-04'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [noether_habilitation_archives, noether_university_teaching]
+    text:
+      en: 'After a second application, Noether gave her trial lecture on 4 June 1919 and was admitted as a lecturer in mathematics, with Invariant Variational Problems as her thesis.'
+      zh: '第二次申请之后，诺特在 1919 年 6 月 4 日作了试讲，获准为数学讲师，任教资格论文就是《不变变分问题》。'
+    line:
+      en: '4 June 1919: after her trial lecture Noether is admitted to lecture at Göttingen.'
+      zh: '1919 年 6 月 4 日，诺特试讲之后获准在哥廷根任教。'
+  paid:
+    date: '1923'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [noether_university_teaching, noether_wiki]
+    text:
+      en: 'Only in 1923 did Noether receive her first teaching assignment with a small fixed salary.'
+      zh: '直到 1923 年，诺特才第一次得到带一小笔固定薪酬的教学任务。'
+    line:
+      en: '1923: for the first time Noether is paid a small fixed salary for her teaching.'
+      zh: '1923 年，诺特第一次为教课领到一小笔固定薪酬。'
+  dismissed:
+    date: '1933'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [noether_mactutor, noether_university_teaching]
+    text:
+      en: 'In 1933 Noether was one of the first to lose her post at Göttingen, and she went to Bryn Mawr College in the United States.'
+      zh: '1933 年，诺特是哥廷根最早被解职的人之一，此后她去了美国的布林莫尔学院。'
+    note: 'A dismissal: written as a plain fact.'
+    line:
+      en: '1933: Noether loses her post at Göttingen and leaves for Bryn Mawr College in the United States.'
+      zh: '1933 年，诺特被哥廷根解职，去了美国的布林莫尔学院。'
+  death:
+    date: '1935-04-14'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [noether_mactutor, noether_wiki]
+    text:
+      en: 'Emmy Noether died at Bryn Mawr, Pennsylvania, on 14 April 1935.'
+      zh: '1935 年 4 月 14 日，埃米·诺特在美国宾夕法尼亚州布林莫尔去世。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '14 April 1935: Emmy Noether dies at Bryn Mawr.'
+      zh: '1935 年 4 月 14 日，埃米·诺特在布林莫尔去世。'
 bystanders:
-  noether_gottingen_reader:
+  porter:
     invented: true
-    text: {en: 'An invented listener puzzling over an example after a reading.', zh: '一位虚构的听讲者，散场后还在琢磨例子。'}
+    text: {en: 'The porter who pins up the timetable at the university, made up for the game.', zh: '一个编出来的大学工友，管往布告栏上钉课表。'}
+  landlady:
+    invented: true
+    text: {en: 'A landlady in Göttingen who lets rooms to students, made up for the game.', zh: '一个编出来的哥廷根房东太太，把屋子租给学生。'}
+  doorkeeper:
+    invented: true
+    text: {en: 'The doorkeeper of the mathematics building, made up for the game.', zh: '一个编出来的数学楼门房。'}
 wiki:
   refs:
     noether_paper_title_page:
@@ -120,12 +222,29 @@ wiki:
       status: checked
       text:
         en: 'Emmy Noether, Invariante Variationsprobleme, Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, 1918, pp. 235–257. https://de.wikisource.org/wiki/Invariante_Variationsprobleme'
-        zh: 'Emmy Noether, Invariante Variationsprobleme, Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, 1918, pp. 235–257. https://de.wikisource.org/wiki/Invariante_Variationsprobleme'
+        zh: '埃米·诺特《不变变分问题》，载《哥廷根科学学会通报》，1918 年，第 235 至 257 页。 https://de.wikisource.org/wiki/Invariante_Variationsprobleme'
+    noether_mactutor:
+      order: 1319
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, Emmy Noether. https://mathshistory.st-andrews.ac.uk/Biographies/Noether_Emmy/'
+        zh: '麦克图托数学史，埃米·诺特。 https://mathshistory.st-andrews.ac.uk/Biographies/Noether_Emmy/'
+    noether_wiki:
+      order: 1320
+      status: checked
+      text:
+        en: 'Wikipedia, Emmy Noether. https://en.wikipedia.org/wiki/Emmy_Noether'
+        zh: '维基百科，埃米·诺特。 https://en.wikipedia.org/wiki/Emmy_Noether'
 self_check:
-  quote_line: '你问把同一个例子往后推一会开始，规则会不会变。'
-  fact: symmetry
-  regret_choice: '略过「认出例子里做的变换」，这处细节便留给下一位核对。'
-  bookend: '从「什么变了，什么守恒」开始，以员工留下的观察或更正收尾。'
-  share_line: '什么变了，什么守恒'
-  share_number: '1918'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: hilbert_name
+  quote_line: '1916 年冬季学期，课表上她的讨论课写的是希尔伯特教授主讲，诺特博士协助。'
+  regret_choice: '派会说话的档案员或讲师去，十二月系里先给她的课付了酬；派只管递稿的去，论文护住了，她照旧白教到 1923 年。'
+  bookend: '从 1915 年她来到哥廷根却不准任教开始，以 1923 年第一次领到薪酬收尾，中间是署着希尔伯特名字的课和她自己署名的论文。'
+  share_line: '她讲的课，课表上写的是希尔伯特。'
+  share_number: '1923'
+  knowing: 'paid'
+  near: 'presented, final_version'
+  lever: 'p2'
+  missed: 'habilitation'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

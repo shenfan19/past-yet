@@ -2,17 +2,23 @@ order: 79
 events:
   galois_paris:
     order: 101
-    build_step: 2
+    build_step: 4
     year: 1832
+    # four office days from the planned arrival on 20 May 1832, through the letter of 29 May, the duel of 30 May and the printing of the letter in September
     date: '1832-05-20'
     stay: 4
     lon: 2.35
     lat: 48.85
     region: europe
+    home: [europe_west]
+    near: [europe_east, north_africa]
+    crossroads: true
     field: math
     tier: 3
-    channels: {G: 2, S: 1, V: 2}
-    refs: [galois_paris_primary, galois_chevalier_archive, galois_liouville_1846]
+    channels: {E: 2, G: 2, V: 1}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [galois_paris_primary, galois_chevalier_archive, galois_liouville_1846, galois_mactutor, galois_wiki, galois_oeuvres_1897]
     scene:
       star_rules: 2
       points:
@@ -20,15 +26,15 @@ events:
         - {id: p2, kind: persuade, day: 104, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
         - {id: p3, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","paramedic"],"item":"first_aid_kit"},{"job":["nurse"],"item":"antibiotic","stat":{"will":6}},{"provides":"cure","stat":{"constitution":6}}]}}
       vignettes:
-        - {id: check, traits: [curious, scholarly, skeptical]}
-        - {id: sequence, traits: [methodical, vigil]}
-        - {id: fold}
+        - {id: candle, traits: [methodical, vigil, patient, quiet, scholarly], day: 9.3}
+        - {id: cart, traits: [bold, hardy, kind, streetwise, cheerful], day: 11.5}
+        - {id: type, day: 103}
     text:
       en:
         name: "The night before the duel"
         place: "Paris"
         figure: "Évariste Galois"
-        story: 'In a letter dated 29 May 1832, Galois summarized mathematical work for Auguste Chevalier and distinguished results from questions still to be pursued.'
+        story: 'Évariste Galois came out of prison in Paris on 29 April 1832. On the night of 29 May he wrote to his friend Auguste Chevalier, setting out what he had found about which equations can be solved by radicals and asking him to have the letter printed. The next morning he was shot in the abdomen in a duel and left where he fell; he died in the Cochin hospital on 31 May, aged twenty. Chevalier printed the letter that September. Fourteen years later Joseph Liouville published his papers.'
         relic: "A hurried letter"
         relic_desc: "Pages crossed with figures and the words that he had no time."
         points:
@@ -51,14 +57,14 @@ events:
             who: galois_paris
             bio: 'Galois survived the duel of May 1832. He went on working in mathematics in Paris and saw his theory of equations read and discussed in his own lifetime.'
         vignettes:
-          check: 'The copyist puts a question among the conclusions. You trace it back to the request at the end of the letter. They mark what the next reader is being asked to check.'
-          sequence: 'Two pages both begin with the same symbol. You read the last line of each and find which one the argument needs first. The copyist adds a page mark.'
-          fold: 'You hold the letter open until the copyist has copied the date and recipient. They fold the notes separately so the two sets of paper can still be found.'
+          candle: 'On the night of 29 May {staff} carries a second candle up the stairs for the concierge. She grumbles that the young gentleman''s lamp has been burning since dark, and that the ink is hers too, lent, and she means to put it on the account.'
+          cart: 'On 31 May {staff} helps a carter unload firewood at the gate of the Cochin hospital. Yesterday they carried a young man in, the carter says, and this morning there was a sheet over him; ten years he has brought wood here, and it is the fine mornings he cannot stand.'
+          type: 'At the end of summer {staff} picks up spilled type from the floor of a small print shop. The compositor complains that this number has a letter in it full of sums, and he has had to borrow every equals sign from the case next door.'
       zh:
         name: "决斗前夜"
         place: "巴黎"
         figure: "埃瓦里斯特·伽罗瓦"
-        story: '伽罗瓦在署于 1832 年 5 月 29 日的致奥古斯特·舍瓦利耶信中概述了自己的数学研究，区分已得结果和有待追究的问题。'
+        story: '1832 年 4 月 29 日，埃瓦里斯特·伽罗瓦在巴黎获释出狱。5 月 29 日夜里，他给朋友奥古斯特·舍瓦利耶写信，概述自己关于哪些方程能用根式求解的发现，托他把信刊出。第二天清晨，他在决斗中腹部中枪，被丢在原地，5 月 31 日死在科钦医院，年仅二十岁。那年九月，舍瓦利耶刊出了这封信。十四年后，约瑟夫·刘维尔刊出了他的论文。'
         relic: "一封匆忙写就的信"
         relic_desc: "写满算式的信页，页边写着没有时间了。"
         points:
@@ -81,9 +87,9 @@ events:
             who: galois_paris
             bio: '伽罗瓦挺过了 1832 年 5 月的决斗。他在巴黎继续做数学，生前就看到自己关于方程的理论被人读懂、讨论。'
         vignettes:
-          check: '誊写员把一个问题夹进了结论。你顺着信查到末尾的请求，他另标出下一个读信人要核对哪件事。'
-          sequence: '两页都从同一个符号起笔。你分别读了末行，找出论证先用哪一页。誊写员补上页码。'
-          fold: '你扶着信，等誊写员抄好日期和收信人。他把笔记另折一份，后来还找得出两套纸。'
+          candle: '5 月 29 日夜里，{staff}替看门的老妇人往楼上送第二支蜡烛。她嘟囔说，这位年轻先生的灯从天黑亮到现在，墨水也是从她这儿借的，回头得记进账里。'
+          cart: '5 月 31 日，{staff}在科钦医院门口帮一个车夫卸柴。车夫说，昨天抬进去一个年轻人，今早就盖上了布。他往这儿送了十年柴，最受不了的就是这种天气好的早上。'
+          type: '夏末，{staff}在一家小印坊里帮着捡撒了一地的铅字。排字工抱怨这一期有封信满纸算式，等号得一个个从隔壁字盘里借。'
 text:
   en:
     name: Évariste Galois
@@ -91,21 +97,111 @@ text:
   zh:
     name: 埃瓦里斯特·伽罗瓦
     text: 法国数学家，1811 年生，1832 年去世。他在少年时找到方程能否用根式求解的条件，并开创了群论。他二十岁时在巴黎因决斗去世。
-hook: {en: 'What is a reader supposed to check?', zh: '给后来的人留哪一道题'}
+hook: {en: 'He finished the letter, and at dawn went to fight', zh: '写完这封信，天亮就去决斗'}
 facts:
+  release:
+    date: '1832-04-29'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [galois_mactutor, galois_wiki]
+    text:
+      en: 'Galois was held in the Sainte-Pélagie prison from July 1831. In March 1832, when cholera broke out in Paris, the prisoners were moved to the nursing home of Sieur Faultrier, and on 29 April 1832 he was released.'
+      zh: '伽罗瓦自 1831 年 7 月起关押在圣佩拉吉监狱。1832 年 3 月巴黎霍乱流行，囚犯被移到福尔特里耶疗养所，4 月 29 日他获释。'
+    note: 'A prison term: written as a plain fact, without its cause.'
+    line:
+      en: '29 April 1832: Galois is released in Paris, after more than nine months held.'
+      zh: '1832 年 4 月 29 日，伽罗瓦在巴黎被关押九个多月后获释。'
   letter_to_chevalier:
     date: '1832-05-29'
+    stay_day: 9
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [galois_paris_primary]
+    use: [story, history, wiki]
+    sources: [galois_paris_primary, galois_chevalier_archive]
     text:
-      en: 'In a letter dated 29 May 1832, Galois summarized mathematical work for Auguste Chevalier and distinguished results from questions still to be pursued.'
-      zh: '伽罗瓦在署于 1832 年 5 月 29 日的致奥古斯特·舍瓦利耶信中概述了自己的数学研究，区分已得结果和有待追究的问题。'
+      en: 'In a letter dated 29 May 1832, Galois summarized mathematical work for Auguste Chevalier and distinguished results from questions still to be pursued. He asked Chevalier to have the letter printed and to ask Jacobi or Gauss publicly for their opinion.'
+      zh: '伽罗瓦在署于 1832 年 5 月 29 日的致奥古斯特·舍瓦利耶信中概述了自己的数学研究，区分已得结果和有待追究的问题。他托舍瓦利耶把信刊出，并公开请雅可比或高斯发表意见。'
+    line:
+      en: '29 May 1832: through the night Galois writes to his friend Auguste Chevalier, setting out his work and asking him to print the letter.'
+      zh: '1832 年 5 月 29 日夜里，伽罗瓦给朋友奥古斯特·舍瓦利耶写信，概述自己的研究，托他把信刊出。'
+  duel:
+    date: '1832-05-30'
+    stay_day: 10
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [galois_mactutor, galois_wiki]
+    text:
+      en: 'Early on 30 May 1832 Galois was shot in the abdomen in a duel. His opponent and the seconds left him where he fell, and a passing farmer found him.'
+      zh: '1832 年 5 月 30 日清晨，伽罗瓦在一场决斗中腹部中枪。对手和助手们把他丢在原地，一个路过的农人发现了他。'
+    note: 'A wound: written as a plain fact, without the cause of the duel or the name of the opponent.'
+    line:
+      en: '30 May 1832: early in the morning Galois is shot in the abdomen in a duel and left where he fell, until a passing farmer finds him.'
+      zh: '1832 年 5 月 30 日清晨，伽罗瓦在决斗中腹部中枪，被丢在原地，直到一个路过的农人发现他。'
+  death:
+    date: '1832-05-31'
+    stay_day: 11.2
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [galois_mactutor, galois_wiki]
+    text:
+      en: 'Galois died in the Cochin hospital in Paris on the morning of 31 May 1832, aged twenty.'
+      zh: '1832 年 5 月 31 日上午，伽罗瓦死在巴黎科钦医院，年仅二十岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '31 May 1832: Évariste Galois dies in the Cochin hospital, aged twenty.'
+      zh: '1832 年 5 月 31 日，埃瓦里斯特·伽罗瓦死在科钦医院，年仅二十岁。'
+  burial:
+    date: '1832-06-02'
+    stay_day: 13
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [galois_mactutor, galois_wiki]
+    text:
+      en: 'On 2 June 1832 Galois was buried in a common grave of the Montparnasse cemetery, whose exact place is no longer known.'
+      zh: '1832 年 6 月 2 日，伽罗瓦葬在蒙帕纳斯公墓的公共墓穴，确切位置今已不知。'
+    note: 'A burial: written as a plain fact.'
+    line:
+      en: '2 June 1832: Galois is buried in a common grave at Montparnasse.'
+      zh: '1832 年 6 月 2 日，伽罗瓦葬进蒙帕纳斯公墓的公共墓穴。'
+  printed:
+    date: '1832-09'
+    stay_day: 104.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [galois_chevalier_archive, galois_oeuvres_1897]
+    text:
+      en: 'In September 1832 Chevalier printed the letter of 29 May in the Revue encyclopédique, with a notice on his friend.'
+      zh: '1832 年 9 月，舍瓦利耶把 5 月 29 日那封信刊在《百科评论》上，并附了一篇悼念朋友的短文。'
+    line:
+      en: 'September 1832: Chevalier prints the letter in the Revue encyclopédique.'
+      zh: '1832 年 9 月，舍瓦利耶把那封信刊在《百科评论》上。'
+  liouville:
+    date: '1846'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [galois_liouville_1846, galois_wiki]
+    text:
+      en: 'In 1846 Joseph Liouville published the mathematical papers of Galois in his Journal de mathématiques pures et appliquées.'
+      zh: '1846 年，约瑟夫·刘维尔在他主编的《纯粹与应用数学杂志》上刊出伽罗瓦的数学论文。'
+    line:
+      en: '1846: Joseph Liouville publishes the papers of Galois in his journal.'
+      zh: '1846 年，约瑟夫·刘维尔在自己的杂志上刊出伽罗瓦的论文。'
 bystanders:
-  galois_paris_reader:
+  concierge:
     invented: true
-    text: {en: 'An invented copyist setting out the letter beside a page of notes.', zh: '一位虚构的誊写员，把信和一页笔记摊开。'}
+    text: {en: 'The concierge of a Paris house, made up for the game, who lends ink and keeps an account of it.', zh: '一个编出来的巴黎看门老妇人，借墨水也记账。'}
+  carter:
+    invented: true
+    text: {en: 'A carter who brings firewood to the Cochin hospital, made up for the game.', zh: '一个编出来的往科钦医院送柴的车夫。'}
+  compositor:
+    invented: true
+    text: {en: 'A compositor in a small Paris print shop, made up for the game.', zh: '一个编出来的巴黎小印坊排字工。'}
 wiki:
   refs:
     galois_chevalier_archive:
@@ -125,12 +221,35 @@ wiki:
       status: checked
       text:
         en: 'Évariste Galois, letter to Auguste Chevalier, 29 May 1832, in the posthumous Œuvres mathématiques, 1846, NUMDAM scan. https://www.numdam.org/item/JMPA_1846_1_11__381_0.pdf'
-        zh: 'Évariste Galois, letter to Auguste Chevalier, 29 May 1832, in the posthumous Œuvres mathématiques, 1846, NUMDAM scan. https://www.numdam.org/item/JMPA_1846_1_11__381_0.pdf'
+        zh: '伽罗瓦致奥古斯特·舍瓦利耶信，1832 年 5 月 29 日，载 1846 年《数学著作》，NUMDAM 扫描本。 https://www.numdam.org/item/JMPA_1846_1_11__381_0.pdf'
+    galois_mactutor:
+      order: 1310
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, Évariste Galois. https://mathshistory.st-andrews.ac.uk/Biographies/Galois/'
+        zh: '麦克图托数学史，埃瓦里斯特·伽罗瓦。 https://mathshistory.st-andrews.ac.uk/Biographies/Galois/'
+    galois_wiki:
+      order: 1311
+      status: checked
+      text:
+        en: 'Wikipedia, Évariste Galois. https://en.wikipedia.org/wiki/%C3%89variste_Galois'
+        zh: '维基百科，埃瓦里斯特·伽罗瓦。 https://en.wikipedia.org/wiki/%C3%89variste_Galois'
+    galois_oeuvres_1897:
+      order: 1312
+      status: checked
+      text:
+        en: 'Œuvres mathématiques d''Évariste Galois, 1897 edition with the notice by Chevalier from the Revue encyclopédique, September 1832, Project Gutenberg. https://www.gutenberg.org/ebooks/40213'
+        zh: '《伽罗瓦数学著作》1897 年版，收舍瓦利耶 1832 年 9 月刊于《百科评论》的悼文，古腾堡计划。 https://www.gutenberg.org/ebooks/40213'
 self_check:
-  quote_line: '誊写员把一个问题夹进了结论。'
   fact: letter_to_chevalier
-  regret_choice: '略过「认出留给下一位读者的问题」，这处细节便留给下一位核对。'
-  bookend: '从「给后来的人留哪一道题」开始，以员工留下的观察或更正收尾。'
-  share_line: '给后来的人留哪一道题'
-  share_number: '1832-05-29'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '1832 年 5 月 29 日夜里，伽罗瓦给朋友奥古斯特·舍瓦利耶写信，概述自己的研究，托他把信刊出。'
+  regret_choice: '派带急救包的医生或急救员去，5 月 30 日清晨他被及时送医；派只会理稿的去，信护住了，人照旧在第二天死在科钦医院。'
+  bookend: '从 4 月 29 日他出狱开始，以 1846 年刘维尔刊出他的论文收尾，中间是写信的一夜和决斗的清晨。'
+  share_line: '他写完那封信，天亮就去决斗了，那年二十岁。'
+  share_number: '20'
+  knowing: 'duel'
+  near: 'letter_to_chevalier, printed'
+  lever: 'p3'
+  missed: 'liouville'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

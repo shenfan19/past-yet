@@ -2,17 +2,22 @@ order: 57
 events:
   du_chatelet_luneville:
     order: 105
-    build_step: 2
+    build_step: 4
     year: 1749
+    # two office days from the planned arrival on 22 August 1749, through the birth of 4 September, the death and the receipt of the Royal Library of 10 September
     date: '1749-08-22'
     stay: 2
     lon: 6.49
     lat: 48.59
     region: europe
+    home: [europe_west]
+    near: [europe_east]
     field: science
     tier: 2
-    channels: {V: 3}
-    refs: [du_chatelet_luneville_primary, du_chatelet_luneville_royal_library, du_chatelet_luneville_deposit_receipt, du_chatelet_luneville_workpapers]
+    channels: {V: 2, G: 2}
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [du_chatelet_luneville_primary, du_chatelet_luneville_royal_library, du_chatelet_luneville_deposit_receipt, du_chatelet_luneville_workpapers, du_chatelet_wiki, du_chatelet_britannica]
     scene:
       star_rules: 2
       points:
@@ -20,15 +25,15 @@ events:
         - {id: p2, kind: persuade, day: 14, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
         - {id: p3, kind: care, day: 15, req: {"any":[{"job":["midwife","doctor","physician","nurse","paramedic"],"item":"nano_kit"},{"job":["midwife","doctor","physician"],"item":"antibiotic","stat":{"wit":6}}]}}
       vignettes:
-        - {id: source, traits: [methodical, scholarly]}
-        - {id: diagram, traits: [curious, artistic]}
-        - {id: mark}
+        - {id: stairs, traits: [kind, patient, calm, sensitive, attached, quiet], day: 13.3}
+        - {id: candles, traits: [methodical, vigil, scholarly, curious, skeptical, handy], day: 8}
+        - {id: arbour, day: 45}
     text:
       en:
         name: "Newton in French"
         place: "Lunéville"
         figure: "Émilie du Châtelet"
-        story: 'The complete French edition of Newton''s Principia translated and annotated by Émilie du Châtelet appeared posthumously in 1759.'
+        story: 'In the summer of 1749 Émilie du Châtelet was at the court of Stanislas at Lunéville, waiting for a child and finishing her French translation of Newton''s Principia with its commentary. On 4 September she gave birth to a daughter. On 10 September she died, aged forty two; the cause is given as childbed fever by some and a pulmonary embolism by others. The same day the Royal Library in Paris signed a receipt for three packets of her commentary. The complete translation came out in 1759.'
         relic: "An inkwell"
         relic_desc: "A small inkwell from a desk worked at through the night."
         points:
@@ -51,14 +56,14 @@ events:
             who: du_chatelet_luneville
             bio: 'Du Châtelet survived the birth of 1749, took her French Newton and its commentary to the printer herself, and kept writing and researching for years after.'
         vignettes:
-          source: 'The reader follows one sentence straight into the next. You stop them where the commentary begins. Back at the first page, they can now tell who is doing the explaining.'
-          diagram: 'You ask what the words would look like on paper. The reader sketches a direction, then goes back to the text to check where the arrow belongs.'
-          mark: 'You move the paper mark from the next page to the exact line the reader wants to revisit. When the sheets are collected, the question stays with the passage.'
+          stairs: 'Early on 4 September {staff} helps a laundry girl carry a pile of clean cloths upstairs. The lamp up there was lit at midnight, she says; she counted the feet on the stairs, and by daybreak it was eleven trips.'
+          candles: 'At the end of August {staff} helps the old servant who keeps the candles count the store. The lady marquise burns more candles than the king''s own study, he says, and this month he has to send in his account a week early.'
+          arbour: 'In October {staff} helps a gardener take down the curtains of the arbour. The court has gone quiet early this autumn, he says; most years they would still be putting on plays out here.'
       zh:
         name: "法语版牛顿"
         place: "吕内维尔"
-        figure: "埃米莉·迪沙特莱"
-        story: '迪沙特莱翻译并加注的牛顿《原理》完整法译本，于她去世后的 1759 年刊行。'
+        figure: "埃米莉·杜·夏特莱"
+        story: '1749 年夏，埃米莉·杜·夏特莱住在吕内维尔斯坦尼斯瓦夫的宫廷里待产，手上是快要完成的牛顿《原理》法译和评注。9 月 4 日，她生下一个女儿。9 月 10 日，她去世，四十二岁，死因一说产褥热，一说肺栓塞。同一天，巴黎的王家图书馆为她寄存的三包评注稿签了收据。1759 年，法译全本出版。'
         relic: "一只墨水瓶"
         relic_desc: "一只小墨水瓶，来自一张通宵写字的书桌。"
         points:
@@ -81,31 +86,92 @@ events:
             who: du_chatelet_luneville
             bio: '杜·夏特莱在 1749 年产后活了下来，亲自把牛顿《原理》的法译与评注送进印坊，此后继续写作与研究多年。'
         vignettes:
-          source: '读者顺着一句直接念到下一句。到评注开头处，你请他停一下。再翻回第一页，他已能认出是哪一位作者在解释。'
-          diagram: '你问这段话画出来该是什么样。读者先画了个方向，又回去翻文字，确认箭头该落在哪儿。'
-          mark: '你把夹在下一页的纸签移到读者想回看的那一行。散页收起来时，问题仍和原段夹在一起。'
+          stairs: '9 月 4 日一早，{staff}帮洗衣房的姑娘把一摞干净布巾送上楼。姑娘说楼上半夜就点了灯，她躺着数楼梯上的脚步，到天亮一共跑了十一趟。'
+          candles: '八月底，{staff}帮宫里管蜡烛的老仆清点库房。老仆说侯爵夫人屋里的蜡烛比国王的书房还费，他这个月得提前一周报账。'
+          arbour: '十月，{staff}帮园丁把凉亭的帘子收起来。园丁说宫里今年秋天静得早，往年这时候还在这儿排戏。'
 text:
   en:
     name: Émilie du Châtelet
     text: French mathematician and physicist, 1706 to 1749. She translated Newton's Principia into French with a commentary and argued that the energy of a moving body depends on the square of its speed. She died after childbirth at Lunéville.
   zh:
-    name: 埃米莉·迪沙特莱
+    name: 埃米莉·杜·夏特莱
     text: 法国数学家与物理学家，1706 年生，1749 年去世。她把牛顿的《原理》译成法文并作注，论证运动物体的能量与速度的平方有关。她在吕内维尔因产后并发症去世。
-hook: {en: 'Where does the translation end?', zh: '译文到哪儿，评注从哪儿起'}
+hook: {en: 'Six days after her daughter was born', zh: '生下女儿后的第六天'}
 facts:
+  luneville:
+    date: '1749-07'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [du_chatelet_luneville_deposit_receipt, du_chatelet_wiki]
+    text:
+      en: 'In July 1749 Du Châtelet came to the court of Stanislas, Duke of Lorraine, first at Commercy and from 19 July at Lunéville, where she was to give birth.'
+      zh: '1749 年 7 月，杜·夏特莱来到洛林公爵斯坦尼斯瓦夫的宫廷，先在科梅尔西，7 月 19 日起在吕内维尔，在那里待产。'
+    line:
+      en: 'July 1749: Du Châtelet comes to the court of Stanislas at Lunéville to await the birth of her child.'
+      zh: '1749 年 7 月，杜·夏特莱来到吕内维尔斯坦尼斯瓦夫的宫廷待产。'
+  birth:
+    date: '1749-09-04'
+    stay_day: 13
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [du_chatelet_luneville_deposit_receipt, du_chatelet_wiki]
+    text:
+      en: 'At four in the morning of 4 September 1749 Du Châtelet gave birth at Lunéville to a daughter, Stanislas-Adélaïde.'
+      zh: '1749 年 9 月 4 日凌晨四点，杜·夏特莱在吕内维尔生下女儿斯坦尼斯拉斯－阿德莱德。'
+    line:
+      en: '4 September 1749: before dawn Du Châtelet gives birth to a daughter.'
+      zh: '1749 年 9 月 4 日天亮前，杜·夏特莱生下一个女儿。'
+  death:
+    date: '1749-09-10'
+    stay_day: 19.05
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [du_chatelet_luneville_deposit_receipt, du_chatelet_wiki, du_chatelet_britannica]
+    text:
+      en: 'Du Châtelet died at Lunéville at one in the morning of 10 September 1749, aged forty two. The cause is given as childbed fever by some and as a pulmonary embolism by others.'
+      zh: '1749 年 9 月 10 日凌晨一点，杜·夏特莱在吕内维尔去世，四十二岁。死因一说产褥热，一说肺栓塞。'
+    note: 'A death after childbirth: written as a plain fact, both accounts of the cause given.'
+    line:
+      en: '10 September 1749: Émilie du Châtelet dies at Lunéville, six days after the birth.'
+      zh: '1749 年 9 月 10 日，埃米莉·杜·夏特莱在吕内维尔去世，离生下女儿六天。'
+  receipt:
+    date: '1749-09-10'
+    stay_day: 19.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [du_chatelet_luneville_deposit_receipt, du_chatelet_luneville_royal_library]
+    text:
+      en: 'On 10 September 1749 the keepers of the Royal Library in Paris, Sallier and Melot, signed a receipt for three packets of her commentary on Newton''s Principia.'
+      zh: '1749 年 9 月 10 日，巴黎王家图书馆的萨利耶和梅洛为她的牛顿《原理》评注稿三包签了收据。'
+    line:
+      en: '10 September 1749: in Paris the Royal Library signs for three packets of her commentary on Newton.'
+      zh: '1749 年 9 月 10 日，巴黎的王家图书馆为她的三包牛顿评注稿签了收据。'
   principes:
     date: '1759'
-    checked: official_record
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [du_chatelet_luneville_primary]
+    use: [story, history, wiki]
+    sources: [du_chatelet_luneville_primary, du_chatelet_luneville_deposit_receipt]
     text:
       en: 'The complete French edition of Newton''s Principia translated and annotated by Émilie du Châtelet appeared posthumously in 1759.'
-      zh: '迪沙特莱翻译并加注的牛顿《原理》完整法译本，于她去世后的 1759 年刊行。'
+      zh: '杜·夏特莱翻译并加注的牛顿《原理》完整法译本，于她去世后的 1759 年刊行。'
+    line:
+      en: '1759: her complete French translation of Newton''s Principia, with her commentary, is published.'
+      zh: '1759 年，她翻译并加注的牛顿《原理》法译全本出版。'
 bystanders:
-  du_chatelet_luneville_reader:
+  laundry_girl:
     invented: true
-    text: {en: 'An invented reader comparing the translation and commentary.', zh: '一位虚构的读者，正把译文和评注放在一起看。'}
+    text: {en: 'A girl of the laundry at the court of Lunéville, made up for the game.', zh: '一个编出来的吕内维尔宫廷洗衣房姑娘。'}
+  candle_keeper:
+    invented: true
+    text: {en: 'The old servant who keeps the candles at court, made up for the game.', zh: '一个编出来的宫里管蜡烛的老仆。'}
+  gardener:
+    invented: true
+    text: {en: 'A gardener at the château of Lunéville, made up for the game.', zh: '一个编出来的吕内维尔宫苑园丁。'}
 wiki:
   refs:
     du_chatelet_luneville_royal_library:
@@ -131,12 +197,29 @@ wiki:
       status: checked
       text:
         en: 'Isaac Newton, Principes mathématiques de la philosophie naturelle, translated and annotated by Émilie du Châtelet, Paris, 1759. Ghent University copy. https://books.google.com/books?id=eoUPAAAAQAAJ'
-        zh: 'Isaac Newton, Principes mathématiques de la philosophie naturelle, translated and annotated by Émilie du Châtelet, Paris, 1759. Ghent University copy. https://books.google.com/books?id=eoUPAAAAQAAJ'
+        zh: '牛顿《自然哲学的数学原理》，杜·夏特莱译注，巴黎，1759 年，根特大学藏本。 https://books.google.com/books?id=eoUPAAAAQAAJ'
+    du_chatelet_wiki:
+      order: 1317
+      status: checked
+      text:
+        en: 'Wikipedia, Émilie du Châtelet. https://en.wikipedia.org/wiki/%C3%89milie_du_Ch%C3%A2telet'
+        zh: '维基百科，埃米莉·杜·夏特莱。 https://en.wikipedia.org/wiki/%C3%89milie_du_Ch%C3%A2telet'
+    du_chatelet_britannica:
+      order: 1318
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Émilie du Châtelet. https://www.britannica.com/biography/Gabrielle-Emilie-Le-Tonnelier-de-Breteuil-Marquise-du-Chatelet'
+        zh: '大英百科全书，埃米莉·杜·夏特莱。 https://www.britannica.com/biography/Gabrielle-Emilie-Le-Tonnelier-de-Breteuil-Marquise-du-Chatelet'
 self_check:
-  quote_line: '读者顺着一句直接念到下一句。'
-  fact: principes
-  regret_choice: '略过「找出评注正在解释的那句原文」，这处细节便留给下一位核对。'
-  bookend: '从「译文到哪儿，评注从哪儿起」开始，以员工留下的观察或更正收尾。'
-  share_line: '译文到哪儿，评注从哪儿起'
-  share_number: '1759'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: receipt
+  quote_line: '1749 年 9 月 10 日，巴黎的王家图书馆为她的三包牛顿评注稿签了收据。'
+  regret_choice: '派带纳米医疗箱的助产士或医生去，她熬过了产后；派细心的译员去，三包稿子护住了，人照旧在第六天去世。'
+  bookend: '从 1749 年 7 月她到吕内维尔待产开始，以 1759 年法译全本出版收尾，中间是 9 月 10 日同一天的死与收据。'
+  share_line: '她去世那天，巴黎的图书馆刚好签收了她的稿子。'
+  share_number: '6'
+  knowing: 'receipt'
+  near: 'birth'
+  lever: 'p3'
+  missed: 'principes'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
