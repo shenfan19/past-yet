@@ -292,31 +292,31 @@ try {
     S.secretary = null; S.dispatches = [];
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     const crew = Object.keys(S.staff).filter((k) => S.staff[k].hired);
-    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, heart_monitor: 1, recall_charm: 1 });
+    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, headlamp: 1, recall_charm: 1 });
     const trip = (staffId, items, outcome, era) => {
       const d = off.launch(era, { seed: 5, staffId, items });
       d.report.outcomeId = outcome; d.readyDay = S.clock.day;
       off.claim(d.id);
       return d.kit;
     };
-    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1, heart_monitor: 1 }, 'perfect', 'vienna_1847');
-    const bad = trip(crew[1], { heart_monitor: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
-    S.inv.heart_monitor = 1;
-    const saved2 = trip(crew[2], { heart_monitor: 1, recall_charm: 1, neural_chip: 1 }, 'near_death', 'vienna_1847');
+    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1, headlamp: 1 }, 'perfect', 'vienna_1847');
+    const bad = trip(crew[1], { headlamp: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
+    S.inv.headlamp = 1;
+    const saved2 = trip(crew[2], { headlamp: 1, recall_charm: 1, neural_chip: 1 }, 'near_death', 'vienna_1847');
     const out = { fine, bad, saved2, inv: { ...S.inv } };
     S.inv = saved.inv; S.dispatches = saved.dispatches.concat(S.dispatches.filter((d) => d.claimed)); S.secretary = saved.secretary;
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     return out;
   });
-  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1 && kit.fine.back.heart_monitor === 1);
-  ok('a fatal trip loses the modern gear, not the future technology', kit.bad.lost.heart_monitor === 1 && kit.bad.back.neural_chip === 1);
-  ok('a rescue item saves the gear and is spent doing it', kit.saved2.back.heart_monitor === 1 && kit.saved2.lost.recall_charm === 1 && kit.saved2.back.neural_chip === 1);
+  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1 && kit.fine.back.headlamp === 1);
+  ok('a fatal trip loses the modern gear, not the future technology', kit.bad.lost.headlamp === 1 && kit.bad.back.neural_chip === 1);
+  ok('a rescue item saves the gear and is spent doing it', kit.saved2.back.headlamp === 1 && kit.saved2.lost.recall_charm === 1 && kit.saved2.back.neural_chip === 1);
   // scenes: the points are requirements, equipment counts and shows, and a scene can find the traveller out
   const sc = await page.evaluate(() => {
     const b = window.__game.backend;
     const rate = (ev, staff, items, id) => { let n = 0; for (let k = 1; k <= 60; k++) if (b.runLight(ev, staff, k, items).points.find((p) => p.id === id).hit) n++; return n / 60; };
     let foundGorilla = 0, foundCloak = 0;
-    for (let k = 1; k <= 200; k++) { if (b.runLight('leonardo_florence', 's_ning', k, { gorilla_arm: 1, cyber_arm: 1 }).found) foundGorilla++; if (b.runLight('leonardo_florence', 's_ning', k, { gorilla_arm: 1, cyber_arm: 1, holo_cloak: 1 }).found) foundCloak++; }
+    for (let k = 1; k <= 200; k++) { if (b.runLight('leonardo_florence', 's_ning', k, { exoskeleton: 1, scout_drone: 1 }).found) foundGorilla++; if (b.runLight('leonardo_florence', 's_ning', k, { exoskeleton: 1, scout_drone: 1, holo_cloak: 1 }).found) foundCloak++; }
     // the points are looked for among the stories, so the check does not hang on one card: a point that asks for a woman, one that asks for the chip
     const scenes = window.__game.D.get('catalog.active_events').filter((e) => e.scene);
     const findPoint = (test) => { for (const e of scenes) for (const p of e.scene.points) if (test(JSON.stringify(p.req))) return [e.id, p.id]; return null; };
@@ -346,13 +346,13 @@ try {
   await page.click('[data-act=sellspares]');
   ok('one click sells the spares and keeps one of each', await page.evaluate((f) => { const S = window.__game.ctx.S(); return S.funds > f && S.antiques.filter((x) => x === 'relic_faraday_london').length === 1; }, fundsC));
   await sub('modern');
-  await page.click('[data-act=cartinc][data-id=disinfectant]');
-  ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=disinfectant]').count()) === 1);
+  await page.click('[data-act=cartinc][data-id=chlorine_tablet]');
+  ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=chlorine_tablet]').count()) === 1);
   await page.click('[data-act=cartbuy]');
-  ok('bought disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 2);
+  ok('bought chlorine_tablet', (await page.evaluate(() => window.__game.ctx.S().inv.chlorine_tablet)) === 2);
   await sub('inv');
-  await page.click('[data-act=shopsell][data-id=disinfectant]');
-  ok('sold disinfectant', (await page.evaluate(() => window.__game.ctx.S().inv.disinfectant)) === 0);
+  await page.click('[data-act=shopsell][data-id=chlorine_tablet]');
+  ok('sold chlorine_tablet', (await page.evaluate(() => window.__game.ctx.S().inv.chlorine_tablet)) === 0);
   await sub('future');
   ok('future goods are buyable', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   await sub('modern');
@@ -913,24 +913,26 @@ const imp = await page.evaluate(() => {
   const cap = o.loadCap();
   const id = o.hiredIds().find((k) => g.ui.office && S.staff[k].hired);
   const before = g.backend.staffStats(id, null).constitution;
-  for (const k of ['gorilla_arm', 'cyber_arm', 'cyber_lung', 'neural_chip']) S.inv[k] = (S.inv[k] || 0) + 1;
+  for (const k of ['cyber_lung', 'neural_chip']) S.inv[k] = (S.inv[k] || 0) + 1;
   S.staff[id].gear = [];
-  const a = o.equip(id, 'gorilla_arm');
+  const a = o.equip(id, 'cyber_lung');
   const afterGorilla = g.backend.staffStats(id, null).constitution;
-  const b = o.equip(id, 'cyber_arm');
   const c = o.equip(id, 'neural_chip');
-  const stockWhileWorn = S.inv.gorilla_arm;
+  // the two implants fill the load cap, so a third piece of load does not fit
+  S.inv.cyber_lung += 1;
+  const b = o.equip(id, 'cyber_lung');
+  const stockWhileWorn = S.inv.neural_chip;
   const load = o.loadOf(id);
-  const un = o.unequip(id, 'gorilla_arm');
-  const stockBack = S.inv.gorilla_arm;
-  o.equip(id, 'gorilla_arm');
+  const un = o.unequip(id, 'neural_chip');
+  const stockBack = S.inv.neural_chip;
+  o.equip(id, 'neural_chip');
   const worn = [...o.staffGear(id)];
   const other = o.hiredIds().find((k) => k !== id);
   S.staff[id].restUntil = 0;
   const left = o.dismiss(id);
   return { cap, a, afterGorilla: afterGorilla - before, b, c, stockWhileWorn, load, un, stockBack, left, gearAfter: S.staff[id].gear.length, stockAfter: worn.every((k) => S.inv[k] >= 1) };
 });
-ok('a piece is worn while it fits the load cap and adds to the attributes', imp.a === true && imp.afterGorilla === 3 && imp.b === false && imp.load <= imp.cap);
+ok('a piece is worn while it fits the load cap and adds to the attributes', imp.a === true && imp.afterGorilla === 1 && imp.c === true && imp.b === false && imp.load <= imp.cap);
 ok('a worn piece leaves the stock and comes back when taken off', imp.stockWhileWorn === 0 && imp.un === true && imp.stockBack === 1);
 ok('letting someone go takes the implants off first, nothing is lost', imp.left === true && imp.gearAfter === 0 && imp.stockAfter);
 } catch (e) {

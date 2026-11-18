@@ -136,15 +136,51 @@ function updateUnfinishedCrew(save) {
   return save;
 }
 
+// A save written by another version, or naming cards that have since left the game, is upgraded instead of dropped. Before anything changes
+// the raw text is kept under a backup key. Every field a fresh save has and this one lacks is filled in; an employee new to the roster is added,
+// not hired; an employee, antique, place or trip under way the data no longer has is set aside in S.parked, and put back if it returns.
+function upgrade(S, raw) {
+  if (S.version !== VERSION && raw) { try { localStorage.setItem(KEY + '_backup_v' + S.version, raw); } catch (e) { /* storage blocked */ } }
+  const base = fresh();
+  for (const k of Object.keys(base)) if (S[k] === undefined) S[k] = base[k];
+  S.parked ||= {};
+  const park = (kind, x) => { (S.parked[kind] ||= []).push(x); };
+  const staff = D.get('staff.staff');
+  const entry = base.staff[Object.keys(base.staff)[0]];
+  for (const [id, st] of Object.entries(S.staff)) {
+    if (DEV_STAFF.includes(id)) continue;
+    if (!(id in staff)) { park('staff', { id, ...st }); delete S.staff[id]; continue; }
+    for (const k of Object.keys(entry)) if (st[k] === undefined) st[k] = k === 'hired' ? false : structuredClone(entry[k]);
+  }
+  for (const id of Object.keys(staff)) if (!(id in S.staff) && !DEV_STAFF.includes(id)) S.staff[id] = { ...structuredClone(entry), hired: false };
+  const antiques = D.get('antiques.antiques');
+  const places = new Set([...D.get('config.eras'), ...D.get('catalog.events').map((e) => e.id)]);
+  // what was set aside before and is back in the data returns to its place
+  const back = (kind, ok, put) => { const keep = []; for (const x of S.parked[kind] || []) (ok(x) ? put(x) : keep.push(x)); S.parked[kind] = keep; };
+  back('antiques', (x) => x.id in antiques, (x) => S[x.list].push(x.id));
+  back('staff', (x) => x.id in staff, (x) => { const { id, ...st } = x; S.staff[id] = st; });
+  for (const list of ['antiques', 'locks']) S[list] = S[list].filter((id) => (id in antiques) || (park('antiques', { id, list }), false));
+  S.visited = S.visited.filter((id) => places.has(id));
+  S.dispatches = S.dispatches.filter((d) => (places.has(d.eraId) && d.spec.staffId in S.staff) || (park('dispatches', d), false));
+  if (S.startStaff && !S.startStaff.offer.every((id) => id in staff)) S.startStaff = base.startStaff;
+  S.version = VERSION;
+  applyFounder(D, S.founder);
+  return S;
+}
+
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
     if (raw) {
-      const S = JSON.parse(raw);
-      if (S.version === VERSION && fits(S)) { S.calendarStart ||= new Date().toISOString().slice(0, 10); return withDevStaff(updateUnfinishedCrew(S)); }
+      const parsed = JSON.parse(raw);
+      const S = parsed && parsed.founder && parsed.staff && Array.isArray(parsed.dispatches) ? upgrade(parsed, raw) : null;
+      if (S && fits(S)) { S.calendarStart ||= new Date().toISOString().slice(0, 10); return withDevStaff(updateUnfinishedCrew(S)); }
+      // a save that still does not read is kept before the new game writes over it
+      try { localStorage.setItem(KEY + '_backup_unread', raw); } catch (e) { /* storage blocked */ }
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);
+    try { const raw = localStorage.getItem(KEY); if (raw) localStorage.setItem(KEY + '_backup_unread', raw); } catch (x) { /* storage blocked */ }
   }
   return fresh();
 }
@@ -167,6 +203,7 @@ const ctx = {
   },
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
+    if (obj && typeof obj === 'object' && obj.founder && typeof obj.staff === 'object' && Array.isArray(obj.dispatches)) obj = upgrade(obj, null);
     if (!obj || typeof obj !== 'object' || obj.version !== VERSION || typeof obj.staff !== 'object' || !Array.isArray(obj.dispatches) || !fits(obj)) { if (S && S.founder) applyFounder(D, S.founder); return false; }
     S = withDevStaff(updateUnfinishedCrew(obj));
     this.save();
