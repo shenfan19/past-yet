@@ -118,6 +118,8 @@ emitYaml('hiring.yaml', read('config/hiring.yaml'));
 emitYaml('identities.yaml', read('config/identities.yaml'));
 emitYaml('share_qr.yaml', read('config/share_qr.yaml'));
 emitCopy('world_land.json', 'world/world_land.json');
+// the logo: one svg drawn in the top bar, on the share card and as the page icon
+emitCopy('logo.svg', 'config/logo.svg');
 // the traveller core: the flat model and the bridge description exported from the LM game bridge, copied as they are
 emitCopy('core/traveler_stay.lm.json', 'core/traveler_stay.lm.json');
 emitCopy('core/traveler_stay.bridge.json', 'core/traveler_stay.bridge.json');

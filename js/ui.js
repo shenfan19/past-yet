@@ -42,7 +42,10 @@ export function createUI(D, ctx, DEV = false) {
     u.searchParams.delete('lang');
     location.href = u.toString();
   }
-  document.getElementById('logo').textContent = D.get('config.meta.logo');
+  // the logo is one svg in data/, used as a data URL so it also works in play.html and keeps the share canvas exportable
+  const logoUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.get('logo'));
+  document.getElementById('logo').innerHTML = `<img src="${logoUrl}" alt="">`;
+  document.querySelector('link[rel=icon]').href = logoUrl;
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 

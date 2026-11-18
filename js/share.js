@@ -9,6 +9,8 @@ export function createShare(X) {
   const C = D.get('config.share');
   const CV = C.canvas;
   const QR = D.get('share_qr');
+  const logo = new Image();
+  logo.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.get('logo'));
 
   const dispatch = (id) => ctx.S().dispatches.find((d) => d.id === id);
   const hookOf = (n) => H.hooks[n % H.hooks.length];
@@ -100,16 +102,10 @@ export function createShare(X) {
     g.fillStyle = K.bg; g.fillRect(0, 0, CV.w, CV.h);
     g.strokeStyle = K.stamp; g.lineWidth = CV.border; g.strokeRect(CV.border / 2, CV.border / 2, CV.w - CV.border, CV.h - CV.border);
 
-    // stamp and title
+    // logo and title; the card is drawn again once the logo has loaded
     const L = CV.logo_px;
-    g.save();
-    g.translate(CV.pad + L / 2, CV.pad + L / 2);
-    g.rotate((CV.logo_tilt_deg * Math.PI) / 180);
-    g.strokeStyle = K.stamp; g.lineWidth = 4;
-    g.strokeRect(-L / 2, -L / 2, L, L);
-    g.fillStyle = K.stamp; g.font = `700 ${Math.round(L * 0.72)}px ${serif}`; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.fillText(D.get('config.meta.logo'), 0, 2);
-    g.restore();
+    if (logo.complete && logo.naturalWidth) g.drawImage(logo, CV.pad, CV.pad, L, L);
+    else logo.addEventListener('load', () => draw(d), { once: true });
     g.textAlign = 'left'; g.textBaseline = 'alphabetic';
     g.fillStyle = K.ink; g.font = `700 ${CV.title_px}px ${serif}`;
     g.fillText(H.card_title, CV.pad + L + 20, CV.pad + L / 2 + CV.title_px * 0.35);

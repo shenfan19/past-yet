@@ -45,6 +45,7 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
     const base = await loadLocale(stem, I.fallback);
     o[key] = lang === I.fallback ? base : merge(base, await loadLocale(stem, lang));
   }
+  o.logo = await readText('data/logo.svg');
   o.world = JSON.parse(await readText('data/world_land.json'));
   o.core_model = JSON.parse(await readText('data/core/traveler_stay.lm.json'));
   o.core_bridge = JSON.parse(await readText('data/core/traveler_stay.bridge.json'));
