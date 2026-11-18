@@ -106,20 +106,35 @@ events:
       - AI
       - Fan Shen
   - id: socrates_athens
-    build_step: 2
+    build_step: 4
     year: -399
+    stay: 2
     lon: 23.73
     lat: 37.97
     region: europe
+    home:
+      - europe_east
+    near:
+      - europe_west
+      - middle_east
+      - north_africa
+    crossroads: true
     field: philosophy
     tier: 2
     channels:
-      S: 2
-      G: 1
+      G: 2
+      S: 1
+    ready: true
     refs:
       - socrates_athens_apology
-      - socrates_athens_trial_sources
       - socrates_athens_last_visits
+      - socrates_athens_crito
+      - socrates_athens_memorabilia
+      - socrates_athens_laertius
+      - socrates_athens_sep
+      - socrates_athens_trial_wiki
+      - socrates_athens_phaedo_wiki
+      - socrates_athens_trial_sources
     scene:
       star_rules: 2
       points:
@@ -178,17 +193,23 @@ events:
                 stat:
                   will: 6
       vignettes:
-        - id: handoff
+        - id: rumours
           traits:
-            - artistic
-            - sensitive
-            - attached
-        - id: charges
-          traits:
-            - scholarly
             - skeptical
+            - scholarly
+            - curious
+            - streetwise
+          day: 19
+        - id: harbour
+          traits:
+            - vigil
+            - patient
             - quiet
-        - id: verdict
+            - attached
+            - sensitive
+          day: 32
+        - id: gate
+          day: 44
     authors:
       - AI
       - Fan Shen
@@ -351,17 +372,29 @@ events:
       - AI
       - Fan Shen
   - id: euclid_alexandria
-    build_step: 2
+    build_step: 4
     year: -300
+    stay: 1
     lon: 29.92
     lat: 31.2
     region: africa
+    home:
+      - north_africa
+    near:
+      - europe_east
+      - middle_east
+    crossroads: true
     field: math
     tier: 2
     channels:
       V: 1
+    ready: true
     refs:
       - euclid_alexandria_primary
+      - euclid_alexandria_mactutor
+      - euclid_alexandria_britannica
+      - euclid_alexandria_porisms_study
+      - euclid_alexandria_elements_wiki
     scene:
       star_rules: 2
       points:
@@ -391,15 +424,22 @@ events:
                   wit: 8
                   will: 6
       vignettes:
-        - id: intersection
+        - id: lost
+          traits:
+            - scholarly
+            - curious
+            - sensitive
+            - vigil
+          day: 18
+        - id: arcs
           traits:
             - handy
             - artistic
-        - id: reason
-          traits:
-            - skeptical
-            - scholarly
-        - id: clean
+            - methodical
+            - patient
+          day: 9
+        - id: papyrus
+          day: 12
     authors:
       - AI
       - Fan Shen
@@ -450,24 +490,35 @@ events:
       - AI
       - Fan Shen
   - id: eratosthenes_alexandria
-    build_step: 2
+    build_step: 4
     year: -240
+    stay: 1
     lon: 29.9
     lat: 31.19
     region: africa
+    home:
+      - north_africa
+    near:
+      - europe_east
+      - middle_east
+    crossroads: true
     field: science
     tier: 2
     channels:
-      H: 3
-      L: 2
+      H: 2
+      V: 1
+    ready: true
     refs:
       - eratosthenes_alexandria_cleomedes
+      - eratosthenes_alexandria_mactutor
+      - eratosthenes_alexandria_britannica
+      - eratosthenes_alexandria_osu
     scene:
       star_rules: 2
       points:
         - id: p1
           kind: hold
-          day: 30
+          day: 28
           req:
             any:
               - job:
@@ -485,21 +536,31 @@ events:
                   wit: 8
                   will: 5
       vignettes:
-        - id: scale
-          traits:
-            - methodical
-            - scholarly
         - id: noon
           traits:
             - curious
             - handy
-        - id: arc
+            - methodical
+            - patient
+          day: 25.2
+        - id: beta
+          traits:
+            - cheerful
+            - glib
+            - streetwise
+            - bold
+            - cosmopolitan
+          day: 12
+        - id: shelves
+          day: 18
     authors:
       - AI
       - Fan Shen
   - id: hypatia_alexandria
-    build_step: 1
-    year: 400
+    build_step: 2
+    year: 415
+    date: '0415-01-01'
+    stay: 3
     lon: 29.93
     lat: 31.21
     region: africa
@@ -508,23 +569,33 @@ events:
     channels:
       S: 3
     refs:
+      - hypatia_alexandria_socrates
+      - hypatia_alexandria_romana
+      - hypatia_alexandria_ebsco
       - hypatia_alexandria_hydroscope
     scene:
+      star_rules: 2
       points:
         - id: p1
           kind: persuade
+          day: 60
           req:
-            stat:
-              finesse: 7
-        - id: p2
-          kind: notice
-          req:
-            stat:
-              wit: 7
-        - id: p3
-          kind: hold
-          req:
-            item: holo_cloak
+            any:
+              - trait:
+                  - charismatic
+                  - glib
+                  - cosmopolitan
+                stat:
+                  wit: 5
+                  will: 6
+              - trait:
+                  - scholarly
+                stat:
+                  wit: 8
+                  will: 5
+              - item: golden_apple
+                stat:
+                  will: 6
       vignettes:
         - id: scale
           traits:
@@ -541,19 +612,30 @@ events:
       - AI
       - Fan Shen
   - id: fibonacci_pisa
-    build_step: 2
+    build_step: 4
     year: 1202
+    stay: 2
     lon: 10.4
     lat: 43.72
     region: europe
+    home:
+      - europe_west
+    near:
+      - north_africa
+      - europe_east
+    crossroads: true
     field: math
     tier: 2
     channels:
-      'Y': 1
+      V: 1
+    ready: true
     refs:
       - fibonacci_pisa_primary
+      - fibonacci_pisa_mactutor
+      - fibonacci_pisa_dsb
       - fibonacci_pisa_liber_abaci_versions
       - fibonacci_pisa_manuscript_versions
+      - fibonacci_pisa_wiki
     scene:
       star_rules: 2
       points:
@@ -576,15 +658,22 @@ events:
                   wit: 8
                   will: 6
       vignettes:
-        - id: gap
+        - id: rabbits
+          traits:
+            - curious
+            - cheerful
+            - kind
+            - scholarly
+          day: 34
+        - id: zero
           traits:
             - methodical
             - vigil
-        - id: tokens
-          traits:
-            - curious
-            - handy
-        - id: copy
+            - skeptical
+            - patient
+          day: 21
+        - id: quay
+          day: 9
     authors:
       - AI
       - Fan Shen
@@ -656,20 +745,29 @@ events:
       - AI
       - Fan Shen
   - id: dante_ravenna
-    build_step: 2
+    build_step: 4
     year: 1320
+    date: '1320-01-01'
+    stay: 3
     lon: 12.2
     lat: 44.42
     region: europe
+    home:
+      - europe_west
     field: literature
     tier: 2
     channels:
-      E: 2
+      E: 1
       V: 1
+    ready: true
     refs:
       - dante_ravenna_primary
-      - boccaccio_dante_tradition
+      - dante_ravenna_britannica
+      - dante_ravenna_wiki
       - dante_ravenna_eclogue_research
+      - dante_ravenna_questio
+      - dante_ravenna_loc_rehabilitation
+      - boccaccio_dante_tradition
     scene:
       star_rules: 2
       points:
@@ -714,21 +812,31 @@ events:
                   - scholarly
                   - artistic
       vignettes:
-        - id: dream
+        - id: latin
           traits:
-            - bold
-            - curious
-        - id: ear
-          traits:
+            - scholarly
             - artistic
+            - sensitive
+            - curious
+          day: 24
+        - id: pinewood
+          traits:
+            - wanderer
+            - hardy
             - quiet
-        - id: stars
+            - vigil
+            - patient
+          day: 52
+        - id: ink
+          day: 40
     authors:
       - AI
       - Fan Shen
   - id: gutenberg_mainz
-    build_step: 1
-    year: 1450
+    build_step: 2
+    year: 1455
+    date: '1455-06-01'
+    stay: 6
     lon: 8.27
     lat: 50
     region: europe
@@ -739,24 +847,54 @@ events:
       T: 1
     refs:
       - gutenberg_mainz_primary
+      - gutenberg_mainz_loc
+      - gutenberg_mainz_helmasperger
+      - gutenberg_mainz_society
+      - gutenberg_mainz_britannica
     scene:
+      star_rules: 2
       points:
         - id: p1
           kind: hold
+          guard: true
+          day: 20
           req:
-            job:
-              - mechanic
-              - carpenter
-              - builder
+            any:
+              - job:
+                  - mechanic
+                  - carpenter
+                  - woodcarver
+                  - proofreader
+                  - bookseller
+                stat:
+                  finesse: 5
+              - trait:
+                  - handy
+                  - methodical
+                stat:
+                  finesse: 7
+                  will: 5
+              - item: exoskeleton
+                stat:
+                  finesse: 6
         - id: p2
-          kind: endure
+          kind: persuade
+          day: 150
           req:
-            provides: strength
-        - id: p3
-          kind: notice
-          req:
-            stat:
-              wit: 7
+            any:
+              - job:
+                  - accountant
+                  - tax_preparer
+                  - archivist
+                stat:
+                  wit: 5
+                  will: 5
+              - trait:
+                  - skeptical
+                  - scholarly
+                stat:
+                  wit: 8
+                  will: 6
       vignettes:
         - id: wrong_sort
           traits:
@@ -837,23 +975,34 @@ events:
       - AI
       - Fan Shen
   - id: copernicus_frombork
-    build_step: 2
+    build_step: 4
     year: 1543
     date: '1543-04-08'
     stay: 4
     lon: 19.68
     lat: 54.36
     region: europe
+    home:
+      - europe_east
+    near:
+      - europe_west
     field: science
     tier: 3
     channels:
-      C: 2
+      C: 1
       V: 2
+      G: 1
+    ready: true
     refs:
       - copernicus_frombork_primary
-      - copernicus_autograph_provenance
-      - copernicus_first_edition_prefaces
+      - copernicus_mactutor
+      - copernicus_torun
       - copernicus_giese_letters
+      - copernicus_reception_study
+      - copernicus_first_edition_prefaces
+      - copernicus_autograph_provenance
+      - copernicus_wiki
+      - copernicus_remains_pnas
     scene:
       star_rules: 2
       points:
@@ -914,15 +1063,23 @@ events:
                   will: 8
                   wit: 6
       vignettes:
-        - id: walk
-          traits:
-            - curious
-            - bold
-        - id: frame
+        - id: preface
           traits:
             - methodical
+            - scholarly
             - skeptical
-        - id: diagram
+            - curious
+          day: 55
+        - id: window
+          traits:
+            - kind
+            - patient
+            - vigil
+            - attached
+            - sensitive
+          day: 40
+        - id: nets
+          day: 12
     authors:
       - AI
       - Fan Shen
@@ -1155,9 +1312,9 @@ events:
       - Fan Shen
   - id: leeuwenhoek_delft
     build_step: 2
-    year: 1676
-    date: '1676-09-25'
-    stay: 3
+    year: 1677
+    date: '1677-05-01'
+    stay: 7
     lon: 4.36
     lat: 52.01
     region: europe
@@ -1166,44 +1323,62 @@ events:
     channels:
       V: 1
     refs:
-      - leeuwenhoek_delft_primary
-      - leeuwenhoek_delft_october_letter
       - leeuwenhoek_delft_witnesses
+      - leeuwenhoek_delft_rs_1677
+      - leeuwenhoek_delft_hooke
+      - leeuwenhoek_delft_gest
+      - leeuwenhoek_delft_wiki
+      - leeuwenhoek_delft_october_letter
+      - leeuwenhoek_delft_primary
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
+          kind: persuade
           guard: true
-          day: 14
+          day: 17
           req:
             any:
               - job:
-                  - archivist
                   - translator
+                  - archivist
+                  - teacher
+                  - lecturer
+                  - university_lecturer
+                stat:
+                  will: 5
               - trait:
                   - curious
-                  - methodical
+                  - charismatic
                 stat:
+                  wit: 6
                   will: 6
         - id: p2
-          kind: persuade
-          day: 40
+          kind: notice
+          guard: true
+          day: 200
           req:
             any:
               - job:
-                  - translator
-                  - archivist
+                  - biologist
+                  - physician
+                  - lecturer
+                  - university_lecturer
                 stat:
                   wit: 7
-                  will: 7
               - trait:
-                  - curious
                   - methodical
-                  - scholarly
+                  - curious
                 stat:
                   wit: 8
-                  will: 7
+                  will: 6
+              - item: magnifier
+                trait:
+                  - methodical
+                  - curious
+                  - handy
+                stat:
+                  wit: 6
       vignettes:
         - id: motion
           traits:
@@ -1288,9 +1463,9 @@ events:
       - Fan Shen
   - id: bach_leipzig
     build_step: 2
-    year: 1723
-    date: '1723-04-22'
-    stay: 4
+    year: 1750
+    date: '1750-03-01'
+    stay: 2
     lon: 12.37
     lat: 51.34
     region: europe
@@ -1300,6 +1475,9 @@ events:
       V: 2
       L: 1
     refs:
+      - bach_leipzig_zegers
+      - bach_leipzig_britannica
+      - bach_leipzig_taylor
       - bach_leipzig_primary
       - bach_leipzig_leipzig_council
       - bach_leipzig_choir
@@ -1308,37 +1486,24 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 38
+          kind: care
+          day: 20
           req:
             any:
               - job:
-                  - musician
-                  - archivist
-              - trait:
-                  - artistic
-                  - methodical
+                  - doctor
+                  - physician
                 stat:
-                  will: 6
-        - id: p2
-          kind: persuade
-          day: 71
-          req:
-            any:
+                  will: 7
               - job:
-                  - musician
-                  - archivist
+                  - nurse
+                  - paramedic
+                  - caregiver
+                  - pharmacist
+                  - medical_teacher
+                provides: cure
                 stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - artistic
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  will: 5
       vignettes:
         - id: entry
           traits:
@@ -1353,21 +1518,30 @@ events:
       - AI
       - Fan Shen
   - id: smith_kirkcaldy
-    build_step: 2
+    build_step: 4
     year: 1776
     date: '1776-10-28'
     stay: 3
     lon: -3.16
     lat: 56.11
     region: europe
+    home:
+      - europe_west
     field: thought
     tier: 2
     channels:
       S: 1
+      G: 1
+    ready: true
     refs:
       - smith_kirkcaldy_primary
+      - smith_wiki
+      - smith_hume_texts_dialogues
+      - smith_dnb_hume
+      - smith_letter_econlib
       - smith_kirkcaldy_strahan_autograph
       - smith_kirkcaldy_glasgow_letters
+      - smith_dialogues_wiki
     scene:
       star_rules: 2
       points:
@@ -1392,15 +1566,23 @@ events:
                 stat:
                   wit: 5
       vignettes:
-        - id: queue
+        - id: nails
           traits:
-            - methodical
             - curious
-        - id: handoff
+            - streetwise
+            - methodical
+            - skeptical
+          day: 20
+        - id: post
           traits:
-            - handy
             - kind
-        - id: walk
+            - patient
+            - vigil
+            - attached
+            - sensitive
+          day: 16
+        - id: firth
+          day: 40
     authors:
       - AI
       - Fan Shen
@@ -1538,7 +1720,9 @@ events:
       - Fan Shen
   - id: lavoisier_paris
     build_step: 2
-    year: 1789
+    year: 1793
+    date: '1793-10-25'
+    stay: 2
     lon: 2.35
     lat: 48.86
     region: europe
@@ -1548,6 +1732,10 @@ events:
       E: 1
       S: 1
     refs:
+      - lavoisier_paris_historytoday
+      - lavoisier_paris_herodote
+      - lavoisier_paris_britannica
+      - lavoisier_paris_wikipedia
       - lavoisier_paris_primary
       - lavoisier_paris_illustrated_first
       - lavoisier_paris_first_plates
@@ -1556,37 +1744,43 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 19
+          kind: persuade
+          day: 22
           req:
             any:
-              - job:
-                  - proofreader
-                  - archivist
               - trait:
-                  - methodical
-                  - artistic
+                  - charismatic
+                  - glib
+                  - streetwise
                 stat:
-                  will: 6
+                  wit: 5
+                  will: 5
+              - job:
+                  - accountant
+                  - tax_preparer
+                stat:
+                  wit: 5
+                  will: 5
         - id: p2
           kind: persuade
-          day: 53
+          day: 26
           req:
             any:
-              - job:
-                  - translator
-                  - archivist
-                stat:
-                  wit: 7
-                  will: 7
               - trait:
-                  - methodical
-                  - artistic
-                  - scholarly
+                  - charismatic
+                  - streetwise
+                  - cosmopolitan
                 stat:
-                  wit: 8
+                  wit: 6
                   will: 7
+              - provides: disguise
+                trait:
+                  - streetwise
+                  - glib
+                  - bold
+                  - charismatic
+                stat:
+                  will: 6
       vignettes:
         - id: units
           traits:
@@ -1666,22 +1860,31 @@ events:
       - AI
       - Fan Shen
   - id: beethoven_vienna
-    build_step: 2
+    build_step: 4
     year: 1824
     date: '1824-04-22'
     stay: 2
     lon: 16.37
     lat: 48.21
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
     field: music
     tier: 3
     channels:
       G: 2
       S: 1
+    ready: true
     refs:
       - beethoven_vienna_primary
       - beethoven_house_ninth
       - beethoven_conversation_rehearsals
+      - beethoven_ninth_wiki
+      - beethoven_ninth_cambridge
+      - beethoven_wiki
+      - beethoven_britannica
     scene:
       star_rules: 2
       points:
@@ -1727,15 +1930,22 @@ events:
                 stat:
                   will: 8
       vignettes:
-        - id: voice
+        - id: parts
           traits:
+            - methodical
             - artistic
-            - curious
-        - id: step
+            - scholarly
+            - handy
+          day: 10
+        - id: prater
           traits:
-            - kind
-            - patient
-        - id: programme
+            - cheerful
+            - wanderer
+            - streetwise
+            - curious
+          day: 31
+        - id: stools
+          day: 14
     authors:
       - AI
       - Fan Shen
@@ -1806,6 +2016,7 @@ events:
       - AI
       - Fan Shen
   - id: darwin_galapagos
+    build_step: 2
     year: 1835
     lon: -90.3
     lat: -0.6
@@ -1817,31 +2028,58 @@ events:
       'Y': 3
       H: 2
     refs:
+      - darwin_galapagos_journal
+      - darwin_galapagos_sulloway
       - darwin_beagle_bird_notes
       - darwin_galapagos_log
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - curious
-              - streetwise
-              - handy
-        - id: p2
           kind: endure
-          req:
-            stat:
-              constitution: 5
-        - id: p3
-          kind: care
+          guard: true
+          day: 23
           req:
             any:
-              - stat:
-                  wit: 6
+              - trait:
+                  - hardy
+                  - wanderer
+                stat:
+                  constitution: 7
+                  will: 5
+              - provides: clean_water
+                stat:
+                  constitution: 5
+                  will: 5
               - job:
+                  - fisher
+                  - fisherman
+                  - sailor
+                  - navigator
+                  - shepherd
+                stat:
+                  constitution: 5
+                  will: 5
+        - id: p2
+          kind: notice
+          day: 10
+          req:
+            any:
+              - job:
+                  - biologist
+                  - geologist
                   - archivist
-                  - data_analyst
+                  - university_lecturer
+                stat:
+                  wit: 7
+                  will: 5
+              - trait:
+                  - curious
+                  - skeptical
+                  - methodical
+                stat:
+                  wit: 8
+                  will: 6
       vignettes:
         - id: two_tags
           traits:
@@ -1856,21 +2094,27 @@ events:
       - AI
       - Fan Shen
   - id: lovelace_london
-    build_step: 2
+    build_step: 4
     year: 1843
     date: '1843-07-23'
     stay: 3
     lon: -0.13
     lat: 51.5
     region: europe
+    home:
+      - europe_west
     field: math
     tier: 2
     channels:
       V: 2
+    ready: true
     refs:
       - lovelace_london_primary
       - lovelace_1843_correspondence
       - lovelace_print_1843
+      - lovelace_wiki
+      - lovelace_essinger
+      - lovelace_britannica
     scene:
       star_rules: 2
       points:
@@ -1919,15 +2163,22 @@ events:
                 stat:
                   will: 8
       vignettes:
-        - id: repeat
+        - id: messenger
           traits:
+            - patient
+            - vigil
+            - streetwise
+            - wanderer
+          day: 5
+        - id: compositor
+          traits:
+            - handy
             - methodical
             - scholarly
-        - id: music
-          traits:
-            - artistic
-            - curious
-        - id: row
+            - quiet
+          day: 23
+        - id: loom
+          day: 40
     authors:
       - AI
       - Fan Shen
@@ -2029,22 +2280,29 @@ events:
       - AI
       - Fan Shen
   - id: mendel_brno
-    build_step: 2
+    build_step: 4
     year: 1865
     date: '1865-01-26'
     stay: 3
     lon: 16.6
     lat: 49.2
     region: europe
+    home:
+      - europe_east
+    near:
+      - europe_west
     field: science
     tier: 2
     channels:
       L: 1
+    ready: true
     refs:
       - mendel_brno_primary
       - mendel_brno_manuscript_1865
       - mendel_brno_lecture_sources
       - mendel_brno_replication_letters
+      - mendel_wiki
+      - mendel_britannica
     scene:
       star_rules: 2
       points:
@@ -2093,34 +2351,51 @@ events:
                 stat:
                   will: 8
       vignettes:
-        - id: ratio
+        - id: straw
           traits:
-            - skeptical
-            - scholarly
-        - id: label
-          traits:
-            - methodical
+            - kind
             - handy
-        - id: tally
+            - hardy
+            - quiet
+          day: 13
+        - id: market
+          traits:
+            - curious
+            - patient
+            - methodical
+            - scholarly
+            - skeptical
+          day: 30
+        - id: furrow
+          day: 62
     authors:
       - AI
       - Fan Shen
   - id: mendeleev_petersburg
-    build_step: 2
+    build_step: 4
     year: 1869
     date: '1869-03-07'
     stay: 4
     lon: 30.31
     lat: 59.93
     region: europe
+    home:
+      - europe_east
+    near:
+      - europe_west
     field: science
     tier: 2
     channels:
       C: 3
       V: 2
+    ready: true
     refs:
       - mendeleev_petersburg_primary
       - mendeleev_minutes_translation
+      - mendeleev_jensen_flu_cheese
+      - mendeleev_giunta_abstract
+      - mendeleev_wiki
+      - mendeleev_britannica
     scene:
       star_rules: 2
       points:
@@ -2167,31 +2442,41 @@ events:
                 stat:
                   wit: 8
       vignettes:
-        - id: blank
+        - id: flyers
           traits:
             - methodical
-            - vigil
-        - id: similarity
+            - handy
+            - scholarly
+            - quiet
+          day: 22
+        - id: neva
           traits:
+            - cheerful
             - curious
-            - skeptical
-        - id: heading
+            - wanderer
+            - streetwise
+          day: 45
+        - id: samovar
+          day: 15
     authors:
       - AI
       - Fan Shen
   - id: pasteur_paris
     build_step: 2
-    year: 1885
-    date: '1885-06-28'
-    stay: 5
-    lon: 2.34
-    lat: 48.84
+    year: 1859
+    date: '1859-07-01'
+    stay: 3
+    lon: 5.77
+    lat: 46.9
     region: europe
     field: medicine
     tier: 2
     channels:
       E: 2
     refs:
+      - pasteur_paris_vallery_radot
+      - pasteur_paris_hov
+      - pasteur_paris_marie
       - pasteur_paris_arrival
       - pasteur_paris_paris_1885
       - pasteur_paris_grancher_role
@@ -2200,54 +2485,24 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 8
+          kind: care
+          day: 55
           req:
             any:
               - job:
                   - doctor
                   - physician
+                stat:
+                  will: 7
+              - job:
                   - nurse
-                  - archivist
-              - trait:
-                  - kind
-                  - methodical
+                  - paramedic
+                  - caregiver
+                  - pharmacist
+                  - medical_teacher
+                provides: cure
                 stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 13
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - kind
-                  - methodical
-                  - curious
-                stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 108
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - kind
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  will: 5
       vignettes:
         - id: date
           traits:
@@ -2264,23 +2519,32 @@ events:
       - AI
       - Fan Shen
   - id: curie_paris
-    build_step: 2
+    build_step: 4
     year: 1898
     date: '1898-06-30'
     stay: 7
     lon: 2.34
     lat: 48.85
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
+    crossroads: true
     field: science
     tier: 3
     channels:
       T: 3
       L: 1
+    ready: true
     refs:
       - curie_paris_primary
       - curie_academy_july_1898
       - curie_academy_dec_1898
       - curie_nobel_lab_conditions
+      - curie_wiki
+      - curie_europeana
+      - pierre_curie_nobel
     scene:
       star_rules: 2
       points:
@@ -2336,38 +2600,54 @@ events:
                   - pharmacist
                   - nurse
       vignettes:
-        - id: two_notices
+        - id: shed
           traits:
             - methodical
             - vigil
-        - id: word
+            - hardy
+            - kind
+            - patient
+          day: 150
+        - id: borscht
           traits:
-            - skeptical
-            - scholarly
+            - cosmopolitan
+            - cheerful
             - curious
-        - id: heading
+            - wanderer
+          day: 25
+        - id: bookstall
+          day: 90
     authors:
       - AI
       - Fan Shen
   - id: freud_vienna
-    build_step: 2
+    build_step: 4
     year: 1899
     date: '1899-10-13'
     stay: 3
     lon: 16.35
     lat: 48.22
     region: europe
+    home:
+      - europe_east
+    near:
+      - europe_west
     field: thought
     tier: 2
     channels:
       G: 1
       S: 1
+    ready: true
     refs:
       - freud_vienna_imprint
       - freud_vienna_appearance
       - freud_vienna_first_ed_loc
       - freud_vienna_publication_letter
       - freud_vienna_advance_copy
+      - freud_vienna_dreams_wiki
+      - freud_vienna_sothebys
+      - freud_vienna_shapero
+      - freud_vienna_wiki
     scene:
       star_rules: 2
       points:
@@ -2391,36 +2671,55 @@ events:
                 stat:
                   wit: 6
       vignettes:
-        - id: imprint
+        - id: window
           traits:
-            - quiet
             - curious
-            - methodical
-        - id: reader
+            - scholarly
+            - skeptical
+            - quiet
+          day: 24
+        - id: cafe
           traits:
-            - kind
-            - patient
-            - sensitive
-        - id: edition
+            - charismatic
+            - glib
+            - cheerful
+            - cosmopolitan
+            - bold
+          day: 33
+        - id: snow
+          day: 75
     authors:
       - AI
       - Fan Shen
   - id: cajal_barcelona
-    build_step: 2
+    build_step: 4
     year: 1889
     date: '1889-09-01'
     stay: 3
     lon: 2.17
     lat: 41.39
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
+      - north_africa
+    crossroads: true
     field: science
     tier: 2
     channels:
       V: 2
+    ready: true
     refs:
       - cajal_barcelona_primary
       - cajal_memories_berlin
       - cajal_1889_unizar
+      - cajal_nobel_bio
+      - cajal_kolliker_review
+      - cajal_revista_iec
+      - cajal_barcelona_sld
+      - cajal_wiki
+      - cajal_nobel_1906
     scene:
       star_rules: 2
       points:
@@ -2457,15 +2756,24 @@ events:
                 stat:
                   will: 8
       vignettes:
-        - id: crossing
+        - id: stain
           traits:
-            - skeptical
-            - vigil
-        - id: legend
-          traits:
-            - artistic
             - methodical
-        - id: blank
+            - patient
+            - handy
+            - scholarly
+            - quiet
+          day: 12
+        - id: ticket
+          traits:
+            - bold
+            - cheerful
+            - cosmopolitan
+            - wanderer
+            - streetwise
+          day: 22
+        - id: rain
+          day: 70
     authors:
       - AI
       - Fan Shen
@@ -2618,18 +2926,31 @@ events:
       - AI
       - Fan Shen
   - id: hammurabi_babylon
-    build_step: 2
+    build_step: 4
     year: -1754
+    stay: 1
     lon: 44.42
     lat: 32.54
     region: asia
+    home:
+      - middle_east
+    near:
+      - central_asia
+      - north_africa
+    crossroads: true
     field: thought
     tier: 2
     channels:
       H: 1
       S: 1
+    ready: true
     refs:
       - hammurabi_babylon_primary
+      - hammurabi_code_wiki
+      - hammurabi_bm_copy
+      - hammurabi_britannica
+      - hammurabi_history_com
+      - hammurabi_find_record
     scene:
       star_rules: 2
       points:
@@ -2654,15 +2975,24 @@ events:
                   will: 5
               - provides: scan
       vignettes:
-        - id: condition
+        - id: clay
           traits:
-            - scholarly
+            - handy
+            - patient
             - methodical
-        - id: case
+            - quiet
+            - scholarly
+          day: 6
+        - id: river
           traits:
+            - bold
+            - cheerful
             - curious
-            - skeptical
-        - id: edge
+            - streetwise
+            - glib
+          day: 15
+        - id: roof
+          day: 27
     authors:
       - AI
       - Fan Shen
@@ -3324,8 +3654,10 @@ events:
       - AI
       - Fan Shen
   - id: ulugh_beg_samarkand
-    build_step: 1
-    year: 1428
+    build_step: 2
+    year: 1449
+    date: '1449-09-01'
+    stay: 2
     lon: 66.98
     lat: 39.65
     region: asia
@@ -3336,64 +3668,46 @@ events:
     channels:
       C: 2
       V: 2
-    ready: true
     refs:
-      - ulugh_beg_samarkand_observatory
-      - ulugh_beg_samarkand_catalogue
       - st_andrews_ulugh_beg
+      - ulugh_beg_samarkand_wiki
+      - ulugh_beg_samarkand_vangent
       - stantrips_observatory
+      - ulugh_beg_samarkand_catalogue
+      - ulugh_beg_samarkand_observatory
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 12
+          kind: hold
+          day: 54
           req:
             any:
-              - job:
-                  - mechanic
-                  - carpenter
-                  - builder
               - trait:
-                  - handy
+                  - bold
                   - hardy
-                  - cheerful
-              - stat:
-                  constitution: 6
-        - id: p2
-          kind: notice
-          day: 80
-          req:
-            any:
+                stat:
+                  constitution: 7
+                  will: 7
               - trait:
-                  - methodical
-                  - scholarly
-                  - curious
-              - stat:
-                  wit: 7
-        - id: p3
-          kind: endure
-          day: 150
-          req:
-            any:
-              - trait:
-                  - vigil
-                  - patient
-                  - hardy
-              - stat:
-                  will: 6
+                  - streetwise
+                  - wanderer
+                provides: disguise
+                stat:
+                  will: 5
       vignettes:
         - id: source
           traits:
             - methodical
             - scholarly
-          day: 90
+          day: 20
         - id: arc
           traits:
             - curious
             - handy
-          day: 40
+          day: 10
         - id: hold
-          day: 120
+          day: 40
     authors:
       - AI
       - Fan Shen
@@ -3620,19 +3934,29 @@ events:
       - AI
       - Fan Shen
   - id: murasaki_kyoto
-    build_step: 2
+    build_step: 4
     year: 1008
+    stay: 2
     lon: 135.77
     lat: 35.01
     region: asia
+    home:
+      - japan
+    near:
+      - korea
+      - china
     field: literature
     tier: 3
     channels:
       S: 3
+    ready: true
     refs:
       - murasaki_kyoto_primary
       - murasaki_kyoto_genji_diary_exhibit
       - murasaki_kyoto_textual_history
+      - murasaki_diary_wiki
+      - murasaki_classics_day_nijl
+      - murasaki_classics_day_kyoto
     scene:
       star_rules: 2
       points:
@@ -3669,15 +3993,24 @@ events:
                   wit: 8
                   will: 7
       vignettes:
-        - id: nickname
+        - id: banquet
           traits:
             - glib
+            - cheerful
             - curious
-        - id: voice
+            - charismatic
+            - bold
+          day: 4
+        - id: paper
           traits:
-            - quiet
+            - methodical
             - artistic
-        - id: return
+            - scholarly
+            - patient
+            - quiet
+          day: 12
+        - id: snow
+          day: 40
     authors:
       - AI
       - Fan Shen
@@ -3872,22 +4205,31 @@ events:
       - AI
       - Fan Shen
   - id: basho_hiraizumi
-    build_step: 2
+    build_step: 4
     year: 1689
     date: '1689-06-29'
     stay: 1
     lon: 141.1
     lat: 39
     region: asia
+    home:
+      - japan
+    near:
+      - korea
+      - china
     field: literature
     tier: 2
     channels:
       C: 2
       L: 2
+    ready: true
     refs:
       - basho_hiraizumi_primary
       - basho_hiraizumi_sora_diary
       - basho_hiraizumi_hiraizumi_date
+      - basho_oku_wiki
+      - basho_wiki
+      - basho_britannica
     scene:
       star_rules: 2
       points:
@@ -3928,11 +4270,19 @@ events:
           traits:
             - artistic
             - quiet
-        - id: accounts
+            - sensitive
+            - patient
+          day: 0.32
+        - id: bath
           traits:
-            - curious
-            - skeptical
+            - handy
+            - kind
+            - hardy
+            - cheerful
+            - streetwise
+          day: 0.75
         - id: sandal
+          day: 2
     authors:
       - AI
       - Fan Shen
@@ -4043,22 +4393,34 @@ events:
       - AI
       - Fan Shen
   - id: tagore_santiniketan
-    build_step: 2
+    build_step: 4
     year: 1913
     date: '1913-11-01'
     stay: 3
     lon: 87.68
     lat: 23.68
     region: asia
+    home:
+      - india
+      - south_asia
+    near:
+      - southeast_asia
+      - middle_east
     field: literature
     tier: 2
     channels:
       H: 1
+    ready: true
     refs:
       - tagore_santiniketan_translation
       - tagore_santiniketan_award
       - tagore_1913_santiniketan_reception
       - tagore_nobel_school
+      - tagore_outlook_prize
+      - tagore_nobel_facts
+      - tagore_gitanjali_wiki
+      - tagore_visva_bharati
+      - tagore_britannica
     scene:
       star_rules: 2
       points:
@@ -4085,15 +4447,24 @@ events:
                 stat:
                   will: 5
       vignettes:
-        - id: headline
+        - id: telegram
           traits:
             - bold
+            - cheerful
+            - glib
             - charismatic
-        - id: pause
+            - curious
+          day: 14
+        - id: platform
           traits:
-            - methodical
-            - artistic
-        - id: sheets
+            - kind
+            - calm
+            - sensitive
+            - patient
+            - quiet
+          day: 22.6
+        - id: rice
+          day: 50
     authors:
       - AI
       - Fan Shen
@@ -4823,6 +5194,8 @@ events:
       - bell_boston_notebook
       - bell_loc_march_notebook
       - bell_watson_recollection
+      - bell_centennial_pbs
+      - bell_centennial_smithsonian
     scene:
       star_rules: 2
       points:
@@ -4844,20 +5217,23 @@ events:
                   wit: 7
         - id: p2
           kind: persuade
-          day: 30
+          guard: true
+          day: 120
           req:
             any:
               - job:
-                  - mechanic
-                  - electrician
+                  - tutor
+                  - teacher
+                  - lecturer
+                  - university_lecturer
                 stat:
-                  wit: 7
-                  will: 7
+                  will: 6
               - trait:
-                  - methodical
                   - charismatic
+                  - kind
                 stat:
-                  will: 8
+                  wit: 6
+                  will: 7
       vignettes:
         - id: blind
           traits:
@@ -4925,23 +5301,33 @@ events:
       - AI
       - Fan Shen
   - id: galois_paris
-    build_step: 2
+    build_step: 4
     year: 1832
     date: '1832-05-20'
     stay: 4
     lon: 2.35
     lat: 48.85
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
+      - north_africa
+    crossroads: true
     field: math
     tier: 3
     channels:
+      E: 2
       G: 2
-      S: 1
-      V: 2
+      V: 1
+    ready: true
     refs:
       - galois_paris_primary
       - galois_chevalier_archive
       - galois_liouville_1846
+      - galois_mactutor
+      - galois_wiki
+      - galois_oeuvres_1897
     scene:
       star_rules: 2
       points:
@@ -4995,16 +5381,24 @@ events:
                 stat:
                   constitution: 6
       vignettes:
-        - id: check
-          traits:
-            - curious
-            - scholarly
-            - skeptical
-        - id: sequence
+        - id: candle
           traits:
             - methodical
             - vigil
-        - id: fold
+            - patient
+            - quiet
+            - scholarly
+          day: 9.3
+        - id: cart
+          traits:
+            - bold
+            - hardy
+            - kind
+            - streetwise
+            - cheerful
+          day: 11.5
+        - id: type
+          day: 103
     authors:
       - AI
       - Fan Shen
@@ -5115,25 +5509,32 @@ events:
       - AI
       - Fan Shen
   - id: abel_froland
-    build_step: 2
+    build_step: 4
     year: 1829
     date: '1829-01-01'
     stay: 4
     lon: 8.65
     lat: 58.6
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
     field: math
     tier: 2
     channels:
       E: 2
       C: 3
       G: 2
+    ready: true
     refs:
       - abel_froland_quintic
       - abel_froland_berlin
       - abel_froland_municipal_record
       - abel_froland_prize_final_years
       - abel_paris_academy_records
+      - abel_mactutor
+      - abel_wiki
     scene:
       star_rules: 2
       points:
@@ -5204,36 +5605,55 @@ events:
                 stat:
                   will: 9
       vignettes:
-        - id: example
+        - id: firewood
           traits:
-            - methodical
-            - scholarly
-        - id: job
+            - kind
+            - patient
+            - attached
+            - calm
+            - sensitive
+            - hardy
+          day: 31
+        - id: sledge
           traits:
             - bold
-            - charismatic
-        - id: margin
+            - cheerful
+            - wanderer
+            - cosmopolitan
+            - streetwise
+            - glib
+            - handy
+          day: 12
+        - id: post
+          day: 110
     authors:
       - AI
       - Fan Shen
   - id: riemann_selasca
-    build_step: 2
+    build_step: 4
     year: 1866
     date: '1866-06-23'
     stay: 2
     lon: 8.57
     lat: 45.95
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
     field: math
     tier: 2
     channels:
       E: 1
       G: 2
+    ready: true
     refs:
       - riemann_selasca_primary
       - riemann_selasca_royal_obituary
       - riemann_selasca_gottingen_papers
       - riemann_selasca_nachlass_research
+      - riemann_mactutor
+      - riemann_wiki
     scene:
       star_rules: 2
       points:
@@ -5273,35 +5693,55 @@ events:
                 stat:
                   wit: 6
       vignettes:
-        - id: surface
+        - id: figs
           traits:
+            - kind
+            - patient
+            - calm
+            - quiet
+            - sensitive
+            - attached
+          day: 25.5
+        - id: boat
+          traits:
+            - bold
+            - cheerful
+            - wanderer
+            - cosmopolitan
+            - hardy
             - handy
-            - artistic
-        - id: assumption
-          traits:
-            - skeptical
-            - curious
-        - id: paper
+            - streetwise
+          day: 10
+        - id: chair
+          day: 40
     authors:
       - AI
       - Fan Shen
   - id: du_chatelet_luneville
-    build_step: 2
+    build_step: 4
     year: 1749
     date: '1749-08-22'
     stay: 2
     lon: 6.49
     lat: 48.59
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
     field: science
     tier: 2
     channels:
-      V: 3
+      V: 2
+      G: 2
+    ready: true
     refs:
       - du_chatelet_luneville_primary
       - du_chatelet_luneville_royal_library
       - du_chatelet_luneville_deposit_receipt
       - du_chatelet_luneville_workpapers
+      - du_chatelet_wiki
+      - du_chatelet_britannica
     scene:
       star_rules: 2
       points:
@@ -5357,35 +5797,54 @@ events:
                 stat:
                   wit: 6
       vignettes:
-        - id: source
+        - id: stairs
+          traits:
+            - kind
+            - patient
+            - calm
+            - sensitive
+            - attached
+            - quiet
+          day: 13.3
+        - id: candles
           traits:
             - methodical
+            - vigil
             - scholarly
-        - id: diagram
-          traits:
             - curious
-            - artistic
-        - id: mark
+            - skeptical
+            - handy
+          day: 8
+        - id: arbour
+          day: 45
     authors:
       - AI
       - Fan Shen
   - id: noether_gottingen
-    build_step: 2
+    build_step: 4
     year: 1918
     date: '1918-07-12'
     stay: 6
     lon: 9.93
     lat: 51.53
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
     field: math
     tier: 3
     channels:
       S: 3
+      E: 2
+    ready: true
     refs:
       - noether_gottingen_primary
       - noether_paper_title_page
       - noether_habilitation_archives
       - noether_university_teaching
+      - noether_mactutor
+      - noether_wiki
     scene:
       star_rules: 2
       points:
@@ -5421,15 +5880,25 @@ events:
                 stat:
                   will: 8
       vignettes:
-        - id: clock
+        - id: notice
           traits:
-            - curious
-            - scholarly
-        - id: assumption
-          traits:
-            - skeptical
             - methodical
-        - id: board
+            - scholarly
+            - skeptical
+            - curious
+            - vigil
+          day: 93
+        - id: turnips
+          traits:
+            - kind
+            - patient
+            - cheerful
+            - attached
+            - hardy
+            - handy
+          day: 105
+        - id: snow
+          day: 165
     authors:
       - AI
       - Fan Shen
@@ -5526,17 +5995,30 @@ events:
       - AI
       - Fan Shen
   - id: boltzmann_duino
-    build_step: 2
+    build_step: 4
     year: 1906
+    stay: 3
     lon: 13.61
     lat: 45.77
     region: europe
+    home:
+      - europe_west
+    near:
+      - europe_east
     field: science
     tier: 2
     channels:
       G: 3
+    ready: true
     refs:
       - boltzmann_duino_counting
+      - boltzmann_mactutor
+      - boltzmann_wien_geschichte
+      - boltzmann_standard
+      - boltzmann_physics_today
+      - boltzmann_einstein_brownian
+      - jean_perrin_lindahall
+      - jean_perrin_nobel
     scene:
       star_rules: 2
       points:
@@ -5580,22 +6062,33 @@ events:
                 stat:
                   will: 5
       vignettes:
-        - id: six
-          traits:
-            - methodical
-            - scholarly
-        - id: swap
+        - id: pebbles
           traits:
             - curious
+            - scholarly
+            - methodical
+            - skeptical
             - artistic
-        - id: boxes
+          day: 45
+        - id: nets
+          traits:
+            - bold
+            - hardy
+            - cheerful
+            - handy
+            - wanderer
+            - streetwise
+            - cosmopolitan
+          day: 30
+        - id: towels
+          day: 80
     authors:
       - AI
       - Fan Shen
   - id: cantor_halle
     build_step: 2
-    year: 1884
-    date: '1884-11-11'
+    year: 1917
+    date: '1917-07-15'
     stay: 6
     lon: 11.97
     lat: 51.48
@@ -5606,6 +6099,8 @@ events:
       G: 3
       S: 2
     refs:
+      - cantor_halle_mactutor
+      - cantor_halle_wikipedia
       - cantor_halle_primary
       - cantor_halle_unpublished_material
       - cantor_halle_letter_index
@@ -5613,37 +6108,49 @@ events:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 124
+          kind: persuade
+          day: 60
           req:
             any:
               - job:
-                  - archivist
-                  - university_lecturer
-              - trait:
-                  - methodical
-                  - scholarly
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
                 stat:
                   will: 6
+              - trait:
+                  - kind
+                  - patient
+                  - charismatic
+                stat:
+                  wit: 5
+                  will: 7
         - id: p2
-          kind: persuade
-          day: 145
+          kind: care
+          day: 150
           req:
             any:
               - job:
-                  - archivist
-                  - university_lecturer
+                  - doctor
+                  - physician
                 stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
-                  - scholarly
-                  - scholarly
+                  will: 8
+              - job:
+                  - nurse
+                  - caregiver
+                  - cook
+                  - chef
+                provides: ration
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 5
+              - provides: cure
+                trait:
+                  - kind
+                  - patient
+                  - vigil
+                stat:
+                  will: 6
       vignettes:
         - id: list
           traits:
@@ -6403,6 +6910,8 @@ events:
                   - proofreader
                   - writer
                   - teacher
+                  - lecturer
+                  - university_lecturer
                   - bookseller
                 stat:
                   will: 7
@@ -6692,8 +7201,10 @@ events:
       - AI
       - Fan Shen
   - id: hertz_bonn
-    build_step: 1
-    year: 1894
+    build_step: 2
+    year: 1893
+    date: '1893-09-05'
+    stay: 4
     lon: 7.1
     lat: 50.73
     region: europe
@@ -6701,33 +7212,38 @@ events:
     tier: 2
     channels:
       G: 2
-    regret: true
     refs:
+      - hertz_bonn_mactutor
+      - hertz_bonn_nature
+      - hertz_bonn_wikipedia
       - hertz_bonn_resonator
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
+          kind: care
+          day: 80
           req:
             any:
               - job:
-                  - civil_engineer
-                  - retired_engineer
-                  - electrician
-              - stat:
-                  wit: 7
-        - id: p2
-          kind: care
-          req:
-            trait:
-              - faithful
-              - cheerful
-              - calm
-        - id: p3
-          kind: hold
-          redeem: true
-          req:
-            item: elixir
+                  - doctor
+                  - physician
+                provides: cure
+                stat:
+                  will: 5
+              - job:
+                  - doctor
+                  - physician
+                  - medical_teacher
+                stat:
+                  wit: 8
+                  will: 8
+              - job:
+                  - nurse
+                  - paramedic
+                provides: cure
+                stat:
+                  will: 6
       vignettes:
         - id: repeat
           traits:
@@ -7364,43 +7880,33 @@ events:
       G: 1
     refs:
       - bizet_paris_premiere
+      - bizet_paris_carmen_wiki
+      - bizet_paris_sfopera
+      - bizet_paris_bizet_wiki
+      - bizet_paris_hektoen
       - bizet_rehearsal_score
       - bizet_comique_archive
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 17
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - methodical
-                  - vigil
-                stat:
-                  will: 6
-        - id: p2
           kind: persuade
-          day: 40
+          guard: true
+          day: 15
           req:
             any:
               - job:
-                  - archivist
-                  - translator
+                  - musician
+                  - teacher
+                  - tutor
                 stat:
-                  wit: 7
-                  will: 7
+                  will: 5
               - trait:
-                  - methodical
                   - charismatic
+                  - patient
                 stat:
-                  will: 8
-        - id: p3
+                  will: 7
+        - id: p2
           kind: trust
           day: 45
           req:
@@ -7421,7 +7927,7 @@ events:
                 stat:
                   wit: 6
                   will: 6
-        - id: p4
+        - id: p3
           kind: care
           day: 103
           req:
@@ -7442,6 +7948,8 @@ events:
                   - kind
                   - patient
                   - vigil
+                stat:
+                  will: 6
       vignettes:
         - id: future
           traits:
@@ -8448,44 +8956,14 @@ events:
       E: 2
       G: 1
     refs:
+      - buchner_zurich_ndb
+      - buchner_zurich_hls
+      - buchner_zurich_stol
       - buchner_zurich_fragments
-      - buchner_zurich_woyzeck_drafts
-      - buchner_zurich_january_letter
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 26
-          req:
-            any:
-              - job:
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                stat:
-                  will: 6
-        - id: p2
-          kind: hold
-          day: 20
-          req:
-            any:
-              - job:
-                  - archivist
-                  - proofreader
-                  - translator
-              - trait:
-                  - methodical
-                  - scholarly
-                stat:
-                  finesse: 6
-              - item: notebook_pen
-                stat:
-                  finesse: 7
-        - id: p3
           kind: care
           day: 19
           req:
@@ -8502,7 +8980,7 @@ events:
                   - rideshare_driver
               - stat:
                   luck: 8
-        - id: p4
+        - id: p2
           kind: care
           day: 22
           req:
@@ -8632,42 +9110,45 @@ events:
       - AI
       - Fan Shen
   - id: lili_boulanger_paris
-    build_step: 1
+    build_step: 2
     year: 1918
-    lon: 1.8
-    lat: 48.97
+    date: '1918-01-01'
+    stay: 3
+    lon: 1.88
+    lat: 49
     region: europe
     field: music
     tier: 1
     channels:
       E: 1
       G: 2
-    regret: true
     refs:
+      - lili_boulanger_paris_wiki
+      - lili_boulanger_paris_snl
+      - lili_boulanger_paris_baker
       - lili_boulanger_paris_score
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
+          kind: care
+          day: 50
           req:
             any:
               - job:
-                  - musician
-              - stat:
-                  wit: 7
-        - id: p2
-          kind: endure
-          req:
-            stat:
-              will: 6
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            trait:
-              - kind
-              - cosmopolitan
-              - attached
+                  - doctor
+                  - physician
+                stat:
+                  will: 7
+              - job:
+                  - nurse
+                  - paramedic
+                  - caregiver
+                  - pharmacist
+                  - medical_teacher
+                provides: cure
+                stat:
+                  will: 5
       vignettes:
         - id: entry
           traits:
@@ -9232,6 +9713,7 @@ events:
       - AI
       - Fan Shen
   - id: ban_zhao_luoyang
+    deprecated: true
     build_step: 2
     year: 92
     lon: 112.45
@@ -9396,6 +9878,7 @@ events:
       - AI
       - Fan Shen
   - id: song_yingxing_fengxin
+    deprecated: true
     build_step: 2
     year: 1637
     lon: 115.4
@@ -9463,6 +9946,7 @@ events:
       - AI
       - Fan Shen
   - id: wang_zhenyi_jinling
+    deprecated: true
     build_step: 1
     year: 1790
     lon: 118.78
@@ -9514,9 +9998,10 @@ events:
       - Fan Shen
   - id: jianzhen_nara
     build_step: 2
-    year: 754
-    lon: 135.84
-    lat: 34.69
+    year: 750
+    stay: 7
+    lon: 112.47
+    lat: 23.05
     region: asia
     field: thought
     tier: 2
@@ -9524,46 +10009,52 @@ events:
       'Y': 3
       E: 1
     refs:
+      - jianzhen_nara_tozhengzhuan
+      - jianzhen_nara_eiei
+      - jianzhen_nara_enwiki
+      - jianzhen_nara_jawiki
       - jianzhen_nara_arrival
       - jianzhen_nara_foundation
-      - jianzhen_nara_nara_arrival
-      - jianzhen_nara_todai_register
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 22
+          kind: care
+          day: 8
           req:
             any:
               - job:
-                  - archivist
-                  - translator
-                  - builder
-              - trait:
-                  - handy
-                  - patient
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                  - pharmacist
+                  - medical_teacher
+                  - caregiver
                 stat:
-                  will: 6
+                  will: 5
+              - provides: cure
+                stat:
+                  will: 4
         - id: p2
-          kind: persuade
-          day: 81
+          kind: care
+          day: 150
           req:
             any:
               - job:
-                  - archivist
-                  - translator
+                  - doctor
+                  - physician
                 stat:
-                  wit: 7
                   will: 7
-              - trait:
-                  - handy
-                  - patient
-                  - scholarly
+              - job:
+                  - nurse
+                  - paramedic
+                  - caregiver
+                  - pharmacist
+                  - medical_teacher
+                provides: cure
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 5
       vignettes:
         - id: sound
           traits:
@@ -9821,8 +10312,10 @@ events:
       - AI
       - Fan Shen
   - id: sei_shonagon_kyoto
-    build_step: 1
+    build_step: 2
     year: 1000
+    date: '1000-12-01'
+    stay: 2
     lon: 135.76
     lat: 35.01
     region: asia
@@ -9832,59 +10325,35 @@ events:
       G: 1
       S: 1
     refs:
+      - sei_shonagon_kyoto_teishi_wiki
+      - sei_shonagon_kyoto_teishi_ja
+      - sei_shonagon_kyoto_britannica
       - sei_shonagon_kyoto_opening
-      - sei_shonagon_kyoto_collected_manuscripts
-      - sei_shonagon_kyoto_court_writing
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 21
+          kind: care
+          day: 42
           req:
             any:
               - job:
-                  - archivist
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
+                  - midwife
                 stat:
-                  will: 6
-        - id: p2
-          kind: notice
-          day: 26
-          req:
-            any:
+                  finesse: 6
               - job:
-                  - archivist
-                  - proofreader
-                  - proofreader
-              - trait:
-                  - artistic
-                  - methodical
-                  - curious
+                  - doctor
+                  - physician
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 60
-          req:
-            any:
-              - job:
-                  - archivist
-                  - proofreader
-                stat:
-                  wit: 7
                   will: 7
-              - trait:
-                  - artistic
-                  - methodical
-                  - scholarly
+              - job:
+                  - nurse
+                  - paramedic
+                  - caregiver
+                  - medical_teacher
+                provides: cure
                 stat:
-                  wit: 8
-                  will: 7
+                  will: 5
       vignettes:
         - id: compare
           traits:
@@ -10197,9 +10666,10 @@ events:
       - AI
       - Fan Shen
   - id: ibn_khaldun_cairo
-    build_step: 3
-    year: 1406
-    date: '1406-01-01'
+    build_step: 2
+    year: 1384
+    date: '1384-07-15'
+    stay: 7
     lon: 31.24
     lat: 30.04
     region: africa
@@ -10210,19 +10680,20 @@ events:
     channels:
       G: 2
       S: 2
-    ready: true
     refs:
-      - ibn_khaldun_cairo_method
+      - ibn_khaldun_cairo_morimoto
+      - ibn_khaldun_cairo_broadbridge
       - britannica_ibn_khaldun_later
       - ahram_ibn_khaldun
       - encyclopedia_ibn_khaldun
+      - ibn_khaldun_cairo_method
     scene:
       star_rules: 2
       points:
         - id: p1
           kind: persuade
           guard: true
-          day: 45
+          day: 23
           req:
             any:
               - trait:
@@ -10230,45 +10701,37 @@ events:
                   - glib
                   - streetwise
                 stat:
+                  will: 6
+              - trait:
+                  - cosmopolitan
+                  - scholarly
+                stat:
+                  wit: 8
+                  will: 5
+              - item: golden_apple
+                stat:
+                  will: 5
+        - id: p2
+          kind: endure
+          day: 110
+          req:
+            any:
+              - job:
+                  - sailor
+                  - navigator
+                  - ferry_pilot
+                  - ferryman
+                  - fisher
+                  - fisherman
+                stat:
+                  constitution: 5
                   will: 5
               - trait:
-                  - cosmopolitan
+                  - bold
+                  - hardy
                 stat:
-                  wit: 7
-              - item: golden_apple
-        - id: p2
-          kind: hold
-          day: 70
-          req:
-            stat:
-              wit: 6
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-                  - bookseller
-                  - teacher
-                trait:
-                  - scholarly
-                  - methodical
-                  - patient
-              - item: neural_chip
-        - id: p3
-          kind: trust
-          day: 60
-          req:
-            any:
-              - trait:
-                  - scholarly
-                  - cosmopolitan
-                stat:
-                  will: 4
-              - job:
-                  - teacher
-                  - university_lecturer
-                  - lecturer
-                  - tutor
+                  constitution: 9
+                  will: 5
       vignettes:
         - id: gate
           traits:
@@ -11392,8 +11855,10 @@ events:
       - AI
       - Fan Shen
   - id: maya_codices_mani
-    build_step: 1
+    build_step: 2
     year: 1562
+    date: '1562-06-20'
+    stay: 1
     lon: -89.39
     lat: 20.39
     region: americas
@@ -11402,33 +11867,42 @@ events:
     channels:
       S: 3
       H: 2
-    regret: true
     refs:
       - maya_codices_mani_mani
       - maya_codices_mani_account
       - maya_codices_mani_codex
+      - maya_codices_mani_dresden
+      - maya_codices_mani_apology_2015
+      - maya_codices_mani_apology_2021
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - wanderer
-              - handy
-        - id: p2
-          kind: endure
+          kind: trust
+          day: 18
           req:
             any:
+              - job:
+                  - translator
+                  - archivist
+                trait:
+                  - quiet
+                  - streetwise
+                  - kind
+                stat:
+                  will: 7
               - trait:
-                  - calm
-                  - hardy
-              - stat:
+                  - quiet
+                  - streetwise
+                item: holo_cloak
+                stat:
                   will: 6
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            item: holo_cloak
+              - trait:
+                  - kind
+                  - quiet
+                stat:
+                  wit: 7
+                  will: 8
       vignettes:
         - id: fold
           traits:
@@ -11591,67 +12065,81 @@ events:
       - AI
       - Fan Shen
   - id: tupaia_tahiti
-    build_step: 1
-    year: 1769
-    date: '1769-07-01'
-    lon: -149.5
-    lat: -17.5
+    build_step: 2
+    year: 1770
+    date: '1770-06-01'
+    stay: 7
+    lon: 145.57
+    lat: -15.78
     region: oceania
     home:
       - pacific
     field: exploration
     tier: 2
-    era: tupaia_tahiti_1769
     channels:
       'Y': 3
       E: 2
-    regret: true
-    ready: true
     refs:
+      - tupaia_tepapa_cannon
+      - tupaia_anmm_cannonball
+      - tupaia_banks_june
+      - tupaia_banks_hooker
+      - wikipedia_tupaia
       - tupaia_chart_survival
       - tupaia_banks_july
-      - wikipedia_tupaia
       - potsdam_tupaia_map
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 9
+          kind: endure
+          guard: true
+          day: 10
           req:
             any:
-              - trait:
-                  - hardy
-                  - cheerful
-                  - kind
+              - job:
+                  - sailor
+                  - shipwright
+                  - navigator
+                  - ferry_pilot
               - stat:
-                  constitution: 6
+                  constitution: 9
+              - provides: strength
+                stat:
+                  will: 5
         - id: p2
-          kind: notice
-          day: 12.5
+          kind: care
+          day: 13
           req:
             any:
-              - trait:
-                  - streetwise
-                  - wanderer
-                  - vigil
+              - item: vitamin_c
               - job:
-                  - sailor
                   - fisher
-              - stat:
-                  wit: 6
+                  - fisherman
+                  - doctor
+                  - physician
+                  - nurse
+                  - pharmacist
         - id: p3
-          kind: trust
-          redeem: true
-          day: 45.5
+          kind: care
+          day: 155
           req:
             any:
               - job:
-                  - sailor
-                  - fisher
-              - trait:
-                  - attached
-                  - cosmopolitan
+                  - doctor
+                  - physician
+                  - nurse
+                  - paramedic
+                item: antibiotic
+                any:
+                  - item: mosquito_net
+              - provides: cure
+                trait:
+                  - kind
                   - patient
+                  - vigil
+                stat:
+                  will: 6
       vignettes:
         - id: pronounce
           traits:
@@ -11890,6 +12378,7 @@ events:
       - AI
       - Fan Shen
   - id: zhu_shijie_yangzhou
+    deprecated: true
     build_step: 2
     year: 1303
     lon: 119.42
@@ -11944,6 +12433,7 @@ events:
       - AI
       - Fan Shen
   - id: qin_jiushao_huzhou
+    deprecated: true
     build_step: 2
     year: 1247
     lon: 120.09
@@ -12346,8 +12836,10 @@ events:
       - AI
       - Fan Shen
   - id: zeami_sado
-    build_step: 1
-    year: 1434
+    build_step: 2
+    year: 1435
+    date: '1435-04-01'
+    stay: 2
     lon: 138.4
     lat: 38
     region: asia
@@ -12357,33 +12849,46 @@ events:
       C: 2
       G: 2
       S: 1
-    regret: true
     refs:
       - zeami_sado_island
-      - zeami_sado_mask_tradition
+      - zeami_sado_jawiki
+      - zeami_sado_amano
+      - zeami_sado_motomasa
+      - zeami_sado_corpus
+      - zeami_sado_nearman
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 30
           req:
             any:
               - trait:
-                  - skeptical
-                  - quiet
-                  - wanderer
+                  - kind
+                  - sensitive
+                  - patient
+                  - calm
+                  - attached
+                stat:
+                  will: 7
               - job:
                   - musician
-        - id: p2
-          kind: persuade
-          req:
-            provides: show
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            trait:
-              - kind
-              - sensitive
+                  - teacher
+                  - tutor
+                  - writer
+                  - caregiver
+                stat:
+                  will: 7
+              - provides: calm
+                trait:
+                  - kind
+                  - sensitive
+                  - patient
+                  - calm
+                  - attached
+                stat:
+                  will: 5
       vignettes:
         - id: later
           traits:
@@ -12635,6 +13140,7 @@ events:
       - AI
       - Fan Shen
   - id: humboldt_chimborazo
+    build_step: 2
     year: 1802
     lon: -78.82
     lat: -1.47
@@ -12647,29 +13153,38 @@ events:
       C: 2
       L: 2
     refs:
+      - humboldt_dhm
+      - humboldt_chimborazo_wikipedia
       - humboldt_diary_1802
       - humboldt_plants_table
       - humboldt_calpi_history
     scene:
+      star_rules: 2
       points:
         - id: p1
           kind: endure
+          day: 7
           req:
             any:
-              - stat:
-                  constitution: 6
+              - trait:
+                  - hardy
+                  - bold
+                stat:
+                  constitution: 8
+                  will: 5
+              - item: exoskeleton
+                stat:
+                  constitution: 5
+                  will: 6
               - provides: endurance
-        - id: p2
-          kind: notice
-          req:
-            stat:
-              wit: 7
-        - id: p3
-          kind: hold
-          req:
-            trait:
-              - bold
-              - vigil
+                trait:
+                  - hardy
+                  - bold
+                  - wanderer
+                  - calm
+                stat:
+                  constitution: 6
+                  will: 5
       vignettes:
         - id: turn
           traits:

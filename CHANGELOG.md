@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0, 2026-11-18
+
+- Twenty four stories rewritten on the new stars and turned on: Socrates, Euclid, Eratosthenes, Fibonacci, Dante, Copernicus, Adam Smith, Beethoven, Ada Lovelace, Mendel, Mendeleev, Marie Curie, Freud, Cajal, Hammurabi, Murasaki Shikibu, Basho, Tagore, Galois, Abel, Riemann, Emilie du Chatelet, Emmy Noether and Boltzmann, with new encyclopedia entries for the people they name.
+- A story may give the employee one remark at the end of the record, chosen by who the employee is, an older woman or a young firebrand, with a sentence for everyone else or none at all.
+- The record runs in the order of the calendar: facts with only a year or a month fall where their date puts them, years before the common era read right, no scene is told after an employee is sent back, and the leaving comes after the last day's costs. A mend point can overturn a fact of history, such as a death it prevented, and the record then leaves it out.
+- Five stories are retired: Ban Zhao, Song Yingxing, Wang Zhenyi, Zhu Shijie and Qin Jiushao; Hippocrates, Mozart in Prague and Giotto before them.
+
 ## 0.9.7, 2026-11-17
 
 - The premise is new: history is drifting. Every trip prises a branch off history, the main timeline loosens, and a key moment goes another way unless someone holds it. The agency does two things: a guard star holds a recorded moment so that history happens as it did, and a mend star mends a regret in the branch the trip made. Both pay time energy; a missed guard star sends the employee home out of sync, a missed mend star costs only the star. The welcome, the home page, the star note and the about page say so.
