@@ -2,7 +2,7 @@ order: 114
 events:
   kepler_leonberg:
     order: 124
-    build_step: 2
+    build_step: 4
     year: 1620
     date: '1620-07-25'
     stay: 6
@@ -12,7 +12,8 @@ events:
     field: science
     tier: 2
     channels: {S: 3, G: 2}
-    refs: [kepler_leonberg_arrest, kepler_leonberg_released, kepler_leonberg_trial_research, kepler_leonberg_stuttgart_archives]
+    ready: true
+    refs: [kepler_leonberg_arrest, kepler_leonberg_released, kepler_leonberg_stuttgart_archives, katharina_kepler_wiki, kepler_leonberg_trial_research]
     scene:
       star_rules: 2
       points:
@@ -20,17 +21,17 @@ events:
         - {id: p2, kind: notice, day: 36, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","vigil","curious"],"stat":{"wit":6}}]}}
         - {id: p3, kind: care, day: 130, req: {"any":[{"job":["nurse","caregiver","midwife","physician","doctor","paramedic"],"stat":{"will":6}},{"item":"warm_blanket","trait":["kind","patient","faithful"],"stat":{"will":6}}]}}
       vignettes:
-        - {id: heard, traits: [skeptical, methodical, scholarly]}
-        - {id: compare, traits: [bold, faithful, vigil]}
-        - {id: release}
+        - {id: soup, traits: [kind, patient, attached, sensitive, cheerful], day: 51}
+        - {id: hearing, traits: [methodical, scholarly, skeptical, curious, quiet], day: 69}
+        - {id: frost, day: 115}
     text:
       en:
         name: 'What the witness saw'
         place: "Leonberg"
         figure: "Johannes Kepler"
-        story: 'In his defence of his mother Katharina, Johannes Kepler dated her arrest to 7 August 1620 and set out the delays in the proceedings at Güglingen. This visit starts among her papers in Leonberg.'
-        relic: 'A checked defence copy'
-        relic_desc: 'A fictional copying sheet with one corrected date.'
+        story: 'In 1620 Katharina Kepler, seventy three, the mother of the astronomer Johannes Kepler, had been accused for five years by neighbours in Leonberg of harming them with her remedies. On 7 August she was arrested at the house of her daughter at Heumaden; the case began at Leonberg and was moved to Güglingen, where she was held in chains under two guards at her family''s cost. Johannes came from Linz on 28 September and insisted that every step of the proceedings be put in writing. The hearings were put off again and again. She was released in the autumn of 1621, after more than a year in prison.'
+        relic: 'A copy of a defence plea'
+        relic_desc: 'A fair copy of one page of a written plea, with a date corrected in the margin.'
         points:
           p1: 'After Katharina is brought to Leonberg, have the keeper of the defense papers file a second copy so her written response reaches the proceedings'
           p2: 'Help the family sort firsthand testimony, hearsay and later inferences into separate columns'
@@ -48,18 +49,19 @@ events:
           p3:
             was: 'On 7 August 1620 Katharina Kepler was arrested and taken to Güglingen, where she was held in chains for fourteen months under two guards, at her family''s cost. She was released in the autumn of 1621 and died about six months later.'
             now: '{staff} settled things with the guards for the family. That winter she had thick bedding and hot food; the chains stayed on, but she held up better than in history.'
+            who: katharina_kepler
             bio: 'In this timeline Katharina Kepler had warm bedding and hot food through her first winter in the cell at Güglingen, and was stronger when she was released in the autumn of 1621.'
         vignettes:
-          heard: 'Margarete has written that a neighbour saw something. When you ask which neighbour, she can only name the man who repeated it at the door. She copies the two claims onto separate lines and leaves a place for a first-hand account if one comes.'
-          compare: 'Matthias wants to send the first copy now and keep the second at the desk. You read one against the other and find that a date has lost a digit. He waits while Margarete checks the original. The messenger takes the corrected copy as the bells finish striking.'
-          release: 'You know Katharina will eventually be released. Margarete asks what should go on the packet she has in her hands today. You write the day of dispatch and help her dry the ink. The date of release still lies beyond this visit.'
+          soup: 'On 13 September {staff} carries a pot of barley soup up the lane at Güglingen for the jailer''s wife. She says she can tell which prisoner is which by the bowls that come back: the old woman sends hers back scraped clean and complains that it wanted salt.'
+          hearing: 'On 2 October {staff} helps a lawyer''s clerk carry two bundles of papers to the town hall at Güglingen for the hearing. At the door they are told it is put off. The clerk sets the bundles down on the step and says he has carried them up so often that they ought to know the way by now.'
+          frost: 'In the middle of November {staff} rides on a carter''s wagon from Leonberg to Güglingen. The carter says the road is worst where the Zaber valley begins; in the frost the wheels sing, and he has learned to tell the distance by the note.'
       zh:
         name: '证人亲眼看见的事'
         place: "莱昂贝格"
         figure: "约翰内斯·开普勒"
-        story: '约翰内斯·开普勒为母亲卡塔琳娜辩护时，把她被捕的日子记为1620年8月7日，也逐一写下居格林根诉讼的拖延。'
-        relic: '一页核对过的辩护文书练习稿'
-        relic_desc: '抄写练习，有一处改过日期。'
+        story: '1620 年，天文学家约翰内斯·开普勒的母亲卡塔琳娜七十三岁，莱昂贝格的邻居告她用草药害人，已经告了五年。8 月 7 日，她在女儿家所在的霍伊马登被捕；案子先在莱昂贝格开审，后来移到居格林根，她戴着锁链关在那里，两个人日夜看守，费用由家里出。9 月 28 日，约翰内斯从林茨赶到，坚持每一步程序都要落在纸上。审理一拖再拖。1621 年秋，她坐了一年多的牢，获释出狱。'
+        relic: '一页申辩书抄本'
+        relic_desc: '一页誊清的书面申辩，页边改过一个日期。'
         points:
           p1: '卡塔琳娜被带到莱昂贝格以后，请保管申辩书的人立刻另抄并交存一份，护住书面申辩继续进入程序'
           p2: '让家人整理原证词，逐项区分证人亲眼所见、由人转述和后来附上的推断'
@@ -77,45 +79,140 @@ events:
           p3:
             was: '1620 年 8 月 7 日卡塔琳娜·开普勒被捕，押到居格林根，戴着锁链关押十四个月，两人日夜看守，费用由她和家人承担；1621 年秋获释，约半年后去世。'
             now: '{staff}替家里打点好看守，那个冬天她有厚被和热饭，锁链没有卸下，身子却比历史上撑得住些。'
+            who: katharina_kepler
             bio: '这条时间线里，卡塔琳娜·开普勒在居格林根牢里的第一个冬天有厚被和热饭，1621 年秋获释时身子比历史上硬朗些。'
         vignettes:
-          heard: '玛格丽特写着有邻居亲眼看见。你问是哪位邻居，她只叫得出在门边转述的那个人。她把两种说法分成两行，又给可能收到的亲历说法留个位置。'
-          compare: '马蒂亚斯想先送出一份，另一份留桌上。你照着念了两遍，发现有个日期漏了一位数字。他等玛格丽特找原稿核对。钟声刚停，送件人带着改好的副本走了。'
-          release: '你知道卡塔琳娜终会获释。玛格丽特问，今天手里这包纸该写什么。你写上送出的日期，帮她等墨晾干。获释的日子这趟还等不到。'
+          soup: '9 月 13 日，{staff}替狱卒的妻子端一锅大麦汤上居格林根的小巷。她说不用看人，看碗就知道是哪个犯人：那个老太太的碗总是刮得干干净净送回来，还要抱怨一句盐放少了。'
+          hearing: '10 月 2 日，{staff}帮律师的文书把两捆案卷抬到居格林根的市政厅去开庭。到了门口，说是又改期了。文书把两捆纸放在台阶上，说这条路它们走了这么多回，早该自己认得了。'
+          frost: '十一月中，{staff}搭一辆运货马车从莱昂贝格去居格林根。车夫说这条路最难走的是进察伯河谷那一段；一上冻，车轮就会唱，他听音高就知道还剩多远。'
 text:
   en:
     name: Johannes Kepler
-    text: German astronomer, 1571 to 1630. He formulated three laws of planetary motion from the observations of Tycho Brahe. In 1620 his mother was tried for witchcraft at Leonberg, and he helped her defence.
+    text: German astronomer, 1571 to 1630. He formulated three laws of planetary motion from the observations of Tycho Brahe. From 1620 to 1621 he defended his mother Katharina, who had been accused by her neighbours in Leonberg and was held in prison at Güglingen, until she was released.
   zh:
     name: 约翰内斯·开普勒
-    text: 德国天文学家，1571 年生，1630 年去世。他根据第谷·布拉赫的观测归纳出行星运动三定律。1620 年他的母亲在莱昂贝格因巫术受审，他协助辩护。
-hook: {en: 'Who actually saw what the statement describes?', zh: '这句话写的事，谁亲眼看见？'}
+    text: 德国天文学家，1571 年生，1630 年去世。他根据第谷·布拉赫的观测归纳出行星运动三定律。1620 年至 1621 年，他的母亲卡塔琳娜被莱昂贝格的邻居告发，关在居格林根的牢里，他替她辩护，直到她获释。
+hook: {en: 'His mother waited in chains for a hearing', zh: '母亲戴着锁链等开庭'}
 facts:
   arrest:
     date: '1620-08-07'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [kepler_leonberg_arrest, kepler_leonberg_stuttgart_archives, katharina_kepler_wiki]
+    text:
+      en: 'On 7 August 1620 Katharina Kepler was arrested at Heumaden, in the house of her daughter Margaretha, where she was living. The proceedings began at Leonberg under the governor of that district; at the request of her son Christoph, who feared for his trade in the town, her imprisonment and trial were moved to Güglingen.'
+      zh: '1620 年 8 月 7 日，卡塔琳娜·开普勒在霍伊马登被捕，她那时住在女儿玛格丽塔家里。案子先由莱昂贝格的地方官开审；她的儿子克里斯托夫怕在城里的生意受连累，请求把关押和审理移到居格林根。'
+    note: 'An imprisonment: written as a plain fact.'
+    line:
+      en: '7 August 1620: Katharina Kepler is arrested at Heumaden; the case against her begins at Leonberg.'
+      zh: '1620 年 8 月 7 日，卡塔琳娜·开普勒在霍伊马登被捕，案子在莱昂贝格开审。'
+  charged:
+    date: '1620-09-04'
     checked: official_record
-    level: usable
-    use: [story, wiki]
+    level: careful
+    use: [story, history, wiki]
     sources: [kepler_leonberg_arrest]
     text:
-      en: 'The defence dates the arrest to 7 August 1620, distinguishes later steps taken at Güglingen and records the defence’s complaints about delay.'
-      zh: '辩护文书将被捕日记为1620年8月7日，分别列出后来在居格林根的诉讼步骤，并陈述辩方对拖延的异议。'
-  released:
-    date: '1621'
+      en: 'In his petition to the duke Johannes Kepler set out the dates: his mother was charged with a capital offence at Güglingen on 4 September 1620, was to answer on 13 September, and was granted a delay until he arrived.'
+      zh: '约翰内斯·开普勒在呈给公爵的申诉里列出日期：1620 年 9 月 4 日，他的母亲在居格林根被控死罪，本应 13 日答辩，获准延到他来了再说。'
+    note: 'A capital charge: written as a plain fact.'
+    line:
+      en: '4 September 1620: at Güglingen, Katharina is charged with a capital offence.'
+      zh: '1620 年 9 月 4 日，卡塔琳娜在居格林根被控死罪。'
+  kepler_arrives:
+    date: '1620-09-28'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [kepler_leonberg_released]
+    use: [story, history, wiki]
+    sources: [kepler_leonberg_arrest]
     text:
-      en: 'Rublack’s archival research places Katharina’s release in the autumn of 1621.'
-      zh: '鲁布拉克据档案研究将卡塔琳娜获释定在1621年秋。'
+      en: 'Johannes Kepler arrived on 28 September 1620 and at once applied for a court date. Through lawyers he insisted that every step of the proceedings be put in writing, which drove up the costs.'
+      zh: '1620 年 9 月 28 日，约翰内斯·开普勒赶到，当即申请开庭。他通过律师坚持每一步程序都要书面进行，费用也因此一涨再涨。'
+    line:
+      en: '28 September 1620: Johannes Kepler arrives from Linz and applies at once for a court date.'
+      zh: '1620 年 9 月 28 日，约翰内斯·开普勒从林茨赶到，当即申请开庭。'
+  postponed:
+    date: '1620-10-02'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [kepler_leonberg_arrest]
+    text:
+      en: 'A court date was granted for 2 October 1620, then put off again for ten weeks, until 11 December.'
+      zh: '开庭的日子定在 1620 年 10 月 2 日，又往后推了十个星期，推到 12 月 11 日。'
+    line:
+      en: '2 October 1620: the hearing set for today is put off by ten weeks, to 11 December.'
+      zh: '1620 年 10 月 2 日，原定这天的开庭又推后十个星期，推到 12 月 11 日。'
+  witnesses:
+    date: '1621-01-08'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [kepler_leonberg_arrest]
+    text:
+      en: 'After the holidays, on 8 January 1621, the swearing in of the witnesses began.'
+      zh: '过了年节，1621 年 1 月 8 日，证人开始宣誓作证。'
+    line:
+      en: '8 January 1621: at Güglingen the witnesses begin to be sworn.'
+      zh: '1621 年 1 月 8 日，居格林根开始让证人宣誓作证。'
+  defence:
+    date: '1621-05-07'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [kepler_leonberg_arrest]
+    text:
+      en: 'The written defence of Katharina Kepler was presented to the ducal advocate on 7 May 1621. It answered the claims of the witnesses one by one and argued that each spoke only for himself, of things he had not seen done.'
+      zh: '1621 年 5 月 7 日，卡塔琳娜·开普勒的书面申辩交到公爵的检察官手里。申辩逐条回应证人的说法，指出每个证人只说自己的一面，说的又不是亲眼看见的事。'
+    line:
+      en: '7 May 1621: the written defence of Katharina Kepler is handed in, answering each witness in turn.'
+      zh: '1621 年 5 月 7 日，卡塔琳娜·开普勒的书面申辩交上去，逐个回应证人。'
+  costs:
+    date: '1621'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [kepler_leonberg_stuttgart_archives, katharina_kepler_wiki]
+    text:
+      en: 'Two men guarded her day and night, and the family paid for them. The trial cost Johannes Kepler more than 900 guilders, over two years of his salary, swollen by the delays and by the charges for heating, food and the two guards.'
+      zh: '两个人日夜看守她，看守的钱由家里出。这场官司花了约翰内斯·开普勒九百多古尔登，比他两年的薪俸还多，拖延和取暖、伙食、两名看守的费用把它越抬越高。'
+  released:
+    date: '1621'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [kepler_leonberg_released, kepler_leonberg_stuttgart_archives, katharina_kepler_wiki]
+    text:
+      en: 'Katharina Kepler would confess nothing, and in the autumn of 1621, after 405 days in custody, she was released.'
+      zh: '卡塔琳娜·开普勒什么也不肯认，1621 年秋，关了四百零五天以后，她获释出狱。'
+    note: 'An imprisonment: written as a plain fact.'
+    line:
+      en: 'Autumn 1621: after 405 days in custody, Katharina Kepler is released.'
+      zh: '1621 年秋，关了四百零五天的卡塔琳娜·开普勒获释。'
+  death:
+    date: '1622'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [katharina_kepler_wiki, kepler_leonberg_stuttgart_archives]
+    text:
+      en: 'Katharina Kepler died in April 1622 at Roßwälden, about six months after her release.'
+      zh: '1622 年 4 月，卡塔琳娜·开普勒在罗斯韦尔登去世，离获释约半年。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: 'April 1622: Katharina Kepler dies, about six months after her release.'
+      zh: '1622 年 4 月，卡塔琳娜·开普勒去世，离获释约半年。'
 bystanders:
-  margarete:
+  jailer_wife:
     invented: true
-    text: {en: 'A fictional scribe whose copy has to distinguish two kinds of statement.', zh: '虚构抄写员玛格丽特，得在抄本里分清两种说法。'}
-  matthias:
+    text: {en: 'The wife of the jailer at Güglingen, made up for the game.', zh: '一个编出来的居格林根狱卒的妻子。'}
+  clerk:
     invented: true
-    text: {en: 'A fictional courier about to leave with the first copy he is handed.', zh: '虚构送件人马蒂亚斯，拿到第一份纸就准备走。'}
+    text: {en: 'A clerk in the office of the defence lawyer, made up for the game.', zh: '一个编出来的辩护律师事务所文书。'}
+  carter:
+    invented: true
+    text: {en: 'A carter on the road from Leonberg to Güglingen, made up for the game.', zh: '一个编出来的莱昂贝格至居格林根路上的车夫。'}
 wiki:
   refs:
     kepler_leonberg_trial_research:
@@ -128,8 +225,8 @@ wiki:
       order: 11
       status: checked
       text:
-        en: 'University of Stuttgart exhibition on the defense and written process https://www.project.uni-stuttgart.de/kepler2022/dokumente/Kepler-Begleitband_screen-Version.pdf'
-        zh: '斯图加特大学展览档案，书面程序及辩护 https://www.project.uni-stuttgart.de/kepler2022/dokumente/Kepler-Begleitband_screen-Version.pdf'
+        en: 'Kepler Society and University of Stuttgart, companion volume to the exhibition himmelwärts, 2021, on the trial of Katharina Kepler https://www.project.uni-stuttgart.de/kepler2022/dokumente/Kepler-Begleitband_screen-Version.pdf'
+        zh: '开普勒学会与斯图加特大学，“向天”展览配套文集，2021 年，卡塔琳娜·开普勒案 https://www.project.uni-stuttgart.de/kepler2022/dokumente/Kepler-Begleitband_screen-Version.pdf'
     kepler_leonberg_arrest:
       order: 865
       status: checked
@@ -142,16 +239,22 @@ wiki:
       text:
         en: 'Ulinka Rublack, archival research on the Kepler trial, University of Cambridge https://www.cam.ac.uk/research/news/the-astronomer-and-the-witch-how-kepler-saved-his-mother-from-the-stake'
         zh: '乌琳卡·鲁布拉克，开普勒案档案研究，剑桥大学 https://www.cam.ac.uk/research/news/the-astronomer-and-the-witch-how-kepler-saved-his-mother-from-the-stake'
+    katharina_kepler_wiki:
+      order: 1523
+      status: checked
+      text:
+        en: 'Wikipedia, Katharina Kepler. https://en.wikipedia.org/wiki/Katharina_Kepler'
+        zh: '维基百科，卡塔琳娜·开普勒。 https://en.wikipedia.org/wiki/Katharina_Kepler'
 self_check:
-  fact: arrest
-  quote_line: '她把两种说法分成两行，又给可能收到的亲历说法留个位置。'
-  regret_choice: 'compare 先送可能递错日子。'
-  bookend: '先核对看见与转述，收尾只写亲历的送出日期。'
-  share_line: '两份抄本等一个日期。'
-  share_number: 'compare 两份虚构文书。'
-  knowing: 'release 知道来年获释。'
-  near: 'arrest 有辩护文书的日期。'
-  lever: 'heard 两行各留出处。'
-  missed: 'release 获释在这趟之后。'
-  brought: 'compare 留下虚构的校对页。'
+  fact: postponed
+  quote_line: '这条路它们走了这么多回，早该自己认得了。'
+  regret_choice: '派档案员去，申辩书与证词都理得清，可牢里过冬要医护，或带保暖毯又心软、意志够的人；三颗要同一趟做齐，得有人纸上和牢里都顾得上。'
+  bookend: '从 8 月 7 日在霍伊马登被捕开始，以 1621 年秋获释、半年后去世收尾，中间是一拖再拖的开庭。'
+  share_line: '七十三岁的她戴着锁链等了四百零五天。'
+  share_number: '405'
+  knowing: 'released'
+  near: 'postponed'
+  lever: 'p3'
+  missed: 'death'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

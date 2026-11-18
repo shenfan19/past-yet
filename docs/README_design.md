@@ -1,4 +1,4 @@
-# The Teleporter: design
+# All the Years Home: design
 
 This document describes how the game works and why it is built the way it is. The numbers quoted here live in `cards/config/` and can be changed there.
 

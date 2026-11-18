@@ -1,4 +1,6 @@
-# The Teleporter
+# All the Years Home
+
+Chinese title: 岁岁归途.
 
 You run a small staffing agency that sends people into the past. History is drifting: every trip prises a branch off it, so the agency holds the moments that are slipping and mends, in a branch, what history left undone. The staff come home with stories and time energy, and you spend the energy on getting back to your own family.
 
@@ -15,7 +17,7 @@ Open `play.html` with a double click. It is the whole game in one page and needs
 To work on the game, serve the folder instead, so that changes to the code and to `data/` show on reload:
 
 ```
-run_teleporter.cmd
+run_game.cmd
 ```
 
 Then open http://127.0.0.1:8778/index.html. Any static file server works.

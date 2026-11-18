@@ -2,7 +2,7 @@ order: 139
 events:
   modigliani_paris:
     order: 132
-    build_step: 2
+    build_step: 4
     year: 1920
     date: '1920-01-06'
     stay: 3
@@ -12,24 +12,25 @@ events:
     field: art
     tier: 2
     channels: {E: 2, T: 1, G: 2}
-    refs: [modigliani_paris_portrait, modigliani_paris_museum_chronology, modigliani_paris_estate_exhibitions, modigliani_paris_last_portraits]
+    ready: true
+    refs: [modigliani_paris_last_portraits, modigliani_wiki, hebuterne_wiki, modigliani_paris_portrait]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: trust, day: 8, req: {"any":[{"trait":["charismatic","kind","artistic"],"stat":{"will":7}},{"item":"hologram_projector","stat":{"will":5}}]}}
         - {id: p2, kind: hold, guard: true, day: 15, req: {"any":[{"job":["paramedic","nurse","doctor","physician","caregiver"]},{"trait":["vigil","kind"],"stat":{"constitution":7,"will":6}}]}}
-        - {id: p3, kind: care, day: 16.5, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}}]}}
-        - {id: p4, kind: care, day: 19, req: {"any":[{"job":["midwife","nurse","caregiver","doctor","physician"],"stat":{"will":7}},{"job":["midwife","nurse","caregiver","doctor","physician"],"item":"calm_patch"},{"trait":["kind","calm"],"stat":{"will":9}}]}}
+        - {id: p3, kind: care, day: 16.5, overturns: [death, funeral, jeanne_death, adopted, grave], req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"nano_kit"},{"job":["nurse","paramedic","pharmacist"],"item":"nano_kit","stat":{"wit":6}}]}}
+        - {id: p4, kind: care, day: 19, overturns: [jeanne_death, adopted, grave], req: {"any":[{"job":["midwife","nurse","caregiver","doctor","physician"],"stat":{"will":7}},{"job":["midwife","nurse","caregiver","doctor","physician"],"item":"calm_patch"},{"trait":["kind","calm"],"stat":{"will":9}}]}}
       vignettes:
-        - {id: line, traits: [artistic, curious]}
-        - {id: reverse, traits: [methodical, handy]}
-        - {id: cloth}
+        - {id: coal, traits: [hardy, kind, streetwise, patient], day: 4}
+        - {id: saucers, traits: [artistic, glib, cheerful, cosmopolitan], day: 30}
+        - {id: mimosa, day: 60}
     text:
       en:
         name: 'A label behind the portrait'
         place: "Paris"
         figure: "Amedeo Modigliani"
-        story: 'The Metropolitan Museum of Art catalogues a 1919 oil portrait of Jeanne Hébuterne by Amedeo Modigliani.'
+        story: 'At the end of May 1919 Amedeo Modigliani and Jeanne Hébuterne came back to Paris from Nice, with the daughter born the November before. His tuberculosis was getting worse, and by the autumn he no longer had the strength to paint. On 24 January 1920 he died of tuberculous meningitis at the Charité hospital in Paris, aged thirty five. Two days later Jeanne, eight months pregnant, died at her parents'' home. His fellow painters collected the money for his funeral on 27 January. In his lifetime he had held one solo exhibition, and sold nothing from it.'
         relic: "A charcoal stick"
         relic_desc: "A stub of charcoal black to the fingers."
         points:
@@ -56,16 +57,17 @@ events:
           p4:
             was: 'On 26 January 1920, two days after Modigliani''s death, Jeanne Hébuterne, eight months pregnant, died at her parents'' home, leaving a daughter of fourteen months.'
             now: '{staff} stays at her side through those days. In this timeline Jeanne gives birth to the child, raises her son and daughter, and later takes up painting again.'
+            who: jeanne_hebuterne
             bio: 'Jeanne Hébuterne lived through the winter of 1920, gave birth to her second child, raised both children and went on painting.'
         vignettes:
-          line: 'You recognise the angle of the head before the painting has been fully uncovered. The attendant compares it with your thumbnail sketch and moves one label to the other pile. You keep the pencil line. By the time there is room to see the whole face, the canvas has been covered again.'
-          reverse: 'The labels come loose when the frames are set down. You copy one distinctive line from each portrait before the attendant covers them. Now both labels can be put back. An earlier owner’s handwriting stays unidentified.'
-          cloth: 'The cloth catches on the edge of a frame. You hold it while the attendant presses the loose label flat. You copy the name before the cloth goes down. You have the right painting in your notes, but only a glimpse of its face.'
+          coal: 'On 10 January {staff} carries a sack of coal up the stairs for the coal man of the street, who sells wood, coal and wine from the same counter. He says this winter nobody in Montparnasse buys a whole sack; they buy half, and pay for the other half in promises.'
+          saucers: 'Early in February {staff} helps a waiter in a Montparnasse café clear the tables. Each drink comes on its own saucer and the bill is counted from the stack. He points at the back table: the painters build towers of saucers there, and pay in drawings when the money runs out.'
+          mimosa: 'In early March {staff} helps a flower seller at the market untie the first bunches of mimosa. She says they came up from the south on the night train, and in a cold March they are the only yellow in Paris.'
       zh:
         name: '肖像背后的一张纸签'
         place: "巴黎"
         figure: "阿梅迪奥·莫迪利亚尼"
-        story: '大都会艺术博物馆藏有莫迪利亚尼于 1919 年所画的让娜·埃比泰纳油画肖像。'
+        story: '1919 年 5 月底，阿梅迪奥·莫迪利亚尼和让娜·埃比泰纳带着前一年 11 月出生的女儿，从尼斯回到巴黎。他的结核越来越重，到秋天已没有力气作画。1920 年 1 月 24 日，他因结核性脑膜炎在巴黎慈善医院去世，三十五岁。两天后，怀孕八个月的让娜在父母家去世。1 月 27 日的葬礼，是画家朋友们凑钱办成的。他生前只办过一次个展，一幅也没卖出。'
         relic: "一截炭条"
         relic_desc: "一截能把手指染黑的炭条。"
         points:
@@ -92,11 +94,12 @@ events:
           p4:
             was: '1920 年 1 月 26 日，莫迪利亚尼去世两天后，怀孕八个月的让娜·埃比泰纳在父母家中去世，留下十四个月大的女儿。'
             now: '{staff}那几天一直守在她身边。这条时间线里，让娜生下了孩子，带着一儿一女长大，后来又拿起了画笔。'
+            who: jeanne_hebuterne
             bio: '让娜·埃比泰纳在 1920 年冬天活了下来，生下第二个孩子，带大两个孩子，并继续画画。'
         vignettes:
-          line: '画布还没完全揭开，你先认出了头偏向的角度。帮工对着你的小草图，把一张纸签挪到另一摞。你把那道铅笔线留在本子上。等你腾出位置好看整张脸，画又被蒙上了。'
-          reverse: '画框刚放下，两张纸签就掉了。你趁帮工还没蒙布，各描一道最容易认出的线。这下两张签都能放回原处。纸角有一行前人写的字，仍不知是谁的笔迹。'
-          cloth: '蒙布挂在框边。你扶着布，帮工把松掉的签压平。布落下前，你把名字抄好。记下的是对的那幅画，脸却只来得及看一眼。'
+          coal: '1 月 10 日，{staff}替街口卖煤的人把一袋煤扛上楼。他的铺子里柴、煤、酒在同一个柜台上卖。他说今年冬天蒙帕纳斯没人买整袋，都买半袋，另外半袋拿口头答应来付。'
+          saucers: '二月初，{staff}帮蒙帕纳斯一家咖啡馆的伙计收桌子。每上一杯就垫一只小碟，结账时数碟子。他朝最里头那张桌努努嘴：画家们在那儿把碟子摞成塔，钱用完了就拿画来抵。'
+          mimosa: '三月初，{staff}帮市场上卖花的女人解开头一批含羞草。她说这是夜车从南边运上来的，三月要是冷，巴黎就只有这一点黄。'
 text:
   en:
     name: Amedeo Modigliani
@@ -104,41 +107,147 @@ text:
   zh:
     name: 阿梅迪奥·莫迪利亚尼
     text: 意大利画家与雕塑家，1884 年生，1920 年去世，在巴黎工作。他画脖子细长、眼睛如杏仁的肖像和裸体，生前卖得很少，三十五岁死于结核性脑膜炎。
-hook: {en: 'Can you identify a portrait without the frame?', zh: '拿掉画框，还认得哪幅？'}
+hook: {en: 'One solo show, and nothing sold', zh: '生前一次个展，一幅没卖出'}
 facts:
+  exhibition:
+    date: '1917'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [modigliani_paris_last_portraits, modigliani_wiki]
+    text:
+      en: 'In 1917 Modigliani showed some twenty nudes at a gallery in Paris, his only solo exhibition in his lifetime. A nude in the window caused a scandal; when the police threatened to confiscate the pictures, the nudes were taken down. Not one picture sold.'
+      zh: '1917 年，莫迪利亚尼在巴黎一家画廊展出约二十幅裸体画，这是他生前唯一一次个展。橱窗里的一幅裸体画引起风波，警方要没收画作，裸体画被撤下。一幅也没有卖出。'
+    line:
+      en: '1917: Modigliani''s only solo exhibition; the police step in, the nudes are taken down, and nothing sells.'
+      zh: '1917 年，莫迪利亚尼办了生前唯一一次个展，警方插手，裸体画撤下，一幅也没卖出。'
+  daughter:
+    date: '1918-11'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [modigliani_paris_last_portraits, hebuterne_wiki]
+    text:
+      en: 'In March 1918 Modigliani and Jeanne Hébuterne left Paris for Cagnes-sur-Mer and Nice, for the war and for his health. Their daughter Jeanne was born in Nice in November 1918, shortly after the armistice.'
+      zh: '1918 年 3 月，为了躲避战事，也为了他的身体，莫迪利亚尼和让娜·埃比泰纳离开巴黎去了滨海卡涅和尼斯。1918 年 11 月停战后不久，女儿让娜在尼斯出生。'
+    line:
+      en: 'November 1918: in Nice, Jeanne Hébuterne gives birth to their daughter Jeanne.'
+      zh: '1918 年 11 月，让娜·埃比泰纳在尼斯生下女儿让娜。'
+  back_in_paris:
+    date: '1919-05'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [modigliani_paris_last_portraits, modigliani_wiki]
+    text:
+      en: 'By the end of May 1919 Modigliani and Jeanne were back in Paris. His tuberculosis had grown much worse. He kept painting the people closest to him, and in the autumn he lost his strength and could no longer work.'
+      zh: '1919 年 5 月底，莫迪利亚尼和让娜回到巴黎。他的结核病重了许多，仍在画身边最亲近的人；到秋天，他没了力气，再也画不动了。'
+    line:
+      en: 'End of May 1919: Modigliani and Jeanne are back in Paris; his tuberculosis is much worse.'
+      zh: '1919 年 5 月底，莫迪利亚尼和让娜回到巴黎，他的结核重了许多。'
   portrait:
     date: '1919'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [modigliani_paris_portrait]
     text:
-      en: 'The museum records the 1919 portrait by Modigliani as an oil painting on canvas.'
-      zh: '馆方将这件莫迪利亚尼 1919 年肖像登记为布面油画。'
+      en: 'The Metropolitan Museum of Art records a 1919 portrait of Jeanne Hébuterne by Modigliani as an oil painting on canvas.'
+      zh: '大都会艺术博物馆藏有莫迪利亚尼 1919 年所画的让娜·埃比泰纳肖像，登记为布面油画。'
+  death:
+    date: '1920-01-24'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [modigliani_paris_last_portraits, modigliani_wiki]
+    text:
+      en: 'Modigliani died of tuberculous meningitis at the Charité hospital in Paris on 24 January 1920, aged thirty five.'
+      zh: '1920 年 1 月 24 日，莫迪利亚尼因结核性脑膜炎在巴黎慈善医院去世，三十五岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '24 January 1920: Amedeo Modigliani dies of tuberculous meningitis at the Charité hospital, aged thirty five.'
+      zh: '1920 年 1 月 24 日，阿梅迪奥·莫迪利亚尼因结核性脑膜炎在慈善医院去世，三十五岁。'
+  jeanne_death:
+    date: '1920-01-26'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [modigliani_paris_last_portraits, hebuterne_wiki]
+    text:
+      en: 'Two days after his death, on 26 January 1920, Jeanne Hébuterne, unmarried, eight months pregnant and disowned by her family, died at her parents'' home. She left a daughter of fourteen months.'
+      zh: '1920 年 1 月 26 日，他去世两天后，未婚、怀孕八个月、被家里断绝来往的让娜·埃比泰纳在父母家中去世，留下十四个月大的女儿。'
+    note: 'A death by her own hand: written as a plain fact, without how.'
+    line:
+      en: '26 January 1920: Jeanne Hébuterne, eight months pregnant, dies at her parents'' home.'
+      zh: '1920 年 1 月 26 日，怀孕八个月的让娜·埃比泰纳在父母家中去世。'
+  funeral:
+    date: '1920-01-27'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [modigliani_paris_last_portraits, modigliani_wiki]
+    text:
+      en: 'Modigliani was buried in Paris on 27 January 1920. His fellow artists collected the money for the burial, and painters, writers, models, dealers and the owners of the bars of Montmartre and Montparnasse came to see him off.'
+      zh: '1920 年 1 月 27 日，莫迪利亚尼在巴黎下葬。葬礼的钱是画家朋友们凑的，画家、作家、模特、画商和蒙马特、蒙帕纳斯的酒馆老板都来送他。'
+    note: 'A burial: written as a plain fact.'
+    line:
+      en: '27 January 1920: Modigliani is buried; his fellow artists have collected the money for the funeral.'
+      zh: '1920 年 1 月 27 日，莫迪利亚尼下葬，葬礼的钱是画家朋友们凑的。'
+  adopted:
+    date: '1920'
+    checked: two_sources
+    level: usable
+    use: [history, wiki]
+    sources: [modigliani_paris_last_portraits, hebuterne_wiki]
+    text:
+      en: 'Their daughter Jeanne, fourteen months old, was taken in by Modigliani''s sister in Livorno.'
+      zh: '十四个月大的女儿让娜，由莫迪利亚尼在里窝那的姐姐收养。'
+    line:
+      en: '1920: their daughter Jeanne is taken in by Modigliani''s sister in Livorno.'
+      zh: '1920 年，女儿让娜由莫迪利亚尼在里窝那的姐姐收养。'
+  grave:
+    date: '1930'
+    checked: two_sources
+    level: careful
+    use: [history, wiki]
+    sources: [modigliani_paris_last_portraits, hebuterne_wiki]
+    text:
+      en: 'Only in 1930 was Jeanne Hébuterne laid in the same grave as Modigliani in Paris.'
+      zh: '直到 1930 年，让娜·埃比泰纳才与莫迪利亚尼合葬在巴黎同一座墓里。'
+    note: 'A burial: written as a plain fact.'
+    line:
+      en: '1930: Jeanne Hébuterne is laid in the same grave as Modigliani.'
+      zh: '1930 年，让娜·埃比泰纳与莫迪利亚尼合葬。'
 bystanders:
-  attendant:
+  coal_man:
     invented: true
-    text: {en: 'An invented studio attendant trying to match the labels before covering the paintings.', zh: '虚构的帮工，要在把画蒙起来之前配好纸签。'}
+    text: {en: 'A coal and wine seller of Montparnasse, made up for the game.', zh: '一个编出来的蒙帕纳斯卖煤兼卖酒的人。'}
+  waiter:
+    invented: true
+    text: {en: 'A waiter in a Montparnasse café, made up for the game.', zh: '一个编出来的蒙帕纳斯咖啡馆伙计。'}
+  flower_seller:
+    invented: true
+    text: {en: 'A flower seller at a Paris market, made up for the game.', zh: '一个编出来的巴黎市场卖花女人。'}
 wiki:
   refs:
-    modigliani_paris_museum_chronology:
-      order: 10
-      status: checked
-      text:
-        en: 'Ca’ Pesaro exhibition chronology of the return to Paris https://archivio-capesaro.visitmuve.it/en/mostre-en/archivio-mostre-en/a-modigliani-masterpiece-at-capesaro-la-femme-a-leventail-from-the-musee-dart-modernede-la-ville-de-paris/2011/07/958/amedeo-modigliani-1/'
-        zh: '佩萨罗宫展览所录巴黎行程 https://archivio-capesaro.visitmuve.it/en/mostre-en/archivio-mostre-en/a-modigliani-masterpiece-at-capesaro-la-femme-a-leventail-from-the-musee-dart-modernede-la-ville-de-paris/2011/07/958/amedeo-modigliani-1/'
-    modigliani_paris_estate_exhibitions:
-      order: 11
-      status: checked
-      text:
-        en: 'Archival study of Zborowski and the 1920 exhibitions https://www.modigliani-initiative.org/spotlight/gamechanger-bernheim-jeune'
-        zh: '兹博罗夫斯基与 1920 年展览档案研究 https://www.modigliani-initiative.org/spotlight/gamechanger-bernheim-jeune'
     modigliani_paris_last_portraits:
       order: 12
       status: checked
       text:
-        en: 'Albertina exhibition on the last portraits https://www.albertina.at/site/assets/files/9693/presskit_modigliani_en.pdf'
-        zh: '阿尔贝蒂娜博物馆晚期肖像展览 https://www.albertina.at/site/assets/files/9693/presskit_modigliani_en.pdf'
+        en: 'Albertina, Vienna, Modigliani exhibition press kit, with a chronology of his last years. https://www.albertina.at/site/assets/files/9693/presskit_modigliani_en.pdf'
+        zh: '维也纳阿尔贝蒂娜博物馆莫迪利亚尼展新闻资料，附晚年年表。 https://www.albertina.at/site/assets/files/9693/presskit_modigliani_en.pdf'
+    modigliani_wiki:
+      order: 1611
+      status: checked
+      text:
+        en: 'Wikipedia, Amedeo Modigliani. https://en.wikipedia.org/wiki/Amedeo_Modigliani'
+        zh: '维基百科，阿梅迪奥·莫迪利亚尼。 https://en.wikipedia.org/wiki/Amedeo_Modigliani'
+    hebuterne_wiki:
+      order: 1612
+      status: checked
+      text:
+        en: 'Wikipedia, Jeanne Hébuterne. https://en.wikipedia.org/wiki/Jeanne_H%C3%A9buterne'
+        zh: '维基百科，让娜·埃比泰纳。 https://en.wikipedia.org/wiki/Jeanne_H%C3%A9buterne'
     modigliani_paris_portrait:
       order: 504
       status: checked
@@ -146,15 +255,15 @@ wiki:
         en: 'The Metropolitan Museum of Art, Jeanne Hébuterne, object 488903 https://www.metmuseum.org/art/collection/search/488903'
         zh: '大都会艺术博物馆，《让娜·埃比泰纳》，藏品 488903 https://www.metmuseum.org/art/collection/search/488903'
 self_check:
-  fact: portrait
-  quote_line: '记下的是对的那幅画，脸却只来得及看一眼。'
-  regret_choice: '忙着配纸签来不及看全脸。'
-  bookend: '从仅见轮廓到能把纸签和画配回去。'
-  share_line: '我凭一道线认出了肖像。'
-  share_number: '1919 年'
-  knowing: 'line 员工预先见过藏品。'
-  near: 'portrait 锚定这幅画。'
-  lever: '两张签各回到一幅画上。'
-  missed: '合布后看不到完整的画。'
-  brought: '一道铅笔轮廓。'
+  fact: death
+  quote_line: '画家们在那儿把碟子摞成塔，钱用完了就拿画来抵。'
+  regret_choice: '派带纳米医疗箱的医生去治得好他，可陪住让娜还要意志够硬的医护，或带一贴镇静贴；四颗要同一趟做齐，得有人医术和心力都够。'
+  bookend: '从 1917 年那次一幅没卖出的个展开始，以 1930 年两人合葬收尾，中间是巴黎的一月。'
+  share_line: '他生前唯一一次个展，一幅画也没卖出。'
+  share_number: '35'
+  knowing: 'exhibition'
+  near: 'death'
+  lever: 'p4'
+  missed: 'jeanne_death'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

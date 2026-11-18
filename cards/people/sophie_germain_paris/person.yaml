@@ -2,7 +2,7 @@ order: 182
 events:
   sophie_germain_paris:
     order: 130
-    build_step: 2
+    build_step: 4
     year: 1831
     date: '1831-03-01'
     stay: 4
@@ -12,7 +12,8 @@ events:
     field: math
     tier: 2
     channels: {E: 1, G: 2}
-    refs: [sophie_germain_paris_primary]
+    ready: true
+    refs: [germain_mactutor, germain_agnesscott, germain_britannica, germain_crelle_eudml, sophie_germain_paris_primary]
     scene:
       star_rules: 2
       points:
@@ -20,15 +21,15 @@ events:
         - {id: p2, kind: care, day: 60, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","caregiver"]},{"item":"painkiller","trait":["kind","patient"]}]}}
         - {id: p3, kind: trust, day: 100, req: {"any":[{"job":["translator","archivist","lecturer","university_lecturer","journalist"],"stat":{"wit":8,"will":6}},{"trait":["scholarly","cosmopolitan"],"stat":{"wit":8,"will":7}},{"item":"neural_chip","trait":["scholarly","cosmopolitan","curious"],"stat":{"will":6}}]}}
       vignettes:
-        - {id: quiet_lines, traits: [artistic, curious]}
-        - {id: edges, traits: [methodical, vigil]}
-        - {id: compare}
+        - {id: water, traits: [hardy, kind, cheerful, streetwise], day: 6}
+        - {id: quai, traits: [curious, scholarly, wanderer, methodical], day: 45}
+        - {id: wash, day: 85}
     text:
       en:
         name: "A degree that came too late"
         place: "Paris"
         figure: "Sophie Germain"
-        story: 'Sophie Germain published her mathematical study of elastic surfaces in 1821, engaging with patterns observed on vibrating plates.'
+        story: 'In 1829 Sophie Germain fell ill with breast cancer. She kept working, and finished a memoir on the curvature of surfaces, which appeared in 1831 in volume 7 of Crelle''s journal in Berlin. Barred from the university as a young woman, she had written to Lagrange and to Gauss under the name of Monsieur Le Blanc, and in 1816 she won the prize of the Academy of Sciences for her memoir on the vibrations of elastic plates. Gauss persuaded the University of Göttingen to give her an honorary degree. She died at 13 rue de Savoie in Paris on 27 June 1831, before the degree was conferred.'
         relic: "A letter signed Le Blanc"
         relic_desc: "A letter to Gauss in a borrowed name."
         points:
@@ -51,18 +52,18 @@ events:
             who: sophie_germain_paris
             bio: 'In this timeline Germain learned before she died that Gauss had put her forward for an honorary degree at Göttingen. The degree itself still came too late.'
         vignettes:
-          quiet_lines: 'The reader points to the darkest line and guesses that it moves the most. You ask what was still when the pattern appeared. They look back to the description before drawing another arrow.'
-          edges: 'The two figures look almost alike until you check how the edges are treated in the text. The reader adds each condition beside its matching figure.'
-          compare: 'You set the two prints beside each other and make room below them for the reader''s note. They can now point to the difference without covering either picture.'
+          water: 'On 7 March {staff} helps a water carrier haul two buckets of Seine water up five floors of a house in the rue de Savoie. Counting the steps between breaths, he says the houses of Paris get taller every year, and he is still paid by the bucket, not by the floor.'
+          quai: 'In the middle of April {staff} leafs through an old almanac at a bookseller''s stall on the quay. The bookseller says the whole pile came from one household, the margins full of sums he cannot follow, so he sells them by the weight.'
+          wash: 'Late in May {staff} helps a washerwoman wring sheets on a wash boat by the river. She says the Seine has risen and fallen all spring, the boat goes up and down with it, and so does her back.'
       zh:
         name: "来迟了的学位"
         place: "巴黎"
         figure: "索菲·热尔曼"
-        story: '索菲·热尔曼于 1821 年出版弹性曲面的数学研究，讨论振动薄板上观察到的图样。'
+        story: '1829 年，索菲·热尔曼得了乳腺癌。她没有停下，病中写完论曲面曲率的论文，1831 年刊于柏林克雷勒杂志第七卷。她年轻时进不了大学，用勒布朗先生的名字给拉格朗日和高斯写信；1816 年，她以论弹性薄板振动的论文获法兰西科学院的奖。高斯说动哥廷根大学授她名誉博士学位。1831 年 6 月 27 日，她在巴黎萨伏依街 13 号去世，学位还没有授出。'
         relic: "一封署名勒布朗的信"
         relic_desc: "一封用借来的名字写给高斯的信。"
         points:
-          p1: '在她病中护住那篇论曲面曲率的论文，让它寄到柏林克雷尔的杂志'
+          p1: '在她病中护住那篇论曲面曲率的论文，让它寄到柏林克雷勒的杂志'
           p2: '减轻她最后几个月在巴黎的癌痛'
           p3: '让热尔曼生前知道，高斯在为她向哥廷根大学争取名誉博士学位'
         points_fail:
@@ -71,19 +72,19 @@ events:
           p3: '消息没送到她手里，她到去世都不知道高斯为她做了什么。'
         shift:
           p1:
-            was: '1831 年，热尔曼论曲面曲率的论文刊于克雷尔杂志第七卷，同年她去世。'
+            was: '1831 年，热尔曼论曲面曲率的论文刊于克雷勒杂志第七卷，同年她去世。'
           p2:
             was: '约 1829 年起热尔曼患乳腺癌，仍坚持工作，1831 年 6 月 27 日在巴黎去世。'
-            now: '{staff} 用现代的药压住疼痛，在最难熬的时候陪着她。她最后几个月少受了些苦，还能坐到书桌前。'
+            now: '{staff}用现代的药压住疼痛，在最难熬的时候陪着她。她最后几个月少受了些苦，还能坐到书桌前。'
           p3:
             was: '高斯曾推动哥廷根大学授予热尔曼名誉博士学位，1831 年 6 月 27 日她去世时，学位尚未授出。'
-            now: '{staff} 把高斯所做的事带给她。热尔曼得知，那所她从没能进去读书的大学要给她这份荣誉。'
+            now: '{staff}把高斯所做的事带给她。热尔曼得知，那所她从没能进去读书的大学要给她这份荣誉。'
             who: sophie_germain_paris
             bio: '这条时间线里，热尔曼生前得知高斯推荐她获得哥廷根的名誉博士学位。学位本身仍然来得太迟。'
         vignettes:
-          quiet_lines: '读者指着最深的线，猜它动得最厉害。你问当图样出现时，哪一处反而是静的。他回头翻说明，先没再添箭头。'
-          edges: '两张图看着差不多，直到你们读到文字是怎样处理边缘的。读者把两个条件各自写回对应的图。'
-          compare: '你把印图并排搁好，在下边给读者留条记字的空。他指出两幅不同之处时，手不必压住任何一幅。'
+          water: '3 月 7 日，{staff}帮送水的人把两桶塞纳河水扛上萨伏依街一座楼的五层。送水人一边数台阶一边喘，说巴黎的楼一年比一年高，他的工钱还是按桶算，不按层算。'
+          quai: '四月中旬，{staff}在河岸的旧书摊前翻一本旧历书。摊主说这一摞是从同一户人家收来的，页边记满了算式，他看不懂，只好论分量卖。'
+          wash: '五月下旬，{staff}在河边的洗衣船上帮洗衣妇拧床单。她说今年春天塞纳河涨了又退，船跟着一高一低，她的腰也跟着一高一低。'
 text:
   en:
     name: Sophie Germain
@@ -91,21 +92,101 @@ text:
   zh:
     name: 索菲·热尔曼
     text: 法国数学家，1776 年生，1831 年去世。她被大学拒之门外，靠书本自学，并以男性名字通信。她在费马大定理上取得进展，并因对振动板的研究获得科学院奖。
-hook: {en: 'Which lines stay still when a plate sounds?', zh: '薄板响时，哪几道线不动'}
+hook: {en: 'The university that never let her in', zh: '那所没收过她的大学，要给她学位'}
 facts:
+  leblanc:
+    date: '1804'
+    checked: two_sources
+    level: usable
+    use: [history, wiki]
+    sources: [germain_agnesscott, germain_mactutor]
+    text:
+      en: 'Women could not study at the École Polytechnique, so Germain obtained its lecture notes and sent her work to Lagrange under the name of Monsieur Le Blanc. From 1804 she wrote to Gauss under the same name; he learned who she was only in 1807.'
+      zh: '综合理工学院不收女生，热尔曼弄来学院的讲义，用勒布朗先生的名字把自己的作业寄给拉格朗日。1804 年起，她又用这个名字给高斯写信，高斯到 1807 年才知道她是谁。'
+    line:
+      en: '1804: under the name of Monsieur Le Blanc, Germain begins writing to Gauss.'
+      zh: '1804 年，热尔曼以勒布朗先生的名字开始给高斯写信。'
+  prize:
+    date: '1816'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [germain_agnesscott, germain_mactutor]
+    text:
+      en: 'On her third attempt, in 1816, Germain won the prize of the Academy of Sciences with her memoir on the vibrations of elastic plates.'
+      zh: '1816 年，热尔曼第三次参赛，以论弹性薄板振动的论文获得科学院的奖。'
+    line:
+      en: '1816: on her third attempt, Germain wins the prize of the Academy of Sciences for her memoir on vibrating elastic plates.'
+      zh: '1816 年，热尔曼第三次参赛，以论弹性薄板振动的论文获科学院的奖。'
   elastic_surfaces:
     date: '1821'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [sophie_germain_paris_primary]
     text:
       en: 'Sophie Germain published her mathematical study of elastic surfaces in 1821, engaging with patterns observed on vibrating plates.'
       zh: '索菲·热尔曼于 1821 年出版弹性曲面的数学研究，讨论振动薄板上观察到的图样。'
+  cancer:
+    date: '1829'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [germain_mactutor, germain_agnesscott]
+    text:
+      en: 'In 1829 Germain fell ill with breast cancer. She kept working through the illness and finished papers on number theory and on the curvature of surfaces.'
+      zh: '1829 年，热尔曼得了乳腺癌。她病中没有停笔，写完了数论和曲面曲率的论文。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: '1829: Germain falls ill with breast cancer, and goes on working.'
+      zh: '1829 年，热尔曼得了乳腺癌，仍在工作。'
+  degree:
+    date: '1831'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [germain_agnesscott, germain_britannica]
+    text:
+      en: 'Gauss persuaded the University of Göttingen to give Germain an honorary degree. She died before it was conferred. Accounts differ on when the university decided and whether the degree was conferred later.'
+      zh: '高斯说动哥廷根大学授热尔曼名誉博士学位，她生前学位没有授出。学校何时作出决定、后来是否补授，各家说法不一。'
+    line:
+      en: '1831: Gauss has asked Göttingen to give Germain an honorary degree; it is not conferred in her lifetime.'
+      zh: '1831 年，高斯为热尔曼向哥廷根大学争取的名誉博士学位，她生前没有授出。'
+  death:
+    date: '1831-06-27'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [germain_agnesscott, germain_mactutor]
+    text:
+      en: 'Germain died of breast cancer on 27 June 1831 at 13 rue de Savoie in Paris, aged fifty five.'
+      zh: '1831 年 6 月 27 日，热尔曼因乳腺癌在巴黎萨伏依街 13 号去世，五十五岁。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '27 June 1831: Sophie Germain dies at 13 rue de Savoie in Paris, aged fifty five.'
+      zh: '1831 年 6 月 27 日，索菲·热尔曼在巴黎萨伏依街 13 号去世，五十五岁。'
+  curvature:
+    date: '1831'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [germain_crelle_eudml, germain_mactutor]
+    text:
+      en: 'Her Mémoire sur la courbure des surfaces appeared in 1831 in volume 7 of the Journal für die reine und angewandte Mathematik, edited by August Leopold Crelle in Berlin, pages 1 to 29.'
+      zh: '她的《论曲面的曲率》1831 年刊于克雷勒在柏林主编的《纯粹与应用数学杂志》第七卷第 1 至 29 页。'
+    line:
+      en: '1831: her memoir on the curvature of surfaces appears in volume 7 of Crelle''s journal in Berlin.'
+      zh: '1831 年，她论曲面曲率的论文刊于柏林克雷勒杂志第七卷。'
 bystanders:
-  sophie_germain_paris_reader:
+  water_carrier:
     invented: true
-    text: {en: 'An invented reader comparing the curved lines in two printed figures.', zh: '一位虚构的读者，对照两幅印图上的曲线。'}
+    text: {en: 'A water carrier of the rue de Savoie, made up for the game.', zh: '一个编出来的萨伏依街送水人。'}
+  bookseller:
+    invented: true
+    text: {en: 'A bookseller with a stall on the Paris quays, made up for the game.', zh: '一个编出来的巴黎河岸旧书摊主。'}
+  washerwoman:
+    invented: true
+    text: {en: 'A washerwoman on a wash boat on the Seine, made up for the game.', zh: '一个编出来的塞纳河洗衣船上的洗衣妇。'}
 wiki:
   refs:
     sophie_germain_paris_primary:
@@ -114,11 +195,40 @@ wiki:
       text:
         en: 'Sophie Germain, Recherches sur la théorie des surfaces élastiques, Paris, 1821. ETH Library, Rar 22198. https://www.e-rara.ch/zut/content/titleinfo/17082368'
         zh: 'Sophie Germain, Recherches sur la théorie des surfaces élastiques, Paris, 1821. ETH Library, Rar 22198. https://www.e-rara.ch/zut/content/titleinfo/17082368'
+    germain_mactutor:
+      order: 1601
+      status: checked
+      text:
+        en: 'MacTutor History of Mathematics, Sophie Germain. https://mathshistory.st-andrews.ac.uk/Biographies/Germain/'
+        zh: '麦克图托数学史，索菲·热尔曼。 https://mathshistory.st-andrews.ac.uk/Biographies/Germain/'
+    germain_agnesscott:
+      order: 1602
+      status: checked
+      text:
+        en: 'Agnes Scott College, Biographies of Women Mathematicians, Sophie Germain. https://mathwomen.agnesscott.org/women/germain.htm'
+        zh: '阿格尼斯·斯科特学院，女数学家传记，索菲·热尔曼。 https://mathwomen.agnesscott.org/women/germain.htm'
+    germain_britannica:
+      order: 1603
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Sophie Germain. https://www.britannica.com/biography/Sophie-Germain'
+        zh: '大英百科全书，索菲·热尔曼。 https://www.britannica.com/biography/Sophie-Germain'
+    germain_crelle_eudml:
+      order: 1604
+      status: checked
+      text:
+        en: 'Sophie Germain, Mémoire sur la courbure des surfaces, Journal für die reine und angewandte Mathematik 7, 1831, 1 to 29. EuDML record. https://eudml.org/doc/146720'
+        zh: '索菲·热尔曼，《论曲面的曲率》，《纯粹与应用数学杂志》第 7 卷，1831 年，第 1 至 29 页。EuDML 记录。 https://eudml.org/doc/146720'
 self_check:
-  quote_line: '读者指着最深的线，猜它动得最厉害。'
-  fact: elastic_surfaces
-  regret_choice: '略过「辨认图中所示的静止线」，这处细节便留给下一位核对。'
-  bookend: '从「薄板响时，哪几道线不动」开始，以员工留下的观察或更正收尾。'
-  share_line: '薄板响时，哪几道线不动'
-  share_number: '1821'
+  fact: curvature
+  quote_line: '他的工钱还是按桶算，不按层算。'
+  regret_choice: '派带止痛药的护士去，她最后几个月少受些苦，可护住论文、把高斯的消息说给她听，要有学问、意志够硬的人；三颗要同一趟做齐，得有人学识和照护都顾得上。'
+  bookend: '从 1829 年得病开始，以 1831 年曲率论文刊出、学位来迟收尾，中间是巴黎的春天。'
+  share_line: '大学没收过她，她病中写完的论文寄到了柏林。'
+  share_number: '1831'
+  knowing: 'degree'
+  near: 'curvature'
+  lever: 'p3'
+  missed: 'death'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

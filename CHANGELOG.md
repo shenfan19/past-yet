@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- The game is renamed All the Years Home, in Chinese 岁岁归途. Saves, language and settings stay under the keys they had, so a game in progress carries on.
+
 ## 0.10.0, 2026-11-18
 
 - Twenty four stories rewritten on the new stars and turned on: Socrates, Euclid, Eratosthenes, Fibonacci, Dante, Copernicus, Adam Smith, Beethoven, Ada Lovelace, Mendel, Mendeleev, Marie Curie, Freud, Cajal, Hammurabi, Murasaki Shikibu, Basho, Tagore, Galois, Abel, Riemann, Emilie du Chatelet, Emmy Noether and Boltzmann, with new encyclopedia entries for the people they name.

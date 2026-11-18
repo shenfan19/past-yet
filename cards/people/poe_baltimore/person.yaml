@@ -2,7 +2,7 @@ order: 156
 events:
   poe_baltimore:
     order: 120
-    build_step: 2
+    build_step: 4
     year: 1849
     date: '1849-09-20'
     stay: 1
@@ -11,24 +11,25 @@ events:
     region: americas
     field: literature
     tier: 2
-    channels: {S: 2, T: 2}
-    refs: [poe_baltimore_walker, poe_baltimore_death, poe_clemm_october_letter, poe_baltimore_chronology]
+    channels: {S: 2, V: 2}
+    ready: true
+    refs: [poe_baltimore_walker, poe_baltimore_death, poe_death_wiki, poe_death_society, poe_clemm_october_letter, poe_baltimore_chronology]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["nurse","physician","doctor","paramedic"],"stat":{"will":6}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
-        - {id: p2, kind: care, day: 14, req: {"any":[{"job":["nurse","caregiver","courier","journalist"]},{"trait":["kind","patient","methodical"],"stat":{"will":5}},{"item":"notebook_pen","stat":{"wit":5}}]}}
-        - {id: p3, kind: care, day: 15, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":8,"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"nano_kit","stat":{"will":6}}]}}
+        - {id: p2, kind: care, day: 14, overturns: [clemm_letter], req: {"any":[{"job":["nurse","caregiver","courier","journalist"]},{"trait":["kind","patient","methodical"],"stat":{"will":5}},{"item":"notebook_pen","stat":{"wit":5}}]}}
+        - {id: p3, kind: care, day: 15, overturns: [death, burial, ludwig, clemm_letter, moran_letter], req: {"any":[{"job":["doctor","physician"],"stat":{"wit":8,"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"nano_kit","stat":{"will":6}}]}}
       vignettes:
-        - {id: witness, traits: [methodical, skeptical]}
-        - {id: dispatch, traits: [bold, charismatic, glib]}
-        - {id: door}
+        - {id: wharf, traits: [curious, streetwise, wanderer, cheerful, bold], day: 8}
+        - {id: ballot, traits: [skeptical, methodical, calm, quiet], day: 12}
+        - {id: ward, day: 14.5}
     text:
       en:
         name: 'The note from the Fourth Ward'
         place: "Baltimore"
         figure: "Edgar Allan Poe"
-        story: 'On October 3, 1849, printer Joseph Walker sent Joseph Snodgrass a note saying that a man identifying himself as Edgar A. Poe was in distress at Ryan’s Fourth Ward polls. Poe died on October 7. The cause remains uncertain.'
+        story: 'On 27 September 1849 Edgar Allan Poe left Richmond for his home at Fordham in New York, and came to Baltimore the next day. Nothing certain is known of the following week. On 3 October, election day, he was found in great distress at Ryan''s Fourth Ward polls, and the printer Joseph Walker sent a note to Joseph Snodgrass. He was taken to Washington College Hospital, kept from visitors, and died there before dawn on 7 October, aged forty. The cause is still unknown. His aunt and mother-in-law Maria Clemm learned of it from a newspaper.'
         relic: "A walking cane"
         relic_desc: "A plain cane with a worn handle."
         points:
@@ -51,14 +52,14 @@ events:
             who: poe_baltimore
             bio: 'In this line Poe came through his days in a Baltimore hospital in October 1849. He went home to New York and went on writing and editing for some years.'
         vignettes:
-          witness: 'A print-shop helper has heard three reasons for the man''s condition. You ask which one he saw. He can give you a place and one man''s name. On the spare slip you keep those two details. Four days later there will still be people filling in the rest.'
-          dispatch: 'The print-shop helper wants to wait for someone who knows Poe. You send him with the address he already has. He comes back able to say the note reached the right door. You keep the route on a scrap. He has nothing to tell you about the days before that afternoon.'
-          door: 'You move a stool out of the passage and keep it clear while the helper runs the note. On the way back you jot down the two doors you can vouch for. The missing days stay outside the report.'
+          wharf: 'On 28 September {staff} is on the wharf when the steamer from Richmond ties up. A porter with three trunks on his back says the Norfolk boats bring the sick and the Richmond boats bring the poets, and he cannot say which kind tips worse.'
+          ballot: 'On 2 October {staff} watches men nail up a board outside a tavern on Lombard Street. The tavern keeper says that tomorrow every room upstairs is let to the ward, and the beer is on the candidates; he has learned to count the barrels and not the voters.'
+          ward: 'On the night of 4 October {staff} takes a pail of fresh water up to the ward for drunk patients. The night porter says the gentleman in the barred room will not touch a cup; he keeps the lamp low, because the man talks to the wall when it is bright.'
       zh:
         name: '第四选区的一张求助条'
         place: "巴尔的摩"
         figure: "埃德加·爱伦·坡"
-        story: '1849 年 10 月 3 日，印刷工约瑟夫·沃克给约瑟夫·斯诺德格拉斯送了张条子，说瑞安那处第四选区投票点有个自称埃德加·爱伦·坡的人，处境不妙。坡在 10 月 7 日去世，死因未有定论。帮工和你的差事属于分支演绎。'
+        story: '1849 年 9 月 27 日，埃德加·爱伦·坡离开里士满，要回纽约福德姆的家，第二天到了巴尔的摩。此后一个星期他在哪里，没有可靠的记载。10 月 3 日是选举日，有人在瑞安那处第四选区投票点发现他处境不妙，印刷工约瑟夫·沃克写条子请约瑟夫·斯诺德格拉斯来。他被送进华盛顿学院医院，不许探视，7 日天亮前在那里去世，四十岁，死因至今不明。他的姨母兼岳母玛丽亚·克莱姆是从报上读到的。'
         relic: "一根手杖"
         relic_desc: "一根朴素的手杖，握柄已被磨旧。"
         points:
@@ -81,9 +82,9 @@ events:
             who: poe_baltimore
             bio: '这条时间线里，坡挺过了 1849 年 10 月在巴尔的摩医院里的那几天。他回到纽约，又写了、编了几年。'
         vignettes:
-          witness: '印刷铺帮工听了三种说法。你问他哪一种是亲眼见的。他能说准一个地点、一个人名。你在备用纸条上只留这两项。四天后，仍有人试着把空下的地方填满。'
-          dispatch: '印刷铺帮工想等个认识坡的人来。你请他先按已有的地址跑一趟。他回来时，能说清纸条已经送对了门。你把路记在纸角。至于那天下午以前发生过什么，他也说不上来。'
-          door: '帮工去送纸条时，你把挡道的凳子搬开，在原处留出一条通道。回来的路上，你记下自己能确认的两扇门。此前那几天的空白，仍留在报告外。'
+          wharf: '9 月 28 日，{staff}在码头上等里士满来的汽船靠岸。一个背着三只箱子的脚夫说，诺福克的船运病人，里士满的船运诗人，哪一种给的小费更少，他说不准。'
+          ballot: '10 月 2 日，{staff}看几个人在隆巴德街一家酒馆门外钉木牌。酒馆老板说明天楼上每间屋都租给了选区，啤酒由候选人请；他早学会了数酒桶，不数投票的人。'
+          ward: '10 月 4 日夜里，{staff}提一桶清水上到收醉汉的病区。守夜的杂役说，带铁栏那间屋里的先生一口水也不肯碰；他把灯捻得很低，灯一亮，那人就对着墙说话。'
 text:
   en:
     name: Edgar Allan Poe
@@ -91,30 +92,119 @@ text:
   zh:
     name: 埃德加·爱伦·坡
     text: 美国作家，1809 年生，1849 年去世。他写恐怖和推理故事，有《乌鸦》和《莫格街凶杀案》。他去世前几天被人发现在巴尔的摩神志不清，死因不明。
-hook: {en: 'How much belongs on a call for help?', zh: '求助纸条该写几行？'}
+hook: {en: 'A note from the polls on election day', zh: '选举日投票点送出的一张条子'}
 facts:
+  leaves_richmond:
+    date: '1849-09-27'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [poe_baltimore_chronology, poe_death_wiki]
+    text:
+      en: 'Poe had spent the summer of 1849 in Richmond, lecturing to raise money for a magazine. On 27 September he left, perhaps on the steamer Pocahontas, for his home in New York, and he reached Baltimore on 28 September. No reliable record places him for the next week.'
+      zh: '1849 年夏天，坡在里士满讲演，为办杂志筹钱。9 月 27 日他动身，也许坐的是汽船波卡洪塔斯号，要回纽约的家，28 日到了巴尔的摩。此后一个星期他在哪里，没有可靠的记载。'
+    line:
+      en: '27 September 1849: Poe leaves Richmond for New York; he reaches Baltimore the next day.'
+      zh: '1849 年 9 月 27 日，坡离开里士满回纽约，第二天到巴尔的摩。'
   walker:
     date: '1849-10-03'
-    checked: official_record
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [poe_baltimore_walker, poe_death_society, poe_baltimore_death]
+    text:
+      en: 'On 3 October 1849, an election day, the printer Joseph W. Walker found Poe in great distress at Ryan''s Fourth Ward polls, also known as Gunner''s Hall, and sent a note asking Dr Joseph E. Snodgrass to come. Snodgrass and Poe''s uncle Henry Herring took him by carriage to Washington College Hospital, where he was put in a room kept for patients brought in drunk.'
+      zh: '1849 年 10 月 3 日是选举日，印刷工约瑟夫·沃克在瑞安那处第四选区投票点，又叫炮手厅，发现坡处境很糟，写条子请约瑟夫·斯诺德格拉斯医生来。斯诺德格拉斯和坡的姨父亨利·赫林叫了马车，把他送进华盛顿学院医院，安置在收醉汉的病房。'
+    note: 'An illness: written as a plain fact.'
+    line:
+      en: '3 October 1849: Poe is found in distress at the Fourth Ward polls; after a note is sent, he is taken to Washington College Hospital.'
+      zh: '1849 年 10 月 3 日，坡在第四选区投票点被人发现处境很糟，有人写条求援，他被送进华盛顿学院医院。'
+  ward:
+    date: '1849-10-04'
+    checked: two_sources
     level: careful
     use: [story, wiki]
-    sources: [poe_baltimore_walker]
+    sources: [poe_baltimore_death, poe_death_society]
     text:
-      en: 'The note locates the man calling himself Poe at Ryan’s Fourth Ward polls and asks Snodgrass to come.'
-      zh: '纸条写明自称坡的人在瑞安的第四选区投票点，并请斯诺德格拉斯赶来。'
+      en: 'In the hospital Poe drifted in and out of consciousness for several days. Dr John J. Moran, who looked after him, could get no coherent answer about what had happened, and kept visitors away because he was so excitable.'
+      zh: '在医院里，坡一连几天时醒时昏。照看他的约翰·莫兰医生问他出了什么事，得不到说得通的回答，又因为他太激动，不让人探视。'
+    note: 'An illness: written as a plain fact.'
   death:
     date: '1849-10-07'
-    checked: official_record
+    checked: two_sources
     level: careful
-    use: [story, wiki]
-    sources: [poe_baltimore_death]
+    use: [story, history, wiki]
+    sources: [poe_baltimore_death, poe_death_society, poe_baltimore_chronology]
     text:
-      en: 'Poe died on October 7. The cause is uncertain.'
-      zh: '坡于 10 月 7 日去世，死因未有定论。'
+      en: 'Poe died at Washington College Hospital before dawn on Sunday 7 October 1849, aged forty, at about three or five in the morning by different accounts. The cause of his death has never been settled.'
+      zh: '1849 年 10 月 7 日星期天天亮前，坡在华盛顿学院医院去世，四十岁，各家记的时刻有凌晨三点、五点两说。死因始终没有定论。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '7 October 1849: Edgar Allan Poe dies before dawn at Washington College Hospital, aged forty.'
+      zh: '1849 年 10 月 7 日天亮前，埃德加·爱伦·坡在华盛顿学院医院去世，四十岁。'
+  burial:
+    date: '1849-10-08'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [poe_death_wiki, poe_baltimore_chronology]
+    text:
+      en: 'Poe was buried in his grandfather''s lot in the Westminster Burying Ground in Baltimore, on 8 October by most accounts and on the 8th or 9th by the Poe Society chronology. Few people came, and the burial was over in minutes.'
+      zh: '坡葬在巴尔的摩威斯敏斯特墓地他祖父的那块地里，多数记载是 10 月 8 日，坡学会的年表写 8 日或 9 日。来的人很少，几分钟就完了。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '8 October 1849: Poe is buried in Baltimore; only a few people come.'
+      zh: '1849 年 10 月 8 日，坡葬于巴尔的摩，来送的人寥寥无几。'
+  ludwig:
+    date: '1849-10-09'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [poe_baltimore_chronology, poe_death_wiki]
+    stay_day: 19.2
+    text:
+      en: 'On 9 October 1849 the New York Tribune printed an obituary of Poe signed Ludwig, written by Rufus Wilmot Griswold, which set his gifts against a cruel portrait of his character. It was widely copied, and for decades it shaped how Poe was remembered.'
+      zh: '1849 年 10 月 9 日，《纽约论坛报》登出一篇署名路德维希的坡的讣告，执笔的是鲁弗斯·格里斯沃尔德，一边称道他的才华，一边把他的为人写得很不堪。这篇讣告被各报转载，几十年里左右着人们对坡的印象。'
+    line:
+      en: '9 October 1849: an obituary of Poe signed Ludwig appears in the New York Tribune and is copied far and wide.'
+      zh: '1849 年 10 月 9 日，《纽约论坛报》登出署名路德维希的坡的讣告，各报纷纷转载。'
+  clemm_letter:
+    date: '1849-10-09'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [poe_clemm_october_letter, poe_death_wiki]
+    stay_day: 19.4
+    text:
+      en: 'On 9 October 1849, at Fordham, Maria Clemm wrote to Neilson Poe that she had that moment heard of the death of her son Edgar, that the paper said he had died in Baltimore, and asked him to write at once and conceal nothing.'
+      zh: '1849 年 10 月 9 日，玛丽亚·克莱姆在福德姆写信给尼尔森·坡，说她刚刚听到儿子埃德加的死讯，报上说他死在巴尔的摩，请他一收到信就回信，什么都不要瞒她。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '9 October 1849: at Fordham, Maria Clemm learns of Poe''s death from the newspaper and writes to Baltimore to ask.'
+      zh: '1849 年 10 月 9 日，玛丽亚·克莱姆在福德姆从报上得知坡的死讯，写信去巴尔的摩打听。'
+  moran_letter:
+    date: '1849-11'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [poe_death_society, poe_death_wiki]
+    text:
+      en: 'Dr Moran wrote to Maria Clemm about Poe''s last days only after she asked him in November 1849; his letter is dated 15 November, more than a month after the death.'
+      zh: '莫兰医生是在玛丽亚·克莱姆 1849 年 11 月来信询问之后，才写信告诉她坡最后几天的情形，信写于 11 月 15 日，离坡去世已一个多月。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: 'November 1849: more than a month after the death, Dr Moran writes to Maria Clemm about Poe''s last days.'
+      zh: '1849 年 11 月，坡去世一个多月后，莫兰医生才写信告诉玛丽亚·克莱姆他最后几天的情形。'
 bystanders:
-  print_helper:
+  porter:
     invented: true
-    text: {en: 'A fictional print-shop helper who can find an address but has only heard the rumours second-hand.', zh: '虚构的印刷铺帮工，认得路，所听传言都是转述。'}
+    text: {en: 'A porter on the Baltimore wharf, made up for the game.', zh: '一个编出来的巴尔的摩码头脚夫。'}
+  tavern_keeper:
+    invented: true
+    text: {en: 'A tavern keeper on Lombard Street, made up for the game.', zh: '一个编出来的隆巴德街酒馆老板。'}
+  night_porter:
+    invented: true
+    text: {en: 'The night porter of the hospital ward, made up for the game.', zh: '一个编出来的医院病区守夜杂役。'}
 wiki:
   refs:
     poe_clemm_october_letter:
@@ -141,16 +231,28 @@ wiki:
       text:
         en: 'U.S. National Park Service, The Mystery of Edgar Allan Poe’s Death https://www.nps.gov/articles/poe-death.htm'
         zh: '美国国家公园管理局，爱伦·坡死因之谜 https://www.nps.gov/articles/poe-death.htm'
+    poe_death_wiki:
+      order: 1521
+      status: checked
+      text:
+        en: 'Wikipedia, Death of Edgar Allan Poe. https://en.wikipedia.org/wiki/Death_of_Edgar_Allan_Poe'
+        zh: '维基百科，埃德加·爱伦·坡之死。 https://en.wikipedia.org/wiki/Death_of_Edgar_Allan_Poe'
+    poe_death_society:
+      order: 1522
+      status: checked
+      text:
+        en: 'Edgar Allan Poe Society of Baltimore, The Death of Edgar Allan Poe. https://www.eapoe.org/geninfo/poedeath.htm'
+        zh: '巴尔的摩爱伦·坡学会，埃德加·爱伦·坡之死。 https://www.eapoe.org/geninfo/poedeath.htm'
 self_check:
   fact: walker
-  quote_line: '你在备用纸条上只留这两项。'
-  regret_choice: '去送信会错过守在原地核对来人，在原地等则少知道纸条怎么送到。'
-  bookend: '开头一张求助条，结尾分清纸条上知道的两件事和以前几天的空白。'
-  share_line: '这张求助条上只有我能核实的事。'
-  share_number: '四天'
-  foreknowledge: 'death 告知玩家四天后的结果。'
-  proximity: 'walker 给在场差事提供确切日期和地点。'
-  leverage: '分支留下两项可核实信息或把求助送到一扇门。'
-  missed: '员工赶不上此前那些日子。'
-  takeaway: '纸角上的送信路线。'
+  quote_line: '他早学会了数酒桶，不数投票的人。'
+  regret_choice: '派会写信的信使去，玛丽亚·克莱姆早几天得到消息，可熬过谵妄要医生或带纳米医疗箱的医护；三颗要同一趟做齐，得有人既守得住病房又顾得上写信。'
+  bookend: '从 9 月 27 日离开里士满回家开始，以 11 月医生迟来的那封信收尾，中间是巴尔的摩的选举日和医院的四天。'
+  share_line: '他在回家的路上停在巴尔的摩，家里人是从报上读到的。'
+  share_number: '4'
+  knowing: 'death'
+  near: 'walker'
+  lever: 'p2'
+  missed: 'moran_letter'
+  brought: 'relic'
 pack: {license: MIT, version: 1, languages: [en, zh]}

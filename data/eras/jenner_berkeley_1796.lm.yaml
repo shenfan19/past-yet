@@ -1,5 +1,5 @@
 # Berkeley, 1796. One era = one model file.
-# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the Teleporter extensions
+# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the All the Years Home extensions
 # listed under `extensions`. Every number lives here, the engine in js/ only interprets.
 # Time unit is the day. Day 0 is 7 May 1796 00:00. History has Jenner inoculate with cowpox on 14 May.
 # Facts marked source: historical are placeholders awaiting a source check, see README.
@@ -460,10 +460,9 @@ scoring:
 item_bindings:
   ors_pack: {ors_stock: 1}
   face_mask: {protect_room: 4}
-  disinfectant: {protect_room: 12}
+  chlorine_tablet: {protect_room: 12}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   case_book: {character: jenner, tech: 4, bindings: {jenner.evidence: 0.2}}
@@ -512,7 +511,6 @@ optimization:
     regimens:
       - {item: ors_pack, variable: ors_stock, delivery: total, optimize: {value: [0, 90], integer: true}}
       - {item: face_mask, variable: protect_room, delivery: total, optimize: {value: [0, 40], integer: true}}
-      - {item: disinfectant, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: chlorine_tablet, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

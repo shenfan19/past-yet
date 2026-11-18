@@ -537,6 +537,10 @@ export function createUI(D, ctx, DEV = false) {
     return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">${head}<div class="sec">${U.archive.history}</div><ul>${hist}</ul><div class="sec">${U.archive.regret}</div><ul>${reg}</ul>${tripsHtml(id)}</div></div>`;
   }
 
+  // a dedication stands under the title of a story card as a few small lines, apart from stars and rewards
+  function dedicationHtml(c) {
+    return Array.isArray(c.dedication) && c.dedication.length ? `<div class="dedication">${c.dedication.map(esc).join('<br>')}</div>` : '';
+  }
   function catalogCard(id) {
     const c = T.catalog[id];
     const ev = D.get('catalog.events').find((x) => x.id === id);
@@ -545,7 +549,7 @@ export function createUI(D, ctx, DEV = false) {
     const tags = catalogTags(id).map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('');
     return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">
       <div class="row sp"><h3>${esc(c.name)}${own ? '' : ' ' + hiddenChip()}</h3><span class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</span></div>
-      <div>${tags}</div>
+      <div>${tags}</div>${dedicationHtml(c)}
       <p>${esc(c.story)}</p><div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
       <div class="muted">${U.dispatch.relic}${COLON}${D.get('antiques.antiques.' + relicId).kind === 'medium' ? esc(c.relic) : wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>

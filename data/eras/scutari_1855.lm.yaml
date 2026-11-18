@@ -1,5 +1,5 @@
 # Barrack Hospital, Scutari, 1855. One era = one model file.
-# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the Teleporter extensions
+# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the All the Years Home extensions
 # listed under `extensions`. Every number lives here, the engine in js/ only interprets.
 # Time unit is the day. Day 0 is 20 Feb 1855 00:00, in the worst weeks of the winter. The Sanitary Commission arrives in early March.
 # Facts marked source: historical are placeholders awaiting a source check, see README.
@@ -484,10 +484,7 @@ item_bindings:
   chlorine_tablet: {protect_room: 5}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  detox_water: {ors_stock: 3}
-  disinfectant: {protect_room: 12}
   antibiotic: {ors_stock: 4}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   statistics: {character: nightingale, tech: 4, bindings: {nightingale.evidence: 0.2}}
@@ -538,7 +535,4 @@ optimization:
       - {item: chlorine_tablet, variable: protect_room, delivery: total, optimize: {value: [0, 60], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: detox_water, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: disinfectant, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: antibiotic, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

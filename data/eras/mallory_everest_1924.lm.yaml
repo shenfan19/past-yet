@@ -1,5 +1,5 @@
 # Mount Everest, 1924. One era = one model file.
-# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the Teleporter extensions
+# Format: LM 1.0 blocks (metadata, variables, equations, simulation, optimization) plus the All the Years Home extensions
 # listed under `extensions`. Every number lives here, the engine in js/ only interprets.
 # Time unit is the day. Day 0 is 1 Jun 1924 00:00, in the weeks before the last attempts on the summit.
 # Facts marked source: historical are placeholders awaiting a source check, see README.
@@ -459,14 +459,11 @@ scoring:
 
 item_bindings:
   ors_pack: {ors_stock: 1}
-  energy_bar: {ors_stock: 2}
-  altitude_pills: {ors_stock: 2}
+  hardtack: {ors_stock: 2}
   oxygen_can: {protect_room: 4}
   warm_blanket: {protect_room: 3}
-  hand_warmer: {protect_room: 1}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
-  heart_monitor: {has_monitor: 1}
 
 plots:
   field_notes: {character: mallory, tech: 4, bindings: {mallory.evidence: 0.2}}
@@ -514,11 +511,8 @@ optimization:
   startpoint:
     regimens:
       - {item: ors_pack, variable: ors_stock, delivery: total, optimize: {value: [0, 60], integer: true}}
-      - {item: energy_bar, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: altitude_pills, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: hardtack, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: oxygen_can, variable: protect_room, delivery: total, optimize: {value: [0, 15], integer: true}}
       - {item: warm_blanket, variable: protect_room, delivery: total, optimize: {value: [0, 12], integer: true}}
-      - {item: hand_warmer, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
-      - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}
