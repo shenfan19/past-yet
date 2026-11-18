@@ -58,6 +58,9 @@ export function createAudio(D, settings) {
   // ---------- music ----------
   async function load(index) {
     const t = M.tracks[index];
+    // play.html carries the music as base64 in window.TP_MUSIC, so it plays without a server
+    const packed = window.TP_MUSIC?.[t.file];
+    if (packed) return parseMidi(Uint8Array.from(atob(packed), (c) => c.charCodeAt(0)).buffer);
     const res = await fetch(`${M.folder}/${t.file}`, { cache: 'no-cache' });
     if (!res.ok) throw new Error(t.file);
     return parseMidi(await res.arrayBuffer());

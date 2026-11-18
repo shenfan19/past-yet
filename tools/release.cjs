@@ -8,6 +8,8 @@ ed('cards/config/config.yaml', (s) => { const n = s.replace(/^  version: [0-9.]+
 const today = new Date().toISOString().slice(0, 10);
 ed('CHANGELOG.md', (s) => s.replace('# Changelog\n\n', `# Changelog\n\n## ${ver}, ${today}\n\n${lines.map((l) => '- ' + l).join('\n')}\n\n`));
 execSync('node tools/build_data.mjs', { stdio: 'ignore' });
+// the page that opens with a double click, without a server, is built from the same data
+execSync('node tools/build_offline.mjs', { stdio: 'ignore' });
 // a release does not go out with placeholders that differ between languages
 const i18n = execSync('node tools/check_i18n.mjs', { encoding: 'utf8' });
 const bad = i18n.split(/\r?\n/).filter((l) => /placeholders differ/i.test(l));

@@ -6,9 +6,13 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Version 0.2.0. The framework for stories is in place: people as modules with fact sheets, templates for models, recorded dates, identities for the employees, a calendar, and reports told as one record. The stories are still being written. Stories are turned on one at a time as they are finished (`ready: true`, see [cards/README.md](cards/README.md)), and Guangzhou 1924 is the one turned on so far. The others, about two hundred small stories and simulated places such as London 1854 and Vienna 1847, are in the repository and can be played with `?drafts` in the address. There are fifty employees with their own stories, a world map of catalogue events, antiques found on trips and anchored to open places, an automatic mode, music, a share card and English and Chinese text. Facts outside the fact sheets are placeholders until their sources are checked. What changed is in [CHANGELOG.md](CHANGELOG.md), how it all works in [docs/README_design.md](docs/README_design.md), and how to write a story in [cards/README.md](cards/README.md).
+Version 0.10.0, the first release. Forty six stories are open, each holding a moment of history or mending a regret in a branch; more are added release by release.
 
 ## Run
+
+Open `play.html` with a double click. It is the whole game in one page and needs no server; it has to stay in the root of the game folder, next to `css/` and `assets/`. It is built by `node tools/build_offline.mjs` and by every release, and is attached to each release rather than kept in the repository.
+
+To work on the game, serve the folder instead, so that changes to the code and to `data/` show on reload:
 
 ```
 run_teleporter.cmd
@@ -23,7 +27,8 @@ Then open http://127.0.0.1:8778/index.html. Any static file server works.
 - `node tools/check_benchmarks.mjs` runs the benchmark places with the reference employees and checks identities, vignettes and that the employees do not all end the same.
 - `node tools/story_probe.mjs <place> [lang] [seed] [staff,...] [item:n,...]` prints, for each employee, who they were taken for, the stars and the record of one trip.
 - `node tools/pressure_probe.mjs [place,...] [seeds]` prints how often employees are sent home from each story that is turned on, empty handed and with the fitting kit; `BINS=1` adds the empty handed rate by constitution.
-- `node tools/release.cjs <version> "<line>" ...` sets the version, puts the lines on top of `CHANGELOG.md`, rebuilds and refuses when the languages differ in their placeholders.
+- `node tools/release.cjs <version> "<line>" ...` sets the version, puts the lines on top of `CHANGELOG.md`, rebuilds `data/` and `play.html`, and refuses when the languages differ in their placeholders.
+- `node tools/build_offline.mjs` builds `play.html`: the modules bundled into one script with esbuild, fetched by npx at a fixed version, and every file of `data/` and the music carried inline.
 
 ## How it is built
 

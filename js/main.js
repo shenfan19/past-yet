@@ -22,6 +22,8 @@ function pickLang(I) {
 
 const dev = new URLSearchParams(location.search).has('devtools');
 const D = await loadData(async (p) => {
+  // play.html, the build for opening without a server, carries every data file in window.TP_FILES; index.html asks the server
+  if (window.TP_FILES) { if (p in window.TP_FILES) return window.TP_FILES[p]; throw new Error('无法读取 ' + p); }
   const res = await fetch(p, { cache: 'no-cache' }); // always ask the server whether the data changed, so a rebuilt playlist is never hidden by the browser cache
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();

@@ -226,7 +226,15 @@ The game is MIT licensed. The music files are from the Mutopia Project, public d
 
 ## Regrets and redemption
 
-A catalogue event with `regret: true` is a story history treated unjustly: an early death, a lost work, a stolen credit, a lonely life. It is always a scene with three points, exactly one of them marked `redeem: true`. History cannot be changed, so the traveller never prevents the outcome. The first two stars are company and attention, the redeem star is the thing the traveller can give inside history as it happened. The redeem point is shown as a heart, is never a pure luck roll, and about a third of them need special equipment, which is what the auto mode buys equipment for. A regret carries the tag regret. `node tools/check_logic.mjs` fails a regret without exactly one redeem point.
+Older cards, those without `scene.star_rules: 2`, may still carry `regret: true` and one point marked `redeem: true`. They are kept so that old saves and reports read, and no story that is turned on uses them; the stories use guard and mend stars, see Stars.
+
+## What the record leaves out and what the employee says
+
+The record of a trip runs in the order of the calendar. A fact with a full date sits on its day; with a planned arrival, a fact with only a year or a month sits where its date falls; without one, as in a story of the lunar calendar or before the common era, a fact of an earlier year comes before the arrival and a later one after the leaving. After an employee falls out of sync and is sent home, no scene of a later day is told, and the leaving comes after the cost of a point missed on the last day.
+
+A mend point may list `overturns`, facts of history its branch undoes, such as the death of the person it saved; when the point is won those facts are left out of the record.
+
+A story may give the employee one remark at the end of the record, chosen by who the employee is: `text.<language>.remarks` maps keys of person tags joined by `+`, such as `female+elder` or `young`, to one sentence, and the first key the employee fits is said, `else` when none fits, nothing without `else`. With `scene.remark_on` the remark is said only when that point was won. A remark is the employee's own voice; the people of history keep to what they are recorded to have done.
 
 ## Log, reports and the history of a place
 
