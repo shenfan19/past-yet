@@ -240,12 +240,12 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       if (!journey.accepted) {
         const missedTrip = { ...r, points: timed.map((p) => ({ id: p.id, day: p.day, redeem: p.redeem, hit: false })), stars: 0,
           journey, vignette: null, found: null, extraFavor: 0, restDays: L.rest_days.missed, keepAntique: false, outcome: 'missed' };
-        return { ...missedTrip, timeline: lightRecord(D, ev, missedTrip, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
+        return { ...missedTrip, timeline: lightRecord(D, ev, missedTrip, staffId, historicalDays(D, lightStay(eventId)), sim.staffTags(D, staffId, placeOfEvent(ev))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
       }
       const done = { ...r, points: timed, journey };
       // after a desync the record and the body stop on the day the traveller was sent back
       const lastDay = r.cutDay ?? historicalDays(D, lightStay(eventId));
-      return { ...done, timeline: lightRecord(D, ev, done, staffId, lastDay), body: health ? health.trace.filter((x) => x.day <= lastDay).map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
+      return { ...done, timeline: lightRecord(D, ev, done, staffId, lastDay, sim.staffTags(D, staffId, placeOfEvent(ev))), body: health ? health.trace.filter((x) => x.day <= lastDay).map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
     }
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
@@ -255,7 +255,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];
     const plain = { outcome, stars, points, journey, keepAntique: journey.accepted, energyBase: pay.energy, restDays: L.rest_days[outcome], stay: lightStay(eventId) };
-    return { ...plain, timeline: lightRecord(D, ev, plain, staffId, historicalDays(D, lightStay(eventId))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
+    return { ...plain, timeline: lightRecord(D, ev, plain, staffId, historicalDays(D, lightStay(eventId)), sim.staffTags(D, staffId, placeOfEvent(ev))), body: health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null };
   }
   // The market price factor of an antique on a day: one seeded draw per field and per period, so every antique of a field moves together.
   const MK = D.get('config.office.market');

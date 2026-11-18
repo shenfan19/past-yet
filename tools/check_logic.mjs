@@ -5,12 +5,15 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { loadData } from '../js/data.js';
+import { tagNames } from '../js/sim.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
 const load = (lang) => loadData(async (p) => fs.readFileSync(path.join(root, p), 'utf8'), (t) => yaml.load(t), () => lang, { drafts: true });
 const D = await load('en');
 const DZ = await load('zh');
+// every tag a person can have, for the keys of the remarks a story gives the employee
+const knownTags = new Set(tagNames(D));
 const peopleIds = new Set((D.get('encyclopedia.sections.people') || []).map((x) => x.id));
 const errors = [];
 const warns = [];
@@ -180,6 +183,11 @@ for (const e of events) {
     if (nPts >= 3 && !nGuard) err(`event ${e.id}: a story of ${nPts} stars needs at least one guard point`);
     // a story of guarding only holds history as it was; it needs two stars at least, since one missed guard would leave it nothing
     if (nGuard === nPts && nPts < 2) err(`event ${e.id}: a story of guarding only has two stars at least`);
+    // remarks: every key is tags joined by + or else, every tag one a person can have, and remark_on names a point of the scene
+    if (e.scene.remark_on && !e.scene.points.some((p) => p.id === e.scene.remark_on)) err(`event ${e.id}: remark_on ${e.scene.remark_on} is not a point`);
+    for (const lang of ['en', 'zh']) for (const k of Object.keys(((lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {}).remarks || {})) {
+      if (k !== 'else') for (const t of k.split('+')) if (!knownTags.has(t)) err(`event ${e.id} ${lang}: remark key ${k} names an unknown tag ${t}`);
+    }
     // a mend point may overturn facts of history in its branch, which the record then leaves out: the facts must be this event's, and a guard point overturns nothing
     const factIds = new Set((D.get('encyclopedia.event_facts')?.[e.id]?.facts || []).map((f) => f.id));
     for (const p of e.scene.points) for (const f of p.overturns || []) {

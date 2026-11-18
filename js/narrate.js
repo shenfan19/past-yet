@@ -243,7 +243,8 @@ export function weaveJourney(D, E, res, report, journey, vignette, vignetteTrait
 // The record of a small story, in the same shape as the record of a model, so one report shows both. Its days are counted from arrival,
 // since a small story has a year and no calendar. Facts of the person dated in the year of the event come before the arrival, facts of later years
 // after the leaving, each year marked; the lines of getting in, the sync points on their days, the scene in the middle, and the leaving.
-export function lightRecord(D, ev, r, staffId, stayDays) {
+// tags: what the employee is, from sim.staffTags, read by the remark a story may give the employee at the end of the record
+export function lightRecord(D, ev, r, staffId, stayDays, tags = new Set()) {
   const T = D.get('text');
   const R = T.ui.report;
   const c = T.catalog[ev.id];
@@ -321,6 +322,16 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
     why: { kind: 'vignette', expr: (ev.scene.vignettes.find((x) => x.id === r.vignette)?.traits || []).join(' | ') || 'default' } });
   // the leaving is read after everything of its last day, so the cost of a point missed on that day, a missed guard point above all, comes before it
   lines.push({ t: stayDays + 0.002, year: ev.year, kind: 'leave', id: 'leave', key: 'leave', tag: null, after: false, text: (desync ? R.light_sent_back : R.light_leave).replace('{day}', dayWord(stayDays)).replace('{staff}', staff), why: { kind: 'stay', expr: String(stayDays) } });
+  // A story may give the employee one remark at the end of the record, chosen by what the employee is: text.<language>.remarks maps a key of tags joined by +
+  // to a sentence, and the first key whose tags the employee all has is said, `else` when none fits; without `else` the employee says nothing. With
+  // scene.remark_on the remark is said only when that point was won, for a remark about what the employee did there.
+  const RM = c.remarks;
+  const on = ev.scene?.remark_on;
+  const onWon = !on || (r.points || []).some((p) => p.id === on && p.hit && !p.cut);
+  if (RM && onWon && j?.accepted !== false && !desync) {
+    const key = Object.keys(RM).find((k) => k !== 'else' && k.split('+').every((t) => tags.has(t))) ?? (RM.else !== undefined ? 'else' : null);
+    if (key) lines.push({ t: stayDays + 0.003, year: ev.year, kind: 'remark', id: 'remark', key: 'remark', tag: null, after: false, text: RM[key].split('{staff}').join(staff), why: { kind: 'remark', expr: key } });
+  }
   // what a won point changed is not told in the record: the report sets it out beside what history recorded, under the shift of the timeline
   // with `date`, the planned arrival on the calendar, the lines of the employee carry the year their day falls in, so a stay that runs into a new year marks it
   if (ev.date) {
