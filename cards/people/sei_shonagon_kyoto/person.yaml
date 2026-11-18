@@ -2,82 +2,64 @@ order: 173
 events:
   sei_shonagon_kyoto:
     order: 167
-    build_step: 1
+    build_step: 2
     year: 1000
+    date: '1000-12-01'
+    stay: 2
     lon: 135.76
     lat: 35.01
     region: asia
     field: literature
     tier: 1
     channels: {G: 1, S: 1}
-    refs: [sei_shonagon_kyoto_opening, sei_shonagon_kyoto_collected_manuscripts, sei_shonagon_kyoto_court_writing]
+    refs: [sei_shonagon_kyoto_teishi_wiki, sei_shonagon_kyoto_teishi_ja, sei_shonagon_kyoto_britannica, sei_shonagon_kyoto_opening]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 26, req: {"any":[{"job":["archivist","proofreader","proofreader"]},{"trait":["artistic","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 60, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 42, req: {"any":[{"job":["midwife"],"stat":{"finesse":6}},{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
       vignettes:
         - {id: compare, traits: [scholarly, skeptical, methodical]}
         - {id: colour, traits: [artistic, curious, kind]}
         - {id: listen}
     text:
       en:
-        name: 'A list beginning before sunrise'
+        name: 'The winter the empress was due'
         place: "Kyoto"
         figure: "Sei Shonagon"
-        story: 'The opening of The Pillow Book begins spring at dawn. The mountain edge brightens first, with slender purple clouds trailing above it. The visits and copyist below are imagined. The map year is a setting for the encounter.'
+        story: 'Sei Shōnagon had served the empress Teishi at court since about 993. At the end of 1000 Teishi was expecting her third child. On 13 January 1001 she gave birth to a daughter, Princess Bishi, and died soon after, aged twenty four. With her death Sei Shōnagon''s years at court came to an end.'
         relic: "A folded list"
         relic_desc: "A sheet of lightly written lists of things that please and things that do not."
         points:
-          p1: 'Give Sei Shōnagon a box for the notes she is gathering in Kyōto and a way to find the sections already written'
-          p2: 'Mark which passages she is willing to lend so a reader does not copy the adjacent private pages'
-          p3: 'Ask her to choose some lists and scenes for a loan copy and arrange the sequence. Return the other pages to her own box'
+          p1: 'Stay with Teishi through the birth, bring the child safely and save the mother'
         points_fail:
-          p1: 'Borrowers separate the loose papers. No collection remains to be copied, and the office recalls the employee.'
-          p2: 'The reader takes the whole pile. Only later does she find that a page she kept to herself is circulating.'
-          p3: 'The first person to borrow the pages determines their order. Readers cannot tell how she kept them.'
+          p1: 'As in history Teishi dies soon after the birth of her daughter, aged twenty four. Sei Shōnagon leaves the court.'
         shift:
           p1:
-            was: 'Some manuscripts of The Pillow Book relate how she obtained paper and how the notes came to be seen by others.'
-          p2:
-            was: 'An authorial account in some manuscripts describes someone taking the notes. This passage does not occur in every version.'
-            now: 'A borrower receives the passages she approved, marked where the selection ends.'
-          p3:
-            was: 'Manuscripts arrange The Pillow Book differently. The order and the status of the authorial notes are matters of study.'
-            now: 'The borrower receives a selection she arranged. A second record stays with her so another copyist can tell which order the loan copy used.'
+            was: '13 January 1001, the sixteenth day of the twelfth month of Chōhō 2: the empress Teishi, whom Sei Shōnagon served, gave birth to Princess Bishi and died soon after, aged twenty four.'
+            now: 'The birth went safely, and Teishi lived.'
             who: sei_shonagon_kyoto
-            bio: 'Sei Shōnagon wrote observations, lists and recollections at court. Different manuscripts preserve different arrangements and accounts of circulation.'
+            bio: 'In this timeline the empress Teishi came through the birth of early 1001 alive, and Sei Shōnagon still had her mistress.'
         vignettes:
           compare: 'You recognise the opening from a future edition. The copyist has skipped the edge of the mountain while reciting it. You ask where the light first shows, and the omitted place returns to the practice copy. You save the correction on a folded list. From this doorway the mountain itself stays out of sight.'
           colour: 'The painter’s purple you remember is too dark for that sky. The copyist lets you use an offcut. You put a thin grey line over a small patch of violet, and the two of you wait for the paper to dry. By then the colour outside has gone.'
           listen: 'From the doorway you hear the copyist read the opening twice. At dawn you make a list of one thing, the roof tiles that turn pale before the yard does. You take the fold of paper home. You never learn what the writer would have made of your entry.'
       zh:
-        name: '从天亮前写起的清单'
+        name: '皇后临产的那个冬天'
         place: "京都"
         figure: "清少纳言"
-        story: '《枕草子》开篇从春日破晓写起，山际渐渐发白，天上拖着细细的紫云。'
+        story: '清少纳言约从 993 年起在宫中侍奉皇后定子。1000 年岁末，定子怀着第三个孩子。1001 年 1 月 13 日，她生下女儿媄子内亲王，随即去世，年二十四。清少纳言的宫中岁月随她的去世结束。'
         relic: "一张折起来的清单"
         relic_desc: "一张轻轻写着喜欢和不喜欢的事的单子。"
         points:
-          p1: '在京都给清少纳言正在积攒的记事留一处可取用的纸盒，把已经写成的段落收好'
-          p2: '在清少纳言愿意给人看的段落旁另记节选，不让同一人误把未同意的旁页抄去'
-          p3: '请她从自己所写的清单和记事中各挑一组，安排可以借看的顺序，将其余页留回自己的箱中'
+          p1: '定子临产时守在她身边，让孩子平安落地，把母亲救下来'
         points_fail:
-          p1: '随手记的页被借纸的人拆走，没能聚成供后来抄读的笔记，事务所召回员工。'
-          p2: '读者拿走的是相邻的整摞纸，作者后来才发现原本私人留存的一页也传出去了。'
-          p3: '借阅本的收页次序由第一个抄写人决定。作者很难让后来读者辨别她原来怎么放。'
+          p1: '定子照史实在生下女儿后随即去世，年二十四，清少纳言离开宫中。'
         shift:
           p1:
-            was: '一些《枕草子》传本记清少纳言获得纸张写记事，也叙述笔记怎样被其他人看到。'
-          p2:
-            was: '部分传本中的自述将笔记流传与一次有人拿走稿子的情节联系起来；该段并非所有版本都有。'
-            now: '来借的人只领到她核过的几则，附来的段尾写明节选在此截止。'
-          p3:
-            was: '《枕草子》有不同的写本编排，段落次序与自述性质均是研究问题。'
-            now: '早期借阅者得到一份由她排过的节选，另外有一份留在作者处的次序。后来的抄写可以查到曾经使用哪一种。'
+            was: '长保二年十二月十六日（1001 年 1 月 13 日），清少纳言侍奉的皇后定子生下媄子内亲王后随即去世，年二十四。'
+            now: '孩子平安落地，定子活了下来。'
             who: sei_shonagon_kyoto
-            bio: '清少纳言在京都宫廷写下见闻、清单和感想。《枕草子》的传本保留不同的安排与流传线索。'
+            bio: '这条时间线里，清少纳言侍奉的皇后定子平安度过 1001 年初的生产，她的主人还在。'
         vignettes:
           compare: '你认出后世版本的开头。抄写人念漏了山际，你问光最先从哪里出来，他把漏掉的地方补到练习纸上。你把这处订正记进折起来的清单。从这扇门望出去，山本身却被挡着。'
           colour: '你印象里的紫颜料太深了。抄写人分你一张纸边，你在淡紫上压了一笔细灰。两人等纸干，再往门外望，天上已不是那个颜色。'
@@ -89,13 +71,35 @@ text:
   zh:
     name: 清少纳言
     text: 平安时代的日本宫廷女官，约 966 年生。她的《枕草子》收集了京都宫廷生活的清单、观察和轶事，口吻犀利而机智。
-hook: {en: 'When does spring begin on a page?', zh: '春天从哪一刻写起？'}
+hook: {en: 'The empress is due before the year turns.', zh: '年关前，皇后就要临产。'}
 facts:
+  service:
+    date: '993'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [sei_shonagon_kyoto_britannica, sei_shonagon_kyoto_teishi_wiki]
+    text:
+      en: 'From about 993 to 1000 Sei Shōnagon served the empress Teishi at the court in Kyoto.'
+      zh: '约 993 年到 1000 年，清少纳言在京都宫中侍奉皇后定子。'
+  teishi_death:
+    date: '1001-01-13'
+    stay_day: 43
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [sei_shonagon_kyoto_teishi_wiki, sei_shonagon_kyoto_teishi_ja]
+    text:
+      en: 'On the sixteenth day of the twelfth month of Chōhō 2, 13 January 1001, the empress Teishi died soon after giving birth to Princess Bishi, aged twenty four.'
+      zh: '长保二年十二月十六日（1001 年 1 月 13 日），皇后定子生下媄子内亲王后随即去世，年二十四。'
+    line:
+      en: 'The empress Teishi gives birth to a daughter and dies soon after.'
+      zh: '皇后定子生下一个女儿，随即去世。'
   opening:
     date: '1000'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [sei_shonagon_kyoto_opening]
     text:
       en: 'The opening places spring at dawn and describes the brightening mountain edge and slender purplish clouds. The event year does not date a particular manuscript.'
@@ -106,6 +110,24 @@ bystanders:
     text: {en: 'A fictional copyist practising the opening on an offcut of paper.', zh: '虚构的抄写人，用裁剩的纸边练开头几行。'}
 wiki:
   refs:
+    sei_shonagon_kyoto_teishi_wiki:
+      order: 899
+      status: checked
+      text:
+        en: 'Wikipedia, Fujiwara no Teishi https://en.wikipedia.org/wiki/Fujiwara_no_Teishi'
+        zh: '维基百科，藤原定子 https://en.wikipedia.org/wiki/Fujiwara_no_Teishi'
+    sei_shonagon_kyoto_teishi_ja:
+      order: 900
+      status: checked
+      text:
+        en: 'Japanese Wikipedia, Fujiwara no Teishi, citing the Gonki entry of Chōhō 2.12.16 https://ja.wikipedia.org/wiki/藤原定子'
+        zh: '日文维基百科，藤原定子，引《权记》长保二年十二月十六日条 https://ja.wikipedia.org/wiki/藤原定子'
+    sei_shonagon_kyoto_britannica:
+      order: 901
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Sei Shōnagon https://www.britannica.com/biography/Sei-Shonagon'
+        zh: '《不列颠百科全书》，清少纳言 https://www.britannica.com/biography/Sei-Shonagon'
     sei_shonagon_kyoto_collected_manuscripts:
       order: 10
       status: checked

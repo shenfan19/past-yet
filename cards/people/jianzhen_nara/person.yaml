@@ -3,70 +3,73 @@ events:
   jianzhen_nara:
     order: 162
     build_step: 2
-    year: 754
-    lon: 135.84
-    lat: 34.69
+    year: 750
+    stay: 7
+    lon: 112.47
+    lat: 23.05
     region: asia
     field: thought
     tier: 2
     channels: {Y: 3, E: 1}
-    refs: [jianzhen_nara_arrival, jianzhen_nara_foundation, jianzhen_nara_nara_arrival, jianzhen_nara_todai_register]
+    refs: [jianzhen_nara_tozhengzhuan, jianzhen_nara_eiei, jianzhen_nara_enwiki, jianzhen_nara_jawiki, jianzhen_nara_arrival, jianzhen_nara_foundation]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["archivist","translator","builder"]},{"trait":["handy","patient"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 81, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["handy","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 8, req: {"any":[{"job":["doctor","physician","nurse","paramedic","pharmacist","medical_teacher","caregiver"],"stat":{"will":5}},{"provides":"cure","stat":{"will":4}}]}}
+        - {id: p2, kind: care, day: 150, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
       vignettes:
         - {id: sound, traits: [kind, charismatic, cosmopolitan]}
         - {id: tie, traits: [methodical, vigil, handy]}
         - {id: temple}
     text:
       en:
-        name: 'The shelf at Tōdai-ji'
-        place: "Nara"
+        name: 'The long road back to Yangzhou'
+        place: "Lingnan"
         figure: "Jianzhen"
-        story: 'After leaving China in 753, Jianzhen reached Nara in 754. He transmitted Buddhist precepts at Tōdai-ji, and Tōshōdai-ji came later.'
+        story: 'In 748 Jianzhen of Yangzhou set out for Japan for the fifth time, and his ship was blown to Hainan. On the long way back overland, Eiei, the Japanese visitor who had come to Yangzhou to ask him across, fell ill and died at Duanzhou. Further on, at Shaozhou, Jianzhen''s failing eyes were treated by a man who said he could cure them, and afterwards he was blind.'
         relic: 'A practice wrapper label'
         relic_desc: 'An invented label used by the fictional temple helpers.'
         points:
-          p1: 'Prepare a place for the party’s books and belongings at Tōdai-ji. Check which volumes the travelers will need to reach first'
-          p2: 'Keep two copies of the catalogue for future delivery, reading and copying. Have the people who know each half check the entries'
+          p1: 'When Eiei falls ill at Duanzhou, nurse him and cure him'
+          p2: 'Before the man at Shaozhou treats Jianzhen''s eyes, talk him out of it and treat the eyes properly'
         points_fail:
-          p1: 'Some fascicles go to another store with the luggage. The receiving clerk cannot find the first set, and the office recalls the employee.'
-          p2: 'The first delivery is complete. Later visitors still have to find someone who was present at the handover to identify the scrolls.'
+          p1: 'As in history Eiei dies at Duanzhou. Jianzhen sees him to his burial and goes on north without him.'
+          p2: 'As in history the treatment leaves him blind. Three years later he crosses to Japan without his sight.'
         shift:
           p1:
-            was: 'Jianzhen’s party reached Tōdai-ji in Nara in 754. The travelers and the things they brought entered its community.'
+            was: 'Around 750, on the way back after the fifth failed crossing, Eiei, who had come to Yangzhou ten years before to ask Jianzhen to Japan, fell ill and died at Duanzhou.'
+            now: 'He got well at Duanzhou and went on north with the others.'
           p2:
-            was: 'Jianzhen later helped establish Tōshōdai-ji. Study at both institutions continued through later generations.'
-            now: 'When a reader goes to the new site, a catalogue at Tōdai-ji can still be matched to the copies received. Both places can record later additions.'
+            was: '750, Shaozhou: after the heat and strain of the road Jianzhen''s eyes had grown dim. A man who said he could cure eyes treated them, and afterwards he was blind.'
+            now: 'He never let the man treat him. His eyes were cured, and he could see the road and the people beside him.'
             who: jianzhen_nara
-            bio: 'Jianzhen reached Nara with companions. The texts they brought and the work of people receiving them contributed to what was passed on.'
+            bio: 'In this timeline Jianzhen kept his eyes on the road back of 750, and later saw the sea he crossed to Japan.'
         vignettes:
           sound: 'Chiyo points to the right bundle from across the room. Jun still cannot tell which one she means on the crowded shelf. You ask her to read the opening aloud instead. Jun finds the matching words on the wrapper and sets the bundle down for the next reader.'
           tie: 'Jun starts to retie a loose wrapper before checking the order. You hold the bundle as Chiyo reads the first line of each part in turn. He puts one misplaced part back. The bundle will now open in the order in which they practised it.'
           temple: 'You know the name of the temple that will be founded in 759. Chiyo only needs to mark where to take this reading in the morning. You help her write Tōdai-ji on the wrapper. The other temple still belongs to a future you will not see on this visit.'
       zh:
-        name: '东大寺里的一层架'
-        place: "奈良"
+        name: '回扬州的长路'
+        place: "岭南"
         figure: "鉴真"
-        story: '鉴真于753年离开中国，754年抵达奈良。他在东大寺传授戒律，后来才有唐招提寺。'
+        story: '748 年，扬州的鉴真第五次动身去日本，船被风吹到海南。走陆路北返的长路上，十年前到扬州请他东渡的日本人荣叡在端州病逝。再往前到了韶州，鉴真日渐昏暗的眼睛经一个自称会治眼的人治过，从此失明。'
         relic: '一张练习用的卷签'
         relic_desc: '故事中的帮工使用的经卷签。'
         points:
-          p1: '在奈良给东大寺接收一行人的书物安排位置，逐件核对哪几份需要先让同行人取用'
-          p2: '在奈良留下请求讲读与抄阅时能用的双份目录，请两地来的人各核自己知道的部分'
+          p1: '荣叡在端州病倒，照料他，把病治好'
+          p2: '韶州那人给鉴真治眼之前，劝他别让人乱治，把眼睛好好治好'
         points_fail:
-          p1: '行李暂放时几卷迁往别库，来接收的人找不到第一批书物，事务所召回员工。'
-          p2: '第一次接收已完成，后续到访的人仍要找原来在场的人才能辨别书卷。'
+          p1: '荣叡照史实病逝于端州，鉴真为他送葬，没有他同行，继续北上。'
+          p2: '那次治疗照史实让他双目失明，三年后他看不见地渡海去了日本。'
         shift:
           p1:
-            was: '鉴真一行在 754 年抵达奈良东大寺，带去的人员与物件进入寺院使用。'
+            was: '750 年前后，第五次渡海失败后的归途中，十年前到扬州请鉴真东渡的日本人荣叡在端州病逝。'
+            now: '他在端州病好了，和一行人一起继续北上。'
           p2:
-            was: '鉴真后来参与创建唐招提寺。东大寺与唐招提寺的研究和承续由多代人员传下。'
-            now: '后来有人另到新处讲读，东大寺的一份目录仍能与他领到的抄卷核对。两处可以据此分别补登记。'
+            was: '750 年，归途走到韶州，鉴真的眼睛因一路炎热劳顿日渐昏暗，一个自称会治眼的人给他治过以后，他双目失明。'
+            now: '他没让那人动手，眼睛治好了，看得清路上的山水和身边的人。'
             who: jianzhen_nara
-            bio: '鉴真东渡后与同伴到达奈良。他们携来的文书和在地人员的工作共同参与了后续传承。'
+            bio: '这条时间线里，鉴真在 750 年的归途中保住了眼睛，后来看得见他渡过去的那片海。'
         vignettes:
           sound: '千代隔着屋子指给人看，可架上摆得太满，准还是分不清她指哪束。你请她念出开头。准听着去对包纸上的字，找到那一束，给接读的人摆了出来。'
           tie: '准想先把松开的包纸捆上，还没核对里面的次序。你扶着那束经卷，千代挨个念每部分的头一句。准把放错的一份放了回去。下次打开时，次序就是他们练过的那样。'
@@ -74,30 +77,63 @@ events:
 text:
   en:
     name: Jianzhen
-    text: Chinese Buddhist monk, 688 to 763. He sailed in 753 and reached Nara in 754. He taught the Buddhist precepts at Tōdai-ji, and Tōshōdai-ji was established in 759.
+    text: Teacher from Yangzhou in Tang China, 688 to 763. Asked to Japan by Japanese visitors in 742, he failed five times to cross; after the fifth attempt he lost his sight on the way back. He sailed again in 753, reached Nara in 754 and taught there, and in 759 he founded a new place of study in Nara, where he died.
   zh:
     name: 鉴真
-    text: 中国僧人，688年生，763年去世。他于753年起航，754年抵达奈良，在东大寺传戒。唐招提寺创建于759年。
-hook: {en: 'A bundle must be ready before the lesson.', zh: '开讲前，还得找齐一束经卷。'}
+    text: 唐代扬州人，688 年生，763 年去世。742 年日本来客请他东渡，前五次都没渡成，第五次失败后的归途中双目失明。753 年他再次起航，754 年到奈良讲学，759 年在奈良另建讲学之所，后来在那里去世。
+hook: {en: 'His eyes grow dimmer with every day of the road.', zh: '路走得越远，他的眼睛越暗。'}
 facts:
+  fifth_voyage:
+    date: '748'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_enwiki]
+    text:
+      en: 'In 748 Jianzhen set out from Yangzhou on his fifth attempt to reach Japan; the ship was blown off course to Hainan, and he made his way back north overland.'
+      zh: '748 年，鉴真第五次从扬州出发东渡，船被风吹离航路，漂到海南，此后他走陆路北返。'
+  eiei:
+    date: '750'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_eiei]
+    text:
+      en: 'On the way back, Eiei, the Japanese visitor who had asked Jianzhen to Japan in 742, fell ill and died at Duanzhou. Sources give the year as 749 to 751.'
+      zh: '北返途中，742 年请鉴真东渡的日本人荣叡在端州病逝，年份各书记作 749 到 751 年不等。'
+    line:
+      en: 'Duanzhou: Eiei, who came to Yangzhou to ask Jianzhen across, dies of his illness.'
+      zh: '端州，当年到扬州请鉴真东渡的荣叡病逝。'
+  eyes:
+    date: '750'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_enwiki, jianzhen_nara_jawiki]
+    text:
+      en: 'At Shaozhou, after the heat and strain of the road had dimmed his eyes, Jianzhen was treated by a man who said he could cure eyes, and afterwards he was blind. Later writers suggest infection or age related cataract.'
+      zh: '在韶州，一路炎热劳顿使鉴真的眼睛昏暗，一个自称会治眼的人给他治过以后，他双目失明。后人推测是感染或老年白内障。'
+    line:
+      en: 'Shaozhou: a man who says he can cure eyes treats Jianzhen, and afterwards he cannot see.'
+      zh: '韶州，一个自称会治眼的人给鉴真治眼，治过以后他看不见了。'
   arrival:
     date: '754'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [jianzhen_nara_arrival]
     text:
-      en: 'The exhibition documents the journey to Japan and the Nara transmission of the Buddhist precepts associated with Jianzhen.'
-      zh: '展览记述鉴真赴日经历，以及他在奈良传授佛教戒律。'
+      en: 'Jianzhen sailed again in 753 and reached Nara in 754, where he taught.'
+      zh: '鉴真 753 年再次起航，754 年到达奈良，在那里讲学。'
   foundation:
     date: '759'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [jianzhen_nara_foundation]
     text:
-      en: 'The temple places its establishment on a site granted in 759, after the arrival at Nara.'
-      zh: '寺方记载，鉴真抵达奈良之后，759年获赐地创建唐招提寺。'
+      en: 'In 759 Jianzhen was granted land in Nara and founded a new place of study there.'
+      zh: '759 年，鉴真在奈良获赐土地，另建讲学之所。'
 bystanders:
   chiyo:
     invented: true
@@ -107,18 +143,30 @@ bystanders:
     text: {en: 'A fictional helper bundling the texts for the next reader.', zh: '虚构帮工准，要为接读的人把经卷收好。'}
 wiki:
   refs:
-    jianzhen_nara_nara_arrival:
-      order: 10
+    jianzhen_nara_tozhengzhuan:
+      order: 895
       status: checked
       text:
-        en: 'Research on the party’s arrival at Tōdai-ji https://uva.theopenscholar.com/files/dorothy-wong/files/wong_jianzhen_entry_for_brill_encyclopedia_of_buddhism.pdf'
-        zh: '鉴真一行抵达东大寺的研究 https://uva.theopenscholar.com/files/dorothy-wong/files/wong_jianzhen_entry_for_brill_encyclopedia_of_buddhism.pdf'
-    jianzhen_nara_todai_register:
-      order: 11
+        en: 'Ōmi no Mifune, Tō Daiwajō Tōseiden (779), Wikisource https://zh.wikisource.org/wiki/唐大和上東征傳'
+        zh: '真人元开，《唐大和上东征传》（779），维基文库 https://zh.wikisource.org/wiki/唐大和上東征傳'
+    jianzhen_nara_eiei:
+      order: 896
       status: checked
       text:
-        en: 'Nara National Museum, contemporary Tōdai-ji receiving record https://www.narahaku.go.jp/english/collection/p-1118-0.html'
-        zh: '奈良国立博物馆东大寺同期收存文书 https://www.narahaku.go.jp/english/collection/p-1118-0.html'
+        en: 'Japanese Wikipedia, Yōei (Eiei), English corpus https://japanese-wiki-corpus.github.io/person/Yoei%20(Eiei).html'
+        zh: '日文维基百科，荣叡，英译语料 https://japanese-wiki-corpus.github.io/person/Yoei%20(Eiei).html'
+    jianzhen_nara_enwiki:
+      order: 897
+      status: checked
+      text:
+        en: 'Wikipedia, Jianzhen https://en.wikipedia.org/wiki/Jianzhen'
+        zh: '维基百科，鉴真 https://en.wikipedia.org/wiki/Jianzhen'
+    jianzhen_nara_jawiki:
+      order: 898
+      status: checked
+      text:
+        en: 'Japanese Wikipedia, Ganjin https://ja.wikipedia.org/wiki/鑑真'
+        zh: '日文维基百科，鉴真 https://ja.wikipedia.org/wiki/鑑真'
     jianzhen_nara_arrival:
       order: 893
       status: checked

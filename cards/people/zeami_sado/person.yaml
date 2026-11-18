@@ -2,21 +2,21 @@ order: 218
 events:
   zeami_sado:
     order: 208
-    build_step: 1
-    year: 1434
+    build_step: 2
+    year: 1435
+    date: '1435-04-01'
+    stay: 2
     lon: 138.4
     lat: 38.0
     region: asia
     field: literature
     tier: 1
     channels: {C: 2, G: 2, S: 1}
-    regret: true
-    refs: [zeami_sado_island, zeami_sado_mask_tradition]
+    refs: [zeami_sado_island, zeami_sado_jawiki, zeami_sado_amano, zeami_sado_motomasa, zeami_sado_corpus, zeami_sado_nearman]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["skeptical","quiet","wanderer"]},{"job":["musician"]}]}}
-        - {id: p2, kind: persuade, req: {"provides":"show"}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","sensitive"]}}
+        - {id: p1, kind: trust, day: 30, req: {"any":[{"trait":["kind","sensitive","patient","calm","attached"],"stat":{"will":7}},{"job":["musician","teacher","tutor","writer","caregiver"],"stat":{"will":7}},{"provides":"calm","trait":["kind","sensitive","patient","calm","attached"],"stat":{"will":5}}]}}
       vignettes:
         - {id: later, traits: [bold, curious]}
         - {id: mask, traits: [handy, artistic]}
@@ -26,13 +26,19 @@ events:
         name: 'The island on the page'
         place: "Sado Island"
         figure: "Zeami"
-        story: 'Sado City records that Zeami was exiled to Sado in 1434. In Kintōsho, written during his time on the island, he calls Sado an island of gold. The mask associated with him in local tradition is not identified as an object he wore in this scene.'
+        story: 'In the eighth month of 1432 Zeami''s eldest son Motomasa, the heir of his troupe, died far from home in Ise. Some months later Zeami wrote that with Motomasa gone the way of their school had been cut off. In 1434, past seventy, he was exiled to Sado, and on the island he wrote Kintōsho. His treatises stayed hidden for centuries and were published only in 1909.'
         relic: "A Noh mask"
         relic_desc: "A small wooden mask with a fine line of lacquer between the brows."
         points:
-          p1: 'Hear where the reader pauses on the island’s name'
-          p2: 'Demonstrate two readings of the same line'
-          p3: 'Keep one reading slip dry until the lesson ends'
+          p1: 'Stay beside Zeami on Sado and let him know that what he wrote will be handed on and read'
+        points_fail:
+          p1: 'As in history he lives out his exile believing that the line of his art ended with his son.'
+        shift:
+          p1:
+            was: '1433: some seven months after Motomasa''s death, Zeami wrote that the way of their school had been cut off and the troupe was already ruined. In 1434 he was exiled to Sado. His treatises stayed hidden for centuries and were published only in 1909.'
+            now: 'On Sado he came to know that what he had written would be handed on and still read centuries later.'
+            who: zeami_sado
+            bio: 'In this timeline Zeami spent his exile on Sado knowing that his writings on his art would outlast him.'
         vignettes:
           later: 'You tell the reader that people will still use the name in books about Sado. He tries the words as a place name, then as something a person longs for. You mark both pauses on a slip. The boat that brought Zeami to Sado has already gone.'
           mask: 'The reader holds up a practice mask and loses his place when he lowers it. You mark the start of the line on a loose slip and prop it where he can find it again. The mask goes back on its peg. You miss the reading after yours.'
@@ -41,13 +47,19 @@ events:
         name: '纸上的金岛'
         place: "佐渡岛"
         figure: "世阿弥"
-        story: '佐渡市资料记载，世阿弥于 1434 年流放佐渡，居岛期间所写的《金岛书》称佐渡为金之岛。'
+        story: '1432 年 8 月，世阿弥的长子、一座的继承人元雅客死伊势。几个月后，世阿弥写道，元雅一死，这一流的道就断了。1434 年，年过七十的他被流放佐渡，在岛上写下《金岛书》。他的论著此后秘藏数百年，1909 年才刊行于世。'
         relic: "一张能面"
         relic_desc: "一张小小的木面，眉间有细细的漆痕。"
         points:
-          p1: '听清念到岛名时停在哪儿'
-          p2: '把同一行试念两遍，让人听出区别'
-          p3: '在练习结束前护好一张没受潮的念词纸'
+          p1: '在佐渡陪着世阿弥，让他知道自己写下的东西会传下去、有人读'
+        points_fail:
+          p1: '他照史实在流放中度日，以为自己这一流的道随儿子一起断了。'
+        shift:
+          p1:
+            was: '1433 年，元雅去世约七个月后，世阿弥写道，这一流的道已经断绝，一座已经破败。1434 年他被流放佐渡。他的论著此后秘藏数百年，1909 年才刊行。'
+            now: '他在佐渡知道了，自己写下的东西会传下去，几百年后还有人读。'
+            who: zeami_sado
+            bio: '这条时间线里，世阿弥在佐渡度过流放的岁月，知道自己论艺的文字会比他活得更久。'
         vignettes:
           later: '你告诉虚构的念词人，后来写佐渡的书还会提到这个名字。他先像念地名一样试一遍，再念得像一个人对着远处想什么。你记下两个停顿。载世阿弥来岛的船，你已经赶不上了。'
           mask: '念词人举起练习用的面具，放下时找不到念到哪儿。你拿一张散纸标出那行的起头，立在他伸手就能找见的位置。面具挂回钩上，下一轮念词你没能留下听。'
@@ -59,22 +71,52 @@ text:
   zh:
     name: "世阿弥"
     text: "日本能乐演员和剧作家，约 1363 年生，约 1443 年去世。他留下多部关于能乐的论著，1434 年被流放到佐渡岛。"
-hook: {en: 'What would a reader hear in the island’s name?', zh: '金岛两个字怎么念？'}
+hook: {en: 'He thinks his art ended with his son.', zh: '他以为自己的道随儿子断了。'}
 facts:
+  motomasa:
+    date: '1432-08'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [zeami_sado_amano, zeami_sado_motomasa]
+    text:
+      en: 'In the eighth month of 1432 Zeami''s eldest son Kanze Motomasa died away from home at Anotsu in Ise.'
+      zh: '1432 年 8 月，世阿弥的长子观世元雅客死伊势安浓津。'
+  lament:
+    date: '1433'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [zeami_sado_amano, zeami_sado_jawiki]
+    text:
+      en: 'Some seven months after Motomasa''s death Zeami wrote at the opening of Kyakuraika that with Motomasa gone the way of their school had been cut off.'
+      zh: '元雅去世约七个月后，世阿弥在《却来华》开头写道，元雅一死，这一流的道已经断绝。'
   island:
     date: '1434'
-    checked: official_record
-    level: usable
-    use: [story, wiki]
-    sources: [zeami_sado_island]
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [zeami_sado_island, zeami_sado_jawiki]
     text:
-      en: 'Zeami was exiled to Sado in 1434. The city’s plan identifies Kintōsho as an island-period text and cites its description of Sado as an island of gold.'
-      zh: '世阿弥于 1434 年被流放佐渡。市政府资料指出《金岛书》写于居岛期间，并引述书中对金之岛佐渡的称呼。'
+      en: 'Zeami was exiled to Sado in 1434; no official record of the sentence survives. On the island he wrote Kintōsho, dated 1436, which calls Sado an island of gold.'
+      zh: '1434 年世阿弥被流放佐渡，判罪的官方记录没有留存。他在岛上写下《金岛书》，书成于 1436 年，称佐渡为金之岛。'
+    line:
+      en: 'Sado: Zeami, past seventy, lives out his exile on the island.'
+      zh: '佐渡，年过七十的世阿弥在岛上过着流放的日子。'
+  published:
+    date: '1909'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [zeami_sado_corpus, zeami_sado_nearman]
+    text:
+      en: 'Zeami''s treatises were handed down in secret and were published only in 1909, when the historian Yoshida Tōgo edited sixteen of them.'
+      zh: '世阿弥的论著秘传数百年，1909 年才由史学家吉田东伍整理十六部刊行。'
   mask_tradition:
     date: '1434'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [zeami_sado_mask_tradition]
     text:
       en: 'The city''s property record attributes the association of a particular mask with Zeami to local tradition.'
@@ -91,6 +133,36 @@ wiki:
       text:
         en: 'Sado City, Historical Landscape Conservation Plan, chapter 1, on Zeami and Kintōsho https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf'
         zh: '佐渡市历史风貌计划第一章，世阿弥与《金岛书》 https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf'
+    zeami_sado_jawiki:
+      order: 902
+      status: checked
+      text:
+        en: 'Japanese Wikipedia, Zeami https://ja.wikipedia.org/wiki/世阿弥'
+        zh: '日文维基百科，世阿弥 https://ja.wikipedia.org/wiki/世阿弥'
+    zeami_sado_amano:
+      order: 903
+      status: checked
+      text:
+        en: 'Amano Fumio, on Motomasa''s death and Zeami''s writings of 1432 and 1433, Osaka University repository https://ir.library.osaka-u.ac.jp/repo/ouka/all/97475/egrs_10_001.pdf'
+        zh: '天野文雄，论元雅之死与世阿弥 1432、1433 年的著述，大阪大学机构库 https://ir.library.osaka-u.ac.jp/repo/ouka/all/97475/egrs_10_001.pdf'
+    zeami_sado_motomasa:
+      order: 904
+      status: checked
+      text:
+        en: 'Japanese Wikipedia, Kanze Motomasa, English corpus https://japanese-wiki-corpus.github.io/person/Motomasa%20KANZE.html'
+        zh: '日文维基百科，观世元雅，英译语料 https://japanese-wiki-corpus.github.io/person/Motomasa%20KANZE.html'
+    zeami_sado_corpus:
+      order: 905
+      status: checked
+      text:
+        en: 'Japanese Wikipedia, Zeami, English corpus https://japanese-wiki-corpus.github.io/person/Zeami.html'
+        zh: '日文维基百科，世阿弥，英译语料 https://japanese-wiki-corpus.github.io/person/Zeami.html'
+    zeami_sado_nearman:
+      order: 906
+      status: checked
+      text:
+        en: 'Mark J. Nearman, Kakyō: Zeami''s Fundamental Principles of Acting, Monumenta Nipponica 37 (1982) https://www.gwern.net/doc/japan/poetry/zeami/1982-nearman.pdf'
+        zh: '马克·尼尔曼，《花镜：世阿弥的演艺根本原则》，《日本文化志丛》第 37 卷（1982） https://www.gwern.net/doc/japan/poetry/zeami/1982-nearman.pdf'
     zeami_sado_mask_tradition:
       order: 455
       status: checked
