@@ -2,51 +2,63 @@ order: 19
 events:
   archimedes_syracuse:
     order: 8
-    build_step: 1
-    year: -250
+    build_step: 2
+    year: -212
+    stay: 2
     lon: 15.29
     lat: 37.07
     region: europe
     field: science
     tier: 2
     channels: {H: 2, L: 1}
-    refs: [archimedes_syracuse_floating, archimedes_syracuse_bath]
+    refs: [archimedes_syracuse_plutarch, archimedes_syracuse_wiki, archimedes_syracuse_floating, archimedes_syracuse_bath]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: persuade, req: {"stat":{"finesse":6}}}
-        - {id: p3, kind: hold, req: {"stat":{"will":6}}}
+        - {id: p1, kind: hold, day: 40, overturns: [death], req: {"any":[{"trait":["bold","hardy"],"stat":{"constitution":7,"will":7}},{"trait":["streetwise","wanderer","cosmopolitan"],"provides":"disguise","stat":{"will":5}},{"job":["sailor","navigator","ferryman","ferry_pilot","fisher","fisherman"],"trait":["bold","calm","patient","hardy"],"stat":{"will":7}}]}}
       vignettes:
         - {id: load, traits: [methodical, curious, handy]}
         - {id: settle, traits: [patient, kind, quiet]}
         - {id: crown}
     text:
       en:
-        name: 'Two boats, one basin'
+        name: 'The day the city fell'
         place: Syracuse, Sicily
         figure: Archimedes
-        story: 'In On Floating Bodies, Archimedes relates the weight of a floating body to that of the liquid it displaces. Vitruvius much later tells the bath and crown story.'
+        story: 'For two years Roman forces besieged Syracuse, and the city held out with the help of machines Archimedes had devised. In 212 BC the city was taken. The Roman commander had given word that Archimedes was to be spared, but in the taking of the city Archimedes, then about seventy five, was killed.'
         relic: 'A marked toy hull'
         relic_desc: 'A practice hull from the fictional workshop.'
         points:
-          p1: 'Compare the floating boats at equal load'
-          p2: 'Talk the maker into repeating the trial after the water settles'
-          p3: 'Hold the catch bowl level while the floating boat settles'
+          p1: 'On the day Syracuse falls, get Archimedes safely out of the way of the fighting'
+        points_fail:
+          p1: 'As in history he is killed when the city is taken.'
+        shift:
+          p1:
+            was: '212 BC: when Roman forces took Syracuse, Archimedes, about seventy five, was killed, although the Roman commander had ordered that he be spared.'
+            now: 'On the day the city fell he was taken safely out of harm''s way and lived on.'
+            who: archimedes_syracuse
+            bio: 'In this timeline Archimedes came safely through the fall of Syracuse in 212 BC and lived on.'
         vignettes:
           load: 'Tyche expects the wide boat to send more water over the rim. You give both boats equal total weight. The wider hull sits shallower and the two catches balance. She keeps both boats instead of cutting down the larger one to match the smaller.'
           settle: 'Nikon has to return the basin before the workshop closes. He starts the second trial while the first catch is still sloshing. You send Tyche to return the weights and use the time to let the bowl settle. Nikon weighs the water again. He leaves with a second reading and still gets the basin back.'
           crown: 'You ask Nikon whether Archimedes ever tested a king’s crown in a bath. He looks down at the two toy boats and asks whose crown you could put on the scale. You have the tale a Roman author will tell long after this workshop. You leave with the mark from the trial you can actually repeat.'
       zh:
-        name: '两只小舟，一盆水'
+        name: '城破的那一天'
         place: 西西里锡拉库扎
         figure: 阿基米德
-        story: '阿基米德在《论浮体》中讨论浮体和它排开的液体之间的重量关系。浴池与王冠的故事见于晚得多的维特鲁威。'
+        story: '罗马军队围攻叙拉古两年，城里靠阿基米德设计的器械守了下来。公元前 212 年，叙拉古城破。罗马主帅曾下令放过阿基米德，年约七十五的他还是在城破时遇害。'
         relic: '留着吃水线的小舟'
         relic_desc: '工坊里拿来练习的小舟。'
         points:
-          p1: '比较载重相同的两只小舟'
-          p2: '说服做船的人，等水静下来再试一次'
-          p3: '扶平接水碗，等小舟浮稳'
+          p1: '叙拉古城破那天，带阿基米德平安避开乱兵'
+        points_fail:
+          p1: '他照史实在城破时遇害。'
+        shift:
+          p1:
+            was: '公元前 212 年，罗马军队攻下叙拉古，年约七十五的阿基米德遇害，尽管罗马主帅曾下令放过他。'
+            now: '城破那天，他被平安带离乱处，活了下来。'
+            who: archimedes_syracuse
+            bio: '这条时间线里，阿基米德平安度过公元前 212 年叙拉古城破的那一天，活了下来。'
         vignettes:
           load: '堤刻以为宽舟会挤出更多水。你把两只舟配到同样重。宽舟吃水浅一些，接到的两份水却一样重。她把两只舟都留下了，原本还想把大的削成小的那样。'
           settle: '尼孔关坊前得还水盆，头一回接的水还在晃，就要做第二回。你请堤刻先去还砝码，趁空等水静下来。尼孔又称了一次，走时多带走一次读数，水盆也赶得及还。'
@@ -58,13 +70,37 @@ text:
   zh:
     name: 阿基米德
     text: 叙拉古的希腊数学家与发明家，约公元前 287 年生，公元前 212 年去世。他求出了球体积，提出浮力原理和杠杆定律。罗马军队攻陷叙拉古时他被杀。
-hook: {en: 'Which boat can carry the last weight?', zh: '最后一枚砝码，该放哪条船？'}
+hook: {en: 'He was to be spared, and was not.', zh: '下令放过他的命令，没能救下他。'}
 facts:
+  siege:
+    date: '-213'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [archimedes_syracuse_plutarch, archimedes_syracuse_wiki]
+    text:
+      en: 'From 213 BC Roman forces besieged Syracuse by land and sea, and machines devised by Archimedes kept them from the walls.'
+      zh: '公元前 213 年起，罗马军队从海陆两面围攻叙拉古，阿基米德设计的器械让他们近不了城墙。'
+    line:
+      en: 'Syracuse: the city holds out against the Roman siege.'
+      zh: '叙拉古，城中顶住罗马军队的围攻。'
+  death:
+    date: '-212'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [archimedes_syracuse_plutarch, archimedes_syracuse_wiki]
+    text:
+      en: 'When Syracuse was taken in 212 BC, Archimedes was killed, although the Roman commander Marcellus had ordered that he be spared.'
+      zh: '公元前 212 年叙拉古城破，阿基米德遇害，尽管罗马主帅马塞勒斯曾下令放过他。'
+    line:
+      en: 'Syracuse: the city is taken, and Archimedes is killed.'
+      zh: '叙拉古城破，阿基米德遇害。'
   floating:
     date: '-250'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [archimedes_syracuse_floating]
     text:
       en: 'For a floating body at rest, the displaced liquid has the same weight as the whole body.'
@@ -73,7 +109,7 @@ facts:
     date: '-25'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [archimedes_syracuse_bath]
     text:
       en: 'The Roman author tells the bath anecdote in connection with a crown commissioned by Hiero, long after Archimedes lived.'
@@ -87,6 +123,18 @@ bystanders:
     text: {en: 'A fictional attendant with a basin to return before closing.', zh: '虚构帮工尼孔，关坊前要把水盆还回去。'}
 wiki:
   refs:
+    archimedes_syracuse_plutarch:
+      order: 1417
+      status: checked
+      text:
+        en: 'Plutarch, Life of Marcellus 14 to 19, Perseus Digital Library, Tufts University https://www.perseus.tufts.edu/hopper/text?doc=Plut.+Marc.+19'
+        zh: '普鲁塔克《马塞勒斯传》第 14 至 19 章，塔夫茨大学珀尔修斯数字图书馆 https://www.perseus.tufts.edu/hopper/text?doc=Plut.+Marc.+19'
+    archimedes_syracuse_wiki:
+      order: 1418
+      status: checked
+      text:
+        en: 'English Wikipedia, Archimedes, on the siege of Syracuse and his death (citing Plutarch and Livy 25.31) https://en.wikipedia.org/wiki/Archimedes'
+        zh: '英文维基百科，阿基米德条，叙拉古之围与遇害（引普鲁塔克、李维 25.31） https://en.wikipedia.org/wiki/Archimedes'
     archimedes_syracuse_floating:
       order: 809
       status: checked

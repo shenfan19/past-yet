@@ -2,52 +2,75 @@ order: 103
 events:
   ibn_rushd_lucena:
     order: 169
-    build_step: 1
+    build_step: 2
     year: 1195
-    lon: -4.48
-    lat: 37.41
+    date: '1195-08-01'
+    stay: 2
+    lon: -4.78
+    lat: 37.88
     region: europe
     field: philosophy
     tier: 3
     channels: {S: 3}
-    regret: true
-    refs: [ibn_rushd_lucena_exile, ibn_rushd_lucena_reasoning]
+    refs: [ibn_rushd_lucena_exile, ibn_rushd_lucena_wiki, ibn_rushd_lucena_neh, ibn_rushd_lucena_sep, ibn_rushd_lucena_reasoning]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, req: {"trait":["kind","cosmopolitan"]}}
-        - {id: p2, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+        - {id: p1, kind: trust, day: 45, req: {"any":[{"trait":["kind","patient","calm","cosmopolitan","sensitive"],"stat":{"will":7}},{"provides":"calm","trait":["kind","patient","calm","cosmopolitan","sensitive"],"stat":{"will":5}}]}}
+        - {id: p2, kind: hold, day: 15, req: {"any":[{"trait":["scholarly","methodical"],"stat":{"wit":8,"will":7}},{"job":["archivist","translator","bookseller","proofreader","restorer"],"provides":"disguise","stat":{"wit":7}}]}}
       vignettes:
         - {id: premise, traits: [methodical, curious, scholarly]}
         - {id: together, traits: [kind, cosmopolitan, patient]}
         - {id: language}
     text:
       en:
-        name: 'The step between two lines'
-        place: "Lucena"
+        name: 'Before the order to burn'
+        place: "Córdoba"
         figure: "Ibn Rushd"
-        story: 'A later account by Ibn Abī Uṣaybiʿa describes Ibn Rushd’s exile to Lucena under al-Manṣūr. The earlier Decisive Treatise distinguishes demonstrative argument from other kinds of reasoning.'
+        story: 'In 1195 the Andalusian philosopher and judge Ibn Rushd fell from favour. Charges were brought against him, and a tribunal in Córdoba condemned his teachings, ordered his works to be burned and banished him to nearby Lucena. A few years later he returned to court in Marrakesh, where he died on 11 December 1198. Many of his works in Arabic did not survive and are known only through Hebrew or Latin translations.'
         relic: 'A reader’s practice extract'
         relic_desc: 'An invented extract with space added for a premise.'
         points:
-          p1: 'Ask the reader to say the missing step before copying the conclusion'
-          p2: 'Compare the two explanations in the margin'
-          p3: 'Keep the working page with the book it comments on'
+          p1: 'Stay with Ibn Rushd in Lucena and let him know that his commentaries will be read on in many languages'
+          p2: 'Before the order to burn comes, make a second copy of his works and send it out of Córdoba'
+        points_fail:
+          p1: 'As in history he lives out his banishment in Lucena with his teachings condemned, and no one tells him where his books will go.'
+          p2: 'As in history his works are ordered burned, and many of the Arabic originals are later lost, surviving only in translation.'
+        shift:
+          p1:
+            was: '1195: a tribunal in Córdoba condemned Ibn Rushd''s teachings and banished him to nearby Lucena.'
+            now: 'In Lucena he came to know that his commentaries on Aristotle would be translated into other languages and read for centuries.'
+          p2:
+            was: '1195: the tribunal ordered Ibn Rushd''s works to be burned. After his death many of the Arabic originals did not survive; of forty nine works listed by the Stanford Encyclopedia of Philosophy, fourteen are known only in Hebrew or Latin.'
+            now: 'Before the order to burn came, a second copy had already left Córdoba, and his works came down in his own Arabic.'
+            who: ibn_rushd_lucena
+            bio: 'In this timeline a second copy of Ibn Rushd''s books was sent out of Córdoba before the order to burn them, and his writings survived in the Arabic he wrote them in.'
         vignettes:
           premise: 'Mariam has copied a conclusion in careful letters. Yusuf can follow it only by assuming something she has left unstated. You ask him where he stopped and leave space before the conclusion. Mariam writes her assumption in that space, where Yusuf can question it.'
           together: 'Yusuf wants to return the book and keep a single line for his own use. You give him time to copy the step that goes with it. At the door Mariam asks for the conclusion aloud, and he can now give her the reason as well.'
           language: 'You recognise a term that later readers will meet in another language. Mariam just wants to know whether she has copied the premise as it stands. You hold the page flat while she checks it. The question she writes beside it will go to a reader you will not meet.'
       zh:
-        name: '两行中间那一步'
-        place: "卢塞纳"
+        name: '焚书令之前'
+        place: "科尔多瓦"
         figure: "伊本·鲁世德"
-        story: '伊本·艾比·乌赛比阿的后世传记谈到曼苏尔将伊本·鲁世德放逐卢塞纳。早先的《决定论》区分论证推理和其他说理方式。'
+        story: '1195 年，安达卢斯的哲学家、法官伊本·鲁世德失势。他被控多项罪名，科尔多瓦的法庭判他的学说有罪，下令焚毁他的著作，把他放逐到附近的卢塞纳。几年后他回到马拉喀什的朝中，1198 年 12 月 11 日在那里去世。他的许多阿拉伯文原著没有传下来，只靠希伯来文和拉丁文译本存世。'
         relic: '一页读书练习摘录'
         relic_desc: '摘录，为前提另留一处。'
         points:
-          p1: '抄结语前，请读者先说出漏掉的一步'
-          p2: '对照页边的两种解释'
-          p3: '把练习页与它所读的书放在一处'
+          p1: '在卢塞纳陪着伊本·鲁世德，让他知道他的注释会被许多语言的人读下去'
+          p2: '焚书令下来之前，把他的著作另抄一份，送出科尔多瓦'
+        points_fail:
+          p1: '他照史实在卢塞纳度过放逐，学说被判有罪，没人告诉他这些书后来的去向。'
+          p2: '他的著作照史实被下令焚毁，许多阿拉伯文原本此后失传，只靠译本留下。'
+        shift:
+          p1:
+            was: '1195 年，科尔多瓦的法庭判伊本·鲁世德的学说有罪，把他放逐到附近的卢塞纳。'
+            now: '他在卢塞纳知道了，自己为亚里士多德写的注释会被译成别的语言，读上好几百年。'
+          p2:
+            was: '1195 年，法庭下令焚毁伊本·鲁世德的著作。他去世以后，许多阿拉伯文原本没有传下来，斯坦福哲学百科所列四十九部里，有十四部只靠希伯来文或拉丁文译本存世。'
+            now: '焚书令下来之前，另一份抄本已经出了科尔多瓦，他的著作以阿拉伯文原文传了下来。'
+            who: ibn_rushd_lucena
+            bio: '这条时间线里，伊本·鲁世德的书在焚书令下来前另抄一份送出了科尔多瓦，他的著作以他写下的阿拉伯文传世。'
         vignettes:
           premise: '玛丽娅姆把结论抄得很工整。优素福要读通，却得先替她猜一个没写出来的前提。你问他读到哪儿卡住，在结论前留出地方。玛丽娅姆把前提写进去，优素福终于能就它发问。'
           together: '优素福想把书还了，只给自己留一句。你给他留点时间，把旁边那一步也抄走。到了门口，玛丽娅姆请他复述结论，他如今也说得出理由。'
@@ -55,26 +78,47 @@ events:
 text:
   en:
     name: Ibn Rushd
-    text: Andalusian philosopher and physician, 1126 to 1198, known in Latin as Averroes. He wrote commentaries on Aristotle that were widely read in Europe, served as judge in Córdoba and Seville, and was briefly exiled to Lucena.
+    text: Andalusian philosopher and physician, 1126 to 1198, known in Latin as Averroes. He wrote commentaries on Aristotle that were widely read in Europe, served as judge in Córdoba and Seville, and in 1195 was banished to Lucena and had his works ordered burned.
   zh:
     name: 伊本·鲁世德
-    text: 安达卢斯的哲学家与医生，1126 年生，1198 年去世，拉丁名阿威罗伊。他为亚里士多德作的注释在欧洲广为流传，曾任科尔多瓦和塞维利亚的法官，一度被流放到卢塞纳。
-hook: {en: 'Can the reader find the step you skipped?', zh: '读者找得出跳过去的那一步吗？'}
+    text: 安达卢斯的哲学家与医生，1126 年生，1198 年去世，拉丁名阿威罗伊。他为亚里士多德作的注释在欧洲广为流传，曾任科尔多瓦和塞维利亚的法官，1195 年被放逐到卢塞纳，著作被下令焚毁。
+hook: {en: 'There is still time to copy his books before the order to burn them.', zh: '焚书令下来之前，还来得及另抄一份。'}
 facts:
   exile:
     date: '1195'
-    checked: official_record
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [ibn_rushd_lucena_wiki, ibn_rushd_lucena_neh, ibn_rushd_lucena_exile]
+    text:
+      en: 'In 1195 Ibn Rushd fell from favour. A tribunal in Córdoba condemned his teachings, ordered his works to be burned and banished him to nearby Lucena.'
+      zh: '1195 年伊本·鲁世德失势，科尔多瓦的法庭判他的学说有罪，下令焚毁他的著作，把他放逐到附近的卢塞纳。'
+    line:
+      en: 'Córdoba: a tribunal condemns Ibn Rushd''s teachings, orders his works burned and banishes him to Lucena.'
+      zh: '科尔多瓦，法庭判伊本·鲁世德的学说有罪，下令焚毁他的著作，把他放逐到卢塞纳。'
+  death:
+    date: '1198-12-11'
+    checked: two_sources
+    level: careful
+    use: [story, wiki]
+    sources: [ibn_rushd_lucena_wiki, ibn_rushd_lucena_sep]
+    text:
+      en: 'A few years after the banishment Ibn Rushd returned to court in Marrakesh, where he died on 11 December 1198.'
+      zh: '放逐几年后，伊本·鲁世德回到马拉喀什的朝中，1198 年 12 月 11 日在那里去世。'
+  lost_arabic:
+    date: '1198'
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [ibn_rushd_lucena_exile]
+    sources: [ibn_rushd_lucena_sep, ibn_rushd_lucena_wiki]
     text:
-      en: 'The later biographer records the exile to Lucena under al-Manṣūr.'
-      zh: '后出传记记曼苏尔下令放逐至卢塞纳。'
+      en: 'Many of Ibn Rushd''s works in Arabic did not survive and are known through Hebrew or Latin translations; of forty nine works listed by the Stanford Encyclopedia of Philosophy, fourteen are not extant in Arabic.'
+      zh: '伊本·鲁世德的许多阿拉伯文著作没有传下来，靠希伯来文或拉丁文译本存世；斯坦福哲学百科所列四十九部里，十四部阿拉伯文原本不存。'
   reasoning:
     date: '1180'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [ibn_rushd_lucena_reasoning]
     text:
       en: 'The treatise discusses demonstration, other styles of inference and the premises needed for a syllogism. The approximate date describes the earlier work, not a Lucena composition.'
@@ -100,6 +144,24 @@ wiki:
       text:
         en: 'Ibn Rushd, Decisive Treatise §§3–4, Charles Butterworth translation https://iberian-connections.yale.edu/wp-content/uploads/2019/08/Averroes-DecisiveTreatise.pdf'
         zh: '伊本·鲁世德《决定论》第3至4节，查尔斯·巴特沃思译本 https://iberian-connections.yale.edu/wp-content/uploads/2019/08/Averroes-DecisiveTreatise.pdf'
+    ibn_rushd_lucena_wiki:
+      order: 1411
+      status: checked
+      text:
+        en: 'English Wikipedia, Averroes https://en.wikipedia.org/wiki/Averroes'
+        zh: '英文维基百科，阿威罗伊 https://en.wikipedia.org/wiki/Averroes'
+    ibn_rushd_lucena_neh:
+      order: 1412
+      status: checked
+      text:
+        en: 'National Endowment for the Humanities, Humanities magazine, November/December 2011, The Islamic Scholar Who Gave Us Modern Philosophy https://www.neh.gov/humanities/2011/novemberdecember/feature/the-islamic-scholar-who-gave-us-modern-philosophy'
+        zh: '美国国家人文基金会《人文》杂志 2011 年 11、12 月号，伊本·鲁世德专文 https://www.neh.gov/humanities/2011/novemberdecember/feature/the-islamic-scholar-who-gave-us-modern-philosophy'
+    ibn_rushd_lucena_sep:
+      order: 1413
+      status: checked
+      text:
+        en: 'Stanford Encyclopedia of Philosophy, Ibn Rushd [Averroes], life and list of works https://plato.stanford.edu/entries/ibn-rushd/'
+        zh: '斯坦福哲学百科，伊本·鲁世德条，生平与著作表 https://plato.stanford.edu/entries/ibn-rushd/'
 self_check:
   fact: exile
   quote_line: '他如今也说得出理由。'

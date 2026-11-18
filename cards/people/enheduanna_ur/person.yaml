@@ -2,51 +2,63 @@ order: 64
 events:
   enheduanna_ur:
     order: 49
-    build_step: 1
-    year: -2300
+    build_step: 2
+    year: -2250
+    stay: 2
     lon: 46.1
     lat: 30.96
     region: asia
     field: literature
     tier: 2
     channels: {H: 2, S: 1}
-    refs: [enheduanna_ur_disc, enheduanna_ur_hymn]
+    refs: [enheduanna_ur_hymn, enheduanna_ur_wiki, enheduanna_ur_disc]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"provides":"scan"}}
-        - {id: p2, kind: persuade, req: {"trait":["scholarly","ambitious","cosmopolitan","streetwise"]}}
-        - {id: p3, kind: hold, req: {"job":["archivist","student"]}}
+        - {id: p1, kind: care, day: 30, req: {"any":[{"job":["nurse","caregiver","paramedic","doctor","physician","midwife"],"stat":{"constitution":5}},{"trait":["hardy","kind","wanderer"],"stat":{"constitution":7,"will":6}},{"provides":"heal","trait":["kind","patient","hardy"],"stat":{"will":5}}]}}
       vignettes:
         - {id: inscription, traits: [methodical, scholarly]}
         - {id: support, traits: [handy, kind]}
         - {id: edge}
     text:
       en:
-        name: 'Turn over the disc'
+        name: 'The road through the thorns'
         place: Ur, Mesopotamia
         figure: Enheduanna
-        story: 'A calcite disc from Ur bears a ritual relief on one face and names Enheduanna on the other. Much later surviving copies of The Exaltation of Inana also name her in the voice of the poem.'
+        story: 'Enheduanna, daughter of Sargon of Akkad, held high office at Ur, and several long poems in Sumerian have been attributed to her since antiquity. Around 2250 BC Ur rose in revolt. A poem under her name says in the first person that she was driven out, made to fly like a swallow from the window and made to walk through the thorn bushes of the mountains until her strength was spent.'
         relic: A carved calcite disc
         relic_desc: A carved disc showing a priestess at an offering.
         points:
-          p1: 'Record the inscription face separately from the relief face'
-          p2: 'Ask the stoneworker to show which face carries the name'
-          p3: 'Leave a drawing that lets a future copyist match the two faces'
+          p1: 'When Enheduanna is driven out of Ur, look after her through the mountains and see her safely to shelter'
+        points_fail:
+          p1: 'As in history she crosses the mountains alone and worn out, with no one to look after her.'
+        shift:
+          p1:
+            was: 'About 2250 BC: when Ur rose in revolt, Enheduanna was driven out of the city; the poem under her name says she was made to walk through the thorn bushes of the mountains until her strength was spent.'
+            now: 'On the road through the mountains someone looked after her, and she came safely to shelter.'
+            who: enheduanna_ur
+            bio: 'In this timeline Enheduanna was looked after on her flight from Ur and reached shelter safe and well.'
         vignettes:
           inscription: 'You remember that the museum will catalogue both faces. The stoneworker has set the disc down with the inscription against the bench. You draw the relief while he works, then get a second drawing when he turns it over. You can take home two views. They do not say who first composed the hymn.'
           support: 'The stoneworker asks you to steady a pad beside the disc. With both hands on it you miss the first glimpse of the inscription. He leaves enough time for you to mark on your sketch which side you missed. The name itself will have to wait for another visit.'
           edge: 'The two sides fill the stoneworker’s account of the disc. On your sketch you also mark how thick the edge is, so you can tell which two drawings belong to the same object. You leave with one sketch and no copy of the hymn.'
       zh:
-        name: '翻过圆盘再看'
+        name: '穿过荆棘的山路'
         place: 美索不达米亚乌尔
         figure: 恩赫杜安娜
-        story: '乌尔出土的方解石圆盘一面刻着仪式浮雕，另一面刻有恩赫杜安娜的名字。现存年代更晚的《伊南娜颂》抄本里，诗中人也自称恩赫杜安娜。'
+        story: '恩赫杜安娜是阿卡德王萨尔贡的女儿，在乌尔身居高位，几首苏美尔语长诗自古归在她名下。约公元前 2250 年，乌尔起了叛乱。她名下的一首长诗以第一人称写道，她被赶了出去，像燕子一样从窗口飞走，被逼着穿过山里的荆棘，力气都耗尽了。'
         relic: 一块方解石圆盘
         relic_desc: 圆盘上刻着一位女祭司在献祭。
         points:
-          p1: '把刻字面与浮雕面分开记录'
-          p2: '请石工指出哪一面刻着名字'
-          p3: '留一张让后来的抄写人认得正反两面的图'
+          p1: '恩赫杜安娜被赶出乌尔时，一路照顾她翻过山去，护她平安到达落脚处'
+        points_fail:
+          p1: '她照史实独自翻山，力气耗尽，身边没有人照顾。'
+        shift:
+          p1:
+            was: '约公元前 2250 年，乌尔起了叛乱，恩赫杜安娜被赶出城；她名下的长诗写道，她被逼着穿过山里的荆棘，力气都耗尽了。'
+            now: '翻山的路上有人照顾她，她平安走到了落脚的地方。'
+            who: enheduanna_ur
+            bio: '这条时间线里，恩赫杜安娜逃出乌尔的路上有人照料，平安到了落脚处。'
         vignettes:
           inscription: '你记得后世博物馆会登记正反两面。石工把刻字一面朝下搁在木台上。你趁他干活先画下浮雕，翻面后又补了一张。两幅图都能带回去，最先写那首诗的人是谁，图上答不出来。'
           support: '石工请你扶稳圆盘旁的垫子。你腾不出手来，错过了刻字面刚翻起的时候。收工前，他留了点时间让你在草图上圈出漏看的那一面。上面的人名只能下趟再来核对。'
@@ -54,17 +66,29 @@ events:
 text:
   en:
     name: Enheduanna
-    text: High priestess of the moon god at Ur, daughter of Sargon of Akkad, around 2300 BC. Several early works in Sumerian are traditionally attributed to her. The surviving manuscript copies are later.
+    text: Daughter of Sargon of Akkad, who held high office at Ur around 2300 BC. Several early works in Sumerian are traditionally attributed to her; the attribution is debated, and the surviving copies are later.
   zh:
     name: 恩赫杜安娜
-    text: 乌尔月神的大祭司，阿卡德萨尔贡之女，活跃于公元前 2300 年前后。几篇用苏美尔语写成的早期作品传统上归于她名下。存世抄本年代较晚。
-hook: {en: 'A name on stone and in a hymn', zh: '圆盘背面刻了谁？'}
+    text: 阿卡德王萨尔贡之女，公元前 2300 年前后在乌尔身居高位。几篇用苏美尔语写成的早期作品传统上归于她名下，作者归属学界有争论，存世抄本年代较晚。
+hook: {en: 'Driven out of Ur, through the thorns of the mountains.', zh: '被赶出乌尔，穿过山里的荆棘。'}
 facts:
+  expulsion:
+    date: '-2250'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [enheduanna_ur_hymn, enheduanna_ur_wiki]
+    text:
+      en: 'Around 2250 BC, early in the reign of Naram-Sin, Ur rose in revolt and Enheduanna was removed from her office and driven out of the city. The poem under her name says she was made to fly like a swallow from the window and to walk through the thorn bushes of the mountains.'
+      zh: '约公元前 2250 年，纳拉姆辛在位初年，乌尔起了叛乱，恩赫杜安娜被解除职位、赶出城。她名下的长诗写道，她像燕子一样从窗口飞走，被逼着穿过山里的荆棘。'
+    line:
+      en: 'Ur: the city rises in revolt and Enheduanna is driven out.'
+      zh: '乌尔，城中起了叛乱，恩赫杜安娜被赶出城。'
   disc:
     date: '-2300'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [enheduanna_ur_disc]
     text:
       en: 'The museum dates the disc to around 2300 BCE and describes the relief and the inscription naming Enheduanna.'
@@ -73,7 +97,7 @@ facts:
     date: '-2300'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [enheduanna_ur_hymn]
     text:
       en: 'The poem names Enheduanna in the first person. The catalogue-event year represents the setting and does not date the surviving copies.'
@@ -96,6 +120,12 @@ wiki:
       text:
         en: 'University of Oxford, ETCSL, The Exaltation of Inana, lines 66–73 https://etcsl.orinst.ox.ac.uk/section4/tr4072.htm'
         zh: '牛津大学苏美尔文学电子语料库，《伊南娜颂》第 66–73 行 https://etcsl.orinst.ox.ac.uk/section4/tr4072.htm'
+    enheduanna_ur_wiki:
+      order: 1414
+      status: checked
+      text:
+        en: 'English Wikipedia, Enheduanna, on the rebellion at Ur and the authorship debate (citing Zgoll 1997, Glassner 2009) https://en.wikipedia.org/wiki/Enheduanna'
+        zh: '英文维基百科，恩赫杜安娜条，乌尔叛乱与作者归属之争（引 Zgoll 1997、Glassner 2009） https://en.wikipedia.org/wiki/Enheduanna'
 self_check:
   fact: disc
   quote_line: '两幅图都能带回去，最先写那首诗的人是谁，图上答不出来。'

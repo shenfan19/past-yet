@@ -3,70 +3,63 @@ events:
   ibn_sina_hamadan:
     order: 57
     build_step: 2
-    year: 1025
+    year: 1037
+    date: '1037-05-01'
+    stay: 2
     lon: 48.51
     lat: 34.8
     region: asia
     field: medicine
     tier: 2
     channels: {E: 1, V: 2, S: 1}
-    refs: [ibn_sina_hamadan_canon, ibn_sina_hamadan_date, ibn_sina_hamadan_nlm_completion]
+    refs: [ibn_sina_hamadan_wiki, ibn_sina_hamadan_dsb, ibn_sina_hamadan_canon, ibn_sina_hamadan_date, ibn_sina_hamadan_nlm_completion]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","physician","translator"]},{"trait":["scholarly","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 71, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["scholarly","methodical"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 45, overturns: [death], req: {"any":[{"job":["physician","doctor","nurse","paramedic","pharmacist","medical_teacher"],"stat":{"will":6}},{"provides":"cure","job":["nurse","caregiver","paramedic","pharmacist","midwife"],"stat":{"will":5}},{"provides":"cure","trait":["kind","patient","methodical"],"stat":{"wit":6,"will":6}}]}}
       vignettes:
         - {id: section, traits: [methodical, curious, scholarly]}
         - {id: sleeve, traits: [handy, patient, vigil]}
         - {id: afterlife}
     text:
       en:
-        name: 'Which of the five books'
+        name: 'The last attack of colic'
         place: Hamadan, Persia
         figure: Ibn Sina
-        story: 'The Canon of Medicine is arranged in five books. The U.S. National Library of Medicine places the completion of its long composition in Hamadan, and the Bodleian dates the work to about 1025.'
+        story: 'Ibn Sina finished his Canon of Medicine, a work in five books that was taught for centuries, at Hamadan. He had suffered from colic all his life. In 1037, travelling with the army of the ruler he served, he was struck by a severe attack, and he died soon afterwards at Hamadan, in June 1037, aged about fifty seven.'
         relic: 'A practice index strip'
         relic_desc: 'A fictional marker distinguishing two of the five books.'
         points:
-          p1: 'Bring the Canon’s separately completed volumes under one catalogue in Hamadan so its five books can be assembled'
-          p2: 'Leave scribes an index checked by the author. Mark any section missing from a copy for comparison with another manuscript'
+          p1: 'When the colic strikes Ibn Sina on the road, treat him and cure him'
         points_fail:
-          p1: 'The move leaves several volumes missing. The catalogue lists them all but nobody can hand over the completed work, and the office recalls the employee.'
-          p2: 'The copy conceals a gap. A future translator cannot verify whether another section belonged there.'
+          p1: 'As in history the attack does not let up, and in June he dies at Hamadan.'
         shift:
           p1:
-            was: 'The Canon was composed in several cities. The U.S. National Library of Medicine places its completion in Hamadan. The text has five books.'
-          p2:
-            was: 'The Canon spread in Arabic manuscripts and in translation. Later editors compared translations with Arabic copies.'
-            now: 'A copyist can use the index to compare a gap with another copy. Later readers can see which parts of their book have been checked.'
+            was: '22 June 1037: struck by a severe attack of colic while travelling with the army, Ibn Sina died soon afterwards at Hamadan, aged about fifty seven.'
+            now: 'The attack of colic on the road was treated in time, and he recovered.'
             who: ibn_sina_hamadan
-            bio: 'Ibn Sina wrote the Canon in several cities. The ways its books were divided and reassembled shaped how readers received it elsewhere.'
+            bio: 'In this timeline Ibn Sina was cured of the colic that struck him in 1037 and lived on past that summer.'
         vignettes:
           section: 'Ruqayya sends both requests to the same heading because both mention remedies. You ask her to open the index and point out which entry concerns a single substance and which concerns compounds. She puts one tab on each book. The two people at the table can now look for their entries without waiting for each other.'
           sleeve: 'Yahya has to carry one copy away. Its guide slips will slide out if he tips the board. You help him fold the empty wrapper over the bookmarks while Ruqayya copies the two headings for the reader staying behind. The bench keeps a small index even when the book is gone.'
           afterlife: 'You have seen the five books divided differently in a much later binding. Yahya asks where the first heading begins in this copy. You find its first line and leave the dates of future editions out of his note. You will miss his next reader trying the index from scratch.'
       zh:
-        name: '五卷之中该翻哪卷'
+        name: '最后一次腹痛'
         place: 波斯哈马丹
         figure: 伊本·西那
-        story: '《医典》全书分为五卷。美国国家医学图书馆将这部多年写成的书的完稿地记为哈马丹，博德利图书馆将书定于约1025年。'
+        story: '伊本·西那在哈马丹写完《医典》，这部五卷的书后来教了几百年的医生。他一生常犯腹绞痛。1037 年随他效力的君主的军队出行，他的腹绞痛重重发作，不久在哈马丹去世，那是 1037 年 6 月，年约五十七。'
         relic: '一张练习索引条'
         relic_desc: '读书签，区分全书五卷中的两卷。'
         points:
-          p1: '在哈马丹把陆续完成的《医典》各卷归在同一目录下，护住这次能够合成五书'
-          p2: '为继续誊写的人准备一份作者核过的借阅索引，凡一份抄本缺整段的地方，要求留待原卷核验'
+          p1: '伊本·西那在路上腹绞痛发作时，给他医治，把他治好'
         points_fail:
-          p1: '迁收时只找到几卷，目录列全了却没有可交阅的成书，事务所因同步失败召回员工。'
-          p2: '只在誊本上把缺处抹平。后来的译者无法确认原来是否还有被漏掉的一节。'
+          p1: '他的腹痛照史实没有缓下来，6 月在哈马丹去世。'
         shift:
           p1:
-            was: '《医典》历经多个城市写成，美国国家医学图书馆将完成地点记为哈马丹。存世文本分成五书。'
-          p2:
-            was: '《医典》后来经阿拉伯文传抄和多种译本流传，确有译者再拿阿拉伯文稿逐段核对。'
-            now: '抄写人遇到空处可直接用索引查另一本。后来的读者也能看出他们拿到的书是否已经核齐。'
+            was: '1037 年 6 月 22 日，随军出行途中腹绞痛重重发作的伊本·西那，不久在哈马丹去世，年约五十七。'
+            now: '路上那次腹绞痛及时得到医治，他好了起来。'
             who: ibn_sina_hamadan
-            bio: '伊本·西那在多地写作《医典》。书卷怎样分开与合拢，影响到后来在不同地区读到它的方式。'
+            bio: '这条时间线里，伊本·西那 1037 年那次腹绞痛被治好，他活过了那个夏天。'
         vignettes:
           section: '鲁卡娅见两张单都提到药物，便指向同个题头。你请她打开索引，指出哪条是单味，哪条是复方。她给两卷各夹一签。桌边的两个人现在可以各找各的条目了。'
           sleeve: '叶海亚得带走一份抄本，板一斜，索引签就会滑掉。你帮他用空封纸把几个签护好，鲁卡娅则替还留在桌边的人另抄两个题头。书带走后，桌上还有一张小索引。'
@@ -74,12 +67,25 @@ events:
 text:
   en:
     name: Ibn Sina
-    text: Persian physician and philosopher, about 980 to 1037, known in Latin as Avicenna. His Canon of Medicine was a standard text in Europe and the Islamic world for centuries, and he died at Hamadan.
+    text: Persian physician and philosopher, about 980 to 1037, known in Latin as Avicenna. His Canon of Medicine was a standard text in Europe and western Asia for centuries, and he died at Hamadan.
   zh:
     name: 伊本·西那
-    text: 波斯医生与哲学家，约 980 年生，1037 年去世，拉丁名阿维森纳。他的《医典》在欧洲和伊斯兰世界数百年里是标准教材，他在哈马丹去世。
-hook: {en: 'The tab sends a reader to the wrong book.', zh: '一个书签，把读者引到错的一卷。'}
+    text: 波斯医生与哲学家，约 980 年生，1037 年去世，拉丁名阿维森纳。他的《医典》在欧洲和西亚数百年里是标准教材，他在哈马丹去世。
+hook: {en: 'The physician who wrote the Canon cannot cure his own colic.', zh: '写《医典》的医生，治不好自己的腹痛。'}
 facts:
+  death:
+    date: '1037-06-22'
+    stay_day: 52
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [ibn_sina_hamadan_wiki, ibn_sina_hamadan_dsb]
+    text:
+      en: 'Ibn Sina had suffered from colic all his life. In 1037, travelling with the army of the ruler he served, he was struck by a severe attack and died soon afterwards at Hamadan, where he was buried; the date is given as 22 June 1037.'
+      zh: '伊本·西那一生常犯腹绞痛。1037 年随他效力的君主的军队出行时，腹绞痛重重发作，不久在哈马丹去世并葬在那里，卒日记作 1037 年 6 月 22 日。'
+    line:
+      en: '22 June 1037: Ibn Sina dies at Hamadan after a severe attack of colic.'
+      zh: '1037 年 6 月 22 日，伊本·西那腹绞痛发作后在哈马丹去世。'
   canon:
     date: '1025'
     checked: official_record
@@ -107,6 +113,18 @@ bystanders:
     text: {en: 'A fictional messenger who has to carry the copying board away.', zh: '虚构送件人叶海亚，要把抄书板带走。'}
 wiki:
   refs:
+    ibn_sina_hamadan_wiki:
+      order: 1415
+      status: checked
+      text:
+        en: 'English Wikipedia, Avicenna, on his last illness and death (citing Adamson 2013) https://en.wikipedia.org/wiki/Avicenna'
+        zh: '英文维基百科，阿维森纳条，晚年病逝（引 Adamson 2013） https://en.wikipedia.org/wiki/Avicenna'
+    ibn_sina_hamadan_dsb:
+      order: 1416
+      status: checked
+      text:
+        en: 'Complete Dictionary of Scientific Biography, Ibn Sina, Charles Scribner''s Sons 2008, via Encyclopedia.com https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/ibn-sina-abu-ali-al-husayn-ibn-abdallah-also-known-avicenna'
+        zh: '《科学传记辞典》全本，伊本·西那条，斯克里布纳之子出版社 2008，Encyclopedia.com 收录 https://www.encyclopedia.com/science/dictionaries-thesauruses-pictures-and-press-releases/ibn-sina-abu-ali-al-husayn-ibn-abdallah-also-known-avicenna'
     ibn_sina_hamadan_nlm_completion:
       order: 10
       status: checked
