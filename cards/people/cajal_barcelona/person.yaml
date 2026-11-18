@@ -2,32 +2,38 @@ order: 42
 events:
   cajal_barcelona:
     order: 46
-    build_step: 2
+    build_step: 4
     year: 1889
+    # three office days from the planned arrival on 1 September 1889, through the leave of late September and the Berlin meeting of October
     date: '1889-09-01'
     stay: 3
     lon: 2.17
     lat: 41.39
     region: europe
+    home: [europe_west]
+    near: [europe_east, north_africa]
+    crossroads: true
     field: science
     tier: 2
     channels: {V: 2}
-    refs: [cajal_barcelona_primary, cajal_memories_berlin, cajal_1889_unizar]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [cajal_barcelona_primary, cajal_memories_berlin, cajal_1889_unizar, cajal_nobel_bio, cajal_kolliker_review, cajal_revista_iec, cajal_barcelona_sld, cajal_wiki, cajal_nobel_1906]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 25, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
         - {id: p2, kind: persuade, day: 26, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
-        - {id: crossing, traits: [skeptical, vigil]}
-        - {id: legend, traits: [artistic, methodical]}
-        - {id: blank}
+        - {id: stain, traits: [methodical, patient, handy, scholarly, quiet], day: 12}
+        - {id: ticket, traits: [bold, cheerful, cosmopolitan, wanderer, streetwise], day: 22}
+        - {id: rain, day: 70}
     text:
       en:
         name: Nerve cells as separate units
         place: Barcelona
         figure: Santiago Ramón y Cajal
-        story: 'Cajal published an illustrated manual of histology in 1889. A later diagram preserved by the CSIC shows the retina and directions of currents.'
+        story: 'From the end of 1887 Santiago Ramón y Cajal held the chair of histology in Barcelona. In May 1888 he paid for the first number of his own journal and sent most of its few copies to researchers abroad, who seldom read Spanish. In October 1889 he went to the meeting of the German Anatomical Society in Berlin at his own expense and showed his slides under the microscope; Albert von Kölliker, the senior histologist there, took up his work. In 1906 he shared the Nobel Prize with Camillo Golgi.'
         relic: A fine drawing pen
         relic_desc: A pen so fine it drew every branch of a neuron.
         points:
@@ -45,14 +51,14 @@ events:
             who: cajal_barcelona
             bio: 'Cajal developed a regular translation collaboration while in Barcelona. He could find readers abroad willing to check his slides as he sent out later papers.'
         vignettes:
-          crossing: 'The student joins two strokes where they cross. You ask them to follow each back to its own beginning. One of the connections comes off the page.'
-          legend: 'A bold arrow hides a faint branch. You give the arrow a place outside the figure and ask the student to add a key, so both marks can be read.'
-          blank: 'You keep a blank space by the uncertain end of the drawing. The student leaves a question there for a second look instead of extending the line from memory.'
+          stain: '{staff} helps a student drop small blocks of tissue into a jar of dichromate. The student says this jar is to sit untouched until next week, and anyone who opens it to look will be made to cut the next hundred sections himself.'
+          ticket: '{staff} goes with the student to the railway station to ask the fare to Berlin. The clerk names it, the student whistles, and on the way back works out on his fingers how many numbers of the journal that would have printed.'
+          rain: 'In November it rains in Barcelona. {staff} helps the student bring in a stack of plates drying on the window sill. The student counts them twice before he lets the shutter close.'
       zh:
         name: 神经细胞是一个个独立的单位
         place: 巴塞罗那
         figure: 圣地亚哥·拉蒙-卡哈尔
-        story: '卡哈尔于 1889 年刊行有插图的组织学手册。西班牙国家研究委员会藏有他后来绘制的视网膜结构及传导方向图。'
+        story: '1887 年底起，圣地亚哥·拉蒙-卡哈尔在巴塞罗那任组织学教授。1888 年 5 月，他自掏腰包印出自己期刊的第一期，寥寥几十份大多寄给国外的研究者，可他们很少读西班牙文。1889 年 10 月，他自费去柏林参加德国解剖学会的会议，把切片放在显微镜下给人看，会上资深的组织学家阿尔伯特·冯·克利克接过了他的研究。1906 年，他与卡米洛·高尔基分享诺贝尔奖。'
         relic: 一支极细的绘图笔
         relic_desc: 细到能画出神经元每一条分支的笔。
         points:
@@ -70,31 +76,95 @@ events:
             who: cajal_barcelona
             bio: '卡哈尔在巴塞罗那为研究图文建立了稳定的外语协作。后来的手稿可以先在国外找到愿意拿切片复核的同行。'
         vignettes:
-          crossing: '学生把交叉的两笔连起来。你让他分别往回找起点。两条脉络对过一遍，有一处连线被他擦掉了。'
-          legend: '粗箭头盖住了一根细分支。你把箭头移到图外，请学生补图例，两种线就都看得见了。'
-          blank: '你在画不准的末端旁留了一块白。学生在那里写了个问题，准备下回再看，没凭记忆把线拖长。'
+          stain: '{staff}帮一个学生把切好的小块组织泡进重铬酸钾的罐子里。学生说这罐要原封不动泡到下礼拜，谁要是忍不住打开看，下一百张切片就归谁切。'
+          ticket: '{staff}陪学生去火车站问去柏林的车票。售票员报了价，学生吹了声口哨，回来的路上一直掰着指头算，这笔钱够印几期刊物。'
+          rain: '十一月，巴塞罗那下起雨。{staff}帮学生把窗台上晾着的一叠图版收进屋，学生点了两遍数，才肯把百叶窗关上。'
 text:
   en:
     name: Santiago Ramón y Cajal
-    text: Spanish neuroscientist, 1852 to 1934. Using a silver stain he showed that the nervous system is made of separate cells, the neuron doctrine. He shared the 1906 Nobel Prize and taught in Barcelona in the 1890s.
+    text: Spanish neuroscientist, 1852 to 1934. Using a silver stain he showed that the nervous system is made of separate cells, the neuron doctrine. He shared the 1906 Nobel Prize and taught in Barcelona from 1887 to 1892.
   zh:
     name: 圣地亚哥·拉蒙-卡哈尔
-    text: 西班牙神经科学家，1852 年生，1934 年去世。他用银染法证明神经系统由彼此分离的细胞组成，即神经元学说。他分享了 1906 年诺贝尔奖，1890 年代在巴塞罗那任教。
+    text: 西班牙神经科学家，1852 年生，1934 年去世。他用银染法证明神经系统由彼此分离的细胞组成，即神经元学说。他分享了 1906 年诺贝尔奖，1887 年到 1892 年在巴塞罗那任教。
 hook: {en: 'Is that a join or a crossing?', zh: '两条线相交，就一定相连吗'}
 facts:
+  chair:
+    date: '1887'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [cajal_barcelona_sld, cajal_wiki]
+    text:
+      en: 'At the end of 1887 Cajal took up the chair of normal and pathological histology at the University of Barcelona, where he stayed until he moved to Madrid in 1892.'
+      zh: '1887 年底，卡哈尔到巴塞罗那大学任正常与病理组织学教授，在那里待到 1892 年调往马德里。'
+    line:
+      en: '1887: Cajal takes up the chair of histology at the University of Barcelona.'
+      zh: '1887 年，卡哈尔到巴塞罗那大学任组织学教授。'
+  revista:
+    date: '1888-05-01'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [cajal_revista_iec, cajal_barcelona_sld]
+    text:
+      en: 'On 1 May 1888 Cajal brought out the first number of his own Revista trimestral de histología normal y patológica at his own expense; money kept the printing to some sixty copies, most of them sent to researchers abroad, and his family handed them out from home.'
+      zh: '1888 年 5 月 1 日，卡哈尔自费出版自己的《正常与病理组织学季刊》第一期。手头紧，只印了六十份上下，大多寄给国外的研究者，由家里人在家中分发。'
+    line:
+      en: '1 May 1888: Cajal pays for the first number of his own journal; about sixty copies, most of them posted abroad.'
+      zh: '1888 年 5 月 1 日，卡哈尔自掏腰包印出自己期刊的第一期，六十份上下，大多寄往国外。'
   histology:
     date: '1889'
     checked: official_record
     level: usable
     use: [story, wiki]
-    sources: [cajal_barcelona_primary]
+    sources: [cajal_barcelona_primary, cajal_1889_unizar]
     text:
       en: 'Cajal published an illustrated manual of histology in 1889. A later diagram preserved by the CSIC shows the retina and directions of currents.'
       zh: '卡哈尔于 1889 年刊行有插图的组织学手册。西班牙国家研究委员会藏有他后来绘制的视网膜结构及传导方向图。'
+  berlin:
+    date: '1889-10'
+    stay_day: 40
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [cajal_nobel_bio, cajal_kolliker_review, cajal_memories_berlin]
+    text:
+      en: 'In October 1889 Cajal went to the meeting of the German Anatomical Society at the University of Berlin and showed his preparations to the leading histologists; Albert von Kölliker, the president of the society, became his supporter and introduced him to others.'
+      zh: '1889 年 10 月，卡哈尔到柏林大学参加德国解剖学会的会议，把自己的切片给一流的组织学家看。学会会长阿尔伯特·冯·克利克从此支持他，又把他介绍给别的学者。'
+    line:
+      en: 'October 1889: at the meeting of the German Anatomical Society in Berlin, Cajal sets his slides under the microscope for the leading histologists, and Kölliker takes up his work.'
+      zh: '1889 年 10 月，卡哈尔在柏林德国解剖学会的会上把切片放到显微镜下给各国学者看，克利克接过了他的研究。'
+  madrid:
+    date: '1892'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [cajal_barcelona_sld, cajal_wiki]
+    text:
+      en: 'In 1892 Cajal won the chair of histology in Madrid and left Barcelona.'
+      zh: '1892 年，卡哈尔取得马德里的组织学教职，离开巴塞罗那。'
+    line:
+      en: '1892: Cajal leaves Barcelona for the chair of histology in Madrid.'
+      zh: '1892 年，卡哈尔离开巴塞罗那，去马德里任组织学教授。'
+  nobel:
+    date: '1906'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [cajal_nobel_1906]
+    text:
+      en: 'The Nobel Prize in Physiology or Medicine 1906 was awarded jointly to Camillo Golgi and Santiago Ramón y Cajal for their work on the structure of the nervous system.'
+      zh: '1906 年诺贝尔生理学或医学奖由卡米洛·高尔基与圣地亚哥·拉蒙-卡哈尔共享，表彰他们对神经系统结构的研究。'
+    line:
+      en: '1906: Cajal and Golgi share the Nobel Prize for their work on the structure of the nervous system.'
+      zh: '1906 年，卡哈尔与高尔基因神经系统结构的研究共享诺贝尔奖。'
 bystanders:
   cajal_barcelona_reader:
     invented: true
-    text: {en: 'An invented student trying to copy a branching figure.', zh: '一位虚构的学生，正试着描一幅有多处分叉的图。'}
+    text: {en: 'A student of histology in Barcelona, made up for the game, who cuts sections and dries plates.', zh: '一个编出来的巴塞罗那组织学学生，切片、晾图版都归他。'}
+  ticket_clerk:
+    invented: true
+    text: {en: 'A ticket clerk at the Barcelona railway station, made up for the game.', zh: '一个编出来的巴塞罗那火车站售票员。'}
 wiki:
   refs:
     cajal_memories_berlin:
@@ -109,6 +179,42 @@ wiki:
       text:
         en: 'University of Zaragoza Library, Cajal’s 1889 histology journal and plates. https://biblioteca.unizar.es/sites/biblioteca/files/users/Medicina.13/boletin_cajal.pdf'
         zh: '萨拉戈萨大学图书馆，卡哈尔 1889 年组织学季刊及图版。 https://biblioteca.unizar.es/sites/biblioteca/files/users/Medicina.13/boletin_cajal.pdf'
+    cajal_nobel_bio:
+      order: 841
+      status: checked
+      text:
+        en: 'Nobel Prize archive, Santiago Ramón y Cajal, the Berlin meeting of October 1889. https://www.nobelprize.org/prizes/medicine/1906/cajal/article/'
+        zh: '诺贝尔奖档案，圣地亚哥·拉蒙-卡哈尔，1889 年 10 月柏林会议。 https://www.nobelprize.org/prizes/medicine/1906/cajal/article/'
+    cajal_kolliker_review:
+      order: 842
+      status: checked
+      text:
+        en: 'Albert von Kölliker, Santiago Ramón y Cajal and Camillo Golgi, the main protagonists in the Neuron Theory debate, review. https://pesquisa.bvsalud.org/portal/resource/es/ibc-183844'
+        zh: '《克利克、卡哈尔与高尔基：神经元学说之争的三位主角》，综述。 https://pesquisa.bvsalud.org/portal/resource/es/ibc-183844'
+    cajal_revista_iec:
+      order: 843
+      status: checked
+      text:
+        en: 'Institut d''Estudis Catalans, Cajal in Barcelona and the first number of his journal, 1 May 1888. https://revistes.iec.cat/index.php/CtS/article/view/13989.001/34360'
+        zh: '加泰罗尼亚研究院期刊，卡哈尔在巴塞罗那与 1888 年 5 月 1 日的期刊创刊号。 https://revistes.iec.cat/index.php/CtS/article/view/13989.001/34360'
+    cajal_barcelona_sld:
+      order: 844
+      status: checked
+      text:
+        en: 'Cajal en Barcelona, the chair, the journal and its printing. https://instituciones.sld.cu/csrc/files/2012/02/CajalenBarcelona.pdf'
+        zh: '《卡哈尔在巴塞罗那》，教职、期刊与印数。 https://instituciones.sld.cu/csrc/files/2012/02/CajalenBarcelona.pdf'
+    cajal_wiki:
+      order: 845
+      status: checked
+      text:
+        en: 'Wikipedia, Santiago Ramón y Cajal. https://en.wikipedia.org/wiki/Santiago_Ram%C3%B3n_y_Cajal'
+        zh: '维基百科，圣地亚哥·拉蒙-卡哈尔。 https://en.wikipedia.org/wiki/Santiago_Ram%C3%B3n_y_Cajal'
+    cajal_nobel_1906:
+      order: 846
+      status: checked
+      text:
+        en: 'Nobel Prize, The Nobel Prize in Physiology or Medicine 1906. https://www.nobelprize.org/prizes/medicine/1906/summary/'
+        zh: '诺贝尔奖官网，1906 年诺贝尔生理学或医学奖。 https://www.nobelprize.org/prizes/medicine/1906/summary/'
     cajal_barcelona_primary:
       order: 154
       status: checked
@@ -116,10 +222,15 @@ wiki:
         en: 'Santiago Ramón y Cajal, Manual de histología normal y técnica micrográfica, Valencia, 1889. Wellcome Collection: https://wellcomecollection.org/works/gwudyvvg . Later retinal drawing, CSIC: https://simurg.csic.es/view/9918479815704201'
         zh: '圣地亚哥·拉蒙-卡哈尔，《正常组织学与显微技术手册》，1889 年。韦尔科姆馆藏：https://wellcomecollection.org/works/gwudyvvg 。视网膜手稿图，西班牙国家研究委员会：https://simurg.csic.es/view/9918479815704201'
 self_check:
-  quote_line: '学生把交叉的两笔连起来。'
-  fact: histology
-  regret_choice: '略过「沿一根分支找到它的起点」，这处细节便留给下一位核对。'
-  bookend: '从「两条线相交，就一定相连吗」开始，以员工留下的观察或更正收尾。'
-  share_line: '两条线相交，就一定相连吗'
-  share_number: '1902'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: berlin
+  quote_line: '1888 年 5 月 1 日，卡哈尔自掏腰包印出自己期刊的第一期，六十份上下，大多寄往国外。'
+  regret_choice: '派管账细致的去，旅费和玻片都凑齐了，柏林照常有那场演示；派会说外语的去，会前就有人按图复核。两样都做到要又细又能说。'
+  bookend: '从 1887 年到巴塞罗那任教开始，以 1906 年的诺贝尔奖收尾，中间是六十份没人读的期刊和一趟自费的柏林之行。'
+  share_line: '1889 年秋天，有人自掏腰包，带着一箱玻片去柏林。'
+  share_number: '60'
+  knowing: 'nobel'
+  near: 'berlin'
+  lever: 'p1, p2'
+  missed: 'madrid'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

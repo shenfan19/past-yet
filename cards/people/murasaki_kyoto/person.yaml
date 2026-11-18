@@ -2,30 +2,36 @@ order: 143
 events:
   murasaki_kyoto:
     order: 73
-    build_step: 2
+    build_step: 4
     year: 1008
+    # two office days at the court from the last days of the tenth month of Kankō 5; the dates of the diary are lunar and placed by the day of the stay: the fiftieth-day banquet on day 5, the return to the palace on day 21
+    stay: 2
     lon: 135.77
     lat: 35.01
     region: asia
+    home: [japan]
+    near: [korea, china]
     field: literature
     tier: 3
     channels: {S: 3}
-    refs: [murasaki_kyoto_primary, murasaki_kyoto_genji_diary_exhibit, murasaki_kyoto_textual_history]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [murasaki_kyoto_primary, murasaki_kyoto_genji_diary_exhibit, murasaki_kyoto_textual_history, murasaki_diary_wiki, murasaki_classics_day_nijl, murasaki_classics_day_kyoto]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 21, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["artistic","methodical"],"stat":{"will":6}}]}}
         - {id: p2, kind: persuade, day: 48, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
-        - {id: nickname, traits: [glib, curious]}
-        - {id: voice, traits: [quiet, artistic]}
-        - {id: return}
+        - {id: banquet, traits: [glib, cheerful, curious, charismatic, bold], day: 4}
+        - {id: paper, traits: [methodical, artistic, scholarly, patient, quiet], day: 12}
+        - {id: snow, day: 40}
     text:
       en:
         name: The world's first great novel
         place: Kyoto
         figure: Murasaki Shikibu
-        story: 'Murasaki Shikibu''s diary recalls an exchange in 1008 that plays on a character from The Tale of Genji, evidence that the story was already known at court.'
+        story: 'In the autumn of 1008 the empress Shōshi bore a son, and Murasaki Shikibu, one of her ladies, kept a diary of the weeks that followed. At the banquet for the fiftieth day a courtier called out for "Young Murasaki", a girl from The Tale of Genji, the oldest dated sign that the tale was known. In the eleventh month the ladies chose paper, copied and bound the tale for Shōshi to take back to the palace, while Michinaga carried off a draft Murasaki had kept in her room. No copy in her own hand survives.'
         relic: A lacquered brush box
         relic_desc: A small box with brushes, a stone and water.
         points:
@@ -43,14 +49,14 @@ events:
             who: murasaki_kyoto
             bio: 'Murasaki wrote at the Heian court. The provision of paper, copying and lending affected how a work still under revision reached new readers.'
         vignettes:
-          nickname: 'You hear someone use a name from the tale and look around for the wrong person. The attendant catches your mistake and asks whether you have been listening in the doorway again.'
-          voice: 'You notice the attendant changes her voice when she reads a letter in the story. You ask her to read the same line plainly. It sounds less certain the second time.'
-          return: 'A page gets passed to you halfway through the reading. You keep your finger where she stopped so nobody has to guess where the story should resume.'
+          banquet: 'The day before the fiftieth-day banquet {staff} helps carry trays along the gallery. One of the ladies says under her breath that tomorrow night, once the gentlemen have drunk, they will start teasing the women with names out of the tale, and the thing to do is not to hear.'
+          paper: '{staff} helps a lady sort sheets of coloured paper by chapter and weigh each pile down. Every finished page goes to be checked first, she says, and if the hand slopes, the whole page is done again, and the paper has to be asked for again too.'
+          snow: 'Snow falls in the twelfth month. {staff} is sweeping the gallery when the reading inside stops halfway, and a voice asks who has taken the next volume.'
       zh:
         name: 世界上第一部伟大的长篇小说
         place: 京都
         figure: 紫式部
-        story: '紫式部日记记载，1008 年有人借《源氏物语》中的人物开玩笑，可见故事当时已在宫中为人所知。'
+        story: '1008 年秋，中宫彰子生下皇子，侍奉她的紫式部在日记里记下了此后的几个星期。皇子诞生第五十日的宴席上，有位公卿借《源氏物语》里的"若紫"向女官们搭话，这是这部物语见于记载的最早日子。十一月里，女官们挑纸、誊写、装订《源氏物语》，好让彰子带回宫中；道长又从紫式部房里取走了她留着的稿本。她亲笔的定本没有传下来。'
         relic: 一只漆制笔盒
         relic_desc: 一只小盒子，里面有笔、砚和水。
         points:
@@ -68,9 +74,9 @@ events:
             who: murasaki_kyoto
             bio: '紫式部在平安宫廷写作。别人如何领纸、分抄和借阅，决定了一部未完全改定的作品怎样进入宫外读者手中。'
         vignettes:
-          nickname: '你听见有人叫小说里的人名，转头找错了人。侍女看出来了，笑问你是不是又在门口偷听人念故事。'
-          voice: '你听出侍女念到故事里的信时换了语气，请她照原来的声音再念一次。第二遍听来，话里竟少了几分笃定。'
-          return: '念到一半，纸页传到你手里。你按住刚停下的地方，免得换回去时还得猜从哪里接着念。'
+          banquet: '五十日宴的前一天，{staff}帮着沿回廊搬膳台。一个女官压低声音说，明晚男宾喝多了，最爱拿物语里的名字逗女官，听见了也只当没听见。'
+          paper: '{staff}帮一个女官把各色的纸按章分好，每摞压上镇纸。她说抄好的每一页都得先送去核，字写歪了就整页重抄，纸还得重新去领。'
+          snow: '腊月里下了雪。{staff}正在廊下扫雪，屋里念物语的声音念到一半停了，有人问，下一册谁拿走了。'
 text:
   en:
     name: Murasaki Shikibu
@@ -80,19 +86,98 @@ text:
     text: 平安时代的日本宫廷女官与作家，约 973 年生。她在十一世纪初写的《源氏物语》常被称为第一部长篇小说。她的日记记录了京都宫廷的生活。
 hook: {en: 'A name steps out of the story.', zh: '小说里的人走进了闲谈'}
 facts:
+  prince:
+    date: '1008'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [murasaki_diary_wiki, murasaki_kyoto_primary]
+    text:
+      en: 'On the eleventh day of the ninth month of Kankō 5, in 1008, Shōshi, the consort of the emperor Ichijō and daughter of Michinaga, bore a son, Prince Atsuhira; Murasaki''s diary opens in the weeks around the birth.'
+      zh: '宽弘五年，即 1008 年，九月十一日，一条天皇的中宫、道长之女彰子生下敦成亲王；紫式部的日记从这次生产前后写起。'
+    line:
+      en: 'The eleventh day of the ninth month, Kankō 5: the empress Shōshi bears a son.'
+      zh: '宽弘五年九月十一日，中宫彰子生下皇子。'
   diary:
     date: '1008'
-    checked: official_record
+    stay_day: 5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [murasaki_kyoto_primary, murasaki_classics_day_nijl, murasaki_classics_day_kyoto]
+    text:
+      en: 'At the banquet for the prince''s fiftieth day, on the first day of the eleventh month of Kankō 5, the courtier Fujiwara no Kintō called out for "Young Murasaki" among the ladies. The entry is the oldest dated record of The Tale of Genji.'
+      zh: '宽弘五年十一月一日，皇子诞生第五十日的宴席上，公卿藤原公任在女官们中间问起"若紫"在不在。这一则是《源氏物语》见于记载的最早日期。'
+    line:
+      en: 'The first day of the eleventh month, Kankō 5: at the fiftieth-day banquet Fujiwara no Kintō calls out for "Young Murasaki" among the ladies.'
+      zh: '宽弘五年十一月一日，五十日宴上，藤原公任在女官们中间问起"若紫"在不在。'
+  binding:
+    date: '1008'
+    stay_day: 15
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [murasaki_kyoto_genji_diary_exhibit, murasaki_diary_wiki]
+    text:
+      en: 'Before the return to the palace, Shōshi''s ladies chose paper, sent chapters out to be copied and bound the tale into books, with paper, brushes and ink supplied by Michinaga.'
+      zh: '回宫之前，彰子身边的女官挑纸、把各章分送出去誊写，再装订成册，纸笔墨都由道长送来。'
+    line:
+      en: 'The eleventh month: the ladies around Shōshi choose paper, copy The Tale of Genji and bind it into books.'
+      zh: '十一月里，彰子身边的女官挑纸、誊写《源氏物语》，装订成册。'
+  draft:
+    date: '1008'
+    stay_day: 19
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [murasaki_kyoto_genji_diary_exhibit, murasaki_diary_wiki]
+    text:
+      en: 'While Murasaki was in attendance, Michinaga went into her room, took the draft of the tale she had brought from home and gave it to his daughter Kenshi; Murasaki wrote of her worry that an unrevised version was now going round.'
+      zh: '紫式部在中宫跟前当值时，道长进了她的房间，取走她从家里带来的物语稿本，转给了女儿妍子。紫式部在日记里写到，她担心这份没改好的稿子就此流传开。'
+    line:
+      en: 'In those days: while Murasaki is on duty, Michinaga takes the draft of the tale from her room and gives it to his daughter Kenshi.'
+      zh: '这些天里，紫式部当值时，道长从她房里取走了物语的稿本，转给女儿妍子。'
+  palace:
+    date: '1008'
+    stay_day: 21.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [murasaki_kyoto_genji_diary_exhibit, murasaki_diary_wiki]
+    text:
+      en: 'On the seventeenth day of the eleventh month Shōshi returned to the palace with the prince.'
+      zh: '十一月十七日，彰子带着皇子回到宫中。'
+    line:
+      en: 'The seventeenth day of the eleventh month: Shōshi returns to the palace with the prince.'
+      zh: '十一月十七日，彰子带着皇子回宫。'
+  manuscripts:
+    date: '1008'
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [murasaki_kyoto_primary]
+    sources: [murasaki_kyoto_textual_history, murasaki_diary_wiki]
     text:
-      en: 'Murasaki Shikibu''s diary recalls an exchange in 1008 that plays on a character from The Tale of Genji, evidence that the story was already known at court.'
-      zh: '紫式部日记记载，1008 年有人借《源氏物语》中的人物开玩笑，可见故事当时已在宫中为人所知。'
+      en: 'No copy of The Tale of Genji in Murasaki''s hand survives; the text comes down through later manuscript lines that differ from one another.'
+      zh: '紫式部亲笔的《源氏物语》没有留存，今天的文本来自后世彼此有出入的几系抄本。'
+  classics_day:
+    date: '2012'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [murasaki_classics_day_nijl, murasaki_classics_day_kyoto]
+    text:
+      en: 'In 2012 a Japanese law made 1 November Classics Day, after the diary entry of the first day of the eleventh month of 1008.'
+      zh: '2012 年，日本以法律把 11 月 1 日定为"古典之日"，取的就是《紫式部日记》1008 年十一月一日那一则。'
+    line:
+      en: '2012: Japan makes 1 November Classics Day, after the diary entry of the fiftieth-day banquet.'
+      zh: '2012 年，日本把 11 月 1 日定为"古典之日"，取的就是五十日宴那一则日记。'
 bystanders:
   murasaki_kyoto_reader:
     invented: true
-    text: {en: 'An invented attendant who has heard the tale read aloud.', zh: '一位虚构的侍女，曾听人念过这个故事。'}
+    text: {en: 'A lady in waiting at the court of Shōshi, made up for the game, who sorts the paper for the copying.', zh: '一个编出来的彰子身边的女官，管着抄书的纸。'}
+  gallery_lady:
+    invented: true
+    text: {en: 'Another lady of the court, made up for the game, who knows how the banquets go.', zh: '另一个编出来的女官，宴席上的事她心里有数。'}
 wiki:
   refs:
     murasaki_kyoto_genji_diary_exhibit:
@@ -107,17 +192,40 @@ wiki:
       text:
         en: 'SOAS research on early circulation and manuscript traditions https://eprints.soas.ac.uk/29291/1/10731386.pdf'
         zh: '伦敦大学亚非学院早期传抄研究 https://eprints.soas.ac.uk/29291/1/10731386.pdf'
+    murasaki_diary_wiki:
+      order: 12
+      status: checked
+      text:
+        en: 'Wikipedia, The Diary of Lady Murasaki https://en.wikipedia.org/wiki/The_Diary_of_Lady_Murasaki'
+        zh: '维基百科，紫式部日记 https://en.wikipedia.org/wiki/The_Diary_of_Lady_Murasaki'
+    murasaki_classics_day_nijl:
+      order: 13
+      status: checked
+      text:
+        en: 'National Institute of Japanese Literature, Classics Day 2025, the origin of 1 November https://www.nijl.ac.jp/event/img/kotennohi2025-L.pdf'
+        zh: '国文学研究资料馆，2025 年古典之日，11 月 1 日的由来 https://www.nijl.ac.jp/event/img/kotennohi2025-L.pdf'
+    murasaki_classics_day_kyoto:
+      order: 14
+      status: checked
+      text:
+        en: 'Kyoto Prefectural Library, Classics Day and the Murasaki Shikibu Diary https://www.library.pref.kyoto.jp/contents/wp-content/uploads/2016/02/koten_1.pdf'
+        zh: '京都府立图书馆，古典之日与《紫式部日记》 https://www.library.pref.kyoto.jp/contents/wp-content/uploads/2016/02/koten_1.pdf'
     murasaki_kyoto_primary:
       order: 131
       status: checked
       text:
         en: 'Murasaki Shikibu Diary, 1008 entry on the prince''s fiftieth day, discussed with translation in The Tale of Genji: A Japanese Classic Illuminated, Metropolitan Museum of Art. https://resources.metmuseum.org/resources/metpublications/pdf/The_Tale_of_Genji_A_Japanese_Classic_Illuminated.pdf'
-        zh: 'Murasaki Shikibu Diary, 1008 entry on the prince''s fiftieth day, discussed with translation in The Tale of Genji: A Japanese Classic Illuminated, Metropolitan Museum of Art. https://resources.metmuseum.org/resources/metpublications/pdf/The_Tale_of_Genji_A_Japanese_Classic_Illuminated.pdf'
+        zh: '《紫式部日记》1008 年皇子五十日一则，见大都会艺术博物馆《源氏物语：一部被照亮的日本古典》的译文与讨论。 https://resources.metmuseum.org/resources/metpublications/pdf/The_Tale_of_Genji_A_Japanese_Classic_Illuminated.pdf'
 self_check:
-  quote_line: '你听见有人叫小说里的人名，转头找错了人。'
   fact: diary
-  regret_choice: '略过「分清人物名和屋里随口叫的称呼」，这处细节便留给下一位核对。'
-  bookend: '从「小说里的人走进了闲谈」开始，以员工留下的观察或更正收尾。'
-  share_line: '小说里的人走进了闲谈'
+  quote_line: '宽弘五年十一月一日，五十日宴上，藤原公任在女官们中间问起"若紫"在不在。'
+  regret_choice: '派手细的去，回宫那天成套的抄本一册不缺；派会说话又懂书的去，早期读者拿到的是她核过的一套。只会其中一样的人，只能护住一头。'
+  bookend: '从九月十一日皇子诞生开始，以 2012 年"古典之日"收尾，中间是五十日宴上的一句问话和一套赶在回宫前装订好的书。'
+  share_line: '1008 年冬天，我在京都帮人给《源氏物语》分过纸。'
   share_number: '1008'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  knowing: 'manuscripts'
+  near: 'diary, binding'
+  lever: 'p1, p2'
+  missed: 'classics_day'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

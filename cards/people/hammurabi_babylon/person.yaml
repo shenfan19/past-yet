@@ -2,29 +2,36 @@ order: 85
 events:
   hammurabi_babylon:
     order: 50
-    build_step: 2
+    build_step: 4
     year: -1754
+    # one office day in Babylon late in the reign, when the stele of the laws was set up; the year is approximate and the days are counted from arriving
+    stay: 1
     lon: 44.42
     lat: 32.54
     region: asia
+    home: [middle_east]
+    near: [central_asia, north_africa]
+    crossroads: true
     field: thought
     tier: 2
     channels: {H: 1, S: 1}
-    refs: [hammurabi_babylon_primary]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [hammurabi_babylon_primary, hammurabi_code_wiki, hammurabi_bm_copy, hammurabi_britannica, hammurabi_history_com, hammurabi_find_record]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, day: 25, req: {"any":[{"job":["archivist","translator","proofreader","writer","woodcarver"],"stat":{"finesse":5}},{"trait":["scholarly","methodical"],"stat":{"finesse":7,"will":5}},{"provides":"scan"}]}}
       vignettes:
-        - {id: condition, traits: [scholarly, methodical]}
-        - {id: case, traits: [curious, skeptical]}
-        - {id: edge}
+        - {id: clay, traits: [handy, patient, methodical, quiet, scholarly], day: 6}
+        - {id: river, traits: [bold, cheerful, curious, streetwise, glib], day: 15}
+        - {id: roof, day: 27}
     text:
       en:
         name: Law set in stone
         place: Babylon
         figure: Hammurabi
-        story: 'The Louvre''s Old Babylonian stele preserves decisions concerning property, trade, labour and other matters. Its exact original location is uncertain.'
+        story: 'Around 1754 BC, late in the reign of Hammurabi, a basalt stele carved with nearly three hundred laws was set up, and scribes copied its laws onto clay tablets for centuries after. In the twelfth century BC the stele was carried off to Susa, and several columns of its text were scraped away. A French expedition dug it up at Susa in 1901; it is in the Louvre now, and the clay copies have given back part of what was scraped off.'
         relic: A clay cylinder seal
         relic_desc: A small stone cylinder that rolls a signature into clay.
         points:
@@ -38,14 +45,14 @@ events:
             who: hammurabi_babylon
             bio: 'In this line every one of Hammurabi''s laws came down complete, and nothing that was scraped from the stone was lost.'
         vignettes:
-          condition: 'The apprentice skips a sign when he reads the condition aloud. You ask him to start the clause again. The listener now catches when the obligation applies.'
-          case: 'The apprentice gives you the same answer twice. You change one detail in the imaginary example and ask him to decide again. He has to go back to the line about the kind of property.'
-          edge: 'You set the clay practice tablet where the light catches its angled impressions. The apprentice follows the line without losing the first sign.'
+          clay: '{staff} helps an apprentice scribe knead clay. The sand has to be washed out properly, the apprentice says, or the tablet cracks under the stylus halfway down, and then the master has him start again from the first line.'
+          river: '{staff} helps a boatman unload barley on the bank of the Euphrates. Counting the sacks, the boatman says that if the weigher cheats him of one, he will go and stand in front of the king''s stone and recite the law at him, though he cannot read a sign of it himself.'
+          roof: 'In the worst heat of the day {staff} and the apprentice lay the new tablets out on the roof to dry. The apprentice counts them, loses count halfway, and starts again, afraid a bird has walked across one.'
       zh:
         name: 刻在石头上的法律
         place: 巴比伦
         figure: 汉谟拉比
-        story: '卢浮宫藏古巴比伦石碑刻有财产、交易、劳作等方面的条文。'
+        story: '约前 1754 年，汉谟拉比在位的晚年，一块刻着近三百条法律的玄武岩石碑立了起来，此后几百年，书吏一直把这些条文抄在泥板上传习。前十二世纪，石碑被运到苏萨，碑上有几栏文字被磨去。1901 年，法国考古队在苏萨把它挖了出来，如今藏在卢浮宫，被磨掉的条文靠泥板抄本补回了一部分。'
         relic: 一枚泥印滚筒
         relic_desc: 一个小石柱，在泥上一滚就留下签名。
         points:
@@ -59,9 +66,9 @@ events:
             who: hammurabi_babylon
             bio: 'IF 线里，汉谟拉比的法律一条不缺地传了下来，石上磨掉的部分也没有失去。'
         vignettes:
-          condition: '学徒念条件时漏过一个字。你请他从条首重念，听的人这才弄清什么时候才有这项义务。'
-          case: '学徒两次答得一样。你换了假设例子里的一个细节再问，他只好回去看写明财物种类的那一行。'
-          edge: '你把练习泥板挪到斜光能照到楔痕的地方。学徒从第一个字起一路念了下来。'
+          clay: '{staff}帮书吏学徒和泥。学徒说泥里的沙得淘干净，不然写到一半，芦管一按就裂，师傅又要他从第一行重抄。'
+          river: '{staff}在幼发拉底河边帮船夫卸大麦。船夫一边数袋子一边说，过秤的要是敢少算一袋，他就站到王的石碑跟前把那一条念给他听，虽然碑上的字他一个也不认得。'
+          roof: '日头最毒的时候，{staff}和学徒把新抄的泥板摆到屋顶上晒。学徒挨块数，数到一半乱了，又从头数，生怕有一块被鸟踩过。'
 text:
   en:
     name: Hammurabi
@@ -69,21 +76,85 @@ text:
   zh:
     name: 汉谟拉比
     text: 巴比伦国王，约公元前 1792 年至约公元前 1750 年在位。一块刻有近三百条法律的石碑以他命名，规定了交易、家庭和财产方面的规则与惩罚。
-hook: {en: 'Clay forgets what stone remembers.', zh: '泥板与石碑怎么对读'}
+hook: {en: 'Clay forgets what stone remembers.', zh: '石头记不住的，泥板记得'}
 facts:
+  accession:
+    date: '-1792'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hammurabi_code_wiki, hammurabi_britannica]
+    text:
+      en: 'Hammurabi became king of Babylon around 1792 BC and reigned for about forty-two years.'
+      zh: '约前 1792 年，汉谟拉比做了巴比伦的王，在位约四十二年。'
+    line:
+      en: 'About 1792 BC: Hammurabi becomes king of Babylon.'
+      zh: '约前 1792 年，汉谟拉比做了巴比伦的王。'
   stele:
+    date: '-1754'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hammurabi_babylon_primary, hammurabi_code_wiki]
+    text:
+      en: 'Late in his reign a basalt stele was carved with a prologue, some 282 laws on property, trade, family and labour, and an epilogue. Where it first stood is not certain.'
+      zh: '汉谟拉比在位晚年，一块玄武岩石碑刻上了序言、约二百八十二条涉及财产、交易、家庭与劳作的法律和结语。它最初立在哪座城，说法不一。'
+    line:
+      en: 'About 1754 BC, late in Hammurabi''s reign: a basalt stele carved with nearly three hundred laws is set up.'
+      zh: '约前 1754 年，汉谟拉比在位的晚年，一块刻着近三百条法律的玄武岩石碑立了起来。'
+  copies:
     date: '-1750'
-    checked: official_record
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [hammurabi_babylon_primary]
+    sources: [hammurabi_code_wiki, hammurabi_bm_copy]
     text:
-      en: 'The Louvre''s Old Babylonian stele preserves decisions concerning property, trade, labour and other matters. Its exact original location is uncertain.'
-      zh: '卢浮宫藏古巴比伦石碑刻有财产、交易、劳作等方面的条文。'
+      en: 'The laws were copied onto clay tablets and studied by scribes for more than a thousand years; these copies now fill in much of what is missing on the stone.'
+      zh: '这些法律被抄在泥板上，书吏传习了一千多年；今天石碑上缺掉的条文，大半靠这些抄本补回。'
+  death:
+    date: '-1750'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [hammurabi_code_wiki, hammurabi_britannica]
+    text:
+      en: 'Hammurabi died around 1750 BC.'
+      zh: '汉谟拉比约在前 1750 年去世。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: 'About 1750 BC: Hammurabi dies.'
+      zh: '约前 1750 年，汉谟拉比去世。'
+  susa:
+    date: '-1150'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hammurabi_babylon_primary, hammurabi_code_wiki, hammurabi_history_com]
+    text:
+      en: 'In the twelfth century BC the Elamite king Shutruk-Nahhunte carried the stele to Susa, and several columns at the foot of its face were later scraped smooth.'
+      zh: '前十二世纪，埃兰王舒特鲁克-纳洪特把石碑运到了苏萨，碑面下部后来有几栏被磨平。'
+    line:
+      en: 'Twelfth century BC: the stele is carried to Susa, and several columns of its text are scraped away.'
+      zh: '前十二世纪，石碑被运到苏萨，碑上有几栏文字被磨去。'
+  found:
+    date: '1901'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hammurabi_find_record, hammurabi_history_com, hammurabi_code_wiki]
+    text:
+      en: 'In the winter of 1901 to 1902 a French expedition under Jacques de Morgan found the stele at Susa in three pieces; it was taken to the Louvre, and Vincent Scheil published the text in 1902.'
+      zh: '1901 年到 1902 年之交的冬天，雅克·德摩根带领的法国考古队在苏萨找到断成三块的石碑，运到了卢浮宫，1902 年舍伊尔发表了碑文。'
+    line:
+      en: '1901: a French expedition digs the stele up at Susa, broken in three.'
+      zh: '1901 年，法国考古队在苏萨挖出这块石碑，已断成三块。'
 bystanders:
   hammurabi_babylon_reader:
     invented: true
-    text: {en: 'An invented apprentice checking two versions of a clause.', zh: '一位虚构的书吏学徒，正在核对同一条文的两个版本。'}
+    text: {en: 'An apprentice scribe in Babylon, made up for the game, who kneads the clay and dries the tablets.', zh: '一个编出来的巴比伦书吏学徒，和泥、晒泥板都归他。'}
+  boatman:
+    invented: true
+    text: {en: 'A boatman on the Euphrates, made up for the game, who cannot read.', zh: '一个编出来的幼发拉底河船夫，不识字。'}
 wiki:
   refs:
     hammurabi_babylon_primary:
@@ -91,12 +162,47 @@ wiki:
       status: checked
       text:
         en: 'Louvre, Code of Hammurabi, inscribed basalt stele, SB 8. https://collections.louvre.fr/ark:/53355/cl010174436'
-        zh: 'Louvre, Code of Hammurabi, inscribed basalt stele, SB 8. https://collections.louvre.fr/ark:/53355/cl010174436'
+        zh: '卢浮宫，汉谟拉比法典玄武岩石碑，馆藏号 SB 8。 https://collections.louvre.fr/ark:/53355/cl010174436'
+    hammurabi_code_wiki:
+      order: 140
+      status: checked
+      text:
+        en: 'Wikipedia, Code of Hammurabi. https://en.wikipedia.org/wiki/Code_of_Hammurabi'
+        zh: '维基百科，汉谟拉比法典。 https://en.wikipedia.org/wiki/Code_of_Hammurabi'
+    hammurabi_bm_copy:
+      order: 141
+      status: checked
+      text:
+        en: 'British Museum collection online, object W_C-161, cited for the clay copies of the laws. https://www.britishmuseum.org/collection/object/W_C-161'
+        zh: '大英博物馆在线藏品 W_C-161，引作法律泥板抄本的出处。 https://www.britishmuseum.org/collection/object/W_C-161'
+    hammurabi_britannica:
+      order: 142
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Hammurabi. https://www.britannica.com/biography/Hammurabi'
+        zh: '大英百科全书，汉谟拉比。 https://www.britannica.com/biography/Hammurabi'
+    hammurabi_history_com:
+      order: 143
+      status: checked
+      text:
+        en: 'HISTORY, Hammurabi, the stele at Susa and its rediscovery. https://www.history.com/articles/hammurabi'
+        zh: 'HISTORY 网站，汉谟拉比，石碑在苏萨与重新发现。 https://www.history.com/articles/hammurabi'
+    hammurabi_find_record:
+      order: 144
+      status: checked
+      text:
+        en: 'History of Information, the Code of Hammurabi discovered at Susa by Gustave Jéquier, 1901. https://historyofinformation.com/detail.php?entryid=2240'
+        zh: '信息史年表，1901 年古斯塔夫·热基耶在苏萨发现汉谟拉比法典。 https://historyofinformation.com/detail.php?entryid=2240'
 self_check:
-  quote_line: '学徒念条件时漏过一个字。'
   fact: stele
-  regret_choice: '略过「从条文开头的条件读起」，这处细节便留给下一位核对。'
-  bookend: '从「泥板与石碑怎么对读」开始，以员工留下的观察或更正收尾。'
-  share_line: '泥板与石碑怎么对读'
-  share_number: '-1750'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  quote_line: '前十二世纪，石碑被运到苏萨，碑上有几栏文字被磨去。'
+  regret_choice: '派手稳的抄写好手去，几份全文都抄齐送出了城；派手笨的去，只能帮学徒和泥晒板，抄本数没变。'
+  bookend: '从约前 1792 年汉谟拉比即位开始，以 1901 年在苏萨挖出断成三块的石碑收尾，中间隔着三千多年。'
+  share_line: '我在巴比伦帮人晒过泥板，后来石头上磨掉的字，泥板上都还有。'
+  share_number: '282'
+  knowing: 'susa'
+  near: 'stele'
+  lever: 'p1'
+  missed: 'found'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

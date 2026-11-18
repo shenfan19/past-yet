@@ -2,33 +2,38 @@ order: 75
 events:
   freud_vienna:
     order: 38
-    build_step: 2
+    build_step: 4
     year: 1899
+    # three office days from the planned arrival on 13 October 1899, through the appearance of the book on 4 November
     date: '1899-10-13'
     stay: 3
     lon: 16.35
     lat: 48.22
     region: europe
+    home: [europe_east]
+    near: [europe_west]
     field: thought
     tier: 2
     channels: {G: 1, S: 1}
-    refs: [freud_vienna_imprint, freud_vienna_appearance, freud_vienna_first_ed_loc, freud_vienna_publication_letter, freud_vienna_advance_copy]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [freud_vienna_imprint, freud_vienna_appearance, freud_vienna_first_ed_loc, freud_vienna_publication_letter, freud_vienna_advance_copy, freud_vienna_dreams_wiki, freud_vienna_sothebys, freud_vienna_shapero, freud_vienna_wiki]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, day: 40, req: {"any":[{"job":["bookseller","journalist","doctor","physician","medical_teacher"],"stat":{"will":6}},{"trait":["charismatic","glib","cosmopolitan"],"stat":{"wit":6}}]}}
       vignettes:
-        - {id: imprint, traits: [quiet, curious, methodical]}
-        - {id: reader, traits: [kind, patient, sensitive]}
-        - {id: edition}
+        - {id: window, traits: [curious, scholarly, skeptical, quiet], day: 24}
+        - {id: cafe, traits: [charismatic, glib, cheerful, cosmopolitan, bold], day: 33}
+        - {id: snow, day: 75}
     text:
       en:
         name: 'Two years for one book'
         place: Vienna
         figure: Sigmund Freud
-        story: 'Freud’s The Interpretation of Dreams reached readers around the turn of 1899–1900. The first edition bears 1900 on its title page, while Freud later recalled having the book before him in 1899.'
+        story: 'On 4 November 1899 Sigmund Freud''s The Interpretation of Dreams appeared in Vienna, and the publisher printed 1900 on its title page. Freud later called the book his reaction to the death of his father. The first printing was 600 copies, and it took eight years to sell them; a second edition came only in 1909.'
         relic: 'A dated bookseller’s slip'
-        relic_desc: 'An invented slip that preserves the imprint and the arrival year.'
+        relic_desc: 'A delivery slip from a Viennese bookshop, dated November 1899, for a book whose title page says 1900.'
         points:
           p1: 'In the quiet weeks after the book appears, get The Interpretation of Dreams into the hands of colleagues who will read it to the end'
         points_fail:
@@ -40,16 +45,16 @@ events:
             who: freud_vienna
             bio: 'Freud''s book on dreams found serious readers in its first year. The discussion he waited years for began in the winter of 1899.'
         vignettes:
-          imprint: 'Grete sees 1900 on the title page and wants to change the arrival ledger. You bring the delivery slip over from the counter. She writes the printed year on the label and keeps today’s year in the ledger. The two records now answer different questions.'
-          reader: 'A customer thinks Emil has brought next year’s book by mistake. You invite him to compare the slip with the title page at the counter. The customer leaves with a copy and asks Emil to keep the slip in the shop so the next reader can see it too.'
-          edition: 'You know later bibliographies will file the book under the year on the title page. Grete only needs a way to find today’s order. You leave both dates where she can look them up. The door shuts while the last reader is still on the street.'
+          window: '{staff} stands a long while at the window of a bookshop in the inner city. The new book on dreams lies in a corner, open at the title page, which says 1900. The assistant comes out to wipe the glass and says it only counts as new next year; for now it is keeping its place warm.'
+          cafe: '{staff} takes the newspapers down from the rack in a coffee house and goes through every review column; the book is not in any of them. A doctor at the next table says nobody has time for three hundred pages about dreams, and orders another coffee to finish his paper.'
+          snow: 'At the end of December it snows. {staff} helps the bookshop boy clear the doorway, and the boy, leafing through the order book with cold fingers, says the dream book has hardly moved this month, and asks whether dreams sell better in summer.'
       zh:
         name: '一本书的两个年份'
         place: 维也纳
         figure: 西格蒙德·弗洛伊德
-        story: '《梦的解析》在1899至1900年之交面世，初版扉页印1900年，弗洛伊德后来回忆自己1899年已经拿到书。'
+        story: '1899 年 11 月 4 日，西格蒙德·弗洛伊德的《梦的解析》在维也纳面世，出版商在扉页上印了 1900 年。弗洛伊德后来说，这本书是他对父亲去世的回应。首印六百册，卖了八年才卖完，第二版到 1909 年才出。'
         relic: '一张注明日期的书店存根'
-        relic_desc: '书店存根，两处年份都保留。'
+        relic_desc: '维也纳一家书店的送货单，日期是 1899 年 11 月，单上那本书的扉页印着 1900 年。'
         points:
           p1: '在书面世后无人问津的那几周，把《梦的解析》送到会认真读完它的同行手里'
         points_fail:
@@ -61,9 +66,9 @@ events:
             who: freud_vienna
             bio: '弗洛伊德那本讲梦的书在头一年就有了认真的读者。他等了多年的讨论，1899 年冬天就开始了。'
         vignettes:
-          imprint: '格雷特看了扉页上的1900年，就想改掉到货簿。你从柜台拿来送货单。她把印在书上的年份写给题签，簿上仍记今天是哪一年。两张纸各回答一个问题。'
-          reader: '有客人以为埃米尔错拿了明年的书。你请他在柜台上把到货单和扉页对着看。客人带书走时，请埃米尔把单留下，好给再来的人看看。'
-          edition: '你知道后世书目常以扉页上的年份著录。格雷特眼下只需要找得到今天的订单。你把两个年份都留在她会查的地方。门关上时，最后一位读者还在街上。'
+          window: '{staff}在内城一家书店的橱窗前站了半天。那本讲梦的新书摆在角上，翻开着扉页，印的是 1900 年。店员出来擦玻璃，说这书要到明年才算新书，眼下先占个位子。'
+          cafe: '{staff}在咖啡馆从报架上取下几份报纸，把书评栏翻了个遍，哪一份都没提这本书。邻桌的医生说，三百多页讲梦的书，谁有工夫读完，说完又叫了一杯咖啡，接着看他的报。'
+          snow: '十二月底下了雪。{staff}帮书店的小伙计铲门口的雪。伙计冻着手翻订货簿，说那本讲梦的书这个月几乎没动，又问梦是不是夏天才好卖。'
 text:
   en:
     name: Sigmund Freud
@@ -73,31 +78,79 @@ text:
     text: 奥地利医生，1856 年生，1939 年去世，精神分析的创立者。1899 年的《梦的解析》提出梦表达隐藏的愿望。1938 年德国吞并奥地利后，他离开维也纳去了伦敦。
 hook: {en: 'The new book carries next year’s date.', zh: '新书扉页印着明年的年份。'}
 facts:
-  imprint:
-    date: '1900'
-    checked: official_record
-    level: usable
-    use: [story, wiki]
-    sources: [freud_vienna_imprint]
+  father:
+    date: '1896-10-23'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [freud_vienna_appearance, freud_vienna_dreams_wiki]
     text:
-      en: 'The first edition held by the library is catalogued with the Leipzig and Vienna imprint of 1900.'
-      zh: '馆藏初版依莱比锡与维也纳印记著录为1900年。'
+      en: 'Freud''s father Jacob died in Vienna in October 1896. In the preface to the second edition Freud called the book a piece of his self-analysis and his reaction to his father''s death.'
+      zh: '1896 年 10 月，弗洛伊德的父亲雅各布在维也纳去世。弗洛伊德在第二版序言里说，这本书是他自我分析的一部分，是他对父亲之死的回应。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '23 October 1896: Freud''s father Jacob dies in Vienna.'
+      zh: '1896 年 10 月 23 日，弗洛伊德的父亲雅各布在维也纳去世。'
   appearance:
-    date: '1899'
-    checked: official_record
+    date: '1899-11-04'
+    stay_day: 22
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [freud_vienna_appearance]
+    use: [story, history, wiki]
+    sources: [freud_vienna_publication_letter, freud_vienna_dreams_wiki, freud_vienna_sothebys]
     text:
-      en: 'The archive places publication across 1899–1900. The imagined bookshop records use 1899 for arrival and 1900 for the imprint.'
-      zh: '档案年表把该书出版记在1899至1900年。'
+      en: 'Die Traumdeutung was published by Franz Deuticke of Leipzig and Vienna on 4 November 1899.'
+      zh: '1899 年 11 月 4 日，莱比锡与维也纳的弗朗茨·多伊蒂克出版社出版了《梦的解析》。'
+    line:
+      en: '4 November 1899: The Interpretation of Dreams comes out in Vienna, published by Franz Deuticke.'
+      zh: '1899 年 11 月 4 日，《梦的解析》由多伊蒂克出版社在维也纳出版。'
+  imprint:
+    date: '1899-11-04'
+    stay_day: 22.1
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [freud_vienna_imprint, freud_vienna_first_ed_loc]
+    text:
+      en: 'The title page of the first edition bears the Leipzig and Vienna imprint of 1900, and libraries catalogue it under that year.'
+      zh: '初版扉页印的是莱比锡与维也纳 1900 年，图书馆也按这一年著录。'
+    line:
+      en: 'The same day: the year printed on its title page is 1900.'
+      zh: '同一天，书的扉页上印的年份是 1900 年。'
+  second_edition:
+    date: '1909'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [freud_vienna_dreams_wiki, freud_vienna_sothebys, freud_vienna_shapero]
+    text:
+      en: 'The first printing of 600 copies sold so slowly that it took about eight years to sell out, and the second edition appeared only in 1909.'
+      zh: '首印六百册卖得很慢，前后约八年才卖完，第二版到 1909 年才出。'
+    line:
+      en: '1909: the second edition of The Interpretation of Dreams appears, after the 600 copies of the first took eight years to sell.'
+      zh: '1909 年，《梦的解析》出了第二版，首印的六百册卖了八年才卖完。'
+  professor:
+    date: '1902'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [freud_vienna_appearance, freud_vienna_wiki]
+    text:
+      en: 'In 1902 Freud was named an extraordinary professor at the University of Vienna.'
+      zh: '1902 年，弗洛伊德被任命为维也纳大学的编外教授。'
+    line:
+      en: '1902: Freud is made an extraordinary professor at the University of Vienna.'
+      zh: '1902 年，弗洛伊德被任命为维也纳大学的编外教授。'
 bystanders:
-  grete:
+  shop_assistant:
     invented: true
-    text: {en: 'A fictional bookseller reconciling the arrival ledger with the title page.', zh: '虚构书商格雷特，要核对到货簿与扉页。'}
-  emil:
+    text: {en: 'A bookshop assistant in the inner city of Vienna, made up for the game.', zh: '一个编出来的书店店员，在维也纳内城。'}
+  shop_boy:
     invented: true
-    text: {en: 'A fictional assistant handling a customer’s order.', zh: '虚构店员埃米尔，经手客人的订单。'}
+    text: {en: 'The errand boy of the same bookshop, made up for the game, who keeps the order book.', zh: '同一家书店里编出来的小伙计，管着订货簿。'}
+  cafe_doctor:
+    invented: true
+    text: {en: 'A doctor reading the papers in a coffee house, made up for the game.', zh: '一个编出来的医生，在咖啡馆里看报。'}
 wiki:
   refs:
     freud_vienna_first_ed_loc:
@@ -118,6 +171,30 @@ wiki:
       text:
         en: 'First edition and presentation copies https://www.christies.com/en/lot/lot-3815372?ldp_breadcrumb=back'
         zh: '首版与先行赠本记录 https://www.christies.com/en/lot/lot-3815372?ldp_breadcrumb=back'
+    freud_vienna_dreams_wiki:
+      order: 13
+      status: checked
+      text:
+        en: 'Wikipedia, The Interpretation of Dreams https://en.wikipedia.org/wiki/The_Interpretation_of_Dreams'
+        zh: '维基百科，梦的解析 https://en.wikipedia.org/wiki/The_Interpretation_of_Dreams'
+    freud_vienna_sothebys:
+      order: 14
+      status: checked
+      text:
+        en: 'Sotheby''s, first edition of Die Traumdeutung, publication and sales https://www.sothebys.com/en/auctions/ecatalogue/2013/library-english-bibliophile-l13411/lot.66.html'
+        zh: '苏富比，《梦的解析》初版的出版与销售 https://www.sothebys.com/en/auctions/ecatalogue/2013/library-english-bibliophile-l13411/lot.66.html'
+    freud_vienna_shapero:
+      order: 15
+      status: checked
+      text:
+        en: 'Shapero Rare Books, Die Traumdeutung 1900, first printing of 600 copies https://shapero.com/products/sigmund-freud-de-traumdetung-1900-109668'
+        zh: '沙佩罗古籍书店，《梦的解析》1900 年初版，首印六百册 https://shapero.com/products/sigmund-freud-de-traumdetung-1900-109668'
+    freud_vienna_wiki:
+      order: 16
+      status: checked
+      text:
+        en: 'Wikipedia, Sigmund Freud https://en.wikipedia.org/wiki/Sigmund_Freud'
+        zh: '维基百科，西格蒙德·弗洛伊德 https://en.wikipedia.org/wiki/Sigmund_Freud'
     freud_vienna_imprint:
       order: 977
       status: checked
@@ -131,15 +208,15 @@ wiki:
         en: 'Library of Congress, Sigmund Freud Papers, publication chronology https://www.loc.gov/collections/sigmund-freud-papers/articles-and-essays/timeline/'
         zh: '美国国会图书馆，弗洛伊德档案出版年表 https://www.loc.gov/collections/sigmund-freud-papers/articles-and-essays/timeline/'
 self_check:
-  fact: imprint
-  quote_line: '两张纸各回答一个问题。'
-  regret_choice: 'imprint 若改掉到货年份，接手人无法按日查单。'
-  bookend: '一本新书的年份冲突，收尾两处都能查。'
-  share_line: '1899到手，1900印在书上。'
-  share_number: '两个有史料依据的年份。'
-  knowing: 'edition 知道后世常按扉页号年。'
-  near: 'imprint 初版实物有著录。'
-  lever: 'imprint 原来的一笔不被覆盖。'
-  missed: 'edition 店关后见不到最后的读者。'
-  brought: 'reader 带回虚构的订单存根。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: appearance
+  quote_line: '同一天，书的扉页上印的年份是 1900 年。'
+  regret_choice: '派会说话的去，几位同行那个冬天就读完了书；派不善交际的去，只能看着书在橱窗角上一周周躺着。'
+  bookend: '从 1896 年父亲去世开始，以 1909 年第二版收尾，中间是一本没人读的新书和一个冬天。'
+  share_line: '1899 年冬天，维也纳有一本讲梦的新书，扉页上印着明年。'
+  share_number: '600'
+  knowing: 'second_edition'
+  near: 'appearance, imprint'
+  lever: 'p1'
+  missed: 'second_edition'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

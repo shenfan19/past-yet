@@ -174,7 +174,7 @@ export function buildReport(D, E, res) {
   // It is told plainly at the end of the record, after the traveller has gone, and the simulation does not run to it.
   for (const ep of E.raw.epilogue || []) {
     const t = dayOfDate(E, ep.date);
-    kept.push({ t, year: Number(ep.date.slice(0, 4)), text: fmt(ET.milestones[ep.key], {}, { ...common, date: dateLabel(D, E, t, true) }), tag: 'history', source: null, importance: 5, kind: 'milestone', id: ep.key, key: ep.key, fact: ep.fact || null, after: true, seg: null, own: false, why: { kind: 'epilogue', expr: ep.date + (ep.fact ? ' · ' + ep.fact : '') } });
+    kept.push({ t, year: Number(ep.date.match(/^-?\d+/)[0]), text: fmt(ET.milestones[ep.key], {}, { ...common, date: dateLabel(D, E, t, true) }), tag: 'history', source: null, importance: 5, kind: 'milestone', id: ep.key, key: ep.key, fact: ep.fact || null, after: true, seg: null, own: false, why: { kind: 'epilogue', expr: ep.date + (ep.fact ? ' · ' + ep.fact : '') } });
   }
 
   // outcome, summary, quote
@@ -261,11 +261,11 @@ export function lightRecord(D, ev, r, staffId, stayDays) {
   const EF = D.get('encyclopedia.event_facts')?.[ev.id];
   if (EF) {
     for (const f of EF.facts) {
-      const year = Number(f.date.slice(0, 4));
+      // a date is a year, a year and month or a full date; a year before the common era carries a minus sign and may have four digits
+      const [year, mm, dd] = (f.date.match(/^(-?\d+)(?:-(\d+))?(?:-(\d+))?$/) || []).slice(1).map((x) => (x === undefined ? undefined : Number(x)));
       // only the line written for the record is told, never the text of the fact, which is for the wiki
       const text = D.get('enc_text.fact_lines')?.[EF.module]?.[f.id];
       if (!text) continue;
-      const [, mm, dd] = f.date.split('-').map(Number);
       // a fact with a full date and no day of the stay is placed by its date against the planned arrival, so a date after the stay follows the leaving
       const dated = typeof f.stay_day !== 'number' && ev.date && /^\d{4}-\d{2}-\d{2}$/.test(f.date) ? Math.round((utc(year, mm, dd) - utc(ay, am, ad)) / 86400000) : null;
       const onDay = typeof f.stay_day === 'number' || dated !== null;

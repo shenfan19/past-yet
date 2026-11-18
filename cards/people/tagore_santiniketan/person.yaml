@@ -2,31 +2,36 @@ order: 186
 events:
   tagore_santiniketan:
     order: 82
-    build_step: 2
+    build_step: 4
     year: 1913
+    # three office days from the planned arrival on 1 November 1913, through the news of the prize on 13 November and the reception of 23 November
     date: '1913-11-01'
     stay: 3
     lon: 87.68
     lat: 23.68
     region: asia
+    home: [india, south_asia]
+    near: [southeast_asia, middle_east]
     field: literature
     tier: 2
     channels: {H: 1}
-    refs: [tagore_santiniketan_translation, tagore_santiniketan_award, tagore_1913_santiniketan_reception, tagore_nobel_school]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [tagore_santiniketan_translation, tagore_santiniketan_award, tagore_1913_santiniketan_reception, tagore_nobel_school, tagore_outlook_prize, tagore_nobel_facts, tagore_gitanjali_wiki, tagore_visva_bharati, tagore_britannica]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, day: 22, req: {"any":[{"trait":["charismatic","calm","kind"],"stat":{"will":7}},{"job":["teacher","journalist","radio_host","tour_guide"],"stat":{"wit":6,"will":5}},{"item":"golden_apple","stat":{"will":5}}]}}
       vignettes:
-        - {id: headline, traits: [bold, charismatic]}
-        - {id: pause, traits: [methodical, artistic]}
-        - {id: sheets}
+        - {id: telegram, traits: [bold, cheerful, glib, charismatic, curious], day: 14}
+        - {id: platform, traits: [kind, calm, sensitive, patient, quiet], day: 22.6}
+        - {id: rice, day: 50}
     text:
       en:
         name: 'One poem, two readings'
         place: Santiniketan, India
         figure: Rabindranath Tagore
-        story: 'The English Gitanjali presents Tagore’s own prose translations from Bengali. In 1913 the Swedish Academy awarded him the Nobel Prize in Literature.'
+        story: 'In November 1912 the English Gitanjali, Rabindranath Tagore''s own prose renderings of his Bengali songs, came out in London. On 13 November 1913 the Swedish Academy gave him the Nobel Prize in Literature. Ten days later a trainload of well-wishers came from Calcutta to his school at Santiniketan; in his reply he said he could not accept without diffidence an honour offered in the country''s name, and many of the guests went home hurt. The prize money went to the school, which became the university of Visva-Bharati in 1921.'
         relic: A hand-copied songbook
         relic_desc: A small book of songs in his own hand.
         points:
@@ -40,14 +45,14 @@ events:
             who: tagore_santiniketan
             bio: 'In this timeline Tagore and the guests of the 1913 reception talked things out the same evening, and his reply did not set him apart from his countrymen.'
         vignettes:
-          headline: 'You tell a student helping with the reading that the prize will bring readers who know only the English. The student asks which sheet they will reach for first. You leave both on the desk and label the English as the author’s rendering. You have time to hear only the first reading.'
-          pause: 'The student keeps stopping at the ends of the printed lines. You read a sentence aloud and mark one pause that comes earlier. The next reader gets through the whole thought. You keep a copy of the marked sheet, but leave before you can hear how the other version sounds.'
-          sheets: 'You pin two loose sheets together after the reading and mark which is which. The student can now hand both to whoever comes next. You take home the one pause you remember. The room is empty by the time you try it again.'
+          telegram: 'The day the news comes, {staff} helps the boys carry benches under the mango trees. One of them climbs a tree and shouts that the whole of Calcutta is coming by train; a teacher pulls him down, and he protests that then somebody had better count the benches.'
+          platform: 'At dusk {staff} helps a guest at Bolpur station find the umbrella he left behind. He stands on the platform a long time turning the umbrella in his hands, and only as the train comes in asks whether the poet always speaks to his guests like that.'
+          rice: 'In December {staff} helps the school cook spread rice to dry in the yard. People keep coming to see the poet, the cook says, one party after another, and the rice is going faster than in any year he remembers.'
       zh:
         name: '一首诗，读两遍'
         place: 印度圣蒂尼克坦
         figure: 罗宾德拉纳特·泰戈尔
-        story: '英文版《吉檀迦利》收入泰戈尔本人从孟加拉语译写的散文诗。1913 年，瑞典学院把诺贝尔文学奖授予泰戈尔。'
+        story: '1912 年 11 月，英文版《吉檀迦利》在伦敦出版，收的是罗宾德拉纳特·泰戈尔自己从孟加拉语译写的散文诗。1913 年 11 月 13 日，瑞典学院把诺贝尔文学奖授予他。十天后，一列火车从加尔各答载来祝贺的人，到了他在圣蒂尼克坦的学校。他在答辞里说，自己不能毫无保留地接受这份以国家名义献上的荣誉，许多来客带着不快回去了。奖金给了学校，1921 年，学校成了国际大学。'
         relic: 一本手抄的歌集
         relic_desc: 一本小小的歌本，是他的亲笔。
         points:
@@ -61,9 +66,9 @@ events:
             who: tagore_santiniketan
             bio: '这条时间线里，1913 年那场祝贺会散场后，泰戈尔当晚就和来客把话说开，没有因那篇答辞与同胞生出隔阂。'
         vignettes:
-          headline: '你告诉管朗读的学生，奖项会带来只读得懂英文的新读者。学生问他们会先拿哪张。你把两张都留在桌上，给英文那张标明是作者自己译写。轮到第二遍时，你已得收队。'
-          pause: '学生每到印刷行尾就停。你念了一整句，把该停的一处标在更前面。下一位朗读的人念完了整句的意思。你留了一份带停顿记号的纸，但没能听到另一种语言的读法。'
-          sheets: '读完后，你把散开的两张稿夹在一起，标明各是哪一种语言。下一个人来了，学生可以把两张一起交给他。你只带回一个记得住的停顿，再念一遍时，教室已经空了。'
+          telegram: '消息传来那天，{staff}帮孩子们往芒果树下搬长凳。一个孩子爬上树喊，全加尔各答都要坐火车来了，被老师揪了下来，还不服气，说那总得有人先把凳子数够。'
+          platform: '天擦黑，{staff}在博尔布尔车站帮一位来客找回落下的伞。他在月台上攥着伞站了半天，火车进站时才问，诗人对客人说话一向是这样的吗。'
+          rice: '十二月，{staff}帮学校的厨子在院里摊晒米。厨子说，来看诗人的人一拨接一拨，今年的米下得比哪年都快。'
 text:
   en:
     name: Rabindranath Tagore
@@ -71,30 +76,90 @@ text:
   zh:
     name: 罗宾德拉纳特·泰戈尔
     text: 孟加拉诗人与教育家，1861 年生，1941 年去世。他写诗、歌曲、戏剧和小说，在圣蒂尼克坦创办学校，1913 年成为第一位获得诺贝尔文学奖的非欧洲人。
-hook: {en: 'Can the next reader hear both versions?', zh: '译成英文之后，怎么读？'}
+hook: {en: 'A train full of well-wishers, and a reply they did not expect', zh: '一车人来道贺，听到的答辞不是他们想的'}
 facts:
   translation:
-    date: '1912'
-    checked: official_record
+    date: '1912-11'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [tagore_santiniketan_translation]
+    use: [story, history, wiki]
+    sources: [tagore_santiniketan_translation, tagore_gitanjali_wiki]
     text:
-      en: 'The title page identifies the English book as the author''s own prose translations from Bengali.'
-      zh: '英文版题名页注明收入作者自己从孟加拉语译写的散文诗。'
+      en: 'In November 1912 the India Society in London published Gitanjali, Song Offerings, the author''s own prose translations from Bengali, with an introduction by W. B. Yeats.'
+      zh: '1912 年 11 月，伦敦的印度学会出版了英文版《吉檀迦利》，收作者本人从孟加拉语译写的散文诗，叶芝作序。'
+    line:
+      en: 'November 1912: the English Gitanjali, in Tagore''s own prose translation, is published in London.'
+      zh: '1912 年 11 月，泰戈尔自己译写的英文版《吉檀迦利》在伦敦出版。'
   award:
+    date: '1913-11-13'
+    stay_day: 12
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tagore_nobel_facts, tagore_santiniketan_award]
+    text:
+      en: 'On 13 November 1913 the Swedish Academy awarded Tagore the Nobel Prize in Literature, the first given to a writer from outside Europe.'
+      zh: '1913 年 11 月 13 日，瑞典学院把诺贝尔文学奖授予泰戈尔，他是第一位获得此奖的欧洲以外的作家。'
+    line:
+      en: '13 November 1913: the Swedish Academy awards Tagore the Nobel Prize in Literature.'
+      zh: '1913 年 11 月 13 日，瑞典学院把诺贝尔文学奖授予泰戈尔。'
+  reception:
+    date: '1913-11-23'
+    stay_day: 21.9
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [tagore_1913_santiniketan_reception, tagore_outlook_prize]
+    text:
+      en: 'Soon after the news, on 23 November by the account of India Perspectives, a trainload of well-wishers from Calcutta came to Santiniketan; Tagore''s reply, that he could not accept without diffidence an honour offered in the country''s name, disappointed many of them.'
+      zh: '消息传来后不久，据《印度展望》记载是 11 月 23 日，一列火车从加尔各答载着祝贺的人来到圣蒂尼克坦。泰戈尔答辞说不能毫无保留地接受以国家名义献上的荣誉，许多来客失望而归。'
+    line:
+      en: '23 November 1913: a train brings well-wishers from Calcutta to Santiniketan; Tagore''s reply leaves many of them hurt.'
+      zh: '1913 年 11 月 23 日，一列火车从加尔各答载来祝贺的人。泰戈尔的答辞让许多来客不快。'
+  school:
     date: '1913'
-    checked: official_record
+    checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [tagore_santiniketan_award]
+    sources: [tagore_nobel_school, tagore_visva_bharati]
     text:
-      en: 'The release notes Tagore’s Nobel Prize in 1913 and describes the manuscript kept at Houghton Library.'
-      zh: '发布记录载有泰戈尔 1913 年获诺贝尔奖一事，并介绍霍顿图书馆保存的手稿。'
+      en: 'Tagore gave the prize money to his school at Santiniketan.'
+      zh: '泰戈尔把奖金用在了圣蒂尼克坦的学校上。'
+  visva_bharati:
+    date: '1921'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [tagore_visva_bharati]
+    text:
+      en: 'In 1921 the school at Santiniketan grew into Visva-Bharati, the university Tagore founded.'
+      zh: '1921 年，圣蒂尼克坦的学校发展成泰戈尔创办的国际大学。'
+    line:
+      en: '1921: Tagore founds the university of Visva-Bharati at Santiniketan.'
+      zh: '1921 年，泰戈尔在圣蒂尼克坦创办国际大学。'
+  death:
+    date: '1941-08-07'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [tagore_nobel_facts, tagore_britannica]
+    text:
+      en: 'Rabindranath Tagore died in Calcutta on 7 August 1941.'
+      zh: '1941 年 8 月 7 日，罗宾德拉纳特·泰戈尔在加尔各答去世。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: '7 August 1941: Rabindranath Tagore dies in Calcutta.'
+      zh: '1941 年 8 月 7 日，罗宾德拉纳特·泰戈尔在加尔各答去世。'
 bystanders:
-  reader:
+  schoolboy:
     invented: true
-    text: {en: 'A fictional student setting out the sheets for both languages.', zh: '虚构的学生，负责为两种语言的朗读摆讲义。'}
+    text: {en: 'A boy at the school in Santiniketan, made up for the game, who climbs the mango trees.', zh: '一个编出来的圣蒂尼克坦学校的男孩，爱爬芒果树。'}
+  guest:
+    invented: true
+    text: {en: 'A guest from Calcutta at the reception, made up for the game.', zh: '一个编出来的从加尔各答来道贺的客人。'}
+  cook:
+    invented: true
+    text: {en: 'The cook of the school, made up for the game.', zh: '一个编出来的学校厨子。'}
 wiki:
   refs:
     tagore_1913_santiniketan_reception:
@@ -109,6 +174,36 @@ wiki:
       text:
         en: 'Amartya Sen, Nobel Prize archive, Tagore and his India, on the school and the prize money. https://www.nobelprize.org/prizes/literature/1913/tagore/article/'
         zh: '阿马蒂亚·森，诺贝尔奖档案，《泰戈尔和他的印度》，学校与奖金。 https://www.nobelprize.org/prizes/literature/1913/tagore/article/'
+    tagore_outlook_prize:
+      order: 864
+      status: checked
+      text:
+        en: 'Outlook, The Poet and the Prize, the reception at Santiniketan. https://www.outlookindia.com/books/the-poet-and-the-prize-news-223618'
+        zh: 'Outlook 杂志，《诗人与奖》，圣蒂尼克坦的祝贺会。 https://www.outlookindia.com/books/the-poet-and-the-prize-news-223618'
+    tagore_nobel_facts:
+      order: 865
+      status: checked
+      text:
+        en: 'Nobel Prize, Rabindranath Tagore, facts. https://www.nobelprize.org/prizes/literature/1913/tagore/facts/'
+        zh: '诺贝尔奖官网，罗宾德拉纳特·泰戈尔生平要点。 https://www.nobelprize.org/prizes/literature/1913/tagore/facts/'
+    tagore_gitanjali_wiki:
+      order: 866
+      status: checked
+      text:
+        en: 'Wikipedia, Gitanjali. https://en.wikipedia.org/wiki/Gitanjali'
+        zh: '维基百科，吉檀迦利。 https://en.wikipedia.org/wiki/Gitanjali'
+    tagore_visva_bharati:
+      order: 867
+      status: checked
+      text:
+        en: 'Visva-Bharati, about the university. https://visvabharati.ac.in/'
+        zh: '国际大学官网，学校简介。 https://visvabharati.ac.in/'
+    tagore_britannica:
+      order: 868
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Rabindranath Tagore. https://www.britannica.com/biography/Rabindranath-Tagore'
+        zh: '大英百科全书，罗宾德拉纳特·泰戈尔。 https://www.britannica.com/biography/Rabindranath-Tagore'
     tagore_santiniketan_translation:
       order: 450
       status: checked
@@ -122,15 +217,15 @@ wiki:
         en: 'Press Information Bureau, Government of India, Gitanjali facsimile release https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=81587'
         zh: '印度政府新闻信息局，《吉檀迦利》手稿影印本发布记录 https://www.pib.gov.in/newsite/erelcontent.aspx?lang=2&reg=48&relid=81587'
 self_check:
-  fact: translation
-  quote_line: '轮到第二遍时，你已得收队。'
-  regret_choice: '留下两种文字供下一班读，自己却只能听到一遍。'
-  bookend: '开头问该读哪一稿，结尾给后来的人留下两张。'
-  share_line: '两张读诗稿一起留在桌上。'
+  fact: reception
+  quote_line: '1913 年 11 月 23 日，一列火车从加尔各答载来祝贺的人。泰戈尔的答辞让许多来客不快。'
+  regret_choice: '派沉着和善、说得动人的去，散场时有几位客人被请回屋里坐下；派不会劝人的去，只能在月台上帮人找伞，看着一车人带着不快走了。'
+  bookend: '从 1912 年英文版《吉檀迦利》出版开始，以 1941 年泰戈尔去世收尾，中间是一列来道贺的火车。'
+  share_line: '1913 年 11 月，一车人去圣蒂尼克坦道贺，回去的路上没人说话。'
   share_number: '1913'
-  knowing: 'headline 知道英文读者会随获奖增加。'
-  near: 'translation 与 award 定出处；读诗小组为虚构。'
-  lever: 'pause 改一处可听见的停顿，sheets 留两份成对讲义。'
-  missed: '收队时第二遍还没听到。'
-  brought: '抄下的停顿与两种读本的信息。'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  knowing: 'visva_bharati'
+  near: 'award, reception'
+  lever: 'p1'
+  missed: 'death'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}

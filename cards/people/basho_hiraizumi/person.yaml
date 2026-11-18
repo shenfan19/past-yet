@@ -2,32 +2,37 @@ order: 26
 events:
   basho_hiraizumi:
     order: 79
-    build_step: 2
+    build_step: 4
     year: 1689
+    # one office day from 29 June 1689, the thirteenth day of the fifth month of Genroku 2; the day trip from Ichinoseki to Hiraizumi and back is placed by fractions of the first day
     date: '1689-06-29'
     stay: 1
     lon: 141.1
     lat: 39
     region: asia
+    home: [japan]
+    near: [korea, china]
     field: literature
     tier: 2
     channels: {C: 2, L: 2}
-    refs: [basho_hiraizumi_primary, basho_hiraizumi_sora_diary, basho_hiraizumi_hiraizumi_date]
+    # finished: in the game with release.ready_only
+    ready: true
+    refs: [basho_hiraizumi_primary, basho_hiraizumi_sora_diary, basho_hiraizumi_hiraizumi_date, basho_oku_wiki, basho_wiki, basho_britannica]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 0.2, req: {"any":[{"job":["archivist","translator"]},{"trait":["vigil","patient"],"stat":{"will":6}}]}}
         - {id: p2, kind: persuade, day: 0.48, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["vigil","patient","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
-        - {id: grass, traits: [artistic, quiet]}
-        - {id: accounts, traits: [curious, skeptical]}
-        - {id: sandal}
+        - {id: grass, traits: [artistic, quiet, sensitive, patient], day: 0.32}
+        - {id: bath, traits: [handy, kind, hardy, cheerful, streetwise], day: 0.75}
+        - {id: sandal, day: 2}
     text:
       en:
         name: The narrow road to the deep north
         place: Hiraizumi, Japan
         figure: Matsuo Basho
-        story: 'Basho''s Oku no Hosomichi, written after his 1689 journey, recalls Hiraizumi through present landscape and remembered history. It includes his verse on summer grasses.'
+        story: 'In the spring of 1689 Matsuo Bashō set out from Edo with his pupil Sora on a long walk through the north. On the thirteenth day of the fifth month they went from Ichinoseki to Hiraizumi and back in a day: they climbed Takadachi above the Kitakami River, the steward showed them the Golden Hall of Chūsonji, and the Sutra Hall stayed shut because he was away. Bashō turned the journey into The Narrow Road to the Deep North, where the visit gives his verse on summer grasses and says that both halls were opened.'
         relic: A straw hat
         relic_desc: A woven hat grey with rain.
         points:
@@ -40,19 +45,19 @@ events:
           p1:
             was: 'Sora’s diary records a journey from Ichinoseki to Hiraizumi and back that day, the thirteenth day of the fifth lunar month in 1689.'
           p2:
-            was: 'Sora recorded that the keeper was away and neither hall opened. Bashō wrote about the Golden Hall in his travel account.'
-            now: 'A local guide confirms they can walk outside and shows them the covering structure from the permitted side. Bashō returns with an architectural detail he can check from his own notes.'
+            was: 'On the thirteenth day of the fifth month of 1689 Sora recorded that the steward showed them the Golden Hall but the Sutra Hall stayed shut because he was away; Bashō later wrote that both halls were opened.'
+            now: 'A local guide confirms they can walk round the Sutra Hall and shows it to them from the permitted side. Bashō returns with a detail of the building he saw for himself.'
             who: basho_hiraizumi
             bio: 'Bashō and Sora had only part of a day for Hiraizumi. The later book and Sora’s route notes put different things on the page.'
         vignettes:
-          grass: 'The traveler asks what you are looking at. You wait for the grass to move again before answering. When you write the place down later, you remember the movement before the name.'
-          accounts: 'The traveler remembers a story that puts a landmark farther away than you can see. You put the story and the view on separate lines, then ask where the name came from.'
-          sandal: 'You move your bundle so the traveler can set the damp sandal flat. Between the two of you there is time to point out one place on the ridge before setting off.'
+          grass: '{staff} follows the two travellers up Takadachi. The Kitakami runs below and the grass is waist high. The elder spreads his hat on the ground and sits a long while without a word, the younger writes something in his notebook, and {staff}, not liking to speak, watches the river with them.'
+          bath: '{staff} helps the master of the lodging in Ichinoseki carry water and heat the bath. The two guests went to Hiraizumi today, he says, they will be back in a sweat; he has seen plenty of travellers come back from the old ruins in tears, and a bath sees to it.'
+          sandal: '{staff} helps a man at the corner of the street in Ichinoseki mend a sandal strap. A passing porter says the roads to the north are all mud this week, and anyone going on had better put on new sandals before he starts.'
       zh:
         name: 奥州小路
         place: 日本平泉
         figure: 松尾芭蕉
-        story: '芭蕉以 1689 年行旅为素材，后来写成《奥之细道》。平泉一节从眼前景物想到旧事，收有咏夏草的俳句。'
+        story: '1689 年春，松尾芭蕉带着弟子曾良从江户出发，徒步走北方。农历五月十三日，两人从一关去平泉，当天往返：登上北上川边的高馆，由别当带着看了中尊寺的光堂，经堂因为别当不在没有开。芭蕉后来把这一路写成《奥之细道》，平泉一节有咏夏草的俳句，书里写两座堂都开了。'
         relic: 一顶草笠
         relic_desc: 被雨淋灰了的编织草帽。
         points:
@@ -65,14 +70,14 @@ events:
           p1:
             was: '曾良的行程日记记元禄二年农历五月十三日，两人从一关去平泉，当日折回。'
           p2:
-            was: '曾良记到中尊寺时看守不在，两个堂没有打开。芭蕉的纪行把光堂写入平泉一节。'
-            now: '附近的人确认外廊可走，并带两人从允许的地方看覆盖屋。芭蕉回到住处时有一项自己能核对的建筑笔记。'
+            was: '元禄二年五月十三日，曾良记别当带路看了光堂，经堂因别当不在没有开；芭蕉后来在纪行里写两座堂都开了。'
+            now: '附近的人确认经堂外廊可走，带两人从允许的地方看了经堂。芭蕉回到住处时，多了一处自己亲眼看过的建筑细节。'
             who: basho_hiraizumi
             bio: '芭蕉与曾良的平泉行程只有当天的一段时间。后来入书的写法与曾良当日的路线记录各有侧重。'
         vignettes:
-          grass: '旅人问你在看什么。你等草再动了一下才回答。后来写下这个地方，你先想起的是草动的样子，才想起地名。'
-          accounts: '旅人讲的旧事里，有个地方比眼睛能看到的还远。你把故事和所见分两行记，接着问这名字是从哪听来的。'
-          sandal: '你挪开包袱，让旅人把湿草鞋摊平。再次出发之前，两人还有空指认山脊上的一处地方。'
+          grass: '{staff}跟着两个旅人登上高馆。北上川在底下流，草长得齐腰高。年长的那位把斗笠铺在地上坐下，半天没出声，年轻的那位在本子上记着什么，{staff}不好开口，就陪着看河。'
+          bath: '{staff}帮一关住处的主人挑水烧洗澡水。主人说那两位客人今天去了平泉，回来准是一身汗；看旧迹看哭了回来的客人他见得多了，洗个澡就好。'
+          sandal: '{staff}在一关的街口帮人系草鞋带子。路过的脚夫说，往北的路这几天全是泥，接着赶路的人最好先换一双新草鞋。'
 text:
   en:
     name: Matsuo Basho
@@ -82,44 +87,163 @@ text:
     text: 日本俳句诗人，1644 年生，1694 年去世。1689 年他步行游历北方，写下散文与俳句相间的《奥之细道》。
 hook: {en: 'What stays when the road moves on?', zh: '走过平泉，带走什么'}
 facts:
-  hiraizumi:
-    date: '1689'
-    checked: official_record
+  set_out:
+    date: '1689-05-16'
+    checked: two_sources
     level: usable
-    use: [story, wiki]
-    sources: [basho_hiraizumi_primary]
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_oku_wiki]
     text:
-      en: 'Basho''s Oku no Hosomichi, written after his 1689 journey, recalls Hiraizumi through present landscape and remembered history. It includes his verse on summer grasses.'
-      zh: '芭蕉以 1689 年行旅为素材，后来写成《奥之细道》。平泉一节从眼前景物想到旧事，收有咏夏草的俳句。'
+      en: 'Early on the twenty-seventh day of the third month of Genroku 2, 16 May 1689, Bashō set out from Fukagawa in Edo with Sora.'
+      zh: '元禄二年三月二十七日，即 1689 年 5 月 16 日清早，芭蕉带着曾良从江户深川出发。'
+    line:
+      en: 'The twenty-seventh day of the third month, Genroku 2: Bashō sets out from Fukagawa in Edo with Sora for the north.'
+      zh: '元禄二年三月二十七日，芭蕉带着曾良从江户深川出发北行。'
+  depart:
+    date: '1689-06-29'
+    stay_day: 0.1
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_hiraizumi_hiraizumi_date]
+    text:
+      en: 'Sora''s diary for the thirteenth day of the fifth month: fine weather; at the hour of the snake, about ten in the morning, they left Ichinoseki for Hiraizumi, some two ri away.'
+      zh: '曾良五月十三日的日记：天晴，巳时前后，两人从一关动身去平泉，路程约二里。'
+    line:
+      en: 'The thirteenth day of the fifth month, Genroku 2, fine: about ten in the morning Bashō and Sora leave Ichinoseki for Hiraizumi.'
+      zh: '元禄二年五月十三日，天晴。巳时前后，芭蕉与曾良从一关动身去平泉。'
+  takadachi:
+    date: '1689-06-29'
+    stay_day: 0.3
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_hiraizumi_primary]
+    text:
+      en: 'They saw Takadachi, the Koromo River and the site of the Koromo barrier. In his book Bashō climbs Takadachi above the Kitakami River and gives the verse on summer grasses and the dreams of warriors.'
+      zh: '两人看了高馆、衣川和衣关旧址。芭蕉在书里写登上北上川边的高馆，留下"夏草啊，武士们的梦的遗迹"一句。'
+    line:
+      en: 'They climb Takadachi and look down on the Kitakami and Koromo rivers.'
+      zh: '两人登上高馆，看北上川和衣川。'
+  golden_hall:
+    date: '1689-06-29'
+    stay_day: 0.45
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_hiraizumi_hiraizumi_date]
+    text:
+      en: 'At Chūsonji the steward showed them the Golden Hall.'
+      zh: '在中尊寺，别当带两人看了光堂。'
+    line:
+      en: 'At Chūsonji the steward shows them the Golden Hall.'
+      zh: '在中尊寺，别当带两人看了光堂。'
+  sutra_hall:
+    date: '1689-06-29'
+    stay_day: 0.5
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_hiraizumi_hiraizumi_date]
+    text:
+      en: 'Sora wrote that the Sutra Hall was not opened because the steward was away, while Bashō''s book says that both halls were opened.'
+      zh: '曾良记经堂因别当不在没有开，芭蕉的书里却写两座堂都开了。'
+    line:
+      en: 'The Sutra Hall stays shut: the steward is away.'
+      zh: '经堂没有开，别当不在。'
+  back:
+    date: '1689-06-29'
+    stay_day: 0.7
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_hiraizumi_hiraizumi_date]
+    text:
+      en: 'At the early hour of the monkey, about four in the afternoon, they were back in Ichinoseki, where their host had the bath ready.'
+      zh: '申时上刻，约下午四点，两人回到一关，住处的主人烧好洗澡水等着他们。'
+    line:
+      en: 'About four in the afternoon they are back at their lodging in Ichinoseki, where the host has the bath ready.'
+      zh: '申时上刻，两人回到一关的住处，主人已烧好洗澡水等着。'
+  ogaki:
+    date: '1689-10-04'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [basho_hiraizumi_sora_diary, basho_oku_wiki]
+    text:
+      en: 'Around the twenty-first day of the eighth month, 4 October 1689, Bashō reached Ōgaki, the end of the journey of the book.'
+      zh: '八月二十一日前后，即 1689 年 10 月 4 日，芭蕉到了大垣，《奥之细道》的旅程在这里收尾。'
+    line:
+      en: 'About the twenty-first day of the eighth month: Bashō reaches Ōgaki, the end of the narrow road.'
+      zh: '八月二十一日前后，芭蕉到了大垣，这一趟北行在这里收尾。'
+  death:
+    date: '1694-11-28'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [basho_wiki, basho_britannica]
+    text:
+      en: 'Matsuo Bashō died in Osaka on 28 November 1694, the twelfth day of the tenth month of Genroku 7. The Narrow Road to the Deep North was printed in 1702.'
+      zh: '1694 年 11 月 28 日，即元禄七年十月十二日，松尾芭蕉在大阪去世。《奥之细道》1702 年刊行。'
+    note: 'A death: written as a plain fact.'
+    line:
+      en: 'The twelfth day of the tenth month, Genroku 7: Matsuo Bashō dies in Osaka.'
+      zh: '元禄七年十月十二日，松尾芭蕉在大阪去世。'
 bystanders:
-  basho_hiraizumi_reader:
+  basho_hiraizumi_host:
     invented: true
-    text: {en: 'An invented fellow traveler waiting for a damp sandal to dry.', zh: '一位虚构的同行旅人，正等湿草鞋晾干。'}
+    text: {en: 'The master of the lodging in Ichinoseki, made up for the game, who heats the bath for his guests.', zh: '一个编出来的一关住处主人，给客人烧洗澡水。'}
+  basho_hiraizumi_porter:
+    invented: true
+    text: {en: 'A porter on the roads around Ichinoseki, made up for the game.', zh: '一个编出来的一关一带的脚夫。'}
 wiki:
   refs:
     basho_hiraizumi_sora_diary:
       order: 10
       status: checked
       text:
-        en: 'Iwate Prefectural Library on Bashō and Sora’s visit https://www.library.pref.iwate.jp/ex/hiraizumi/alacarte02.html'
-        zh: '岩手县立图书馆芭蕉与曾良行程 https://www.library.pref.iwate.jp/ex/hiraizumi/alacarte02.html'
+        en: 'Iwate Prefectural Library, Bashō and Sora at Hiraizumi, with Sora''s diary for the thirteenth day of the fifth month https://www.library.pref.iwate.jp/ex/hiraizumi/alacarte02.html'
+        zh: '岩手县立图书馆，芭蕉与曾良在平泉，附曾良五月十三日日记 https://www.library.pref.iwate.jp/ex/hiraizumi/alacarte02.html'
     basho_hiraizumi_hiraizumi_date:
       order: 11
       status: checked
       text:
         en: 'Iwate University Hiraizumi research with Gregorian date and diary https://www.sekaiisan.pref.iwate.jp/uploads/contents/pages_0000002296_00/%E5%B9%B3%E6%B3%89%E6%96%87%E5%8C%96%E7%A0%94%E7%A9%B6%E5%B9%B4%E5%A0%B1%E7%AC%AC22%E5%8F%B7.pdf'
         zh: '岩手大学平泉研究所录新历日期与曾良日记 https://www.sekaiisan.pref.iwate.jp/uploads/contents/pages_0000002296_00/%E5%B9%B3%E6%B3%89%E6%96%87%E5%8C%96%E7%A0%94%E7%A9%B6%E5%B9%B4%E5%A0%B1%E7%AC%AC22%E5%8F%B7.pdf'
+    basho_oku_wiki:
+      order: 12
+      status: checked
+      text:
+        en: 'Wikipedia, Oku no Hosomichi https://en.wikipedia.org/wiki/Oku_no_Hosomichi'
+        zh: '维基百科，奥之细道 https://en.wikipedia.org/wiki/Oku_no_Hosomichi'
+    basho_wiki:
+      order: 13
+      status: checked
+      text:
+        en: 'Wikipedia, Matsuo Bashō https://en.wikipedia.org/wiki/Matsuo_Bash%C5%8D'
+        zh: '维基百科，松尾芭蕉 https://en.wikipedia.org/wiki/Matsuo_Bash%C5%8D'
+    basho_britannica:
+      order: 14
+      status: checked
+      text:
+        en: 'Encyclopaedia Britannica, Matsuo Bashō https://www.britannica.com/biography/Matsuo-Basho'
+        zh: '大英百科全书，松尾芭蕉 https://www.britannica.com/biography/Matsuo-Basho'
     basho_hiraizumi_primary:
       order: 134
       status: checked
       text:
         en: 'Matsuo Basho, Oku no Hosomichi, Hiraizumi section. Aozora Bunko transcription of the annotated Japanese edition. https://www.aozora.gr.jp/cards/002240/files/61619_78128.html'
-        zh: 'Matsuo Basho, Oku no Hosomichi, Hiraizumi section. Aozora Bunko transcription of the annotated Japanese edition. https://www.aozora.gr.jp/cards/002240/files/61619_78128.html'
+        zh: '松尾芭蕉《奥之细道》平泉一节，青空文库所录日文注释本。 https://www.aozora.gr.jp/cards/002240/files/61619_78128.html'
 self_check:
-  quote_line: '旅人问你在看什么。'
-  fact: hiraizumi
-  regret_choice: '略过「与同行旅人一起走到歇脚处」，这处细节便留给下一位核对。'
-  bookend: '从「走过平泉，带走什么」开始，以员工留下的观察或更正收尾。'
-  share_line: '走过平泉，带走什么'
-  share_number: '1689'
-pack: {author: The Teleporter, license: MIT, version: 1, languages: [en, zh]}
+  fact: sutra_hall
+  quote_line: '经堂没有开，别当不在。'
+  regret_choice: '派耐得住、记得清路的去，两人照史实当天往返；派会打听又能说的去，经堂外头也看上了一眼。一天之内两样都做到，要又稳又会问。'
+  bookend: '从三月二十七日深川出发开始，以元禄七年芭蕉在大阪去世收尾，中间是平泉的半天和一扇没开的门。'
+  share_line: '1689 年夏天，我陪两个旅人在平泉走了半天，有一座堂没开门。'
+  share_number: '2'
+  knowing: 'sutra_hall'
+  near: 'takadachi, golden_hall'
+  lever: 'p1, p2'
+  missed: 'ogaki'
+  brought: 'relic'
+pack: {author: The Teleporter, license: MIT, version: 2, languages: [en, zh]}
