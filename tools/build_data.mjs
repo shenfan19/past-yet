@@ -398,4 +398,18 @@ for (const rel of walk(OUT)) {
 console.log(`${outputs.size} files from ${entries('items').length + entries('events').length + entries('staff').length + entries('traits').length} item, event, staff and trait cards and more, ${moduleNames.length} person modules`);
 if (check && differs) { console.log(`${differs} files differ, run node tools/build_data.mjs`); process.exit(1); }
 console.log(storyLine);
+// ---------- words of modern politics are pointed out, not refused ----------
+// The list is in cards/config/politics_watch.yaml. Every yaml under cards is read line by line; a hit is printed for a person to read again.
+{
+  const watch = read('config/politics_watch.yaml').words;
+  const list = Object.values(watch).flat();
+  const files = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? files(path.join(dir, e.name)) : e.name.endsWith('.yaml') ? [path.join(dir, e.name)] : []));
+  const hits = [];
+  for (const f of files(CARDS)) {
+    const rel = path.relative(CARDS, f).split(path.sep).join('/');
+    if (rel === 'config/politics_watch.yaml') continue;
+    fs.readFileSync(f, 'utf8').split('\n').forEach((line, i) => { for (const w of list) if (line.includes(w)) hits.push(`  ${rel}:${i + 1} ${w}`); });
+  }
+  console.log(hits.length ? `politics watch, ${hits.length} lines to read again:\n${hits.join('\n')}` : 'politics watch: no word of the list in the cards');
+}
 if (check) console.log('data is up to date');

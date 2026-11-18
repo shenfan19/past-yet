@@ -8153,7 +8153,7 @@ events:
       - AI
       - Fan Shen
   - id: modigliani_paris
-    build_step: 2
+    build_step: 4
     year: 1920
     date: '1920-01-06'
     stay: 3
@@ -8166,11 +8166,12 @@ events:
       E: 2
       T: 1
       G: 2
+    ready: true
     refs:
-      - modigliani_paris_portrait
-      - modigliani_paris_museum_chronology
-      - modigliani_paris_estate_exhibitions
       - modigliani_paris_last_portraits
+      - modigliani_wiki
+      - hebuterne_wiki
+      - modigliani_paris_portrait
     scene:
       star_rules: 2
       points:
@@ -8209,6 +8210,12 @@ events:
         - id: p3
           kind: care
           day: 16.5
+          overturns:
+            - death
+            - funeral
+            - jeanne_death
+            - adopted
+            - grave
           req:
             any:
               - job:
@@ -8226,6 +8233,10 @@ events:
         - id: p4
           kind: care
           day: 19
+          overturns:
+            - jeanne_death
+            - adopted
+            - grave
           req:
             any:
               - job:
@@ -8249,15 +8260,22 @@ events:
                 stat:
                   will: 9
       vignettes:
-        - id: line
+        - id: coal
+          traits:
+            - hardy
+            - kind
+            - streetwise
+            - patient
+          day: 4
+        - id: saucers
           traits:
             - artistic
-            - curious
-        - id: reverse
-          traits:
-            - methodical
-            - handy
-        - id: cloth
+            - glib
+            - cheerful
+            - cosmopolitan
+          day: 30
+        - id: mimosa
+          day: 60
     authors:
       - AI
       - Fan Shen
