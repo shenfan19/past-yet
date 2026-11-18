@@ -6,6 +6,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { loadData } from '../js/data.js';
+import { chosenLocale, localeTag, pickLocale } from '../js/language.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
@@ -60,7 +61,18 @@ const en = await loadData(reader, (t) => yaml.load(t), () => I.fallback);
 const check = (label, ok) => { console.log(label + ':', ok ? 'ok' : 'MISMATCH'); if (!ok) bad++; };
 check('partial language uses its own key', Dxx.get('text.ui.title') === 'Partial title');
 check('partial language falls back for the rest', Dxx.get('text.ui.tabs.home') === en.get('text.ui.tabs.home'));
+check('partial language falls back for story text', JSON.stringify(Dxx.get('text.eras')) === JSON.stringify(en.get('text.eras')));
 check('partial encyclopedia falls back key by key', Dxx.get('enc_text.refs.game') === 'Partial game ref' && Dxx.get('enc_text.refs.lm') === en.get('enc_text.refs.lm'));
 check('language without a file reads the fallback', Dyy.get('text.ui.title') === en.get('text.ui.title') && Dyy.lang === 'yy');
 check('language not in the config reads the fallback', Dzz.lang === I.fallback && Dzz.get('text.ui.title') === en.get('text.ui.title'));
+check('legacy Chinese choice keeps the Simplified Chinese content', pickLocale(I, null, 'zh', ['zh-TW']) === 'zh' && localeTag('zh') === 'zh-Hans');
+check('the selector and runtime resolve the same URL alias', chosenLocale(I, 'zh_tw', 'ja') === 'zh-Hant' && pickLocale(I, 'zh_tw', 'ja', ['en']) === 'zh-Hant');
+check('Traditional Chinese regions and script use the Traditional locale', ['zh-TW', 'zh-HK', 'zh-MO', 'zh-Hant-CN'].every((tag) => pickLocale(I, null, null, [tag]) === 'zh-Hant'));
+check('explicit Simplified Chinese script wins over the region', ['zh-CN', 'zh-SG', 'zh-Hans-HK'].every((tag) => pickLocale(I, null, null, [tag]) === 'zh'));
+check('unsupported preferences are skipped in browser order', pickLocale(I, 'de', null, ['de-DE', 'es-MX', 'fr-CA']) === 'es');
+check('unsupported browser languages fall back to English', pickLocale(I, null, null, ['pt-BR']) === I.fallback);
+for (const [code, agency] of Object.entries({ 'zh-Hant': '事務所', fr: 'Agence', es: 'Agencia', ja: '事務所', ko: '사무소' })) {
+  const localized = await loadData(reader, (t) => yaml.load(t), () => code);
+  check(`${code} uses its own navigation`, localized.lang === code && localized.get('text.ui.tabs.shop') === agency);
+}
 process.exit(bad ? 1 : 0);

@@ -5,19 +5,14 @@ import { createSettings } from './settings.js';
 import { createAudio } from './audio.js';
 import { drawStartStaff } from './start.js';
 import { defaultFounder, applyFounder } from './founder.js';
+import { localeTag, pickLocale } from './language.js';
 
 // Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
 function pickLang(I) {
-  const codes = Object.keys(I.locales);
   const url = new URLSearchParams(location.search).get('lang');
   let saved = null;
   try { saved = localStorage.getItem(I.storage_key); } catch (e) { /* storage blocked */ }
-  for (const c of [url, saved]) if (c && c !== I.auto && codes.includes(c)) return c;
-  for (const n of navigator.languages || [navigator.language]) {
-    const pre = String(n).toLowerCase().split('-')[0];
-    if (codes.includes(pre)) return pre;
-  }
-  return I.fallback;
+  return pickLocale(I, url, saved, navigator.languages?.length ? navigator.languages : [navigator.language]);
 }
 
 const dev = new URLSearchParams(location.search).has('devtools');
@@ -50,7 +45,7 @@ function withDevStaff(S) {
   return S;
 }
 
-document.documentElement.lang = D.lang;
+document.documentElement.lang = localeTag(D.lang);
 document.title = [D.get('text.ui.title'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');
 
 const backend = createLocalBackend(D);

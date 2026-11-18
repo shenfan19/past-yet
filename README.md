@@ -56,12 +56,11 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Languages
 
-- Language files are `data/i18n/text.<code>.yaml` and `data/i18n/encyclopedia.<code>.yaml`. The structure of the encyclopedia is language neutral in `data/encyclopedia.yaml`.
-- Supported languages are listed in `config.yaml` under `i18n.locales`. English is the fallback and must be complete. Any key another language lacks, a missing file, or a language that is not configured, reads English.
-- The language is picked from `?lang=`, then the saved choice, then the browser language, then English. The selector on the settings page has Follow browser as its default, which clears the saved choice. Choosing a language saves it and reloads, and the page, filters, wiki article and scroll positions come back as they were.
-- The About pop-up holds the introduction, disclaimer, privacy, how it is driven and credits, in every language.
-- To add a language: add its code to `i18n.locales`, copy `text.en.yaml` and `encyclopedia.en.yaml` to the new code, translate what you want, leave the rest.
-- `node tools/check_i18n.mjs` compares the files with English (missing keys, stray keys, placeholders that differ) and tests the fallback.
+- The language selector offers English, Simplified Chinese (`zh`), Traditional Chinese (`zh-Hant`), French, Spanish, Japanese and Korean. The five new locales currently cover navigation and the language picker; untranslated interface, story and encyclopedia text falls back to English key by key.
+- Selection priority is `?lang=`, saved choice, browser preferences, then English. Existing `?lang=zh` links and saved choices still work. Browser tags such as `zh-TW` and `zh-HK` select Traditional Chinese; `zh-CN` and `zh-Hans` select Simplified Chinese. Follow browser clears the saved choice. Switching language reloads and restores the current page and UI state.
+- Configure selectable languages in `cards/config/config.yaml` under `i18n.locales`. Only the locales in `i18n.story_locales` currently require story translations at build time; keep optional locales out of this list until their stories are ready.
+- Add interface strings in `cards/text/<code>/` and story or encyclopedia translations in the corresponding source cards. Use the same keys and placeholders as English. Run `node tools/build_data.mjs` to generate `data/i18n/text.<code>.yaml` and `data/i18n/encyclopedia.<code>.yaml`. For the offline page, run `node tools/build_offline.mjs` after rebuilding data.
+- `node tools/check_i18n.mjs` checks locale matching, fallback, unexpected keys and placeholder consistency. Missing keys are reported as translation coverage, not errors.
 
 ## Catalogue and employees
 

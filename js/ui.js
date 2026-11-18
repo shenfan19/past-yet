@@ -8,6 +8,7 @@ import { createOffice } from './office.js';
 import { createSettingsPage } from './settings_ui.js';
 import { createShare } from './share.js';
 import { createQuotes } from './quotes.js';
+import { chosenLocale, localeTag } from './language.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const r1 = (x) => (Math.round(x * 10) / 10).toString();
@@ -26,10 +27,10 @@ export function createUI(D, ctx, DEV = false) {
   let savedLang = null;
   try { savedLang = localStorage.getItem(I.storage_key); } catch (e) { /* storage blocked */ }
   const urlLang = new URLSearchParams(location.search).get('lang');
-  const chosen = urlLang && urlLang in I.locales ? urlLang : (savedLang && savedLang in I.locales ? savedLang : I.auto);
+  const chosen = chosenLocale(I, urlLang, savedLang);
   // The language selector lives on the settings page. It is drawn there and handled here, so a change keeps the page and state.
   function langHtml() {
-    const opts = `<option value="${I.auto}" ${chosen === I.auto ? 'selected' : ''}>${esc(U.lang.auto)}</option>` + Object.entries(I.locales).map(([code, name]) => `<option value="${code}" ${chosen === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
+    const opts = `<option value="${I.auto}" ${chosen === I.auto ? 'selected' : ''}>${esc(U.lang.auto)}</option>` + Object.entries(I.locales).map(([code, name]) => `<option value="${esc(code)}" lang="${esc(localeTag(code))}" ${chosen === code ? 'selected' : ''}>${esc(name)}</option>`).join('');
     return `<select id="lang" aria-label="${esc(U.lang.label)}">${opts}</select>`;
   }
   function changeLang(value) {

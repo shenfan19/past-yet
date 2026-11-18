@@ -1,3 +1,5 @@
+import { matchLocale } from './language.js';
+
 // Strict data access: a missing key throws, there are no silent defaults.
 export class Data {
   constructor(obj) { this.o = obj; }
@@ -35,7 +37,7 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
   for (const f of FILES) o[f] = parse(await readText('data/' + f + '.yaml'));
   const I = o.config.i18n;
   const want = pickLang ? pickLang(I) : I.fallback;
-  const lang = want in I.locales ? want : I.fallback;
+  const lang = matchLocale(I, want) ?? I.fallback;
   const loadLocale = async (kind, code) => {
     try { return parse(await readText(`data/i18n/${kind}.${code}.yaml`)); } catch (e) { console.warn(`语言文件缺失 ${kind}.${code}，落回 ${I.fallback}`); return {}; }
   };

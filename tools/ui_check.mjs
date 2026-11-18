@@ -755,10 +755,13 @@ try {
   const frPage = await frCtx.newPage();
   await frPage.goto(`http://127.0.0.1:${port}/index.html`);
   await frPage.waitForSelector('.lead');
-  ok('browser language not configured falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
-  await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=fr&drafts`);
+  ok('French regional browser tag uses French navigation', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agence') && await frPage.locator('html').getAttribute('lang') === 'fr');
+  await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=zh-TW&drafts`);
   await frPage.waitForSelector('.lead');
-  ok('?lang with an unconfigured code falls back to English', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
+  ok('Traditional Chinese URL overrides the browser', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('事務所') && await frPage.locator('html').getAttribute('lang') === 'zh-Hant');
+  await frPage.goto(`http://127.0.0.1:${port}/index.html?lang=de`);
+  await frPage.waitForSelector('.lead');
+  ok('unsupported URL code still follows the browser', (await frPage.locator('#tabs [data-tab=shop]').textContent()).includes('Agence'));
   await frCtx.close();
   // a click that spans several ticks of the clock must still land
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en&drafts`);

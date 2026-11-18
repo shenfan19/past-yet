@@ -33,6 +33,10 @@ function merge(base, over) {
 
 const config = read('config/config.yaml');
 const LANGS = Object.keys(config.i18n.locales);
+const STORY_LANGS = config.i18n.story_locales;
+if (!LANGS.includes(config.i18n.fallback) || !Array.isArray(STORY_LANGS) || !STORY_LANGS.includes(config.i18n.fallback) || STORY_LANGS.some((lang) => !LANGS.includes(lang))) {
+  throw new Error('i18n.story_locales must include the fallback and only use configured locales');
+}
 const defaultAuthors = config.meta.card_authors;
 const validAuthors = (authors) => Array.isArray(authors) && authors.length > 0 && authors.every((a) => typeof a === 'string' && a.trim());
 if (!validAuthors(defaultAuthors)) fail('config.meta.card_authors must list the default card contributors');
@@ -248,7 +252,7 @@ for (const lang of LANGS) {
     if (inCard !== undefined) (text.eras = text.eras || {})[id] = inCard;
     else if (exists(rel)) (text.eras = text.eras || {})[id] = read(rel);
   }
-  if (Object.keys(text).length) emitYaml(`i18n/text.${lang}.yaml`, text);
+  emitYaml(`i18n/text.${lang}.yaml`, text);
 
   const enc = {};
   const putEnc = (key, list, pick) => {
@@ -277,7 +281,7 @@ for (const lang of LANGS) {
     }
   }
   putEnc('stats', statCards, (t) => t);
-  if (Object.keys(enc).length) emitYaml(`i18n/encyclopedia.${lang}.yaml`, enc);
+  emitYaml(`i18n/encyclopedia.${lang}.yaml`, enc);
 }
 
 // ---------- the modules are checked as modules ----------
@@ -326,7 +330,7 @@ let storyLine = '';
       if (i === variants.length - 1 ? v.traits !== undefined : !Array.isArray(v.traits) || !v.traits.length || v.traits.some((t) => !traitIds.has(t))) {
         fail(`${id} vignette ${v.id} needs known traits, or must be the final unconditional vignette`);
       }
-      for (const lang of LANGS) {
+      for (const lang of STORY_LANGS) {
         const line = localText(lang)?.vignettes?.[v.id];
         if (typeof line !== 'string' || !line.trim()) fail(`${id} vignette ${v.id} is missing ${lang} text`);
       }
@@ -355,7 +359,7 @@ let storyLine = '';
     people.push({ id: m, hasFacts: isObj(pc.facts), published });
     if (!isObj(pc.facts)) continue;
     checkStory(pc, {
-      id: m, langs: LANGS, fallback: config.i18n.fallback, hookMax: config.release.hook_max, refIds,
+      id: m, langs: STORY_LANGS, fallback: config.i18n.fallback, hookMax: config.release.hook_max, refIds,
       eraOf: eraOfEvent,
       eraText: (eid, lang) => (isObj(pc.era_text) ? pc.era_text[lang] : (exists(`people/${m}/era/text.${lang}.yaml`) ? read(`people/${m}/era/text.${lang}.yaml`) : null)),
     }, fail);
