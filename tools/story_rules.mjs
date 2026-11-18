@@ -72,8 +72,10 @@ export function checkStory(card, ctx, fail) {
   }
 
   // who made it
+  // who made it is the card's authors, or config.meta.card_authors; the pack says only under what licence and in which languages, so an author is never written twice
   const pk = card.pack;
-  if (!isObj(pk) || !pk.author || !pk.license || !Array.isArray(pk.languages)) fail(`${at}: a story with facts needs pack with author, license and languages`);
+  if (!isObj(pk) || !pk.license || !Array.isArray(pk.languages)) fail(`${at}: a story with facts needs pack with license and languages`);
+  if (isObj(pk) && 'author' in pk) fail(`${at}: pack has no author; who made the card is its authors, or config.meta.card_authors`);
 
   // every episode that has a model: a clock of recorded dates, a choice with a price, stars that are deeds of the traveller, and an ending that compares
   const events = isObj(card.events) ? Object.keys(card.events) : [];

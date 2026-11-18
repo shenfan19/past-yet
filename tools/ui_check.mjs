@@ -44,10 +44,16 @@ try {
   const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&devtools`);
   await page.waitForSelector('.lead');
+  // every item these checks name must still be in the game; a retired one fails here by name instead of somewhere later
+  const named = [...new Set(fs.readFileSync(new URL(import.meta.url), 'utf8').match(/[a-z]+(?:_[a-z0-9]+)+/g))];
+  const gone = await page.evaluate((ids) => { const I = window.__game.D.get('items'); return ids.filter((k) => k in I && !I[k].playable); }, named);
+  ok('every item the checks name is in the game' + (gone.length ? ': not ' + gone.join(', ') : ''), gone.length === 0);
   // a new game opens with the disclaimer before the character and agency setup
   await page.waitForSelector('#modal .welcome');
   ok('a new game opens with the welcome and its notice about the people in the game', await page.locator('#modal .welcome a[href*=issues]').isVisible() && (await page.locator('#modal .mclose').count()) === 0);
-  ok('the welcome tells how to have something removed that infringes rights', (await page.locator('#modal .welcome').innerText()).includes('contact@teleporter.uk'));
+  // the address is whatever the text of the welcome gives, so changing it does not break the check
+  const rightsMail = await page.evaluate(() => (window.__game.D.get('text.ui.welcome.rights').match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/) || [''])[0]);
+  ok('the welcome tells how to have something removed that infringes rights', rightsMail !== '' && (await page.locator('#modal .welcome').innerText()).includes(rightsMail));
   await page.keyboard.press('Escape');
   await page.mouse.click(5, 5);
   ok('the welcome does not close on Escape or on a click beside it', (await page.locator('#modal .welcome').count()) === 1);
@@ -292,31 +298,38 @@ try {
     S.secretary = null; S.dispatches = [];
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     const crew = Object.keys(S.staff).filter((k) => S.staff[k].hired);
-    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, headlamp: 1, recall_charm: 1 });
+    // the modern gear a fatal trip costs is the first playable item with that rule, found by what it is, not by its name
+    const I = g.D.get('items');
+    const G = Object.keys(I).find((k) => I[k].playable && I[k].loss === 'fatal');
+    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, [G]: 1, recall_charm: 1 });
     const trip = (staffId, items, outcome, era) => {
       const d = off.launch(era, { seed: 5, staffId, items });
       d.report.outcomeId = outcome; d.readyDay = S.clock.day;
       off.claim(d.id);
       return d.kit;
     };
-    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1, headlamp: 1 }, 'perfect', 'vienna_1847');
-    const bad = trip(crew[1], { headlamp: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
-    S.inv.headlamp = 1;
-    const saved2 = trip(crew[2], { headlamp: 1, recall_charm: 1, neural_chip: 1 }, 'near_death', 'vienna_1847');
-    const out = { fine, bad, saved2, inv: { ...S.inv } };
+    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1, [G]: 1 }, 'perfect', 'vienna_1847');
+    const bad = trip(crew[1], { [G]: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
+    S.inv[G] = 1;
+    const saved2 = trip(crew[2], { [G]: 1, recall_charm: 1, neural_chip: 1 }, 'near_death', 'vienna_1847');
+    const out = { G, fine, bad, saved2, inv: { ...S.inv } };
     S.inv = saved.inv; S.dispatches = saved.dispatches.concat(S.dispatches.filter((d) => d.claimed)); S.secretary = saved.secretary;
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     return out;
   });
-  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1 && kit.fine.back.headlamp === 1);
-  ok('a fatal trip loses the modern gear, not the future technology', kit.bad.lost.headlamp === 1 && kit.bad.back.neural_chip === 1);
-  ok('a rescue item saves the gear and is spent doing it', kit.saved2.back.headlamp === 1 && kit.saved2.lost.recall_charm === 1 && kit.saved2.back.neural_chip === 1);
+  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1 && kit.fine.back[kit.G] === 1);
+  ok('a fatal trip loses the modern gear, not the future technology', kit.bad.lost[kit.G] === 1 && kit.bad.back.neural_chip === 1);
+  ok('a rescue item saves the gear and is spent doing it', kit.saved2.back[kit.G] === 1 && kit.saved2.lost.recall_charm === 1 && kit.saved2.back.neural_chip === 1);
   // scenes: the points are requirements, equipment counts and shows, and a scene can find the traveller out
   const sc = await page.evaluate(() => {
     const b = window.__game.backend;
     const rate = (ev, staff, items, id) => { let n = 0; for (let k = 1; k <= 60; k++) if (b.runLight(ev, staff, k, items).points.find((p) => p.id === id).hit) n++; return n / 60; };
     let foundGorilla = 0, foundCloak = 0;
-    for (let k = 1; k <= 200; k++) { if (b.runLight('leonardo_florence', 's_ning', k, { exoskeleton: 1, scout_drone: 1 }).found) foundGorilla++; if (b.runLight('leonardo_florence', 's_ning', k, { exoskeleton: 1, scout_drone: 1, holo_cloak: 1 }).found) foundCloak++; }
+    // the two most conspicuous pieces of gear and the one that hides, chosen by their exposure
+    const I = window.__game.D.get('items');
+    const gear = Object.keys(I).filter((k) => I[k].playable && !I[k].implant && typeof I[k].exposure === 'number').sort((x, y) => I[y].exposure - I[x].exposure);
+    const showy = Object.fromEntries(gear.slice(0, 2).map((k) => [k, 1])), hide = gear[gear.length - 1];
+    for (let k = 1; k <= 200; k++) { if (b.runLight('leonardo_florence', 's_ning', k, showy).found) foundGorilla++; if (b.runLight('leonardo_florence', 's_ning', k, { ...showy, [hide]: 1 }).found) foundCloak++; }
     // the points are looked for among the stories, so the check does not hang on one card: a point that asks for a woman, one that asks for the chip
     const scenes = window.__game.D.get('catalog.active_events').filter((e) => e.scene);
     const findPoint = (test) => { for (const e of scenes) for (const p of e.scene.points) if (test(JSON.stringify(p.req))) return [e.id, p.id]; return null; };
@@ -346,18 +359,21 @@ try {
   await page.click('[data-act=sellspares]');
   ok('one click sells the spares and keeps one of each', await page.evaluate((f) => { const S = window.__game.ctx.S(); return S.funds > f && S.antiques.filter((x) => x === 'relic_faraday_london').length === 1; }, fundsC));
   await sub('modern');
-  await page.click('[data-act=cartinc][data-id=chlorine_tablet]');
-  ok('cart pins the chosen item', (await page.locator('.lpin [data-act=cartdec][data-id=chlorine_tablet]').count()) === 1);
+  // a modern supply to buy and sell, chosen by what it is, and its count before
+  const M = await page.evaluate(() => { const I = window.__game.D.get('items'), T = window.__game.D.get('text.items'); const id = Object.keys(I).find((k) => I[k].playable && I[k].shop === 'modern' && I[k].kind === 'consumable'); return { id, name: T[id].name, before: window.__game.ctx.S().inv[id] || 0 }; });
+  await page.click(`[data-act=cartinc][data-id=${M.id}]`);
+  ok('cart pins the chosen item', (await page.locator(`.lpin [data-act=cartdec][data-id=${M.id}]`).count()) === 1);
   await page.click('[data-act=cartbuy]');
-  ok('bought chlorine_tablet', (await page.evaluate(() => window.__game.ctx.S().inv.chlorine_tablet)) === 2);
+  ok('bought a modern supply', await page.evaluate((m) => window.__game.ctx.S().inv[m.id] - m.before === window.__game.D.get('items.' + m.id + '.step'), M));
   await sub('inv');
-  await page.click('[data-act=shopsell][data-id=chlorine_tablet]');
-  ok('sold chlorine_tablet', (await page.evaluate(() => window.__game.ctx.S().inv.chlorine_tablet)) === 0);
+  await page.click(`[data-act=shopsell][data-id=${M.id}]`);
+  // one sale gives back one step, so the stock is where it was before the purchase
+  ok('sold a modern supply', (await page.evaluate((m) => window.__game.ctx.S().inv[m.id] || 0, M)) === M.before);
   await sub('future');
   ok('future goods are buyable', (await page.locator('[data-act=cartinc][data-id=radiation_shield]').count()) === 1);
   await sub('modern');
   await page.click('[data-act=lfilter][data-id=shop_modern]');
-  await page.fill('#fq-shop_modern', '心率');
+  await page.fill('#fq-shop_modern', M.name);
   ok('a table has its own filter, folded until asked for', (await page.locator('#lb-shop_modern [data-act=cartinc]').count()) === 1 && (await page.locator('#lb-shop_future [data-act=cartinc]').count()) > 1);
   await page.fill('#fq-shop_modern', '');
   await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
@@ -913,26 +929,31 @@ const imp = await page.evaluate(() => {
   const cap = o.loadCap();
   const id = o.hiredIds().find((k) => g.ui.office && S.staff[k].hired);
   const before = g.backend.staffStats(id, null).constitution;
-  for (const k of ['cyber_lung', 'neural_chip']) S.inv[k] = (S.inv[k] || 0) + 1;
+  // the implants in the game, the one that adds most constitution first, so the checks follow whatever implants there are
+  const I = g.D.get('items');
+  const imps = Object.keys(I).filter((k) => I[k].playable && I[k].implant).sort((x, y) => (I[y].stat_add?.constitution || 0) - (I[x].stat_add?.constitution || 0));
+  const first = imps[0], second = imps[1];
+  for (const k of imps) S.inv[k] = (S.inv[k] || 0) + 1;
   S.staff[id].gear = [];
-  const a = o.equip(id, 'cyber_lung');
+  const a = o.equip(id, first);
   const afterGorilla = g.backend.staffStats(id, null).constitution;
-  const c = o.equip(id, 'neural_chip');
-  // the two implants fill the load cap, so a third piece of load does not fit
-  S.inv.cyber_lung += 1;
-  const b = o.equip(id, 'cyber_lung');
-  const stockWhileWorn = S.inv.neural_chip;
+  // more implants are put on until the load cap is reached, then one more copy does not fit
+  let c = true;
+  for (const k of imps.slice(1)) if (o.loadOf(id) + (I[k].load || 0) <= cap) c = o.equip(id, k) && c;
+  S.inv[first] += 1;
+  const b = o.loadOf(id) + (I[first].load || 0) > cap ? o.equip(id, first) : false;
+  const stockWhileWorn = S.inv[second];
   const load = o.loadOf(id);
-  const un = o.unequip(id, 'neural_chip');
-  const stockBack = S.inv.neural_chip;
-  o.equip(id, 'neural_chip');
+  const un = o.unequip(id, second);
+  const stockBack = S.inv[second];
+  o.equip(id, second);
   const worn = [...o.staffGear(id)];
   const other = o.hiredIds().find((k) => k !== id);
   S.staff[id].restUntil = 0;
   const left = o.dismiss(id);
-  return { cap, a, afterGorilla: afterGorilla - before, b, c, stockWhileWorn, load, un, stockBack, left, gearAfter: S.staff[id].gear.length, stockAfter: worn.every((k) => S.inv[k] >= 1) };
+  return { cap, a, afterGorilla: afterGorilla - before, expectAdd: I[first].stat_add?.constitution || 0, b, c, stockWhileWorn, load, un, stockBack, left, gearAfter: S.staff[id].gear.length, stockAfter: worn.every((k) => S.inv[k] >= 1) };
 });
-ok('a piece is worn while it fits the load cap and adds to the attributes', imp.a === true && imp.afterGorilla === 1 && imp.c === true && imp.b === false && imp.load <= imp.cap);
+ok('a piece is worn while it fits the load cap and adds to the attributes', imp.a === true && imp.afterGorilla === imp.expectAdd && imp.c === true && imp.b === false && imp.load <= imp.cap);
 ok('a worn piece leaves the stock and comes back when taken off', imp.stockWhileWorn === 0 && imp.un === true && imp.stockBack === 1);
 ok('letting someone go takes the implants off first, nothing is lost', imp.left === true && imp.gearAfter === 0 && imp.stockAfter);
 } catch (e) {

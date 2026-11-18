@@ -485,7 +485,6 @@ item_bindings:
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
   detox_water: {ors_stock: 3}
-  disinfectant: {protect_room: 12}
   antibiotic: {ors_stock: 4}
   heart_monitor: {has_monitor: 1}
 
@@ -539,6 +538,5 @@ optimization:
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: detox_water, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: disinfectant, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: antibiotic, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

@@ -459,11 +459,9 @@ scoring:
 
 item_bindings:
   ors_pack: {ors_stock: 1}
-  energy_bar: {ors_stock: 2}
-  altitude_pills: {ors_stock: 2}
+  hardtack: {ors_stock: 2}
   oxygen_can: {protect_room: 4}
   warm_blanket: {protect_room: 3}
-  hand_warmer: {protect_room: 1}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
   heart_monitor: {has_monitor: 1}
@@ -514,11 +512,9 @@ optimization:
   startpoint:
     regimens:
       - {item: ors_pack, variable: ors_stock, delivery: total, optimize: {value: [0, 60], integer: true}}
-      - {item: energy_bar, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
-      - {item: altitude_pills, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: hardtack, variable: ors_stock, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: oxygen_can, variable: protect_room, delivery: total, optimize: {value: [0, 15], integer: true}}
       - {item: warm_blanket, variable: protect_room, delivery: total, optimize: {value: [0, 12], integer: true}}
-      - {item: hand_warmer, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}

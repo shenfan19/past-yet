@@ -145,8 +145,21 @@ for (const id of cfg.eras) for (const k of Object.keys(D.get('era_raw.' + id).it
 for (const [id, it] of Object.entries(items)) {
   if (it.scene) { if (!(it.unlock_energy > 0)) err(`scene item ${id}: no unlock energy`); }
   else if (it.playable && it.shop !== 'future' && !bindingItems.has(id)) warn(`item ${id}: playable but bound by no era model`);
-  if (!it.playable && !it.ip) warn(`item ${id}: not playable and no reason given`);
+  if (!it.playable && !it.ip && !it.retired) warn(`item ${id}: not playable and no reason given`);
+  if (it.retired && it.playable) err(`item ${id}: retired but still playable`);
 }
+// a retired item keeps its id for old saves, and nothing that is in the game may ask for it: no point of a story that is on, no start stock,
+// no binding of a full model; a point that asks for what an item provides needs one playable item that provides it
+const playable = (id) => items[id]?.playable;
+const provided = new Set(Object.values(items).filter((it) => it.playable).flatMap((it) => [].concat(it.provides || [])));
+const reqItems = (r, out = []) => { if (!r || typeof r !== 'object') return out; if (Array.isArray(r)) { r.forEach((x) => reqItems(x, out)); return out; }
+  for (const [k, v] of Object.entries(r)) { if (k === 'item') out.push(...[].concat(v).map((x) => ['item', x])); else if (k === 'provides') out.push(...[].concat(v).map((x) => ['provides', x])); else reqItems(v, out); } return out; };
+for (const e of D.get('catalog.active_events')) for (const p of e.scene?.points || []) for (const [k, x] of reqItems(p.req)) {
+  if (k === 'item' && !playable(x)) err(`event ${e.id} point ${p.id}: asks for ${x}, which is not in the game`);
+  if (k === 'provides' && !provided.has(x)) err(`event ${e.id} point ${p.id}: asks for what provides ${x}, and no playable item does`);
+}
+for (const id of Object.keys(D.get('config.office.start_stock'))) if (!playable(id)) err(`start stock: ${id} is not in the game`);
+for (const id of cfg.eras) for (const k of Object.keys(D.get('era_raw.' + id).item_bindings)) if (!playable(k)) err(`model ${id}: binds ${k}, which is not in the game`);
 
 // events
 const tiers = {};

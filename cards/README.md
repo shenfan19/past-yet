@@ -41,7 +41,7 @@ The file name is the id. A card with `id:` inside must match its file name.
 
 A historical person has one folder, `people/<person>/`, and one file in it, `person.yaml`, holds everything written about that person. To find the events of a person, the lines they said, the sources, open the file of the person. To add a person, drop a folder in. To take one out, remove the folder. Nothing else has to change.
 
-Set `authors: [AI, Fan Shen]` for an explicit credit or list the contributors to that card. Embedded and separate cards in a person module can inherit the module's `authors`. The build uses `meta.card_authors` for the existing first-party cards and writes the resolved credit into every generated content card. Author credits describe the game's card, while sources and image credits identify the underlying material.
+Who made a card is its `authors` and nothing else; `pack` carries only the licence, the version and the languages. Set `authors: [AI, Fan Shen]` for an explicit credit or list the contributors to that card. Embedded and separate cards in a person module can inherit the module's `authors`. The build uses `meta.card_authors` for the existing first-party cards and writes the resolved credit into every generated content card. Author credits describe the game's card, while sources and image credits identify the underlying material.
 
 ```
 people/<person>/
@@ -86,7 +86,7 @@ self_check:              # the written check of the story, for the reviewer
   bookend: ...
   share_line: ...
   share_number: ...
-pack: {author: ..., license: ..., version: 1, languages: [en, zh]}
+pack: {license: ..., version: 1, languages: [en, zh]}
 ```
 
 A person card holds only what is true: the story, the facts, the article and the wiki cards say what the sources say and nothing about the card, the game or what is made up. Where there is no source, nothing is written. What is made up belongs to the side of the employee: the identities, the sync points, the scenes, the bystanders, the events of a model and the lines written for an employee. A relic is a thing of the game and its description says what the thing is.

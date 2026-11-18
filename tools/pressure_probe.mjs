@@ -17,11 +17,11 @@ const off = D.get('config.channels.off');
 const items = D.get('items');
 const staff = Object.keys(D.get('staff.staff'));
 const evs = D.get('catalog.events').filter((e) => (only ? only.split(',').includes(e.id) : e.ready) && Object.keys(e.channels || {}).some((c) => !off.includes(c)));
-// the best kit: for each live channel the two plain items and one piece of gear that name it, no implants
+// the best kit: for each live channel the two plain items and one piece of gear that name it, no implants and nothing retired
 function bestKit(ev) {
   const kit = {};
   for (const c of Object.keys(ev.channels).filter((c) => !off.includes(c))) {
-    const named = Object.keys(items).filter((id) => !items[id].implant && items[id].channels.includes(c));
+    const named = Object.keys(items).filter((id) => items[id].playable !== false && !items[id].implant && items[id].channels.includes(c));
     named.filter((id) => !items[id].scene).slice(0, 2).forEach((id) => { kit[id] = 1; });
     named.filter((id) => items[id].scene).slice(0, 1).forEach((id) => { kit[id] = 1; });
   }

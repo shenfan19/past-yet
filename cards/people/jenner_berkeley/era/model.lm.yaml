@@ -460,7 +460,7 @@ scoring:
 item_bindings:
   ors_pack: {ors_stock: 1}
   face_mask: {protect_room: 4}
-  disinfectant: {protect_room: 12}
+  chlorine_tablet: {protect_room: 12}
   handbook: {has_handbook: 1}
   recall_charm: {has_charm: 1}
   heart_monitor: {has_monitor: 1}
@@ -512,7 +512,7 @@ optimization:
     regimens:
       - {item: ors_pack, variable: ors_stock, delivery: total, optimize: {value: [0, 90], integer: true}}
       - {item: face_mask, variable: protect_room, delivery: total, optimize: {value: [0, 40], integer: true}}
-      - {item: disinfectant, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
+      - {item: chlorine_tablet, variable: protect_room, delivery: total, optimize: {value: [0, 30], integer: true}}
       - {item: handbook, variable: has_handbook, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: recall_charm, variable: has_charm, delivery: total, optimize: {value: [0, 1], integer: true}}
       - {item: heart_monitor, variable: has_monitor, delivery: total, optimize: {value: [0, 1], integer: true}}
