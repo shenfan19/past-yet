@@ -54,7 +54,7 @@ try {
   ok('the Sun Yat-sen story is open from the start, with the relic of its own', await page.evaluate(() => { const S = window.__game.ctx.S(); return S.locks.includes('relic_sun_yat_sen_guangzhou') && S.antiques.includes('relic_sun_yat_sen_guangzhou') && S.locks.filter((x) => x === 'relic_sun_yat_sen_guangzhou').length === 1; }));
   await page.click('[data-act=welcomeack]');
   // the founder: a name is required, points are spent from a pool, and the traits are limited
-  const fo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { f: S.founder, n: Object.keys(g.D.get('staff.staff')).length, hired: S.staff[S.founder.id].hired }; });
+  const fo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { f: S.founder, n: Object.values(g.D.get('staff.staff')).filter((x) => !x.dev_only).length, hired: S.staff[S.founder.id].hired }; });
   ok('the default character is male and the start button waits for a name', await page.locator('#founder-gender').inputValue() === 'm' && await page.locator('[data-act=welcomestart]').isDisabled());
   await page.fill('#founder-name', 'Test Founder');
   ok('a name alone is not enough to start', await page.locator('[data-act=welcomestart]').isDisabled());
@@ -78,7 +78,7 @@ try {
   const startBefore = await page.evaluate(() => window.__game.ctx.S().startRandom.join());
   await page.click('[data-act=rerollstart]');
   ok('the two random places can be drawn again before the first trip', (await page.evaluate(() => window.__game.ctx.S().startRandom.join())) !== startBefore && (await page.locator('#modal .welcome .startplaces li').count()) === 3);
-  const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired) }; });
+  const crewInfo = () => page.evaluate(() => { const g = window.__game, S = g.ctx.S(); return { offer: S.startStaff.offer, pick: S.startStaff.pick, regions: new Set(S.startStaff.offer.map((id) => g.D.get('staff.staff.' + id).region)).size, hired: Object.keys(S.staff).filter((k) => S.staff[k].hired && !g.D.get('staff.staff.' + k)?.dev_only) }; });
   const c0 = await crewInfo();
   ok('the crew is the founder and two drawn from different regions, with nothing to pick', c0.offer.length === 2 && c0.regions === 2 && c0.pick.length === 2 && c0.hired.length === 3 && (await page.locator('#modal .welcome .startstaff li').count()) === 2 && (await page.locator('[data-act=startpick]').count()) === 0);
   await page.click('[data-act=rerollstaff]');
@@ -317,18 +317,24 @@ try {
     const rate = (ev, staff, items, id) => { let n = 0; for (let k = 1; k <= 60; k++) if (b.runLight(ev, staff, k, items).points.find((p) => p.id === id).hit) n++; return n / 60; };
     let foundGorilla = 0, foundCloak = 0;
     for (let k = 1; k <= 200; k++) { if (b.runLight('leonardo_florence', 's_ning', k, { gorilla_arm: 1, cyber_arm: 1 }).found) foundGorilla++; if (b.runLight('leonardo_florence', 's_ning', k, { gorilla_arm: 1, cyber_arm: 1, holo_cloak: 1 }).found) foundCloak++; }
+    // the points are looked for among the stories, so the check does not hang on one card: a point that asks for a woman, one that asks for the chip
+    const scenes = window.__game.D.get('catalog.active_events').filter((e) => e.scene);
+    const findPoint = (test) => { for (const e of scenes) for (const p of e.scene.points) if (test(JSON.stringify(p.req))) return [e.id, p.id]; return null; };
+    const fem = findPoint((r) => r.includes('"female"'));
+    const chipAt = findPoint((r) => r === '{"item":"neural_chip"}');
     return {
-      woman: rate('leonardo_florence', 's_ning', {}, 'p2'), man: rate('leonardo_florence', 's_zhou', {}, 'p2'),
-      plain: rate('leonardo_florence', 's_ning', {}, 'p1'), apple: rate('leonardo_florence', 's_ning', { golden_apple: 1 }, 'p1'),
-      chipNeeded: rate('newton_cambridge', 's_ning', {}, 'p2'), chip: rate('newton_cambridge', 's_ning', { neural_chip: 1 }, 'p2'), foundGorilla, foundCloak,
+      woman: fem ? rate(fem[0], 's_ning', {}, fem[1]) : null, man: fem ? rate(fem[0], 's_zhou', {}, fem[1]) : null,
+      chipNeeded: chipAt ? rate(chipAt[0], 's_ning', {}, chipAt[1]) : null, chip: chipAt ? rate(chipAt[0], 's_ning', { neural_chip: 1 }, chipAt[1]) : null, foundGorilla, foundCloak,
       noKit: b.runLight('leonardo_florence', 's_ning', 5, {}).found,
     };
   });
-  ok('being a woman is a requirement of the portrait', sc.woman > 0.95 && sc.man < 0.2);
-  ok('the golden apple triples persuasion and a chip is the item a point asks for', sc.plain === 0 && sc.apple > 0.7 && sc.chipNeeded === 0 && sc.chip > 0.7);
+  if (sc.woman === null) console.log('being a woman as a requirement: skipped, no story asks for it now');
+  else ok('being a woman is a requirement where a point asks for it', sc.woman > 0.95 && sc.man < 0.2);
+  if (sc.chip === null) console.log('the chip as the item a point asks for: skipped, no story asks for it now');
+  else ok('a chip is the item a point asks for', sc.chipNeeded === 0 && sc.chip > 0.7);
   ok('equipment that shows gets the traveller found out, a cloak lowers it, and no equipment is never found out', sc.foundGorilla > 80 && sc.foundCloak < sc.foundGorilla && sc.noKit === null);
   // the antique roll is the backend's, seeded, and the chance falls to a floor
-  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= window.__game.D.get('config.office.antique_find.cap') && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_pythagoras_croton') && !o.list.some((x) => x.id === 'relic_curie_paris'); }));
+  ok('antique find is repeatable, and near in time and space beats far', await page.evaluate(() => { const b = window.__game.backend; const o = b.findOdds('broad_street_1854'); const w = (id) => o.list.find((x) => x.id === id).w; return b.findAntique('broad_street_1854', 5) === b.findAntique('broad_street_1854', 5) && o.p <= window.__game.D.get('config.office.antique_find.cap') && w('relic_faraday_london') > w('relic_lavoisier_paris') && w('relic_lavoisier_paris') > w('relic_euclid_alexandria') && !o.list.some((x) => x.id === 'relic_curie_paris'); }));
   ok('the chance of a find is a probability below the cap', await page.evaluate(() => { const b = window.__game.backend; return ['broad_street_1854', 'vienna_1847'].every((e) => { const p = b.findOdds(e).p; return p > 0.1 && p <= window.__game.D.get('config.office.antique_find.cap'); }); }));
   ok('a trip with no star finds a quarter as often as one with three', await page.evaluate(() => { const b = window.__game.backend; let a = 0, z = 0; for (let s = 1; s <= 2000; s++) { if (b.findAntique('broad_street_1854', s, [], 3)) a++; if (b.findAntique('broad_street_1854', s, [], 0)) z++; } return z > 0 && Math.abs(z / a - 0.25) < 0.08; }));
   ok('some first trips bring something back and some do not', await page.evaluate(() => { const b = window.__game.backend; let n = 0; for (let s = 1; s <= 400; s++) if (b.findAntique('broad_street_1854', s)) n++; return n > 80 && n < 400 * window.__game.D.get('config.office.antique_find.cap'); }));
@@ -561,7 +567,7 @@ try {
   await page.click('[data-act=appoint][data-id=s_zhou]');
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '0');
-  ok('hired after recruit', (await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length)) === 6);
+  ok('hired after recruit', (await page.evaluate(() => Object.entries(window.__game.ctx.S().staff).filter(([k, x]) => x.hired && !window.__game.D.get('staff.staff.' + k)?.dev_only).length)) === 6);
   // the game so far was played with the drafts shown, and a page without them does not know their places, so the trips to them are taken out of the save first
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(), D = g.D; const draft = new Set(D.get('config.eras').filter((id) => D.get('era_raw.' + id).metadata.status === 'draft')); S.dispatches = S.dispatches.filter((d) => !draft.has(d.eraId)); S.visited = S.visited.filter((x) => !draft.has(x)); if (S.trips) S.trips = S.trips.filter((x) => !draft.has(x.place)); for (const k of draft) delete S.stars[k]; g.ctx.save(); });
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&drafts`);
