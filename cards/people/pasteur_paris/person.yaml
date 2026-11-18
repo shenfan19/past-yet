@@ -3,83 +3,63 @@ events:
   pasteur_paris:
     order: 36
     build_step: 2
-    year: 1885
-    date: '1885-06-28'
-    stay: 5
-    lon: 2.34
-    lat: 48.84
+    year: 1859
+    date: '1859-07-01'
+    stay: 3
+    lon: 5.77
+    lat: 46.90
     region: europe
     field: medicine
     tier: 2
     channels: {E: 2}
-    refs: [pasteur_paris_arrival, pasteur_paris_paris_1885, pasteur_paris_grancher_role, pasteur_paris_institution_open]
+    refs: [pasteur_paris_vallery_radot, pasteur_paris_hov, pasteur_paris_marie, pasteur_paris_arrival, pasteur_paris_paris_1885, pasteur_paris_grancher_role, pasteur_paris_institution_open]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 8, req: {"any":[{"job":["doctor","physician","nurse","archivist"]},{"trait":["kind","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: notice, day: 13, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["kind","methodical","curious"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 108, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["kind","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: care, day: 55, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
       vignettes:
         - {id: date, traits: [methodical, curious, quiet]}
         - {id: address, traits: [kind, patient, faithful]}
         - {id: future}
     text:
       en:
-        name: 'The day he reached Paris'
-        place: Paris
+        name: 'The summer at Arbois'
+        place: Arbois
         figure: Louis Pasteur
-        story: 'Joseph Meister was brought to Louis Pasteur in Paris on 6 July 1885, and survived after the team’s rabies vaccination.'
+        story: 'In the summer of 1859 Pasteur''s eldest daughter Jeanne, nine years old, was staying with her grandfather at Arbois while her father worked in Paris. In September she fell ill with typhoid fever and died there.'
         relic: 'An arrival slip'
         relic_desc: 'An invented record that distinguishes arrival from later news.'
         points:
-          p1: 'When Joseph Meister and his mother reach Paris, connect their referral to Dr. Grancher so they can be seen on July 6'
-          p2: 'Help the reception desk agree a follow-up time and an address with the family. Keep identifying contact information private'
-          p3: 'As more families arrive in autumn, put a contact point in place and have the desk assign someone to answer questions about where and when to be seen'
+          p1: 'When the typhoid fever takes hold, nurse Jeanne through it and cure her'
         points_fail:
-          p1: 'The family is sent to wait elsewhere. Grancher does not find the child on his list, and the office recalls the employee.'
-          p2: 'After the family leaves, there is no address for a follow-up. Staff have to ask another traveler from the area.'
-          p3: 'Visitors get directions by word of mouth. Families arriving at night cannot tell whom to contact.'
+          p1: 'As in history the fever does not break. Jeanne dies at Arbois in September.'
         shift:
           p1:
-            was: 'Joseph Meister was brought to Pasteur in Paris on July 6, 1885. Dr. Jacques-Joseph Grancher was responsible for treating him.'
-          p2:
-            was: 'Meister came from Alsace. More people living outside Paris subsequently traveled there seeking help.'
-            now: 'Staff can send the family confirmation and pass its reply to the person taking over. The public record retains only the dates that can be checked.'
-          p3:
-            was: 'After 1885 the number of people seeking help in Paris continued to grow. The dedicated institute was built later.'
-            now: 'A staffed reception period gives families a place to leave their details and learn where to wait. Referrals from outside Paris now have a traceable record at the existing site.'
+            was: 'September 1859: Pasteur''s eldest daughter Jeanne, nine years old, died of typhoid fever at Arbois, where she was staying with her grandfather.'
+            now: 'The fever broke and Jeanne got well. In the autumn she went back to her parents in Paris.'
             who: pasteur_paris
-            bio: 'The early case involved a family traveling to Paris, researchers and a physician responsible for care. Each had a different part in the visit.'
+            bio: 'In this timeline Pasteur''s eldest daughter Jeanne came through the typhoid fever of 1859 at Arbois and grew up with her brother and sisters.'
         vignettes:
           date: 'Claire has copied the day the letter was brought in beside the name in the arrival register. You set the envelope next to the register, and she finds the difference. Both dates stay on the desk, each beside the event it marks.'
           address: 'Émile has offered to take the family’s reply while Claire keeps the register. You give him a narrow slip with just the address he needs. He checks it before leaving and the register stays closed while the visitors wait.'
           future: 'You know this case will be remembered long after the boy leaves. Claire needs a line describing what is known today. You enter the arrival and leave the later news for its own date. The latest envelope is still unopened when your visit ends.'
       zh:
-        name: '他抵达巴黎的那一天'
-        place: 巴黎
+        name: '阿尔布瓦的那个夏天'
+        place: 阿尔布瓦
         figure: 路易·巴斯德
-        story: '1885年7月6日，约瑟夫·迈斯特被带到巴黎见路易·巴斯德，接受团队的狂犬病疫苗接种后存活。'
+        story: '1859 年夏，巴斯德在巴黎做研究，九岁的长女让娜住在阿尔布瓦的祖父家。九月她染上伤寒，死在那里。'
         relic: '一张抵达登记副页'
         relic_desc: '登记副页，分开记录抵达与后来的来信。'
         points:
-          p1: '约瑟夫·迈斯特和母亲到达巴黎时，把来访经过与可接诊的格朗谢医生对上，护住 7 月 6 日的接诊'
-          p2: '帮接诊处给一家人留返回时间与能收到消息的地点，由接手人员核对并另存私密联络信息'
-          p3: '秋季来访者增多时，给等候的外地家庭明确联络处，请接诊处安排能答复问路和接待时段的人'
+          p1: '伤寒烧起来的时候，守着让娜照护，治好她'
         points_fail:
-          p1: '母子被转往另一处等候，格朗谢收到的名单漏了这个孩子，事务所因同步失败召回员工。'
-          p2: '家人离开后没有可回访的地址。要取得新消息只好请从同地来的人辗转打听。'
-          p3: '不同人只收到口头指路，夜间抵达的家庭不知道该跟哪一处联系。'
+          p1: '高烧照史实没有退下去，让娜九月死在阿尔布瓦。'
         shift:
           p1:
-            was: '1885 年 7 月 6 日，迈斯特被带到巴黎见巴斯德，医生雅克－约瑟夫·格朗谢负责接诊和治疗。'
-          p2:
-            was: '迈斯特来自阿尔萨斯。随后越来越多外地来访者赴巴黎寻求帮助。'
-            now: '接诊处可以给一家人寄确认信，回函由接手的人拿到；公开记录里只留能核对的日期。'
-          p3:
-            was: '1885 年之后赴巴黎求助的人数继续增加。新的专门机构后来才建成。'
-            now: '接诊处留出一个有人值守的时段，负责接收来访信息并把候诊地点告诉家属。远地转介在已有机构内也能留下可追查的记录。'
+            was: '1859 年 9 月，巴斯德九岁的长女让娜在阿尔布瓦祖父家患伤寒去世。'
+            now: '烧退了，让娜病好起来，秋天回到巴黎爸爸妈妈身边。'
             who: pasteur_paris
-            bio: '首位著名接种者由外地赶到巴黎，家人、负责研究的人和具备医疗职责的人员分别参与了这一次就诊。'
+            bio: '这条时间线里，巴斯德的长女让娜在 1859 年阿尔布瓦的那场伤寒里活了下来，和弟弟妹妹一起长大。'
         vignettes:
           date: '克莱尔把来信送到的日子抄进了抵达簿。你把信封摆到登记簿旁，她看出了两处不同。两天都留在桌上，各标它真正对应的事。'
           address: '埃米尔愿意代送家人的回信，克莱尔留守登记簿。你递给他一张窄条，只写他要核对的地址。他出门前核过一遍，有旁人等候时，登记簿仍合着。'
@@ -87,23 +67,57 @@ events:
 text:
   en:
     name: Louis Pasteur
-    text: French chemist and microbiologist, 1822 to 1895. He studied fermentation and spoilage and developed pasteurisation. In 1885 his team vaccinated Joseph Meister against rabies after a dog bite.
+    text: French chemist and microbiologist, 1822 to 1895. He studied fermentation and spoilage and developed pasteurisation. Two of his daughters died of typhoid fever, Jeanne in 1859 and Cécile in 1866. In 1885 his team vaccinated Joseph Meister against rabies after a dog bite.
   zh:
     name: 路易·巴斯德
-    text: 法国化学家与微生物学家，1822年生，1895年去世。他研究发酵和腐败，发展了巴氏消毒法。1885年，巴斯德团队为被狗咬伤的约瑟夫·迈斯特接种狂犬病疫苗。
+    text: 法国化学家与微生物学家，1822 年生，1895 年去世。他研究发酵和腐败，发展了巴氏消毒法。他有两个女儿死于伤寒，让娜在 1859 年，塞西尔在 1866 年。1885 年，巴斯德团队为被狗咬伤的约瑟夫·迈斯特接种狂犬病疫苗。
 quotes:
   pasteur:
     order: 5
     text:
       en: {who: Louis Pasteur, quote: "Chance favours only the prepared mind."}
       zh: {who: 巴斯德, quote: "机遇只青睐有准备的头脑。"}
-hook: {en: 'Which date belongs on the arrival card?', zh: '登记卡上，该填哪一天？'}
+hook: {en: 'A summer at her grandfather''s, and a fever in September.', zh: '在祖父家过的夏天，九月的一场高烧'}
 facts:
+  jeanne:
+    date: '1859-07'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [pasteur_paris_vallery_radot, pasteur_paris_marie]
+    text:
+      en: 'In 1859 Pasteur''s eldest daughter Jeanne, born in 1850, was staying with her grandfather at Arbois.'
+      zh: '1859 年，巴斯德 1850 年出生的长女让娜住在阿尔布瓦的祖父家。'
+    line:
+      en: 'Summer 1859: Jeanne, nine, is staying with her grandfather at Arbois.'
+      zh: '1859 年夏，九岁的让娜住在阿尔布瓦祖父家。'
+  death:
+    date: '1859-09-10'
+    stay_day: 71
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [pasteur_paris_vallery_radot, pasteur_paris_hov]
+    text:
+      en: 'Jeanne Pasteur died of typhoid fever at Arbois in September 1859; a chronology gives 10 September.'
+      zh: '1859 年 9 月，让娜·巴斯德在阿尔布瓦死于伤寒，一份年表记作 9 月 10 日。'
+    line:
+      en: 'September 1859: Jeanne dies of typhoid fever at Arbois.'
+      zh: '1859 年 9 月，让娜在阿尔布瓦死于伤寒。'
+  cecile:
+    date: '1866-05-23'
+    checked: two_sources
+    level: careful
+    use: [wiki]
+    sources: [pasteur_paris_vallery_radot, pasteur_paris_marie]
+    text:
+      en: 'Pasteur''s daughter Cécile died of typhoid fever at Chambéry on 23 May 1866, aged twelve.'
+      zh: '1866 年 5 月 23 日，巴斯德的女儿塞西尔在尚贝里死于伤寒，十二岁。'
   arrival:
     date: '1885-07-06'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [pasteur_paris_arrival]
     text:
       en: 'The institutional history dates Meister’s arrival with Pasteur to 6 July 1885 and records the successful vaccination.'
@@ -117,6 +131,24 @@ bystanders:
     text: {en: 'A fictional messenger taking a reply to the family.', zh: '虚构送信人埃米尔，把回信带给家人。'}
 wiki:
   refs:
+    pasteur_paris_vallery_radot:
+      order: 974
+      status: checked
+      text:
+        en: 'René Vallery-Radot, The Life of Pasteur, volume 1, translated by R. L. Devonshire (1902), chapters 4 and 6 https://archive.org/details/lifeofpasteur01vall'
+        zh: '勒内·瓦莱里－拉多，《巴斯德传》第一卷，德文希尔英译（1902），第四、六章 https://archive.org/details/lifeofpasteur01vall'
+    pasteur_paris_hov:
+      order: 975
+      status: checked
+      text:
+        en: 'History of Vaccines, College of Physicians of Philadelphia, Louis Pasteur timeline https://www.historyofvaccines.org/content/first-laboratory-vaccine'
+        zh: '费城医师学院“疫苗史”，路易·巴斯德年表 https://www.historyofvaccines.org/content/first-laboratory-vaccine'
+    pasteur_paris_marie:
+      order: 976
+      status: checked
+      text:
+        en: 'Wikipedia, Marie Pasteur https://en.wikipedia.org/wiki/Marie_Pasteur'
+        zh: '维基百科，玛丽·巴斯德 https://en.wikipedia.org/wiki/Marie_Pasteur'
     pasteur_paris_paris_1885:
       order: 10
       status: checked
@@ -142,7 +174,7 @@ wiki:
         en: 'Institut Pasteur, Louis Pasteur’s final years, Joseph Meister chronology https://www.pasteur.fr/en/about-us/final-years-1877-1887'
         zh: '巴斯德研究所，巴斯德生平末期，约瑟夫·迈斯特纪年 https://www.pasteur.fr/en/about-us/final-years-1877-1887'
 self_check:
-  fact: arrival
+  fact: death
   quote_line: '两天都留在桌上，各标它真正对应的事。'
   regret_choice: 'future 若提前落笔写结果，抵达时能知道的事就被改了。'
   bookend: '从填不了一个日期，到各有落处。'

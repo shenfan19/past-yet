@@ -3,21 +3,21 @@ events:
   leeuwenhoek_delft:
     order: 21
     build_step: 2
-    year: 1676
-    date: '1676-09-25'
-    stay: 3
+    year: 1677
+    date: '1677-05-01'
+    stay: 7
     lon: 4.36
     lat: 52.01
     region: europe
     field: science
     tier: 2
     channels: {V: 1}
-    refs: [leeuwenhoek_delft_primary, leeuwenhoek_delft_october_letter, leeuwenhoek_delft_witnesses]
+    refs: [leeuwenhoek_delft_witnesses, leeuwenhoek_delft_rs_1677, leeuwenhoek_delft_hooke, leeuwenhoek_delft_gest, leeuwenhoek_delft_wiki, leeuwenhoek_delft_october_letter, leeuwenhoek_delft_primary]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["archivist","translator"]},{"trait":["curious","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 40, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["curious","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: persuade, guard: true, day: 17, req: {"any":[{"job":["translator","archivist","teacher","lecturer","university_lecturer"],"stat":{"will":5}},{"trait":["curious","charismatic"],"stat":{"wit":6,"will":6}}]}}
+        - {id: p2, kind: notice, guard: true, day: 200, req: {"any":[{"job":["biologist","physician","lecturer","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","curious"],"stat":{"wit":8,"will":6}},{"item":"magnifier","trait":["methodical","curious","handy"],"stat":{"wit":6}}]}}
       vignettes:
         - {id: motion, traits: [skeptical, curious]}
         - {id: label, traits: [handy, methodical]}
@@ -27,23 +27,20 @@ events:
         name: A world in a drop of water
         place: Delft
         figure: Antonie van Leeuwenhoek
-        story: 'A letter sent from Delft in April 1676 records Leeuwenhoek''s observations and includes figures of ash wood and a tiny eel-like animal found in wine.'
+        story: 'In October 1676 Leeuwenhoek wrote from Delft that a drop of pepper water held thousands of little animals. In London the Fellows of the Royal Society did not believe him, and Nehemiah Grew could not see them. Through the summer of 1677 eight witnesses in Delft looked through his lenses and wrote down what they saw; he sent their testimonials to London on 5 October. In November Robert Hooke failed twice, and at the third try showed the Society the little animals himself.'
         relic: A tiny brass lens plate
         relic_desc: A thumb sized plate holding one very small, very clear lens.
         points:
-          p1: 'In Delft, check every page and illustration of the long October 9 letter before dispatching it to the Royal Society'
-          p2: 'Have a witness in Delft independently describe the shapes and movements they see. Send the signed account apart from Leeuwenhoek’s own comments'
+          p1: 'When word of London’s disbelief reaches Delft, hold the witnesses to it until they have looked through the lens and written down what they saw'
+          p2: 'After Hooke has failed twice to find the little animals, help him steep the pepper water and set the lens, and hold the third showing in London'
         points_fail:
-          p1: 'Loose sheets are set aside and the drawings no longer match the account. The office recalls the employee.'
-          p2: 'London receives only the observer’s account. Others have to wait for more evidence to judge what can be seen independently.'
+          p1: 'The first witnesses put off looking and no testimonial is written. The branch drifts out of sync, and the office recalls the employee.'
+          p2: 'Hooke’s third showing finds nothing either, and the Society’s doubt stands. The branch drifts out of sync, and the office recalls the employee.'
         shift:
           p1:
-            was: 'The Royal Society preserves Leeuwenhoek’s long Dutch letter to Oldenburg dated October 9, 1676, at Delft.'
+            was: '18 May to 30 August 1677: eight witnesses in Delft looked through Leeuwenhoek’s lenses and wrote testimonials to the little animals in pepper water. He sent them to London with his letter of 5 October.'
           p2:
-            was: 'Witnesses wrote in 1677, and the Society also asked Hooke to verify observations.'
-            now: 'A dated statement from a witness reaches London earlier. Readers can compare the accounts and identify what still needs checking.'
-            who: leeuwenhoek_delft
-            bio: 'Leeuwenhoek corresponded with the Royal Society from Delft for years. Translation and independent checks shaped how his observations were received.'
+            was: 'November 1677: Robert Hooke twice failed to show the Royal Society Leeuwenhoek’s little animals, and on the third try, with pepper steeped nine or ten days in rainwater, showed great numbers of them.'
         vignettes:
           motion: 'The correspondent writes that something moved. You ask what the movement looked like to someone who cannot see the lens. They cross out a comparison and draw a second position beside the first.'
           label: 'There are drawings from wood and from wine on the table. You add temporary labels before the correspondent scrapes up the stray sheets, and the pictures go in the right order.'
@@ -52,23 +49,20 @@ events:
         name: 一滴水里的世界
         place: 代尔夫特
         figure: 列文虎克
-        story: '列文虎克 1676 年 4 月从代尔夫特寄出的信记录了他的观察，并附白蜡木切面和酒中鳗状小动物的图。'
+        story: '1676 年 10 月，列文虎克从代尔夫特写信说，一滴胡椒水里有成千上万的小动物。伦敦皇家学会的会员们不信，格鲁也没看见。1677 年夏天，代尔夫特先后有八位见证人凑到他的透镜前看过，写下证词，10 月 5 日随信寄往伦敦。11 月，胡克两次没看见，第三次才当着学会的面把小动物显了出来。'
         relic: 一块小黄铜透镜板
         relic_desc: 拇指大的板子，里面嵌着一片极小又极清晰的透镜。
         points:
-          p1: '在代尔夫特给列文虎克 10 月 9 日写出的长信核齐各页和随信图，再合封送往皇家学会'
-          p2: '请一位当地见证者留下自己看到的形状和动作，和列文虎克的注释分开署名，再寄给伦敦'
+          p1: '伦敦不信的消息传到代尔夫特时，稳住见证人，等他们亲眼看过透镜、写下所见'
+          p2: '胡克两次没找到小动物之后，帮他泡足胡椒水、调好透镜，护住伦敦的第三次演示'
         points_fail:
-          p1: '附页被另放一边，信中的观察与图对不上。事务所因同步失败召回员工。'
-          p2: '伦敦只收到观察者自己的解释，同行仍须等下一轮材料判断哪些能独立复见。'
+          p1: '头几位见证人一拖再拖，没有人写下证词。分支脱节，事务所召回员工。'
+          p2: '胡克第三次也没看见，学会的怀疑照旧。分支脱节，事务所召回员工。'
         shift:
           p1:
-            was: '皇家学会保存了他 1676 年 10 月 9 日从代尔夫特寄给奥尔登堡的荷兰文长信。'
+            was: '1677 年 5 月 18 日到 8 月 30 日，代尔夫特八位见证人先后看过列文虎克的透镜，为胡椒水里的小动物写下证词，他 10 月 5 日随信寄往伦敦。'
           p2:
-            was: '1677 年有见证者来信，皇家学会也请胡克验证。'
-            now: '一份标明见证人和日期的说明提前到了伦敦，读者可以先判断哪些所见相同，哪些仍待核实。'
-            who: leeuwenhoek_delft
-            bio: '列文虎克从代尔夫特向皇家学会长期寄信。观察能否经翻译和独立核验传递，是通信的重要部分。'
+            was: '1677 年 11 月，胡克两次没能向皇家学会显出列文虎克说的小动物，第三次用雨水泡了九到十天的胡椒，显出了一大群。'
         vignettes:
           motion: '通信者写了句「有东西在动」。你问看不到透镜的人该怎样想象这个动法。他划去原先的比喻，在第一个位置旁画了第二个。'
           label: '桌上混着木头和酒的观察图。通信者收走散页前，你加了两张临时标签，图才按原来的顺序放进信里。'
@@ -82,11 +76,62 @@ text:
     text: 荷兰布商与显微镜学家，1632 年生，1723 年去世，代尔夫特人。他用自己磨制的单透镜显微镜看到细菌、红细胞和精子，并在给皇家学会的信中描述。
 hook: {en: 'Can the next observer find it too?', zh: '下一个人也看得见吗'}
 facts:
+  doubt:
+    date: '1677-02-14'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [leeuwenhoek_delft_witnesses, leeuwenhoek_delft_wiki]
+    text:
+      en: 'Early in 1677 the Royal Society asked Leeuwenhoek for his method so that it could confirm his observations; its members did not believe him, and Nehemiah Grew could not repeat them.'
+      zh: '1677 年初，皇家学会要列文虎克交代方法，好核实他的观察；会员们不信，格鲁也复现不出来。'
+    line:
+      en: 'Spring 1677: London does not believe in the little animals.'
+      zh: '1677 年春，伦敦不信那些小动物。'
+  testimonials:
+    date: '1677-05-18'
+    stay_day: 17
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [leeuwenhoek_delft_rs_1677, leeuwenhoek_delft_witnesses]
+    text:
+      en: 'Between 18 May and 30 August 1677 eight people in Delft and nearby, among them a notary, a physician and a minister, wrote testimonials to the little animals in Leeuwenhoek’s pepper water; he enclosed them in his letter of 5 October 1677.'
+      zh: '1677 年 5 月 18 日到 8 月 30 日，代尔夫特一带有八人为列文虎克胡椒水里的小动物写下证词，其中有公证人、医生和牧师；他把证词附在 1677 年 10 月 5 日的信里。'
+    line:
+      en: '18 May 1677: the first two witnesses in Delft write down what they saw.'
+      zh: '1677 年 5 月 18 日，代尔夫特头两位见证人写下了亲眼所见。'
+  sent:
+    date: '1677-10-05'
+    stay_day: 157
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [leeuwenhoek_delft_rs_1677]
+    text:
+      en: 'Leeuwenhoek’s letter of 5 October 1677 from Delft sent eight testimonials to London.'
+      zh: '1677 年 10 月 5 日，列文虎克从代尔夫特寄出附八份证词的信。'
+    line:
+      en: '5 October 1677: the testimonials go to London.'
+      zh: '1677 年 10 月 5 日，证词寄往伦敦。'
+  hooke:
+    date: '1677-11'
+    stay_day: 208
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [leeuwenhoek_delft_hooke, leeuwenhoek_delft_gest]
+    text:
+      en: 'In November 1677 Robert Hooke failed twice to show the Royal Society the little animals, and at the third meeting, with pepper steeped in rainwater, showed great numbers of them.'
+      zh: '1677 年 11 月，胡克两次没能向皇家学会显出小动物，第三次用雨水泡过的胡椒水显出了一大群。'
+    line:
+      en: 'November 1677: at the third try Hooke shows the Society the little animals.'
+      zh: '1677 年 11 月，胡克第三次才向学会显出了小动物。'
   letter:
     date: '1676-04-21'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [leeuwenhoek_delft_primary]
     text:
       en: 'A letter sent from Delft in April 1676 records Leeuwenhoek''s observations and includes figures of ash wood and a tiny eel-like animal found in wine.'
@@ -97,6 +142,30 @@ bystanders:
     text: {en: 'An invented correspondent trying to describe a sight through a lens.', zh: '一位虚构的通信者，正在写透镜下的景象。'}
 wiki:
   refs:
+    leeuwenhoek_delft_rs_1677:
+      order: 145
+      status: checked
+      text:
+        en: 'Antoni van Leeuwenhoek to Henry Oldenburg, Delft, 5 October 1677, with testimonials, Royal Society Archives EL/L1/29 https://makingscience.royalsociety.org/items/el_l1_29/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
+        zh: '列文虎克致奥尔登堡，代尔夫特，1677 年 10 月 5 日，附证词，皇家学会档案 EL/L1/29 https://makingscience.royalsociety.org/items/el_l1_29/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
+    leeuwenhoek_delft_hooke:
+      order: 146
+      status: checked
+      text:
+        en: 'Lens on Leeuwenhoek, Robert Hooke finally succeeded in replicating Leeuwenhoek''s observations of little animals, after Birch''s History of the Royal Society https://lensonleeuwenhoek.net/content/hooke-finally-succeeded'
+        zh: 'Lens on Leeuwenhoek，胡克终于复现了列文虎克的小动物，据伯奇《皇家学会史》 https://lensonleeuwenhoek.net/content/hooke-finally-succeeded'
+    leeuwenhoek_delft_gest:
+      order: 147
+      status: checked
+      text:
+        en: 'Howard Gest, The discovery of microorganisms by Robert Hooke and Antoni van Leeuwenhoek, fellows of the Royal Society, Notes and Records of the Royal Society 58 (2004), 187–201 https://pubmed.ncbi.nlm.nih.gov/15209075/'
+        zh: '霍华德·盖斯特，《胡克与列文虎克发现微生物》，《皇家学会笔记与记录》第 58 卷（2004），187–201 页 https://pubmed.ncbi.nlm.nih.gov/15209075/'
+    leeuwenhoek_delft_wiki:
+      order: 148
+      status: checked
+      text:
+        en: 'Wikipedia, Antonie van Leeuwenhoek https://en.wikipedia.org/wiki/Antonie_van_Leeuwenhoek'
+        zh: '维基百科，安东尼·范·列文虎克 https://en.wikipedia.org/wiki/Antonie_van_Leeuwenhoek'
     leeuwenhoek_delft_october_letter:
       order: 10
       status: checked
@@ -117,7 +186,7 @@ wiki:
         zh: 'Antoni van Leeuwenhoek to Henry Oldenburg, Delft, 21 April 1676, Royal Society Archives EL/L1/18. https://makingscience.royalsociety.org/items/el_l1_18/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
 self_check:
   quote_line: '通信者写了句「有东西在动」。'
-  fact: letter
+  fact: testimonials
   regret_choice: '略过「把图对到信里的那段说明」，这处细节便留给下一位核对。'
   bookend: '从「下一个人也看得见吗」开始，以员工留下的观察或更正收尾。'
   share_line: '下一个人也看得见吗'

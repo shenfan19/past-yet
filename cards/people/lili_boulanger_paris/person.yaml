@@ -2,21 +2,21 @@ order: 125
 events:
   lili_boulanger_paris:
     order: 149
-    build_step: 1
+    build_step: 2
     year: 1918
-    lon: 1.8
-    lat: 48.97
+    date: '1918-01-01'
+    stay: 3
+    lon: 1.88
+    lat: 49.00
     region: europe
     field: music
     tier: 1
     channels: {E: 1, G: 2}
-    regret: true
-    refs: [lili_boulanger_paris_score]
+    refs: [lili_boulanger_paris_wiki, lili_boulanger_paris_snl, lili_boulanger_paris_baker, lili_boulanger_paris_score]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"job":["musician"]},{"stat":{"wit":7}}]}}
-        - {id: p2, kind: endure, req: {"stat":{"will":6}}}
-        - {id: p3, kind: trust, redeem: true, req: {"trait":["kind","cosmopolitan","attached"]}}
+        - {id: p1, kind: care, day: 50, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
       vignettes:
         - {id: entry, traits: [methodical, curious]}
         - {id: visitor, traits: [kind, charismatic]}
@@ -26,13 +26,19 @@ events:
         name: 'Parts spread across the table'
         place: "Mézy sur Seine"
         figure: "Lili Boulanger"
-        story: 'The Bibliothèque nationale de France catalogues Lili Boulanger’s Pie Jesu with the composition note Rome–Mézy 1918 and specifies voice, string quartet, harp and organ.'
+        story: 'Lili Boulanger had been ill since early childhood. In the winter of 1918, at Mézy-sur-Seine, she was too weak to write and dictated her last work, for voice, string quartet, harp and organ, to her sister Nadia. She died there on 15 March 1918, at twenty four.'
         relic: "A pencil"
         relic_desc: "A short pencil beside blank staff paper."
         points:
-          p1: 'Identify the singing line in the score'
-          p2: 'Wait until the copyist has checked the quiet entrance'
-          p3: 'Return the marked parts to the people who will read them'
+          p1: 'Before the illness of her bowel wears her out, get it under control and save Lili'
+        points_fail:
+          p1: 'As in history the illness wins. Lili dies at Mézy on 15 March, at twenty four.'
+        shift:
+          p1:
+            was: '15 March 1918: Lili Boulanger, ill since childhood, died at Mézy-sur-Seine, aged twenty four.'
+            now: 'Her illness was brought under control. That spring she sat up at the table again and wrote the notes down in her own hand.'
+            who: lili_boulanger_paris
+            bio: 'In this timeline Lili Boulanger came through the winter of 1918 at Mézy. Her illness was treated, and she went on composing.'
         vignettes:
           entry: 'The copyist has marked the singer’s entry on an instrumental part. You lay that sheet next to the full score and ask him to point to the voice. He moves one mark. You take a scrap with both places on it. The rehearsal begins after your return.'
           visitor: 'You tell the copyist that future readers will come looking for every part listed for the work. He sets the organ pages aside so they won’t be mistaken for a spare voice copy. You help him tie them separately. You never get to hear those two parts together.'
@@ -41,13 +47,19 @@ events:
         name: '桌上摊着几份声部谱'
         place: "梅齐"
         figure: "莉莉·布朗热"
-        story: '法国国家图书馆将莉莉·布朗热的《Pie Jesu》记作 1918 年罗马至梅济时期的作品，编制为人声、弦乐四重奏、竖琴和管风琴。'
+        story: '莉莉·布朗热自幼多病。1918 年冬在塞纳河畔梅齐，她已虚弱得握不住笔，把最后一部作品口述给姐姐娜迪亚记下，编制是人声、弦乐四重奏、竖琴和管风琴。同年 3 月 15 日她在那里去世，二十四岁。'
         relic: "一支铅笔"
         relic_desc: "一支短铅笔，旁边是空白的五线谱纸。"
         points:
-          p1: '在总谱里找出人声那一行'
-          p2: '等抄谱人核完轻声进入的地方'
-          p3: '把标记过的分谱交给接下来要看的人'
+          p1: '肠病把她耗尽之前把病治住，救下莉莉'
+        points_fail:
+          p1: '病照史实拖垮了她，莉莉 3 月 15 日死在梅齐，二十四岁。'
+        shift:
+          p1:
+            was: '1918 年 3 月 15 日，自幼多病的莉莉·布朗热在塞纳河畔梅齐去世，二十四岁。'
+            now: '她的病治住了。那年春天她又能坐到桌前，自己把音符写下来。'
+            who: lili_boulanger_paris
+            bio: '这条时间线里，莉莉·布朗热熬过了 1918 年梅齐的那个冬天，病得到医治，继续作曲。'
         vignettes:
           entry: '抄谱人把歌声进来的记号划在了一张器乐分谱上。你把它跟总谱并排搁好，请他指出人声那一行。他挪了一个记号。你带走写着两处位置的纸角。真正的排练在你回去之后才开始。'
           visitor: '你告诉抄谱人，后来的读者会照着编制来找各声部。他另收好管风琴谱，省得有人当成多出一份声乐谱。你帮他单独系住那一叠。这两份谱合起来响是什么样，你始终没听到。'
@@ -59,13 +71,50 @@ text:
   zh:
     name: 莉莉·布朗热
     text: 法国作曲家，1893 年生，1918 年去世。1913 年她成为第一位获得罗马大奖作曲奖的女性。她一生体弱，二十四岁去世。
-hook: {en: 'Where did the singing voice go?', zh: '第一页的歌声在哪一行？'}
+hook: {en: 'Too weak to hold the pen, she dictates the notes.', zh: '握不住笔了，她一个音一个音念给姐姐听'}
 facts:
+  illness:
+    date: '1918'
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [lili_boulanger_paris_wiki, lili_boulanger_paris_snl]
+    text:
+      en: 'Lili Boulanger was ill from early childhood with a chronic disease of the bowel, recorded as intestinal tuberculosis and now thought possibly to have been Crohn''s disease.'
+      zh: '莉莉·布朗热自幼患慢性肠病，当时记作肠结核，今人推测可能是克罗恩病。'
+    line:
+      en: 'Winter 1918: Lili is too weak to write.'
+      zh: '1918 年冬，莉莉已虚弱得写不了字。'
+  last_work:
+    date: '1918'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [lili_boulanger_paris_snl, lili_boulanger_paris_wiki, lili_boulanger_paris_score]
+    text:
+      en: 'Her last work, for voice, string quartet, harp and organ, was dictated from her sickbed to her sister Nadia.'
+      zh: '她的最后一部作品，为人声、弦乐四重奏、竖琴和管风琴而写，是在病床上口述给姐姐娜迪亚记下的。'
+    line:
+      en: '1918: from her bed Lili dictates her last work to Nadia.'
+      zh: '1918 年，莉莉在病床上把最后一部作品口述给娜迪亚。'
+  death:
+    date: '1918-03-15'
+    stay_day: 73
+    checked: two_sources
+    level: careful
+    use: [story, history, wiki]
+    sources: [lili_boulanger_paris_baker, lili_boulanger_paris_snl]
+    text:
+      en: 'Lili Boulanger died at Mézy-sur-Seine on 15 March 1918, aged twenty four.'
+      zh: '1918 年 3 月 15 日，莉莉·布朗热在塞纳河畔梅齐去世，二十四岁。'
+    line:
+      en: '15 March 1918: Lili dies at Mézy.'
+      zh: '1918 年 3 月 15 日，莉莉在梅齐去世。'
   score:
     date: '1918'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [lili_boulanger_paris_score]
     text:
       en: 'The catalogue specifies voice, string quartet, harp and organ and records the composition note Rome–Mézy 1918.'
@@ -76,6 +125,24 @@ bystanders:
     text: {en: 'A fictional copyist with more pages than clear space on the table.', zh: '虚构的抄谱人，桌子摆不下要分清的谱。'}
 wiki:
   refs:
+    lili_boulanger_paris_wiki:
+      order: 491
+      status: checked
+      text:
+        en: 'Wikipedia, Lili Boulanger https://en.wikipedia.org/wiki/Lili_Boulanger'
+        zh: '维基百科，莉莉·布朗热 https://en.wikipedia.org/wiki/Lili_Boulanger'
+    lili_boulanger_paris_snl:
+      order: 492
+      status: checked
+      text:
+        en: 'Store norske leksikon, Lili Boulanger https://snl.no/Lili_Boulanger'
+        zh: '《挪威大百科全书》，莉莉·布朗热 https://snl.no/Lili_Boulanger'
+    lili_boulanger_paris_baker:
+      order: 493
+      status: checked
+      text:
+        en: 'Baker''s Biographical Dictionary of Musicians, Boulanger, Lili (Juliette Marie Olga), at Encyclopedia.com https://www.encyclopedia.com/arts/dictionaries-thesauruses-pictures-and-press-releases/boulanger-lili-juliette-marie-olga'
+        zh: '《贝克音乐家传记辞典》，莉莉·布朗热，Encyclopedia.com 收录 https://www.encyclopedia.com/arts/dictionaries-thesauruses-pictures-and-press-releases/boulanger-lili-juliette-marie-olga'
     lili_boulanger_paris_score:
       order: 490
       status: checked
@@ -83,7 +150,7 @@ wiki:
         en: 'Bibliothèque nationale de France, Lili Boulanger, Pie Jesu, catalogue record https://catalogue.bnf.fr/ark:/12148/cb39749643r'
         zh: '法国国家图书馆，莉莉·布朗热《Pie Jesu》乐谱目录 https://catalogue.bnf.fr/ark:/12148/cb39749643r'
 self_check:
-  fact: score
+  fact: death
   quote_line: '等谱架摆好，你站过的地方已经空了。'
   regret_choice: '核对一处进声就顾不上等合奏。'
   bookend: '从找不到人声到按编制排好每一叠。'

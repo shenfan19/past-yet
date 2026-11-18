@@ -2,27 +2,25 @@ order: 194
 events:
   tupaia_tahiti:
     order: 196
-    build_step: 1
-    year: 1769
-    # the planned arrival is 1 July 1769, a few days before Tupaia went aboard the Endeavour
-    date: '1769-07-01'
-    lon: -149.5
-    lat: -17.5
+    build_step: 2
+    year: 1770
+    date: '1770-06-01'
+    stay: 7
+    lon: 145.57
+    lat: -15.78
     region: oceania
     home: [pacific]
     field: exploration
     tier: 2
     era: tupaia_tahiti_1769
     channels: {Y: 3, E: 2}
-    regret: true
-    # finished: in the game with release.ready_only; its full model is still a draft, so the game plays the scene
-    ready: true
-    refs: [tupaia_chart_survival, tupaia_banks_july, wikipedia_tupaia, potsdam_tupaia_map]
+    refs: [tupaia_tepapa_cannon, tupaia_anmm_cannonball, tupaia_banks_june, tupaia_banks_hooker, wikipedia_tupaia, tupaia_chart_survival, tupaia_banks_july, potsdam_tupaia_map]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 9, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 12.5, req: {"any":[{"trait":["streetwise","wanderer","vigil"]},{"job":["sailor","fisher"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: trust, redeem: true, day: 45.5, req: {"any":[{"job":["sailor","fisher"]},{"trait":["attached","cosmopolitan","patient"]}]}}
+        - {id: p1, kind: endure, guard: true, day: 10, req: {"any":[{"job":["sailor","shipwright","navigator","ferry_pilot"]},{"stat":{"constitution":9}},{"provides":"strength","stat":{"will":5}}]}}
+        - {id: p2, kind: care, day: 13, req: {"any":[{"item":"vitamin_c"},{"job":["fisher","fisherman","doctor","physician","nurse","pharmacist"]}]}}
+        - {id: p3, kind: care, day: 155, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"item":"antibiotic","any":[{"item":"mosquito_net"}]},{"provides":"cure","trait":["kind","patient","vigil"],"stat":{"will":6}}]}}
       vignettes:
         - {id: pronounce, traits: [cosmopolitan, curious], day: 46}
         - {id: route, traits: [methodical, wanderer], day: 30}
@@ -30,30 +28,60 @@ events:
     text:
       en:
         name: "The navigator's chart"
-        place: "Tahiti"
+        place: "Aboard the Endeavour"
         figure: "Tupaia"
-        story: 'Tupaia, a navigator and priest from Raiatea, came aboard the Endeavour at Tahiti in July 1769 and sailed with James Cook. From the middle of August he worked on a chart of the islands around, some 130 of them, 74 named by him; his own sketch is lost and a copy survives in the papers of Joseph Banks. He died at Batavia late in 1770.'
+        story: 'Tupaia, a navigator from Raiatea, had sailed with the Endeavour since Tahiti in July 1769 and drawn a chart of the islands he knew. In June 1770 the ship struck a reef off the coast of what is now Queensland, and while it was being repaired he fell ill with scurvy. In the autumn the Endeavour put in at Batavia to refit; fever and dysentery went through the crew, the Tahitian boy Taiata died, and Tupaia died soon after.'
         relic: "A sketch of islands"
         relic_desc: "A sheet of ink and wash with small island shapes and names."
         points:
-          p1: 'Be taken in by the people on the shore, then roll the water casks down to the boats'
-          p2: 'On the day the ship sails, write down the wind he points to and the bearing of the first island'
-          p3: 'While he draws the chart, write down each island name as he says it'
+          p1: 'The night the ship strikes the reef, help lighten her and work the pumps, and keep the Endeavour afloat'
+          p2: 'Before the scurvy lays Tupaia low at the river mouth, bring him fresh food and cure it'
+          p3: 'At Batavia, hold back the fever that takes one man after another, and save Taiata and Tupaia'
+        points_fail:
+          p1: 'At daybreak the ship is still fast on the reef with water over the hold. The branch drifts out of sync with history, and the office recalls the employee that day.'
+          p2: 'On 16 June, as in history, his gums bleed and his legs turn livid, and he lies sick for days before fish of his own catching bring him round.'
+          p3: 'As in history Taiata and then Tupaia die at Batavia, and their names are missing from the roll the day the ship sails.'
+        shift:
+          p1:
+            was: '10 to 11 June 1770: the Endeavour ran onto what is now Endeavour Reef. The crew threw six guns, ballast, water and spoiled stores overboard, and she floated off on the rising tide.'
+          p2:
+            was: '16 June 1770: Banks wrote that Tupaia had bad scurvy, his gums gone and livid spots on his legs, and that the remedies on board did not help.'
+            now: 'He did not fall sick at the river mouth. While the ship was repaired he fished from the shore every day.'
+          p3:
+            was: 'Late 1770: while the Endeavour refitted at Batavia, sickness spread through the crew. The boy Taiata died first, and Tupaia a few weeks later, far from the islands on his chart.'
+            now: 'The two of them came through those weeks. When the Endeavour left Batavia at the end of December, both were aboard.'
+            who: tupaia_tahiti
+            bio: 'In this timeline Tupaia and the boy Taiata survived the sickness at Batavia in 1770 and sailed on with the Endeavour.'
         vignettes:
           pronounce: '{staff} asks a copyist, made up for the game, to read two spellings aloud before drawing a second island, and he puts a question mark by the names instead.'
           route: '{staff} asks from which island a bearing was given before a straight line is drawn between two marks, and the line is left undrawn.'
           room: '{staff} holds down the rolled corner of a sheet so that a new name can be written without covering the one before.'
       zh:
         name: "领航者的海图"
-        place: "塔希提"
+        place: "奋进号上"
         figure: "图帕亚"
-        story: '来自赖阿特阿岛的领航者兼祭司图帕亚，1769 年 7 月在塔希提登上“奋进号”，随詹姆斯·库克远航。从八月中旬起，他画了一幅周边群岛的海图，图上约有 130 座岛，其中 74 座的名字是他说出来的；他自己的草图已经遗失，一份抄本保存在约瑟夫·班克斯的文件里。1770 年末，他在巴达维亚病逝。'
+        story: '来自赖阿特阿岛的领航者图帕亚，1769 年 7 月在塔希提登上“奋进号”，画下了他熟悉的群岛海图。1770 年 6 月，船在今天昆士兰外海触礁，修船那些天他得了坏血病。秋天船到巴达维亚修整，船上流行热病与痢疾，塔希提少年泰阿塔先病逝，图帕亚随后也病逝。'
         relic: "一张岛屿草图"
         relic_desc: "一张墨与淡彩的纸，画着小小的岛形和名字。"
         points:
-          p1: '先让岸上的人认下，再帮着把淡水桶滚到小船边'
-          p2: '起航那天，记下他指的风向和第一座岛的方位'
-          p3: '他画海图的时候，把他念出的岛名一个个记下'
+          p1: '触礁那一夜帮着减重、压泵，护住奋进号不沉'
+          p2: '坏血病在河口把图帕亚拖倒之前，给他弄来鲜食，治好他'
+          p3: '在巴达维亚拦下一个接一个放倒船员的热病，救下泰阿塔和图帕亚'
+        points_fail:
+          p1: '天亮时船还卡在礁上，水漫过了货舱。分支和历史脱了节，员工在这一天被送回。'
+          p2: '6 月 16 日他照史实病倒，牙龈出血、腿上发紫，熬了好些天才靠自己钓的鱼缓过来。'
+          p3: '泰阿塔和图帕亚照史实先后病逝在巴达维亚，离港那天的花名册上没有他们。'
+        shift:
+          p1:
+            was: '1770 年 6 月 10 日夜到 11 日，奋进号撞上今天的奋进礁，船员扔掉六门炮、压舱物、淡水和坏了的存粮，涨潮时船才浮起来。'
+          p2:
+            was: '1770 年 6 月 16 日，班克斯记下图帕亚坏血病很重，牙龈坏了，腿上起了青紫的斑，船上的药都不管用。'
+            now: '他没有在河口病倒，修船那些天天天在岸边钓鱼。'
+          p3:
+            was: '1770 年末奋进号在巴达维亚修整，船上疾病蔓延，少年泰阿塔先病逝，几个星期后图帕亚也病逝，离他海图上的那些岛很远。'
+            now: '两人熬过了那几个星期，12 月底奋进号离开巴达维亚时，他们都在船上。'
+            who: tupaia_tahiti
+            bio: '这条时间线里，图帕亚和少年泰阿塔熬过了 1770 年巴达维亚的那场病，随奋进号继续航行。'
         vignettes:
           pronounce: '一位编出来的抄图人以为两种拼法是两座岛。{staff}请他先把两个名字念出来，他便在名字旁留了个问号，没画新岛。'
           route: '抄图人要在两个记号之间拉一条直线，{staff}问刚才说方位是从哪座岛算起的，那条线就没有画下去。'
@@ -61,10 +89,10 @@ events:
 text:
   en:
     name: Tupaia
-    text: Navigator and priest from Raiatea, about 1725 to 1770. In 1769 he joined James Cook's ship at Tahiti and helped draw a chart of the Pacific islands from memory. He died of illness at Batavia.
+    text: Navigator from Raiatea, about 1725 to 1770. In 1769 he joined James Cook's ship at Tahiti and helped draw a chart of the Pacific islands from memory. He died of illness at Batavia.
   zh:
     name: 图帕亚
-    text: 来自赖阿特阿岛的领航人与祭司，约 1725 年生，1770 年去世。1769 年他在大溪地登上詹姆斯·库克的船，凭记忆帮忙画出太平洋诸岛的海图。他在巴达维亚病逝。
+    text: 来自赖阿特阿岛的领航人，约 1725 年生，1770 年去世。1769 年他在大溪地登上詹姆斯·库克的船，凭记忆帮忙画出太平洋诸岛的海图。他在巴达维亚病逝。
 wiki:
   places:
     tahiti_endeavour:
@@ -131,6 +159,30 @@ wiki:
       text:
         en: 'Wikipedia, Tupaia (navigator). https://en.wikipedia.org/wiki/Tupaia_(navigator)'
         zh: '维基百科，图帕亚（领航者）。https://en.wikipedia.org/wiki/Tupaia_(navigator)'
+    tupaia_tepapa_cannon:
+      order: 999
+      status: checked
+      text:
+        en: 'Museum of New Zealand Te Papa Tongarewa, cannon from HMB Endeavour https://collections.tepapa.govt.nz/object/58886'
+        zh: '新西兰蒂帕帕博物馆，奋进号的炮 https://collections.tepapa.govt.nz/object/58886'
+    tupaia_anmm_cannonball:
+      order: 1000
+      status: checked
+      text:
+        en: 'Australian National Maritime Museum, cannon ball from one of the HMB Endeavour cannons https://collections.sea.museum/objects/19053/cannon-ball-from-one-of-the-hmb-endeavour-cannons'
+        zh: '澳大利亚国家海事博物馆，奋进号炮的炮弹 https://collections.sea.museum/objects/19053/cannon-ball-from-one-of-the-hmb-endeavour-cannons'
+    tupaia_banks_june:
+      order: 1001
+      status: checked
+      text:
+        en: 'Joseph Banks, Endeavour Journal, 16 June 1770, South Seas project https://paulturnbull.org/project/southseas/journals/banks/17700616.html'
+        zh: '约瑟夫·班克斯，《奋进号日记》，1770 年 6 月 16 日，南海项目本 https://paulturnbull.org/project/southseas/journals/banks/17700616.html'
+    tupaia_banks_hooker:
+      order: 1002
+      status: checked
+      text:
+        en: 'Journal of the Right Hon. Sir Joseph Banks, ed. Hooker (1896), chapter 11, Wikisource https://en.wikisource.org/wiki/Journal_of_the_Right_Hon._Sir_Joseph_Banks/Chapter_11'
+        zh: '《约瑟夫·班克斯爵士日记》，胡克编（1896），第 11 章，维基文库 https://en.wikisource.org/wiki/Journal_of_the_Right_Hon._Sir_Joseph_Banks/Chapter_11'
     potsdam_tupaia_map:
       order: 998
       status: checked
@@ -365,7 +417,7 @@ era_text:
       ally_gap: 图帕亚的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
 
-hook: {en: 'Which name did the navigator actually say?', zh: '领航员刚才说的是哪座岛？'}
+hook: {en: 'A reef in the night, then a long way to Batavia.', zh: '夜里的一道礁，之后是去巴达维亚的长路'}
 facts:
   boards:
     date: '1769-07-12'
@@ -376,7 +428,6 @@ facts:
     text:
       en: 'Banks records that Tupaia came aboard and reaffirmed his wish to sail.'
       zh: '班克斯记下图帕亚登船，并重申愿意随船远行。'
-    stay_day: 11
     line:
       en: '12 July 1769: Tupaia comes aboard the Endeavour and says again that he wants to sail with it.'
       zh: '1769 年 7 月 12 日，图帕亚登上“奋进号”，又说了一遍他要随船走。'
@@ -389,13 +440,11 @@ facts:
     text:
       en: 'The Endeavour departs Tahiti with Tupaia and Taiata aboard.'
       zh: '奋进号驶离塔希提，图帕亚与泰阿塔随船。'
-    stay_day: 12
     line:
       en: '13 July: the Endeavour leaves Tahiti with Tupaia and the boy Taiata aboard.'
       zh: '7 月 13 日，“奋进号”驶离塔希提，图帕亚和少年泰阿塔都在船上。'
   chart:
     date: '1769-08-15'
-    stay_day: 45
     checked: two_sources
     level: usable
     use: [story, history, wiki]
@@ -406,15 +455,42 @@ facts:
     line:
       en: '15 August: Tupaia starts on a chart of the islands he knows, some 130 of them. Seventy four he names himself.'
       zh: '8 月 15 日，图帕亚开始画他知道的群岛，约 130 座。其中 74 座的名字，是他自己说出来的。'
+  reef:
+    date: '1770-06-11'
+    stay_day: 10
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [tupaia_tepapa_cannon, tupaia_anmm_cannonball]
+    text:
+      en: 'On the night of 10 to 11 June 1770 the Endeavour grounded on what is now Endeavour Reef; the crew threw six guns, ballast and stores overboard and floated her off on the tide, then beached her for repair at the Endeavour River.'
+      zh: '1770 年 6 月 10 日夜到 11 日，奋进号在今天的奋进礁搁浅；船员扔下六门炮、压舱物和存粮，趁涨潮把船弄下来，随后在奋进河口上滩修船。'
+    line:
+      en: 'Night of 10 June 1770: the Endeavour strikes a reef.'
+      zh: '1770 年 6 月 10 日夜，奋进号触礁。'
+  scurvy:
+    date: '1770-06-16'
+    stay_day: 15
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [tupaia_banks_june, tupaia_banks_hooker]
+    text:
+      en: 'On 16 June 1770 Banks wrote that Tupaia had bad scurvy, with spoiled gums and livid spots on his legs; he later recovered on fish he caught himself.'
+      zh: '1770 年 6 月 16 日，班克斯记下图帕亚坏血病很重，牙龈坏了，腿上有青紫的斑；后来他靠自己钓的鱼好了起来。'
+    line:
+      en: '16 June 1770: Tupaia is down with scurvy.'
+      zh: '1770 年 6 月 16 日，图帕亚得了坏血病。'
   death:
-    date: '1770'
+    date: '1770-12-20'
+    stay_day: 202
     checked: two_sources
     level: careful
     use: [story, history, wiki]
     sources: [wikipedia_tupaia, potsdam_tupaia_map]
     text:
-      en: 'Tupaia died at Batavia late in 1770, most sources say on 20 December; one gives 11 November.'
-      zh: '图帕亚 1770 年末在巴达维亚病逝，多数说法是 12 月 20 日，也有一说是 11 月 11 日。'
+      en: 'Tupaia died at Batavia late in 1770, after the boy Taiata; the ship''s muster gives 20 December, and Banks''s entry of 11 November was written up afterwards.'
+      zh: '图帕亚 1770 年末在巴达维亚病逝，在少年泰阿塔之后；奋进号花名册记 12 月 20 日，班克斯 11 月 11 日那一条是事后补记。'
     note: 'Death: written as a plain fact.'
     line:
       en: 'Late 1770: at Batavia, Tupaia dies of illness, far from the islands on his chart.'
@@ -427,7 +503,7 @@ bystanders:
     invented: true
     text: {en: 'Reed, a fictional store clerk with a boat waiting to take his list.', zh: '虚构库房文员里德，小船在等他交单。'}
 self_check:
-  fact: chart
+  fact: reef
   quote_line: '其中 74 座的名字，是他自己说出来的。'
   regret_choice: '派力气大的去，水桶滚得到船边，起航那天的风向却没人记；派细心的去，岛名记全了，岸上的人却未必认得下。'
   bookend: '从他登上奋进号那天开始，以他在离那些岛很远的地方病逝收尾。'
