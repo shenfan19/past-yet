@@ -2,21 +2,21 @@ order: 132
 events:
   maya_codices_mani:
     order: 191
-    build_step: 1
+    build_step: 2
     year: 1562
+    date: '1562-06-20'
+    stay: 1
     lon: -89.39
     lat: 20.39
     region: americas
     field: literature
     tier: 3
     channels: {S: 3, H: 2}
-    regret: true
-    refs: [maya_codices_mani_mani, maya_codices_mani_account, maya_codices_mani_codex]
+    refs: [maya_codices_mani_mani, maya_codices_mani_account, maya_codices_mani_codex, maya_codices_mani_dresden, maya_codices_mani_apology_2015, maya_codices_mani_apology_2021]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["wanderer","handy"]}}
-        - {id: p2, kind: endure, req: {"any":[{"trait":["calm","hardy"]},{"stat":{"will":6}}]}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"holo_cloak"}}
+        - {id: p1, kind: trust, day: 18, req: {"any":[{"job":["translator","archivist"],"trait":["quiet","streetwise","kind"],"stat":{"will":7}},{"trait":["quiet","streetwise"],"item":"holo_cloak","stat":{"will":6}},{"trait":["kind","quiet"],"stat":{"wit":7,"will":8}}]}}
       vignettes:
         - {id: fold, traits: [handy, wanderer, methodical]}
         - {id: listen, traits: [calm, patient, kind]}
@@ -26,13 +26,19 @@ events:
         name: 'The fold remembered'
         place: "Mani"
         figure: "Maya scribes"
-        story: 'At Maní on 12 July 1562, an auto de fe led by Diego de Landa destroyed Maya books and sacred objects. Landa’s later account describes burning books. Maya knowledge and communities continued, and some Maya codices survive.'
+        story: 'At Maní on 12 July 1562 a great many Maya folding books were burned in public. Maya communities and their knowledge went on, but only a handful of Maya books from before the conquest survive today.'
         relic: 'A blank practice fold'
         relic_desc: 'A fictional fold offered by its keeper.'
         points:
-          p1: 'Look where the keeper indicates before the practice fold is put away'
-          p2: 'Stay to listen to a second account of the missing fold'
-          p3: 'Earn the keeper’s trust and carry only the rehearsal sheet they offer'
+          p1: 'Win the keepers’ trust and carry the folding books out of Maní in small lots, to be hidden in other villages before the burning'
+        points_fail:
+          p1: 'The books stay in Maní. On 12 July they burn with the rest.'
+        shift:
+          p1:
+            was: '12 July 1562: at Maní a great many Maya folding books were burned in public. Of the books made before the conquest, only a handful survive anywhere.'
+            now: 'Before the burning the keepers sent their books out of Maní a few at a time, to houses in other villages. Those books stayed in Maya hands.'
+            who: maya_codices_mani
+            bio: 'In this timeline the scribes’ books left Maní before July 1562 and were kept in other villages, so more of the Maya book tradition came down in its own pages.'
         vignettes:
           fold: 'The keeper lays two blank folds on a bench and asks her neighbour which one opened first in the book he remembers. You hold the paper while they compare. He cannot place the second fold. She keeps the first and leaves the other loose for the next time they talk.'
           listen: 'The neighbour starts to retell the part the keeper lost, but they remember the order differently. You listen while each finishes. They agree on the first fold and leave the second undecided. The keeper asks you to leave her the copy that carries both accounts.'
@@ -41,13 +47,19 @@ events:
         name: '记住书页怎样折'
         place: "马尼"
         figure: "玛雅书吏"
-        story: '1562年7月12日，迭戈·德·兰达主持的马尼宗教审判仪式焚毁了玛雅书籍和宗教物件。兰达自己后来也写到毁书。玛雅社群与知识仍在延续，也有玛雅抄本存世。'
+        story: '1562 年 7 月 12 日，马尼当众烧毁了大批玛雅折页书。玛雅社群与知识仍在延续，但征服以前的玛雅书，今天只剩寥寥几部。'
         relic: '一张空白练习折页'
         relic_desc: '守书人自愿交给员工的练习折页。'
         points:
-          p1: '练习折页收起前，看清守书人指出的位置'
-          p2: '留下再听一遍遗失那折的讲法'
-          p3: '取得守书人信任，只带走对方愿意交给你的练习纸'
+          p1: '取得守书人信任，赶在焚书前把折页书分批运出马尼，藏到别村'
+        points_fail:
+          p1: '书留在马尼，7 月 12 日和别的书一同烧掉。'
+        shift:
+          p1:
+            was: '1562 年 7 月 12 日，马尼当众烧毁了大批玛雅折页书。征服以前的玛雅书，存世的只有寥寥几部。'
+            now: '焚书之前，守书人把书一批批送出马尼，藏进别村人家。这些书留在了玛雅人手里。'
+            who: maya_codices_mani
+            bio: '这条时间线里，书吏们的书在 1562 年 7 月以前离开马尼，在别的村子收藏下来，玛雅的制书传统有更多页留了下来。'
         vignettes:
           fold: '守书人把两张空折页放在凳上，问邻居记得那本书从哪一折先打开。你扶住纸，让他们比对。他说不准第二折在哪里。她把第一折收好，第二折不合上，等下次两人再谈。'
           listen: '邻居说起守书人记不清的那段，两人记得的次序却不一样。你听他们各自讲完。他们同意第一折，第二折先不定。守书人请你把两种说法都在的那份留给她。'
@@ -55,10 +67,10 @@ events:
 text:
   en:
     name: Maya scribes
-    text: Maya scribes in Yucatán made folded manuscripts. At Maní in 1562, an auto de fe led by Diego de Landa destroyed books and religious objects. Surviving manuscripts such as the Códice Maya de México preserve evidence of the book tradition.
+    text: Maya scribes in Yucatán made folding books of bark paper. At Maní in July 1562 a great many of these books were burned. A few surviving manuscripts, such as the Dresden Codex and the Códice Maya de México, preserve the book tradition.
   zh:
     name: 玛雅书吏
-    text: 尤卡坦的玛雅书吏制作折页写本。1562年，迭戈·德·兰达主持的马尼宗教审判仪式毁去书籍和宗教物件。《墨西哥玛雅抄本》等存世写本保存了这一制书传统的实物证据。
+    text: 尤卡坦的玛雅书吏用树皮纸制作折页书。1562 年 7 月，马尼烧毁了大批这样的书。《德累斯顿抄本》《墨西哥玛雅抄本》等少数存世写本保存了这一制书传统。
 hook: {en: 'What can the keeper still pass on?', zh: '守书的人还能留下些什么？'}
 facts:
   mani:
@@ -66,10 +78,14 @@ facts:
     checked: official_record
     level: usable
     use: [story, wiki]
+    stay_day: 23
     sources: [maya_codices_mani_mani]
     text:
-      en: 'The research dates the auto de fe at Maní to 12 July 1562 and discusses the destruction associated with it.'
-      zh: '研究把马尼的宗教审判仪式定于1562年7月12日，并讨论相关的毁书毁物。'
+      en: 'The research dates the public burning at Maní to 12 July 1562 and discusses the books and objects destroyed.'
+      zh: '研究把马尼的当众焚烧定于 1562 年 7 月 12 日，并讨论被毁的书籍和器物。'
+    line:
+      en: '12 July 1562: Maya books are burned in public at Maní.'
+      zh: '1562 年 7 月 12 日，马尼当众焚烧玛雅书籍。'
   account:
     date: '1566'
     checked: official_record
@@ -77,8 +93,8 @@ facts:
     use: [story, wiki]
     sources: [maya_codices_mani_account]
     text:
-      en: 'The transmitted account has Landa describe burning books. His description gives the persecutor’s justification rather than the keepers’ perspective.'
-      zh: '传世文本里有兰达关于焚书的叙述，记录的是施害方为自己辩护的话。'
+      en: 'The Relación de las cosas de Yucatán, written by the man who ran the burning, describes the books being burned. It gives his side, not the keepers’.'
+      zh: '主持焚书的人在《尤卡坦纪事》里写到烧书，记的是他一方的说法，不是守书人的。'
   codex:
     date: '1021'
     checked: official_record
@@ -88,6 +104,15 @@ facts:
     text:
       en: 'INAH dates the manuscript’s manufacture to 1021–1152 CE.'
       zh: '研究所将抄本制作年代定于公元1021至1152年。'
+  survivors:
+    date: '1562'
+    checked: two_sources
+    level: usable
+    use: [story, wiki]
+    sources: [maya_codices_mani_dresden, maya_codices_mani_codex]
+    text:
+      en: 'Only a few Maya books from before the conquest survive, among them the Dresden Codex and the Códice Maya de México.'
+      zh: '征服以前的玛雅书只存下少数几部，其中有《德累斯顿抄本》和《墨西哥玛雅抄本》。'
 bystanders:
   keeper:
     invented: true
@@ -109,6 +134,24 @@ wiki:
       text:
         en: 'Diego de Landa, Relación de las cosas de Yucatán, § XLI, 1864 edition p. 316 https://kloss.sourcelibrary.org/es/book/relation-des-choses-de-yucatan-de-diego-de-landa-ed'
         zh: '迭戈·德·兰达《尤卡坦纪事》第41节，1864年版第316页 https://kloss.sourcelibrary.org/es/book/relation-des-choses-de-yucatan-de-diego-de-landa-ed'
+    maya_codices_mani_dresden:
+      order: 904
+      status: checked
+      text:
+        en: 'SLUB Dresden, The Dresden Maya Codex, deciphering and the destruction of Maya books https://www.slub-dresden.de/en/explore/manuscripts/the-dresden-maya-codex/deciphering'
+        zh: '德累斯顿萨克森州立图书馆，《德累斯顿玛雅抄本》释读与玛雅书的毁损 https://www.slub-dresden.de/en/explore/manuscripts/the-dresden-maya-codex/deciphering'
+    maya_codices_mani_apology_2015:
+      order: 905
+      status: checked
+      text:
+        en: 'Catholic News Agency, Pope in Latin America apologizes for sins against native peoples, Santa Cruz de la Sierra, 9 July 2015 https://www.catholicnewsagency.com/news/32297/pope-in-latin-america-apologizes-for-sins-against-native-peoples'
+        zh: '天主教通讯社，教宗在圣克鲁斯为对美洲原住民的罪过道歉，2015 年 7 月 9 日 https://www.catholicnewsagency.com/news/32297/pope-in-latin-america-apologizes-for-sins-against-native-peoples'
+    maya_codices_mani_apology_2021:
+      order: 906
+      status: checked
+      text:
+        en: 'Vatican News, Pope Francis letter to the bishops of Mexico on 200 years of independence, September 2021 https://www.vaticannews.va/en/pope/news/2021-09/pope-francis-letter-mexico-bishops-200years-independence.html'
+        zh: '梵蒂冈新闻网，教宗方济各致墨西哥主教团信，独立两百年，2021 年 9 月 https://www.vaticannews.va/en/pope/news/2021-09/pope-francis-letter-mexico-bishops-200years-independence.html'
     maya_codices_mani_codex:
       order: 903
       status: checked
