@@ -101,7 +101,7 @@ function fresh() {
     antiques: [...start],
     // the random ones of the start, which can be drawn again until the first trip, and whether the welcome has been read
     startRandom: begin.random,
-    // the antiques the automatic mode has already anchored, so it does not anchor again what the player released
+    // antiques already anchored by auto mode or explicitly released by the player
     autoAnchored: [],
     // the candidates for the first employees and the ones picked, which can be changed until the first trip
     startStaff: crew,

@@ -424,7 +424,7 @@ export function createOffice(X) {
     return gain;
   }
   // The auto mode anchors every new antique it holds, so each one opens its place or its event.
-  // A piece it has anchored once is remembered, so a piece the player released by hand stays released and can be sold.
+  // Remember antiques auto mode has already anchored and antiques the player has explicitly released.
   function anchorFound() {
     const s = S();
     s.autoAnchored ||= [];

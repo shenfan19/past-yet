@@ -1309,7 +1309,10 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'lsort') { listbox.sort(id); render(); }
     else if (act === 'pickstaff') { if (staffState(id) === 'ready') { st.form.staffId = id;  } render(); }
     else if (act.startsWith('map')) { if (worldMap.act(act, id)) render(); }
-    else if (['cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) { if (shop.act(act, id)) { if (['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin'); render(); } }
+    else if (['cartinc', 'cartdec', 'cartclear', 'cartbuy', 'shopsell', 'antsell', 'antlock', 'sellspares'].includes(act)) {
+      if (shop.act(act, id) && ['cartbuy', 'shopsell', 'antsell', 'sellspares'].includes(act)) ctx.audio.sfx('coin');
+      render();
+    }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'share', id }; render(); }
     else if (act === 'modalclose') closeModal();

@@ -261,7 +261,10 @@ try {
   ok('a found antique opens nothing until it is anchored', await page.evaluate(() => !window.__game.ctx.S().locks.includes('clinic_bell')));
   await page.click('[data-act=antlock][data-id=clinic_bell]');
   ok('anchoring opens its place', await page.evaluate(() => window.__game.ctx.S().locks.includes('clinic_bell')));
+  await page.evaluate(() => { const S = window.__game.ctx.S(); S.autoAnchored = S.autoAnchored.filter((id) => id !== 'pump_rust'); });
   await page.click('[data-act=antlock][data-id=pump_rust]');
+  await page.evaluate(() => { window.__game.ui.office.anchorFound(); window.__game.ui.render(); });
+  ok('auto mode respects the first release of an antique it never anchored', await page.evaluate(() => !window.__game.ctx.S().locks.includes('pump_rust')));
   ok('release then sell possible', !(await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled()));
   await page.click('[data-act=antlock][data-id=pump_rust]');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'clinic_bell'); S.antiques.push('clinic_bell'); window.__game.ui.render(); });

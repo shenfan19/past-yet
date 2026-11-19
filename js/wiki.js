@@ -52,6 +52,8 @@ export function createWiki(X) {
     const A = [];
     const add = (a) => A.push(a);
     const sec = (k) => D.get('encyclopedia.sections.' + k).map((e) => ({ ...e, ...D.get('enc_text.sections.' + k + '.' + e.id) }));
+    const events = D.get('catalog.events');
+    const eventRefs = new Map(events.map((e) => [e.id, e.refs || []]));
     const tagsOfEra = (eraId) => T.eras[eraId].tags;
     const eraTitle = (eraId) => T.eras[eraId].name;
 
@@ -95,7 +97,8 @@ export function createWiki(X) {
       add({
         id: 'people:' + e.id, cat: 'people', title: e.name, authors: e.authors,
         tags: evs.length ? D.get('antiques.antiques.relic_' + evs[0] + '.tags') : e.tags,
-        unlock: evs.length ? { anchored: 'relic_' + evs[0] } : e.unlock, refs: evs.length ? ['catalog'] : e.refs,
+        unlock: evs.length ? { anchored: 'relic_' + evs[0] } : e.unlock,
+        refs: [...(e.refs || []), ...evs.flatMap((id) => eventRefs.get(id) || [])],
         // the stars of a person are the best stars of all the episodes of that person, added up
         body: () => {
           const keys = evs.map((id) => { const c = D.get('catalog.events').find((x) => x.id === id); return c && c.era ? c.era : id; }).filter((k) => D.get('catalog.events').some((x) => x.id === k || x.era === k));
@@ -111,7 +114,7 @@ export function createWiki(X) {
     for (const e of sec('events')) add({ id: 'events:' + e.id, cat: 'events', title: e.name, tags: e.tags, unlock: e.unlock, refs: e.refs, authors: e.authors, body: () => `<p>${link(e.text)}</p>${relatedLinks(e.related)}` });
 
     // the catalogue: famous events with a relic each, readable once the relic is owned
-    for (const ev of D.get('catalog.events')) {
+    for (const ev of events) {
       const c = T.catalog[ev.id];
       const relicId = 'relic_' + ev.id;
       add({
@@ -316,12 +319,18 @@ export function createWiki(X) {
     if (!x) return `<p class="muted">${W.pick}</p>`;
     if (!visible(x)) return `<p class="muted">${U.enc.locked_text}</p>`;
     const tags = (x.tags || []).map((t) => `<button class="chipbtn" data-act="wikitag" data-id="${t}">${esc(T.tags[t])}</button>`).join('');
-    const rf = x.refs.map((id) => {
+    const sourceIds = [...new Set(x.refs || [])].filter((id) => id !== 'game' && id !== 'catalog');
+    const rf = sourceIds.map((id) => {
       if (!(id in D.get('encyclopedia.refs'))) throw new Error('百科引用缺失: ' + id);
-      return `<div class="ref">${esc(refCite(id))} ${refStatus(id) === 'pending' ? `<span class="chip warn">${U.enc.pending}</span>` : refStatus(id) === 'game' ? `<span class="chip">${U.enc.game_ref}</span>` : ''}</div>`;
+      return `<div class="ref">${esc(refCite(id))} ${refStatus(id) === 'pending' ? `<span class="chip warn">${esc(U.enc.pending)}</span>` : ''}</div>`;
     }).join('');
     const authors = x.authors || D.get('config.meta.card_authors');
-    return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}<div class="refs"><div class="muted">${esc(U.enc.card_authors)}${COLON}${esc(authors.join(', '))}</div><span class="muted">${U.enc.refs}</span>${rf}</div>`;
+    const humanAuthors = authors.filter((author) => author !== 'AI');
+    const credit = humanAuthors.length ? `<div class="muted">${esc(U.enc.card_authors)}${COLON}${esc(humanAuthors.join(', '))}</div>` : '';
+    const sources = rf ? `<span class="muted">${esc(U.enc.refs)}</span>${rf}`
+      : authors.includes('AI') ? `<div class="ref">${esc(refCite('game'))}</div>` : '';
+    const footer = credit || sources ? `<div class="refs">${credit}${sources}</div>` : '';
+    return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}${footer}`;
   }
 
   function navHtml() {

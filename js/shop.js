@@ -160,15 +160,24 @@ export function createShop(X) {
     }
     if (a === 'sellspares') { if (office.sellSpares()) return true; return false; }
     if (a === 'antsell') {
-      if (sellable(id)) { S.funds += office.salePrice(id); S.antiques.splice(S.antiques.indexOf(id), 1); if (!S.antiques.includes(id)) S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id); ctx.save(); }
+      if (!sellable(id)) return false;
+      S.funds += office.salePrice(id);
+      S.antiques.splice(S.antiques.indexOf(id), 1);
+      if (!S.antiques.includes(id)) S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id);
+      ctx.save();
       return true;
     }
     if (a === 'antlock') {
-      if (S.antiques.includes(id)) {
-        if (!S.locks.includes(id)) S.locks.push(id);
-        else if (releasable(id)) S.locks = S.locks.filter((x) => x !== id);
-        ctx.save();
+      if (!S.antiques.includes(id)) return false;
+      if (S.locks.includes(id)) {
+        if (!releasable(id)) return false;
+        S.locks = S.locks.filter((x) => x !== id);
+        S.autoAnchored ||= [];
+        if (!S.autoAnchored.includes(id)) S.autoAnchored.push(id);
+      } else {
+        S.locks.push(id);
       }
+      ctx.save();
       return true;
     }
     return false;
