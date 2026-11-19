@@ -13,7 +13,7 @@ events:
     channels: {H: 2, T: 1}
     # finished: in the game with release.ready_only. The heads are dated by century, so the stay carries no day.
     ready: true
-    refs: [ife_bronzes_cast, natgeo_ife_heads, wikipedia_ife_head]
+    refs: [ife_bronzes_cast, ife_exhibition_man]
     scene:
       points:
         - {id: p1, kind: trust, day: 10, req: {"any":[{"stat":{"finesse":6}},{"trait":["handy","patient"]},{"job":["woodcarver"]}]}}
@@ -28,7 +28,7 @@ events:
         name: 'The line that must survive the cast'
         place: Ife, Nigeria
         figure: The casters of Ife
-        story: 'In Ife, a city of the Yoruba, casters made lifelike heads of copper alloy over some four centuries, around 1300 by most estimates. In 1910 the German Leo Frobenius pressed the priest of a grove to sell him a head he called the Olokun head, and had to give it back. In 1938 builders digging in the Wunmonije compound found a group of heads, among them the one now in the British Museum. At a London exhibition of 1948 the heads were said to rank with the finest works of Italy and Greece.'
+        story: 'A brass head from the Yoruba city of Ife still holds traces of red and black pigment on its beaded headdress. The head was made by lost-wax casting. It was one of a group found in January 1938 when builders broke ground at the Wunmonije compound. Several of the Ife castings were shown together at the British Museum in 1948.'
         relic: 'Two study drawings'
         relic_desc: 'Drawings comparing lines on a plain casting sample.'
         points:
@@ -43,7 +43,7 @@ events:
         name: '铸好以后还能不能认出这道线'
         place: 尼日利亚伊费
         figure: 伊费的铸造匠人
-        story: '约鲁巴人的城市伊费，铸匠们在约四个世纪里用铜合金铸出写实的头像，多数估计在 1300 年前后。1910 年，德国人莱奥·弗罗贝尼乌斯逼一处圣林的祭司把一尊他称作“奥洛昆头像”的铜像卖给他，后来被迫交还。1938 年，人们在翁莫尼杰院落盖房挖地时挖出一批头像，其中一尊今藏大英博物馆。1948 年伦敦的一场展览上，有人说这些头像足以与意大利和希腊最好的作品并列。'
+        story: '约鲁巴城市伊费出土的一尊黄铜头像，珠饰头冠上还留着红色和黑色的颜料。这尊头像用失蜡法铸成。1938 年 1 月，翁莫尼杰院落里开挖房屋地基，人们从土里挖出它和一批其他头像。1948 年，多件伊费铸像在大英博物馆一同展出。'
         relic: '一对线样小图'
         relic_desc: '对照无像练习铸样上两次所见的线。'
         points:
@@ -57,10 +57,10 @@ events:
 text:
   en:
     name: The casters of Ife
-    text: The casters of Ife, a city of the Yoruba in what is now Nigeria. Over some four centuries, around 1300 by most estimates, they made lifelike heads in copper alloy.
+    text: The casters of the Yoruba city of Ife, in present-day Nigeria, produced naturalistic heads in brass and copper. The British Museum dates one Wunmonije head to 1300–1450; neither its maker nor the person depicted is known by name.
   zh:
     name: 伊费的铸造匠人
-    text: 伊费的铸造匠人。伊费是约鲁巴人的城市，在今尼日利亚境内。在约四个世纪里，多数估计在 1300 年前后，他们做出了写实的铜合金头像。
+    text: 伊费是今尼日利亚境内的约鲁巴城市，当地铸匠留下了写实的黄铜和紫铜头像。大英博物馆将翁莫尼杰院落出土的其中一尊定在 1300—1450 年，铸匠和肖像原型的姓名不可考。
 hook: {en: 'Which mark belongs to the wax model?', zh: '这道线是草样上刻的，还是后来留下的？'}
 facts:
   cast:
@@ -68,50 +68,47 @@ facts:
     stay_day: 61
     checked: official_record
     level: usable
-    use: [story, history, wiki]
+    use: [story, wiki]
     sources: [ife_bronzes_cast]
     text:
-      en: 'The museum record identifies the brass head from Wunmonije and records lost-wax casting and incision.'
-      zh: '馆方确认该黄铜头像出自翁莫尼杰院落，记录有失蜡铸造和刻划。'
-    line:
-      en: 'In the casting yard, a head is cast in brass from a wax model, and its lines are cut in after.'
-      zh: '铸场里，一尊头像从蜡模铸成黄铜，脸上的细线是铸成之后再刻上去的。'
+      en: 'The collection record dates the Wunmonije head to 1300–1450 and lists lost-wax casting, incision and painting; it does not date a particular pour or establish when every line was incised.'
+      zh: '馆方把翁莫尼杰院落出土的这尊头像定在 1300—1450 年，记载了失蜡铸造、刻划和上色，但没有确定浇铸的日期，也没有判定每道线是在何时刻上的。'
   frobenius:
     date: '1910'
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [natgeo_ife_heads, wikipedia_ife_head]
+    sources: [ife_exhibition_man]
     text:
-      en: 'In 1910 Leo Frobenius pressed the priest of a grove to sell him a head he named the Olokun head, reportedly for six pounds, and had to return it after the British administration stepped in.'
-      zh: '1910 年，莱奥·弗罗贝尼乌斯逼一处圣林的祭司把一尊他称作“奥洛昆头像”的铜像卖给他，据说只给了六英镑；英国殖民当局介入后，他被迫交还。'
+      en: 'In 1910 Leo Frobenius tried to acquire a metal head at Ife. Accounts differ on how it was obtained; he was required to return it.'
+      zh: '1910 年，莱奥·弗罗贝尼乌斯试图取得伊费的一尊金属头像。关于他如何得到头像，记述不一；后来他被要求交还。'
     line:
-      en: '1910: the German Leo Frobenius presses a priest to sell him a head from a sacred grove, and is made to give it back.'
-      zh: '1910 年，德国人莱奥·弗罗贝尼乌斯逼一位祭司卖给他一尊圣林里的头像，后来被迫交还。'
+      en: '1910: Leo Frobenius is required to return a metal head he obtained at Ife.'
+      zh: '1910 年，莱奥·弗罗贝尼乌斯被要求交还在伊费取得的一尊金属头像。'
   wunmonije:
-    date: '1938'
-    checked: two_sources
+    date: '1938-01'
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [wikipedia_ife_head, natgeo_ife_heads]
+    sources: [ife_bronzes_cast]
     text:
       en: 'In 1938 a group of brass and copper heads was found by chance in the Wunmonije compound in Ife, during building work.'
       zh: '1938 年，伊费的翁莫尼杰院落在盖房时意外挖出一批黄铜与紫铜头像。'
     line:
-      en: '1938: digging foundations in the Wunmonije compound, builders turn up a group of heads.'
-      zh: '1938 年，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
+      en: 'January 1938: digging foundations in the Wunmonije compound, builders turn up a group of heads.'
+      zh: '1938 年 1 月，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
   exhibition:
-    date: '1948'
-    checked: two_sources
+    date: '1948-07'
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [natgeo_ife_heads, wikipedia_ife_head]
+    sources: [ife_exhibition_man]
     text:
-      en: 'Of an exhibition of the heads at the British Museum in 1948, a London publication wrote that this African art was worthy to rank with the finest works of Italy and Greece.'
-      zh: '1948 年这些头像在大英博物馆展出，伦敦一份刊物写道，这些非洲艺术足以与意大利和希腊最好的作品并列。'
+      en: 'The British Museum exhibited the Ife castings from July to September 1948.'
+      zh: '1948 年 7 月至 9 月，大英博物馆展出伊费铸像。'
     line:
-      en: '1948: the heads are shown at the British Museum. A London paper writes that they rank with the finest works of Italy and Greece.'
-      zh: '1948 年，头像在大英博物馆展出。伦敦一份刊物写道，它们足以与意大利和希腊最好的作品并列。'
+      en: 'July 1948: the Ife castings go on display at the British Museum.'
+      zh: '1948 年 7 月，伊费铸像在大英博物馆展出。'
 bystanders:
   helper:
     invented: true
@@ -127,23 +124,18 @@ wiki:
       text:
         en: 'British Museum, Ife head, Af1939,34.1, collection record on Google Arts & Culture https://artsandculture.google.com/asset/ife-head-brass-head-of-a-ruler/rQGTIZwDJn4lCg?hl=en'
         zh: '大英博物馆，伊费头像 Af1939,34.1，馆藏在线展 https://artsandculture.google.com/asset/ife-head-brass-head-of-a-ruler/rQGTIZwDJn4lCg?hl=en'
-    natgeo_ife_heads:
+    ife_exhibition_man:
       order: 708
       status: checked
       text:
-        en: 'National Geographic, Nigeria''s ancient royal portraits challenged European biases toward African art. https://www.nationalgeographic.com/history/history-magazine/article/nigerian-treasures-ife-heads-bronze'
-        zh: '《国家地理》，尼日利亚古代王室肖像挑战了欧洲对非洲艺术的偏见。https://www.nationalgeographic.com/history/history-magazine/article/nigerian-treasures-ife-heads-bronze'
-    wikipedia_ife_head:
-      order: 709
-      status: checked
-      text:
-        en: 'Wikipedia, Ife Head. https://en.wikipedia.org/wiki/Ife_Head'
-        zh: '维基百科，伊费头像。https://en.wikipedia.org/wiki/Ife_Head'
+        en: 'Man, January 1949, pp. 1–3: contemporary account of the British Museum exhibition, also quoting records of the Frobenius episode. https://ignca.gov.in/Asi_data/16908.pdf'
+        zh: '《Man》，1949 年 1 月，第 1—3 页：大英博物馆展览的同期报道，也引述弗罗贝尼乌斯事件的记录。https://ignca.gov.in/Asi_data/16908.pdf'
 self_check:
   fact: wunmonije
-  quote_line: '1938 年，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
+  quote_line: '1938 年 1 月，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
+  echo_note: 'The casters are unnamed in the collection records and no attributable words are known. The employee’s own line is the fallback.'
   regret_choice: '派手巧的去，蜡模捏得好，浇铸那天的火却未必守得住；派守得住的去，火没弱，线是谁刻的却没人分。'
-  bookend: '从铸场里的一尊头像开始，以六百多年后伦敦的一句评语收尾。'
+  bookend: '从铸场里的一尊头像开始，以数百年后多件出土铸像同台展出收尾。'
   share_line: '我在伊费的铸场替铸匠们守过一炉火。'
   share_number: '1938'
   knowing: 'exhibition'

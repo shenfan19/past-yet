@@ -7,7 +7,7 @@ import { createListbox } from './listbox.js';
 import { createOffice } from './office.js';
 import { createSettingsPage } from './settings_ui.js';
 import { createShare } from './share.js';
-import { createQuotes } from './quotes.js';
+import { createQuotes, echoSources } from './quotes.js';
 import { chosenLocale, localeTag } from './language.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -169,8 +169,7 @@ export function createUI(D, ctx, DEV = false) {
   // a three star trip that earned a point of an attribute says so in the accounts
   const grownRow = (paid) => (paid && paid.grown ? `<tr><td>${U.report.grown}</td><td class="num">${esc(T.stats[paid.grown])} +1</td></tr>` : '');
   // The stars an employee has brought in, as three counts: three stars, two stars, one star. It never grows into a list.
-  const tallyOf = (id) => ctx.S().staff[id].tally || { 3: 0, 2: 0, 1: 0 };
-  const tallyHtml = (id) => { const tl = tallyOf(id); return `<span class="tally"><b class="s3">${tl[3]}</b>/<b class="s2">${tl[2]}</b>/<b class="s1">${tl[1]}</b></span>`; };
+  const tallyHtml = (stars) => `<span class="tally">★ ${stars}</span>`;
   const traitChip = (t) => `<a class="chip tr" data-act="wiki" data-id="traits:${t}"${tip(traitTip(t))}>${esc(T.traits[t])}</a>`;
   // stars: filled and empty marks coloured by the count, bronze, silver and gold
   const STAR_MAX = D.get('config.stars.max');
@@ -207,7 +206,7 @@ export function createUI(D, ctx, DEV = false) {
     const Q = qid && D.get('quotes.quotes')[qid];
     if (!q || !Q) return '';
     const said = Q.said && Q.original !== D.lang && Q.said !== q.quote ? `<div class="echosaid">${esc(Q.said)}</div>` : '';
-    return `<figure class="${cls}"><blockquote>${U.fmt.quote.replace('{x}', esc(q.quote))}</blockquote>${said}<figcaption>${esc(U.report.echo_cite.replace('{who}', q.who).replace('{date}', echoDate(Q.date)).replace('{occasion}', q.occasion))}</figcaption></figure>`;
+    return `<figure class="${cls}"><blockquote>${U.fmt.quote.replace('{x}', esc(q.quote))}</blockquote>${said}<figcaption>${esc(U.report.echo_cite.replace('{who}', q.who).replace('{date}', echoDate(Q.date)).replace('{occasion}', q.occasion))}${echoSources(D, Q.sources, esc)}</figcaption></figure>`;
   };
   // The settlement at the head of a report, its summary: the stars one row each, what the trip brought and cost, the shift of the timeline, then the echo.
   // The record waits folded below, and the line the employee says on coming back is in it, at the return.
@@ -227,7 +226,8 @@ export function createUI(D, ctx, DEV = false) {
     const shift = S.shift ? `<li class="shiftrow" style="--i:${rows.length}">${S.shift}</li>` : '';
     const n = rows.length + (shift ? 1 : 0);
     const qid = cur.echo ?? ctx.backend.echoOf(cur);
-    const echo = echoHtml(qid);
+    const words = qid ? '' : ctx.backend.sayingOf(cur);
+    const echo = echoHtml(qid) || (words ? `<figure class="echo"><blockquote>${U.fmt.quote.replace('{x}', esc(words))}</blockquote><figcaption>${staffLink(cur.spec.staffId)}</figcaption></figure>` : '');
     const now = Date.now();
     if (!(cur.id in st.settled)) st.settled[cur.id] = now;
     const gone = now - st.settled[cur.id];
@@ -434,8 +434,7 @@ export function createUI(D, ctx, DEV = false) {
     const allIds = hiredIds();
     const traitTags = [...new Set(allIds.flatMap((id) => staffTraits(D, id)))].map((x) => ({ id: x, label: T.traits[x] }));
     const rows = allIds.filter((id) => listbox.match('home_staff', staffName(D, id) + ' ' + T.staff[id].jobs.join(' ') + ' ' + T.staff[id].ethnicity, staffTraits(D, id))).map((id) => {
-      const tl = tallyOf(id);
-      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: tl[3] * 3 + tl[2] * 2 + tl[1] };
+      return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: office.growthStars(id) };
     });
     const perkText = perkParts(office.perks()).join(' · ');
     const sec = S.secretary
@@ -451,7 +450,7 @@ export function createUI(D, ctx, DEV = false) {
         { k: 'traits', label: U.office.col_traits, w: '22%', cell: (r) => `<span class="nowrap">${staffTraits(D, r.id).map(traitChip).join('')}</span>` },
         { k: 'state', label: U.office.col_state, w: '9%', val: (r) => r.state, cell: (r) => `<span class="chip ${r.state === 'ready' ? '' : 'warn'}">${stateLabel()[r.state]}</span>` },
         { k: 'favor', label: U.office.col_favor, w: '13%', val: (r) => r.favor, cell: (r) => favorCell(r.id) },
-        { k: 'score', label: U.office.col_history, w: '11%', val: (r) => r.score, cell: (r) => `<a class="tallylink" data-act="staffopen" data-id="${r.id}"${tip(U.office.tally_tip)}>${tallyHtml(r.id)}</a>` },
+        { k: 'score', label: U.office.col_history, w: '11%', val: (r) => r.score, cell: (r) => `<a class="tallylink" data-act="staffopen" data-id="${r.id}"${tip(U.office.tally_tip)}>${tallyHtml(r.score)}</a>` },
         // the test employees of the developer mode keep their mood, never serve as secretary and cannot be let go, so their row has no buttons
         { k: 'act', label: '', w: '31%', cls: 'num', cell: (r) => D.get('staff.staff')[r.id]?.dev_only ? '' : `<span class="nowrap"><button data-act="gift" data-id="${r.id}" ${S.funds < office.giftCost() ? 'disabled' : ''}${tip(U.office.gift_tip)}>${U.office.gift} ${office.giftCost()}</button> <button data-act="appoint" data-id="${r.id}" ${r.state === 'away' ? 'disabled' : ''}>${r.state === 'secretary' ? U.office.dismiss : U.office.appoint}</button> <button class="ghost" data-act="fire" data-id="${r.id}" ${r.state === 'away' || hiredIds().length <= 1 || r.id === ctx.S().founder.id ? 'disabled' : ''}${tip(U.office.fire_tip)}>${U.office.fire}</button></span>` },
       ],
@@ -998,7 +997,7 @@ export function createUI(D, ctx, DEV = false) {
     const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('')}`).join('');
     const jumps = A.sections.map((sec, i) => `<a class="wl" data-act="aboutjump" data-id="about-${i}">${esc(sec.h)}</a>`).join(' · ');
     return `<div class="about">
-      <div class="muted">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div>
+      <div class="about-version">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div>
       <p class="jumps">${jumps}</p>
       ${secs}</div>`;
   }
@@ -1030,7 +1029,8 @@ export function createUI(D, ctx, DEV = false) {
     const keptIds = new Set(S.dispatches.filter((d) => d.claimed).map((d) => d.id));
     const rows = S.trips.filter((x) => x.staffId === id).slice().reverse();
     const grown = sf.growth || {};
-    const into = office.growthStars(id) % O.stars_per_point;
+    const stars = office.growthStars(id);
+    const into = stars % O.stars_per_point;
     const attrRows = attrList.map((k) => {
       const base = plain[k];
       return `<tr><td>${esc(T.stats[k])}</td><td class="num">${r1(base)}${grown[k] ? ` <span class="muted"${tip(P.grown_tip)}>(+${grown[k]})</span>` : ''}</td><td class="num">${gearAdd(k) ? `<b class="up">+${gearAdd(k)}</b>` : '<span class="muted">0</span>'}</td><td class="num"><b>${r1(eff[k])}</b></td></tr>`;
@@ -1061,7 +1061,7 @@ export function createUI(D, ctx, DEV = false) {
       <p class="muted">${esc(T.staff[id].bio)}</p>
       <div class="cols2"><div><div class="radarwrap"${tip(attrs)}>${radarSvg(D, eff)}</div></div>
       <div><table class="plain attrs"><thead><tr><th></th><th class="num">${P.base}</th><th class="num">${P.gear}</th><th class="num">${P.today}</th></tr></thead><tbody>${attrRows}</tbody></table>
-      <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(id)}</span></div>
+      <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(stars)}</span></div>
       <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(O.stars_per_point))}</div></div></div>
       <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
       ${sf.hired ? `<div class="sec">${P.gear_title} <span class="muted">${P.load_meter.replace('{a}', String(used)).replace('{b}', String(cap))}</span></div>
@@ -1345,7 +1345,7 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'chartline') { const k = b.dataset.chart + ':' + b.dataset.k; if (st.chartOff.has(k)) st.chartOff.delete(k); else st.chartOff.add(k); render(); }
     else if (act === 'fn') { const k = st.modal.id + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
     // a click on the settlement shows all of it at once: its rows and its echo are put where the motion would have ended
-    else if (act === 'settleskip') { st.settled[id] = 0; render(); }
+    else if (act === 'settleskip' && !ev.target.closest('.echo-sources')) { st.settled[id] = 0; render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
     else if (act === 'again') {
       const d = ctx.S().dispatches.find((x) => x.id === id);

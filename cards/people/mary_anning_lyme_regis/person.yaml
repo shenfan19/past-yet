@@ -106,18 +106,31 @@ facts:
       en: 'November 1812: Mary Anning, twelve or thirteen, digs a skeleton five metres long out of the cliff. Her brother had found its skull.'
       zh: '1812 年 11 月，十三岁上下的玛丽·安宁从崖壁里挖出一具五米来长的骨架，头骨是哥哥先找到的。'
   plesiosaur:
-    date: '1823-12'
-    stay_day: 20
-    checked: two_sources
+    date: '1823-12-10'
+    stay_day: 25
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [mary_anning_lyme_regis_primary, museum_earth_anning]
+    sources: [anning_plesiosaur_geolsoc]
     text:
-      en: 'Mary Anning discovered a complete plesiosaur skeleton at Lyme Regis in December 1823. Her sketch records the remarkably long neck.'
-      zh: '1823 年 12 月，玛丽·安宁在莱姆里吉斯发现一具完整的蛇颈龙骨架，她的草图记下了那条长颈。'
+      en: 'On 10 December 1823 Mary Anning discovered the first near-complete, articulated plesiosaur skeleton at Lyme Regis.'
+      zh: '1823 年 12 月 10 日，玛丽·安宁在莱姆里吉斯发现了第一具近乎完整、关节仍相连的蛇颈龙骨架。'
     line:
-      en: 'December 1823: under the cliffs Mary Anning finds a whole skeleton with a neck longer than its body. She draws it.'
-      zh: '1823 年 12 月，玛丽·安宁在崖下找到一整具骨架，脖子比身子还长。她把它画了下来。'
+      en: '10 December 1823: under the cliffs at Lyme Regis, Mary Anning finds a nearly complete skeleton with a neck longer than its body.'
+      zh: '1823 年 12 月 10 日，玛丽·安宁在莱姆里吉斯的崖下找到一具近乎完整的骨架，脖子比身子还长。'
+  sketch:
+    date: '1823-12-26'
+    stay_day: 41
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [anning_plesiosaurus_letter_1823]
+    text:
+      en: 'Anning’s letter of 26 December includes a sketch of the skeleton and calls attention to its long neck and small head.'
+      zh: '安宁在 12 月 26 日的信里附上骨架草图，特别指出它脖子很长，头却很小。'
+    line:
+      en: '26 December 1823: Anning writes from Lyme and includes a drawing of the skeleton.'
+      zh: '1823 年 12 月 26 日，安宁从莱姆寄出一封信，附了一张骨架草图。'
   pterosaur:
     date: '1828-12'
     checked: two_sources
@@ -152,6 +165,12 @@ bystanders:
     text: {en: 'A buyer, made up for the game, who asks the price before he asks who found it.', zh: '一位编出来的买主，先问价钱，再问是谁找到的。'}
 wiki:
   refs:
+    anning_plesiosaur_geolsoc:
+      order: 174
+      status: checked
+      text:
+        en: 'Geological Society of London, Reconstructing a new animal, discovery of 10 December 1823. https://www.geolsoc.org.uk/the-library/online-exhibitions/mary-anning-and-the-geological-society/reconstruction-of-life/reconstructing-a-new-animal/'
+        zh: '伦敦地质学会，《重建一种新动物》，记 1823 年 12 月 10 日的发现。https://www.geolsoc.org.uk/the-library/online-exhibitions/mary-anning-and-the-geological-society/reconstruction-of-life/reconstructing-a-new-animal/'
     mary_anning_lyme_regis_primary:
       order: 150
       status: checked
@@ -170,15 +189,48 @@ wiki:
       text:
         en: 'BBC Wildlife, Mary Anning. https://www.discoverwildlife.com/people/mary-anning'
         zh: 'BBC Wildlife，玛丽·安宁。https://www.discoverwildlife.com/people/mary-anning'
+    anning_plesiosaurus_letter_1823:
+      order: 172
+      status: checked
+      text:
+        en: 'Wellcome Collection autograph letter of 26 December 1823; image and archivist transcription on Show Me. https://www.show.me.uk/collection/1470-letter-from-mary-anning'
+        zh: '惠康收藏馆藏 1823 年 12 月 26 日亲笔信；Show Me 登载影像及惠康档案员转录。 https://www.show.me.uk/collection/1470-letter-from-mary-anning'
+    anning_murchison_letter_1829:
+      order: 173
+      status: checked
+      text:
+        en: 'Geological Society of London Archives, Anning to Charlotte Murchison, 25 February [1829], LDGSL/838/A/7/1; manuscript and transcription. https://www.geolsoc.org.uk/the-library/online-exhibitions/mary-anning-and-the-geological-society/geologising-with-mary-anning/letter-from-mary-anning/'
+        zh: '伦敦地质学会档案，安宁致夏洛特·默奇森，推定 1829 年 2 月 25 日，LDGSL/838/A/7/1；手稿影像及转录。 https://www.geolsoc.org.uk/the-library/online-exhibitions/mary-anning-and-the-geological-society/geologising-with-mary-anning/letter-from-mary-anning/'
+quotes:
+  anning_rough_sketch:
+    order: 1
+    tier: full
+    date: '1823-12-26'
+    checked: official_record
+    sources: [anning_plesiosaurus_letter_1823]
+    original: en
+    text:
+      en: {who: Mary Anning, quote: 'I have endeavoured in a rough sketch to give you some idea of what it is like.', occasion: 'letter from Lyme accompanying her drawing of the plesiosaur'}
+      zh: {who: 玛丽·安宁, quote: '我试着画了一张草图，好让您大致知道它是什么样子。', occasion: '从莱姆寄出的信，附她亲绘的蛇颈龙草图'}
+  anning_old_passion:
+    order: 2
+    tier: none
+    date: '1829-02-25'
+    checked: official_record
+    sources: [anning_murchison_letter_1829]
+    original: en
+    text:
+      en: {who: Mary Anning, quote: 'I soone lost the green sand mania and returned to my old passion for bones', occasion: 'letter to Charlotte Murchison, dated 25 February, assigned to 1829 by the Geological Society'}
+      zh: {who: 玛丽·安宁, quote: '我很快就不再迷恋绿砂，又回去找那些我一直喜欢的骨头。', occasion: '致夏洛特·默奇森的信，署 2 月 25 日，伦敦地质学会推定为 1829 年'}
 self_check:
   fact: plesiosaur
-  quote_line: '脖子比身子还长。她把它画了下来。'
+  quote_line: '玛丽·安宁在莱姆里吉斯的崖下找到一具近乎完整的骨架，脖子比身子还长。'
   regret_choice: '派力气大的去，退潮时跟得上，崖下的弯线却分不清；派爱说话的去，买主面前把名字说清了，崖下那趟没人陪。'
   bookend: '从一个十三岁女孩挖出的骨架开始，以她死时仍然拮据收尾。'
   share_line: '1823 年冬天，我在莱姆里吉斯的崖下帮人分清哪道线是骨头。'
   share_number: '47'
   knowing: 'pterosaur'
-  near: 'plesiosaur'
+  near: 'plesiosaur, sketch'
   lever: 'p2, p3'
   missed: 'death'
   brought: 'relic'

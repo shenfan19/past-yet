@@ -16,7 +16,7 @@ events:
     channels: {E: 1, V: 1}
     # finished: in the game with release.ready_only
     ready: true
-    refs: [dante_ravenna_primary, dante_ravenna_britannica, dante_ravenna_wiki, dante_ravenna_eclogue_research, dante_ravenna_questio, dante_ravenna_loc_rehabilitation, boccaccio_dante_tradition]
+    refs: [dante_ravenna_primary, dante_ravenna_britannica, dante_ravenna_wiki, dante_ravenna_eclogue_research, dante_ravenna_questio, dante_ravenna_florence_motion, dante_ravenna_loc_rehabilitation, boccaccio_dante_tradition]
     scene:
       star_rules: 2
       points:
@@ -85,6 +85,29 @@ text:
     name: 但丁
     text: 意大利诗人，1265 年生，1321 年去世，出身佛罗伦萨。1302 年被逐出故城，他用托斯卡纳语写下《神曲》，在拉文纳去世并葬在那里。
 hook: {en: 'The laurel in Bologna, the poem in Ravenna', zh: '桂冠在博洛尼亚，诗在拉文纳'}
+quotes:
+  dante_spark:
+    order: 1
+    tier: full
+    date: '1321'
+    checked: official_record
+    sources: [dante_paradiso_spark]
+    original: it
+    text:
+      en: {who: 'Dante Alighieri', quote: 'A little spark is followed by a great flame.', occasion: 'Paradiso I.34, the poet on those who might follow his work (completed by 1321); game translation'}
+      zh: {who: '但丁·阿利吉耶里', quote: '一星微火之后，便是熊熊烈焰。', occasion: '《天堂篇》第一歌第 34 行，诗人寄望后来的作者（全篇至迟于 1321 年完成）；本游戏译文'}
+      it: {who: 'Dante Alighieri', quote: 'Poca favilla gran fiamma seconda', occasion: 'Paradiso I.34, the poet on those who might follow his work (completed by 1321)'}
+  dante_give_to_one:
+    order: 2
+    tier: none
+    date: '1305'
+    checked: official_record
+    sources: [dante_convivio_gift]
+    original: it
+    text:
+      en: {who: 'Dante Alighieri', quote: 'You cannot give to many without giving to one, since the one is among the many. But you can give to one without giving to many.', occasion: 'Convivio I.viii.4, on generosity (written c. 1303–1306); game translation'}
+      zh: {who: '但丁·阿利吉耶里', quote: '要给予许多人，就一定会给予其中的一人；但即使不能给予许多人，也可以给予一人。', occasion: '《飨宴》第一卷第八章第四节，论慷慨（约写于 1303—1306 年）；本游戏译文'}
+      it: {who: 'Dante Alighieri', quote: 'dare a molti è impossibile sanza dare a uno, acciò che uno in molti sia inchiuso; ma dare a uno si può bene sanza dare a molti.', occasion: 'Convivio I.viii.4, on generosity (written c. 1303–1306)'}
 facts:
   exile:
     date: '1302'
@@ -158,17 +181,17 @@ facts:
       en: '14 September 1321: back ill from an embassy to Venice, Dante dies in Ravenna.'
       zh: '1321 年 9 月 14 日，从威尼斯出使回来后病倒的但丁，在拉文纳去世。'
   rehabilitation:
-    date: '2008-06'
-    checked: two_sources
+    date: '2008-06-16'
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [dante_ravenna_loc_rehabilitation, dante_ravenna_wiki]
+    sources: [dante_ravenna_florence_motion, dante_ravenna_loc_rehabilitation]
     text:
       en: 'In June 2008 the city council of Florence passed a motion asking the mayor to rehabilitate Dante and revoke the sentence of 1302.'
       zh: '2008 年 6 月，佛罗伦萨市议会通过动议，请市长为但丁恢复名誉，撤销 1302 年的判决。'
     line:
-      en: 'June 2008: the city council of Florence votes to revoke the sentence it passed on Dante in 1302.'
-      zh: '2008 年 6 月，佛罗伦萨市议会表决，撤销 1302 年对但丁的判决。'
+      en: '16 June 2008: Florence’s city council passes a motion asking the mayor to revoke Dante’s 1302 sentence.'
+      zh: '2008 年 6 月 16 日，佛罗伦萨市议会通过动议，请市长撤销 1302 年对但丁的判决。'
 bystanders:
   dante_ravenna_reader:
     invented: true
@@ -178,6 +201,18 @@ bystanders:
     text: {en: 'A wood gatherer, made up for the game, who goes out to the pine forest by the sea.', zh: '一个编出来的拾柴人，常去海边的松林。'}
 wiki:
   refs:
+    dante_paradiso_spark:
+      order: 30
+      status: checked
+      text:
+        en: 'Princeton Dante Project, Paradiso I.34–36, Italian text. https://dante.princeton.edu/cgi-bin/dante/campuscgi/mpb/GetCantoSection.pl?INP_LEN=3&INP_POEM=Par&INP_SECT=1&INP_START=34&LANG=2'
+        zh: '普林斯顿但丁项目，《天堂篇》第一歌第 34–36 行，意大利语原文。 https://dante.princeton.edu/cgi-bin/dante/campuscgi/mpb/GetCantoSection.pl?INP_LEN=3&INP_POEM=Par&INP_SECT=1&INP_START=34&LANG=2'
+    dante_convivio_gift:
+      order: 31
+      status: checked
+      text:
+        en: 'Princeton Dante Project, Convivio I.viii.4, Italian National Edition. https://dante.princeton.edu/cgi-bin/dante/DispMinorWork.pl?REF=I+viii+1-18&TITLE=Conv'
+        zh: '普林斯顿但丁项目，《飨宴》第一卷第八章第四节，意大利国家校勘版。 https://dante.princeton.edu/cgi-bin/dante/DispMinorWork.pl?REF=I+viii+1-18&TITLE=Conv'
     dante_ravenna_eclogue_research:
       order: 10
       status: checked
@@ -202,6 +237,12 @@ wiki:
       text:
         en: 'Princeton Dante Project, Questio de aqua et terra. https://dante.princeton.edu/dante/pdp/questiohead.html'
         zh: '普林斯顿但丁项目，《水与土之辩》。https://dante.princeton.edu/dante/pdp/questiohead.html'
+    dante_ravenna_florence_motion:
+      order: 33
+      status: checked
+      text:
+        en: 'Florence City Council minutes of 25 May 2015, quoting motion 319 and recording its approval on 16 June 2008. https://www1.comune.fi.it/materiali/uff_consiglio/verbali/Verbale-25.05.15.pdf'
+        zh: '佛罗伦萨市议会 2015 年 5 月 25 日会议记录，引述第 319 号动议及 2008 年 6 月 16 日的通过日期。https://www1.comune.fi.it/materiali/uff_consiglio/verbali/Verbale-25.05.15.pdf'
     dante_ravenna_loc_rehabilitation:
       order: 14
       status: checked
@@ -224,7 +265,7 @@ self_check:
   fact: bologna_letter
   quote_line: '1319 年前后，博洛尼亚的乔万尼·德尔·维尔吉利奥寄来一首拉丁诗，劝但丁改用拉丁文写作，来博洛尼亚戴桂冠。'
   regret_choice: '派懂行的译者去，答诗和《天堂篇》分得清清楚楚，却未必有人肯坐下来，把七百年后的事讲给他听；派有心的去，话说得到，誊写间里那两叠纸却可能混在一起。'
-  bookend: '从 1302 年佛罗伦萨的判决开始，以 2008 年同一座城撤销这份判决收尾，中间他死在拉文纳。'
+  bookend: '从 1302 年佛罗伦萨的判决开始，以 2008 年同一座城通过动议请求撤销判决收尾；但丁终未回到故乡。'
   share_line: '1320 年冬天，我在拉文纳的誊写间里，看着一部用街头话写的诗。'
   share_number: '706'
   knowing: 'rehabilitation'

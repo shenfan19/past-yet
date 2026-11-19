@@ -32,7 +32,7 @@ events:
         name: "An essay from Ternate"
         place: "Ternate"
         figure: "Alfred Russel Wallace"
-        story: 'In February 1858, recovering from a bout of malaria in the Moluccas, Alfred Russel Wallace wrote an essay signed at Ternate on how varieties depart from the original type, and sent it to Charles Darwin. It reached Darwin on 18 June 1858. On 1 July it was read at the Linnean Society in London with material by Darwin; neither author was there.'
+        story: 'In February 1858, after a bout of fever in the Moluccas, Alfred Russel Wallace wrote an essay on how varieties depart from their original type. It bears the date and place February 1858, Ternate. On 25 March Wallace sailed from Ternate with a party that included the young hunter Jumaat. They reached Dorey on the coast of New Guinea. The essay went to Charles Darwin in England; on 1 July it was read alongside Darwin’s work in London, with neither author in the room.'
         relic: "A beetle in a pin box"
         relic_desc: "A collected beetle in a small tin box."
         points:
@@ -60,7 +60,7 @@ events:
         name: "来自特尔纳特的论文"
         place: "特尔纳特"
         figure: "阿尔弗雷德·拉塞尔·华莱士"
-        story: '1858 年 2 月，阿尔弗雷德·拉塞尔·华莱士在摩鹿加群岛一场疟疾稍退之后，写成一篇落款特尔纳特的论文，谈变种怎样偏离原型，寄给了查尔斯·达尔文。6 月 18 日，论文到了达尔文手里。7 月 1 日，它与达尔文的材料一同在伦敦林奈学会宣读，两位作者都不在场。'
+        story: '1858 年 2 月，阿尔弗雷德·拉塞尔·华莱士在摩鹿加群岛发烧，退烧后写了一篇论文，谈变种怎样偏离原型。论文落款是「特尔纳特，1858 年 2 月」。3 月 25 日，他从特尔纳特乘船出发，同行的有年轻猎手朱马特，一行人抵达新几内亚海岸的多雷。论文寄到了英格兰。7 月 1 日，他与达尔文的文章在伦敦一同宣读，两位作者都不在场。'
         relic: "针盒里的一只甲虫"
         relic_desc: "一只收集来的甲虫，放在小锡盒里。"
         points:
@@ -87,27 +87,28 @@ events:
 text:
   en:
     name: Alfred Russel Wallace
-    text: Welsh naturalist, 1823 to 1913. While ill with fever on Ternate in 1858 he wrote out the idea of evolution by natural selection and sent it to Charles Darwin, which led to a joint presentation that year. He also mapped the faunal boundary now called Wallace's Line.
+    text: British naturalist born in Wales, 1823 to 1913. During his travels in the Malay Archipelago he developed an account of natural selection independently of Charles Darwin. Wallace’s essay and Darwin’s writings were presented together in 1858. Wallace also described a marked change in the distribution of animals across the archipelago; the boundary is now known as Wallace’s Line.
   zh:
     name: 阿尔弗雷德·拉塞尔·华莱士
-    text: 威尔士博物学家，1823 年生，1913 年去世。1858 年他在特尔纳特岛发烧期间写出自然选择的进化思想并寄给查尔斯·达尔文，当年便有了联合宣读。他还划出了今天称为华莱士线的动物分界。
+    text: 英国博物学家，1823 年生于威尔士，1913 年去世。在马来群岛考察时，他独立于查尔斯·达尔文提出了自然选择的解释。1858 年，两人的文章在同一次会议上宣读。他还描述了群岛间动物分布的显著变化，那道分界如今称为华莱士线。
 hook: {en: 'A letter wrapped against the damp', zh: '一封包得防潮的信'}
 facts:
   fever:
-    date: '1858'
+    date: '1858-02'
     stay_day: 12
-    checked: two_sources
-    level: usable
+    checked: official_record
+    level: careful
     use: [story, history, wiki]
-    sources: [victorianweb_wallace, mun_darwin_wallace]
+    sources: [wallace_my_life_1905]
     text:
-      en: 'In February 1858, while suffering an attack of malaria in the Moluccas, Wallace conceived the idea and wrote the essay as soon as he was well enough.'
-      zh: '1858 年 2 月，华莱士在摩鹿加群岛疟疾发作，其间想到了这个道理，病稍好便写成论文。'
+      en: 'In his autobiography Wallace recalled thinking of the idea during a bout of intermittent fever and making notes that evening.'
+      zh: '华莱士在自传中回忆，他在间歇性发烧时想到这个解释，当晚就记下了要点。'
+    note: 'The wording follows his retrospective account and does not assign a day or an exact island.'
     line:
-      en: 'February 1858: in the Moluccas Wallace is down with malaria. As soon as he can hold a pen, he writes the essay.'
-      zh: '1858 年 2 月，华莱士在摩鹿加群岛疟疾发作，病稍好便提笔写成论文。'
+      en: 'February 1858: in the Moluccas, Wallace waits for the fever to ease and makes notes for his paper.'
+      zh: '1858 年 2 月，在摩鹿加群岛，华莱士等这一阵烧过去，记下了论文的要点。'
   signed:
-    date: '1858'
+    date: '1858-02'
     stay_day: 20
     checked: two_sources
     level: usable
@@ -117,8 +118,21 @@ facts:
       en: 'The printed essay is signed Ternate, February, 1858.'
       zh: '印出的论文落款是“特尔纳特，1858 年 2 月”。'
     line:
-      en: 'He signs it: Ternate, February, 1858.'
-      zh: '他在稿末落款：特尔纳特，1858 年 2 月。'
+      en: 'February 1858: the essay is dated at Ternate.'
+      zh: '1858 年 2 月，论文落款写的是特尔纳特。'
+  dorey_departure:
+    date: '1858-03-25'
+    stay_day: 52
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [wallace_malay_archipelago, wallace_ali_study]
+    text:
+      en: 'Wallace’s party embarked at Ternate on 25 March 1858 to travel to Dorey, now Manokwari, on the coast of New Guinea. Jumaat joined the expedition as a hunter.'
+      zh: '1858 年 3 月 25 日，华莱士一行从特尔纳特乘船出发，前往新几内亚海岸的多雷，即今马诺夸里。朱马特作为猎手随行。'
+    line:
+      en: '25 March 1858: Wallace and his party, including Jumaat, sail from Ternate for Dorey.'
+      zh: '1858 年 3 月 25 日，华莱士、朱马特一行乘船离开特尔纳特，前往多雷。'
   sent:
     date: '1858'
     stay_day: 60
@@ -138,7 +152,7 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [mun_darwin_wallace, wallace_online_s043]
+    sources: [wallace_darwin_lyell_1858, wallace_ternate_primary]
     text:
       en: 'The essay reached Darwin at Down House on 18 June 1858.'
       zh: '1858 年 6 月 18 日，论文寄到达尔文的唐屋。'
@@ -158,6 +172,20 @@ facts:
     line:
       en: '1 July: at the Linnean Society in London both papers are read. Neither author is in the room. Wallace hears of it only later.'
       zh: '7 月 1 日，伦敦林奈学会宣读了两人的文章。两位作者都不在场，华莱士事后才知道。'
+  jumaat_death:
+    date: '1858-06-26'
+    stay_day: 145
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [wallace_malay_archipelago, wallace_ali_study]
+    text:
+      en: 'Wallace records that Jumaat, a young hunter with his party, died at Dorey on 26 June 1858.'
+      zh: '据华莱士记载，随队的年轻猎手朱马特于 1858 年 6 月 26 日在多雷去世。'
+    line:
+      en: '26 June 1858: Jumaat dies at Dorey.'
+      zh: '1858 年 6 月 26 日，朱马特在多雷去世。'
+    note: 'The historical record stays separate from the employee’s outcome.'
   printed:
     date: '1858-08-20'
     checked: two_sources
@@ -179,6 +207,18 @@ bystanders:
     text: {en: 'A householder, made up for the game, who lets the room with the drying rack.', zh: '一位编出来的房东，把带晾架的屋子租了出去。'}
 wiki:
   refs:
+    wallace_malay_archipelago:
+      order: 208
+      status: checked
+      text:
+        en: 'A. R. Wallace, The Malay Archipelago, vol. II (1869), chapter XXXIV, New Guinea — Dorey. https://darwin-online.org.uk/converted/Ancillary/1869_MalayArchipelago_A1013.2/1869_MalayArchipelago_A1013.2.html'
+        zh: '华莱士，《马来群岛》第二卷（1869 年），第 34 章「新几内亚：多雷」。https://darwin-online.org.uk/converted/Ancillary/1869_MalayArchipelago_A1013.2/1869_MalayArchipelago_A1013.2.html'
+    wallace_ali_study:
+      order: 209
+      status: checked
+      text:
+        en: 'John van Wyhe and Gerrell M. Drawhorn, I am Ali Wallace, pp. 13–14, on the Dorey expedition and Jumaat. https://darwin-online.org.uk/people/2015%2C%20John%20van%20Wyhe%2C%20I%20am%20Ali%20Wallace.pdf'
+        zh: '约翰·范怀伊、杰雷尔·德劳霍恩，《我是阿里·华莱士》第 13 至 14 页，述多雷之行与朱马特。https://darwin-online.org.uk/people/2015%2C%20John%20van%20Wyhe%2C%20I%20am%20Ali%20Wallace.pdf'
     wallace_ternate_primary:
       order: 158
       status: checked
@@ -203,15 +243,54 @@ wiki:
       text:
         en: 'The Victorian Web, Alfred Russel Wallace. https://victorianweb.org/victorian/science/wallace/wallace2.htm'
         zh: 'The Victorian Web，阿尔弗雷德·拉塞尔·华莱士。https://victorianweb.org/victorian/science/wallace/wallace2.htm'
+    wallace_hooker_1858:
+      order: 205
+      status: checked
+      text:
+        en: 'Alfred Russel Wallace to Joseph Dalton Hooker, 6 October 1858, Wallace Correspondence Project WCP1454. https://epsilon.ac.uk/view/wallace/letters/WCP1454'
+        zh: '阿尔弗雷德·拉塞尔·华莱士致约瑟夫·道尔顿·胡克，1858 年 10 月 6 日，华莱士通信项目 WCP1454。 https://epsilon.ac.uk/view/wallace/letters/WCP1454'
+    wallace_my_life_1905:
+      order: 206
+      status: checked
+      text:
+        en: 'Wallace, My Life, vol. 1, 1905, pp. 361–363, Wallace Online transcription and facsimile. https://wallace-online.org/content/contentblock?basepage=1&hitpage=353&itemID=S729.1&viewtype=side'
+        zh: '华莱士，《我的一生》第 1 卷，1905 年，第 361 至 363 页，Wallace Online 转录及影印。 https://wallace-online.org/content/contentblock?basepage=1&hitpage=353&itemID=S729.1&viewtype=side'
+    wallace_darwin_lyell_1858:
+      order: 207
+      status: checked
+      text:
+        en: 'Cambridge University Library, Darwin Correspondence Project, Darwin to Lyell, 18 [June 1858], letter 2285. https://www.darwinproject.ac.uk/view/letters/DCP-LETT-2285'
+        zh: '剑桥大学图书馆，达尔文通信项目，达尔文致莱尔，推定 1858 年 6 月 18 日，第 2285 封。 https://www.darwinproject.ac.uk/view/letters/DCP-LETT-2285'
+quotes:
+  wallace_independent_work:
+    order: 1
+    tier: full
+    date: '1858-10-06'
+    checked: official_record
+    sources: [wallace_hooker_1858]
+    original: en
+    text:
+      en: {who: Alfred Russel Wallace, quote: 'any other party who may, quite independently, have arrived at the same result a few years or a few hours later', occasion: 'letter to Joseph Dalton Hooker from Ternate, on credit for independent discoveries (excerpt)'}
+      zh: {who: 阿尔弗雷德·拉塞尔·华莱士, quote: '任何其他独立得到同一结果的人，不论他们晚了几年，还是几个钟头', occasion: '从特尔纳特致约瑟夫·道尔顿·胡克的信，谈独立发现如何得到承认（节录）'}
+  wallace_waited_for_fever:
+    order: 2
+    tier: none
+    date: '1905'
+    checked: official_record
+    sources: [wallace_my_life_1905]
+    original: en
+    text:
+      en: {who: Alfred Russel Wallace, quote: 'I waited anxiously for the termination of my fit so that I might at once make notes for a paper on the subject.', occasion: 'My Life, recalling the fever during which the idea for the essay came to him'}
+      zh: {who: 阿尔弗雷德·拉塞尔·华莱士, quote: '我焦急地等着这一阵发作过去，好立刻为这篇论文记下些东西。', occasion: '《我的一生》，回忆在发烧时想到那篇论文的经过'}
 self_check:
   fact: sent
   quote_line: '坐的是三月那一班还是四月那一班，至今说法不一。'
-  regret_choice: '派会照顾病人的去，烧退得快，邮船那天却未必在码头；派手巧的去，信包得好，发烧那几夜没人换布。'
+  regret_choice: '第一道要护住写作，后两道要在多雷分别照护伤口与病人。能让华莱士写完论文的人，不一定带齐救朱马特用的东西。'
   bookend: '从发烧时想到的一个道理开始，以他不在场的那场宣读收尾。'
   share_line: '1858 年，我在特尔纳特把一封信包进油纸，送上了邮船。'
   share_number: '1858'
   knowing: 'read'
-  near: 'fever, signed'
+  near: 'fever, signed, dorey_departure'
   lever: 'p2, p3'
   missed: 'read'
   brought: 'relic'

@@ -107,17 +107,18 @@ facts:
       en: 'March 1901: Morgan agrees to put 150,000 dollars into a wireless station for Tesla.'
       zh: '1901 年 3 月，摩根答应出资十五万美元，给特斯拉建一座无线电站。'
   white:
-    date: '1901'
+    date: '1901-09-13'
+    stay_day: 6
     checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [tesla_wardenclyffe_white]
+    sources: [tesla_wardenclyffe_white, tesla_wardenclyffe_white_quotes]
     text:
-      en: 'The archival finding aid lists three 1901 letters to Stanford White about the construction of the Wardenclyffe tower and building.'
-      zh: '档案指南列有三封1901年致斯坦福·怀特、涉及沃登克里弗塔和实验楼施工的信。'
+      en: 'Tesla wrote to Stanford White from New York on 13 September 1901 after receiving the contractor estimates White had sent him.'
+      zh: '1901 年 9 月 13 日，特斯拉收到斯坦福·怀特寄来的工程报价后，从纽约写信回复。'
     line:
-      en: '1901: Tesla writes to the architect Stanford White about the Wardenclyffe tower and building.'
-      zh: '1901 年，特斯拉为沃登克里弗的塔和实验楼写信给建筑师斯坦福·怀特。'
+      en: '13 September 1901: Tesla writes back to Stanford White about the unexpectedly high bids.'
+      zh: '1901 年 9 月 13 日，工程报价高出预料，特斯拉给斯坦福·怀特回信。'
   building:
     date: '1901-09'
     checked: two_sources
@@ -132,6 +133,7 @@ facts:
       zh: '1901 年 9 月，沃登克里弗工地动工。'
   marconi:
     date: '1901-12-12'
+    stay_day: 96
     checked: two_sources
     level: usable
     use: [story, history, wiki]
@@ -176,8 +178,8 @@ facts:
       en: 'On 4 July 1917 the Smiley Steel Company began blowing up the Wardenclyffe tower; the work went on into September.'
       zh: '1917 年 7 月 4 日，斯迈利钢铁公司开始炸毁沃登克里弗的塔，一直拆到 9 月。'
     line:
-      en: '4 July 1917: the Wardenclyffe tower is blown up.'
-      zh: '1917 年 7 月 4 日，沃登克里弗的塔被炸掉。'
+      en: '4 July 1917: demolition of the Wardenclyffe tower begins.'
+      zh: '1917 年 7 月 4 日，沃登克里弗塔开始拆除。'
   site:
     date: '1902'
     checked: official_record
@@ -253,6 +255,39 @@ wiki:
       text:
         en: 'U.S. National Park Service, Wardenclyffe Laboratory historic site https://www.nps.gov/places/wardenclyffe-laboratory.htm'
         zh: '美国国家公园管理局，沃登克里弗实验室遗址 https://www.nps.gov/places/wardenclyffe-laboratory.htm'
+    tesla_wireless_smithsonian:
+      order: 255
+      status: checked
+      text:
+        en: 'Smithsonian Libraries and Archives, Nikola Tesla papers, 5 March 1904 offprint of The Transmission of Electrical Energy Without Wires. https://collections.si.edu/search/detail/edanmdm:siris_sil_1102446'
+        zh: '史密森学会图书馆与档案馆，尼古拉·特斯拉文献，1904 年 3 月 5 日《无线电能传输》抽印本。 https://collections.si.edu/search/detail/edanmdm:siris_sil_1102446'
+    tesla_wireless_text:
+      order: 256
+      status: checked
+      text:
+        en: 'Nikola Tesla, The Transmission of Electrical Energy Without Wires, Electrical World and Engineer, 5 March 1904; transcription. https://borderlandsciences.org/tesla/article/1904-03-05_-_Wireless_Transmission_of_Electricity.html'
+        zh: '尼古拉·特斯拉，《无线电能传输》，《电气世界与工程师》，1904 年 3 月 5 日；转录本。 https://borderlandsciences.org/tesla/article/1904-03-05_-_Wireless_Transmission_of_Electricity.html'
+quotes:
+  tesla_prepared:
+    order: 1
+    tier: full
+    date: '1904-03-05'
+    checked: official_record
+    sources: [tesla_wireless_smithsonian, tesla_wireless_text]
+    original: en
+    text:
+      en: {who: Nikola Tesla, quote: 'I was able to handle my instruments quickly and I was prepared.', occasion: 'Electrical World and Engineer article on wireless transmission, recalling the Colorado experiments that preceded Wardenclyffe'}
+      zh: {who: 尼古拉·特斯拉, quote: '我已能迅速操作仪器，也做好了准备。', occasion: '《电气世界与工程师》无线传输文章，回忆沃登克里弗之前的科罗拉多实验'}
+  tesla_expectation:
+    order: 2
+    tier: none
+    date: '1904-03-05'
+    checked: official_record
+    sources: [tesla_wireless_smithsonian, tesla_wireless_text]
+    original: en
+    text:
+      en: {who: Nikola Tesla, quote: 'I was watching in eager expectation.', occasion: 'Electrical World and Engineer article, recalling the wait after the instrument trace went quiet'}
+      zh: {who: 尼古拉·特斯拉, quote: '我守着仪器，满怀期待。', occasion: '《电气世界与工程师》文章，回忆仪器读数沉寂之后的等待'}
 self_check:
   fact: marconi
   quote_line: '工头把报纸折好塞进外套，叫工人接着敲。'

@@ -281,12 +281,8 @@ export function createOffice(X) {
     const top = ctx.backend.maxStars(d.eraId);
     const energy = d.newBest ? d.baseEnergy * (ST.energy_share[top][d.stars] - ST.energy_share[top][best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
-    const sf0 = s.staff[d.spec.staffId];
     d.paid = { energy: Math.round(energy), restDays: restOf(d, d.payout.restDays, p.rest_cut), restCut: p.rest_cut };
     s.energy += d.paid.energy;
-    sf0.tally ||= { 3: 0, 2: 0, 1: 0 };
-    // the tally counts in thirds of the stars of the place, so a five star story fills the same three cells
-    if (d.stars > 0) sf0.tally[Math.ceil(d.stars * 3 / top)] += 1;
     d.paid.grown = grow(d.spec.staffId, d.eraId, d.stars, Number(d.id.slice(1)));
     // the echo is fixed when the report is taken, and the line counts as heard, so the page of the person shows it from now on instead of its question marks
     d.echo = ctx.backend.echoOf(d);

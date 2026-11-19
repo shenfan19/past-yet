@@ -32,3 +32,12 @@ export function createQuotes(D, el) {
     stop() { clearTimeout(timer); },
   };
 }
+export function echoSources(D, ids, esc) {
+  if (!ids?.length) return '';
+  const rows = ids.map((id) => {
+    const citation = D.get('enc_text.refs.' + id);
+    const url = citation.match(/https?:\/\/[^\s<>"']+/u)?.[0];
+    return `<li>${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(citation)}</a>` : esc(citation)}</li>`;
+  }).join('');
+  return `<details class="echo-sources"><summary>${esc(D.get('text.ui.enc.refs'))}</summary><ul>${rows}</ul></details>`;
+}

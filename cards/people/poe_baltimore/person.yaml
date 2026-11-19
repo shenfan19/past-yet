@@ -29,7 +29,7 @@ events:
         name: 'The note from the Fourth Ward'
         place: "Baltimore"
         figure: "Edgar Allan Poe"
-        story: 'On 27 September 1849 Edgar Allan Poe left Richmond for his home at Fordham in New York, and came to Baltimore the next day. Nothing certain is known of the following week. On 3 October, election day, he was found in great distress at Ryan''s Fourth Ward polls, and the printer Joseph Walker sent a note to Joseph Snodgrass. He was taken to Washington College Hospital, kept from visitors, and died there before dawn on 7 October, aged forty. The cause is still unknown. His aunt and mother-in-law Maria Clemm learned of it from a newspaper.'
+        story: 'On 27 September 1849 Edgar Allan Poe left Richmond for his home at Fordham in New York, and came to Baltimore the next day. His whereabouts for the next five days are uncertain. On 3 October, election day, he was found in great distress at Ryan''s Fourth Ward polls, and the printer Joseph Walker sent a note to Joseph Snodgrass. He was taken to Washington College Hospital, kept from visitors, and died there before dawn on 7 October, aged forty. The cause is still unknown. His aunt and mother-in-law Maria Clemm learned of it from a newspaper.'
         relic: "A walking cane"
         relic_desc: "A plain cane with a worn handle."
         points:
@@ -59,7 +59,7 @@ events:
         name: '第四选区的一张求助条'
         place: "巴尔的摩"
         figure: "埃德加·爱伦·坡"
-        story: '1849 年 9 月 27 日，埃德加·爱伦·坡离开里士满，要回纽约福德姆的家，第二天到了巴尔的摩。此后一个星期他在哪里，没有可靠的记载。10 月 3 日是选举日，有人在瑞安那处第四选区投票点发现他处境不妙，印刷工约瑟夫·沃克写条子请约瑟夫·斯诺德格拉斯来。他被送进华盛顿学院医院，不许探视，7 日天亮前在那里去世，四十岁，死因至今不明。他的姨母兼岳母玛丽亚·克莱姆是从报上读到的。'
+        story: '1849 年 9 月 27 日，埃德加·爱伦·坡离开里士满，要回纽约福德姆的家，第二天到了巴尔的摩。此后直到 10 月 3 日，他的行踪没有可靠记载。10 月 3 日是选举日，有人在瑞安那处第四选区投票点发现他处境不妙，印刷工约瑟夫·沃克写条子请约瑟夫·斯诺德格拉斯来。他被送进华盛顿学院医院，不许探视，7 日天亮前在那里去世，四十岁，死因至今不明。他的姨母兼岳母玛丽亚·克莱姆是从报上读到的。'
         relic: "一根手杖"
         relic_desc: "一根朴素的手杖，握柄已被磨旧。"
         points:
@@ -93,16 +93,37 @@ text:
     name: 埃德加·爱伦·坡
     text: 美国作家，1809 年生，1849 年去世。他写恐怖和推理故事，有《乌鸦》和《莫格街凶杀案》。他去世前几天被人发现在巴尔的摩神志不清，死因不明。
 hook: {en: 'A note from the polls on election day', zh: '选举日投票点送出的一张条子'}
+quotes:
+  poe_echo_completion:
+    order: 1
+    tier: full
+    date: '1846-04'
+    checked: official_record
+    sources: [poe_grahams_composition]
+    original: en
+    text:
+      en: {who: Edgar Allan Poe, quote: 'the work proceeded, step by step, to its completion with the precision and rigid consequence of a mathematical problem.', occasion: 'on writing The Raven, in The Philosophy of Composition'}
+      zh: {who: 埃德加·爱伦·坡, quote: '这部作品一步一步走向完成，像一道数学题那样精确严密。', occasion: '《创作哲学》中谈《乌鸦》的写作（游戏译文）'}
+  poe_echo_mother:
+    order: 2
+    tier: none
+    date: '1849'
+    checked: official_record
+    sources: [poe_museum_mother]
+    original: en
+    text:
+      en: {who: Edgar Allan Poe, quote: 'Are mother to the one I loved so dearly,', occasion: 'from To My Mother, the sonnet for Maria Clemm'}
+      zh: {who: 埃德加·爱伦·坡, quote: '您是我深爱之人的母亲，', occasion: '写给玛丽亚·克莱姆的十四行诗《致我的母亲》（游戏译文）'}
 facts:
   leaves_richmond:
     date: '1849-09-27'
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [poe_baltimore_chronology, poe_death_wiki]
+    sources: [poe_baltimore_chronology, poe_baltimore_death]
     text:
-      en: 'Poe had spent the summer of 1849 in Richmond, lecturing to raise money for a magazine. On 27 September he left, perhaps on the steamer Pocahontas, for his home in New York, and he reached Baltimore on 28 September. No reliable record places him for the next week.'
-      zh: '1849 年夏天，坡在里士满讲演，为办杂志筹钱。9 月 27 日他动身，也许坐的是汽船波卡洪塔斯号，要回纽约的家，28 日到了巴尔的摩。此后一个星期他在哪里，没有可靠的记载。'
+      en: 'Poe had spent the summer of 1849 in Richmond, lecturing to raise money for a magazine. On 27 September he left, perhaps on the steamer Pocahontas, for his home in New York, and he reached Baltimore on 28 September. No reliable record places him between his arrival and 3 October.'
+      zh: '1849 年夏天，坡在里士满讲演，为办杂志筹钱。9 月 27 日他动身，也许坐的是汽船波卡洪塔斯号，要回纽约的家，28 日到了巴尔的摩。此后直到 10 月 3 日，他的行踪没有可靠记载。'
     line:
       en: '27 September 1849: Poe leaves Richmond for New York; he reaches Baltimore the next day.'
       zh: '1849 年 9 月 27 日，坡离开里士满回纽约，第二天到巴尔的摩。'
@@ -207,6 +228,18 @@ bystanders:
     text: {en: 'The night porter of the hospital ward, made up for the game.', zh: '一个编出来的医院病区守夜杂役。'}
 wiki:
   refs:
+    poe_grahams_composition:
+      order: 857
+      status: checked
+      text:
+        en: 'Edgar Allan Poe, The Philosophy of Composition, Graham’s Magazine, April 1846, original publication transcribed by the Edgar Allan Poe Society of Baltimore. https://www.eapoe.org/works/essays/philcomp.htm'
+        zh: '埃德加·爱伦·坡，《创作哲学》，《格雷厄姆杂志》1846 年 4 月版，巴尔的摩爱伦·坡学会转录。 https://www.eapoe.org/works/essays/philcomp.htm'
+    poe_museum_mother:
+      order: 858
+      status: checked
+      text:
+        en: 'The Poe Museum, Edgar Allan Poe, To My Mother, first published in 1849. https://poemuseum.org/to-my-mother/'
+        zh: '爱伦·坡博物馆，埃德加·爱伦·坡，《致我的母亲》，1849 年首刊。 https://poemuseum.org/to-my-mother/'
     poe_clemm_october_letter:
       order: 855
       status: checked

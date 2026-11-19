@@ -5,6 +5,9 @@ The game content lives here as small yaml files, one card per thing. `data/` is 
 ```
 node tools/build_data.mjs          pack the cards into data/
 node tools/build_data.mjs --check  write nothing, exit 1 if data/ is out of date
+node tools/build_data.mjs --check --story-report  list structural review gaps for every live event
+node tools/check_echoes.mjs        check live settlement echo selection and citations in every locale
+node tools/check_live_stories.mjs  run every live story with the reference employees in English and Chinese
 ```
 
 A card holds the structure of a thing and its text in every language, so changing one thing means changing one file.

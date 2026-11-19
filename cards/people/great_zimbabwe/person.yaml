@@ -13,7 +13,7 @@ events:
     channels: {L: 3, H: 1}
     # finished: in the game with release.ready_only. No year is recorded for any wall, so the stay carries the century only.
     ready: true
-    refs: [great_zimbabwe_passage, livescience_great_zimbabwe, worldatlas_great_zimbabwe, ancient_history_great_zimbabwe]
+    refs: [great_zimbabwe_passage, great_zimbabwe_met, great_zimbabwe_iccrom]
     scene:
       points:
         - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","handy"]},{"job":["builder","carpenter"]},{"stat":{"constitution":6}}]}}
@@ -68,7 +68,7 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [livescience_great_zimbabwe, worldatlas_great_zimbabwe]
+    sources: [great_zimbabwe_passage, great_zimbabwe_met]
     text:
       en: 'Great Zimbabwe was built by ancestors of the Shona people. Building began in the eleventh century and went on for more than three centuries; the city flourished until the fifteenth.'
       zh: '大津巴布韦由绍纳人的祖先建造，十一世纪开始动工，延续三百多年，一直兴盛到十五世纪。'
@@ -80,20 +80,17 @@ facts:
     stay_day: 5
     checked: official_record
     level: usable
-    use: [story, history, wiki]
+    use: [story, wiki]
     sources: [great_zimbabwe_passage]
     text:
-      en: 'The site description documents the elliptical Great Enclosure, its regular courses of cut granite and a narrow passage leading to the conical tower.'
-      zh: '遗产档案记有椭圆形大围场、整齐垒砌的花岗岩墙体和通往锥形塔的狭道。'
-    line:
-      en: 'The Great Enclosure stands in an oval of granite laid in even courses. Between two of its walls a narrow passage leads to a conical tower.'
-      zh: '大围场是一圈椭圆的花岗岩墙，一层层垒得整齐。两道墙之间，一条狭道通向一座锥形塔。'
+      en: 'The fourteenth-century Great Enclosure is elliptical, with even courses of cut granite and a narrow passage leading to the conical tower. The surviving walls do not document the day or order in which workers laid particular stones.'
+      zh: '十四世纪的大围场呈椭圆形，花岗岩逐层整齐垒起，一条狭道通向锥形塔。现存的墙无法说明某块石头具体是哪天、按什么顺序垒上的。'
   mauch:
     date: '1871'
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [livescience_great_zimbabwe, worldatlas_great_zimbabwe]
+    sources: [great_zimbabwe_iccrom]
     text:
       en: 'The German explorer Karl Mauch reached the ruins in 1871.'
       zh: '1871 年，德国探险家卡尔·毛赫来到这片遗址。'
@@ -102,10 +99,10 @@ facts:
       zh: '1871 年，德国人卡尔·毛赫来到这片遗址。'
   name:
     date: '1980'
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [livescience_great_zimbabwe, ancient_history_great_zimbabwe]
+    sources: [great_zimbabwe_iccrom]
     text:
       en: 'In 1980 the country took the name Zimbabwe, the name the Shona had long given to the city.'
       zh: '1980 年，国家以绍纳人早就给这座城起的名字，定名为津巴布韦。'
@@ -114,10 +111,10 @@ facts:
       zh: '1980 年，一个新国家用这座城的名字命名自己：津巴布韦。'
   heritage:
     date: '1986'
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [ancient_history_great_zimbabwe, great_zimbabwe_passage]
+    sources: [great_zimbabwe_passage]
     text:
       en: 'UNESCO inscribed Great Zimbabwe as a World Heritage site in 1986.'
       zh: '1986 年，联合国教科文组织把大津巴布韦列入世界遗产。'
@@ -139,27 +136,22 @@ wiki:
       text:
         en: 'UNESCO World Heritage Centre, Great Zimbabwe National Monument, Great Enclosure description https://whc.unesco.org/en/list/364'
         zh: '联合国教科文组织世界遗产中心，大津巴布韦遗址大围场说明 https://whc.unesco.org/en/list/364'
-    livescience_great_zimbabwe:
+    great_zimbabwe_met:
       order: 674
       status: checked
       text:
-        en: 'Live Science, Great Zimbabwe: African City of Stone. https://www.livescience.com/58200-great-zimbabwe.html'
-        zh: 'Live Science，大津巴布韦：非洲的石头城。https://www.livescience.com/58200-great-zimbabwe.html'
-    worldatlas_great_zimbabwe:
+        en: 'Metropolitan Museum of Art, Great Zimbabwe (11th–15th Century), on builders and dry-stone masonry. https://www.metmuseum.org/fr/essays/great-zimbabwe-11th-15th-century'
+        zh: '大都会艺术博物馆，大津巴布韦（十一至十五世纪），建造者与干砌石墙。https://www.metmuseum.org/fr/essays/great-zimbabwe-11th-15th-century'
+    great_zimbabwe_iccrom:
       order: 675
       status: checked
       text:
-        en: 'WorldAtlas, What Was Great Zimbabwe? https://www.worldatlas.com/articles/what-was-great-zimbabwe.html'
-        zh: 'WorldAtlas，大津巴布韦是什么？https://www.worldatlas.com/articles/what-was-great-zimbabwe.html'
-    ancient_history_great_zimbabwe:
-      order: 676
-      status: checked
-      text:
-        en: 'Ancient History Sites, Great Zimbabwe: Capital of a Medieval Southern African Kingdom. https://www.ancient-history-sites.com/?p=169679'
-        zh: 'Ancient History Sites，大津巴布韦：中世纪南部非洲王国的都城。https://www.ancient-history-sites.com/?p=169679'
+        en: 'ICCROM, The Preservation of Great Zimbabwe, site history and heritage management. https://www.iccrom.org/sites/default/files/publications/2019-11/iccrom_ics04_zimbabwe_en.pdf'
+        zh: '国际文化财产保护与修复研究中心，《大津巴布韦的保护》，遗址历史与遗产管理。https://www.iccrom.org/sites/default/files/publications/2019-11/iccrom_ics04_zimbabwe_en.pdf'
 self_check:
-  fact: passage
-  quote_line: '两道墙之间，一条狭道通向一座锥形塔。'
+  fact: heritage
+  quote_line: '1986 年，大津巴布韦列入世界遗产。'
+  echo_note: 'No individual medieval builder is identified in the records consulted. Later visitors’ words are not the builders’ words.'
   regret_choice: '派力气大的去，石块挑得好，狭道却没人画成图；派细心的去，图画好了，旱季的水挑不上山。'
   bookend: '从绍纳人的祖先在山上垒起第一层石开始，以一个国家用这座城的名字命名自己收尾。'
   share_line: '我在大津巴布韦替砌墙的人挑过石块。'

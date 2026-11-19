@@ -17,7 +17,7 @@ events:
     channels: {V: 1}
     # finished: in the game with release.ready_only
     ready: true
-    refs: [euclid_alexandria_primary, euclid_alexandria_mactutor, euclid_alexandria_britannica, euclid_alexandria_porisms_study, euclid_alexandria_elements_wiki]
+    refs: [euclid_alexandria_primary, euclid_alexandria_mactutor, euclid_alexandria_britannica, euclid_alexandria_porisms_study, euclid_alexandria_ratdolt]
     scene:
       star_rules: 2
       points:
@@ -77,13 +77,36 @@ text:
     name: 欧几里得
     text: 约公元前 300 年在亚历山大工作的希腊数学家。他的《几何原本》从定义、公设和证明出发构建几何，两千多年里一直是标准教材。他的生平所知甚少。
 hook: {en: '171 propositions, and only the number left', zh: '171 个命题，只剩下一个数'}
+quotes:
+  euclid_equal_to_the_same:
+    order: 1
+    tier: full
+    date: '-300'
+    checked: official_record
+    sources: [euclid_greek_book_one]
+    original: grc
+    text:
+      en: {who: 'Euclid', quote: 'Things equal to the same thing are equal to one another.', occasion: 'Elements, Book I, first common notion (c. 300 BCE); game translation'}
+      zh: {who: '欧几里得', quote: '等于同一量的量，彼此相等。', occasion: '约公元前 300 年，《几何原本》第一卷，第一条公理；本游戏译文'}
+      grc: {who: 'Euclid', quote: 'Τὰ τῷ αὐτῷ ἴσα καὶ ἀλλήλοις ἐστὶν ἴσα.', occasion: 'Elements, Book I, first common notion (c. 300 BCE)'}
+  euclid_from_a_point:
+    order: 2
+    tier: none
+    date: '-300'
+    checked: official_record
+    sources: [euclid_greek_book_one]
+    original: grc
+    text:
+      en: {who: 'Euclid', quote: 'Let it be granted that a straight line can be drawn from any point to any point.', occasion: 'Elements, Book I, first postulate (c. 300 BCE); game translation'}
+      zh: {who: '欧几里得', quote: '容许从任一点向任一点画一条直线。', occasion: '约公元前 300 年，《几何原本》第一卷，第一条公设；本游戏译文'}
+      grc: {who: 'Euclid', quote: 'Ἠιτήσθω ἀπὸ παντὸς σημείου ἐπὶ πᾶν σημεῖον εὐθεῖαν γραμμὴν ἀγαγεῖν.', occasion: 'Elements, Book I, first postulate (c. 300 BCE)'}
 facts:
   first_proposition:
     date: '-300'
     checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [euclid_alexandria_primary, euclid_alexandria_elements_wiki]
+    sources: [euclid_alexandria_primary, euclid_greek_book_one]
     text:
       en: 'The first proposition of Euclid''s Elements constructs an equilateral triangle on a given line segment, with two circles.'
       zh: '欧几里得《几何原本》第一卷第一命题用两个圆，在一条给定线段上作等边三角形。'
@@ -122,16 +145,16 @@ facts:
       zh: '约公元 320 年，帕普斯在亚历山大记下，《推论集》共有 171 个定理、38 个引理。'
   printed:
     date: '1482'
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [euclid_alexandria_mactutor, euclid_alexandria_elements_wiki]
+    sources: [euclid_alexandria_ratdolt]
     text:
       en: 'The Elements was first printed in 1482, in Venice.'
       zh: '1482 年，《几何原本》在威尼斯第一次印刷出版。'
     line:
-      en: '1482: the Elements is printed for the first time, in Venice.'
-      zh: '1482 年，《几何原本》在威尼斯第一次印成书。'
+      en: '1482: Erhard Ratdolt prints the Elements in Venice, with diagrams in the margins.'
+      zh: '1482 年，埃尔哈德·拉特多尔特在威尼斯印行《几何原本》，把图形排在页边。'
 bystanders:
   euclid_alexandria_reader:
     invented: true
@@ -141,6 +164,12 @@ bystanders:
     text: {en: 'A papyrus seller on the quay, made up for the game.', zh: '一个编出来的码头上卖莎草纸的人。'}
 wiki:
   refs:
+    euclid_greek_book_one:
+      order: 30
+      status: checked
+      text:
+        en: 'Euclid, Elements I, Greek text, hosted by the National Technical University of Athens. https://www.physics.ntua.gr/mourmouras./euclid/book1/elements1.html'
+        zh: '欧几里得《几何原本》第一卷希腊文，雅典国立技术大学托管。 https://www.physics.ntua.gr/mourmouras./euclid/book1/elements1.html'
     euclid_alexandria_primary:
       order: 141
       status: checked
@@ -165,12 +194,12 @@ wiki:
       text:
         en: 'Science in Context, Cambridge University Press, on Chasles and the Porisms of Euclid. https://www.cambridge.org/core/product/DD2E15AD0C1FA71D6708C309512D2215/core-reader'
         zh: '剑桥大学出版社《科学的语境》，沙勒与欧几里得的《推论集》。https://www.cambridge.org/core/product/DD2E15AD0C1FA71D6708C309512D2215/core-reader'
-    euclid_alexandria_elements_wiki:
+    euclid_alexandria_ratdolt:
       order: 145
       status: checked
       text:
-        en: 'Wikipedia, Euclid''s Elements. https://en.wikipedia.org/wiki/Euclid%27s_Elements'
-        zh: '维基百科，几何原本。https://en.wikipedia.org/wiki/Euclid%27s_Elements'
+        en: 'UCL Graves Library collection catalogue, first printed Elements, Erhard Ratdolt, Venice, 1482. https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/20/71/53/16/2020715316/2020715316.pdf'
+        zh: '伦敦大学学院格雷夫斯馆藏目录，《几何原本》初印本，拉特多尔特，威尼斯，1482 年。https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/20/71/53/16/2020715316/2020715316.pdf'
 self_check:
   fact: pappus
   quote_line: '约公元 320 年，帕普斯在亚历山大记下，《推论集》共有 171 个定理、38 个引理。'

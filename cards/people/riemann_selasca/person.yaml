@@ -32,7 +32,7 @@ events:
         name: "The last paper"
         place: "Selasca"
         figure: "Bernhard Riemann"
-        story: 'In the autumn of 1862 a heavy cold turned into tuberculosis for Bernhard Riemann, and he went south to Italy more than once to recover. In June 1866 he came for the third time, to Selasca on Lake Maggiore. On 19 July, resting under a fig tree, he was still working on his last paper, which he did not finish. He died there the next day, aged thirty nine. Ten years later his collected works came out, with Richard Dedekind among the editors.'
+        story: 'Bernhard Riemann fell ill in 1862 and travelled to Italy more than once while suffering from tuberculosis. In June 1866 he came for the third time, to Selasca on Lake Maggiore. On 19 July, resting under a fig tree, he was still working on his last paper, which he did not finish. He died there the next day, aged thirty nine. Ten years later his collected works came out, with Richard Dedekind among the editors.'
         relic: "A page of notes"
         relic_desc: "A page of unfinished formulas in a small hand."
         points:
@@ -58,7 +58,7 @@ events:
         name: "最后一篇论文"
         place: "塞拉斯卡"
         figure: "伯恩哈德·黎曼"
-        story: '1862 年秋，伯恩哈德·黎曼受了一场重寒，转成肺结核，此后几次南下意大利养病。1866 年 6 月，他第三次来，住进马焦雷湖畔的塞拉斯卡。7 月 19 日，他在无花果树下休息，仍在写最后一篇论文，没有写完。第二天，他在那里去世，三十九岁。十年后，他的全集出版，理查德·戴德金参与了编订。'
+        story: '1862 年，伯恩哈德·黎曼病倒，此后患肺结核，几次南下意大利养病。1866 年 6 月，他第三次来，住进马焦雷湖畔的塞拉斯卡。7 月 19 日，他在无花果树下休息，仍在写最后一篇论文，没有写完。第二天，他在那里去世，三十九岁。十年后，他的全集出版，理查德·戴德金参与了编订。'
         relic: "一页笔记"
         relic_desc: "一页写着没完成公式的纸，字很小。"
         points:
@@ -87,6 +87,29 @@ text:
   zh:
     name: 伯恩哈德·黎曼
     text: 德国数学家，1826 年生，1866 年去世。他在弯曲空间的几何和素数分布上的工作开辟了重要领域，黎曼猜想至今未解。他在马焦雷湖畔的塞拉斯卡死于肺结核。
+quotes:
+  riemann_selasca_space:
+    order: 1
+    tier: full
+    date: '1854-06-10'
+    checked: official_record
+    sources: [riemann_geometry_print]
+    original: de
+    text:
+      de: {quote: 'der Raum also nur einen besonderen Fall einer dreifach ausgedehnten Grösse bildet'}
+      en: {who: 'Bernhard Riemann', quote: 'Space, then, is only one particular case of a three-dimensional magnitude.', occasion: 'Göttingen habilitation lecture, On the Hypotheses Underlying Geometry (game translation)'}
+      zh: {who: '伯恩哈德·黎曼', quote: '因此，空间只是三维量的一种特例。', occasion: '哥廷根任教资格讲演《论几何基础中的假设》（游戏译文）'}
+  riemann_selasca_concepts:
+    order: 2
+    tier: none
+    date: '1854-06-10'
+    checked: official_record
+    sources: [riemann_geometry_print]
+    original: de
+    text:
+      de: {quote: 'die Schwierigkeiten mehr in den Begriffen, als in der Construction liegen'}
+      en: {who: 'Bernhard Riemann', quote: 'The difficulties lie more in the concepts than in the construction.', occasion: 'Göttingen habilitation lecture, On the Hypotheses Underlying Geometry (game translation)'}
+      zh: {who: '伯恩哈德·黎曼', quote: '难处更多在于概念，而不在构造。', occasion: '哥廷根任教资格讲演《论几何基础中的假设》（游戏译文）'}
 hook: {en: 'Under the fig tree, writing to the last day', zh: '无花果树下写到最后一天'}
 facts:
   geometry_lecture:
@@ -120,12 +143,12 @@ facts:
     use: [story, history, wiki]
     sources: [riemann_mactutor, riemann_wiki]
     text:
-      en: 'In the autumn of 1862 a heavy cold turned into tuberculosis for Riemann. He spent the following winter in Sicily and went back to Italy more than once.'
-      zh: '1862 年秋，黎曼受了一场重寒，转成肺结核。他在西西里过了那个冬天，此后又几次去意大利。'
+      en: 'Riemann fell ill in the autumn of 1862 and suffered from tuberculosis. He spent the following winter in Sicily and went back to Italy more than once.'
+      zh: '1862 年秋，黎曼病倒，此后患肺结核。他在西西里过了那个冬天，此后又几次去意大利。'
     note: 'An illness: written as a plain fact.'
     line:
-      en: 'Autumn 1862: a heavy cold turns into tuberculosis for Riemann.'
-      zh: '1862 年秋，黎曼受了一场重寒，转成肺结核。'
+      en: 'Autumn 1862: Riemann falls ill.'
+      zh: '1862 年秋，黎曼病倒，此后患肺结核。'
   selasca:
     date: '1866-06'
     checked: two_sources
@@ -189,6 +212,12 @@ bystanders:
     text: {en: 'The landlord of the house at Selasca, made up for the game.', zh: '一个编出来的塞拉斯卡房东。'}
 wiki:
   refs:
+    riemann_geometry_print:
+      order: 7200
+      status: checked
+      text:
+        en: 'Bernhard Riemann, Über die Hypothesen, welche der Geometrie zu Grunde liegen, introduction and § I, text of the 10 June 1854 lecture. https://www.caressa.it/pdf/riemann01.pdf'
+        zh: '黎曼《论几何基础中的假设》，引言与第一节，1854 年 6 月 10 日讲演正文。 https://www.caressa.it/pdf/riemann01.pdf'
     riemann_selasca_royal_obituary:
       order: 10
       status: checked

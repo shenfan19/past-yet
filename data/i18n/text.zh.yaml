@@ -525,7 +525,7 @@ ui:
     gift: 奖励
     favor_tip: 心情。成功让它涨，失败和放弃让它掉。所有属性随它变化，心情满时多 20%，见底时少 20%。奖励加 10。
     mood_mult: 属性乘以 {m}
-    tally_tip: 三星、二星、一星的次数。点开看这个人的出差记录。
+    tally_tip: 这名员工在各故事中的个人最佳星数之和。
     staff_trips: 出差记录
     no_trips: 还没派出去过。
     archive: 归档
@@ -564,7 +564,7 @@ ui:
     wage_after: 雇下后总日薪从 {a} 到 {b}
     col_traits: 特质
     col_state: 状态
-    col_history: 履历
+    col_history: 总星数
     recruit_hint: 一位应聘者，来历不明。招募之后才知道他是谁。
     unknown_candidate: ？
     fire: 解雇
@@ -2154,9 +2154,296 @@ mainline:
     name: 回家
     desc: 能量够了，所长可以回到自己的时空，见家人。
 quotes:
+  abel_froland_masters:
+    who: 尼尔斯·亨里克·阿贝尔
+    quote: 该研读名家的著作，而不是他们学生的著作。
+    occasion: 巴黎数学笔记第 79 页页边批注，谈怎样在数学上取得进展（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  anning_rough_sketch:
+    who: 玛丽·安宁
+    quote: 我试着画了一张草图，好让您大致知道它是什么样子。
+    occasion: 从莱姆寄出的信，附她亲绘的蛇颈龙草图
+    authors:
+      - AI
+      - Fan Shen
+  basho_summer_grass:
+    who: 松尾芭蕉
+    quote: 夏草啊，武士旧梦的遗痕。
+    occasion: 《奥之细道》平泉一节（本游戏译）
+    authors:
+      - AI
+      - Fan Shen
+  beethoven_heart_echo:
+    who: 路德维希·范·贝多芬
+    quote: 发自内心——愿它也抵达人心！
+    occasion: 《庄严弥撒》总谱手稿上的题词 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  boltzmann_duino_theory:
+    who: 路德维希·玻尔兹曼
+    quote: 气体理论在科学中的作用远未到头。
+    occasion: 《气体理论讲义》第二卷序言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  cajal_barcelona_microscope:
+    who: 圣地亚哥·拉蒙-卡哈尔
+    quote: 我们的第一台显微镜是台不错的韦里克，是分期买来的。
+    occasion: 《科学研究的规则与忠告》第六版，谈研究环境一章（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  chekhov_bread_echo:
+    who: 安东·契诃夫
+    quote: 哪里的面包都不如德国人的好吃。
+    occasion: 在巴登魏勒写给帕维尔·约尔达诺夫，俄历 6 月 12 日 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  copernicus_sun_at_center:
+    who: 尼古拉·哥白尼
+    quote: 而在它们的正中央，安坐着太阳。
+    occasion: 《天体运行论》初版，第一卷第十章；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  curie_paris_persistence:
+    who: 玛丽·居里
+    quote: 那是此前一点一滴的辛劳结出的果实。
+    occasion: 在《皮埃尔·居里》一书中谈重大发现（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  dante_spark:
+    who: 但丁·阿利吉耶里
+    quote: 一星微火之后，便是熊熊烈焰。
+    occasion: 《天堂篇》第一歌第 34 行，诗人寄望后来的作者（全篇至迟于 1321 年完成）；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  du_chatelet_luneville_building:
+    who: 埃米莉·杜·夏特莱
+    quote: 物理学是一座宏大的建筑，非一人之力所能建成。
+    occasion: 《物理学原理》写给儿子的序言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  euclid_equal_to_the_same:
+    who: 欧几里得
+    quote: 等于同一量的量，彼此相等。
+    occasion: 约公元前 300 年，《几何原本》第一卷，第一条公理；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  fibonacci_any_number:
+    who: 比萨的列奥纳多
+    quote: 用这九个数字和符号 0——阿拉伯语称它为 zephirum——便能写出任何数，下文将说明这一点。
+    occasion: 《计算之书》现传修订本，第一章开篇；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  freud_vienna_wish:
+    who: 西格蒙德·弗洛伊德
+    quote: 梦是愿望的实现。
+    occasion: 《梦的解析》第三章标题，初版印 1900 年（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  galois_paris_publish:
+    who: 埃瓦里斯特·伽罗瓦
+    quote: 请把这封信刊在《百科评论》上。
+    occasion: 致奥古斯特·舍瓦利耶的信（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  gaudi_echo_intelligible:
+    who: 安东尼·高迪
+    quote: 我的目标，是让装饰有趣，也让人看得懂。
+    occasion: 《雷乌斯手稿》关于装饰的笔记开篇（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  germain_conjectures:
+    who: 索菲·热尔曼
+    quote: 在人类的知识里，猜想和见解也应当有一席之地。
+    occasion: 《杂感》1896 年身后刊本；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  hammurabi_words_in_stone:
+    who: 汉谟拉比
+    quote: 我将珍重的话刻在石碑上，立在我的像前——那是公正之王的像。
+    occasion: 《汉谟拉比法典》石碑尾声，第 47 栏 74–78 行（在位晚期；阿卡德语规范转写）；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  hargrave_gust:
+    who: 劳伦斯·哈格雷夫
+    quote: 接着一阵又猛又长的风，我一下子就冲了上去。
+    occasion: 斯坦威尔公园风筝升空记述，日期为试验日（节录）
+    authors:
+      - AI
+      - Fan Shen
+  ibn_battuta_birds_nests:
+    who: 伊本·白图泰
+    quote: 我离开故乡，就像飞鸟离开巢穴。
+    occasion: 《游记》口述给伊本·朱扎伊，回忆 1325 年六月离开丹吉尔（本游戏译）
+    authors:
+      - AI
+      - Fan Shen
+  ino_echo_yoshioka:
+    who: 伊能忠敬
+    quote: 船驶至松前三里外一个叫吉冈的河岸，我们在那里上岸，住了一夜。
+    occasion: 致长子景敬的信，记述在吉冈登岸（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  kafka_thanks_echo:
+    who: 弗朗茨·卡夫卡
+    quote: 谢谢你为我做的一切！
+    occasion: 自基尔灵寄给马克斯·布罗德的最后一张明信片 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  keats_endymion_echo:
+    who: 约翰·济慈
+    quote: 美的事物，给人长久的欢喜。
+    occasion: 1818 年出版的《恩底弥翁》第一卷开篇 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  lovelace_echo_weave:
+    who: 阿达·洛芙莱斯
+    quote: 我们不妨这样说：分析机编织代数图式，正如雅卡尔织机织出花叶。
+    occasion: 《科学回忆录》梅纳布雷亚论文译本注释 A（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  mendel_brno_years:
+    who: 格雷戈尔·孟德尔
+    quote: 八年过去，这项实验如今已大体完成。
+    occasion: 布尔诺报告后刊行的《植物杂交实验》引言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  mendeleev_petersburg_period:
+    who: 门捷列夫
+    quote: 元素按原子量排列时，其性质呈现明显的周期性。
+    occasion: 《元素性质与原子量的关系》的结论（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  modigliani_art_echo:
+    who: 阿梅迪奥·莫迪利亚尼
+    quote: 我试着尽可能清楚地写出那些散在罗马美景之中、被我拾起的关于艺术与生活的真理。
+    occasion: 致画家奥斯卡·吉利亚，谈在罗马的所得 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  murasaki_paper_and_letters:
+    who: 紫式部
+    quote: 我挑拣各色纸张，一一理好，附上物语的底本，写信分送各处。
+    occasion: 《紫式部日记》宽弘五年十一月，为彰子整理抄本（本游戏译）
+    authors:
+      - AI
+      - Fan Shen
   newton:
     who: 牛顿
     quote: 如果说我看得更远，那是因为我站在巨人的肩膀上。
+    authors:
+      - AI
+      - Fan Shen
+  noether_gottingen_methods:
+    who: 埃米·诺特
+    quote: 因此，下文把形式变分法与李群理论的方法结合起来。
+    occasion: 费利克斯·克莱因代呈的《不变变分问题》（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  poe_echo_completion:
+    who: 埃德加·爱伦·坡
+    quote: 这部作品一步一步走向完成，像一道数学题那样精确严密。
+    occasion: 《创作哲学》中谈《乌鸦》的写作（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  pushkin_lyre_echo:
+    who: 亚历山大·普希金
+    quote: 不，我不会整个死去——我的灵魂在珍爱的琴中，将比我的骨灰活得更久，不归于朽灭。
+    occasion: 《我为自己筑起一座非手造的纪念碑》第二节；日期为手稿所记俄历 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  ramanujan_new_path:
+    who: 斯里尼瓦瑟·拉马努金
+    quote: 我正在为自己闯出一条新路。
+    occasion: 初次致信哈代，谈自己如何在大学课程之外研究数学
+    authors:
+      - AI
+      - Fan Shen
+  rembrandt_light_echo:
+    who: 伦勃朗·范·莱因
+    quote: 先生，把这幅画挂在光线明亮、能退远几步看的地方，那样最合适。
+    occasion: 致康斯坦丁·惠更斯信后附言，谈如何悬挂画作 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  riemann_selasca_space:
+    who: 伯恩哈德·黎曼
+    quote: 因此，空间只是三维量的一种特例。
+    occasion: 哥廷根任教资格讲演《论几何基础中的假设》（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  savitribai_echo_learning:
+    who: 萨维特里拜·普勒
+    quote: 孩子，学问就是财富。
+    occasion: 诗集《诗之花》第 26 首（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  schubert_books_echo:
+    who: 弗朗茨·舒伯特
+    quote: 劳驾，给我找点书读，帮我熬过这难捱的时候。
+    occasion: 最后一封存世书信，向弗朗茨·冯·绍贝尔借书；日期为收信日 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  sejong_daily_use:
+    who: 世宗
+    quote: 予爲此憫然，新制二十八字，欲使人人易習便於日用耳。
+    occasion: 《训民正音》御制序，说明制字的用意（原文为汉文）
+    authors:
+      - AI
+      - Fan Shen
+  smith_hume_account:
+    who: 亚当·斯密
+    quote: 我打算在他的自传之后附上一篇有充分实证的记述，写他最后一次患病时的举止。
+    occasion: 在达尔基斯府致威廉·斯特拉恩的信，格拉斯哥版第 172 封（纽约公共图书馆手稿）
+    authors:
+      - AI
+      - Fan Shen
+  socrates_reason_together:
+    who: 苏格拉底
+    quote: 朋友，我们一起来想。我的话若有哪里你不同意，就说出来，我会听。
+    occasion: 柏拉图《克里同篇》48d–e 所记狱中对话（对话设于公元前 399 年）；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  sor_juana_study_echo:
+    who: 胡安娜·伊内斯·德拉克鲁斯
+    quote: 我唯一想做的，就是学习，让自己少一点无知。
+    occasion: 《答书》中解释自己为何求学 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  su_shi_wind_and_moon:
+    who: 苏轼
+    quote: 惟江上之清風。與山間之明月。耳得之而為聲。目遇之而成色。取之無禁。用之不竭。
+    occasion: 黄州《前赤壁赋》，赋中苏子答客
     authors:
       - AI
       - Fan Shen
@@ -2167,9 +2454,331 @@ quotes:
     authors:
       - AI
       - Fan Shen
+  tagore_stream_of_life:
+    who: 罗宾德拉纳特·泰戈尔
+    quote: 日夜流过我血脉的那条生命之流，也流过整个世界，有节奏地起舞。
+    occasion: 泰戈尔自译的英文《吉檀迦利》手稿，第 69 首
+    authors:
+      - AI
+      - Fan Shen
+  tesla_prepared:
+    who: 尼古拉·特斯拉
+    quote: 我已能迅速操作仪器，也做好了准备。
+    occasion: 《电气世界与工程师》无线传输文章，回忆沃登克里弗之前的科罗拉多实验
+    authors:
+      - AI
+      - Fan Shen
+  van_gogh_auvers_voice_echo:
+    who: 文森特·梵高
+    quote: 这些画布会告诉你们我说不出口的事
+    occasion: 在奥维尔写给提奥与乔的信，约 7 月 10 日 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  wallace_independent_work:
+    who: 阿尔弗雷德·拉塞尔·华莱士
+    quote: 任何其他独立得到同一结果的人，不论他们晚了几年，还是几个钟头
+    occasion: 从特尔纳特致约瑟夫·道尔顿·胡克的信，谈独立发现如何得到承认（节录）
+    authors:
+      - AI
+      - Fan Shen
+  wright_echo_telegram:
+    who: 奥维尔·莱特
+    quote: 星期四上午，四次飞行成功
+    occasion: 在基蒂霍克发给父亲米尔顿·莱特的电报（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  abel_froland_equations:
+    who: 尼尔斯·亨里克·阿贝尔
+    quote: 四次以上的一般方程无法［用根式］求解。
+    occasion: 致阿德里安-马里·勒让德的信，论根式求解（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  anning_old_passion:
+    who: 玛丽·安宁
+    quote: 我很快就不再迷恋绿砂，又回去找那些我一直喜欢的骨头。
+    occasion: 致夏洛特·默奇森的信，署 2 月 25 日，伦敦地质学会推定为 1829 年
+    authors:
+      - AI
+      - Fan Shen
+  basho_passing_years:
+    who: 松尾芭蕉
+    quote: 日月是百代的过客，来去的岁月也是旅人。
+    occasion: 《奥之细道》序，回望 1689 年的行旅（本游戏译）
+    authors:
+      - AI
+      - Fan Shen
+  beethoven_work_echo:
+    who: 路德维希·范·贝多芬
+    quote: 唉，在把自己觉得能够创作的一切都创作出来之前，我觉得自己不能离开这个世界。
+    occasion: 在海利根施塔特写给两位弟弟的信 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  boltzmann_duino_currents:
+    who: 路德维希·玻尔兹曼
+    quote: 我知道，一个人面对时代的潮流，力量有多微薄。
+    occasion: 《气体理论讲义》第二卷序言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  cajal_barcelona_perseverance:
+    who: 圣地亚哥·拉蒙-卡哈尔
+    quote: 热忱和坚持能创造奇迹。
+    occasion: 《科学研究的规则与忠告》第六版，谈研究环境一章（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  chekhov_well_echo:
+    who: 安东·契诃夫
+    quote: 愿你平安健康。
+    occasion: 在巴登魏勒写给彼得·库尔金，俄历 6 月 12 日 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  copernicus_beauty_of_sky:
+    who: 尼古拉·哥白尼
+    quote: 还有什么比天空更美？一切美的事物都收在其中。
+    occasion: 《天体运行论》手稿第一卷引言（约 1520—1541 年），未收入初版；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  curie_paris_joined:
+    who: 玛丽·居里
+    quote: 我们合力提取新的放射性物质，并继续研究它们。
+    occasion: 巴黎博士论文《放射性物质研究》引言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  dante_give_to_one:
+    who: 但丁·阿利吉耶里
+    quote: 要给予许多人，就一定会给予其中的一人；但即使不能给予许多人，也可以给予一人。
+    occasion: 《飨宴》第一卷第八章第四节，论慷慨（约写于 1303—1306 年）；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  du_chatelet_luneville_study:
+    who: 埃米莉·杜·夏特莱
+    quote: ……学习能给人多少助益与慰藉。
+    occasion: 《物理学原理》写给儿子的序言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
   einstein:
     who: 爱因斯坦
     quote: 重要的是不要停止提问。
+    authors:
+      - AI
+      - Fan Shen
+  euclid_from_a_point:
+    who: 欧几里得
+    quote: 容许从任一点向任一点画一条直线。
+    occasion: 约公元前 300 年，《几何原本》第一卷，第一条公设；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  fibonacci_first_place:
+    who: 比萨的列奥纳多
+    quote: 写数时，第一位从右边起。
+    occasion: 《计算之书》现传修订本，第一章讲解数位；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  freud_vienna_grief:
+    who: 西格蒙德·弗洛伊德
+    quote: 我后来才明白，这本书是自我分析的一部分，是我对父亲去世的回应。
+    occasion: 1908 年夏写于《梦的解析》第二版序言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  galois_paris_readers:
+    who: 埃瓦里斯特·伽罗瓦
+    quote: 在那之后，我希望会有人觉得，把这一团乱麻理清是值得的。
+    occasion: 致奥古斯特·舍瓦利耶的信（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  gaudi_echo_embryo:
+    who: 安东尼·高迪
+    quote: 这个想法还得慢慢推敲，现在才刚有个雏形。
+    occasion: 《雷乌斯手稿》中记下的一项采光构想（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  germain_borrowed_name:
+    who: 索菲·热尔曼
+    quote: 我希望，今天说出实情，不会使我失去您曾给予那个借来的名字的礼遇。
+    occasion: 致卡尔·弗里德里希·高斯、说明自己身份的信；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  hammurabi_let_him_take_heart:
+    who: 汉谟拉比
+    quote: 愿我的石碑为他说明案情，愿他明白自己的判决，心里得以宽慰。
+    occasion: 《汉谟拉比法典》石碑尾声，第 48 栏 15–19 行，谈蒙冤者的申诉（在位晚期；阿卡德语规范转写）；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  hargrave_young_minds:
+    who: 劳伦斯·哈格雷夫
+    quote: 年轻的头脑更容易看出哪里能改，也更容易领会新的做法。
+    occasion: 在新南威尔士皇家学会宣读的《飞行器札记》（节录）
+    authors:
+      - AI
+      - Fan Shen
+  ibn_battuta_parting:
+    who: 伊本·白图泰
+    quote: 那时父母还在世。远离他们，我心里难过；离别让他们受苦，也让我受苦。
+    occasion: 《游记》口述给伊本·朱扎伊，回忆 1325 年六月与父母分别（本游戏译）
+    authors:
+      - AI
+      - Fan Shen
+  ino_echo_same_wind:
+    who: 伊能忠敬
+    quote: 二十日早晨，等风等到四时前后。风向没有变，只好走陆路，行一里有余到福岛。
+    occasion: 《忠敬先生日记》，宽政十二年农历五月二十日；原文四时为江户时制（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  kafka_help_echo:
+    who: 弗朗茨·卡夫卡
+    quote: 要是没有他们，我怎么办！
+    occasion: 致父母的最后一封信，谈多拉·迪亚曼特和罗伯特·克洛普施托克的照料 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  keats_awkward_bow_echo:
+    who: 约翰·济慈
+    quote: 就连在信里，我也几乎说不出再见。我告别时鞠躬总是笨拙。
+    occasion: 在罗马写给查尔斯·布朗的最后一封存世书信 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  lovelace_echo_available:
+    who: 阿达·洛芙莱斯
+    quote: 它的职责，是帮助我们把已经掌握的知识用起来。
+    occasion: 《科学回忆录》论分析机作用的注释 G（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  mendel_brno_courage:
+    who: 格雷戈尔·孟德尔
+    quote: 要着手做这样一项长远的工作，确实需要一点勇气。
+    occasion: 布尔诺报告后刊行的《植物杂交实验》引言（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  mendeleev_petersburg_unfound:
+    who: 门捷列夫
+    quote: 还会有许多未知的单质等待发现。
+    occasion: 《元素性质与原子量的关系》的结论（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  modigliani_joy_echo:
+    who: 阿梅迪奥·莫迪利亚尼
+    quote: 因为，相信我，你生来就该热烈地活着，就该有欢喜。
+    occasion: 自威尼斯致奥斯卡·吉利亚，宽慰受挫的朋友 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  murasaki_waterbirds:
+    who: 紫式部
+    quote: 怎能只当水鸟浮在水上，与我无关？我也在这忧浮的人世里，漂着过日子。
+    occasion: 《紫式部日记》宽弘五年十月，望土御门邸池中水鸟所作（本游戏译）
+    authors:
+      - AI
+      - Fan Shen
+  noether_gottingen_correspondence:
+    who: 埃米·诺特
+    quote: 无论如何，这番通信让我多懂了一些数学史！
+    occasion: 重读证明后寄给赫尔穆特·哈塞的明信片（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  poe_echo_mother:
+    who: 埃德加·爱伦·坡
+    quote: 您是我深爱之人的母亲，
+    occasion: 写给玛丽亚·克莱姆的十四行诗《致我的母亲》（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  pushkin_life_echo:
+    who: 亚历山大·普希金
+    quote: 假如生活欺骗了你，不要悲伤，也不要生气！且忍过忧郁的一天：相信吧，欢喜的日子终会到来。
+    occasion: 《假如生活欺骗了你》第一节 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  ramanujan_advice:
+    who: 斯里尼瓦瑟·拉马努金
+    quote: 我经验尚浅，您给我的任何指点，我都会十分珍重。
+    occasion: 致哈代第一封信的末尾
+    authors:
+      - AI
+      - Fan Shen
+  rembrandt_diligence_echo:
+    who: 伦勃朗·范·莱因
+    quote: 这两幅画费了一番苦功，如今总算画完了。
+    occasion: 致康斯坦丁·惠更斯的信，谈两幅耗时已久的画（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  riemann_selasca_concepts:
+    who: 伯恩哈德·黎曼
+    quote: 难处更多在于概念，而不在构造。
+    occasion: 哥廷根任教资格讲演《论几何基础中的假设》（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  savitribai_echo_learn:
+    who: 萨维特里拜·普勒
+    quote: 不要闲坐，去求学吧。
+    occasion: 诗集《诗之花》第 32 首（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  schubert_sonatas_echo:
+    who: 弗朗茨·舒伯特
+    quote: 这些奏鸣曲我已在好几处演奏过，颇受喝彩。
+    occasion: 致出版商海因里希·阿尔伯特·普罗布斯特的信（游戏译文）
+    authors:
+      - AI
+      - Fan Shen
+  sejong_unheard_words:
+    who: 世宗
+    quote: 有所欲言，而終不得伸其情者多矣。
+    occasion: 《训民正音》御制序，说的是有话却写不出的人（原文为汉文）
+    authors:
+      - AI
+      - Fan Shen
+  smith_hume_gentleness:
+    who: 亚当·斯密
+    quote: 他的性情极其温和，却从不因此动摇心志，也不更改自己的决定。
+    occasion: 在柯卡尔迪致威廉·斯特拉恩的信，追忆大卫·休谟
+    authors:
+      - AI
+      - Fan Shen
+  socrates_same_arguments:
+    who: 苏格拉底
+    quote: 我不能因为遭逢此事，就把从前讲的道理丢开。在我看来，它们并没有变；我仍像从前一样信重它们。
+    occasion: 柏拉图《克里同篇》46b–c 所记狱中对话（对话设于公元前 399 年）；本游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  sor_juana_kitchen_echo:
+    who: 胡安娜·伊内斯·德拉克鲁斯
+    quote: 亚里士多德要是下过厨，准会多写不少。
+    occasion: 《答书》中谈到下厨时观察到的现象后 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  su_shi_what_endures:
+    who: 苏轼
+    quote: 自其不變者而觀之。則物與我皆無盡也。而又何羨乎。
+    occasion: 黄州《前赤壁赋》，赋中苏子以齐观万物答客
     authors:
       - AI
       - Fan Shen
@@ -2177,6 +2786,41 @@ quotes:
     who: 孙中山
     quote: 我劝诸君立志，是要做大事，不可要做大官。
     occasion: 在岭南大学学生欢迎会上的演说
+    authors:
+      - AI
+      - Fan Shen
+  tagore_sun_and_stars:
+    who: 罗宾德拉纳特·泰戈尔
+    quote: 如果你为错过太阳而落泪，也会错过群星。
+    occasion: 1916 年英文版《飞鸟集》，第 6 首
+    authors:
+      - AI
+      - Fan Shen
+  tesla_expectation:
+    who: 尼古拉·特斯拉
+    quote: 我守着仪器，满怀期待。
+    occasion: 《电气世界与工程师》文章，回忆仪器读数沉寂之后的等待
+    authors:
+      - AI
+      - Fan Shen
+  van_gogh_auvers_back_echo:
+    who: 文森特·梵高
+    quote: 一回到这里，我又开始画了
+    occasion: 在奥维尔写给提奥与乔的信，谈到从巴黎回来后重新动笔，约 7 月 10 日 · 游戏译文
+    authors:
+      - AI
+      - Fan Shen
+  wallace_waited_for_fever:
+    who: 阿尔弗雷德·拉塞尔·华莱士
+    quote: 我焦急地等着这一阵发作过去，好立刻为这篇论文记下些东西。
+    occasion: 《我的一生》，回忆在发烧时想到那篇论文的经过
+    authors:
+      - AI
+      - Fan Shen
+  wright_echo_belief:
+    who: 威尔伯·莱特
+    quote: 这几年来，我一直被一个念头缠住：人是能够飞行的。
+    occasion: 致奥克塔夫·沙尼特、谈飞行实验计划的信（游戏译文）
     authors:
       - AI
       - Fan Shen
@@ -2386,7 +3030,7 @@ catalog:
     name: 量地球的那部书
     place: 亚历山大
     figure: 埃拉托色尼
-    story: 昔兰尼人埃拉托色尼约公元前 245 年应托勒密三世之请来到亚历山大，给王子当老师，约公元前 240 年做了亚历山大图书馆的馆长。他对照夏至正午塞伊尼和亚历山大两地的日影，算出地球周长 250000 斯塔迪亚。他写这件事的《论地球的测量》后来失传，方法主要靠克莱奥梅德斯简化过的转述留下。
+    story: 公元前三世纪，昔兰尼人埃拉托色尼担任亚历山大图书馆馆长。他自己写的测地著作已经失传。据克莱奥梅德斯后来的记述，夏至正午，塞伊尼的太阳正在头顶，亚历山大却还有日影。两地的角度差是全圆的五十分之一；两地相隔五千斯塔迪亚，绕地球一圈就是二十五万。
     relic: 一根日晷针
     relic_desc: 一根朴素的立杆，影子告诉他太阳的角度。
     points:
@@ -2724,7 +3368,7 @@ catalog:
       rest: 歌者一唱到休止就数乱。你抄下等待时能听到的另一行，他在自己开口前的那个字上做了记号。
       light: 两人合看一页谱。你把纸转向有光的地方，扶住不动，直到两人都看见自己的声部从哪儿分开。
   smith_kirkcaldy:
-    name: 一个国家怎样变富
+    name: 托付在身后的书
     place: 苏格兰柯卡尔迪
     figure: 亚当·斯密
     story: 1776 年 3 月，亚当·斯密的《国富论》在伦敦出版。8 月 25 日，他的朋友大卫·休谟在爱丁堡去世。休谟起先托斯密把《自然宗教对话录》印出来，斯密有顾虑，休谟改托印书商威廉·斯特拉恩，要他在身后两年内出版。这年 11 月，斯密在柯卡尔迪给斯特拉恩写信，记下休谟最后几个月的样子。斯特拉恩最终作罢，《对话录》到 1779 年才由休谟的侄子印出。
@@ -3020,7 +3664,7 @@ catalog:
     name: 元素周期表
     place: 圣彼得堡
     figure: 门捷列夫
-    story: 1869 年 3 月 1 日，德米特里·门捷列夫排好一张单页的表，按原子量和化学上的相近把元素排成一个体系，印成散页。3 月 18 日俄国化学学会开会时他不在场，由尼古拉·缅舒特金代为宣读；会议记录把讨论推到下次会议，后来再没有人提起。5 月，他给德国的期刊寄去一份短摘要，译成德文时，表示性质周期性重现的词被译成了表示逐级变化的词。
+    story: 1869 年 3 月 1 日，德米特里·门捷列夫排好一张单页的表，按原子量和化学性质的相似性给元素分组。3 月 18 日，俄国化学学会开会，门捷列夫不在，尼古拉·缅舒特金代他宣读论文。会议记录把讨论推到下一次，下一次却没再议。3 月下旬，这张表随他的化学教科书刊出，也另印散页寄给同行。那年春天的一份德文摘要，把性质的「周期性重现」译成了「逐级变化」。
     relic: 一副元素卡片
     relic_desc: 手写的卡片，可以像摆纸牌一样摆。
     points:
@@ -3071,7 +3715,7 @@ catalog:
     name: 两种新元素
     place: 巴黎
     figure: 玛丽·居里
-    story: 1898 年 4 月，玛丽·居里报告说，沥青铀矿放出的射线比其中的铀能解释的更强。她与皮埃尔·居里在巴黎的工业物理化学学校把矿石一份份分开，追着射线走。1898 年 7 月 18 日，他们宣布发现一种新元素，以她的祖国波兰命名为钋；12 月 26 日，又与古斯塔夫·贝蒙一起宣布了镭。此后多年，他们一直徒手处理这些材料。玛丽·居里 1934 年死于再生障碍性贫血，一般认为与她长年受辐射有关。
+    story: 1898 年 4 月，玛丽·居里报告说，沥青铀矿放出的射线比其中的铀能解释的更强。她与皮埃尔·居里在巴黎的工业物理化学学校把矿石一份份分开，追着射线走。1898 年 7 月 18 日，他们宣布发现一种新元素，以她的祖国波兰命名为钋；12 月 26 日，又与古斯塔夫·贝蒙一起宣布了镭。玛丽·居里 1934 年死于再生障碍性贫血，一般认为与她长年受辐射有关。
     relic: 一管沥青铀矿
     relic_desc: 一支装着黑色矿石的玻璃管，在黑暗里有一点微光。
     points:
@@ -3225,7 +3869,7 @@ catalog:
     name: 沿岩沟找出口
     place: 埃塞俄比亚拉利贝拉
     figure: 拉利贝拉与石匠们
-    story: 扎格韦王朝的拉利贝拉国王在位于 1181 年至 1221 年，以他命名的城镇周围有十一座向下凿进岩石的教堂，连同沟渠、深槽和通道，都归在他名下，各座教堂的确切年代并不确定。1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来到这里，写下欧洲人对这些教堂的第一份详细记述。1978 年，岩凿教堂列入世界遗产。
+    story: 拉利贝拉的石匠向下开凿，把周围的石料清出去，墙和柱便从整片岩石中留了下来。如今遗址保存着十一座岩凿建筑，以及相通的深槽、水沟和通道。传统把这处建筑群与扎格韦王朝的拉利贝拉国王相联系；考古人员发现，岩石曾分期开凿，有些地方原来还立着更早的建筑。1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团到访，写下了他的见闻。
     relic: 石匠的凿子
     relic_desc: 一把铁凿子，刃口磨得很薄。
     points:
@@ -3240,7 +3884,7 @@ catalog:
     name: 铸好以后还能不能认出这道线
     place: 尼日利亚伊费
     figure: 伊费的铸造匠人
-    story: 约鲁巴人的城市伊费，铸匠们在约四个世纪里用铜合金铸出写实的头像，多数估计在 1300 年前后。1910 年，德国人莱奥·弗罗贝尼乌斯逼一处圣林的祭司把一尊他称作“奥洛昆头像”的铜像卖给他，后来被迫交还。1938 年，人们在翁莫尼杰院落盖房挖地时挖出一批头像，其中一尊今藏大英博物馆。1948 年伦敦的一场展览上，有人说这些头像足以与意大利和希腊最好的作品并列。
+    story: 约鲁巴城市伊费出土的一尊黄铜头像，珠饰头冠上还留着红色和黑色的颜料。这尊头像用失蜡法铸成。1938 年 1 月，翁莫尼杰院落里开挖房屋地基，人们从土里挖出它和一批其他头像。1948 年，多件伊费铸像在大英博物馆一同展出。
     relic: 一对线样小图
     relic_desc: 对照无像练习铸样上两次所见的线。
     points:
@@ -3386,7 +4030,7 @@ catalog:
     name: 长途还只有第一站
     place: 摩洛哥丹吉尔
     figure: 伊本·白图泰
-    story: 多数说法是 1325 年 6 月 14 日，二十一岁上下的伊本·白图泰离开家乡丹吉尔，去麦加朝圣。他在《游记》里回忆，那天是独自上路，既没有同行的旅伴，也没有可以随行的商队。约三十年后，1353 年底或 1354 年他才回到家乡，把一路见闻口述给伊本·朱扎伊。
+    story: 1325 年六月，伊本·白图泰离开故乡丹吉尔。他在《游记》里回忆，父母都还在家，而他出门时没有旅伴，也没有商队可以跟随。他回到摩洛哥后，把前后近三十年的行旅见闻口述给伊本·朱扎伊。
     relic: 一只走旧的凉鞋
     relic_desc: 一只补过很多次底的皮凉鞋。
     points:
@@ -3864,7 +4508,7 @@ catalog:
     name: 一个人造出来的文字
     place: 美国东南部切罗基地区
     figure: 塞阔雅
-    story: 切罗基银匠塞阔雅为切罗基语造了一套八十多个符号的音节文字。1821 年，他在切罗基全国议会上演示这套文字确实能用，议会接受了它。1828 年 2 月 21 日，第一份美洲原住民报纸《切罗基凤凰报》在新埃乔塔出了创刊号，切罗基文和英文并排印。1843 年 8 月，塞阔雅在墨西哥去世。
+    story: 1821 年，切罗基银匠塞阔雅完成了切罗基语的音节文字，每个符号表示一个音节，而不是单个语音。切罗基民族后来正式采纳了这套文字。1828 年 2 月 21 日，《切罗基凤凰报》在新埃乔塔印出创刊号，报上既有切罗基文，也有英文。
     relic: 一张音节表
     relic_desc: 一张纸，八十多个字符排成行。
     points:
@@ -3877,7 +4521,7 @@ catalog:
       p3: 地照旧荒着，家里人照旧劝他放手，这条分支里，这套文字仍旧是这个家多年的代价。
     shift:
       p1:
-        was: 1821 年，切罗基全国议会上，塞阔雅与女儿阿约卡演示这套符号，议会接受了它。
+        was: 1821 年，塞阔雅完成了这套音节文字。切罗基民族在同一年代稍后正式采纳。
       p2:
         was: 塞阔雅一条腿跛，走路吃力，起因各说不一。
         now: 他那半年腿疼得轻了些，去邻镇教字的路走得快了些。
@@ -4057,7 +4701,7 @@ catalog:
     name: 最后一篇论文
     place: 塞拉斯卡
     figure: 伯恩哈德·黎曼
-    story: 1862 年秋，伯恩哈德·黎曼受了一场重寒，转成肺结核，此后几次南下意大利养病。1866 年 6 月，他第三次来，住进马焦雷湖畔的塞拉斯卡。7 月 19 日，他在无花果树下休息，仍在写最后一篇论文，没有写完。第二天，他在那里去世，三十九岁。十年后，他的全集出版，理查德·戴德金参与了编订。
+    story: 1862 年，伯恩哈德·黎曼病倒，此后患肺结核，几次南下意大利养病。1866 年 6 月，他第三次来，住进马焦雷湖畔的塞拉斯卡。7 月 19 日，他在无花果树下休息，仍在写最后一篇论文，没有写完。第二天，他在那里去世，三十九岁。十年后，他的全集出版，理查德·戴德金参与了编订。
     relic: 一页笔记
     relic_desc: 一页写着没完成公式的纸，字很小。
     points:
@@ -4113,7 +4757,7 @@ catalog:
     name: 署着别人名字的课
     place: 哥廷根
     figure: 埃米·诺特
-    story: 1915 年，大卫·希尔伯特和费利克斯·克莱因把埃米·诺特请到哥廷根，可大学不让女性取得任教资格，从 1916 年冬季学期起，她的课在课表上署的是希尔伯特的名字。1918 年 7 月 26 日，克莱因把她的论文《不变变分问题》呈交给哥廷根科学学会，9 月底她交了终稿。这篇论文把每一种连续对称性与一个守恒量联系起来。1919 年 6 月，她获准任教，直到 1923 年才第一次领到一小笔固定的教学薪酬。
+    story: 1915 年，大卫·希尔伯特和费利克斯·克莱因把埃米·诺特请到哥廷根，可大学不让女性取得任教资格，从 1916 年冬季学期起，她的课在课表上署的是希尔伯特的名字。1918 年 7 月 26 日，克莱因把她的论文《不变变分问题》呈交给哥廷根科学学会，9 月底她交了终稿。这篇论文把作用量的连续对称性与守恒定律联系起来。1919 年 6 月，她获准任教，直到 1923 年才第一次领到一小笔固定的教学薪酬。
     relic: 一张课程通告
     relic_desc: 一张厅里的通告，应该写她名字的地方写着希尔伯特。
     points:
@@ -4497,7 +5141,7 @@ catalog:
     name: 第四选区的一张求助条
     place: 巴尔的摩
     figure: 埃德加·爱伦·坡
-    story: 1849 年 9 月 27 日，埃德加·爱伦·坡离开里士满，要回纽约福德姆的家，第二天到了巴尔的摩。此后一个星期他在哪里，没有可靠的记载。10 月 3 日是选举日，有人在瑞安那处第四选区投票点发现他处境不妙，印刷工约瑟夫·沃克写条子请约瑟夫·斯诺德格拉斯来。他被送进华盛顿学院医院，不许探视，7 日天亮前在那里去世，四十岁，死因至今不明。他的姨母兼岳母玛丽亚·克莱姆是从报上读到的。
+    story: 1849 年 9 月 27 日，埃德加·爱伦·坡离开里士满，要回纽约福德姆的家，第二天到了巴尔的摩。此后直到 10 月 3 日，他的行踪没有可靠记载。10 月 3 日是选举日，有人在瑞安那处第四选区投票点发现他处境不妙，印刷工约瑟夫·沃克写条子请约瑟夫·斯诺德格拉斯来。他被送进华盛顿学院医院，不许探视，7 日天亮前在那里去世，四十岁，死因至今不明。他的姨母兼岳母玛丽亚·克莱姆是从报上读到的。
     relic: 一根手杖
     relic_desc: 一根朴素的手杖，握柄已被磨旧。
     points:
@@ -4604,7 +5248,7 @@ catalog:
     name: 证人亲眼看见的事
     place: 莱昂贝格
     figure: 约翰内斯·开普勒
-    story: 1620 年，天文学家约翰内斯·开普勒的母亲卡塔琳娜七十三岁，莱昂贝格的邻居告她用草药害人，已经告了五年。8 月 7 日，她在女儿家所在的霍伊马登被捕；案子先在莱昂贝格开审，后来移到居格林根，她戴着锁链关在那里，两个人日夜看守，费用由家里出。9 月 28 日，约翰内斯从林茨赶到，坚持每一步程序都要落在纸上。审理一拖再拖。1621 年秋，她坐了一年多的牢，获释出狱。
+    story: 1620 年，莱昂贝格的邻居指控天文学家约翰内斯·开普勒的母亲卡塔琳娜，案子已拖了五年。8 月 7 日，她在霍伊马登的女儿家中被捕，后来从莱昂贝格转押到居格林根，看守费用由家里承担。那年 9 月，约翰内斯从林茨回来为母亲辩护。审理一拖再拖。1621 年秋，卡塔琳娜获释，距被捕已过了一年多。
     relic: 一页申辩书抄本
     relic_desc: 一页誊清的书面申辩，页边改过一个日期。
     points:
@@ -4774,10 +5418,10 @@ catalog:
       privacy: 露琪亚请你扶着提包，她好把文书遮起来。楼梯上有人问里头写了什么。你把包外的签露出来，她不用开包也能说明送到哪里。到了楼梯平台，旁人只看得见应该收包的名字。
       horse: 彼得罗问，你知不知道人们后来会讲起的那匹马。这故事你听过许多遍。你问在场谁看见了，他一个也指不出来。登记里便空着那一行。提包合上时，楼梯上传来了脚步声。
   sophie_germain_paris:
-    name: 来迟了的学位
+    name: 寄往柏林的论文
     place: 巴黎
     figure: 索菲·热尔曼
-    story: 1829 年，索菲·热尔曼得了乳腺癌。她没有停下，病中写完论曲面曲率的论文，1831 年刊于柏林克雷勒杂志第七卷。她年轻时进不了大学，用勒布朗先生的名字给拉格朗日和高斯写信；1816 年，她以论弹性薄板振动的论文获法兰西科学院的奖。高斯说动哥廷根大学授她名誉博士学位。1831 年 6 月 27 日，她在巴黎萨伏依街 13 号去世，学位还没有授出。
+    story: 索菲·热尔曼与卡尔·弗里德里希·高斯通信讨论数论，起初署名勒布朗。1816 年，她凭弹性薄板振动研究获得法兰西科学院的奖。1829 年患病后，她仍继续工作。柏林克雷勒主编的杂志第七卷以她的本名刊出了她论曲面曲率的论文。1831 年 6 月 27 日，她在巴黎去世。
     relic: 一封署名勒布朗的信
     relic_desc: 一封用借来的名字写给高斯的信。
     points:
@@ -4837,7 +5481,7 @@ catalog:
     name: 肖像背后的一张纸签
     place: 巴黎
     figure: 阿梅迪奥·莫迪利亚尼
-    story: 1919 年 5 月底，阿梅迪奥·莫迪利亚尼和让娜·埃比泰纳带着前一年 11 月出生的女儿，从尼斯回到巴黎。他的结核越来越重，到秋天已没有力气作画。1920 年 1 月 24 日，他因结核性脑膜炎在巴黎慈善医院去世，三十五岁。两天后，怀孕八个月的让娜在父母家去世。1 月 27 日的葬礼，是画家朋友们凑钱办成的。他生前只办过一次个展，一幅也没卖出。
+    story: 1919 年 5 月底，阿梅迪奥·莫迪利亚尼和让娜·埃比泰纳带着前一年 11 月出生的女儿，从尼斯回到巴黎。他的结核越来越重，到秋天已没有力气作画。1920 年 1 月 24 日，他因结核性脑膜炎在巴黎慈善医院去世，三十五岁。两天后，怀孕八个月的让娜在父母家去世。1 月 27 日的葬礼，是画家朋友们凑钱办成的。两年前，他生前唯一一次个展销路惨淡。
     relic: 一截炭条
     relic_desc: 一截能把手指染黑的炭条。
     points:
@@ -4846,13 +5490,13 @@ catalog:
       p3: 在慈善医院里，治好他的结核性脑膜炎
       p4: 他去世以后的那几天，陪住怀孕八个月的让娜·埃比泰纳，让她和腹中的孩子留下来
     points_fail:
-      p1: 这条分支里，他到最后只办过一次个展，那次一幅也没卖出，没有人告诉过他以后的事。
+      p1: 这条分支里，唯一那场个展销路惨淡后，没人告诉过他，那些肖像以后会去哪里。
       p2: 这条分支里没有人及时进门，他没能被送到慈善医院，与史实脱节，事务所召回员工。
       p3: 这条分支里病照旧发展，1 月 24 日他在慈善医院去世，三十五岁。
       p4: 这条分支里，1 月 26 日照史实发生，让娜和腹中的孩子没有留下来。
     shift:
       p1:
-        was: 1917 年，莫迪利亚尼生前唯一的个展因警方干涉撤下了裸体画，一幅也没卖出；他去世时一贫如洗。
+        was: 1917 年 12 月 3 日，警方干预了莫迪利亚尼生前唯一一次个展。展览销路惨淡。
         now: '{staff}在他病倒以前告诉他，他画的这些人以后会挂进世界各地的美术馆。'
       p2:
         was: 1920 年 1 月，莫迪利亚尼病重，被送进巴黎慈善医院，1 月 24 日在那里去世。
@@ -4906,7 +5550,7 @@ catalog:
     name: 来自特尔纳特的论文
     place: 特尔纳特
     figure: 阿尔弗雷德·拉塞尔·华莱士
-    story: 1858 年 2 月，阿尔弗雷德·拉塞尔·华莱士在摩鹿加群岛一场疟疾稍退之后，写成一篇落款特尔纳特的论文，谈变种怎样偏离原型，寄给了查尔斯·达尔文。6 月 18 日，论文到了达尔文手里。7 月 1 日，它与达尔文的材料一同在伦敦林奈学会宣读，两位作者都不在场。
+    story: 1858 年 2 月，阿尔弗雷德·拉塞尔·华莱士在摩鹿加群岛发烧，退烧后写了一篇论文，谈变种怎样偏离原型。论文落款是「特尔纳特，1858 年 2 月」。3 月 25 日，他从特尔纳特乘船出发，同行的有年轻猎手朱马特，一行人抵达新几内亚海岸的多雷。论文寄到了英格兰。7 月 1 日，他与达尔文的文章在伦敦一同宣读，两位作者都不在场。
     relic: 针盒里的一只甲虫
     relic_desc: 一只收集来的甲虫，放在小锡盒里。
     points:
@@ -6338,7 +6982,7 @@ catalog:
     name: 包里多带的一件纱丽
     place: 浦那
     figure: 萨维特丽巴伊·普勒
-    story: 1848 年 1 月，萨维特丽巴伊·普勒、乔蒂拉奥·普勒和萨古娜拜在浦那塔蒂亚萨赫布·比德的宅子里开办女子学校。去学校的路上常有人朝她扔石头和粪，她包里多带一件纱丽，到学校再换上。1852 年的记录写她是普勒夫妇办的第一所女校的校长。1897 年 3 月 10 日，她在照顾病人时染上鼠疫去世。
+    story: 1848 年，萨维特丽巴伊·普勒与乔蒂拉奥·普勒在浦那开始办女学。有关她的记述里，有她去学校路上受到的侮辱，也有她随身多带、到学校再换上的那件纱丽。后来的办学档案记她担任校长。1897 年，她在照顾鼠疫病人时染病去世。
     relic: 一块石板
     relic_desc: 一块小石板，上面用粉笔写着第一排字母。
     points:
@@ -6547,7 +7191,7 @@ catalog:
     name: 被直线吞掉的转弯
     place: 北海道
     figure: 伊能忠敬
-    story: 1800 年 6 月 11 日，伊能忠敬带着一行五人从江户出发，去测量虾夷地，也就是今天的北海道。他们在岛上待了约半年，测了东南沿岸。他于 1818 年去世，死讯一度被隐瞒，好让测绘继续；1821 年，高桥景保等人完成了《大日本沿海舆地全图》。
+    story: 1800 年 6 月 11 日，伊能忠敬从江户出发，开始第一次测量。队伍沿东北地方一路北测，渡海到虾夷地，再沿海岸测到西别折返。来回全程约半年，不全是在岛上度过。伊能忠敬于 1818 年去世，同伴在 1821 年完成《大日本沿海舆地全图》。
     relic: 一根测杖
     relic_desc: 一根量步距用的细杖，上面刻着尺度。
     points:

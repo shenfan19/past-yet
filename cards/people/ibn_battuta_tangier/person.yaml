@@ -34,7 +34,7 @@ events:
         name: 'Before the road grows long'
         place: Tangier, Morocco
         figure: Ibn Battuta
-        story: 'On 14 June 1325, by most accounts, Ibn Battuta left his native Tangier, about twenty one, to make the pilgrimage to Mecca. In the Rihla he recalled setting out alone, with neither a companion nor a caravan to join. He came home some three decades later, at the end of 1353 or in 1354, and dictated his travels to Ibn Juzayy.'
+        story: 'In June 1325, Ibn Battuta left his native Tangier. In the Rihla he recalled setting out without a companion or a caravan, leaving both parents behind. Nearly three decades of journeys went into the account he dictated to Ibn Juzayy after returning to Morocco.'
         relic: A travel-worn sandal
         relic_desc: A leather sandal resoled many times.
         points:
@@ -62,7 +62,7 @@ events:
         name: '长途还只有第一站'
         place: 摩洛哥丹吉尔
         figure: 伊本·白图泰
-        story: '多数说法是 1325 年 6 月 14 日，二十一岁上下的伊本·白图泰离开家乡丹吉尔，去麦加朝圣。他在《游记》里回忆，那天是独自上路，既没有同行的旅伴，也没有可以随行的商队。约三十年后，1353 年底或 1354 年他才回到家乡，把一路见闻口述给伊本·朱扎伊。'
+        story: '1325 年六月，伊本·白图泰离开故乡丹吉尔。他在《游记》里回忆，父母都还在家，而他出门时没有旅伴，也没有商队可以跟随。他回到摩洛哥后，把前后近三十年的行旅见闻口述给伊本·朱扎伊。'
         relic: 一只走旧的凉鞋
         relic_desc: 一只补过很多次底的皮凉鞋。
         points:
@@ -93,6 +93,29 @@ text:
   zh:
     name: 伊本·白图泰
     text: 摩洛哥旅行家，丹吉尔人，1304 年生，约 1369 年去世。他的《游记》在归来后编成，记有近三十年间在北非、阿拉伯、印度、中国和西非的见闻。
+quotes:
+  ibn_battuta_birds_nests:
+    order: 1
+    tier: full
+    date: '1355'
+    checked: two_sources
+    sources: [ibn_battuta_iccr_departure, ibn_battuta_mithaq_departure]
+    original: ar
+    text:
+      ar: {who: 'ابن بطوطة', quote: 'وفارقت وطني مفارقة الطيور للوكور', occasion: 'الرحلة، في ذكر الخروج من طنجة'}
+      en: {who: 'Ibn Battuta', quote: 'I left my homeland as birds leave their nests.', occasion: 'The Rihla, as told to Ibn Juzayy, recalling his departure in June 1325 (game translation)'}
+      zh: {who: '伊本·白图泰', quote: '我离开故乡，就像飞鸟离开巢穴。', occasion: '《游记》口述给伊本·朱扎伊，回忆 1325 年六月离开丹吉尔（本游戏译）'}
+  ibn_battuta_parting:
+    order: 2
+    tier: none
+    date: '1355'
+    checked: two_sources
+    sources: [ibn_battuta_edition_tazi, ibn_battuta_mithaq_departure]
+    original: ar
+    text:
+      ar: {who: 'ابن بطوطة', quote: 'وكان والديّ بقيد الحياة، فتحملت لبعدهما وصبا، ولقيت كما لقيا من الفراق نصبا', occasion: 'الرحلة، في ذكر مفارقة الوالدين عند الخروج من طنجة'}
+      en: {who: 'Ibn Battuta', quote: 'My parents were still alive. I bore the pain of being far from them, and the parting weighed on me as it weighed on them.', occasion: 'The Rihla, as told to Ibn Juzayy, recalling parting from his parents in June 1325 (game translation)'}
+      zh: {who: '伊本·白图泰', quote: '那时父母还在世。远离他们，我心里难过；离别让他们受苦，也让我受苦。', occasion: '《游记》口述给伊本·朱扎伊，回忆 1325 年六月与父母分别（本游戏译）'}
 hook: {en: 'Which road do you write down before leaving home?', zh: '临出门，该写下一站还是最后想去的地方？'}
 facts:
   departure:
@@ -103,11 +126,11 @@ facts:
     use: [story, history, wiki]
     sources: [orias_ibn_battuta, worldhistory_ibn_battuta]
     text:
-      en: 'Ibn Battuta left Tangier on 14 June 1325 by most accounts, some say 13 June, to make the pilgrimage to Mecca, aged about twenty one.'
-      zh: '多数说法是 1325 年 6 月 14 日，也有说 13 日，伊本·白图泰离开丹吉尔去麦加朝圣，那时二十一岁上下。'
+      en: 'The Rihla dates his departure from Tangier to 2 Rajab 725. The Defrémery and Sanguinetti translation gives 14 June 1325; other calendar conversions give 13 June.'
+      zh: '《游记》记他在回历 725 年赖哲卜月初二离开丹吉尔。德弗雷梅里与桑吉内蒂的译本换算为 1325 年 6 月 14 日，另有历法换算得 13 日。'
     line:
-      en: '14 June 1325: Ibn Battuta, about twenty one, leaves Tangier for the pilgrimage to Mecca.'
-      zh: '1325 年 6 月 14 日，二十一岁上下的伊本·白图泰离开丹吉尔，去麦加朝圣。'
+      en: '2 Rajab 725 (June 1325): Ibn Battuta leaves Tangier.'
+      zh: '回历 725 年赖哲卜月初二（1325 年六月），伊本·白图泰离开丹吉尔。'
   alone:
     date: '1325'
     stay_day: 13.4
@@ -118,9 +141,6 @@ facts:
     text:
       en: 'In the opening of the Rihla he recalls that he set out alone, with neither a companion to cheer him nor a caravan to join.'
       zh: '他在《游记》开篇回忆，自己是独自出发的，没有可以作伴的旅伴，也没有可以加入的商队。'
-    line:
-      en: 'He goes alone. Later he will remember that he had neither a companion nor a caravan to join.'
-      zh: '他一个人走的。后来他回忆，那天既没有旅伴，也没有商队可以跟。'
   return:
     date: '1354'
     checked: two_sources
@@ -142,6 +162,24 @@ bystanders:
     text: {en: 'A neighbour, made up for the game, who fills the water skins at the fountain.', zh: '一位编出来的邻家妇人，在泉边灌满水囊。'}
 wiki:
   refs:
+    ibn_battuta_iccr_departure:
+      order: 1613
+      status: checked
+      text:
+        en: 'Indian Council for Cultural Relations, Thaqafat al-Hind 66.3 (2015), pp. 114–115, Arabic quotation from the Rihla. https://iccr.gov.in/sites/default/files/2021-09/Thaqafat-ul-hind%20Vol%2066%20No%203-2015.pdf'
+        zh: '印度文化关系委员会《印度文化》66 卷 3 期（2015），第 114–115 页，引录《游记》阿拉伯语原文。 https://iccr.gov.in/sites/default/files/2021-09/Thaqafat-ul-hind%20Vol%2066%20No%203-2015.pdf'
+    ibn_battuta_mithaq_departure:
+      order: 1614
+      status: checked
+      text:
+        en: 'Mithaq al-Rabita, Arabic quotation of the departure passage from the Rihla. https://www.mithaqarrabita.ma/%D8%A7%D8%A8%D9%86-%D8%A8%D8%B7%D9%88%D8%B7%D8%A9-%D8%A7%D9%84%D9%84%D9%88%D8%A7%D8%AA%D9%8A-%D8%A7%D9%84%D8%B7%D9%86%D8%AC%D9%8A'
+        zh: '《米萨格》：引录《游记》丹吉尔启程段的阿拉伯语原文。 https://www.mithaqarrabita.ma/%D8%A7%D8%A8%D9%86-%D8%A8%D8%B7%D9%88%D8%B7%D8%A9-%D8%A7%D9%84%D9%84%D9%88%D8%A7%D8%AA%D9%8A-%D8%A7%D9%84%D8%B7%D9%86%D8%AC%D9%8A'
+    ibn_battuta_edition_tazi:
+      order: 1615
+      status: checked
+      text:
+        en: 'Rihla, edited by Abd al-Hadi al-Tazi, vol. 1, p. 153; a parallel reading of the departure passage. https://books.rafed.net/view/2357/page/153'
+        zh: '《游记》阿卜杜勒哈迪·塔齐校注本，卷一第 153 页；可对读启程段的异文。 https://books.rafed.net/view/2357/page/153'
     ibn_battuta_tangier_departure:
       order: 759
       status: checked

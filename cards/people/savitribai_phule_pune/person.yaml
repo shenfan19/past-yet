@@ -31,7 +31,7 @@ events:
         name: 'A spare sari in the bag'
         place: "Pune"
         figure: "Savitribai Phule"
-        story: 'In January 1848 Savitribai Phule, Jyotirao Phule and Sagunabai opened a school for girls in the house of Tatyasaheb Bhide in Pune. On the way to the school she was often pelted with stones and dung, and she carried a spare sari to change into. In 1852 she was recorded as head teacher of the first of the Phules'' girls'' schools. She died on 10 March 1897 of plague caught while nursing the sick.'
+        story: 'In 1848 Savitribai and Jyotirao Phule began teaching girls in Pune. Accounts of her work describe the abuse she met on the road and the spare sari she took to change into at school. The records of the later schools list her as headmistress. In 1897 she died of plague while caring for the sick.'
         relic: "A slate"
         relic_desc: "A small slate with a first row of letters in chalk."
         points:
@@ -59,7 +59,7 @@ events:
         name: '包里多带的一件纱丽'
         place: "浦那"
         figure: "萨维特丽巴伊·普勒"
-        story: '1848 年 1 月，萨维特丽巴伊·普勒、乔蒂拉奥·普勒和萨古娜拜在浦那塔蒂亚萨赫布·比德的宅子里开办女子学校。去学校的路上常有人朝她扔石头和粪，她包里多带一件纱丽，到学校再换上。1852 年的记录写她是普勒夫妇办的第一所女校的校长。1897 年 3 月 10 日，她在照顾病人时染上鼠疫去世。'
+        story: '1848 年，萨维特丽巴伊·普勒与乔蒂拉奥·普勒在浦那开始办女学。有关她的记述里，有她去学校路上受到的侮辱，也有她随身多带、到学校再换上的那件纱丽。后来的办学档案记她担任校长。1897 年，她在照顾鼠疫病人时染病去世。'
         relic: "一块石板"
         relic_desc: "一块小石板，上面用粉笔写着第一排字母。"
         points:
@@ -91,23 +91,41 @@ text:
     name: 萨维特丽巴伊·普勒
     text: 印度教师与诗人，1831 年生，1897 年去世。1848 年她与丈夫乔蒂拉奥·普勒在浦那开办女校，为此遭到敌视，后来又开设寡妇之家，并照顾鼠疫病人。
 hook: {en: 'A spare sari in the bag', zh: '包里多带一件纱丽'}
+quotes:
+  savitribai_echo_learning:
+    order: 1
+    tier: full
+    date: '1854'
+    checked: official_record
+    sources: [savitribai_marathi_collected_works]
+    original: mr
+    text:
+      mr: {who: सावित्रीबाई फुले, quote: 'विद्या हे धन आहे रे', occasion: 'काव्य फुले, कविता २६'}
+      en: {who: Savitribai Phule, quote: 'Learning is wealth, child.', occasion: 'Kavya Phule, poem 26 (game translation)'}
+      zh: {who: 萨维特里拜·普勒, quote: '孩子，学问就是财富。', occasion: '诗集《诗之花》第 26 首（游戏译文）'}
+  savitribai_echo_learn:
+    order: 2
+    tier: none
+    date: '1854'
+    checked: official_record
+    sources: [savitribai_marathi_collected_works]
+    original: mr
+    text:
+      mr: {who: सावित्रीबाई फुले, quote: 'स्वस्थ नका बसु । विद्या घेणे ॥', occasion: 'काव्य फुले, कविता ३२'}
+      en: {who: Savitribai Phule, quote: 'Do not sit idle. Take up learning.', occasion: 'Kavya Phule, poem 32 (game translation)'}
+      zh: {who: 萨维特里拜·普勒, quote: '不要闲坐，去求学吧。', occasion: '诗集《诗之花》第 32 首（游戏译文）'}
 facts:
   school:
-    date: '1848-01-01'
-    stay_day: 0
+    date: '1848'
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [wikipedia_savitribai, janata_savitribai]
+    sources: [savitribai_phule_pune_early, janata_savitribai]
     text:
-      en: 'In January 1848 Savitribai and Jyotirao Phule, with Sagunabai, started a school for girls at Bhide Wada, the house of Tatyasaheb Bhide in Pune. One account gives the date as 1 January.'
-      zh: '1848 年 1 月，萨维特丽巴伊和乔蒂拉奥·普勒与萨古娜拜在浦那塔蒂亚萨赫布·比德的宅子比德府开办女子学校，有说法定在 1 月 1 日。'
-    line:
-      en: 'January 1848: in Bhide Wada, the house of Tatyasaheb Bhide, Savitribai, Jyotirao and Sagunabai open a school for girls.'
-      zh: '1848 年 1 月，萨维特丽巴伊、乔蒂拉奥和萨古娜拜在比德府开办女子学校。'
+      en: 'The Phules started teaching girls in Pune in 1848. Some accounts give 1 January for the opening at Bhide Wada; the NCERT lecture reads early newspaper evidence as pointing to August. The exact opening day is not established.'
+      zh: '1848 年，普勒夫妇在浦那开始办女学。比德府开学有说法定在 1 月 1 日；印度国家教育研究与培训委员会刊行的纪念讲座则依据早期报纸，将办学起点放在八月。开学确日未能确定。'
   sari:
     date: '1848'
-    stay_day: 25
     checked: two_sources
     level: careful
     use: [story, history, wiki]
@@ -115,9 +133,7 @@ facts:
     text:
       en: 'On her way to the school she was often pelted with stones and dung and abused, and she carried a spare sari to change into at the school.'
       zh: '去学校的路上，她常被人扔石头和粪、遭人辱骂，所以包里多带一件纱丽，到学校再换上。'
-    line:
-      en: 'On the road to the school she is pelted with stones and dung. She carries a spare sari in her bag and changes at the school.'
-      zh: '去学校的路上有人朝她扔石头和粪。她包里多带一件纱丽，到了学校再换上。'
+    note: 'Accounts describe repeated harassment, not a dated incident during the stay.'
   early:
     date: '1851'
     checked: official_record
@@ -161,6 +177,12 @@ bystanders:
     text: {en: 'A girl, made up for the game, who has to take the slate home at night.', zh: '一个编出来的女孩，晚上得把石板带回家。'}
 wiki:
   refs:
+    savitribai_marathi_collected_works:
+      order: 95
+      status: checked
+      text:
+        en: 'Maharashtra State Board for Literature and Culture, Savitribai Phule: Collected Works, Marathi text of Kavya Phule (1854), poems 26 and 32. https://sahitya.marathi.gov.in/ebooks/%E0%A4%B8%E0%A4%BE%E0%A4%B5%E0%A4%BF%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%80%E0%A4%AC%E0%A4%BE%E0%A4%88%20%E0%A4%AB%E0%A5%81%E0%A4%B2%E0%A5%87%20%E0%A4%B8%E0%A4%AE%E0%A4%97%E0%A5%8D%E0%A4%B0%20%E0%A4%B5%E0%A4%BE%E0%A4%99%E0%A5%8D%E2%80%8C%E0%A4%AE%E0%A4%AF.pdf'
+        zh: '马哈拉施特拉邦文学文化委员会，《萨维特里拜·普勒全集》，收录 1854 年《诗之花》马拉地语原文，第 26、32 首。 https://sahitya.marathi.gov.in/ebooks/%E0%A4%B8%E0%A4%BE%E0%A4%B5%E0%A4%BF%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A5%80%E0%A4%AC%E0%A4%BE%E0%A4%88%20%E0%A4%AB%E0%A5%81%E0%A4%B2%E0%A5%87%20%E0%A4%B8%E0%A4%AE%E0%A4%97%E0%A5%8D%E0%A4%B0%20%E0%A4%B5%E0%A4%BE%E0%A4%99%E0%A5%8D%E2%80%8C%E0%A4%AE%E0%A4%AF.pdf'
     savitribai_phule_pune_early:
       order: 853
       status: checked

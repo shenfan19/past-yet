@@ -31,7 +31,7 @@ const D = await loadData(async (p) => {
 const staffCards = D.get('staff.staff');
 const DEV_STAFF = Object.keys(staffCards).filter((id) => staffCards[id].dev_only);
 const devIds = DEV_STAFF;
-const devStaffEntry = () => ({ restUntil: 0, gear: [], hired: true, favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} });
+const devStaffEntry = () => ({ restUntil: 0, gear: [], hired: true, favor: D.get('config.favor.start'), growth: {} });
 // a save as it is written: without the test employees and what they did
 function withoutDevStaff(S) {
   if (!DEV_STAFF.length) return S;
@@ -82,7 +82,7 @@ function fresh() {
     founder,
     // trips: the log of finished trips, made with the save so a cleared save renders like a new one
     version: VERSION, funds: O.start_funds, energy: O.start_energy, seq: 0, dispatches: [], trips: [],
-    staff: Object.fromEntries(Object.entries(D.get('staff.staff')).map(([id, s]) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id) || id === founder.id || devIds.includes(id), favor: D.get('config.favor.start'), tally: { 3: 0, 2: 0, 1: 0 }, growth: {} }])),
+    staff: Object.fromEntries(Object.keys(D.get('staff.staff')).map((id) => [id, { restUntil: 0, gear: [], hired: crew.pick.includes(id) || id === founder.id || devIds.includes(id), favor: D.get('config.favor.start'), growth: {} }])),
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,

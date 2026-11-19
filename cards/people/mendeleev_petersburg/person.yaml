@@ -33,7 +33,7 @@ events:
         name: The periodic table
         place: Saint Petersburg
         figure: Dmitri Mendeleev
-        story: 'On 1 March 1869 Dmitri Mendeleev finished a one-page table, an attempt at a system of the elements by their atomic weights and chemical likeness, and had it printed as a flyer. At the meeting of the Russian Chemical Society on 18 March he was absent, and Nikolai Menshutkin read his paper for him; the minutes put off the discussion to the next meeting, and it was not taken up again. In May he sent a short abstract to a German journal, and in the translation the word for a periodic recurrence of properties became a word for a stepwise change.'
+        story: 'On 1 March 1869 Dmitri Mendeleev drew up a one-page table grouping the elements by atomic weight and chemical similarity. At the Russian Chemical Society meeting on 18 March, Nikolai Menshutkin read the paper in Mendeleev''s absence. The minutes deferred discussion to the next meeting, where the subject was not taken up. The table appeared in Mendeleev''s chemistry textbook later in March and was circulated separately. In a German abstract that spring, periodic recurrence became stepwise change.'
         relic: A deck of element cards
         relic_desc: Hand written cards that can be dealt like patience.
         points:
@@ -63,7 +63,7 @@ events:
         name: 元素周期表
         place: 圣彼得堡
         figure: 门捷列夫
-        story: '1869 年 3 月 1 日，德米特里·门捷列夫排好一张单页的表，按原子量和化学上的相近把元素排成一个体系，印成散页。3 月 18 日俄国化学学会开会时他不在场，由尼古拉·缅舒特金代为宣读；会议记录把讨论推到下次会议，后来再没有人提起。5 月，他给德国的期刊寄去一份短摘要，译成德文时，表示性质周期性重现的词被译成了表示逐级变化的词。'
+        story: '1869 年 3 月 1 日，德米特里·门捷列夫排好一张单页的表，按原子量和化学性质的相似性给元素分组。3 月 18 日，俄国化学学会开会，门捷列夫不在，尼古拉·缅舒特金代他宣读论文。会议记录把讨论推到下一次，下一次却没再议。3 月下旬，这张表随他的化学教科书刊出，也另印散页寄给同行。那年春天的一份德文摘要，把性质的「周期性重现」译成了「逐级变化」。'
         relic: 一副元素卡片
         relic_desc: 手写的卡片，可以像摆纸牌一样摆。
         points:
@@ -96,6 +96,29 @@ text:
   zh:
     name: 门捷列夫
     text: 俄国化学家，1834 年生，1907 年去世。1869 年他在圣彼得堡发表周期表，按原子量排列元素，并为尚未发现的元素留出空位。1907 年 2 月 2 日，他在圣彼得堡去世。
+quotes:
+  mendeleev_petersburg_period:
+    order: 1
+    tier: full
+    date: '1869'
+    checked: official_record
+    sources: [mendeleev_periodic_collected]
+    original: ru
+    text:
+      ru: {quote: 'Элементы, расположенные по величине их атомного веса, представляют явственную периодичность свойств.'}
+      en: {who: 'Dmitri Mendeleev', quote: 'Elements arranged by their atomic weights show a distinct periodicity in their properties.', occasion: 'conclusions of On the Relation of the Properties to the Atomic Weights of the Elements (game translation)'}
+      zh: {who: '门捷列夫', quote: '元素按原子量排列时，其性质呈现明显的周期性。', occasion: '《元素性质与原子量的关系》的结论（游戏译文）'}
+  mendeleev_petersburg_unfound:
+    order: 2
+    tier: none
+    date: '1869'
+    checked: official_record
+    sources: [mendeleev_periodic_collected]
+    original: ru
+    text:
+      ru: {quote: 'Должно ожидать открытия еще многих неизвестных простых тел'}
+      en: {who: 'Dmitri Mendeleev', quote: 'We should expect many more as yet unknown elementary substances to be discovered.', occasion: 'conclusions of On the Relation of the Properties to the Atomic Weights of the Elements (game translation)'}
+      zh: {who: '门捷列夫', quote: '还会有许多未知的单质等待发现。', occasion: '《元素性质与原子量的关系》的结论（游戏译文）'}
 hook: {en: 'The evening he was not there', zh: '他不在场的那一晚'}
 facts:
   flyer:
@@ -103,10 +126,10 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [mendeleev_minutes_translation, mendeleev_jensen_flu_cheese]
+    sources: [mendeleev_minutes_translation, mendeleev_druzhinin_publication]
     text:
-      en: 'On 1 March 1869 (17 February in the Russian calendar) Mendeleev finished his first table, An attempt at a system of the elements based on their atomic weights and chemical likeness, and had it printed as a flyer without explanations, for chemists in Russia and abroad.'
-      zh: '1869 年 3 月 1 日（俄历 2 月 17 日），门捷列夫排成第一张表，题为《按原子量和化学相似性排列的元素体系尝试》，不加说明印成散页，寄给国内外的化学家。'
+      en: 'On 1 March 1869 (17 February in the Russian calendar) Mendeleev drew up his first table. Its publication in the second fascicle of Principles of Chemistry followed on 26 or 27 March, Gregorian; it also circulated as a separate sheet.'
+      zh: '1869 年 3 月 1 日（俄历 2 月 17 日），门捷列夫排出第一张表。它在公历 3 月 26 日或 27 日随《化学原理》第二分册刊出，另印散页传阅。'
     line:
       en: '1 March 1869: Mendeleev finishes a one-page table of the elements by their atomic weights.'
       zh: '1869 年 3 月 1 日，门捷列夫排好一张单页的元素表，按原子量排列。'
@@ -183,6 +206,18 @@ bystanders:
     text: {en: 'The keeper of an inn with a samovar, made up for the game.', zh: '一个编出来的客栈掌柜，守着一只茶炊。'}
 wiki:
   refs:
+    mendeleev_druzhinin_publication:
+      order: 7210
+      status: checked
+      text:
+        en: 'P. A. Druzhinin, The Mystery of Mendeleev’s Table (2019), section VI; archival reconstruction of the publication and separate circulation. https://djvu.online/file/K8OjXhq71iMko'
+        zh: '帕维尔·德鲁日宁《门捷列夫表之谜》（2019），第六节，据档案考订分册刊出与散页流传。 https://djvu.online/file/K8OjXhq71iMko'
+    mendeleev_periodic_collected:
+      order: 7200
+      status: checked
+      text:
+        en: 'D. I. Mendeleev, Periodicheskii zakon, Academy of Sciences of the USSR edition (1958), reprints of the 1869 paper and the Faraday lecture. https://ru.djvu.online/file/nMumE1vLiNj4B'
+        zh: '门捷列夫《周期律》，苏联科学院 1958 年校刊，重印 1869 年论文与法拉第讲演。 https://ru.djvu.online/file/nMumE1vLiNj4B'
     mendeleev_minutes_translation:
       order: 2
       status: checked
@@ -223,7 +258,7 @@ self_check:
   fact: meeting
   quote_line: '1869 年 3 月 18 日，俄国化学学会开会，缅舒特金替门捷列夫宣读论文，讨论推到作者在场的时候。'
   regret_choice: '派会讲课的去，四月那次会上元素表重新排进了议程；派懂德文的去，六月付印前那个词改回了周期性。两件事隔了一个多月，一个人要从冬天一直守到夏天。'
-  bookend: '从 3 月 1 日印成的一页散表开始，以 1875 年镓被发现填上空位收尾，中间是一场作者缺席的会和一个译错的词。'
+  bookend: '从 3 月 1 日排好的一页元素表开始，以 1875 年镓被发现填上空位收尾，中间是一场作者缺席的会和一个译错的词。'
   share_line: '1869 年春天，我在圣彼得堡替一个不在场的人把元素表送进会场。'
   share_number: '18'
   knowing: 'flyer'

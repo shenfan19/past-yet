@@ -1,6 +1,7 @@
 // Wiki style encyclopedia: a left list with search and tag filter, a right article with links, a back and forward history.
 // Locked articles show as a question mark for visitors. In dev mode they show in full with a hidden mark, and the model categories appear.
 import { staffName, staffTraits, fmtYear, staffProfile, radarSvg, isoDateLabel } from './narrate.js';
+import { echoSources } from './quotes.js';
 
 const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
 
@@ -83,7 +84,8 @@ export function createWiki(X) {
         const q = T.quotes[id];
         if (Q[id].tier && !heard.includes(id)) return `<li class="locked"><div class="q">${esc(U.enc.quote_locked)}</div><div class="muted small">${esc(U.enc.quote_tier[Q[id].tier])}</div></li>`;
         const cite = q.occasion ? U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q[id].date)).replace('{occasion}', q.occasion) : q.who;
-        return `<li><div class="q">${U.fmt.quote.replace('{x}', esc(q.quote))}</div><div class="muted small">${esc(cite)}</div></li>`;
+        const original = Q[id].said && Q[id].said !== q.quote ? `<div class="muted small">${esc(Q[id].said)}</div>` : '';
+        return `<li><div class="q">${U.fmt.quote.replace('{x}', esc(q.quote))}</div>${original}<div class="muted small">${esc(cite)}${echoSources(D, Q[id].sources, esc)}</div></li>`;
       });
       return `<div class="sec">${esc(U.enc.quotes_title)}</div><ul class="quotelist">${rows.join('')}</ul>`;
     };

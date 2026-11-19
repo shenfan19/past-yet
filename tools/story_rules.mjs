@@ -120,21 +120,28 @@ export function checkEchoes(quotes, ctx, fail) {
   const at = `people/${ctx.id}/person.yaml`;
   const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
   const has = new Set();
+  const perTier = new Map();
   for (const [qid, q] of Object.entries(quotes || {})) {
     if (!isObj(q) || q.tier === undefined) continue;
     const w = `${at}: quote ${qid}`;
     if (!ctx.tiers.includes(q.tier)) fail(`${w}: tier must be one of ${ctx.tiers.join(', ')}`);
-    else has.add(q.tier);
+    else {
+      has.add(q.tier);
+      const count = (perTier.get(q.tier) || 0) + 1;
+      perTier.set(q.tier, count);
+      if (count > 2) fail(`${w}: at most two echoes in tier ${q.tier}`);
+    }
     if (!['two_sources', 'official_record'].includes(q.checked)) fail(`${w}: an echo needs checked two_sources or official_record`);
-    if (!Array.isArray(q.sources) || !q.sources.length) fail(`${w}: an echo needs its sources`);
-    else for (const s of q.sources) if (!ctx.refIds.has(s)) fail(`${w} names the source ${s}, which does not exist`);
+    if (!Array.isArray(q.sources) || new Set(q.sources).size < (q.checked === 'two_sources' ? 2 : 1)) fail(`${w}: an echo needs the sources required by ${q.checked}`);
+    else for (const s of q.sources) if (!ctx.refIds.has(s)) fail(`${w}: source ${s} is missing or not checked`);
     if (!/^-?\d{1,4}(-\d{2}(-\d{2})?)?$/.test(String(q.date))) fail(`${w} needs a date as year, year-month or year-month-day`);
     if (q.fit !== undefined && !isObj(q.fit)) fail(`${w}: fit must be a mapping of traits and tags`);
     for (const l of ctx.langs) {
       const t = q.text && q.text[l];
       if (!isObj(t) || typeof t.quote !== 'string' || !t.quote.trim() || typeof t.who !== 'string' || typeof t.occasion !== 'string' || !t.occasion.trim()) fail(`${w} needs who, quote and occasion in ${l}`);
     }
-    if (typeof q.original !== 'string' || !isObj(q.text?.[q.original])) fail(`${w}: original names the language of the words as said, and the card needs them in it`);
+    const original = typeof q.original === 'string' && q.text?.[q.original]?.quote;
+    if (typeof original !== 'string' || !original.trim()) fail(`${w}: original names the language of the words as said, and the card needs them in it`);
   }
   return has;
 }

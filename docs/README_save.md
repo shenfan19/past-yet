@@ -43,7 +43,7 @@ Status: this is the specification of save schema 13. The game currently writes t
 |---|---|
 | `office` | funds, time energy, dispatch counter, stock, secretary, hiring offer, the real start date, the clock |
 | `founder` | the player's own character |
-| `staff` | by employee id: hired, mood, rest, worn gear, implants, star tallies, growth |
+| `staff` | by employee id: hired, mood, rest, worn gear, implants, personal best stars by story (`storyBests`), growth |
 | `travel` | trips under way, and the index of trip chunks |
 | `progress` | by event id: best stars, unlocked IF lines, visited, and `world`, the lasting state of that place |
 | `antiques` | owned, anchored, and those the automatic mode has anchored |

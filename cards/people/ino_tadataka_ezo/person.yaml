@@ -31,7 +31,7 @@ events:
         name: 'The bend left out of the line'
         place: "Hokkaido"
         figure: "Ino Tadataka"
-        story: 'On 11 June 1800 Ino Tadataka set out from Edo with a party of five to survey Ezo, today''s Hokkaido. They spent about six months on the island and measured its southeastern coast. He died in 1818; his death was kept quiet for a time so that the work could go on, and in 1821 Takahashi Kageyasu and others finished the maps of the coasts of Great Japan.'
+        story: 'On 11 June 1800 Ino Tadataka left Edo on his first survey. The party measured as it went north through Tōhoku, crossed to Ezo, and followed the coast as far as Nishibetsu before turning back. The whole expedition, not just the survey on the island, took about six months. Ino died in 1818. His colleagues completed the coastal atlas in 1821.'
         relic: "A measuring staff"
         relic_desc: "A thin staff for measuring paces, marked with a scale."
         points:
@@ -59,7 +59,7 @@ events:
         name: '被直线吞掉的转弯'
         place: "北海道"
         figure: "伊能忠敬"
-        story: '1800 年 6 月 11 日，伊能忠敬带着一行五人从江户出发，去测量虾夷地，也就是今天的北海道。他们在岛上待了约半年，测了东南沿岸。他于 1818 年去世，死讯一度被隐瞒，好让测绘继续；1821 年，高桥景保等人完成了《大日本沿海舆地全图》。'
+        story: '1800 年 6 月 11 日，伊能忠敬从江户出发，开始第一次测量。队伍沿东北地方一路北测，渡海到虾夷地，再沿海岸测到西别折返。来回全程约半年，不全是在岛上度过。伊能忠敬于 1818 年去世，同伴在 1821 年完成《大日本沿海舆地全图》。'
         relic: "一根测杖"
         relic_desc: "一根量步距用的细杖，上面刻着尺度。"
         points:
@@ -91,33 +91,56 @@ text:
     name: "伊能忠敬"
     text: "日本的测量家，1745 年生，1818 年去世。50 岁以后学习天文和测量，1800 年起走遍日本海岸，主持绘制了精度很高的全国地图。"
 hook: {en: 'Do three stretches of road make one straight coast?', zh: '拐过两回，还能画成一条直线吗？'}
+quotes:
+  ino_echo_yoshioka:
+    order: 1
+    tier: full
+    date: '1800-07-14'
+    checked: official_record
+    sources: [ino_fukushima_letter_diary]
+    original: ja
+    text:
+      ja: {who: 伊能忠敬, quote: '松前より上み三里吉岡と申す川岸へ着船夫に上り一夜宿候', occasion: '長男・景敬への書状、寛政十二年五月二十三日'}
+      en: {who: Inō Tadataka, quote: 'We put in at a riverbank called Yoshioka, three ri beyond Matsumae, went ashore and lodged for the night.', occasion: 'letter to his eldest son Kagetaka on landing at Yoshioka (game translation)'}
+      zh: {who: 伊能忠敬, quote: '船驶至松前三里外一个叫吉冈的河岸，我们在那里上岸，住了一夜。', occasion: '致长子景敬的信，记述在吉冈登岸（游戏译文）'}
+  ino_echo_same_wind:
+    order: 2
+    tier: none
+    date: '1800'
+    checked: official_record
+    sources: [ino_fukushima_letter_diary]
+    original: ja
+    text:
+      ja: {who: 伊能忠敬, quote: '同廿日朝四ツ頃迄風待致候へ共 同風にて致方無之陸地一里余福島へ行', occasion: '忠敬先生日記、寛政十二年五月二十日'}
+      en: {who: Inō Tadataka, quote: 'On the twentieth we waited for the wind until around the morning hour of Four. It did not change, so we went overland a little more than one ri to Fukushima.', occasion: 'survey diary, twentieth day of the fifth lunar month; hour in Edo-period timekeeping (game translation)'}
+      zh: {who: 伊能忠敬, quote: '二十日早晨，等风等到四时前后。风向没有变，只好走陆路，行一里有余到福岛。', occasion: '《忠敬先生日记》，宽政十二年农历五月二十日；原文四时为江户时制（游戏译文）'}
 facts:
   set_out:
     date: '1800-06-11'
     stay_day: 0
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [ino_tadataka_ezo_survey, nippon_ino]
+    sources: [ino_katori_first_survey]
     text:
-      en: 'The first survey set out from Edo on 11 June 1800 with five members, bound for Ezo.'
-      zh: '第一次测量于 1800 年 6 月 11 日从江户出发，一行五人，前往虾夷地。'
+      en: 'The first survey set out from Edo on 11 June 1800. The Ino Tadataka Museum counts six people on the expedition, including Ino.'
+      zh: '第一次测量于 1800 年 6 月 11 日从江户出发。伊能忠敬纪念馆记同行共六人，包括伊能忠敬本人。'
     line:
-      en: '11 June 1800: Ino Tadataka and four others set out from Edo for Ezo.'
-      zh: '1800 年 6 月 11 日，伊能忠敬一行五人从江户出发，去测量虾夷地。'
+      en: '11 June 1800: Ino Tadataka and the survey party leave Edo for Ezo.'
+      zh: '1800 年 6 月 11 日，伊能忠敬与测量队从江户出发，前往虾夷地。'
   coast:
     date: '1800'
     stay_day: 60
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [wikipedia_ino, nippon_ino]
+    sources: [ino_katori_first_survey, ino_katori_first_map]
     text:
-      en: 'In Ezo the party surveyed only the southeastern coast, spending about six months on the island.'
-      zh: '测量队在虾夷地只测了东南沿岸，在岛上待了约半年。'
+      en: 'The party surveyed the southern coast of Ezo as far as Nishibetsu, then returned by the same route. The complete expedition from Edo and back took 180 days.'
+      zh: '测量队沿虾夷地南部海岸测到西别，再循原路折返。从离开江户到返回，整趟测量共历时 180 天。'
     line:
-      en: 'On Ezo the party measures its way along the southeastern coast.'
-      zh: '在虾夷地，测量队沿着东南海岸一段一段测过去。'
+      en: '1800: on Ezo the survey party follows the southern coast as far as Nishibetsu.'
+      zh: '1800 年，测量队沿虾夷地南部海岸一路量到西别。'
   death:
     date: '1818'
     checked: two_sources
@@ -152,6 +175,24 @@ bystanders:
     text: {en: 'A fisherman, made up for the game, who knows where the shore turns.', zh: '一位编出来的渔夫，知道海岸在哪里拐弯。'}
 wiki:
   refs:
+    ino_fukushima_letter_diary:
+      order: 92
+      status: checked
+      text:
+        en: 'Town of Fukushima historical bulletin, Nihon chizu no daiippo wa Yoshioka kara, p. 22. Facsimiles and transcriptions of Inō’s letter to his son and his survey diary, held by the Inō Tadataka Memorial Museum. https://www.town.fukushima.hokkaido.jp/wp-content/uploads/2023/04/3e3a6f3d707cdb6abe4c3d6a8bfa955a1.pdf'
+        zh: '福岛町地方史资料《日本地图的第一步从吉冈开始》，第 22 页。伊能忠敬纪念馆藏致子书信及测量日记的影印和释读。 https://www.town.fukushima.hokkaido.jp/wp-content/uploads/2023/04/3e3a6f3d707cdb6abe4c3d6a8bfa955a1.pdf'
+    ino_katori_first_survey:
+      order: 1620
+      status: checked
+      text:
+        en: 'Ino Tadataka Museum newsletter no. 6, first survey itinerary. https://www.city.katori.lg.jp/sightseeing/museum/letter-and-comic.files/letter-six.pdf'
+        zh: '伊能忠敬纪念馆通讯第 6 期：第一次测量的路线、人数与全程天数。 https://www.city.katori.lg.jp/sightseeing/museum/letter-and-comic.files/letter-six.pdf'
+    ino_katori_first_map:
+      order: 1621
+      status: checked
+      text:
+        en: 'Ino Tadataka Museum, Small Map from the Survey of Kansei 12 (1800). https://www.city.katori.lg.jp/sightseeing/museum/document/id2.html'
+        zh: '伊能忠敬纪念馆藏《宽政十二年测量小图》，1800 年首次实测图。 https://www.city.katori.lg.jp/sightseeing/museum/document/id2.html'
     ino_tadataka_ezo_survey:
       order: 642
       status: checked

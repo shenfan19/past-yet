@@ -26,10 +26,10 @@ events:
         - {id: wash, day: 85}
     text:
       en:
-        name: "A degree that came too late"
+        name: "A paper for Berlin"
         place: "Paris"
         figure: "Sophie Germain"
-        story: 'In 1829 Sophie Germain fell ill with breast cancer. She kept working, and finished a memoir on the curvature of surfaces, which appeared in 1831 in volume 7 of Crelle''s journal in Berlin. Barred from the university as a young woman, she had written to Lagrange and to Gauss under the name of Monsieur Le Blanc, and in 1816 she won the prize of the Academy of Sciences for her memoir on the vibrations of elastic plates. Gauss persuaded the University of Göttingen to give her an honorary degree. She died at 13 rue de Savoie in Paris on 27 June 1831, before the degree was conferred.'
+        story: 'Sophie Germain exchanged work on number theory with Carl Friedrich Gauss, at first signing her letters Le Blanc. In 1816 the Academy of Sciences awarded her a prize for her work on vibrating plates. She kept working after falling ill in 1829. The seventh volume of Crelle’s journal in Berlin carried her memoir on the curvature of surfaces under her own name. She died in Paris on 27 June 1831.'
         relic: "A letter signed Le Blanc"
         relic_desc: "A letter to Gauss in a borrowed name."
         points:
@@ -56,10 +56,10 @@ events:
           quai: 'In the middle of April {staff} leafs through an old almanac at a bookseller''s stall on the quay. The bookseller says the whole pile came from one household, the margins full of sums he cannot follow, so he sells them by the weight.'
           wash: 'Late in May {staff} helps a washerwoman wring sheets on a wash boat by the river. She says the Seine has risen and fallen all spring, the boat goes up and down with it, and so does her back.'
       zh:
-        name: "来迟了的学位"
+        name: "寄往柏林的论文"
         place: "巴黎"
         figure: "索菲·热尔曼"
-        story: '1829 年，索菲·热尔曼得了乳腺癌。她没有停下，病中写完论曲面曲率的论文，1831 年刊于柏林克雷勒杂志第七卷。她年轻时进不了大学，用勒布朗先生的名字给拉格朗日和高斯写信；1816 年，她以论弹性薄板振动的论文获法兰西科学院的奖。高斯说动哥廷根大学授她名誉博士学位。1831 年 6 月 27 日，她在巴黎萨伏依街 13 号去世，学位还没有授出。'
+        story: '索菲·热尔曼与卡尔·弗里德里希·高斯通信讨论数论，起初署名勒布朗。1816 年，她凭弹性薄板振动研究获得法兰西科学院的奖。1829 年患病后，她仍继续工作。柏林克雷勒主编的杂志第七卷以她的本名刊出了她论曲面曲率的论文。1831 年 6 月 27 日，她在巴黎去世。'
         relic: "一封署名勒布朗的信"
         relic_desc: "一封用借来的名字写给高斯的信。"
         points:
@@ -143,17 +143,16 @@ facts:
   degree:
     date: '1831'
     checked: two_sources
-    level: usable
-    use: [story, history, wiki]
-    sources: [germain_agnesscott, germain_britannica]
+    level: careful
+    use: [wiki]
+    sources: [germain_agnesscott, germain_degree_ebsco]
     text:
-      en: 'Gauss persuaded the University of Göttingen to give Germain an honorary degree. She died before it was conferred. Accounts differ on when the university decided and whether the degree was conferred later.'
-      zh: '高斯说动哥廷根大学授热尔曼名誉博士学位，她生前学位没有授出。学校何时作出决定、后来是否补授，各家说法不一。'
-    line:
-      en: '1831: Gauss has asked Göttingen to give Germain an honorary degree; it is not conferred in her lifetime.'
-      zh: '1831 年，高斯为热尔曼向哥廷根大学争取的名誉博士学位，她生前没有授出。'
+      en: 'Some biographical accounts say Gauss recommended Germain for an honorary degree at Göttingen. They disagree about how the university responded. Germain received no such degree in her lifetime.'
+      zh: '部分传记记载，高斯曾推荐哥廷根大学授予热尔曼名誉学位，但对校方如何回应说法不一。热尔曼生前没有获得该学位。'
+    note: 'The university decision is disputed; do not place it on the dated record.'
   death:
     date: '1831-06-27'
+    stay_day: 118
     checked: two_sources
     level: careful
     use: [story, history, wiki]
@@ -170,7 +169,7 @@ facts:
     checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [germain_crelle_eudml, germain_mactutor]
+    sources: [germain_crelle_facsimile, germain_crelle_eudml]
     text:
       en: 'Her Mémoire sur la courbure des surfaces appeared in 1831 in volume 7 of the Journal für die reine und angewandte Mathematik, edited by August Leopold Crelle in Berlin, pages 1 to 29.'
       zh: '她的《论曲面的曲率》1831 年刊于克雷勒在柏林主编的《纯粹与应用数学杂志》第七卷第 1 至 29 页。'
@@ -189,6 +188,18 @@ bystanders:
     text: {en: 'A washerwoman on a wash boat on the Seine, made up for the game.', zh: '一个编出来的塞纳河洗衣船上的洗衣妇。'}
 wiki:
   refs:
+    germain_degree_ebsco:
+      order: 225
+      status: checked
+      text:
+        en: 'EBSCO Research Starters, Sophie Germain; gives a different account of Göttingen’s response. https://www.ebsco.com/research-starters/history/sophie-germain'
+        zh: 'EBSCO《索菲·热尔曼》，对哥廷根校方回应的记载不同。https://www.ebsco.com/research-starters/history/sophie-germain'
+    germain_crelle_facsimile:
+      order: 226
+      status: checked
+      text:
+        en: 'Digitized original of Crelle’s journal, volume 7, Germain’s memoir, opening page. https://fr.wikisource.org/wiki/Page:Journal_f%C3%BCr_die_reine_und_angewandte_Mathematik,_1831-1832.pdf/13'
+        zh: '克雷勒杂志第七卷原刊影像，热尔曼论文首页。https://fr.wikisource.org/wiki/Page:Journal_f%C3%BCr_die_reine_und_angewandte_Mathematik,_1831-1832.pdf/13'
     sophie_germain_paris_primary:
       order: 186
       status: checked
@@ -219,6 +230,47 @@ wiki:
       text:
         en: 'Sophie Germain, Mémoire sur la courbure des surfaces, Journal für die reine und angewandte Mathematik 7, 1831, 1 to 29. EuDML record. https://eudml.org/doc/146720'
         zh: '索菲·热尔曼，《论曲面的曲率》，《纯粹与应用数学杂志》第 7 卷，1831 年，第 1 至 29 页。EuDML 记录。 https://eudml.org/doc/146720'
+    germain_pensees_eduscol:
+      order: 222
+      status: checked
+      text:
+        en: 'French Ministry of Education, Éduscol, Sophie Germain, p. 46, quoting Pensées diverses in the 1896 edition. https://eduscol.education.gouv.fr/sites/default/files/document/documentscommentescommemorationpdf-73236.pdf'
+        zh: '法国教育部 Éduscol，索菲·热尔曼资料，第 46 页，引 1896 年版《杂感》。 https://eduscol.education.gouv.fr/sites/default/files/document/documentscommentescommemorationpdf-73236.pdf'
+    germain_gauss_stupuy:
+      order: 223
+      status: checked
+      text:
+        en: 'Sophie Germain to Gauss, 20 February 1807, in Œuvres philosophiques, 1896, Correspondance; Stupuy edition transcription. https://fr.wikisource.org/wiki/Œuvres_philosophiques_de_Sophie_Germain/Correspondance'
+        zh: '索菲·热尔曼致高斯，1807 年 2 月 20 日，见 1896 年斯图皮编《哲学著作·通信》转录。 https://fr.wikisource.org/wiki/Œuvres_philosophiques_de_Sophie_Germain/Correspondance'
+    germain_gauss_tamboukou:
+      order: 224
+      status: checked
+      text:
+        en: 'Maria Tamboukou, An Award Letter Too Late to Receive, with the 20 February 1807 letter and its archival and editorial trail. https://repository.uel.ac.uk/download/0e2db29903750ce3199c33c7d6bab0e021abcbf7c2be3d54c25794e4705dec99/325531/JES%2Bvol%2B4%2Bissue%2B1%2BTamboukou%2B32-49.pdf'
+        zh: '玛丽亚·坦布库，《一封来不及收到的获奖信》，引 1807 年 2 月 20 日书信并列档案与版本。 https://repository.uel.ac.uk/download/0e2db29903750ce3199c33c7d6bab0e021abcbf7c2be3d54c25794e4705dec99/325531/JES%2Bvol%2B4%2Bissue%2B1%2BTamboukou%2B32-49.pdf'
+quotes:
+  germain_conjectures:
+    order: 1
+    tier: full
+    date: '1896'
+    checked: official_record
+    sources: [germain_pensees_eduscol]
+    original: fr
+    text:
+      en: {who: Sophie Germain, quote: 'Conjectures and opinions must have a place in human knowledge.', occasion: 'Pensées diverses, 1896 posthumous edition; game translation'}
+      zh: {who: 索菲·热尔曼, quote: '在人类的知识里，猜想和见解也应当有一席之地。', occasion: '《杂感》1896 年身后刊本；本游戏译文'}
+      fr: {who: Sophie Germain, quote: 'Les conjectures, les opinions doivent avoir une place dans les connaissances des hommes.', occasion: 'Pensées diverses, édition posthume de 1896'}
+  germain_borrowed_name:
+    order: 2
+    tier: none
+    date: '1807-02-20'
+    checked: two_sources
+    sources: [germain_gauss_stupuy, germain_gauss_tamboukou, germain_mactutor]
+    original: fr
+    text:
+      en: {who: Sophie Germain, quote: 'I hope that what I am admitting today will not deprive me of the honour you granted me under a borrowed name', occasion: 'letter to Carl Friedrich Gauss revealing her identity; game translation'}
+      zh: {who: 索菲·热尔曼, quote: '我希望，今天说出实情，不会使我失去您曾给予那个借来的名字的礼遇。', occasion: '致卡尔·弗里德里希·高斯、说明自己身份的信；本游戏译文'}
+      fr: {who: Sophie Germain, quote: 'J’espère que la singularité, dont je fais aujourd’hui l’aveu, ne me privera pas de l’honneur que vous m’avez accordé sous un nom emprunté', occasion: 'lettre à Carl Friedrich Gauss'}
 self_check:
   fact: curvature
   quote_line: '他的工钱还是按桶算，不按层算。'
@@ -226,7 +278,7 @@ self_check:
   bookend: '从 1829 年得病开始，以 1831 年曲率论文刊出、学位来迟收尾，中间是巴黎的春天。'
   share_line: '大学没收过她，她病中写完的论文寄到了柏林。'
   share_number: '1831'
-  knowing: 'degree'
+  knowing: 'death'
   near: 'curvature'
   lever: 'p3'
   missed: 'death'

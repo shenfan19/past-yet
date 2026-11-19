@@ -48,6 +48,7 @@ export function createShare(X) {
       name: d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name,
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
       text: [U.report.participation.share_missed.replace('{staff}', who)],
+      echo: echoOf(d),
       points: [], hook: hookOf(index),
     };
     if (d.light) {

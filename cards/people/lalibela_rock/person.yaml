@@ -13,7 +13,7 @@ events:
     channels: {A: 1, L: 3}
     # finished: in the game with release.ready_only. No year is recorded for any one cut, so the stay carries the year of the reign only.
     ready: true
-    refs: [lalibela_rock_drainage, wikipedia_lalibela_churches, everything_everywhere_lalibela]
+    refs: [lalibela_rock_drainage, lalibela_mission, lalibela_archaeology, lalibela_alvares, lalibela_inscriptions]
     scene:
       points:
         - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"job":["carpenter"]},{"stat":{"constitution":6}}]}}
@@ -28,7 +28,7 @@ events:
         name: 'Look for the outlet in the rock'
         place: Lalibela, Ethiopia
         figure: Lalibela and the stonecutters
-        story: 'King Lalibela of the Zagwe dynasty reigned from 1181 to 1221, and the eleven churches cut down into the rock of the town that bears his name are attributed to him, with their ditches, trenches and passages; the dating of single churches is not well established. In the 1520s the Portuguese priest Francisco Álvares came with an embassy and wrote the first detailed European description of them. They were inscribed as a World Heritage site in 1978.'
+        story: 'At Lalibela, the builders cut down into the rock, leaving standing walls and columns as they cleared stone away. Eleven rock-cut buildings and a network of trenches, channels and passages survive. The complex is traditionally associated with King Lalibela of the Zagwe dynasty, but archaeologists have found traces of successive cuts and earlier structures. In the 1520s Francisco Álvares described the site after visiting with a Portuguese embassy.'
         relic: A stonecutter's chisel
         relic_desc: An iron chisel, the edge ground thin.
         points:
@@ -43,7 +43,7 @@ events:
         name: '沿岩沟找出口'
         place: 埃塞俄比亚拉利贝拉
         figure: 拉利贝拉与石匠们
-        story: '扎格韦王朝的拉利贝拉国王在位于 1181 年至 1221 年，以他命名的城镇周围有十一座向下凿进岩石的教堂，连同沟渠、深槽和通道，都归在他名下，各座教堂的确切年代并不确定。1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来到这里，写下欧洲人对这些教堂的第一份详细记述。1978 年，岩凿教堂列入世界遗产。'
+        story: '拉利贝拉的石匠向下开凿，把周围的石料清出去，墙和柱便从整片岩石中留了下来。如今遗址保存着十一座岩凿建筑，以及相通的深槽、水沟和通道。传统把这处建筑群与扎格韦王朝的拉利贝拉国王相联系；考古人员发现，岩石曾分期开凿，有些地方原来还立着更早的建筑。1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团到访，写下了他的见闻。'
         relic: 石匠的凿子
         relic_desc: 一把铁凿子，刃口磨得很薄。
         points:
@@ -57,10 +57,10 @@ events:
 text:
   en:
     name: Lalibela and the stonecutters
-    text: Lalibela and the stonecutters of the Zagwe dynasty of Ethiopia. In the late twelfth and early thirteenth century eleven churches were cut down into the rock around the town that bears his name.
+    text: Lalibela was an Ethiopian ruler of the Zagwe dynasty around the turn of the thirteenth century. The town that bears his name preserves eleven rock-cut buildings shaped over successive phases.
   zh:
     name: 拉利贝拉与石匠们
-    text: 拉利贝拉与埃塞俄比亚扎格韦王朝的石匠。十二世纪末到十三世纪初，以他命名的城镇周围，十一座教堂从岩石中向下凿出。
+    text: 拉利贝拉是十三世纪前后的埃塞俄比亚扎格韦王朝国王。以他命名的城镇保存了十一座岩凿建筑，现有形制由多次开凿逐步形成。
 hook: {en: 'Does the rock channel lead out or stop?', zh: '凿出的水沟通出去了吗？'}
 facts:
   reign:
@@ -68,65 +68,59 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [lalibela_rock_drainage, wikipedia_lalibela_churches]
+    sources: [lalibela_rock_drainage, lalibela_archaeology]
     text:
-      en: 'King Lalibela of the Zagwe dynasty reigned from 1181 to 1221, and the building of the eleven rock hewn churches is attributed to him.'
-      zh: '扎格韦王朝的拉利贝拉国王在位于 1181 年至 1221 年，十一座岩凿教堂的修建归在他名下。'
+      en: 'Lalibela ruled around the turn of the thirteenth century. Tradition attributes the complex to his patronage.'
+      zh: '拉利贝拉约在十三世纪前后掌权。传统将这处建筑群的兴建与他的资助联系起来。'
     line:
-      en: '1181: Lalibela of the Zagwe dynasty becomes king. The churches cut into the rock of his town will be put down to him.'
-      zh: '1181 年，扎格韦王朝的拉利贝拉即位。城边凿进岩石的那些教堂，后来都归在他名下。'
+      en: 'Around the turn of the thirteenth century: Lalibela rules in the Ethiopian highlands.'
+      zh: '十三世纪前后，拉利贝拉统治着埃塞俄比亚高地。'
   drainage:
     date: '1200'
     stay_day: 5
     checked: official_record
     level: usable
-    use: [story, history, wiki]
+    use: [story, wiki]
     sources: [lalibela_rock_drainage]
     text:
-      en: 'The property includes churches hewn from rock and an extensive system of drainage ditches, trenches and passages.'
-      zh: '遗址包括从岩石中凿出的教堂，以及排水沟、深槽和通道。'
-    line:
-      en: 'Around the churches run ditches, trenches and passages, all cut down into the same rock.'
-      zh: '教堂四周是排水沟、深槽和通道，都从同一片岩石里向下凿出。'
+      en: 'The surviving complex includes rock-cut buildings, drainage ditches, trenches and passages. The heritage record does not date any one channel to a particular year.'
+      zh: '遗址保留了岩凿建筑、排水沟、深槽和通道。遗产记录没有把某条水沟的开凿定到具体年份。'
   undated:
     date: '1200'
     checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [wikipedia_lalibela_churches, everything_everywhere_lalibela]
+    sources: [lalibela_archaeology, lalibela_rock_drainage]
     text:
-      en: 'The dating of the single churches is not well established; most are thought to date from the twelfth and thirteenth centuries.'
-      zh: '各座教堂的确切年代并不确定，多数被认为属于十二、十三世纪。'
+      en: 'Excavation and analysis of the rock cuts indicate several phases; parts of the site predate the thirteenth-century complex.'
+      zh: '发掘和岩石切痕显示，开凿分为多个阶段，部分遗存早于十三世纪的建筑群。'
   reign_end:
     date: '1221'
-    checked: two_sources
-    level: usable
-    use: [story, history, wiki]
-    sources: [lalibela_rock_drainage, wikipedia_lalibela_churches]
+    checked: single
+    level: unused
+    use: []
+    sources: [lalibela_archaeology]
     text:
-      en: 'His reign ended in 1221.'
-      zh: '他的统治于 1221 年结束。'
-    line:
-      en: '1221: the reign of Lalibela ends.'
-      zh: '1221 年，拉利贝拉的统治结束。'
+      en: 'The available evidence places Lalibela in the late twelfth and early thirteenth centuries without establishing an exact end to his reign.'
+      zh: '现有材料将拉利贝拉置于十二世纪末至十三世纪初，不足以确定其统治结束的确切年份。'
   alvares:
     date: '1520'
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [wikipedia_lalibela_churches, everything_everywhere_lalibela]
+    sources: [lalibela_alvares, lalibela_inscriptions]
     text:
-      en: 'In the 1520s the Portuguese priest Francisco Álvares, travelling with an embassy, gave the first detailed European description of the churches.'
-      zh: '1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来访，写下欧洲人对这些教堂的第一份详细描述。'
+      en: 'In the 1520s Francisco Álvares visited with a Portuguese embassy and described the rock-cut buildings.'
+      zh: '1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团来访，记下了所见的岩凿建筑。'
     line:
-      en: 'The 1520s: a Portuguese priest, Francisco Álvares, comes with an embassy and writes the churches down for Europe for the first time.'
-      zh: '1520 年代，葡萄牙神父弗朗西斯科·阿尔瓦雷斯随使团来到这里，第一次为欧洲人把这些教堂详细写了下来。'
+      en: '1520s: Francisco Álvares visits with a Portuguese embassy and describes the buildings cut into the rock.'
+      zh: '1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团来访，记下这些凿进岩石的建筑。'
   heritage:
     date: '1978'
-    checked: two_sources
+    checked: official_record
     level: usable
     use: [story, history, wiki]
-    sources: [lalibela_rock_drainage, wikipedia_lalibela_churches]
+    sources: [lalibela_rock_drainage]
     text:
       en: 'The rock hewn churches were inscribed on the World Heritage List in 1978.'
       zh: '岩凿教堂于 1978 年列入《世界遗产名录》。'
@@ -142,29 +136,42 @@ bystanders:
     text: {en: 'A stonecutter, made up for the game, who reads the rock by its sound.', zh: '一位编出来的石匠，听声音就知道岩石的纹路。'}
 wiki:
   refs:
+    lalibela_mission:
+      order: 682
+      status: checked
+      text:
+        en: 'CNRS, Lalibela Mission field findings and documentary evidence, including the surviving Ge’ez donation. https://news.cnrs.fr/articles/in-ethiopia-lalibelas-mysteries'
+        zh: '法国国家科学研究中心，拉利贝拉考古调查及文献证据，含存世吉兹语捐赠铭文。https://news.cnrs.fr/articles/in-ethiopia-lalibelas-mysteries'
+    lalibela_archaeology:
+      order: 683
+      status: checked
+      text:
+        en: 'Derat et al., Lalibela field archaeology and evidence for earlier phases, Antiquity, 2021. https://doi.org/10.15184/aqy.2021.20'
+        zh: '德拉等，拉利贝拉现场考古及早期阶段的证据，《古物》，2021 年。https://doi.org/10.15184/aqy.2021.20'
+    lalibela_alvares:
+      order: 684
+      status: checked
+      text:
+        en: 'Francisco Álvares, embassy narrative, Hakluyt Society edition. https://www.habeshahistory.com/travellers/francisco-alvares/read'
+        zh: '弗朗西斯科·阿尔瓦雷斯，使团见闻，哈克卢特学会版。https://www.habeshahistory.com/travellers/francisco-alvares/read'
+    lalibela_inscriptions:
+      order: 685
+      status: checked
+      text:
+        en: 'Marie-Laure Derat, study of the Lalibela inscriptions and the testimony of Álvares, Annales d’Éthiopie, 2010. https://www.persee.fr/doc/ethio_0066-2127_2010_num_25_1_1406?pageId=T3_51'
+        zh: '玛丽-洛尔·德拉，拉利贝拉铭文与阿尔瓦雷斯证词研究，《埃塞俄比亚年鉴》，2010 年。https://www.persee.fr/doc/ethio_0066-2127_2010_num_25_1_1406?pageId=T3_51'
     lalibela_rock_drainage:
       order: 681
       status: checked
       text:
         en: 'UNESCO World Heritage Centre, Rock-Hewn Churches, Lalibela, site description https://whc.unesco.org/en/list/18'
         zh: '联合国教科文组织世界遗产中心，拉利贝拉岩凿教堂遗产说明 https://whc.unesco.org/en/list/18'
-    wikipedia_lalibela_churches:
-      order: 682
-      status: checked
-      text:
-        en: 'Wikipedia, Rock-Hewn Churches, Lalibela. https://en.wikipedia.org/wiki/Rock-Hewn_Churches,_Lalibela'
-        zh: '维基百科，拉利贝拉岩凿教堂。https://en.wikipedia.org/wiki/Rock-Hewn_Churches,_Lalibela'
-    everything_everywhere_lalibela:
-      order: 683
-      status: checked
-      text:
-        en: 'Everything Everywhere, The Rock-Hewn Churches, Lalibela. https://everything-everywhere.com/unesco-world-heritage-site-306-rock-hewn-churches-lalibela/'
-        zh: 'Everything Everywhere，拉利贝拉岩凿教堂。https://everything-everywhere.com/unesco-world-heritage-site-306-rock-hewn-churches-lalibela/'
 self_check:
-  fact: drainage
-  quote_line: '教堂四周是排水沟、深槽和通道，都从同一片岩石里向下凿出。'
+  fact: alvares
+  quote_line: '1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团来访，记下这些凿进岩石的建筑。'
+  echo_note: 'The documented Ge’ez donation is a dedication of a sacred object, not suitable as dispatch feedback; no eligible pair was found.'
   regret_choice: '派力气大的去，碎石运得出去，水从哪里流走却没人去找；派爱琢磨的去，出口找到了，雨季那条沟却清不到头。'
-  bookend: '从拉利贝拉即位开始，以八百年后列入世界遗产收尾。'
+  bookend: '从拉利贝拉在高地统治的年代开始，以 1978 年列入世界遗产收尾。'
   share_line: '我在拉利贝拉的深槽里，替石匠们往外递过一筐筐碎石。'
   share_number: '11'
   knowing: 'heritage'

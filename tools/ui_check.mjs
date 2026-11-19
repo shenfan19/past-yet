@@ -120,7 +120,7 @@ try {
       stay: g.ctx.backend.eraStay('sun_yat_sen_1924'),
     };
     // the trip is taken back out so the rest of the checks start from a clean log
-    S.dispatches = S.dispatches.filter((x) => x.id !== d.id); if (S.trips) S.trips = S.trips.filter((x) => x.id !== d.id); S.seq -= 1; S.staff.s_ning.restUntil = 0; S.staff.s_ning.tally = { 3: 0, 2: 0, 1: 0 }; S.visited = S.visited.filter((x) => x !== 'sun_yat_sen_1924'); delete S.stars.sun_yat_sen_1924; S.energy = 0; g.ctx.save(); g.ui.render();
+    S.dispatches = S.dispatches.filter((x) => x.id !== d.id); if (S.trips) S.trips = S.trips.filter((x) => x.id !== d.id); S.seq -= 1; S.staff.s_ning.restUntil = 0; delete S.staff.s_ning.storyBests; S.visited = S.visited.filter((x) => x !== 'sun_yat_sen_1924'); delete S.stars.sun_yat_sen_1924; S.energy = 0; g.ctx.save(); g.ui.render();
     return out;
   });
   ok('the removed Sun Yat-sen episodes and their relics are absent', ep.removed);
@@ -730,8 +730,9 @@ try {
   await tool('about');
   ok('about page has the disclaimer', (await page.locator('.about h3').allInnerTexts()).includes('Disclaimer'));
   ok('about page has jump links and no second title', (await page.locator('.about .jumps a').count()) >= 5 && (await page.locator('.about h2').count()) === 0);
-  const released = await page.evaluate(() => window.__game.D.get('config.meta.released'));
-  ok('about release shows the date only', (await page.locator('.about .muted').first().innerText()).includes(released) && !(await page.locator('.about .muted').first().innerText()).includes('T00'));
+  const { app, version, released } = await page.evaluate(() => window.__game.D.get('config.meta'));
+  const versionLine = await page.locator('.about-version').innerText();
+  ok('about header shows the game name, version and date', [app, version, released].every((value) => versionLine.includes(value)) && !versionLine.includes('T00'));
   ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
   await tool('wiki');
   await page.click('.wcat[data-cat=people] summary');
@@ -816,18 +817,19 @@ try {
     const low = mean(0), high = mean(1);
     const sf = g.ctx.S().staff.s_ning;
     const previous = { bests: sf.storyBests, growth: sf.growth };
-    sf.storyBests = Object.fromEntries(ids.slice(0, 16).map((id) => [id, 3]));
+    sf.storyBests = Object.fromEntries(ids.slice(0, 7).map((id, index) => [id, [5, 3][index] ?? 4]));
     sf.growth = {};
     const base = b.staffBase('s_ning');
-    const got = [1, 1, 2].map((stars) => off.grow('s_ning', ids[16], stars, 11));
+    const got = [1, 1, 2].map((stars) => off.grow('s_ning', ids[7], stars, 11));
+    const total = off.growthStars('s_ning');
     const after = b.staffBase('s_ning');
     const diff = Object.keys(after).filter((k) => after[k] !== base[k]);
     const growth = sf.growth;
     sf.storyBests = previous.bests; sf.growth = previous.growth;
-    return { low, high, got, diff, attr: got[2], growth };
+    return { low, high, got, diff, attr: got[2], growth, total };
   });
   ok('a favored employee does better than one who is not', fv.high > fv.low);
-  ok('50 personal best stars give one point and repeated results do not count', fv.got[0] === null && fv.got[1] === null && !!fv.got[2] && fv.diff.length === 1 && fv.diff[0] === fv.attr && fv.growth[fv.attr] === 1);
+  ok('30 personal best stars give one point and repeated results do not count', fv.total === 30 && fv.got[0] === null && fv.got[1] === null && !!fv.got[2] && fv.diff.length === 1 && fv.diff[0] === fv.attr && fv.growth[fv.attr] === 1);
   // the mood changes every attribute by up to a fifth, and a reward costs a day of wages and adds ten to the mood
   const md = await page.evaluate(() => {
     const g = window.__game, b = g.backend, off = g.ui.office, S = g.ctx.S();
@@ -844,8 +846,10 @@ try {
   ok('a reward costs a day of the wages of that person and adds ten to the mood', md.paid === md.cost && md.cost === md.want && Math.abs(md.mood - 0.1) < 1e-9);
   // the record of one person opens as a pop-up from the tally of stars, and a trip can be archived and brought back
   await go('shop');
-  await page.click('.tallylink >> nth=0');
-  ok('the tally of stars opens the record of that person in a pop-up, with the star of the five attributes', (await page.locator('#modal #lb-staff_trips').count()) === 1 && (await page.locator('#modal .tally').count()) >= 1 && (await page.locator('#modal svg.radar .area').count()) === 1);
+  const starsLink = page.locator('.tallylink').first();
+  const staffStars = await starsLink.innerText();
+  await starsLink.click();
+  ok('the total stars open the employee record with the same total and the attribute chart', /^★ \d+$/.test(staffStars) && (await page.locator('#modal .tally').innerText()) === staffStars && (await page.locator('#modal #lb-staff_trips').count()) === 1 && (await page.locator('#modal svg.radar .area').count()) === 1);
   await page.keyboard.press('Escape');
   await go('home');
   const ar = await page.evaluate(() => {
