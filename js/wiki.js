@@ -1,6 +1,6 @@
 // Wiki style encyclopedia: a left list with search and tag filter, a right article with links, a back and forward history.
 // Locked articles show as a question mark for visitors. In dev mode they show in full with a hidden mark, and the model categories appear.
-import { staffName, staffTraits, fmtYear, staffProfile, radarSvg } from './narrate.js';
+import { staffName, staffTraits, fmtYear, staffProfile, radarSvg, isoDateLabel } from './narrate.js';
 
 const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
 
@@ -70,6 +70,23 @@ export function createWiki(X) {
       }).filter(Boolean);
       return rows.length ? `<div class="sec">${esc(U.enc.if_title)}</div><p class="muted">${esc(U.enc.if_note)}</p><ul class="iflines">${rows.join('')}</ul>` : '';
     };
+    // The words of a person: every quote of the card. An echo, a quote with a tier, shows once a trip has given it, 5.15 of the story outline;
+    // until then it keeps its place as question marks with the tier that brings it. A quote without a tier is a plain line and always shows.
+    const quotesBlock = (pid) => {
+      const Q = D.get('quotes.quotes');
+      const order = D.get('config.echo.tiers');
+      const mine = Object.keys(Q).filter((id) => Q[id].person === pid && T.quotes[id])
+        .sort((a, b) => (Q[a].tier ? order.indexOf(Q[a].tier) : order.length) - (Q[b].tier ? order.indexOf(Q[b].tier) : order.length));
+      if (!mine.length) return '';
+      const heard = ctx.S().heard || [];
+      const rows = mine.map((id) => {
+        const q = T.quotes[id];
+        if (Q[id].tier && !heard.includes(id)) return `<li class="locked"><div class="q">${esc(U.enc.quote_locked)}</div><div class="muted small">${esc(U.enc.quote_tier[Q[id].tier])}</div></li>`;
+        const cite = q.occasion ? U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q[id].date)).replace('{occasion}', q.occasion) : q.who;
+        return `<li><div class="q">${U.fmt.quote.replace('{x}', esc(q.quote))}</div><div class="muted small">${esc(cite)}</div></li>`;
+      });
+      return `<div class="sec">${esc(U.enc.quotes_title)}</div><ul class="quotelist">${rows.join('')}</ul>`;
+    };
     for (const e of sec('people')) {
       const evs = e.events || [];
       for (const ev of evs) personOf[ev] = e.id;
@@ -85,7 +102,7 @@ export function createWiki(X) {
           const pics = D.get('encyclopedia').images ? (D.get('encyclopedia.images')[e.id] || []) : [];
           const pic = pics.find((x) => x.kind === 'portrait') || pics[0];
           const fig = pic ? `<figure class="personpic"><img src="data/people/${esc(e.id)}/images/${esc(pic.file)}" alt="${esc(pic.title[D.lang] || pic.title[D.get('config.i18n.fallback')])}"><figcaption class="muted small">${esc(pic.title[D.lang] || pic.title[D.get('config.i18n.fallback')])} · ${esc(pic.credit)} · ${esc(pic.license)}</figcaption></figure>` : '';
-          return `${fig}<p>${link(e.text)}</p>${total}${ifLines(e.id, evs)}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
+          return `${fig}<p>${link(e.text)}</p>${total}${quotesBlock(e.id)}${ifLines(e.id, evs)}${relatedLinks(evs.length ? evs.map((ev) => 'events:c:' + ev) : e.related)}`;
         },
       });
     }

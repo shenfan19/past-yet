@@ -60,6 +60,15 @@ export function dayOfDate(E, iso) {
   return Math.round((at - dateOf(E, 0)) / 86400000);
 }
 
+// The date of a recorded line, written as year-month-day, year-month or a year: a year alone, or the day in the words of the calendar of the page.
+export function isoDateLabel(D, iso) {
+  const T = D.get('text');
+  const [y, m, d] = String(iso).split('-').map(Number);
+  if (!m) return String(y);
+  const day = d ? T.date_day.replace('{m}', String(m)).replace('{mn}', T.month_names[m - 1]).replace('{d}', String(d)) : T.month_names[m - 1];
+  return T.year_day.replace('{y}', String(y)).replace('{date}', day);
+}
+
 export function dateLabel(D, E, t, dayOnly = false) {
   const T = D.get('text');
   const hour = (t - Math.floor(t)) * 24;

@@ -22,7 +22,9 @@ const D = await loadData(async (p) => {
   const res = await fetch(p, { cache: 'no-cache' }); // always ask the server whether the data changed, so a rebuilt playlist is never hidden by the browser cache
   if (!res.ok) throw new Error('无法读取 ' + p);
   return res.text();
-}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev || new URLSearchParams(location.search).has('drafts') ? true : undefined, devStaff: dev });
+}, (t) => window.jsyaml.load(t), pickLang, { drafts: dev || new URLSearchParams(location.search).has('drafts') ? true : undefined, devStaff: dev })
+  // a failure here would leave the page blank, so the box of index.html shows it
+  .catch((e) => { window.__bootfail?.(e.stack || e); throw e; });
 
 // The test employees, King and V, cards with dev_only: they are in the agency only with ?devtools, and never in a save,
 // so a save written in the developer mode still opens in the normal game, and the normal game never shows them.
@@ -90,6 +92,8 @@ function fresh() {
     visited: [],
     // the best star count of each place, time energy is paid only for an improvement on it
     stars: {},
+    // the echoes heard so far, the recorded lines of people given at the settlement of a trip; the page of a person shows them
+    heard: [],
     // the hiring offer
     hire: null,
     // the antiques the office starts with are already anchored, so those places are open: the first one, the latest event, and a few at random
@@ -212,5 +216,5 @@ const ctx = {
 
 const ui = createUI(D, ctx, dev);
 window.__game = { D, ctx, ui, backend };
-ui.render();
+try { ui.render(); } catch (e) { window.__bootfail?.(e.stack || e); throw e; }
 setInterval(() => ui.tick(), D.get('config.ui.refresh_ms'));

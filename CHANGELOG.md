@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- The game is renamed All the Years Home, in Chinese 岁岁归途. Saves, language and settings stay under the keys they had, so a game in progress carries on.
+- The game is renamed The Past Is Yet to Come, in Chinese 白露未晞, from the line of the Book of Songs, Jian Jia, where the white dew on the reeds is not yet dry. Saves, language and settings stay under the keys they had, so a game in progress carries on.
 - A new logo: a slanted red heart, the same heart as Life Matters and Care for You, with the two hands of a clock in it. It is one svg drawn in the top bar, on the share card and as the page icon, and it works in play.html too.
 
 ## 0.10.0, 2026-11-18

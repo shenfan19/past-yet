@@ -1,7 +1,7 @@
 // The share card of one finished trip, shown in a pop-up over the page. It is drawn on a canvas from the record of the report: the line of the employee,
 // how it ended, and a few lines of the record, the deeds that won a star, the lines written for this employee and the history around them. No curves and no tables.
 // The site address and a QR code from a matrix shipped with the game are on it. Nothing is uploaded and no outside service is asked.
-import { staffName } from './narrate.js';
+import { staffName, isoDateLabel } from './narrate.js';
 
 export function createShare(X) {
   const { D, ctx, T, U, esc } = X;
@@ -27,6 +27,13 @@ export function createShare(X) {
   // what the card says about a trip: its name, how it ended, the story told in a few lines, and the hook
   // the line the employee says, as the report shows it under the title
   const said = (d) => { const x = ctx.backend.sayingOf(d); return x ? [U.fmt.quote.replace('{x}', x) + ' ' + U.fmt.dash + staffName(D, d.spec.staffId)] : []; };
+  // the echo of a trip, 5.15 of the story outline: the recorded line of the person and who said it, when and where
+  const echoOf = (d) => {
+    const id = d.echo ?? ctx.backend.echoOf(d);
+    const q = id && T.quotes[id];
+    const Q = id && D.get('quotes.quotes')[id];
+    return q && Q ? { quote: U.fmt.quote.replace('{x}', q.quote), cite: U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q.date)).replace('{occasion}', q.occasion) } : null;
+  };
   function parts(d) {
     const R = d.report;
     const who = staffName(D, d.spec.staffId);
@@ -52,6 +59,7 @@ export function createShare(X) {
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
         text: R.timeline ? said(d) : [...said(d), U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
         lines: R.timeline ? pickLines(R.timeline) : null,
+        echo: echoOf(d),
         points: R.points.map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
         hook: hookOf(index),
       };
@@ -61,10 +69,11 @@ export function createShare(X) {
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
       text: [...said(d), R.summary],
       lines: pickLines(R.timeline),
+      echo: echoOf(d),
       hook: hookOf(index),
     };
   }
-  const caption = (d) => { const p = parts(d); return [H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...p.text, ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), p.hook, QR.url].join(' '); };
+  const caption = (d) => { const p = parts(d); return [H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text, ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), p.hook, QR.url].join(' '); };
 
   // the pop-up body: the card and what can be done with it
   function html(d) {
@@ -117,7 +126,8 @@ export function createShare(X) {
     g.fillStyle = K.ink; g.font = `700 ${CV.event_px}px ${serif}`;
     for (const l of cut(wrap(g, p.name, colW), 2)) { g.fillText(l, CV.pad, y); y += CV.event_px * CV.line_gap; }
     g.fillStyle = K.stamp; g.font = `700 ${CV.body_px}px ${sans}`;
-    const stars = '★'.repeat(d.stars || 0) + '☆'.repeat((d.max || D.get('config.stars.max')) - (d.stars || 0));
+    // the empty stars are those the place has and this trip did not win; a place may have from one to five
+    const stars = '★'.repeat(d.stars || 0) + '☆'.repeat(Math.max(0, ctx.backend.maxStars(d.eraId) - (d.stars || 0)));
     g.fillText(`${p.outcome}  ${stars}`, CV.pad, y); y += CV.body_px * CV.line_gap + 6;
     g.fillStyle = K.ink; g.font = `400 ${CV.body_px - 2}px ${sans}`;
     const room = Math.floor((CV.vis_y - 50 - y) / ((CV.body_px - 2) * CV.line_gap));
@@ -147,6 +157,16 @@ export function createShare(X) {
     const vy = CV.vis_y;
     let py = vy + 30;
     const bandEnd = CV.h - CV.pad - 140;
+    // the echo first, the recorded line of the person, large and centred, who said it below; the record fills the band under it
+    if (p.echo) {
+      g.textAlign = 'center';
+      g.fillStyle = K.ink; g.font = `700 ${CV.echo_px}px ${serif}`;
+      py += CV.echo_px * 0.4;
+      for (const l of cut(wrap(g, p.echo.quote, CV.w - CV.pad * 4), CV.echo_lines)) { g.fillText(l, CV.w / 2, py); py += CV.echo_px * CV.line_gap; }
+      g.fillStyle = K.ink2; g.font = `400 ${CV.small_px + 2}px ${sans}`;
+      g.fillText(p.echo.cite, CV.w / 2, py); py += (CV.small_px + 2) * CV.line_gap + 18;
+      g.textAlign = 'left';
+    }
     if (p.lines) {
       g.font = `400 ${CV.body_px - 2}px ${sans}`;
       for (const l of p.lines) {

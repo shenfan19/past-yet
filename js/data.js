@@ -13,7 +13,7 @@ export class Data {
   }
 }
 
-const FILES = ['config', 'items', 'staff', 'map', 'antiques', 'shops', 'mainline', 'encyclopedia', 'catalog', 'audio', 'share_qr', 'hiring', 'identities'];
+const FILES = ['config', 'items', 'staff', 'map', 'antiques', 'shops', 'mainline', 'encyclopedia', 'catalog', 'audio', 'share_qr', 'hiring', 'identities', 'quotes'];
 // Language files: the key under which the merged text lives, and the file name stem in data/i18n.
 const LOCALE_KINDS = { text: 'text', enc_text: 'encyclopedia' };
 

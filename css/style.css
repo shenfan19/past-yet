@@ -508,3 +508,29 @@ svg.map .night path { fill: #0d1b3d; opacity: .3; pointer-events: none; filter: 
 .personpic { float: right; margin: 0 0 8px 12px; max-width: 34%; }
 .personpic img { width: 100%; height: auto; display: block; border: 1px solid var(--ink2); }
 
+
+/* The settlement at the head of a report: the stars and what the trip brought, a row each, then the echo, the recorded line of the person, large.
+   The rows come in one after another and the echo last; --gone is the time already passed, so a page drawn again goes on where it was. */
+.settle { margin: 14px 0 6px; }
+.settlerows { list-style: none; padding: 0; margin: 0; }
+.settlerows li { font-size: 16px; padding: 4px 0; border-bottom: 1px dashed var(--line); }
+.settlerows li.hit { color: var(--stamp); font-weight: 700; }
+.settlerows li.miss { color: var(--ink2); }
+.settlerows li.gain { font-size: 14px; }
+.settlerows li.shiftrow { border-bottom: none; padding: 12px 0 0; font-size: inherit; }
+.echo { margin: 28px auto 10px; max-width: 640px; text-align: center; }
+.echo blockquote { margin: 0; font-family: "Noto Serif SC", "Songti SC", SimSun, serif; font-size: 26px; line-height: 1.55; font-weight: 700; color: var(--ink); }
+.echo .echosaid { margin-top: 6px; font-size: 13px; color: var(--ink2); }
+.echo figcaption { margin-top: 10px; font-size: 13px; color: var(--ink2); }
+.settle.moving { cursor: pointer; }
+.settle.moving .settlerows li { opacity: 0; animation: settle-in var(--item) ease-out forwards; animation-delay: calc(var(--i) * var(--step) - var(--gone)); }
+.settle.moving .echo { opacity: 0; animation: echo-in var(--echo) cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: calc(var(--echo-at) - var(--gone)); }
+@keyframes settle-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes echo-in { 0% { opacity: 0; transform: scale(1.12); letter-spacing: .08em; } 55% { opacity: 1; } 100% { opacity: 1; transform: scale(1); letter-spacing: normal; } }
+@media (prefers-reduced-motion: reduce) { .settle.moving .settlerows li, .settle.moving .echo { animation: none; opacity: 1; } }
+.recordbtn { margin-top: 4px; }
+/* the words of a person on their page: an echo not yet heard keeps its place as question marks, with the tier that brings it */
+.quotelist { list-style: none; padding: 0; }
+.quotelist li { margin: 10px 0; }
+.quotelist .q { font-family: "Noto Serif SC", "Songti SC", SimSun, serif; font-size: 16px; }
+.quotelist .locked .q { color: var(--ink2); letter-spacing: .2em; }

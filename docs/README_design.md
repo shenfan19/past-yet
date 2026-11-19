@@ -1,4 +1,4 @@
-# All the Years Home: design
+# The Past Is Yet to Come: design
 
 This document describes how the game works and why it is built the way it is. The numbers quoted here live in `cards/config/` and can be changed there.
 

@@ -1,5 +1,5 @@
 meta:
-  app: All the Years Home
+  app: The Past Is Yet to Come
   version: 0.10.0
   released: '2026-11-17'
   card_authors: [AI, Fan Shen]
@@ -8,8 +8,8 @@ meta:
     lm: https://lifematters.dev
     care: https://careforyou.dev
     site: https://teleporter.uk
-    code: https://github.com/shenfan19/game-all-the-years-home
-    issues: https://github.com/shenfan19/game-all-the-years-home/issues
+    code: https://github.com/shenfan19/game-past-yet-come
+    issues: https://github.com/shenfan19/game-past-yet-come/issues
     mail: mailto:contact@teleporter.uk
     music: https://www.mutopiaproject.org
 i18n:
@@ -172,6 +172,9 @@ ui:
   tab_icons: {home: '🏠', buy: '🛒', shop: '🗂️'}
   tool_icons: {wiki: '📖', settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
+  # The settlement at the head of a report: its rows come in one after another, step_ms apart, each taking item_ms, and after a pause the echo comes in over echo_ms.
+  # A report opened again, or a reader who asks for less motion, sees it all at once.
+  settle: {step_ms: 320, item_ms: 380, echo_pause_ms: 500, echo_ms: 1100}
   refresh_ms: 500
   # a return shows a note this many seconds before it fades; the reports wait on the home page
   toast_seconds: 8
@@ -188,6 +191,18 @@ ui:
   chart: {w: 520, h: 170, margin_l: 36, margin_r: 10, margin_t: 10, margin_b: 22, y_lines: 4, x_labels: 8, headroom: 1.1, max_points: 200, body_colors: ['#b3382c', '#2f4f6f', '#8a6a1f', '#5a7f3a', '#7a4f8a', '#3a7f7f', '#8a8272', '#c2622d', '#3f6fb3', '#a3477a'], body_min_max: 0.05}
   tooltip: {offset: 14, edge: 4}
   timeline: {w: 600, h: 70, pad: 30, y: 36, tick_half: 4, line_ext: 20}
+# The echo: a line the historical person is recorded to have said, picked by how the trip went and shown at the settlement and on the share card.
+# A trip falls in one tier: desync when a guard point was missed, full when every star was won, most above most_share of them, some with any star, none otherwise.
+# A person card without a line of that tier takes the first tier of its fallback that has one. See 5.15 of the story outline.
+echo:
+  tiers: [full, most, some, none, desync]
+  most_share: 0.5
+  fallback:
+    full: [most, some, none]
+    most: [some, none, full]
+    some: [none, most, full]
+    none: [desync, some, most, full]
+    desync: [none, some, most, full]
 stars:
   # a scene has as many stars as sync points, and the counts the tables below know
   max: 3
@@ -286,11 +301,12 @@ settings:
   options:
     theme: [auto, light, dark]
 share:
-  file_name: all_the_years_home_share.png
+  file_name: the_past_is_yet_to_come_share.png
   # the card tells the trip from its record: the lines that won a star, the lines written for this employee, then the lines of history by importance, at most this many, in time order
   record_lines: 6
+  # the echo of the trip, the recorded line of the person, stands in the middle band in echo_px letters on at most echo_lines lines, and the record fills what is left below it
   colors: {bg: '#f1e8d4', ink: '#2b241b', ink2: '#6b5f4d', stamp: '#b3382c', line: '#cdbf9f', qr_bg: '#f8f2e3'}
-  canvas: {w: 1200, h: 960, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4}
+  canvas: {w: 1200, h: 960, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, echo_px: 40, echo_lines: 4}
 # The pressure channels of the events, and how they reach the body of the traveller (design: game_事件系统设计 sections 3 and 4 in the home folder).
 # Every number here is an uncalibrated starting value. When the traveller core is connected, the levels are tuned in a batch simulation until a traveller with all attributes 4,
 # no trait and no gear ends a stay with the main readout near target_readout at level 1, 2 and 3.

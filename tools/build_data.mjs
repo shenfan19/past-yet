@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { checkStory, storyReport } from './story_rules.mjs';
+import { checkStory, storyReport, checkEchoes } from './story_rules.mjs';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
@@ -135,6 +135,15 @@ const staffRules = read('config/staff_rules.yaml');
 const traitCards = cards('traits');
 const staffCards = cards('staff');
 const quoteCards = cards('quotes');
+// the structure of the quotes: whose they are, and for an echo its tier, fit, date, sources and the words as said; the words in each language go to the text
+const quoteOwner = {};
+for (const m of moduleNames) for (const id of Object.keys(embedded(m, 'quotes'))) quoteOwner[id] = m;
+emitYaml('quotes.yaml', { quotes: Object.fromEntries(quoteCards.map((c) => {
+  const { authors, ...rest } = struct(c);
+  const out = { person: quoteOwner[c.id] || null, ...rest };
+  if (c.original && c.text?.[c.original]) out.said = c.text[c.original].quote;
+  return [c.id, out];
+})) });
 emitYaml('staff.yaml', {
   attributes: staffRules.attributes, stats: staffRules.stats, derive: staffRules.derive, default_base: staffRules.default_base, default_habit: staffRules.default_habit, gender_class: staffRules.gender_class,
   tags: staffRules.tags, job_classes: staffRules.job_classes, literacy: staffRules.literacy, ages: staffRules.ages, faces: staffRules.faces,
@@ -358,7 +367,10 @@ let storyLine = '';
     const eraOfEvent = (eid) => (evs[eid] ? modelOf(evs[eid].era) : null);
     const own = Object.keys(eraDir).filter((id) => eraModule[id] === m);
     const published = own.some((id) => modelOf(id).metadata.status !== 'draft');
-    people.push({ id: m, hasFacts: isObj(pc.facts), published });
+    // the echoes of the person: every quote with a tier is checked, and a published story with a fact sheet should have the two tiers 5.15 asks for
+    const tiersHeld = checkEchoes(pc.quotes, { id: m, langs: STORY_LANGS, tiers: config.echo.tiers, refIds }, fail);
+    const echoWanted = isObj(pc.facts) && Object.values(evs).some((e) => e.ready) && !['full', 'none'].every((t) => tiersHeld.has(t));
+    people.push({ id: m, hasFacts: isObj(pc.facts), published, echoWanted });
     if (!isObj(pc.facts)) continue;
     checkStory(pc, {
       id: m, langs: STORY_LANGS, fallback: config.i18n.fallback, hookMax: config.release.hook_max, refIds,
@@ -368,6 +380,9 @@ let storyLine = '';
   }
   const r = storyReport(people);
   storyLine = `stories with a fact sheet: ${r.done.join(', ') || 'none'}; published models without one: ${r.missing.join(', ') || 'none'}`;
+  const noEcho = people.filter((p) => p.echoWanted).map((p) => p.id);
+  storyLine += `
+open stories without the echoes full and none: ${noEcho.length}${noEcho.length ? ', the first ' + noEcho.slice(0, 8).join(', ') : ''}`;
 }
 
 // ---------- write or check ----------

@@ -1,6 +1,6 @@
-# All the Years Home
+# The Past Is Yet to Come
 
-Chinese title: 岁岁归途.
+Chinese title: 白露未晞, from the Book of Songs, Jian Jia: the white dew on the reeds is not yet dry.
 
 You run a small staffing agency that sends people into the past. History is drifting: every trip prises a branch off it, so the agency holds the moments that are slipping and mends, in a branch, what history left undone. The staff come home with stories and time energy, and you spend the energy on getting back to your own family.
 
@@ -20,7 +20,7 @@ To work on the game, serve the folder instead, so that changes to the code and t
 run_game.cmd
 ```
 
-Then open http://127.0.0.1:8778/index.html. Any static file server works.
+Then open http://127.0.0.1:8778/index.html. `run_game.cmd` runs `tools/serve.py`, which tells the browser not to cache anything, so a reload never mixes files from before and after a change. Another static file server works too, but after a change it may need a hard reload, Ctrl+F5.
 
 - `node tools/headless.mjs [era] [log] [opt]` runs the simulation without a browser and compares kits and staff from the same seeds.
 - `node tools/check_logic.mjs` audits the traits, employees, scenes and items for dead, missing or unreachable parts.

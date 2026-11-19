@@ -1,4 +1,4 @@
-import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel } from './narrate.js';
 import { pointsLeft, founderProblem } from './founder.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
@@ -49,7 +49,7 @@ export function createUI(D, ctx, DEV = false) {
   document.getElementById('title').textContent = U.title;
   document.getElementById('subtitle').textContent = U.subtitle;
 
-  const st = { chartOff: new Set(), tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null };
+  const st = { chartOff: new Set(), tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null, settled: {} };
 
   // ---------- navigation history ----------
   // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
@@ -199,6 +199,45 @@ export function createUI(D, ctx, DEV = false) {
   const protagonistHtml = (d) => { const p = protagonistOf(d); return p.link ? wl(p.link, p.name) : esc(p.name); };
   const staffLine = (id) => `<div class="muted small">${U.report.staff_line.replace('{x}', staffLink(id))}</div>`;
   // under the title of a report, the employee's own words on coming back with the name; without words, the plain line that names the employee
+  const echoDate = (iso) => isoDateLabel(D, iso);
+  // The echo, 5.15 of the story outline: the recorded line of the person, large, with who said it, when and where in small letters below.
+  // When the words were said in another language than the page, the words as said follow in small letters.
+  const echoHtml = (qid, cls = 'echo') => {
+    const q = qid && T.quotes[qid];
+    const Q = qid && D.get('quotes.quotes')[qid];
+    if (!q || !Q) return '';
+    const said = Q.said && Q.original !== D.lang && Q.said !== q.quote ? `<div class="echosaid">${esc(Q.said)}</div>` : '';
+    return `<figure class="${cls}"><blockquote>${U.fmt.quote.replace('{x}', esc(q.quote))}</blockquote>${said}<figcaption>${esc(U.report.echo_cite.replace('{who}', q.who).replace('{date}', echoDate(Q.date)).replace('{occasion}', q.occasion))}</figcaption></figure>`;
+  };
+  // The settlement at the head of a report, its summary: the stars one row each, what the trip brought and cost, the shift of the timeline, then the echo.
+  // The record waits folded below, and the line the employee says on coming back is in it, at the return.
+  // The rows come in one after another the first time a report is opened in a session. The clock of the page draws the page again and again, so each row
+  // is given a negative delay for the time already gone, and the motion goes on where it was instead of starting over. A click on it shows it all at once.
+  const settleHtml = (cur, S) => {
+    const C = D.get('config.ui.settle');
+    const rows = [];
+    const chips = (p) => `${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}`;
+    for (const p of cur.report.points || []) rows.push(`<li class="${p.hit ? 'hit' : 'miss'}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(S.pointText(p.id))}${chips(p)}</li>`);
+    if (cur.paid?.energy) rows.push(`<li class="gain">${esc(U.report.energy_gain)} +${ri(cur.paid.energy)}${cur.newBest ? ' · ' + U.stars.new_best : ''}</li>`);
+    if (cur.paid?.grown) rows.push(`<li class="gain">${esc(U.report.grown)}${COLON}${esc(T.stats[cur.paid.grown])} +1</li>`);
+    if (cur.paid?.antique) rows.push(`<li class="gain">${esc(U.report.antique_gain)}${COLON}${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}</li>`);
+    if (S.cost) rows.push(`<li class="gain">${esc(U.report.spent)}${COLON}${ri(S.cost)}</li>`);
+    rows.push(`<li class="gain">${esc(U.report.rest)} ${S.restDays} ${esc(U.report.days)}</li>`);
+    // the shift of the timeline comes in after the rows as one more of them, and the echo last
+    const shift = S.shift ? `<li class="shiftrow" style="--i:${rows.length}">${S.shift}</li>` : '';
+    const n = rows.length + (shift ? 1 : 0);
+    const qid = cur.echo ?? ctx.backend.echoOf(cur);
+    const echo = echoHtml(qid);
+    const now = Date.now();
+    if (!(cur.id in st.settled)) st.settled[cur.id] = now;
+    const gone = now - st.settled[cur.id];
+    const total = n * C.step_ms + C.echo_pause_ms + C.echo_ms;
+    const moving = gone < total;
+    const style = `--step:${C.step_ms}ms;--item:${C.item_ms}ms;--echo-at:${n * C.step_ms + C.echo_pause_ms}ms;--echo:${C.echo_ms}ms;--gone:${gone}ms`;
+    return `<section class="settle${moving ? ' moving' : ''}" style="${style}" data-act="settleskip" data-id="${cur.id}">
+      <div class="sec">${U.report.accounts}</div>
+      <ul class="settlerows">${rows.map((r, i) => r.replace('<li class="', `<li style="--i:${i}" class="`)).join('')}${shift}</ul>${echo}</section>`;
+  };
   const sayingLine = (d) => { const x = ctx.backend.sayingOf(d); return x ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(x))} <span class="muted">${U.fmt.dash}${staffLink(d.spec.staffId)}</span></p>` : staffLine(d.spec.staffId); };
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
   // how a trip ended is told by its stamp, see stampOf in backend.js
@@ -873,7 +912,10 @@ export function createUI(D, ctx, DEV = false) {
     const restLine = officeLi((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff), '');
     let lastYear = S.year;
     const record = S.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
-    const tl = yearLine(nowYear) + departLine + yearLine(S.year) + record + yearLine(backYear) + backLine + restLine;
+    // what the employee says on coming back is a line of the record, after the return, where it is said
+    const said = ctx.backend.sayingOf(cur);
+    const saidLine = said ? officeLi(U.report.said_line.replace('{date}', officeDay(cur.readyDay)).replace(/\{staff\}/g, S.staff).replace('{x}', said), '') : '';
+    const tl = yearLine(nowYear) + departLine + yearLine(S.year) + record + yearLine(backYear) + backLine + saidLine + restLine;
     const tlf = st.tlf === 'history' || st.tlf === 'travel' ? st.tlf : 'all';
     const tlButtons = [['all', U.report.line_filter.all], ['history', U.report.line_filter.history], ['travel', S.staff]].map(([k, label]) => `<button class="chipbtn${tlf === k ? ' on' : ''}" data-act="tlf" data-k="${k}">${esc(label)}</button>`).join(' ');
     // the body of the employee through the stay as LM reads it, a part of its own that config.ui.report_body turns on always, in the developer mode only, or never
@@ -895,29 +937,26 @@ export function createUI(D, ctx, DEV = false) {
       return burden + `<div class="sec">${U.report.body_attrs}</div>${legendHtml('attrs', alines)}${lineChart(alines, [], ctx.backend.staffAttrMax, 'attrs')}`;
     };
     const vsHtml = st.vs && !cur.light ? vsBlock(cur) : '';
+    // the record and all below it are folded under the settlement, and open on a click
+    const recOpen = st.opened.has(cur.id + 'rec');
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
-      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>${sayingLine(cur)}
+      <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>
+      ${settleHtml(cur, S)}
+      <div class="row" style="margin:16px 0">${S.buttons}</div>${vsHtml}
+      <p><button class="ghost recordbtn" data-act="fn" data-key="rec">${esc(recOpen ? U.report.hide_record : U.report.full_record)}</button></p>
+      ${recOpen ? `<div class="fullrecord">
       ${S.stay != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(S.stay)))}</p>` : ''}
       ${S.before}
       <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
       ${S.afterRecord}${S.warn}
       ${S.numbers}
       ${bodyHtml()}
-      ${S.shift || ''}
-      <div class="sec">${U.report.accounts}</div>
-      <table><tbody>
-        ${S.cost != null ? `<tr><td>${U.report.spent}</td><td class="num">${ri(S.cost)}</td></tr>` : ''}
-        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
-        <tr class="points"><td colspan="2">${pointsHtml(cur, S.pointText)}</td></tr>
-        ${grownRow(cur.paid)}
-        <tr><td>${U.report.antique_gain}</td><td class="num">${cur.paid && cur.paid.antique ? `${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
-        <tr><td>${U.report.rest}</td><td class="num">${S.restDays} ${U.report.days}</td></tr>
-      </tbody></table>
       ${S.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
-      <div class="row" style="margin:16px 0">${S.buttons}</div>${vsHtml}`;
-    // the notes are numbered in the order they are first met on the page, so they are listed after the page is written
-    return page + (notes.length ? `<div class="sec">${U.report.footnotes}</div><ol class="notes">${notes.map((x) => `<li class="muted">${esc(x.text)}</li>`).join('')}</ol>` : '');
+      ${notes.length ? `<div class="sec">${U.report.footnotes}</div><ol class="notes">${notes.map((x) => `<li class="muted">${esc(x.text)}</li>`).join('')}</ol>` : ''}
+      </div>` : ''}`;
+    // the notes are numbered in the order they are first met on the page, so they are listed with the record they belong to
+    return page;
   }
 
   function participationHtml(cur) {
@@ -1305,6 +1344,8 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'tlf') { st.tlf = b.dataset.k; render(); }
     else if (act === 'chartline') { const k = b.dataset.chart + ':' + b.dataset.k; if (st.chartOff.has(k)) st.chartOff.delete(k); else st.chartOff.add(k); render(); }
     else if (act === 'fn') { const k = st.modal.id + b.dataset.key; if (st.opened.has(k)) st.opened.delete(k); else st.opened.add(k); render(); }
+    // a click on the settlement shows all of it at once: its rows and its echo are put where the motion would have ended
+    else if (act === 'settleskip') { st.settled[id] = 0; render(); }
     else if (act === 'yaml') { st.modelYaml = !st.modelYaml; render(); }
     else if (act === 'again') {
       const d = ctx.S().dispatches.find((x) => x.id === id);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>All the Years Home</title>
+<title>The Past Is Yet to Come</title>
 <link rel="icon" href="data/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,6 +16,27 @@
   <div id="navrow"><nav id="tabs"></nav><div id="res"></div><div id="tools"></div></div>
 </header>
 <main id="view"></main>
+<!-- Shown only when the page fails to open, so a failure is not a blank page. It is written here and not in data/, since data/ may be what failed. -->
+<div id="bootfail" hidden style="max-width:720px;margin:40px auto;padding:16px 20px;border:2px solid #b3382c;background:#f8f2e3;font-family:system-ui,sans-serif">
+  <p>页面没能打开。请按 Ctrl+F5 强制刷新；如果还是打不开，请把下面这行发给作者。</p>
+  <p>The page could not open. Press Ctrl+F5 to reload; if it still fails, please send the line below to the author.</p>
+  <pre id="bootfailmsg" style="white-space:pre-wrap;font-size:12px"></pre>
+</div>
+<script>
+// An error before the game has drawn its first page shows the box above with the error, instead of leaving the page blank.
+(function () {
+  function show(msg) {
+    if (document.getElementById('view').childElementCount) return;
+    var box = document.getElementById('bootfail');
+    box.hidden = false;
+    document.getElementById('bootfailmsg').textContent += String(msg) + String.fromCharCode(10);
+  }
+  // main.js hands over what it catches itself, an error while reading data/ or drawing the first page, which the browser does not report as an error event
+  window.__bootfail = show;
+  window.addEventListener('error', function (e) { show((e.error && e.error.stack) || (e.message + ' ' + (e.filename || '') + ':' + (e.lineno || ''))); }, true);
+  window.addEventListener('unhandledrejection', function (e) { show((e.reason && e.reason.stack) || e.reason); });
+})();
+</script>
 <script src="vendor/js-yaml.min.js"></script>
 <script type="module" src="js/main.js"></script>
 </body>

@@ -146,6 +146,8 @@ export function createOffice(X) {
       redeemed: pts.some((p) => p.redeem && p.hit), won: pts.filter((p) => p.hit).map((p) => p.id), archived: false,
       // quote: the words of the card of a full model said on this trip, kept so the record can show them after the full report is dropped
       quote: (!d.light && d.report.journey?.accepted !== false && d.report.quote) || null,
+      // echo: the recorded line of the person this trip was given, 5.15 of the story outline
+      echo: d.echo || null,
     };
   }
   // the points a finished trip met: kept in its summary, or read from the full report for a summary written before it kept them
@@ -286,6 +288,10 @@ export function createOffice(X) {
     // the tally counts in thirds of the stars of the place, so a five star story fills the same three cells
     if (d.stars > 0) sf0.tally[Math.ceil(d.stars * 3 / top)] += 1;
     d.paid.grown = grow(d.spec.staffId, d.eraId, d.stars, Number(d.id.slice(1)));
+    // the echo is fixed when the report is taken, and the line counts as heard, so the page of the person shows it from now on instead of its question marks
+    d.echo = ctx.backend.echoOf(d);
+    s.heard ||= [];
+    if (d.echo && !s.heard.includes(d.echo)) s.heard.push(d.echo);
     d.paid.antique = d.payout.antique || null;
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);

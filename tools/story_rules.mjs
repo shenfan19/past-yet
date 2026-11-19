@@ -111,3 +111,30 @@ export function storyReport(people) {
   const missing = people.filter((p) => !p.hasFacts && p.published).map((p) => p.id);
   return { done, missing };
 }
+
+// The echo, 5.15 of the story outline: a quote of the person with a tier is a line the person is recorded to have said, shown at the settlement of a trip.
+// It needs a tier the config knows, a check of two sources or the record of an institution, sources that exist, a date, the occasion and the words in every story language,
+// and the words in the language of the original. A quote without a tier is a plain line of the header and is not checked here.
+// quotes: { id: card } of one person. ctx: { id, langs, tiers, refIds }. Returns the tiers the person has.
+export function checkEchoes(quotes, ctx, fail) {
+  const at = `people/${ctx.id}/person.yaml`;
+  const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
+  const has = new Set();
+  for (const [qid, q] of Object.entries(quotes || {})) {
+    if (!isObj(q) || q.tier === undefined) continue;
+    const w = `${at}: quote ${qid}`;
+    if (!ctx.tiers.includes(q.tier)) fail(`${w}: tier must be one of ${ctx.tiers.join(', ')}`);
+    else has.add(q.tier);
+    if (!['two_sources', 'official_record'].includes(q.checked)) fail(`${w}: an echo needs checked two_sources or official_record`);
+    if (!Array.isArray(q.sources) || !q.sources.length) fail(`${w}: an echo needs its sources`);
+    else for (const s of q.sources) if (!ctx.refIds.has(s)) fail(`${w} names the source ${s}, which does not exist`);
+    if (!/^-?\d{1,4}(-\d{2}(-\d{2})?)?$/.test(String(q.date))) fail(`${w} needs a date as year, year-month or year-month-day`);
+    if (q.fit !== undefined && !isObj(q.fit)) fail(`${w}: fit must be a mapping of traits and tags`);
+    for (const l of ctx.langs) {
+      const t = q.text && q.text[l];
+      if (!isObj(t) || typeof t.quote !== 'string' || !t.quote.trim() || typeof t.who !== 'string' || typeof t.occasion !== 'string' || !t.occasion.trim()) fail(`${w} needs who, quote and occasion in ${l}`);
+    }
+    if (typeof q.original !== 'string' || !isObj(q.text?.[q.original])) fail(`${w}: original names the language of the words as said, and the card needs them in it`);
+  }
+  return has;
+}

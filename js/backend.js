@@ -108,6 +108,37 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // otherwise the catchphrase of the employee for the stamp, see staffSaying in narrate.js.
   // the same for a trip whose full report is gone: the words kept in its summary, or the catchphrase for its stamp
   const sayingOfTrip = (t) => t.quote || staffSaying(D, t.staffId, t.stamp, t.id);
+  // The echo of a trip, 5.15 of the story outline: a recorded line of the person of the place, picked by the tier the trip falls in.
+  // A tier with no line falls back along config.echo.fallback; of two lines in a tier, one whose fit names a trait or tag of the employee comes first,
+  // and otherwise the seed of the trip decides, so a report shows the same line every time. Returns the id of a quote, or null.
+  const personOfEvent = {};
+  for (const p of D.get('encyclopedia.sections.people') || []) for (const e of p.events || []) personOfEvent[e] = p.id;
+  const echoTier = (d) => {
+    const E = D.get('config.echo');
+    if (d.report?.outcomeId === 'desync') return 'desync';
+    const s = d.stars || 0, m = maxStars(d.eraId);
+    if (d.report?.journey?.accepted === false || s === 0) return 'none';
+    return s >= m ? 'full' : s / m > E.most_share ? 'most' : 'some';
+  };
+  const echoOf = (d) => {
+    if (!d || d.recalled || d.evacuation || !d.report) return null;
+    const ev = d.light ? d.eraId : D.get('catalog.events').find((e) => e.era === d.eraId)?.id;
+    const person = ev && personOfEvent[ev];
+    if (!person) return null;
+    const mine = Object.entries(D.get('quotes.quotes') || {}).filter(([, q]) => q.person === person && q.tier);
+    if (!mine.length) return null;
+    const first = echoTier(d);
+    for (const tier of [first, ...D.get('config.echo.fallback')[first]]) {
+      const lines = mine.filter(([, q]) => q.tier === tier);
+      if (!lines.length) continue;
+      const tags = sim.staffTags(D, d.spec.staffId);
+      const traits = D.get('staff.staff.' + d.spec.staffId + '.traits') || [];
+      const fits = lines.filter(([, q]) => q.fit && ((q.fit.traits || []).some((t) => traits.includes(t)) || (q.fit.tags || []).some((t) => tags.has(t))));
+      const pool = fits.length ? fits : lines;
+      return pool[(Math.abs(Math.trunc(d.spec.seed || 0)) + Number(String(d.id).replace(/\D/g, '') || 0)) % pool.length][0];
+    }
+    return null;
+  };
   const sayingOf = (d) => (!d.light && d.report?.journey?.accepted !== false && d.report?.quote) || staffSaying(D, d.spec.staffId, stampOf(d), d.id);
   // the stars of a place: those of its full model, also when it is asked by the event the model stands at, else the points of the small story
   const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); if (e?.era && info[e.era]) return info[e.era].raw.star_points.length; return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
@@ -268,7 +299,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     runLight, lightStay, lightKitAllowed, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
-    findOdds, findAntique, stampOf, sayingOf, sayingOfTrip,
+    findOdds, findAntique, stampOf, sayingOf, sayingOfTrip, echoOf, echoTier,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],
