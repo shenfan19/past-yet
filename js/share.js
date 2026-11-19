@@ -75,7 +75,7 @@ export function createShare(X) {
       hook: hookOf(index),
     };
   }
-  const caption = (d) => { const p = parts(d); return [H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text, ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), p.hook, QR.url].join(' '); };
+  const caption = (d) => { const p = parts(d); return [H.card_title + ' · ' + H.game_label + '.', H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text, ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), p.hook, QR.url].join(' '); };
 
   // the pop-up body: the card and what can be done with it
   function html(d) {
@@ -113,16 +113,21 @@ export function createShare(X) {
     g.fillStyle = K.bg; g.fillRect(0, 0, CV.w, CV.h);
     g.strokeStyle = K.stamp; g.lineWidth = CV.border; g.strokeRect(CV.border / 2, CV.border / 2, CV.w - CV.border, CV.h - CV.border);
 
-    // logo and title; the card is drawn again once the logo has loaded
+    // Draw the title and game label alongside the logo, clear of the QR code.
+    const qrX = CV.w - CV.pad - CV.qr_size;
     const L = CV.logo_px;
     if (logo.complete && logo.naturalWidth) g.drawImage(logo, CV.pad, CV.pad, L, L);
     else logo.addEventListener('load', () => draw(d), { once: true });
+    const brandX = CV.pad + L + 20;
+    const brandW = qrX - brandX - 24;
+    const titleY = CV.pad + L / 2 + (CV.title_px - CV.game_label_px) / 2;
     g.textAlign = 'left'; g.textBaseline = 'alphabetic';
     g.fillStyle = K.ink; g.font = `700 ${CV.title_px}px ${serif}`;
-    g.fillText(H.card_title, CV.pad + L + 20, CV.pad + L / 2 + CV.title_px * 0.35);
+    g.fillText(H.card_title, brandX, titleY, brandW);
+    g.fillStyle = K.ink2; g.font = `600 ${CV.game_label_px}px ${sans}`;
+    g.fillText(H.game_label, brandX, titleY + CV.game_label_px + 9, brandW);
 
     // text column on the left, the QR code on the right
-    const qrX = CV.w - CV.pad - CV.qr_size;
     const colW = qrX - CV.pad - 40;
     let y = CV.pad + L + 56;
     g.fillStyle = K.ink; g.font = `700 ${CV.event_px}px ${serif}`;
@@ -166,7 +171,7 @@ export function createShare(X) {
       py += CV.echo_px * 0.4;
       for (const l of cut(wrap(g, p.echo.quote, CV.w - CV.pad * 4), CV.echo_lines)) { g.fillText(l, CV.w / 2, py); py += CV.echo_px * CV.line_gap; }
       g.fillStyle = K.ink2; g.font = `400 ${CV.small_px + 2}px ${sans}`;
-      g.fillText(p.echo.cite, CV.w / 2, py); py += (CV.small_px + 2) * CV.line_gap + 18;
+      g.fillText(p.echo.cite, CV.w / 2, py, CV.w - CV.pad * 2); py += (CV.small_px + 2) * CV.line_gap + 18;
       g.textAlign = 'left';
     }
     if (p.lines) {
@@ -180,6 +185,7 @@ export function createShare(X) {
     } else {
       g.font = `400 ${CV.body_px}px ${sans}`;
       for (const pt of p.points || []) {
+        if (py > bandEnd) break;
         g.fillStyle = pt.hit ? K.stamp : K.ink2;
         const mark = pt.redeem ? (pt.hit ? '♥' : '♡') : (pt.hit ? '★' : '☆');
         for (const [i, l] of cut(wrap(g, `${mark} ${pt.text}`, CV.w - CV.pad * 2), 2).entries()) { g.fillText(i ? '    ' + l : l, CV.pad, py); py += CV.body_px * CV.line_gap; }

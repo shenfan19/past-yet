@@ -502,28 +502,43 @@ export function createUI(D, ctx, DEV = false) {
       + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}${sec}`;
   }
 
-  // One table for the dispatches: the ones still out come first, with what can be done to them, then the finished ones with their report.
-  // What needs the player now sits at the top of the home page: trips on the road and trips that are home and wait to be claimed.
-  function pendingHtml() {
+  // Standby first, then trips and reports to collect, then rest.
+  function staffStatusHtml() {
     const S = ctx.S();
     const today = S.clock.day;
     const out = S.dispatches.filter((d) => !d.claimed).sort((a, b) => a.readyDay - b.readyDay);
-    if (!out.length) return '';
-    const pg = listbox.paginate('pending', out);
-    const rows = pg.shown.map((d) => {
-      const left = Math.max(0, d.readyDay - today);
-      const ready = left === 0;
-      const recallBtn = !ready && !d.recallRefused ? `<button data-act="recall" data-id="${d.id}"${tip(U.office.recall_tip)}>${U.office.recall}</button>` : '';
-      const refused = d.recallRefused && !ready ? ` <span class="chip warn">${U.office.recall_refused}</span>` : '';
-      // the stars of a trip that is not home yet are not known, so the cell shows the wait
-      const status = ready ? `<span class="chip warn pulse">${U.office.pending}</span>` : `<span class="muted">⏳ ${r1(left)} ${U.report.days}</span>${refused}`;
-      const acts = ready ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>` : recallBtn;
-      const place = d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].place_name;
-      return `<div class="outrow pend">
-        <b>${placeYear(d)}</b><span class="pend-place" title="${esc(place)}">${esc(place)}</span><span class="pend-staff" title="${esc(staffName(D, d.spec.staffId))}">${staffLink(d.spec.staffId)}</span><span class="pend-status">${status}</span>${acts}
+    const away = new Set(out.map((d) => d.spec.staffId));
+    const trips = out.map((d) => ({ id: d.spec.staffId, d, state: d.readyDay <= today ? 'pending' : 'away', until: d.readyDay }));
+    const here = hiredIds().filter((id) => id !== S.secretary && !away.has(id));
+    const resting = here.filter((id) => S.staff[id].restUntil > today)
+      .map((id) => ({ id, state: 'resting', until: S.staff[id].restUntil }))
+      .sort((a, b) => a.until - b.until);
+    const standby = here.filter((id) => !(S.staff[id].restUntil > today)).map((id) => ({ id, state: 'ready' }));
+    const roster = [...standby, ...trips, ...resting];
+    if (!roster.length) return '';
+    const pg = listbox.paginate('pending', roster);
+    const maxDays = D.get('config.ui.staff_status_max_days');
+    const rows = pg.shown.map(({ id, d, state, until }) => {
+      const countdown = state === 'away' || state === 'resting';
+      const remaining = countdown ? until - today : 0;
+      const percent = countdown ? r1(100 * Math.min(remaining, maxDays) / maxDays) : 100;
+      const time = countdown ? `${r1(remaining)} ${U.report.days}` : '';
+      const label = state === 'ready' ? U.office.standby : U.office[state];
+      const status = state === 'pending' ? `<span class="chip warn pulse">${esc(label)}</span>`
+        : `<span class="pend-status">${esc(label)}${time ? ' · ' + esc(time) : ''}</span>`;
+      const action = state === 'pending' ? `<button class="primary alert" data-act="claim" data-id="${d.id}">${U.office.claim}</button>`
+        : state !== 'away' ? '' : d.recallRefused ? `<span class="chip warn">${U.office.recall_refused}</span>`
+          : `<button data-act="recall" data-id="${d.id}"${tip(U.office.recall_tip)}>${U.office.recall}</button>`;
+      const place = d ? `${placeYear(d)} · ${d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].place_name}` : '';
+      const progress = state === 'pending' ? '' : `<div class="pend-progress" ${countdown
+        ? `role="progressbar" aria-label="${esc(label)}" aria-valuenow="${percent}" aria-valuetext="${esc(time)}"`
+        : 'aria-hidden="true"'}><i style="width:${percent}%"></i></div>`;
+      return `<div class="pend pend-${state}" data-staff="${esc(id)}">
+        <div class="pend-person"><span class="pend-staff" title="${esc(staffName(D, id))}">${staffLink(id)}</span>${place ? `<span class="pend-place" title="${esc(place)}">${esc(place)}</span>` : ''}</div>
+        <div class="pend-meta">${status}${action}</div>${progress}
       </div>`;
     });
-    return `<div class="sec" id="home-pending">${U.office.on_road} (${out.length})</div>
+    return `<div class="sec" id="home-pending">${esc(U.office.staff_status)}</div>
       ${pg.html}<div class="pendgrid">${rows.join('')}</div>`;
   }
 
@@ -721,7 +736,8 @@ export function createUI(D, ctx, DEV = false) {
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
       </tbody></table>
-      <p class="muted">${U.light.note}</p>`;
+      <p class="muted">${U.light.note}</p>
+      ${echoHtml(cur.echo ?? ctx.backend.echoOf(cur))}`;
   }
 
   // A recalled trip has no ending to read. It says where it stopped and what came back.
@@ -1013,7 +1029,7 @@ export function createUI(D, ctx, DEV = false) {
     fixForm();
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
-      ${pendingHtml()}
+      <div id="home-staff-panel">${staffStatusHtml()}</div>
       <div class="sec" id="home-map">${U.dispatch.era}</div>
       ${worldMap.html()}
       ${officeHtml()}`;
@@ -1478,7 +1494,13 @@ export function createUI(D, ctx, DEV = false) {
     // Redrawing the page replaces the box someone is typing in and loses the cursor, so the page waits while a field has the focus.
     const ae = document.activeElement;
     const typing = !!ae && view.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName);
-    if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !typing) render(true);
+    if (st.tab === 'home' && !typing) {
+      if (fresh.length || ctx.S().clock.auto || transit) render(true);
+      else {
+        const panel = document.getElementById('home-staff-panel');
+        if (panel) setHtml(panel, staffStatusHtml());
+      }
+    }
     setHtml(resEl, resHtml());
   }
   createHeaderLines(D, document.getElementById('quote')).start();

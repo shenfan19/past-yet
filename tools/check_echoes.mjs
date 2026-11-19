@@ -21,20 +21,27 @@ for (const lang of Object.keys(base.get('config.i18n.locales'))) {
     const eraId = event.era || event.id;
     const person = owners.get(event.id);
     const dispatch = { id: 'd1', eraId, light: !event.era, spec: { staffId, seed: 1 }, report: {} };
-    const choices = Object.values(definitions).filter((quote) => quote.tier && quote.person === person);
-    for (const [tier, stars] of [['full', backend.maxStars(eraId)], ['none', 0]]) {
-      const selected = backend.echoOf({ ...dispatch, stars });
-      if (!choices.length) {
-        assert.equal(selected, null, `${lang}: ${event.id} must not borrow an unrelated echo`);
-        continue;
-      }
-      assert.equal(definitions[selected]?.person, person, `${lang}: ${event.id} ${tier} echo owner`);
-      if (choices.some((quote) => quote.tier === tier)) assert.equal(definitions[selected].tier, tier);
-      assert.ok(text[selected]?.quote && text[selected].occasion && definitions[selected].said);
-      assert.match(echoSources(data, definitions[selected].sources, escapeHtml), /<details class="echo-sources">/);
+    const max = backend.maxStars(eraId);
+    const outcomes = [
+      ...Array.from({ length: max + 1 }, (_, stars) => ({ stars, report: {} })),
+      { stars: 0, report: { outcomeId: 'desync' } },
+      { stars: 0, report: { journey: { accepted: false } } },
+    ];
+    for (const outcome of outcomes) {
+      const trip = { ...dispatch, ...outcome };
+      const tier = backend.echoTier(trip);
+      const location = `${lang}: ${event.id} ${tier}`;
+      const selected = backend.echoOf(trip);
+      const quote = definitions[selected];
+      assert.ok(person && quote, `${location} needs a sourced echo`);
+      assert.equal(quote.person, person, `${location} echo owner`);
+      if (tier === 'full' || tier === 'none') assert.equal(quote.tier, tier, `${location} required tier`);
+      assert.ok(text[selected]?.who && text[selected].quote && text[selected].occasion && quote.said, location);
+      assert.match(echoSources(data, quote.sources, escapeHtml), /<details class="echo-sources">/, location);
       verified++;
     }
     assert.equal(backend.echoOf({ ...dispatch, recalled: true }), null);
+    assert.equal(backend.echoOf({ ...dispatch, evacuation: { day: 1 } }), null);
   }
-  console.log(`${lang}: ${verified} live full/zero-star settlements with sourced echoes checked`);
+  console.log(`${lang}: ${verified} live settlement outcomes with sourced echoes checked`);
 }

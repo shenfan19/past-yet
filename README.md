@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Version 0.10.0, the first release. Forty six stories are open, each holding a moment of history or mending a regret in a branch; more are added release by release.
+Version 0.11.1 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
 
 ## Run
 

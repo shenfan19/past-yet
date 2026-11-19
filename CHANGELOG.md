@@ -1,9 +1,21 @@
 # Changelog
 
-## Unreleased
+## 0.11.1, 2026-11-19
 
-- The game is renamed The Past Is Yet to Come, in Chinese 白露未晞, from the line of the Book of Songs, Jian Jia, where the white dew on the reeds is not yet dry. Saves, language and settings stay under the keys they had, so a game in progress carries on.
-- A new logo: a slanted red heart, the same heart as Life Matters and Care for You, with the two hands of a clock in it. It is one svg drawn in the top bar, on the share card and as the page icon, and it works in play.html too.
+- Travel and rest bars use the same seven-day scale. Longer countdowns stay full until seven days remain, while the label shows the actual time left.
+- Share cards have a larger logo and title, plus a short description of the game in all seven interface languages.
+- All 57 playable stories now have sourced historical echoes for both full-star and zero-star results. Related historical quotations credit the recorded speaker or author.
+
+## 0.11.0, 2026-11-19
+
+- The game is now The Past Is Yet to Come (白露未晞), with a heart-and-clock logo and rotating literary lines beside the title. The interface supports English, Simplified Chinese, Traditional Chinese, French, Spanish, Japanese and Korean. The title lines include links to their sources where applicable.
+- The catalogue now has 57 playable stories. All five goals in the opening Sun Yat-sen University story are ways to help. A missed goal costs that star, and the trip continues. Antiques use the same reward rules as other stories.
+- The home page shows who is travelling, resting or on standby. Blue travel and amber rest bars shrink as time passes, and standby is green. The date, pause and automatic dispatch controls sit with funds and time energy.
+- Employee records show the total stars earned across stories. Every 30 stars awards an attribute point.
+- Reports put the outcome and rewards first and keep the full record one click away. The expanded record scrolls without being redrawn by the game clock. Featured echoes in reports and share cards come from sourced historical speech. Employee dialogue appears in the trip record.
+- The encyclopedia has translated tags, clearer source credits and readable source links in dark mode. Entries with AI assistance show a short notice when they have no sources to list.
+- Auto mode remembers when you unlock an antique, including one that started locked or was locked by hand. You can transfer it to the research institute on the first attempt.
+- Older saves are upgraded on load where possible. About explains what early updates may mean for saves and shows the three latest version entries.
 
 ## 0.10.0, 2026-11-18
 

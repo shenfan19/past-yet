@@ -89,7 +89,8 @@ export function createWiki(X) {
         const original = Q[id].said && Q[id].said !== q.quote ? `<div class="muted small">${esc(Q[id].said)}</div>` : '';
         return `<li><div class="q">${U.fmt.quote.replace('{x}', esc(q.quote))}</div>${original}<div class="muted small">${esc(cite)}${echoSources(D, Q[id].sources, esc)}</div></li>`;
       });
-      return `<div class="sec">${esc(U.enc.quotes_title)}</div><ul class="quotelist">${rows.join('')}</ul>`;
+      const title = mine.some((id) => Q[id].contextual) ? U.enc.context_echoes : U.enc.quotes_title;
+      return `<div class="sec">${esc(title)}</div><ul class="quotelist">${rows.join('')}</ul>`;
     };
     for (const e of sec('people')) {
       const evs = e.events || [];

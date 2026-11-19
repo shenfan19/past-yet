@@ -1,7 +1,7 @@
 meta:
   app: The Past Is Yet to Come
-  version: 0.10.0
-  released: '2026-11-17'
+  version: 0.11.1
+  released: '2026-11-19'
   card_authors: [AI, Fan Shen]
   links:
     author: https://github.com/shenfan19
@@ -176,6 +176,7 @@ ui:
   # A report opened again, or a reader who asks for less motion, sees it all at once.
   settle: {step_ms: 320, item_ms: 380, echo_pause_ms: 500, echo_ms: 1100}
   refresh_ms: 500
+  staff_status_max_days: 7
   # a return shows a note this many seconds before it fades; the reports wait on the home page
   toast_seconds: 8
   timeline_max: 9
@@ -306,7 +307,7 @@ share:
   record_lines: 6
   # the echo of the trip, the recorded line of the person, stands in the middle band in echo_px letters on at most echo_lines lines, and the record fills what is left below it
   colors: {bg: '#f1e8d4', ink: '#2b241b', ink2: '#6b5f4d', stamp: '#b3382c', line: '#cdbf9f', qr_bg: '#f8f2e3'}
-  canvas: {w: 1200, h: 960, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 56, title_px: 30, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, echo_px: 40, echo_lines: 4}
+  canvas: {w: 1200, h: 1056, vis_y: 540, chart_h: 200, chart_gap: 40, pad: 56, border: 6, qr_size: 220, qr_quiet: 4, logo_px: 104, title_px: 56, game_label_px: 25, event_px: 46, body_px: 28, small_px: 19, line_gap: 1.4, echo_px: 40, echo_lines: 4}
 # The pressure channels of the events, and how they reach the body of the traveller (design: game_事件系统设计 sections 3 and 4 in the home folder).
 # Every number here is an uncalibrated starting value. When the traveller core is connected, the levels are tuned in a batch simulation until a traveller with all attributes 4,
 # no trait and no gear ends a stay with the main readout near target_readout at level 1, 2 and 3.

@@ -112,7 +112,7 @@ export function storyReport(people) {
   return { done, missing };
 }
 
-// The echo, 5.15 of the story outline: a quote of the person with a tier is a line the person is recorded to have said, shown at the settlement of a trip.
+// An echo is a recorded historical quotation shown at the settlement of a trip. Contextual quotes name the historical source, which can differ from the card owner.
 // It needs a tier the config knows, a check of two sources or the record of an institution, sources that exist, a date, the occasion and the words in every story language,
 // and the words in the language of the original. A quote without a tier is a plain line of the header and is not checked here.
 // quotes: { id: card } of one person. ctx: { id, langs, tiers, refIds }. Returns the tiers the person has.
@@ -135,6 +135,7 @@ export function checkEchoes(quotes, ctx, fail) {
     if (!Array.isArray(q.sources) || new Set(q.sources).size < (q.checked === 'two_sources' ? 2 : 1)) fail(`${w}: an echo needs the sources required by ${q.checked}`);
     else for (const s of q.sources) if (!ctx.refIds.has(s)) fail(`${w}: source ${s} is missing or not checked`);
     if (!/^-?\d{1,4}(-\d{2}(-\d{2})?)?$/.test(String(q.date))) fail(`${w} needs a date as year, year-month or year-month-day`);
+    if (q.contextual !== undefined && typeof q.contextual !== 'boolean') fail(`${w}: contextual must be a boolean`);
     if (q.fit !== undefined && !isObj(q.fit)) fail(`${w}: fit must be a mapping of traits and tags`);
     for (const l of ctx.langs) {
       const t = q.text && q.text[l];
