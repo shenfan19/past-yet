@@ -105,6 +105,12 @@ const emitBinary = (rel, fromRel) => outputs.set(rel, fs.readFileSync(path.join(
 
 // ---------- shared small files ----------
 emitYaml('config.yaml', config);
+const changelog = fs.readFileSync(path.join(root, 'CHANGELOG.md'), 'utf8');
+const releases = changelog.split(/^## /m).slice(1).map(section => {
+  const [title, ...lines] = section.split(/\r?\n/);
+  return { title, notes: lines.join('\n').trim() };
+}).filter(({ title }) => /^\d/.test(title)).slice(0, 3);
+emitYaml('changelog.yaml', { releases });
 emitYaml('map.yaml', read('config/map.yaml'));
 emitYaml('shops.yaml', read('config/shops.yaml'));
 // The playlist is whatever midi files are in the music folder, so adding a piece means dropping the file in and building.
@@ -241,10 +247,21 @@ emitYaml('encyclopedia.yaml', {
 });
 
 // ---------- text, one file per language ----------
+const headerLines = read('config/header_lines.yaml');
 for (const lang of LANGS) {
   const text = {};
   const partialDir = `text/${lang}`;
   for (const f of yamlFiles(partialDir)) Object.assign(text, merge(text, read(`${partialDir}/${f}`)));
+  (text.ui ||= {}).header_lines = Object.entries(headerLines.lines).map(([id, entry]) => {
+    const line = entry.text?.[lang];
+    if (typeof line !== 'string' || !line.trim()) fail(`header line ${id}: missing text for ${lang}`);
+    if (!entry.source) return { line };
+    const citation = headerLines.sources[entry.source];
+    const source = citation?.title?.[lang];
+    if (!source) fail(`header line ${id}: missing source title for ${lang}`);
+    if (!/^https:\/\//.test(citation?.url)) fail(`header line ${id}: source needs an HTTPS URL`);
+    return { line, source, url: citation?.url };
+  });
   const put = (section, list, pick) => {
     for (const c of list) {
       const t = c.text && c.text[lang];

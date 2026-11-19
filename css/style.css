@@ -66,11 +66,16 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .logo { display: inline-block; width: 40px; height: 40px; flex: none; }
 .logo img { display: block; width: 100%; height: 100%; }
 #top h1 { font-size: 20px; }
+#top .brand-version { font: 600 12px/1.2 system-ui, sans-serif; color: var(--ink2); white-space: nowrap; }
 #subtitle { font-size: 12px; color: var(--ink2); letter-spacing: .08em; }
 #lang { margin-left: 8px; }
 #header-tools { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .about { max-width: 760px; }
 .about-version { font-size: 22px; line-height: 1.35; font-weight: 700; }
+.release-notes { margin: 8px 0; }
+.release-notes section + section { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 8px; }
+.release-notes h4 { margin: 0 0 4px; }
+.release-notes pre { margin: 4px 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
 .about h3 { margin: 24px 0 10px; padding-bottom: 4px; font-size: 17px; font-weight: 700; letter-spacing: .06em; border-bottom: 2px solid var(--line); }
 .about h3::before { content: ''; display: inline-block; width: 4px; height: 1em; background: var(--stamp); margin-right: 8px; vertical-align: -2px; border-radius: 2px; }
 .jumps { margin: 10px 0 12px; padding: 8px 10px; background: var(--paper2); border-radius: 4px; line-height: 1.9; }
@@ -293,8 +298,9 @@ ul.stages li.dim { color: var(--ink2); }
 .settings h4 { margin: 18px 0 4px; font-family: "Noto Serif SC", serif; }
 .settings input[type=range] { width: 160px; accent-color: var(--stamp); }
 .share canvas { width: 100%; max-width: 960px; height: auto; border: 1px solid var(--line); border-radius: 6px; display: block; }
-#quote { flex: 1 1 160px; min-width: 0; max-height: 2.9em; overflow: hidden; font: italic 13px/1.45 "Noto Serif SC", serif; color: var(--ink2); transition: opacity .6s; }
+#quote { flex: 1 1 160px; min-width: 0; font: italic 13px/1.45 "Noto Serif SC", serif; color: var(--ink2); overflow-wrap: anywhere; transition: opacity .6s; }
 #quote.fade { opacity: 0; }
+#quote .quote-source { display: inline-block; max-width: 100%; color: var(--link); font-size: 12px; font-style: normal; text-decoration: underline dotted; }
 #clock { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
 #clock .chipwrap:empty { display: none; }
 #clock .ctl { display: flex; align-items: center; gap: 8px; }
@@ -306,7 +312,7 @@ ul.stages li.dim { color: var(--ink2); }
 #tabs .navbtns { display: inline-flex; gap: 2px; margin-right: 10px; }
 #tabs .navbtns button { min-width: 0; padding: 4px 10px; font-size: 13px; }
 @media (max-width: 560px) { #tabs button { flex: 1 1 0; min-width: 0; padding: 4px 4px; } #tabs .tx { display: none; } }
-@media (max-width: 760px) { #quote { display: none; } }
+@media (max-width: 760px) { #quote { order: 1; flex: 1 0 100%; } }
 
 /* the dispatch desk: story, who goes, what they carry */
 .cols3 { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 14px; margin-top: 14px; }
@@ -526,6 +532,10 @@ svg.map .night path { fill: #0d1b3d; opacity: .3; pointer-events: none; filter: 
 .echo-sources { margin-top: 6px; overflow-wrap: anywhere; }
 .echo-sources summary { cursor: pointer; }
 .echo-sources ul { text-align: start; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .echo-sources a[href] { color: var(--link); }
+}
+:root[data-theme="dark"] .echo-sources a[href] { color: var(--link); }
 .settle.moving { cursor: pointer; }
 .settle.moving .settlerows li { opacity: 0; animation: settle-in var(--item) ease-out forwards; animation-delay: calc(var(--i) * var(--step) - var(--gone)); }
 .settle.moving .echo { opacity: 0; animation: echo-in var(--echo) cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: calc(var(--echo-at) - var(--gone)); }

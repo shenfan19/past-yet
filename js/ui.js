@@ -7,7 +7,7 @@ import { createListbox } from './listbox.js';
 import { createOffice } from './office.js';
 import { createSettingsPage } from './settings_ui.js';
 import { createShare } from './share.js';
-import { createQuotes, echoSources } from './quotes.js';
+import { createHeaderLines, echoSources } from './quotes.js';
 import { chosenLocale, localeTag } from './language.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -46,7 +46,10 @@ export function createUI(D, ctx, DEV = false) {
   const logoUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.get('logo'));
   document.getElementById('logo').innerHTML = `<img src="${logoUrl}" alt="">`;
   document.querySelector('link[rel=icon]').href = logoUrl;
-  document.getElementById('title').textContent = U.title;
+  const versionLabel = document.createElement('span');
+  versionLabel.className = 'brand-version';
+  versionLabel.textContent = 'v' + D.get('config.meta.version');
+  document.getElementById('title').replaceChildren(U.title, ' ', versionLabel);
   document.getElementById('subtitle').textContent = U.subtitle;
 
   const st = { chartOff: new Set(), tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null, settled: {} };
@@ -201,17 +204,16 @@ export function createUI(D, ctx, DEV = false) {
   const echoDate = (iso) => isoDateLabel(D, iso);
   // The echo, 5.15 of the story outline: the recorded line of the person, large, with who said it, when and where in small letters below.
   // When the words were said in another language than the page, the words as said follow in small letters.
-  const echoHtml = (qid, cls = 'echo') => {
+  const echoHtml = (qid) => {
     const q = qid && T.quotes[qid];
     const Q = qid && D.get('quotes.quotes')[qid];
-    if (!q || !Q) return '';
+    if (!q || !Q?.tier || !Q.sources?.length) return '';
     const said = Q.said && Q.original !== D.lang && Q.said !== q.quote ? `<div class="echosaid">${esc(Q.said)}</div>` : '';
-    return `<figure class="${cls}"><blockquote>${U.fmt.quote.replace('{x}', esc(q.quote))}</blockquote>${said}<figcaption>${esc(U.report.echo_cite.replace('{who}', q.who).replace('{date}', echoDate(Q.date)).replace('{occasion}', q.occasion))}${echoSources(D, Q.sources, esc)}</figcaption></figure>`;
+    return `<figure class="echo"><blockquote>${U.fmt.quote.replace('{x}', esc(q.quote))}</blockquote>${said}<figcaption>${esc(U.report.echo_cite.replace('{who}', q.who).replace('{date}', echoDate(Q.date)).replace('{occasion}', q.occasion))}${echoSources(D, Q.sources, esc)}</figcaption></figure>`;
   };
   // The settlement at the head of a report, its summary: the stars one row each, what the trip brought and cost, the shift of the timeline, then the echo.
   // The record waits folded below, and the line the employee says on coming back is in it, at the return.
-  // The rows come in one after another the first time a report is opened in a session. The clock of the page draws the page again and again, so each row
-  // is given a negative delay for the time already gone, and the motion goes on where it was instead of starting over. A click on it shows it all at once.
+  // When an action redraws the report, the rows resume their animation at the elapsed time. A click on the settlement shows it all at once.
   const settleHtml = (cur, S) => {
     const C = D.get('config.ui.settle');
     const rows = [];
@@ -225,16 +227,14 @@ export function createUI(D, ctx, DEV = false) {
     // the shift of the timeline comes in after the rows as one more of them, and the echo last
     const shift = S.shift ? `<li class="shiftrow" style="--i:${rows.length}">${S.shift}</li>` : '';
     const n = rows.length + (shift ? 1 : 0);
-    const qid = cur.echo ?? ctx.backend.echoOf(cur);
-    const words = qid ? '' : ctx.backend.sayingOf(cur);
-    const echo = echoHtml(qid) || (words ? `<figure class="echo"><blockquote>${U.fmt.quote.replace('{x}', esc(words))}</blockquote><figcaption>${staffLink(cur.spec.staffId)}</figcaption></figure>` : '');
+    const echo = echoHtml(cur.echo ?? ctx.backend.echoOf(cur));
     const now = Date.now();
     if (!(cur.id in st.settled)) st.settled[cur.id] = now;
     const gone = now - st.settled[cur.id];
     const total = n * C.step_ms + C.echo_pause_ms + C.echo_ms;
     const moving = gone < total;
-    const style = `--step:${C.step_ms}ms;--item:${C.item_ms}ms;--echo-at:${n * C.step_ms + C.echo_pause_ms}ms;--echo:${C.echo_ms}ms;--gone:${gone}ms`;
-    return `<section class="settle${moving ? ' moving' : ''}" style="${style}" data-act="settleskip" data-id="${cur.id}">
+    const animation = moving ? ` style="--step:${C.step_ms}ms;--item:${C.item_ms}ms;--echo-at:${n * C.step_ms + C.echo_pause_ms}ms;--echo:${C.echo_ms}ms;--gone:${gone}ms"` : '';
+    return `<section class="settle${moving ? ' moving' : ''}"${animation} data-act="settleskip" data-id="${cur.id}">
       <div class="sec">${U.report.accounts}</div>
       <ul class="settlerows">${rows.map((r, i) => r.replace('<li class="', `<li style="--i:${i}" class="`)).join('')}${shift}</ul>${echo}</section>`;
   };
@@ -311,6 +311,7 @@ export function createUI(D, ctx, DEV = false) {
       st.cart = o.cart || {};
       st.sort = o.sort || {};
       Object.assign(st.wiki, o.wiki);
+      if (!Object.hasOwn(T.tags, st.wiki.tag)) st.wiki.tag = '';
       Object.assign(st.map, o.map);
       if (o.form && visibleEras().includes(o.form.eraId) && hiredIds().includes(o.form.staffId)) st.form = { ...st.form, ...o.form };
       st.scrollY = o.scrollY || {};
@@ -593,7 +594,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${Object.keys(ctx.backend.pressureOf(id).base).length ? `<div class="muted">${U.dispatch.pressure}${COLON}${esc(pressureText(ctx.backend.pressureOf(id).base))}</div><p class="muted">${U.dispatch.pressure_hint}</p>` : ''}
-      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.guard ? '◇' : p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret || ev.scene.star_rules === 2 ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
+      ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.guard ? '◇' : p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret || ev.scene.points.some((p) => p.guard) ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
       <p class="muted" style="margin-top:8px">${esc(travelTime(ev.era && ctx.era(ev.era) ? ctx.backend.eraStay(ev.era) : ctx.backend.lightStay(id)))} · ${esc(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story)}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
 
@@ -994,12 +995,16 @@ export function createUI(D, ctx, DEV = false) {
       return `<p>${h}</p>`;
     };
     const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
-    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('')}`).join('');
-    const jumps = A.sections.map((sec, i) => `<a class="wl" data-act="aboutjump" data-id="about-${i}">${esc(sec.h)}</a>`).join(' · ');
+    const preview = `<h4>${esc(A.preview.title)}</h4>${para(A.preview.project)}${para(A.preview.changes)}`;
+    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('')}${sec.preview ? preview : ''}`).join('');
+    const jumps = jumpBar([...A.sections.map((sec, i) => ['about-' + i, sec.h]), ['about-updates', A.update_notes]]);
+    const releases = `<div class="release-notes">${D.get('changelog.releases').map(({ title, notes }) =>
+      `<section><h4>${esc(title)}</h4><pre>${esc(notes)}</pre></section>`).join('')}</div>`;
     return `<div class="about">
       <div class="about-version">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div>
-      <p class="jumps">${jumps}</p>
-      ${secs}</div>`;
+      ${jumps}
+      ${secs}
+      <h3 id="about-updates">${esc(A.update_notes)}</h3>${releases}</div>`;
   }
 
   // ---------- home ----------
@@ -1175,7 +1180,8 @@ export function createUI(D, ctx, DEV = false) {
     const d = share.dispatch(m.id);
     return d ? `<div class="mbox">${share.html(d)}</div>` : '';
   }
-  function renderModal() {
+  function renderModal(fromTick) {
+    if (fromTick === true && st.modal?.kind === 'report') return;
     const inner = modalBody();
     // only a pop-up the game forces open stops the clock, see config.clock.hold_modals; one the player opens leaves it running
     if (inner && D.get('config.clock.hold_modals').includes(st.modal.kind)) office.holdClock(); else office.releaseClock();
@@ -1211,7 +1217,7 @@ export function createUI(D, ctx, DEV = false) {
     renderTabs();
     const html = { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
     const key = st.tab;
-    if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(); return; }
+    if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(true); return; }
     viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
     const keeps = {};
@@ -1228,7 +1234,7 @@ export function createUI(D, ctx, DEV = false) {
     st.lastKey = key;
     navCommit();
     renderTabs();
-    renderModal();
+    renderModal(fromTick);
     if (keep) { const el = document.getElementById(keep.id); if (el) { el.focus(); try { el.setSelectionRange(keep.a, keep.b); } catch (e) { /* number inputs have no selection */ } } }
   }
 
@@ -1472,8 +1478,7 @@ export function createUI(D, ctx, DEV = false) {
     if ((fresh.length || ctx.S().clock.auto || transit) && st.tab === 'home' && !typing) render(true);
     setHtml(resEl, resHtml());
   }
-  const quotes = createQuotes(D, document.getElementById('quote'));
-  quotes.start();
+  createHeaderLines(D, document.getElementById('quote')).start();
   const musicEl = document.getElementById('music');
   function renderMusic() {
     const a = ctx.audio;

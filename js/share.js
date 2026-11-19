@@ -32,7 +32,8 @@ export function createShare(X) {
     const id = d.echo ?? ctx.backend.echoOf(d);
     const q = id && T.quotes[id];
     const Q = id && D.get('quotes.quotes')[id];
-    return q && Q ? { quote: U.fmt.quote.replace('{x}', q.quote), cite: U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q.date)).replace('{occasion}', q.occasion) } : null;
+    if (!q || !Q?.tier || !Q.sources?.length) return null;
+    return { quote: U.fmt.quote.replace('{x}', q.quote), cite: U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q.date)).replace('{occasion}', q.occasion) };
   };
   function parts(d) {
     const R = d.report;

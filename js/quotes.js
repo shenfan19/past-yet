@@ -1,8 +1,7 @@
-// A line from a scientist or a historian in the header, changed at random intervals. The pieces are the quotes sections of the person cards in cards/people.
-export function createQuotes(D, el) {
+// Title lines are separate from the historical quotes and echoes.
+export function createHeaderLines(D, el) {
   const Q = D.get('config.ui.quote');
-  // an echo, a quote with a tier, is kept for the settlement of a trip and for the page of its person, so the header does not give it away
-  const list = Object.entries(D.get('text.quotes')).filter(([id]) => !D.get('quotes.quotes')[id]?.tier).map(([, q]) => q);
+  const list = D.get('text.ui.header_lines');
   let last = -1;
   let timer = null;
   const wait = () => (Q.interval_min_s + Math.random() * (Q.interval_max_s - Q.interval_min_s)) * 1000;
@@ -10,16 +9,24 @@ export function createQuotes(D, el) {
     let i;
     do { i = Math.floor(Math.random() * list.length); } while (list.length > 1 && i === last);
     last = i;
-    const q = list[i];
+    const { line, source, url } = list[i];
     el.classList.add('fade');
     setTimeout(() => {
-      el.textContent = `${q.quote} · ${q.who}`;
-      el.title = `${q.quote} · ${q.who}`;
+      el.textContent = line;
+      if (source) {
+        const citation = document.createElement('a');
+        citation.className = 'quote-source';
+        citation.href = url;
+        citation.target = '_blank';
+        citation.rel = 'noopener noreferrer';
+        citation.textContent = `— ${source}`;
+        el.append(' ', citation);
+      }
       el.classList.remove('fade');
     }, Q.fade_ms);
   }
   function next() {
-    if (!document.hidden) show();
+    if (!document.hidden && !el.contains(document.activeElement)) show();
     timer = setTimeout(next, wait());
   }
   return {

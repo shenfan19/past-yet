@@ -5,7 +5,9 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { loadData } from '../js/data.js';
+import { createLocalBackend } from '../js/backend.js';
 import { tagNames } from '../js/sim.js';
+import { createWiki } from '../js/wiki.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
@@ -27,6 +29,18 @@ const events = D.get('catalog.events');
 const cfg = D.get('config');
 const attrs = D.get('staff.attributes');
 const jobs = new Set(Object.values(staff).flatMap((s) => s.jobs));
+
+// Audit the wiki registry used by the interface, including draft eras and dev-only articles.
+const T = D.get('text');
+const backend = createLocalBackend(D);
+const wiki = createWiki({ D, T, U: T.ui, DEV: true, ctx: { era: backend.eraInfo } });
+const wikiTags = new Set(wiki.articles().flatMap((article) => article.tags || []));
+for (const data of [D, DZ]) {
+  const labels = data.get('text.tags');
+  for (const tag of wikiTags) {
+    if (typeof labels[tag] !== 'string' || !labels[tag].trim()) err(`wiki tag ${tag}: missing label in ${data.lang}`);
+  }
+}
 
 // point kinds: every kind a scene or an era model asks for, and which traits give or cost it
 const sceneEvents = events.filter((e) => e.scene);
@@ -190,10 +204,10 @@ for (const e of events) {
   if (e.scene?.points?.some((p) => p.guard && p.redeem)) err(`event ${e.id}: a point cannot be both guard and redeem`);
   if (e.scene?.points?.some((p) => p.guard) && !v2) err(`event ${e.id}: guard points need star_rules 2`);
   if (v2) {
-    // one to five stars by the weight of the story: a story of one star has a fulfil point only, one of three or more holds at least one recorded event
+    // A one-star story only has a fulfil point. Outside the starter, stories with three or more stars hold at least one recorded event.
     const nPts = e.scene.points.length, nGuard = e.scene.points.filter((p) => p.guard).length;
     if (nPts === 1 && nGuard) err(`event ${e.id}: a story of one star has a fulfil point, not a guard point`);
-    if (nPts >= 3 && !nGuard) err(`event ${e.id}: a story of ${nPts} stars needs at least one guard point`);
+    if (nPts >= 3 && !nGuard && !e.start) err(`event ${e.id}: a story of ${nPts} stars needs at least one guard point`);
     // a story of guarding only holds history as it was; it needs two stars at least, since one missed guard would leave it nothing
     if (nGuard === nPts && nPts < 2) err(`event ${e.id}: a story of guarding only has two stars at least`);
     // remarks: every key is tags joined by + or else, every tag one a person can have, and remark_on names a point of the scene
@@ -233,7 +247,7 @@ for (const id of cfg.eras) {
   const pts = raw.star_points, nG = pts.filter((p) => p.guard).length;
   if (!cfg.stars.counts.includes(pts.length)) err(`model ${id}: ${pts.length} star points, the tables know ${cfg.stars.counts}`);
   if (pts.length === 1 && nG) err(`model ${id}: a story of one star has a fulfil point`);
-  if (pts.length >= 3 && !nG) err(`model ${id}: a story of ${pts.length} stars needs at least one guard point`);
+  if (pts.length >= 3 && !nG && !events.some((e) => e.era === id && e.start)) err(`model ${id}: a story of ${pts.length} stars needs at least one guard point`);
   if (nG === pts.length && pts.length < 2) err(`model ${id}: a story of guarding only has two stars at least`);
   for (const p of pts.filter((x) => x.guard && typeof x.day !== 'number')) err(`model ${id}: guard point ${p.id} needs a day of the stay`);
   for (const lang of ['en', 'zh']) {

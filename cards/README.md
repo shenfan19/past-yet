@@ -69,7 +69,7 @@ wiki:                    # the wiki cards and sources only this person uses
   model_events: {<id>: card}
   refs: {<id>: card}
 antiques: {<id>: card}   # antiques made by hand
-quotes: {<id>: card}     # the recorded words of the person: a plain quote is a line for the header, a quote with a tier is an echo
+quotes: {<id>: card}     # the recorded words of the person: a quote with a tier is an echo
 era_text:                # the text of the era model, in every language
   en: ...
   zh: ...

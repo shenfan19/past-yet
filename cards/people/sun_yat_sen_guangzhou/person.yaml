@@ -23,7 +23,7 @@ events:
         - {id: p1, kind: persuade, req: {"stat":{"wit":5}}}
         - {id: p2, kind: trust, req: {"stat":{"luck":5}}}
         - {id: p3, kind: hold, req: {"stat":{"will":5}}}
-        - {id: p4, kind: notice, guard: true, day: 137, req: {"stat":{"finesse":5}}}
+        - {id: p4, kind: notice, req: {"stat":{"finesse":5}}}
         - {id: p5, kind: endure, req: {"stat":{"constitution":5}}}
       vignettes:
         - {id: slips, traits: [methodical, vigil]}
@@ -41,13 +41,13 @@ events:
           p1: 'Study widely: before registration opens, have the office post the notice of enrolment outside the city too, so students from beyond the walls are in time'
           p2: 'Enquire carefully: before the first preparatory meeting, go round the three schools and ask in full what each lacks and where it is stuck, and hand it in as one list'
           p3: 'Think prudently: before the new campus is chosen, walk and compare the sites in the city and the open ground at Shipai, and hand the office a map'
-          p4: 'Discern clearly: sort out the lists of the graduating classes that do not agree, and keep the graduation of 21 June'
+          p4: 'Discern clearly: reconcile the three schools’ graduation lists and submit a single roster for the 21 June ceremony'
           p5: 'Practise earnestly: go out to Shipai and set the bounds of the new ground, post by post'
         points_fail:
           p1: 'In this branch the notice goes up only in the city, and students outside hear of it after registration has begun.'
           p2: 'The first preparatory meeting is held as recorded, and each school still speaks only of its own troubles, with no list that puts them together.'
           p3: 'Shipai is chosen as recorded, and the office has no sheet with the sites drawn together.'
-          p4: 'The lists of the graduates are never sorted out and the ceremony of 21 June cannot be held on its day. This branch has come loose from history, and the office recalls the employee that day.'
+          p4: 'The 21 June graduation goes ahead as recorded. The office has to work from three separate lists.'
           p5: 'The ground at Shipai is marked out only on paper as recorded, and not one post stands on it.'
         shift:
           p1:
@@ -61,6 +61,7 @@ events:
             now: 'In this branch a map of the sites and of Shipai lies beside the papers on the choice.'
           p4:
             was: '21 June 1924: Zou Lu takes up the post of president of National Guangdong University, and the graduation ceremony of the three schools is held the same day.'
+            now: 'In this branch, the office has a single checked roster for the ceremony.'
           p5:
             was: '1924: Sun Yat-sen has Zou Lu choose Shipai for the new campus, but building begins only in 1933 and the first colleges move in in the autumn of 1934. Sun dies on 12 March 1925 and never sees it.'
             now: 'In this branch, before he leaves Guangzhou in November, the bounds of the ground at Shipai already stand, post by post.'
@@ -82,13 +83,13 @@ events:
           p1: '博学：报名开始之前，建议筹备处把招生告示贴出城去，让城外的学生也赶得上'
           p2: '审问：第一次筹备会议之前，到三所学校请教，缺什么、难在哪，一样样问仔细，列成单子交上去'
           p3: '慎思：选址之前，把城里几处校址和石牌那片官地一处处走过、比过，画成图交给筹备处'
-          p4: '明辨：理清三所学校毕业班对不上的名单，护住 6 月 21 日的毕业典礼'
+          p4: '明辨：核对三所学校的毕业名单，给 6 月 21 日的毕业典礼交上一份统一名册'
           p5: '笃行：跟着去石牌，把新校地的界一根根立下去'
         points_fail:
           p1: '这条分支里，招生告示只贴在城里，城外的学生知道消息时，报名已经开始了。'
           p2: '第一次筹备会议照史实召开，三所学校的难处仍是各说各的，没有一张合在一起的单子。'
           p3: '选址照史实定在石牌，筹备处桌上没有一张把几处校址画在一起的图。'
-          p4: '三所学校的毕业名单没有理清，6 月 21 日的毕业典礼没能照期举行，这条分支与历史脱了节，事务所当天召回员工。'
+          p4: '6 月 21 日的毕业典礼照常举行，筹备处仍要分开查阅三份名单。'
           p5: '石牌的校地照史实只划在纸上，地上一根界桩也没有立。'
         shift:
           p1:
@@ -102,6 +103,7 @@ events:
             now: '这条分支里，选址的文书旁边多了一张把几处校址和石牌画在一起的图。'
           p4:
             was: '1924 年 6 月 21 日，邹鲁就任国立广东大学校长，同一天为原三所学校的毕业生举行毕业典礼。'
+            now: '这条分支里，筹备处办典礼时有了一份核对过的统一名册。'
           p5:
             was: '1924 年孙中山命邹鲁择石牌为新校址，可新校舍 1933 年才动工，1934 年秋第一批学院才迁入。孙中山 1925 年 3 月 12 日去世，生前没有见到。'
             now: '这条分支里，11 月他离开广州之前，石牌校地的界已经一根根立定。'
@@ -409,13 +411,13 @@ era_text:
       xue: 'Study widely: before registration opens, have the office post the notice of enrolment outside the city too, so students from beyond the walls are in time'
       wen: 'Enquire carefully: before the first preparatory meeting, go round the three schools and ask in full what each lacks and where it is stuck, and hand it in as one list'
       si: 'Think prudently: before the new campus is chosen, walk and compare the sites in the city and the open ground at Shipai, and hand the office a map'
-      bian: 'Discern clearly: sort out the lists of the graduating classes that do not agree, and keep the graduation of 21 June'
+      bian: 'Discern clearly: reconcile the three schools’ graduation lists and submit a single roster for the 21 June ceremony'
       xing: 'Practise earnestly: go out to Shipai and set the bounds of the new ground, post by post'
     points_fail:
       xue: 'In this branch the notice goes up only in the city, and students outside hear of it after registration has begun.'
       wen: 'The first preparatory meeting is held as recorded, and each school still speaks only of its own troubles, with no list that puts them together.'
       si: 'Shipai is chosen as recorded, and the office has no sheet with the sites drawn together.'
-      bian: 'The lists of the graduates are never sorted out and the ceremony of 21 June cannot be held on its day. This branch has come loose from history, and the office recalls the employee that day.'
+      bian: 'The 21 June graduation goes ahead as recorded. The office has to work from three separate lists.'
       xing: 'The ground at Shipai is marked out only on paper as recorded, and not one post stands on it.'
     shift:
       xue:
@@ -429,6 +431,7 @@ era_text:
         now: 'In this branch a map of the sites and of Shipai lies beside the papers on the choice.'
       bian:
         was: '21 June 1924: Zou Lu takes up the post of president of National Guangdong University, and the graduation ceremony of the three schools is held the same day.'
+        now: 'In this branch, the office has a single checked roster for the ceremony.'
       xing:
         was: '1924: Sun Yat-sen has Zou Lu choose Shipai for the new campus, but building begins only in 1933 and the first colleges move in in the autumn of 1934. Sun dies on 12 March 1925 and never sees it.'
         now: 'In this branch, before he leaves Guangzhou in November, the bounds of the ground at Shipai already stand, post by post.'
@@ -521,7 +524,7 @@ era_text:
     hints:
       low_luck: 'Enquire carefully reads luck. Without enough of it the employee never catches the old teachers with time to talk.'
       low_wit: 'Study widely reads wit. Without enough of it nobody thinks of posting the notice outside the city. A cyborg neural chip helps.'
-      low_finesse: 'Discern clearly reads finesse. Without enough of it the lists of three schools stay tangled. It is the guard star: missed, the employee is sent back.'
+      low_finesse: 'Discern clearly reads finesse. Without enough of it the office has to work from three separate graduation lists.'
       low_will: 'Think prudently reads will. Without enough of it the employee chooses before walking every site. A cyborg bionic lung helps.'
       low_constitution: 'Practise earnestly reads constitution. Without enough of it the employee cannot walk to Shipai and set the posts. A cyborg bionic lung helps.'
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -650,13 +653,13 @@ era_text:
       xue: '博学：报名开始之前，建议筹备处把招生告示贴出城去，让城外的学生也赶得上'
       wen: '审问：第一次筹备会议之前，到三所学校请教，缺什么、难在哪，一样样问仔细，列成单子交上去'
       si: '慎思：选址之前，把城里几处校址和石牌那片官地一处处走过、比过，画成图交给筹备处'
-      bian: '明辨：理清三所学校毕业班对不上的名单，护住 6 月 21 日的毕业典礼'
+      bian: '明辨：核对三所学校的毕业名单，给 6 月 21 日的毕业典礼交上一份统一名册'
       xing: '笃行：跟着去石牌，把新校地的界一根根立下去'
     points_fail:
       xue: '这条分支里，招生告示只贴在城里，城外的学生知道消息时，报名已经开始了。'
       wen: '第一次筹备会议照史实召开，三所学校的难处仍是各说各的，没有一张合在一起的单子。'
       si: '选址照史实定在石牌，筹备处桌上没有一张把几处校址画在一起的图。'
-      bian: '三所学校的毕业名单没有理清，6 月 21 日的毕业典礼没能照期举行，这条分支与历史脱了节，事务所当天召回员工。'
+      bian: '6 月 21 日的毕业典礼照常举行，筹备处仍要分开查阅三份名单。'
       xing: '石牌的校地照史实只划在纸上，地上一根界桩也没有立。'
     shift:
       xue:
@@ -670,6 +673,7 @@ era_text:
         now: '这条分支里，选址的文书旁边多了一张把几处校址和石牌画在一起的图。'
       bian:
         was: '1924 年 6 月 21 日，邹鲁就任国立广东大学校长，同一天为原三所学校的毕业生举行毕业典礼。'
+        now: '这条分支里，筹备处办典礼时有了一份核对过的统一名册。'
       xing:
         was: '1924 年孙中山命邹鲁择石牌为新校址，可新校舍 1933 年才动工，1934 年秋第一批学院才迁入。孙中山 1925 年 3 月 12 日去世，生前没有见到。'
         now: '这条分支里，11 月他离开广州之前，石牌校地的界已经一根根立定。'
@@ -762,7 +766,7 @@ era_text:
     hints:
       low_luck: '审问看幸运，运气不够，赶不上老先生们有空细谈的时候。'
       low_wit: '博学看聪慧，聪慧不够，想不到把告示贴出城去。义体智能芯片能补。'
-      low_finesse: '明辨看灵巧，灵巧不够，理不开三所学校的名单。这是守护星，没做到会被送回。'
+      low_finesse: '明辨看灵巧。灵巧不够，筹备处就只能分开查阅三所学校的毕业名单。'
       low_will: '慎思看意志，意志不够，沉不住气把每处校址走完再比。义体仿生肺能补。'
       low_constitution: '笃行看体质，体质不够，走不到石牌、立不起界桩。义体仿生肺能补。'
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

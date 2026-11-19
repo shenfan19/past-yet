@@ -208,7 +208,20 @@ try {
   await page.waitForSelector('[data-act=claim]');
   ok('ready report puts a badge on the home tab', (await page.locator('#tabs [data-tab=home] .badge').count()) === 1);
   await page.click('[data-act=claim]');
+  await page.locator('#modal .recordbtn').click();
   await page.waitForSelector('.tl');
+  const reportKeepsScroll = await page.evaluate(() => {
+    const backdrop = document.querySelector('#modal .modalbg');
+    const originalOffset = backdrop.scrollTop;
+    backdrop.scrollTop = 100;
+    const offset = backdrop.scrollTop;
+    window.__game.ui.render(true);
+    const current = document.querySelector('#modal .modalbg');
+    const stable = offset > 0 && backdrop === current && current.scrollTop === offset;
+    current.scrollTop = originalOffset;
+    return stable;
+  });
+  ok('background redraws keep the expanded report scroll container and position', reportKeepsScroll);
   ok('the report lists three sync points and the stars are the ones hit', await page.evaluate(() => { const hit = document.querySelectorAll('.sync li.hit').length; return document.querySelectorAll('.sync li').length === 3 && document.querySelector('.stars') && document.querySelector('.stars').classList.contains('s' + hit); }));
   ok('the milestone lines of the points are highlighted in the timeline', (await page.locator('.tl li.star').count()) === (await page.locator('.sync li.hit:not(.bonus)').count()) + (await page.locator('.sync li.lost').count()));
   await page.screenshot({ path: path.join(outDir, '4_report.png'), fullPage: true });
