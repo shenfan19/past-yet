@@ -297,7 +297,8 @@ ul.stages li.dim { color: var(--ink2); }
 .settings .sctl { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .settings h4 { margin: 18px 0 4px; font-family: "Noto Serif SC", serif; }
 .settings input[type=range] { width: 160px; accent-color: var(--stamp); }
-.share canvas { width: 100%; max-width: 960px; height: auto; border: 1px solid var(--line); border-radius: 6px; display: block; }
+.share canvas { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
+.share-actions { margin: 12px 0; }
 #quote { flex: 1 1 160px; min-width: 0; font: italic 13px/1.45 "Noto Serif SC", serif; color: var(--ink2); overflow-wrap: anywhere; transition: opacity .6s; }
 #quote.fade { opacity: 0; }
 #quote .quote-source { display: inline-block; max-width: 100%; color: var(--link); font-size: 12px; font-style: normal; text-decoration: underline dotted; }
@@ -388,7 +389,7 @@ body.modal-open { overflow: hidden; }
 .mbox { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
 .mbox.wide .desk .lbox { height: 300px; }
 .mclose { position: absolute; top: 8px; right: 8px; z-index: 2; }
-.share canvas { width: 100%; max-width: 760px; height: auto; border: 1px solid var(--line); }
+.mwrap:has(.sharebox) { width: min(560px, 100%); }
 
 /* one row is one line in the lists, and the two groups of tabs of the agency page */
 .nowrap { white-space: nowrap; }

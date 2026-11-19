@@ -1194,7 +1194,7 @@ export function createUI(D, ctx, DEV = false) {
     if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
     if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;
     const d = share.dispatch(m.id);
-    return d ? `<div class="mbox">${share.html(d)}</div>` : '';
+    return d ? `<div class="mbox sharebox">${share.html(d)}</div>` : '';
   }
   function renderModal(fromTick) {
     if (fromTick === true && st.modal?.kind === 'report') return;

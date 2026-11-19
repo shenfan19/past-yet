@@ -1,5 +1,4 @@
-// The share card of one finished trip, shown in a pop-up over the page. It is drawn on a canvas from the record of the report: the line of the employee,
-// how it ended, and a few lines of the record, the deeds that won a star, the lines written for this employee and the history around them. No curves and no tables.
+// The portrait share card shows the outcome, historical echo and a short selection from the report.
 // The site address and a QR code from a matrix shipped with the game are on it. Nothing is uploaded and no outside service is asked.
 import { staffName, isoDateLabel } from './narrate.js';
 
@@ -9,48 +8,49 @@ export function createShare(X) {
   const C = D.get('config.share');
   const CV = C.canvas;
   const QR = D.get('share_qr');
+  const englishTitle = D.get('config.meta.app');
+  const localTitle = H.card_title === englishTitle ? '' : H.card_title;
   const logo = new Image();
   logo.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.get('logo'));
 
   const dispatch = (id) => ctx.S().dispatches.find((d) => d.id === id);
-  const hookOf = (n) => H.hooks[n % H.hooks.length];
 
   // The lines of the record the card keeps: every line that won a star, then the lines written for this employee, then the lines of history by importance,
   // up to config.share.record_lines, told in the order they happened.
   function pickLines(timeline) {
     const N = C.record_lines;
     const rank = (t) => (t.star ? 0 : t.own ? 1 : t.tag === 'history' ? 2 : 3);
-    const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => rank(t) < 3)
+    const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => t.kind !== 'remark' && rank(t) < 3)
       .sort((a, b) => rank(a.t) - rank(b.t) || (b.t.importance || 0) - (a.t.importance || 0) || a.i - b.i).slice(0, N).sort((a, b) => a.i - b.i);
     return chosen.map(({ t }) => ({ text: t.text, star: !!t.star, history: t.tag === 'history' }));
   }
-  // what the card says about a trip: its name, how it ended, the story told in a few lines, and the hook
-  // the line the employee says, as the report shows it under the title
-  const said = (d) => { const x = ctx.backend.sayingOf(d); return x ? [U.fmt.quote.replace('{x}', x) + ' ' + U.fmt.dash + staffName(D, d.spec.staffId)] : []; };
   // the echo of a trip, 5.15 of the story outline: the recorded line of the person and who said it, when and where
   const echoOf = (d) => {
     const id = d.echo ?? ctx.backend.echoOf(d);
     const q = id && T.quotes[id];
     const Q = id && D.get('quotes.quotes')[id];
     if (!q || !Q?.tier || !Q.sources?.length) return null;
-    return { quote: U.fmt.quote.replace('{x}', q.quote), cite: U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q.date)).replace('{occasion}', q.occasion) };
+    const occasion = q.occasion.replace(
+      /\s*(?:[（(]\s*(?:game translation|本游戏译文?|本遊戲譯文?)\s*[）)]|[;；。·.]\s*(?:game translation|本游戏译文?|本遊戲譯文?))\s*[。.]?\s*$/iu, '',
+    );
+    const cite = U.report.echo_cite.replace('{who}', q.who).replace('{date}', isoDateLabel(D, Q.date)).replace('{occasion}', occasion);
+    return { quote: U.fmt.quote.replace('{x}', q.quote), cite };
   };
   function parts(d) {
     const R = d.report;
     const who = staffName(D, d.spec.staffId);
-    const index = ctx.S().dispatches.indexOf(d);
     if (d.evacuation) return {
       name: d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name,
       outcome: U.report.evacuated,
       text: [U.report.evacuation_text.replace('{day}', String(d.evacuation.day))],
-      points: [], hook: hookOf(index),
+      points: [],
     };
     if (R.journey?.accepted === false) return {
       name: d.light ? T.catalog[d.eraId].name : T.eras[d.eraId].name,
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
       text: [U.report.participation.share_missed.replace('{staff}', who)],
       echo: echoOf(d),
-      points: [], hook: hookOf(index),
+      points: [],
     };
     if (d.light) {
       const c = T.catalog[d.eraId];
@@ -59,48 +59,84 @@ export function createShare(X) {
       return {
         name: c.name,
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
-        text: R.timeline ? said(d) : [...said(d), U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
+        text: R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
         lines: R.timeline ? pickLines(R.timeline) : null,
         echo: echoOf(d),
-        points: R.points.map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
-        hook: hookOf(index),
+        points: R.timeline ? [] : (R.points || []).map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
       };
     }
     return {
       name: T.eras[d.eraId].name,
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
-      text: [...said(d), R.summary],
-      lines: pickLines(R.timeline),
+      text: R.summary ? [R.summary] : [],
+      lines: pickLines(R.timeline || []),
       echo: echoOf(d),
-      hook: hookOf(index),
     };
   }
-  const caption = (d) => { const p = parts(d); return [H.card_title + ' · ' + H.game_label + '.', H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome), ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text, ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), p.hook, QR.url].join(' '); };
+  function starsOf(d) {
+    const won = d.stars || 0;
+    return '★'.repeat(won) + '☆'.repeat(Math.max(0, ctx.backend.maxStars(d.eraId) - won));
+  }
+
+  const caption = (d) => {
+    const p = parts(d);
+    const brand = [localTitle, englishTitle].filter(Boolean).join(' · ');
+    const outcome = H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome);
+    const result = [outcome, starsOf(d)].filter(Boolean).join('\n');
+    return [brand, H.description, result, ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text,
+      ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), QR.url].join('\n\n');
+  };
 
   // the pop-up body: the card and what can be done with it
   function html(d) {
     return `<div class="share">
       <h3>${esc(H.title)}</h3>
       <p class="muted">${esc(H.intro)}</p>
-      <canvas id="sharecanvas" width="${CV.w}" height="${CV.h}" aria-label="${esc(caption(d))}"></canvas>
-      <div class="row" style="margin:12px 0"><button class="primary" data-act="sharesave">${esc(H.save)}</button><button data-act="sharecopy">${esc(H.copy)}</button>${navigator.share ? `<button data-act="sharenative">${esc(H.send)}</button>` : ''}<span class="muted" id="sharemsg"></span></div>
+      <div class="row share-actions"><button class="primary" data-act="sharesave">${esc(H.save)}</button><button data-act="sharecopy">${esc(H.copy)}</button>${navigator.share ? `<button data-act="sharenative">${esc(H.send)}</button>` : ''}<span class="muted" id="sharemsg"></span></div>
+      <canvas id="sharecanvas" width="${CV.w}" height="${CV.min_h}" aria-label="${esc(caption(d))}"></canvas>
     </div>`;
   }
 
-  // CJK characters break anywhere, other text breaks between words
-  function wrap(g, text, maxW) {
-    const tokens = text.match(/[　-〿぀-ヿ㐀-鿿＀-￯]|[^\s　-〿぀-ヿ㐀-鿿＀-￯]+\s*/g) || [];
+  // Keep words together where possible, with character wrapping for CJK and oversized words.
+  function wrap(g, text, width) {
+    const tokens = text.match(/[（《「『【]*[\u3000-\u30ff\u3400-\u9fff\uff00-\uffef][、。，；：！？）》」』】]*|[^\s\u3000-\u30ff\u3400-\u9fff\uff00-\uffef]+|\s+/gu) || [];
     const lines = [];
     let line = '';
-    for (const t of tokens) {
-      // closing punctuation never starts a line
-      if (line && !/^[，。！？；：、）」』”,.!?;:)]/.test(t) && g.measureText((line + t).trimEnd()).width > maxW) { lines.push(line.trimEnd()); line = t.trimStart(); } else line += t;
+    for (const token of tokens) {
+      const next = (line + token).trimEnd();
+      if (line && g.measureText(next).width > width) {
+        lines.push(line.trimEnd());
+        line = '';
+      }
+      if (g.measureText(token).width > width) {
+        for (const char of token) {
+          if (line && g.measureText(line + char).width > width) {
+            lines.push(line);
+            line = '';
+          }
+          line += char;
+        }
+      } else {
+        line += line ? token : token.trimStart();
+      }
     }
-    if (line) lines.push(line.trimEnd());
+    if (line.trimEnd()) lines.push(line.trimEnd());
     return lines;
   }
-  // at most n lines, the last one ending in an ellipsis when something was left out
-  const cut = (lines, n) => (lines.length <= n ? lines : [...lines.slice(0, n - 1), lines[n - 1].replace(/[\s，。,.;；、]*$/, '') + '…']);
+
+  function drawQR(g, x, y) {
+    const { qr_size: size, qr_quiet: quiet } = CV;
+    const cells = QR.rows.length + quiet * 2;
+    const edge = (n) => Math.round((n + quiet) * size / cells);
+    g.fillStyle = C.colors.qr_bg;
+    g.fillRect(x, y, size, size);
+    g.fillStyle = C.colors.ink;
+    QR.rows.forEach((row, r) => {
+      for (let c = 0; c < row.length; c++) {
+        if (row[c] === '1') g.fillRect(x + edge(c), y + edge(r), edge(c + 1) - edge(c), edge(r + 1) - edge(r));
+      }
+    });
+  }
 
   function draw(d) {
     const cv = document.getElementById('sharecanvas');
@@ -108,104 +144,169 @@ export function createShare(X) {
     const g = cv.getContext('2d');
     const K = C.colors;
     const p = parts(d);
-    const serif = '"Noto Serif SC", "Songti SC", SimSun, serif';
+    const serif = '"Noto Serif SC", "Songti SC", SimSun, Georgia, serif';
     const sans = '"Segoe UI", "Microsoft YaHei", system-ui, sans-serif';
-    g.fillStyle = K.bg; g.fillRect(0, 0, CV.w, CV.h);
-    g.strokeStyle = K.stamp; g.lineWidth = CV.border; g.strokeRect(CV.border / 2, CV.border / 2, CV.w - CV.border, CV.h - CV.border);
+    const { w, min_h: minHeight, max_h: maxHeight, pad, logo_px: logoSize } = CV;
+    const width = w - 2 * pad;
+    const center = w / 2;
+    const rows = [];
+    const lineHeight = (size) => Math.ceil(size * CV.line_gap);
+    let y = pad;
 
-    // Draw the title and game label alongside the logo, clear of the QR code.
-    const qrX = CV.w - CV.pad - CV.qr_size;
-    const L = CV.logo_px;
-    if (logo.complete && logo.naturalWidth) g.drawImage(logo, CV.pad, CV.pad, L, L);
-    else logo.addEventListener('load', () => draw(d), { once: true });
-    const brandX = CV.pad + L + 20;
-    const brandW = qrX - brandX - 24;
-    const titleY = CV.pad + L / 2 + (CV.title_px - CV.game_label_px) / 2;
-    g.textAlign = 'left'; g.textBaseline = 'alphabetic';
-    g.fillStyle = K.ink; g.font = `700 ${CV.title_px}px ${serif}`;
-    g.fillText(H.card_title, brandX, titleY, brandW);
-    g.fillStyle = K.ink2; g.font = `600 ${CV.game_label_px}px ${sans}`;
-    g.fillText(H.game_label, brandX, titleY + CV.game_label_px + 9, brandW);
-
-    // text column on the left, the QR code on the right
-    const colW = qrX - CV.pad - 40;
-    let y = CV.pad + L + 56;
-    g.fillStyle = K.ink; g.font = `700 ${CV.event_px}px ${serif}`;
-    for (const l of cut(wrap(g, p.name, colW), 2)) { g.fillText(l, CV.pad, y); y += CV.event_px * CV.line_gap; }
-    g.fillStyle = K.stamp; g.font = `700 ${CV.body_px}px ${sans}`;
-    // the empty stars are those the place has and this trip did not win; a place may have from one to five
-    const stars = '★'.repeat(d.stars || 0) + '☆'.repeat(Math.max(0, ctx.backend.maxStars(d.eraId) - (d.stars || 0)));
-    g.fillText(`${p.outcome}  ${stars}`, CV.pad, y); y += CV.body_px * CV.line_gap + 6;
-    g.fillStyle = K.ink; g.font = `400 ${CV.body_px - 2}px ${sans}`;
-    const room = Math.floor((CV.vis_y - 50 - y) / ((CV.body_px - 2) * CV.line_gap));
-    const body = [];
-    for (const t of p.text) body.push(...wrap(g, t, colW));
-    for (const l of cut(body, Math.max(2, room))) { g.fillText(l, CV.pad, y); y += (CV.body_px - 2) * CV.line_gap; }
-
-    // QR code with its quiet zone, then the address
-    const rows = QR.rows;
-    const cells = rows.length + CV.qr_quiet * 2;
-    const qrY = CV.pad + 8;
-    g.fillStyle = K.qr_bg; g.fillRect(qrX, qrY, CV.qr_size, CV.qr_size);
-    g.fillStyle = K.ink;
-    for (let r = 0; r < rows.length; r++) {
-      for (let c = 0; c < rows[r].length; c++) {
-        if (rows[r][c] !== '1') continue;
-        const x0 = Math.round(((c + CV.qr_quiet) * CV.qr_size) / cells);
-        const y0 = Math.round(((r + CV.qr_quiet) * CV.qr_size) / cells);
-        g.fillRect(qrX + x0, qrY + y0, Math.round(((c + CV.qr_quiet + 1) * CV.qr_size) / cells) - x0, Math.round(((r + CV.qr_quiet + 1) * CV.qr_size) / cells) - y0);
+    function text(value, { size, face = sans, weight = 400, color = K.ink, x = pad, max = width, align = 'left', limit = Infinity } = {}) {
+      if (!value) return;
+      const font = `${weight} ${size}px ${face}`;
+      g.font = font;
+      const lines = wrap(g, value, max);
+      if (lines.length > limit) {
+        lines.length = limit;
+        const last = Array.from(lines[limit - 1].replace(/[\s,.，。]+$/u, ''));
+        while (last.length && g.measureText(last.join('').trimEnd() + '…').width > max) last.pop();
+        lines[limit - 1] = last.join('').trimEnd() + '…';
+      }
+      for (const line of lines) {
+        rows.push({ line, font, color, x, y: y + size, align });
+        y += lineHeight(size);
       }
     }
-    g.fillStyle = K.ink; g.font = `600 ${CV.small_px + 2}px ${sans}`; g.textAlign = 'center';
-    g.fillText(QR.url.replace(/^https?:\/\//, ''), qrX + CV.qr_size / 2, qrY + CV.qr_size + CV.small_px + 14);
-    g.textAlign = 'left';
 
-    // the middle band: a few lines of the record, the ones that won a star marked; a report written before it kept a record shows its sync points
-    const vy = CV.vis_y;
-    let py = vy + 30;
-    const bandEnd = CV.h - CV.pad - 140;
-    // the echo first, the recorded line of the person, large and centred, who said it below; the record fills the band under it
+    const qrX = w - pad - CV.qr_size;
+    const titleX = pad + logoSize + 20;
+    const titleSpace = { x: titleX, max: qrX - titleX - 26 };
+    if (localTitle) text(localTitle, { ...titleSpace, size: 39, face: serif, weight: 700 });
+    else y += 8;
+    text(englishTitle, { ...titleSpace, size: CV.title_px, face: serif, weight: 700 });
+    text(H.description, { ...titleSpace, size: CV.description_px, color: K.ink2 });
+    const brandEnd = y;
+    y = pad + CV.qr_size + 10;
+    text(new URL(QR.url).hostname, {
+      x: qrX + CV.qr_size / 2, max: CV.qr_size + 24, align: 'center', size: 20, weight: 700, color: K.ink2,
+    });
+    y = Math.max(y, brandEnd);
+
+    const eventStart = rows.length;
+    y += 39;
+    text(p.name, { size: CV.event_px, face: serif, weight: 700, limit: 2 });
+    const rating = [starsOf(d), p.outcome].filter(Boolean).join(' · ');
+    text(rating, { size: CV.body_px, weight: 700, color: K.stamp, limit: 2 });
+
+    const echoStart = rows.length;
+    let echoPanel;
     if (p.echo) {
-      g.textAlign = 'center';
-      g.fillStyle = K.ink; g.font = `700 ${CV.echo_px}px ${serif}`;
-      py += CV.echo_px * 0.4;
-      for (const l of cut(wrap(g, p.echo.quote, CV.w - CV.pad * 4), CV.echo_lines)) { g.fillText(l, CV.w / 2, py); py += CV.echo_px * CV.line_gap; }
-      g.fillStyle = K.ink2; g.font = `400 ${CV.small_px + 2}px ${sans}`;
-      g.fillText(p.echo.cite, CV.w / 2, py, CV.w - CV.pad * 2); py += (CV.small_px + 2) * CV.line_gap + 18;
-      g.textAlign = 'left';
-    }
-    if (p.lines) {
-      g.font = `400 ${CV.body_px - 2}px ${sans}`;
-      for (const l of p.lines) {
-        if (py > bandEnd) break;
-        g.fillStyle = l.star ? K.stamp : l.history ? K.ink2 : K.ink;
-        for (const [i, t] of cut(wrap(g, (l.star ? '★ ' : '') + l.text, CV.w - CV.pad * 2), 2).entries()) { g.fillText(i ? '    ' + t : t, CV.pad, py); py += (CV.body_px - 2) * CV.line_gap; }
-        py += 6;
+      const top = y + 26;
+      y = top + 22;
+      const hero = { x: center, max: width - 72, align: 'center' };
+      let size = CV.echo_px;
+      while (size > CV.echo_min_px) {
+        g.font = `700 ${size}px ${serif}`;
+        if (wrap(g, p.echo.quote, hero.max).length <= 3) break;
+        size = Math.max(CV.echo_min_px, size - 6);
       }
-    } else {
-      g.font = `400 ${CV.body_px}px ${sans}`;
-      for (const pt of p.points || []) {
-        if (py > bandEnd) break;
-        g.fillStyle = pt.hit ? K.stamp : K.ink2;
-        const mark = pt.redeem ? (pt.hit ? '♥' : '♡') : (pt.hit ? '★' : '☆');
-        for (const [i, l] of cut(wrap(g, `${mark} ${pt.text}`, CV.w - CV.pad * 2), 2).entries()) { g.fillText(i ? '    ' + l : l, CV.pad, py); py += CV.body_px * CV.line_gap; }
-        py += 6;
-      }
+      text(p.echo.quote, { ...hero, size, face: serif, weight: 700, limit: 4 });
+      y += 12;
+      text(p.echo.cite, { ...hero, size: CV.small_px + 2, color: K.ink2, limit: 2 });
+      y += 18;
+      echoPanel = { top, height: y - top };
     }
 
-    // the hook and the disclaimer sit along the bottom
-    g.strokeStyle = K.line; g.lineWidth = 2;
-    g.font = `italic 400 ${CV.body_px - 2}px ${serif}`;
-    const hook = cut(wrap(g, p.hook, CV.w - CV.pad * 2), 2);
-    g.font = `400 ${CV.small_px}px ${sans}`;
-    const lines = wrap(g, H.disclaimer, CV.w - CV.pad * 2);
-    const dy = CV.h - CV.pad + 8 - lines.length * CV.small_px * CV.line_gap;
-    g.beginPath(); g.moveTo(CV.pad, dy - CV.small_px * 1.4); g.lineTo(CV.w - CV.pad, dy - CV.small_px * 1.4); g.stroke();
-    g.fillStyle = K.ink2; g.font = `italic 400 ${CV.body_px - 2}px ${serif}`;
-    hook.forEach((l, i) => g.fillText(l, CV.pad, dy - CV.small_px * 1.4 - 14 - (hook.length - 1 - i) * (CV.body_px - 2) * CV.line_gap));
-    g.font = `400 ${CV.small_px}px ${sans}`;
-    lines.forEach((l, i) => g.fillText(l, CV.pad, dy + i * CV.small_px * CV.line_gap));
+    const bodyStart = rows.length;
+    const record = p.lines
+      ? p.lines.map((line) => ({
+        value: (line.star ? '★ ' : '') + line.text,
+        color: line.star ? K.stamp : line.history ? K.ink2 : K.ink,
+        priority: line.star ? 0 : line.history ? 2 : 1,
+      }))
+      : (p.points || []).filter((pt) => pt.text).map((pt) => ({
+        value: `${pt.redeem ? (pt.hit ? '♥' : '♡') : (pt.hit ? '★' : '☆')} ${pt.text}`,
+        color: pt.hit ? K.stamp : K.ink2,
+        priority: pt.hit ? 0 : 1,
+      }));
+    const disclaimerSize = CV.small_px - 2;
+    const disclaimerLimit = 2;
+    const footerGap = 33;
+    const footerInset = 18;
+    const excerptGap = 8;
+    g.font = `400 ${disclaimerSize}px ${sans}`;
+    const disclaimerHeight = lineHeight(disclaimerSize) * Math.min(disclaimerLimit, wrap(g, H.disclaimer, width).length);
+    const recordEnd = maxHeight - pad - disclaimerHeight - footerInset - footerGap - excerptGap;
+    const bodyStep = lineHeight(CV.body_px);
+    if (p.text.length || record.length) y += echoPanel ? 27 : 38;
+    for (const value of p.text) {
+      const room = Math.floor((recordEnd - y) / bodyStep);
+      if (room < 1) break;
+      text(value, { size: CV.body_px, limit: Math.min(room, record.length ? 2 : 4) });
+      y += excerptGap;
+    }
+    // Fit up to four excerpts within the height limit, choosing star entries first and printing them in order.
+    const ranked = record.map((entry, index) => ({ ...entry, index }))
+      .sort((a, b) => a.priority - b.priority).slice(0, 4);
+    const selected = [];
+    let room = recordEnd - y;
+    g.font = `400 ${CV.body_px}px ${sans}`;
+    for (const entry of ranked) {
+      const available = Math.floor(room / bodyStep);
+      if (available < 1) break;
+      const lines = Math.min(2, wrap(g, entry.value, width).length);
+      if (lines > available && entry.priority > 0) continue;
+      const limit = Math.min(lines, available);
+      selected.push({ ...entry, limit });
+      room -= limit * bodyStep + excerptGap;
+    }
+    for (const { value, color, limit } of selected.sort((a, b) => a.index - b.index)) {
+      text(value, { size: CV.body_px, color, limit });
+      y += excerptGap;
+    }
+
+    const footerStart = rows.length;
+    const footerY = y + footerGap;
+    y = footerY + footerInset;
+    text(H.disclaimer, { size: disclaimerSize, color: K.ink2, limit: disclaimerLimit });
+    const height = Math.max(minHeight, y + pad);
+    const extra = height - y - pad;
+    // Sparse cards share the breathing room between sections and keep their footer near the text.
+    const footerSpace = Math.min(42, Math.round(extra / 4));
+    const bodyOffset = extra - footerSpace;
+    const eventOffset = Math.round(bodyOffset * (p.echo ? 0.32 : 0.55));
+    const echoOffset = Math.round(bodyOffset * 0.68);
+
+    if (cv.height !== height) cv.height = height;
+    g.fillStyle = K.bg;
+    g.fillRect(0, 0, w, height);
+    g.strokeStyle = K.stamp;
+    g.lineWidth = CV.border;
+    g.strokeRect(CV.border / 2, CV.border / 2, w - CV.border, height - CV.border);
+    if (echoPanel) {
+      g.beginPath();
+      g.roundRect(pad, echoPanel.top + echoOffset, width, echoPanel.height, 16);
+      g.fillStyle = K.echo_bg;
+      g.fill();
+      g.strokeStyle = K.echo_line;
+      g.lineWidth = 2;
+      g.stroke();
+    }
+    g.strokeStyle = K.line;
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(pad, footerY + extra); g.lineTo(w - pad, footerY + extra);
+    g.stroke();
+
+    if (logo.complete && logo.naturalWidth) g.drawImage(logo, pad, pad, logoSize, logoSize);
+    else logo.addEventListener('load', () => {
+      if (document.getElementById('sharecanvas') === cv) draw(d);
+    }, { once: true });
+
+    g.textBaseline = 'alphabetic';
+    rows.forEach(({ line, font, color, x, y: rowY, align }, i) => {
+      g.font = font;
+      g.fillStyle = color;
+      g.textAlign = align;
+      const offset = i >= footerStart ? extra : i >= bodyStart ? bodyOffset
+        : i >= echoStart ? echoOffset : i >= eventStart ? eventOffset : 0;
+      g.fillText(line, x, rowY + offset);
+    });
+    drawQR(g, qrX, pad);
   }
+
 
   function save() {
     const cv = document.getElementById('sharecanvas');
