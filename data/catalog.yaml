@@ -14046,30 +14046,35 @@ events:
       - sysu_founding_museum
       - sysu_news_lectures
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            any:
-              - trait:
-                  - bold
-              - stat:
-                  constitution: 6
-        - id: p2
-          kind: notice
+          kind: persuade
           req:
             stat:
               wit: 5
+        - id: p2
+          kind: trust
+          req:
+            stat:
+              luck: 5
         - id: p3
           kind: hold
           req:
-            any:
-              - trait:
-                  - patient
-                  - methodical
-                  - vigil
-              - stat:
-                  will: 6
+            stat:
+              will: 5
+        - id: p4
+          kind: notice
+          guard: true
+          day: 137
+          req:
+            stat:
+              finesse: 5
+        - id: p5
+          kind: endure
+          req:
+            stat:
+              constitution: 5
       vignettes:
         - id: slips
           traits:

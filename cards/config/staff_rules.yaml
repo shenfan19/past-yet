@@ -27,6 +27,11 @@ stats:
   - homesick_trait
   - hurt
   - infect
+  - wit_level
+  - constitution_level
+  - finesse_level
+  - will_level
+  - luck_level
 derive:
   stamina: {from: constitution, scale: 0.1, offset: 0.5}
   skill: {from: wit, scale: 0.08, offset: 0}
@@ -37,6 +42,12 @@ derive:
   hurt: {from: will, scale: -0.08, offset: 0.6}
   kindness: {offset: 0.2}
   infect: {from: constitution, scale: -0.2, offset: 1}
+  # the five attributes as they stand on the trip, with implants and mood, for a point that asks only whether an attribute is over a line
+  wit_level: {from: wit, scale: 1, offset: 0}
+  constitution_level: {from: constitution, scale: 1, offset: 0}
+  finesse_level: {from: finesse, scale: 1, offset: 0}
+  will_level: {from: will, scale: 1, offset: 0}
+  luck_level: {from: luck, scale: 1, offset: 0}
 # What a point that asks for a woman or a man sees: a trans woman is a woman, a trans man is a man, another gender is its own.
 gender_class: {f: f, m: m, tf: f, tm: m, x: x}
 # What a scene can ask of a person beyond the five attributes: the tags. They are worked out from the card, nothing is entered by hand.

@@ -109,7 +109,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // the same for a trip whose full report is gone: the words kept in its summary, or the catchphrase for its stamp
   const sayingOfTrip = (t) => t.quote || staffSaying(D, t.staffId, t.stamp, t.id);
   const sayingOf = (d) => (!d.light && d.report?.journey?.accepted !== false && d.report?.quote) || staffSaying(D, d.spec.staffId, stampOf(d), d.id);
-  const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
+  // the stars of a place: those of its full model, also when it is asked by the event the model stands at, else the points of the small story
+  const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); if (e?.era && info[e.era]) return info[e.era].raw.star_points.length; return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => { const e = lightEvent(eventId); return officeStay(D, e.stay || L.stay_by_tier[e.tier]); };
   const namedIn = (req, id) => Object.entries(req || {}).some(([k, v]) => (k === 'item' && v === id) || (k === 'any' && v.some((r) => namedIn(r, id))));

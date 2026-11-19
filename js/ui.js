@@ -556,7 +556,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       ${Object.keys(ctx.backend.pressureOf(id).base).length ? `<div class="muted">${U.dispatch.pressure}${COLON}${esc(pressureText(ctx.backend.pressureOf(id).base))}</div><p class="muted">${U.dispatch.pressure_hint}</p>` : ''}
       ${ev.scene ? `<div class="sec">${U.stars.points}</div><ul class="sync">${ev.scene.points.map((p) => `<li>${p.guard ? '◇' : p.redeem ? '♡' : '☆'} ${esc(c.points[p.id])}${reqHint(p.req)}</li>`).join('')}</ul>${ev.regret || ev.scene.star_rules === 2 ? `<p class="muted">${U.stars.regret_note}</p>` : ''}<p class="muted">${U.dispatch.scene_hint}</p>` : ''}
-      <p class="muted" style="margin-top:8px">${esc(travelTime(ctx.backend.lightStay(id)))} · ${esc(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story)}</p>${own ? tripsHtml(id) : ''}</div></div>`;
+      <p class="muted" style="margin-top:8px">${esc(travelTime(ev.era && ctx.era(ev.era) ? ctx.backend.eraStay(ev.era) : ctx.backend.lightStay(id)))} · ${esc(ev.scene ? U.dispatch.scene_note : U.dispatch.small_story)}</p>${own ? tripsHtml(id) : ''}</div></div>`;
   }
 
   // ---------- home: the dispatch desk under the map ----------

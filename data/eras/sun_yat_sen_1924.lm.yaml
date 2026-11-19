@@ -7,7 +7,7 @@ metadata:
     method: Daily-scale difference equations, 6-hour step. Matters that people bring to the new institution are raised until it opens, are settled at a rate that rises with the two pieces of groundwork the traveller can do, the merged records and the known sites, and lapse when nobody answers. One agent, the traveller, picks one piece of work each step.
     limitations: 'The matters are a count, not named people, and every rate is a game assumption. The recorded dates are not part of the model: they are written on their days whatever the traveller does.'
     problem: Guangzhou from February to September 1924. Sun Yat-sen orders three schools joined into one university and Zou Lu prepares it, while on Sundays Sun lectures in the hall of the Higher Normal School and the notes of the lectures go back and forth to become a book. What can one visitor do in the seven months before classes begin?
-    result: Where the records of the three schools are one book and the scattered sites are drawn on one sheet, fewer matters lapse before the opening. The recorded dates happen on their days whatever the traveller does, and the traveller leaves eighteen days before classes begin.
+    result: Where the records of the three schools are one book and the scattered sites are drawn on one sheet, fewer matters lapse before the opening. The traveller is asked into the preparatory office as an adviser and does five things for the founding, one for each word of the motto. The recorded dates happen on their days whatever the traveller does, and the traveller leaves eighteen days before classes begin.
   name: sun_yat_sen_1924
   status: released
   tags:
@@ -602,6 +602,68 @@ variables:
     unit: fraction
     source: game_assumption
     note: How much of the sites the traveller has to have walked to draw a map worth handing in.
+  enrol_day:
+    type: parameter
+    value: 135
+    unit: day
+    source: historical
+    note: 10 June 1924, registration for the preparatory classes opens. Fact f20.
+  grad_day:
+    type: parameter
+    value: 146
+    unit: day
+    source: historical
+    note: 21 June 1924, the graduation ceremony of the three schools. Fact f21.
+  a_wit:
+    type: parameter
+    value: 4
+    from_staff: wit_level
+    source: game_assumption
+  a_luck:
+    type: parameter
+    value: 4
+    from_staff: luck_level
+    source: game_assumption
+  a_will:
+    type: parameter
+    value: 4
+    from_staff: will_level
+    source: game_assumption
+  a_finesse:
+    type: parameter
+    value: 4
+    from_staff: finesse_level
+    source: game_assumption
+  a_constitution:
+    type: parameter
+    value: 4
+    from_staff: constitution_level
+    source: game_assumption
+  line_xue:
+    type: parameter
+    value: 5
+    source: game_assumption
+    note: 'Study widely: wit.'
+  line_wen:
+    type: parameter
+    value: 5
+    source: game_assumption
+    note: 'Enquire carefully: luck, to catch the old teachers with time to talk.'
+  line_si:
+    type: parameter
+    value: 5
+    source: game_assumption
+    note: 'Think prudently: will, to walk every site before choosing.'
+  line_bian:
+    type: parameter
+    value: 5
+    source: game_assumption
+    note: 'Discern clearly: finesse, to sort the lists of three schools. The guard star.'
+  line_xing:
+    type: parameter
+    value: 5
+    source: game_assumption
+    note: 'Practise earnestly: constitution, to stake the ground at Shipai. The fewest employees reach it.'
 equations:
   matters:
     priority: 80
@@ -783,6 +845,18 @@ milestones:
     importance: 4
     tag: history
     needs_traveler: false
+  enrol_open:
+    date: '1924-06-10'
+    fact: f20
+    importance: 4
+    tag: history
+    needs_traveler: false
+  grad_ceremony:
+    date: '1924-06-21'
+    fact: f21
+    importance: 5
+    tag: history
+    needs_traveler: false
   shipai_chosen:
     when: day >= 158
     fact: f07
@@ -869,14 +943,38 @@ milestones:
           reached_far: '1'
       - when: tag.frail == 1
         key: shipai_frail
-  site_offered:
-    when: arrived == 1 and sites >= site_known and day < site_by and (ring_now == 1 or tag.trait_bold == 1)
+  adviser:
+    when: arrived == 1
+    importance: 4
+    tag: branch
+    needs_traveler: true
+    effects:
+      traveler.trust: max(traveler.trust, inner_trust)
+  wen_ask:
+    when: arrived == 1 and day >= 30 and day < early_day and a_luck >= line_wen
     importance: 5
     tag: branch
     needs_traveler: true
-    variants:
-      - when: ring_now == 0
-        key: site_offered_bold
+  xue_enrol:
+    when: arrived == 1 and day >= 133 and day < enrol_day and a_wit >= line_xue
+    importance: 5
+    tag: branch
+    needs_traveler: true
+  bian_rolls:
+    when: arrived == 1 and day >= 138 and day < grad_day and a_finesse >= line_bian
+    importance: 5
+    tag: branch
+    needs_traveler: true
+  si_site:
+    when: arrived == 1 and day >= 150 and day < site_by and a_will >= line_si
+    importance: 5
+    tag: branch
+    needs_traveler: true
+  xing_shipai:
+    when: arrived == 1 and day >= 190 and a_constitution >= line_xing
+    importance: 5
+    tag: branch
+    needs_traveler: true
   last_seat:
     date: '1924-08-24'
     importance: 5
@@ -904,12 +1002,21 @@ tag_source:
   trait: game_assumption
   param: game_assumption
 hints:
-  - when: tag.frail == 1
-    key: frail
-    point: site
-  - when: has_compass == 0
-    key: empty
-    point: site
+  - when: a_luck < line_wen
+    key: low_luck
+    point: wen
+  - when: a_wit < line_xue
+    key: low_wit
+    point: xue
+  - when: a_finesse < line_bian
+    key: low_finesse
+    point: bian
+  - when: a_will < line_si
+    key: low_will
+    point: si
+  - when: a_constitution < line_xing
+    key: low_constitution
+    point: xing
   - when: 1 == 1
     key: none
 recall:
@@ -1098,13 +1205,22 @@ epilogue:
   - date: '1926-08-17'
     fact: f16
     key: renamed
+star_rules: 2
 star_points:
-  - id: site
-    kind: notice
-    milestone: site_offered
-  - id: copy
+  - id: xue
+    kind: persuade
+    milestone: xue_enrol
+  - id: wen
     kind: trust
-    milestone: copy_kept
-  - id: last
+    milestone: wen_ask
+  - id: si
     kind: hold
-    milestone: last_seat
+    milestone: si_site
+  - id: bian
+    kind: notice
+    milestone: bian_rolls
+    guard: true
+    day: 137
+  - id: xing
+    kind: endure
+    milestone: xing_shipai

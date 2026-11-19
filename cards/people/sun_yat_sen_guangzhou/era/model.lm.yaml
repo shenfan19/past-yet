@@ -1,4 +1,4 @@
-# Guangzhou, 1924. A founding: three schools are to become one university, and in the same hall a book is being made from the Sunday lectures.
+# Guangzhou, 1924. A founding: three schools are to become one university. The five stars are the five words of the motto Sun Yat-sen wrote for it, each read from one attribute of the employee.
 # This file is laid over cards/templates/founding.lm.yaml. It holds what is its own: the place, the recorded dates, the moments of the traveller, the stars and the identities.
 # Day 0 is 27 January 1924, the first of the Sunday lectures. The traveller is meant to arrive on day 8, 4 February, the day the order to join the three schools is given,
 # and the crossing may bring them a few days early or late, see travel.drift in the config. One office day is thirty historical days, so a stay of seven ends near 1 September.
@@ -22,7 +22,7 @@ metadata:
     crossroads: true
   description:
     problem: "Guangzhou from February to September 1924. Sun Yat-sen orders three schools joined into one university and Zou Lu prepares it, while on Sundays Sun lectures in the hall of the Higher Normal School and the notes of the lectures go back and forth to become a book. What can one visitor do in the seven months before classes begin?"
-    result: "Where the records of the three schools are one book and the scattered sites are drawn on one sheet, fewer matters lapse before the opening. The recorded dates happen on their days whatever the traveller does, and the traveller leaves eighteen days before classes begin."
+    result: "Where the records of the three schools are one book and the scattered sites are drawn on one sheet, fewer matters lapse before the opening. The traveller is asked into the preparatory office as an adviser and does five things for the founding, one for each word of the motto. The recorded dates happen on their days whatever the traveller does, and the traveller leaves eighteen days before classes begin."
 
 # Who a traveller can be taken for here, in the order the place prefers. Guangzhou is a port, so a face from far away is a guest and not a wonder.
 identities: [local_scholar, pen, wanderer, maker, local_hand, far_guest, lodger]
@@ -33,6 +33,19 @@ variables:
   site_by: {type: parameter, value: 158, unit: day, source: historical, note: "July 1924, when Sun Yat-sen has Zou Lu choose Shipai. Fact f07. The map has to be handed in before it."}
   site_known: {type: parameter, value: 0.5, unit: fraction, source: game_assumption, note: "How much of the sites the traveller has to have walked to draw a map worth handing in."}
   early_day: {value: 36, note: "3 March 1924, the first preparatory meeting. Fact f04."}
+  enrol_day: {type: parameter, value: 135, unit: day, source: historical, note: "10 June 1924, registration for the preparatory classes opens. Fact f20."}
+  grad_day: {type: parameter, value: 146, unit: day, source: historical, note: "21 June 1924, the graduation ceremony of the three schools. Fact f21."}
+  # the five attributes of the employee on the trip, implants and mood included, and the line each star asks of one of them
+  a_wit: {type: parameter, value: 4, from_staff: wit_level, source: game_assumption}
+  a_luck: {type: parameter, value: 4, from_staff: luck_level, source: game_assumption}
+  a_will: {type: parameter, value: 4, from_staff: will_level, source: game_assumption}
+  a_finesse: {type: parameter, value: 4, from_staff: finesse_level, source: game_assumption}
+  a_constitution: {type: parameter, value: 4, from_staff: constitution_level, source: game_assumption}
+  line_xue: {type: parameter, value: 5, source: game_assumption, note: "Study widely: wit."}
+  line_wen: {type: parameter, value: 5, source: game_assumption, note: "Enquire carefully: luck, to catch the old teachers with time to talk."}
+  line_si: {type: parameter, value: 5, source: game_assumption, note: "Think prudently: will, to walk every site before choosing."}
+  line_bian: {type: parameter, value: 5, source: game_assumption, note: "Discern clearly: finesse, to sort the lists of three schools. The guard star."}
+  line_xing: {type: parameter, value: 5, source: game_assumption, note: "Practise earnestly: constitution, to stake the ground at Shipai. The fewest employees reach it."}
   horizon_days: {value: 298}
 
 milestones:
@@ -55,6 +68,8 @@ milestones:
   lecture_apr20: {date: "1924-04-20", fact: g1, importance: 3, tag: history, needs_traveler: false}
   measures_sent: {date: "1924-06-03", fact: f05, importance: 3, tag: history, needs_traveler: false}
   measures_approved: {date: "1924-06-06", fact: f05, importance: 4, tag: history, needs_traveler: false}
+  enrol_open: {date: "1924-06-10", fact: f20, importance: 4, tag: history, needs_traveler: false}
+  grad_ceremony: {date: "1924-06-21", fact: f21, importance: 5, tag: history, needs_traveler: false}
   shipai_chosen: {when: "day >= 158", fact: f07, importance: 3, tag: history, needs_traveler: false}
   last_lecture: {date: "1924-08-24", fact: g1, importance: 5, tag: history, needs_traveler: false}
   classes_begin: {date: "1924-09-19", fact: f08, importance: 5, tag: history, needs_traveler: false}
@@ -101,16 +116,40 @@ milestones:
     variants:
       - {when: "sites >= 1", key: shipai_reached, effects: {reached_far: "1"}}
       - {when: "tag.frail == 1", key: shipai_frail}
-  # The first star. Nothing is recorded of who walked the sites before the choice of Shipai, so the branch may hold this deed of the traveller:
-  # once the office takes them in and they know the sites, they hand a map of the sites and of the open ground at Shipai to a clerk.
-  # A bold employee does not wait to be asked in and stops a clerk at the door. Whether the map counted is not said; the choice stays as it is recorded.
-  site_offered:
-    when: "arrived == 1 and sites >= site_known and day < site_by and (ring_now == 1 or tag.trait_bold == 1)"
+  # Whoever the traveller came as, the preparatory office is short of hands and asks them in as an adviser who may make suggestions. Nobody of the kind is recorded, and no real post is taken.
+  adviser:
+    when: "arrived == 1"
+    importance: 4
+    tag: branch
+    needs_traveler: true
+    effects: {traveler.trust: "max(traveler.trust, inner_trust)"}
+  # The five stars, one for each word of the motto. Each is a deed of the traveller and a suggestion handed to the office; a star asks only that one attribute is over its line.
+  # The motto itself is not touched: Sun Yat-sen writes it for the ceremony of 11 November, after the traveller has gone.
+  wen_ask:
+    when: "arrived == 1 and day >= 30 and day < early_day and a_luck >= line_wen"
     importance: 5
     tag: branch
     needs_traveler: true
-    variants:
-      - {when: "ring_now == 0", key: site_offered_bold}
+  xue_enrol:
+    when: "arrived == 1 and day >= 133 and day < enrol_day and a_wit >= line_xue"
+    importance: 5
+    tag: branch
+    needs_traveler: true
+  bian_rolls:
+    when: "arrived == 1 and day >= 138 and day < grad_day and a_finesse >= line_bian"
+    importance: 5
+    tag: branch
+    needs_traveler: true
+  si_site:
+    when: "arrived == 1 and day >= 150 and day < site_by and a_will >= line_si"
+    importance: 5
+    tag: branch
+    needs_traveler: true
+  xing_shipai:
+    when: "arrived == 1 and day >= 190 and a_constitution >= line_xing"
+    importance: 5
+    tag: branch
+    needs_traveler: true
   last_seat:
     date: "1924-08-24"
     importance: 5
@@ -119,10 +158,13 @@ milestones:
     variants:
       - {when: "tag.class_food == 1 or tag.class_trade == 1", key: last_stall}
 
-# The hints of Guangzhou point at the stars: only the first star needs walking, so only what stops the walking is said, and only when that star was missed.
+# The hints of Guangzhou point at the stars: each star asks one attribute, so the hint names it, and only when that star was missed.
 hints:
-  - {when: "tag.frail == 1", key: frail, point: site}
-  - {when: "has_compass == 0", key: empty, point: site}
+  - {when: "a_luck < line_wen", key: low_luck, point: wen}
+  - {when: "a_wit < line_xue", key: low_wit, point: xue}
+  - {when: "a_finesse < line_bian", key: low_finesse, point: bian}
+  - {when: "a_will < line_si", key: low_will, point: si}
+  - {when: "a_constitution < line_xing", key: low_constitution, point: xing}
   - {when: "1 == 1", key: none}
 
 # What is recorded long after the stay, told at the end of the record as plain dated lines. The model does not run to these days.
@@ -130,8 +172,12 @@ epilogue:
   - {date: "1925-03-12", fact: f13, key: sun_dies}
   - {date: "1926-08-17", fact: f16, key: renamed}
 
-# Three sync points. Each is a deed of the traveller: a map of the sites handed in before the choice of Shipai, a copy of the book of the lectures to take home, and being there for the last lecture.
+# Five sync points in the order of the motto: study widely, enquire carefully, think prudently, discern clearly, practise earnestly.
+# Discern clearly is the guard: missed, the graduation of 21 June does not hold and the trip falls out of sync, day 137 of the stay counted from the arrival.
+star_rules: 2
 star_points:
-  - {id: site, kind: notice, milestone: site_offered}
-  - {id: copy, kind: trust, milestone: copy_kept}
-  - {id: last, kind: hold, milestone: last_seat}
+  - {id: xue, kind: persuade, milestone: xue_enrol}
+  - {id: wen, kind: trust, milestone: wen_ask}
+  - {id: si, kind: hold, milestone: si_site}
+  - {id: bian, kind: notice, milestone: bian_rolls, guard: true, day: 137}
+  - {id: xing, kind: endure, milestone: xing_shipai}

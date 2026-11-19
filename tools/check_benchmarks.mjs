@@ -76,7 +76,8 @@ for (const [id, bm] of Object.entries(B0.benchmarks)) {
     const twice = keys.filter((k, i) => keys.indexOf(k) !== i);
     if (twice.length) segBad.push(`${r.s}: told twice ${[...new Set(twice)].join(',')}`);
     if (bm.every_segment && r.report.journey.accepted) {
-      const stay = Math.round((r.res.branch.leftDay - Math.floor(r.res.branch.arrivedDay)) / SEG);
+      // a trip that fell out of sync at a missed guard point ends there, so only the segments it lived through are counted
+      const stay = r.report.outcomeId === 'desync' ? r.report.cutStay : Math.round((r.res.branch.leftDay - Math.floor(r.res.branch.arrivedDay)) / SEG);
       const have = new Set(r.report.timeline.filter((t) => !t.after).map((t) => t.seg));
       for (let n = 1; n <= stay; n++) if (!have.has(n)) segBad.push(`${r.s}: segment ${n} is empty`);
     }
