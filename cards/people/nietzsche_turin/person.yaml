@@ -2,7 +2,8 @@ order: 147
 events:
   nietzsche_turin:
     order: 129
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1889
     date: '1889-01-01'
     stay: 1
@@ -12,75 +13,71 @@ events:
     field: philosophy
     tier: 2
     channels: {G: 2, S: 2}
-    refs: [nietzsche_turin_letter, nietzsche_turin_journey, nietzsche_turin_turin_overbeck, nietzsche_turin_estate_history]
+    refs: [nietzsche_turin_letter, nietzsche_turin_journey, nietzsche_turin_proof, nietzsche_turin_preface]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 7, req: {"any":[{"job":["nurse","archivist","translator"]},{"trait":["patient","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 8, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 7, req: {any: [{job: [nurse, archivist, translator, courier, proofreader], stat: {will: 5}}, {trait: [patient, methodical], stat: {will: 6}}]}}
+        - {id: p2, kind: hold, day: 8, req: {any: [{job: [translator, archivist, proofreader], stat: {wit: 7, will: 7}}, {trait: [scholarly, methodical], item: notebook_pen, stat: {wit: 8, will: 7}}]}}
       vignettes:
-        - {id: address, traits: [skeptical, quiet, methodical]}
-        - {id: privacy, traits: [faithful, patient, attached]}
-        - {id: horse}
+        - {id: address, traits: [skeptical, quiet, methodical], day: 4}
+        - {id: privacy, traits: [faithful, patient, attached], day: 6}
+        - {id: stairs, day: 7}
     text:
       en:
         name: 'The address on the back'
         place: "Turin"
         figure: "Friedrich Nietzsche"
-        story: 'The Basel University Library holds a letter from Nietzsche to Franz and Ida Overbeck, signed Dionysus and dated approximately 4 January 1889 in Turin. Overbeck travelled to Turin after hearing from him. The famous account involving a horse is treated as an anecdote of uncertain detail.'
+        story: 'The letter from Turin is addressed to Franz and Ida Overbeck. Nietzsche signed it Dionysus. When Franz arrives at his friend’s lodging, he finds him reading the corrected proofs of Nietzsche contra Wagner. By the time they leave Turin, someone will have to decide what goes into the case with the proofs.'
         relic: 'A duplicate luggage label'
-        relic_desc: 'A fictional label copied without reproducing private correspondence.'
+        relic_desc: 'A duplicate luggage label from the game’s timeline, with a recipient on the back.'
         points:
-          p1: 'Verify the Turin address so Overbeck can find his friend on January 8 and arrange for someone to stay with him'
-          p2: 'Leave incoming custodians a record of which manuscripts were meant for publication. Keep private letters separately with controlled access'
+          p1: 'Check the lodging address and get Overbeck to the right door on 8 January'
+          p2: 'Record the corrected proofs separately from the personal letters so each bundle can be handed over without opening the other'
         points_fail:
-          p1: 'Overbeck gets the previous address and cannot find him in Turin. The office recalls the employee.'
-          p2: 'A later editor reads one isolated paper into an unrelated draft. The first custodians left no record of its purpose.'
+          p1: 'Overbeck is directed to the wrong lodging, and the office recalls the employee when the meeting slips out of the timeline.'
+          p2: 'The letters and proofs go into the same wrapper. The first person looking for the corrections will also see the names on the letters.'
         shift:
           p1:
             was: 'Nietzsche wrote to the Overbecks from Turin. Franz Overbeck arrived there on January 8, 1889, to find him.'
           p2:
-            was: 'Different people took charge of the papers. Some items were later abridged or altered for print.'
-            now: 'Editors receive the papers with records of their purpose. Private letters stay intact, and any cuts to the published text are recorded for later comparison.'
-            who: nietzsche_turin
-            bio: 'Friends took charge of the letters and papers from Turin. Editing and publication continued for years after Nietzsche could no longer oversee the work.'
+            was: 'Overbeck later recalled that Nietzsche was reading the last proofs of Nietzsche contra Wagner when he arrived.'
+            now: 'The proofs and the letters travel in separate wrappers. Overbeck can find the corrections at a glance without breaking the other seal.'
         vignettes:
-          address: 'Pietro has copied the name Dionysus into the destination line of his inventory. You turn the practice slip and show him the line that names the recipients. He corrects the inventory without writing an explanation of the signature. It is enough to tell him who should be handed the packet.'
-          privacy: 'Lucia asks you to hold the bag while she covers the papers. Someone on the stairs wants to know what they say. You leave the outside label visible so she can give directions without opening it. The bag reaches the landing with only the intended name on show.'
-          horse: 'Pietro asks whether you know the account people will tell about a horse. You have heard the story many times. When you ask who here saw it, he points to no one. He leaves that line out of the inventory. You hear footsteps on the stairs as the bag is closed.'
+          address: 'Pietro has copied Dionysus into the destination line of his inventory. {staff} turns the slip to show him the names of the recipients. He draws one line through what he wrote, lightly enough that he could still read it back.'
+          privacy: 'Lucia asks {staff} to hold the bag while she wraps the papers. Someone on the stairs asks whose they are. She turns the label to the wall before she answers.'
+          stairs: 'From the landing, {staff} hears the rustle of a page. Then someone knocks below, and Pietro puts the blank luggage label on the stair rail where he can find it again.'
       zh:
         name: '纸背上的收件人'
         place: "都灵"
         figure: "弗里德里希·尼采"
-        story: '巴塞尔大学图书馆藏有尼采致弗兰茨与伊达·奥弗贝克的信，署名狄俄尼索斯，馆方定在约1889年1月4日，地点为都灵。奥弗贝克接到他的消息后赶到都灵。'
+        story: '都灵寄来一封信，收信的是弗兰茨和伊达·奥弗贝克，尼采签的是狄俄尼索斯。弗兰茨赶到朋友的住处，见他在读自己改过的《尼采反对瓦格纳》校样。离开都灵前，得有人看看箱里除了校样，还该放些什么。'
         relic: '一张留底的行李签'
-        relic_desc: '留底签，抄写时保留了私信内容的隐私。'
+        relic_desc: '游戏时间线里留下的一张行李签副本，收件人写在纸背上。'
         points:
-          p1: '把都灵住址核给奥韦尔贝克，让他能在 1 月 8 日找到旧友并安排有人陪着'
-          p2: '让接手的人留一张说明，把有证据表明待刊的稿定出来，将属于私人通信的纸另外存放并限定查阅'
+          p1: '核准住处地址，1 月 8 日把奥弗贝克领到对的门前'
+          p2: '把改过的校样和私人信件分开登记，确保要交其中一包时不用拆另一包'
         points_fail:
-          p1: '他拿到的是上一个住址，到了都灵仍找不到人，事务所因同步失败召回员工。'
-          p2: '日后有人依据孤立的一张纸给别的稿补意，而当时接手的人没留下用途说明。'
+          p1: '奥弗贝克走错了住处。这次见面偏离原时间线，事务所召回员工。'
+          p2: '信和校样叠在一起包走。第一个来找校样的人，也会看到那些信上的名字。'
         shift:
           p1:
-            was: '尼采从都灵写信给奥韦尔贝克夫妇。奥韦尔贝克于 1889 年 1 月 8 日到都灵寻找他。'
+            was: '尼采从都灵写信给奥弗贝克夫妇。弗兰茨·奥弗贝克于 1889 年 1 月 8 日在都灵找到尼采。'
           p2:
-            was: '病发后遗稿经不同人管理。若干后来出版材料曾删节或改编。'
-            now: '出书的人只能领到有相应说明的稿。私人纸件原样存放，编辑删节另有记录，之后读者能区分原件和刊本。'
-            who: nietzsche_turin
-            bio: '都灵留下的信与稿件由友人接手。它们的编订和刊行经历了多年，原作者当时已无法继续亲自核校。'
+            was: '奥弗贝克事后写信说，他赶到时，尼采正在看《尼采反对瓦格纳》的最后一份校样。'
+            now: '校样和信分作两包上路。奥弗贝克一眼就认得哪份是改过的校样，另一包仍然封着。'
         vignettes:
-          address: '彼得罗把狄俄尼索斯抄进了登记的去向栏。你翻过练习纸，指给他看写着收件人的一行。他改好登记，没有解说这个署名。知道该把信包递给谁，就够了。'
-          privacy: '露琪亚请你扶着提包，她好把文书遮起来。楼梯上有人问里头写了什么。你把包外的签露出来，她不用开包也能说明送到哪里。到了楼梯平台，旁人只看得见应该收包的名字。'
-          horse: '彼得罗问，你知不知道人们后来会讲起的那匹马。这故事你听过许多遍。你问在场谁看见了，他一个也指不出来。登记里便空着那一行。提包合上时，楼梯上传来了脚步声。'
+          address: '彼得罗把狄俄尼索斯抄进了登记的去向栏。{staff}翻过纸签，指给他看收件人那一面。他在刚抄的字上划了一道，淡得还能认出原来写的是什么。'
+          privacy: '露琪亚请{staff}扶着包，她腾手裹好那叠信。楼梯上有人问信是谁的。她把纸签转向墙，才开口答话。'
+          stairs: '{staff}在楼梯平台听见翻纸的窸窣声。楼下有人敲门。彼得罗把空白行李签放在扶手上，等会儿回来还找得到。'
 text:
   en:
     name: Friedrich Nietzsche
-    text: German philosopher, 1844 to 1900. He wrote Thus Spoke Zarathustra and criticised morality and religion. In January 1889 he collapsed in Turin and never recovered his mind, and spent his last years in the care of his mother and sister.
+    text: 'German philosopher (1844–1900), author of Thus Spoke Zarathustra and Beyond Good and Evil. He fell seriously ill in Turin in January 1889. His friend Franz Overbeck accompanied him back to Basel. Nietzsche spent his later years in the care of family.'
   zh:
     name: 弗里德里希·尼采
-    text: 德国哲学家，1844 年生，1900 年去世。他写了《查拉图斯特拉如是说》，批判道德与宗教。1889 年 1 月他在都灵崩溃，再也没有恢复心智，晚年由母亲和妹妹照料。
-hook: {en: 'A rumour is moving faster than the letter.', zh: '传闻比那封信先到了门口。'}
+    text: '德国哲学家（1844–1900），著有《查拉图斯特拉如是说》《善恶的彼岸》。1889 年 1 月，他在都灵病重，友人弗兰茨·奥弗贝克陪他回巴塞尔。此后的岁月里，他由家人照料。'
+hook: {en: 'He copied the signature where the address should have been.', zh: '他把署名抄到了该填去向的一栏。'}
 facts:
   letter:
     date: '1889-01'
@@ -95,11 +92,13 @@ facts:
     date: '1889-01-08'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [nietzsche_turin_journey]
+    use: [story, history, wiki]
+    stay_day: 8
+    sources: [nietzsche_turin_journey, nietzsche_turin_proof]
     text:
-      en: 'The research gives 8 January for Overbeck’s arrival and recounts the reported horse episode with qualification.'
-      zh: '研究列1月8日为奥弗贝克抵达日，对马的轶闻采用有保留的讲法。'
+      en: 'Overbeck arrived in Turin on 8 January and found Nietzsche reading the last proofs.'
+      zh: '奥弗贝克 1 月 8 日到都灵，见尼采正在读最后一份校样。'
+    line: {en: 'On 8 January 1889 Franz Overbeck reached Turin.', zh: '1889 年 1 月 8 日，弗兰茨·奥弗贝克抵达都灵。'}
 bystanders:
   pietro:
     invented: true
@@ -107,20 +106,49 @@ bystanders:
   lucia:
     invented: true
     text: {en: 'A fictional attendant covering papers for the journey.', zh: '虚构帮工露琪亚，负责把旅途要带的文书包好。'}
+quotes:
+  nietzsche_turin_proofs_echo:
+    order: 1
+    tier: full
+    date: '1888-12'
+    checked: official_record
+    sources: [nietzsche_turin_preface]
+    original: de
+    text:
+      de: {who: Friedrich Nietzsche, quote: 'Die folgenden Kapitel sind sämtlich aus meinen älteren Schriften nicht ohne Vorsicht ausgewählt', occasion: 'Vorwort zu Nietzsche kontra Wagner, Turin, Dezember 1888.'}
+      en: {who: Friedrich Nietzsche, quote: 'All the chapters that follow have been selected with some care from my earlier writings', occasion: 'From the preface to Nietzsche contra Wagner, Turin, December 1888 (game translation).'}
+      zh: {who: 弗里德里希·尼采, quote: '接下来的各章全都选自我早年的著作，挑选时我颇为谨慎。', occasion: '节选自《尼采反对瓦格纳》序言，1888 年 12 月，都灵（游戏译文）。'}
+  nietzsche_turin_letter_echo:
+    order: 2
+    tier: none
+    date: '1888-12'
+    checked: official_record
+    sources: [nietzsche_turin_wagner_letter]
+    original: de
+    text:
+      de: {who: Friedrich Nietzsche, quote: 'Hier kommt noch ein schönes Manuskript, etwas Kleines, aber sehr gut Geratenes, auf das ich stolz bin.', occasion: 'Begleitbrief an den Verleger Constantin Georg Naumann, Turin, Dezember 1888.'}
+      en: {who: Friedrich Nietzsche, quote: 'Here is another fine manuscript, something small but very well turned out, and I am proud of it.', occasion: 'From the letter accompanying the manuscript to publisher Constantin Georg Naumann, Turin, December 1888 (game translation).'}
+      zh: {who: 弗里德里希·尼采, quote: '又寄来一份漂亮的手稿。它很短，但写得很成功，我为它自豪。', occasion: '1888 年 12 月，在都灵随手稿寄给出版社瑙曼的信（游戏译文）。'}
 wiki:
   refs:
-    nietzsche_turin_turin_overbeck:
+    nietzsche_turin_proof:
       order: 10
       status: checked
       text:
-        en: 'Cambridge historical account on Overbeck’s Turin journey https://assets.cambridge.org/97811084/82561/excerpt/9781108482561_excerpt.pdf'
-        zh: '剑桥研究所录奥韦尔贝克都灵行程 https://assets.cambridge.org/97811084/82561/excerpt/9781108482561_excerpt.pdf'
-    nietzsche_turin_estate_history:
+        en: 'Heidelberg Academy historical commentary quoting Overbeck’s letter of 15 January 1889 https://digi.hadw-bw.de/view/nietzsche_kom6_2/0729'
+        zh: '海德堡科学院历史评注，转录奥弗贝克 1889 年 1 月 15 日书信 https://digi.hadw-bw.de/view/nietzsche_kom6_2/0729'
+    nietzsche_turin_preface:
       order: 11
       status: checked
       text:
-        en: 'Bibliographical research on the archive and later editions https://cla.csulb.edu/departments/philosophy/wp-content/uploads/2023/04/Marmor-1997-Nietzsche-altered-states.pdf'
-        zh: '遗稿管理与编订研究 https://cla.csulb.edu/departments/philosophy/wp-content/uploads/2023/04/Marmor-1997-Nietzsche-altered-states.pdf'
+        en: 'Nietzsche kontra Wagner, German text of the preface https://projekt-gutenberg.org/authors/friedrich-wilhelm-nietzsche/books/nietzsche-kontra-wagner/'
+        zh: '《尼采反对瓦格纳》德文版序 https://projekt-gutenberg.org/authors/friedrich-wilhelm-nietzsche/books/nietzsche-kontra-wagner/'
+    nietzsche_turin_wagner_letter:
+      order: 13
+      status: checked
+      text:
+        en: 'Nietzsche’s letter accompanying the manuscript, transcribed in the editorial materials https://projekt-gutenberg.org/authors/friedrich-wilhelm-nietzsche/books/kunst-und-kuenstler-modernitaet-aus-dem-vorreden-material/chapter/3/?gl_reading_mode=1'
+        zh: '编者材料转录的尼采随稿信 https://projekt-gutenberg.org/authors/friedrich-wilhelm-nietzsche/books/kunst-und-kuenstler-modernitaet-aus-dem-vorreden-material/chapter/3/?gl_reading_mode=1'
     nietzsche_turin_letter:
       order: 877
       status: checked
@@ -135,14 +163,14 @@ wiki:
         zh: '亚当·莱奇纳《尼采之后的狄俄尼索斯》序章，剑桥大学出版社 https://assets.cambridge.org/97811084/82561/excerpt/9781108482561_excerpt.pdf'
 self_check:
   fact: letter
-  quote_line: '知道该把信包递给谁，就够了。'
-  regret_choice: 'horse 听过许多次也不能在登记里当成亲见。'
-  bookend: '从传闻跑到门口，收尾听到还未认出的人。'
+  quote_line: '他在刚抄的字上划了一道，淡得还能认出原来写的是什么。'
+  regret_choice: '为了确认纸件的归属，是否要把别人的信也摊开。'
+  bookend: '从抄反的去向开始，到带走的副签把去向写清。'
   share_line: '一张签，收件人与署名各归其处。'
   share_number: '信上有两位收件人。'
-  knowing: 'horse 员工知道后世版本。'
+  knowing: '员工知道后来有印本，眼前还只是校样。'
   near: 'letter 以现存信件的收件人与署名为依据。'
   lever: 'privacy 让人带得走包而不揭开私信。'
-  missed: 'horse 赶不上看到脚步主人。'
+  missed: '只来得及看一眼校改，后来的出版由别人接手。'
   brought: 'address 带回标过收件位置的虚构副签。'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -7886,7 +7886,8 @@ events:
       - AI
       - Fan Shen
   - id: nietzsche_turin
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1889
     date: '1889-01-01'
     stay: 1
@@ -7901,8 +7902,8 @@ events:
     refs:
       - nietzsche_turin_letter
       - nietzsche_turin_journey
-      - nietzsche_turin_turin_overbeck
-      - nietzsche_turin_estate_history
+      - nietzsche_turin_proof
+      - nietzsche_turin_preface
     scene:
       star_rules: 2
       points:
@@ -7916,26 +7917,31 @@ events:
                   - nurse
                   - archivist
                   - translator
+                  - courier
+                  - proofreader
+                stat:
+                  will: 5
               - trait:
                   - patient
                   - methodical
                 stat:
                   will: 6
         - id: p2
-          kind: persuade
+          kind: hold
           day: 8
           req:
             any:
               - job:
                   - translator
                   - archivist
+                  - proofreader
                 stat:
                   wit: 7
                   will: 7
               - trait:
-                  - patient
-                  - methodical
                   - scholarly
+                  - methodical
+                item: notebook_pen
                 stat:
                   wit: 8
                   will: 7
@@ -7945,12 +7951,15 @@ events:
             - skeptical
             - quiet
             - methodical
+          day: 4
         - id: privacy
           traits:
             - faithful
             - patient
             - attached
-        - id: horse
+          day: 6
+        - id: stairs
+          day: 7
     authors:
       - AI
       - Fan Shen
