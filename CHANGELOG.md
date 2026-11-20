@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.2, 2026-11-20
+
+- The game opens faster on slower connections by loading independent files in parallel and skipping unused draft models in normal play.
+- The opening screen shows the game title and a loading message while the game starts.
+
 ## 0.13.1, 2026-11-20
 
 - Shortened the opening introduction to three sentences and the home screen introduction to one. The Finish the game button now sits beside the time energy counter and becomes available at 600 energy.

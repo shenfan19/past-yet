@@ -33,45 +33,62 @@ export function merge(base, over) {
 // `metadata.ready: true`. The antiques of a model kept out are kept out too. A story is turned on when it is finished.
 // content can be added step by step and only the finished part is published. The event of a draft era falls back to its own sync points, and the wiki cards of a draft era are dropped.
 export async function loadData(readText, parse, pickLang, opts = {}) {
-  const o = {};
-  for (const f of FILES) o[f] = parse(await readText('data/' + f + '.yaml'));
-  const I = o.config.i18n;
-  const want = pickLang ? pickLang(I) : I.fallback;
-  const lang = matchLocale(I, want) ?? I.fallback;
-  const loadLocale = async (kind, code) => {
-    try { return parse(await readText(`data/i18n/${kind}.${code}.yaml`)); } catch (e) { console.warn(`语言文件缺失 ${kind}.${code}，落回 ${I.fallback}`); return {}; }
-  };
-  for (const [key, stem] of Object.entries(LOCALE_KINDS)) {
-    const base = await loadLocale(stem, I.fallback);
-    o[key] = lang === I.fallback ? base : merge(base, await loadLocale(stem, lang));
-  }
-  o.logo = await readText('data/logo.svg');
-  o.world = JSON.parse(await readText('data/world_land.json'));
-  o.core_model = JSON.parse(await readText('data/core/traveler_stay.lm.json'));
-  o.core_bridge = JSON.parse(await readText('data/core/traveler_stay.bridge.json'));
-  o.era_raw = {};
-  o.era_src = {};
-  for (const id of o.config.eras) {
-    const src = await readText('data/eras/' + id + '.lm.yaml');
-    o.era_src[id] = src;
-    o.era_raw[id] = parse(src);
-  }
+  const readYaml = async (file) => parse(await readText(file));
+  const readJson = async (file) => JSON.parse(await readText(file));
+  const files = Object.fromEntries(FILES.map((id) => [id, readYaml(`data/${id}.yaml`)]));
+  const core = Promise.all([
+    readText('data/logo.svg'),
+    readJson('data/world_land.json'),
+    readJson('data/core/traveler_stay.lm.json'),
+    readJson('data/core/traveler_stay.bridge.json'),
+  ]);
+  const locale = files.config.then(async ({ i18n: I }) => {
+    const want = pickLang ? pickLang(I) : I.fallback;
+    const lang = matchLocale(I, want) ?? I.fallback;
+    const loadLocale = async (stem, code) => {
+      try { return await readYaml(`data/i18n/${stem}.${code}.yaml`); } catch (e) { console.warn(`语言文件缺失 ${stem}.${code}，落回 ${I.fallback}`); return {}; }
+    };
+    const entries = await Promise.all(Object.entries(LOCALE_KINDS).map(async ([key, stem]) => {
+      const base = loadLocale(stem, I.fallback);
+      if (lang === I.fallback) return [key, await base];
+      const [fallback, selected] = await Promise.all([base, loadLocale(stem, lang)]);
+      return [key, merge(fallback, selected)];
+    }));
+    return { lang, texts: Object.fromEntries(entries) };
+  });
+  const notReady = (e, config) => e.draft || (config.release.ready_only && !e.ready);
+  const models = Promise.all([files.config, files.catalog]).then(async ([config, catalog]) => {
+    // Normal play discards eras with draft events, so their source files can be skipped.
+    const skipped = (opts.drafts ?? config.release.drafts)
+      ? new Set()
+      : new Set(catalog.events.filter((e) => e.era && notReady(e, config)).map((e) => e.era));
+    const entries = await Promise.all(config.eras.filter((id) => !skipped.has(id)).map(async (id) => {
+      const source = await readText(`data/eras/${id}.lm.yaml`);
+      return [id, source];
+    }));
+    return {
+      era_src: Object.fromEntries(entries),
+      era_raw: Object.fromEntries(entries.map(([id, source]) => [id, parse(source)])),
+    };
+  });
+  const [entries, [logo, world, core_model, core_bridge], { lang, texts }, eras] = await Promise.all([
+    Promise.all(FILES.map(async (id) => [id, await files[id]])), core, locale, models,
+  ]);
+  const o = { ...Object.fromEntries(entries), ...texts, logo, world, core_model, core_bridge, ...eras };
   // The test employees, King and V, cards with dev_only, are left out unless asked for with opts.devStaff: the game asks in the developer mode,
   // the story probe asks, and every check of the roster reads the fifty without them.
   if (!opts.devStaff) for (const id of Object.keys(o.staff.staff)) if (o.staff.staff[id].dev_only) delete o.staff.staff[id];
   // what is still a draft is left out unless it was asked for
   if (!(opts.drafts ?? o.config.release.drafts)) {
-    const notReady = (e) => e.draft || (o.config.release.ready_only && !e.ready);
-    const unreadyEras = new Set(o.catalog.events.filter((e) => e.era && notReady(e)).map((e) => e.era));
     // a model with no catalogue event of its own is turned on in the model itself, metadata.ready: true
     const standaloneOff = (id) => o.config.release.ready_only && !o.catalog.events.some((e) => e.era === id) && !o.era_raw[id].metadata.ready;
-    const drafts = new Set(o.config.eras.filter((id) => o.era_raw[id].metadata.status === 'draft' || unreadyEras.has(id) || standaloneOff(id)));
+    const drafts = new Set(o.config.eras.filter((id) => !Object.hasOwn(o.era_raw, id) || o.era_raw[id].metadata.status === 'draft' || standaloneOff(id)));
     // the antiques that lead to a model kept out go with it
     for (const [id, a] of Object.entries(o.antiques.antiques)) if (a.era && drafts.has(a.era)) delete o.antiques.antiques[id];
     o.config.eras = o.config.eras.filter((id) => !drafts.has(id));
     for (const id of drafts) { delete o.era_raw[id]; delete o.era_src[id]; delete o.config.stars.energy_base[id]; }
-    const gone = new Set(o.catalog.events.filter(notReady).map((e) => e.id));
-    o.catalog.events = o.catalog.events.filter((e) => !notReady(e));
+    const gone = new Set(o.catalog.events.filter((e) => notReady(e, o.config)).map((e) => e.id));
+    o.catalog.events = o.catalog.events.filter((e) => !gone.has(e.id));
     for (const e of o.catalog.events) if (drafts.has(e.era)) delete e.era;
     const hidden = (c) => (c.era && drafts.has(c.era)) || (c.unlock && c.unlock.era && drafts.has(c.unlock.era)) || (c.events && c.events.length && c.events.every((x) => gone.has(x)));
     for (const k of Object.keys(o.encyclopedia.sections)) o.encyclopedia.sections[k] = o.encyclopedia.sections[k].filter((c) => !hidden(c));

@@ -259,4 +259,6 @@ const ctx = {
 const ui = createUI(D, ctx, dev);
 window.__game = { D, ctx, ui, backend };
 try { ui.render(); } catch (e) { window.__bootfail?.(e.stack || e); throw e; }
+document.getElementById('bootloading').hidden = true;
+document.getElementById('top').hidden = false;
 setInterval(() => ui.tick(), D.get('config.ui.refresh_ms'));
