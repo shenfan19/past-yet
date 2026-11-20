@@ -8484,10 +8484,11 @@ events:
       - AI
       - Fan Shen
   - id: hooke_london
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1703
     date: '1703-02-16'
-    stay: 3
+    stay: 1
     lon: -0.09
     lat: 51.52
     region: europe
@@ -8500,6 +8501,7 @@ events:
       - hooke_london_primary
       - hooke_london_waller_edition
       - hooke_london_papers_archive
+      - hooke_london_royal_society
     scene:
       star_rules: 2
       points:
@@ -8512,26 +8514,30 @@ events:
               - job:
                   - archivist
                   - proofreader
+                  - bookseller
+                  - courier
+                stat:
+                  will: 5
               - trait:
                   - methodical
                   - vigil
                 stat:
                   will: 6
         - id: p2
-          kind: persuade
-          day: 58
+          kind: notice
+          day: 27
           req:
             any:
               - job:
                   - archivist
                   - translator
+                  - proofreader
                 stat:
                   wit: 7
                   will: 7
               - trait:
                   - methodical
-                  - vigil
-                  - scholarly
+                item: notebook_pen
                 stat:
                   wit: 8
                   will: 7
@@ -8543,7 +8549,6 @@ events:
               - trait:
                   - scholarly
                   - sensitive
-                  - faithful
                 stat:
                   will: 7
               - job:
@@ -8554,23 +8559,21 @@ events:
                   - biologist
                   - bookseller
                 stat:
+                  wit: 6
                   will: 7
-              - item: golden_apple
-                trait:
-                  - kind
-                  - sensitive
-                  - scholarly
-                  - artistic
       vignettes:
         - id: edge
           traits:
             - artistic
             - vigil
+          day: 4
         - id: analogy
           traits:
             - curious
             - skeptical
+          day: 8
         - id: plate
+          day: 11
     authors:
       - AI
       - Fan Shen

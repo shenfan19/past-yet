@@ -2,88 +2,85 @@ order: 96
 events:
   hooke_london:
     order: 135
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1703
     date: '1703-02-16'
-    stay: 3
+    stay: 1
     lon: -0.09
     lat: 51.52
     region: europe
     field: science
     tier: 2
     channels: {V: 1, S: 1}
-    refs: [hooke_london_primary, hooke_london_waller_edition, hooke_london_papers_archive]
+    refs: [hooke_london_primary, hooke_london_waller_edition, hooke_london_papers_archive, hooke_london_royal_society]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 19, req: {"any":[{"job":["archivist","proofreader"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 58, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
-        - {id: p3, kind: trust, day: 12, req: {"any":[{"trait":["scholarly","sensitive","faithful"],"stat":{"will":7}},{"job":["teacher","university_lecturer","lecturer","writer","biologist","bookseller"],"stat":{"will":7}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 19, req: {any: [{job: [archivist, proofreader, bookseller, courier], stat: {will: 5}}, {trait: [methodical, vigil], stat: {will: 6}}]}}
+        - {id: p2, kind: notice, day: 27, req: {any: [{job: [archivist, translator, proofreader], stat: {wit: 7, will: 7}}, {trait: [methodical], item: notebook_pen, stat: {wit: 8, will: 7}}]}}
+        - {id: p3, kind: trust, day: 12, req: {any: [{trait: [scholarly, sensitive], stat: {will: 7}}, {job: [teacher, university_lecturer, lecturer, writer, biologist, bookseller], stat: {wit: 6, will: 7}}]}}
       vignettes:
-        - {id: edge, traits: [artistic, vigil]}
-        - {id: analogy, traits: [curious, skeptical]}
-        - {id: plate}
+        - {id: edge, traits: [artistic, vigil], day: 4}
+        - {id: analogy, traits: [curious, skeptical], day: 8}
+        - {id: plate, day: 11}
     text:
       en:
         name: "The curator of experiments"
         place: "London"
         figure: "Robert Hooke"
-        story: 'Hooke''s Micrographia of 1665 illustrates the small compartments he observed in cork.'
+        story: 'A reader brings out Hooke’s old Micrographia and tries to copy the cork. The edges in the drawing soon turn into a neat honeycomb that Hooke never saw. In the same room are bundles of lectures and demonstrations. Someone who opens one years from now will have to tell a missing page from a blank one.'
         relic: "A drawing of a flea"
-        relic_desc: "A fine engraving of a flea under glass."
+        relic_desc: 'A copy of the folding engraving of a flea from Micrographia.'
         points:
-          p1: 'Keep Hooke’s lecture papers and the accounts he read at the Royal Society in a chest that can be checked. Leave Waller an inventory and access to it'
-          p2: 'Ask Waller to record where papers left out of the new collection will be kept under searchable titles'
-          p3: 'Before he dies, let him know that the little cells he named and his law of springs will go on being remembered under his name'
+          p1: 'Keep the lectures together as the bundles are moved, so Waller will still be able to gather them for his edition'
+          p2: 'File a list of the bundles outside the lectures, with enough detail for a later editor to find them'
+          p3: 'Show Hooke the reader’s tracing while he is still there to look at it, and ask which lines should be left open'
         points_fail:
-          p1: 'Lectures go off with loose papers. Waller cannot recover the pieces for the later edition, and the office recalls the employee.'
-          p2: 'The inventory covers only what is going to the printer. The rest goes back to separate people.'
-          p3: 'He still died on 3 March, and no authenticated portrait of him was left. In this branch nobody told him in those last days that he would be remembered.'
+          p1: 'One bundle of lectures is taken away with loose papers. Waller can no longer assemble the collection, and the office recalls the employee.'
+          p2: 'The next editor can tell what went into print. Nothing on that list points to the papers elsewhere.'
+          p3: 'The tracing stays in the book. The reader has already filled in the lines and will not get to ask where they belong.'
         shift:
           p1:
             was: 'Hooke died in 1703. Richard Waller prepared the collection of posthumous works published in 1705.'
           p2:
             was: 'Waller’s book preserved some of the papers. Parts of Hooke’s diaries and other work appeared later through other editors.'
-            now: 'The first editorial inventory includes a page for papers set aside. Later editors can still trace what can be seen even if they work on a different subject.'
+            now: 'A second list goes into the chest. Someone looking for the demonstrations that did not go to print can start by asking for a bundle that has a name.'
           p3:
-            was: 'On 3 March 1703 Hooke died in London. No authenticated portrait of him survives, and his reputation was restored only at the end of the twentieth century.'
-            now: '{staff} let him know in those last days that the little cells in the cork would keep the name he gave them, and that his law of springs would carry his name into textbooks.'
-            who: hooke_london
-            bio: 'In this timeline Hooke heard before he died that he would be remembered, and his last days were easier.'
+            was: 'In Micrographia Hooke compared the pores of cork to a honeycomb and pointed out that their shape was irregular.'
+            now: '{staff} sets the tracing beside the old plate. The reader leaves two lines open after Hooke points to where the copied pattern ceases to match the plate.'
         vignettes:
-          edge: 'The reader closes every incomplete edge. You cover half the plate and ask which outlines they can still defend. When the cover comes away, they leave several marks unfinished.'
-          analogy: 'You ask where the cork stops looking like a honeycomb. The reader puts the two pictures together and starts pointing out differences instead of naming more similarities.'
-          plate: 'The reader holds the picture too close and loses the grid. You give them room to pull it back and then ask them to point to one chamber.'
+          edge: 'The reader follows two lines around a pore, then joins them with a third that is absent from the plate. {staff} holds the tracing to the window. The invented line is the straightest one on the sheet.'
+          analogy: '{staff} asks the reader to find a cell that would not fit the comb they drew at the top of the page. Soon they are both pointing to the same crooked edge.'
+          plate: 'When the reader opens another fold, a flea takes up almost the whole desk. {staff} holds one corner down while the reader moves the ink out of the way.'
       zh:
         name: "实验的管理人"
         place: "伦敦"
         figure: "罗伯特·胡克"
-        story: '胡克 1665 年的《显微图谱》画出了他在软木中观察到的小格。'
+        story: '有人翻出胡克的《显微图谱》，照着图版描软木里的小格。描着描着，格子齐得像蜂巢，原图却没那么整齐。屋里还放着几捆讲稿和实验记录。等几年后别人来翻，也得分清哪一页本来是空的，哪一页是真的缺了。'
         relic: "一幅跳蚤的图"
-        relic_desc: "一幅玻璃下跳蚤的精细版画。"
+        relic_desc: '《显微图谱》里那幅折页跳蚤版画的摹本。'
         points:
-          p1: '在伦敦把胡克讲课留存的手稿与皇家学会宣读过的另纸放在可点清的箱中，给后来接手的沃勒留一份钥匙和清单'
-          p2: '在伦敦请沃勒给未选入书的稿件留存处和可查题名，让曾参与的人能确认自己的记录去了哪里'
-          p3: '去世之前让他知道，他起名的小格和那条弹性定律会一直带着他的名字被人记着'
+          p1: '挪动纸堆时把讲稿留在一起，让沃勒日后仍能找齐要入书的稿子'
+          p2: '给讲稿以外的纸捆另留一张目录，让后来的编者有题名可查'
+          p3: '趁胡克还看得到那张描图，把它拿给他看，问哪几处该留着断线'
         points_fail:
-          p1: '几套文稿跟零散纸件同箱运走，沃勒找不齐后来编辑要用的册页，事务所因同步失败召回员工。'
-          p2: '收集工作只形成将付印的目录，未进书的记录重新散在不同人手里。'
-          p3: '他照旧在 3 月 3 日去世，没有留下一幅经认证的画像，这条分支里没有人在最后那几天告诉过他，后人会记得他。'
+          p1: '一捆讲稿跟零散纸件一道运走。沃勒后来凑不齐汇编所需的纸页，事务所召回员工。'
+          p2: '下一个编者看得出哪些稿印了出来，目录却没告诉他其他的稿在哪里。'
+          p3: '描图夹回书里，读者已经把断线都接上了，也没来得及问。'
         shift:
           p1:
             was: '胡克 1703 年去世。由理查德·沃勒整理的遗著汇编于 1705 年刊行。'
           p2:
             was: '沃勒的汇编只保存部分遗稿。胡克的部分日记及其他遗留文献经另一些编辑才陆续出版。'
-            now: '初版整理时另有一页列出暂留的本子。之后来的编者即使只编另一题，也能追查哪些手稿还可借看。'
+            now: '箱里多了一张目录。下次有人来找没印出来的实验记录，可以先报出纸捆的题名。'
           p3:
-            was: '1703 年 3 月 3 日胡克在伦敦去世，没有一幅经认证的画像传下来，他的名声到二十世纪末才重新被人看重。'
-            now: '{staff}在最后那几天让他知道，软木里的小格会一直叫他起的名字，那条弹性定律会带着他的名字写进课本。'
-            who: hooke_london
-            bio: '这条时间线里，胡克去世前听说了自己会被后人记住，最后那几天走得安心些。'
+            was: '胡克在《显微图谱》里把软木的小孔比作蜂巢，同时指出它们的形状并不规整。'
+            now: '{staff}把描图和旧版画摊在一起。胡克指给读者看，哪里开始就对不上了。那两道断开的线，他没有再补。'
         vignettes:
-          edge: '读者把每一处断开的边都补成了整格。你盖住半张图，问他哪些线还能从图上认出。再揭开时，他留了几处断线。'
-          analogy: '你问软木在哪儿就不像蜂房了。读者把图凑到一起，开始指两幅图哪里不同。'
-          plate: '读者把图凑太近，看散了整片格子。你给他腾开地方，让他往远处拿，再请他只指出其中一格。'
+          edge: '读者沿着一格描了两条边，又顺手补上原图里没有的第三条。{staff}把描图举到窗前。纸上最直的那道线，恰好是补上去的。'
+          analogy: '{staff}请读者找一个塞不进页顶那个蜂巢的格子。两人不约而同指向同一条歪歪的边。'
+          plate: '读者再揭开一页折纸，一只跳蚤差点占满整张桌。{staff}按着一个角，等读者腾手挪开墨水。'
 text:
   en:
     name: Robert Hooke
@@ -102,10 +99,49 @@ facts:
     text:
       en: 'Hooke''s Micrographia of 1665 illustrates the small compartments he observed in cork.'
       zh: '胡克 1665 年的《显微图谱》画出了他在软木中观察到的小格。'
+  death:
+    date: '1703-03-03'
+    stay_day: 16
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [hooke_london_royal_society]
+    note: 'Date follows the Royal Society catalogue’s convention for contemporary English dates.'
+    text: {en: 'The Royal Society records Hooke’s death on 3 March 1703.', zh: '皇家学会目录记胡克于 1703 年 3 月 3 日去世，日期沿用馆方记法。'}
+    line: {en: 'On 3 March 1703 Robert Hooke died in London.', zh: '1703 年 3 月 3 日，罗伯特·胡克在伦敦去世。'}
+  edition:
+    date: '1705'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [hooke_london_waller_edition]
+    text: {en: 'Waller published a collection that included Hooke’s lectures and papers read at the Royal Society.', zh: '沃勒刊印的遗著包括胡克的讲稿和在皇家学会宣读过的论文。'}
+    line: {en: 'In 1705 Richard Waller published Hooke’s posthumous works.', zh: '1705 年，理查德·沃勒刊印了胡克的遗著汇编。'}
 bystanders:
   hooke_london_reader:
     invented: true
     text: {en: 'An invented reader trying to draw what a plate shows.', zh: '一位虚构的读者，正试着描下图版里的形状。'}
+quotes:
+  hooke_london_memory:
+    order: 1
+    tier: full
+    date: '1665'
+    checked: official_record
+    original: en
+    sources: [hooke_london_micrographia_text, hooke_london_wellcome]
+    text:
+      en: {who: Robert Hooke, quote: 'that they may not only be kept in safety, but ready and convenient, to be at any time produc’d for use', occasion: 'On arranging material kept for future use, in the preface to Micrographia, 1665.'}
+      zh: {who: 罗伯特·胡克, quote: '使它们既能安全保存，又能在需要时随手取来。', occasion: '《显微图谱》序，谈怎样整理要留待以后使用的材料，1665 年（游戏译文）。'}
+  hooke_london_cork_echo:
+    order: 2
+    tier: none
+    date: '1665'
+    checked: official_record
+    original: en
+    sources: [hooke_london_cork_text]
+    text:
+      en: {who: Robert Hooke, quote: 'much like a Honey-comb, but that the pores of it were not regular', occasion: 'His description of cork in Observation XVIII of Micrographia, 1665.'}
+      zh: {who: 罗伯特·胡克, quote: '很像蜂巢，只是那些小孔的形状并不规整。', occasion: '《显微图谱》第十八项观察，谈显微镜下的软木，1665 年（游戏译文）。'}
 wiki:
   refs:
     hooke_london_waller_edition:
@@ -126,11 +162,27 @@ wiki:
       text:
         en: 'Robert Hooke, Micrographia, 1665, cork and honeycomb plate. Library of Congress. https://www.loc.gov/resource/cph.3b41351/'
         zh: 'Robert Hooke, Micrographia, 1665, cork and honeycomb plate. Library of Congress. https://www.loc.gov/resource/cph.3b41351/'
+    hooke_london_royal_society:
+      order: 12
+      status: checked
+      text: {en: 'Royal Society, Robert Hooke biographical catalogue https://makingscience.royalsociety.org/people/na8242/robert-hooke', zh: '皇家学会，罗伯特·胡克生平目录 https://makingscience.royalsociety.org/people/na8242/robert-hooke'}
+    hooke_london_micrographia_text:
+      order: 13
+      status: checked
+      text: {en: 'Micrographia, searchable text, preface https://www.gutenberg.org/ebooks/15491', zh: '《显微图谱》公版文字及序 https://www.gutenberg.org/ebooks/15491'}
+    hooke_london_wellcome:
+      order: 14
+      status: checked
+      text: {en: 'Wellcome Collection, 1665 edition of Micrographia https://wellcomecollection.org/works/apmaw56u', zh: '惠康馆藏，1665 年版《显微图谱》 https://wellcomecollection.org/works/apmaw56u'}
+    hooke_london_cork_text:
+      order: 15
+      status: checked
+      text: {en: 'National Library of Wales, Micrographia exhibition with Hooke’s cork passage https://www.library.wales/discover-learn/digital-exhibitions/printed-material/micrographia', zh: '威尔士国立图书馆《显微图谱》展览，含软木观察原文 https://www.library.wales/discover-learn/digital-exhibitions/printed-material/micrographia'}
 self_check:
-  quote_line: '读者把每一处断开的边都补成了整格。'
+  quote_line: '纸上最直的那道线，恰好是补上去的。'
   fact: micrographia
-  regret_choice: '略过「从胡克的图版里认出一格边界」，这处细节便留给下一位核对。'
-  bookend: '从「看得见的格子才画下来」开始，以员工留下的观察或更正收尾。'
+  regret_choice: '填上断线会更好看，却会替图版多说一句它没说的话。'
+  bookend: '从图版里分辨一条线，落到目录里找回一个名字。'
   share_line: '看得见的格子才画下来'
   share_number: '1665'
 pack: {license: MIT, version: 1, languages: [en, zh]}

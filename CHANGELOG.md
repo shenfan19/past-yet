@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.7, 2026-11-20
+
+- Opened Robert Hooke’s story in London. Check a reader’s tracing against Micrographia and help preserve Hooke’s lectures and experimental papers for later editors.
+
 ## 0.12.6, 2026-11-20
 
 - Opened George Boole’s story in Cork. Keep his lecture on schedule, flag a sign in an unfinished manuscript and relieve the family at his bedside.
