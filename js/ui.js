@@ -1030,7 +1030,10 @@ export function createUI(D, ctx, DEV = false) {
       for (const [name, href] of Object.entries(inline)) if (!linked.has(name) && h.includes(name)) { linked.add(name); h = h.replace(name, link(href, name)); }
       return `<p>${h}</p>`;
     };
-    const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
+    const links = A.links.map(({ id, label }) => {
+      const href = M.links[id];
+      return link(href, id === 'mail' ? href.replace(/^mailto:/, '') : label);
+    }).join(' · ');
     const preview = `<h4>${esc(A.preview.title)}</h4>${para(A.preview.project)}${para(A.preview.changes)}`;
     const echoes = `<h4>${esc(A.echoes.title)}</h4>${para(A.echoes.rule)}`;
     const secs = A.sections.map((sec, i) => {
