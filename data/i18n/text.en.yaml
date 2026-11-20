@@ -100,15 +100,6 @@ strategies:
     balanced:
       name: Balanced
       desc: Treat the sick, save the water, and meet the local doctor when there is time.
-    cure:
-      name: Patients first
-      desc: Rehydration first, protection second, little talking.
-    prevent:
-      name: Water first
-      desc: Hand out chlorine, teach boiling, patients come last.
-    ally:
-      name: Work with the local doctor
-      desc: Spend time with Snow and help carry his evidence to the people who need it.
   on_block:
     yield:
       name: Yield
@@ -118,7 +109,7 @@ strategies:
       desc: Stand at the door and say it, lose some gear if needed.
     appeal:
       name: Appeal
-      desc: Turn and go to Snow for help.
+      desc: Ask the local contact to speak up for you.
 tags:
   science: science
   technology: technology
@@ -619,8 +610,8 @@ ui:
     recall_tip: Ask them to come home now. The story stops where it is and only part of the pay comes back. They may refuse.
     recall_refused: Refused to come back
     hire_title: Hiring
-    hire_hint: Candidates are on offer. Hiring one brings another, and every {n} days the offer changes.
-    hire_next: The offer changes in {n} days.
+    hire_hint: Hiring a candidate opens a slot for another. The list refreshes every {n} in-game days.
+    hire_next: Refresh in {n} in-game days.
     hire: Hire
     fire: Let go
     fire_tip: Take them off the staff list. Hiring them again costs the hiring fee again. The last employee and anyone away cannot be let go.
@@ -944,6 +935,7 @@ ui:
     need_gear: '{i}'
     need_luck: a little luck
     by_trait: made up by a trait
+    trait_bonus: Sync point second chance
     lost_by_trait: lost to a trait
     by_secretary: made sure by the secretary
   welcome:
@@ -1078,15 +1070,6 @@ items:
   recall_charm:
     name: Recall charm
     desc: Pulls a dying employee back. Without it, all gear is lost.
-  detox_water:
-    name: All purpose antidote water
-    desc: A modern solution that neutralises many common poisons. Pricier than rehydration salts, but one bottle is worth three packets.
-  disinfectant:
-    name: Disinfectant
-    desc: Modern disinfectant. One bottle makes the water or hands of a dozen people safe.
-  heart_monitor:
-    name: Heart rate monitor
-    desc: Worn by the employee, it spots overwork early so fatigue builds more slowly.
   radiation_shield:
     name: Radiation shield
     desc: A lead lined shield from the future that keeps dust and radiation off the skin. The Curies worked without one.
@@ -1099,45 +1082,21 @@ items:
   face_mask:
     name: Face mask
     desc: A cheap barrier that cuts the spread of airborne illness. Worn once, then thrown away.
-  thermometer:
-    name: Thermometer
-    desc: Shows a fever early, so a sickness is noticed before it is obvious.
-  sun_hat:
-    name: Wide brimmed hat
-    desc: Shade for the head and neck against hours of sun.
   water_flask:
     name: Insulated flask
     desc: Boiled water carried along, cool in the heat and warm in the cold.
   warm_blanket:
     name: Thermal blanket
     desc: A light blanket that holds in body heat on a cold night outdoors.
-  hand_warmer:
-    name: Hand warmer
-    desc: A packet that stays warm for a night.
-  energy_bar:
-    name: Energy bar
-    desc: Dense food that fills an energy gap fast.
   neural_chip:
     name: Cyborg neural chip
     desc: A chip behind the ear that translates any language and speeds up learning. Hard to hide.
   oxygen_can:
     name: Oxygen can
     desc: A few breaths of oxygen for a thin air emergency.
-  altitude_pills:
-    name: Altitude sickness pills
-    desc: Eases the headache and nausea of climbing too fast.
-  cyber_arm:
-    name: Cyborg arm
-    desc: A prosthetic arm with far more strength than a person has. It shows.
-  back_brace:
-    name: Back brace
-    desc: Supports the lower back during heavy lifting.
   cyber_lung:
     name: Cyborg bionic lung
     desc: An artificial lung for long hours of hard work. It hums softly.
-  gorilla_arm:
-    name: Cyborg gorilla arm
-    desc: A huge, absurdly strong arm. Everyone looks.
   painkiller:
     name: Painkiller
     desc: Dulls pain for a few hours. It treats nothing, and only buys time.
@@ -1153,15 +1112,9 @@ items:
   golden_apple:
     name: Golden apple
     desc: A golden apple out of a myth. Whoever hears you out is moved. Your power to persuade is tripled.
-  elixir:
-    name: Elixir
-    desc: A bright potion that eases pain and restores strength.
   headlamp:
     name: Headlamp
     desc: Light for reading and writing through the night, hands free.
-  ear_plugs:
-    name: Ear plugs and eye mask
-    desc: Sleep in a noisy, bright place.
   thermal_suit:
     name: Thermal suit
     desc: A suit that holds a steady body temperature in ice or in heat. It looks odd.
@@ -1174,9 +1127,6 @@ items:
   nutrient_synth:
     name: Nutrient synthesizer
     desc: Turns almost anything into a balanced meal, which ends hunger on a long road.
-  plush_toy:
-    name: Soft toy
-    desc: A small gift for a child or a patient that makes the room less frightening.
   ar_glasses:
     name: AR glasses
     desc: Glasses that label what you see and bring out detail. Hard to hide.
@@ -1219,9 +1169,6 @@ items:
   scout_drone:
     name: Scout drone
     desc: Flies the road ahead and comes back with a picture of it.
-  insulated_gloves:
-    name: Insulated gloves
-    desc: Protect the hands from a shock.
   first_aid_kit:
     name: First aid kit
     desc: Dressings and tape to stop bleeding and hold a wound closed, which lowers the chance that a hurt becomes a death.
@@ -2146,73 +2093,50 @@ traits:
 trait_notes:
   kind:
     pro: Earns trust and gives care that counts.
-    con: Easily hurt by hostility, and gives way too soon.
   curious:
     pro: Notices things and asks what nobody else asks.
-    con: Easily pulled away from what has to be done.
   glib:
     pro: Talks their way in and brings people round.
-    con: A smooth tongue is not always trusted.
   sensitive:
     pro: Notices what is wrong, and feels what others feel.
-    con: A weak constitution, so disease catches on more easily.
   bold:
     pro: Pushes through resistance and danger.
-    con: Careless, and misses what should have been noticed or cared for.
   patient:
     pro: Waits as long as it takes and stays gentle.
-    con: Slow to react when something changes suddenly.
   methodical:
     pro: Works by a method, checks and records every step, and holds to it when pushed.
-    con: Rigid, struggles when there is no order to lean on, and poor at bringing others round.
   hardy:
     pro: Stands up to hard conditions, and falls ill less than others.
-    con: Blunt, and misses the fine details.
   charismatic:
     pro: People want to listen and to follow.
-    con: Spends energy on people and cannot sit down to fine work.
   quiet:
     pro: Draws no attention, sees a lot and can wait.
-    con: Does not push, and cannot bring others round.
   wanderer:
     pro: Raised in the lower ranks or long on the road, rarely homesick, shrugs off hostility and sleepless nights, and takes hardship in stride.
-    con: Does not open up easily, is not easily trusted, and ill at ease before the powerful.
   attached:
     pro: Gives deeply to people and stays by them.
-    con: The longer from home the more homesick, and may give up.
   streetwise:
     pro: Quick on the street, and finds a way out of any scrape.
-    con: Restless, and poor at long steady work.
   scholarly:
     pro: Well read, and can talk with scholars as an equal.
-    con: Weak in body, and catches disease more easily.
   handy:
     pro: Solid craft, and gets the thing done properly.
-    con: Cannot explain, and poor at persuading others.
   artistic:
     pro: Keen to beauty and sound, and moves people.
-    con: The mind drifts, and homesickness comes easily.
   calm:
     pro: Steady when it comes to the worst, and good at nursing.
-    con: A beat slow, and misses small changes.
   cosmopolitan:
     pro: Has seen many places, and strikes up talk with strangers.
-    con: Has seen it all, and has little patience to stay with one thing.
   cheerful:
     pro: Laughs easily, helps willingly and lifts the mood.
-    con: Thinks simply, and does not see the trouble in the dark.
   vigil:
     pro: Clearer the later it gets, and keeps a long watch without drifting.
-    con: Falls apart after a long day on the road.
   faithful:
     pro: Holds a firm belief, and does not waver in hard times.
-    con: Slow to take in what does not fit the belief.
   skeptical:
     pro: Wants proof, is not easily fooled and sees the flaw.
-    con: Guarded with people, and others are guarded with them.
   ambitious:
     pro: Has a clear aim, and asks for what it takes.
-    con: Keeps the goal in mind and overlooks the trouble of those nearby.
 mainline:
   open:
     name: Opening day
@@ -7940,7 +7864,7 @@ eras:
         - text: With one more item I might have saved one more household.
     hints:
       lost_ors: A lot of rehydration salts were lost. Next time let the employee yield, or bring more.
-      unused_protect: Chlorine was left over. The limit was the neighbours' trust, not the tablets. Let the employee help patients first to build trust.
+      unused_protect: Chlorine was left over. The limit was the neighbours' trust, not the tablets.
       unused_ors: Rehydration salts were left over. The employee may have spent time elsewhere, or patients were not let in.
       ally_gap: Snow's evidence is still thin. The handbook helps him, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8090,7 +8014,7 @@ eras:
         - text: With one more item I might have saved a few more.
     hints:
       lost_ors: A lot of washing solution was confiscated. Next time let the employee yield, or go to Semmelweis first.
-      unused_protect: Washing solution was left over. The seniors would not listen, it was not a shortage. Try working with Semmelweis first to lower the resistance.
+      unused_protect: Washing solution was left over. The seniors would not listen, it was not a shortage.
       unused_ors: Supplies were left over.
       ally_gap: Semmelweis's evidence is still thin. The handbook helps him, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8206,7 +8130,7 @@ eras:
         - text: With one more item I might have saved one more man.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Disinfectant was left over. The limit was the trust of the ward, not the supplies. Let the employee help patients first to build trust.
+      unused_protect: Disinfectant was left over. The limit was the trust of the ward, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or patients were not let in.
       ally_gap: Nightingale's evidence is still thin. The handbook helps her, provided the employee spends time with her.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8320,7 +8244,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Nets were left over. The limit was the trust of the district, not the nets. Let the employee help patients first to build trust.
+      unused_protect: Nets were left over. The limit was the trust of the district, not the nets.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or patients were not let in.
       ally_gap: Finlay's evidence is still thin. The handbook helps him, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8429,7 +8353,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Masks and cleaning supplies were left over. The limit was the trust of the village, not the supplies. Let the employee help patients first to build trust.
+      unused_protect: Masks and cleaning supplies were left over. The limit was the trust of the village, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or patients were not let in.
       ally_gap: Jenner's evidence is still thin. The handbook helps him, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8536,7 +8460,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Chlorine was left over. The limit was the trust of the camp, not the supplies. Let the employee help patients first to build trust.
+      unused_protect: Chlorine was left over. The limit was the trust of the camp, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or patients were not let in.
       ally_gap: Seacole's evidence is still thin. The handbook helps her, provided the employee spends time with her.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8850,7 +8774,7 @@ eras:
       boards: '{date}: Banks records that Tupaia came aboard and reaffirmed his wish to sail.'
       departs: '{date}: The Endeavour departs Tahiti with Tupaia and Taiata aboard.'
       first_treat: '{date}: {staff} brings the first cup of fruit juice to a man with swollen gums. He starts to speak.'
-      first_protect: '{date}: {staff} hands out the first hats and nets to the working parties, and teaches the men to use them.'
+      first_protect: '{date}: {staff} hands out the first mosquito nets to the working parties and shows the men how to put them up.'
       met_tupaia: '{date}: {staff} is received by Tupaia.'
       tupaia_trusts: '{date}: Tupaia gives {staff} the notes to work from.'
       tupaia_convinced: '{date}: Tupaia takes up the plan that {staff} put to him.'
@@ -8899,7 +8823,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Hats were left over. The limit was the trust of the ship's company, not the supplies. Let the employee help people first to build trust.
+      unused_protect: Some mosquito nets stayed packed because the crew had yet to trust you.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
       ally_gap: Tupaia's evidence is still thin. The handbook helps, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -8957,7 +8881,7 @@ eras:
       surveying: '{date}: The Beagle surveys the outer coast of Chatham Island, now San Cristóbal.'
       lands: '{date}: Darwin records an afternoon landing on Chatham Island with FitzRoy.'
       first_treat: '{date}: {staff} brings the first cup of clean water to a man with the heat sickness. He starts to speak.'
-      first_protect: '{date}: {staff} hands out the first hats and shade cloths to the shore party, and teaches the men to use them.'
+      first_protect: '{date}: {staff} hands out the first mosquito nets to the shore party and shows the men how to put them up.'
       met_darwin: '{date}: {staff} is received by Darwin.'
       darwin_trusts: '{date}: Darwin gives {staff} the notes to work from.'
       darwin_convinced: '{date}: Darwin takes up the plan that {staff} put to him.'
@@ -9006,7 +8930,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Hats were left over. The limit was the trust of the ship's company, not the supplies. Let the employee help people first to build trust.
+      unused_protect: Some mosquito nets stayed packed because the crew had yet to trust you.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
       ally_gap: Charles Darwin's evidence is still thin. The handbook helps, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -9113,7 +9037,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Blankets were left over. The limit was the trust of the carriers, not the supplies. Let the employee help people first to build trust.
+      unused_protect: Blankets were left over. The limit was the trust of the carriers, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
       ally_gap: Alexander von Humboldt's evidence is still thin. The handbook helps, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -9220,7 +9144,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Oxygen was left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
+      unused_protect: Oxygen was left over. The limit was the trust of the party, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
       ally_gap: George Mallory's evidence is still thin. The handbook helps, provided the employee spends time with him.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
@@ -9323,7 +9247,7 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
+      unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   wegener_greenland_1930:
@@ -9425,6 +9349,6 @@ eras:
         - text: With one more item I might have saved one more life.
     hints:
       lost_ors: A lot of supplies were lost. Next time let the employee yield, or bring more.
-      unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies. Let the employee help people first to build trust.
+      unused_protect: Blankets were left over. The limit was the trust of the party, not the supplies.
       unused_ors: Supplies were left over. The employee may have spent time elsewhere, or was not let in.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.

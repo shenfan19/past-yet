@@ -2,11 +2,13 @@
 
 This page describes how The Past Is Yet to Come keeps a game: what a save holds, how it is read, and how it grows without breaking older saves.
 
-Status: this is the specification of save schema 13. The game currently writes the flat save of schema 12; schema 12 saves are upgraded to 13 when the new format ships. Until then the game already reads a flat save of another version instead of dropping it: the raw save is first kept under `<key>_backup_v<version>`, missing fields are filled from a new game, employees new to the roster are added, and employees, antiques and trips under way that the data no longer has are set aside in `parked` and put back if they return. A save that still cannot be read is kept under `<key>_backup_unread` before a new game starts.
+The game currently writes flat saves with `version: 13`. The envelope and split files described below are a proposed format. Loading an older flat save backs up the raw save under `<key>_backup_v<version>`, fills missing fields and adds any new employees. If a save still cannot be read, the game keeps a backup under `<key>_backup_unread` before starting a new game.
+
+Flat version 13 migrates the 15 retired item IDs. Each cyber arm or gorilla arm from inventory, equipped gear or an unclaimed kit becomes one exoskeleton in stock. Other retired stock and unclaimed cargo are refunded at their old shop prices in funds or time energy. Old item IDs are removed from saved gear, kits and trip item lists. The reports and results already generated for those trips are retained. Loading the migrated save again leaves the inventory and balances intact.
 
 ## Rules
 
-- Permanent ids. Events, employees, items, antiques, implants and simulation modules have permanent ids. An id is never renamed or reused; a renamed card lists its old id as an alias, and a card that leaves the game is retired rather than deleted. Ids do not carry facts that may change, such as a year.
+- Permanent ids. Events, employees, items, antiques, implants and simulation modules have permanent ids. An id is never renamed or reused. When removing a card that still appears in flat saves, reserve the old id and define how to migrate its references. Ids do not carry facts that may change, such as a year.
 - Tables keyed by id. Employees, event progress, items and simulations are stored as maps from id to record, never as lists read by position, so adding or removing one is adding or removing a key.
 - Facts in the save, limits in the rules. A save records what there is; capacities, slots and numbers live in the cards. Implants are a list, and raising the limit from one to three does not touch the save.
 - Absolute times. Every time is an office day or a day of the stay, never a count of simulation steps.
@@ -67,7 +69,7 @@ Appended files are written first and `save.json` last. `save.json` records its `
 ## Reading a save
 
 1. Parse the JSON; a save that cannot be parsed is kept as a backup and a new game starts.
-2. A save with `version` and no `format` is a flat save of schema 12 or earlier and is wrapped first.
+2. A save with `version` and no `format` is a flat save. Upgrade it to the latest flat version before wrapping it.
 3. If `min_reader` is above the game's schema, the save is not overwritten and the player is asked to update the game. If only `schema` is above, the save is read and unknown fields are kept. If `schema` is below, the save is backed up and upgraded step by step.
 4. Every section is deep-merged with its defaults.
 5. References are checked: whatever names a card that no longer exists moves into `parked`; new employees are added with defaults; a trip under way to a missing event comes home without stars.

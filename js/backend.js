@@ -182,8 +182,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const statsAt = (day) => health?.trace.findLast((row) => row.day <= day)?.stats || stats;
     return participation(D, ev.tier, historicalDays(D, days), spec, statsAt, (stage) => draw(spec.seed, 'participation_' + stage, ev.id));
   }
-  // A trait is worth something at the sync points. Each point is about one kind of thing, and the traits of the employee add up to a bonus for that kind:
-  // a point that was missed is still reached with the chance of the bonus, and a negative bonus loses a point that was reached. The draw is seeded.
+  // Traits add up by sync point kind and give a seeded second chance at a missed point.
   const traitBonus = (staffId, kind) => D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).points[kind] || 0), 0);
   function applyBonus(points, kinds, staffId, seed, key, qualified = null) {
     // a test employee is read on the requirements alone, so the same story gives the same stars every time
@@ -192,7 +191,6 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       const b = traitBonus(staffId, kinds[i]);
       const r = draw(seed, 'bonus_' + key + '_' + p.id, 0);
       if (!p.hit && (!qualified || qualified[i]) && b > 0 && r < Math.min(0.9, b)) return { ...p, hit: true, bonus: true };
-      if (p.hit && b < 0 && r < Math.min(0.9, -b)) return { ...p, hit: false, lost: true };
       return p;
     });
   }

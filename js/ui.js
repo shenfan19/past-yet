@@ -1,4 +1,4 @@
-import { diffRows, kitText, staffName, staffTraits, itemText, stratText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel } from './narrate.js';
 import { pointsLeft, founderProblem } from './founder.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
@@ -139,7 +139,7 @@ export function createUI(D, ctx, DEV = false) {
   const reqHint = (req) => { const c = reqClauses(req); return c.length ? ` <span class="muted">${esc(U.stars.need.replace('{x}', c.join(U.stars.need_and)))}</span>` : ''; };
   const statsLine = (stats) => D.get('staff.attributes').map((k) => `${T.stats[k]} ${r1(stats[k])}`).join(' · ');
   // what a trait does at the sync points, as percent per kind of point, for example persuading +35%
-  const pointsText = (tr) => Object.entries(tr.points).map(([k, v]) => `${T.point_kinds[k]} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
+  const pointsText = (tr) => Object.entries(tr.points).map(([k, v]) => `${T.point_kinds[k]} +${Math.round(v * 100)}%`).join(SEP);
   // What a secretary gives, in words: shares as percent, an attribute lent as its points, a sure star by its kind. perkParts reads office.perks(),
   // traitPerk the card of one trait, which has no secretary yet, so an attribute is told as the share of the secretary's own.
   const PK = () => U.office.perks;
@@ -158,9 +158,9 @@ export function createUI(D, ctx, DEV = false) {
   function traitTip(t) {
     const tr = D.get('staff.traits.' + t);
     const mods = pointsText(tr);
-    const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}${COLON}${T.strategies[grp][key].name}`).join('${U.fmt.semi}');
+    const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}${COLON}${T.strategies[grp][key].name}`).join(U.fmt.semi);
     const note = T.trait_notes[t];
-    return [T.traits[t], `+ ${note.pro}`, `− ${note.con}`, mods, pol, `${U.office.secretary_as}${COLON}${traitPerk(t)}`].filter(Boolean).join('\n');
+    return [T.traits[t], note.pro, `${U.stars.trait_bonus}${COLON}${mods}`, pol, `${U.office.secretary_as}${COLON}${traitPerk(t)}`].filter(Boolean).join('\n');
   }
   function staffTip(id) {
     const stats = ctx.backend.staffStats(id);
@@ -258,6 +258,7 @@ export function createUI(D, ctx, DEV = false) {
   const wiki = createWiki(X);
   X.office = office;
   X.traitPerk = traitPerk;
+  X.pointsText = pointsText;
   const shop = createShop(X);
   const worldMap = createWorldMap(X);
   const settingsPage = createSettingsPage(X);
@@ -308,12 +309,18 @@ export function createUI(D, ctx, DEV = false) {
       st.vs = !!o.vs;
       st.opened = new Set(o.opened || []);
       if (o.filters) st.filters = o.filters;
-      st.cart = o.cart || {};
+      const items = D.get('items');
+      const keepItems = (list) => Object.fromEntries(Object.entries(list || {}).filter(([id]) => Object.hasOwn(items, id) && !items[id].retired));
+      st.cart = keepItems(o.cart);
       st.sort = o.sort || {};
       Object.assign(st.wiki, o.wiki);
+      const keepArticle = (id) => !id?.startsWith('items:') || (Object.hasOwn(items, id.slice(6)) && !items[id.slice(6)].retired);
+      st.wiki.pos = st.wiki.hist.slice(0, st.wiki.pos + 1).filter(keepArticle).length - 1;
+      st.wiki.hist = st.wiki.hist.filter(keepArticle);
+      if (!keepArticle(st.wiki.cur)) st.wiki.cur = st.wiki.hist[st.wiki.pos] || null;
       if (!Object.hasOwn(T.tags, st.wiki.tag)) st.wiki.tag = '';
       Object.assign(st.map, o.map);
-      if (o.form && visibleEras().includes(o.form.eraId) && hiredIds().includes(o.form.staffId)) st.form = { ...st.form, ...o.form };
+      if (o.form && visibleEras().includes(o.form.eraId) && hiredIds().includes(o.form.staffId)) st.form = { ...st.form, ...o.form, items: keepItems(o.form.items) };
       st.scrollY = o.scrollY || {};
       st.pendingKeeps = o.keeps || {};
       st.pendingModalScroll = o.modalScroll;
@@ -466,8 +473,7 @@ export function createUI(D, ctx, DEV = false) {
     });
   }
 
-  // Candidates are shown in full before hiring: who they are, what they can do, and what each trait gives and costs.
-  // One candidate is one row: who, background, abilities, traits with what each gives and costs in its tooltip, and the hire button.
+  // Candidates show their background, abilities and trait effects before hiring.
   function candidateRow(c) {
     const id = c.id;
     const def = D.get('staff.staff.' + id);
@@ -475,10 +481,16 @@ export function createUI(D, ctx, DEV = false) {
     return { id, name: staffName(D, id), swatch, profile: staffProfile(D, id), stats: statsLine(ctx.backend.staffStats(id)), traits: staffTraits(D, id) };
   }
 
+  let renderedHireSlots = null;
+  function hireCountdown() {
+    const S = ctx.S();
+    const left = Math.max(0, S.hire.next - S.clock.day);
+    return U.office.hire_next.replace('{n}', r1(Math.ceil(left * 10) / 10));
+  }
+
   function hireHtml() {
     const S = ctx.S();
-    office.ensureHire();
-    const left = Math.max(0, S.hire.next - S.clock.day);
+    renderedHireSlots = S.hire.slots;
     const n = hiredIds().length;
     const icon = D.get('config.ui.currency_icons.funds');
     const box = listbox.html({
@@ -494,7 +506,7 @@ export function createUI(D, ctx, DEV = false) {
     });
     return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))} ${U.office.wage}${COLON}${ri(office.wageTotal())} → ${ri(office.wageOf(n + 1))} ${icon}</p>
       ${box}
-      <p class="muted" id="hire-next">${U.office.hire_next.replace('{n}', r1(left))}</p>`;
+      <p class="muted" id="hire-next">${hireCountdown()}</p>`;
   }
 
   // The figures that move with the clock sit at the right of the navigation bar on every page, as icons. The tick redraws only this.
@@ -1581,8 +1593,15 @@ export function createUI(D, ctx, DEV = false) {
       }
     } else if (viewRedrawPending) {
       render(true);
+    } else if (st.tab === 'buy' && renderedHireSlots !== ctx.S().hire.slots) {
+      render(true);
     } else if (modalRedrawPending || (fresh.length && st.modal)) {
       renderModal(true);
+    }
+    const hireNext = document.getElementById('hire-next');
+    if (hireNext && renderedHireSlots === ctx.S().hire.slots) {
+      const countdown = hireCountdown();
+      if (hireNext.textContent !== countdown) hireNext.textContent = countdown;
     }
     setHtml(resEl, resHtml());
     const homeComplete = document.getElementById('home-complete');

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.8, 2026-11-20
+
+- The hiring page now updates the countdown and replaces candidates every seven in-game days. A refresh prioritizes people who were absent from the previous offer.
+- Traits provide a second chance at missed sync points. Removed trait-based star penalties and dispatch priorities such as treating patients first. Fixed an error when opening trait articles in the encyclopedia.
+- Removed 15 retired items from the game, including both arm implants and the elixir. The exoskeleton supplies strength and opens routes to full stars in the Van Gogh and Su Shi stories.
+- Older saves exchange each retired arm for one exoskeleton and refund other retired stock and unclaimed cargo at their original prices. Existing trip results are preserved.
+
 ## 0.12.7, 2026-11-20
 
 - Opened Robert Hooke’s story in London. Check a reader’s tracing against Micrographia and help preserve Hooke’s lectures and experimental papers for later editors.

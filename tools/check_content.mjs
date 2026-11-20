@@ -36,18 +36,16 @@ for (const id of D.get('config.eras')) {
 console.log('reports built:', n);
 console.log(JSON.stringify(outcomes));
 
-// Every trait must give something and cost something, and say so in both languages.
-// A stat counts as a gain when it goes up, except the two where less is better.
+// Every trait has a sync point bonus, a description, and the default dispatch focus.
 let bad = 0;
 const T_ = D.get('staff.traits');
 for (const [id, tr] of Object.entries(T_)) {
-  // a trait is worth something at some kind of sync point, and costs something at another or in a weakness of its own
-  const effects = Object.values(tr.points).concat(Object.values(tr.model || {}).map((v) => -v));
-  if (!effects.some((x) => x > 0) || !effects.some((x) => x < 0)) { console.log(`trait ${id} lacks a gain or a cost`); bad++; }
+  if (!Object.keys(tr.points).length) { console.log(`trait ${id} has no sync point bonus`); bad++; }
+  if (tr.policy?.focus) { console.log(`trait ${id} overrides the default dispatch focus`); bad++; }
   if (tr.mods) { console.log(`trait ${id} must not change attributes`); bad++; }
   for (const k of Object.keys(tr.points)) D.get('text.point_kinds.' + k);
   const note = D.get('text.trait_notes.' + id);
-  if (!note.pro || !note.con) { console.log(`trait ${id} has no gain or cost text`); bad++; }
+  if (!note.pro) { console.log(`trait ${id} has no description`); bad++; }
 }
 const E1 = sim.compileEra(D.get('era_raw.' + D.get('config.eras')[0]), D, D.get('config.eras')[0]);
 // The employees are the cards of cards/staff: all of them with a name, a job and a story in both languages, a region and a skin tone that exist,

@@ -138,6 +138,44 @@ function updateUnfinishedCrew(save) {
   return save;
 }
 
+// The removed arms become carried exoskeletons. Other retired stock is refunded at its old shop price.
+const retiredRefunds = {
+  altitude_pills: 10, back_brace: 14, detox_water: 12, disinfectant: 8, ear_plugs: 5,
+  energy_bar: 4, hand_warmer: 3, heart_monitor: 60, insulated_gloves: 16, plush_toy: 7,
+  sun_hat: 8, thermometer: 6, elixir: 190,
+};
+const retiredArm = (id) => id === 'cyber_arm' || id === 'gorilla_arm';
+const retiredItem = (id) => retiredArm(id) || Object.hasOwn(retiredRefunds, id);
+
+function migrateRetiredItems(save) {
+  const credit = (id, n) => {
+    if (!(n > 0)) return;
+    if (retiredArm(id)) save.inv.exoskeleton = (save.inv.exoskeleton || 0) + n;
+    else save[id === 'elixir' ? 'energy' : 'funds'] += retiredRefunds[id] * n;
+  };
+  const clear = (items, refund = false) => {
+    for (const [id, n] of Object.entries(items || {})) {
+      if (!retiredItem(id)) continue;
+      if (refund) credit(id, n);
+      delete items[id];
+    }
+  };
+  const clearGear = (gear) => gear.filter((id) => !retiredItem(id));
+  clear(save.inv, true);
+  for (const staff of [...Object.values(save.staff), ...(save.parked.staff || [])]) {
+    for (const id of staff.gear || []) if (retiredItem(id)) credit(id, 1);
+    if (staff.gear) staff.gear = clearGear(staff.gear);
+  }
+  for (const dispatch of [...save.dispatches, ...(save.parked.dispatches || [])]) {
+    // Dispatch results are stored at launch. Credit the retired cargo of open trips once, before it can return to stock.
+    clear(dispatch.spec.items, !dispatch.claimed);
+    if (dispatch.spec.gear) dispatch.spec.gear = clearGear(dispatch.spec.gear);
+    clear(dispatch.kit?.back);
+    clear(dispatch.kit?.lost);
+  }
+  for (const trip of save.trips || []) if (trip.items) trip.items = trip.items.filter((id) => !retiredItem(id));
+}
+
 // A save written by another version, or naming cards that have since left the game, is upgraded instead of dropped. Before anything changes
 // the raw text is kept under a backup key. Every field a fresh save has and this one lacks is filled in; an employee new to the roster is added,
 // not hired; an employee, antique, place or trip under way the data no longer has is set aside in S.parked, and put back if it returns.
@@ -146,6 +184,7 @@ function upgrade(S, raw) {
   const base = fresh();
   for (const k of Object.keys(base)) if (S[k] === undefined) S[k] = base[k];
   S.parked ||= {};
+  migrateRetiredItems(S);
   const park = (kind, x) => { (S.parked[kind] ||= []).push(x); };
   const staff = D.get('staff.staff');
   const entry = base.staff[Object.keys(base.staff)[0]];

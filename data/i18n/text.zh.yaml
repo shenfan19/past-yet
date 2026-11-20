@@ -100,15 +100,6 @@ strategies:
     balanced:
       name: 均衡
       desc: 有病人就治，有水可救就救，有空就见当地医生。
-    cure:
-      name: 先救病人
-      desc: 补液优先，防护次之，少去找人聊。
-    prevent:
-      name: 先保水
-      desc: 分氯片，教煮水，病人排在后面。
-    ally:
-      name: 与当地名医合作
-      desc: 多花时间在斯诺身上，帮他把证据送到该去的人面前。
   on_block:
     yield:
       name: 让步
@@ -118,7 +109,7 @@ strategies:
       desc: 站在门口说清楚，丢点东西也要进去。
     appeal:
       name: 求助
-      desc: 转头去找斯诺帮忙说话。
+      desc: 找当地的接洽人帮忙说话。
 tags:
   science: 科学
   technology: 技术
@@ -622,8 +613,8 @@ ui:
     recall_tip: 要求对方现在回来。故事就停在当下，只带回一部分报酬。对方可能拒绝。
     recall_refused: 拒绝召回
     hire_title: 雇佣
-    hire_hint: 眼前有一批候选人。雇了一位，会再出现一位，每 {n} 天整批刷新。
-    hire_next: '{n} 天后刷新。'
+    hire_hint: 雇佣一位后会补充人选。名单每 {n} 个游戏日刷新一次。
+    hire_next: 再过 {n} 个游戏日刷新。
     hire: 招募
     cost: 费用
     reached_home: 能量已够回家。这个原型到此为止。
@@ -944,6 +935,7 @@ ui:
     need_gear: '{i}'
     need_luck: 一点运气
     by_trait: 靠特质补上
+    trait_bonus: 同步点补判概率
     lost_by_trait: 因特质失去
     by_secretary: 秘书保住
   welcome:
@@ -1078,15 +1070,6 @@ items:
   recall_charm:
     name: 回收符
     desc: 濒死时把人接回。没带的话，装备全丢。
-  detox_water:
-    name: 泛用解毒水
-    desc: 能中和多种常见毒物的现代药水。比补液盐贵，但一瓶顶三包。
-  disinfectant:
-    name: 杀菌水
-    desc: 现代的消毒液。一瓶能让十几个人的水或手变得安全。
-  heart_monitor:
-    name: 心率检测器
-    desc: 戴在员工身上，能提前发现过劳，疲劳涨得更慢。
   radiation_shield:
     name: 辐射隔离器
     desc: 来自未来的铅衬防护罩，挡住粉尘和辐射。居里夫妇当年没有这样的东西。
@@ -1099,45 +1082,21 @@ items:
   face_mask:
     name: 医用口罩
     desc: 便宜的屏障，减少呼吸道疾病的传播，戴一次就丢。
-  thermometer:
-    name: 体温计
-    desc: 早早看出发热，疾病还不明显时就能察觉。
-  sun_hat:
-    name: 宽檐帽
-    desc: 给头和脖子遮阴，挡住几个小时的日晒。
   water_flask:
     name: 保温水壶
     desc: 带着走的烧开水，热天是凉的，冷天是热的。
   warm_blanket:
     name: 保暖毯
     desc: 很轻的毯子，在寒夜里把体温留住。
-  hand_warmer:
-    name: 暖宝宝
-    desc: 一包能暖一整夜。
-  energy_bar:
-    name: 能量棒
-    desc: 热量很高的食物，快速补上能量缺口。
   neural_chip:
     name: 义体智能芯片
     desc: 耳后的芯片，能翻译任何语言，加快学习。不容易遮住。
   oxygen_can:
     name: 便携氧气瓶
     desc: 在稀薄的空气里救急的几口氧气。
-  altitude_pills:
-    name: 高原药
-    desc: 缓解上得太快引起的头痛和恶心。
-  cyber_arm:
-    name: 义体手臂
-    desc: 力量远超常人的假肢，很显眼。
-  back_brace:
-    name: 护腰带
-    desc: 搬重物时托住腰。
   cyber_lung:
     name: 义体仿生肺
     desc: 能撑长时间重活的人造肺，会轻轻嗡鸣。
-  gorilla_arm:
-    name: 义体大猩猩手臂
-    desc: 又大又夸张的怪力手臂，谁看到都会盯着。
   painkiller:
     name: 止痛药
     desc: 压住几个小时的疼痛，不治病，只是争取时间。
@@ -1153,15 +1112,9 @@ items:
   golden_apple:
     name: 金苹果
     desc: 神话里的金苹果，听你说话的人容易被打动，说服力提高 200%。
-  elixir:
-    name: 灵药
-    desc: 一瓶明亮的药水，止痛，恢复体力。
   headlamp:
     name: 头灯
     desc: 夜里腾出双手读书写字用的光。
-  ear_plugs:
-    name: 耳塞眼罩
-    desc: 在吵闹明亮的地方也能睡着。
   thermal_suit:
     name: 恒温服
     desc: 在冰天雪地或酷暑里都保持体温的衣服，样子很奇怪。
@@ -1174,9 +1127,6 @@ items:
   nutrient_synth:
     name: 营养合成器
     desc: 把几乎任何东西变成营养均衡的一餐，长路上不再挨饿。
-  plush_toy:
-    name: 毛绒玩具
-    desc: 送给孩子或病人的小礼物，让房间不那么可怕。
   ar_glasses:
     name: 增强现实眼镜
     desc: 给看到的东西加标注、让细节浮现的眼镜，不容易遮住。
@@ -1219,9 +1169,6 @@ items:
   scout_drone:
     name: 探路无人机
     desc: 先飞过前面的路，带回一张图。
-  insulated_gloves:
-    name: 绝缘手套
-    desc: 挡住电击，保护双手。
   first_aid_kit:
     name: 急救包
     desc: 包扎与胶带，止血并合住伤口，让受伤不至于变成死亡。
@@ -2146,73 +2093,50 @@ traits:
 trait_notes:
   kind:
     pro: 容易赢得信任，照护真诚。
-    con: 容易被敌意所伤，也容易让步。
   curious:
     pro: 留意到别人没留意的，敢问别人不问的。
-    con: 容易被别的事分心。
   glib:
     pro: 靠嘴进得去门，容易说动人。
-    con: 太会说的人不一定被信。
   sensitive:
     pro: 容易发现不对劲，也能体会别人的感受。
-    con: 体质较弱，更容易染上疾病。
   bold:
     pro: 敢顶住阻力和危险。
-    con: 粗心，容易漏掉该留意、该照料的。
   patient:
     pro: 能等，肯花时间把事情慢慢做好。
-    con: 遇到突然的变化反应偏慢。
   methodical:
     pro: 做事有章法，记录和核对一丝不苟，被逼也不松口。
-    con: 死板，场面没有章法时容易吃力，也不擅长说动别人。
   hardy:
     pro: 身体扛得住，生病也比别人少。
-    con: 粗线条，容易看漏细节。
   charismatic:
     pro: 一站出来就有人愿意听、愿意跟。
-    con: 精力分给了人，坐不住做细活。
   quiet:
     pro: 不惹眼，看得多，耐得住。
-    con: 不爱争，说不动别人。
   wanderer:
     pro: 底层出身或惯了在外，不怎么想家，不太受敌意和熬夜的影响，吃得了苦。
-    con: 不容易交心，别人也不太信任，在上层人面前不自在，话说不到点上。
   attached:
     pro: 对人用情很深，肯守着。
-    con: 离家越久越想家，容易撑不下去。
   streetwise:
     pro: 市井里练出来的反应，吃了亏也能找条出路。
-    con: 耐不住性子，难做长久的事。
   scholarly:
     pro: 读得多，能和学者平等地谈。
-    con: 体力一般，也容易生病。
   handy:
     pro: 手艺扎实，能把东西做到位。
-    con: 嘴笨，不擅长说服别人。
   artistic:
     pro: 对美和声音特别敏锐，能打动人。
-    con: 心思容易飘走，也容易想家。
   calm:
     pro: 事到临头反而稳，照护病人尤其好。
-    con: 慢半拍，容易错过细小的变化。
   cosmopolitan:
     pro: 去过很多地方，同陌生人容易搭上话。
-    con: 什么都见过，没耐心守着一件事。
   cheerful:
     pro: 爱笑，愿意帮忙，带得起气氛。
-    con: 想得简单，看不出暗处的问题。
   vigil:
     pro: 越晚越清醒，守夜熬更不容易走神。
-    con: 白天长途劳累就垮。
   faithful:
     pro: 有坚定的信念，难关里不动摇。
-    con: 对与信念不合的事不容易接受。
   skeptical:
     pro: 凡事要证据，不轻信，也容易看出破绽。
-    con: 对人先有戒心，别人也不容易对他敞开。
   ambitious:
     pro: 目标明确，肯争取，也敢开口要。
-    con: 心里装着事，容易忽略身边人的难处。
 mainline:
   open:
     name: 开张
@@ -7940,7 +7864,7 @@ eras:
         - text: 如果多带一样东西，也许能多救一户人家。
     hints:
       lost_ors: 补液被丢了很多，下一次可以让员工让步，或者多带一点。
-      unused_protect: 氯片没用完。受限于邻居的信任，不是氯片不够，让员工先去帮病人建立信任。
+      unused_protect: 氯片没用完。受限于邻居的信任，不是氯片不够。
       unused_ors: 补液没用完。可能是员工把时间花在别处，或者病人没让进门。
       ally_gap: 斯诺的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
       none: 换一项配置再派一趟，同一个种子，对照起来最清楚。
@@ -8090,7 +8014,7 @@ eras:
         - text: 如果多带一样东西，也许能多救几位。
     hints:
       lost_ors: 洗手液被没收了很多，下一次可以让员工让步，或者先去找森梅尔维斯。
-      unused_protect: 洗手液没用完。前辈们不愿意听，不是不够用，试试先和森梅尔维斯合作，把阻力降下来。
+      unused_protect: 洗手液没用完。前辈们不愿意听，不是不够用。
       unused_ors: 物资没用完。
       ally_gap: 森梅尔维斯的证据还不够。手册能帮他，前提是员工愿意花时间陪他。
       none: 换一项配置再派一趟，同一个种子，对照起来最清楚。
@@ -8206,7 +8130,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 消毒的东西剩下了。限制不是物资，是病房对你的信任。先让员工帮病人做事，建立信任。
+      unused_protect: 消毒的东西剩下了。限制不是物资，是病房对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进病房。
       ally_gap: 南丁格尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -8320,7 +8244,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 蚊帐剩下了。限制不是蚊帐，是街区对你的信任。先让员工帮病人做事，建立信任。
+      unused_protect: 蚊帐剩下了。限制不是蚊帐，是街区对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 芬莱的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -8429,7 +8353,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 口罩和清洁用品剩下了。限制不是物资，是村子对你的信任。先让员工帮病人做事，建立信任。
+      unused_protect: 口罩和清洁用品剩下了。限制不是物资，是村子对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 詹纳的证据还很薄。手册能帮他，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -8536,7 +8460,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 氯片剩下了。限制不是物资，是营地对你的信任。先让员工帮病人做事，建立信任。
+      unused_protect: 氯片剩下了。限制不是物资，是营地对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进门。
       ally_gap: 西科尔的证据还很薄。手册能帮她，前提是员工花时间和她在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -8850,7 +8774,7 @@ eras:
       boards: '{date}，班克斯记下图帕亚登船，并重申愿意随船远行。'
       departs: '{date}，奋进号驶离塔希提，图帕亚与泰阿塔随船。'
       first_treat: '{date}：{staff} 给一个牙龈肿胀的人递上第一杯果汁，他开始开口了。'
-      first_protect: '{date}：{staff} 给干活的人发下第一批帽子和网，教大家使用。'
+      first_protect: '{date}：{staff} 给干活的人发下第一批蚊帐，教大家怎么挂。'
       met_tupaia: '{date}：{staff} 被图帕亚接见。'
       tupaia_trusts: '{date}：图帕亚把笔记交给 {staff} 用。'
       tupaia_convinced: '{date}：图帕亚采纳了 {staff} 提出的办法。'
@@ -8899,7 +8823,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 帽子剩下了。限制不是物资，是船员对你的信任。先让员工帮人做事，建立信任。
+      unused_protect: 有些蚊帐还在包里，船员还没信任你。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 图帕亚的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -8957,7 +8881,7 @@ eras:
       surveying: '{date}，小猎犬号测量查塔姆岛（今圣克里斯托瓦尔岛）外侧海岸。'
       lands: '{date}，达尔文记下自己与菲茨罗伊当天下午登上查塔姆岛。'
       first_treat: '{date}：{staff} 给一个中暑的人递上第一杯干净的水，他开始开口了。'
-      first_protect: '{date}：{staff} 给上岸的队伍发下第一批帽子和遮阳布，教大家使用。'
+      first_protect: '{date}：{staff} 给上岸的队伍发下第一批蚊帐，教大家怎么挂。'
       met_darwin: '{date}：{staff} 被达尔文接见。'
       darwin_trusts: '{date}：达尔文把笔记交给 {staff} 用。'
       darwin_convinced: '{date}：达尔文采纳了 {staff} 提出的办法。'
@@ -9006,7 +8930,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 帽子剩下了。限制不是物资，是船员对你的信任。先让员工帮人做事，建立信任。
+      unused_protect: 有些蚊帐还在包里，船员还没信任你。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 查尔斯·达尔文的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -9113,7 +9037,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 毯子剩下了。限制不是物资，是挑夫对你的信任。先让员工帮人做事，建立信任。
+      unused_protect: 毯子剩下了。限制不是物资，是挑夫对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 亚历山大·冯·洪堡的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -9220,7 +9144,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 氧气剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_protect: 氧气剩下了。限制不是物资，是队伍对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       ally_gap: 乔治·马洛里的证据还很薄。手册能帮上忙，前提是员工花时间和他在一起。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
@@ -9323,7 +9247,7 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。
   wegener_greenland_1930:
@@ -9425,6 +9349,6 @@ eras:
         - text: 再多带一件东西，也许还能多救一个人。
     hints:
       lost_ors: 丢了不少物资。下次让员工退让，或者多带一些。
-      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。先让员工帮人做事，建立信任。
+      unused_protect: 毯子剩下了。限制不是物资，是队伍对你的信任。
       unused_ors: 物资剩下了。员工可能把时间花在别处，或者没被放进来。
       none: 只改一样东西，用同一个种子再派一次，这样对比最清楚。

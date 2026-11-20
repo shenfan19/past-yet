@@ -273,7 +273,7 @@ for (const lang of LANGS) {
   put('antiques', antiqueCards, (t) => t);
   put('staff', staffCards, (t) => t);
   put('traits', traitCards, (t) => t.name);
-  put('trait_notes', traitCards, (t) => ({ pro: t.pro, con: t.con }));
+  put('trait_notes', traitCards, (t) => ({ pro: t.pro }));
   put('mainline', stageCards, (t) => t);
   put('quotes', quoteCards, (t, c) => ({ ...t, authors: c.authors }));
   put('catalog', eventCards, (t) => t);

@@ -42,25 +42,21 @@ for (const data of [D, DZ]) {
   }
 }
 
-// point kinds: every kind a scene or an era model asks for, and which traits give or cost it
+// point kinds: every kind a scene or an era model asks for, and which traits can help
 const sceneEvents = events.filter((e) => e.scene);
 const kinds = new Set(cfg.light.kinds);
 for (const e of sceneEvents) for (const p of e.scene.points) kinds.add(p.kind);
 for (const id of cfg.eras) for (const p of D.get('era_raw.' + id).star_points) kinds.add(p.kind);
-const gives = {}, costs = {};
-for (const k of kinds) { gives[k] = []; costs[k] = []; }
+const gives = Object.fromEntries([...kinds].map((k) => [k, []]));
 for (const [t, tr] of Object.entries(traits)) {
-  let g = 0, c = 0;
   for (const [k, v] of Object.entries(tr.points)) {
     if (!kinds.has(k)) { err(`trait ${t}: points key ${k} is not a point kind anyone asks for`); continue; }
-    (v > 0 ? gives : costs)[k].push(t);
-    v > 0 ? g++ : c++;
+    if (!(v > 0 && v <= 1)) { err(`trait ${t}: invalid sync point bonus ${k} = ${v}`); continue; }
+    gives[k].push(t);
   }
-  if (!g || !c) err(`trait ${t} has only gains or only costs`);
 }
 for (const k of kinds) {
   if (!gives[k].length) err(`point kind ${k}: no trait gives it`);
-  if (!costs[k].length) warn(`point kind ${k}: no trait costs it, nothing trades against it`);
 }
 
 // scenes
@@ -162,8 +158,7 @@ for (const [id, it] of Object.entries(items)) {
   if (!it.playable && !it.ip && !it.retired) warn(`item ${id}: not playable and no reason given`);
   if (it.retired && it.playable) err(`item ${id}: retired but still playable`);
 }
-// a retired item keeps its id for old saves, and nothing that is in the game may ask for it: no point of a story that is on, no start stock,
-// no binding of a full model; a point that asks for what an item provides needs one playable item that provides it
+// Gameplay references must resolve to playable items, including dispatch regimens and auto-mode settings.
 const playable = (id) => items[id]?.playable;
 const provided = new Set(Object.values(items).filter((it) => it.playable).flatMap((it) => [].concat(it.provides || [])));
 const reqItems = (r, out = []) => { if (!r || typeof r !== 'object') return out; if (Array.isArray(r)) { r.forEach((x) => reqItems(x, out)); return out; }
@@ -173,7 +168,14 @@ for (const e of D.get('catalog.active_events')) for (const p of e.scene?.points 
   if (k === 'provides' && !provided.has(x)) err(`event ${e.id} point ${p.id}: asks for what provides ${x}, and no playable item does`);
 }
 for (const id of Object.keys(D.get('config.office.start_stock'))) if (!playable(id)) err(`start stock: ${id} is not in the game`);
-for (const id of cfg.eras) for (const k of Object.keys(D.get('era_raw.' + id).item_bindings)) if (!playable(k)) err(`model ${id}: binds ${k}, which is not in the game`);
+for (const id of [...cfg.auto.kit_order, ...Object.keys(cfg.auto.buy_target)]) if (!playable(id)) err(`auto mode: ${id} is not in the game`);
+for (const id of cfg.eras) {
+  const model = D.get('era_raw.' + id);
+  for (const k of Object.keys(model.item_bindings)) if (!playable(k)) err(`model ${id}: binds ${k}, which is not in the game`);
+  for (const plan of model.simulation?.plans || []) for (const { from_item, variable } of plan.regimens || []) {
+    if (from_item && (!playable(from_item) || !Object.hasOwn(model.item_bindings[from_item] || {}, variable))) err(`model ${id}: ${plan.id} has no binding from ${from_item} to ${variable}`);
+  }
+}
 
 // events
 const tiers = {};
@@ -296,7 +298,7 @@ for (const [, v] of Object.entries(placeSeen)) if (v.length > 1) warn(`events ${
 
 const fmt = (o) => Object.entries(o).map(([k, v]) => `${k}:${v}`).join(' ');
 console.log('point kinds in scenes:', fmt(kindUse));
-for (const k of kinds) console.log(`  ${k}: gives [${gives[k].join(', ')}] costs [${costs[k].join(', ')}]`);
+for (const k of kinds) console.log(`  ${k}: gives [${gives[k].join(', ')}]`);
 console.log('trait holders:', fmt(traitCount));
 console.log('trait asked in scenes:', fmt(traitUse));
 console.log('scene items asked:', fmt(itemUse));

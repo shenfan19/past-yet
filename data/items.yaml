@@ -73,66 +73,6 @@ recall_charm:
   authors:
     - AI
     - Fan Shen
-detox_water:
-  cost: 12
-  weight: 0.4
-  max: 40
-  step: 2
-  kind: consumable
-  shop: modern
-  loss: used
-  channels:
-    - T
-    - W
-  tags:
-    - medical
-    - consumable
-    - modern
-  playable: false
-  retired: merged into ors_pack
-  authors:
-    - AI
-    - Fan Shen
-disinfectant:
-  cost: 8
-  weight: 0.6
-  max: 40
-  step: 2
-  kind: consumable
-  shop: modern
-  loss: used
-  channels:
-    - W
-    - E
-  tags:
-    - medical
-    - sterilize
-    - consumable
-    - modern
-  playable: false
-  retired: merged into chlorine_tablet
-  authors:
-    - AI
-    - Fan Shen
-heart_monitor:
-  cost: 60
-  weight: 0.3
-  max: 1
-  step: 1
-  kind: single
-  shop: modern
-  loss: fatal
-  channels:
-    - V
-  tags:
-    - medical
-    - device
-    - modern
-  playable: false
-  retired: removed; no story or model keeps a monitor
-  authors:
-    - AI
-    - Fan Shen
 radiation_shield:
   cost: 20
   weight: 2
@@ -209,42 +149,6 @@ face_mask:
   authors:
     - AI
     - Fan Shen
-thermometer:
-  cost: 6
-  weight: 0.05
-  max: 1
-  step: 1
-  kind: single
-  shop: modern
-  channels:
-    - E
-  tags:
-    - medical
-    - device
-    - modern
-  playable: false
-  retired: unused
-  authors:
-    - AI
-    - Fan Shen
-sun_hat:
-  cost: 8
-  weight: 0.2
-  max: 1
-  step: 1
-  kind: single
-  shop: modern
-  channels:
-    - H
-  tags:
-    - safety
-    - device
-    - modern
-  playable: false
-  retired: merged into water_flask
-  authors:
-    - AI
-    - Fan Shen
 water_flask:
   cost: 10
   weight: 0.5
@@ -277,45 +181,6 @@ warm_blanket:
     - device
     - modern
   playable: true
-  authors:
-    - AI
-    - Fan Shen
-hand_warmer:
-  cost: 3
-  weight: 0.05
-  max: 60
-  step: 5
-  kind: consumable
-  shop: modern
-  loss: used
-  channels:
-    - C
-  tags:
-    - safety
-    - consumable
-    - modern
-  playable: false
-  retired: merged into warm_blanket
-  authors:
-    - AI
-    - Fan Shen
-energy_bar:
-  cost: 4
-  weight: 0.08
-  max: 80
-  step: 5
-  kind: consumable
-  shop: modern
-  loss: used
-  channels:
-    - C
-    - 'Y'
-  tags:
-    - medical
-    - consumable
-    - modern
-  playable: false
-  retired: merged into hardtack
   authors:
     - AI
     - Fan Shen
@@ -363,70 +228,6 @@ oxygen_can:
   authors:
     - AI
     - Fan Shen
-altitude_pills:
-  cost: 10
-  weight: 0.03
-  max: 40
-  step: 2
-  kind: consumable
-  shop: modern
-  loss: used
-  channels:
-    - A
-  tags:
-    - medical
-    - consumable
-    - modern
-  playable: false
-  retired: merged into oxygen_can
-  authors:
-    - AI
-    - Fan Shen
-cyber_arm:
-  cost: 50
-  weight: 1
-  max: 1
-  step: 1
-  kind: single
-  shop: future
-  channels:
-    - L
-  tags:
-    - cyber
-    - device
-    - future
-  playable: false
-  retired: removed; implants stand for attributes
-  scene: true
-  unlock_energy: 40
-  exposure: 0.35
-  provides:
-    - strength
-  implant: true
-  load: 1
-  stat_add:
-    constitution: 2
-  authors:
-    - AI
-    - Fan Shen
-back_brace:
-  cost: 14
-  weight: 0.4
-  max: 1
-  step: 1
-  kind: single
-  shop: modern
-  channels:
-    - L
-  tags:
-    - safety
-    - device
-    - modern
-  playable: false
-  retired: unused; the pack frame holds the load
-  authors:
-    - AI
-    - Fan Shen
 cyber_lung:
   cost: 75
   weight: 1
@@ -453,34 +254,6 @@ cyber_lung:
   stat_add:
     constitution: 1
     will: 1
-  authors:
-    - AI
-    - Fan Shen
-gorilla_arm:
-  cost: 100
-  weight: 1
-  max: 1
-  step: 1
-  kind: single
-  shop: future
-  channels:
-    - L
-  tags:
-    - cyber
-    - device
-    - future
-  playable: false
-  retired: removed; implants stand for attributes
-  scene: true
-  unlock_energy: 80
-  exposure: 0.5
-  provides:
-    - strength
-    - gorilla
-  implant: true
-  load: 2
-  stat_add:
-    constitution: 3
   authors:
     - AI
     - Fan Shen
@@ -584,32 +357,6 @@ golden_apple:
   authors:
     - AI
     - Fan Shen
-elixir:
-  cost: 190
-  weight: 1
-  max: 1
-  step: 1
-  kind: single
-  shop: future
-  channels:
-    - G
-    - E
-  tags:
-    - fantasy
-    - medical
-    - future
-  playable: false
-  retired: removed; the nano kit heals and cures, the calm patch calms
-  scene: true
-  unlock_energy: 150
-  exposure: 0.1
-  provides:
-    - heal
-  stat_mult:
-    constitution: 1.4
-  authors:
-    - AI
-    - Fan Shen
 headlamp:
   cost: 9
   weight: 0.2
@@ -622,23 +369,6 @@ headlamp:
     - device
     - modern
   playable: true
-  authors:
-    - AI
-    - Fan Shen
-ear_plugs:
-  cost: 5
-  weight: 0.02
-  max: 1
-  step: 1
-  kind: single
-  shop: modern
-  channels:
-    - V
-  tags:
-    - device
-    - modern
-  playable: false
-  retired: unused; caffeine holds the vigil
   authors:
     - AI
     - Fan Shen
@@ -724,24 +454,6 @@ nutrient_synth:
   exposure: 0.15
   provides:
     - ration
-  authors:
-    - AI
-    - Fan Shen
-plush_toy:
-  cost: 7
-  weight: 0.15
-  max: 20
-  step: 2
-  kind: consumable
-  shop: modern
-  loss: used
-  channels:
-    - G
-  tags:
-    - consumable
-    - modern
-  playable: false
-  retired: unused; the voice recorder holds the grief
   authors:
     - AI
     - Fan Shen
@@ -1018,24 +730,6 @@ scout_drone:
   exposure: 0.4
   provides:
     - scout
-  authors:
-    - AI
-    - Fan Shen
-insulated_gloves:
-  cost: 16
-  weight: 0.3
-  max: 1
-  step: 1
-  kind: single
-  shop: modern
-  channels:
-    - T
-  tags:
-    - safety
-    - device
-    - modern
-  playable: false
-  retired: unused
   authors:
     - AI
     - Fan Shen

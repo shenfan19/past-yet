@@ -512,27 +512,28 @@ export function createOffice(X) {
   // The candidates are the employees of the cards, the ones not hired and not already on offer, drawn with a seed. Hiring one brings another,
   // and every refresh_days the whole offer is replaced.
   const HI = D.get('hiring');
-  function addCandidate() {
+  function addCandidate(previous = new Set()) {
     const s = S();
     const taken = new Set(s.hire.slots.map((x) => x.id));
     const free = Object.keys(D.get('staff.staff')).filter((id) => !(s.staff[id] && s.staff[id].hired) && !taken.has(id));
     if (!free.length) return false;
+    const newcomers = free.filter((id) => !previous.has(id));
     s.hire.serial += 1;
-    s.hire.slots.push({ id: ctx.backend.pick(free, s.hire.serial, 'hire') });
+    s.hire.slots.push({ id: ctx.backend.pick(newcomers.length ? newcomers : free, s.hire.serial, 'hire') });
     return true;
   }
   function ensureHire() {
     const s = S();
     if (!s.hire) s.hire = { slots: [], serial: 0, next: day() + HI.refresh_days };
-    while (s.hire.slots.length < HI.slots && addCandidate());
-  }
-  function refreshHire() {
-    const s = S();
-    if (!s.hire || day() < s.hire.next) return;
-    while (day() >= s.hire.next) s.hire.next += HI.refresh_days;
-    s.hire.slots = [];
-    ensureHire();
-    ctx.save();
+    const refresh = day() >= s.hire.next;
+    const previous = new Set();
+    if (refresh) {
+      for (const { id } of s.hire.slots) previous.add(id);
+      s.hire.next += (Math.floor((day() - s.hire.next) / HI.refresh_days) + 1) * HI.refresh_days;
+      s.hire.slots = [];
+    }
+    while (s.hire.slots.length < HI.slots && addCandidate(previous));
+    if (refresh) ctx.save();
   }
   function hire(id) {
     const s = S();
@@ -659,7 +660,7 @@ export function createOffice(X) {
     payWages();
     // an unpaid day stops the clock and asks for a decision
     if ((s.unpaidDays || 0) > unpaid0) { s.clock.speed = 0; s.brokeNew = true; }
-    refreshHire();
+    if (s.hire && day() >= s.hire.next) ensureHire();
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
     if (fresh.length && ctx.settings.get('pause_on_report')) s.clock.speed = 0;

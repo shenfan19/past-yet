@@ -168,12 +168,12 @@ export function createWiki(X) {
         id: 'traits:' + t, cat: 'traits', title: T.traits[t], tags: [], unlock: { trait: t }, refs: ['game'], authors: D.get('staff.traits.' + t + '.authors'),
         body: () => {
           const tr = D.get('staff.traits.' + t);
-          const mods = Object.entries(tr.points).map(([k, v]) => `${esc(T.point_kinds[k])} ${v > 0 ? '+' : ''}${Math.round(v * 100)}%`).join(SEP);
-          const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${esc(U.dispatch[grp])}${COLON}${esc(T.strategies[grp][key].name)}`).join('${U.fmt.semi}');
-          const who = Object.keys(D.get('staff.staff')).filter((id) => known(id) && staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
+          const mods = X.pointsText(tr);
+          const pol = Object.entries(tr.policy || {}).map(([grp, key]) => `${U.dispatch[grp]}${COLON}${T.strategies[grp][key].name}`).join(U.fmt.semi);
+          const who = Object.keys(D.get('staff.staff')).filter((id) => X.isUnlocked({ staff: id }) && staffTraits(D, id).includes(t)).map((id) => a('staff:' + id, staffName(D, id))).join(' ');
           const pref = `<div>${U.office.secretary_as}${COLON}${esc(X.traitPerk(t))}</div>`;
           const note = T.trait_notes[t];
-          return `<div class="traitline"><span class="pro">+ ${esc(note.pro)}</span></div><div class="traitline"><span class="con">− ${esc(note.con)}</span></div><div>${U.enc.modified_by}${COLON}${mods}</div><div>${pol ? esc(pol) : U.enc.edge_none}</div>${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
+          return `<p>${esc(note.pro)}</p><div>${U.stars.trait_bonus}${COLON}${esc(mods)}</div>${pol ? `<div>${esc(pol)}</div>` : ''}${pref}<div class="sec">${W.related}</div><div class="wrap">${who}</div>`;
         },
       });
     }
@@ -202,6 +202,7 @@ export function createWiki(X) {
     }
 
     for (const [id, it] of Object.entries(D.get('items'))) {
+      if (it.retired) continue;
       const tx = T.items[id];
       add({
         id: 'items:' + id, cat: it.shop === 'future' ? 'items_future' : 'items_modern', title: tx.name, tags: it.tags, unlock: { item: id }, refs: ['game'], authors: it.authors,

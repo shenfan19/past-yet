@@ -31,7 +31,7 @@ export function createShop(X) {
     const sh = D.get('shops.shops.' + shopId);
     const S = ctx.S();
     const lid = 'shop_' + shopId;
-    const base = Object.keys(D.get('items')).filter((id) => D.get('items.' + id).shop === shopId);
+    const base = Object.entries(D.get('items')).filter(([, it]) => it.shop === shopId && !it.retired).map(([id]) => id);
     const ids = base.filter((id) => listbox.match(lid, T.items[id].name + ' ' + T.items[id].desc, D.get('items.' + id).tags));
     const rows = ids.map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
     const buyable = (it) => it.playable && sh.playable && !it.ip;
