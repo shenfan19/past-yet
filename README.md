@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Version 0.11.1 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
+Version 0.11.2 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
 
 ## Run
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.2, 2026-11-19
+
+- Trip histories on story pages and employee cards can be sorted by most recent or highest stars and browsed page by page. Repeat dispatches stay visible, and returning from a report restores the story page position.
+- Share cards use a portrait layout with more room for the historical echo and trip record. The game link and QR code point to www.pastyet.com.
+- About explains when historical echoes appear and how the historical material was drafted and reviewed. Life Matters is introduced and linked in the author section. Encyclopedia entries show individual contributor credits where applicable.
+- The opening Sun Yat-sen University story and its translations were revised. The encyclopedia lists unlocked entries in language-aware title order and groups locked entries below them.
+- Large saves are stored in IndexedDB and can be transferred as compressed exports in supported browsers. Import also accepts earlier JSON exports and warns if the browser cannot keep the imported save.
+- Automatic dispatch covers routine trips and restocking. Routes that repeatedly fall short can be retried manually, and spare antiques can be transferred to fund payroll.
+
 ## 0.11.1, 2026-11-19
 
 - Travel and rest bars use the same seven-day scale. Longer countdowns stay full until seven days remain, while the label shows the actual time left.
