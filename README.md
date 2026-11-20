@@ -1,12 +1,14 @@
 # The Past Is Yet to Come
 
+[简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
+
 You run a small staffing agency that sends people into the past. History is drifting: every trip prises a branch off it, so the agency holds the moments that are slipping and mends, in a branch, what history left undone. The staff come home with stories and time energy, and you spend the energy on getting back to your own family.
 
 It is a travel-frog style game: send people out, wait, read what happened. Each trip is an automatic simulation of the traveller and the protagonist of the era, driven by traits and the conditions of that era. Every report is set against a baseline run of the same seed without the traveller.
 
 ## Status
 
-Version 0.12.0 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
+Version 0.12.1 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
 
 ## Run
 

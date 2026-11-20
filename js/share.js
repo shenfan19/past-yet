@@ -9,7 +9,6 @@ export function createShare(X) {
   const CV = C.canvas;
   const QR = D.get('share_qr');
   const englishTitle = D.get('config.meta.app');
-  const localTitle = H.card_title === englishTitle ? '' : H.card_title;
   const logo = new Image();
   logo.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.get('logo'));
 
@@ -80,10 +79,9 @@ export function createShare(X) {
 
   const caption = (d) => {
     const p = parts(d);
-    const brand = [localTitle, englishTitle].filter(Boolean).join(' · ');
     const outcome = H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome);
     const result = [outcome, starsOf(d)].filter(Boolean).join('\n');
-    return [brand, H.description, result, ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text,
+    return [englishTitle, H.description, result, ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text,
       ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), QR.url].join('\n\n');
   };
 
@@ -173,8 +171,7 @@ export function createShare(X) {
     const qrX = w - pad - CV.qr_size;
     const titleX = pad + logoSize + 20;
     const titleSpace = { x: titleX, max: qrX - titleX - 26 };
-    if (localTitle) text(localTitle, { ...titleSpace, size: 39, face: serif, weight: 700 });
-    else y += 8;
+    y += 8;
     text(englishTitle, { ...titleSpace, size: CV.title_px, face: serif, weight: 700 });
     text(H.description, { ...titleSpace, size: CV.description_px, color: K.ink2 });
     const brandEnd = y;

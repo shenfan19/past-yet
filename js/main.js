@@ -49,7 +49,8 @@ function withDevStaff(S) {
 }
 
 document.documentElement.lang = localeTag(D.lang);
-document.title = [D.get('text.ui.title') + ' v' + D.get('config.meta.version'), D.get('text.ui.subtitle')].filter(Boolean).join(' · ');
+const { app, version } = D.get('config.meta');
+document.title = `${app} · v${version}`;
 
 const backend = createLocalBackend(D);
 backend.setGearSource((id) => (S && S.staff[id] && S.staff[id].gear) || []);

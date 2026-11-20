@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1, 2026-11-19
+
+- The game header, browser tab, share image and copied share text now use The Past Is Yet to Come as the title in every language.
+- About and the Simplified Chinese, Traditional Chinese, Japanese and Korean README guides pair the original title with 白露未晞.
+- About links to the current source and issue tracker. The email link opens a draft, and the disclaimer points readers to the contact links in the Author section.
+
 ## 0.12.0, 2026-11-19
 
 - Auto explores unvisited routes first, then rotates through each employee’s least-tried routes. Automatic and manual trips use the same antique find rules, including after repeated low-star results.

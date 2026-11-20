@@ -186,6 +186,7 @@ For a small story, Auto estimates star outcomes using the dispatch seed. It cons
 
 ## Languages, sound and sharing
 
+- The Past Is Yet to Come is the title shown in the game, browser tab, share image and copied share text across all languages. The subtitle 白露未晞 appears in About and the README guides for Simplified Chinese, Traditional Chinese, Japanese and Korean. Project links use their English names.
 - English is the fallback and must be complete. Simplified Chinese is the second language. Any missing key reads English. `node tools/check_i18n.mjs` checks the files against English.
 - The music is a few piano pieces played by a small Web Audio synthesiser from MIDI files, and the sound effects are tones the page makes itself. There is no sampled audio.
 - A trip can be shared from its report. The card opens in a pop-up, not on a page of its own, and closes with a click beside it, the cross or Escape. It tells the story of the trip in a few lines taken from its record: the line of the employee, how it ended, then the lines that won a star, the lines written for this employee and the history around them, at most `share.record_lines`, in time order. It draws no curves. A simulated place shows its two curves against the mainline, a small story shows its sync points, and there is no table of numbers on it. It has the address and a QR code, as a picture to save or copy.

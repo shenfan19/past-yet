@@ -50,7 +50,6 @@ export function createUI(D, ctx, DEV = false) {
   versionLabel.className = 'brand-version';
   versionLabel.textContent = 'v' + D.get('config.meta.version');
   document.getElementById('title').replaceChildren(U.title, ' ', versionLabel);
-  document.getElementById('subtitle').textContent = U.subtitle;
 
   const st = { chartOff: new Set(), tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null, settled: {} };
 
@@ -1021,6 +1020,7 @@ export function createUI(D, ctx, DEV = false) {
   function aboutHtml() {
     const A = U.about;
     const M = D.get('config.meta');
+    const appName = ['zh', 'zh-Hant', 'ja', 'ko'].includes(D.lang) ? `${M.app}（${M.chinese_title}）` : M.app;
     const link = (href, label) => `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
     // the first mention of a name on this page links to its page
     const inline = { 'Life Matters': M.links.lm, 'Care for You': M.links.care, 'Fan Shen': M.links.author, 'Mutopia Project': M.links.music };
@@ -1030,10 +1030,7 @@ export function createUI(D, ctx, DEV = false) {
       for (const [name, href] of Object.entries(inline)) if (!linked.has(name) && h.includes(name)) { linked.add(name); h = h.replace(name, link(href, name)); }
       return `<p>${h}</p>`;
     };
-    const links = A.links.map(({ id, label }) => {
-      const href = M.links[id];
-      return link(href, id === 'mail' ? href.replace(/^mailto:/, '') : label);
-    }).join(' · ');
+    const links = A.links.map(({ id, label }) => link(M.links[id], label)).join(' · ');
     const preview = `<h4>${esc(A.preview.title)}</h4>${para(A.preview.project)}${para(A.preview.changes)}`;
     const echoes = `<h4>${esc(A.echoes.title)}</h4>${para(A.echoes.rule)}`;
     const secs = A.sections.map((sec, i) => {
@@ -1047,7 +1044,7 @@ export function createUI(D, ctx, DEV = false) {
     const releases = `<div class="release-notes">${D.get('changelog.releases').map(({ title, notes }) =>
       `<section><h4>${esc(title)}</h4><pre>${esc(notes)}</pre></section>`).join('')}</div>`;
     return `<div class="about">
-      <div class="about-version">${esc(A.version_line.replace('{app}', M.app).replace('{v}', M.version).replace('{date}', M.released))}</div>
+      <div class="about-version">${esc(A.version_line.replace('{app}', appName).replace('{v}', M.version).replace('{date}', M.released))}</div>
       ${jumps}
       ${secs}
       <h3 id="about-updates">${esc(A.update_notes)}</h3>${releases}</div>`;
