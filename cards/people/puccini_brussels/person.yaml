@@ -1,156 +1,203 @@
 order: 157
+related: ['people:franco_alfano']
 events:
   puccini_brussels:
     order: 127
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1924
-    date: '1924-11-04'
-    stay: 2
+    date: '1924-11-07'
+    stay: 1
     lon: 4.35
     lat: 50.85
     region: europe
     field: music
     tier: 2
     channels: {G: 2}
-    refs: [puccini_brussels_catalogue, puccini_brussels_completion, puccini_brussels_letters, puccini_met_sketches]
+    refs: [puccini_brussels_letters, puccini_brussels_manuscript, puccini_brussels_clinic, puccini_brussels_museum, puccini_brussels_alfano_score]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 12, req: {"any":[{"job":["archivist","translator","proofreader","musician"]},{"trait":["methodical","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 16, req: {"any":[{"job":["musician"],"stat":{"wit":5}},{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["artistic","methodical"],"stat":{"wit":7,"will":7}}]}}
-        - {id: p3, kind: care, day: 24, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":8,"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"first_aid_kit","stat":{"wit":7,"will":6}}]}}
+        - {id: p1, kind: persuade, day: 12, req: {any: [{job: [musician], stat: {wit: 5}}, {job: [archivist, translator], stat: {wit: 7, will: 7}}, {trait: [artistic, methodical], stat: {wit: 7, will: 7}}]}}
+        - {id: p2, kind: care, day: 21, req: {any: [{job: [doctor, physician], stat: {wit: 8, will: 7}}, {job: [doctor, physician, nurse, paramedic], item: first_aid_kit, stat: {wit: 7, will: 6}}]}}
       vignettes:
-        - {id: divider, traits: [methodical, handy]}
-        - {id: future, traits: [bold, charismatic]}
-        - {id: pin}
+        - {id: divider, traits: [methodical, handy], day: 9}
+        - {id: future, traits: [bold, charismatic], day: 10}
+        - {id: pin, day: 11}
     text:
       en:
-        name: 'A divider for the unfinished score'
-        place: "Brussels"
-        figure: "Giacomo Puccini"
-        story: 'Puccini left Turandot incomplete. The Puccini Study Centre distinguishes the surviving drafts and scores and credits Franco Alfano with completing the duet and final scene.'
-        relic: "A sketch page"
-        relic_desc: "A page of musical sketches in soft pencil."
+        name: 'The unfinished duet'
+        place: Brussels
+        figure: Giacomo Puccini
+        story: 'Puccini went to Brussels for treatment in November 1924 with the ending of Turandot still unfinished. The pen stops in the middle of a thought on one sketch. On another, there is a list of instruments. Franco Alfano later had to turn such fragments into something an orchestra could play.'
+        relic: 'A sketch for the duet'
+        relic_desc: 'A leaf of music paper with a pencil note beside an unfinished passage.'
         points:
-          p1: 'While Puccini moves into the clinic in Brussels, keep the pages of the Turandot finale he brought together and hand them to Tonio one by one'
-          p2: 'While he can still write, help him mark on his sketches the two joins in the final duet he wants kept, so the unfinished ending goes one step further in his own hand'
-          p3: 'Through the nights after the radium operation, stop the bleeding and the strain on his heart, and save Puccini'
+          p1: 'Help Puccini put the two alternative sketches for the final duet in order of preference while he can still weigh them'
+          p2: 'Put your experience in care to work so Puccini can spend the last night free of the worst of his discomfort'
         points_fail:
-          p1: 'Loose sketches went in with the travel papers and several pages of the finale were missing at handover. The branch came apart from history and the office recalled the employee.'
-          p2: 'The sketches stayed as they were, and whoever finished the opera had to decide alone how the passages joined.'
-          p3: 'He died in Brussels on 29 November as history has it, and in this branch too he could not be kept.'
+          p1: 'The sheets remain separate. Whoever takes over will still have to choose between them.'
+          p2: 'At the end of the night, the chair beside the bed is still empty and the discomfort has not eased.'
         shift:
           p1:
-            was: 'On 4 November 1924 Puccini left for Brussels with the unfinished sketches for the final duet of Turandot. The sketches survived, and Alfano later completed the ending from them.'
+            was: 'In November 1924 the final duet still existed in fragments. Alfano later had to work out how to join what had survived.'
+            now: 'Puccini marks which alternative he wants when the music changes at the end of the duet. The composer who takes over can start from that choice.'
           p2:
-            was: 'Puccini left the finale incomplete, and Alfano had to choose how to continue from the surviving sketches.'
-            now: 'Two joins in the duet are marked in Puccini''s hand. Whoever finished the ending began from them.'
-          p3:
-            was: 'On 24 November 1924 Puccini underwent radium treatment for throat cancer in Brussels; he died there on 29 November of complications after the operation, aged 65.'
-            now: '{staff} kept watch through the nights after the operation and he came through the strain on his heart. He spent December recovering in Brussels, then went home to Italy and went back to the end of Turandot.'
+            was: 'On 24 November 1924 Puccini underwent treatment for throat cancer in Brussels. He died in the same clinic on 29 November.'
+            now: '{staff} sits beside Puccini and helps him settle. The night he had been dreading passes with less pain and someone close enough to see when he needs help.'
             who: puccini_brussels
-            bio: 'In this line Puccini survived the treatment in Brussels in November 1924. He went home and worked on for some years more.'
+            bio: 'Puccini spent a quieter final night in Brussels. He had someone beside him when he put the score aside.'
         vignettes:
-          divider: 'The copyist has laid a sketch after a clean score page as if they belong to one continuous copy. You insert a divider and label each side. He can now retrieve either without mistaking it for the other. The missing stage ending will be someone else’s task.'
-          future: 'You almost tell the copyist how the opera will end. He asks which sheet you are reading that from. You put the later ending out of your own notes and write down what is actually in front of you. There are two packets and no final page you can copy.'
-          pin: 'A loose sheet lifts when the copyist opens the packet. You keep it where he can find it and draw a little sign on the wrapper. You carry the position away in your notebook. You will not be there when the missing music is supplied.'
+          divider: 'The copyist puts two pencilled measures side by side on the desk. They look almost the same until {staff} traces the bass with a finger. One comes back to where it started. The other leaves room for what follows. {staff} keeps both on the desk for Puccini to see.'
+          future: '{staff} catches themself tapping the ending they know from the theatre. The copyist looks up from a bar that has no ending yet. {staff} turns the page back and asks to start at the last measure both of them can read.'
+          pin: 'The copyist clears a corner of the desk for a cup. {staff} moves one manuscript leaf a little farther in from the edge. At the bottom of the leaf, below a nearly empty stave, two words have been squeezed into the margin.'
       zh:
-        name: '给未完稿夹一张分隔纸'
-        place: "布鲁塞尔"
-        figure: "贾科莫·普契尼"
-        story: '普契尼未完成《图兰朵》。普契尼研究中心区分留下的草稿与总谱，并把补完二重唱及最后一场的工作归于弗兰科·阿尔法诺。'
-        relic: "一页草稿"
-        relic_desc: "一页用软铅笔写的乐谱草稿。"
+        name: '没写完的二重唱'
+        place: 布鲁塞尔
+        figure: 贾科莫·普契尼
+        story: '1924 年 11 月，普契尼到布鲁塞尔治病，《图兰朵》的结尾还没写完。有一页稿，乐句写到一半停住了。另一页上列着几样乐器。后来，弗兰科·阿尔法诺要从这些零散的音符里接出一段乐团能演奏的音乐。'
+        relic: '二重唱草稿'
+        relic_desc: '一张五线谱纸，没写完的乐句旁留着铅笔字。'
         points:
-          p1: '普契尼住进布鲁塞尔的诊所时，护住他带来的《图兰朵》末场草稿，逐页交到托尼奥手上'
-          p2: '趁他还能动笔，帮他在草稿上标出末场二重唱里要留的两处接缝，让没写完的结尾在他自己手里多走一步'
-          p3: '镭针手术后的那几夜，止住出血、托住他的心脏，救下普契尼'
+          p1: '趁普契尼还能审稿，帮他从末场二重唱的两份草稿里标出自己想留的一种写法'
+          p2: '用照护经验减轻普契尼在最后一夜的病痛'
         points_fail:
-          p1: '散页混进了行李里的旅途文件，交接时缺了末场的几张草稿。分支与历史脱了节，事务所因同步失败召回员工。'
-          p2: '草稿照旧，后来补写的人只能自己决定几段怎样相接。'
-          p3: '他照史实在 11 月 29 日死在布鲁塞尔，这条分支里也没能留住他。'
+          p1: '两张草稿照旧分开搁着。接手的人还得自己猜他想用哪一种。'
+          p2: '这一夜过去，床边的椅子还是空的，病痛也没能缓下来。'
         shift:
           p1:
-            was: '1924 年 11 月 4 日，普契尼带着《图兰朵》末场二重唱的未完草稿去布鲁塞尔。草稿留存下来，结尾后来由阿尔法诺据此补写。'
+            was: '1924 年 11 月，末场二重唱仍是散页，阿尔法诺后来要从留下的草稿里找出接法。'
+            now: '普契尼在二重唱转调的地方标下自己想留的一种写法。接手的人从他标的这一处起笔。'
           p2:
-            was: '普契尼没有写完末场，阿尔法诺只能从留下的草稿里自己选择怎样续写。'
-            now: '二重唱里有两处接缝是普契尼亲手标定的。补写结尾的人从这两处起笔。'
-          p3:
-            was: '1924 年 11 月 24 日，普契尼在布鲁塞尔接受喉癌的镭针放疗手术，11 月 29 日因术后并发症在那里去世，六十五岁。'
-            now: '{staff}守住了术后那几夜，他挺过了心脏那一关。十二月他还在布鲁塞尔养病，之后回到意大利，又回到《图兰朵》的结尾上。'
+            was: '1924 年 11 月 24 日，普契尼在布鲁塞尔接受喉癌治疗，29 日在同一家诊所去世。'
+            now: '{staff}留在床边帮普契尼缓一缓。这一夜没有他想的那么疼，想叫人的时候，手也够得着床边。'
             who: puccini_brussels
-            bio: '这条时间线里，普契尼挺过了 1924 年 11 月在布鲁塞尔的治疗。他回到家，又工作了几年。'
+            bio: '普契尼在布鲁塞尔度过了稍安稳的一夜。他把谱放下时，床边有人陪着。'
         vignettes:
-          divider: '抄谱人把一页草稿接在誊清谱后头，好像它们属于一份连贯的谱。你插进分隔纸，分别标了两边。往后两份都找得到，也不必认错。舞台上缺的结尾，要留给后来的人。'
-          future: '你差点把后来演出时的结尾告诉抄谱人。他问你是照哪张读的。你从自己的便笺里划去那个未来的结尾，改记眼前的东西。手上是两叠纸，里面没有一张能让你照抄成末页。'
-          pin: '抄谱人解开纸包，一页松动的稿子翘起来。你把它扶回原处，在外包纸上画一个小记号，好让他再找得到。你在笔记里带走它的位置。等缺的音乐补上，你早就离开了。'
+          divider: '抄谱人把两行铅笔谱并排摊在桌上。乍看几乎一样，{staff}用指尖顺着低声部走了一遍。一行兜回原处，另一行给后头留了地方。{staff}把两页都留下，等普契尼亲自看。'
+          future: '{staff}差点敲出自己在剧院听过的结尾。抄谱人从还没有收尾的一小节上抬头。{staff}把纸往回翻，请他从两人都认得的最后一个小节开始。'
+          pin: '抄谱人腾出个桌角放杯子。{staff}把一张稿纸往里挪了挪。页脚一行空了大半的五线谱底下，挤着两个铅笔字。'
 text:
   en:
     name: Giacomo Puccini
-    text: Italian composer, 1858 to 1924, of operas including La Bohème, Tosca and Madama Butterfly. He died in Brussels during treatment for throat cancer, leaving Turandot unfinished.
+    text: 'Italian composer (1858–1924) of La Bohème, Tosca and Madama Butterfly. He died in Brussels while receiving treatment for throat cancer. His last opera, Turandot, remained unfinished.'
   zh:
     name: 贾科莫·普契尼
-    text: 意大利作曲家，1858 年生，1924 年去世，作有《波希米亚人》《托斯卡》《蝴蝶夫人》等歌剧。他因喉癌在布鲁塞尔治疗期间去世，《图兰朵》尚未写完。
-hook: {en: 'Where does the finished music give way to drafts?', zh: '总谱在哪一页变成草稿？'}
+    text: '意大利作曲家（1858–1924），作有《波希米亚人》《托斯卡》和《蝴蝶夫人》。他在布鲁塞尔治疗喉癌期间去世，最后一部歌剧《图兰朵》未能写完。'
+hook: {en: 'Two sketches, and one choice he never made', zh: '两张草稿，该留下哪一张？'}
 facts:
-  catalogue:
-    date: '1924'
+  departure:
+    date: '1924-11-04'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [puccini_brussels_catalogue]
-    text:
-      en: 'The catalogue separately describes sketches, drafts and score sources for the opera.'
-      zh: '该目录分别记载歌剧的草图、草稿与总谱资料。'
+    use: [story, history, wiki]
+    sources: [puccini_brussels_letters]
+    text: {en: 'Puccini set out for Brussels for treatment with part of a draft for the final duet already in existence.', zh: '普契尼启程赴布鲁塞尔治疗，离开意大利时末场二重唱已有部分草稿。'}
+    line: {en: 'On 4 November 1924 Puccini set out for Brussels with the final duet of Turandot unfinished.', zh: '1924 年 11 月 4 日，普契尼启程前往布鲁塞尔，《图兰朵》的末场二重唱还没写完。'}
+  clinic:
+    date: '1924-11-07'
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    stay_day: 1
+    sources: [puccini_brussels_clinic]
+    note: 'Only the documented treatment date is given.'
+    text: {en: 'Puccini began treatment at the Brussels clinic on 7 November.', zh: '普契尼于 11 月 7 日在布鲁塞尔的诊所开始接受治疗。'}
+    line: {en: 'On 7 November 1924 Puccini began treatment in Brussels.', zh: '1924 年 11 月 7 日，普契尼在布鲁塞尔开始治疗。'}
+  operation:
+    date: '1924-11-24'
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    stay_day: 18
+    sources: [puccini_brussels_clinic]
+    note: 'Only the recorded operation and date are given.'
+    text: {en: 'The operation on Puccini took place on 24 November.', zh: '普契尼于 11 月 24 日接受手术。'}
+    line: {en: 'On 24 November 1924 Puccini underwent an operation.', zh: '1924 年 11 月 24 日，普契尼接受手术。'}
+  death:
+    date: '1924-11-29'
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    stay_day: 23
+    sources: [puccini_brussels_museum, puccini_brussels_clinic]
+    note: 'The date and unfinished work are documented. The branch changes comfort, so this fact remains.'
+    text: {en: 'Puccini died in Brussels on 29 November with Turandot unfinished.', zh: '普契尼于 11 月 29 日在布鲁塞尔去世，《图兰朵》没有写完。'}
+    line: {en: 'On 29 November 1924 Puccini died in Brussels.', zh: '1924 年 11 月 29 日，普契尼在布鲁塞尔去世。'}
   completion:
-    date: '1926-04-25'
+    date: '1926-01-28'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [puccini_brussels_completion]
-    text:
-      en: 'The work catalogue credits Alfano with the completion of the duet and final scene, and dates the première to 25 April 1926.'
-      zh: '作品目录记载阿尔法诺补写二重唱与最后一场，首演日期为 1926 年 4 月 25 日。'
+    use: [story, history, wiki]
+    sources: [puccini_brussels_alfano_score]
+    text: {en: 'Alfano dated the end of his first full score for the duet and closing scene 28 January 1926.', zh: '阿尔法诺在二重唱和终场的第一版总谱末尾写下日期 1926 年 1 月 28 日。'}
+    line: {en: 'On 28 January 1926 Alfano dated his first score of the concluding duet and scene.', zh: '1926 年 1 月 28 日，阿尔法诺在第一版末场总谱的最后一页签上日期。'}
 bystanders:
   copyist:
     invented: true
-    text: {en: 'An invented music copyist with a clean packet and a packet still being sorted.', zh: '虚构的抄谱人，手头一叠已誊清，一叠仍待理顺。'}
+    text: {en: 'A music copyist working with two loose leaves of score.', zh: '手头摊着两张散谱的抄谱人。'}
+  attendant:
+    invented: true
+    text: {en: 'A clinic attendant who has put a chair near the bed.', zh: '在病床旁放了一把椅子的诊所护工。'}
+quotes:
+  puccini_brussels_tristano:
+    order: 1
+    tier: full
+    date: '1924'
+    checked: official_record
+    sources: [puccini_brussels_manuscript, puccini_brussels_letters]
+    original: it
+    text:
+      it: {who: Giacomo Puccini, quote: 'poi Tristano', occasion: 'Annotazione autografa sul foglio 17 recto degli abbozzi del finale di Turandot.'}
+      en: {who: Giacomo Puccini, quote: 'then Tristan', occasion: 'Pencil annotation on folio 17 recto of his sketches for the Turandot finale. The sheet has no exact date (game translation).'}
+      zh: {who: 贾科莫·普契尼, quote: '然后是《特里斯坦》。', occasion: '《图兰朵》结尾草稿第 17 叶正面的亲笔批注，稿页无确日（游戏译文）。'}
+  puccini_brussels_health:
+    order: 2
+    tier: none
+    date: '1924-11'
+    checked: official_record
+    sources: [puccini_brussels_clinic_fr]
+    original: fr
+    text:
+      fr: {who: Giacomo Puccini, quote: 'mais vous pensez comme je l’aimerai quand j’y aurai recouvré la santé…', occasion: 'Propos publiés dans Le Soir les 21 et 22 novembre 1924, à propos de Bruxelles.'}
+      en: {who: Giacomo Puccini, quote: 'but imagine how much I’ll love it once I’ve recovered my health here…', occasion: 'Speaking about Brussels in Le Soir on 21–22 November 1924, in the French wording reprinted by La Monnaie (game translation).'}
+      zh: {who: 贾科莫·普契尼, quote: '等我在这里恢复健康，你想我该有多爱这座城……', occasion: '谈布鲁塞尔，见 1924 年 11 月 21–22 日《晚报》访谈。引文采用铸币局歌剧院转录的法语刊载文字（游戏译文）。'}
 wiki:
   refs:
     puccini_brussels_letters:
       order: 3
       status: checked
-      text:
-        en: 'Puccini Study Centre on the Brussels journey and drafts https://www.catalog.puccini.it/works/turandot/notes'
-        zh: '普契尼研究中心布鲁塞尔行程和末场草稿记录 https://www.catalog.puccini.it/works/turandot/notes'
-    puccini_met_sketches:
+      text: {en: 'Puccini Study Centre catalogue, correspondence and the unfinished finale https://mail.catalog.puccini.it/works/turandot/notes', zh: '普契尼研究中心目录，书信与未完成的结尾 https://mail.catalog.puccini.it/works/turandot/notes'}
+    puccini_brussels_manuscript:
       order: 4
       status: checked
-      text:
-        en: 'Metropolitan Opera archive on the sketches carried to Brussels https://www.metopera.org/globalassets/user-information/nightly-opera-streams/week-49/playbills/nov-7-turandot.pdf'
-        zh: '大都会歌剧院关于带往布鲁塞尔的草稿 https://www.metopera.org/globalassets/user-information/nightly-opera-streams/week-49/playbills/nov-7-turandot.pdf'
-    puccini_brussels_catalogue:
-      order: 508
+      text: {en: 'Puccini Study Centre, Jürgen Maehder on the finale autograph, folio 17 recto, pp. 28–29 https://puccini.it/wp-content/uploads/2024/03/2003_Turandot.pdf', zh: '普契尼研究中心，梅德尔论结尾亲笔草稿第 17 叶正面，第 28–29 页 https://puccini.it/wp-content/uploads/2024/03/2003_Turandot.pdf'}
+    puccini_brussels_clinic:
+      order: 5
       status: checked
-      text:
-        en: 'Centro Studi Giacomo Puccini, Turandot, catalogue of musical sources https://catalog.puccini.it/works/turandot/sources/91.C.1'
-        zh: '普契尼研究中心，《图兰朵》乐谱来源目录 https://catalog.puccini.it/works/turandot/sources/91.C.1'
-    puccini_brussels_completion:
-      order: 509
+      text: {en: 'La Monnaie / De Munt, Puccini in Brussels https://www.lamonnaiedemunt.be/en/magazine/3231-puccini-in-brussels', zh: '铸币局歌剧院，普契尼在布鲁塞尔 https://www.lamonnaiedemunt.be/en/magazine/3231-puccini-in-brussels'}
+    puccini_brussels_clinic_fr:
+      order: 6
       status: checked
-      text:
-        en: 'Centro Studi Giacomo Puccini, Turandot SC91, works catalogue https://puccini.it/opera/turandot/'
-        zh: '普契尼研究中心，《图兰朵》SC91 作品目录 https://puccini.it/opera/turandot/'
+      text: {en: 'La Monnaie / De Munt, French transcription of the Le Soir interview https://www.lamonnaiedemunt.be/fr/magazine/3231-puccini-a-bruxelles', zh: '铸币局歌剧院转录《晚报》法语访谈 https://www.lamonnaiedemunt.be/fr/magazine/3231-puccini-a-bruxelles'}
+    puccini_brussels_museum:
+      order: 7
+      status: checked
+      text: {en: 'Puccini Museum, Turandot exhibition https://www.puccinimuseum.org/mostra-turandot-francese/', zh: '普契尼博物馆，《图兰朵》展览 https://www.puccinimuseum.org/mostra-turandot-francese/'}
+    puccini_brussels_alfano_score:
+      order: 8
+      status: checked
+      text: {en: 'Puccini Study Centre catalogue, Alfano autograph score 91.B.2 https://www.catalog.puccini.it/works/turandot/sources/91.B.2', zh: '普契尼研究中心目录，阿尔法诺手稿 91.B.2 https://www.catalog.puccini.it/works/turandot/sources/91.B.2'}
 self_check:
-  fact: catalogue
-  quote_line: '手上是两叠纸，里面没有一张能让你照抄成末页。'
-  regret_choice: '把时间用来核对两叠谱，就只能把最后一页留空。'
-  bookend: '从看似接得上的谱页，到用分隔纸承认缺的是哪一段。'
-  share_line: '给未完成的总谱留了一张分隔纸。'
-  share_number: '1926 年首演'
-  knowing: 'future 员工知道后来有补写的结尾。'
-  near: 'catalogue 锚定不同类型谱源。'
-  lever: '插入一处分隔，稿与总谱可分别取出。'
-  missed: '走后才补完并演出。'
-  brought: '草页位置的记号。'
+  fact: completion
+  quote_line: '页脚一行空了大半的五线谱底下，挤着两个铅笔字。'
+  regret_choice: '先把谱给他审，还是把纸收好、让他安稳地过夜。会读谱和会照护的人各能看见一件自己能帮的事。'
+  bookend: '从缺了结尾的草稿，落到后人为另一份总谱签下日期。'
+  share_line: '两份草稿都在，末场还欠作曲家一句自己的决定。'
+  share_number: '1926 年 1 月 28 日'
+  knowing: '员工认得后来演出的结尾，桌上的谱却还没有写到那里。'
+  near: '诊所、抄谱人的桌子和谱页下角的批注。'
+  lever: '让作者自己选一次接法，或让他的最后一夜少一点疼痛。'
+  missed: '阿尔法诺完成第一版总谱时，普契尼已去世。'
+  brought: '一张图兰朵二重唱草稿。'
 pack: {license: MIT, version: 1, languages: [en, zh]}

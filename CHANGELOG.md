@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.3, 2026-11-20
+
+- Opened Puccini’s unfinished duet in Brussels in November 1924, with two ways to help and sourced echoes from his score and a contemporary interview.
+
 ## 0.12.2, 2026-11-20
 
 - Reach 600 time energy to open the ending and share a dedicated completion card. The ending takes you home to your own future, with the echoes of the past still with you.

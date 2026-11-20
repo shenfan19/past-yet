@@ -7694,10 +7694,11 @@ events:
       - AI
       - Fan Shen
   - id: puccini_brussels
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1924
-    date: '1924-11-04'
-    stay: 2
+    date: '1924-11-07'
+    stay: 1
     lon: 4.35
     lat: 50.85
     region: europe
@@ -7706,32 +7707,17 @@ events:
     channels:
       G: 2
     refs:
-      - puccini_brussels_catalogue
-      - puccini_brussels_completion
       - puccini_brussels_letters
-      - puccini_met_sketches
+      - puccini_brussels_manuscript
+      - puccini_brussels_clinic
+      - puccini_brussels_museum
+      - puccini_brussels_alfano_score
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 12
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-                  - musician
-              - trait:
-                  - methodical
-                  - vigil
-                stat:
-                  will: 6
-        - id: p2
           kind: persuade
-          day: 16
+          day: 12
           req:
             any:
               - job:
@@ -7750,9 +7736,9 @@ events:
                 stat:
                   wit: 7
                   will: 7
-        - id: p3
+        - id: p2
           kind: care
-          day: 24
+          day: 21
           req:
             any:
               - job:
@@ -7775,11 +7761,14 @@ events:
           traits:
             - methodical
             - handy
+          day: 9
         - id: future
           traits:
             - bold
             - charismatic
+          day: 10
         - id: pin
+          day: 11
     authors:
       - AI
       - Fan Shen
