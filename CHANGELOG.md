@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.2, 2026-11-20
+
+- Reach 600 time energy to open the ending and share a dedicated completion card. The ending takes you home to your own future, with the echoes of the past still with you.
+- Localized the ending in all seven interface languages and added more translated report labels.
+- Added citation metadata for GitHub and future Zenodo archives.
+
 ## 0.12.1, 2026-11-19
 
 - The game header, browser tab, share image and copied share text now use The Past Is Yet to Come as the title in every language.

@@ -166,6 +166,8 @@ A recall before the story ends does not count as fatal. The kit that came home a
 
 The main line is the time energy the agency holds, in five stages at 0, 80, 240, 440 and 600 (`cards/mainline`). The last is going home. The home cost, `office.home_cost`, is 600, under a third of the most that all places can pay together: 140 from the two full simulations and 1700 from the 179 catalogue events at three stars, 1840 in all.
 
+At the home threshold, the finish button opens the ending and its completion card. The time machine takes the agency director home to their own future, where the echoes of the past are still with them. The ending dialog, share image and copied text use the same localized ending.
+
 ## Auto mode
 
 Auto claims finished trips, anchors newly discovered antiques, manages the cash reserve and restocks basic supplies. For each ready employee it first chooses among open, unoccupied places nobody has returned from. After those are explored, it chooses among the places the employee has tried least, using a seeded draw to break ties. Recalled trips do not count toward that rotation.
