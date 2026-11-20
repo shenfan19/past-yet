@@ -12,7 +12,9 @@ export function createShare(X) {
   const logo = new Image();
   logo.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(D.get('logo'));
 
-  const dispatch = (id) => ctx.S().dispatches.find((d) => d.id === id);
+  const dispatch = (id) => id === null ? null : ctx.S().dispatches.find((d) => d.id === id);
+  const homeAchievement = () => H.home.achieved.replace('{n}', D.get('config.office.home_cost'));
+  const fileName = (d) => d === null ? C.home_file_name : C.file_name;
 
   // The lines of the record the card keeps: every line that won a star, then the lines written for this employee, then the lines of history by importance,
   // up to config.share.record_lines, told in the order they happened.
@@ -78,6 +80,7 @@ export function createShare(X) {
   }
 
   const caption = (d) => {
+    if (d === null) return [englishTitle, H.home.title, homeAchievement(), H.home.message, QR.url].join('\n\n');
     const p = parts(d);
     const outcome = H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome);
     const result = [outcome, starsOf(d)].filter(Boolean).join('\n');
@@ -88,7 +91,8 @@ export function createShare(X) {
   // the pop-up body: the card and what can be done with it
   function html(d) {
     return `<div class="share">
-      <h3>${esc(H.title)}</h3>
+      <h3 id="share-title" tabindex="-1">${esc(d === null ? H.home.title : H.title)}</h3>
+      ${d === null ? `<p>${esc(H.home.message)}</p>` : ''}
       <p class="muted">${esc(H.intro)}</p>
       <div class="row share-actions"><button class="primary" data-act="sharesave">${esc(H.save)}</button><button data-act="sharecopy">${esc(H.copy)}</button>${navigator.share ? `<button data-act="sharenative">${esc(H.send)}</button>` : ''}<span class="muted" id="sharemsg"></span></div>
       <canvas id="sharecanvas" width="${CV.w}" height="${CV.min_h}" aria-label="${esc(caption(d))}"></canvas>
@@ -141,10 +145,12 @@ export function createShare(X) {
     if (!cv) return;
     const g = cv.getContext('2d');
     const K = C.colors;
-    const p = parts(d);
+    const home = d === null;
+    const p = home ? { name: H.home.title, outcome: homeAchievement(), text: [] } : parts(d);
     const serif = '"Noto Serif SC", "Songti SC", SimSun, Georgia, serif';
     const sans = '"Segoe UI", "Microsoft YaHei", system-ui, sans-serif';
-    const { w, min_h: minHeight, max_h: maxHeight, pad, logo_px: logoSize } = CV;
+    const { w, max_h: maxHeight, pad, logo_px: logoSize } = CV;
+    const minHeight = home ? CV.home_min_h : CV.min_h;
     const width = w - 2 * pad;
     const center = w / 2;
     const rows = [];
@@ -183,9 +189,18 @@ export function createShare(X) {
 
     const eventStart = rows.length;
     y += 39;
-    text(p.name, { size: CV.event_px, face: serif, weight: 700, limit: 2 });
-    const rating = [starsOf(d), p.outcome].filter(Boolean).join(' · ');
-    text(rating, { size: CV.body_px, weight: 700, color: K.stamp, limit: 2 });
+    const homeTop = y;
+    const homeStyle = home ? { x: center, max: width - 72, align: 'center' } : {};
+    if (home) y += 36;
+    text(p.name, { ...homeStyle, size: CV.event_px + (home ? 14 : 0), face: serif, weight: 700, limit: 2 });
+    const rating = home ? p.outcome : [starsOf(d), p.outcome].filter(Boolean).join(' · ');
+    text(rating, { ...homeStyle, size: CV.body_px, weight: 700, color: K.stamp, limit: 2 });
+    if (home) {
+      y += 18;
+      text(H.home.message, { ...homeStyle, size: CV.body_px, limit: 3 });
+      y += 36;
+    }
+    const homePanel = home ? { top: homeTop, height: y - homeTop } : null;
 
     const echoStart = rows.length;
     let echoPanel;
@@ -272,9 +287,10 @@ export function createShare(X) {
     g.strokeStyle = K.stamp;
     g.lineWidth = CV.border;
     g.strokeRect(CV.border / 2, CV.border / 2, w - CV.border, height - CV.border);
-    if (echoPanel) {
+    const panel = homePanel || echoPanel;
+    if (panel) {
       g.beginPath();
-      g.roundRect(pad, echoPanel.top + echoOffset, width, echoPanel.height, 16);
+      g.roundRect(pad, panel.top + (home ? eventOffset : echoOffset), width, panel.height, 16);
       g.fillStyle = K.echo_bg;
       g.fill();
       g.strokeStyle = K.echo_line;
@@ -305,12 +321,12 @@ export function createShare(X) {
   }
 
 
-  function save() {
+  function save(d) {
     const cv = document.getElementById('sharecanvas');
     cv.toBlob((blob) => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = C.file_name;
+      a.download = fileName(d);
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     }, 'image/png');
@@ -323,7 +339,7 @@ export function createShare(X) {
     const cv = document.getElementById('sharecanvas');
     try {
       const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
-      const file = new File([blob], C.file_name, { type: 'image/png' });
+      const file = new File([blob], fileName(d), { type: 'image/png' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], text: caption(d) });
       else await navigator.share({ text: caption(d), url: QR.url });
     } catch (e) { /* the player closed the share sheet */ }

@@ -1056,6 +1056,7 @@ export function createUI(D, ctx, DEV = false) {
     fixForm();
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
+      <p class="row"><button id="home-complete" class="primary" data-act="homecomplete" aria-describedby="home-complete-goal"${ctx.S().energy >= O.home_cost ? '' : ' disabled'}>${esc(U.share.home.button)}</button><span class="muted" id="home-complete-goal">${esc(U.share.home.goal.replace('{n}', O.home_cost))}</span></p>
       <div id="home-staff-panel">${staffStatusHtml()}</div>
       <div class="sec" id="home-map">${U.dispatch.era}</div>
       ${worldMap.html()}
@@ -1210,6 +1211,7 @@ export function createUI(D, ctx, DEV = false) {
   // Closing the wiki gives back the pop-up it was opened from, if there was one, so a chain of links ends where it began.
   function closeModal() {
     if (st.modal && st.modal.kind === 'welcome') return;
+    const fromHomeCompletion = st.modal?.kind === 'share' && st.modal.id === null;
     // the wiki and the status page open over what is open and give it back, one step at a time
     st.modal = st.modal && ['wiki', 'staff', 'share', 'report'].includes(st.modal.kind) && st.modalStack.length ? st.modalStack.pop() : null;
     if (reportBackScroll.has(st.modal)) {
@@ -1218,6 +1220,7 @@ export function createUI(D, ctx, DEV = false) {
     }
     if (!st.modal) st.modalStack = [];
     render();
+    if (fromHomeCompletion) document.getElementById('home-complete')?.focus();
   }
   function modalBody(dispatch) {
     const m = st.modal;
@@ -1232,7 +1235,7 @@ export function createUI(D, ctx, DEV = false) {
     if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
     if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${dispatch.story}</div><div class="dispatchdesk">${dispatch.desk}</div></div>`;
     const d = share.dispatch(m.id);
-    return d ? `<div class="mbox sharebox">${share.html(d)}</div>` : '';
+    return m.kind === 'share' && (d || d === null) ? `<div class="mbox sharebox" role="dialog" aria-modal="true" aria-labelledby="share-title">${share.html(d)}</div>` : '';
   }
   let modalRedrawPending = false;
   function renderModal(fromTick) {
@@ -1393,6 +1396,11 @@ export function createUI(D, ctx, DEV = false) {
     }
     else if (act === 'aboutjump') { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (act === 'shareopen') { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'share', id }; render(); }
+    else if (act === 'homecomplete' && !st.modal && ctx.S().energy >= O.home_cost) {
+      st.modal = { kind: 'share', id: null };
+      render();
+      document.getElementById('share-title')?.focus();
+    }
     else if (act === 'modalclose') closeModal();
     else if (act === 'rerollstart') { office.rerollStart(); render(); }
     else if (act === 'rerollstaff') { office.rerollStaff(); render(); }
@@ -1419,7 +1427,7 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'modalplace') { st.modal = { kind: 'place', place: id }; render(); }
     else if (act === 'lfilter') { listbox.toggleFilter(id); render(); }
     else if (act === 'pgpage') { const [pid, dir] = id.split(':'); listbox.turn(pid, dir === 'next' ? 1 : -1); render(); }
-    else if (act === 'sharesave') share.save();
+    else if (act === 'sharesave') share.save(share.dispatch(st.modal.id));
     else if (act === 'sharecopy') share.copy(share.dispatch(st.modal.id));
     else if (act === 'sharenative') share.send(share.dispatch(st.modal.id));
     else if (act === 'musictoggle') ctx.audio.toggle();
@@ -1577,6 +1585,8 @@ export function createUI(D, ctx, DEV = false) {
       renderModal(true);
     }
     setHtml(resEl, resHtml());
+    const homeComplete = document.getElementById('home-complete');
+    if (homeComplete) homeComplete.disabled = ctx.S().energy < O.home_cost;
   }
   createHeaderLines(D, document.getElementById('quote')).start();
   const musicEl = document.getElementById('music');
