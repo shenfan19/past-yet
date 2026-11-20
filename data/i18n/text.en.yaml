@@ -191,6 +191,14 @@ tags:
 ui:
   about:
     update_notes: Update notes
+    content_credit:
+      design: Fan Shen designed the game with AI assistance.
+      drafts: AI drafted most of the stories, historical figure profiles and fictional employee stories. Fan Shen chose the topics and edits the material. Individual contributors are credited on the relevant cards.
+      review: Some cards have been manually reviewed, and review is ongoing. Historical details, cultural portrayals and translations may contain errors or omissions. If you spot a problem, please tell us which card and passage it concerns. A source is welcome if you have one.
+      feedback: Report a correction
+    echoes:
+      title: Historical echoes
+      rule: Every playable story has sourced quotations called echoes. The trip report shows an echo even with zero stars, a loss of synchronisation, or no chance to take part in the event. The stars and outcome guide which quotation appears. Medical evacuation and manual recall skip the echo.
     preview:
       title: Early version
       project: This game is a playable front end for Life Matters (LM), a research project that helps us develop the simulation engine. You don’t need to understand the research to enjoy the game.
@@ -208,6 +216,7 @@ ui:
         label: Email
     sections:
       - h: Introduction
+        echoes: true
         p:
           - You run a time travel agency. Employees go back to historical turning points, try to help, and come home with a report. Nothing needs your constant attention. You can set it to run by itself and just read what happens.
           - It started from plain curiosity about what would happen if someone from today stood in a famous moment of the past, and it is meant to be fun to poke at and pleasant to watch.
@@ -216,13 +225,14 @@ ui:
           - The game begins before the statue of Dr. Sun Yat-sen at Sun Yat-sen University. In memory of Dr. Sun Yat-sen, on the 160th anniversary of his birth.
       - h: Disclaimer
         preview: true
+        review: true
         p:
           - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
           - The models are simplified. Their parameters are game assumptions unless a number is marked historical, and no parameter has been fitted to data. Historical facts in the game are placeholders until their sources are checked, and each entry says whether it has been checked. Please do not cite the game as a source.
           - 'The events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Every story has a real opponent, a moment of history about to go another way or something history left undone: the first is to be guarded, the second can be mended. That is a choice of a first version, not a claim about what matters more in history.'
-          - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. What they say and do in the game is fiction built around the historical record, and does not reflect their real words, views or character. The time travel, the employees, the antiques, the goods and every plot are invented.
-          - The fifty employees are invented people, spread over the world roughly as people are. Some of their traits and stories lean on common impressions of a place or a group, and some are written against them, so that no one is only a type, and neither says anything about a real group. The author cannot know every culture well, so the people, their ethnicities and their stories were also checked by an AI for anything that might offend, and that check can be wrong. If something reads as unfair, inaccurate or hurtful, please report it in the Issues of the repository and the author will change it as soon as possible.
-          - The people in the events are real figures from the past, chosen because they have been dead for a long time, and what they say and do in the game is fiction. If anything in the game infringes on someone's rights, or the rights of a family, please write to shenfan19@gmail.com or open an issue in the repository, and it will be removed.
+          - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. Their dialogue and actions within the story are fictional portrayals. The time travel, the employees, the antiques, the goods and every plot are invented.
+          - The employees and their personal stories are fictional. Their traits and experiences describe individual characters.
+          - The people in the events are real figures from the past, chosen because they have been dead for a long time. If anything in the game infringes on someone's rights, or the rights of a family, please write to shenfan19@gmail.com or open an issue in the repository, and it will be removed.
           - Products, names and items in the game are fictional. Where a name resembles someone else's work it is a reference, not an affiliation, and anything not yet checked for rights is marked and cannot be bought in the game.
           - The game is provided as is, without warranty of any kind. If you are in a very difficult place, please reach out to someone you trust or to local professional support.
       - h: Data and privacy
@@ -243,8 +253,8 @@ ui:
           - Care for You is also a sub-project of LM, a home caregiving game, driven in the same way by an engine improved from the LM backend.
         links: 0
       - h: Credits and licence
+        credits: true
         p:
-          - Parts of the game, including the code, the text and the design, were made with vibe coding. Thanks to AI, I could realise this idea in my spare time.
           - 'Other games inspired this one: the encyclopedia follows the Civilopedia of Civilization IV, sending someone out and reading what happened follows Assassin''s Creed Brotherhood and Travel Frog, hiring follows Heroes of Might and Magic, the clock and the music player follow Stellaris, and the stars and levels follow Plants vs. Zombies and the full synchronisation of Assassin''s Creed. They are named as thanks and have no connection to this game.'
           - The world map outlines are from Natural Earth, in the public domain.
           - The music is MIDI files from the Mutopia Project, whose volunteers typeset them from public domain editions of works by Bach, Beethoven, Chopin, Debussy, Grieg, Joplin, Mozart and Satie and of traditional songs from England, Finland and Japan. The header of every piece states Public Domain. The files are kept unchanged in the assets folder. Any file put in that folder joins the playlist when the data is built. The effects are tones the page makes itself.
@@ -252,6 +262,9 @@ ui:
           - The name and the logo are not licensed under the MIT License.
   archive:
     trips: Trips here
+    trip_order: Sort trips
+    trip_recent: Most recent
+    trip_best: Highest stars
     trips_none: Nobody has been here yet.
     trip_gone: report no longer stored
     trip_day: day {d}
@@ -947,8 +960,7 @@ ui:
     reroll: Draw the two random ones again
     tutorial: first trip
     disclaimer_title: Disclaimer · About the people in the game
-    disclaimer: The employees and their stories are invented. Some lean on common impressions of a place or a group, and some are written against them, and neither says anything about a real group. The author cannot know every culture well, so an AI also looked for anything that might offend, and it can be wrong. If something is unfair, inaccurate or hurtful, please report it in the {issues} of the repository and it will be changed as soon as possible.
-    authorship: The credited contributors are responsible for the content they provide. AI-assisted content is marked AI, and the credited human contributors are responsible for reviewing and correcting it. See each card’s source notes for its verification status.
+    disclaimer: The employees and their stories are fictional. Historical details, cultural portrayals and translations may contain errors or omissions. If you find something inaccurate, unfair or hurtful, please tell us about it in the repository’s {issues}.
     rights: If anything in the game infringes on someone's rights, or the rights of a family, please write to shenfan19@gmail.com or open an issue in the repository, and it will be removed.
     issues: Issues
     begin: Begin
@@ -7689,11 +7701,11 @@ catalog:
     relic: The statue of Sun Yat-sen
     relic_desc: The statue on the campus of Sun Yat-sen University. It is the way to Guangzhou in 1924 and is not an antique, so it cannot be sold.
     points:
-      p1: 'Study widely: before registration opens, have the office post the notice of enrolment outside the city too, so students from beyond the walls are in time'
-      p2: 'Enquire carefully: before the first preparatory meeting, go round the three schools and ask in full what each lacks and where it is stuck, and hand it in as one list'
-      p3: 'Think prudently: before the new campus is chosen, walk and compare the sites in the city and the open ground at Shipai, and hand the office a map'
-      p4: 'Discern clearly: reconcile the three schools’ graduation lists and submit a single roster for the 21 June ceremony'
-      p5: 'Practise earnestly: go out to Shipai and set the bounds of the new ground, post by post'
+      p1: Plan where the enrolment notices should go outside the walls and hand the route to the office messengers
+      p2: Take an introduction to the three schools and bring their concerns back on one sheet for the first meeting
+      p3: Compare the sites the office is considering and deliver a map before the decision on Shipai
+      p4: Check the three graduation lists and deliver one roster for the 21 June ceremony
+      p5: Join the crew at Shipai and set the boundary posts for the new campus
     points_fail:
       p1: In this branch the notice goes up only in the city, and students outside hear of it after registration has begun.
       p2: The first preparatory meeting is held as recorded, and each school still speaks only of its own troubles, with no list that puts them together.
@@ -7718,7 +7730,7 @@ catalog:
         now: In this branch, before he leaves Guangzhou in November, the bounds of the ground at Shipai already stand, post by post.
         who: sun_yat_sen_guangzhou
         bio: In this timeline the bounds of the new campus at Shipai stand before Sun Yat-sen leaves Guangzhou.
-    shift_all: 'The motto is five phrases Sun Yat-sen wrote himself: study widely, enquire carefully, think prudently, discern clearly, practise earnestly. The five words in the corners of the notes match it, word for word.'
+    shift_all: Each job left something the office could use. Looking back, the five jobs echo the motto Sun Yat-sen later wrote for the university, with its call to study widely, enquire carefully, think prudently, discern clearly and practise earnestly.
     vignettes:
       slips: A clerk made up for the game is about to copy a page that has a slip pasted over two lines. You ask which hand wrote the slip and which wrote the page. He copies the page first and leaves the slip where it is.
       back_row: A student made up for the game cannot find a seat and keeps standing up to look. You move along the bench. He sits through the rest without a word and nods to you as the hall empties.
@@ -8574,7 +8586,7 @@ eras:
     event_titles:
       asked_the_way: Asked the way
     plots: {}
-    blurb: Three schools are to become one university. Seven months, from the order to join them to eighteen days before classes begin. This is where the game begins.
+    blurb: Three schools are to become one university. As work comes in, the preparatory office assigns jobs to people who can do them. Your employee earns a star for each assignment they take on and finish.
     handle_label: The records become one book
     protagonist: Sun Yat-sen
     protagonist_role: A statesman who has ordered three schools joined into one university, and lectures in their hall on Sundays
@@ -8599,11 +8611,11 @@ eras:
       asked_the_way: '{date}: A new student with a letter asks {staff} the way to an office. {staff} does not know either, and they look for it together for half the morning.'
       asked_the_way_shown: '{date}: A new student with a letter asks {staff} the way to an office. {staff} shows it on the sheet, and the student thanks them and goes off with the sheet in hand.'
     star_points:
-      xue: 'Study widely: before registration opens, have the office post the notice of enrolment outside the city too, so students from beyond the walls are in time'
-      wen: 'Enquire carefully: before the first preparatory meeting, go round the three schools and ask in full what each lacks and where it is stuck, and hand it in as one list'
-      si: 'Think prudently: before the new campus is chosen, walk and compare the sites in the city and the open ground at Shipai, and hand the office a map'
-      bian: 'Discern clearly: reconcile the three schools’ graduation lists and submit a single roster for the 21 June ceremony'
-      xing: 'Practise earnestly: go out to Shipai and set the bounds of the new ground, post by post'
+      xue: Plan where the enrolment notices should go outside the walls and hand the route to the office messengers
+      wen: Take an introduction to the three schools and bring their concerns back on one sheet for the first meeting
+      si: Compare the sites the office is considering and deliver a map before the decision on Shipai
+      bian: Check the three graduation lists and deliver one roster for the 21 June ceremony
+      xing: Join the crew at Shipai and set the boundary posts for the new campus
     points_fail:
       xue: In this branch the notice goes up only in the city, and students outside hear of it after registration has begun.
       wen: The first preparatory meeting is held as recorded, and each school still speaks only of its own troubles, with no list that puts them together.
@@ -8628,7 +8640,7 @@ eras:
         now: In this branch, before he leaves Guangzhou in November, the bounds of the ground at Shipai already stand, post by post.
         who: sun_yat_sen_guangzhou
         bio: In this timeline the bounds of the new campus at Shipai stand before Sun Yat-sen leaves Guangzhou.
-    shift_all: 'The motto is five phrases Sun Yat-sen wrote himself: study widely, enquire carefully, think prudently, discern clearly, practise earnestly. The five words in the corners of the notes match it, word for word.'
+    shift_all: Each job left something the office could use. Looking back, the five jobs echo the motto Sun Yat-sen later wrote for the university, with its call to study widely, enquire carefully, think prudently, discern clearly and practise earnestly.
     milestones:
       order_given: '{date}: Sun Yat-sen orders the National Higher Normal School, the Guangdong School of Law and Politics and the Guangdong Agricultural School joined into National Guangdong University, and names Zou Lu to prepare it. Nobody in the city can yet say where this university is.'
       sun_dies: '{date}: Sun Yat-sen dies in Beijing.'
@@ -8669,17 +8681,17 @@ eras:
       pamphlet_traded: '{date}: {staff} trades what they make with their own hands for a copy of the pamphlet, new from the printer.'
       pamphlet_given: '{date}: A clerk hands {staff} a copy of the pamphlet, new from the printer, and says everyone in the room is to have one.'
       homesick_may: '{date}: A month with nothing on record. {staff} keeps a tally in the notebook, and it reaches a hundred days. At the office a little over three days have gone by.'
-      shipai_walk: '{date}: {staff} hears that the new campus is to be at Shipai, east of the city, and does not get there on this trip.'
+      shipai_walk: '{date}: {staff} hears that the new campus is to be at Shipai, east of the city. There is no journey out there today.'
       shipai_reached: '{date}: {staff} walks out of the city to the east and reaches Shipai. {staff} knows what will stand here, stays a long while, and draws what is here now.'
-      shipai_frail: '{date}: {staff} knows what will stand at Shipai, east of the city. It is too far, and {staff} cannot walk it.'
+      shipai_frail: '{date}: {staff} knows what will stand at Shipai, east of the city. It is a long walk, and today {staff} stays in town.'
       last_seat: '{date}: {staff} hears this lecture out from the usual place, and stays sitting a while after the hall has emptied.'
       last_stall: '{date}: {staff} brings more to the door of the hall than on other Sundays. {staff} knows that on the Sundays to come there will not be such a crowd at this door.'
-      adviser: '{date}: The preparatory office is short of hands and asks {staff} in as a temporary adviser, who may put any suggestion in writing and hand it up.'
-      wen_ask: '{date}: {staff} goes round the three schools one after another to ask: what the teachers lack, what the students worry about, each thing asked in full. As it happens, several old teachers have the afternoon free and talk for a long while. {staff} writes what they heard on one list for the office, and in the corner of the note writes: enquire carefully.'
-      xue_enrol: '{date}: {staff} suggests posting the notice of enrolment at the crossroads outside the city and on the quays too, so that those who read, near or far, are in time to register. In the corner of the note: study widely.'
-      bian_rolls: '{date}: The lists of the graduating classes of the three schools disagree in several places. {staff} sets them straight name by name and hands in the list. In its corner: discern clearly.'
-      si_site: '{date}: {staff} walks every site in the city and the open ground at Shipai east of the city, compares them, and only then hands the map to Zou Lu. In its corner: think prudently.'
-      xing_shipai: '{date}: {staff} walks out east of the city to Shipai with men of the office and drives the boundary posts into the earth one by one. Back in the city, {staff} adds the last words to the notebook: practise earnestly.'
+      adviser: '{date}: The preparatory office is short of hands. A clerk clears a seat for {staff} and says they can pass along jobs as they come in.'
+      wen_ask: '{date}: Before the first meeting, a clerk happens to know someone at each school who can spare time. The clerk sends {staff} with introductions and asks for one sheet the committee can use. {staff} hears out the teachers and students and brings back their concerns on a single page.'
+      xue_enrol: '{date}: A clerk sees how quickly {staff} works out which roads serve the villages outside the walls and asks for a route for the enrolment notices. {staff} marks the crossings and quays, then hands the finished route to the messengers with the notices.'
+      bian_rolls: '{date}: The three graduation lists arrive with names that do not match. A clerk who has seen {staff} check papers carefully hands over the three bundles. {staff} checks the names against the originals and returns one roster for the ceremony.'
+      si_site: '{date}: The office needs someone who will walk every site before drawing a conclusion. They ask {staff} to compare the grounds in town and at Shipai. {staff} walks them all and brings back a single map with the approaches marked.'
+      xing_shipai: '{date}: The crew going to Shipai still needs an extra pair of hands. A clerk asks {staff}, who can manage the walk and the work. At Shipai, {staff} holds the posts straight as the crew drives them in and walks the boundary with them once more before returning.'
       enrol_open: '{date}: Registration for the preparatory examination opens. The day before, the university asked the provincial education offices to enrol students, with 520 places planned.'
       grad_ceremony: '{date}: Zou Lu takes up the post of president, and the graduation ceremony of the three schools is held the same day.'
     summary:
@@ -8713,11 +8725,11 @@ eras:
           text: I said the name would change in two years. Nobody believed me.
         - text: I was only there.
     hints:
-      low_luck: Enquire carefully reads luck. Without enough of it the employee never catches the old teachers with time to talk.
-      low_wit: Study widely reads wit. Without enough of it nobody thinks of posting the notice outside the city. A cyborg neural chip helps.
-      low_finesse: Discern clearly reads finesse. Without enough of it the office has to work from three separate graduation lists.
-      low_will: Think prudently reads will. Without enough of it the employee chooses before walking every site. A cyborg bionic lung helps.
-      low_constitution: Practise earnestly reads constitution. Without enough of it the employee cannot walk to Shipai and set the posts. A cyborg bionic lung helps.
+      low_luck: Luck brings a timely introduction to the three schools.
+      low_wit: The office trusts the notice route to an employee with enough wit. A cyborg neural chip helps.
+      low_finesse: The office looks for a steady hand with documents before entrusting someone with the three lists.
+      low_will: The office looks for the will to walk all the proposed sites. A cyborg bionic lung helps.
+      low_constitution: The crew looks for someone with the constitution for the walk and the work at Shipai. A cyborg bionic lung helps.
       none: Change one thing and send again with the same seed, that makes the comparison clearest.
   tupaia_tahiti_1769:
     name: Tahiti, 1769

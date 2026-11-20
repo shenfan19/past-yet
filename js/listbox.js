@@ -23,14 +23,14 @@ export function createListbox(X) {
   const setText = (id, v) => { fstate(id).q = v; if (st.pager[id]) st.pager[id].page = 0; };
   const setTag = (id, v) => { fstate(id).tag = v; if (st.pager[id]) st.pager[id].page = 0; };
   const pager = (id) => (st.pager[id] ||= { size: D.get('config.ui.page_sizes')[0], page: 0 });
-  function paginate(id, rows) {
-    const sizes = D.get('config.ui.page_sizes');
+  function paginate(id, rows, sizes = D.get('config.ui.page_sizes')) {
     const pg = pager(id);
     if (!sizes.includes(pg.size)) pg.size = sizes[0];
     const pages = Math.max(1, Math.ceil(rows.length / pg.size));
     pg.page = Math.min(Math.max(0, pg.page), pages - 1);
     const shown = rows.slice(pg.page * pg.size, (pg.page + 1) * pg.size);
-    const html = rows.length > sizes[0] ? `<div class="row pager"><label class="muted">${U.office.page_size} <select data-pgsize="${id}">${sizes.map((n) => `<option value="${n}" ${n === pg.size ? 'selected' : ''}>${n}</option>`).join('')}</select></label><button class="ghost" data-act="pgpage" data-id="${id}:prev" aria-label="${esc(U.office.prev_page)}" ${pg.page > 0 ? '' : 'disabled'}>‹</button><span class="muted">${U.office.page_of.replace('{a}', String(pg.page + 1)).replace('{b}', String(pages))}</span><button class="ghost" data-act="pgpage" data-id="${id}:next" aria-label="${esc(U.office.next_page)}" ${pg.page < pages - 1 ? '' : 'disabled'}>›</button></div>` : '';
+    const size = sizes.length > 1 ? `<label class="muted">${U.office.page_size} <select data-pgsize="${id}">${sizes.map((n) => `<option value="${n}" ${n === pg.size ? 'selected' : ''}>${n}</option>`).join('')}</select></label>` : '';
+    const html = rows.length > sizes[0] ? `<div class="row pager">${size}<button class="ghost" data-act="pgpage" data-id="${id}:prev" aria-label="${esc(U.office.prev_page)}" ${pg.page > 0 ? '' : 'disabled'}>‹</button><span class="muted">${U.office.page_of.replace('{a}', String(pg.page + 1)).replace('{b}', String(pages))}</span><button class="ghost" data-act="pgpage" data-id="${id}:next" aria-label="${esc(U.office.next_page)}" ${pg.page < pages - 1 ? '' : 'disabled'}>›</button></div>` : '';
     return { shown, html };
   }
   const setSize = (id, n) => { const pg = pager(id); pg.size = n; pg.page = 0; };

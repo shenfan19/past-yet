@@ -268,6 +268,7 @@ export function createUI(D, ctx, DEV = false) {
   modalEl.id = 'modal';
   document.body.appendChild(modalEl);
   let modalLast = '';
+  const reportBackScroll = new WeakMap();
   st.map = worldMap.init();
   // with no simulated place open yet, which is the case at the start, the form stands on the first one of the list and is made again when the player picks a place
   st.form = newForm(visibleEras()[0] || eraList()[0]);
@@ -564,18 +565,25 @@ export function createUI(D, ctx, DEV = false) {
   }
 
   // ---------- dispatch ----------
-  // Every trip that has come home from a place, newest first, from the summaries that are kept for good. A report opens while it is still stored.
+  const tripPageSize = 5;
+  // Show the stored summaries in pages. A full report opens while it is still kept.
   function tripsHtml(id) {
     const trips = office.tripsOf(id);
+    const heading = `<div class="sec">${U.archive.trips} (${trips.length})</div>`;
+    if (!trips.length) return heading + `<p class="muted">${U.archive.trips_none}</p>`;
+    const key = 'event_trips_' + id;
+    const byStars = st.sort[key]?.k === 'best';
+    const recent = (a, b) => (b.back ?? b.day) - (a.back ?? a.day);
+    trips.sort(byStars ? (a, b) => (b.stars || 0) - (a.stars || 0) || recent(a, b) : recent);
+    const pg = listbox.paginate(key, trips, [tripPageSize]);
     const kept = new Set(ctx.S().dispatches.map((d) => d.id));
-    const body = trips.length
-      ? `<ul class="trips">${trips.map((t) => {
+    const body = `<ul class="trips">${pg.shown.map((t) => {
         const oc = t.stamp ? U.report.stamp[t.stamp] : t.recalled ? U.report.recalled : t.evacuated ? U.report.evacuated : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
         return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place)}${t.redeemed ? ' <span class="chip">♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
-      }).join('')}</ul>`
-      : `<p class="muted">${U.archive.trips_none}</p>`;
-    return `<div class="sec">${U.archive.trips} (${trips.length})</div>${body}`;
+      }).join('')}</ul>`;
+    const order = trips.length > 1 ? `<div class="row trip-controls"><select id="${esc(key)}" data-trip-order="${esc(key)}" aria-label="${esc(U.archive.trip_order)}"><option value="recent">${esc(U.archive.trip_recent)}</option><option value="best" ${byStars ? 'selected' : ''}>${esc(U.archive.trip_best)}</option></select>${pg.html}</div>` : '';
+    return heading + order + body;
   }
   // The story of the selected place: who it is about, what the traveller can bring up with them, and what is known of it once someone has been.
   const travelTime = (days) => U.dispatch.travel_time.replace('{n}', String(days)).replace('{h}', String(ctx.backend.historicalDays(days)));
@@ -1012,7 +1020,14 @@ export function createUI(D, ctx, DEV = false) {
     };
     const links = A.links.map((l) => link(M.links[l.id], l.label)).join(' · ');
     const preview = `<h4>${esc(A.preview.title)}</h4>${para(A.preview.project)}${para(A.preview.changes)}`;
-    const secs = A.sections.map((sec, i) => `<h3 id="about-${i}">${esc(sec.h)}</h3>${sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('')}${sec.preview ? preview : ''}`).join('');
+    const echoes = `<h4>${esc(A.echoes.title)}</h4>${para(A.echoes.rule)}`;
+    const secs = A.sections.map((sec, i) => {
+      const heading = `<h3 id="about-${i}">${esc(sec.h)}</h3>`;
+      const credits = sec.credits ? para(A.content_credit.design) + para(A.content_credit.drafts) : '';
+      const body = sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('');
+      const review = sec.review ? `<p>${esc(A.content_credit.review)} ${link(M.links.issues, A.content_credit.feedback)}</p>` : '';
+      return heading + credits + body + review + (sec.echoes ? echoes : '') + (sec.preview ? preview : '');
+    }).join('');
     const jumps = jumpBar([...A.sections.map((sec, i) => ['about-' + i, sec.h]), ['about-updates', A.update_notes]]);
     const releases = `<div class="release-notes">${D.get('changelog.releases').map(({ title, notes }) =>
       `<section><h4>${esc(title)}</h4><pre>${esc(notes)}</pre></section>`).join('')}</div>`;
@@ -1149,7 +1164,7 @@ export function createUI(D, ctx, DEV = false) {
     return `<p>${esc(W.story)}</p><p>${esc(W.story_start)}</p><section class="welcome-notice">
       <h3 id="welcome-title" tabindex="-1">${esc(W.disclaimer_title)}</h3>
       <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${esc(W.issues)}</a>${esc(disclaimer[1] || '')}</p>
-      <p>${esc(W.authorship)}</p>
+      <p>${esc(U.about.content_credit.drafts)}</p>
       <p>${esc(W.rights)}</p>
     </section>`;
   }
@@ -1178,10 +1193,14 @@ export function createUI(D, ctx, DEV = false) {
     if (st.modal && st.modal.kind === 'welcome') return;
     // the wiki and the status page open over what is open and give it back, one step at a time
     st.modal = st.modal && ['wiki', 'staff', 'share', 'report'].includes(st.modal.kind) && st.modalStack.length ? st.modalStack.pop() : null;
+    if (reportBackScroll.has(st.modal)) {
+      st.pendingModalScroll = reportBackScroll.get(st.modal);
+      reportBackScroll.delete(st.modal);
+    }
     if (!st.modal) st.modalStack = [];
     render();
   }
-  function modalBody() {
+  function modalBody(dispatch) {
     const m = st.modal;
     if (!m) return '';
     if (m.kind === 'broke') return `<div class="mbox narrow"><h2>${esc(U.clock.broke_title)}</h2><p>${esc(U.clock.broke_text)}</p><p class="row" style="justify-content:flex-end"><button class="primary" data-act="modalclose">${esc(U.clock.broke_ok)}</button></p></div>`;
@@ -1192,13 +1211,14 @@ export function createUI(D, ctx, DEV = false) {
     if (m.kind === 'report') return `<div class="mbox wide reportbox" role="dialog" aria-modal="true" aria-label="${esc(U.report.view)}">${reportHtml(m.id)}</div>`;
     if (m.kind === 'staff') return `<div class="mbox wide">${staffModalHtml(m.id)}</div>`;
     if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
-    if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${storyBoxHtml()}</div>${deskHtml()}</div>`;
+    if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${dispatch.story}</div><div class="dispatchdesk">${dispatch.desk}</div></div>`;
     const d = share.dispatch(m.id);
     return d ? `<div class="mbox sharebox">${share.html(d)}</div>` : '';
   }
   function renderModal(fromTick) {
     if (fromTick === true && st.modal?.kind === 'report') return;
-    const inner = modalBody();
+    const dispatch = st.modal?.kind === 'dispatch' ? { story: storyBoxHtml(), desk: deskHtml() } : null;
+    const inner = modalBody(dispatch);
     // only a pop-up the game forces open stops the clock, see config.clock.hold_modals; one the player opens leaves it running
     if (inner && D.get('config.clock.hold_modals').includes(st.modal.kind)) office.holdClock(); else office.releaseClock();
     const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', st.modal.kind === 'welcome' ? '<div class="mbox' : `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
@@ -1211,11 +1231,22 @@ export function createUI(D, ctx, DEV = false) {
     st.pendingModalScroll = null;
     const act = document.activeElement;
     const keepFocus = act && act.id && modalEl.contains(act) ? { id: act.id, a: act.selectionStart, b: act.selectionEnd } : null;
-    modalEl.innerHTML = html;
-    if (keepFocus) { const el = document.getElementById(keepFocus.id); if (el) { el.focus(); try { el.setSelectionRange(keepFocus.a, keepFocus.b); } catch (e) { /* no selection in this kind of input */ } } }
+    const desk = fromTick === true && dispatch && modalEl.querySelector('.dispatchdesk');
+    if (desk) {
+      // A returning traveller can change the desk without changing this event's history.
+      setHtml(modalEl.querySelector('.storyfull'), dispatch.story);
+      setHtml(desk, dispatch.desk);
+    } else {
+      modalEl.innerHTML = html;
+      if (dispatch) {
+        lastHtml.set(modalEl.querySelector('.storyfull'), dispatch.story);
+        lastHtml.set(modalEl.querySelector('.dispatchdesk'), dispatch.desk);
+      }
+    }
+    if (keepFocus) { const el = document.getElementById(keepFocus.id); if (el && el !== act) { el.focus({ preventScroll: true }); try { el.setSelectionRange(keepFocus.a, keepFocus.b); } catch (e) { /* no selection in this kind of input */ } } }
     modalEl.querySelectorAll('[data-keep]').forEach((el) => { if (el.dataset.keep in keeps) el.scrollTop = keeps[el.dataset.keep]; });
     const bg = modalEl.querySelector('.modalbg');
-    if (bg) bg.scrollTop = scroll;
+    if (bg && bg.scrollTop !== scroll) bg.scrollTop = scroll;
     if (st.modal && st.modal.kind === 'share') share.draw(share.dispatch(st.modal.id));
   }
   modalEl.addEventListener('click', (ev) => {
@@ -1282,7 +1313,13 @@ export function createUI(D, ctx, DEV = false) {
   }
 
   function openReport(id) {
-    if (st.modal) st.modalStack.push(st.modal);
+    if (st.modal) {
+      if (st.modal.kind === 'dispatch') {
+        reportBackScroll.set(st.modal, modalEl.querySelector('.modalbg')?.scrollTop ?? 0);
+        st.pendingModalScroll = 0;
+      }
+      st.modalStack.push(st.modal);
+    }
     st.modal = { kind: 'report', id };
     st.vs = false;
     render();
@@ -1432,6 +1469,13 @@ export function createUI(D, ctx, DEV = false) {
     if (t.id === 'lang') { changeLang(t.value); return; }
     if (t.id === 'founder-gender') { office.founderGender(t.value); render(); return; }
     if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }
+    if (t.dataset.tripOrder) {
+      const key = t.dataset.tripOrder;
+      st.sort[key] = { k: t.value };
+      listbox.setSize(key, tripPageSize);
+      render();
+      return;
+    }
     if (t.dataset.ftag !== undefined) { listbox.setTag(t.dataset.ftag, t.value); render(); return; }
     if (t.dataset.pgsize) { listbox.setSize(t.dataset.pgsize, Number(t.value)); render(); return; }
     if (settingsPage.onInput(ev)) return;

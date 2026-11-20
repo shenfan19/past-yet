@@ -18,6 +18,22 @@ run_game.cmd
 
 Leave that window running and open [the game in your browser](http://127.0.0.1:8778/index.html). The script starts a local server with caching disabled, so reloading picks up changes to the code and data. You don't need to build anything to run the checked-out game.
 
+## Deploy to Cloudflare
+
+Past uses Cloudflare Workers Builds with static assets, like CARE. Run `node tools/build_web.mjs` to rebuild the game data and prepare `dist/`. The public homepage is `dist/index.html`, and visitors can open the site at `/`. Git ignores the generated `dist/`; Cloudflare builds it from the repository.
+
+In **Workers & Pages**, import the GitHub repository as a Worker using these settings. [Cloudflare Workers Builds configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)
+
+| Setting | Value |
+| --- | --- |
+| Worker name | `past-yet-come` |
+| Production branch | `main` |
+| Root directory | Repository root |
+| Build command | `node tools/build_web.mjs` |
+| Deploy command | `npx wrangler deploy` |
+
+`wrangler.jsonc` sets `dist/` as the static assets directory. After the first deployment succeeds, go to **Settings → Domains & Routes → Add → Custom Domain** in the Worker and enter `www.pastyet.com`. Pushes to `main` then rebuild and deploy the site. [Cloudflare Workers custom domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)
+
 ## Development tools
 
 - `node tools/headless.mjs [era] [log] [opt]` runs the simulation without a browser and compares kits and staff from the same seeds.
@@ -45,6 +61,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Interface
 
+- Historical echoes are sourced quotations in the settlement report. Every playable story has echoes, including outcomes with zero stars, lost synchronisation or no participation in the event. The result guides the choice of quotation. Medical evacuation and manual recall skip the echo.
 - Time travel: the trips on the road first, then a slim row of filters and a zoomable world map (Natural Earth 110m land, public domain) with a time axis, then the log of finished trips. A pin is a place and a place holds events at different times; only anchored places are drawn, and an anchored place nobody has been to yet is a question mark. A pin opens a pop-up with its events, an event opens a pop-up with its story, who goes and what they carry, and a Send button.
 - Buy: the shop paid in funds, the time shop paid in time energy, and the hiring offer of five candidates. Items sell at the price they were bought for. The research institute provides funding when the agency transfers antiques.
 - Agency: the employees, the goods and the antiques. Antiques are found on trips and anchored to open places, spares can be sold. Each employee shows a total of their personal best stars across stories. Click it to open their record. Every 30 stars earn one attribute point if an attribute can still grow.

@@ -224,6 +224,7 @@ details summary { cursor: pointer; color: var(--blue); font-size: 13px; }
 .wmain { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 14px 18px; min-height: 240px; }
 .wmain h2 { margin-bottom: 6px; }
 .wcat summary { cursor: pointer; font-weight: 600; padding: 4px 0; color: var(--ink); }
+.wcount { margin-inline-start: .25em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .wrow { padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
 .wrow:hover { background: var(--paper2); }
 .wrow.on { background: var(--chip); font-weight: 600; }
@@ -381,6 +382,7 @@ ul.stages li.dim { color: var(--ink2); }
 /* the trips that came home from one place */
 .trips { list-style: none; padding: 0; margin: 4px 0 0; }
 .trips li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 3px 0; border-bottom: 1px dotted var(--line, #cdbf9f); }
+.trip-controls { justify-content: space-between; }
 
 /* the pop-up over the page: a click on the dark ground closes it */
 .modalbg { position: fixed; inset: 0; background: #0007; z-index: 60; overflow: auto; display: flex; padding: 24px 12px; }
@@ -394,9 +396,8 @@ body.modal-open { overflow: hidden; }
 /* one row is one line in the lists, and the two groups of tabs of the agency page */
 .nowrap { white-space: nowrap; }
 .ltable td .oneline { display: block; }
-/* the story in a pop-up is shown whole, only its history of trips scrolls */
+/* The event and its paged trip history use the pop-up's scroll area. */
 .storyfull .lscroll { max-height: none !important; overflow: visible; }
-.storyfull .trips { max-height: 180px; overflow: auto; }
 
 /* settings and about are pop-ups opened from two icons at the right of the bar */
 #tools { display: flex; gap: 4px; }

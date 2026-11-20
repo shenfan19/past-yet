@@ -2,12 +2,14 @@
 // Locked articles show as a question mark for visitors. In dev mode they show in full with a hidden mark, and the model categories appear.
 import { staffName, staffTraits, fmtYear, staffProfile, radarSvg, isoDateLabel } from './narrate.js';
 import { echoSources } from './quotes.js';
+import { localeTag } from './language.js';
 
 const IDENT = /[A-Za-z_][A-Za-z0-9_.]*/g;
 
 export function createWiki(X) {
   const { D, ctx, T, U, DEV, esc, r1, st } = X;
   const W = U.wiki;
+  const collator = new Intl.Collator(localeTag(D.lang), { numeric: true });
   const COLON = U.fmt.colon, SEP = U.fmt.sep;
   const paren = (x) => U.fmt.paren.replace('{x}', x);
   const eraIds = () => D.get('config.eras');
@@ -298,19 +300,26 @@ export function createWiki(X) {
 
   function listHtml() {
     const cats = Object.keys(W.cats).filter((c) => DEV || !['formulas', 'vars', 'models'].includes(c));
+    const filtered = filtering();
     const out = cats.map((c) => {
-      const items = articles().filter((x) => x.cat === c);
-      let rows = '';
-      let n = 0;
+      const items = articles().filter((x) => x.cat === c).sort((a, b) => collator.compare(a.title, b.title));
+      const unlockedRows = [];
+      const lockedRows = [];
+      let unlocked = 0;
       for (const x of items) {
-        if (!visible(x)) { if (!filtering()) { rows += `<div class="wrow locked">${U.enc.locked_name}</div>`; n++; } continue; }
-        if (!matches(x)) continue;
-        n++;
-        rows += `<div class="wrow ${w().cur === x.id ? 'on' : ''} ${open(x) ? '' : 'locked'}" data-act="wiki" data-id="${esc(x.id)}">${esc(x.title)}${open(x) ? '' : ' ' + U.enc.hidden}</div>`;
+        const isOpen = open(x);
+        if (isOpen) unlocked++;
+        if (!isOpen && !DEV) {
+          if (!filtered) lockedRows.push(`<div class="wrow locked">${esc(U.enc.locked_name)}</div>`);
+          continue;
+        }
+        if (filtered && !matches(x)) continue;
+        const rows = isOpen ? unlockedRows : lockedRows;
+        rows.push(`<div class="wrow ${w().cur === x.id ? 'on' : ''} ${isOpen ? '' : 'locked'}" data-act="wiki" data-id="${esc(x.id)}">${esc(x.title)}${isOpen ? '' : ' ' + esc(U.enc.hidden)}</div>`);
       }
-      if (!n) return '';
+      if (!unlockedRows.length && !lockedRows.length) return '';
       const devCat = ['formulas', 'vars', 'models'].includes(c);
-      return `<details class="wcat" ${w().openCats[c] ? 'open' : ''} data-cat="${c}"><summary>${esc(W.cats[c])} <span class="muted">${n}</span>${devCat ? ' <span class="chip warn">' + W.dev_cats + '</span>' : ''}</summary>${rows}</details>`;
+      return `<details class="wcat" ${w().openCats[c] ? 'open' : ''} data-cat="${c}"><summary>${esc(W.cats[c])} <span class="muted wcount">${unlocked}/${items.length}</span>${devCat ? ' <span class="chip warn">' + W.dev_cats + '</span>' : ''}</summary>${unlockedRows.join('')}${lockedRows.join('')}</details>`;
     }).join('');
     return out || `<p class="muted">${W.none}</p>`;
   }
@@ -325,11 +334,12 @@ export function createWiki(X) {
       if (!(id in D.get('encyclopedia.refs'))) throw new Error('百科引用缺失: ' + id);
       return `<div class="ref">${esc(refCite(id))} ${refStatus(id) === 'pending' ? `<span class="chip warn">${esc(U.enc.pending)}</span>` : ''}</div>`;
     }).join('');
-    const authors = x.authors || D.get('config.meta.card_authors');
-    const humanAuthors = authors.filter((author) => author !== 'AI');
-    const credit = humanAuthors.length ? `<div class="muted">${esc(U.enc.card_authors)}${COLON}${esc(humanAuthors.join(', '))}</div>` : '';
-    const sources = rf ? `<span class="muted">${esc(U.enc.refs)}</span>${rf}`
-      : authors.includes('AI') ? `<div class="ref">${esc(refCite('game'))}</div>` : '';
+    const defaults = D.get('config.meta.card_authors');
+    const authors = x.authors ?? defaults;
+    const hasSpecialCredit = authors.length !== defaults.length || authors.some((name) => !defaults.includes(name));
+    const credited = hasSpecialCredit ? authors.filter((name) => name !== 'AI') : [];
+    const credit = credited.length ? `<div class="muted">${esc(U.enc.card_authors)}${COLON}${esc(credited.join(', '))}</div>` : '';
+    const sources = rf ? `<span class="muted">${esc(U.enc.refs)}</span>${rf}` : '';
     const footer = credit || sources ? `<div class="refs">${credit}${sources}</div>` : '';
     return `<h2>${esc(x.title)}${open(x) ? '' : ' ' + `<span class="chip warn">${U.enc.hidden}</span>`}</h2><div class="wrap">${tags}</div>${x.body()}${footer}`;
   }

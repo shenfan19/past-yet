@@ -333,10 +333,11 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
       // the body of the traveller through the stay, as LM reads it, for the part of the report that shows it
       report.body = health ? health.trace.map((x) => ({ day: x.day, ...x.readouts, attrs: bodyAttrs(x.stats) })) : null;
       if (!journey.accepted) report.outcomeName = D.get('text.ui.report.participation.title_missed');
-      report.points = journey.accepted ? applyBonus(report.points, eras[eraId].starPoints.map((p) => p.kind), spec.staffId, spec.seed, eraId) : report.points.map((p) => ({ ...p, hit: false }));
+      const SP = eras[eraId].starPoints;
+      if (!journey.accepted) report.points = report.points.map((p) => ({ ...p, hit: false }));
+      else if (info[eraId].raw.star_trait_bonus !== false) report.points = applyBonus(report.points, SP.map((p) => p.kind), spec.staffId, spec.seed, eraId);
       // A guard point of a model holds a recorded event by its day of the stay. Missed, the trip falls out of sync on that day, as in a small story:
       // the points whose milestones come later are not reached, the lines of the employee after it are dropped, and the traveller comes home that day.
-      const SP = eras[eraId].starPoints;
       const arrived = res.branch.arrivedDay ?? 0;
       const milestoneDay = (p) => res.branch.log.find((e) => e.kind === 'milestone' && e.id === p.milestone)?.t;
       report.points = report.points.map((p, i) => ({ ...p, ...(SP[i].guard ? { guard: true } : {}) }));
