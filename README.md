@@ -18,6 +18,8 @@ run_game.cmd
 
 Leave that window running and open [the game in your browser](http://127.0.0.1:8778/index.html). The script starts a local server with caching disabled, so reloading picks up changes to the code and data. You don't need to build anything to run the checked-out game.
 
+Use **Settings → Data** to transfer a save between browsers or addresses. Large saves are stored in IndexedDB and export as `past-yet-come-save.json.gz` in browsers that support gzip streams. The import picker accepts that file and earlier JSON saves.
+
 ## Deploy to Cloudflare
 
 Past uses Cloudflare Workers Builds with static assets, like CARE. Run `node tools/build_web.mjs` to rebuild the game data and prepare `dist/`. The public homepage is `dist/index.html`, and visitors can open the site at `/`. Git ignores the generated `dist/`; Cloudflare builds it from the repository.

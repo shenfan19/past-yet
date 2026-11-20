@@ -23,7 +23,7 @@ export function createSettingsPage(X) {
       game: row(P.game.pause_on_report, check('pause_on_report'), P.game.pause_on_report_note),
       data: `<div class="muted small">${esc(P.data.note)}</div>`
         + row(P.data.export, `<button data-act="saveexport">${esc(P.data.export)}</button>`)
-        + row(P.data.import, `<input type="file" accept="application/json,.json" data-act="saveimport" aria-label="${esc(P.data.import)}">`)
+        + row(P.data.import, `<input type="file" accept="application/json,application/gzip,.json,.gz" data-act="saveimport" aria-label="${esc(P.data.import)}">`)
         + row(P.data.defaults, `<button data-act="settingsreset">${esc(P.data.defaults)}</button>`)
         + row(P.data.reset, `<button class="ghost danger" data-act="reset">${esc(P.data.reset)}</button>`),
       advanced: `<h4>${esc(P.advanced.backend_h)}</h4>`
@@ -52,19 +52,31 @@ export function createSettingsPage(X) {
     return true;
   }
 
-  function exportSave() {
-    const blob = new Blob([JSON.stringify(ctx.saved(), null, 1)], { type: 'application/json' });
+  async function exportSave() {
+    let blob = new Blob([JSON.stringify(ctx.saved())], { type: 'application/json' });
+    let extension = '.json';
+    if (blob.size >= 1024 * 1024 && typeof CompressionStream !== 'undefined' && typeof DecompressionStream !== 'undefined') {
+      try {
+        const gzip = blob.stream().pipeThrough(new CompressionStream('gzip'));
+        blob = await new Response(gzip, { headers: { 'Content-Type': 'application/gzip' } }).blob();
+        extension += '.gz';
+      } catch (e) { /* keep the JSON export if compression fails */ }
+    }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = D.get('config.save.key') + '.json';
+    a.download = D.get('config.save.file_name') + extension;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
   async function importSave(file) {
     try {
-      const obj = JSON.parse(await file.text());
+      const signature = new Uint8Array(await file.slice(0, 2).arrayBuffer());
+      const gzip = signature[0] === 0x1f && signature[1] === 0x8b;
+      const text = gzip ? await new Response(file.stream().pipeThrough(new DecompressionStream('gzip'))).text() : await file.text();
+      const obj = JSON.parse(text);
       if (!ctx.replace(obj)) throw new Error('bad save');
-      alert(P.data.import_ok);
+      const stored = await ctx.save();
+      alert(stored ? P.data.import_ok : P.data.import_memory);
       return true;
     } catch (e) {
       alert(P.data.import_bad);

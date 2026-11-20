@@ -6,6 +6,7 @@ import { createAudio } from './audio.js';
 import { drawStartStaff } from './start.js';
 import { defaultFounder, applyFounder } from './founder.js';
 import { localeTag, pickLocale } from './language.js';
+import { createSaveStorage } from './save_storage.js';
 
 // Language: ?lang= in the address, then the saved choice, then the browser language, then the fallback.
 function pickLang(I) {
@@ -54,6 +55,7 @@ const backend = createLocalBackend(D);
 backend.setGearSource((id) => (S && S.staff[id] && S.staff[id].gear) || []);
 
 const KEY = D.get('config.save.key');
+const saveStorage = createSaveStorage(KEY);
 const VERSION = D.get('config.save.version');
 const O = D.get('config.office');
 
@@ -167,9 +169,9 @@ function upgrade(S, raw) {
   return S;
 }
 
-function load() {
+async function load() {
+  const raw = await saveStorage.read();
   try {
-    const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       const S = parsed && parsed.founder && parsed.staff && Array.isArray(parsed.dispatches) ? upgrade(parsed, raw) : null;
@@ -179,12 +181,12 @@ function load() {
     }
   } catch (e) {
     console.warn('存档读取失败，使用新存档', e);
-    try { const raw = localStorage.getItem(KEY); if (raw) localStorage.setItem(KEY + '_backup_unread', raw); } catch (x) { /* storage blocked */ }
+    try { if (raw) localStorage.setItem(KEY + '_backup_unread', raw); } catch (x) { /* storage blocked */ }
   }
   return fresh();
 }
 
-let S = load();
+let S = await load();
 D.staffGrowth = (id) => S.staff[id]?.growth;
 const settings = createSettings(D);
 const ctx = {
@@ -198,7 +200,7 @@ const ctx = {
   era: (id) => backend.eraInfo(id),
   eraSource: (id) => D.get('era_src.' + id),
   save() {
-    try { localStorage.setItem(KEY, JSON.stringify(withoutDevStaff(S))); } catch (e) { /* storage may be blocked, the game still runs */ }
+    return saveStorage.write(JSON.stringify(withoutDevStaff(S)));
   },
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {

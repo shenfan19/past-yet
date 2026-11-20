@@ -28,6 +28,7 @@ i18n:
 save:
   key: teleporter_save
   version: 12
+  file_name: past-yet-come-save
 eras:
   - broad_street_1854
   - vienna_1847
@@ -61,7 +62,7 @@ office:
   # Each employee earns a point for this many stars across their personal best results.
   stars_per_point: 30
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
-  # An employee earns about 7 funds a day from trips, and the antiques sold add to that as the spares pile up, so the upkeep passes the income near seven or eight people. There is no fixed limit on the staff, the wage bill is the limit.
+  # Trips pay no cash. Antique sales cover the wages, and there is no fixed limit on staff.
   # A day that cannot be paid empties the funds and costs every employee unpaid_favor.
   wage: {base: 2.4, step: 0.5, unpaid_favor: -0.02}
   # archived reports are kept, up to this many, the oldest go first and their lines stay
@@ -138,6 +139,7 @@ favor:
   # a reward costs this many days of the wage of that person and gives this much mood
   gift_days: 1
   gift_gain: 0.1
+  rest_recovery_per_day: 0.015
   min: 0
   max: 1
   outcome:
@@ -152,10 +154,11 @@ favor:
     desync: -0.05
 auto:
   reserve_funds: 100
-  sell_spares_below: 100
-  pick: {breakthrough_tries: 3}
-  # the special equipment is paid in time energy, which is also the way home, so a piece is only bought when its price is at most this share of the energy in hand
-  item_buy: {energy_share: 0.5}
+  wage_reserve_days: 14
+  # Automatic routes with three sub-threshold results wait for another employee or a successful manual trip.
+  retry_limit: 3
+  # Share of the story's stars required to make route progress or find a new antique on auto.
+  progress_share: 0.5
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40

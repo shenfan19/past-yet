@@ -530,55 +530,29 @@ try {
   ok('the star filter keeps only places with that many stars', await page.evaluate(() => [...document.querySelectorAll('svg.map .pt')].length >= 1 && [...document.querySelectorAll('svg.map .pt')].length <= 3));
   await page.selectOption('#map-star', '');
   await go('shop');
-  // the auto mode picks where to send an employee by rules: unexplored first, then a place that can still be improved, then earlier history, then any
   const pk = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
-    const free = ['broad_street_1854', 'vienna_1847', 'ev_a'].slice(0, 2);
-    const keep = { visited: [...S.visited], stars: { ...S.stars }, dispatches: S.dispatches, trips: S.trips };
-    const id = Object.keys(S.staff).find((k) => S.staff[k].hired);
-    S.dispatches = []; S.trips = [];
-    S.visited = ['vienna_1847']; S.stars = { vienna_1847: 3 };
-    const r1 = off.pickPlace(id, free);
-    S.visited = ['broad_street_1854', 'vienna_1847']; S.stars = { broad_street_1854: 3, vienna_1847: 2 };
-    const r2 = off.pickPlace(id, free);
-    S.stars = { broad_street_1854: 3, vienna_1847: 3 };
-    const r3 = off.pickPlace(id, free);
-    const early = g.ctx.backend.placeYear('vienna_1847') < g.ctx.backend.placeYear('broad_street_1854') ? 'vienna_1847' : 'broad_street_1854';
+    const free = ['broad_street_1854', 'vienna_1847'];
+    const keep = { visited: S.visited, trips: S.trips };
+    const [id, other] = off.hiredIds();
+    const staff = S.staff[id], misses = staff.autoMisses;
+    const catalog = g.D.get('catalog.events');
+    const key = (area) => catalog.find((e) => e.era === area)?.id || area;
+    S.visited = [free[1]]; S.trips = [];
+    const first = off.pickPlace(id, free);
+    S.visited = [...free];
+    S.trips = [{ staffId: id, place: free[0] }];
+    const rotation = off.pickPlace(id, free);
+    staff.autoMisses = Object.fromEntries(free.map((area) => [key(area), g.D.get('config.auto.retry_limit')]));
+    const stopped = off.pickPlace(id, free);
+    const differentEmployee = off.pickPlace(other, free);
+    if (misses) staff.autoMisses = misses; else delete staff.autoMisses;
     Object.assign(S, keep);
-    return { r1, r2, r3, early };
+    return { first, rotation, stopped, differentEmployee };
   });
-  ok('the auto mode sends to an unexplored place first', pk.r1.rule === 'unexplored' && pk.r1.eraId === 'broad_street_1854');
-  ok('then to a visited place that can still be improved', pk.r2.rule === 'breakthrough' && pk.r2.eraId === 'vienna_1847');
-  ok('then to the earlier history, the earliest of the places', pk.r3.rule === 'farther' && pk.r3.eraId === pk.early);
-  // the auto mode buys the equipment a story needs, within the share of the energy it may spend, and carries it
-  const eq = await page.evaluate(() => {
-    const g = window.__game, S = g.ctx.S(), off = g.ui.office;
-    const scenes = g.D.get('catalog.events').filter((e) => e.scene);
-    const staffIds = Object.keys(S.staff);
-    const keep = { energy: S.energy, inv: { ...S.inv } };
-    let found = null;
-    S.energy = 5000;
-    for (const e of scenes) {
-      for (const sid of staffIds) {
-        const plain = g.ctx.backend.runLight(e.id, sid, 7, {}).stars;
-        const plan = off.planLight(e.id, sid, 7);
-        if (plan.stars > plain && plan.buy.length) { found = { e: e.id, sid, plain, rich: plan.stars, buy: plan.buy, kit: Object.keys(plan.kit) }; break; }
-      }
-      if (found) break;
-    }
-    S.energy = 0;
-    const poor = found ? off.planLight(found.e, found.sid, 7) : null;
-    S.energy = 5000;
-    const before = found ? found.buy.map((id) => S.inv[id] || 0) : [];
-    if (found) for (const id of found.buy) off.buyItem(id);
-    const after = found ? found.buy.map((id) => S.inv[id] || 0) : [];
-    const spent = 5000 - S.energy;
-    Object.assign(S, { energy: keep.energy, inv: keep.inv });
-    return { found, poorBuy: poor ? poor.buy.length : -1, before, after, spent };
-  });
-  ok('some story cannot reach more stars without equipment, and the plan buys it', !!eq.found && eq.found.rich > eq.found.plain);
-  ok('with no energy the plan buys nothing', eq.poorBuy === 0);
-  ok('buying puts the equipment in the stock and takes the energy', eq.found && eq.after.every((n, i) => n === eq.before[i] + 1) && eq.spent > 0);
+  ok('auto sends to an unexplored place first', pk.first.rule === 'unexplored' && pk.first.eraId === 'broad_street_1854');
+  ok('auto rotates to the least tried place', pk.rotation.rule === 'rotation' && pk.rotation.eraId === 'vienna_1847');
+  ok('blocked routes wait for a different employee', pk.stopped === null && !!pk.differentEmployee);
   await page.selectOption('[data-clk=speed]', '0');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);

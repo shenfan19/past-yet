@@ -201,7 +201,7 @@ ui:
       rule: Every playable story has sourced quotations called echoes. The trip report shows an echo even with zero stars, a loss of synchronisation, or no chance to take part in the event. The stars and outcome guide which quotation appears. Medical evacuation and manual recall skip the echo.
     preview:
       title: Early version
-      project: This game is a playable front end for Life Matters (LM), a research project that helps us develop the simulation engine. You don’t need to understand the research to enjoy the game.
+      project: This game grew out of a research project and helps us develop its simulation engine. You can play without knowing anything about the research.
       changes: As we add features, the rules and what items or actions do may change. We’ll try to carry your progress forward, but a major update may make an older save unusable.
     title: About The Past Is Yet to Come
     version_line: '{app} {v}, released {date}'
@@ -221,7 +221,7 @@ ui:
           - You run a time travel agency. Employees go back to historical turning points, try to help, and come home with a report. Nothing needs your constant attention. You can set it to run by itself and just read what happens.
           - It started from plain curiosity about what would happen if someone from today stood in a famous moment of the past, and it is meant to be fun to poke at and pleasant to watch.
           - 'History cannot be changed. Everything an employee does lands on a parallel branch and the main timeline stays as it was, and the difference between the two is converted into time energy. The agency stays out of wars and regime changes and does only medicine, technology, documents, daily life and witnessing. Employees do not die: when one is about to, the recall charm pulls them back at a cost, and the story goes on.'
-          - The game grew out of Life Matters, LM, and was meant from the start to let the traveller live through the hardship of the past. Disease, heat, cold, hunger, sleepless nights, grief and hostility press on the employee every day of a stay, the LM models work out how the body bears it, and someone who cannot go on is sent home. Constitution and will are the ground to stand on, and fitting items, gear and traits take some of it off. The pressure is written as the history has it and is not lowered to make a trip easy; getting through is the difficulty.
+          - The game was meant from the start to let the traveller live through the hardship of the past. Disease, heat, cold, hunger, sleepless nights, grief and hostility press on the employee every day of a stay. The simulation models determine how the body copes, and anyone who cannot go on is sent home. Constitution and will are the ground to stand on, and fitting items, gear and traits take some of it off. The pressure is written as the history has it and is not lowered to make a trip easy; getting through is the difficulty.
           - The game begins before the statue of Dr. Sun Yat-sen at Sun Yat-sen University. In memory of Dr. Sun Yat-sen, on the 160th anniversary of his birth.
       - h: Disclaimer
         preview: true
@@ -248,7 +248,7 @@ ui:
       - h: Author
         p:
           - I am Fan Shen, a researcher in dynamical systems modelling and simulation, and this is my personal project. I designed its data structures and calculation logic.
-          - Every era is a public YAML model. Employees and historical figures are agents that pick actions by utility, events are random but seeded, and every run is compared with the same seed run without the employee. The code only interprets the files. Each number carries a source tag that tells historical facts, models, game assumptions and calibrated values apart, and in developer mode the wiki lists the formulas and variables. The engine is a simplified JavaScript version of an engine improved from the LM backend, and the models in this prototype are not fitted to data.
+          - Every era is a public YAML model. Employees and historical figures are agents that pick actions by utility, events are random but seeded, and every run is compared with the same seed run without the employee. The code only interprets the files. Each number carries a source tag that tells historical facts, models, game assumptions and calibrated values apart, and in developer mode the wiki lists the formulas and variables. The engine is a simplified JavaScript version of an engine improved from the research project’s backend, and the models in this prototype are not fitted to data.
           - Life Matters (LM) is an open research project I proposed. It builds the LM format in YAML to bring together findings from parts of medicine, psychology and sociology, and uses dynamical models to describe how the elements of everyday life affect health. The format is open, in the hope that people will use it, build models with it, share them and work together. It is still under development.
           - Care for You is also a sub-project of LM, a home caregiving game, driven in the same way by an engine improved from the LM backend.
         links: 0
@@ -277,7 +277,7 @@ ui:
     pause: Pause
     speed: Speed
     auto: Auto
-    auto_tip: When on, the agency collects reports, restocks and dispatches by itself, so you can just watch. The secretary's traits add bonuses whether it is on or off.
+    auto_tip: Auto collects reports, restocks basic supplies and sends employees on routine trips. New antiques take a solid result. After repeated setbacks, switch off Auto and try a different employee or kit.
     paused_report: A report is waiting, paused
     start_hint: The clock starts at the first trip
     start_tip: Until the first trip goes out nothing happens, and the wages would only run down the funds, so the clock stands still. Pick a place on the map and send someone.
@@ -303,6 +303,7 @@ ui:
     kind_daily: Ordinary place
     kind_story: Small story
     not_ready: Content not built yet
+    manual_retry: Manual dispatch only
     not_built: This event has no simulation yet. You can find it, collect its relic and read about it, but not send anyone.
     not_built_short: not built
     relic: Relic
@@ -822,6 +823,7 @@ ui:
       export: Save to a file
       import: Load from a file
       import_ok: The save was loaded.
+      import_memory: The save is open, but this browser could not store it. Export a copy before closing the game.
       import_bad: This file is not a save of this game.
       reset: Clear save
       reset_confirm: Clear the save and start again? This cannot be undone.

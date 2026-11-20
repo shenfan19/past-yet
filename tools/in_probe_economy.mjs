@@ -1,6 +1,8 @@
 // Economy probe: plays new games in the page with the automatic mode and reports the funds, the staff and the antiques over the days.
 // Two ways of playing: auto leaves it alone, human sells the spares and then the cheapest door that can be let go when the funds run short, and hires when they are rich.
-// Usage: node tools/in_probe_economy.mjs runs days policy [key=value ...]   policy: auto | human | idle   keys: k base step hire start scale mindoors cushion sec team (overrides of the config for this run)
+// Usage: node tools/in_probe_economy.mjs runs days policy [key=value ...]
+// Policies: auto (stop at unpaid wage), idle (sell to resume), human (sell and hire).
+// Options: k base step hire start scale mindoors cushion sec team nodup (suppress duplicate finds only).
 // Needs PLAYWRIGHT_DIR, as ui_check does. A run of 6 games and 120 days takes about three minutes.
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
@@ -33,6 +35,14 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
   if (over.hire) OF.hire_cost = over.hire;
   if (over.scale) OF.sale_scale = over.scale;
   if (over.start) OF.start_funds = over.start;
+  const findAntique = g.ctx.backend.findAntique;
+  if (over.nodup) g.ctx.backend.findAntique = (...args) => {
+    const found = findAntique(...args);
+    return g.ctx.S().antiques.includes(found) ? null : found;
+  };
+  const active = D.get('catalog.active_events').map((e) => ({ route: e.era || e.id, antique: e.era
+    ? Object.keys(D.get('antiques.antiques')).find((id) => D.get('antiques.antiques')[id].era === e.era)
+    : 'relic_' + e.id, max: g.ctx.backend.maxStars(e.era || e.id) }));
   const out = [];
   for (let r = 0; r < runs; r++) {
     g.ctx.reset();
@@ -48,6 +58,10 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
     };
     // team=N: the agency is hired up to N people at the start and stays at that size
     if (over.team) { for (let i = 0; i < 50 && o.hiredIds().length < over.team; i++) { o.ensureHire(); const slot = S.hire.slots[0]; if (!slot || !o.hire(slot.id)) break; } }
+    if (over.sec && o.hiredIds().length >= over.sec) {
+      const candidate = o.hiredIds().find((id) => id !== S.founder.id);
+      if (candidate) o.appoint(candidate);
+    }
     f.stops = 0; f.stopsLate = 0;
     for (let t = 0; t < days / step; t++) {
       S.clock.speed = 1;
@@ -55,6 +69,7 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
       S.brokeNew = false;
       o.advance(step * D.get('config.clock.sec_per_day'));
       if ((S.unpaidDays || 0) > unpaid0 && f.firstUnpaid === null) f.firstUnpaid = Math.floor(S.clock.day);
+      if (policy === 'auto' && (S.unpaidDays || 0) > unpaid0) { f.stops += 1; break; }
       // idle: the player leaves the auto mode on; each time a wage cannot be paid the clock stops, and the player sells the spares, then the cheapest antique
       // that can be let go, keeping two, and lets it run again
       if (policy === 'idle' && (S.unpaidDays || 0) > unpaid0) {
@@ -99,6 +114,10 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
     f.funds = Math.round(S.funds);
     f.energy = S.energy;
     f.trips = S.trips.length;
+    f.elapsed = Math.floor(S.clock.day);
+    f.unlocked = active.filter(({ antique }) => S.locks.includes(antique)).length;
+    f.full = active.filter(({ route, max }) => S.stars[route] === max).length;
+    f.bestStars = active.reduce((sum, { route }) => sum + (S.stars[route] || 0), 0);
     out.push(f);
   }
   return out;
@@ -109,5 +128,6 @@ console.log('first unpaid day (runs that had one):', avg((r) => r.firstUnpaid), 
 for (const m of [30, 60, 90, 120, 150, 200, 250]) if (res[0].fundsAt[m] !== undefined) console.log(`day ${m}: funds ${avg((r) => r.fundsAt[m])}, staff ${avg((r) => r.staffAt[m])}, antiques ${avg((r) => r.antiquesAt[m])}`);
 console.log('stops', avg((r) => r.stops), 'stops after day 60', avg((r) => r.stopsLate));
 console.log('unpaid days', avg((r) => r.unpaidDays), 'door sales', avg((r) => r.sells), 'spare-sale events', avg((r) => r.spareSold), 'hires', avg((r) => r.hires), 'energy', avg((r) => r.energy), 'trips', avg((r) => r.trips));
+console.log('elapsed', avg((r) => r.elapsed), 'unlocked stories', avg((r) => r.unlocked), 'full-star stories', avg((r) => r.full), 'best stars', avg((r) => r.bestStars));
 await browser.close();
 server.kill();

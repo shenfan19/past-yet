@@ -641,9 +641,11 @@ export function createUI(D, ctx, DEV = false) {
       const chosen = id === f.staffId;
       const stats = ctx.backend.staffStats(id);
       const mini = statsLine(stats);
+      const manual = office.needsManual(id, st.map.cat || f.eraId)
+        ? `<span class="chip warn">${esc(U.dispatch.manual_retry)}</span>` : '';
       return `<div class="pickrow ${chosen ? 'on' : ''}">
         <div class="pr1"><b>${staffLink(id)}</b><span class="muted pstats">${mini}</span>${chosen ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${id}">${U.dispatch.pick}</button>`}</div>
-        <div class="pr2">${staffTraits(D, id).map(traitChip).join('')}<span class="grow"></span><span class="muted">${favorCell(id)}</span></div></div>`;
+        <div class="pr2">${staffTraits(D, id).map(traitChip).join('')}${manual}<span class="grow"></span><span class="muted">${favorCell(id)}</span></div></div>`;
     }).join('');
     // when nobody can go, say when the first one is back
     const back = hiredIds().map((id) => (staffState(id) === 'away' ? Math.max(...S.dispatches.filter((d) => !d.claimed && d.spec.staffId === id).map((d) => d.readyDay - S.clock.day), 0) : staffState(id) === 'resting' ? S.staff[id].restUntil - S.clock.day : Infinity)).filter((x) => x < Infinity);

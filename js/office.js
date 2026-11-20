@@ -20,6 +20,14 @@ export function createOffice(X) {
   const paidIds = () => hiredIds().filter((id) => !isDev(id));
   // only one employee can be in a place at a time, the simulation cannot yet hold two travellers in one place
   const ST = D.get('config.stars');
+  const madeProgress = (id, stars, points) =>
+    Math.min(stars, points.filter((p) => p.hit && !p.bonus && !p.sure).length) >= Math.ceil(ctx.backend.maxStars(id) * A.progress_share);
+  function tripAntique(id, seed, staffId, stars, points, auto) {
+    const s = S();
+    const antique = ctx.backend.findAntique(id, seed, s.antiques, stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
+    if (!auto || !antique || s.antiques.includes(antique)) return antique;
+    return madeProgress(id, stars, points) ? antique : null;
+  }
   const eraBusy = (eraId) => S().dispatches.some((d) => !d.claimed && d.eraId === eraId);
   const canDispatchTo = (id, light, auto = false) => {
     if (light && !D.get('catalog.active_events').some((e) => e.id === id)) return false;
@@ -70,7 +78,7 @@ export function createOffice(X) {
     if (err || staffState(full.staffId) !== 'ready' || eraBusy(eraId)) return null;
     const { res, report, evacuation } = ctx.backend.dispatch(eraId, full);
     if (evacuation) return launchEvacuation(eraId, full, evacuation, opts);
-    const antique = report.journey?.accepted === false ? null : ctx.backend.findAntique(eraId, full.seed, s.antiques, report.stars, ctx.backend.luckFactor(full.staffId, s.staff[full.staffId].favor));
+    const antique = report.journey?.accepted === false ? null : tripAntique(eraId, full.seed, full.staffId, report.stars, report.points, opts.auto);
     for (const [id, n] of Object.entries(full.items)) s.inv[id] = (s.inv[id] || 0) - n;
     s.seq += 1;
     if (s.seq === 1) startClock();
@@ -90,7 +98,7 @@ export function createOffice(X) {
     const kit = Object.fromEntries(Object.entries(items).filter(([id, n]) => n > 0 && ctx.backend.lightKitAllowed(eventId, id) && (s.inv[id] || 0) >= n));
     const r = ctx.backend.runLight(eventId, staffId, seed, kit, s.staff[staffId].favor);
     if (r.evacuation) return launchEvacuation(eventId, { seed, staffId, items: kit, favor: s.staff[staffId].favor }, r, opts, true);
-    const antique = r.keepAntique === false ? null : ctx.backend.findAntique(eventId, seed, s.antiques, r.stars, ctx.backend.luckFactor(staffId, s.staff[staffId].favor));
+    const antique = r.keepAntique === false ? null : tripAntique(eventId, seed, staffId, r.stars, r.points, opts.auto);
     for (const [id, n] of Object.entries(kit)) s.inv[id] -= n;
     s.seq += 1;
     if (s.seq === 1) startClock();
@@ -232,7 +240,9 @@ export function createOffice(X) {
   }
 
   // Backfill personal records from retained history before counting any new results.
-  const storyKey = (id) => D.get('catalog.events').find((e) => e.era === id)?.id || id;
+  const modelStories = new Map(D.get('catalog.events').filter((e) => e.era).map((e) => [e.era, e.id]));
+  const storyKey = (id) => modelStories.get(id) || id;
+  const needsManual = (staffId, id) => (S().staff[staffId]?.autoMisses?.[storyKey(id)] || 0) >= A.retry_limit;
   function storyBests(id) {
     const sf = S().staff[id];
     if (sf.storyBests) return sf.storyBests;
@@ -292,6 +302,13 @@ export function createOffice(X) {
     d.paid.duplicate = !!d.paid.antique && s.antiques.includes(d.paid.antique);
     if (d.paid.antique) s.antiques.push(d.paid.antique);
     const sf = s.staff[d.spec.staffId];
+    const route = storyKey(d.eraId);
+    if (!d.recalled && madeProgress(d.eraId, d.stars, d.report.points || [])) {
+      if (sf.autoMisses) delete sf.autoMisses[route];
+    } else if (d.auto && !d.recalled) {
+      sf.autoMisses ||= {};
+      sf.autoMisses[route] = Math.min(A.retry_limit, (sf.autoMisses[route] || 0) + 1);
+    }
     sf.restUntil = isDev(d.spec.staffId) ? day() : day() + d.paid.restDays;
     const delta = (d.light || d.evacuation ? LT.favor[d.report.outcomeId] : F.outcome[d.report.outcomeId]) + (d.report.extraFavor || 0);
     d.favorDelta = delta > 0 ? delta * (1 + p.favor_gain) : delta;
@@ -412,15 +429,36 @@ export function createOffice(X) {
   const salePrice = (id) => Math.round(D.get('antiques.antiques.' + id).price * O.sale_scale * ctx.backend.marketMult(id, day()) * (1 + perks().sale_mult));
   const copies = (id) => S().antiques.filter((x) => x === id).length;
   const spareCount = () => [...new Set(S().antiques)].reduce((a, id) => a + copies(id) - 1, 0);
-  function sellSpares() {
+  function sellSpares(targetFunds = Infinity, persist = true) {
     const s = S();
+    const counts = new Map();
+    for (const id of s.antiques) counts.set(id, (counts.get(id) || 0) + 1);
+    const sold = new Map();
     let gain = 0;
-    for (const id of new Set(s.antiques)) {
-      const n = copies(id) - 1;
-      if (n > 0) { gain += n * salePrice(id); s.antiques = s.antiques.filter((x, i) => x !== id || s.antiques.indexOf(x) === i); }
+    const spares = [...counts].filter(([, n]) => n > 1)
+      .map(([id, n]) => ({ id, n: n - 1, price: salePrice(id) }));
+    const limited = Number.isFinite(targetFunds);
+    if (limited) spares.sort((a, b) => a.price - b.price);
+    for (const { id, n, price } of spares) {
+      const shortfall = targetFunds - s.funds - gain;
+      if (shortfall <= 0) break;
+      if (limited && price <= 0) continue;
+      const qty = limited ? Math.min(n, Math.ceil(shortfall / price)) : n;
+      sold.set(id, qty);
+      gain += qty * price;
     }
-    s.funds += gain;
-    if (gain) ctx.save();
+    if (sold.size) {
+      const kept = new Set();
+      s.antiques = s.antiques.filter((id) => {
+        if (!kept.has(id)) { kept.add(id); return true; }
+        const remove = sold.get(id) || 0;
+        if (remove === 0) return true;
+        sold.set(id, remove - 1);
+        return false;
+      });
+      s.funds += gain;
+      if (persist) ctx.save();
+    }
     return gain;
   }
   // The auto mode anchors every new antique it holds, so each one opens its place or its event.
@@ -569,6 +607,7 @@ export function createOffice(X) {
       s.wageDay += 1;
       const ids = paidIds();
       const due = wageTotal();
+      if (s.clock.auto && s.funds < due) sellSpares(due, false);
       if (s.funds >= due) { s.funds -= due; continue; }
       s.funds = 0;
       s.unpaidDays = (s.unpaidDays || 0) + 1;
@@ -609,9 +648,15 @@ export function createOffice(X) {
   // Moves the clock and returns the dispatches that just came home. A new report pauses the clock unless the player ticked the box that lets reports pass.
   function advance(seconds) {
     const s = S();
+    const before = day();
     if (s.clock.speed > 0) {
       const dt = (effectiveSpeed() * seconds) / C.sec_per_day;
       s.clock.day += dt;
+    }
+    for (const id of paidIds()) {
+      const sf = s.staff[id];
+      const rested = Math.min(day(), sf.restUntil || 0) - before;
+      if (id !== s.secretary && rested > 0 && sf.favor < F.start) sf.favor = Math.min(F.start, sf.favor + rested * F.rest_recovery_per_day);
     }
     const unpaid0 = s.unpaidDays || 0;
     payWages();
@@ -645,97 +690,40 @@ export function createOffice(X) {
     const E = ctx.era(eraId);
     return Object.keys(E.plots).filter((p) => E.plots[p].tech <= E.tech).slice(0, O.max_plots);
   }
-  // Buying one piece of special equipment: the time shop is paid in time energy and the piece must be unlocked.
-  function buyItem(id) {
-    const s = S();
-    const it = D.get('items.' + id);
-    const sh = D.get('shops.shops.' + it.shop);
-    if (!it.playable || it.ip || !sh.playable || it.unlock_energy > s.energy) return false;
-    const cur = sh.currency === 'energy' ? 'energy' : 'funds';
-    if (s[cur] < it.cost * it.step) return false;
-    s[cur] -= it.cost * it.step;
-    s.inv[id] = (s.inv[id] || 0) + it.step;
-    return true;
-  }
-  // The kit for a story, found the way a person would: try every set of the special equipment the office owns, or could buy and still keep
-  // its reserve, with the very seed the trip will have, and take the set that earns the most stars, the cheaper and the lighter first.
-  // The kit is not a guess, the story is run on it. What is bought is only what the best set needs and the owned sets cannot match.
-  const sceneItems = Object.keys(D.get('items')).filter((id) => D.get('items.' + id).scene && !D.get('items.' + id).implant);
   const nextSeed = () => ((S().seq + 1) * D.get('config.engine.mc_seed_stride')) % D.get('config.engine.seed_max') + 1;
-  function planLight(eventId, staffId, seed, canBuy = true) {
-    const s = S();
-    const ev = D.get('catalog.events').find((x) => x.id === eventId);
-    const favor = s.staff[staffId].favor;
-    const none = { kit: {}, buy: [], stars: ctx.backend.runLight(eventId, staffId, seed, {}, favor, { estimate: true }).stars };
-    if (!ev.scene) return none;
-    const owned = sceneItems.filter((id) => (s.inv[id] || 0) > 0);
-    const spend = Math.floor(s.energy * A.item_buy.energy_share);
-    const buyable = canBuy ? sceneItems.filter((id) => !owned.includes(id) && D.get('items.' + id).unlock_energy <= s.energy && D.get('items.' + id).cost <= spend) : [];
-    const pool = owned.concat(buyable);
-    let best = null;
-    for (let mask = 0; mask < (1 << pool.length); mask++) {
-      const set = pool.filter((_, i) => mask & (1 << i));
-      const buy = set.filter((id) => !owned.includes(id));
-      const cost = buy.reduce((a, id) => a + D.get('items.' + id).cost, 0);
-      if (cost > spend) continue;
-      const kit = Object.fromEntries(set.map((id) => [id, 1]));
-      const stars = ctx.backend.runLight(eventId, staffId, seed, kit, favor, { estimate: true }).stars;
-      const key = [stars, -cost, -set.length];
-      if (!best || key[0] > best.key[0] || (key[0] === best.key[0] && (key[1] > best.key[1] || (key[1] === best.key[1] && key[2] > best.key[2])))) best = { key, kit, buy, stars };
-    }
-    return best ? { kit: best.kit, buy: best.buy, stars: best.stars } : none;
-  }
-  function restock() {
+  function restock(reserve) {
     const s = S();
     for (const [id, target] of Object.entries(A.buy_target)) {
       const it = D.get('items.' + id);
       if (!it.playable || !D.get('shops.shops.' + it.shop).playable) continue;
-      while ((s.inv[id] || 0) + it.step <= target && s.funds - it.cost * it.step >= A.reserve_funds) {
+      while ((s.inv[id] || 0) + it.step <= target && s.funds - it.cost * it.step >= reserve) {
         s.funds -= it.cost * it.step;
         s.inv[id] = (s.inv[id] || 0) + it.step;
       }
     }
   }
-  // Where the auto mode sends one idle employee, from the free places. The first rule that leaves any candidate decides, and the choice among
-  // the candidates is a seeded draw, so a run can be replayed:
-  //   1. a place nobody has come back from yet
-  //   2. a place already visited whose best is below the top stars, and this employee has tried fewer than A.pick.breakthrough_tries times
-  //   3. a place earlier in history than any this employee has been sent to, the earliest of those
-  //   4. any free place
-  function pickPlace(staffId, free, stories = []) {
+  // Auto explores new places, then rotates among the routes this employee has tried least.
+  // A route that repeatedly failed to make progress waits for a different employee or a successful manual trip.
+  function pickPlace(staffId, free) {
     const s = S();
-    const roll = (list) => ctx.backend.pick(list, s.seq + 1, 'auto_place|' + staffId);
-    const year = ctx.backend.placeYear;
-    // the trips of this person from the summaries that are kept for good, and the one in transit
-    const mine = [...s.trips.filter((t) => t.staffId === staffId).map((t) => ({ eraId: t.place })), ...s.dispatches.filter((d) => !d.claimed && d.spec.staffId === staffId)];
-    const tries = (id) => mine.filter((d) => d.eraId === id).length;
-    const seed = nextSeed();
-    const isStory = (id) => stories.includes(id);
-    const rules = [
-      ['unexplored', () => free.filter((id) => !s.visited.includes(id))],
-      // a story already visited where this traveller, with the equipment the office has or can buy, would beat the best stars
-      ['improvable', () => free.filter((id) => isStory(id) && s.visited.includes(id) && (s.stars[id] || 0) < ctx.backend.maxStars(id) && planLight(id, staffId, seed).stars > (s.stars[id] || 0))],
-      ['breakthrough', () => free.filter((id) => s.visited.includes(id) && (s.stars[id] || 0) < ctx.backend.maxStars(id) && tries(id) < A.pick.breakthrough_tries)],
-      ['farther', () => {
-        const reach = Math.min(Infinity, ...mine.map((d) => year(d.eraId)));
-        const older = free.filter((id) => year(id) < reach);
-        const first = Math.min(...older.map(year));
-        return older.filter((id) => year(id) === first);
-      }],
-      ['random', () => free],
-    ];
-    for (const [rule, pool] of rules) {
-      const list = pool();
-      if (list.length) return { eraId: roll(list), rule };
+    const available = free.filter((id) => !needsManual(staffId, id));
+    if (!available.length) return null;
+    const newPlaces = available.filter((id) => !s.visited.includes(id));
+    const attempts = new Map();
+    for (const trip of s.trips) {
+      if (trip.staffId === staffId && !trip.recalled) attempts.set(trip.place, (attempts.get(trip.place) || 0) + 1);
     }
-    return null;
+    const least = Math.min(...available.map((id) => attempts.get(id) || 0));
+    const pool = newPlaces.length ? newPlaces : available.filter((id) => (attempts.get(id) || 0) === least);
+    return { eraId: ctx.backend.pick(pool, s.seq + 1, 'auto_place|' + staffId), rule: newPlaces.length ? 'unexplored' : 'rotation' };
   }
   function autoStep() {
     const s = S();
     for (const d of s.dispatches.filter((x) => !x.claimed && x.readyDay <= day())) claim(d.id);
     anchorFound();
-    if (s.funds < A.sell_spares_below) sellSpares();
-    restock();
+    const reserve = Math.max(A.reserve_funds, wageTotal() * A.wage_reserve_days);
+    if (s.funds < reserve) sellSpares(reserve);
+    restock(reserve);
     const eras = X.visibleEras().filter((id) => X.eraOpen(id));
     const stories = D.get('catalog.active_events').filter((e) => !e.era).map((e) => e.id).filter((id) => s.locks.includes('relic_' + id));
     // the automatic mode sends the paid staff only, never the test employees
@@ -743,12 +731,12 @@ export function createOffice(X) {
       if (staffState(staffId) !== 'ready') continue;
       const free = [...eras, ...stories].filter((id) => !eraBusy(id));
       if (!free.length) break;
-      const { eraId } = pickPlace(staffId, free, stories);
+      const route = pickPlace(staffId, free);
+      if (!route) continue;
+      const { eraId } = route;
       const seed = nextSeed();
       if (stories.includes(eraId)) {
-        const plan = planLight(eraId, staffId, seed);
-        for (const id of plan.buy) buyItem(id);
-        launchLight(eraId, staffId, seed, plan.kit, { auto: true });
+        launchLight(eraId, staffId, seed, {}, { auto: true });
         continue;
       }
       launch(eraId, { seed, staffId, items: autoKit(eraId) }, { auto: true });
@@ -768,5 +756,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wonOf, winsOf, salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, planLight, buyItem, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, alerts, stageIndex, hiredIds };
+  return { wonOf, winsOf, salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, needsManual, alerts, stageIndex, hiredIds };
 }

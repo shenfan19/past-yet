@@ -33,6 +33,7 @@ i18n:
 save:
   key: teleporter_save
   version: 12
+  file_name: past-yet-come-save
 eras:
   - broad_street_1854
   - vienna_1847
@@ -179,6 +180,7 @@ favor:
   buff: 0.2
   gift_days: 1
   gift_gain: 0.1
+  rest_recovery_per_day: 0.015
   min: 0
   max: 1
   outcome:
@@ -192,11 +194,9 @@ favor:
     desync: -0.05
 auto:
   reserve_funds: 100
-  sell_spares_below: 100
-  pick:
-    breakthrough_tries: 3
-  item_buy:
-    energy_share: 0.5
+  wage_reserve_days: 14
+  retry_limit: 3
+  progress_share: 0.5
   buy_target:
     ors_pack: 40
     chlorine_tablet: 40
