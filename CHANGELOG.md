@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.4, 2026-11-20
+
+- Opened Schumann’s story at Endenich, with three ways to help and two echoes from his published advice to musicians. The recovered score also opens an encyclopedia entry on Clara Schumann.
+
 ## 0.12.3, 2026-11-20
 
 - Opened Puccini’s unfinished duet in Brussels in November 1924, with two ways to help and sourced echoes from his score and a contemporary interview.

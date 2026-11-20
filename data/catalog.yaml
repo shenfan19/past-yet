@@ -7773,9 +7773,10 @@ events:
       - AI
       - Fan Shen
   - id: schumann_endenich
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1856
-    date: '1856-07-05'
+    date: '1856-07-14'
     stay: 1
     lon: 7.07
     lat: 50.72
@@ -7787,30 +7788,42 @@ events:
       S: 1
     refs:
       - schumann_endenich_papillon
-      - schumann_clara_july1856
-      - schumann_loc_endenich
       - schumann_clara_itinerary
+      - schumann_loc_endenich
+      - schumann_rules
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          guard: true
-          day: 22
+          kind: notice
+          day: 2
           req:
             any:
               - job:
-                  - nurse
-                  - physician
-                  - archivist
-              - trait:
-                  - patient
-                  - methodical
+                  - musician
                 stat:
-                  will: 6
+                  finesse: 6
+              - job:
+                  - archivist
+                  - proofreader
+                stat:
+                  wit: 7
+                  finesse: 4
+              - trait:
+                  - methodical
+                item: notebook_pen
+                stat:
+                  wit: 8
+                  finesse: 5
+              - trait:
+                  - artistic
+                stat:
+                  wit: 7
+                  finesse: 7
         - id: p2
-          kind: persuade
-          day: 16
+          kind: hold
+          guard: true
+          day: 13
           req:
             any:
               - job:
@@ -7820,28 +7833,36 @@ events:
                 stat:
                   will: 6
               - trait:
-                  - patient
-                  - calm
                   - charismatic
                 stat:
                   will: 7
-              - item: golden_apple
+                  wit: 7
+              - job:
+                  - archivist
+                  - proofreader
+                  - courier
                 stat:
                   will: 5
         - id: p3
           kind: care
-          day: 23
+          day: 15
           req:
             any:
               - job:
+                  - doctor
+                  - physician
                   - nurse
                   - caregiver
-                trait:
-                  - vigil
-                  - patient
-              - provides: vigil
                 stat:
-                  will: 7
+                  will: 8
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                item: warm_blanket
+                stat:
+                  will: 6
               - trait:
                   - vigil
                 stat:
@@ -7852,12 +7873,15 @@ events:
             - artistic
             - curious
             - scholarly
+          day: 1
         - id: envelope
           traits:
             - kind
             - quiet
             - attached
+          day: 8
         - id: gift
+          day: 14
     authors:
       - AI
       - Fan Shen

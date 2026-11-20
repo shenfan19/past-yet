@@ -1,10 +1,12 @@
 order: 171
+related: ['people:clara_schumann']
 events:
   schumann_endenich:
     order: 128
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1856
-    date: '1856-07-05'
+    date: '1856-07-14'
     stay: 1
     lon: 7.07
     lat: 50.72
@@ -12,139 +14,180 @@ events:
     field: music
     tier: 2
     channels: {G: 3, S: 1}
-    refs: [schumann_endenich_papillon, schumann_clara_july1856, schumann_loc_endenich, schumann_clara_itinerary]
+    refs: [schumann_endenich_papillon, schumann_clara_itinerary, schumann_loc_endenich, schumann_rules]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 22, req: {"any":[{"job":["nurse","physician","archivist"]},{"trait":["patient","methodical"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 16, req: {"any":[{"job":["doctor","physician","nurse"],"stat":{"will":6}},{"trait":["patient","calm","charismatic"],"stat":{"will":7}},{"item":"golden_apple","stat":{"will":5}}]}}
-        - {id: p3, kind: care, day: 23, req: {"any":[{"job":["nurse","caregiver"],"trait":["vigil","patient"]},{"provides":"vigil","stat":{"will":7}},{"trait":["vigil"],"stat":{"will":8}}]}}
+        - {id: p1, kind: notice, day: 2, req: {any: [{job: [musician], stat: {finesse: 6}}, {job: [archivist, proofreader], stat: {wit: 7, finesse: 4}}, {trait: [methodical], item: notebook_pen, stat: {wit: 8, finesse: 5}}, {trait: [artistic], stat: {wit: 7, finesse: 7}}]}}
+        - {id: p2, kind: hold, guard: true, day: 13, req: {any: [{job: [doctor, physician, nurse], stat: {will: 6}}, {trait: [charismatic], stat: {will: 7, wit: 7}}, {job: [archivist, proofreader, courier], stat: {will: 5}}]}}
+        - {id: p3, kind: care, day: 15, req: {any: [{job: [doctor, physician, nurse, caregiver], stat: {will: 8}}, {job: [doctor, physician, nurse, caregiver], item: warm_blanket, stat: {will: 6}}, {trait: [vigil], stat: {will: 8}}]}}
       vignettes:
-        - {id: key, traits: [artistic, curious, scholarly]}
-        - {id: envelope, traits: [kind, quiet, attached]}
-        - {id: gift}
+        - {id: key, traits: [artistic, curious, scholarly], day: 1}
+        - {id: envelope, traits: [kind, quiet, attached], day: 8}
+        - {id: gift, day: 14}
     text:
       en:
         name: 'The tune in another key'
-        place: "Endenich"
-        figure: "Robert Schumann"
-        story: 'The Library of Congress dates a copy of Schumann’s Papillon no. 10 to his stay at Endenich, 1854–1856, and identifies it as a transposition from C to B-flat major.'
-        relic: 'A labelled practice score'
-        relic_desc: 'A fictional page marked for a comparison of keys.'
+        place: Endenich
+        figure: Robert Schumann
+        story: 'A copy of a short piano piece survives from Robert Schumann’s years in Endenich. He set it a whole tone lower than the published score. In July 1856, Clara Schumann came to Bonn and asked to see him. At the guesthouse, Lina has copied the tune twice. She thinks the lower one is a mistake.'
+        relic: 'A practice score in two keys'
+        relic_desc: 'A fictional pair of practice copies with a separate key marked on each.'
         points:
-          p1: 'After Brahms sends news of Robert’s condition, get the doctor’s visiting time to Clara so she can make the visit of 27 July'
-          p2: 'Talk the director of the asylum into letting Clara see Robert earlier in July, after she has twice been turned away'
-          p3: 'On 29 July keep watch at his bed and call Clara back in time, so that she is with him when he dies'
+          p1: 'Compare the two copies and jot down why the one starting a tone lower also belongs in the folder'
+          p2: 'Keep Clara’s visit on 27 July on schedule by meeting her before the appointed hour and showing her to the right door'
+          p3: 'On 29 July, stay within call and bring Clara back to the bedside before Robert dies'
         points_fail:
-          p1: 'The visiting time is not passed to Clara. She arrives too late, and the office recalls the employee.'
-          p2: 'Clara receives accounts of Robert’s condition and still has to wait until 27 July to see him.'
-          p3: 'At four that afternoon he dies alone, and Clara sees him only half an hour later, as in history.'
+          p1: 'Lina sets the lower version aside. The next person opening the folder will see only the version in the published key.'
+          p2: 'Clara waits at the wrong door and misses the visiting hour. The office recalls you when this visit falls out of the timeline.'
+          p3: 'When Clara gets back to Endenich, Robert has already died.'
         shift:
           p1:
-            was: 'Clara visited Robert Schumann at Endenich on July 27, 1856. Robert died there on July 29.'
+            was: 'Schumann’s autograph of Papillon No. 10 from the Endenich years transposes the piece from C major to B-flat major.'
+            now: 'Lina keeps both practice copies together. At the top of each one she writes the key, so the next player knows that neither first note is a copying error.'
           p2:
-            was: '27 July 1856: after nearly two and a half years at Endenich, and after being twice turned away, Clara saw Robert for the first time.'
-            now: 'Clara was let in for a short visit in the third week of July and sat with him for a while. She came again as planned on 27 July.'
+            was: 'On 23 July, Brahms and Dr Richarz urged Clara to wait. She visited Robert on 27 July between six and seven in the evening.'
           p3:
-            was: '29 July 1856: at four in the afternoon Robert Schumann died alone at Endenich; Clara saw him half an hour later.'
-            now: '{staff} kept watch at the bed and called Clara back before the end. When he died she was beside him.'
+            was: 'On 29 July Clara returned to Endenich with Brahms and Joseph Joachim after Robert had died.'
+            now: '{staff} meets Clara on her way back and brings her straight to the room. She takes Robert’s hand before he dies.'
             who: schumann_endenich
-            bio: 'In this timeline Clara saw Robert earlier that July, and she was at his side when he died at Endenich.'
+            bio: 'At Endenich, Clara was beside Robert when he died on 29 July 1856.'
         vignettes:
-          key: 'Lina thinks the first note was copied wrong. You ask her to start each version on its own note and play a few bars. She can hear the tune go the same way from a different pitch. Instead of rubbing either page out, she writes the key above each.'
-          envelope: 'Emil has an envelope ready for only one page. You fold a wider wrapper so he can carry both without covering Lina’s headings. At the door he reads the two key names back to her. She can put the keyboard cover down without wondering which copy went away.'
-          gift: 'You remember that a manuscript will eventually be given to Schumann’s daughter Marie. Lina has only the practice pages and wants to know which she should keep by the instrument. You help her put the keys on their sleeves. The history of the actual manuscript will continue beyond the room.'
+          key: 'Lina starts from the first note in each copy. Before she reaches the end of the second bar she looks up at {staff}. She knows what comes next, even though her fingers are somewhere else on the keyboard.'
+          envelope: 'Emil has promised to take a folded note out to Clara if she is made to wait again. He asks {staff} which door to try first. They cross to the side of the lane where he can see both.'
+          gift: 'The real manuscript will eventually go to Schumann’s daughter Marie. Here at the guesthouse, Lina leaves two paper slips to mark the starts of her practice copies. When {staff} lifts the lid, one slip has slipped behind the other.'
       zh:
         name: '换了调的曲子'
-        place: "恩德尼希"
-        figure: "罗伯特·舒曼"
-        story: '美国国会图书馆记载，舒曼在1854至1856年住在恩德尼希期间抄写过《蝴蝶》第10首，将它从C大调移到降B大调。'
-        relic: '一页写明调号的练习谱'
-        relic_desc: '练习谱，标明了对照用的调号。'
+        place: 恩德尼希
+        figure: 罗伯特·舒曼
+        story: '罗伯特·舒曼住在恩德尼希的那几年，留下过一份钢琴小曲的抄本，比出版的谱低了一个全音。1856 年 7 月，克拉拉·舒曼来波恩请求探视。客店里的莉娜把那首小曲抄了两份，怀疑起音低的那份抄错了。'
+        relic: '两个调的练习谱'
+        relic_desc: '两张虚构的练习谱，页首各写了一个调名。'
         points:
-          p1: '布拉姆斯发出病况消息后，把医生同意的探视时段送到克拉拉手里，护住她 7 月 27 日的探视'
-          p2: '劝动疗养院院长，让两次被挡在门外的克拉拉在七月里早些见到罗伯特'
-          p3: '7 月 29 日守在他床边，及时把克拉拉叫回来，让他走的时候她在身旁'
+          p1: '对照两份谱，写明为什么起音低了一个全音的那份也该留在谱夹里'
+          p2: '7 月 27 日在约定的时间前接到克拉拉，领她走对门，让探视如期发生'
+          p3: '7 月 29 日留在附近等消息，赶在罗伯特去世前把克拉拉带回床边'
         points_fail:
-          p1: '医生给出的探视时段没有转到克拉拉手中。她赶到时已经错过，事务所因同步失败召回员工。'
-          p2: '克拉拉只能收到病况转述，仍要等到 7 月 27 日才见得到他。'
-          p3: '那天下午四点他独自去世，克拉拉半小时后才见到他，这条分支与历史一样。'
+          p1: '莉娜把起音较低的那份谱抽了出来。下一个翻开谱夹的人，只会看到原来出版的调。'
+          p2: '克拉拉在另一扇门前等过了探视时段。这次探视偏离原时间线，事务所召回员工。'
+          p3: '克拉拉回到恩德尼希时，罗伯特已经去世。'
         shift:
           p1:
-            was: '1856 年 7 月 27 日，克拉拉到恩德尼希见罗伯特·舒曼。罗伯特在 7 月 29 日去世。'
+            was: '舒曼在恩德尼希期间亲笔抄写的《蝴蝶》第十首，把曲子从 C 大调移到了降 B 大调。'
+            now: '莉娜把两份练习谱留在同一个谱夹里，页首各写上调名。下一个弹它的人知道，两个起音都没抄错。'
           p2:
-            was: '1856 年 7 月 27 日，罗伯特在恩德尼希住了将近两年半，克拉拉两次被挡回之后，才第一次见到他。'
-            now: '七月第三周，克拉拉获准进去短短见了他一面，在床边坐了一会儿。7 月 27 日她照原来的安排又去了一趟。'
+            was: '7 月 23 日，布拉姆斯和里夏茨医生劝克拉拉再等一等。她在 27 日傍晚六到七点之间见到了罗伯特。'
           p3:
-            was: '1856 年 7 月 29 日下午四点，罗伯特·舒曼在恩德尼希独自去世，克拉拉半小时后才见到他。'
-            now: '{staff}守在床边，在最后那一刻之前把克拉拉叫了回来。他走的时候，她在身旁。'
+            was: '7 月 29 日，克拉拉和布拉姆斯、约阿希姆到恩德尼希时，罗伯特已经去世。'
+            now: '{staff}在克拉拉回来的路上接到她，直接带她去了病房。罗伯特走之前，她握到了他的手。'
             who: schumann_endenich
-            bio: '这条时间线里，克拉拉在那年七月更早见到了罗伯特，他在恩德尼希去世时，她守在他身边。'
+            bio: '1856 年 7 月 29 日，罗伯特在恩德尼希去世时，克拉拉就在身旁。'
         vignettes:
-          key: '莉娜以为起音抄错了。你请她照两份谱各自写的起音，弹几小节。她听出起音不同，旋律的走向却一样。两页都不必擦，她在各自上面标了调。'
-          envelope: '埃米尔备好的信封只能放一页。你另折了张宽一点的包纸，他把两份都带走，莉娜的题头也不用折进去。到门口他把两个调名念给她听。她可以安心盖好琴盖了。'
-          gift: '你记得一份手稿日后会交给舒曼的女儿玛丽。莉娜只有练习页，想知道琴边该留哪一张。你帮她把两个调名写上各自的纸套。真正的手稿后来怎样流传，你在这屋里看不到了。'
+          key: '莉娜照着两张纸各弹一遍。第二小节还没完，她就从键盘上抬头看{staff}。手指明明停在另一个地方，她却知道接下来会响起哪几个音。'
+          envelope: '埃米尔答应，如果克拉拉还得等，他就替她递张折好的纸条。他问{staff}该先敲哪扇门。两人走到巷子对边，从那里刚好能看见两扇门。'
+          gift: '真正的手稿日后会交到舒曼的女儿玛丽手里。眼下，莉娜用两根纸条标记练习谱的开头。{staff}掀起琴盖时，其中一根已经滑到另一根的背后。'
 text:
   en:
     name: Robert Schumann
-    text: German composer, 1810 to 1856. After a breakdown and an attempt to end his life in 1854 he entered a private asylum at Endenich near Bonn, where he died two years later. His wife Clara Schumann was a leading pianist and composer.
+    text: 'German composer and music writer (1810–1856). His works include Papillons, Album for the Young and the Spring Symphony. He spent his last years at a private clinic in Endenich near Bonn. His wife Clara Schumann was a concert pianist and composer.'
   zh:
     name: 罗伯特·舒曼
-    text: 德国作曲家，1810 年生，1856 年去世。1854 年精神崩溃并试图自尽后，他住进波恩附近恩登尼希的私人疗养院，两年后在那里去世。他的妻子克拉拉·舒曼是著名的钢琴家与作曲家。
-hook: {en: 'The same melody starts on a different key.', zh: '同一段曲子，怎么换了起音？'}
+    text: '德国作曲家、音乐评论家（1810–1856），作品有《蝴蝶》《少年曲集》和《春天交响曲》。他晚年住在波恩附近恩德尼希的私人疗养院。克拉拉·舒曼是钢琴演奏家、作曲家，也是他的妻子。'
+hook: {en: 'Who moved the first note?', zh: '谁把第一个音挪了个地方？'}
 facts:
   papillon:
-    date: '1856'
+    date: '1854'
     checked: official_record
-    level: usable
+    level: careful
     use: [story, wiki]
     sources: [schumann_endenich_papillon]
-    text:
-      en: 'The archive dates this copy to Schumann’s Endenich stay and notes its B-flat major transposition and later gift to Marie.'
-      zh: '馆方把抄本归于舒曼在恩德尼希居住期间，提及降B大调移调和后来赠给玛丽，没有给出确切年份。'
+    note: 'The date is the start of the range 1854–1856; the manuscript has no certain day or year in that range.'
+    text: {en: 'The autograph catalogue gives the Endenich period, 1854–1856. The piece is in B-flat major and the copy was later given to Marie.', zh: '亲笔稿的馆藏年代是恩德尼希时期（1854–1856）。手稿为降 B 大调，后来交到玛丽手里。'}
+  request:
+    date: '1856-07-14'
+    stay_day: 1
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [schumann_clara_itinerary]
+    text: {en: 'Clara went to Bonn and asked Dr Richarz to see Robert.', zh: '克拉拉到波恩见里夏茨医生，提出想见罗伯特。'}
+    line: {en: 'On 14 July 1856 Clara Schumann asked to see Robert.', zh: '1856 年 7 月 14 日，克拉拉·舒曼提出探视罗伯特。'}
+  visit:
+    date: '1856-07-27'
+    stay_day: 14
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [schumann_clara_itinerary]
+    text: {en: 'Clara visited Robert with Brahms on 27 July and again on 28 July.', zh: '克拉拉和布拉姆斯在 7 月 27 日见到罗伯特，28 日又去了一次。'}
+    line: {en: 'On 27 July Clara visited Robert at Endenich.', zh: '7 月 27 日，克拉拉在恩德尼希见到罗伯特。'}
+  death:
+    date: '1856-07-29'
+    stay_day: 16
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [schumann_clara_itinerary, schumann_loc_endenich]
+    text: {en: 'Robert died at Endenich on 29 July. Clara came after his death.', zh: '罗伯特于 7 月 29 日在恩德尼希去世，克拉拉在他去世后抵达。'}
+    line: {en: 'On 29 July Robert Schumann died at Endenich.', zh: '7 月 29 日，罗伯特·舒曼在恩德尼希去世。'}
 bystanders:
   lina:
     invented: true
-    text: {en: 'A fictional reader comparing two practice copies.', zh: '虚构读谱者莉娜，要比较两份练习谱。'}
+    text: {en: 'A piano pupil at the guesthouse comparing two practice copies.', zh: '在客店里对照两张练习谱的虚构钢琴学生。'}
   emil:
     invented: true
-    text: {en: 'A fictional messenger with an envelope that is too small.', zh: '虚构送件人埃米尔，带来的信封不够大。'}
+    text: {en: 'A fictional messenger prepared to carry a folded note.', zh: '准备帮忙递一张字条的虚构送件人。'}
+quotes:
+  schumann_endenich_tone:
+    order: 1
+    tier: full
+    date: '1850'
+    checked: official_record
+    sources: [schumann_rules]
+    original: de
+    text:
+      de: {who: Robert Schumann, quote: 'Bemühe dich frühzeitig, Tonart und Ton zu erkennen.', occasion: 'Aus den Musikalischen Haus- und Lebensregeln, 1850.'}
+      en: {who: Robert Schumann, quote: 'Learn early to recognise key and pitch.', occasion: 'From Musical Rules for the Home and for Life, first published in 1850 (game translation).'}
+      zh: {who: 罗伯特·舒曼, quote: '要及早学会辨认调性和音高。', occasion: '《音乐家训与生活准则》，1850 年首次刊行（游戏译文）。'}
+  schumann_endenich_listening:
+    order: 2
+    tier: none
+    date: '1850'
+    checked: official_record
+    sources: [schumann_rules]
+    original: de
+    text:
+      de: {who: Robert Schumann, quote: 'Wenn du spielst, kümmere dich nicht darum, wer dir zuhört.', occasion: 'Aus den Musikalischen Haus- und Lebensregeln, 1850.'}
+      en: {who: Robert Schumann, quote: 'When you play, do not concern yourself with who is listening.', occasion: 'From Musical Rules for the Home and for Life, first published in 1850 (game translation).'}
+      zh: {who: 罗伯特·舒曼, quote: '演奏时，不必管是谁在听。', occasion: '《音乐家训与生活准则》，1850 年首次刊行（游戏译文）。'}
 wiki:
   refs:
-    schumann_clara_july1856:
-      order: 2
-      status: checked
-      text:
-        en: 'Clara Schumann’s July 28 letter to Joseph Joachim https://s9.imslp.org/files/imglnks/usimg/6/6d/IMSLP591615-PMLP952503-BICKLEY%2C_ed._Letters_from_and_to_Joseph_Joachim.pdf'
-        zh: '克拉拉·舒曼 7 月 28 日致约阿希姆信 https://s9.imslp.org/files/imglnks/usimg/6/6d/IMSLP591615-PMLP952503-BICKLEY%2C_ed._Letters_from_and_to_Joseph_Joachim.pdf'
     schumann_loc_endenich:
       order: 3
       status: checked
-      text:
-        en: 'Library of Congress Schumann correspondence and Endenich dates https://guides.loc.gov/robert-schumann/correspondence'
-        zh: '美国国会图书馆舒曼书信与恩德尼希时间记录 https://guides.loc.gov/robert-schumann/correspondence'
+      text: {en: 'Library of Congress, Schumann correspondence and Endenich https://guides.loc.gov/robert-schumann/correspondence', zh: '美国国会图书馆，舒曼书信与恩德尼希时期 https://guides.loc.gov/robert-schumann/correspondence'}
     schumann_clara_itinerary:
       order: 4
       status: checked
-      text:
-        en: 'Schumann Portal itinerary for Clara Schumann https://www.schumann-portal.de/itinerar-4214.html?cid=9975&file=files%2Fimg%2FClaraSchumann%2FClara-Wieck-Schumann-Itinerar_Theresa_Schlegel.pdf'
-        zh: '舒曼门户克拉拉行程年表 https://www.schumann-portal.de/itinerar-4214.html?cid=9975&file=files%2Fimg%2FClaraSchumann%2FClara-Wieck-Schumann-Itinerar_Theresa_Schlegel.pdf'
+      text: {en: 'Schumann Portal, Clara Schumann chronology, July 1856, pp. 11–12 https://www.schumann-portal.de/itinerary.html?cid=9977&file=files%2Fimg%2FClaraSchumann%2FClara-Wieck-Schumann-Itinerar_Theresa_Schlegel.pdf', zh: '舒曼门户，克拉拉·舒曼年表，1856 年 7 月，第 11–12 页 https://www.schumann-portal.de/itinerary.html?cid=9977&file=files%2Fimg%2FClaraSchumann%2FClara-Wieck-Schumann-Itinerar_Theresa_Schlegel.pdf'}
     schumann_endenich_papillon:
-      order: 873
+      order: 5
       status: checked
-      text:
-        en: 'Library of Congress, Robert Schumann music manuscript guide, Papillon no. 10 https://guides.loc.gov/robert-schumann/music-manuscripts'
-        zh: '美国国会图书馆，舒曼音乐手稿指南，《蝴蝶》第10首 https://guides.loc.gov/robert-schumann/music-manuscripts'
+      text: {en: 'Library of Congress, Schumann manuscript guide, Papillon no. 10 https://guides.loc.gov/robert-schumann/music-manuscripts', zh: '美国国会图书馆，舒曼音乐手稿指南，《蝴蝶》第十首 https://guides.loc.gov/robert-schumann/music-manuscripts'}
+    schumann_rules:
+      order: 6
+      status: checked
+      text: {en: 'Robert Schumann House, Zwickau, German text of the musical rules https://www.schumann-zwickau.de/de/04/robert/haus_lebensregeln.php', zh: '茨维考罗伯特·舒曼故居，《音乐家训与生活准则》德文原文 https://www.schumann-zwickau.de/de/04/robert/haus_lebensregeln.php'}
 self_check:
   fact: papillon
-  quote_line: '她听出起音不同，旋律的走向却一样。'
-  regret_choice: 'key 擦掉看着错的开头会丢掉另一个调。'
-  bookend: '问起音为何不同，最后携带两个调。'
-  share_line: '两页谱，从两个音起。'
-  share_number: 'C与降B两种调。'
-  knowing: 'gift 知道实物日后交给玛丽。'
-  near: 'papillon 两调差异有馆藏依据。'
-  lever: 'envelope 让两页一起带走。'
-  missed: 'gift 实物归属在后来。'
-  brought: 'key 留下写明调号的虚构练习谱。'
+  quote_line: '手指明明停在另一个地方，她却知道接下来会响起哪几个音。'
+  regret_choice: '抄谱、探视和临终陪伴各有一项可做，专长可以救回其中一段。'
+  bookend: '莉娜起头想删掉一个调，最后两张谱留在一起。'
+  share_line: '同一段曲子，从两个音起。'
+  share_number: 'C 大调和降 B 大调'
+  knowing: '真正的手稿日后会交到玛丽手里。'
+  near: '客店里的琴键、两份谱和巷子对面的门。'
+  lever: '替练习谱注明移调，或让克拉拉在约定的时间到对的门。'
+  missed: '史实中克拉拉在罗伯特去世后抵达。'
+  brought: '标好调的两张练习谱。'
 pack: {license: MIT, version: 1, languages: [en, zh]}
