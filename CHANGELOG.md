@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.6, 2026-11-20
+
+- Opened George Boole’s story in Cork. Keep his lecture on schedule, flag a sign in an unfinished manuscript and relieve the family at his bedside.
+
 ## 0.12.5, 2026-11-20
 
 - Opened Nietzsche’s story in Turin. Help Overbeck find his friend and separate corrected proofs from private letters. The historical echoes come from Nietzsche’s preface and a letter to his publisher.

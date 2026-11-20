@@ -2,10 +2,11 @@ order: 34
 events:
   boole_ballintemple:
     order: 133
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1864
     date: '1864-11-17'
-    stay: 2
+    stay: 1
     lon: -8.45
     lat: 51.89
     region: europe
@@ -16,86 +17,78 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 7, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["patient","vigil"],"stat":{"will":6}}]}}
-        - {id: p2, kind: persuade, day: 18, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["patient","vigil","scholarly"],"stat":{"wit":8,"will":7}}]}}
-        - {id: p3, kind: care, day: 9, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic"},{"job":["nurse","paramedic","caregiver"],"item":"antibiotic","stat":{"will":5}},{"item":"nano_kit","trait":["kind","patient","vigil"]}]}}
+        - {id: p1, kind: hold, guard: true, day: 7, req: {any: [{job: [university_lecturer, lecturer, archivist, courier, teacher], stat: {will: 5}}, {trait: [patient, vigil], stat: {will: 6}}]}}
+        - {id: p2, kind: notice, day: 13, req: {any: [{job: [archivist, proofreader, data_analyst], stat: {wit: 7, will: 7}}, {job: [university_lecturer, lecturer], item: notebook_pen, stat: {wit: 8, will: 7}}]}}
+        - {id: p3, kind: care, day: 18, req: {any: [{job: [doctor, physician, nurse, caregiver], stat: {will: 8}}, {job: [doctor, physician, nurse, caregiver], item: warm_blanket, stat: {will: 6}}]}}
       vignettes:
-        - {id: repeat, traits: [scholarly, curious]}
-        - {id: border, traits: [methodical, vigil]}
-        - {id: example}
+        - {id: repeat, traits: [scholarly, curious], day: 6}
+        - {id: border, traits: [methodical, vigil], day: 10}
+        - {id: example, day: 12}
     text:
       en:
         name: "Wet clothes and a lecture"
         place: "Ballintemple, Cork"
         figure: "George Boole"
-        story: 'Boole''s 1854 Laws of Thought represents logical operations with algebra. One of its laws says that repeating the same selection produces the same class.'
+        story: 'It is raining in Cork, and George Boole has a class to teach. A student is still puzzling over an exercise from The Laws of Thought. Across town, a table in Boole’s unfinished work on differential equations will eventually have to be calculated again, all because of one sign.'
         relic: "A page of logic"
-        relic_desc: "A page of equations in which letters stand for yes and no."
+        relic_desc: 'A classroom exercise showing what happens when the same selection is applied twice.'
         points:
           p1: 'Get the lecture notes to the college dry before Boole sets out in heavy rain, and keep his class on schedule'
-          p2: 'Have Boole approve a note to Todhunter identifying tables to recalculate and passages of the supplement still under revision'
-          p3: 'Treat the fever that falls on his lungs after the wet day, and bring Boole through the pneumonia'
+          p2: 'Compare the table with the formula that produced it and flag the sign for the next person who checks the manuscript'
+          p3: 'Find someone to cover the evening watch so the family at Boole’s bedside can take a break'
         points_fail:
           p1: 'The notes are soaked and nobody has a duplicate. The class is missed, and the office recalls the employee.'
-          p2: 'The publisher receives papers without a list of which parts have been checked and which still need work.'
-          p3: 'The fever reaches his lungs and nobody can stop it. In this branch, too, Boole dies in Ballintemple on 8 December, at forty nine, and leaves five daughters.'
+          p2: 'The table goes into the folder with the formula unchecked. Sephton will have to trace the error later.'
+          p3: 'The family keeps the evening watch without relief. One of them leaves the room only long enough to set the lamp down.'
         shift:
           p1:
             was: 'University College Cork records that Boole walked from home to teach in heavy rain on November 24, 1864.'
           p2:
             was: 'Boole died in December 1864. Todhunter prepared the supplement. His preface records a table recalculated after a sign error in the manuscript.'
-            now: 'Boole leaves a short list of checks. An editor opening the supplement can assign the table for independent review and file the editorial decision beside the draft.'
-            who: boole_ballintemple
-            bio: 'Boole taught in Cork and wrote mathematical textbooks. Surviving editions and papers preserve corrections he intended to make.'
+            now: 'When the editor opens the folder, a paper marker takes him straight to the formula. Sephton can start by checking its sign.'
           p3:
-            was: 'On 8 December 1864 Boole died at Ballintemple of pleuro-pneumonia, after an illness of about two and a half weeks that followed his lecturing in wet clothes.'
-            now: 'The fever broke in the second week of December. Boole was back at Queen''s College for the next term, and saw his book on differential equations into its revised edition himself.'
-            who: boole_ballintemple
-            bio: 'Boole recovered from the pneumonia of the winter of 1864. He kept teaching at Cork and saw his five daughters grow up.'
+            was: 'Boole died of pleuro-pneumonia at home in Ballintemple on 8 December 1864.'
+            now: '{staff} finds someone who can take the chair for the evening. The family leaves the lamp burning and gets a few hours of rest before coming back.'
         vignettes:
-          repeat: 'You ask the learner to pick the even numbers, then to pick the even numbers again from the pile they just selected. They laugh once, then write down why the second choice gave back the same pile.'
-          border: 'The learner starts to put a slip in both piles without saying which property they used. You ask for the condition first. They label each stack before trying the operation again.'
-          example: 'You turn the selection into a few slips the learner can move. When they copy the conclusion, they can still point to the condition it came from.'
+          repeat: '{staff} asks the student to pick out the even numbers, then to do it again with the slips in hand. The student looks for one to put down. There isn’t one.'
+          border: 'The student is about to write down a row of numbers when {staff} asks how they got the first one. The student draws a line back to the formula before copying the rest.'
+          example: 'The student slides the finished exercise under a book to keep it flat. At the edge of the page, a paper marker sticks out just far enough to take hold of.'
       zh:
         name: "湿衣服与一堂课"
         place: "科克巴林滕普尔"
         figure: "乔治·布尔"
-        story: '布尔 1854 年出版的《思维规律研究》用代数表示逻辑运算。其中一条规律是，重复同一选择，所得的类不变。'
+        story: '科克在下雨，乔治·布尔还有一堂课要上。一名学生拿着《思维规律研究》里的习题，还没想通第二遍该怎么选。城的另一头，布尔还没写完的微分方程书里，一张表以后得重算，只因为公式里的一个符号。'
         relic: "一页逻辑演算"
-        relic_desc: "一页方程，其中的字母代表是和否。"
+        relic_desc: '一张课堂习题纸，演示照同一条件筛选两次会得到什么。'
         points:
           p1: '大雨中从家出门前，把要用的讲义干干地送到学院，护住布尔当天的课'
-          p2: '请布尔核准给托德亨特的一页交代，标明待复算的表格和仍未定下的补编段落'
-          p3: '淋雨后的高烧落到肺上，治好布尔的肺炎，让他挺过这个冬天'
+          p2: '拿公式和算出来的表格对照，把可能有问题的符号标出来，留给下一位核稿的人'
+          p3: '找人来接一班晚间照护，让守在布尔床边的家人歇一会儿'
         points_fail:
           p1: '讲义淋湿且没人有备份，当天课没能开讲，事务所因同步失败召回员工。'
-          p2: '出版社拿到稿件时，补编里哪些算过、哪些还待查并无一张总单。'
-          p3: '高烧落到肺上，没人拦得住。这条分支里布尔仍在 12 月 8 日死于巴林滕普尔，四十九岁，留下五个女儿。'
+          p2: '表格装进文件夹，公式还没核过。以后还得塞普顿自己查出错处。'
+          p3: '晚上没人替班。守在床边的人只有放下灯的时候才离开一小会儿。'
         shift:
           p1:
             was: '科克学院档案记布尔在 1864 年 11 月 24 日的大雨里从家赶去教学。'
           p2:
             was: '布尔于 1864 年 12 月去世，托德亨特后来整理了补编。编者序记有一张表因稿内符号写错而需重新算过。'
-            now: '布尔留下逐项复算的短单。编辑打开补编时，可以先让一位校对者单独核表，再把编辑决定附回原稿。'
-            who: boole_ballintemple
-            bio: '布尔在科克教课并写数学教材。现存印本与稿件还保有他计划修订的痕迹。'
+            now: '编辑一打开文件夹，就能顺着纸签翻到公式。塞普顿可以从那个符号开始核算。'
           p3:
-            was: '1864 年 12 月 8 日，布尔在巴林滕普尔死于胸膜肺炎，此前他穿着湿衣讲课，病了大约两个半星期。'
-            now: '12 月中旬高烧退了。下一学期布尔回到女王学院上课，微分方程那本书的修订本由他自己改完。'
-            who: boole_ballintemple
-            bio: '布尔熬过了 1864 年冬天的肺炎，继续在科克教书，看着五个女儿长大。'
+            was: '1864 年 12 月 8 日，布尔因胸膜肺炎在巴林滕普尔的家中去世。'
+            now: '{staff}找到人来坐一班。家人留着灯，先睡了几个钟头，再回来接替。'
         vignettes:
-          repeat: '你请学算者先挑出偶数，再从刚挑出的那一堆里挑偶数。他笑了一声，随后记下为什么第二次挑出的还是原来那一堆。'
-          border: '学算者没说依据什么，就准备把一张纸同时放进两堆。你请他先说条件。他给各堆贴上标签，再试一遍。'
-          example: '你把选择过程换成几张能挪动的纸条。学算者抄下结论时，还能指出它对应哪个条件。'
+          repeat: '{staff}请学生挑出偶数，再拿着手里的纸条挑一遍。学生想找一张放回桌上，手里却一张都不用放。'
+          border: '学生要抄一排数字，{staff}问第一个是怎么算来的。他先用笔尖划了一道线连回公式，再往下抄。'
+          example: '学生把做完的习题压在书下。页边露出一小截纸签，刚好够手指捏住。'
 text:
   en:
     name: George Boole
     text: English mathematician, 1815 to 1864, first professor of mathematics at Queen's College Cork. He built an algebra of logic that became the basis of digital circuits, and died of pneumonia at Ballintemple.
   zh:
     name: 乔治·布尔
-    text: 英国数学家，1815 年生，1864 年去世，科克女王学院第一位数学教授。他建立了逻辑代数，后来成为数字电路的基础，因肺炎在巴林特普尔去世。
-hook: {en: 'What happens if you choose twice?', zh: '同一类选两遍会怎样'}
+    text: 英国数学家（1815–1864），科克女王学院第一位数学教授。他创立的逻辑代数后来用于数字电路。1864 年，他因胸膜肺炎在巴林滕普尔去世。
+hook: {en: 'What changes if you choose twice?', zh: '照同一个条件选两遍，会少掉哪一张？'}
 facts:
   laws_of_thought:
     date: '1854'
@@ -106,10 +99,57 @@ facts:
     text:
       en: 'Boole''s 1854 Laws of Thought represents logical operations with algebra. One of its laws says that repeating the same selection produces the same class.'
       zh: '布尔 1854 年出版的《思维规律研究》用代数表示逻辑运算。其中一条规律是，重复同一选择，所得的类不变。'
+  lecture:
+    date: '1864-11-24'
+    stay_day: 8
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [boole_ballintemple_cork_rain]
+    text: {en: 'Boole was caught in rain on his way to Queen’s College and continued teaching that day.', zh: '布尔在去女王学院途中遇到大雨，当天仍继续上课。'}
+    line: {en: 'On 24 November 1864 Boole taught at Queen’s College in Cork.', zh: '1864 年 11 月 24 日，布尔在科克女王学院授课。'}
+  death:
+    date: '1864-12-08'
+    stay_day: 22
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [boole_ballintemple_cork_rain]
+    text: {en: 'Boole died of pleuro-pneumonia. The reported duration of illness leaves its precise onset uncertain.', zh: '布尔死于胸膜肺炎。记录的病程长短并不支持把发病定在某一天。'}
+    line: {en: 'On 8 December 1864 Boole died at his home in Ballintemple.', zh: '1864 年 12 月 8 日，布尔在巴林滕普尔的家中去世。'}
+  supplement:
+    date: '1865-11'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [boole_ballintemple_todhunter_preface]
+    text: {en: 'In the supplement preface Todhunter states that J. Sephton recomputed the final table because of a wrong sign in a formula.', zh: '托德亨特在补编序言中说，J. 塞普顿为书末的表做了复算，因为公式的一个符号有误。'}
+    line: {en: 'In November 1865, Isaac Todhunter’s preface recorded who had recalculated the table and why.', zh: '1865 年 11 月，艾萨克·托德亨特在序中写明了是谁复算了那张表、又为何要复算。'}
 bystanders:
   boole_ballintemple_reader:
     invented: true
     text: {en: 'An invented learner sorting numbered slips for a small exercise.', zh: '一位虚构的学算者，拿编号纸条做一道小练习。'}
+quotes:
+  boole_ballintemple_beginner:
+    order: 1
+    tier: full
+    date: '1859-02'
+    checked: official_record
+    original: en
+    sources: [boole_ballintemple_own_preface]
+    text:
+      en: {who: George Boole, quote: 'It was my object, first of all, to meet the wants of those who had no previous acquaintance with the subject', occasion: 'Preface to A Treatise on Differential Equations, Queen’s College, Cork, February 1859.'}
+      zh: {who: 乔治·布尔, quote: '我首先想照顾那些从未接触过这门课的人。', occasion: '《微分方程论》序言，1859 年 2 月，科克女王学院（游戏译文）。'}
+  boole_ballintemple_thought:
+    order: 2
+    tier: none
+    date: '1854'
+    checked: official_record
+    original: en
+    sources: [boole_ballintemple_primary, boole_ballintemple_thought_text]
+    text:
+      en: {who: George Boole, quote: 'to investigate the fundamental laws of those operations of the mind by which reasoning is performed', occasion: 'From the opening of An Investigation of the Laws of Thought, Chapter I, 1854.'}
+      zh: {who: 乔治·布尔, quote: '探究人们借以推理的那些思维活动，找出其中的基本规律。', occasion: '《思维规律研究》第一章开头，1854 年（游戏译文）。'}
 wiki:
   refs:
     boole_ballintemple_cork_rain:
@@ -130,11 +170,19 @@ wiki:
       text:
         en: 'George Boole, An Investigation of the Laws of Thought, London, 1854. Wellcome Collection. https://wellcomecollection.org/works/e3xyy2tg'
         zh: 'George Boole, An Investigation of the Laws of Thought, London, 1854. Wellcome Collection. https://wellcomecollection.org/works/e3xyy2tg'
+    boole_ballintemple_thought_text:
+      order: 12
+      status: checked
+      text: {en: 'An Investigation of the Laws of Thought, searchable public-domain edition https://www.gutenberg.org/ebooks/15114', zh: '《思维规律研究》公版文字 https://www.gutenberg.org/ebooks/15114'}
+    boole_ballintemple_own_preface:
+      order: 13
+      status: checked
+      text: {en: 'Cambridge University Press facsimile of Boole’s 1859 preface, pp. v–ix https://assets.cambridge.org/97811080/67928/frontmatter/9781108067928_frontmatter.pdf', zh: '布尔 1859 年自序，剑桥大学出版社影印，第 v–ix 页 https://assets.cambridge.org/97811080/67928/frontmatter/9781108067928_frontmatter.pdf'}
 self_check:
-  quote_line: '你请学算者先挑出偶数，再从剩在手里的这堆挑出偶数。'
+  quote_line: '学生想找一张放回桌上，手里却一张都不用放。'
   fact: laws_of_thought
-  regret_choice: '略过「用例题纸条走完一步运算」，这处细节便留给下一位核对。'
-  bookend: '从「同一类选两遍会怎样」开始，以员工留下的观察或更正收尾。'
-  share_line: '同一类选两遍会怎样'
-  share_number: '1854'
+  regret_choice: '可以为编辑指出符号，也可以为病人家里腾出休息时间。'
+  bookend: '从筛完还剩哪些纸条，落到从一堆稿纸里找出那一处。'
+  share_line: '同一批数，再选一遍。'
+  share_number: '一个符号'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -8303,10 +8303,11 @@ events:
       - AI
       - Fan Shen
   - id: boole_ballintemple
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1864
     date: '1864-11-17'
-    stay: 2
+    stay: 1
     lon: -8.45
     lat: 51.89
     region: europe
@@ -8330,61 +8331,69 @@ events:
             any:
               - job:
                   - university_lecturer
+                  - lecturer
                   - archivist
+                  - courier
+                  - teacher
+                stat:
+                  will: 5
               - trait:
                   - patient
                   - vigil
                 stat:
                   will: 6
         - id: p2
-          kind: persuade
-          day: 18
+          kind: notice
+          day: 13
           req:
             any:
               - job:
                   - archivist
                   - proofreader
+                  - data_analyst
                 stat:
                   wit: 7
                   will: 7
-              - trait:
-                  - patient
-                  - vigil
-                  - scholarly
+              - job:
+                  - university_lecturer
+                  - lecturer
+                item: notebook_pen
                 stat:
                   wit: 8
                   will: 7
         - id: p3
           kind: care
-          day: 9
+          day: 18
           req:
             any:
               - job:
                   - doctor
                   - physician
-                item: antibiotic
-              - job:
                   - nurse
-                  - paramedic
                   - caregiver
-                item: antibiotic
                 stat:
-                  will: 5
-              - item: nano_kit
-                trait:
-                  - kind
-                  - patient
-                  - vigil
+                  will: 8
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                item: warm_blanket
+                stat:
+                  will: 6
       vignettes:
         - id: repeat
           traits:
             - scholarly
             - curious
+          day: 6
         - id: border
           traits:
             - methodical
             - vigil
+          day: 10
         - id: example
+          day: 12
     authors:
       - AI
       - Fan Shen
