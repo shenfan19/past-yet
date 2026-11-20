@@ -653,11 +653,9 @@ export function createUI(D, ctx, DEV = false) {
       const chosen = id === f.staffId;
       const stats = ctx.backend.staffStats(id);
       const mini = statsLine(stats);
-      const manual = office.needsManual(id, st.map.cat || f.eraId)
-        ? `<span class="chip warn">${esc(U.dispatch.manual_retry)}</span>` : '';
       return `<div class="pickrow ${chosen ? 'on' : ''}">
         <div class="pr1"><b>${staffLink(id)}</b><span class="muted pstats">${mini}</span>${chosen ? `<span class="chip">${U.dispatch.picked}</span>` : `<button data-act="pickstaff" data-id="${id}">${U.dispatch.pick}</button>`}</div>
-        <div class="pr2">${staffTraits(D, id).map(traitChip).join('')}${manual}<span class="grow"></span><span class="muted">${favorCell(id)}</span></div></div>`;
+        <div class="pr2"><span class="muted">${esc(T.staff[id].jobs.join(' · '))}</span>${staffTraits(D, id).map(traitChip).join('')}<span class="grow"></span><span class="muted">${favorCell(id)}</span></div></div>`;
     }).join('');
     // when nobody can go, say when the first one is back
     const back = hiredIds().map((id) => (staffState(id) === 'away' ? Math.max(...S.dispatches.filter((d) => !d.claimed && d.spec.staffId === id).map((d) => d.readyDay - S.clock.day), 0) : staffState(id) === 'resting' ? S.staff[id].restUntil - S.clock.day : Infinity)).filter((x) => x < Infinity);
@@ -1081,6 +1079,12 @@ export function createUI(D, ctx, DEV = false) {
     const grown = sf.growth || {};
     const stars = office.growthStars(id);
     const into = stars % O.stars_per_point;
+    const training = attrList.filter((k) => plain[k] < ctx.backend.staffAttrMax);
+    const trainingSelect = sf.hired && !D.get('staff.staff')[id].dev_only && training.length
+      ? `<label class="muted">${esc(P.training)} <select data-training="${esc(id)}">
+          <option value="">${esc(P.training_auto)}</option>
+          ${training.map((k) => `<option value="${esc(k)}" ${k === sf.training ? 'selected' : ''}>${esc(T.stats[k])}</option>`).join('')}
+        </select></label>` : '';
     const attrRows = attrList.map((k) => {
       const base = plain[k];
       return `<tr><td>${esc(T.stats[k])}</td><td class="num">${r1(base)}${grown[k] ? ` <span class="muted"${tip(P.grown_tip)}>(+${grown[k]})</span>` : ''}</td><td class="num">${gearAdd(k) ? `<b class="up">+${gearAdd(k)}</b>` : '<span class="muted">0</span>'}</td><td class="num"><b>${r1(eff[k])}</b></td></tr>`;
@@ -1113,7 +1117,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="cols2"><div><div class="radarwrap"${tip(attrs)}>${radarSvg(D, eff)}</div></div>
       <div><table class="plain attrs"><thead><tr><th></th><th class="num">${P.base}</th><th class="num">${P.gear}</th><th class="num">${P.today}</th></tr></thead><tbody>${attrRows}</tbody></table>
       <div class="muted">${favorCell(id)} · <span${tip(U.office.tally_tip)}>${tallyHtml(stars)}</span></div>
-      <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(O.stars_per_point))}</div></div></div>
+      <div class="muted">${P.growth.replace('{n}', String(into)).replace('{m}', String(O.stars_per_point))}</div>${trainingSelect}</div></div>
       <div class="row" style="gap:6px;flex-wrap:wrap">${staffTraits(D, id).map(traitChip).join('')}</div>
       ${sf.hired ? `<div class="sec">${P.gear_title} <span class="muted">${P.load_meter.replace('{a}', String(used)).replace('{b}', String(cap))}</span></div>
       ${gearRows ? `<table class="plain gear"><tbody>${gearRows}</tbody></table>` : `<p class="muted">${P.no_gear}</p>`}
@@ -1487,6 +1491,7 @@ export function createUI(D, ctx, DEV = false) {
   view.addEventListener('input', onInput);
   function onChange(ev) {
     const t = ev.target;
+    if (t.dataset.training) { office.setTraining(t.dataset.training, t.value); render(); return; }
     if (t.id === 'lang') { changeLang(t.value); return; }
     if (t.id === 'founder-gender') { office.founderGender(t.value); render(); return; }
     if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }

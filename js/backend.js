@@ -144,8 +144,10 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const maxStars = (id) => { if (info[id]) return info[id].raw.star_points.length; const e = D.get('catalog.events').find((x) => x.id === id); if (e?.era && info[e.era]) return info[e.era].raw.star_points.length; return e && e.scene && !e.era ? e.scene.points.length : D.get('config.stars.max'); };
   const lightEvent = (eventId) => D.get('catalog.events').find((x) => x.id === eventId);
   const lightStay = (eventId) => { const e = lightEvent(eventId); return officeStay(D, e.stay || L.stay_by_tier[e.tier]); };
-  const namedIn = (req, id) => Object.entries(req || {}).some(([k, v]) => (k === 'item' && v === id) || (k === 'any' && v.some((r) => namedIn(r, id))));
+  const namedIn = (req, id, provides = []) => req?.item === id || provides.includes(req?.provides) || req?.any?.some((r) => namedIn(r, id, provides));
   const namedBy = (ev, id) => !!ev?.scene?.points?.some((p) => namedIn(p.req, id));
+  const lightPlanItems = (ev) => Object.entries(D.get('items')).filter(([id, it]) => it.scene && !it.implant && it.playable &&
+    (Object.keys(it.stat_mult || {}).length || ev.scene?.points.some((p) => namedIn(p.req, id, it.provides)))).map(([id]) => id);
   const lightKitAllowed = (eventId, itemId) => {
     const it = D.get('items.' + itemId);
     // a plain item may come along when it eases a channel of the story or a sync point of the story asks for it, such as antibiotics to heal someone
@@ -183,13 +185,13 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   // A trait is worth something at the sync points. Each point is about one kind of thing, and the traits of the employee add up to a bonus for that kind:
   // a point that was missed is still reached with the chance of the bonus, and a negative bonus loses a point that was reached. The draw is seeded.
   const traitBonus = (staffId, kind) => D.get('staff.staff.' + staffId + '.traits').reduce((a, t) => a + (D.get('staff.traits.' + t).points[kind] || 0), 0);
-  function applyBonus(points, kinds, staffId, seed, key) {
+  function applyBonus(points, kinds, staffId, seed, key, qualified = null) {
     // a test employee is read on the requirements alone, so the same story gives the same stars every time
     if (devKind(staffId)) return points;
     return points.map((p, i) => {
       const b = traitBonus(staffId, kinds[i]);
       const r = draw(seed, 'bonus_' + key + '_' + p.id, 0);
-      if (!p.hit && b > 0 && r < Math.min(0.9, b)) return { ...p, hit: true, bonus: true };
+      if (!p.hit && (!qualified || qualified[i]) && b > 0 && r < Math.min(0.9, b)) return { ...p, hit: true, bonus: true };
       if (p.hit && b < 0 && r < Math.min(0.9, -b)) return { ...p, hit: false, lost: true };
       return p;
     });
@@ -219,20 +221,32 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   }
 
   function runScene(ev, staffId, seed, items, favor, health) {
-    const { stats, carried, exposure } = sceneKit(staffId, items, favor);
+    const { stats, carried, exposure, props } = sceneKit(staffId, items, favor);
     // the sync points are met by the scene sub core. With the body on, the stay is stepped through the core of the traveller and each point is met on the attributes of its day;
     // with it off, or when the caller gives its own attributes of the day, the attributes do not change in the stay
-    const { props } = sceneKit(staffId, items, favor);
     // a sync point reads every item carried, the scene items and gear and also the plain items, so a point may ask for antibiotics
-    const hits = health?.hits ?? evalScene(D, ev, { staffId, seed, carried: [...carried, ...props], statsAt: () => stats });
-    const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}), ...(p.guard ? { guard: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id);
+    const kit = [...carried, ...props];
+    const hits = health?.hits ?? evalScene(D, ev, { staffId, seed, carried: kit, statsAt: () => stats });
+    const staff = D.get('staff.staff.' + staffId);
+    const provides = new Set(kit.flatMap((id) => D.get('items.' + id).provides || []));
+    const gender = D.get('staff.gender_class')[staff.gender];
+    // Bonuses can bridge a numeric or luck check. The same authored route must still fit the traveller and kit.
+    const fits = (req) =>
+      (!req.job || req.job.some((job) => staff.jobs.includes(job))) &&
+      (!req.trait || req.trait.some((trait) => staff.traits.includes(trait))) &&
+      (!req.gender || req.gender === gender) &&
+      (!req.item || kit.includes(req.item)) &&
+      (!req.provides || provides.has(req.provides)) &&
+      (!req.any || req.any.some(fits));
+    const qualified = ev.scene.points.map((p) => fits(p.req));
+    const points = applyBonus(ev.scene.points.map((p, i) => ({ id: p.id, hit: hits[i], ...(p.redeem ? { redeem: true } : {}), ...(p.guard ? { guard: true } : {}) })), ev.scene.points.map((p) => p.kind), staffId, seed, ev.id, qualified);
     const days = pointDays(D, ev);
-    // The secretary can make one point sure. guard holds the earliest guard point that was missed. fulfil wins the earliest fulfil point when none was won,
+    // The secretary can make one eligible point sure. guard holds the earliest eligible guard point that was missed. fulfil wins the earliest eligible fulfil point when none was won,
     // and it still has to be reached: a missed guard before it sends the traveller back first, below.
-    const earliest = (test) => points.map((p, i) => i).filter((i) => test(points[i])).reduce((a, i) => (a < 0 || days[i] < days[a] ? i : a), -1);
+    const earliest = (test) => points.map((p, i) => i).filter((i) => test(points[i], i)).reduce((a, i) => (a < 0 || days[i] < days[a] ? i : a), -1);
     const sure = sureSource(staffId) || [];
-    if (sure.includes('guard')) { const i = earliest((p) => p.guard && !p.hit); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
-    if (sure.includes('fulfil') && !points.some((p) => !p.guard && p.hit)) { const i = earliest((p) => !p.guard); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
+    if (sure.includes('guard')) { const i = earliest((p, i) => qualified[i] && p.guard && !p.hit); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
+    if (sure.includes('fulfil') && !points.some((p) => !p.guard && p.hit)) { const i = earliest((p, i) => qualified[i] && !p.guard); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
     // a guard point holds a recorded event in place. When it is missed the branch falls out of step with history: the traveller is sent back on that day,
     // and the points after it are never reached
     // the points are listed in any order, so the first missed guard is the one with the earliest day, and the points cut are those that fall after it
@@ -296,7 +310,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   return {
     // the star points of a full model with their guard flags, and the year of its place, for the record of an employee and the IF lines
     modelPoints: (id) => (eras[id] ? { points: eras[id].starPoints, year: info[id].raw.metadata.era.year } : null),
-    runLight, lightStay, lightKitAllowed, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
+    runLight, lightStay, lightKitAllowed, lightPlanItems, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
     findOdds, findAntique, stampOf, sayingOf, sayingOfTrip, echoOf, echoTier,

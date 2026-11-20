@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0, 2026-11-19
+
+- Auto explores unvisited routes first, then rotates through each employee’s least-tried routes. Automatic and manual trips use the same antique find rules, including after repeated low-star results.
+- Auto plans small-story kits for the traveller and dispatch seed, buying unlocked equipment only when it improves the chosen kit. Equipment purchases for one dispatch are capped at half the time energy on hand.
+- In small stories, trait bonuses and secretary guarantees respect profession, trait, gender and equipment requirements. The dispatch picker shows employees’ professions alongside their traits.
+- Employees can choose a training focus for each attribute point earned from 30 personal-best stars. The game can allocate the point automatically among attributes that can still grow.
+- Trip returns no longer close a dropdown while it is in use. Reports and settlement continue in the background.
+
 ## 0.11.2, 2026-11-19
 
 - Trip histories on story pages and employee cards can be sorted by most recent or highest stars and browsed page by page. Repeat dispatches stay visible, and returning from a report restores the story page position.

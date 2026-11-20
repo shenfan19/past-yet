@@ -6,7 +6,7 @@ It is a travel-frog style game: send people out, wait, read what happened. Each 
 
 ## Status
 
-Version 0.11.2 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
+Version 0.12.0 has 57 playable stories. See [the changelog](CHANGELOG.md) for what changed.
 
 ## Run
 
@@ -66,7 +66,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - Historical echoes are sourced quotations in the settlement report. Every playable story has echoes, including outcomes with zero stars, lost synchronisation or no participation in the event. The result guides the choice of quotation. Medical evacuation and manual recall skip the echo.
 - Time travel: the trips on the road first, then a slim row of filters and a zoomable world map (Natural Earth 110m land, public domain) with a time axis, then the log of finished trips. A pin is a place and a place holds events at different times; only anchored places are drawn, and an anchored place nobody has been to yet is a question mark. A pin opens a pop-up with its events, an event opens a pop-up with its story, who goes and what they carry, and a Send button.
 - Buy: the shop paid in funds, the time shop paid in time energy, and the hiring offer of five candidates. Items sell at the price they were bought for. The research institute provides funding when the agency transfers antiques.
-- Agency: the employees, the goods and the antiques. Antiques are found on trips and anchored to open places, spares can be sold. Each employee shows a total of their personal best stars across stories. Click it to open their record. Every 30 stars earn one attribute point if an attribute can still grow.
+- Agency: the employees, the goods and the antiques. Antiques are found on trips and anchored to open places, spares can be sold. Each employee shows a total of their personal best stars across stories. Click it to open their record. Every 30 stars earn one attribute point if an attribute can still grow. Pick a training focus on the employee card or let the game choose.
 - Wiki (a pop-up): a left list with search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear.
 - The wiki, Settings and About open from the icons beside the music controls. Funds, time energy, date, clock speed and auto dispatch share the office status area. Every list is paged, with no scroll bars, and every table has a filter of its own that opens on a click.
 - Dev mode: add `?devtools` to the URL (or `&devtools` when other parameters are present).
