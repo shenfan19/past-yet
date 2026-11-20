@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.3, 2026-11-20
+
+- Rewrote the welcome in all seven languages to introduce recruitment, guarding and mending history, and returning to your family in the future. Clarified the AI credits and how to report an issue or request removal.
+- New games start on 12 November 2026. Existing saves keep their recorded calendar start.
+
 ## 0.13.2, 2026-11-20
 
 - The game opens faster on slower connections by loading independent files in parallel and skipping unused draft models in normal play.

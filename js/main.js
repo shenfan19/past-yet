@@ -89,8 +89,7 @@ function fresh() {
     inv: { ...O.start_stock },
     clock: { day: 0, speed: 0, auto: false },
     secretary: null,
-    // the office keeps a calendar: day 0 is the real date this game began, so the days of the office read as dates
-    calendarStart: new Date().toISOString().slice(0, 10),
+    calendarStart: O.start_date,
     // places that have had a trip come back, their names are shown on the map
     visited: [],
     // the best star count of each place, time energy is paid only for an improvement on it
@@ -183,6 +182,7 @@ function upgrade(S, raw) {
   if (S.version !== VERSION && raw) { try { localStorage.setItem(KEY + '_backup_v' + S.version, raw); } catch (e) { /* storage blocked */ } }
   const base = fresh();
   for (const k of Object.keys(base)) if (S[k] === undefined) S[k] = base[k];
+  S.calendarStart ||= O.start_date;
   S.parked ||= {};
   migrateRetiredItems(S);
   const park = (kind, x) => { (S.parked[kind] ||= []).push(x); };
@@ -215,7 +215,7 @@ async function load() {
     if (raw) {
       const parsed = JSON.parse(raw);
       const S = parsed && parsed.founder && parsed.staff && Array.isArray(parsed.dispatches) ? upgrade(parsed, raw) : null;
-      if (S && fits(S)) { S.calendarStart ||= new Date().toISOString().slice(0, 10); return withDevStaff(updateUnfinishedCrew(S)); }
+      if (S && fits(S)) return withDevStaff(updateUnfinishedCrew(S));
       // a save that still does not read is kept before the new game writes over it
       try { localStorage.setItem(KEY + '_backup_unread', raw); } catch (e) { /* storage blocked */ }
     }

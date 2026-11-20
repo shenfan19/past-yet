@@ -116,8 +116,7 @@ export function createUI(D, ctx, DEV = false) {
   const sceneKit = () => Object.fromEntries(Object.entries(st.form.items).filter(([k, n]) => n > 0 && ctx.backend.lightKitAllowed(st.map.cat, k)));
   const srcLabel = (src) => ({ historical: U.report.source_historical, lm_model: U.report.source_lm, game_assumption: U.report.source_game, calibrated: U.report.source_calibrated }[src]);
   const reports = () => ctx.S().dispatches.filter((d) => d.claimed).sort((a, b) => b.claimedAt - a.claimedAt);
-  // the calendar of the office: day 0 is the date the game began, see calendarStart in main.js
-  const officeDate = (day) => { const at = new Date((ctx.S().calendarStart || new Date().toISOString().slice(0, 10)) + 'T00:00:00Z'); at.setUTCDate(at.getUTCDate() + Math.floor(day)); return at; };
+  const officeDate = (day) => { const at = new Date(ctx.S().calendarStart + 'T00:00:00Z'); at.setUTCDate(at.getUTCDate() + Math.floor(day)); return at; };
   const officeDay = (day) => { const at = officeDate(day); return T.date_day.replace('{m}', String(at.getUTCMonth() + 1)).replace('{mn}', T.month_names[at.getUTCMonth()]).replace('{d}', String(at.getUTCDate())); };
   const tip = (text) => ` data-tip="${esc(text)}"`;
   const wl = (id, label, tipText) => `<a class="wl" data-act="wiki" data-id="${esc(id)}"${tipText ? tip(tipText) : ''}>${esc(label)}</a>`;
@@ -1213,7 +1212,8 @@ export function createUI(D, ctx, DEV = false) {
   }
   function welcomeIntroHtml() {
     const W = U.welcome;
-    return `<p>${esc(W.story)}</p><p>${esc(W.story_start)}</p><section class="welcome-notice">
+    const intro = [...W.story, W.story_start].map((paragraph) => `<p>${esc(paragraph)}</p>`).join('');
+    return `${intro}<section class="welcome-notice">
       <h3 id="welcome-title" tabindex="-1">${esc(W.disclaimer_title)}</h3>
       ${contentNoticeHtml()}
     </section>`;
