@@ -79,13 +79,14 @@ export function createShare(X) {
     return '★'.repeat(won) + '☆'.repeat(Math.max(0, ctx.backend.maxStars(d.eraId) - won));
   }
 
+  const notice = `${H.fiction_note} ${H.feedback_note}`;
   const caption = (d) => {
-    if (d === null) return [englishTitle, H.home.title, homeAchievement(), H.home.message, QR.url].join('\n\n');
+    if (d === null) return [englishTitle, H.home.title, homeAchievement(), H.home.message, notice, QR.url].join('\n\n');
     const p = parts(d);
     const outcome = H.result.replace('{staff}', staffName(D, d.spec.staffId)).replace('{era}', p.name).replace('{outcome}', p.outcome);
     const result = [outcome, starsOf(d)].filter(Boolean).join('\n');
     return [englishTitle, H.description, result, ...(p.echo ? [p.echo.quote + ' ' + p.echo.cite] : []), ...p.text,
-      ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), QR.url].join('\n\n');
+      ...(p.lines || []).map((l) => (l.star ? '★ ' : '') + l.text), notice, QR.url].join('\n\n');
   };
 
   // the pop-up body: the card and what can be done with it
@@ -100,13 +101,14 @@ export function createShare(X) {
   }
 
   // Keep words together where possible, with character wrapping for CJK and oversized words.
-  function wrap(g, text, width) {
+  function wrap(g, text, width, firstLineInset = 0) {
     const tokens = text.match(/[（《「『【]*[\u3000-\u30ff\u3400-\u9fff\uff00-\uffef][、。，；：！？）》」』】]*|[^\s\u3000-\u30ff\u3400-\u9fff\uff00-\uffef]+|\s+/gu) || [];
     const lines = [];
     let line = '';
     for (const token of tokens) {
       const next = (line + token).trimEnd();
-      if (line && g.measureText(next).width > width) {
+      const inset = lines.length === 0 ? firstLineInset : 0;
+      if ((line || inset) && g.measureText(next).width + inset > width) {
         lines.push(line.trimEnd());
         line = '';
       }
@@ -188,7 +190,7 @@ export function createShare(X) {
     y = Math.max(y, brandEnd);
 
     const eventStart = rows.length;
-    y += 39;
+    y += 30;
     const homeTop = y;
     const homeStyle = home ? { x: center, max: width - 72, align: 'center' } : {};
     if (home) y += 36;
@@ -233,14 +235,21 @@ export function createShare(X) {
         color: pt.hit ? K.stamp : K.ink2,
         priority: pt.hit ? 0 : 1,
       }));
-    const disclaimerSize = CV.small_px - 2;
-    const disclaimerLimit = 2;
-    const footerGap = 33;
-    const footerInset = 18;
     const excerptGap = 8;
-    g.font = `400 ${disclaimerSize}px ${sans}`;
-    const disclaimerHeight = lineHeight(disclaimerSize) * Math.min(disclaimerLimit, wrap(g, H.disclaimer, width).length);
-    const recordEnd = maxHeight - pad - disclaimerHeight - footerInset - footerGap - excerptGap;
+    const noticeGap = 25;
+    const noticeInset = 15;
+    const noticeX = pad + 23;
+    const noticeSize = 27;
+    const noticeColor = '#873329';
+    const noticeFont = `400 ${noticeSize}px ${sans}`;
+    const noticeBold = `700 ${noticeSize}px ${sans}`;
+    g.font = noticeBold;
+    const boldWidth = g.measureText(H.fiction_note).width;
+    g.font = noticeFont;
+    const feedbackInset = boldWidth + g.measureText(' ').width;
+    const feedbackLines = wrap(g, H.feedback_note, width - 46, feedbackInset);
+    const noticeHeight = 2 * noticeInset + feedbackLines.length * lineHeight(noticeSize);
+    const recordEnd = maxHeight - pad - noticeGap - noticeHeight - excerptGap;
     const bodyStep = lineHeight(CV.body_px);
     if (p.text.length || record.length) y += echoPanel ? 27 : 38;
     for (const value of p.text) {
@@ -269,15 +278,17 @@ export function createShare(X) {
       y += excerptGap;
     }
 
-    const footerStart = rows.length;
-    const footerY = y + footerGap;
-    y = footerY + footerInset;
-    text(H.disclaimer, { size: disclaimerSize, color: K.ink2, limit: disclaimerLimit });
-    const height = Math.max(minHeight, y + pad);
-    const extra = height - y - pad;
-    // Sparse cards share the breathing room between sections and keep their footer near the text.
-    const footerSpace = Math.min(42, Math.round(extra / 4));
-    const bodyOffset = extra - footerSpace;
+    const noticeStart = rows.length;
+    const noticeTop = y + noticeGap;
+    const noticeBaseline = noticeTop + noticeInset + noticeSize;
+    rows.push({ line: H.fiction_note, font: noticeBold, color: noticeColor, x: noticeX, y: noticeBaseline, align: 'left' });
+    feedbackLines.forEach((line, index) => {
+      const x = noticeX + (index === 0 ? feedbackInset : 0);
+      rows.push({ line, font: noticeFont, color: noticeColor, x, y: noticeBaseline + index * lineHeight(noticeSize), align: 'left' });
+    });
+    const height = Math.max(minHeight, noticeTop + noticeHeight + pad);
+    const extra = height - noticeTop - noticeHeight - pad;
+    const bodyOffset = extra - Math.min(42, Math.round(extra / 4));
     const eventOffset = Math.round(bodyOffset * (p.echo ? 0.32 : 0.55));
     const echoOffset = Math.round(bodyOffset * 0.68);
 
@@ -297,10 +308,12 @@ export function createShare(X) {
       g.lineWidth = 2;
       g.stroke();
     }
-    g.strokeStyle = K.line;
-    g.lineWidth = 2;
     g.beginPath();
-    g.moveTo(pad, footerY + extra); g.lineTo(w - pad, footerY + extra);
+    g.roundRect(pad, noticeTop + extra, width, noticeHeight, 12);
+    g.fillStyle = K.echo_bg;
+    g.fill();
+    g.strokeStyle = K.stamp;
+    g.lineWidth = 2;
     g.stroke();
 
     if (logo.complete && logo.naturalWidth) g.drawImage(logo, pad, pad, logoSize, logoSize);
@@ -313,7 +326,7 @@ export function createShare(X) {
       g.font = font;
       g.fillStyle = color;
       g.textAlign = align;
-      const offset = i >= footerStart ? extra : i >= bodyStart ? bodyOffset
+      const offset = i >= noticeStart ? extra : i >= bodyStart ? bodyOffset
         : i >= echoStart ? echoOffset : i >= eventStart ? eventOffset : 0;
       g.fillText(line, x, rowY + offset);
     });
