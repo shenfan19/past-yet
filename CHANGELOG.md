@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.1, 2026-11-20
+
+- Shortened the opening introduction to three sentences and the home screen introduction to one. The Finish the game button now sits beside the time energy counter and becomes available at 600 energy.
+- Condensed the welcome and About notices about fictional portrayals and AI-generated material. Each notice now has one GitHub Issues link and one email link for corrections and removal requests.
+- The About page now records when the first version was completed and shows the current version and release date on a separate line at the body text size.
+
 ## 0.13.0, 2026-11-20
 
 - Research grants now use funding tiers in steps of 100. Filter antiques by tier and transfer spares from that tier in bulk.

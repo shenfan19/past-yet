@@ -509,17 +509,28 @@ export function createUI(D, ctx, DEV = false) {
       <p class="muted" id="hire-next">${hireCountdown()}</p>`;
   }
 
-  // The figures that move with the clock sit at the right of the navigation bar on every page, as icons. The tick redraws only this.
+  // Update the figures without replacing the completion button when funds or energy change.
   const resEl = document.getElementById('res');
-  function resHtml() {
+  const fundsEl = document.getElementById('res-funds');
+  const energyEl = document.getElementById('res-energy');
+  const perksEl = document.getElementById('res-perks');
+  const homeComplete = document.getElementById('home-complete');
+  const homeGoal = U.share.home.goal.replace('{n}', O.home_cost);
+  fundsEl.dataset.tip = U.office.funds + ' · ' + U.office.wage_total;
+  energyEl.dataset.tip = U.office.energy + COLON + U.office.home;
+  homeComplete.textContent = U.share.home.button;
+  homeComplete.title = homeGoal;
+  document.getElementById('home-complete-goal').textContent = homeGoal;
+  function renderResources() {
     const S = ctx.S();
     const I = D.get('config.ui.currency_icons');
-    const home = S.energy >= O.home_cost ? `<span class="chip"${tip(U.office.reached_home)}>🏠</span>` : '';
     // the effect of the secretary stays in sight on every page, the person in the tip
     const perk = S.secretary ? perkParts(office.perks()) : [];
-    const sec = perk.length ? `<span class="rv"${tip(`${U.office.secretary_effect}${COLON}${staffName(D, S.secretary)}\n${perk.join('\n')}`)}>${I.secretary} <span class="muted">${esc(perk.join(' · '))}</span></span>` : '';
-    return `<span class="rv"${tip(U.office.funds + ' · ' + U.office.wage_total)}>${I.funds} <b>${ri(S.funds)}</b><span class="muted"> − ${ri(office.wageTotal())}${U.office.per_day}</span></span>`
-      + `<span class="rv"${tip(U.office.energy + COLON + U.office.home)}>${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span></span>${home}${sec}`;
+    setHtml(fundsEl, `${I.funds} <b>${ri(S.funds)}</b><span class="muted"> − ${ri(office.wageTotal())}${U.office.per_day}</span>`);
+    setHtml(energyEl, `${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span>`);
+    setHtml(perksEl, perk.length ? `<span class="rv"${tip(`${U.office.secretary_effect}${COLON}${staffName(D, S.secretary)}\n${perk.join('\n')}`)}>${I.secretary} <span class="muted">${esc(perk.join(' · '))}</span></span>` : '');
+    homeComplete.hidden = st.tab !== 'home' || needsWelcome();
+    homeComplete.disabled = S.energy < O.home_cost;
   }
 
   // Standby first, then trips and reports to collect, then rest.
@@ -1029,6 +1040,17 @@ export function createUI(D, ctx, DEV = false) {
   }
 
   // ---------- about ----------
+  function contentNoticeHtml() {
+    const C = U.about.content_credit;
+    const { issues, mail } = D.get('config.meta.links');
+    const contacts = {
+      issues: `<a href="${esc(issues)}" target="_blank" rel="noopener noreferrer">GitHub Issues</a>`,
+      mail: `<a href="${esc(mail)}">${esc(mail.replace(/^mailto:/, ''))}</a>`,
+    };
+    const review = esc(C.review).replace(/\{(issues|mail)\}/g, (_, channel) => contacts[channel]);
+    return `<p>${esc(C.drafts)}</p><p>${review}</p>`;
+  }
+
   function aboutHtml() {
     const A = U.about;
     const M = D.get('config.meta');
@@ -1047,16 +1069,17 @@ export function createUI(D, ctx, DEV = false) {
     const echoes = `<h4>${esc(A.echoes.title)}</h4>${para(A.echoes.rule)}`;
     const secs = A.sections.map((sec, i) => {
       const heading = `<h3 id="about-${i}">${esc(sec.h)}</h3>`;
-      const credits = sec.credits ? para(A.content_credit.design) + para(A.content_credit.drafts) : '';
+      const credits = sec.credits ? para(A.content_credit.design) : '';
       const body = sec.p.map((x, k) => para(x) + (sec.links === k ? `<p>${links}</p>` : '')).join('');
-      const review = sec.review ? `<p>${esc(A.content_credit.review)} ${link(M.links.issues, A.content_credit.feedback)}</p>` : '';
-      return heading + credits + body + review + (sec.echoes ? echoes : '') + (sec.preview ? preview : '');
+      const review = sec.review ? contentNoticeHtml() : '';
+      return heading + credits + review + body + (sec.dedication ? para(A.dedication) : '') + (sec.echoes ? echoes : '') + (sec.preview ? preview : '');
     }).join('');
     const jumps = jumpBar([...A.sections.map((sec, i) => ['about-' + i, sec.h]), ['about-updates', A.update_notes]]);
     const releases = `<div class="release-notes">${D.get('changelog.releases').map(({ title, notes }) =>
       `<section><h4>${esc(title)}</h4><pre>${esc(notes)}</pre></section>`).join('')}</div>`;
     return `<div class="about">
-      <div class="about-version">${esc(A.version_line.replace('{app}', appName).replace('{v}', M.version).replace('{date}', M.released))}</div>
+      <div class="about-title">${esc(appName)}</div>
+      <p class="about-version">${esc(A.version_line.replace('{v}', M.version).replace('{date}', M.released))}</p>
       ${jumps}
       ${secs}
       <h3 id="about-updates">${esc(A.update_notes)}</h3>${releases}</div>`;
@@ -1068,7 +1091,6 @@ export function createUI(D, ctx, DEV = false) {
     fixForm();
     return `
       <p class="lead" style="margin-top:0">${esc(H.lead)}</p>
-      <p class="row"><button id="home-complete" class="primary" data-act="homecomplete" aria-describedby="home-complete-goal"${ctx.S().energy >= O.home_cost ? '' : ' disabled'}>${esc(U.share.home.button)}</button><span class="muted" id="home-complete-goal">${esc(U.share.home.goal.replace('{n}', O.home_cost))}</span></p>
       <div id="home-staff-panel">${staffStatusHtml()}</div>
       <div class="sec" id="home-map">${U.dispatch.era}</div>
       ${worldMap.html()}
@@ -1191,13 +1213,9 @@ export function createUI(D, ctx, DEV = false) {
   }
   function welcomeIntroHtml() {
     const W = U.welcome;
-    const M = D.get('config.meta');
-    const disclaimer = W.disclaimer.split('{issues}');
     return `<p>${esc(W.story)}</p><p>${esc(W.story_start)}</p><section class="welcome-notice">
       <h3 id="welcome-title" tabindex="-1">${esc(W.disclaimer_title)}</h3>
-      <p>${esc(disclaimer[0])}<a href="${esc(M.links.issues)}" target="_blank" rel="noopener noreferrer">${esc(W.issues)}</a>${esc(disclaimer[1] || '')}</p>
-      <p>${esc(U.about.content_credit.drafts)}</p>
-      <p>${esc(W.rights)}</p>
+      ${contentNoticeHtml()}
     </section>`;
   }
   function welcomeHtml() {
@@ -1303,6 +1321,7 @@ export function createUI(D, ctx, DEV = false) {
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
+    renderResources();
     viewRedrawPending = fromTick === true && editingWithin(view);
     if (viewRedrawPending) { renderModal(true); return; }
     const html = { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
@@ -1476,6 +1495,7 @@ export function createUI(D, ctx, DEV = false) {
   }
   view.addEventListener('click', onClick);
   toolsEl.addEventListener('click', onClick);
+  resEl.addEventListener('click', onClick);
   function onToggle(ev) {
     const t = ev.target;
     if (!t.matches) return;
@@ -1613,9 +1633,7 @@ export function createUI(D, ctx, DEV = false) {
       const countdown = hireCountdown();
       if (hireNext.textContent !== countdown) hireNext.textContent = countdown;
     }
-    setHtml(resEl, resHtml());
-    const homeComplete = document.getElementById('home-complete');
-    if (homeComplete) homeComplete.disabled = ctx.S().energy < O.home_cost;
+    renderResources();
   }
   createHeaderLines(D, document.getElementById('quote')).start();
   const musicEl = document.getElementById('music');
@@ -1638,6 +1656,6 @@ export function createUI(D, ctx, DEV = false) {
   }, { once: true });
   renderMusic();
   renderClock();
-  setHtml(resEl, resHtml());
+  renderResources();
   return { render, tick, state: st, office, X };
 }

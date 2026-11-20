@@ -51,9 +51,11 @@ try {
   // a new game opens with the disclaimer before the character and agency setup
   await page.waitForSelector('#modal .welcome');
   ok('a new game opens with the welcome and its notice about the people in the game', await page.locator('#modal .welcome a[href*=issues]').isVisible() && (await page.locator('#modal .mclose').count()) === 0);
-  // the address is whatever the text of the welcome gives, so changing it does not break the check
-  const rightsMail = await page.evaluate(() => (window.__game.D.get('text.ui.welcome.rights').match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/) || [''])[0]);
-  ok('the welcome tells how to have something removed that infringes rights', rightsMail !== '' && (await page.locator('#modal .welcome').innerText()).includes(rightsMail));
+  const rightsMail = await page.evaluate(() => window.__game.D.get('config.meta.links.mail'));
+  ok('the welcome has one link for each feedback channel',
+    (await page.locator('#modal .welcome a[href*=issues]').count()) === 1 &&
+    (await page.locator(`#modal .welcome a[href="${rightsMail}"]`).count()) === 1 &&
+    await page.locator(`#modal .welcome a[href="${rightsMail}"]`).isVisible());
   await page.keyboard.press('Escape');
   await page.mouse.click(5, 5);
   ok('the welcome does not close on Escape or on a click beside it', (await page.locator('#modal .welcome').count()) === 1);

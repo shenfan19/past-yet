@@ -184,9 +184,8 @@ ui:
     update_notes: Update notes
     content_credit:
       design: Fan Shen designed the game with AI assistance.
-      drafts: AI drafted most of the stories, historical figure profiles and fictional employee stories. Fan Shen chose the topics and edits the material. Individual contributors are credited on the relevant cards.
-      review: Some cards have been manually reviewed, and review is ongoing. Historical details, cultural portrayals and translations may contain errors or omissions. If you spot a problem, please tell us which card and passage it concerns. A source is welcome if you have one.
-      feedback: Report a correction
+      drafts: The employees, objects and plots are fictional. The way historical figures speak and act in the stories is dramatised. Stories and character profiles are mostly AI-generated, and individual contributors are credited on the relevant cards.
+      review: Historical details, cultural portrayals and translations may contain errors or omissions. If you spot a problem or believe content affects the rights of an individual or family, please use {issues} or {mail} to report it or request removal.
     echoes:
       title: Historical echoes
       rule: Every playable story has sourced quotations called echoes. The trip report shows an echo even with zero stars, a loss of synchronisation, or no chance to take part in the event. The stars and outcome guide which quotation appears. Medical evacuation and manual recall skip the echo.
@@ -195,37 +194,24 @@ ui:
       project: This game grew out of a research project and helps us develop its simulation engine. You can play without knowing anything about the research.
       changes: As we add features, the rules and what items or actions do may change. We’ll try to carry your progress forward, but a major update may make an older save unusable.
     title: About The Past Is Yet to Come
-    version_line: '{app} {v}, released {date}'
+    version_line: '{v}, released {date}'
+    dedication: The first version was completed on 19 November 2026. The story opens at the bronze statue of Dr Sun Yat-sen at Sun Yat-sen University in tribute to the 160th anniversary of his birth.
     links:
       - id: site
         label: Website
       - id: code
         label: Source code
-      - id: issues
-        label: Feedback and issues
-      - id: mail
-        label: Email
     sections:
       - h: Introduction
         echoes: true
+        dedication: true
         p:
-          - You run a time travel agency. Employees go back to historical turning points, try to help, and come home with a report. Nothing needs your constant attention. You can set it to run by itself and just read what happens.
-          - It started from plain curiosity about what would happen if someone from today stood in a famous moment of the past, and it is meant to be fun to poke at and pleasant to watch.
-          - 'History cannot be changed. Everything an employee does lands on a parallel branch and the main timeline stays as it was, and the difference between the two is converted into time energy. The agency stays out of wars and regime changes and does only medicine, technology, documents, daily life and witnessing. Employees do not die: when one is about to, the recall charm pulls them back at a cost, and the story goes on.'
-          - The game was meant from the start to let the traveller live through the hardship of the past. Disease, heat, cold, hunger, sleepless nights, grief and hostility press on the employee every day of a stay. The simulation models determine how the body copes, and anyone who cannot go on is sent home. Constitution and will are the ground to stand on, and fitting items, gear and traits take some of it off. The pressure is written as the history has it and is not lowered to make a trip easy; getting through is the difficulty.
-          - The game begins before the statue of Dr. Sun Yat-sen at Sun Yat-sen University. In memory of Dr. Sun Yat-sen, on the 160th anniversary of his birth.
+          - You run a time-travel agency, sending employees into the past and reading the reports they bring home.
       - h: Disclaimer
         preview: true
         review: true
         p:
-          - This is a game and a simulation exercise. It is not a medical, public health or historical research product. It gives no diagnosis, treatment, medication or health advice, and nothing in it should guide a real decision about health or safety.
-          - The models are simplified. Their parameters are game assumptions unless a number is marked historical, and no parameter has been fitted to data. Historical facts in the game are placeholders until their sources are checked, and each entry says whether it has been checked. Please do not cite the game as a source.
-          - 'The events were chosen with a deliberate tilt: more science, technology, philosophy, art and ideas, and less politics and war. Every story has a real opponent, a moment of history about to go another way or something history left undone: the first is to be guarded, the second can be mended. That is a choice of a first version, not a claim about what matters more in history.'
-          - Historical people such as John Snow and Ignaz Semmelweis appear as portrayed figures. Their dialogue and actions within the story are fictional portrayals. The time travel, the employees, the antiques, the goods and every plot are invented.
-          - The employees and their personal stories are fictional. Their traits and experiences describe individual characters.
-          - The people in the events are real figures from the past, chosen because they have been dead for a long time. If anything in the game infringes on someone's rights, or the rights of a family, please use the email or issue link in the Author section to request removal.
-          - Products, names and items in the game are fictional. Where a name resembles someone else's work it is a reference, not an affiliation, and anything not yet checked for rights is marked and cannot be bought in the game.
-          - The game is provided as is, without warranty of any kind. If you are in a very difficult place, please reach out to someone you trust or to local professional support.
+          - The game is for entertainment. Please consult appropriate sources for medical, public health or historical research.
       - h: Data and privacy
         p:
           - Your save and settings live only in your browser, in local storage on your own device. The page has no accounts, no servers for your data, no analytics, no ads, no cookies and no third party tracking, and it sends your game data nowhere.
@@ -234,7 +220,7 @@ ui:
       - h: Contribution
         p:
           - The game is released under the MIT License. The interface and logic are static web files with no backend, and the data files are YAML, read with js-yaml, which is also MIT licensed.
-          - Suggestions and criticism are very welcome, and so are ideas for new events and employees, and any data or sources that could make them more accurate. Events with their relics, employees, traits and translations are plain yaml cards in the cards folder, and cards/README.md shows how to add one. Corrections to the facts are just as welcome.
+          - Suggestions and criticism are very welcome, and so are ideas for new events and employees, and any data or sources that could make them more accurate. Events with their relics, employees, traits and translations are plain yaml cards in the cards folder, and cards/README.md shows how to add one.
           - Contributions that are adopted are published here under your name, a name or a pen name as you prefer, and the work remains yours. Like the game, they are released under the MIT License, so that others can keep using and improving them. Please add a source to any historical claim, so that it can be checked.
       - h: Author
         p:
@@ -433,7 +419,7 @@ ui:
     weight: Weight
     max: Limit
   home:
-    lead: 'You run a time travel agency: send employees into the past to hold the moments that are slipping and to mend what history left undone, and go home to your family once you have earned enough time energy.'
+    lead: You run an agency that sends employees into the past.
   lbox:
     chosen: Chosen
     empty: No matching entries
@@ -947,8 +933,8 @@ ui:
     title: Welcome
     office_title: Game setup
     acknowledge: I understand
-    story: 'You run a small agency that sends people into the past. Every trip prises a branch off history, and as the branches multiply the main timeline begins to drift: some moments work loose, and if nobody holds them they go another way, and your road home runs along the main timeline. So the agency does two things. It guards, holding a loosened moment so that what should happen happens and the main timeline stays steady; and it mends, setting right in a branch something history left undone. The moments held and the regrets mended are both paid as time energy. Collect enough of it and you can go home to your family.'
-    story_start: It all begins before the statue of Dr. Sun Yat-sen at Sun Yat-sen University. In memory of Dr. Sun Yat-sen, on the 160th anniversary of his birth.
+    story: You run a time-travel agency, sending employees into the past and reading the reports they bring home. Protect key moments and mend old regrets to earn enough time energy to return home.
+    story_start: The story begins at the bronze statue of Dr Sun Yat-sen at Sun Yat-sen University and commemorates the 160th anniversary of his birth.
     how_title: How to play
     how:
       - Pick a place on the map and the time you want there. The clock starts when the first trip goes out.
@@ -963,10 +949,7 @@ ui:
     places_hint_start_only: The university where the agency began is open from the start.
     reroll: Draw the two random ones again
     tutorial: first trip
-    disclaimer_title: Disclaimer · About the people in the game
-    disclaimer: The employees and their stories are fictional. Historical details, cultural portrayals and translations may contain errors or omissions. If you find something inaccurate, unfair or hurtful, please tell us about it in the repository’s {issues}.
-    rights: If anything in the game infringes on someone's rights, or the rights of a family, please write to shenfan19@gmail.com or open an issue in the repository, and it will be removed.
-    issues: Issues
+    disclaimer_title: Disclaimer
     begin: Begin
     start_requirements: Name your character, spend all attribute points, and choose at least one trait.
     founder_title: Player character
