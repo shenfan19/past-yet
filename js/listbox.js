@@ -38,7 +38,7 @@ export function createListbox(X) {
 
   function sortOf(id) { return st.sort[id] || (st.sort[id] = { k: null, dir: 1 }); }
 
-  // spec: { id, cols: [{ k, label, w, cls, val(row), cell(row) }], rows, pinned(row), pinTitle, foot, maxH, empty }
+  // spec: { id, cols: [{ k, label, w, cls, val(row), cell(row) }], rows, page, pinned(row), pinTitle, foot, maxH, empty }
   function html(spec) {
     const ss = sortOf(spec.id);
     let rows = spec.rows.slice();
@@ -58,7 +58,7 @@ export function createListbox(X) {
     const body = (list) => list.map((r) => `<tr class="${r.cls || ''}">${spec.cols.map((c) => `<td class="${c.cls || ''}">${c.cell(r)}</td>`).join('')}</tr>`).join('');
     const pinHtml = pins.length ? `<div class="lpin"><div class="lpintitle">${esc(spec.pinTitle || L.chosen)}</div><table class="ltable">${colgroup}<tbody>${body(pins)}</tbody></table></div>` : '';
     // a list in a pop-up with a fixed height keeps its scroll, every other list is paged
-    const pg = spec.scroll ? null : paginate(spec.id, rest);
+    const pg = spec.scroll ? null : (spec.page ?? paginate(spec.id, rest));
     const open = spec.scroll ? `<div class="lscroll" data-keep="${spec.id}" style="max-height:min(${spec.maxH}px,75vh)">` : '<div>';
     const filterRow = spec.tools ? `<div class="lfilterbar">${spec.tools}</div>` : '';
     return `${filterRow}<div class="lbox" id="lb-${spec.id}">${pg ? pg.html : ''}${pinHtml}${open}<table class="ltable">${colgroup}<thead>${head}</thead><tbody>${body(pg ? pg.shown : rest) || `<tr><td colspan="${spec.cols.length}" class="muted">${esc(spec.empty || L.empty)}</td></tr>`}</tbody></table></div>${spec.foot ? `<div class="lfoot">${spec.foot}</div>` : ''}</div>`;

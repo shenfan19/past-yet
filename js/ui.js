@@ -566,24 +566,28 @@ export function createUI(D, ctx, DEV = false) {
 
   // ---------- dispatch ----------
   const tripPageSize = 5;
+  function tripPage(key, trips, sizes) {
+    const byStars = st.sort[key]?.k === 'best';
+    const recent = (a, b) => (b.back ?? b.day) - (a.back ?? a.day);
+    trips.sort(byStars ? (a, b) => (b.stars || 0) - (a.stars || 0) || recent(a, b) : recent);
+    const { shown, html: pager } = listbox.paginate(key, trips, sizes);
+    const order = trips.length > 1 ? `<div class="row trip-controls"><select id="${esc(key)}" data-trip-order="${esc(key)}" aria-label="${esc(U.archive.trip_order)}"><option value="recent">${esc(U.archive.trip_recent)}</option><option value="best" ${byStars ? 'selected' : ''}>${esc(U.archive.trip_best)}</option></select>${pager}</div>` : '';
+    return { shown, html: order };
+  }
+
   // Show the stored summaries in pages. A full report opens while it is still kept.
   function tripsHtml(id) {
     const trips = office.tripsOf(id);
     const heading = `<div class="sec">${U.archive.trips} (${trips.length})</div>`;
     if (!trips.length) return heading + `<p class="muted">${U.archive.trips_none}</p>`;
-    const key = 'event_trips_' + id;
-    const byStars = st.sort[key]?.k === 'best';
-    const recent = (a, b) => (b.back ?? b.day) - (a.back ?? a.day);
-    trips.sort(byStars ? (a, b) => (b.stars || 0) - (a.stars || 0) || recent(a, b) : recent);
-    const pg = listbox.paginate(key, trips, [tripPageSize]);
+    const page = tripPage('event_trips_' + id, trips, [tripPageSize]);
     const kept = new Set(ctx.S().dispatches.map((d) => d.id));
-    const body = `<ul class="trips">${pg.shown.map((t) => {
+    const body = `<ul class="trips">${page.shown.map((t) => {
         const oc = t.stamp ? U.report.stamp[t.stamp] : t.recalled ? U.report.recalled : t.evacuated ? U.report.evacuated : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
         return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place)}${t.redeemed ? ' <span class="chip">♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
       }).join('')}</ul>`;
-    const order = trips.length > 1 ? `<div class="row trip-controls"><select id="${esc(key)}" data-trip-order="${esc(key)}" aria-label="${esc(U.archive.trip_order)}"><option value="recent">${esc(U.archive.trip_recent)}</option><option value="best" ${byStars ? 'selected' : ''}>${esc(U.archive.trip_best)}</option></select>${pg.html}</div>` : '';
-    return heading + order + body;
+    return heading + page.html + body;
   }
   // The story of the selected place: who it is about, what the traveller can bring up with them, and what is known of it once someone has been.
   const travelTime = (days) => U.dispatch.travel_time.replace('{n}', String(days)).replace('{h}', String(ctx.backend.historicalDays(days)));
@@ -1065,7 +1069,7 @@ export function createUI(D, ctx, DEV = false) {
     const gearAdd = (k) => worn.reduce((a, g) => a + ((D.get('items.' + g).stat_add || {})[k] || 0), 0);
     const attrs = attrList.map((k) => `${T.stats[k]} ${r1(eff[k])}`).join(' · ');
     const keptIds = new Set(S.dispatches.filter((d) => d.claimed).map((d) => d.id));
-    const rows = S.trips.filter((x) => x.staffId === id).slice().reverse();
+    const rows = S.trips.filter((x) => x.staffId === id).reverse();
     const grown = sf.growth || {};
     const stars = office.growthStars(id);
     const into = stars % O.stars_per_point;
@@ -1087,6 +1091,7 @@ export function createUI(D, ctx, DEV = false) {
     }).join('');
     const list = listbox.html({
       id: 'staff_trips', rows, empty: U.office.no_trips,
+      page: tripPage('staff_trips', rows),
       cols: [
         { k: 'no', label: '#', w: '8%', cls: 'num', cell: (r) => `<span class="muted">${r.id.slice(1)}</span>` },
         { k: 'year', label: U.report.year, w: '16%', cell: (r) => fmtYear(D, yearOfPlace(r.place, r.light)) },
@@ -1474,7 +1479,7 @@ export function createUI(D, ctx, DEV = false) {
     if (t.dataset.tripOrder) {
       const key = t.dataset.tripOrder;
       st.sort[key] = { k: t.value };
-      listbox.setSize(key, tripPageSize);
+      if (st.pager[key]) st.pager[key].page = 0;
       render();
       return;
     }
