@@ -94,6 +94,9 @@ export function createShop(X) {
     const tiers = [...new Set([...offers.map((r) => r.grant.base), ...(tier === null ? [] : [tier])])].sort((a, b) => a - b);
     const tierFilter = `<label class="nowrap">${esc(S_.grant_tier)} <select id="grant-tier"><option value="">${esc(S_.all_grant_tiers)}</option>${tiers.map((value) => `<option value="${value}" ${value === tier ? 'selected' : ''}>${value}</option>`).join('')}</select></label>`;
     const rows = offers.filter((r) => (tier === null || r.grant.base === tier) && listbox.match('ants', r.name + ' ' + T.antiques[r.id].desc, r.an.tags));
+    const percent = secretary ? esc(signedPercent.format(secretary)) : '';
+    const bonus = D.lang.startsWith('zh') ? `（${percent}）` : ` (${percent})`;
+    const uplift = percent ? `<small class="delta up">${bonus}</small>` : '';
     return listbox.html({
       id: 'ants', tools: tierFilter + listbox.tools('ants', tagOpts(offers.flatMap((r) => r.an.tags))), rows, empty: offers.length ? U.lbox.empty : S_.antiques_empty,
       cols: [
@@ -101,12 +104,7 @@ export function createShop(X) {
         { k: 'desc', label: S_.col_desc, w: '18%', cell: (r) => descCell(T.antiques[r.id].desc) },
         { k: 'dest', label: U.dispatch.points_to, w: '14%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
         { k: 'count', label: S_.copies, w: '6%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
-        { k: 'tier', label: S_.grant_tier, w: '9%', cls: 'num', val: (r) => r.grant.base, cell: (r) => r.grant.base },
-        { k: 'sell', label: S_.research_grant, w: '11%', cls: 'num', val: (r) => r.grant.total, cell: (r) => {
-          const { total } = r.grant;
-          const uplift = secretary ? ` <small class="delta up">${esc(signedPercent.format(secretary))}</small>` : '';
-          return `<span class="nowrap">${total}<span class="grant-currency" aria-hidden="true"> ${icon('funds')}</span></span>${uplift}`;
-        } },
+        { k: 'sell', label: S_.research_grant, w: '100px', cls: 'num', val: (r) => r.grant.total, cell: (r) => `<span class="nowrap">${r.grant.total}${uplift}</span>` },
         { k: 'act', label: '', w: '21%', cls: 'num', cell: (r) => (r.own
           ? `<button data-act="antlock" data-id="${r.id}" ${r.lock && !releasable(r.id) ? 'disabled' : ''}${r.lock && !releasable(r.id) ? ' data-tip="' + esc(S_.keep_one) + '"' : ''}>${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${sellable(r.id) ? '' : 'disabled'}>${S_.sell_antique}</button>`
           : '') },
@@ -119,13 +117,12 @@ export function createShop(X) {
     const tier = selectedGrantTier();
     const secretary = office.perks().sale_mult;
     const cycle = S_.grant_cycle.replace('{days}', String(period_days));
-    const secretaryText = secretary ? S_.grant_secretary.replace('{bonus}', signedPercent.format(secretary)) : '';
     const offers = office.spareOffers(tier);
     const spares = offers.reduce((count, offer) => count + offer.n, 0);
     const spareFund = offers.reduce((amount, offer) => amount + offer.n * offer.price, 0);
     const transfer = tier === null ? S_.sell_spares : S_.sell_tier_spares;
     return `<p class="muted">${esc(S_.antiques_hint)}</p>
-      <p class="muted">${esc([cycle, secretaryText].filter(Boolean).join(SEP))}</p>
+      <p class="muted">${esc(cycle)}</p>
       <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${esc(transfer)}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox(secretary, tier)}`;
   }
 

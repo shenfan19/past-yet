@@ -1044,7 +1044,7 @@ export function createUI(D, ctx, DEV = false) {
     const { issues, mail } = D.get('config.meta.links');
     const contacts = {
       issues: `<a href="${esc(issues)}" target="_blank" rel="noopener noreferrer">GitHub Issues</a>`,
-      mail: `<a href="${esc(mail)}">${esc(mail.replace(/^mailto:/, ''))}</a>`,
+      mail: `<a href="${esc(mail)}">${esc(C.mail)}</a>`,
     };
     const review = esc(C.review).replace(/\{(issues|mail)\}/g, (_, channel) => contacts[channel]);
     return `<p>${esc(C.drafts)}</p><p>${review}</p>`;
