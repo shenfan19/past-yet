@@ -30,6 +30,8 @@ The story card names the pressure of the place and how hard it presses, the disp
 
 ## Pages and pop-ups
 
+Trip returns and automatic settlement continue while a player uses an input or opens a native dropdown. Background redraws of the affected page, pop-up or clock controls wait until the player finishes the interaction. Other regions can update during that time.
+
 - The bar holds three pages, Time travel, Buy and Agency. At its right are the funds and the time energy as icons, and three icons that open the pop-ups Wiki, Settings and About.
 - Time travel: one sentence of introduction. Then the section Trips on the road, what needs the player first: the trips on the road and the ones waiting to be claimed, in two columns of one line each, those that are home first. The next section is Time travel. Then one slim row of filters over the map: a search box, More filters (years, stars, tags, which open as a panel in the page and never lie over the map), a Counts switch that puts on each pin the number of events it holds under the filters in force, and a question mark with the hints. Then the world map with its time axis, and at the bottom the log of finished trips. Picking a pin opens a pop-up with the events of that place in a grid of columns, and picking an event there opens the dispatch pop-up with the story shown whole, who goes, what they carry, Auto configure, Clear and Send, and a way back to the list. A place with one event goes straight to the dispatch pop-up. Sending closes the pop-up and the trip shows at the top.
 - Buy: the modern shop paid in funds, the future shop paid in time energy, and the hiring offer, one under the other. Antiques are found, not bought.

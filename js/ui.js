@@ -335,19 +335,27 @@ export function createUI(D, ctx, DEV = false) {
   document.addEventListener('pointerdown', () => { pressed = true; }, true);
   for (const type of ['pointerup', 'pointercancel']) document.addEventListener(type, () => { pressed = false; }, true);
   window.addEventListener('blur', () => { pressed = false; });
+  const openSelectSupported = CSS.supports('selector(select:open)');
+  function editingWithin(region) {
+    const field = document.activeElement;
+    return (region.contains(field) && field.matches('input, textarea, select')) ||
+      (openSelectSupported && region.querySelector('select:open') !== null);
+  }
   // The clock is three parts so that a ticking day never rebuilds the controls: the day text, the controls and the paused chip.
   const clockParts = { day: document.createElement('span'), ctl: document.createElement('span'), chip: document.createElement('span') };
   clockParts.day.className = 'day'; clockParts.ctl.className = 'ctl'; clockParts.chip.className = 'chipwrap';
   clockEl.append(clockParts.day, clockParts.ctl, clockParts.chip);
-  function renderClock() {
+  function renderClock(fromTick = false) {
     const c = ctx.S().clock;
     const C = D.get('config.clock');
     const al = office.alerts();
     // a ring that fills once a day, so the passing of time can be seen at any speed
     const frac = c.day - Math.floor(c.day), circ = 2 * Math.PI * 7;
     setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg><span title="${esc(U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}">${esc(T.year_day.replace('{y}', String(officeDate(c.day).getUTCFullYear())).replace('{date}', officeDay(c.day)))}</span>`);
-    const speeds = C.speeds.map((sp, i) => `<option value="${i}" ${c.speed === sp ? 'selected' : ''}>${sp === 0 ? '⏸ ' + U.clock.pause : sp + '×'}</option>`).join('');
-    setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label></span>`);
+    if (!fromTick || !editingWithin(clockParts.ctl)) {
+      const speeds = C.speeds.map((sp, i) => `<option value="${i}" ${c.speed === sp ? 'selected' : ''}>${sp === 0 ? '⏸ ' + U.clock.pause : sp + '×'}</option>`).join('');
+      setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label></span>`);
+    }
     const first = ctx.S().seq === 0 && c.speed === 0;
     setHtml(clockParts.chip, c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>`
       : first ? `<span class="chip"${tip(U.clock.start_tip)}>${U.clock.start_hint}</span>`
@@ -1222,7 +1230,10 @@ export function createUI(D, ctx, DEV = false) {
     const d = share.dispatch(m.id);
     return d ? `<div class="mbox sharebox">${share.html(d)}</div>` : '';
   }
+  let modalRedrawPending = false;
   function renderModal(fromTick) {
+    modalRedrawPending = fromTick === true && editingWithin(modalEl);
+    if (modalRedrawPending) return;
     if (fromTick === true && st.modal?.kind === 'report') return;
     const dispatch = st.modal?.kind === 'dispatch' ? { story: storyBoxHtml(), desk: deskHtml() } : null;
     const inner = modalBody(dispatch);
@@ -1266,9 +1277,12 @@ export function createUI(D, ctx, DEV = false) {
 
   // ---------- render ----------
   let viewHtml = null;
+  let viewRedrawPending = false;
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
+    viewRedrawPending = fromTick === true && editingWithin(view);
+    if (viewRedrawPending) { renderModal(true); return; }
     const html = { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
     const key = st.tab;
     if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(true); return; }
@@ -1538,19 +1552,24 @@ export function createUI(D, ctx, DEV = false) {
     if (ctx.S().brokeNew) { ctx.S().brokeNew = false; st.modal = { kind: 'broke' }; ctx.save(); render(); }
     // nothing is sent before the game has begun, so a save never has trips out while the founder form still waits
     if (ctx.S().clock.auto && !needsWelcome()) office.autoStep();
-    if (pressed) return;
-    renderClock();
+    if (pressed) {
+      if (fresh.length && st.tab === 'home') viewRedrawPending = true;
+      if (fresh.length && st.modal) modalRedrawPending = true;
+      return;
+    }
+    renderClock(true);
     renderTabs();
     const transit = ctx.S().dispatches.some((d) => !d.claimed);
-    // Redrawing the page replaces the box someone is typing in and loses the cursor, so the page waits while a field has the focus.
-    const ae = document.activeElement;
-    const typing = !!ae && view.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName);
-    if (st.tab === 'home' && !typing) {
-      if (fresh.length || ctx.S().clock.auto || transit) render(true);
+    if (st.tab === 'home') {
+      if (fresh.length || ctx.S().clock.auto || transit || viewRedrawPending || modalRedrawPending) render(true);
       else {
         const panel = document.getElementById('home-staff-panel');
-        if (panel) setHtml(panel, staffStatusHtml());
+        if (panel && !editingWithin(panel)) setHtml(panel, staffStatusHtml());
       }
+    } else if (viewRedrawPending) {
+      render(true);
+    } else if (modalRedrawPending || (fresh.length && st.modal)) {
+      renderModal(true);
     }
     setHtml(resEl, resHtml());
   }
