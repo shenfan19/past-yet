@@ -65,6 +65,23 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const p = Math.min(AF.cap, 1 - list.reduce((a, x) => a * (1 - AF.k * x.w), 1));
     return { p, list };
   }
+  // Best chance to repeat a find on a full-star trip at ordinary luck. Every candidate is treated as already owned.
+  let repeatFindChances;
+  function bestRepeatFindChance(antiqueId) {
+    if (!repeatFindChances) {
+      repeatFindChances = new Map();
+      const routes = [...D.get('config.eras'), ...D.get('catalog.active_events').filter((event) => !event.era).map((event) => event.id)];
+      for (const route of routes) {
+        const { p, list } = findOdds(route);
+        const total = list.reduce((sum, { w }) => sum + w, 0);
+        for (const { id, w } of list) {
+          const chance = p * w / total;
+          if (chance > (repeatFindChances.get(id) ?? 0)) repeatFindChances.set(id, chance);
+        }
+      }
+    }
+    return repeatFindChances.get(antiqueId);
+  }
   // An antique that points to a place with a simulation, and is not held yet, is favoured by modelled_place_boost when it is drawn, so the way to a place that can be dispatched to is not buried under the many events that have no model yet.
   // The chance is scaled by the stars of the trip: a quarter of it with none, half with one, three quarters with two, all of it with three.
   function findAntique(eraId, seed, held = [], stars = 3, luck = 1) {
@@ -303,15 +320,20 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   }
   // The market price factor of an antique on a day: one seeded draw per field and per period, so every antique of a field moves together.
   const MK = D.get('config.office.market');
-  const marketMult = (antiqueId, dayNo) => 1 + MK.amp * (2 * draw(Math.floor(dayNo / MK.period_days), 'market', D.get('antiques.antiques.' + antiqueId).tags[0]) - 1);
+  const marketPeriod = (dayNo) => Math.floor(dayNo / MK.period_days);
+  const marketMult = (antiqueId, dayNo) => {
+    const field = D.get('antiques.antiques.' + antiqueId).tags[0];
+    const roll = draw(marketPeriod(dayNo), 'market', field);
+    return 1 + MK.amp * (2 * roll - 1);
+  };
   const recallKeeps = (seed, share) => draw(seed, 'recall_keep', 0) < share;
   return {
     // the star points of a full model with their guard flags, and the year of its place, for the record of an employee and the IF lines
     modelPoints: (id) => (eras[id] ? { points: eras[id].starPoints, year: info[id].raw.metadata.era.year } : null),
-    runLight, lightStay, lightKitAllowed, lightPlanItems, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketMult, luckFactor, recallRefused, recallKeeps,
+    runLight, lightStay, lightKitAllowed, lightPlanItems, pressureOf, eraStay, historicalDays: (days) => historicalDays(D, days), maxStars, marketPeriod, marketMult, luckFactor, recallRefused, recallKeeps,
     // the stay of a traveller through the body, for the tools and the report: which points were met and the body day by day
     runStay: (eventId, staffId, seed, items, favor = null) => runStay(D, core, lightEvent(eventId), { staffId, seed, ...sceneKit(staffId, items, favor) }),
-    findOdds, findAntique, stampOf, sayingOf, sayingOfTrip, echoOf, echoTier,
+    findOdds, findAntique, bestRepeatFindChance, stampOf, sayingOf, sayingOfTrip, echoOf, echoTier,
     // the year of a simulated place or a catalogue event, and a seeded pick from a list, both for the auto mode
     placeYear: (id) => (info[id] ? placeOf({ era: id }) : placeOf({ event: id })).year,
     pick: (list, seed, key) => list[Math.min(list.length - 1, Math.floor(draw(seed, key, 0) * list.length))],

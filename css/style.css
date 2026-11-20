@@ -259,6 +259,11 @@ svg .pt.sel .dot { fill: var(--stamp); transform: scale(1.25); }
 .ltable th { position: sticky; top: 0; background: var(--paper2); z-index: 1; }
 .ltable td { vertical-align: middle; overflow: hidden; }
 .ltable tr.dim { opacity: .7; }
+@media (max-width: 560px) {
+  #lb-ants col:nth-child(2), #lb-ants th:nth-child(2), #lb-ants td:nth-child(2):not([colspan]) { display: none; }
+  #lb-ants .grant-currency { display: none; }
+  #lb-ants .delta { display: block; }
+}
 .sortbtn { border: none; background: transparent; padding: 0; font-weight: 600; color: var(--ink2); }
 .sortbtn:hover { color: var(--stamp); }
 .lfoot { padding: 6px 10px; border-top: 1px solid var(--line); background: var(--paper2); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 13px; }

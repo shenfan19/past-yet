@@ -1,7 +1,7 @@
 meta:
   app: The Past Is Yet to Come
   chinese_title: 白露未晞
-  version: 0.12.8
+  version: 0.13.0
   released: '2026-11-20'
   card_authors: [AI, Fan Shen]
   links:
@@ -76,8 +76,12 @@ office:
   max_archived_reports: 200
   # luck is a factor on the chances left to chance: base + per_point * luck, so one at luck 4, and no chance goes past max_chance
   luck: {base: 0.6, per_point: 0.1, max_chance: 0.95}
-  # Antiques sell at the price on the card times a market factor that is redrawn for each field every period_days, within 1 +- amp.
-  market: {period_days: 30, amp: 0.3}
+  # Adjust for repeat-find rarity, then round to grant_step funds before applying the secretary's bonus.
+  market:
+    period_days: 30
+    amp: 0.3
+    grant_step: 100
+    rarity: {rare_chance: 0.05, common_chance: 0.30, max_adjustment: 25}
   fatal_outcomes: [near_death]
   # the share of the find chance at a star count, for a story with that many stars; a story has 3 stars unless its scene has more points
   # k is set so that a small agency left on the auto mode is stopped by a wage it cannot pay after some fifty days, sells an antique or two and then earns its way,

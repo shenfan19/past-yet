@@ -1297,6 +1297,9 @@ export function createUI(D, ctx, DEV = false) {
   // ---------- render ----------
   let viewHtml = null;
   let viewRedrawPending = false;
+  let renderedMarketPeriod = null;
+  let renderedAntiqueCount = null;
+  const marketPeriod = () => ctx.backend.marketPeriod(ctx.S().clock.day);
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
@@ -1304,6 +1307,10 @@ export function createUI(D, ctx, DEV = false) {
     if (viewRedrawPending) { renderModal(true); return; }
     const html = { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
     const key = st.tab;
+    if (key === 'shop') {
+      renderedMarketPeriod = marketPeriod();
+      renderedAntiqueCount = ctx.S().antiques.length;
+    }
     if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(true); return; }
     viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
@@ -1515,6 +1522,7 @@ export function createUI(D, ctx, DEV = false) {
     if (t.id === 'lang') { changeLang(t.value); return; }
     if (t.id === 'founder-gender') { office.founderGender(t.value); render(); return; }
     if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }
+    if (t.id === 'grant-tier') { st.filters.grantTier = t.value === '' ? null : Number(t.value); if (st.pager.ants) st.pager.ants.page = 0; render(); return; }
     if (t.dataset.tripOrder) {
       const key = t.dataset.tripOrder;
       st.sort[key] = { k: t.value };
@@ -1594,6 +1602,8 @@ export function createUI(D, ctx, DEV = false) {
     } else if (viewRedrawPending) {
       render(true);
     } else if (st.tab === 'buy' && renderedHireSlots !== ctx.S().hire.slots) {
+      render(true);
+    } else if (st.tab === 'shop' && (renderedMarketPeriod !== marketPeriod() || renderedAntiqueCount !== ctx.S().antiques.length)) {
       render(true);
     } else if (modalRedrawPending || (fresh.length && st.modal)) {
       renderModal(true);

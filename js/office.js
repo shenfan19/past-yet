@@ -422,18 +422,32 @@ export function createOffice(X) {
 
   // ---------- antiques ----------
   // A spare is a copy beyond the first of an antique. The first copy stays, anchored or not.
-  // What an antique sells for today: its price, the market of its field, and the sale bonus of the secretary.
-  const salePrice = (id) => Math.round(D.get('antiques.antiques.' + id).price * O.sale_scale * ctx.backend.marketMult(id, day()) * (1 + perks().sale_mult));
-  const copies = (id) => S().antiques.filter((x) => x === id).length;
-  const spareCount = () => [...new Set(S().antiques)].reduce((a, id) => a + copies(id) - 1, 0);
-  function sellSpares(targetFunds = Infinity, persist = true) {
-    const s = S();
+  function grantQuote(id, secretary = perks().sale_mult) {
+    const { amp, grant_step, rarity } = O.market;
+    const nominal = D.get('antiques.antiques.' + id).price * O.sale_scale;
+    const marketGrant = nominal * ctx.backend.marketMult(id, day());
+    const chance = ctx.backend.bestRepeatFindChance(id);
+    const rarityBias = chance === undefined ? 0 : rarity.max_adjustment * (1 - 2 * clamp((chance - rarity.rare_chance) / (rarity.common_chance - rarity.rare_chance), 0, 1));
+    const adjusted = clamp(marketGrant + rarityBias, nominal * (1 - amp), nominal * (1 + amp));
+    const base = Math.round(adjusted / grant_step) * grant_step;
+    const bonus = Math.round(base * secretary);
+    return { base, bonus, total: base + bonus };
+  }
+  const salePrice = (id) => grantQuote(id).total;
+  function spareOffers(tier = null) {
     const counts = new Map();
-    for (const id of s.antiques) counts.set(id, (counts.get(id) || 0) + 1);
+    for (const id of S().antiques) counts.set(id, (counts.get(id) || 0) + 1);
+    const secretary = perks().sale_mult;
+    return [...counts].filter(([, n]) => n > 1).flatMap(([id, n]) => {
+      const quote = grantQuote(id, secretary);
+      return tier === null || quote.base === tier ? [{ id, n: n - 1, price: quote.total }] : [];
+    });
+  }
+  function sellSpares(targetFunds = Infinity, persist = true, tier = null) {
+    const s = S();
     const sold = new Map();
     let gain = 0;
-    const spares = [...counts].filter(([, n]) => n > 1)
-      .map(([id, n]) => ({ id, n: n - 1, price: salePrice(id) }));
+    const spares = spareOffers(tier);
     const limited = Number.isFinite(targetFunds);
     if (limited) spares.sort((a, b) => a.price - b.price);
     for (const { id, n, price } of spares) {
@@ -789,5 +803,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wonOf, winsOf, salePrice, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, setTraining, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareCount, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, planLight, alerts, stageIndex, hiredIds };
+  return { wonOf, winsOf, salePrice, grantQuote, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, setTraining, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareOffers, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, planLight, alerts, stageIndex, hiredIds };
 }

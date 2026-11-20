@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.0, 2026-11-20
+
+- Research grants now use funding tiers in steps of 100. Filter antiques by tier and transfer spares from that tier in bulk.
+- The antiques list shows the secretary's percentage and the final payout separately. A grant in the 700 tier pays 840 with a +20% secretary bonus.
+- Antiques that are harder to find again are slightly more likely to land in a higher grant tier. The market still updates every 30 in-game days.
+
 ## 0.12.8, 2026-11-20
 
 - The hiring page now updates the countdown and replaces candidates every seven in-game days. A refresh prioritizes people who were absent from the previous offer.

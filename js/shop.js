@@ -17,6 +17,7 @@ export function createShop(X) {
   const cartTotal = (shopId) => Object.entries(cart()).reduce((a, [id, n]) => a + (D.get(`items.${id}.shop`) === shopId ? D.get(`items.${id}.cost`) * n : 0), 0);
   const oneLine = firstSentence;
   const COLON = U.fmt.colon, SEP = U.fmt.sep;
+  const signedPercent = new Intl.NumberFormat(D.lang, { style: 'percent', signDisplay: 'exceptZero' });
 
   // one row is one line: the name, then the description in a column of its own, cut short with the whole text in the tooltip
   const nameCell = (kind, id, name, tip, extra = '') => `<span class="nowrap">${X.wl(kind + ':' + id, name, tip)}${extra}</span>`;
@@ -84,19 +85,28 @@ export function createShop(X) {
   // a copy that is anchored is not for sale, the rest are
   const sellable = (id) => copies(id) - (ctx.S().locks.includes(id) ? 1 : 0) > 0;
 
-  function antiqueBox() {
+  const selectedGrantTier = () => st.filters.grantTier ?? null;
+
+  function antiqueBox(secretary, tier) {
     const S = ctx.S();
     const shown = Object.keys(D.get('antiques.antiques')).filter((id) => (DEV || S.antiques.includes(id)) && D.get('antiques.antiques.' + id).kind !== 'medium');
-    const ids = shown.filter((id) => listbox.match('ants', T.antiques[id].name + ' ' + T.antiques[id].desc, D.get('antiques.antiques.' + id).tags));
-    const rows = ids.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), n: copies(id), lock: S.locks.includes(id) }));
+    const offers = shown.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), n: copies(id), lock: S.locks.includes(id), grant: office.grantQuote(id, secretary) }));
+    const tiers = [...new Set([...offers.map((r) => r.grant.base), ...(tier === null ? [] : [tier])])].sort((a, b) => a - b);
+    const tierFilter = `<label class="nowrap">${esc(S_.grant_tier)} <select id="grant-tier"><option value="">${esc(S_.all_grant_tiers)}</option>${tiers.map((value) => `<option value="${value}" ${value === tier ? 'selected' : ''}>${value}</option>`).join('')}</select></label>`;
+    const rows = offers.filter((r) => (tier === null || r.grant.base === tier) && listbox.match('ants', r.name + ' ' + T.antiques[r.id].desc, r.an.tags));
     return listbox.html({
-      id: 'ants', tools: listbox.tools('ants', tagOpts(shown.flatMap((id) => D.get('antiques.antiques.' + id).tags))), rows, empty: S_.antiques_empty,
+      id: 'ants', tools: tierFilter + listbox.tools('ants', tagOpts(offers.flatMap((r) => r.an.tags))), rows, empty: offers.length ? U.lbox.empty : S_.antiques_empty,
       cols: [
-        { k: 'name', label: S_.col_name, w: '22%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
-        { k: 'desc', label: S_.col_desc, w: '26%', cell: (r) => descCell(T.antiques[r.id].desc) },
-        { k: 'dest', label: U.dispatch.points_to, w: '16%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
+        { k: 'name', label: S_.col_name, w: '21%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
+        { k: 'desc', label: S_.col_desc, w: '18%', cell: (r) => descCell(T.antiques[r.id].desc) },
+        { k: 'dest', label: U.dispatch.points_to, w: '14%', cell: (r) => esc(r.own || DEV ? (r.an.era ? T.eras[r.an.era].short : r.an.event ? T.catalog[r.an.event].place : U.dispatch.not_ready) : U.dispatch.unknown_dest) },
         { k: 'count', label: S_.copies, w: '6%', cls: 'num', val: (r) => r.n, cell: (r) => r.n },
-        { k: 'sell', label: S_.research_grant, w: '9%', cls: 'num', val: (r) => office.salePrice(r.id), cell: (r) => `${office.salePrice(r.id)} ${icon('funds')}` },
+        { k: 'tier', label: S_.grant_tier, w: '9%', cls: 'num', val: (r) => r.grant.base, cell: (r) => r.grant.base },
+        { k: 'sell', label: S_.research_grant, w: '11%', cls: 'num', val: (r) => r.grant.total, cell: (r) => {
+          const { total } = r.grant;
+          const uplift = secretary ? ` <small class="delta up">${esc(signedPercent.format(secretary))}</small>` : '';
+          return `<span class="nowrap">${total}<span class="grant-currency" aria-hidden="true"> ${icon('funds')}</span></span>${uplift}`;
+        } },
         { k: 'act', label: '', w: '21%', cls: 'num', cell: (r) => (r.own
           ? `<button data-act="antlock" data-id="${r.id}" ${r.lock && !releasable(r.id) ? 'disabled' : ''}${r.lock && !releasable(r.id) ? ' data-tip="' + esc(S_.keep_one) + '"' : ''}>${r.lock ? S_.unlock : S_.lock}</button> <button data-act="antsell" data-id="${r.id}" ${sellable(r.id) ? '' : 'disabled'}>${S_.sell_antique}</button>`
           : '') },
@@ -104,14 +114,26 @@ export function createShop(X) {
     });
   }
 
+  function antiquesSection() {
+    const { period_days } = D.get('config.office.market');
+    const tier = selectedGrantTier();
+    const secretary = office.perks().sale_mult;
+    const cycle = S_.grant_cycle.replace('{days}', String(period_days));
+    const secretaryText = secretary ? S_.grant_secretary.replace('{bonus}', signedPercent.format(secretary)) : '';
+    const offers = office.spareOffers(tier);
+    const spares = offers.reduce((count, offer) => count + offer.n, 0);
+    const spareFund = offers.reduce((amount, offer) => amount + offer.n * offer.price, 0);
+    const transfer = tier === null ? S_.sell_spares : S_.sell_tier_spares;
+    return `<p class="muted">${esc(S_.antiques_hint)}</p>
+      <p class="muted">${esc([cycle, secretaryText].filter(Boolean).join(SEP))}</p>
+      <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${esc(transfer)}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox(secretary, tier)}`;
+  }
+
   // The agency page: antiques, items, the two shops, the employees and the hiring offer. The employee blocks come from the page as they are.
   // the buying page holds the two shops and the hiring offer, the agency page the employees, the goods and the antiques
   const GROUPS = { buy: ['modern', 'future', 'hire'], shop: ['staff', 'inv', 'ants'] };
   function html(extra, tab) {
-    const S = ctx.S();
     const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
-    const spares = office.spareCount();
-    const spareFund = [...new Set(S.antiques)].reduce((a, id) => a + (copies(id) - 1) * office.salePrice(id), 0);
     // each page lists its sections one under the other, every list is paged
     const parts = {
       modern: () => `<p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}`,
@@ -119,7 +141,7 @@ export function createShop(X) {
       hire: () => extra.hire,
       staff: () => extra.staff,
       inv: () => `<p class="muted">${S_.inv_hint}</p>${invBox()}`,
-      ants: () => `<p class="muted">${S_.antiques_hint}</p><div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${S_.sell_spares}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox()}`,
+      ants: antiquesSection,
     };
     const names = { modern: S_.modern.name, future: S_.future.name, hire: U.office.hire_title, staff: U.office.staff, inv: S_.inv_title, ants: S_.antiques_title };
     const ids = GROUPS[tab];
@@ -158,7 +180,7 @@ export function createShop(X) {
       if (n > 0) { if (curOf(it.shop) === 'energy') S.energy += sell1(id) * n; else S.funds += sell1(id) * n; S.inv[id] -= n; ctx.save(); }
       return true;
     }
-    if (a === 'sellspares') { if (office.sellSpares()) return true; return false; }
+    if (a === 'sellspares') return !!office.sellSpares(Infinity, true, selectedGrantTier());
     if (a === 'antsell') {
       if (!sellable(id)) return false;
       S.funds += office.salePrice(id);
