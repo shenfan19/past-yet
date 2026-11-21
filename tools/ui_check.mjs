@@ -42,7 +42,10 @@ try {
     await page.click(`#tabs [data-tab=${tab}]`);
   };
   const tool = async (id) => { if (await page.locator('#modal .modalbg').count()) await page.keyboard.press('Escape'); await page.click(`#tools [data-act=modalopen][data-id=${id}]`); };
-  const sub = (id) => go(['modern', 'future', 'hire'].includes(id) ? 'buy' : 'shop');
+  const sub = async (id) => {
+    await go('shop');
+    if (['modern', 'future', 'hire'].includes(id)) await page.click(`#open-${id}`);
+  };
   // a pin opens the event list even if the city has only one story
   const pick = async (pin, ev) => { await page.click(`.map [data-id=${pin}] .hit`, { force: true }); const row = page.locator(`#modal .evrow[data-id=${ev}]`); if (await row.count()) await row.click(); };
   const openFilter = () => page.evaluate(() => { window.__game.ui.state.map.filterOpen = true; window.__game.ui.render(); });
@@ -109,6 +112,32 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const k of Object.keys(S.staff)) S.staff[k].hired = ['s_ning', 's_zhou', 's_arjun', 's_founder'].includes(k); S.hire = null; for (const a of ['pump_rust']) { if (!S.locks.includes(a)) S.locks.push(a); if (!S.antiques.includes(a)) S.antiques.push(a); } });
   ok('the button begins the game and it is remembered', (await page.locator('#modal .welcome').count()) === 0 && (await page.evaluate(() => window.__game.ctx.S().welcomed)) === true);
   ok('the clock stands still before the first trip, with a hint', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 0 && (await page.locator('#clock .chipwrap .chip').count()) === 1 && (await page.locator('#clock svg.ring').count()) === 1);
+  const headerLayout = () => page.evaluate(() => ['#top', '#navrow', '#tabs', '.clock-playback', '#res', '#home-complete'].map((selector) => {
+    const { x, y, width, height } = document.querySelector(selector).getBoundingClientRect();
+    return [x, y, width, height].join(',');
+  }).join('|'));
+  const homeHeader = await headerLayout();
+  await go('shop');
+  ok('the agency and time travel share the same header layout', await headerLayout() === homeHeader);
+  const returnHome = page.locator('#home-complete');
+  ok('the agency shows the home button disabled below the energy goal', await returnHome.isVisible() && await returnHome.isDisabled());
+  const startEnergy = await page.evaluate(() => {
+    const { D, ctx, ui } = window.__game;
+    const energy = ctx.S().energy;
+    ctx.S().energy = D.get('config.office.home_cost');
+    ui.render();
+    return energy;
+  });
+  await returnHome.click();
+  ok('the agency home button opens the completion dialog', await page.locator('#modal .sharebox').isVisible());
+  await page.keyboard.press('Escape');
+  await page.evaluate(async (energy) => { const { ctx, ui } = window.__game; ctx.S().energy = energy; ui.render(); await ctx.save(); }, startEnergy);
+  await go('home');
+  await tool('wiki');
+  await page.reload();
+  await page.waitForSelector('#top:not([hidden]) #title');
+  ok('restoring the encyclopedia on reload finishes startup', await page.locator('#modal .wiki').isVisible() && await page.locator('#bootloading').isHidden());
+  await page.keyboard.press('Escape');
   // Guangzhou is the only remaining Sun Yat-sen episode, and its statue is a medium.
   const ep = await page.evaluate(() => {
     const g = window.__game, o = g.ui.office, S = g.ctx.S();
@@ -260,6 +289,19 @@ try {
   await go('shop');
   await sub('ants');
   await page.waitForSelector('[data-act=antlock]');
+  ok('the antique heading holds the bulk transfer button without a grant filter', (await page.locator('#shop-ants [data-act=sellspares]').count()) === 1 && (await page.locator('#grant-tier').count()) === 0);
+  ok('grants follow the historical year and remain fixed across office days', await page.evaluate(() => {
+    const { ctx, ui } = window.__game;
+    const clock = ctx.S().clock;
+    const day = clock.day;
+    const quote = (id) => ui.office.grantQuote(id, 0).base;
+    const ids = ['relic_tagore_santiniketan', 'relic_smith_kirkcaldy', 'relic_copernicus_frombork', 'relic_fibonacci_pisa', 'relic_omar_khayyam_nishapur', 'relic_socrates_athens'];
+    const early = ids.map(quote);
+    clock.day += 90;
+    const late = ids.map(quote);
+    clock.day = day;
+    return early.join(',') === '500,600,700,800,900,1000' && early.join(',') === late.join(',');
+  }));
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.antiques = S.antiques.filter((x) => x !== 'pump_rust'); S.antiques.push('pump_rust'); const A = window.__game.D.get('antiques.antiques'); S.locks = S.locks.filter((x) => !A[x].era); S.locks.push('pump_rust'); window.__game.ui.render(); });
   ok('anchored antique cannot be sold', await page.locator('[data-act=antsell][data-id=pump_rust]').isDisabled());
   ok('the last open place cannot be released', await page.locator('[data-act=antlock][data-id=pump_rust]').isDisabled());
@@ -297,8 +339,9 @@ try {
   ok('selling a modern good returns the funds it cost, with no loss', await page.evaluate((b) => window.__game.ctx.S().funds === b.f, pre));
   await go('shop');
   ok('the agency page lists the employees, the goods and the antiques one under the other, with no tabs and no scroll bars', (await page.locator('#lb-home_staff').count()) === 1 && (await page.locator('#lb-inv').count()) === 1 && (await page.locator('#lb-ants').count()) === 1 && (await page.locator('.subtabs').count()) === 0 && (await page.locator('#view .lscroll').count()) === 0);
-  await go('buy');
-  ok('the buying page lists the two shops and the hiring offer one under the other', (await page.locator('#lb-shop_modern').count()) === 1 && (await page.locator('#lb-shop_future').count()) === 1 && (await page.locator('#lb-hire').count()) === 1 && (await page.locator('#view .lscroll').count()) === 0);
+  ok('the agency holds all three procurement entry points', (await page.locator('#tabs button').count()) === 2 && (await page.locator('#shop-inv [data-act=procurement]').count()) === 2 && (await page.locator('#shop-staff #open-hire').count()) === 1 && (await page.locator('#modal [role=dialog]').count()) === 0);
+  await sub('modern');
+  ok('the shop opens in a dialog over the agency', await page.locator('#tabs [data-tab=shop].on').isVisible() && await page.locator('#modal [role=dialog] #lb-shop_modern').isVisible() && (await page.locator('#lb-shop_future, #lb-hire').count()) === 0);
   // a list shows five rows until the player asks for more
   await page.evaluate(() => { delete window.__game.ui.state.pager.shop_modern; window.__game.ui.render(); });
   const fiveRows = await page.locator('#lb-shop_modern .ltable tbody tr').count();
@@ -396,9 +439,11 @@ try {
   await sub('modern');
   await page.click('[data-act=lfilter][data-id=shop_modern]');
   await page.fill('#fq-shop_modern', M.name);
-  ok('a table has its own filter, folded until asked for', (await page.locator('#lb-shop_modern [data-act=cartinc]').count()) === 1 && (await page.locator('#lb-shop_future [data-act=cartinc]').count()) > 1);
+  ok('the shop filter narrows the list inside the dialog', (await page.locator('#lb-shop_modern [data-act=cartinc]').count()) === 1);
   await page.fill('#fq-shop_modern', '');
   await page.screenshot({ path: path.join(outDir, '5_shop.png'), fullPage: true });
+  await page.keyboard.press('Escape');
+  ok('closing the shop restores focus to its agency button', await page.evaluate(() => document.activeElement.id === 'open-modern'));
   // second place
   await go('home');
   await page.click('[data-act=mapz][data-id=reset]');
@@ -887,12 +932,11 @@ try {
     S.funds = 0; S.clock.day += 1; o.advance(0);
     const f1 = o.hiredIds().map((id) => S.staff[id].favor);
     const n = o.hiredIds().length;
-    return { paid, want: 3 * o.wageTotal(), rising: o.wageOf(n + 1) - o.wageOf(n) > o.wageOf(n) - o.wageOf(n - 1), poor: S.funds === 0 && f1.every((v, i) => v < f0[i] || f0[i] === 0), mult: g.ctx.backend.marketMult('relic_faraday_london', 40) };
+    return { paid, want: 3 * o.wageTotal(), rising: o.wageOf(n + 1) - o.wageOf(n) > o.wageOf(n) - o.wageOf(n - 1), poor: S.funds === 0 && f1.every((v, i) => v < f0[i] || f0[i] === 0) };
   });
   ok('wages are paid for every whole day', Math.abs(wg.paid - wg.want) < 1e-6);
   ok('each further hire costs more per day than the one before', wg.rising);
   ok('an unpaid day empties the funds and costs favor', wg.poor);
-  ok('the market factor stays within its band', wg.mult >= 0.7 && wg.mult <= 1.3);
 // a pop-up the player opens leaves the clock running, low funds hold the speed, an unpaid day stops the clock with a pop-up
 // the wage check above leaves an unpaid day waiting to open its pop-up on the next tick; it is cleared here so it does not land in the middle of this check
 await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 100000; S.brokeNew = false; S.clock.speed = 16; S.clock.resume = null; window.__game.ui.render(); });

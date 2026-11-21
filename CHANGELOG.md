@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.0, 2026-11-21
+
+- Moved recruitment and both shops into pop-ups opened from the Agency. The Employees and Items descriptions sit below their section headings.
+- Set six fixed antique grants from 500 to 1,000, based on the historical year an antique points to. The Antiques heading now holds the bulk transfer button, which leaves one copy of each antique. The secretary's bonus still applies.
+- Kept the top bar in the same position when switching between Time travel and Agency. Both pages show the finish button beside the energy counter. Removed the divider before the date on narrow screens.
+- Fixed a startup failure when reopening the encyclopedia with an incomplete unlock rule. Startup errors now replace the loading message even if the page has partly rendered.
+
 ## 0.13.5, 2026-11-21
 
 - Reorganized the top bar with tabs on the left, time controls in the middle and funds and energy on the right. On narrow screens the clock moves down as a group. Removed the navigation arrows and secretary summary from the header, and grouped the music buttons in an outline.

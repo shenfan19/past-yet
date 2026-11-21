@@ -2,7 +2,7 @@
 meta:
   app: The Past Is Yet to Come
   chinese_title: 白露未晞
-  version: 0.13.5
+  version: 0.14.0
   released: '2026-11-20'
   card_authors:
     - AI
@@ -62,7 +62,6 @@ office:
   keep_latest: 10
   max_trips: 2000
   hire_cost: 100
-  sale_scale: 3
   stars_per_point: 30
   wage:
     base: 2.4
@@ -76,14 +75,18 @@ office:
     base: 0.6
     per_point: 0.1
     max_chance: 0.95
-  market:
-    period_days: 30
-    amp: 0.3
-    grant_step: 100
-    rarity:
-      rare_chance: 0.05
-      common_chance: 0.3
-      max_adjustment: 25
+  antique_grants:
+    - min_year: 1900
+      funds: 500
+    - min_year: 1700
+      funds: 600
+    - min_year: 1500
+      funds: 700
+    - min_year: 1200
+      funds: 800
+    - min_year: 1
+      funds: 900
+    - funds: 1000
   fatal_outcomes:
     - near_death
   antique_find:
@@ -220,7 +223,6 @@ ui:
     secretary: 📋
   tab_icons:
     home: 🏠
-    buy: 🛒
     shop: 🗂️
   tool_icons:
     wiki: 📖

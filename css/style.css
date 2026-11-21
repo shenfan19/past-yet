@@ -46,6 +46,7 @@
   --pin: #54b6f2;
 }
 * { box-sizing: border-box; }
+html { scrollbar-gutter: stable; }
 html, body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.6 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; }
 h1, h2, h3 { font-family: "Noto Serif SC", "Songti SC", SimSun, serif; margin: 0; }
 button { font: inherit; font-size: 13px; line-height: 1.4; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 4px; padding: 2px 9px; }
@@ -93,8 +94,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 #res .home-energy { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 #home-complete { padding: 3px 7px; font-size: 12px; }
 #home-complete .home-complete-icon { display: none; }
-#tabs button { border-color: transparent; background: transparent; font-size: 15px; padding: 4px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
-#tabs button.on { border-color: var(--ink); background: var(--card); font-weight: 600; }
+#tabs button { border-color: transparent; background: transparent; font-size: 15px; font-weight: 600; padding: 4px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+#tabs button.on { border-color: var(--ink); background: var(--card); }
 
 #view { max-width: 980px; margin: 0 auto; padding: 16px; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
@@ -103,7 +104,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .card.on { border-color: var(--stamp); box-shadow: 0 0 0 1px var(--stamp) inset; }
 .card h3 { font-size: 15px; margin-bottom: 4px; }
 .sec { margin: 24px 0 10px; font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: .06em; border-bottom: 2px solid var(--line); padding-bottom: 4px; }
-.sec::before { content: ''; display: inline-block; width: 4px; height: 1em; background: var(--stamp); margin-right: 8px; vertical-align: -2px; border-radius: 2px; }
+.sec::before, .agency-heading-title::before { content: ''; display: inline-block; width: 4px; height: 1em; background: var(--stamp); margin-right: 8px; vertical-align: -2px; border-radius: 2px; }
+.agency-heading { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 10px; align-items: center; }
+.agency-heading::before { content: none; }
+.agency-heading-title { white-space: nowrap; }
+.agency-heading > .row { justify-content: flex-end; }
 .muted { color: var(--ink2); font-size: 13px; }
 .chip { display: inline-block; font-size: 12px; padding: 0 7px; border-radius: 10px; background: var(--chip); margin-right: 4px; }
 .chip.history { background: #d9c9a2; color: #5a4210; }
@@ -310,7 +315,7 @@ ul.stages li.dim { color: var(--ink2); }
 #quote { flex: 1 1 160px; min-width: 0; font: italic 13px/1.45 "Noto Serif SC", serif; color: var(--ink2); overflow-wrap: anywhere; transition: opacity .6s; }
 #quote.fade { opacity: 0; }
 #quote .quote-source { display: inline-block; max-width: 100%; color: var(--link); font-size: 12px; font-style: normal; text-decoration: underline dotted; }
-#clock { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 10px; max-inline-size: 100%; margin-inline: auto; padding-inline-start: 12px; border-inline-start: 1px solid var(--line); }
+#clock { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 10px; max-inline-size: 100%; margin-inline: auto; padding-inline-start: 12px; }
 #clock .clock-playback { display: inline-flex; align-items: center; gap: 8px; }
 #clock .clock-side { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; max-inline-size: 100%; }
 #clock .chipwrap:empty { display: none; }
@@ -345,7 +350,7 @@ ul.stages li.dim { color: var(--ink2); }
 }
 @media (max-width: 760px) {
   #quote { order: 1; flex: 1 0 100%; }
-  #clock { order: 1; flex: 1 0 100%; padding: 5px 0 0; border-inline-start: 0; border-top: 1px solid var(--line); }
+  #clock { order: 1; flex: 1 0 100%; padding: 5px 0 0; border-top: 1px solid var(--line); }
 }
 @media (max-width: 560px) {
   #top { padding-inline: 8px; }

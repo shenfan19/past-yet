@@ -262,7 +262,7 @@ export function createWiki(X) {
   let cache = null;
   const articles = () => (cache ||= buildArticles());
   const byId = (id) => articles().find((x) => x.id === id);
-  const open = (x) => X.isUnlocked(x.unlock);
+  const open = (x) => x.unlock != null && X.isUnlocked(x.unlock);
   const visible = (x) => open(x) || DEV;
 
   // [[id|label]] inside hand written text

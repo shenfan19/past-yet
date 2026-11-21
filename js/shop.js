@@ -14,7 +14,14 @@ export function createShop(X) {
   const curOf = (shopId) => D.get('shops.shops.' + shopId + '.currency');
   const icon = (c) => D.get('config.ui.currency_icons.' + c);
   const bal = (c) => (c === 'energy' ? ctx.S().energy : ctx.S().funds);
-  const cartTotal = (shopId) => Object.entries(cart()).reduce((a, [id, n]) => a + (D.get(`items.${id}.shop`) === shopId ? D.get(`items.${id}.cost`) * n : 0), 0);
+  const orders = (shopId) => Object.entries(cart()).filter(([id]) => D.get(`items.${id}.shop`) === shopId);
+  const cartTotal = (shopId) => orders(shopId).reduce((a, [id, n]) => a + D.get(`items.${id}.cost`) * n, 0);
+  const buyable = (it) => it.playable && !it.retired && !it.ip && D.get(`shops.shops.${it.shop}.playable`);
+  const canBuy = (it) => buyable(it) && !(it.unlock_energy > ctx.S().energy);
+  const canCheckout = (shopId, total) => {
+    const pending = orders(shopId);
+    return pending.length > 0 && total <= bal(curOf(shopId)) && pending.every(([id]) => canBuy(D.get(`items.${id}`)));
+  };
   const oneLine = firstSentence;
   const COLON = U.fmt.colon, SEP = U.fmt.sep;
   const signedPercent = new Intl.NumberFormat(D.lang, { style: 'percent', signDisplay: 'exceptZero' });
@@ -29,17 +36,15 @@ export function createShop(X) {
   const stepper = (decAct, incAct, id, n, decOff, incOff) => `<span class="stepper"><button data-act="${decAct}" data-id="${id}" ${decOff ? 'disabled' : ''}>−</button><span class="n">${n}</span><button data-act="${incAct}" data-id="${id}" ${incOff ? 'disabled' : ''}>+</button></span>`;
 
   function shopBox(shopId) {
-    const sh = D.get('shops.shops.' + shopId);
     const S = ctx.S();
     const lid = 'shop_' + shopId;
     const base = Object.entries(D.get('items')).filter(([, it]) => it.shop === shopId && !it.retired).map(([id]) => id);
     const ids = base.filter((id) => listbox.match(lid, T.items[id].name + ' ' + T.items[id].desc, D.get('items.' + id).tags));
     const rows = ids.map((id) => ({ id, name: T.items[id].name, it: D.get('items.' + id) }));
-    const buyable = (it) => it.playable && sh.playable && !it.ip;
     const total = cartTotal(shopId);
     const cur = curOf(shopId);
-    const foot = Object.keys(cart()).some((id) => D.get(`items.${id}.shop`) === shopId)
-      ? `<span>${S_.total} <b>${total}</b> ${icon(cur)}</span> <button class="primary" data-act="cartbuy" data-id="${shopId}" ${total > bal(cur) ? 'disabled' : ''}>${S_.confirm}</button> <button class="ghost" data-act="cartclear">${S_.clear_cart}</button>` : '';
+    const foot = orders(shopId).length
+      ? `<span>${S_.total} <b>${total}</b> ${icon(cur)}</span> <button class="primary" data-act="cartbuy" data-id="${shopId}" ${canCheckout(shopId, total) ? '' : 'disabled'}>${S_.confirm}</button> <button class="ghost" data-act="cartclear" data-id="${shopId}">${S_.clear_cart}</button>` : '';
     return listbox.html({
       id: lid, tools: listbox.tools(lid, tagOpts(base.flatMap((id) => D.get('items.' + id).tags))), rows, pinned: (r) => (cart()[r.id] || 0) > 0, pinTitle: S_.cart, foot,
       cols: [
@@ -85,20 +90,17 @@ export function createShop(X) {
   // a copy that is anchored is not for sale, the rest are
   const sellable = (id) => copies(id) - (ctx.S().locks.includes(id) ? 1 : 0) > 0;
 
-  const selectedGrantTier = () => st.filters.grantTier ?? null;
-
-  function antiqueBox(secretary, tier) {
+  function antiqueBox() {
     const S = ctx.S();
+    const secretary = office.perks().sale_mult;
     const shown = Object.keys(D.get('antiques.antiques')).filter((id) => (DEV || S.antiques.includes(id)) && D.get('antiques.antiques.' + id).kind !== 'medium');
     const offers = shown.map((id) => ({ id, name: T.antiques[id].name, an: D.get('antiques.antiques.' + id), own: S.antiques.includes(id), n: copies(id), lock: S.locks.includes(id), grant: office.grantQuote(id, secretary) }));
-    const tiers = [...new Set([...offers.map((r) => r.grant.base), ...(tier === null ? [] : [tier])])].sort((a, b) => a - b);
-    const tierFilter = `<label class="nowrap">${esc(S_.grant_tier)} <select id="grant-tier"><option value="">${esc(S_.all_grant_tiers)}</option>${tiers.map((value) => `<option value="${value}" ${value === tier ? 'selected' : ''}>${value}</option>`).join('')}</select></label>`;
-    const rows = offers.filter((r) => (tier === null || r.grant.base === tier) && listbox.match('ants', r.name + ' ' + T.antiques[r.id].desc, r.an.tags));
+    const rows = offers.filter((r) => listbox.match('ants', r.name + ' ' + T.antiques[r.id].desc, r.an.tags));
     const percent = secretary ? esc(signedPercent.format(secretary)) : '';
     const bonus = D.lang.startsWith('zh') ? `（${percent}）` : ` (${percent})`;
     const uplift = percent ? `<small class="delta up">${bonus}</small>` : '';
     return listbox.html({
-      id: 'ants', tools: tierFilter + listbox.tools('ants', tagOpts(offers.flatMap((r) => r.an.tags))), rows, empty: offers.length ? U.lbox.empty : S_.antiques_empty,
+      id: 'ants', tools: listbox.tools('ants', tagOpts(offers.flatMap((r) => r.an.tags))), rows, empty: offers.length ? U.lbox.empty : S_.antiques_empty,
       cols: [
         { k: 'name', label: S_.col_name, w: '21%', val: (r) => r.name, cell: (r) => nameCell('antiques', r.id, r.name, T.antiques[r.id].desc + '\n' + r.an.tags.map((t) => T.tags[t]).join(SEP), (DEV && !r.an.playable ? ' ' + hiddenChip() : '') + (r.lock ? ` <span class="chip">${S_.locked}</span>` : '')) },
         { k: 'desc', label: S_.col_desc, w: '18%', cell: (r) => descCell(T.antiques[r.id].desc) },
@@ -112,38 +114,33 @@ export function createShop(X) {
     });
   }
 
-  function antiquesSection() {
-    const { period_days } = D.get('config.office.market');
-    const tier = selectedGrantTier();
-    const secretary = office.perks().sale_mult;
-    const cycle = S_.grant_cycle.replace('{days}', String(period_days));
-    const offers = office.spareOffers(tier);
+  function transferSparesButton() {
+    const offers = office.spareOffers();
     const spares = offers.reduce((count, offer) => count + offer.n, 0);
     const spareFund = offers.reduce((amount, offer) => amount + offer.n * offer.price, 0);
-    const transfer = tier === null ? S_.sell_spares : S_.sell_tier_spares;
-    return `<p class="muted">${esc(S_.antiques_hint)}</p>
-      <p class="muted">${esc(cycle)}</p>
-      <div class="row" style="margin-bottom:6px"><button data-act="sellspares" ${spares ? '' : 'disabled'}>${esc(transfer)}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button></div>${antiqueBox(secretary, tier)}`;
+    return `<button data-act="sellspares" ${spares ? '' : 'disabled'}>${esc(S_.sell_spares)}${spares ? ` ×${spares} · ${spareFund} ${icon('funds')}` : ''}</button>`;
   }
 
-  // The agency page: antiques, items, the two shops, the employees and the hiring offer. The employee blocks come from the page as they are.
-  // the buying page holds the two shops and the hiring offer, the agency page the employees, the goods and the antiques
-  const GROUPS = { buy: ['modern', 'future', 'hire'], shop: ['staff', 'inv', 'ants'] };
-  function html(extra, tab) {
-    const future = `<p class="muted">${esc(S_.future.desc)}</p>${shopBox('future')}`;
-    // each page lists its sections one under the other, every list is paged
-    const parts = {
-      modern: () => `<p class="muted">${esc(S_.modern.desc)}</p>${shopBox('modern')}`,
-      future: () => future,
-      hire: () => extra.hire,
-      staff: () => extra.staff,
-      inv: () => `<p class="muted">${S_.inv_hint}</p>${invBox()}`,
-      ants: antiquesSection,
-    };
-    const names = { modern: S_.modern.name, future: S_.future.name, hire: U.office.hire_title, staff: U.office.staff, inv: S_.inv_title, ants: S_.antiques_title };
-    const ids = GROUPS[tab];
+  const shopButton = (id) => `<button id="open-${id}" data-act="procurement" data-id="${id}" aria-haspopup="dialog">${esc(S_.buy)} · ${esc(S_[id].name)}</button>`;
+  const agencyHeading = (id, label, actions) => `<div class="sec agency-heading" id="shop-${id}">
+    <span class="agency-heading-title">${esc(label)}</span><span class="row">${actions}</span></div>`;
+
+  function html(staff, staffSummary) {
+    const hireButton = `<button id="open-hire" data-act="procurement" data-id="hire" aria-haspopup="dialog">${esc(U.office.hire)}</button>`;
     return `
-      ${ids.map((id) => `<div class="sec" id="shop-${id}">${names[id]}</div>${parts[id]()}`).join('')}`;
+      ${agencyHeading('staff', U.office.staff, hireButton)}
+      <div class="muted">${staffSummary}</div>
+      ${staff}
+      ${agencyHeading('inv', S_.inv_title, shopButton('modern') + shopButton('future'))}
+      <p class="muted">${esc(S_.inv_hint)}</p>${invBox()}
+      ${agencyHeading('ants', S_.antiques_title, transferSparesButton())}
+      <p class="muted">${esc(S_.antiques_hint)}</p>${antiqueBox()}`;
+  }
+
+  function purchaseHtml(id) {
+    const cur = curOf(id);
+    return `<p class="muted">${esc(S_[id].desc)}</p>
+      <p>${esc(U.office[cur])}${COLON}<b>${Math.floor(bal(cur))}</b> ${icon(cur)}</p>${shopBox(id)}`;
   }
 
   function act(a, id) {
@@ -151,25 +148,23 @@ export function createShop(X) {
     if (a === 'cartinc' || a === 'cartdec') {
       const it = D.get('items.' + id);
       const n = (cart()[id] || 0) + (a === 'cartinc' ? it.step : -it.step);
-      if (it.unlock_energy > S.energy && a === 'cartinc') return true;
+      if (a === 'cartinc' && !canBuy(it)) return false;
       if (n <= 0) delete cart()[id]; else if (cartTotal(it.shop) + it.cost * it.step <= bal(curOf(it.shop)) || a === 'cartdec') cart()[id] = n;
       return true;
     }
-    if (a === 'cartclear') { st.cart = {}; return true; }
+    if (a === 'cartclear') {
+      for (const [cid] of orders(id)) delete cart()[cid];
+      return true;
+    }
     if (a === 'cartbuy') {
-      const cur = curOf(id);
-      if (cartTotal(id) <= bal(cur)) {
-        for (const [cid, n] of Object.entries(cart())) {
-          const it = D.get('items.' + cid);
-          if (it.shop !== id) continue;
-          if (it.playable && !it.ip && D.get('shops.shops.' + it.shop).playable) {
-            if (cur === 'energy') S.energy -= it.cost * n; else S.funds -= it.cost * n;
-            S.inv[cid] = (S.inv[cid] || 0) + n;
-          }
-          delete cart()[cid];
-        }
-        ctx.save();
+      const total = cartTotal(id);
+      if (!canCheckout(id, total)) return false;
+      S[curOf(id)] -= total;
+      for (const [cid, n] of orders(id)) {
+        S.inv[cid] = (S.inv[cid] || 0) + n;
+        delete cart()[cid];
       }
+      ctx.save();
       return true;
     }
     if (a === 'shopsell') {
@@ -177,7 +172,7 @@ export function createShop(X) {
       if (n > 0) { if (curOf(it.shop) === 'energy') S.energy += sell1(id) * n; else S.funds += sell1(id) * n; S.inv[id] -= n; ctx.save(); }
       return true;
     }
-    if (a === 'sellspares') return !!office.sellSpares(Infinity, true, selectedGrantTier());
+    if (a === 'sellspares') return !!office.sellSpares();
     if (a === 'antsell') {
       if (!sellable(id)) return false;
       S.funds += office.salePrice(id);
@@ -201,5 +196,5 @@ export function createShop(X) {
     }
     return false;
   }
-  return { html, act };
+  return { html, purchaseHtml, act };
 }

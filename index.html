@@ -36,7 +36,7 @@
 // An error before the game has drawn its first page shows the box above with the error, instead of leaving the page blank.
 (function () {
   function show(msg) {
-    if (document.getElementById('view').childElementCount) return;
+    if (!document.getElementById('top').hidden) return;
     document.getElementById('bootloading').hidden = true;
     var box = document.getElementById('bootfail');
     box.hidden = false;

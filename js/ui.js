@@ -297,7 +297,8 @@ export function createUI(D, ctx, DEV = false) {
     try {
       const o = JSON.parse(raw);
       if (o.reloadOnly && performance.getEntriesByType('navigation')[0]?.type !== 'reload') return;
-      if (o.tab in U.tabs) st.tab = o.tab;
+      if (o.tab === 'buy') st.tab = 'shop';
+      else if (Object.hasOwn(U.tabs, o.tab)) st.tab = o.tab;
       if (o.pager) st.pager = o.pager;
       if (o.modal && ['settings', 'about', 'wiki', 'report'].includes(o.modal.kind)) st.modal = o.modal;
       if (!st.modal && o.sub && ctx.S().dispatches.some((d) => d.id === o.sub)) st.modal = { kind: 'report', id: o.sub };
@@ -473,6 +474,15 @@ export function createUI(D, ctx, DEV = false) {
     else if (state === 'resting') left = S.staff[id].restUntil - S.clock.day;
     return stateLabel()[state] + (left > 0 ? ' ' + r1(left) + ' ' + U.report.days : '');
   }
+  function staffSummaryHtml() {
+    const S = ctx.S();
+    const perkText = perkParts(office.perks()).join(' · ');
+    const secretary = S.secretary ? `${staffLink(S.secretary)} · ${esc(perkText) || U.enc.edge_none}` : U.office.no_secretary;
+    const total = office.wageTotal();
+    const wage = `${U.office.wage}${COLON}${ri(total)} ${D.get('config.ui.currency_icons.funds')}${S.funds < total ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}`;
+    return `${U.office.secretary}${COLON}${secretary} · ${wage}`;
+  }
+
   function staffBoxHtml() {
     const S = ctx.S();
     const allIds = hiredIds();
@@ -480,14 +490,7 @@ export function createUI(D, ctx, DEV = false) {
     const rows = allIds.filter((id) => listbox.match('home_staff', staffName(D, id) + ' ' + T.staff[id].jobs.join(' ') + ' ' + T.staff[id].ethnicity, staffTraits(D, id))).map((id) => {
       return { id, name: staffName(D, id), state: staffState(id), favor: S.staff[id].favor, score: office.growthStars(id) };
     });
-    const perkText = perkParts(office.perks()).join(' · ');
-    const sec = S.secretary
-      ? `<div class="muted">${U.office.secretary}${COLON}${staffLink(S.secretary)} · ${esc(perkText) || U.enc.edge_none}</div>`
-      : `<div class="muted">${U.office.secretary}${COLON}${U.office.no_secretary}</div>`;
-    const total = office.wageTotal();
-    const wage = `${U.office.wage}${COLON}${ri(total)} ${D.get('config.ui.currency_icons.funds')}${S.funds < total ? ` <span class="chip warn">${U.office.wage_unpaid}</span>` : ''}`;
-    const secLine = sec.slice(0, sec.length - '</div>'.length) + ' · ' + wage + '</div>';
-    return secLine + listbox.html({
+    return listbox.html({
       id: 'home_staff', tools: listbox.tools('home_staff', traitTags), rows,
       cols: [
         { k: 'name', label: U.office.col_staff, w: '14%', val: (r) => r.name, cell: (r) => `<span class="nowrap">${staffLink(r.id)}</span>` },
@@ -510,6 +513,7 @@ export function createUI(D, ctx, DEV = false) {
   }
 
   let renderedHireSlots = null;
+  let renderedHireAffordable = null;
   function hireCountdown() {
     const S = ctx.S();
     const left = Math.max(0, S.hire.next - S.clock.day);
@@ -519,6 +523,7 @@ export function createUI(D, ctx, DEV = false) {
   function hireHtml() {
     const S = ctx.S();
     renderedHireSlots = S.hire.slots;
+    renderedHireAffordable = S.funds >= O.hire_cost;
     const n = hiredIds().length;
     const icon = D.get('config.ui.currency_icons.funds');
     const box = listbox.html({
@@ -529,7 +534,7 @@ export function createUI(D, ctx, DEV = false) {
         { k: 'stats', label: U.office.col_stats, w: '24%', cell: (r) => `<div class="oneline">${esc(r.stats)}</div>` },
         { k: 'traits', label: U.office.col_traits, w: '17%', cell: (r) => `<span class="nowrap">${r.traits.map(traitChip).join('')}</span>` },
         { k: 'wage', label: U.office.col_wage, w: '12%', cls: 'num', cell: () => `<span class="nowrap"${tip(U.office.wage_after.replace('{a}', ri(office.wageTotal())).replace('{b}', ri(office.wageOf(n + 1))))}>+${ri(office.wageOf(n + 1) - office.wageTotal())} ${icon}</span>` },
-        { k: 'act', label: '', w: '14%', cls: 'num', cell: (r) => `<button class="primary" data-act="hire" data-id="${r.id}" ${S.funds < O.hire_cost ? 'disabled' : ''}>${U.office.hire} ${O.hire_cost}</button>` },
+        { k: 'act', label: '', w: '14%', cls: 'num', cell: (r) => `<button class="primary" data-act="hire" data-id="${r.id}" ${renderedHireAffordable ? '' : 'disabled'}>${U.office.hire} ${O.hire_cost}</button>` },
       ],
     });
     return `<p class="muted">${U.office.hire_hint.replace('{n}', String(D.get('hiring.refresh_days')))} ${U.office.wage}${COLON}${ri(office.wageTotal())} → ${ri(office.wageOf(n + 1))} ${icon}</p>
@@ -554,7 +559,7 @@ export function createUI(D, ctx, DEV = false) {
     const I = D.get('config.ui.currency_icons');
     setHtml(fundsEl, `${I.funds} <b>${ri(S.funds)}</b><span class="muted"> − ${ri(office.wageTotal())}${U.office.per_day}</span>`);
     setHtml(energyEl, `${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span>`);
-    homeComplete.hidden = st.tab !== 'home' || needsWelcome();
+    homeComplete.hidden = needsWelcome();
     homeComplete.disabled = S.energy < O.home_cost;
   }
 
@@ -1268,6 +1273,7 @@ export function createUI(D, ctx, DEV = false) {
   function closeModal() {
     if (st.modal && st.modal.kind === 'welcome') return;
     const fromHomeCompletion = st.modal?.kind === 'share' && st.modal.id === null;
+    const procurement = st.modal?.kind === 'procurement' ? st.modal.id : null;
     // the wiki and the status page open over what is open and give it back, one step at a time
     st.modal = st.modal && ['wiki', 'staff', 'share', 'report'].includes(st.modal.kind) && st.modalStack.length ? st.modalStack.pop() : null;
     if (reportBackScroll.has(st.modal)) {
@@ -1277,6 +1283,7 @@ export function createUI(D, ctx, DEV = false) {
     if (!st.modal) st.modalStack = [];
     render();
     if (fromHomeCompletion) document.getElementById('home-complete')?.focus();
+    if (procurement) document.getElementById(`open-${procurement}`)?.focus({ preventScroll: true });
   }
   function modalBody(dispatch) {
     const m = st.modal;
@@ -1288,6 +1295,12 @@ export function createUI(D, ctx, DEV = false) {
     if (m.kind === 'about') return `<div class="mbox narrow">${aboutHtml()}</div>`;
     if (m.kind === 'report') return `<div class="mbox wide reportbox" role="dialog" aria-modal="true" aria-label="${esc(U.report.view)}">${reportHtml(m.id)}</div>`;
     if (m.kind === 'staff') return `<div class="mbox wide">${staffModalHtml(m.id)}</div>`;
+    if (m.kind === 'procurement') {
+      const hiring = m.id === 'hire';
+      const title = hiring ? U.office.hire_title : U.shop[m.id].name;
+      const content = hiring ? hireHtml() : shop.purchaseHtml(m.id);
+      return `<div class="mbox wide procurement" role="dialog" aria-modal="true" aria-labelledby="procurement-title"><h2 id="procurement-title" tabindex="-1">${esc(title)}</h2>${content}</div>`;
+    }
     if (m.kind === 'place') return `<div class="mbox wide">${worldMap.placeHtml(m.place)}</div>`;
     if (m.kind === 'dispatch') return `<div class="mbox wide">${m.from ? `<p><button class="ghost" data-act="modalplace" data-id="${esc(m.from)}">‹ ${U.map.back_list}</button></p>` : ''}<div class="storyfull">${dispatch.story}</div><div class="dispatchdesk">${dispatch.desk}</div></div>`;
     const d = share.dispatch(m.id);
@@ -1341,21 +1354,16 @@ export function createUI(D, ctx, DEV = false) {
   // ---------- render ----------
   let viewHtml = null;
   let viewRedrawPending = false;
-  let renderedMarketPeriod = null;
   let renderedAntiqueCount = null;
-  const marketPeriod = () => ctx.backend.marketPeriod(ctx.S().clock.day);
   function render(fromTick) {
     office.ensureHire();
     renderTabs();
     renderResources();
     viewRedrawPending = fromTick === true && editingWithin(view);
     if (viewRedrawPending) { renderModal(true); return; }
-    const html = { home: homeHtml, buy: () => shop.html({ hire: hireHtml() }, 'buy'), shop: () => shop.html({ staff: staffBoxHtml() }, 'shop') }[st.tab]();
+    const html = st.tab === 'shop' ? shop.html(staffBoxHtml(), staffSummaryHtml()) : homeHtml();
     const key = st.tab;
-    if (key === 'shop') {
-      renderedMarketPeriod = marketPeriod();
-      renderedAntiqueCount = ctx.S().antiques.length;
-    }
+    if (key === 'shop') renderedAntiqueCount = ctx.S().antiques.length;
     if (fromTick === true && html === viewHtml && key === st.lastKey) { renderModal(true); return; }
     viewHtml = html;
     if (st.lastKey !== null) st.scrollY[st.lastKey] = window.scrollY;
@@ -1446,6 +1454,11 @@ export function createUI(D, ctx, DEV = false) {
     else if (act === 'recall') { const r = office.recall(id); if (r.ok) openReport(id); renderClock(); render(); }
     else if (act === 'open') openReport(id);
     else if (act === 'fire') { office.dismiss(id); render(); }
+    else if (act === 'procurement') {
+      st.modal = { kind: 'procurement', id };
+      render();
+      document.getElementById('procurement-title')?.focus();
+    }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
     else if (act === 'wiki') { wiki.go(id); if (st.modal && st.modal.kind === 'wiki') wiki.refresh(); else { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'wiki' }; render(); } }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
@@ -1568,7 +1581,6 @@ export function createUI(D, ctx, DEV = false) {
     if (t.id === 'lang') { changeLang(t.value); return; }
     if (t.id === 'founder-gender') { office.founderGender(t.value); render(); return; }
     if (t.id === 'log-archived') { st.showArchived = t.checked; if (st.pager.log) st.pager.log.page = 0; render(); return; }
-    if (t.id === 'grant-tier') { st.filters.grantTier = t.value === '' ? null : Number(t.value); if (st.pager.ants) st.pager.ants.page = 0; render(); return; }
     if (t.dataset.tripOrder) {
       const key = t.dataset.tripOrder;
       st.sort[key] = { k: t.value };
@@ -1647,10 +1659,11 @@ export function createUI(D, ctx, DEV = false) {
       }
     } else if (viewRedrawPending) {
       render(true);
-    } else if (st.tab === 'buy' && renderedHireSlots !== ctx.S().hire.slots) {
+    } else if (st.tab === 'shop' && renderedAntiqueCount !== ctx.S().antiques.length) {
       render(true);
-    } else if (st.tab === 'shop' && (renderedMarketPeriod !== marketPeriod() || renderedAntiqueCount !== ctx.S().antiques.length)) {
-      render(true);
+    } else if (st.modal?.kind === 'procurement') {
+      const S = ctx.S();
+      if (st.modal.id !== 'hire' || renderedHireSlots !== S.hire.slots || renderedHireAffordable !== (S.funds >= O.hire_cost) || modalRedrawPending) renderModal(true);
     } else if (modalRedrawPending || (fresh.length && st.modal)) {
       renderModal(true);
     }

@@ -33,7 +33,7 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
   if (over.base) W.base = over.base;
   if (over.step !== undefined) W.step = over.step;
   if (over.hire) OF.hire_cost = over.hire;
-  if (over.scale) OF.sale_scale = over.scale;
+  if (over.scale) for (const tier of OF.antique_grants) tier.funds *= over.scale;
   if (over.start) OF.start_funds = over.start;
   const findAntique = g.ctx.backend.findAntique;
   if (over.nodup) g.ctx.backend.findAntique = (...args) => {
@@ -75,7 +75,7 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
       if (policy === 'idle' && (S.unpaidDays || 0) > unpaid0) {
         f.stops += 1; if (S.clock.day >= 60) f.stopsLate += 1;
         o.sellSpares();
-        const ids = [...new Set(S.antiques)].filter((id) => releasable(id) && D.get('antiques.antiques.' + id).price > 0).sort((a, b) => D.get('antiques.antiques.' + a).price - D.get('antiques.antiques.' + b).price);
+        const ids = [...new Set(S.antiques)].filter((id) => releasable(id) && D.get('antiques.antiques.' + id).kind !== 'medium').sort((a, b) => o.salePrice(a) - o.salePrice(b));
         if (S.funds < o.wageTotal() && ids.length > 2) { const id = ids[0]; S.funds += o.salePrice(id); S.antiques.splice(S.antiques.indexOf(id), 1); if (!S.antiques.includes(id)) { S.locks = S.locks.filter((x) => x !== id); S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id); } f.sells += 1; }
       }
       o.autoStep();
@@ -88,10 +88,10 @@ const res = await page.evaluate(async ({ runs, days, policy, over }) => {
           const got = o.sellSpares();
           if (got) f.spareSold += 1;
           if (S.funds < 2 * wageTotal && new Set(S.antiques).size > (over.mindoors ?? 4)) {
-            const ids = [...new Set(S.antiques)].filter((id) => releasable(id) && D.get('antiques.antiques.' + id).price > 0).sort((a, b) => D.get('antiques.antiques.' + a).price - D.get('antiques.antiques.' + b).price);
+            const ids = [...new Set(S.antiques)].filter((id) => releasable(id) && D.get('antiques.antiques.' + id).kind !== 'medium').sort((a, b) => o.salePrice(a) - o.salePrice(b));
             if (ids.length) {
               const id = ids[0];
-              S.funds += D.get('antiques.antiques.' + id).price;
+              S.funds += o.salePrice(id);
               S.antiques.splice(S.antiques.indexOf(id), 1);
               if (!S.antiques.includes(id)) { S.locks = S.locks.filter((x) => x !== id); S.autoAnchored = (S.autoAnchored || []).filter((x) => x !== id); }
               f.sells += 1;

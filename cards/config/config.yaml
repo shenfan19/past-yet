@@ -1,7 +1,7 @@
 meta:
   app: The Past Is Yet to Come
   chinese_title: 白露未晞
-  version: 0.13.5
+  version: 0.14.0
   released: '2026-11-20'
   card_authors: [AI, Fan Shen]
   links:
@@ -59,8 +59,6 @@ office:
   keep_latest: 10
   max_trips: 2000
   hire_cost: 100
-  # the funds come only from selling antiques, and this scales what they sell for against the price on the card
-  sale_scale: 3
   # Each employee earns a point for this many stars across their personal best results.
   stars_per_point: 30
   # Daily wages for everyone hired, idle or not. Each person costs base * (1 + step * (headcount - 1)), so the n-th hire adds base * (1 + step * (2n - 2)) per day.
@@ -77,12 +75,14 @@ office:
   max_archived_reports: 200
   # luck is a factor on the chances left to chance: base + per_point * luck, so one at luck 4, and no chance goes past max_chance
   luck: {base: 0.6, per_point: 0.1, max_chance: 0.95}
-  # Adjust for repeat-find rarity, then round to grant_step funds before applying the secretary's bonus.
-  market:
-    period_days: 30
-    amp: 0.3
-    grant_step: 100
-    rarity: {rare_chance: 0.05, common_chance: 0.30, max_adjustment: 25}
+  # Grants use the first matching historical year, from newest to oldest.
+  antique_grants:
+    - {min_year: 1900, funds: 500}
+    - {min_year: 1700, funds: 600}
+    - {min_year: 1500, funds: 700}
+    - {min_year: 1200, funds: 800}
+    - {min_year: 1, funds: 900}
+    - {funds: 1000}
   fatal_outcomes: [near_death]
   # the share of the find chance at a star count, for a story with that many stars; a story has 3 stars unless its scene has more points
   # k is set so that a small agency left on the auto mode is stopped by a wage it cannot pay after some fifty days, sells an antique or two and then earns its way,
@@ -172,7 +172,7 @@ auto:
     - ors_pack
 ui:
   currency_icons: {funds: '💰', energy: '⚡', wage: '🧾', secretary: '📋'}
-  tab_icons: {home: '🏠', buy: '🛒', shop: '🗂️'}
+  tab_icons: {home: '🏠', shop: '🗂️'}
   tool_icons: {wiki: '📖', settings: '⚙️', about: 'ℹ️'}
   quote: {interval_min_s: 45, interval_max_s: 150, fade_ms: 600}
   # The settlement at the head of a report: its rows come in one after another, step_ms apart, each taking item_ms, and after a pause the echo comes in over echo_ms.
