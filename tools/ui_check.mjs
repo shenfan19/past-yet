@@ -29,6 +29,10 @@ page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') 
 page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 try {
   const ok = (label, cond) => console.log(label + ':', cond ? 'ok' : 'MISMATCH');
+  const play = page.locator('[data-clk=play]');
+  const setClockPlaying = async (running) => {
+    if ((await play.getAttribute('class')).split(' ').includes('running') !== running) await play.click();
+  };
   // the agency page shows one tab at a time
   // a tab click first closes a pop-up that is open, as a person would
   const go = async (tab) => {
@@ -203,7 +207,7 @@ try {
   await page.click('[data-act=send]');
   ok('sending closes the pop-up and the trip shows at the top, before the map', (await page.locator('#modal .mbox').count()) === 0 && (await page.locator('#home-pending').count()) === 1 && (await page.evaluate(() => document.getElementById('home-pending').compareDocumentPosition(document.getElementById('home-map')) & Node.DOCUMENT_POSITION_FOLLOWING)) > 0);
   ok('the first trip starts the clock at 1x', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 1);
-  await page.selectOption('[data-clk=speed]', '0');
+  await setClockPlaying(false);
   // the trip is made to be home by moving its day, as the clock would
   await page.waitForSelector('.outrow');
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
@@ -452,6 +456,10 @@ try {
   await page.click('[data-act=gift][data-id=s_ning]');
   ok('gift raises favor', (await page.evaluate(() => window.__game.ctx.S().staff.s_ning.favor)) > favor0);
   await page.selectOption('[data-clk=speed]', '3');
+  ok('picking a speed while paused leaves the clock paused', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 0);
+  await setClockPlaying(true);
+  ok('play starts at the selected speed', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 4);
+  await page.locator('body').evaluate(() => document.activeElement.blur());
   const day0 = await page.evaluate(() => window.__game.ctx.S().clock.day);
   await page.waitForTimeout(1500);
   ok('clock runs at speed', (await page.evaluate(() => window.__game.ctx.S().clock.day)) > day0);
@@ -499,8 +507,9 @@ try {
   const offerBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).join());
   await page.evaluate(() => { window.__game.ctx.S().clock.day += 8; });
   await page.selectOption('[data-clk=speed]', '1');
+  await setClockPlaying(true);
   await page.waitForTimeout(800);
-  await page.selectOption('[data-clk=speed]', '0');
+  await setClockPlaying(false);
   ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
   ok('the funds with the wages a day, and the energy, are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === (await page.evaluate(() => (window.__game.ctx.S().secretary ? 3 : 2))) && (await page.locator('#navrow #res .rv').first().innerText()).includes('−'));
   // stars: time energy is paid only for stars above the best of the place, funds every time
@@ -562,7 +571,7 @@ try {
     return chosen && grown === attr && after === before + 1;
   });
   ok('personal best stars grow the selected attribute', training);
-  await page.selectOption('[data-clk=speed]', '0');
+  await setClockPlaying(false);
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.funds = 400; for (const k of Object.keys(S.staff)) S.staff[k].favor = 0.5; });
   const hiredN = await page.evaluate(() => Object.values(window.__game.ctx.S().staff).filter((x) => x.hired).length);
   await page.click('[data-act=fire][data-id=s_arjun]');
@@ -574,6 +583,7 @@ try {
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.locks = S.locks.filter((x) => x !== 'clinic_bell'); if (!S.antiques.includes('clinic_bell')) S.antiques.push('clinic_bell'); S.antiques.push('relic_newton_cambridge', 'relic_newton_cambridge'); S.funds = 150; });
   await page.locator('[data-clk=auto]').click();
   await page.selectOption('[data-clk=speed]', '3');
+  await setClockPlaying(true);
   const claimedBefore = await page.evaluate(() => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length);
   await page.waitForFunction((b) => window.__game.ctx.S().dispatches.filter((d) => d.claimed).length > b, claimedBefore, { timeout: 60000 });
   ok('auto mode dispatches and claims by itself', true);
@@ -581,7 +591,7 @@ try {
   await go('shop');
   await page.click('[data-act=appoint][data-id=s_zhou]');
   await page.locator('[data-clk=auto]').click();
-  await page.selectOption('[data-clk=speed]', '0');
+  await setClockPlaying(false);
   ok('hired after recruit', (await page.evaluate(() => Object.entries(window.__game.ctx.S().staff).filter(([k, x]) => x.hired && !window.__game.D.get('staff.staff.' + k)?.dev_only).length)) === 6);
   // the game so far was played with the drafts shown, and a page without them does not know their places, so the trips to them are taken out of the save first
   await page.evaluate(() => { const g = window.__game, S = g.ctx.S(), D = g.D; const draft = new Set(D.get('config.eras').filter((id) => D.get('era_raw.' + id).metadata.status === 'draft')); S.dispatches = S.dispatches.filter((d) => !draft.has(d.eraId)); S.visited = S.visited.filter((x) => !draft.has(x)); if (S.trips) S.trips = S.trips.filter((x) => !draft.has(x.place)); for (const k of draft) delete S.stars[k]; g.ctx.save(); });
@@ -676,7 +686,7 @@ try {
   await page.click('#map-from', { clickCount: 3 });
   await page.keyboard.type('1850', { delay: 450 });
   ok('digits typed in the year box stay in order while the clock runs', (await page.locator('#map-from').inputValue()) === '1850');
-  await page.selectOption('[data-clk=speed]', '0');
+  await setClockPlaying(false);
   await page.fill('#map-from', '-5000');
   await page.evaluate(() => { const S = window.__game.ctx.S(); S.dispatches = S.dispatches.filter((d) => d.claimed); window.__game.ui.render(); });
   // the open filter panel lies over a part of the map, so it is folded before a pin is clicked
@@ -767,13 +777,14 @@ try {
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en&drafts`);
   await page.waitForSelector('.lead');
   await page.selectOption('[data-clk=speed]', '3');
+  await setClockPlaying(true);
   const tabBox = await page.locator('#tabs [data-tab=shop]').boundingBox();
   await page.mouse.move(tabBox.x + tabBox.width / 2, tabBox.y + tabBox.height / 2);
   await page.mouse.down();
   await page.waitForTimeout(1300);
   await page.mouse.up();
   ok('a slow click on a tab is not lost to the clock', (await page.locator('#tabs button.on').getAttribute('data-tab')) === 'shop');
-  await page.selectOption('[data-clk=speed]', '0');
+  await setClockPlaying(false);
   // the log scrolls, is read from the kept summaries, and a place lists the trips that came home from it
   await go('home');
   const lg = await page.evaluate(() => {
@@ -918,9 +929,10 @@ ok('the automatic mode anchors a new piece once and leaves a released piece alon
 await go('home');
 const night1 = await page.locator('svg.map .night path').getAttribute('d');
 await page.selectOption('[data-clk=speed]', '3');
+await setClockPlaying(true);
 await page.waitForTimeout(2200);
 const night2 = await page.locator('svg.map .night path').getAttribute('d');
-await page.selectOption('[data-clk=speed]', '0');
+await setClockPlaying(false);
 ok('the night shade is on the map and moves with the clock', !!night1 && night1.startsWith('M') && night1 !== night2);
 await page.evaluate(() => { window.__game.ctx.settings.set('map_daynight', false); window.__game.ui.render(); });
 ok('the setting takes the night shade off the map', (await page.locator('svg.map .night').count()) === 0);

@@ -350,33 +350,48 @@ export function createUI(D, ctx, DEV = false) {
   const clockParts = { day: document.createElement('span'), ctl: document.createElement('span'), chip: document.createElement('span') };
   clockParts.day.className = 'day'; clockParts.ctl.className = 'ctl'; clockParts.chip.className = 'chipwrap';
   clockEl.append(clockParts.day, clockParts.ctl, clockParts.chip);
-  function renderClock(fromTick = false) {
+  const clockSpeeds = D.get('config.clock.speeds');
+  const speeds = clockSpeeds.map((speed, i) => speed > 0 ? `<option value="${i}">${speed}×</option>` : '').join('');
+  clockParts.ctl.innerHTML = `<span class="time-controls"><button type="button" class="clock-play" data-clk="play" aria-keyshortcuts="Space"><span aria-hidden="true"></span></button><select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select></span><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto"> ${esc(U.clock.auto)}</label></span>`;
+  const playControl = clockParts.ctl.querySelector('[data-clk=play]');
+  const speedControl = clockParts.ctl.querySelector('[data-clk=speed]');
+  const autoControl = clockParts.ctl.querySelector('[data-clk=auto]');
+  function renderClock() {
     const c = ctx.S().clock;
-    const C = D.get('config.clock');
     const al = office.alerts();
     // a ring that fills once a day, so the passing of time can be seen at any speed
     const frac = c.day - Math.floor(c.day), circ = 2 * Math.PI * 7;
     setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg><span title="${esc(U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}">${esc(T.year_day.replace('{y}', String(officeDate(c.day).getUTCFullYear())).replace('{date}', officeDay(c.day)))}</span>`);
-    if (!fromTick || !editingWithin(clockParts.ctl)) {
-      const speeds = C.speeds.map((sp, i) => `<option value="${i}" ${c.speed === sp ? 'selected' : ''}>${sp === 0 ? '⏸ ' + U.clock.pause : sp + '×'}</option>`).join('');
-      setHtml(clockParts.ctl, `<select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto" ${c.auto ? 'checked' : ''}> ${esc(U.clock.auto)}</label></span>`);
+    const running = c.speed > 0;
+    const action = running ? U.clock.pause : U.clock.play;
+    if (playControl.getAttribute('aria-label') !== action) {
+      playControl.setAttribute('aria-label', action);
+      playControl.title = action;
+      playControl.classList.toggle('running', running);
     }
+    const speedIndex = String(clockSpeeds.indexOf(office.selectedSpeed()));
+    if (speedControl.value !== speedIndex) speedControl.value = speedIndex;
+    if (autoControl.checked !== c.auto) autoControl.checked = c.auto;
     const first = ctx.S().seq === 0 && c.speed === 0;
     setHtml(clockParts.chip, c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>`
       : first ? `<span class="chip"${tip(U.clock.start_tip)}>${U.clock.start_hint}</span>`
       : office.lowFunds() && c.speed > office.effectiveSpeed() ? `<span class="chip warn"${tip(U.clock.low_tip)}>${U.clock.low_funds.replace('{n}', String(office.effectiveSpeed()))}</span>` : '');
   }
+  playControl.addEventListener('click', () => {
+    office.togglePause();
+    renderClock();
+  });
   clockEl.addEventListener('change', (ev) => {
     const b = ev.target.closest('[data-clk]');
     if (!b) return;
     const c = ctx.S().clock;
     if (b.dataset.clk === 'speed') office.setSpeed(Number(b.value));
-    else { c.auto = b.checked; if (c.auto && c.speed === 0) office.setSpeed(1); ctx.save(); }
+    else if (b.dataset.clk === 'auto') { c.auto = b.checked; ctx.save(); }
     renderClock();
     renderTabs();
   });
   document.addEventListener('keydown', (ev) => {
-    if (ev.code !== 'Space' || st.modal || /INPUT|TEXTAREA|SELECT|BUTTON/.test(ev.target.tagName)) return;
+    if (ev.code !== 'Space' || ev.repeat || st.modal || /INPUT|TEXTAREA|SELECT|BUTTON/.test(ev.target.tagName)) return;
     ev.preventDefault();
     office.togglePause();
     renderClock();
@@ -1604,17 +1619,18 @@ export function createUI(D, ctx, DEV = false) {
     if (fresh.length) { ctx.audio.sfx('ready'); showReturns(fresh); }
     if (ctx.S().brokeNew) { ctx.S().brokeNew = false; st.modal = { kind: 'broke' }; ctx.save(); render(); }
     // nothing is sent before the game has begun, so a save never has trips out while the founder form still waits
-    if (ctx.S().clock.auto && !needsWelcome()) office.autoStep();
+    const autoRunning = ctx.S().clock.auto && ctx.S().clock.speed > 0 && !needsWelcome();
+    if (autoRunning) office.autoStep();
     if (pressed) {
       if (fresh.length && st.tab === 'home') viewRedrawPending = true;
       if (fresh.length && st.modal) modalRedrawPending = true;
       return;
     }
-    renderClock(true);
+    renderClock();
     renderTabs();
     const transit = ctx.S().dispatches.some((d) => !d.claimed);
     if (st.tab === 'home') {
-      if (fresh.length || ctx.S().clock.auto || transit || viewRedrawPending || modalRedrawPending) render(true);
+      if (fresh.length || autoRunning || transit || viewRedrawPending || modalRedrawPending) render(true);
       else {
         const panel = document.getElementById('home-staff-panel');
         if (panel && !editingWithin(panel)) setHtml(panel, staffStatusHtml());

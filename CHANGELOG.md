@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.4, 2026-11-20
+
+- The clock now has a dedicated Play/Pause button and a separate speed selector. Choose a speed while paused or change it while playing. The game remembers the selected speed when you resume or reload a save.
+- Renamed Auto to Auto-dispatch in all seven interface languages. Automatic dispatch, report collection and purchases wait while the clock is paused.
+
 ## 0.13.3, 2026-11-20
 
 - Rewrote the welcome in all seven languages to introduce recruitment, guarding and mending history, and returning to your family in the future. Clarified the AI credits and how to report an issue or request removal.

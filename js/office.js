@@ -631,12 +631,21 @@ export function createOffice(X) {
   // The speed the clock really runs at: when the funds pay fewer than low_funds_days days of wages it is held to low_funds_speed.
   const lowFunds = () => paidIds().length > 0 && S().funds < C.low_funds_days * wageTotal();
   const effectiveSpeed = () => { const sp = S().clock.speed; return lowFunds() ? Math.min(sp, C.low_funds_speed) : sp; };
+  function selectedSpeed() {
+    const c = S().clock;
+    return [c.speed, c.resume, c.preferredSpeed].find((speed) => speed > 0 && C.speeds.includes(speed)) ?? C.speeds[1];
+  }
+  function pauseClock() {
+    const c = S().clock;
+    c.preferredSpeed = selectedSpeed();
+    c.speed = 0;
+  }
   // While a pop-up is open the clock stands still, and the speed that was set comes back when it closes.
   function holdClock() {
     const c = S().clock;
     if (c.resume != null) return;
     c.resume = c.speed;
-    c.speed = 0;
+    pauseClock();
     ctx.save();
   }
   function releaseClock() {
@@ -649,15 +658,24 @@ export function createOffice(X) {
   // The clock stands still until the first trip goes out, because nothing happens before it and the wages would only run down the funds.
   function startClock() {
     const c = S().clock;
-    if (c.resume != null) c.resume = C.speeds[1]; else c.speed = C.speeds[1];
+    if (c.resume != null) c.resume = selectedSpeed(); else c.speed = selectedSpeed();
   }
-  function setSpeed(i) { S().clock.speed = C.speeds[i]; ctx.save(); }
-  function togglePause() {
+  function setSpeed(i) {
+    const speed = C.speeds[i];
+    if (!(speed > 0)) return;
     const c = S().clock;
-    c.speed = c.speed === 0 ? C.speeds[1] : 0;
+    c.preferredSpeed = speed;
+    if (c.speed > 0) c.speed = speed;
+    if (c.resume > 0) c.resume = speed;
     ctx.save();
   }
-  // Moves the clock and returns the dispatches that just came home. A new report pauses the clock unless the player ticked the box that lets reports pass.
+  function togglePause() {
+    const c = S().clock;
+    if (c.resume != null) return;
+    if (c.speed > 0) pauseClock(); else c.speed = selectedSpeed();
+    ctx.save();
+  }
+  // Moves the clock and returns the dispatches that just came home. Reports can pause the clock when enabled in Settings.
   function advance(seconds) {
     const s = S();
     const before = day();
@@ -673,11 +691,11 @@ export function createOffice(X) {
     const unpaid0 = s.unpaidDays || 0;
     payWages();
     // an unpaid day stops the clock and asks for a decision
-    if ((s.unpaidDays || 0) > unpaid0) { s.clock.speed = 0; s.brokeNew = true; }
+    if ((s.unpaidDays || 0) > unpaid0) { pauseClock(); s.brokeNew = true; }
     if (s.hire && day() >= s.hire.next) ensureHire();
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
-    if (fresh.length && ctx.settings.get('pause_on_report')) s.clock.speed = 0;
+    if (fresh.length && ctx.settings.get('pause_on_report')) pauseClock();
     if (s.clock.speed > 0 || fresh.length) ctx.save();
     return fresh;
   }
@@ -803,5 +821,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wonOf, winsOf, salePrice, grantQuote, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, setTraining, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareOffers, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, planLight, alerts, stageIndex, hiredIds };
+  return { wonOf, winsOf, salePrice, grantQuote, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, selectedSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, setTraining, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareOffers, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, planLight, alerts, stageIndex, hiredIds };
 }
