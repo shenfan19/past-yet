@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.5, 2026-11-21
+
+- Reorganized the top bar with tabs on the left, time controls in the middle and funds and energy on the right. On narrow screens the clock moves down as a group. Removed the navigation arrows and secretary summary from the header, and grouped the music buttons in an outline.
+- Added an optional Idle pause switch beside Auto-dispatch. It pauses when nobody is travelling or resting and resumes at the selected speed when a new trip or rest period begins. Press Play to keep the clock running through the current idle period.
+
 ## 0.13.4, 2026-11-20
 
 - The clock now has a dedicated Play/Pause button and a separate speed selector. Choose a speed while paused or change it while playing. The game remembers the selected speed when you resume or reload a save.

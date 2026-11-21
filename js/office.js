@@ -658,6 +658,8 @@ export function createOffice(X) {
   // The clock stands still until the first trip goes out, because nothing happens before it and the wages would only run down the funds.
   function startClock() {
     const c = S().clock;
+    if (c.pauseReason && c.pauseReason !== 'idle') return;
+    delete c.pauseReason;
     if (c.resume != null) c.resume = selectedSpeed(); else c.speed = selectedSpeed();
   }
   function setSpeed(i) {
@@ -672,7 +674,37 @@ export function createOffice(X) {
   function togglePause() {
     const c = S().clock;
     if (c.resume != null) return;
-    if (c.speed > 0) pauseClock(); else c.speed = selectedSpeed();
+    if (c.speed > 0) {
+      pauseClock();
+      c.pauseReason = 'manual';
+    } else {
+      c.speed = selectedSpeed();
+      delete c.pauseReason;
+      if (c.pauseWhenIdle) c.skipIdlePause = true;
+    }
+    ctx.save();
+  }
+  function setIdlePause(enabled) {
+    const c = S().clock;
+    c.pauseWhenIdle = enabled;
+    delete c.skipIdlePause;
+    if (!enabled && c.pauseReason === 'idle') c.pauseReason = 'manual';
+    ctx.save();
+  }
+  function updateIdleClock() {
+    const s = S(), c = s.clock;
+    if (!c.pauseWhenIdle || c.resume != null) return;
+    const hasTimedWork = s.dispatches.some((d) => !d.claimed && d.readyDay > day())
+      || hiredIds().some((id) => id !== s.secretary && (s.staff[id].restUntil || 0) > day());
+    if (hasTimedWork) {
+      if (!c.skipIdlePause && c.pauseReason !== 'idle') return;
+      delete c.skipIdlePause;
+      if (c.pauseReason === 'idle') startClock();
+    } else {
+      if (c.speed === 0 || c.skipIdlePause) return;
+      pauseClock();
+      c.pauseReason = 'idle';
+    }
     ctx.save();
   }
   // Moves the clock and returns the dispatches that just came home. Reports can pause the clock when enabled in Settings.
@@ -691,11 +723,14 @@ export function createOffice(X) {
     const unpaid0 = s.unpaidDays || 0;
     payWages();
     // an unpaid day stops the clock and asks for a decision
-    if ((s.unpaidDays || 0) > unpaid0) { pauseClock(); s.brokeNew = true; }
+    if ((s.unpaidDays || 0) > unpaid0) { pauseClock(); s.clock.pauseReason = 'unpaid'; s.brokeNew = true; }
     if (s.hire && day() >= s.hire.next) ensureHire();
     const fresh = s.dispatches.filter((d) => !d.claimed && !d.notified && d.readyDay <= day());
     for (const d of fresh) d.notified = true;
-    if (fresh.length && ctx.settings.get('pause_on_report')) pauseClock();
+    if (fresh.length && s.clock.speed > 0 && ctx.settings.get('pause_on_report')) {
+      pauseClock();
+      s.clock.pauseReason = 'report';
+    }
     if (s.clock.speed > 0 || fresh.length) ctx.save();
     return fresh;
   }
@@ -821,5 +856,5 @@ export function createOffice(X) {
     return idx;
   }
 
-  return { wonOf, winsOf, salePrice, grantQuote, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, selectedSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, setTraining, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareOffers, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, advance, autoStep, pickPlace, planLight, alerts, stageIndex, hiredIds };
+  return { wonOf, winsOf, salePrice, grantQuote, equip, unequip, staffGear, loadOf, loadCap, lowFunds, effectiveSpeed, selectedSpeed, holdClock, releaseClock, rerollStart, pickStart, rerollStaff, founderName, founderGender, founderSkin, founderAttr, founderTrait, rerollFounder, grow, growthStars, setTraining, giftCost, archiveRule, archive, restore, wageOf, wageTotal, tripsOf, launchLight, recall, hire, ensureHire, eraBusy, canDispatchTo, plotsFor, sellSpares, spareOffers, anchorFound, dismiss, perks, boostOf, sureOf, staffState, launch, claim, gift, appoint, setSpeed, togglePause, setIdlePause, updateIdleClock, advance, autoStep, pickPlace, planLight, alerts, stageIndex, hiredIds };
 }

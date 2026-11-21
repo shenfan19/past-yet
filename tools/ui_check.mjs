@@ -511,7 +511,7 @@ try {
   await page.waitForTimeout(800);
   await setClockPlaying(false);
   ok('the offer is replaced every seven days', await page.evaluate((before) => window.__game.ctx.S().hire.slots.map((x) => x.id).join() !== before, offerBefore));
-  ok('the funds with the wages a day, and the energy, are in the navigation bar as icons', (await page.locator('#navrow #res .rv').count()) === (await page.evaluate(() => (window.__game.ctx.S().secretary ? 3 : 2))) && (await page.locator('#navrow #res .rv').first().innerText()).includes('−'));
+  ok('the navigation bar shows funds, wages per day and energy', (await page.locator('#navrow #res .rv').count()) === 2 && (await page.locator('#navrow #res-funds').innerText()).includes('−'));
   // stars: time energy is paid only for stars above the best of the place, funds every time
   const sr = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;

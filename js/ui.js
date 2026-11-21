@@ -54,7 +54,7 @@ export function createUI(D, ctx, DEV = false) {
   const st = { chartOff: new Set(), tab: 'home', modal: null, modalStack: [], pager: {}, filters: {}, showArchived: false, vs: false, opened: new Set(), form: null, suggest: null, searching: false, cart: {}, sort: {}, scrollY: {}, lastKey: null, wiki: { q: '', tag: '', cur: null, hist: [], pos: -1, openCats: {}, tagOpen: false }, map: null, recordAll: null, settled: {} };
 
   // ---------- navigation history ----------
-  // Every page the player lands on is one entry, so the back and forward buttons and the browser's own buttons walk the same trail.
+  // Each tab change gives the browser's Back and Forward buttons an entry.
   // Render records the entry, so any way of changing page is covered without each place having to remember it.
   const nav = { list: [], pos: -1, sid: String(Date.now()) };
   const navSnap = () => ({ tab: st.tab, modal: st.modal });
@@ -71,10 +71,6 @@ export function createUI(D, ctx, DEV = false) {
     nav.list.push(s);
     nav.pos += 1;
     try { history.pushState({ n: nav.pos, sid: nav.sid }, ''); } catch (e) { /* history may be blocked */ }
-  }
-  function navStep(delta) {
-    if (nav.pos + delta < 0 || nav.pos + delta >= nav.list.length) return;
-    try { history.go(delta); } catch (e) { /* history may be blocked */ }
   }
   const eraList = () => D.get('config.eras');
   const E = () => ctx.era(st.form.eraId);
@@ -346,22 +342,38 @@ export function createUI(D, ctx, DEV = false) {
     return (region.contains(field) && field.matches('input, textarea, select')) ||
       (openSelectSupported && region.querySelector('select:open') !== null);
   }
-  // The clock is three parts so that a ticking day never rebuilds the controls: the day text, the controls and the paused chip.
-  const clockParts = { day: document.createElement('span'), ctl: document.createElement('span'), chip: document.createElement('span') };
+  // The day, playback controls, options and status update independently.
+  const clockParts = { day: document.createElement('span'), ctl: document.createElement('span'), options: document.createElement('span'), chip: document.createElement('span') };
+  const shortClockDate = new Intl.DateTimeFormat(D.lang, { year: '2-digit', month: 'numeric', day: 'numeric', timeZone: 'UTC' });
   clockParts.day.className = 'day'; clockParts.ctl.className = 'ctl'; clockParts.chip.className = 'chipwrap';
-  clockEl.append(clockParts.day, clockParts.ctl, clockParts.chip);
+  const playback = document.createElement('span');
+  playback.className = 'clock-playback';
+  playback.append(clockParts.day, clockParts.ctl);
+  const clockSide = document.createElement('span');
+  clockSide.className = 'clock-side';
+  clockParts.options.className = 'clock-options';
+  clockSide.append(clockParts.options, clockParts.chip);
+  clockEl.append(playback, clockSide);
   const clockSpeeds = D.get('config.clock.speeds');
   const speeds = clockSpeeds.map((speed, i) => speed > 0 ? `<option value="${i}">${speed}×</option>` : '').join('');
-  clockParts.ctl.innerHTML = `<span class="time-controls"><button type="button" class="clock-play" data-clk="play" aria-keyshortcuts="Space"><span aria-hidden="true"></span></button><select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select></span><span class="autochk"><label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto"> ${esc(U.clock.auto)}</label></span>`;
+  clockParts.ctl.innerHTML = `<button type="button" class="clock-play" data-clk="play" aria-keyshortcuts="Space"><span aria-hidden="true"></span></button><select class="spd" data-clk="speed" aria-label="${esc(U.clock.speed)}"${tip(U.clock.speed)}>${speeds}</select>`;
+  clockParts.options.innerHTML = `
+    <label${tip(U.clock.auto_tip)}><input type="checkbox" data-clk="auto"> ${esc(U.clock.auto)}</label>
+    <label${tip(U.clock.idle_tip)}><input type="checkbox" data-clk="idle"> ${esc(U.clock.idle)}</label>
+  `;
   const playControl = clockParts.ctl.querySelector('[data-clk=play]');
   const speedControl = clockParts.ctl.querySelector('[data-clk=speed]');
-  const autoControl = clockParts.ctl.querySelector('[data-clk=auto]');
+  const autoControl = clockParts.options.querySelector('[data-clk=auto]');
+  const idleControl = clockParts.options.querySelector('[data-clk=idle]');
+  clockParts.chip.setAttribute('role', 'status');
   function renderClock() {
     const c = ctx.S().clock;
     const al = office.alerts();
     // a ring that fills once a day, so the passing of time can be seen at any speed
     const frac = c.day - Math.floor(c.day), circ = 2 * Math.PI * 7;
-    setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg><span title="${esc(U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}">${esc(T.year_day.replace('{y}', String(officeDate(c.day).getUTCFullYear())).replace('{date}', officeDay(c.day)))}</span>`);
+    const at = officeDate(c.day);
+    const fullDate = T.year_day.replace('{y}', String(at.getUTCFullYear())).replace('{date}', officeDay(c.day));
+    setHtml(clockParts.day, `<svg class="ring" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7" class="rb"/><circle cx="9" cy="9" r="7" class="rf" stroke-dasharray="${circ.toFixed(2)}" stroke-dashoffset="${(circ * (1 - frac)).toFixed(2)}" transform="rotate(-90 9 9)"/></svg><time datetime="${at.toISOString().slice(0, 10)}" aria-label="${esc(fullDate)}" title="${esc(fullDate + ' · ' + U.clock.day.replace('{n}', String(Math.floor(c.day) + 1)))}"><span class="clock-date-full">${esc(fullDate)}</span><span class="clock-date-short" aria-hidden="true">${esc(shortClockDate.format(at))}</span></time>`);
     const running = c.speed > 0;
     const action = running ? U.clock.pause : U.clock.play;
     if (playControl.getAttribute('aria-label') !== action) {
@@ -372,9 +384,11 @@ export function createUI(D, ctx, DEV = false) {
     const speedIndex = String(clockSpeeds.indexOf(office.selectedSpeed()));
     if (speedControl.value !== speedIndex) speedControl.value = speedIndex;
     if (autoControl.checked !== c.auto) autoControl.checked = c.auto;
+    if (idleControl.checked !== !!c.pauseWhenIdle) idleControl.checked = !!c.pauseWhenIdle;
     const first = ctx.S().seq === 0 && c.speed === 0;
-    setHtml(clockParts.chip, c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>`
-      : first ? `<span class="chip"${tip(U.clock.start_tip)}>${U.clock.start_hint}</span>`
+    setHtml(clockParts.chip, c.pauseReason === 'idle' ? `<span class="chip"${tip(U.clock.idle_tip)}>${esc(U.clock.idle_paused)}</span>`
+      : c.speed === 0 && al.home ? `<span class="chip warn pulse">${U.clock.paused_report}</span>`
+      : first ? `<span class="chip clock-start-hint"${tip(U.clock.start_tip)}>${U.clock.start_hint}</span>`
       : office.lowFunds() && c.speed > office.effectiveSpeed() ? `<span class="chip warn"${tip(U.clock.low_tip)}>${U.clock.low_funds.replace('{n}', String(office.effectiveSpeed()))}</span>` : '');
   }
   playControl.addEventListener('click', () => {
@@ -387,6 +401,7 @@ export function createUI(D, ctx, DEV = false) {
     const c = ctx.S().clock;
     if (b.dataset.clk === 'speed') office.setSpeed(Number(b.value));
     else if (b.dataset.clk === 'auto') { c.auto = b.checked; ctx.save(); }
+    else if (b.dataset.clk === 'idle') office.setIdlePause(b.checked);
     renderClock();
     renderTabs();
   });
@@ -401,10 +416,9 @@ export function createUI(D, ctx, DEV = false) {
   function renderTabs() {
     const al = office.alerts();
     const icons = D.get('config.ui.tab_icons');
-    const arrows = `<span class="navbtns"><button data-nav="-1" title="${esc(U.nav.back)}" aria-label="${esc(U.nav.back)}" ${nav.pos > 0 ? '' : 'disabled'}>◀</button><button data-nav="1" title="${esc(U.nav.forward)}" aria-label="${esc(U.nav.forward)}" ${nav.pos < nav.list.length - 1 ? '' : 'disabled'}>▶</button></span>`;
     const tools = D.get('config.ui.tool_icons');
     setHtml(toolsEl, Object.entries(U.tools).map(([k, label]) => `<button class="tool ${st.modal && st.modal.kind === k ? 'on' : ''}" data-act="modalopen" data-id="${k}" title="${esc(label)}" aria-label="${esc(label)}">${tools[k]}</button>`).join(''));
-    setHtml(tabsEl, arrows + Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
+    setHtml(tabsEl, Object.entries(U.tabs).map(([k, label]) => `<button data-tab="${k}" title="${esc(label)}" aria-label="${esc(label)}" class="${st.tab === k ? 'on' : ''}"><span class="ic" aria-hidden="true">${icons[k]}</span><span class="tx">${esc(label)}</span>${al[k] ? `<span class="badge">${al[k]}</span>` : ''}</button>`).join(''));
   }
 
   // ---------- agency: employees and hiring ----------
@@ -527,22 +541,19 @@ export function createUI(D, ctx, DEV = false) {
   const resEl = document.getElementById('res');
   const fundsEl = document.getElementById('res-funds');
   const energyEl = document.getElementById('res-energy');
-  const perksEl = document.getElementById('res-perks');
   const homeComplete = document.getElementById('home-complete');
   const homeGoal = U.share.home.goal.replace('{n}', O.home_cost);
   fundsEl.dataset.tip = U.office.funds + ' · ' + U.office.wage_total;
   energyEl.dataset.tip = U.office.energy + COLON + U.office.home;
-  homeComplete.textContent = U.share.home.button;
-  homeComplete.title = homeGoal;
+  homeComplete.querySelector('.home-complete-label').textContent = U.share.home.button;
+  homeComplete.setAttribute('aria-label', U.share.home.button);
+  homeComplete.title = `${U.share.home.button} · ${homeGoal}`;
   document.getElementById('home-complete-goal').textContent = homeGoal;
   function renderResources() {
     const S = ctx.S();
     const I = D.get('config.ui.currency_icons');
-    // the effect of the secretary stays in sight on every page, the person in the tip
-    const perk = S.secretary ? perkParts(office.perks()) : [];
     setHtml(fundsEl, `${I.funds} <b>${ri(S.funds)}</b><span class="muted"> − ${ri(office.wageTotal())}${U.office.per_day}</span>`);
     setHtml(energyEl, `${I.energy} <b>${ri(S.energy)}</b><span class="muted">/ ${O.home_cost}</span>`);
-    setHtml(perksEl, perk.length ? `<span class="rv"${tip(`${U.office.secretary_effect}${COLON}${staffName(D, S.secretary)}\n${perk.join('\n')}`)}>${I.secretary} <span class="muted">${esc(perk.join(' · '))}</span></span>` : '');
     homeComplete.hidden = st.tab !== 'home' || needsWelcome();
     homeComplete.disabled = S.energy < O.home_cost;
   }
@@ -1583,8 +1594,6 @@ export function createUI(D, ctx, DEV = false) {
     render();
   });
   tabsEl.addEventListener('click', (ev) => {
-    const nb = ev.target.closest('[data-nav]');
-    if (nb) { navStep(Number(nb.dataset.nav)); return; }
     const b = ev.target.closest('[data-tab]');
     if (!b) return;
     st.tab = b.dataset.tab;
@@ -1621,6 +1630,7 @@ export function createUI(D, ctx, DEV = false) {
     // nothing is sent before the game has begun, so a save never has trips out while the founder form still waits
     const autoRunning = ctx.S().clock.auto && ctx.S().clock.speed > 0 && !needsWelcome();
     if (autoRunning) office.autoStep();
+    office.updateIdleClock();
     if (pressed) {
       if (fresh.length && st.tab === 'home') viewRedrawPending = true;
       if (fresh.length && st.modal) modalRedrawPending = true;
@@ -1657,7 +1667,9 @@ export function createUI(D, ctx, DEV = false) {
     const a = ctx.audio;
     const t = a.tracks[a.state.index];
     const label = `${t.composer} · ${t.title}`;
-    setHtml(musicEl, `<button class="ico" data-music="prev" title="${esc(U.music.prev)}" aria-label="${esc(U.music.prev)}">⏮</button><button class="ico" data-music="toggle" title="${esc(a.state.playing ? U.music.pause : U.music.play)}" aria-label="${esc(a.state.playing ? U.music.pause : U.music.play)}">${a.state.playing ? '⏸' : '▶'}</button><button class="ico" data-music="next" title="${esc(U.music.next)}" aria-label="${esc(U.music.next)}">⏭</button><span class="trk" title="${esc(label)}">${esc(a.state.error ? U.music.error : a.state.loading ? U.music.loading : label)}</span>`);
+    const action = a.state.playing ? U.music.pause : U.music.play;
+    const track = a.state.error ? U.music.error : a.state.loading ? U.music.loading : label;
+    setHtml(musicEl, `<button class="ico" data-music="prev" title="${esc(U.music.prev)}" aria-label="${esc(U.music.prev)}">⏮</button><button class="ico" data-music="toggle" title="${esc(action + ' · ' + track)}" aria-label="${esc(action)}"><span aria-hidden="true">${a.state.playing ? '⏸' : '▶'}</span></button><button class="ico" data-music="next" title="${esc(U.music.next)}" aria-label="${esc(U.music.next)}">⏭</button>`);
   }
   musicEl.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-music]');
