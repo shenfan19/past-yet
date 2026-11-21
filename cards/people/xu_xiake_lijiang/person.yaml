@@ -2,7 +2,8 @@ order: 205
 events:
   xu_xiake_lijiang:
     order: 159
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1639
     lon: 100.23
     lat: 26.87
@@ -18,9 +19,10 @@ events:
         - {id: p2, kind: endure, day: 26, req: {any: [{job: [tour_guide, geologist, courier], stat: {constitution: 4}}, {trait: [wanderer, hardy], stat: {constitution: 5}}, {item: exoskeleton}]}}
         - {id: p3, kind: notice, day: 27, req: {any: [{job: [geologist, tour_guide, archivist], stat: {wit: 5}}, {trait: [methodical, curious], stat: {wit: 6}}, {item: notebook_pen, stat: {wit: 5}}]}}
       vignettes:
-        - {id: view, traits: [methodical, scholarly]}
-        - {id: trail, traits: [hardy, curious]}
-        - {id: slope}
+        - {id: view, traits: [methodical, scholarly], day: 15}
+        - {id: trail, traits: [hardy, curious], day: 16}
+        - {id: slope, day: 16.5}
+      remark_on: p3
     text:
       en:
         name: 'The path he did not have time to climb'
@@ -28,9 +30,9 @@ events:
         figure: "Xu Xiake"
         story: 'In the second lunar month of 1639, Xu Xiake stayed at Jietuo Lin in Lijiang, collating books for Mu Zeng, who sent him food and later gifts in thanks. Xu heard that Gongshou Terrace and Lion Cliff lay above the monastery. He wrote that the pressure of the work left him no time to climb either one.'
         relic: "A route sketch from Jietuo Lin"
-        relic_desc: "A game keepsake with a line for the way walked and blank space for the walks still to come."
+        relic_desc: "A folded sketch with a line up the slope and an empty margin beside the fork."
         points:
-          p1: 'Help finish the collating and return the volumes so Mu Zeng can send his thanks and his request for the Gazetteer of Mount Ji'
+          p1: 'Check the return of the corrected volumes with the messenger, so Mu Zeng can acknowledge the work and renew his request for the Gazetteer of Mount Ji'
           p2: 'Free up half a day, find a local guide and an escort, and walk from Jietuo Lin to Gongshou Terrace with Xu'
           p3: 'Walk the fork below Lion Cliff with Xu and leave a copy of the new route notes with the monastery'
         points_fail:
@@ -42,25 +44,27 @@ events:
             was: 'On the ninth day of the second lunar month in 1639, Mu Zeng sent gifts in thanks for the collating and again asked Xu to compile the Gazetteer of Mount Ji.'
           p2:
             was: 'On the sixth day of the second lunar month in 1639, Xu wrote that he had been too busy collating to climb to Gongshou Terrace or Lion Cliff.'
-            now: 'In this branch, the collation is done and the guide and escort wait at the monastery. Xu climbs to the terrace on foot and writes down where the slope first gives way to a view.'
+            now: 'With the collation delivered, {staff} takes Xu back to Jietuo Lin to meet the guide and escort. Xu climbs the terrace and notes where the opposite slope comes into view.'
           p3:
             was: 'In 1639, the Lijiang diary mentioned Lion Cliff as somewhere Xu heard lay higher up and had no time to climb.'
-            now: 'The way back was longer than the directions made it sound. Xu walks the fork again, marks where the path doubles back, and leaves a copy of the route at the monastery before taking the other copy home.'
+            now: '{staff} walks the fork with Xu in both directions. Xu marks the bend where the paths double back and leaves a copy of the sketch at Jietuo Lin.'
             who: xu_xiake_lijiang
             bio: 'Xu''s Lijiang diary carries an extra firsthand entry between the collation and his departure. A second copy of his sketch stays with Jietuo Lin.'
         vignettes:
           view: 'The guide describes a bend by the mountain it faces. {staff} asks him how many turns there are before it. The view and the way to get there go on different lines.'
-          trail: 'At Jietuo Lin the attendant sees the escort waiting by the steps and sets aside a bundle of dry cloth. There is still wet ink on the sheets Xu is due to return.'
+          trail: 'The escort takes the steep way to the steps and arrives with wet cuffs. {staff} hangs a dry cloth by the door and moves the nearly finished pages farther inside.'
           slope: 'At the monastery steps {staff} pulls out a fresh leaf. The dispatch for Mu Zeng goes back in its box. The blank leaf is for the route.'
+        remarks:
+          trait_methodical: '{staff} adds an arrow to the sketch so the next traveller will know which way is uphill.'
       zh:
         name: '校书之外的半日'
         place: "丽江"
         figure: "徐霞客"
         story: '1639 年二月，徐霞客住在丽江解脱林，为木增校书。木增遣人送来酒食，校书后又送礼酬谢。徐霞客听说寺后高处有拱寿台、狮子崖，日记里写校书催得紧，两处都没来得及登。'
         relic: "一张解脱林步行图"
-        relic_desc: "游戏纪念物。走过的地方画了线，没走的岔道只留一处空白。"
+        relic_desc: "一张折过的步行图，坡路用线画出，岔口旁留着空白。"
         points:
-          p1: '帮徐霞客校完并交回木增的书，赶上初九酬谢和续修《鸡山志》的委托'
+          p1: '跟送书人核清校过的卷册已经交回，赶上木增初九酬谢和续修《鸡山志》的委托'
           p2: '从校书之后腾出半日，请本地人带路、护卫同行，陪徐霞客从解脱林一步步走上拱寿台'
           p3: '陪徐霞客沿狮子崖下的岔路往返，记下从哪儿开始折回，离开前给寺里留一份'
         points_fail:
@@ -72,16 +76,18 @@ events:
             was: '1639 年二月初九，木增遣人送礼酬谢校书，并再次致书请徐霞客修《鸡山志》。'
           p2:
             was: '1639 年二月初六，徐霞客写校书催得紧，没来得及登拱寿台和狮子崖。'
-            now: '这条支线里，书卷交清后，向导和护卫在寺门等他。徐霞客登上拱寿台，回来写下坡走到哪里才看见对面的山。'
+            now: '书卷交清后，{staff}陪徐霞客回解脱林，和向导、护卫会合。徐霞客登上拱寿台，记下走到哪里才看得见对面的山。'
           p3:
             was: '1639 年的丽江日记把狮子崖记为听说在寺后高处、因校书未及攀登的地方。'
-            now: '回程比别人指的远，徐霞客又走了一遍岔口，补上折回的那几步。离开解脱林前，他把一份留给寺僧，另一份夹进自己的游记。'
+            now: '{staff}陪徐霞客从两个方向各走一遍岔口。徐霞客标出路折回的那一弯，给解脱林留了一份草图。'
             who: xu_xiake_lijiang
             bio: '徐霞客的丽江日记在校书和出关之间多了一篇亲历。解脱林另留一份足迹草图。'
         vignettes:
           view: '向导用一座对面的山来指弯道。{staff}问到那里之前要转几次弯，才把望见的山和脚下的路各写一行。'
-          trail: '寺里侍者见护卫在阶下等，拿了块干布留给他们。徐霞客要交回的那些稿页上，墨还没有干。'
+          trail: '护卫从陡坡走到石阶，袖口已经湿透。{staff}把干布挂在门边，再把快校完的稿页往里挪。'
           slope: '在解脱林门槛上，{staff}另抽出一张纸。给木增的还书单放回木匣，走路要记的留在手里。'
+        remarks:
+          trait_methodical: '{staff}在草图上多画了一个箭头，下一位走到岔口便知道哪边是上坡。'
 text:
   en:
     name: Xu Xiake
@@ -93,13 +99,33 @@ hook: {en: 'Can he spare half a day to climb?', zh: '还有半日，能上山吗
 facts:
   diary:
     date: '1639'
+    stay_day: 17
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [xu_xiake_lijiang_diary]
+    use: [story, history, wiki]
+    sources: [xu_xiake_lijiang_diary, xu_xiake_lijiang_diary7]
     text:
-      en: 'Xu''s entry for the sixth day records that he stayed to collate books, received food from Mu Zeng and was unable to climb to Gongshou Terrace or Lion Cliff. The ninth day records the gifts of thanks and the gazetteer request.'
-      zh: '二月初六日条记徐霞客留解脱林校书，木增遣人馈食，拱寿台与狮子崖因校书未及攀登。初九日条记木增遣人送礼谢校书，再请他修《鸡山志》。'
+      en: 'On the sixth day Xu stayed to collate books, received food from Mu Zeng, and recorded that he had no time to climb to Gongshou Terrace or Lion Cliff.'
+      zh: '二月初六，徐霞客留解脱林校书，木增遣人馈食。徐霞客记下拱寿台与狮子崖都因校书未及攀登。'
+    line: {en: 'On the sixth day of the second lunar month in 1639, Xu stayed at Jietuo Lin to collate books.', zh: '1639 年二月初六，徐霞客留在解脱林校书。'}
+  departure:
+    date: '1639'
+    stay_day: 19
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [xu_xiake_lijiang_diary, xu_xiake_lijiang_diary7]
+    text: {en: 'On the eighth day, the messenger took the books away at dawn. Xu then rode down the mountain in the rain.', zh: '二月初八，送信的人黎明带书离开。徐霞客随后冒雨骑马下山。'}
+    line: {en: 'On the eighth day of the second lunar month in 1639, Xu rode down from Jietuo Lin in the rain.', zh: '1639 年二月初八，徐霞客冒雨离开解脱林。'}
+  commission:
+    date: '1639'
+    stay_day: 20.1
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [xu_xiake_lijiang_diary, xu_xiake_lijiang_diary7]
+    text: {en: 'On the ninth day Mu Zeng sent thanks for the collated volumes and wrote again asking Xu to compile the Gazetteer of Mount Ji.', zh: '二月初九，木增遣人酬谢校书，并再次致书请求徐霞客编修《鸡山志》。'}
+    line: {en: 'On the ninth day of the second lunar month in 1639, a letter again asked Xu to compile the Gazetteer of Mount Ji.', zh: '1639 年二月初九，徐霞客收到再次请他修《鸡山志》的书信。'}
 bystanders:
   guide:
     invented: true
@@ -107,14 +133,37 @@ bystanders:
   escort:
     invented: true
     text: {en: 'A fictional escort who accompanies the walk above Jietuo Lin.', zh: '虚构的一位护卫，陪同走解脱林的后山。'}
+quotes:
+  xu_xiake_morning_mist:
+    order: 1
+    tier: full
+    date: '1639'
+    checked: official_record
+    original: zh-Hant
+    sources: [xu_xiake_lijiang_diary, xu_xiake_lijiang_diary7]
+    text:
+      zh-Hant: {who: 徐霞客, quote: '宿雨含紅，朝煙帶綠', occasion: '《滇遊日記七》，己卯二月初八，雨中經過崖腳院。'}
+      zh: {who: 徐霞客, quote: '宿雨含红，朝烟带绿。', occasion: '《滇游日记七》，1639 年二月初八，雨中经过崖脚院。'}
+      en: {who: Xu Xiake, quote: 'The night’s rain held the red of the blossoms. The morning mist carried green.', occasion: 'Yunnan Diary VII, eighth day of the second lunar month, 1639, passing Yajiao Courtyard in the rain (game translation).'}
+  xu_xiake_stayed_to_collate:
+    order: 2
+    tier: none
+    date: '1639'
+    checked: official_record
+    original: zh-Hant
+    sources: [xu_xiake_lijiang_diary, xu_xiake_lijiang_diary7]
+    text:
+      zh-Hant: {who: 徐霞客, quote: '余留解脫林校書', occasion: '《滇遊日記七》，己卯二月初六，記留在解脫林。'}
+      zh: {who: 徐霞客, quote: '我留在解脱林校书。', occasion: '《滇游日记七》，1639 年二月初六，记留在解脱林（游戏译文）。'}
+      en: {who: Xu Xiake, quote: 'I stayed at Jietuo Lin to collate the books.', occasion: 'Yunnan Diary VII, sixth day of the second lunar month, 1639 (game translation).'}
 wiki:
   refs:
     xu_xiake_lijiang_diary7:
       order: 10
       status: checked
       text:
-        en: 'Yunnan diary on collating books and the gazetteer commission https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
-        zh: '《滇游日记七》校书与山志委托原文 https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
+        en: 'National Library of China facsimile, Xu Xiake’s Travel Diaries, volume IV, Yunnan Diary VII, pp. 92–95. https://upload.wikimedia.org/wikipedia/commons/9/95/NLC511-023031404018375-26834_%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98%EF%BC%88%E5%9B%9B%EF%BC%89.pdf'
+        zh: '中国国家图书馆藏《徐霞客游记》卷四《滇游日记七》影印，第 92–95 页。https://upload.wikimedia.org/wikipedia/commons/9/95/NLC511-023031404018375-26834_%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98%EF%BC%88%E5%9B%9B%EF%BC%89.pdf'
     xu_xiake_lijiang_transmission:
       order: 11
       status: checked
@@ -125,11 +174,11 @@ wiki:
       order: 646
       status: checked
       text:
-        en: 'Xu Xiake, Travel Diaries, Yunnan diary VII, sixth and ninth days of the second lunar month https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
-        zh: '徐霞客《徐霞客游记·滇游日记七》，崇祯十二年二月初六、初九日条 https://zh.wikisource.org/zh-hans/%E5%BE%90%E9%9C%9E%E5%AE%A2%E9%81%8A%E8%A8%98/%E6%BB%87%E9%81%8A%E6%97%A5%E8%A8%98%E4%B8%83'
+        en: 'Xu Xiake, Travel Diaries, Yunnan Diary VII, sixth through ninth days of the second lunar month. https://zh.wikisource.org/wiki/徐霞客遊記/滇遊日記七'
+        zh: '徐霞客《徐霞客游记·滇游日记七》，崇祯十二年二月初六至初九日条。https://zh.wikisource.org/wiki/徐霞客遊記/滇遊日記七'
 self_check:
   fact: diary
-  quote_line: '还有半日，能上山吗？'
+  quote_line: '向导用一座对面的山来指弯道。'
   regret_choice: '先兑现校书的承诺，再争取半日。错过了上山的时间，那两个地方便只能写成听说。'
   bookend: '开场在寺里合不上书，收尾回到寺里摊开步行图。'
   share_line: '游记里原来只写听说，这回是他自己走上去的。'

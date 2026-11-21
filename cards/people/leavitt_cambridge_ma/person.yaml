@@ -2,7 +2,8 @@ order: 119
 events:
   leavitt_cambridge_ma:
     order: 138
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1912
     date: '1912-02-17'
     stay: 3
@@ -19,15 +20,15 @@ events:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["university_lecturer","archivist"],"stat":{"wit":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8}}]}}
         - {id: p2, kind: persuade, day: 15, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
-        - {id: rank, traits: [methodical, vigil]}
-        - {id: distance, traits: [curious, skeptical]}
-        - {id: period}
+        - {id: rank, traits: [methodical, vigil], day: 9}
+        - {id: distance, traits: [curious, skeptical], day: 10}
+        - {id: period, day: 11}
     text:
       en:
         name: "A rule for the stars"
         place: "Cambridge, Massachusetts"
         figure: "Henrietta Leavitt"
-        story: 'The 1912 circular presents Leavitt''s comparison of 25 variables in the Small Magellanic Cloud. Among these stars the brighter ones generally have longer periods.'
+        story: 'Harvard’s 1912 circular lists twenty-five variable stars from the Small Magellanic Cloud in order of period. Leavitt plotted their brightest and faintest readings separately. In both plots, the stars that took longer to repeat their cycles were brighter.'
         relic: "A glass plate"
         relic_desc: "A photographic plate crowded with tiny stars."
         points:
@@ -40,19 +41,21 @@ events:
           p1:
             was: 'On 3 March 1912 Harvard Observatory Circular 173 published Leavitt''s periods for twenty-five variables in the Small Magellanic Cloud.'
           p2:
-            was: 'In 1913 Ejnar Hertzsprung used Milky Way Cepheids to calibrate Leavitt''s relation.'
-            now: '{staff} helps Leavitt prepare a list for joint observation. The observatory gives her time to review the resulting measurements and check the calibration sample with her collaborators.'
+            was: 'In 1913 the first calibration used Cepheids in the Milky Way.'
+            now: '{staff} submits a request for observing time with the candidate list attached. Leavitt gets time to check the new measurements with the team when they come in.'
             who: leavitt_cambridge_ma
             bio: 'Leavitt continued working on stellar brightness and took part in applying her relation to distances. She left her own observing notes on the calibration.'
         vignettes:
-          rank: 'You put the table in order of period and find one row that lost its label. The reader retrieves its identifier before the plotted point is moved.'
-          distance: 'You ask whether a nearer star could merely look brighter. The reader puts a finger on the heading for the Small Magellanic Cloud. You write the reason for comparing this group beside the plot.'
-          period: 'The reader gives you the brightness first. You ask for the period as well and keep the two values together until the last dot is marked.'
+          rank: 'A blank star number breaks the sequence. {staff} reads the period aloud while the copyist searches the plate log. The dots stay where they are until the number is found.'
+          distance: '{staff} holds the two plots side by side. The copyist has changed the scale on one sheet. They recopy the axis before comparing the dots.'
+          period: 'The copyist calls out a brightness and reaches for the next row. {staff} lays a ruler underneath the old row until its period has been copied too.'
+        remarks:
+          trait_methodical: '{staff} checks the number once more before returning the plate to its sleeve.'
       zh:
         name: "星星的一条规则"
         place: "马萨诸塞州剑桥"
         figure: "亨丽埃塔·勒维特"
-        story: '1912 年哈佛天文台通报刊出勒维特对小麦哲伦云 25 颗变星的比较。在这一组星里，较亮者的周期通常较长。'
+        story: '1912 年，哈佛天文台的通报把小麦哲伦云里二十五颗变星按周期排成一张表。勒维特把最亮和最暗时的读数分别画成图。两张图上，明暗变化一轮所需时间越长，星就越亮。'
         relic: "一块玻璃底片"
         relic_desc: "一块布满细小星点的照相底片。"
         points:
@@ -65,14 +68,16 @@ events:
           p1:
             was: '1912 年 3 月 3 日，哈佛天文台第 173 号通报刊登了勒维特整理的二十五颗小麦哲伦云变星周期。'
           p2:
-            was: '1913 年，赫茨普龙用了银河系中的造父变星为勒维特的关系式定标。'
-            now: '{staff}替勒维特整理一份可供合作观测的名单，天文台给她留出时间审阅后来的量测。她能跟合作者一起核对定标用的样本。'
+            was: '1913 年，首次定标采用了银河系中的造父变星。'
+            now: '{staff}把候选星名单附在观测时间申请上。等新一批量测结果送到，勒维特能和合作者一起核对样本。'
             who: leavitt_cambridge_ma
             bio: '勒维特继续做变星的亮度研究，并参与将自己的关系式用于测量距离。她给后来的定标留有自己的观测说明。'
         vignettes:
-          rank: '你按周期给表格排序，发现一行丢了标号。读表人在图上的点被挪动前找回了对应的星号。'
-          distance: '你问近一点的星是不是光看起来就更亮。读表人把手指按在「小麦哲伦云」的标题上，你把为什么选这一组来比记在图旁。'
-          period: '读表人先报亮度。你再问周期，把两个数一起记，直到最后一个点也画上去。'
+          rank: '表上有一格星号空着。{staff}念出周期，抄表人翻底片目录。星号找回来之前，谁也没挪图上的点。'
+          distance: '{staff}把两张图并在一起，发现抄表人把其中一张的刻度抄变了。两人先把刻度改回去，再逐个比图上的点。'
+          period: '抄表人报完亮度，正要往下读。{staff}用尺子压住这一行的下缘，等周期也抄过去了才往下挪。'
+        remarks:
+          trait_methodical: '{staff}将底片收回纸套前，又对了一遍星号。'
 text:
   en:
     name: Henrietta Leavitt
@@ -83,18 +88,49 @@ text:
 hook: {en: 'Do the readings still line up?', zh: '二十五颗星能排出什么'}
 facts:
   variable_stars:
-    date: '1912'
+    date: '1912-03-03'
+    stay_day: 15
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [story, history, wiki]
     sources: [leavitt_cambridge_ma_primary]
     text:
       en: 'The 1912 circular presents Leavitt''s comparison of 25 variables in the Small Magellanic Cloud. Among these stars the brighter ones generally have longer periods.'
       zh: '1912 年哈佛天文台通报刊出勒维特对小麦哲伦云 25 颗变星的比较。在这一组星里，较亮者的周期通常较长。'
+    line: {en: 'On 3 March 1912, Harvard College Observatory Circular 173 published Leavitt’s table of twenty-five variable stars.', zh: '1912 年 3 月 3 日，哈佛天文台第 173 号通报刊出勒维特的二十五颗变星周期表。'}
+  calibration:
+    date: '1913'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [leavitt_harvard_plates]
+    text: {en: 'The following year, Ejnar Hertzsprung used Cepheids in the Milky Way to calibrate the period–luminosity relation.', zh: '次年，埃伊纳·赫茨普龙用银河系内的造父变星为周期与光度的关系定标。'}
+    line: {en: 'In 1913, the relation was calibrated using Cepheids in the Milky Way.', zh: '1913 年，银河系内的造父变星被用来为这项关系定标。'}
 bystanders:
   leavitt_cambridge_ma_reader:
     invented: true
-    text: {en: 'An invented reader reconciling a plotted point with its table row.', zh: '一位虚构的读表人，正把图上的点对回原表。'}
+    text: {en: 'An invented copyist checking graph points against the observatory table.', zh: '一位虚构的抄表人，负责把图上的点与天文台的表格核对。'}
+quotes:
+  leavitt_straight_line:
+    order: 1
+    tier: full
+    date: '1912-03-03'
+    checked: official_record
+    original: en
+    sources: [leavitt_cambridge_ma_primary]
+    text:
+      en: {who: Henrietta Swan Leavitt, quote: 'A straight line can readily be drawn', occasion: 'On the two sets of plotted points, Circular 173, p. 2.'}
+      zh: {who: 亨丽埃塔·斯万·勒维特, quote: '很容易画出一条直线。', occasion: '论两组描出的点，哈佛天文台第 173 号通报第 2 页（游戏译文）。'}
+  leavitt_relation:
+    order: 2
+    tier: none
+    date: '1912-03-03'
+    checked: official_record
+    original: en
+    sources: [leavitt_cambridge_ma_primary]
+    text:
+      en: {who: Henrietta Swan Leavitt, quote: 'A remarkable relation between the brightness of these variables and the length of their periods will be noticed.', occasion: 'Introducing Table I, Circular 173, p. 1.'}
+      zh: {who: 亨丽埃塔·斯万·勒维特, quote: '可以看出，这些变星的亮度与周期长短之间有一种显著的关系。', occasion: '引出表一，哈佛天文台第 173 号通报第 1 页（游戏译文）。'}
 wiki:
   refs:
     leavitt_harvard_plates:
@@ -116,10 +152,15 @@ wiki:
         en: 'Henrietta S. Leavitt and Edward C. Pickering, Periods of 25 Variable Stars in the Small Magellanic Cloud, Harvard College Observatory Circular 173, 1912. https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L'
         zh: 'Henrietta S. Leavitt and Edward C. Pickering, Periods of 25 Variable Stars in the Small Magellanic Cloud, Harvard College Observatory Circular 173, 1912. https://articles.adsabs.harvard.edu/pdf/1912HarCi.173....1L'
 self_check:
-  quote_line: '你按周期给表格排序，发现一行丢了标号。'
+  quote_line: '星号找回来之前，谁也没挪图上的点。'
   fact: variable_stars
-  regret_choice: '略过「把图上的点对回表格」，这处细节便留给下一位核对。'
-  bookend: '从「二十五颗星能排出什么」开始，以员工留下的观察或更正收尾。'
+  regret_choice: '表格可以如期印出，勒维特仍有可能拿不到参与后续观测的时间。'
+  bookend: '从按周期排好的二十五行开场，到留给下一次观测的一列候选星。'
   share_line: '二十五颗星能排出什么'
-  share_number: '1912'
+  share_number: '25 颗变星'
+  知情: '通报中的两张图给出周期和亮度的关系。'
+  近身: '以抄表人的协作者进入核对现场。'
+  杠杆: '用星号把底片、图和表接起来，再把候选名单附进申请。'
+  错过: '出版前漏掉无法复核的行会使这趟差事失去同步。'
+  带回: '出版与次年定标纳入记录；成功的分支另外记录合作观测。'
 pack: {license: MIT, version: 1, languages: [en, zh]}

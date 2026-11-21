@@ -2,7 +2,8 @@ order: 187
 events:
   tang_xianzu_linchuan:
     order: 157
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1598
     lon: 116.36
     lat: 27.95
@@ -10,21 +11,21 @@ events:
     field: literature
     tier: 2
     channels: {V: 1}
-    refs: [tang_xianzu_linchuan_primary, tang_xianzu_linchuan_preface_text, tang_xianzu_linchuan_circulation, tang_xianzu_linchuan_adapted_texts]
+    refs: [tang_xianzu_linchuan_primary, tang_xianzu_linchuan_preface_text, tang_xianzu_linchuan_dated_preface, tang_xianzu_linchuan_letter]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, day: 80, req: {"any":[{"job":["musician","proofreader","writer"],"stat":{"wit":6}},{"trait":["artistic","methodical"],"stat":{"wit":6,"will":6}}]}}
       vignettes:
-        - {id: empty_garden, traits: [artistic, curious]}
-        - {id: cue, traits: [methodical, vigil]}
-        - {id: breath}
+        - {id: empty_garden, traits: [artistic, curious], day: 49}
+        - {id: cue, traits: [methodical, vigil], day: 53}
+        - {id: breath, day: 55}
     text:
       en:
         name: "A play on love beyond death"
         place: "Linchuan"
         figure: "Tang Xianzu"
-        story: 'In The Peony Pavilion, the garden scene passes from spring scenery into Du Liniang''s dream.'
+        story: 'Tang Xianzu dated his preface to The Peony Pavilion to the autumn of 1598. In the tenth scene, Du Liniang visits the garden in spring, then falls asleep and meets a young man in a dream.'
         relic: "A printed songbook"
         relic_desc: "Printed arias for singers, with the tune named above each."
         points:
@@ -33,19 +34,19 @@ events:
           p1: 'As in history the altered versions spread later, and all he can do is write to the Yihuang players not to sing them; this branch is as history was.'
         shift:
           p1:
-            was: 'After The Peony Pavilion was written, Lü Yusheng and others altered its lyrics to suit singing in the Wu style, and Tang wrote telling the Yihuang company to keep to his original and not to follow the Lü version.'
+            was: 'After 1598, Tang Xianzu wrote to ask the Yihuang players to stick to his original words instead of using a version altered for singing.'
             now: 'The Yihuang company had a copy he had corrected himself before any altered version appeared, and went on singing from it.'
             who: tang_xianzu_linchuan
             bio: 'In this timeline the text of The Peony Pavilion that Tang Xianzu had corrected himself reached the Yihuang company first, and they kept singing from it.'
         vignettes:
-          empty_garden: 'You ask the player to rehearse the garden without anything on the stage. After a few lines, a listener points to where they imagined a flower. The player keeps the line that put it there.'
-          cue: 'A cut takes away the other player''s entrance signal. You catch it in rehearsal and put the cue where both can hear, without having to restore the whole cut.'
-          breath: 'You wait until the singer reaches the end of the line before moving the chair. This time nobody has to stop and explain why the dream began.'
+          empty_garden: '{staff} sets the chair back against the wall. The player crosses the bare floor and looks down as she sings. From the bench, the copyist can tell where the path ends.'
+          cue: 'The singer stops where a line has been shortened. Her partner misses the entrance. {staff} puts the omitted words back on the rehearsal slip and asks them to try the handover again.'
+          breath: 'The singer leaves a little air at the end of the verse. {staff} marks that pause on a separate slip for the player waiting in the wings.'
       zh:
         name: "写爱情超越死亡的戏"
         place: "临川"
         figure: "汤显祖"
-        story: '汤显祖《牡丹亭》的《惊梦》一出，从游园春色转入杜丽娘的梦。'
+        story: '汤显祖在《牡丹亭》题词末署万历戊戌秋，即 1598 年秋。戏到第十出，杜丽娘游过春日的园子，入睡后在梦里遇见一位年轻书生。'
         relic: "一册刻印的曲本"
         relic_desc: "给歌者用的刻本，每支曲牌的名字写在上方。"
         points:
@@ -54,21 +55,21 @@ events:
           p1: '后来的改本照史实传开，他只能写信叮嘱宜黄的伶人别照改本唱，这条分支与历史一样。'
         shift:
           p1:
-            was: '《牡丹亭》写成后，吕玉绳等人为便于吴地演唱改动曲文，汤显祖写信叮嘱宜黄班要依他的原本，吕家改的不可照用。'
+            was: '1598 年以后，汤显祖在信中嘱咐宜黄伶人沿用他的原本，别采用为了便唱而改过的曲文。'
             now: '改本出来之前，宜黄班手里已经有了一部他亲手核过的原本，班里一直照原本唱。'
             who: tang_xianzu_linchuan
             bio: '这条时间线里，汤显祖亲手核定的《牡丹亭》原本先到了宜黄戏班，班里一直照原本唱。'
         vignettes:
-          empty_garden: '你请演员在空台上排游园。几句之后，听的人指出想象中花开在什么地方。演员留下了让他看见那朵花的一句。'
-          cue: '删词连另一个演员上场的信号也删掉了。你在排练时发现，把那个字留在两人都听得到的位置，余下的删节仍能保留。'
-          breath: '你等演员把这一句唱完才挪椅子。这一遍，没人需要停下来解释为什么到了梦里。'
+          empty_garden: '{staff}把椅子推到墙根。演员走过空地，唱到半途低头看了一眼。坐在长凳上的抄本人才看出园路到哪里拐了弯。'
+          cue: '唱词少了几个字，等着上场的人就没听见接句。{staff}把删掉的字补回排练纸，请两人再接一遍。'
+          breath: '唱到句末，演员留了一口气。{staff}把这一顿另记在纸条上，递给台边等着上场的人。'
 text:
   en:
     name: Tang Xianzu
-    text: Chinese playwright of the Ming, 1550 to 1616. He retired to Linchuan, where in 1598 he finished The Peony Pavilion, a long play about love that crosses the boundary between dream and life.
+    text: Chinese playwright of the Ming, 1550 to 1616. He retired to Linchuan in 1598 and dated the preface to The Peony Pavilion to that autumn. The play follows Du Liniang from a meeting in a dream to a search for the man she met there.
   zh:
     name: 汤显祖
-    text: 明代剧作家，1550 年生，1616 年去世。他退居临川，1598 年写成《牡丹亭》，这是一部关于爱情跨越梦与现实界限的长剧。
+    text: 明代剧作家，1550 年生，1616 年去世。1598 年归居临川，同年秋为《牡丹亭》题词。剧中杜丽娘在梦里遇见一名书生，从此寻访梦中人。
 hook: {en: 'What can one garden scene carry?', zh: '一折惊梦，要留什么给观众'}
 facts:
   peony_dream:
@@ -80,12 +81,52 @@ facts:
     text:
       en: 'In The Peony Pavilion, the garden scene passes from spring scenery into Du Liniang''s dream.'
       zh: '汤显祖《牡丹亭》的《惊梦》一出，从游园春色转入杜丽娘的梦。'
+  dated_preface:
+    date: '1598'
+    stay_day: 60
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [tang_xianzu_linchuan_dated_preface, tang_xianzu_linchuan_preface_text]
+    text: {en: 'The author dated the preface to the autumn of the wùxū year of the Wanli reign, 1598.', zh: '汤显祖在题词末署「万历戊戌秋」，即 1598 年秋。'}
+    line: {en: 'In the autumn of 1598, Tang Xianzu dated his preface to The Peony Pavilion.', zh: '1598 年秋，汤显祖为《牡丹亭》题词。'}
 bystanders:
   tang_xianzu_linchuan_reader:
     invented: true
     text: {en: 'An invented player testing the cue between waking and dreaming.', zh: '一位虚构的演员，正试怎样让观众听出由醒入梦。'}
+quotes:
+  tang_xianzu_preface_depth:
+    order: 1
+    tier: full
+    date: '1598'
+    checked: official_record
+    original: zh-Hant
+    sources: [tang_xianzu_linchuan_dated_preface, tang_xianzu_linchuan_preface_text]
+    text:
+      zh-Hant: {who: 湯顯祖, quote: '情不知所起，一往而深。', occasion: '《牡丹亭》題詞，萬曆戊戌秋。'}
+      zh: {who: 汤显祖, quote: '情不知所起，一往而深。', occasion: '《牡丹亭》题词，万历戊戌秋。'}
+      en: {who: Tang Xianzu, quote: 'No one knows where love begins. Once it takes hold, it deepens.', occasion: 'Author’s preface to The Peony Pavilion, autumn 1598 (game translation).'}
+  tang_xianzu_preface_dream:
+    order: 2
+    tier: none
+    date: '1598'
+    checked: official_record
+    original: zh-Hant
+    sources: [tang_xianzu_linchuan_dated_preface, tang_xianzu_linchuan_preface_text]
+    text:
+      zh-Hant: {who: 湯顯祖, quote: '夢中之情，何必非真？', occasion: '《牡丹亭》題詞，萬曆戊戌秋。'}
+      zh: {who: 汤显祖, quote: '梦中之情，何必非真？', occasion: '《牡丹亭》题词，万历戊戌秋。'}
+      en: {who: Tang Xianzu, quote: 'Why should love in a dream be any less real?', occasion: 'Author’s preface to The Peony Pavilion, autumn 1598 (game translation).'}
 wiki:
   refs:
+    tang_xianzu_linchuan_dated_preface:
+      order: 13
+      status: checked
+      text: {en: 'The Peony Pavilion, dated author’s preface, Wikisource transcription. https://zh.wikisource.org/zh-hant/牡丹亭', zh: '《牡丹亭》卷首署年的题词，维基文库录文。 https://zh.wikisource.org/zh-hant/牡丹亭'}
+    tang_xianzu_linchuan_letter:
+      order: 14
+      status: checked
+      text: {en: 'Central South University Press, excerpt from Tang Xianzu’s letter to Luo Zhang’er about adapting the score. https://csup.csu.edu.cn/info/1031/6008.htm', zh: '中南大学出版社，选录汤显祖《答罗章二》有关改曲的原文。 https://csup.csu.edu.cn/info/1031/6008.htm'}
     tang_xianzu_linchuan_preface_text:
       order: 10
       status: checked
@@ -108,13 +149,18 @@ wiki:
       order: 190
       status: checked
       text:
-        en: 'Tang Xianzu, The Peony Pavilion, author''s preface and scene 10, Interrupted Dream, Wikisource transcription. https://zh.wikisource.org/zh-hant/牡丹亭/驚夢'
-        zh: 'Tang Xianzu, The Peony Pavilion, author''s preface and scene 10, Interrupted Dream, Wikisource transcription. https://zh.wikisource.org/zh-hant/牡丹亭/驚夢'
+        en: 'Tang Xianzu, The Peony Pavilion, scene 10, Interrupted Dream, Wikisource transcription. https://zh.wikisource.org/zh-hant/牡丹亭/驚夢'
+        zh: '汤显祖《牡丹亭》第十出《惊梦》，维基文库录文。 https://zh.wikisource.org/zh-hant/牡丹亭/驚夢'
 self_check:
-  quote_line: '你请演员在空台上排游园。'
-  fact: peony_dream
-  regret_choice: '略过「听出游园在何处转入梦里」，这处细节便留给下一位核对。'
-  bookend: '从「一折惊梦，要留什么给观众」开始，以员工留下的观察或更正收尾。'
+  quote_line: '唱词少了几个字，等着上场的人就没听见接句。'
+  fact: dated_preface
+  regret_choice: '戏班可以继续试唱，但手里没有作者核定的原本时，日后便只剩书信可作指引。'
+  bookend: '由台边听见的一个接句，写到演员手上可以反复排唱的一部本子。'
   share_line: '一折惊梦，要留什么给观众'
-  share_number: '1598'
+  share_number: '第十出'
+  知情: '题词的署年确定了窗口，后来的书信说明改本引发的问题。'
+  近身: '员工随排练核对接句。'
+  杠杆: '把作者核过的本子交到戏班手里。'
+  错过: '戏班仍得靠后来的信辨认原本。'
+  带回: '题词入史实记录，选用哪个抄本入分支。'
 pack: {license: MIT, version: 1, languages: [en, zh]}

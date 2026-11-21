@@ -7,7 +7,7 @@ import { createLocalBackend } from '../js/backend.js';
 const yaml = createRequire(import.meta.url)('../vendor/js-yaml.min.js');
 const read = (file) => fs.readFile(new URL('../' + file, import.meta.url), 'utf8');
 const roster = ['s_fan', 's_guilan', 's_somchai', 's_carlos', 's_samuel', 's_amara', 's_jeanluc'];
-function relevantKit(data, event) {
+function relevantKit(data, backend, event) {
   const items = data.get('items');
   const ids = new Set(['first_aid_kit', 'warm_blanket']);
   function addRequirements(req) {
@@ -19,7 +19,13 @@ function relevantKit(data, event) {
     for (const alternative of req.any || []) addRequirements(alternative);
   }
   for (const point of event.scene?.points || []) addRequirements(point.req);
-  return Object.fromEntries([...ids].filter((id) => items[id]?.playable).map((id) => [id, 1]));
+  const activeChannels = Object.keys(event.channels || {}).filter((channel) => !data.get('config.channels.off').includes(channel));
+  for (const [id, item] of Object.entries(items)) {
+    if (item.channels?.some((channel) => activeChannels.includes(channel))) ids.add(id);
+  }
+  return Object.fromEntries([...ids]
+    .filter((id) => items[id]?.playable && backend.lightKitAllowed(event.id, id))
+    .map((id) => [id, items[id].kind === 'consumable' ? items[id].step : 1]));
 }
 
 for (const lang of (process.argv.slice(2).length ? process.argv.slice(2) : ['en', 'zh'])) {
@@ -51,15 +57,15 @@ for (const lang of (process.argv.slice(2).length ? process.argv.slice(2) : ['en'
       reports++;
     }
     for (const staffId of staff) for (const seed of [17, 36891]) run(staffId, seed, {});
-    assert.ok(patterns.size, `${lang}:${event.id} all runs evacuated`);
-    if (patterns.size === 1 && event.scene && !event.era) {
-      const kit = relevantKit(data, event);
+    if (patterns.size <= 1 && event.scene && !event.era) {
+      const kit = relevantKit(data, backend, event);
       for (const staffId of staff) for (const seed of [17, 36891]) run(staffId, seed, kit);
       for (const staffId of Object.keys(data.get('staff.staff'))) {
         if (patterns.size > 1) break;
         if (!staff.includes(staffId)) for (const seed of [17, 36891]) run(staffId, seed, kit);
       }
     }
+    assert.ok(patterns.size, `${lang}:${event.id} all runs evacuated`);
     if (patterns.size === 1) sameEnding.push(event.id);
   }
   console.log(`${lang}: ${stories.length} live stories; ${reports} completed reports, ${evacuations} evacuations`);
