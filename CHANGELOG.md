@@ -7,6 +7,9 @@
 - Share cards for these stories quote a few sentences from the won passage. Other cards keep up to three short lines from the record.
 - When every star is won, a story shows its own closing paragraph. A key passage can vary with the kind of employee who went, such as a teacher or a geologist.
 - Chinese text for the Sejong story now names Chojeong as 椒水, as in the court records.
+- Chinese story prose for Abel, Ahmed Baba, Bashō, Beethoven, Boltzmann, Boole, Cajal and Chekhov. Every passage in the eleven written stories now ends on a moment rather than a result. English for these stories still uses the plain record lines.
+- Fixed a startup failure when a saved report or the trip log named a story the current mode does not load, such as a draft played in developer mode. Those trips wait aside in the save and return when the story is available again.
+- Restored the two-sided record, with history to the left of the time axis and the traveller to the right.
 
 ## 0.14.0, 2026-11-21
 
