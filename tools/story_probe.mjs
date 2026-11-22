@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { loadData } from '../js/data.js';
 import { createLocalBackend } from '../js/backend.js';
+import { storyProse } from '../js/narrate.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const yaml = createRequire(import.meta.url)(path.join(root, 'vendor/js-yaml.min.js'));
@@ -21,7 +22,11 @@ for (const s of staff) {
   const name = D.get('text.staff.' + s + '.name');
   const ident = B.identityOf(id, s);
   console.log(`\n=== ${name} (${s}) identity=${ident.id} face=${ident.face} tags=${B.staffTags(id, s).filter((t) => !t.startsWith('trait_')).join(',')}`);
-  if (!isEra) { const r = B.runLight(id, s, seed, items); console.log('  journey', JSON.stringify(r.journey), 'stars', r.stars, 'vignette', r.vignette, 'outcome', r.outcome); for (const t of r.timeline || []) console.log('   ', t.after ? 'AFTER' : '', t.year, '[' + (t.tag || t.kind) + ']', t.star ? '★' : '', t.text); continue; }
+  if (!isEra) { const r = B.runLight(id, s, seed, items); console.log('  journey', JSON.stringify(r.journey), 'stars', r.stars, 'vignette', r.vignette, 'outcome', r.outcome); // a card with story prose shows the paragraphs the report gives this trip, so they are read in place of the plain lines of the won points
+    const P = storyProse(D.get('text.catalog')[id]?.story_prose, { report: r }, name, new Set(B.staffTags(id, s)));
+    for (const t of r.timeline || []) console.log('   ', t.after ? 'AFTER' : '', t.year, '[' + (t.tag || t.kind) + ']', t.star ? '★' : '', (t.kind === 'point' && t.star && P?.points[t.id]) || t.text);
+    if (P) { console.log('  prose ending:', P.ending); console.log('  prose excerpt:', P.excerpt); }
+    continue; }
   const { res, report, evacuation } = B.dispatch(id, { seed, staffId: s, items });
   if (evacuation) { console.log('  evacuated'); continue; }
   const F = res.branch.final;

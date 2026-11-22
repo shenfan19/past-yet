@@ -1,6 +1,6 @@
 // The portrait share card shows the outcome, historical echo and a short selection from the report.
 // The site address and a QR code from a matrix shipped with the game are on it. Nothing is uploaded and no outside service is asked.
-import { staffName, isoDateLabel } from './narrate.js';
+import { staffName, isoDateLabel, storyProse } from './narrate.js';
 
 export function createShare(X) {
   const { D, ctx, T, U, esc } = X;
@@ -16,9 +16,10 @@ export function createShare(X) {
   const homeAchievement = () => H.home.achieved.replace('{n}', D.get('config.office.home_cost'));
   const fileName = (d) => d === null ? C.home_file_name : C.file_name;
 
-  // Keep a few short passages from the record, in the order they happened.
+  // Keep a few short passages from the record, config.share.record_lines at most, in the order they happened.
+  // points: the paragraphs of the won points from the story prose, which stand in for their lines
   function pickLines(timeline, points) {
-    const N = Math.min(C.record_lines, 3);
+    const N = C.record_lines;
     const rank = (t) => (t.star ? 0 : t.own ? 1 : t.kind === 'vignette' ? 2 : t.tag === 'history' ? 3 : 4);
     const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => t.kind !== 'remark' && rank(t) < 4)
       .sort((a, b) => rank(a.t) - rank(b.t) || (b.t.importance || 0) - (a.t.importance || 0) || a.i - b.i).slice(0, N).sort((a, b) => a.i - b.i);
@@ -60,14 +61,14 @@ export function createShare(X) {
       const c = T.catalog[d.eraId];
       const ev = D.get('catalog.events').find((x) => x.id === d.eraId);
       const o = R.outcomeId;
-      const prose = c.story_prose;
-      const excerpt = o !== 'desync' && Object.entries(prose?.excerpts ?? {}).find(([id]) =>
-        R.timeline?.some((t) => t.kind === 'point' && t.id === id && t.star))?.[1];
+      // the same story prose the report reads, see storyProse in narrate.js
+      const prose = storyProse(c.story_prose, d, who, new Set(ctx.backend.staffTags(d.eraId, d.spec.staffId)));
+      const excerpt = prose?.excerpt;
       return {
         name: c.name,
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
-        text: excerpt ? [excerpt.replaceAll('{staff}', who)] : R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
-        lines: excerpt ? [] : R.timeline ? pickLines(R.timeline, prose?.points).map((line) => ({ ...line, text: line.text.replaceAll('{staff}', who) })) : null,
+        text: excerpt ? [excerpt] : R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
+        lines: excerpt ? [] : R.timeline ? pickLines(R.timeline, prose?.points) : null,
         echo: echoOf(d),
         points: excerpt || R.timeline ? [] : (R.points || []).map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
       };

@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+- Stories can now be told as short fiction. The story page opens with three paragraphs, each won star has its own passage in the report, and a closing paragraph sits under the stamp. Mary Anning, Émilie du Châtelet and Sejong are the first stories written this way, in English and Chinese.
+- Reports now open with the echo and the full record. The fiction note follows the record and the settlement closes the page.
+- Share cards for these stories quote a few sentences from the won passage. Other cards keep up to three short lines from the record.
+- When every star is won, a story shows its own closing paragraph. A key passage can vary with the kind of employee who went, such as a teacher or a geologist.
+- Chinese text for the Sejong story now names Chojeong as 椒水, as in the court records.
+
 ## 0.14.0, 2026-11-21
 
 - Moved recruitment and both shops into pop-ups opened from the Agency. The Employees and Items descriptions sit below their section headings.

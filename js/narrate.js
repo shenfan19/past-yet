@@ -340,7 +340,7 @@ export function lightRecord(D, ev, r, staffId, stayDays, tags = new Set()) {
   const on = ev.scene?.remark_on;
   const onWon = !on || (r.points || []).some((p) => p.id === on && p.hit && !p.cut);
   if (RM && onWon && j?.accepted !== false && !desync) {
-    const key = Object.keys(RM).find((k) => k !== 'else' && k.split('+').every((t) => tags.has(t))) ?? (RM.else !== undefined ? 'else' : null);
+    const key = keyByTags(RM, tags);
     if (key) lines.push({ t: stayDays + 0.003, year: ev.year, kind: 'remark', id: 'remark', key: 'remark', tag: null, after: false, text: RM[key].split('{staff}').join(staff), why: { kind: 'remark', expr: key } });
   }
   // what a won point changed is not told in the record: the report sets it out beside what history recorded, under the shift of the timeline
@@ -351,6 +351,36 @@ export function lightRecord(D, ev, r, staffId, stayDays, tags = new Set()) {
     for (const x of lines) if (x.tag !== 'history') x.year = yearAt(x.t);
   }
   return lines.map((x, i) => [x, i]).sort((a, b) => a[0].t - b[0].t || a[1] - b[1]).map(([x]) => x);
+}
+
+// The key of a mapping keyed by tags joined by +, read for what the employee is: the first key whose tags the employee all has, `else` when none fits,
+// null when nothing fits and there is no `else`. The remarks of a story and the paragraphs of its story prose choose by it.
+export function keyByTags(map, tags) {
+  return Object.keys(map).find((k) => k !== 'else' && k.split('+').every((t) => tags.has(t))) ?? (map.else !== undefined ? 'else' : null);
+}
+
+// What the story prose of a catalogue event, text.<language>.story_prose in cards/README.md, gives one trip: the paragraph under the stamp, the
+// paragraph of each won point and the excerpt of the share card. A paragraph of a point is one string, or a mapping keyed by tags like the remarks,
+// read for the employee. The report, the share card and tools/story_probe.mjs all read it here, so they tell the same story.
+// d: the trip, with its report and, when it ended early, recalled or evacuation; staff: the name of the employee; tags: what the employee is
+export function storyProse(prose, d, staff, tags = new Set()) {
+  if (!prose) return null;
+  const R = d.report;
+  const fill = (x) => (typeof x === 'string' ? x.split('{staff}').join(staff) : null);
+  const variant = (x) => (typeof x === 'string' ? x : x && typeof x === 'object' ? x[keyByTags(x, tags)] : null);
+  const won = (id) => (R.points || []).some((p) => p.id === id && p.hit && !p.cut);
+  const points = Object.fromEntries(Object.entries(prose.points ?? {}).filter(([id]) => won(id)).map(([id, x]) => [id, fill(variant(x))]).filter(([, x]) => x));
+  const rejected = R.journey?.accepted === false;
+  const desync = (R.outcomeId ?? R.outcome) === 'desync';
+  // a trip cut short by a recall or an evacuation tells only what happened, so it gets neither an ending nor an excerpt
+  const early = !!(d.recalled || d.evacuation);
+  const all = (R.points || []).length > 0 && R.points.every((p) => p.hit && !p.cut);
+  const O = prose.outcomes ?? {};
+  const ending = early ? null : rejected ? prose.not_admitted : desync ? prose.desync
+    : (all && O.all) || Object.entries(O).find(([id]) => id !== 'all' && won(id))?.[1] || prose.none;
+  // the excerpt is quoted from the paragraph of its point, the first in the order of excerpts whose point was won
+  const excerpt = early || rejected || desync ? null : Object.keys(prose.excerpts ?? {}).find((id) => points[id]?.includes(fill(prose.excerpts[id])));
+  return { ending: fill(ending), points, excerpt: excerpt ? fill(prose.excerpts[excerpt]) : null };
 }
 
 // Rows comparing two reports of the same era.

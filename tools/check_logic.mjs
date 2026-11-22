@@ -217,6 +217,10 @@ for (const e of events) {
     for (const lang of ['en', 'zh']) for (const k of Object.keys(((lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {}).remarks || {})) {
       if (k !== 'else') for (const t of k.split('+')) if (!knownTags.has(t)) err(`event ${e.id} ${lang}: remark key ${k} names an unknown tag ${t}`);
     }
+    // the paragraphs of a point in the story prose may be keyed by tags like the remarks, with the same tags
+    for (const lang of ['en', 'zh']) for (const [id, x] of Object.entries(((lang === 'en' ? D : DZ).get('text.catalog')[e.id] || {}).story_prose?.points || {})) {
+      if (x && typeof x === 'object') for (const k of Object.keys(x)) if (k !== 'else') for (const t of k.split('+')) if (!knownTags.has(t)) err(`event ${e.id} ${lang}: story_prose.points.${id} key ${k} names an unknown tag ${t}`);
+    }
     // a mend point may overturn facts of history in its branch, which the record then leaves out: the facts must be this event's, and a guard point overturns nothing
     const factIds = new Set((D.get('encyclopedia.event_facts')?.[e.id]?.facts || []).map((f) => f.id));
     for (const p of e.scene.points) for (const f of p.overturns || []) {

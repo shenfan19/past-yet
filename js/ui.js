@@ -1,4 +1,4 @@
-import { diffRows, kitText, staffName, staffTraits, itemText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel, storyProse } from './narrate.js';
 import { pointsLeft, founderProblem } from './founder.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
@@ -963,11 +963,10 @@ export function createUI(D, ctx, DEV = false) {
   // it came from. After the record come the numbers when the story has any, the body in the developer mode, and the summary with the stars.
   function storyHtml(cur, S) {
     const spec = cur.spec;
-    const prose = cur.light ? T.catalog[cur.eraId].story_prose : null;
     const R = cur.report;
-    const ending = R.journey?.accepted === false ? prose?.not_admitted
-      : R.outcomeId === 'desync' ? prose?.desync
-        : Object.entries(prose?.outcomes ?? {}).find(([id]) => R.points?.some((p) => p.id === id && p.hit && !p.cut))?.[1] ?? prose?.none;
+    // the story prose of the card, read for this trip and this employee, see storyProse in narrate.js
+    const prose = cur.light ? storyProse(T.catalog[cur.eraId].story_prose, cur, S.staff, new Set(ctx.backend.staffTags(cur.eraId, spec.staffId))) : null;
+    const ending = prose?.ending;
     const notes = [];
     const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
     const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
@@ -986,9 +985,9 @@ export function createUI(D, ctx, DEV = false) {
       const [lead, rest] = splitLead(vignette?.replaceAll('{staff}', S.staff) ?? t.text);
       const refs = lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : '';
       const why = DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : '';
-      const written = t.kind === 'point' && t.star ? prose?.points?.[t.id] : null;
+      const written = t.kind === 'point' && t.star ? prose?.points[t.id] : null;
       const mark = t.star ? '<span class="starmark">★</span> ' : '';
-      const story = `${mark}${esc(written ? written.replaceAll('{staff}', S.staff) : rest)}`;
+      const story = `${mark}${esc(written ?? rest)}`;
       const body = `${story}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}`;
       return `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}">${cell(lineKind(t) === 'history', body).replace('%W', esc(lead))}</li>`;
     };
@@ -1040,7 +1039,7 @@ export function createUI(D, ctx, DEV = false) {
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>
-      ${ending ? `<p class="lead">${esc(ending.replaceAll('{staff}', S.staff))}</p>` : ''}
+      ${ending ? `<p class="lead">${esc(ending)}</p>` : ''}
       ${echoHtml(cur.echo ?? ctx.backend.echoOf(cur))}
       <div class="row" style="margin:16px 0">${S.buttons}</div>${vsHtml}
       <p><button class="ghost recordbtn" data-act="fn" data-key="rec-closed">${esc(recOpen ? U.report.hide_record : U.report.full_record)}</button></p>

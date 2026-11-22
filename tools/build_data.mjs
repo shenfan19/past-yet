@@ -371,33 +371,47 @@ let storyLine = '';
   for (const ev of eventCards) {
     for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
     checkVignettes(`event ${ev.id}`, ev.scene?.vignettes, (lang) => ev.text[lang]);
-    const pointIds = new Set((ev.scene?.points ?? []).map((point) => point.id));
+    // story prose, cards/README.md: complete when present, so no won point or ending falls back to the plain line in the middle of the prose
+    const points = ev.scene?.points ?? [];
+    const pointIds = new Set(points.map((point) => point.id));
+    const paragraph = (value) => typeof value === 'string' && !!value.trim() && !value.includes('\n');
+    // a paragraph of a point is one string, or a mapping keyed by tags joined by + with an `else`, read for the employee like the remarks
+    const variants = (value) => (paragraph(value) ? [value] : isObj(value) && 'else' in value && Object.values(value).every(paragraph) ? Object.values(value) : null);
+    // the shape compared across languages: the fields in any order, the keys within a field in their order, since the order of outcomes and excerpts is their priority
+    const shape = (prose) => JSON.stringify(Object.fromEntries(Object.entries(prose).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => [k, isObj(v) ? Object.fromEntries(Object.entries(v).map(([id, x]) => [id, isObj(x) ? Object.keys(x) : 1])) : Array.isArray(v) ? v.length : 1])));
+    const shapes = {};
     for (const [lang, text] of Object.entries(ev.text)) {
       const prose = text.story_prose;
       if (prose === undefined) continue;
       const where = ev.id + ' ' + lang + ' story_prose';
-      const paragraph = (value) => typeof value === 'string' && !!value.trim() && !value.includes('\n');
       if (!isObj(prose)) {
         fail(where + ' must be a mapping');
         continue;
       }
-      if (prose.opening !== undefined && (!Array.isArray(prose.opening) || !prose.opening.length || !prose.opening.every(paragraph))) {
-        fail(where + '.opening must contain nonempty paragraphs');
-      }
-      for (const key of ['none', 'desync', 'not_admitted']) {
-        if (prose[key] !== undefined && !paragraph(prose[key])) fail(where + '.' + key + ' must be one paragraph');
-      }
+      for (const key of Object.keys(prose)) if (!['opening', 'points', 'outcomes', 'none', 'desync', 'not_admitted', 'excerpts'].includes(key)) fail(where + ' has an unknown field ' + key);
+      if (!Array.isArray(prose.opening) || !prose.opening.length || !prose.opening.every(paragraph)) fail(where + '.opening must contain nonempty paragraphs');
+      const endings = ['none', 'not_admitted', ...(points.some((p) => p.guard) ? ['desync'] : [])];
+      for (const key of endings) if (!paragraph(prose[key])) fail(where + '.' + key + ' must be one paragraph');
+      if (prose.desync !== undefined && !endings.includes('desync')) fail(where + '.desync is never read: the scene has no guard point');
       for (const key of ['points', 'outcomes', 'excerpts']) {
-        if (prose[key] === undefined) continue;
         if (!isObj(prose[key])) {
           fail(where + '.' + key + ' must be a mapping keyed by point ID');
           continue;
         }
         for (const [id, value] of Object.entries(prose[key])) {
-          if (!pointIds.has(id) || !paragraph(value)) fail(where + '.' + key + '.' + id + ' needs a valid point ID and a paragraph');
-          else if (key === 'excerpts' && (!paragraph(prose.points?.[id]) || !prose.points[id].includes(value))) fail(where + '.excerpts.' + id + ' must quote its point paragraph');
+          if (!(pointIds.has(id) || (key === 'outcomes' && id === 'all'))) fail(where + '.' + key + '.' + id + ' is not a point of the scene');
+          else if (key === 'points' ? !variants(value) : !paragraph(value)) fail(where + '.' + key + '.' + id + (key === 'points' ? ' needs a paragraph, or paragraphs keyed by tags with an else' : ' needs a paragraph'));
+          else if (key === 'excerpts' && !(variants(prose.points?.[id]) ?? []).every((x) => x.includes(value))) fail(where + '.excerpts.' + id + ' must quote every paragraph of its point');
         }
       }
+      if (isObj(prose.points)) for (const id of pointIds) if (!(id in prose.points)) fail(where + '.points.' + id + ' is missing: every point of the scene needs its paragraph');
+      if (isObj(prose.outcomes) && !Object.keys(prose.outcomes).some((id) => id !== 'all')) fail(where + '.outcomes needs a paragraph for at least one point');
+      shapes[lang] = shape(prose);
+    }
+    // English and Chinese are both written, field for field; another language either matches them or is left out and reads English
+    if (Object.keys(shapes).length) {
+      for (const lang of ['en', 'zh']) if (!shapes[lang]) fail(ev.id + ' story_prose is written in ' + Object.keys(shapes).join(', ') + ' but not in ' + lang);
+      for (const [lang, sh] of Object.entries(shapes)) if (shapes.en && sh !== shapes.en) fail(ev.id + ' ' + lang + ' story_prose does not have the same fields and keys as en');
     }
   }
   const modelOf = (era) => (era && eraDir[era] ? (eraModel[era] ?? modelOfDir(eraDir[era])).raw : null);
