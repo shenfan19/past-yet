@@ -371,6 +371,34 @@ let storyLine = '';
   for (const ev of eventCards) {
     for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
     checkVignettes(`event ${ev.id}`, ev.scene?.vignettes, (lang) => ev.text[lang]);
+    const pointIds = new Set((ev.scene?.points ?? []).map((point) => point.id));
+    for (const [lang, text] of Object.entries(ev.text)) {
+      const prose = text.story_prose;
+      if (prose === undefined) continue;
+      const where = ev.id + ' ' + lang + ' story_prose';
+      const paragraph = (value) => typeof value === 'string' && !!value.trim() && !value.includes('\n');
+      if (!isObj(prose)) {
+        fail(where + ' must be a mapping');
+        continue;
+      }
+      if (prose.opening !== undefined && (!Array.isArray(prose.opening) || !prose.opening.length || !prose.opening.every(paragraph))) {
+        fail(where + '.opening must contain nonempty paragraphs');
+      }
+      for (const key of ['none', 'desync', 'not_admitted']) {
+        if (prose[key] !== undefined && !paragraph(prose[key])) fail(where + '.' + key + ' must be one paragraph');
+      }
+      for (const key of ['points', 'outcomes', 'excerpts']) {
+        if (prose[key] === undefined) continue;
+        if (!isObj(prose[key])) {
+          fail(where + '.' + key + ' must be a mapping keyed by point ID');
+          continue;
+        }
+        for (const [id, value] of Object.entries(prose[key])) {
+          if (!pointIds.has(id) || !paragraph(value)) fail(where + '.' + key + '.' + id + ' needs a valid point ID and a paragraph');
+          else if (key === 'excerpts' && (!paragraph(prose.points?.[id]) || !prose.points[id].includes(value))) fail(where + '.excerpts.' + id + ' must quote its point paragraph');
+        }
+      }
+    }
   }
   const modelOf = (era) => (era && eraDir[era] ? (eraModel[era] ?? modelOfDir(eraDir[era])).raw : null);
   const modelText = (id, lang) => moduleCard[eraModule[id]]?.era_text?.[lang] ?? (exists(`${eraDir[id]}/text.${lang}.yaml`) ? read(`${eraDir[id]}/text.${lang}.yaml`) : null);

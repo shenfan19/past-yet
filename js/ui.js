@@ -205,8 +205,7 @@ export function createUI(D, ctx, DEV = false) {
     const said = Q.said && Q.original !== D.lang && Q.said !== q.quote ? `<div class="echosaid">${esc(Q.said)}</div>` : '';
     return `<figure class="echo"><blockquote>${U.fmt.quote.replace('{x}', esc(q.quote))}</blockquote>${said}<figcaption>${esc(U.report.echo_cite.replace('{who}', q.who).replace('{date}', echoDate(Q.date)).replace('{occasion}', q.occasion))}${echoSources(D, Q.sources, esc)}</figcaption></figure>`;
   };
-  // The settlement at the head of a report, its summary: the stars one row each, what the trip brought and cost, the shift of the timeline, then the echo.
-  // The record waits folded below, and the line the employee says on coming back is in it, at the return.
+  // The settlement follows the record: the stars, what the trip brought and cost, and the shift of the timeline.
   // When an action redraws the report, the rows resume their animation at the elapsed time. A click on the settlement shows it all at once.
   const settleHtml = (cur, S) => {
     const C = D.get('config.ui.settle');
@@ -218,19 +217,18 @@ export function createUI(D, ctx, DEV = false) {
     if (cur.paid?.antique) rows.push(`<li class="gain">${esc(U.report.antique_gain)}${COLON}${wl('antiques:' + cur.paid.antique, T.antiques[cur.paid.antique].name)}${cur.paid.duplicate ? ' · ' + U.report.antique_dup : ''}</li>`);
     if (S.cost) rows.push(`<li class="gain">${esc(U.report.spent)}${COLON}${ri(S.cost)}</li>`);
     rows.push(`<li class="gain">${esc(U.report.rest)} ${S.restDays} ${esc(U.report.days)}</li>`);
-    // the shift of the timeline comes in after the rows as one more of them, and the echo last
+    // The shift of the timeline is the final row.
     const shift = S.shift ? `<li class="shiftrow" style="--i:${rows.length}">${S.shift}</li>` : '';
     const n = rows.length + (shift ? 1 : 0);
-    const echo = echoHtml(cur.echo ?? ctx.backend.echoOf(cur));
     const now = Date.now();
     if (!(cur.id in st.settled)) st.settled[cur.id] = now;
     const gone = now - st.settled[cur.id];
-    const total = n * C.step_ms + C.echo_pause_ms + C.echo_ms;
+    const total = n * C.step_ms;
     const moving = gone < total;
-    const animation = moving ? ` style="--step:${C.step_ms}ms;--item:${C.item_ms}ms;--echo-at:${n * C.step_ms + C.echo_pause_ms}ms;--echo:${C.echo_ms}ms;--gone:${gone}ms"` : '';
+    const animation = moving ? ` style="--step:${C.step_ms}ms;--item:${C.item_ms}ms;--gone:${gone}ms"` : '';
     return `<section class="settle${moving ? ' moving' : ''}"${animation} data-act="settleskip" data-id="${cur.id}">
       <div class="sec">${U.report.accounts}</div>
-      <ul class="settlerows">${rows.map((r, i) => r.replace('<li class="', `<li style="--i:${i}" class="`)).join('')}${shift}</ul>${echo}</section>`;
+      <ul class="settlerows">${rows.map((r, i) => r.replace('<li class="', `<li style="--i:${i}" class="`)).join('')}${shift}</ul></section>`;
   };
   const sayingLine = (d) => { const x = ctx.backend.sayingOf(d); return x ? `<p class="saying">${U.fmt.quote.replace('{x}', esc(x))} <span class="muted">${U.fmt.dash}${staffLink(d.spec.staffId)}</span></p>` : staffLine(d.spec.staffId); };
   const placeShort = (d) => (d.light ? T.catalog[d.eraId].place : T.eras[d.eraId].short);
@@ -673,10 +671,11 @@ export function createUI(D, ctx, DEV = false) {
     const relicId = 'relic_' + id;
     const own = anchored(relicId);
     const tags = catalogTags(id).map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('');
+    const opening = c.story_prose?.opening ?? [c.story];
     return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">
       <div class="row sp"><h3>${esc(c.name)}${own ? '' : ' ' + hiddenChip()}</h3><span class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</span></div>
       <div>${tags}</div>
-      <p>${esc(c.story)}</p><div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
+      ${opening.map((paragraph) => `<p>${esc(paragraph)}</p>`).join('')}<div class="muted">${U.dispatch.character}${COLON}${esc(c.figure)}</div>
       <div class="muted">${U.dispatch.relic}${COLON}${D.get('antiques.antiques.' + relicId).kind === 'medium' ? esc(c.relic) : wl('antiques:' + relicId, c.relic)}${own ? ' · ' + U.dispatch.owned : ''}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
@@ -964,26 +963,34 @@ export function createUI(D, ctx, DEV = false) {
   // it came from. After the record come the numbers when the story has any, the body in the developer mode, and the summary with the stars.
   function storyHtml(cur, S) {
     const spec = cur.spec;
+    const prose = cur.light ? T.catalog[cur.eraId].story_prose : null;
+    const R = cur.report;
+    const ending = R.journey?.accepted === false ? prose?.not_admitted
+      : R.outcomeId === 'desync' ? prose?.desync
+        : Object.entries(prose?.outcomes ?? {}).find(([id]) => R.points?.some((p) => p.id === id && p.hit && !p.cut))?.[1] ?? prose?.none;
     const notes = [];
     const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
     const sup = (ns) => (ns.length ? `<sup class="fnref">${ns.join(',')}</sup>` : '');
     const lineKind = (t) => (t.tag === 'history' ? 'history' : 'travel');
-    // the one emphasis of the record is a won star; every other line has the same weight, and history and the employee are told apart by their side of the axis
+    // The record marks won stars and distinguishes history from the employee's account.
     // the date goes to a column of its own: the lead of the sentence up to its first comma, when it reads as a date or a day of the stay
     const splitLead = (text) => {
       const m = String(text).match(/^([^，。：,:;]{1,24}?)(，|：|, |: )/);
       if (!m || !/\d|十|廿|元|初|望|朔|晦/.test(m[1]) || !/[年月日天]|day|Day|\d{3,4}|January|February|March|April|May|June|July|August|September|October|November|December/.test(m[1])) return ['', text];
       return [m[1], text.slice(m[0].length)];
     };
-    // A time axis down the middle: history on the left, leaning towards the axis, the employee on the right in a bubble, the date on the axis between them.
-    // Another employee met in the same time can later take the right side in a colour of their own.
-    const cell = (side, body) => (side === 'l' ? `<div class="what l">${body}</div><span class="when">%W</span><div class="what r"></div>` : `<div class="what l"></div><span class="when">%W</span><div class="what r"><div class="bubble">${body}</div></div>`);
+    // The date sits on the axis and both historical and travel prose sit alongside it.
+    const cell = (history, body) => `<span class="when">%W</span><div class="what">${history ? body : `<div class="bubble">${body}</div>`}</div>`;
     const tlLine = (t) => {
-      const [lead, rest] = splitLead(t.text);
+      const vignette = prose && t.kind === 'vignette' ? T.catalog[cur.eraId].vignettes?.[R.vignette] : null;
+      const [lead, rest] = splitLead(vignette?.replaceAll('{staff}', S.staff) ?? t.text);
       const refs = lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : '';
       const why = DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : '';
-      const body = `${t.star ? '<span class="starmark">★</span> ' : ''}${esc(rest)}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}`;
-      return `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}">${cell(lineKind(t) === 'history' ? 'l' : 'r', body).replace('%W', esc(lead))}</li>`;
+      const written = t.kind === 'point' && t.star ? prose?.points?.[t.id] : null;
+      const mark = t.star ? '<span class="starmark">★</span> ' : '';
+      const story = `${mark}${esc(written ? written.replaceAll('{staff}', S.staff) : rest)}`;
+      const body = `${story}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}`;
+      return `<li class="${lineKind(t)}${t.star ? ' star' : ''}${t.after ? ' after' : ''}${t.own ? ' own' : ''}">${cell(lineKind(t) === 'history', body).replace('%W', esc(lead))}</li>`;
     };
     const accepted = cur.report.journey?.accepted !== false;
     const summaryNote = accepted && S.modelNote ? sup([noteOf('model', S.modelNote)]) : '';
@@ -993,13 +1000,17 @@ export function createUI(D, ctx, DEV = false) {
     // the crossing says only where and to which year it carried the employee; the rest of the story is told by the dated lines of the record
     const via = S.anchor && D.get('antiques.antiques.' + S.anchor)?.kind === 'medium' ? U.report.depart_medium : U.report.depart_antique;
     // the lines of the office, set out like the others: the date in its column, the sentence beside it
-    const officeLi = (text, extra) => { const [lead, rest] = splitLead(text); return `<li class="travel">${cell('r', esc(rest) + extra).replace('%W', esc(lead))}</li>`; };
+    const officeLi = (text, extra) => { const [lead, rest] = splitLead(text); return `<li class="travel">${cell(false, esc(rest) + extra).replace('%W', esc(lead))}</li>`; };
     const departLine = officeLi(via.replace('{date}', officeDay(cur.startDay)).replace('{staff}', S.staff).replace('{anchor}', S.anchor && T.antiques[S.anchor] ? T.antiques[S.anchor].name : '').replace('{year}', String(S.year)).replace('{place}', S.place), S.sources);
     const backLine = officeLi(accepted && S.summary ? U.report.back_line.replace('{date}', officeDay(cur.readyDay)).replace('{text}', S.summary) : U.report.back_plain.replace('{date}', officeDay(cur.readyDay)).replace('{staff}', S.staff), summaryNote);
     const fd = cur.favorDelta || 0;
     const restLine = officeLi((S.restDays > 0 ? U.report.rest_line.replace('{n}', String(S.restDays)) : U.report.rest_none).replace(/\{staff\}/g, S.staff) + (fd > 0 ? U.report.mood_up : fd < 0 ? U.report.mood_down : '').replace(/\{staff\}/g, S.staff), '');
     let lastYear = S.year;
-    const record = S.timeline.map((t) => { const mark = t.year && t.year !== lastYear ? yearLine(t.year) : ''; if (t.year) lastYear = t.year; return mark + tlLine(t); }).join('');
+    const record = S.timeline.map((t) => {
+      const mark = t.year && t.year !== lastYear ? yearLine(t.year) : '';
+      if (t.year) lastYear = t.year;
+      return mark + tlLine(t);
+    }).join('');
     // what the employee says on coming back is a line of the record, after the return, where it is said
     const said = ctx.backend.sayingOf(cur);
     const saidLine = said ? officeLi(U.report.said_line.replace('{date}', officeDay(cur.readyDay)).replace(/\{staff\}/g, S.staff).replace('{x}', said), '') : '';
@@ -1025,24 +1036,26 @@ export function createUI(D, ctx, DEV = false) {
       return burden + `<div class="sec">${U.report.body_attrs}</div>${legendHtml('attrs', alines)}${lineChart(alines, [], ctx.backend.staffAttrMax, 'attrs')}`;
     };
     const vsHtml = st.vs && !cur.light ? vsBlock(cur) : '';
-    // the record and all below it are folded under the settlement, and open on a click
-    const recOpen = st.opened.has(cur.id + 'rec');
+    const recOpen = !st.opened.has(cur.id + 'rec-closed');
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>
-      ${settleHtml(cur, S)}
+      ${ending ? `<p class="lead">${esc(ending.replaceAll('{staff}', S.staff))}</p>` : ''}
+      ${echoHtml(cur.echo ?? ctx.backend.echoOf(cur))}
       <div class="row" style="margin:16px 0">${S.buttons}</div>${vsHtml}
-      <p><button class="ghost recordbtn" data-act="fn" data-key="rec">${esc(recOpen ? U.report.hide_record : U.report.full_record)}</button></p>
+      <p><button class="ghost recordbtn" data-act="fn" data-key="rec-closed">${esc(recOpen ? U.report.hide_record : U.report.full_record)}</button></p>
       ${recOpen ? `<div class="fullrecord">
       ${S.stay != null ? `<p class="muted">${esc(U.report.historical_stay.replace('{n}', r1(S.stay)))}</p>` : ''}
       ${S.before}
       <div class="row sp sec"><span>${U.report.timeline}</span><span class="tlf">${tlButtons}</span></div><ul class="tl f-${tlf}">${tl}</ul>
+      <p class="muted">${esc(U.share.fiction_note)}</p>
       ${S.afterRecord}${S.warn}
       ${S.numbers}
       ${bodyHtml()}
       ${S.hints.map((h) => `<div class="hint">${esc(h)}</div>`).join('')}
       ${notes.length ? `<div class="sec">${U.report.footnotes}</div><ol class="notes">${notes.map((x) => `<li class="muted">${esc(x.text)}</li>`).join('')}</ol>` : ''}
-      </div>` : ''}`;
+      </div>` : ''}
+      ${settleHtml(cur, S)}`;
     // the notes are numbered in the order they are first met on the page, so they are listed with the record they belong to
     return page;
   }

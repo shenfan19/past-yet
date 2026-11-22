@@ -52,7 +52,16 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
       const base = loadLocale(stem, I.fallback);
       if (lang === I.fallback) return [key, await base];
       const [fallback, selected] = await Promise.all([base, loadLocale(stem, lang)]);
-      return [key, merge(fallback, selected)];
+      const combined = merge(fallback, selected);
+      if (key === 'text') {
+        for (const [id, card] of Object.entries(selected.catalog ?? {})) {
+          const localized = combined.catalog[id];
+          // The ordered return paragraphs and matching excerpts belong to one version of the story.
+          if (card.story_prose) localized.story_prose = card.story_prose;
+          else if (card.story) delete localized.story_prose;
+        }
+      }
+      return [key, combined];
     }));
     return { lang, texts: Object.fromEntries(entries) };
   });

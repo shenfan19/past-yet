@@ -16,14 +16,17 @@ export function createShare(X) {
   const homeAchievement = () => H.home.achieved.replace('{n}', D.get('config.office.home_cost'));
   const fileName = (d) => d === null ? C.home_file_name : C.file_name;
 
-  // The lines of the record the card keeps: every line that won a star, then the lines written for this employee, then the lines of history by importance,
-  // up to config.share.record_lines, told in the order they happened.
-  function pickLines(timeline) {
-    const N = C.record_lines;
-    const rank = (t) => (t.star ? 0 : t.own ? 1 : t.tag === 'history' ? 2 : 3);
-    const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => t.kind !== 'remark' && rank(t) < 3)
+  // Keep a few short passages from the record, in the order they happened.
+  function pickLines(timeline, points) {
+    const N = Math.min(C.record_lines, 3);
+    const rank = (t) => (t.star ? 0 : t.own ? 1 : t.kind === 'vignette' ? 2 : t.tag === 'history' ? 3 : 4);
+    const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => t.kind !== 'remark' && rank(t) < 4)
       .sort((a, b) => rank(a.t) - rank(b.t) || (b.t.importance || 0) - (a.t.importance || 0) || a.i - b.i).slice(0, N).sort((a, b) => a.i - b.i);
-    return chosen.map(({ t }) => ({ text: t.text, star: !!t.star, history: t.tag === 'history' }));
+    return chosen.map(({ t }) => {
+      const passage = (t.kind === 'point' && t.star ? points?.[t.id] : null) ?? t.text;
+      const text = passage.match(/^.*?(?:[。！？]|[.!?](?=\s|$))/u)?.[0] ?? passage;
+      return { text, star: !!t.star, history: t.tag === 'history' };
+    });
   }
   // the echo of a trip, 5.15 of the story outline: the recorded line of the person and who said it, when and where
   const echoOf = (d) => {
@@ -57,13 +60,16 @@ export function createShare(X) {
       const c = T.catalog[d.eraId];
       const ev = D.get('catalog.events').find((x) => x.id === d.eraId);
       const o = R.outcomeId;
+      const prose = c.story_prose;
+      const excerpt = o !== 'desync' && Object.entries(prose?.excerpts ?? {}).find(([id]) =>
+        R.timeline?.some((t) => t.kind === 'point' && t.id === id && t.star))?.[1];
       return {
         name: c.name,
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
-        text: R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
-        lines: R.timeline ? pickLines(R.timeline) : null,
+        text: excerpt ? [excerpt.replaceAll('{staff}', who)] : R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
+        lines: excerpt ? [] : R.timeline ? pickLines(R.timeline, prose?.points).map((line) => ({ ...line, text: line.text.replaceAll('{staff}', who) })) : null,
         echo: echoOf(d),
-        points: R.timeline ? [] : (R.points || []).map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
+        points: excerpt || R.timeline ? [] : (R.points || []).map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
       };
     }
     return {
