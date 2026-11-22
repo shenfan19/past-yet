@@ -315,7 +315,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     eraInfo: (id) => info[id],
     // the identity an employee would take in a place, and the tags of the employee there, for the dispatch sheet and the checks
     identityOf: (id, staffId) => identityOf(info[id] ? id : null, lightEvent(id), staffId),
-    staffTags: (id, staffId) => [...sim.staffTags(D, staffId, info[id] ? eras[id].place : placeOfEvent(lightEvent(id)))],
+    // a saved report may name an employee who is no longer on the roster, such as a test employee of the developer mode: they have no tags
+    staffTags: (id, staffId) => (D.get('staff.staff')[staffId] ? [...sim.staffTags(D, staffId, info[id] ? eras[id].place : placeOfEvent(lightEvent(id)))] : []),
     staffStats: (staffId, mood = null) => sim.staffAttrs(D, staffId, mood, gearOf(staffId)),
     staffAttrMax: sim.STAFF_ATTR_MAX,
     staffBase: (staffId) => sim.staffAttrs(D, staffId, null, [], { boost: false }),

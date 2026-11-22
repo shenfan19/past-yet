@@ -408,10 +408,11 @@ let storyLine = '';
       if (isObj(prose.outcomes) && !Object.keys(prose.outcomes).some((id) => id !== 'all')) fail(where + '.outcomes needs a paragraph for at least one point');
       shapes[lang] = shape(prose);
     }
-    // English and Chinese are both written, field for field; another language either matches them or is left out and reads English
+    // Chinese is written first and is the master; English and the other languages follow once the Chinese is approved. A language that has not
+    // been written leaves the block out and tells the trip in plain lines; one that has must match the Chinese field for field and key for key.
     if (Object.keys(shapes).length) {
-      for (const lang of ['en', 'zh']) if (!shapes[lang]) fail(ev.id + ' story_prose is written in ' + Object.keys(shapes).join(', ') + ' but not in ' + lang);
-      for (const [lang, sh] of Object.entries(shapes)) if (shapes.en && sh !== shapes.en) fail(ev.id + ' ' + lang + ' story_prose does not have the same fields and keys as en');
+      if (!shapes.zh) fail(ev.id + ' story_prose is written in ' + Object.keys(shapes).join(', ') + ' but not in zh, which is written first');
+      else for (const [lang, sh] of Object.entries(shapes)) if (sh !== shapes.zh) fail(ev.id + ' ' + lang + ' story_prose does not have the same fields and keys as zh');
     }
   }
   const modelOf = (era) => (era && eraDir[era] ? (eraModel[era] ?? modelOfDir(eraDir[era])).raw : null);
@@ -472,6 +473,10 @@ let storyLine = '';
   const noEcho = rows.filter((row) => row.missingTiers.length);
   storyLine += `
 open stories without the echoes full and none: ${noEcho.length}/${open.length}${noEcho.length ? ', the first ' + noEcho.slice(0, 8).map((row) => row.event).join(', ') : ''}`;
+  // every open story with a scene is told by its Chinese story prose; the list is the work left, and the story agent takes its batches from it
+  const noProse = open.filter((event) => event.scene && !event.text?.zh?.story_prose).map((event) => event.id);
+  storyLine += `
+open stories without Chinese story prose: ${noProse.length}/${open.filter((event) => event.scene).length}${noProse.length ? ': ' + noProse.join(', ') : ''}`;
   if (storyDetails) storyLine += '\n' + rows.map(({ event, owner, gaps }) =>
     `  ${event} (${owner || 'unlinked'}): ${gaps.length ? gaps.join('; ') : 'structural checks clear; editorial review still required'}`).join('\n');
 }

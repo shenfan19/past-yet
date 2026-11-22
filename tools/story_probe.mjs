@@ -23,7 +23,7 @@ for (const s of staff) {
   const ident = B.identityOf(id, s);
   console.log(`\n=== ${name} (${s}) identity=${ident.id} face=${ident.face} tags=${B.staffTags(id, s).filter((t) => !t.startsWith('trait_')).join(',')}`);
   if (!isEra) { const r = B.runLight(id, s, seed, items); console.log('  journey', JSON.stringify(r.journey), 'stars', r.stars, 'vignette', r.vignette, 'outcome', r.outcome); // a card with story prose shows the paragraphs the report gives this trip, so they are read in place of the plain lines of the won points
-    const P = storyProse(D.get('text.catalog')[id]?.story_prose, { report: r }, name, new Set(B.staffTags(id, s)));
+    const P = storyProse(D.get('text.catalog')[id]?.story_prose, { report: r }, name, () => B.staffTags(id, s));
     for (const t of r.timeline || []) console.log('   ', t.after ? 'AFTER' : '', t.year, '[' + (t.tag || t.kind) + ']', t.star ? '★' : '', (t.kind === 'point' && t.star && P?.points[t.id]) || t.text);
     if (P) { console.log('  prose ending:', P.ending); console.log('  prose excerpt:', P.excerpt); }
     continue; }

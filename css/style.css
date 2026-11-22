@@ -134,18 +134,24 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .stepper button { width: 28px; padding: 2px 0; }
 .stepper .n { min-width: 36px; text-align: center; font-variant-numeric: tabular-nums; }
 .tl { list-style: none; padding: 0; margin: 0; }
-/* History and travel prose share a column beside the time axis. */
+/* The record is one list in time order around a time axis: history on the left, leaning towards the axis, the employee on the right,
+   the date on the axis between them. The one emphasis is a won star. On a narrow screen both sides stand right of the axis, so the employee has a thin frame. */
 .tl { position: relative; }
-.tl::before { content: ""; position: absolute; left: 2.6em; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--line); }
-.tl li { position: relative; display: grid; grid-template-columns: 5.2em minmax(0, 1fr); align-items: start; padding: 4px 0; line-height: 1.6; }
-.tl li .what { grid-column: 2; grid-row: 1; text-align: left; }
-.tl li.history .what { color: var(--ink2); }
-.tl li .when { grid-column: 1; grid-row: 1; position: relative; z-index: 1; margin: 2px auto 0; padding: 0 6px; font-size: 11.5px; color: var(--ink2); background: var(--paper); border-radius: 9px; text-align: center; font-variant-numeric: tabular-nums; max-width: 100%; line-height: 1.35; }
+.tl::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--line); }
+.tl li { position: relative; display: grid; grid-template-columns: 1fr 7.6em 1fr; align-items: start; padding: 4px 0; line-height: 1.6; }
+.tl li .what.l { text-align: right; padding-right: 2px; }
+.tl li .what.r { text-align: left; padding-left: 2px; }
+.tl li .when { position: relative; z-index: 1; margin: 2px auto 0; padding: 0 6px; font-size: 11.5px; color: var(--ink2); background: var(--paper); border-radius: 9px; text-align: center; font-variant-numeric: tabular-nums; max-width: 100%; line-height: 1.35; }
 .tl li .when:empty { width: 9px; height: 9px; padding: 0; margin-top: 8px; border-radius: 50%; background: var(--line); }
 .tl li.year { display: block; text-align: center; padding: 12px 0 4px; }
 .tl li.year .when { display: inline-block; font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: .08em; padding: 1px 10px; border: 1px solid var(--line); }
 .tl.f-history li.travel, .tl.f-travel li.history { display: none; }
 @media (max-width: 560px) {
+  .tl::before { left: 2.6em; }
+  .tl li { grid-template-columns: 5.2em 1fr; }
+  .tl li .what.l:empty, .tl li .what.r:empty { display: none; }
+  .tl li .when { grid-column: 1; grid-row: 1; margin-left: 0; }
+  .tl li .what.l, .tl li .what.r { grid-column: 2; grid-row: 1; text-align: left; padding: 0 0 0 4px; }
   .tl li .bubble { display: block; border: 1px solid var(--line); border-radius: 4px 12px 12px 12px; padding: 2px 8px; }
 }
 /* the shift of the timeline: a card of its own, the left column the dim paper of what was, the right the bright card of this timeline */

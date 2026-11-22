@@ -62,7 +62,7 @@ export function createShare(X) {
       const ev = D.get('catalog.events').find((x) => x.id === d.eraId);
       const o = R.outcomeId;
       // the same story prose the report reads, see storyProse in narrate.js
-      const prose = storyProse(c.story_prose, d, who, new Set(ctx.backend.staffTags(d.eraId, d.spec.staffId)));
+      const prose = storyProse(c.story_prose, d, who, () => ctx.backend.staffTags(d.eraId, d.spec.staffId));
       const excerpt = prose?.excerpt;
       return {
         name: c.name,

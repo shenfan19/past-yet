@@ -362,12 +362,15 @@ export function keyByTags(map, tags) {
 // What the story prose of a catalogue event, text.<language>.story_prose in cards/README.md, gives one trip: the paragraph under the stamp, the
 // paragraph of each won point and the excerpt of the share card. A paragraph of a point is one string, or a mapping keyed by tags like the remarks,
 // read for the employee. The report, the share card and tools/story_probe.mjs all read it here, so they tell the same story.
-// d: the trip, with its report and, when it ended early, recalled or evacuation; staff: the name of the employee; tags: what the employee is
-export function storyProse(prose, d, staff, tags = new Set()) {
+// d: the trip, with its report and, when it ended early, recalled or evacuation; staff: the name of the employee;
+// tagsOf: what the employee is, a function asked only when a paragraph is written in variants, so a report that needs no tags never looks them up
+export function storyProse(prose, d, staff, tagsOf = () => []) {
   if (!prose) return null;
+  let tags = null;
+  const tagSet = () => (tags ??= new Set(tagsOf()));
   const R = d.report;
   const fill = (x) => (typeof x === 'string' ? x.split('{staff}').join(staff) : null);
-  const variant = (x) => (typeof x === 'string' ? x : x && typeof x === 'object' ? x[keyByTags(x, tags)] : null);
+  const variant = (x) => (typeof x === 'string' ? x : x && typeof x === 'object' ? x[keyByTags(x, tagSet())] : null);
   const won = (id) => (R.points || []).some((p) => p.id === id && p.hit && !p.cut);
   const points = Object.fromEntries(Object.entries(prose.points ?? {}).filter(([id]) => won(id)).map(([id, x]) => [id, fill(variant(x))]).filter(([, x]) => x));
   const rejected = R.journey?.accepted === false;

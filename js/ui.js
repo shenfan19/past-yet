@@ -965,7 +965,7 @@ export function createUI(D, ctx, DEV = false) {
     const spec = cur.spec;
     const R = cur.report;
     // the story prose of the card, read for this trip and this employee, see storyProse in narrate.js
-    const prose = cur.light ? storyProse(T.catalog[cur.eraId].story_prose, cur, S.staff, new Set(ctx.backend.staffTags(cur.eraId, spec.staffId))) : null;
+    const prose = cur.light ? storyProse(T.catalog[cur.eraId].story_prose, cur, S.staff, () => ctx.backend.staffTags(cur.eraId, spec.staffId)) : null;
     const ending = prose?.ending;
     const notes = [];
     const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
@@ -978,8 +978,9 @@ export function createUI(D, ctx, DEV = false) {
       if (!m || !/\d|十|廿|元|初|望|朔|晦/.test(m[1]) || !/[年月日天]|day|Day|\d{3,4}|January|February|March|April|May|June|July|August|September|October|November|December/.test(m[1])) return ['', text];
       return [m[1], text.slice(m[0].length)];
     };
-    // The date sits on the axis and both historical and travel prose sit alongside it.
-    const cell = (history, body) => `<span class="when">%W</span><div class="what">${history ? body : `<div class="bubble">${body}</div>`}</div>`;
+    // A time axis down the middle: history on the left, leaning towards the axis, the employee on the right in a bubble, the date on the axis between them.
+    // On a narrow screen both sides stand right of the axis. Another employee met in the same time can later take the right side in a colour of their own.
+    const cell = (history, body) => (history ? `<div class="what l">${body}</div><span class="when">%W</span><div class="what r"></div>` : `<div class="what l"></div><span class="when">%W</span><div class="what r"><div class="bubble">${body}</div></div>`);
     const tlLine = (t) => {
       const vignette = prose && t.kind === 'vignette' ? T.catalog[cur.eraId].vignettes?.[R.vignette] : null;
       const [lead, rest] = splitLead(vignette?.replaceAll('{staff}', S.staff) ?? t.text);

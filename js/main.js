@@ -203,6 +203,12 @@ function upgrade(S, raw) {
   for (const list of ['antiques', 'locks']) S[list] = S[list].filter((id) => (id in antiques) || (park('antiques', { id, list }), false));
   S.visited = S.visited.filter((id) => places.has(id));
   S.dispatches = S.dispatches.filter((d) => (places.has(d.eraId) && d.spec.staffId in S.staff) || (park('dispatches', d), false));
+  // the log of finished trips likewise: a trip to a place this game does not have, such as a draft story played in the developer mode, waits aside,
+  // and comes back into the log, in the order the trips came home, once the place is there again
+  const tripBack = (S.parked.trips || []).some((t) => places.has(t.place));
+  back('trips', (t) => places.has(t.place), (t) => S.trips.push(t));
+  S.trips = (S.trips || []).filter((t) => places.has(t.place) || (park('trips', t), false));
+  if (tripBack) S.trips.sort((a, b) => a.back - b.back || a.day - b.day);
   if (S.startStaff && !S.startStaff.offer.every((id) => id in staff)) S.startStaff = base.startStaff;
   S.version = VERSION;
   applyFounder(D, S.founder);
