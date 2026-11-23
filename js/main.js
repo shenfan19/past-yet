@@ -27,21 +27,12 @@ const D = await loadData(async (p) => {
   // a failure here would leave the page blank, so the box of index.html shows it
   .catch((e) => { window.__bootfail?.(e.stack || e); throw e; });
 
-// The test employees, King and V, cards with dev_only: they are in the agency only with ?devtools, and never in a save,
-// so a save written in the developer mode still opens in the normal game, and the normal game never shows them.
+// The test employees, King and V, cards with dev_only: they are in the agency only with ?devtools. A save written there keeps them and their trips;
+// the normal game, which does not load their cards, sets them and their trips aside in S.parked, and the developer mode puts them back.
 const staffCards = D.get('staff.staff');
 const DEV_STAFF = Object.keys(staffCards).filter((id) => staffCards[id].dev_only);
 const devIds = DEV_STAFF;
 const devStaffEntry = () => ({ restUntil: 0, gear: [], hired: true, favor: D.get('config.favor.start'), growth: {} });
-// a save as it is written: without the test employees and what they did
-function withoutDevStaff(S) {
-  if (!DEV_STAFF.length) return S;
-  const out = { ...S, staff: Object.fromEntries(Object.entries(S.staff).filter(([id]) => !DEV_STAFF.includes(id))) };
-  out.dispatches = (S.dispatches || []).filter((d) => !DEV_STAFF.includes(d.spec?.staffId));
-  out.trips = (S.trips || []).filter((t) => !DEV_STAFF.includes(t.staffId));
-  if (DEV_STAFF.includes(S.secretary)) out.secretary = null;
-  return out;
-}
 // the test employees join a save read in the developer mode, always hired and ready
 function withDevStaff(S) {
   for (const id of devIds) S.staff[id] ||= devStaffEntry();
@@ -202,14 +193,21 @@ function upgrade(S, raw) {
   back('staff', (x) => x.id in staff, (x) => { const { id, ...st } = x; S.staff[id] = st; });
   for (const list of ['antiques', 'locks']) S[list] = S[list].filter((id) => (id in antiques) || (park('antiques', { id, list }), false));
   S.visited = S.visited.filter((id) => places.has(id));
-  S.dispatches = S.dispatches.filter((d) => (places.has(d.eraId) && d.spec.staffId in S.staff) || (park('dispatches', d), false));
-  // the log of finished trips likewise: a trip to a place this game does not have, such as a draft story played in the developer mode, waits aside,
-  // and comes back into the log, in the order the trips came home, once the place is there again
-  const tripBack = (S.parked.trips || []).some((t) => places.has(t.place));
-  back('trips', (t) => places.has(t.place), (t) => S.trips.push(t));
-  S.trips = (S.trips || []).filter((t) => places.has(t.place) || (park('trips', t), false));
+  // a trip under way or a kept report waits aside with its place or employee, and returns with them, as the trips of the log below
+  const dispatchFits = (d) => places.has(d.eraId) && (d.spec.staffId in S.staff || DEV_STAFF.includes(d.spec.staffId));
+  back('dispatches', dispatchFits, (d) => S.dispatches.push(d));
+  S.dispatches = S.dispatches.filter((d) => dispatchFits(d) || (park('dispatches', d), false));
+  // the log of finished trips likewise: a trip to a place this game does not have, such as a draft story played in the developer mode,
+  // or by an employee it does not have, such as V or King outside the developer mode, waits aside,
+  // and comes back into the log, in the order the trips came home, once the place and the employee are there again
+  const tripFits = (t) => places.has(t.place) && (t.staffId in S.staff || DEV_STAFF.includes(t.staffId));
+  const tripBack = (S.parked.trips || []).some(tripFits);
+  back('trips', tripFits, (t) => S.trips.push(t));
+  S.trips = (S.trips || []).filter((t) => tripFits(t) || (park('trips', t), false));
   if (tripBack) S.trips.sort((a, b) => a.back - b.back || a.day - b.day);
   if (S.startStaff && !S.startStaff.offer.every((id) => id in staff)) S.startStaff = base.startStaff;
+  // a secretary set aside with the employees, such as a test employee outside the developer mode, leaves the post
+  if (S.secretary && !(S.secretary in S.staff)) S.secretary = null;
   S.version = VERSION;
   applyFounder(D, S.founder);
   return S;
@@ -239,14 +237,14 @@ const ctx = {
   settings,
   audio: createAudio(D, settings),
   S: () => S,
-  // the save as it is written and exported, without the test employees
-  saved: () => withoutDevStaff(S),
+  // the save as it is written and exported
+  saved: () => S,
   now: () => Date.now(),
   backend,
   era: (id) => backend.eraInfo(id),
   eraSource: (id) => D.get('era_src.' + id),
   save() {
-    return saveStorage.write(JSON.stringify(withoutDevStaff(S)));
+    return saveStorage.write(JSON.stringify(S));
   },
   // replaces the whole game from a loaded save, and says whether the file looked like one
   replace(obj) {
@@ -255,6 +253,10 @@ const ctx = {
     S = withDevStaff(updateUnfinishedCrew(obj));
     this.save();
     return true;
+  },
+  // trips of the loaded save that wait aside, because their place or employee is not in this game, such as V's outside the developer mode
+  unkeptTrips() {
+    return (S.parked?.trips || []).length;
   },
   reset() {
     S = fresh();

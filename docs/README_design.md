@@ -203,6 +203,7 @@ For a small story, Auto estimates star outcomes using the dispatch seed. It cons
 - `node tools/check_logic.mjs` audits traits, employees, scenes and items: every point kind has a trait that gives it and one that costs it, every scene can be three starred by someone on the roster, and no requirement is gated by equipment the text does not name.
 - `node tools/check_i18n.mjs` and `node tools/check_boundary.mjs` check the languages and the engine boundary.
 - `node tools/build_data.mjs` fails on incomplete story prose: an opening, a paragraph for every point, the endings the scene can reach, excerpts quoted from every variant of their paragraph, and, in every other language that has it, the same fields and keys as the Chinese, which is written first. `node tools/check_logic.mjs` checks the person tags that key its variants, and `node tools/story_probe.mjs <id>` prints the paragraphs, the ending and the excerpt each employee gets.
+- `node tools/story_review_save.mjs [eventId,eventId]` drives the real page in `?devtools`. It sends V, King, a reader for each written variant and one trip that misses the first point of `outcomes` to every story with story prose, brings them home and writes `temp_story_review/past-yet-come-save.json` to import from Settings in `?devtools`.
 - `node tools/ui_check.mjs` drives the page with Playwright through dispatching, shopping, antiques, auto mode, the map, the axis, themes, languages and the settings page.
 - `node tools/headless.mjs` runs the simulation without a browser and compares kits and staff from the same seeds.
 

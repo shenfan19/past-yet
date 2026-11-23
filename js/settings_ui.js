@@ -76,7 +76,8 @@ export function createSettingsPage(X) {
       const obj = JSON.parse(text);
       if (!ctx.replace(obj)) throw new Error('bad save');
       const stored = await ctx.save();
-      alert(stored ? P.data.import_ok : P.data.import_memory);
+      const unkept = ctx.unkeptTrips();
+      alert((stored ? P.data.import_ok : P.data.import_memory) + (unkept ? '\n' + P.data.import_unkept.replace('{n}', unkept) : ''));
       return true;
     } catch (e) {
       alert(P.data.import_bad);
