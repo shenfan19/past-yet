@@ -2,7 +2,7 @@ order: 156
 events:
   poe_baltimore:
     order: 120
-    build_step: 4
+    build_step: 3
     year: 1849
     date: '1849-09-20'
     stay: 1
@@ -30,6 +30,34 @@ events:
         place: "Baltimore"
         figure: "Edgar Allan Poe"
         story: 'On 27 September 1849 Edgar Allan Poe left Richmond for his home at Fordham in New York, and came to Baltimore the next day. His whereabouts for the next five days are uncertain. On 3 October, election day, he was found in great distress at Ryan''s Fourth Ward polls, and the printer Joseph Walker sent a note to Joseph Snodgrass. He was taken to Washington College Hospital, kept from visitors, and died there before dawn on 7 October, aged forty. The cause is still unknown. His aunt and mother-in-law Maria Clemm learned of it from a newspaper.'
+        story_prose:
+          opening:
+            - 'Baltimore, late September 1849. The writer Edgar Allan Poe, forty, wrote The Raven, and writes tales of horror and of detection. This summer he lectured in Richmond to raise money for a magazine; on 27 September he set out for his home at Fordham in New York, and the next day he reached Baltimore. Waiting for him at Fordham is his aunt and mother-in-law, Maria Clemm.'
+            - 'In history, for the next five days there is no reliable record of where he was. On 3 October, election day, the printer Joseph Walker found him in great distress at the Fourth Ward polls and sent a note asking Dr Snodgrass to come; he was taken to Washington College Hospital and put in the room for patients brought in drunk, drifted in and out of consciousness for days, was kept from visitors, and died before dawn on the 7th, the cause still unknown. Two days later Maria Clemm read of his death in the paper at Fordham and wrote to Baltimore to ask. In this branch, a porter carries trunks on the wharf, a tavern keeper on Lombard Street counts his barrels, and a night porter keeps the ward.'
+            - 'A few kinds of people can help on this trip: someone who knows medicine with a firm will, or someone methodical or watchful with a firmer one, to take up the note asking for help and see him safely from the polls to the hospital; someone trained in nursing or care, a courier or a journalist, someone kind, patient or methodical, or someone with a notebook and pen and a fair wit, to get word to Maria Clemm; a doctor with a quick mind and a strong will, or someone who knows medicine and carries the nano medical kit, to see him through the delirium.'
+          outcomes:
+            all: 'At the end of October Poe left the hospital and went north to his home in New York. At the door of the little house at Fordham, Maria Clemm stood with the letter from Baltimore in her hand, watching the end of the road.'
+            p3: 'At the end of October Poe left the hospital to go north to his home in New York. Leaning on his cane, he paused on the hospital steps and buttoned his collar.'
+            p2: 'Before dawn on 7 October Poe died in the hospital. Maria Clemm''s answer had already reached the ward, and lay on the windowsill of that room.'
+            p1: 'Before dawn on 7 October Poe died at Washington College Hospital, aged forty. The next day he was buried in his grandfather''s lot in Baltimore; few people came, and it was over in minutes.'
+          none: 'Before dawn on 7 October Poe died at Washington College Hospital, and the cause is still unknown. Two days later Maria Clemm read the news in the paper at Fordham and sat down to write to Baltimore, asking them to hide nothing from her.'
+          desync: 'On 3 October the note asking for help passed through a few hands in the crowd below the polls and ended up in somebody''s pocket. When {staff} was recalled, a man was still slumped on the bench at the foot of the stairs, his hat over half his face.'
+          not_admitted: '{staff} never got near him, and only carried trunks on the wharf for a few days. The steamers from Richmond tied up one after another, and among the passengers coming off was a thin man with a cane, walking slowly.'
+          points:
+            p1:
+              class_medical: 'On the afternoon of 3 October the ground floor below the Fourth Ward polls is packed with people, the smell of drink mixed with the smell of damp wood. A note comes out from the foot of the stairs and passes through a few hands. {staff}, who knows medicine, takes the note, reads whom it asks for, asks the way until Dr Snodgrass is found, and with him and Poe''s uncle brings a carriage and helps Poe up from the bench at the foot of the stairs. Poe leans in the corner of the carriage, saying things nobody can make out. As the carriage moves off, {staff} pulls the curtain half down over the window, shutting out the faces craning in from the door of the polls.'
+              trait_vigil: 'On the afternoon of 3 October the ground floor below the Fourth Ward polls is packed with people, the smell of drink mixed with the smell of damp wood. A note comes out from the foot of the stairs and passes through a few hands. {staff}, who has been watching the stairs, takes the note, reads whom it asks for, asks the way until Dr Snodgrass is found, and with him and Poe''s uncle brings a carriage and helps Poe up from the bench at the foot of the stairs. Poe leans in the corner of the carriage, saying things nobody can make out. As the carriage moves off, {staff} pulls the curtain half down over the window, shutting out the faces craning in from the door of the polls.'
+              else: 'On the afternoon of 3 October the ground floor below the Fourth Ward polls is packed with people, the smell of drink mixed with the smell of damp wood. A note comes out from the foot of the stairs and passes through a few hands. {staff}, methodical, takes the note, reads whom it asks for, asks the way until Dr Snodgrass is found, and with him and Poe''s uncle brings a carriage and helps Poe up from the bench at the foot of the stairs. Poe leans in the corner of the carriage, saying things nobody can make out. As the carriage moves off, {staff} pulls the curtain half down over the window, shutting out the faces craning in from the door of the polls.'
+            p2:
+              class_medical: 'On 4 October the ward is closed to visitors, everyone who comes to ask is kept downstairs, and at Fordham nobody yet knows where he is. {staff}, trained in nursing and allowed into the ward, finds out what the hospital knows, what day he was brought in, which room he is in, who is looking after him, puts it in a letter with an address to write back to, and gets it to the post office ahead of the northbound mail. The post office clerk stamps the envelope. It is addressed to Maria Clemm at Fordham, and he drops it into the bag for New York.'
+              class_press: 'On 4 October the ward is closed to visitors, everyone who comes to ask is kept downstairs, and at Fordham nobody yet knows where he is. {staff}, a former journalist who knows how news travels fastest, finds out what the hospital knows, what day he was brought in, which room he is in, who is looking after him, puts it in a letter with an address to write back to, and gets it to the post office ahead of the northbound mail. The post office clerk stamps the envelope. It is addressed to Maria Clemm at Fordham, and he drops it into the bag for New York.'
+              class_travel: 'On 4 October the ward is closed to visitors, everyone who comes to ask is kept downstairs, and at Fordham nobody yet knows where he is. {staff}, used to running errands and knowing when the northbound mail goes, finds out what the hospital knows, what day he was brought in, which room he is in, who is looking after him, puts it in a letter with an address to write back to, and gets it to the post office ahead of the northbound mail. The post office clerk stamps the envelope. It is addressed to Maria Clemm at Fordham, and he drops it into the bag for New York.'
+              else: 'On 4 October the ward is closed to visitors, everyone who comes to ask is kept downstairs, and at Fordham nobody yet knows where he is. {staff}, careful, finds out what the hospital knows, what day he was brought in, which room he is in, who is looking after him, puts it in a letter with an address to write back to, and gets it to the post office ahead of the northbound mail. The post office clerk stamps the envelope. It is addressed to Maria Clemm at Fordham, and he drops it into the bag for New York.'
+            p3: 'On the night of 5 October a single lamp burns very low in the barred room. Poe talks to the wall, sits up, lies down again, and will not touch the water held to his lips. {staff}, who knows medicine, sits by the bed taking his pulse now and then, and whenever he falls quiet brings the rim of the cup to his mouth for a small sip. Towards dawn Poe falls asleep. Some mornings later he sits up by himself, asks for a cup of water, drinks it holding it himself, and puts the cup back on the windowsill.'
+          excerpts:
+            p3: 'Towards dawn Poe falls asleep. Some mornings later he sits up by himself, asks for a cup of water, drinks it holding it himself, and puts the cup back on the windowsill.'
+            p2: 'The post office clerk stamps the envelope. It is addressed to Maria Clemm at Fordham, and he drops it into the bag for New York.'
+            p1: 'Poe leans in the corner of the carriage, saying things nobody can make out. As the carriage moves off, {staff} pulls the curtain half down over the window, shutting out the faces craning in from the door of the polls.'
         relic: "A walking cane"
         relic_desc: "A plain cane with a worn handle."
         points:
@@ -60,6 +88,34 @@ events:
         place: "巴尔的摩"
         figure: "埃德加·爱伦·坡"
         story: '1849 年 9 月 27 日，埃德加·爱伦·坡离开里士满，要回纽约福德姆的家，第二天到了巴尔的摩。此后直到 10 月 3 日，他的行踪没有可靠记载。10 月 3 日是选举日，有人在瑞安那处第四选区投票点发现他处境不妙，印刷工约瑟夫·沃克写条子请约瑟夫·斯诺德格拉斯来。他被送进华盛顿学院医院，不许探视，7 日天亮前在那里去世，四十岁，死因至今不明。他的姨母兼岳母玛丽亚·克莱姆是从报上读到的。'
+        story_prose:
+          opening:
+            - '1849 年 9 月底，巴尔的摩。四十岁的作家埃德加·爱伦·坡写过《乌鸦》，也写恐怖和推理故事。这年夏天他在里士满讲演，为办杂志筹钱，9 月 27 日动身回纽约福德姆的家，第二天到了巴尔的摩。福德姆家里等他的，是姨母兼岳母玛丽亚·克莱姆。'
+            - '史实里，此后五天他的行踪没有可靠记载。10 月 3 日是选举日，印刷工约瑟夫·沃克在第四选区的投票点发现他处境很糟，写条子请斯诺德格拉斯医生来；他被送进华盛顿学院医院收醉汉的病房，一连几天时醒时昏，不许探视，7 日天亮前去世，死因至今不明。两天后，玛丽亚·克莱姆在福德姆从报上读到死讯，写信去巴尔的摩打听。在这条分支里，码头上有个背箱子的脚夫，隆巴德街有个数酒桶的酒馆老板，病区里有个守夜的杂役。'
+            - '这一趟用得上几种人：懂医护、意志够硬的人，或者有条理、守得住、意志更硬的人，接住那张求助条，护住他从投票点到医院的那段路；懂护理、干过照护、跑过腿或当过记者的人，心善、耐心、有条理的人，或者带着笔记本和笔、脑子不慢的人，把消息送到玛丽亚·克莱姆手上；当医生、脑子快又意志硬的人，或者懂医护、带着纳米医疗箱的人，守着他熬过谵妄。'
+          outcomes:
+            all: '十月底，坡出了院，往北回纽约的家。福德姆的小屋门口，玛丽亚·克莱姆手里攥着那封从巴尔的摩寄来的信，朝路口望着。'
+            p3: '十月底，坡出了院，往北回纽约的家。他拄着手杖，在医院门口的台阶上停了一下，把领口扣好。'
+            p2: '10 月 7 日天亮前，坡在医院里去世。玛丽亚·克莱姆的回信已经送到了病区，搁在那间屋子的窗台上。'
+            p1: '10 月 7 日天亮前，坡在华盛顿学院医院去世，四十岁。第二天他葬在巴尔的摩他祖父的那块地里，来送的人很少，几分钟就完了。'
+          none: '10 月 7 日天亮前，坡在华盛顿学院医院去世，死因至今不明。两天后，玛丽亚·克莱姆在福德姆读到报上的消息，提笔给巴尔的摩写信，请人什么都不要瞒她。'
+          desync: '10 月 3 日，那张求助条在投票点楼下的人群里传了几手，不知落进了谁的口袋。{staff}被召回时，楼梯口那张长凳上还靠着一个人，帽子盖住了半张脸。'
+          not_admitted: '{staff}没能接近他，只在码头上帮人搬过几天箱子。里士满来的汽船一船船靠岸，下船的人里有个拄手杖的瘦个子，走得很慢。'
+          points:
+            p1:
+              class_medical: '10 月 3 日下午，第四选区投票点楼下挤满了人，酒味和湿木头味混在一起。一张条子从楼梯口传出来，在几只手里转了一圈。{staff}懂医护，接过条子，看清了上面要请的人，一路问着找到斯诺德格拉斯医生，又陪着他和坡的姨父叫来一辆马车，把坡从楼梯口的长凳上扶起来。坡靠在车厢的角落里，嘴里说着谁也听不清的话。马车动起来，{staff}把车窗的布帘拉下一半，挡住了投票点门口那些探过来的脸。'
+              trait_vigil: '10 月 3 日下午，第四选区投票点楼下挤满了人，酒味和湿木头味混在一起。一张条子从楼梯口传出来，在几只手里转了一圈。{staff}一直留神着楼梯口，接过条子，看清了上面要请的人，一路问着找到斯诺德格拉斯医生，又陪着他和坡的姨父叫来一辆马车，把坡从楼梯口的长凳上扶起来。坡靠在车厢的角落里，嘴里说着谁也听不清的话。马车动起来，{staff}把车窗的布帘拉下一半，挡住了投票点门口那些探过来的脸。'
+              else: '10 月 3 日下午，第四选区投票点楼下挤满了人，酒味和湿木头味混在一起。一张条子从楼梯口传出来，在几只手里转了一圈。{staff}有条理，接过条子，看清了上面要请的人，一路问着找到斯诺德格拉斯医生，又陪着他和坡的姨父叫来一辆马车，把坡从楼梯口的长凳上扶起来。坡靠在车厢的角落里，嘴里说着谁也听不清的话。马车动起来，{staff}把车窗的布帘拉下一半，挡住了投票点门口那些探过来的脸。'
+            p2:
+              class_medical: '10 月 4 日，病区不许探视，来打听的人都被挡在楼下，福德姆那边还不知道他在哪里。{staff}懂护理，进得了病区，问清了院方知道的情形：哪天送来的，住在哪间，谁在照看，把这些和一个能回信的地址写成一封信，赶在往北的邮班之前送到了邮局。邮局的伙计在信封上盖了一个戳。信封上写着福德姆，玛丽亚·克莱姆收，他把它丢进了往纽约去的那只邮袋。'
+              class_press: '10 月 4 日，病区不许探视，来打听的人都被挡在楼下，福德姆那边还不知道他在哪里。{staff}当过记者，知道消息怎么走得最快，问清了院方知道的情形：哪天送来的，住在哪间，谁在照看，把这些和一个能回信的地址写成一封信，赶在往北的邮班之前送到了邮局。邮局的伙计在信封上盖了一个戳。信封上写着福德姆，玛丽亚·克莱姆收，他把它丢进了往纽约去的那只邮袋。'
+              class_travel: '10 月 4 日，病区不许探视，来打听的人都被挡在楼下，福德姆那边还不知道他在哪里。{staff}跑过腿，知道往北的邮班几点走，问清了院方知道的情形：哪天送来的，住在哪间，谁在照看，把这些和一个能回信的地址写成一封信，赶在往北的邮班之前送到了邮局。邮局的伙计在信封上盖了一个戳。信封上写着福德姆，玛丽亚·克莱姆收，他把它丢进了往纽约去的那只邮袋。'
+              else: '10 月 4 日，病区不许探视，来打听的人都被挡在楼下，福德姆那边还不知道他在哪里。{staff}做事仔细，问清了院方知道的情形：哪天送来的，住在哪间，谁在照看，把这些和一个能回信的地址写成一封信，赶在往北的邮班之前送到了邮局。邮局的伙计在信封上盖了一个戳。信封上写着福德姆，玛丽亚·克莱姆收，他把它丢进了往纽约去的那只邮袋。'
+            p3: '10 月 5 日夜里，那间带铁栏的屋子只点着一盏捻得很低的灯。坡对着墙说话，一会儿坐起来，一会儿又躺下，递到嘴边的水一口也不肯碰。{staff}懂医护，守在床边，隔一阵量一回他的脉，等他安静下来的空当，就把杯沿凑到他嘴边，让他抿一小口。天快亮时，坡睡着了。几天后的一个早上，他自己坐了起来，要了一杯水，端着喝完，把杯子放回了窗台上。'
+          excerpts:
+            p3: '天快亮时，坡睡着了。几天后的一个早上，他自己坐了起来，要了一杯水，端着喝完，把杯子放回了窗台上。'
+            p2: '邮局的伙计在信封上盖了一个戳。信封上写着福德姆，玛丽亚·克莱姆收，他把它丢进了往纽约去的那只邮袋。'
+            p1: '坡靠在车厢的角落里，嘴里说着谁也听不清的话。马车动起来，{staff}把车窗的布帘拉下一半，挡住了投票点门口那些探过来的脸。'
         relic: "一根手杖"
         relic_desc: "一根朴素的手杖，握柄已被磨旧。"
         points:
@@ -82,9 +138,9 @@ events:
             who: poe_baltimore
             bio: '这条时间线里，坡挺过了 1849 年 10 月在巴尔的摩医院里的那几天。他回到纽约，又写了、编了几年。'
         vignettes:
-          wharf: '9 月 28 日，{staff}在码头上等里士满来的汽船靠岸。一个背着三只箱子的脚夫说，诺福克的船运病人，里士满的船运诗人，哪一种给的小费更少，他说不准。'
-          ballot: '10 月 2 日，{staff}看几个人在隆巴德街一家酒馆门外钉木牌。酒馆老板说明天楼上每间屋都租给了选区，啤酒由候选人请；他早学会了数酒桶，不数投票的人。'
-          ward: '10 月 4 日夜里，{staff}提一桶清水上到收醉汉的病区。守夜的杂役说，带铁栏那间屋里的先生一口水也不肯碰；他把灯捻得很低，灯一亮，那人就对着墙说话。'
+          wharf: '9 月 28 日，{staff}在码头上等里士满来的汽船靠岸，河面上一股煤烟和咸鱼的味道。一个背着三只箱子的脚夫说，诺福克的船运病人，里士满的船运诗人，哪一种给的小费更少，他说不准。'
+          ballot: '10 月 2 日，{staff}看几个人在隆巴德街一家酒馆门外钉木牌，街上的泥还没干。酒馆老板说明天楼上每间屋都租给了选区，啤酒由候选人请；他早学会了数酒桶，不数投票的人。'
+          ward: '10 月 4 日夜里，{staff}提一桶清水上到收醉汉的病区，走廊的地板一踩就响。守夜的杂役说，带铁栏那间屋里的先生一口水也不肯碰；他把灯捻得很低，灯一亮，那人就对着墙说话。'
 text:
   en:
     name: Edgar Allan Poe

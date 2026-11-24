@@ -2,7 +2,7 @@ order: 80
 events:
   gaudi_barcelona:
     order: 117
-    build_step: 4
+    build_step: 3
     year: 1926
     date: '1926-05-26'
     stay: 2
@@ -29,7 +29,40 @@ events:
         name: "Struck by a tram"
         place: "Barcelona"
         figure: "Antoni Gaudí"
-        story: 'On the evening of 7 June 1926 Antoni Gaudí, seventy three, was struck by a tram on the Gran Via in Barcelona. With no papers and in plain clothes he was taken for a beggar, and the taxis that were hailed would not stop. He died in the Hospital de la Santa Creu on 10 June and was buried at the Sagrada Família on 12 June. Domènec Sugranyes took over the direction of the works. On 20 July 1936 the workshop was set on fire, and most of the drawings and plaster models were lost.'
+        story: 'On the evening of 7 June 1926 Antoni Gaudí, seventy three, was struck by a tram on the Gran Via in Barcelona. With no papers and in plain clothes he was taken for a beggar, and the taxis that were hailed would not stop. He died in hospital on 10 June and was buried on 12 June beneath the building he had directed for forty three years. Domènec Sugranyes took over the direction of the works. On 20 July 1936 the workshop was set on fire, and most of the drawings and plaster models were lost.'
+        story_prose:
+          opening:
+            - 'Barcelona, late May 1926. The Catalan architect Antoni Gaudí, seventy three, has given his last years to a great building in the city that is still unfinished. His designs use curves taken from nature, and the workshop on the site is full of drawings and plaster models. Last year the first bell tower of the east façade was completed.'
+            - 'In history, on the evening of 7 June he was struck by a tram on the Gran Via. He had no papers and was plainly dressed, so he was taken for a beggar and left lying; the taxis that were hailed would not stop, until a civil guard made one take him to a dispensary, and from there he was moved to hospital, where he died on 10 June. His disciple Domènec Sugranyes took over the direction of the works. Ten years later, on 20 July 1936, the workshop was burned, and most of the drawings and plaster models in it were lost. In this branch, a tram conductor on the Gran Via is fond of his bell, a young mason on the site hums along with the wind, and a woman comes to sell water at noon.'
+            - 'A few kinds of people can help on this trip: someone who knows medicine and carries a first aid kit, someone kind or watchful with a strong body, or someone carrying gear that heals wounds, to get him to hospital at once from the tram tracks; someone who has worked as a carpenter or kept archives, or someone handy and methodical, to hand over the work in progress and the workshop keys properly; and the same kind of person with a little more wit or will, to persuade Sugranyes to keep photographs, dimensions and drawings of the key models in a second place.'
+          outcomes:
+            all: 'That summer Gaudí came back to the workshop. Ten years later the cupboards burned, and someone brought an album back from the second place and turned over a photograph of a model; the scale of that year was written on the back.'
+            p3: 'That summer Gaudí came back to the workshop. He sat on a low stool by the door watching the masons work, and in the afternoon the wind passed through the openings of the tower and whistled.'
+            p2: 'On 12 June Gaudí was buried. Ten years later the workshop burned, and someone brought an album back from the second place, the scale of that year still written on the backs of the photographs.'
+            p1: 'On 12 June Gaudí was buried. Sugranyes took over the direction of the works, the hammers on the site did not stop, and the masons went on building by that list.'
+          none: 'On 12 June Gaudí was buried. Ten years later, on 20 July 1936, the workshop was burned, and most of the drawings and plaster models in its cupboards were lost.'
+          desync: 'On 10 June the masons waited all morning at the workshop door; nobody knew who had the keys, and nobody could say what work was in hand. When {staff} was recalled, the young mason was sitting on a stone not yet set in place, waiting for someone to call him.'
+          not_admitted: '{staff} never got onto the site, and only rode a few times on the trams of the Gran Via. Far off among the scaffolding stood a bell tower, and on windy afternoons a faint whistle carried across several streets.'
+          points:
+            p3:
+              class_medical: 'On the evening of 7 June a tram brakes hard on the Gran Via between Bailèn and Girona streets. An old man in worn clothes lies beside the rails; a few people gather, look, and step back. {staff}, who knows medicine, is kneeling beside him within a minute, pressing on the wound and holding his head steady, and looks up to tell the people around who he is: this is Gaudí, the architect from the site. A taxi pulls up. As the car pulls away, {staff} holds his head with one hand and the door with the other. Behind them the tram rings its bell once and moves slowly off.'
+              trait_kind: 'On the evening of 7 June a tram brakes hard on the Gran Via between Bailèn and Girona streets. An old man in worn clothes lies beside the rails; a few people gather, look, and step back. {staff}, kind and unable to leave an old man lying in the road, is kneeling beside him within a minute, holding his head steady, and looks up to tell the people around who he is: this is Gaudí, the architect from the site. A taxi pulls up. As the car pulls away, {staff} holds his head with one hand and the door with the other. Behind them the tram rings its bell once and moves slowly off.'
+              trait_vigil: 'On the evening of 7 June a tram brakes hard on the Gran Via between Bailèn and Girona streets. An old man in worn clothes lies beside the rails; a few people gather, look, and step back. {staff}, who has been keeping an eye on the crossing, is kneeling beside him within a minute, holding his head steady, and looks up to tell the people around who he is: this is Gaudí, the architect from the site. A taxi pulls up. As the car pulls away, {staff} holds his head with one hand and the door with the other. Behind them the tram rings its bell once and moves slowly off.'
+              else: 'On the evening of 7 June a tram brakes hard on the Gran Via between Bailèn and Girona streets. An old man in worn clothes lies beside the rails; a few people gather, look, and step back. {staff}, carrying the nano medical kit, is kneeling beside him within a minute, using it as its instructions say and holding his head steady, and looks up to tell the people around who he is: this is Gaudí, the architect from the site. A taxi pulls up. As the car pulls away, {staff} holds his head with one hand and the door with the other. Behind them the tram rings its bell once and moves slowly off.'
+            p1:
+              class_lettered: 'Early on 10 June the models and drawings in the workshop lie where they always do, and the masons stand at the door waiting for Gaudí to come back and approve the day''s work; nobody knows who has the keys. {staff}, used to paperwork, lists the work in progress item by item, which wall has reached which course, which model goes with which drawing, and hands the list to Sugranyes together with the workshop keys, asking him to sign for them. Sugranyes folds the list and closes his hand on the keys. He walks to the door and nods to the masons, and outside the first hammer rings.'
+              class_craft: 'Early on 10 June the models and drawings in the workshop lie where they always do, and the masons stand at the door waiting for Gaudí to come back and approve the day''s work; nobody knows who has the keys. {staff}, who has worked with tools, lists the work in progress item by item, which wall has reached which course, which model goes with which drawing, and hands the list to Sugranyes together with the workshop keys, asking him to sign for them. Sugranyes folds the list and closes his hand on the keys. He walks to the door and nods to the masons, and outside the first hammer rings.'
+              trait_methodical: 'Early on 10 June the models and drawings in the workshop lie where they always do, and the masons stand at the door waiting for Gaudí to come back and approve the day''s work; nobody knows who has the keys. {staff}, methodical, lists the work in progress item by item, which wall has reached which course, which model goes with which drawing, and hands the list to Sugranyes together with the workshop keys, asking him to sign for them. Sugranyes folds the list and closes his hand on the keys. He walks to the door and nods to the masons, and outside the first hammer rings.'
+              else: 'Early on 10 June the models and drawings in the workshop lie where they always do, and the masons stand at the door waiting for Gaudí to come back and approve the day''s work; nobody knows who has the keys. {staff}, handy, lists the work in progress item by item, which wall has reached which course, which model goes with which drawing, and hands the list to Sugranyes together with the workshop keys, asking him to sign for them. Sugranyes folds the list and closes his hand on the keys. He walks to the door and nods to the masons, and outside the first hammer rings.'
+            p2:
+              class_lettered: 'Early in July the cupboards in the workshop stand in rows, holding the photographs, the drawings and the plaster models, and a hanging model of a vault is strung overhead. {staff}, used to paperwork, measures the key models one by one, writes the scale on the back of each photograph, has the drawings copied, and draws up a list for Sugranyes to sign: one copy stays in the workshop, the other goes with the album to be kept in a second place. Sugranyes signs at the foot of the list and caps his pen. He looks up at the model hanging overhead, and the little weights on its strings sway.'
+              class_craft: 'Early in July the cupboards in the workshop stand in rows, holding the photographs, the drawings and the plaster models, and a hanging model of a vault is strung overhead. {staff}, who has worked with tools, measures the key models one by one, writes the scale on the back of each photograph, has the drawings copied, and draws up a list for Sugranyes to sign: one copy stays in the workshop, the other goes with the album to be kept in a second place. Sugranyes signs at the foot of the list and caps his pen. He looks up at the model hanging overhead, and the little weights on its strings sway.'
+              trait_methodical: 'Early in July the cupboards in the workshop stand in rows, holding the photographs, the drawings and the plaster models, and a hanging model of a vault is strung overhead. {staff}, methodical and stubborn about detail, measures the key models one by one, writes the scale on the back of each photograph, has the drawings copied, and draws up a list for Sugranyes to sign: one copy stays in the workshop, the other goes with the album to be kept in a second place. Sugranyes signs at the foot of the list and caps his pen. He looks up at the model hanging overhead, and the little weights on its strings sway.'
+              else: 'Early in July the cupboards in the workshop stand in rows, holding the photographs, the drawings and the plaster models, and a hanging model of a vault is strung overhead. {staff}, handy and stubborn about detail, measures the key models one by one, writes the scale on the back of each photograph, has the drawings copied, and draws up a list for Sugranyes to sign: one copy stays in the workshop, the other goes with the album to be kept in a second place. Sugranyes signs at the foot of the list and caps his pen. He looks up at the model hanging overhead, and the little weights on its strings sway.'
+          excerpts:
+            p3: 'As the car pulls away, {staff} holds his head with one hand and the door with the other. Behind them the tram rings its bell once and moves slowly off.'
+            p2: 'Sugranyes signs at the foot of the list and caps his pen. He looks up at the model hanging overhead, and the little weights on its strings sway.'
+            p1: 'Sugranyes folds the list and closes his hand on the keys. He walks to the door and nods to the masons, and outside the first hammer rings.'
         relic: "A plaster model"
         relic_desc: "A small hanging model of a vault."
         points:
@@ -39,18 +72,18 @@ events:
         points_fail:
           p1: 'The workshop waits for Gaudí to sign off, and his colleague cannot retrieve the list of active work. The handover stops and the office recalls the employee.'
           p2: 'The photographs and drawings stay in the same row of cupboards. When the workshop is damaged, the comparison material is lost with the plaster models.'
-          p3: 'Taken for a beggar, he lies in the street while taxis pass, reaches a dispensary and then the Santa Creu hospital late, and dies there on 10 June.'
+          p3: 'Taken for a beggar, he lies in the street while taxis pass, reaches a dispensary and then a hospital late, and dies there on 10 June.'
         shift:
           p1:
-            was: 'A tram accident put Gaudí in hospital in June 1926, where he died. His colleague Sugranyes took charge of the Sagrada Família project.'
+            was: 'A tram accident put Gaudí in hospital in June 1926, where he died. His colleague Sugranyes took charge of the building Gaudí left unfinished.'
           p2:
             was: 'In 1936 much of the workshop’s original drawings and plaster models were lost. The project later drew on fragments and published images for reconstruction.'
             now: 'Ten years later the workshop cupboards burn. The team retrieves an album and the drawings from the second site. Two model faces they would otherwise have to piece together from fragments now have contemporary dimensions for comparison.'
           p3:
-            was: 'On 7 June 1926 Gaudí was struck by a tram on the Gran Via. With no papers and in worn clothes he was taken for a beggar, and he died in the Hospital de la Santa Creu on 10 June, aged seventy three.'
-            now: '{staff} kneels beside him within a minute, says who he is and gets him straight to a surgeon. Gaudí recovers, and goes back to the workshop at the Sagrada Família for some years more.'
+            was: 'On 7 June 1926 Gaudí was struck by a tram on the Gran Via. With no papers and in worn clothes he was taken for a beggar, and he died in hospital on 10 June, aged seventy three.'
+            now: '{staff} kneels beside him within a minute, says who he is and gets him straight to a surgeon. Gaudí recovers, and goes back to the workshop on the building site for some years more.'
             who: gaudi_barcelona
-            bio: 'Gaudí survived the tram accident of June 1926. He returned to the Sagrada Família workshop and went on directing the work with Sugranyes for several more years.'
+            bio: 'Gaudí survived the tram accident of June 1926. He returned to the workshop on the building site and went on directing the work with Sugranyes for several more years.'
         vignettes:
           tram: 'On 29 May {staff} rides the length of the Gran Via on a tram, standing on the back platform. The conductor says the worst part of his job is not the fares but the people who cross reading the paper, and he rings the bell at every corner as if he were scolding the whole street.'
           stone: 'On 1 June {staff} helps two masons at the site lower a carved block onto its bed of mortar. When the wind comes up, it whistles through the openings of the tower overhead, and the younger mason swears it hits the same note every afternoon, and that he has started to hum along.'
@@ -59,7 +92,40 @@ events:
         name: "被电车撞倒"
         place: "巴塞罗那"
         figure: "安东尼·高迪"
-        story: '1926 年 6 月 7 日傍晚，七十三岁的安东尼·高迪在巴塞罗那的大道上被电车撞倒。他没带证件，衣着朴素，被当成乞丐，路人拦了几辆出租车都不停。6 月 10 日，他在圣十字医院去世，12 日安葬在圣家堂。多梅内克·苏格拉涅斯接手主持工程。1936 年 7 月 20 日，工房被人放火，图纸和石膏模型大多毁掉。'
+        story: '1926 年 6 月 7 日傍晚，七十三岁的安东尼·高迪在巴塞罗那的大道上被电车撞倒。他没带证件，衣着朴素，被当成乞丐，路人拦了几辆出租车都不停。6 月 10 日，他在医院去世，12 日安葬在他主持了四十三年的那座建筑地下。多梅内克·苏格拉涅斯接手主持工程。1936 年 7 月 20 日，工房被人放火，图纸和石膏模型大多毁掉。'
+        story_prose:
+          opening:
+            - '1926 年 5 月底，巴塞罗那。七十三岁的加泰罗尼亚建筑师安东尼·高迪把晚年都放在城里一座还没完工的大建筑上。他的设计用取自自然的曲线，工地上的工房里摆满了图纸和石膏模型。前一年，东立面的第一座钟塔刚刚完工。'
+            - '史实里，6 月 7 日傍晚他在大道上被电车撞倒。他没带证件，衣着朴素，被当成乞丐倒在那里，路人拦了几辆出租车都不停，直到一名国民警卫逼一辆车把他送去诊所，再转进医院；6 月 10 日他在医院去世。弟子多梅内克·苏格拉涅斯接手主持工程。十年后，1936 年 7 月 20 日，工房被烧，里面的图纸和石膏模型大多毁掉。在这条分支里，大道的电车上有个爱拉铃的售票员，工地上有个跟着风声哼调子的年轻石匠，中午有个来卖水的女人。'
+            - '这一趟用得上几种人：懂医护、带着急救包的人，心善或守得住、身子骨结实的人，或者带着能治伤的器材的人，在电车道边立刻把他送医；做过木工、管过档案的人，或者手巧、有条理的人，把进行中的工程和工房钥匙交接清楚；同样的人再多一点脑子或定力，说得动苏格拉涅斯，把关键模型的照片、尺寸和图纸另存一处。'
+          outcomes:
+            all: '那年夏天，高迪又回到了工房。十年后，柜子烧了，有人从另一处取回一本照相册，翻开一张模型的照片，背面写着当年的比例尺。'
+            p3: '那年夏天，高迪又回到了工房。他坐在门口的矮凳上看石匠们干活，午后的风从钟塔的孔洞里穿过去，吹出一声哨音。'
+            p2: '6 月 12 日，高迪下葬。十年后工房被烧，有人从另一处取回一本照相册，照片背面还写着当年的比例尺。'
+            p1: '6 月 12 日，高迪下葬。苏格拉涅斯接手主持工程，工地上的锤子声没有停，石匠们照着那张清单往上砌。'
+          none: '6 月 12 日，高迪下葬。十年后，1936 年 7 月 20 日，工房被烧，柜子里的图纸和石膏模型大多毁掉。'
+          desync: '6 月 10 日，石匠们在工房门口等了一上午，钥匙不知道在谁手里，进行中的活一样也说不清。{staff}被召回时，那个年轻石匠正坐在一块还没放上去的石头上，等着有人来叫他。'
+          not_admitted: '{staff}没能进那座工地，只在大道上坐过几回电车。远处的脚手架中间立着一座钟塔，风大的下午，隔着几条街也听得见一点哨音。'
+          points:
+            p3:
+              class_medical: '6 月 7 日傍晚，大道上，一辆电车在拜伦街和赫罗纳街之间猛地刹住。轨道边倒着一个穿旧衣服的老人，几个人围上来看了看，又退开了。{staff}懂医护，一分钟内跪到他身边，按住他的伤处，托稳他的头，抬头对围着的人说出了他是谁：这是高迪，工地上的建筑师。一辆出租车停了下来。车开动时，{staff}一只手托着他的头，另一只手扶着车门。身后那辆电车叮地响了一声，慢慢开走了。'
+              trait_kind: '6 月 7 日傍晚，大道上，一辆电车在拜伦街和赫罗纳街之间猛地刹住。轨道边倒着一个穿旧衣服的老人，几个人围上来看了看，又退开了。{staff}心善，见不得一个老人倒在路上没人管，一分钟内跪到他身边，托稳他的头，抬头对围着的人说出了他是谁：这是高迪，工地上的建筑师。一辆出租车停了下来。车开动时，{staff}一只手托着他的头，另一只手扶着车门。身后那辆电车叮地响了一声，慢慢开走了。'
+              trait_vigil: '6 月 7 日傍晚，大道上，一辆电车在拜伦街和赫罗纳街之间猛地刹住。轨道边倒着一个穿旧衣服的老人，几个人围上来看了看，又退开了。{staff}一直留神着路口，一分钟内跪到他身边，托稳他的头，抬头对围着的人说出了他是谁：这是高迪，工地上的建筑师。一辆出租车停了下来。车开动时，{staff}一只手托着他的头，另一只手扶着车门。身后那辆电车叮地响了一声，慢慢开走了。'
+              else: '6 月 7 日傍晚，大道上，一辆电车在拜伦街和赫罗纳街之间猛地刹住。轨道边倒着一个穿旧衣服的老人，几个人围上来看了看，又退开了。{staff}带着纳米医疗箱，一分钟内跪到他身边，照着说明给他用上，托稳他的头，抬头对围着的人说出了他是谁：这是高迪，工地上的建筑师。一辆出租车停了下来。车开动时，{staff}一只手托着他的头，另一只手扶着车门。身后那辆电车叮地响了一声，慢慢开走了。'
+            p1:
+              class_lettered: '6 月 10 日一早，工房里的模型和图纸照旧摆着，石匠们站在门口，等高迪回来核准当天的活，没有人知道钥匙在谁那里。{staff}管过文书，把进行中的工程一项项列成清单，哪一面墙砌到哪一层，哪个模型对应哪张图，连同工房的钥匙一起交到苏格拉涅斯手里，请他签了收。苏格拉涅斯把清单折好，钥匙攥在手心里。他走到门口，朝石匠们点了点头，外面响起了第一声锤子。'
+              class_craft: '6 月 10 日一早，工房里的模型和图纸照旧摆着，石匠们站在门口，等高迪回来核准当天的活，没有人知道钥匙在谁那里。{staff}干过手艺活，把进行中的工程一项项列成清单，哪一面墙砌到哪一层，哪个模型对应哪张图，连同工房的钥匙一起交到苏格拉涅斯手里，请他签了收。苏格拉涅斯把清单折好，钥匙攥在手心里。他走到门口，朝石匠们点了点头，外面响起了第一声锤子。'
+              trait_methodical: '6 月 10 日一早，工房里的模型和图纸照旧摆着，石匠们站在门口，等高迪回来核准当天的活，没有人知道钥匙在谁那里。{staff}做事有条理，把进行中的工程一项项列成清单，哪一面墙砌到哪一层，哪个模型对应哪张图，连同工房的钥匙一起交到苏格拉涅斯手里，请他签了收。苏格拉涅斯把清单折好，钥匙攥在手心里。他走到门口，朝石匠们点了点头，外面响起了第一声锤子。'
+              else: '6 月 10 日一早，工房里的模型和图纸照旧摆着，石匠们站在门口，等高迪回来核准当天的活，没有人知道钥匙在谁那里。{staff}手巧，把进行中的工程一项项列成清单，哪一面墙砌到哪一层，哪个模型对应哪张图，连同工房的钥匙一起交到苏格拉涅斯手里，请他签了收。苏格拉涅斯把清单折好，钥匙攥在手心里。他走到门口，朝石匠们点了点头，外面响起了第一声锤子。'
+            p2:
+              class_lettered: '7 月初，工房里的柜子一排挨着一排，照片、图纸和石膏模型都收在里头，头顶还吊着一个悬挂的穹顶模型。{staff}管过文书，把几个关键模型一个个量过，在照片背面写上比例尺，图纸另誊一份，开了一张清单请苏格拉涅斯签字，一份留在工房，一份连同照相册送到另一处收着。苏格拉涅斯在清单底下签了名，扣上笔帽。他抬头看了一眼头顶吊着的那个模型，细绳上的小坠子轻轻晃了一下。'
+              class_craft: '7 月初，工房里的柜子一排挨着一排，照片、图纸和石膏模型都收在里头，头顶还吊着一个悬挂的穹顶模型。{staff}干过手艺活，把几个关键模型一个个量过，在照片背面写上比例尺，图纸另誊一份，开了一张清单请苏格拉涅斯签字，一份留在工房，一份连同照相册送到另一处收着。苏格拉涅斯在清单底下签了名，扣上笔帽。他抬头看了一眼头顶吊着的那个模型，细绳上的小坠子轻轻晃了一下。'
+              trait_methodical: '7 月初，工房里的柜子一排挨着一排，照片、图纸和石膏模型都收在里头，头顶还吊着一个悬挂的穹顶模型。{staff}有条理，也肯较真，把几个关键模型一个个量过，在照片背面写上比例尺，图纸另誊一份，开了一张清单请苏格拉涅斯签字，一份留在工房，一份连同照相册送到另一处收着。苏格拉涅斯在清单底下签了名，扣上笔帽。他抬头看了一眼头顶吊着的那个模型，细绳上的小坠子轻轻晃了一下。'
+              else: '7 月初，工房里的柜子一排挨着一排，照片、图纸和石膏模型都收在里头，头顶还吊着一个悬挂的穹顶模型。{staff}手巧，也肯较真，把几个关键模型一个个量过，在照片背面写上比例尺，图纸另誊一份，开了一张清单请苏格拉涅斯签字，一份留在工房，一份连同照相册送到另一处收着。苏格拉涅斯在清单底下签了名，扣上笔帽。他抬头看了一眼头顶吊着的那个模型，细绳上的小坠子轻轻晃了一下。'
+          excerpts:
+            p3: '车开动时，{staff}一只手托着他的头，另一只手扶着车门。身后那辆电车叮地响了一声，慢慢开走了。'
+            p2: '苏格拉涅斯在清单底下签了名，扣上笔帽。他抬头看了一眼头顶吊着的那个模型，细绳上的小坠子轻轻晃了一下。'
+            p1: '苏格拉涅斯把清单折好，钥匙攥在手心里。他走到门口，朝石匠们点了点头，外面响起了第一声锤子。'
         relic: "一个石膏模型"
         relic_desc: "一个小小的悬挂式穹顶模型。"
         points:
@@ -69,29 +135,29 @@ events:
         points_fail:
           p1: '工房等着高迪回来核准，接手的同事拿不到进行中的工程清单。施工交接中断，事务所因同步失败召回员工。'
           p2: '照片和图纸仍收在工房同一排柜里。后来工房毁损时，对照材料随石膏模型一起散失。'
-          p3: '他被当成乞丐躺在街上，几辆出租车都不停，先到一处诊所才转进圣十字医院，6 月 10 日在那里去世。'
+          p3: '他被当成乞丐躺在街上，几辆出租车都不停，先到一处诊所才转进医院，6 月 10 日在那里去世。'
         shift:
           p1:
-            was: '高迪 1926 年 6 月遭遇电车事故，在医院去世。他的合作者苏格拉涅斯接掌圣家堂工程。'
+            was: '高迪 1926 年 6 月遭遇电车事故，在医院去世。他的合作者苏格拉涅斯接掌了他没建完的那座建筑。'
           p2:
             was: '1936 年工房毁损，原图和石膏模型多有损失。工程团队后来从残件和已刊照片等材料重建。'
             now: '十年后工房里的柜子烧毁，团队从另一处取回照相册和有签收的图纸。以前只能靠残件拼的两个模型面，现在有当年的尺寸可作对照。'
           p3:
-            was: '1926 年 6 月 7 日，高迪在大道上被电车撞倒，没带证件，衣着破旧，被当成乞丐；6 月 10 日他在圣十字医院去世，年七十三岁。'
-            now: '{staff}一分钟内跪到他身边，说出他是谁，直接把他送到外科医生手里。高迪活了下来，又回圣家堂的工房干了几年。'
+            was: '1926 年 6 月 7 日，高迪在大道上被电车撞倒，没带证件，衣着破旧，被当成乞丐；6 月 10 日他在医院去世，年七十三岁。'
+            now: '{staff}一分钟内跪到他身边，说出他是谁，直接把他送到外科医生手里。高迪活了下来，又回工地上的工房干了几年。'
             who: gaudi_barcelona
-            bio: '高迪挺过了 1926 年 6 月的电车事故。他回到圣家堂的工房，和苏格拉涅斯一起又主持了几年工程。'
+            bio: '高迪挺过了 1926 年 6 月的电车事故。他回到工地上的工房，和苏格拉涅斯一起又主持了几年工程。'
         vignettes:
-          tram: '5 月 29 日，{staff}站在电车后平台上，从大道这头坐到那头。售票员说这份差事最难的不是收钱，是那些边看报边过马路的人。他每到一个路口就拉一下铃，像在数落整条街。'
-          stone: '6 月 1 日，{staff}帮工地上两个石匠把一块雕好的石头放到灰浆上。起风时，风从头顶塔身的孔洞里穿过去，吹出哨音。年轻的那个石匠发誓每天下午都是同一个音，他已经开始跟着哼了。'
-          water: '7 月 10 日，入夏最热的一天，{staff}替中午来工地的卖水女人提水罐。她说石匠们不到收工铃响就喝掉一整桶，喝完还嫌水里有灰味。她说那是当然，灰就是从他们身上掉进去的。'
+          tram: '5 月 29 日，{staff}站在电车后平台上，从大道这头坐到那头，车厢里一股晒热的铁味。售票员说这份差事最难的不是收钱，是那些边看报边过马路的人。他每到一个路口就拉一下铃，像在数落整条街。'
+          stone: '6 月 1 日，{staff}帮工地上两个石匠把一块雕好的石头放到灰浆上，三个人身上都落满了石粉。起风时，风从头顶塔身的孔洞里穿过去，吹出哨音。年轻的那个石匠发誓每天下午都是同一个音，他已经开始跟着哼了。'
+          water: '7 月 10 日，入夏最热的一天，{staff}替中午来工地的卖水女人提水罐，堆在地上的石料晒得烫手。她说石匠们不到收工铃响就喝掉一整桶，喝完还嫌水里有灰味。她说那是当然，灰就是从他们身上掉进去的。'
 text:
   en:
     name: Antoni Gaudí
-    text: Catalan architect, 1852 to 1926. His buildings in Barcelona, including Casa Batlló and the Sagrada Família, use curved forms taken from nature. He was killed by a tram in 1926 and the Sagrada Família remains unfinished.
+    text: Catalan architect, 1852 to 1926. His buildings in Barcelona, including Casa Batlló and Casa Milà, use curved forms taken from nature. He was killed by a tram in 1926, and his largest building remains unfinished.
   zh:
     name: 安东尼·高迪
-    text: 加泰罗尼亚建筑师，1852 年生，1926 年去世。他在巴塞罗那的建筑，包括巴特略之家和圣家堂，使用取自自然的曲线形态。他 1926 年被电车撞死，圣家堂至今未完工。
+    text: 加泰罗尼亚建筑师，1852 年生，1926 年去世。他在巴塞罗那的建筑，包括巴特略之家和米拉之家，使用取自自然的曲线形态。他 1926 年被电车撞死，他最大的那座建筑至今未完工。
 hook: {en: 'Nobody knew the old man on the tracks', zh: '倒在电车道上的老人没人认得'}
 quotes:
   gaudi_echo_intelligible:
@@ -124,8 +190,8 @@ facts:
     use: [story, wiki]
     sources: [gaudi_barcelona_primary]
     text:
-      en: 'The first of the bell towers on the east façade was completed in 1925. The Sagrada Família was still unfinished when Gaudí died in 1926.'
-      zh: '东立面的第一座钟塔在 1925 年完工。1926 年高迪去世时，圣家堂仍未完成。'
+      en: 'The first of the bell towers on the east façade was completed in 1925. The building was still unfinished when Gaudí died in 1926.'
+      zh: '东立面的第一座钟塔在 1925 年完工。1926 年高迪去世时，这座建筑仍未完成。'
   accident:
     date: '1926-06-07'
     checked: two_sources
@@ -133,8 +199,8 @@ facts:
     use: [story, history, wiki]
     sources: [gaudi_bellesguard, gaudi_wiki]
     text:
-      en: 'On the evening of 7 June 1926 Gaudí, crossing the Gran Via between Bailèn and Girona streets, was struck by a tram. Taken for a beggar, he was left lying; the taxis hailed for him would not stop, until a civil guard made one take him to a dispensary in the Ronda de Sant Pere, and from there he was moved to the Hospital de la Santa Creu.'
-      zh: '1926 年 6 月 7 日傍晚，高迪在大道上穿过拜伦街与赫罗纳街之间时被电车撞倒。他被当成乞丐，倒在那里没人管；路人拦了几辆出租车都不停，直到一名国民警卫逼一辆车把他送到圣佩雷环路的诊所，再转进圣十字医院。'
+      en: 'On the evening of 7 June 1926 Gaudí, crossing the Gran Via between Bailèn and Girona streets, was struck by a tram. Taken for a beggar, he was left lying; the taxis hailed for him would not stop, until a civil guard made one take him to a dispensary nearby, and from there he was moved to hospital.'
+      zh: '1926 年 6 月 7 日傍晚，高迪在大道上穿过拜伦街与赫罗纳街之间时被电车撞倒。他被当成乞丐，倒在那里没人管；路人拦了几辆出租车都不停，直到一名国民警卫逼一辆车把他送到附近一处诊所，再转进医院。'
     note: 'An accident: written as a plain fact.'
     line:
       en: '7 June 1926: on the Gran Via a tram knocks Gaudí down; taken for a beggar, he lies in the street while taxis pass.'
@@ -146,12 +212,12 @@ facts:
     use: [story, history, wiki]
     sources: [gaudi_bellesguard, gaudi_wiki]
     text:
-      en: 'Gaudí died in the Hospital de la Santa Creu at eight minutes past five in the afternoon of 10 June 1926, aged seventy three.'
-      zh: '1926 年 6 月 10 日下午五点零八分，高迪在圣十字医院去世，七十三岁。'
+      en: 'Gaudí died in hospital in Barcelona at eight minutes past five in the afternoon of 10 June 1926, aged seventy three.'
+      zh: '1926 年 6 月 10 日下午五点零八分，高迪在巴塞罗那的医院去世，七十三岁。'
     note: 'A death: written as a plain fact.'
     line:
-      en: '10 June 1926: Antoni Gaudí dies in the Hospital de la Santa Creu, aged seventy three.'
-      zh: '1926 年 6 月 10 日，安东尼·高迪在圣十字医院去世，七十三岁。'
+      en: '10 June 1926: Antoni Gaudí dies in hospital in Barcelona, aged seventy three.'
+      zh: '1926 年 6 月 10 日，安东尼·高迪在巴塞罗那的医院去世，七十三岁。'
   burial:
     date: '1926-06-12'
     checked: two_sources
@@ -159,12 +225,12 @@ facts:
     use: [story, history, wiki]
     sources: [gaudi_bellesguard, gaudi_wiki]
     text:
-      en: 'On 12 June 1926 Gaudí was buried beneath the Sagrada Família.'
-      zh: '1926 年 6 月 12 日，高迪安葬在圣家堂地下。'
+      en: 'On 12 June 1926 Gaudí was buried beneath the building he had directed for forty three years.'
+      zh: '1926 年 6 月 12 日，高迪安葬在他主持了四十三年的那座建筑地下。'
     note: 'A death: written as a plain fact.'
     line:
-      en: '12 June 1926: Gaudí is buried beneath the Sagrada Família.'
-      zh: '1926 年 6 月 12 日，高迪安葬在圣家堂地下。'
+      en: '12 June 1926: Gaudí is buried beneath the building he had directed for forty three years.'
+      zh: '1926 年 6 月 12 日，高迪安葬在他主持了四十三年的那座建筑地下。'
   succession:
     date: '1926'
     checked: two_sources

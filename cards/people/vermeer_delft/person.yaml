@@ -2,7 +2,7 @@ order: 198
 events:
   vermeer_delft:
     order: 115
-    build_step: 4
+    build_step: 3
     year: 1675
     date: '1675-12-01'
     stay: 4
@@ -17,7 +17,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 3, req: {"any":[{"job":["archivist","antique_dealer","restorer"]},{"trait":["vigil","methodical"],"stat":{"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 3, req: {"any":[{"job":["archivist","antique_dealer","restorer"]},{"job":["painter","illustrator","proofreader","translator"],"stat":{"wit":5}},{"trait":["vigil","methodical"],"stat":{"will":7}}]}}
         - {id: p2, kind: persuade, day: 6, req: {"any":[{"job":["antique_dealer","market_trader","bookseller","shopkeeper"],"stat":{"luck":5}},{"trait":["glib","charismatic","streetwise"],"stat":{"wit":5}}]}}
         - {id: p3, kind: persuade, day: 9, req: {"any":[{"trait":["artistic","sensitive","kind"]},{"job":["painter","illustrator","antique_dealer","restorer"]}]}}
         - {id: p4, kind: care, day: 12, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["doctor","physician","nurse","paramedic"],"item":"calm_patch"},{"provides":"cure"}]}, overturns: [burial, baker, inventory, petition, trustee]}
@@ -31,6 +31,41 @@ events:
         place: "Delft"
         figure: "Johannes Vermeer"
         story: 'After the war of 1672 Johannes Vermeer could hardly sell a painting, and in July 1675 he went to Amsterdam to borrow a thousand guilders. In December 1675, his widow later wrote, he went within a day and a half from healthy to dead; he was buried in Delft on 15 December, aged forty three, leaving eleven children. Early in 1676 Catharina Bolnes gave two of his paintings to the baker against a bread debt, and on 24 February she passed The Art of Painting to her mother Maria Thins. On 29 February the house was inventoried, and in April she asked the High Court to relieve her of the debts.'
+        story_prose:
+          opening:
+            - 'The Oude Langendijk in Delft, early December 1675. The painter Johannes Vermeer, forty three, lives here with his wife Catharina Bolnes and eleven children. He paints quiet rooms in soft light, and only some forty of his paintings survive. Since the war of 1672 the art trade has collapsed: his own work hardly sells, and the paintings of other masters he bought to deal in are left on his hands. In July he went to Amsterdam to borrow a thousand guilders.'
+            - 'In history, Catharina later wrote, under the weight of the children and the debts he went within a day and a half from healthy to dead, and he was buried on 15 December. Early the next year she gave two of his paintings to the baker against three years of bread, on 24 February passed The Art of Painting from his studio to her mother Maria Thins, and in April asked the High Court to relieve her of the debts. For nearly two centuries afterwards his name was all but forgotten. In this branch, a baker''s boy hands in bread unpaid and only makes a mark in his little book, there is a frame maker, and a woman sells peat on the market square.'
+            - 'A few kinds of people can help on this trip: someone who has kept archives, dealt in antiques or restored paintings, someone who paints, reads proofs or translates and has a careful eye, or someone watchful or methodical with a strong will, to protect the large painting in the studio; someone who has traded and has some luck, or someone glib and at home in the streets, to sell the paintings left on his hands; someone who knows painting, or is sensitive or kind, to tell him what will become of his pictures; a doctor with a strong will, someone who knows medicine and carries the calm patch, or someone carrying the nano medical kit, to hold off that day and a half in mid December.'
+          outcomes:
+            all: 'That winter Vermeer did not go under. On a clear day in January he climbed the stairs to paint again; the large painting still hung on the studio wall, and a little bundle of money wrapped in cloth lay in the kitchen cupboard.'
+            p4: 'That December passed and Vermeer did not go under. On a clear day in January he climbed the stairs again and moved the easel to the window.'
+            p2: 'On 15 December Vermeer was buried in Delft, aged forty three. The money from the paintings sold that month Catharina kept wrapped in a cloth in the kitchen cupboard.'
+            p3: 'On 15 December Vermeer was buried in Delft, aged forty three. The easel in the studio stood empty, and the palette lay to one side, the fresh blue on it dried.'
+            p1: 'On 15 December Vermeer was buried in Delft, aged forty three, leaving eleven children. The next February Catharina passed the large painting from the studio to her mother.'
+          none: 'On 15 December Vermeer was buried in Delft in a grave his mother-in-law had bought years before, aged forty three. For nearly two centuries afterwards few people knew his name.'
+          desync: 'On 3 December the creditor''s man checked his list, nodded, and had the large painting by the wall taken down from its nail. When {staff} was recalled, two men were carrying it downstairs, and the blue of it flashed once at the turn of the stairs.'
+          not_admitted: '{staff} never got into the house on the Oude Langendijk, and only stood a few mornings at the edge of the market square. The shutters of that house were always half closed, and a child leaned on the sill counting the bread baskets going by.'
+          points:
+            p1:
+              trait_vigil: 'On the morning of 3 December a man sent by a creditor comes into the studio with a list, says some paintings must go against the debt before the year is out, and points at the large painting by the wall: a painter, his back to us, painting a woman in blue who holds a book and a trumpet. {staff}, watchful, sleeps two nights running on the stairs outside the studio, and by day goes through the man''s list line by line: what can go against the debt is the stock of other masters'' paintings from the shop, and this one is not on it. The man rolls up his list and leaves. Vermeer stands a while in front of the painting, then reaches out and wipes a film of dust from the bottom of the frame.'
+              trait_methodical: 'On the morning of 3 December a man sent by a creditor comes into the studio with a list, says some paintings must go against the debt before the year is out, and points at the large painting by the wall: a painter, his back to us, painting a woman in blue who holds a book and a trumpet. {staff}, methodical, goes through the man''s list line by line and writes out a page on where each painting in the studio came from: what can go against the debt is the stock of other masters'' paintings from the shop, and this one is not on it. The man rolls up his list and leaves. Vermeer stands a while in front of the painting, then reaches out and wipes a film of dust from the bottom of the frame.'
+              else: 'On the morning of 3 December a man sent by a creditor comes into the studio with a list, says some paintings must go against the debt before the year is out, and points at the large painting by the wall: a painter, his back to us, painting a woman in blue who holds a book and a trumpet. {staff}, used to paintings and deeds, goes through the man''s list line by line and shows that what can go against the debt is the stock of other masters'' paintings from the shop, and this one is not on it. The man rolls up his list and leaves. Vermeer stands a while in front of the painting, then reaches out and wipes a film of dust from the bottom of the frame.'
+            p2:
+              class_trade: 'The 6th of December is market day. Some paintings by other masters, wrapped in cloth, have stood behind the door of the shop for years. {staff}, who has traded, carries them one by one into the light of the window and talks with two dealers who have come to look from morning till noon, giving a little on the price and then not an inch more. In the afternoon three paintings, tied with twine, are carried out of the door on men''s shoulders. Catharina counts the money twice on the kitchen table, sets a small pile aside, wraps it in a cloth and puts it in her apron pocket.'
+              else: 'The 6th of December is market day. Some paintings by other masters, wrapped in cloth, have stood behind the door of the shop for years. {staff}, glib, goes round the market and comes back with two dealers, carries the paintings one by one into the light of the window and talks with them from morning till noon. In the afternoon three paintings, tied with twine, are carried out of the door on men''s shoulders. Catharina counts the money twice on the kitchen table, sets a small pile aside, wraps it in a cloth and puts it in her apron pocket.'
+            p3:
+              trait_artistic: 'On the afternoon of 9 December the studio is very quiet. Vermeer sits at the easel, and for a long time the brush in his hand does not touch the canvas. {staff}, who has an eye for painting too, stands behind him a while and tells him that one day people will seek out these quiet rooms one by one, know them again, and hang them in many cities. Vermeer does not turn round. He picks up the palette, scrapes off a little blue that has dried on it with the knife, and bends to mix some fresh.'
+              trait_sensitive: 'On the afternoon of 9 December the studio is very quiet. Vermeer sits at the easel, and for a long time the brush in his hand does not touch the canvas. {staff}, sensitive and seeing how tired he is, stands behind him a while and tells him that one day people will seek out these quiet rooms one by one, know them again, and hang them in many cities. Vermeer does not turn round. He picks up the palette, scrapes off a little blue that has dried on it with the knife, and bends to mix some fresh.'
+              trait_kind: 'On the afternoon of 9 December the studio is very quiet. Vermeer sits at the easel, and for a long time the brush in his hand does not touch the canvas. {staff}, kind, stands behind him a while and tells him that one day people will seek out these quiet rooms one by one, know them again, and hang them in many cities. Vermeer does not turn round. He picks up the palette, scrapes off a little blue that has dried on it with the knife, and bends to mix some fresh.'
+              else: 'On the afternoon of 9 December the studio is very quiet. Vermeer sits at the easel, and for a long time the brush in his hand does not touch the canvas. {staff}, who knows painting, stands behind him a while and tells him that one day people will seek out these quiet rooms one by one, know them again, and hang them in many cities. Vermeer does not turn round. He picks up the palette, scrapes off a little blue that has dried on it with the knife, and bends to mix some fresh.'
+            p4:
+              class_medical: 'On the afternoon of 12 December Vermeer comes down from the studio and stops halfway down the stairs, a hand against the wall, his face suddenly grey. {staff}, who knows medicine, helps him to bed, sits by him taking his pulse, wakes him twice in the night to drink, and keeps watch all the next day. The day and a half goes by. On the third morning Vermeer climbs the stairs by himself and opens the shutters of the studio, and the light comes in and falls on the bare floor in front of the easel.'
+              else: 'On the afternoon of 12 December Vermeer comes down from the studio and stops halfway down the stairs, a hand against the wall, his face suddenly grey. {staff}, carrying the nano medical kit, helps him to bed, uses it on him as its instructions say, sits by him, wakes him twice in the night to drink, and keeps watch all the next day. The day and a half goes by. On the third morning Vermeer climbs the stairs by himself and opens the shutters of the studio, and the light comes in and falls on the bare floor in front of the easel.'
+          excerpts:
+            p4: 'The day and a half goes by. On the third morning Vermeer climbs the stairs by himself and opens the shutters of the studio, and the light comes in and falls on the bare floor in front of the easel.'
+            p3: 'Vermeer does not turn round. He picks up the palette, scrapes off a little blue that has dried on it with the knife, and bends to mix some fresh.'
+            p2: 'In the afternoon three paintings, tied with twine, are carried out of the door on men''s shoulders. Catharina counts the money twice on the kitchen table, sets a small pile aside, wraps it in a cloth and puts it in her apron pocket.'
+            p1: 'The man rolls up his list and leaves. Vermeer stands a while in front of the painting, then reaches out and wipes a film of dust from the bottom of the frame.'
         relic: "A pearl earring"
         relic_desc: "A small pearl of the kind he painted so often."
         points:
@@ -66,6 +101,41 @@ events:
         place: "代尔夫特"
         figure: "约翰内斯·维米尔"
         story: '1672 年战事以后，约翰内斯·维米尔的画几乎卖不出去，1675 年 7 月他去阿姆斯特丹借了一千荷兰盾。据他的遗孀后来陈述，那年 12 月他在一天半里由好好的人到了去世；12 月 15 日他葬在代尔夫特，四十三岁，留下十一个孩子。1676 年初，卡塔琳娜·博尔内斯把他的两幅画交给面包商抵面包钱，2 月 24 日又把《绘画艺术》转到母亲玛丽亚·廷斯名下。2 月 29 日，公证人来家里清点遗产；4 月，她请求高等法院免去她的债务。'
+        story_prose:
+          opening:
+            - '1675 年 12 月初，代尔夫特老朗恩代克街。四十三岁的画家约翰内斯·维米尔和妻子卡塔琳娜·博尔内斯、十一个孩子住在这里。他画光线柔和的安静屋子，留到今天的画只有四十来幅。1672 年开战以后画市垮了，他自己的画几乎卖不出去，买来经手的别家画作也只能压在手里；这年 7 月，他去阿姆斯特丹借了一千荷兰盾。'
+            - '史实里，据卡塔琳娜后来的陈述，他被孩子和债务压着，在一天半里由好好的人到了去世，12 月 15 日下葬。第二年初，她把他的两幅画交给面包商抵三年的面包钱，2 月 24 日把画室里那幅《绘画艺术》转到母亲玛丽亚·廷斯名下，4 月请求高等法院免去她的债。此后将近两百年，他的名字几乎被人忘了。在这条分支里，有个送面包不收钱、只在小本子上画一道的伙计，有个画框铺的师傅，集市上有个卖泥炭的女人。'
+            - '这一趟用得上几种人：管过档案、做古董买卖或修过画的人，会画画、做过校对或翻译又细心的人，或者守得住夜、有条理、意志硬的人，护得住画室里那幅大画；做过买卖、手气不坏的人，或者能说会道、在市井里混得开的人，把压在手里的画卖出去；懂画、心细或心善的人，说得出这些画以后的样子；当医生、意志硬的人，懂医护、带着情绪稳定贴片的人，或者带着纳米医疗箱的人，守得住十二月中旬那一天半。'
+          outcomes:
+            all: '那个冬天，维米尔没有倒下。正月里一个晴天，他又爬上楼去画画，那幅大画还挂在画室的墙上，厨房柜子里收着一小包用布裹着的钱。'
+            p4: '那个十二月过去了，维米尔没有倒下。正月里一个晴天，他又爬上楼，把画架挪到了窗前。'
+            p2: '12 月 15 日，维米尔葬在代尔夫特，四十三岁。那个月卖画得来的钱，卡塔琳娜用布包着，收在厨房的柜子里。'
+            p3: '12 月 15 日，维米尔葬在代尔夫特，四十三岁。画室里的画架空着，调色板搁在一边，上面那一点新调的蓝已经干了。'
+            p1: '12 月 15 日，维米尔葬在代尔夫特，四十三岁，留下十一个孩子。第二年二月，卡塔琳娜把画室里那幅大画转到了母亲名下。'
+          none: '12 月 15 日，维米尔葬在代尔夫特岳母早年买下的墓穴里，四十三岁。此后将近两百年，很少有人叫得出他的名字。'
+          desync: '12 月 3 日，债主差来的人对着清单点了点头，叫人把墙边那幅大画从钉子上取下来。{staff}被召回时，两个人正抬着它下楼，画上那片蓝在楼梯拐角一晃。'
+          not_admitted: '{staff}没能进老朗恩代克街那户人家，只在集市广场边站过几个早上。那户人家的窗板总是关着一半，有个孩子趴在窗台上，数着过往的面包篮子。'
+          points:
+            p1:
+              trait_vigil: '12 月 3 日上午，一个债主差来的人拿着一张清单进了画室，说年底前要拿几幅画去抵账，手指着墙边那幅大画：画里一个画家背对着人，正在画一个穿蓝衣、捧着书和号角的女子。{staff}守得住，一连两夜睡在画室外的楼梯口，白天把来人的清单一行行对过：能抵账的是店里经手的那些别家画作，这一幅不在里面。来人卷起清单走了。维米尔在那幅画前站了一会儿，伸手把画框底边的一层灰抹掉了。'
+              trait_methodical: '12 月 3 日上午，一个债主差来的人拿着一张清单进了画室，说年底前要拿几幅画去抵账，手指着墙边那幅大画：画里一个画家背对着人，正在画一个穿蓝衣、捧着书和号角的女子。{staff}有条理，把来人的清单一行行对过，又把画室里每幅画的来历记成一页：能抵账的是店里经手的那些别家画作，这一幅不在里面。来人卷起清单走了。维米尔在那幅画前站了一会儿，伸手把画框底边的一层灰抹掉了。'
+              else: '12 月 3 日上午，一个债主差来的人拿着一张清单进了画室，说年底前要拿几幅画去抵账，手指着墙边那幅大画：画里一个画家背对着人，正在画一个穿蓝衣、捧着书和号角的女子。{staff}跟画和契据打过交道，把来人的清单一行行对过，指给他看：能抵账的是店里经手的那些别家画作，这一幅不在里面。来人卷起清单走了。维米尔在那幅画前站了一会儿，伸手把画框底边的一层灰抹掉了。'
+            p2:
+              class_trade: '12 月 6 日是集市日。几幅别家的画用布包着，靠在店里的门后已经好几年了。{staff}做过买卖，把画一幅幅抬到窗前的光里，跟来看画的两个商人从早谈到中午，价钱让了一点，又一点不让。下午，三幅画用麻绳捆好，被人扛出了门。卡塔琳娜把钱在厨房桌上数了两遍，拨出一小摞用布包好，放进了围裙口袋。'
+              else: '12 月 6 日是集市日。几幅别家的画用布包着，靠在店里的门后已经好几年了。{staff}能说会道，在集市上转了一圈，领回来两个看画的商人，把画一幅幅抬到窗前的光里，跟他们从早谈到中午。下午，三幅画用麻绳捆好，被人扛出了门。卡塔琳娜把钱在厨房桌上数了两遍，拨出一小摞用布包好，放进了围裙口袋。'
+            p3:
+              trait_artistic: '12 月 9 日下午，画室里很静。维米尔坐在画架前，手里的笔很久没有落下去。{staff}自己也有一双看画的眼睛，在他身后站了一会儿，告诉他，这些安静的屋子以后会有人一幅一幅找出来，认回来，挂在许多城市里。维米尔没有回头。他拿起调色板，用刮刀把上面一点干了的蓝刮掉，又低头调起了颜色。'
+              trait_sensitive: '12 月 9 日下午，画室里很静。维米尔坐在画架前，手里的笔很久没有落下去。{staff}心细，看得出他的累，在他身后站了一会儿，告诉他，这些安静的屋子以后会有人一幅一幅找出来，认回来，挂在许多城市里。维米尔没有回头。他拿起调色板，用刮刀把上面一点干了的蓝刮掉，又低头调起了颜色。'
+              trait_kind: '12 月 9 日下午，画室里很静。维米尔坐在画架前，手里的笔很久没有落下去。{staff}心善，在他身后站了一会儿，告诉他，这些安静的屋子以后会有人一幅一幅找出来，认回来，挂在许多城市里。维米尔没有回头。他拿起调色板，用刮刀把上面一点干了的蓝刮掉，又低头调起了颜色。'
+              else: '12 月 9 日下午，画室里很静。维米尔坐在画架前，手里的笔很久没有落下去。{staff}懂画，在他身后站了一会儿，告诉他，这些安静的屋子以后会有人一幅一幅找出来，认回来，挂在许多城市里。维米尔没有回头。他拿起调色板，用刮刀把上面一点干了的蓝刮掉，又低头调起了颜色。'
+            p4:
+              class_medical: '12 月 12 日下午，维米尔从画室下楼，扶着墙在楼梯半中间站住了，脸色一下子灰了下去。{staff}懂医护，扶他躺下，守在床边量他的脉，一夜叫醒他两回喝水，第二天又守了一整天。那一天半过去了。第三天早上，维米尔自己上了楼，推开画室的窗板，光照进来，落在画架前那块空地上。'
+              else: '12 月 12 日下午，维米尔从画室下楼，扶着墙在楼梯半中间站住了，脸色一下子灰了下去。{staff}带着纳米医疗箱，扶他躺下，照着说明给他用上，守在床边，一夜叫醒他两回喝水，第二天又守了一整天。那一天半过去了。第三天早上，维米尔自己上了楼，推开画室的窗板，光照进来，落在画架前那块空地上。'
+          excerpts:
+            p4: '那一天半过去了。第三天早上，维米尔自己上了楼，推开画室的窗板，光照进来，落在画架前那块空地上。'
+            p3: '维米尔没有回头。他拿起调色板，用刮刀把上面一点干了的蓝刮掉，又低头调起了颜色。'
+            p2: '下午，三幅画用麻绳捆好，被人扛出了门。卡塔琳娜把钱在厨房桌上数了两遍，拨出一小摞用布包好，放进了围裙口袋。'
+            p1: '来人卷起清单走了。维米尔在那幅画前站了一会儿，伸手把画框底边的一层灰抹掉了。'
         relic: "一枚珍珠耳环"
         relic_desc: "一颗小珍珠，是他常画的那种。"
         points:
@@ -93,9 +163,9 @@ events:
             who: vermeer_delft
             bio: 'IF 线里，维米尔挺过了 1675 年的十二月，又在代尔夫特画了些年，陪这一家把债慢慢还清。'
         vignettes:
-          bread: '12 月 5 日早上，{staff}帮面包铺的伙计沿着老朗恩代克街送面包。到了一家门口，伙计把面包递进去，没收钱，在小本子上画了一道。他说老板每个星期六都对着这一页嘟囔，每个星期一照样叫他把面包送来。'
-          frames: '一月里，{staff}在一家画框铺里待了一上午，替师傅按住斜角，等胶干。靠墙的画框有一半空着。师傅说自从七二年法国人打进来，人们买框子是为了装镜子，不是装画，镜子至少不会让人付两回钱。'
-          peat: '二月中旬，{staff}帮一个卖泥炭的女人在集市广场上码湿泥炭块。她朝手指哈气，说今年冬天全代尔夫特都在烧便宜货，整座城闻起来像一条趴在炉边的湿狗。'
+          bread: '12 月 5 日早上，天还没大亮，运河上起着雾，{staff}帮面包铺的伙计沿着老朗恩代克街送面包。到了一家门口，伙计把面包递进去，没收钱，在小本子上画了一道。他说老板每个星期六都对着这一页嘟囔，每个星期一照样叫他把面包送来。'
+          frames: '一月里，{staff}在一家画框铺里待了一上午，替师傅按住斜角，等胶干，铺子里一股熬胶的腥味。靠墙的画框有一半空着。师傅说自从七二年法国人打进来，人们买框子是为了装镜子，不是装画，镜子至少不会让人付两回钱。'
+          peat: '二月中旬，{staff}帮一个卖泥炭的女人在集市广场上码湿泥炭块，脚下的石板结了一层薄霜。她朝手指哈气，说今年冬天全代尔夫特都在烧便宜货，整座城闻起来像一条趴在炉边的湿狗。'
 text:
   en:
     name: Johannes Vermeer

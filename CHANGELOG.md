@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Story prose in Chinese, English and Traditional Chinese for Schubert, Vermeer, Rembrandt, Gaudí, Kafka and Poe. The Chinese short scenes of these stories have a little more detail, and the Traditional Chinese corrections list has thirteen more entries.
 - Added Russian to the language selector. The interface, calendar, tags and header lines are in Russian; stories and the encyclopedia read in English for now. Time axis ticks can use a shorter year form per language, and Russian ticks read −4000 and 1.
 - Fixed Russian text that split into stray keys: the lodger identity, an early-return stamp and a placeholder in a secretary perk.
 - Story prose in Chinese, English and Traditional Chinese for Hammurabi and Ibn Battuta.
@@ -27,6 +28,9 @@
 - Story prose in Chinese, English and Traditional Chinese for Adam Smith, Ada Lovelace, Mendel, Mendeleev, Marie Curie and Freud. The Traditional Chinese titles of the Smith, Sophie Germain and Great Zimbabwe stories now match the Chinese ones.
 - Added `tools/story_review_save.mjs`, which plays each story with prose in developer mode and writes a save to import.
 - Story prose in Chinese, English and Traditional Chinese for Murasaki Shikibu, Tagore, Galois, Riemann, Emmy Noether and Tesla. The Chinese short scenes of these stories have a little more detail.
+- Vermeer: painters, illustrators, proofreaders and translators with a quick mind can now hold the first star. Kafka: the last star no longer has a route for persuasive employees, whom the first star always turned back.
+- Rembrandt and Gaudí cards name the last painting, the building and the hospital in plain words; source titles are unchanged.
+- Boole now has Traditional Chinese text, so every story with story prose reads in Simplified Chinese, Traditional Chinese and English. The Traditional Chinese corrections now turn every 溼 into 濕.
 
 ## 0.14.0, 2026-11-21
 

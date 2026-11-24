@@ -2,7 +2,7 @@ order: 111
 events:
   kafka_kierling:
     order: 118
-    build_step: 4
+    build_step: 3
     year: 1924
     date: '1924-05-01'
     stay: 2
@@ -20,7 +20,7 @@ events:
         - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
         - {id: p2, kind: care, day: 20, req: {"any":[{"job":["nurse","physician"]},{"trait":["kind","patient","methodical"]}]}}
         - {id: p3, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","nurse","pharmacist","paramedic"],"item":"painkiller"},{"job":["doctor","physician"],"stat":{"wit":7}}]}}
-        - {id: p4, kind: persuade, day: 25, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p4, kind: persuade, day: 25, req: {"any":[{"job":["archivist","proofreader"],"stat":{"wit":7,"will":7}},{"trait":["methodical"],"stat":{"will":8}}]}}
       vignettes:
         - {id: lilac, traits: [kind, sensitive, attached, patient, quiet, calm], day: 12}
         - {id: post, traits: [methodical, curious, bold, cheerful, streetwise, wanderer], day: 22}
@@ -31,6 +31,37 @@ events:
         place: "Kierling"
         figure: "Franz Kafka"
         story: 'In March 1924 tuberculosis reached the larynx of Franz Kafka, and swallowing became hard. On 19 April he came to the Hoffmann sanatorium at Kierling near Klosterneuburg, with Dora Diamant; he was told not to speak, and talked mostly on slips of paper. Around 6 May the medical student Robert Klopstock came to help care for him. On 2 June he was still correcting the proofs of his collection A Hunger Artist. He died around noon on 3 June, aged forty, and was buried in Prague on 11 June. The book of four stories came out in Berlin at the end of August.'
+        story_prose:
+          opening:
+            - 'The Hoffmann sanatorium at Kierling, near Klosterneuburg north of Vienna, May 1924. Franz Kafka, forty, has tuberculosis, and since March it has reached his larynx, so that swallowing grows harder. He has a room with a balcony over the garden; told not to speak, he talks mostly on small slips of paper. Dora Diamant has a guest room and cooks for him, and around 6 May the medical student Robert Klopstock has come to help with the nursing. He is still correcting the proofs of his collection A Hunger Artist, the last book he put together himself.'
+            - 'In history, swallowing hurt so much that he could hardly eat, and his doctor injected the laryngeal nerve against the pain every eight to ten days; on 2 June he was still correcting proofs, and his last letter, to his parents, he grew too tired to finish, and Dora finished it for him; around noon on 3 June he died, and the book came out in Berlin only at the end of August. In this branch, the sanatorium has a gardener who cuts back the lilac and an errand boy who carries the letters, and the village bakery has a baker''s wife.'
+            - 'A few kinds of people can help on this trip: someone who knows medicine and carries painkillers, or a doctor with a quick mind, to ease the pain in his throat; someone who has kept archives or read proofs, with a quick mind, or someone methodical or watchful with a strong will, to keep his place each time the illness breaks off the proofing; someone trained in nursing, or someone kind, patient or methodical, to share out the errands and the letters so that those keeping watch can rest; someone who has kept archives or read proofs, quick and steady, or someone methodical with a stronger will still, to get the Berlin publisher to bind a copy and send it ahead.'
+          outcomes:
+            all: 'Around noon on 3 June Kafka died at Kierling. On the little table on the balcony lay the copy bound ahead of time, a narrow strip of paper between its pages, and beside it an empty bowl.'
+            p3: 'Around noon on 3 June Kafka died at Kierling. In those last weeks, the bowls Dora carried in mostly came out empty.'
+            p4: 'Around noon on 3 June Kafka died at Kierling. The copy bound ahead of time stayed on the little table on the balcony, a narrow strip of paper between its pages.'
+            p2: 'Around noon on 3 June Kafka died at Kierling. The table of turns stayed pinned behind the corridor door until the day they left, its last squares still empty.'
+            p1: 'Around noon on 3 June Kafka died at Kierling. At the end of August A Hunger Artist came out in Berlin, its four stories printed as he had last corrected them.'
+          none: 'Around noon on 3 June Kafka died at Kierling, aged forty. A pile of unused slips of paper was left on the little table on the balcony.'
+          desync: 'On 19 May the proofs were half corrected when the pencil fell; nobody remembered which line he had stopped at, and the corrected pages were gathered up among the rest. When {staff} was recalled, the wind was blowing in from the balcony and turned over the top page.'
+          not_admitted: '{staff} never got into the sanatorium, and only stood a few times outside the post office down the hill in Klosterneuburg. Every day the errand boy came down with an armful of letters, and one fat one was addressed to Berlin.'
+          points:
+            p3: 'At noon on 11 May Dora brings in a bowl of soup. Kafka picks up the spoon, puts it down again, writes a few words on a slip of paper and pushes it across. {staff}, who knows medicine, works out with the doctor how to give the pain relief before meals, times it, and only when it has taken hold sets the bowl in front of him again. Kafka swallows in very small mouthfuls, stopping after each one. When a little less than half is left, he lays the spoon across the rim of the bowl, picks up the pencil and writes another line on the back of the slip.'
+            p1:
+              class_lettered: 'On the afternoon of 19 May a pile of proofs lies on the little table on the balcony. Halfway through his corrections Kafka begins to cough, and the pencil falls to the floor. {staff}, used to work on paper, picks up the pencil, slips a narrow strip of paper in beside the line where he stopped, separates the corrected pages from the rest into two piles and sets a paperweight on them. When Kafka has rested a while he draws out the strip himself and goes on correcting. The wind lifts a corner of a page left loose, and he puts out a hand and holds it down.'
+              trait_vigil: 'On the afternoon of 19 May a pile of proofs lies on the little table on the balcony. Halfway through his corrections Kafka begins to cough, and the pencil falls to the floor. {staff}, who has been keeping watch beside him, picks up the pencil, slips a narrow strip of paper in beside the line where he stopped, separates the corrected pages from the rest into two piles and sets a paperweight on them. When Kafka has rested a while he draws out the strip himself and goes on correcting. The wind lifts a corner of a page left loose, and he puts out a hand and holds it down.'
+              else: 'On the afternoon of 19 May a pile of proofs lies on the little table on the balcony. Halfway through his corrections Kafka begins to cough, and the pencil falls to the floor. {staff}, methodical, picks up the pencil, slips a narrow strip of paper in beside the line where he stopped, separates the corrected pages from the rest into two piles and sets a paperweight on them. When Kafka has rested a while he draws out the strip himself and goes on correcting. The wind lifts a corner of a page left loose, and he puts out a hand and holds it down.'
+            p2:
+              class_medical: 'On 21 May a small pile of letters waits in the corridor for the post, and Dora has not been out of the door for days. {staff}, trained in nursing, sets out in a table the hours for taking letters, going down to the post office and sitting with him, pins it behind the corridor door, and fills it in square by square, who comes when and who leaves when. In the afternoon it is {staff}''s turn to sit in the room. Dora goes out, walks once round the garden along the fence, and stands a while under the lilac.'
+              else: 'On 21 May a small pile of letters waits in the corridor for the post, and Dora has not been out of the door for days. {staff}, caring and patient, sets out in a table the hours for taking letters, going down to the post office and sitting with him, pins it behind the corridor door, and fills it in square by square, who comes when and who leaves when. In the afternoon it is {staff}''s turn to sit in the room. Dora goes out, walks once round the garden along the fence, and stands a while under the lilac.'
+            p4:
+              class_lettered: 'On 26 May the corrected sheets have gone back to Berlin, and the book will not be printed until the summer. {staff}, used to paperwork and to the ways of printers, writes to the publisher in Berlin asking them to bind the corrected sheets into a single copy first and send it by post, and encloses the titles of the four stories in the order Kafka chose. Some days later the errand boy carries a stiff parcel up the hill. Kafka sets it on his knees and turns the pages one by one, and at the last story his finger rests a while under the title.'
+              else: 'On 26 May the corrected sheets have gone back to Berlin, and the book will not be printed until the summer. {staff}, methodical, writes to the publisher in Berlin asking them to bind the corrected sheets into a single copy first and send it by post, and encloses the titles of the four stories in the order Kafka chose. Some days later the errand boy carries a stiff parcel up the hill. Kafka sets it on his knees and turns the pages one by one, and at the last story his finger rests a while under the title.'
+          excerpts:
+            p4: 'Some days later the errand boy carries a stiff parcel up the hill. Kafka sets it on his knees and turns the pages one by one, and at the last story his finger rests a while under the title.'
+            p3: 'Kafka swallows in very small mouthfuls, stopping after each one. When a little less than half is left, he lays the spoon across the rim of the bowl, picks up the pencil and writes another line on the back of the slip.'
+            p2: 'In the afternoon it is {staff}''s turn to sit in the room. Dora goes out, walks once round the garden along the fence, and stands a while under the lilac.'
+            p1: 'When Kafka has rested a while he draws out the strip himself and goes on correcting. The wind lifts a corner of a page left loose, and he puts out a hand and holds it down.'
         relic: "A page of proofs"
         relic_desc: "A galley proof with small corrections in pencil."
         points:
@@ -66,6 +97,37 @@ events:
         place: "基尔灵"
         figure: "弗朗茨·卡夫卡"
         story: '1924 年 3 月，结核侵入弗朗茨·卡夫卡的喉头，他咽东西越来越难。4 月 19 日，他和朵拉·迪亚曼特来到克洛斯特新堡附近基尔灵的霍夫曼疗养院；医生让他少说话，他多半靠纸条交谈。5 月 6 日前后，医学生罗伯特·克洛普施托克赶来帮着照料。6 月 2 日，他还在校故事集《饥饿艺术家》的校样。6 月 3 日中午前后，他去世，四十岁，11 日葬于布拉格。这本收了四篇小说的书，8 月底在柏林出版。'
+        story_prose:
+          opening:
+            - '1924 年 5 月，维也纳北边克洛斯特新堡附近的基尔灵，霍夫曼疗养院。四十岁的弗朗茨·卡夫卡患结核，三月起病到了喉头，咽东西越来越难。他住在一间带阳台、望得见花园的屋子里，医生让他禁声，他多半在小纸条上写字说话。朵拉·迪亚曼特住在客房，给他做饭；5 月 6 日前后，医学生罗伯特·克洛普施托克也赶来帮着照料。他手头还在校自己编定的最后一本书，故事集《饥饿艺术家》的校样。'
+            - '史实里，吞咽痛得他几乎吃不下东西，医生每隔八到十天给他的喉上神经打一针止痛；6 月 2 日他还在改校样，给父母的最后一封信写到一半没了力气，由朵拉替他写完；6 月 3 日中午前后他去世，书到 8 月底才在柏林出版。在这条分支里，疗养院有个修丁香的园丁，有个跑腿送信的男孩，村里面包铺有个面包师的妻子。'
+            - '这一趟用得上几种人：懂医护、带着止痛药的人，或者当医生、脑子快的人，替他把喉头的痛减下来；管过档案、做过校对、脑子快的人，或者有条理、守得住、意志硬的人，在病一次次打断校稿时，替他记住改到了哪里；懂护理的人，或者心善、耐心、有条理的人，把跑腿和通信排开，让守着的人歇一口气；管过档案、做过校对、脑子快又沉得住气的人，或者有条理、意志更硬的人，说得动柏林的出版人先装订一本寄来。'
+          outcomes:
+            all: '6 月 3 日中午前后，卡夫卡在基尔灵去世。阳台的小桌上放着那本先装订的书，书页里夹着一张窄纸条，旁边一只碗是空的。'
+            p3: '6 月 3 日中午前后，卡夫卡在基尔灵去世。最后那几个星期，朵拉端进屋的碗，多半是空着端出来的。'
+            p4: '6 月 3 日中午前后，卡夫卡在基尔灵去世。那本先装订的书留在阳台的小桌上，书页里夹着一张窄纸条。'
+            p2: '6 月 3 日中午前后，卡夫卡在基尔灵去世。走廊门后那张排班表一直钉到他们离开的那天，最后几格还空着。'
+            p1: '6 月 3 日中午前后，卡夫卡在基尔灵去世。8 月底，《饥饿艺术家》在柏林出版，四篇小说照他最后改定的样子印了出来。'
+          none: '6 月 3 日中午前后，卡夫卡在基尔灵去世，四十岁。阳台的小桌上还留着一叠没用完的小纸条。'
+          desync: '5 月 19 日，校样改到一半，铅笔掉在地上，没人记得他停在了哪一行，改过的几页被收拢起来，混进了没改的里头。{staff}被召回时，风正从阳台吹进来，把最上面一页翻了过去。'
+          not_admitted: '{staff}没能进疗养院，只在坡下克洛斯特新堡的邮局门口站过几回。跑腿的男孩每天抱着一摞信从坡上下来，有一封厚的，是寄往柏林的。'
+          points:
+            p3: '5 月 11 日中午，朵拉端来一碗汤。卡夫卡拿起勺子，又放下了，在纸条上写了几个字推过去。{staff}懂医护，跟医生商量着把止痛排在饭前，算好钟点，等药起了效，才把碗端回他面前。卡夫卡一小口一小口地咽，咽一口，停一会儿。碗里剩下小半时，他把勺子横搁在碗沿上，拿起铅笔，在那张纸条背面又写了一行。'
+            p1:
+              class_lettered: '5 月 19 日下午，阳台的小桌上摊着一叠校样。卡夫卡改到一半，咳了起来，铅笔掉到了地上。{staff}做惯了文字活，捡起铅笔，在他停下的那一行边上夹进一张窄纸条，把改过的几页和没改的分成两摞，用一块镇纸压住。卡夫卡歇过一阵，自己把那张纸条抽出来，接着往下改。风把没压住的一页掀起一角，他伸手按住了。'
+              trait_vigil: '5 月 19 日下午，阳台的小桌上摊着一叠校样。卡夫卡改到一半，咳了起来，铅笔掉到了地上。{staff}一直守在旁边，捡起铅笔，在他停下的那一行边上夹进一张窄纸条，把改过的几页和没改的分成两摞，用一块镇纸压住。卡夫卡歇过一阵，自己把那张纸条抽出来，接着往下改。风把没压住的一页掀起一角，他伸手按住了。'
+              else: '5 月 19 日下午，阳台的小桌上摊着一叠校样。卡夫卡改到一半，咳了起来，铅笔掉到了地上。{staff}有条理，捡起铅笔，在他停下的那一行边上夹进一张窄纸条，把改过的几页和没改的分成两摞，用一块镇纸压住。卡夫卡歇过一阵，自己把那张纸条抽出来，接着往下改。风把没压住的一页掀起一角，他伸手按住了。'
+            p2:
+              class_medical: '5 月 21 日，走廊上等着送去邮局的信摞了一小摞，朵拉已经几天没出过这扇门。{staff}懂护理，把送信、下坡去邮局、陪坐的钟点排成一张表，钉在走廊的门后，谁几点来、谁几点走，一格一格写清楚。下午轮到{staff}守在屋里。朵拉出了门，沿着花园的篱笆走了一圈，在丁香底下站了一会儿。'
+              else: '5 月 21 日，走廊上等着送去邮局的信摞了一小摞，朵拉已经几天没出过这扇门。{staff}肯操心，也有耐心，把送信、下坡去邮局、陪坐的钟点排成一张表，钉在走廊的门后，谁几点来、谁几点走，一格一格写清楚。下午轮到{staff}守在屋里。朵拉出了门，沿着花园的篱笆走了一圈，在丁香底下站了一会儿。'
+            p4:
+              class_lettered: '5 月 26 日，改定的印张已经寄回柏林，书要到夏天才印得出来。{staff}管过文书，知道印书的规矩，给柏林的出版社写信，请他们先把改定的印张装成一本，随邮寄来，信里附上四篇的篇目和他定的次序。过了些日子，跑腿的男孩从坡下抱上来一个硬邦邦的包裹。卡夫卡把它放在膝头，一页一页翻过去，翻到最后一篇，手指在标题底下停了一会儿。'
+              else: '5 月 26 日，改定的印张已经寄回柏林，书要到夏天才印得出来。{staff}有条理，给柏林的出版社写信，请他们先把改定的印张装成一本，随邮寄来，信里附上四篇的篇目和他定的次序。过了些日子，跑腿的男孩从坡下抱上来一个硬邦邦的包裹。卡夫卡把它放在膝头，一页一页翻过去，翻到最后一篇，手指在标题底下停了一会儿。'
+          excerpts:
+            p4: '过了些日子，跑腿的男孩从坡下抱上来一个硬邦邦的包裹。卡夫卡把它放在膝头，一页一页翻过去，翻到最后一篇，手指在标题底下停了一会儿。'
+            p3: '卡夫卡一小口一小口地咽，咽一口，停一会儿。碗里剩下小半时，他把勺子横搁在碗沿上，拿起铅笔，在那张纸条背面又写了一行。'
+            p2: '下午轮到{staff}守在屋里。朵拉出了门，沿着花园的篱笆走了一圈，在丁香底下站了一会儿。'
+            p1: '卡夫卡歇过一阵，自己把那张纸条抽出来，接着往下改。风把没压住的一页掀起一角，他伸手按住了。'
         relic: "一页校样"
         relic_desc: "一页印刷校样，上面有铅笔改的小字。"
         points:
@@ -93,9 +155,9 @@ events:
             who: kafka_kierling
             bio: '卡夫卡生前看到一册按最后校样装订的故事集。正式出版时出版社保留了他选定的篇目和次序。'
         vignettes:
-          lilac: '5 月 13 日，{staff}帮疗养院的园丁修剪篱笆边的丁香。园丁说今年丁香晚开了一个星期，蜜蜂到现在还没原谅它，天天飞到厨房窗口来抱怨。'
-          post: '5 月 23 日，{staff}跟疗养院跑腿的男孩走下坡去克洛斯特新堡的邮局。男孩说他不用看就知道信从哪儿来：柏林来的又厚又硬，全是纸；布拉格来的薄，天天都有。'
-          rain: '六月中旬，{staff}被一场急雨堵在村里面包铺的门洞下。面包师的妻子看着街面变成一条河，说基尔灵的小溪只在她刚刷完门口台阶的时候才漫上来。'
+          lilac: '5 月 13 日，{staff}帮疗养院的园丁修剪篱笆边的丁香，剪下的枝子堆在脚边，香得发闷。园丁说今年丁香晚开了一个星期，蜜蜂到现在还没原谅它，天天飞到厨房窗口来抱怨。'
+          post: '5 月 23 日，{staff}跟疗养院跑腿的男孩走下坡去克洛斯特新堡的邮局，路边的果树刚落了花。男孩说他不用看就知道信从哪儿来：柏林来的又厚又硬，全是纸；布拉格来的薄，天天都有。'
+          rain: '六月中旬，{staff}被一场急雨堵在村里面包铺的门洞下，雨点砸在石板上，溅起一层白烟。面包师的妻子看着街面变成一条河，说基尔灵的小溪只在她刚刷完门口台阶的时候才漫上来。'
 text:
   en:
     name: Franz Kafka
