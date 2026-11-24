@@ -3,6 +3,9 @@
 ## [Unreleased]
 
 - Added Russian to the language selector. The interface, calendar, tags and header lines are in Russian; stories and the encyclopedia read in English for now. Time axis ticks can use a shorter year form per language, and Russian ticks read −4000 and 1.
+- Fixed Russian text that split into stray keys: the lodger identity, an early-return stamp and a placeholder in a secretary perk.
+- Story prose in Chinese, English and Traditional Chinese for Hammurabi and Ibn Battuta.
+- Traditional Chinese now follows the rewritten Chinese for thirteen story texts that had kept an older version, among them Eratosthenes, Lalibela, Ife, Sophie Germain and Wallace.
 - Stories can now be told as short fiction. The story page opens with three paragraphs, each won star has its own passage in the report, and a closing paragraph sits under the stamp. Mary Anning, Émilie du Châtelet and Sejong are the first stories written this way, in English and Chinese.
 - Reports now open with the echo and the full record. The fiction note follows the record and the settlement closes the page.
 - Share cards for these stories quote a few sentences from the won passage. Other cards keep up to three short lines from the record.
