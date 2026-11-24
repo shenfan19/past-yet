@@ -248,10 +248,13 @@ emitYaml('encyclopedia.yaml', {
 
 // ---------- text, one file per language ----------
 const headerLines = read('config/header_lines.yaml');
+// the story cards a language carries in its own files under cards/text, such as the Traditional Chinese catalogue, read again by the story prose check
+const langCatalog = {};
 for (const lang of LANGS) {
   const text = {};
   const partialDir = `text/${lang}`;
   for (const f of yamlFiles(partialDir)) Object.assign(text, merge(text, read(`${partialDir}/${f}`)));
+  langCatalog[lang] = text.catalog || {};
   (text.ui ||= {}).header_lines = Object.entries(headerLines.lines).map(([id, entry]) => {
     const line = entry.text?.[lang];
     if (typeof line !== 'string' || !line.trim()) fail(`header line ${id}: missing text for ${lang}`);
@@ -380,7 +383,9 @@ let storyLine = '';
     // the shape compared across languages: the fields in any order, the keys within a field in their order, since the order of outcomes and excerpts is their priority
     const shape = (prose) => JSON.stringify(Object.fromEntries(Object.entries(prose).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => [k, isObj(v) ? Object.fromEntries(Object.entries(v).map(([id, x]) => [id, isObj(x) ? Object.keys(x) : 1])) : Array.isArray(v) ? v.length : 1])));
     const shapes = {};
-    for (const [lang, text] of Object.entries(ev.text)) {
+    // the text of the story in every language that carries it: the person card, and over it nothing, else the language's own catalogue file
+    const texts = Object.fromEntries(LANGS.map((lang) => [lang, ev.text[lang] ?? langCatalog[lang][ev.id]]).filter(([, t]) => t !== undefined));
+    for (const [lang, text] of Object.entries(texts)) {
       const prose = text.story_prose;
       if (prose === undefined) continue;
       const where = ev.id + ' ' + lang + ' story_prose';
@@ -413,6 +418,9 @@ let storyLine = '';
     if (Object.keys(shapes).length) {
       if (!shapes.zh) fail(ev.id + ' story_prose is written in ' + Object.keys(shapes).join(', ') + ' but not in zh, which is written first');
       else for (const [lang, sh] of Object.entries(shapes)) if (sh !== shapes.zh) fail(ev.id + ' ' + lang + ' story_prose does not have the same fields and keys as zh');
+      // a story is written whole: once the Chinese prose is there, English, the fallback, and every language that carries the card have theirs,
+      // so no language shows the plain lines for one story while it reads the prose for another
+      if (shapes.zh) for (const lang of LANGS) if (!shapes[lang] && (lang === config.i18n.fallback || texts[lang])) fail(ev.id + ' story_prose is written in zh but not in ' + lang + (lang === config.i18n.fallback ? ', the fallback' : ', which carries the card') + (config.i18n.convert?.[lang] ? '; run python tools/story_prose_convert.py ' + ev.id : ''));
     }
   }
   const modelOf = (era) => (era && eraDir[era] ? (eraModel[era] ?? modelOfDir(eraDir[era])).raw : null);

@@ -11,6 +11,9 @@
 - Fixed a startup failure when a saved report or the trip log named a story the current mode does not load, such as a draft played in developer mode. Those trips wait aside in the save and return when the story is available again.
 - Restored the two-sided record, with history to the left of the time axis and the traveller to the right.
 - Saves written in developer mode now keep V and King and their trips. Outside developer mode those trips wait aside in the save, are left out of the dispatch log and come back in developer mode. Trips under way and kept reports set aside with a missing place or employee also come back when it returns. The import message says how many trips wait aside.
+- A story with Chinese story prose must now also have it in English and in every language that carries its card; the data build fails otherwise. Added `tools/story_prose_convert.py`, which converts the prose into Traditional Chinese with OpenCC and a list of corrections, and Traditional Chinese prose for ten stories. The rest of the Traditional Chinese text was converted again, which puts right characters left in Simplified.
+- Share card excerpts are now two sentences, and every excerpt is given in each language.
+- Story prose in Chinese, English and Traditional Chinese for Socrates, Euclid, Eratosthenes, Fibonacci, Dante and Copernicus. The second Copernicus star now reads more plainly.
 - Added `tools/story_review_save.mjs`, which plays each story with prose in developer mode and writes a save to import.
 
 ## 0.14.0, 2026-11-21

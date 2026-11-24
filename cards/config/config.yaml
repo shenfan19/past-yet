@@ -18,6 +18,14 @@ i18n:
   auto: auto
   storage_key: teleporter_lang
   story_locales: [en, zh]
+  # a language written by converting another one, read by tools/story_prose_convert.py: the story prose of each story whose card
+  # this language carries is converted from the source with OpenCC, then read through by hand
+  convert:
+    zh-Hant:
+      from: zh
+      opencc: s2tw
+      # what the converter gets wrong, put right after it: 里 in transliterated names, as the Traditional cards already spell them, and 干 for dry, 喂 for feeding, 襬 for 擺, 唸 for reading aloud, 評注, 岩 and 卷 as the cards spell them, names that keep 托 布 岳, and 只 回 准 背 where they are not the measure word, the turn or the verb of carrying, 哄 for an uproar, 回 in 回音, 嘩 as the cards spell it
+      fix: { 亨裡克: 亨里克, 弗裡德里克: 弗里德里克, 萊姆裡吉斯: 萊姆里吉斯, 的裡雅斯特: 的里雅斯特, 沒幹: 沒乾, 已經幹了: 已經乾了, 崖下乾重活: 崖下幹重活, 喂水: 餵水, 襬得: 擺得, 議事廳里: 議事廳裡, 把紙念給: 把紙唸給, 再念一遍: 再唸一遍, 把名字念響: 把名字唸響, 喂藥: 餵藥, 捱得很近: 挨得很近, 評註: 評注, 巖縫: 岩縫, 十來天后: 十來天後, 一捲一捲: 一卷一卷, 託雷: 托雷, 佈德瓦爾: 布德瓦爾, 梅納佈雷亞: 梅納布雷亞, 嶽鄂: 岳鄂, 還是隻有: 還是只有, 獲準: 獲准, 北迴紐約: 北回紐約, 被人揹: 被人背, 颳得幹乾淨凈: 刮得乾乾淨淨, 幹葉: 乾葉, 墨幹: 墨乾, 幹豌豆: 乾豌豆, 膠幹: 膠乾, 幹豆莢: 乾豆莢, 封皮幹得: 封皮乾得, 聯系: 聯繫, 那捲詩: 那卷詩, 三捲一捲卷: 三卷一卷卷, 喂下: 餵下, 鬨鬧: 哄鬧, 迴音: 回音, 喧譁: 喧嘩, 蘇格拉底念一句: 蘇格拉底唸一句, 照著節拍念回: 照著節拍唸回, 互相換著念: 互相換著唸, 幾行念給: 幾行唸給, 跟著念回去: 跟著唸回去 }
   locales:
     en: English
     zh: 简体中文
