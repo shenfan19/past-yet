@@ -72,7 +72,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 - Wiki (a pop-up): a left list with search and tag filter, linked articles and back and forward history. Unseen entries show as a question mark. In dev mode they show in full with a hidden mark, and the model categories (formulas, variables, models) appear.
 - The wiki, Settings and About open from the icons beside the music controls. Funds, time energy, date, clock speed and auto dispatch share the office status area. Every list is paged, with no scroll bars, and every table has a filter of its own that opens on a click.
 - Dev mode: add `?devtools` to the URL (or `&devtools` when other parameters are present).
-- `python tools/story_prose_convert.py [eventId,eventId]` converts the story prose of Simplified Chinese into Traditional Chinese with OpenCC, for the stories the Traditional catalogue carries; `--whole` also converts every Traditional Chinese file in place. It needs `pip install opencc pyyaml`.
+- `python tools/story_prose_convert.py [eventId,eventId]` converts the story prose of Simplified Chinese into Traditional Chinese with OpenCC, for the stories the Traditional catalogue carries; `--whole` also converts every Traditional Chinese file in place. `--stale` lists the Traditional Chinese story texts that no longer match the conversion of the Chinese, and `--stale --refresh` reconverts them. It needs `pip install opencc pyyaml`.
 - Story review save: `node tools/story_review_save.mjs [eventId,eventId]` plays the stories with story prose in `?devtools` and writes a save to import from Settings there. The import replaces the save of that browser. Each story gets V, King, a reader for each written variant and a trip that misses the first ending.
 
 ## Languages

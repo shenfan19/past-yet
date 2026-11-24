@@ -6,6 +6,10 @@
 - Fixed Russian text that split into stray keys: the lodger identity, an early-return stamp and a placeholder in a secretary perk.
 - Story prose in Chinese, English and Traditional Chinese for Hammurabi and Ibn Battuta.
 - Traditional Chinese now follows the rewritten Chinese for thirteen story texts that had kept an older version, among them Eratosthenes, Lalibela, Ife, Sophie Germain and Wallace.
+- Story prose in Chinese, English and Traditional Chinese for Inō Tadataka, with Japanese too, Keats, Nezahualcoyotl, Pushkin, Ramanujan and Sequoyah. Religious wording in the Keats, Pushkin and Sequoyah cards is now neutral.
+- The fiction note under the record and on share cards now also says that historical details may be wrong or not yet checked. On the share card the note wraps instead of running past the edge.
+- `tools/story_prose_convert.py --stale` lists Traditional Chinese story texts left behind by a rewritten Chinese text, and `--refresh` reconverts them; 32 such texts were brought up to date.
+- The story review save also picks readers whose trip falls out of sync after the passage they show.
 - Stories can now be told as short fiction. The story page opens with three paragraphs, each won star has its own passage in the report, and a closing paragraph sits under the stamp. Mary Anning, Émilie du Châtelet and Sejong are the first stories written this way, in English and Chinese.
 - Reports now open with the echo and the full record. The fiction note follows the record and the settlement closes the page.
 - Share cards for these stories quote a few sentences from the won passage. Other cards keep up to three short lines from the record.

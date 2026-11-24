@@ -250,12 +250,14 @@ export function createShare(X) {
     const noticeColor = '#873329';
     const noticeFont = `400 ${noticeSize}px ${sans}`;
     const noticeBold = `700 ${noticeSize}px ${sans}`;
+    // the bold note wraps like the rest, and the feedback note goes on after its last line
     g.font = noticeBold;
-    const boldWidth = g.measureText(H.fiction_note).width;
+    const boldLines = wrap(g, H.fiction_note, width - 46);
+    const boldWidth = g.measureText(boldLines[boldLines.length - 1]).width;
     g.font = noticeFont;
     const feedbackInset = boldWidth + g.measureText(' ').width;
     const feedbackLines = wrap(g, H.feedback_note, width - 46, feedbackInset);
-    const noticeHeight = 2 * noticeInset + feedbackLines.length * lineHeight(noticeSize);
+    const noticeHeight = 2 * noticeInset + (boldLines.length - 1 + feedbackLines.length) * lineHeight(noticeSize);
     const recordEnd = maxHeight - pad - noticeGap - noticeHeight - excerptGap;
     const bodyStep = lineHeight(CV.body_px);
     if (p.text.length || record.length) y += echoPanel ? 27 : 38;
@@ -288,10 +290,11 @@ export function createShare(X) {
     const noticeStart = rows.length;
     const noticeTop = y + noticeGap;
     const noticeBaseline = noticeTop + noticeInset + noticeSize;
-    rows.push({ line: H.fiction_note, font: noticeBold, color: noticeColor, x: noticeX, y: noticeBaseline, align: 'left' });
+    boldLines.forEach((line, index) => rows.push({ line, font: noticeBold, color: noticeColor, x: noticeX, y: noticeBaseline + index * lineHeight(noticeSize), align: 'left' }));
+    const feedbackBaseline = noticeBaseline + (boldLines.length - 1) * lineHeight(noticeSize);
     feedbackLines.forEach((line, index) => {
       const x = noticeX + (index === 0 ? feedbackInset : 0);
-      rows.push({ line, font: noticeFont, color: noticeColor, x, y: noticeBaseline + index * lineHeight(noticeSize), align: 'left' });
+      rows.push({ line, font: noticeFont, color: noticeColor, x, y: feedbackBaseline + index * lineHeight(noticeSize), align: 'left' });
     });
     const height = Math.max(minHeight, noticeTop + noticeHeight + pad);
     const extra = height - noticeTop - noticeHeight - pad;

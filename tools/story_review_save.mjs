@@ -50,13 +50,15 @@ try {
     const out = [];
     // the game's own run of a small story, tried over a few seeds before the trip is sent, to find a reader and a seed that show a passage
     const won = (r, id) => (r.points || []).some((p) => p.id === id && p.hit && !p.cut);
-    const find = (ev, readers, test) => {
+    // passage: a trip that falls out of sync later still shows the passage of a point won before, and the record is where it is read;
+    // an ending is only read when the trip did not fall out of sync, so the test of the endings keeps such trips out
+    const find = (ev, readers, test, passage = false) => {
       for (let k = 0; k < tries; k++) for (const s of readers) {
         // the same kit the trip will carry, as launchLight keeps only what the story allows
         const allowed = Object.fromEntries(Object.entries(kit).filter(([id]) => backend.lightKitAllowed(ev.id, id)));
         const r = backend.runLight(ev.id, s, seed + k, allowed, S.staff[s].favor);
         // reached and taken in: a trip that never got there keeps its scene points in the run, though it wins no star
-        if (!r.evacuation && r.outcome !== 'desync' && r.journey?.reached && r.journey?.accepted && r.stars > 0 && test(r)) return { staffId: s, seed: seed + k };
+        if (!r.evacuation && (passage || r.outcome !== 'desync') && r.journey?.reached && r.journey?.accepted && (passage || r.stars > 0) && test(r)) return { staffId: s, seed: seed + k };
       }
       return null;
     };
@@ -80,7 +82,7 @@ try {
         if (!x || typeof x !== 'object') continue;
         for (const key of Object.keys(x).filter((k) => k !== 'else')) {
           const readers = roster.filter((s) => key.split('+').every((t) => backend.staffTags(ev.id, s).includes(t)));
-          const pick = find(ev, readers, (r) => won(r, point));
+          const pick = find(ev, readers, (r) => won(r, point), true);
           if (pick) send(ev, pick.staffId, point + ' ' + key, pick.seed);
           else out.push({ story: ev.id, name: T.catalog[ev.id].name, staff: readers.length + ' readers', why: point + ' ' + key, result: 'no reader won the point in ' + tries + ' seeds' });
         }
