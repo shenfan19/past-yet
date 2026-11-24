@@ -21,13 +21,13 @@ const kit = {
   empty: {},
   ors: only({ ors_pack: 60 }),
   chlor: { chlorine_tablet: 60 },
-  snow: { handbook: 1 },
+  handbook: { handbook: 1 },
   mix: only({ ors_pack: 40, chlorine_tablet: 40, handbook: 1, recall_charm: 1 }),
   full: only({ ors_pack: 80, chlorine_tablet: 60, handbook: 1, recall_charm: 1 }),
 };
 const cases = [];
 for (const [kn, items] of Object.entries(kit)) cases.push([kn, base({ items })]);
-for (const sid of Object.keys(D.get('staff.staff'))) for (const kn of ['empty', 'snow', 'mix']) cases.push([kn + '/' + sid, base({ items: kit[kn], staffId: sid })]);
+for (const sid of Object.keys(D.get('staff.staff'))) for (const kn of ['empty', 'handbook', 'mix']) cases.push([kn + '/' + sid, base({ items: kit[kn], staffId: sid })]);
 
 for (const [label, spec] of cases) {
   const rs = seeds.map((s) => sim.runDispatch(E, D, { ...spec, seed: s }));

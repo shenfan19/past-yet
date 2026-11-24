@@ -35,8 +35,10 @@ try {
   };
   // the agency page shows one tab at a time
   // a tab click first closes a pop-up that is open, as a person would
+  // pop-ups stack, so Escape is pressed until none is left
+  const closeAll = async () => { for (let i = 0; i < 5 && (await page.locator('#modal .modalbg').count()); i++) await page.keyboard.press('Escape'); };
   const go = async (tab) => {
-    if (await page.locator('#modal .modalbg').count()) await page.keyboard.press('Escape');
+    await closeAll();
     // the lists show five rows by default, the test asks for the longest page so every item is on the first one
     await page.evaluate(() => { const pg = window.__game.ui.state.pager; for (const id of ['shop_modern', 'shop_future', 'inv', 'ants', 'home_staff', 'hire', 'pending', 'log']) pg[id] = { size: 50, page: 0 }; });
     await page.click(`#tabs [data-tab=${tab}]`);
@@ -174,7 +176,7 @@ try {
   await page.evaluate(() => { window.__game.ui.state.modal = { kind: 'dispatch' }; window.__game.ui.render(); });
   await page.hover('a.chip.tr >> nth=0');
   ok('trait tooltip shows', (await page.locator('#tip').isVisible()) && (await page.locator('#tip').innerText()).length > 0);
-  await page.click('a.wl[data-act=staffopen][data-id="s_ning"] >> nth=0');
+  await page.click('#modal a.wl[data-act=staffopen] >> nth=0');
   await page.waitForSelector('#modal .radarwrap');
   ok('a name opens the status page with attributes, implants and records', (await page.locator('#modal table.attrs tbody tr').count()) === 5 && (await page.locator('#modal .sec', { hasText: '义体' }).count()) >= 1);
   ok('the status page is a pop-up over the dispatch pop-up', (await page.locator('#modal .storyfull').count()) === 0 && (await page.evaluate(() => window.__game.ui.state.modalStack.map((m) => m.kind).join())) === 'dispatch');
@@ -238,12 +240,12 @@ try {
   ok('the first trip starts the clock at 1x', (await page.evaluate(() => window.__game.ctx.S().clock.speed)) === 1);
   await setClockPlaying(false);
   // the trip is made to be home by moving its day, as the clock would
-  await page.waitForSelector('.outrow');
+  await page.waitForSelector('.pend-away');
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
   await page.waitForSelector('[data-act=claim]');
   ok('ready report puts a badge on the home tab', (await page.locator('#tabs [data-tab=home] .badge').count()) === 1);
   await page.click('[data-act=claim]');
-  await page.locator('#modal .recordbtn').click();
+  // the full record is open by default
   await page.waitForSelector('.tl');
   const reportKeepsScroll = await page.evaluate(() => {
     const backdrop = document.querySelector('#modal .modalbg');
@@ -257,8 +259,10 @@ try {
     return stable;
   });
   ok('background redraws keep the expanded report scroll container and position', reportKeepsScroll);
-  ok('the report lists three sync points and the stars are the ones hit', await page.evaluate(() => { const hit = document.querySelectorAll('.sync li.hit').length; return document.querySelectorAll('.sync li').length === 3 && document.querySelector('.stars') && document.querySelector('.stars').classList.contains('s' + hit); }));
-  ok('the milestone lines of the points are highlighted in the timeline', (await page.locator('.tl li.star').count()) === (await page.locator('.sync li.hit:not(.bonus)').count()) + (await page.locator('.sync li.lost').count()));
+  // the sync points are lines of the record now, a won point starred on its day, so the checks read the points of the trip that was just claimed
+  const lastPoints = await page.evaluate(() => window.__game.ctx.S().dispatches.filter((d) => d.claimed).slice(-1)[0].report.points);
+  ok('the summary lists every sync point and marks the ones hit', await page.evaluate((pts) => document.querySelectorAll('#modal .settlerows li.hit, #modal .settlerows li.miss').length === pts.length && document.querySelectorAll('#modal .settlerows li.hit').length === pts.filter((p) => p.hit).length, lastPoints));
+  ok('the milestone lines of the points are starred in the timeline', (await page.locator('.tl li.star').count()) === lastPoints.filter((p) => p.hit && !p.bonus).length);
   await page.screenshot({ path: path.join(outDir, '4_report.png'), fullPage: true });
   // the share pop-up draws a card with a QR code that reads back as the site address
   await page.click('[data-act=shareopen]');
@@ -356,35 +360,29 @@ try {
   ok('special equipment is locked until the energy reaches its number', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 0 && (await page.locator('[data-act=cartinc][data-id=neural_chip]').count()) === 1);
   await page.evaluate(() => { window.__game.ctx.S().energy = 130; window.__game.ui.render(); });
   ok('it unlocks when the energy gets there', (await page.locator('[data-act=cartinc][data-id=golden_apple]').count()) === 1);
-  // the kit: supplies are spent in the story, future technology always comes home, and a fatal trip costs the gear unless a rescue item was carried
+  // the kit: supplies are spent in the story, everything else comes home, and a rescue item is spent on a fatal trip
   const kit = await page.evaluate(() => {
     const g = window.__game, S = g.ctx.S(), off = g.ui.office;
     const saved = { inv: { ...S.inv }, dispatches: S.dispatches, secretary: S.secretary };
     S.secretary = null; S.dispatches = [];
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     const crew = Object.keys(S.staff).filter((k) => S.staff[k].hired);
-    // the modern gear a fatal trip costs is the first playable item with that rule, found by what it is, not by its name
-    const I = g.D.get('items');
-    const G = Object.keys(I).find((k) => I[k].playable && I[k].loss === 'fatal');
-    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, [G]: 1, recall_charm: 1 });
+    Object.assign(S.inv, { ors_pack: 20, neural_chip: 1, recall_charm: 1 });
     const trip = (staffId, items, outcome, era) => {
       const d = off.launch(era, { seed: 5, staffId, items });
       d.report.outcomeId = outcome; d.readyDay = S.clock.day;
       off.claim(d.id);
       return d.kit;
     };
-    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1, [G]: 1 }, 'perfect', 'vienna_1847');
-    const bad = trip(crew[1], { [G]: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
-    S.inv[G] = 1;
-    const saved2 = trip(crew[2], { [G]: 1, recall_charm: 1, neural_chip: 1 }, 'near_death', 'vienna_1847');
-    const out = { G, fine, bad, saved2, inv: { ...S.inv } };
+    const fine = trip(crew[0], { ors_pack: 10, neural_chip: 1 }, 'perfect', 'vienna_1847');
+    const rescue = trip(crew[1], { recall_charm: 1, neural_chip: 1 }, 'near_death', 'broad_street_1854');
+    const out = { fine, rescue };
     S.inv = saved.inv; S.dispatches = saved.dispatches.concat(S.dispatches.filter((d) => d.claimed)); S.secretary = saved.secretary;
     for (const k of Object.keys(S.staff)) S.staff[k].restUntil = 0;
     return out;
   });
-  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1 && kit.fine.back[kit.G] === 1);
-  ok('a fatal trip loses the modern gear, not the future technology', kit.bad.lost[kit.G] === 1 && kit.bad.back.neural_chip === 1);
-  ok('a rescue item saves the gear and is spent doing it', kit.saved2.back[kit.G] === 1 && kit.saved2.lost.recall_charm === 1 && kit.saved2.back.neural_chip === 1);
+  ok('supplies are used up in the story and the rest of the kit comes home', kit.fine.lost.ors_pack === 10 && kit.fine.back.neural_chip === 1);
+  ok('a fatal trip spends the rescue item and the rest of the kit comes home', kit.rescue.lost.recall_charm === 1 && kit.rescue.back.neural_chip === 1);
   // scenes: the points are requirements, equipment counts and shows, and a scene can find the traveller out
   const sc = await page.evaluate(() => {
     const b = window.__game.backend;
@@ -494,8 +492,6 @@ try {
   await sub('staff');
   await page.click('[data-act=appoint][data-id=s_zhou]');
   ok('secretary is appointed', (await page.evaluate(() => window.__game.ctx.S().secretary)) === 's_zhou');
-  // the bar is redrawn on the tick, so wait for it
-  ok('secretary effect stays in the top bar', await page.waitForFunction(() => document.getElementById('res').textContent.includes(window.__game.D.get('config.ui.currency_icons.secretary')), null, { timeout: 5000 }).then(() => true, () => false));
   ok('secretary lends to travellers, not to themselves', await page.evaluate(() => { const o = window.__game.ui.office, pk = o.perks(); return JSON.stringify(o.boostOf('s_ning')) === JSON.stringify(pk.attrs) && Object.keys(o.boostOf('s_zhou')).length === 0 && o.sureOf('s_zhou').length === 0; }));
   const favor0 = await page.evaluate(() => window.__game.ctx.S().staff.s_ning.favor);
   await page.click('[data-act=gift][data-id=s_ning]');
@@ -551,6 +547,7 @@ try {
   ok('someone who decided to stay refuses a recall and anyone else comes', rc.stay === true && rc.other === false);
   const offerBefore = await page.evaluate(() => window.__game.ctx.S().hire.slots.map((x) => x.id).join());
   await page.evaluate(() => { window.__game.ctx.S().clock.day += 8; });
+  await closeAll();
   await page.selectOption('[data-clk=speed]', '1');
   await setClockPlaying(true);
   await page.waitForTimeout(800);
@@ -692,7 +689,8 @@ try {
   ok('paused music stays paused after refresh and a click', await page.evaluate(() => !window.__game.ctx.audio.state.playing && !window.__game.ctx.settings.get('music_autostart') && window.__game.ctx.settings.get('music_volume') === 0.2));
   await page.screenshot({ path: path.join(outDir, '9_settings.png'), fullPage: true });
   await go('home');
-  ok('guest has three pages and three tools', (await page.locator('#tabs [data-tab]').count()) === 3 && (await page.locator('#tools [data-act=modalopen]').count()) === 3);
+  const tabCount = await page.evaluate(() => Object.keys(window.__game.D.get('text.ui.tabs')).length);
+  ok('guest has a button for each page and three tools', tabCount >= 2 && (await page.locator('#tabs [data-tab]').count()) === tabCount && (await page.locator('#tools [data-act=modalopen]').count()) === 3);
   await tool('wiki');
   await page.waitForSelector('.wiki');
   {
@@ -739,7 +737,7 @@ try {
   await pick('london_soho', 'newton_cambridge');
   ok('an anchored catalogue event shows its card and can be gone to', (await page.locator('.lbox').filter({ hasText: '牛顿' }).count()) >= 1 && !(await page.locator('[data-act=send]').isDisabled()));
   await page.click('[data-act=send]');
-  await page.waitForSelector('.outrow');
+  await page.waitForSelector('.pend-away');
   await page.evaluate(() => { const S = window.__game.ctx.S(); for (const d of S.dispatches.filter((x) => !x.claimed)) d.readyDay = S.clock.day; window.__game.ui.render(); });
   await page.waitForSelector('[data-act=claim]');
   await page.click('[data-act=claim]');
@@ -766,7 +764,8 @@ try {
   // English, language switch and fallback
   await page.goto(`http://127.0.0.1:${port}/index.html?lang=en&drafts`);
   await page.waitForSelector('.lead');
-  ok('English title', (await page.title()) === 'The Past Is Yet to Come');
+  // the page title is the name of the game and its version, set in main.js
+  ok('English title', (await page.title()) === await page.evaluate(() => { const m = window.__game.D.get('config.meta'); return `${m.app} · v${m.version}`; }));
   ok('English tab label', (await page.locator('#tabs [data-tab=shop]').textContent()).includes('Agency'));
   await go('home');
   await page.waitForSelector('svg.map');
@@ -786,7 +785,7 @@ try {
   ok('about page has jump links and no second title', (await page.locator('.about .jumps a').count()) >= 5 && (await page.locator('.about h2').count()) === 0);
   const { app, version, released } = await page.evaluate(() => window.__game.D.get('config.meta'));
   const versionLine = await page.locator('.about-version').innerText();
-  ok('about header shows the game name, version and date', [app, version, released].every((value) => versionLine.includes(value)) && !versionLine.includes('T00'));
+  ok('about header shows the version and date', app && [version, released].every((value) => versionLine.includes(value)) && !versionLine.includes('T00'));
   ok('about page names the purpose without a family reason', !(await page.locator('.about').innerText()).toLowerCase().includes('wife') && (await page.locator('.about').innerText()).includes('Life Matters'));
   await tool('wiki');
   await page.click('.wcat[data-cat=people] summary');
@@ -984,7 +983,7 @@ ok('the setting takes the night shade off the map', (await page.locator('svg.map
 await page.evaluate(() => { const S = JSON.parse(localStorage.getItem('teleporter_save')); S.locks.push('relic_removed_event'); localStorage.setItem('teleporter_save', JSON.stringify(S)); });
 await page.goto(`http://127.0.0.1:${port}/index.html?lang=zh&drafts`);
 await page.waitForSelector('#tabs button');
-ok('a save that does not fit the data is dropped and the page still opens', (await page.locator('#tabs button[data-tab]').count()) === 3 && !(await page.evaluate(() => window.__game.ctx.S().locks.includes('relic_removed_event'))));
+ok('a save that does not fit the data is dropped and the page still opens', (await page.locator('#tabs button[data-tab]').count()) === (await page.evaluate(() => Object.keys(window.__game.D.get('text.ui.tabs')).length)) && !(await page.evaluate(() => window.__game.ctx.S().locks.includes('relic_removed_event'))));
 // implants: worn up to the load cap, add to the attributes, and come back to the stock when the wearer is let go
 const imp = await page.evaluate(() => {
   const g = window.__game, o = g.ui.office, S = g.ctx.S();

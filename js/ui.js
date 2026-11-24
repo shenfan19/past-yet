@@ -175,7 +175,7 @@ export function createUI(D, ctx, DEV = false) {
   const starRow = (n, STAR_MAX) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
   // the sync points of a trip, hit or not, with the words of the place
   // a point that a trait made up for, or that a trait lost, says so, because the timeline shows what happened and the traits then changed the count
-  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}${p.lost ? ' lost' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${p.day ? `<span class="muted">${esc(U.report.participation.day.replace('{day}', String(p.day)))} · </span>` : ''}${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}</li>`).join('')}</ul>`;
+  const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${p.day ? `<span class="muted">${esc(U.report.participation.day.replace('{day}', String(p.day)))} · </span>` : ''}${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}</li>`).join('')}</ul>`;
   const yearOfPlace = (id, light) => (light ? D.get('catalog.events').find((x) => x.id === id).year : ctx.era(id).raw.metadata.era.year);
   const shortOfPlace = (id, light) => (light ? T.catalog[id].place : T.eras[id].short);
   const placeYear = (d) => fmtYear(D, d.light ? D.get('catalog.events').find((x) => x.id === d.eraId).year : ctx.era(d.eraId).raw.metadata.era.year);
@@ -210,7 +210,7 @@ export function createUI(D, ctx, DEV = false) {
   const settleHtml = (cur, S) => {
     const C = D.get('config.ui.settle');
     const rows = [];
-    const chips = (p) => `${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.lost ? ` <span class="chip trait">${U.stars.lost_by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}`;
+    const chips = (p) => `${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}`;
     for (const p of cur.report.points || []) rows.push(`<li class="${p.hit ? 'hit' : 'miss'}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${esc(S.pointText(p.id))}${chips(p)}</li>`);
     if (cur.paid?.energy) rows.push(`<li class="gain">${esc(U.report.energy_gain)} +${ri(cur.paid.energy)}${cur.newBest ? ' · ' + U.stars.new_best : ''}</li>`);
     if (cur.paid?.grown) rows.push(`<li class="gain">${esc(U.report.grown)}${COLON}${esc(T.stats[cur.paid.grown])} +1</li>`);

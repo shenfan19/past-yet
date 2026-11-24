@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Gear is no longer lost on a fatal trip; the rescue item is still spent on one. The leftover code of trait star penalties, the "lost to a trait" mark in reports and its text, is gone. The UI check follows the current interface again and passes in full.
 - Story prose in Chinese, English and Traditional Chinese for Schubert, Vermeer, Rembrandt, Gaudí, Kafka and Poe. The Chinese short scenes of these stories have a little more detail, and the Traditional Chinese corrections list has thirteen more entries.
 - Added Russian to the language selector. The interface, calendar, tags and header lines are in Russian; stories and the encyclopedia read in English for now. Time axis ticks can use a shorter year form per language, and Russian ticks read −4000 and 1.
 - Fixed Russian text that split into stray keys: the lodger identity, an early-return stamp and a placeholder in a secretary perk.

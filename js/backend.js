@@ -247,8 +247,8 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     // and it still has to be reached: a missed guard before it sends the traveller back first, below.
     const earliest = (test) => points.map((p, i) => i).filter((i) => test(points[i], i)).reduce((a, i) => (a < 0 || days[i] < days[a] ? i : a), -1);
     const sure = sureSource(staffId) || [];
-    if (sure.includes('guard')) { const i = earliest((p, i) => qualified[i] && p.guard && !p.hit); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
-    if (sure.includes('fulfil') && !points.some((p) => !p.guard && p.hit)) { const i = earliest((p, i) => qualified[i] && !p.guard); if (i >= 0) points[i] = { ...points[i], hit: true, lost: false, sure: true }; }
+    if (sure.includes('guard')) { const i = earliest((p, i) => qualified[i] && p.guard && !p.hit); if (i >= 0) points[i] = { ...points[i], hit: true, sure: true }; }
+    if (sure.includes('fulfil') && !points.some((p) => !p.guard && p.hit)) { const i = earliest((p, i) => qualified[i] && !p.guard); if (i >= 0) points[i] = { ...points[i], hit: true, sure: true }; }
     // a guard point holds a recorded event in place. When it is missed the branch falls out of step with history: the traveller is sent back on that day,
     // and the points after it are never reached
     // the points are listed in any order, so the first missed guard is the one with the earliest day, and the points cut are those that fall after it
@@ -298,7 +298,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const score = Object.entries(L.field_weights[ev.field]).reduce((a, [k, w]) => a + w * stats[k] / 10, 0);
     const margin = score + L.noise * (2 * draw(seed, 'light', eventId) - 1) - (L.difficulty.base + L.difficulty.per_tier * ev.tier);
     const points = applyBonus([margin >= L.cuts.reach, margin >= L.cuts.meet, margin >= L.cuts.impress].map((hit, i) => ({ id: ['reach', 'meet', 'impress'][i], hit })), L.kinds, staffId, seed, eventId)
-      .map((p) => journey.accepted ? p : { ...p, hit: false, bonus: false, lost: false });
+      .map((p) => journey.accepted ? p : { ...p, hit: false, bonus: false });
     const stars = points.filter((p) => p.hit).length;
     const outcome = stars >= 2 ? 'success' : stars === 1 ? 'partial' : 'missed';
     const pay = L.pay[ev.tier];

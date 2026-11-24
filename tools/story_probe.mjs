@@ -30,7 +30,7 @@ for (const s of staff) {
   const { res, report, evacuation } = B.dispatch(id, { seed, staffId: s, items });
   if (evacuation) { console.log('  evacuated'); continue; }
   const F = res.branch.final;
-  console.log(`  journey reached=${report.journey.reached} accepted=${report.journey.accepted} day=${report.journey.recognitionDay} outcome=${report.outcomeId} stars=${report.stars} points=${report.points.map((p) => p.id + ':' + (p.hit ? 1 : 0) + (p.bonus ? 'b' : '') + (p.lost ? 'l' : '')).join(' ')}`);
+  console.log(`  journey reached=${report.journey.reached} accepted=${report.journey.accepted} day=${report.journey.recognitionDay} outcome=${report.outcomeId} stars=${report.stars} points=${report.points.map((p) => p.id + ':' + (p.hit ? 1 : 0) + (p.bonus ? 'b' : '')).join(' ')}`);
   console.log(`  D base=${res.base.final.D.toFixed(1)} branch=${F.D.toFixed(1)} ` + ['records', 'sites', 'traveler.trust', 'traveler.homesick', 'traveler.fatigue', 'traveler.progress'].filter((k) => k in F).map((k) => k.replace('traveler.', '') + '=' + F[k].toFixed(2)).join(' '));
   for (const t of report.timeline) console.log(`  ${t.after ? 'AFTER' : 'seg' + t.seg} [${t.tag || t.kind}] ${t.key}${t.own ? ' *own*' : ''}: ${t.text}`);
   console.log('  ledger', report.ledger.map((l) => `${l.day}:${Math.round(l.sick)}/${Math.round(l.baseDead)}/${Math.round(l.dead)}/${Math.round(l.treated)}/${Math.round(l.protected)}`).join(' '));

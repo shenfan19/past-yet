@@ -123,16 +123,15 @@ export function createOffice(X) {
   }
 
   // What of the kit comes home with the traveller. Anything with no loss rule, which is all the future technology, always comes back.
-  // 'used' is spent in the story. On a fatal outcome 'fatal' gear is lost unless a 'rescue' item was carried, and the rescue item is spent doing it.
+  // 'used' is spent in the story, and a 'rescue' item is spent on a fatal outcome.
   function kitReturn(d) {
     const s = S();
     const kit = Object.entries(d.spec.items || {}).filter(([, n]) => n > 0);
     const fatal = !d.recalled && O.fatal_outcomes.includes(d.report.outcomeId);
-    const rescued = kit.some(([id]) => D.get('items.' + id).loss === 'rescue');
     d.kit = { back: {}, lost: {} };
     for (const [id, n] of kit) {
       const loss = D.get('items.' + id).loss;
-      const gone = loss === 'used' || (loss === 'rescue' && fatal) || (loss === 'fatal' && fatal && !rescued);
+      const gone = loss === 'used' || (loss === 'rescue' && fatal);
       d.kit[gone ? 'lost' : 'back'][id] = n;
       if (!gone) s.inv[id] = (s.inv[id] || 0) + n;
     }
