@@ -14,6 +14,7 @@
 - A story with Chinese story prose must now also have it in English and in every language that carries its card; the data build fails otherwise. Added `tools/story_prose_convert.py`, which converts the prose into Traditional Chinese with OpenCC and a list of corrections, and Traditional Chinese prose for ten stories. The rest of the Traditional Chinese text was converted again, which puts right characters left in Simplified.
 - Share card excerpts are now two sentences, and every excerpt is given in each language.
 - Story prose in Chinese, English and Traditional Chinese for Socrates, Euclid, Eratosthenes, Fibonacci, Dante and Copernicus. The second Copernicus star now reads more plainly.
+- Story prose in Chinese, English and Traditional Chinese for Adam Smith, Ada Lovelace, Mendel, Mendeleev, Marie Curie and Freud. The Traditional Chinese titles of the Smith, Sophie Germain and Great Zimbabwe stories now match the Chinese ones.
 - Added `tools/story_review_save.mjs`, which plays each story with prose in developer mode and writes a save to import.
 
 ## 0.14.0, 2026-11-21
