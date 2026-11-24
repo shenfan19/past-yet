@@ -156,7 +156,7 @@ export function createWorldMap(X) {
       ticks = [];
       for (let yr = Math.ceil(s.from / step) * step; yr <= s.to; yr += step) ticks.push(yr);
     }
-    for (const yr of ticks) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - TL.tick_half}" y2="${y0 + TL.tick_half}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1)}</text>`;
+    for (const yr of ticks) g += `<line class="tick" x1="${x(yr)}" x2="${x(yr)}" y1="${y0 - TL.tick_half}" y2="${y0 + TL.tick_half}"/><text class="yr" x="${x(yr)}" y="${y0 + 18}" text-anchor="middle">${fmtYear(D, yr || 1, true)}</text>`;
     for (const e of filtered()) {
       const i = info(e);
       const on = isSel(e);

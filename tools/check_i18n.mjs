@@ -71,7 +71,7 @@ check('Traditional Chinese regions and script use the Traditional locale', ['zh-
 check('explicit Simplified Chinese script wins over the region', ['zh-CN', 'zh-SG', 'zh-Hans-HK'].every((tag) => pickLocale(I, null, null, [tag]) === 'zh'));
 check('unsupported preferences are skipped in browser order', pickLocale(I, 'de', null, ['de-DE', 'es-MX', 'fr-CA']) === 'es');
 check('unsupported browser languages fall back to English', pickLocale(I, null, null, ['pt-BR']) === I.fallback);
-for (const [code, agency] of Object.entries({ 'zh-Hant': '事務所', fr: 'Agence', es: 'Agencia', ja: '事務所', ko: '사무소' })) {
+for (const [code, agency] of Object.entries({ 'zh-Hant': '事務所', fr: 'Agence', es: 'Agencia', ja: '事務所', ko: '사무소', ru: 'Агентство' })) {
   const localized = await loadData(reader, (t) => yaml.load(t), () => code);
   check(`${code} uses its own navigation`, localized.lang === code && localized.get('text.ui.tabs.shop') === agency);
 }

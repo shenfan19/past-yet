@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Added Russian to the language selector. The interface, calendar, tags and header lines are in Russian; stories and the encyclopedia read in English for now. Time axis ticks can use a shorter year form per language, and Russian ticks read −4000 and 1.
 - Stories can now be told as short fiction. The story page opens with three paragraphs, each won star has its own passage in the report, and a closing paragraph sits under the stamp. Mary Anning, Émilie du Châtelet and Sejong are the first stories written this way, in English and Chinese.
 - Reports now open with the echo and the full record. The fiction note follows the record and the settlement closes the page.
 - Share cards for these stories quote a few sentences from the won passage. Other cards keep up to three short lines from the record.

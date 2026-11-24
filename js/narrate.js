@@ -401,11 +401,13 @@ export function diffRows(D, eraId, A, B) {
 }
 
 // Years are stored as signed integers. The text decides how they read: negative years use the bc template, years before the cut off the ad template.
-export function fmtYear(D, y) {
+// short is for the ticks of the time axis, where a language with long era words can give bc_short and ad_short; without them the full templates are used.
+export function fmtYear(D, y, short) {
   const C = D.get('text.ui.cal');
+  const bc = (short && C.bc_short) || C.bc, ad = (short && C.ad_short) || C.ad;
   if (y === 0) throw new Error('没有 0 年');
-  if (y < 0) return C.bc.replace('{n}', String(-y));
-  return y < D.get('map.calendar.ad_prefix_below') ? C.ad.replace('{n}', String(y)) : String(y);
+  if (y < 0) return bc.replace('{n}', String(-y));
+  return y < D.get('map.calendar.ad_prefix_below') ? ad.replace('{n}', String(y)) : String(y);
 }
 
 // The first sentence of a description, for one line list cells.

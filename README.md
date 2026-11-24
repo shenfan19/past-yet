@@ -77,7 +77,7 @@ MIT. The name and logos are not licensed. `vendor/js-yaml.min.js` is MIT license
 
 ## Languages
 
-- The language selector offers English, Simplified Chinese (`zh`), Traditional Chinese (`zh-Hant`), French, Spanish, Japanese and Korean. Untranslated interface, story and encyclopedia text falls back to English key by key.
+- The language selector offers English, Simplified Chinese (`zh`), Traditional Chinese (`zh-Hant`), French, Spanish, Japanese, Korean and Russian. Untranslated interface, story and encyclopedia text falls back to English key by key.
 - Selection priority is `?lang=`, saved choice, browser preferences, then English. Existing `?lang=zh` links and saved choices still work. Browser tags such as `zh-TW` and `zh-HK` select Traditional Chinese; `zh-CN` and `zh-Hans` select Simplified Chinese. Follow browser clears the saved choice. Switching language reloads and restores the current page and UI state.
 - Configure selectable languages in `cards/config/config.yaml` under `i18n.locales`. Only the locales in `i18n.story_locales` currently require story translations at build time; keep optional locales out of this list until their stories are ready.
 - Add interface strings in `cards/text/<code>/` and encyclopedia translations in the corresponding source cards. Story translation batches can add `catalog` and `eras` mappings in `cards/text/<code>/`, indexed by event and era ID respectively. Text defined on a source card for the same ID and locale takes precedence; keep a translation in one place. Use the same keys and placeholders as English.
