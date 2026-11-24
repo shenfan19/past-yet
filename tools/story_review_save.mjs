@@ -57,8 +57,9 @@ try {
         // the same kit the trip will carry, as launchLight keeps only what the story allows
         const allowed = Object.fromEntries(Object.entries(kit).filter(([id]) => backend.lightKitAllowed(ev.id, id)));
         const r = backend.runLight(ev.id, s, seed + k, allowed, S.staff[s].favor);
-        // reached and taken in: a trip that never got there keeps its scene points in the run, though it wins no star
-        if (!r.evacuation && (passage || r.outcome !== 'desync') && r.journey?.reached && r.journey?.accepted && (passage || r.stars > 0) && test(r)) return { staffId: s, seed: seed + k };
+        // reached and taken in: a trip that never got there keeps its scene points in the run, though it wins no star.
+        // Not found out: being found out takes stars away, so the stamp would not match the passage the trip is sent to show
+        if (!r.evacuation && !r.found && (passage || r.outcome !== 'desync') && r.journey?.reached && r.journey?.accepted && (passage || r.stars > 0) && test(r)) return { staffId: s, seed: seed + k };
       }
       return null;
     };

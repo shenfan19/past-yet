@@ -212,10 +212,14 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     const props = Object.entries(items || {}).filter(([id, n]) => n > 0 && !D.get('items.' + id).scene).map(([id]) => id);
     return { stats, carried, exposure, props };
   }
-  function vignetteFor(variants, staffId) {
+  // the first vignette whose conditions hold: a trait of the traveller, and the star points it names as won or missed on this trip.
+  // A point cut by a desync counts as missed. The last vignette has no conditions, so everyone taken in reads one
+  function vignetteFor(variants, staffId, points = []) {
     if (!variants) return undefined;
     const traits = D.get('staff.staff.' + staffId + '.traits');
-    return variants.find((v) => !v.traits || v.traits.some((t) => traits.includes(t)))?.id;
+    const won = new Set(points.filter((p) => p.hit).map((p) => p.id));
+    return variants.find((v) => (!v.traits || v.traits.some((t) => traits.includes(t)))
+      && (v.won || []).every((id) => won.has(id)) && (v.missed || []).every((id) => !won.has(id)))?.id;
   }
 
   function runScene(ev, staffId, seed, items, favor, health) {
@@ -263,7 +267,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
     if (f) stars = Math.max(0, stars - f.stars_cost);
     const pay = L.pay[ev.tier];
     const kind = cutAt >= 0 ? 'desync' : outcomeOf(stars, points.length);
-    const vignette = vignetteFor(ev.scene.vignettes, staffId);
+    const vignette = vignetteFor(ev.scene.vignettes, staffId, points);
     // sent back on the day of the guard point, so the stay is cut to the office days it took
     const cutDay = cutAt >= 0 ? days[cutAt] : null;
     const stay = cutAt >= 0 ? Math.min(lightStay(ev.id), Math.max(1, Math.ceil(cutDay / D.get('config.travel.history_days_per_office_day')))) : lightStay(ev.id);

@@ -10,6 +10,8 @@
 - The fiction note under the record and on share cards now also says that historical details may be wrong or not yet checked. On the share card the note wraps instead of running past the edge.
 - `tools/story_prose_convert.py --stale` lists Traditional Chinese story texts left behind by a rewritten Chinese text, and `--refresh` reconverts them; 32 such texts were brought up to date.
 - The story review save also picks readers whose trip falls out of sync after the passage they show.
+- A vignette can name star points with `won` or `missed`, and is drawn only when the trip matches. Riemann's empty chair and the cart at Galois's hospital now appear only when he is not saved, and Riemann has a new default vignette of the fig harvest.
+- The story review save skips trips that were found out, so each variant reader keeps the star whose passage it shows.
 - Stories can now be told as short fiction. The story page opens with three paragraphs, each won star has its own passage in the report, and a closing paragraph sits under the stamp. Mary Anning, Émilie du Châtelet and Sejong are the first stories written this way, in English and Chinese.
 - Reports now open with the echo and the full record. The fiction note follows the record and the settlement closes the page.
 - Share cards for these stories quote a few sentences from the won passage. Other cards keep up to three short lines from the record.
@@ -24,6 +26,7 @@
 - Story prose in Chinese, English and Traditional Chinese for Socrates, Euclid, Eratosthenes, Fibonacci, Dante and Copernicus. The second Copernicus star now reads more plainly.
 - Story prose in Chinese, English and Traditional Chinese for Adam Smith, Ada Lovelace, Mendel, Mendeleev, Marie Curie and Freud. The Traditional Chinese titles of the Smith, Sophie Germain and Great Zimbabwe stories now match the Chinese ones.
 - Added `tools/story_review_save.mjs`, which plays each story with prose in developer mode and writes a save to import.
+- Story prose in Chinese, English and Traditional Chinese for Murasaki Shikibu, Tagore, Galois, Riemann, Emmy Noether and Tesla. The Chinese short scenes of these stories have a little more detail.
 
 ## 0.14.0, 2026-11-21
 

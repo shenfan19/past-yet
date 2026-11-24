@@ -2,7 +2,7 @@ order: 79
 events:
   galois_paris:
     order: 101
-    build_step: 4
+    build_step: 3
     year: 1832
     # four office days from the planned arrival on 20 May 1832, through the letter of 29 May, the duel of 30 May and the printing of the letter in September
     date: '1832-05-20'
@@ -27,7 +27,7 @@ events:
         - {id: p3, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","paramedic"],"item":"first_aid_kit"},{"job":["nurse"],"item":"antibiotic","stat":{"will":6}},{"provides":"cure","stat":{"constitution":6}}]}}
       vignettes:
         - {id: candle, traits: [methodical, vigil, patient, quiet, scholarly], day: 9.3}
-        - {id: cart, traits: [bold, hardy, kind, streetwise, cheerful], day: 11.5}
+        - {id: cart, traits: [bold, hardy, kind, streetwise, cheerful], missed: [p3], day: 11.5}
         - {id: type, day: 103}
     text:
       en:
@@ -35,6 +35,33 @@ events:
         place: "Paris"
         figure: "Évariste Galois"
         story: 'Évariste Galois came out of prison in Paris on 29 April 1832. On the night of 29 May he wrote to his friend Auguste Chevalier, setting out what he had found about which equations can be solved by radicals and asking him to have the letter printed. The next morning he was shot in the abdomen in a duel and left where he fell; he died in the Cochin hospital on 31 May, aged twenty. Chevalier printed the letter that September. Fourteen years later Joseph Liouville published his papers.'
+        story_prose:
+          opening:
+            - 'Paris, May 1832. Évariste Galois, twenty years old, came out of prison a month ago. As a teenager he found the conditions under which an equation can be solved by radicals, the ideas from which group theory grew, but hardly anyone then could follow them.'
+            - 'In history, on the night of 29 May he wrote to his friend Auguste Chevalier, setting out what he had found and asking him to have the letter printed; the next morning he was shot in the abdomen in a duel and left where he fell, and on 31 May he died in the Cochin hospital. The letter was printed that September, and his papers had to wait fourteen years for Liouville to publish them. In this branch, the concierge where he lodges lends him ink, a carter has brought firewood to the gate of the Cochin hospital for ten years, and a compositor in a print shop complains that he is short of equals signs.'
+            - 'A few kinds of people can help on this trip: someone who has kept archives, translated or read proofs, or someone methodical who can stay awake through the night, to keep the letter and the papers together; someone who knows medicine and has brought the right kit or drug, to be there that early morning; someone who has kept archives or translated and can talk an editor round, so that later readers can find what comes next.'
+          outcomes:
+            all: 'Galois lived. That September the letter was printed with a page of index, and people came asking for papers by their page numbers. Chevalier copied their questions onto a list, and Galois sat at the table answering them one by one.'
+            p3: 'Galois lay in the hospital into June before he could get up. That summer he sat down at his table again, the draft of the letter spread in front of him, the line in its margin still there.'
+            p2: 'From September on, anyone who read the letter could ask for a copy by the index, and the questions went back to Chevalier with their page numbers. In 1846 Liouville published his papers.'
+            p1: 'That September Chevalier printed the letter of 29 May in the Revue encyclopédique. Fourteen years later Liouville published his papers.'
+          none: 'On 2 June Galois was buried in a common grave at Montparnasse. The concierge took back the bottle of ink he had borrowed and struck a line through her account book.'
+          desync: 'Late on the night of 29 May the letter and the papers it spoke of lay at the two ends of the table, and nobody had wrapped them. When {staff} was recalled the candle had burned down, and its wax had run over the edge of a page.'
+          not_admitted: '{staff} never got into the building, and only stood at the corner of the street for a few nights. One window upstairs stayed lit until nearly dawn, and once it opened and a crumpled sheet fell onto the cobbles.'
+          points:
+            p1:
+              class_lettered: 'On the night of 29 May the table is covered with paper; the letter to Chevalier runs on page after page, and the papers it speaks of lie under a few books. {staff}, at home with paper and writing, hands him the pages one by one to check while he is still awake, folds the letter by itself, ties the papers into a second bundle in the order he gives, writes the name on each, to go to Chevalier by hand at first light. Near dawn Galois adds a hurried line in the margin of a page and puts down the pen. The two bundles lie side by side on the table, and the top one bears Chevalier''s name.'
+              else: 'On the night of 29 May the table is covered with paper; the letter to Chevalier runs on page after page, and the papers it speaks of lie under a few books. {staff}, methodical and able to sit up all night, stays at the table and takes each page as he finishes it, folds the letter by itself, ties the papers into a second bundle in the order he gives, writes the name on each, to go to Chevalier by hand at first light. Near dawn Galois adds a hurried line in the margin of a page and puts down the pen. The two bundles lie side by side on the table, and the top one bears Chevalier''s name.'
+            p3:
+              class_medical: 'Early on 30 May, after the shot, he lies alone in the grass of an open ground outside the city; the others have gone. {staff}, who knows medicine, gets there within minutes, kneels and presses gauze on the wound in his abdomen until at long last the bleeding stops, uses the drug brought along against infection, stops a passing cart and gets him to a doctor. A few days later he wakes in a hospital bed and reaches out for paper. A nurse gives him half a sheet, and he turns it over and begins writing sums on the back.'
+              else: 'Early on 30 May, after the shot, he lies alone in the grass of an open ground outside the city; the others have gone. {staff} gets there within minutes, opens the nano medical kit brought along and follows its instructions to stop the bleeding and keep the wound from turning septic, stops a passing cart and gets him to a doctor. A few days later he wakes in a hospital bed and reaches out for paper. A nurse gives him half a sheet, and he turns it over and begins writing sums on the back.'
+            p2:
+              class_lettered: 'In September that number of the Revue encyclopédique is set in a small print shop, and the compositor goes muttering to the case next door for more equals signs. {staff}, used to paperwork, numbers the pages Chevalier holds, copies them into a page of index, asks the editor to print it after the letter, and writes to a mathematician willing to read the pages through in order. The printed number lies on the windowsill of the shop, a page of index after the letter, one page number to a line. Chevalier picks up a copy and runs his finger down the column of numbers.'
+              else: 'In September that number of the Revue encyclopédique is set in a small print shop, and the compositor goes muttering to the case next door for more equals signs. {staff}, methodical and persuasive, sits at the editor''s desk and reads him the pages Chevalier holds one by one, talks him into adding a page of index after the letter, and finds a mathematician willing to read the pages through in order. The printed number lies on the windowsill of the shop, a page of index after the letter, one page number to a line. Chevalier picks up a copy and runs his finger down the column of numbers.'
+          excerpts:
+            p3: 'A few days later he wakes in a hospital bed and reaches out for paper. A nurse gives him half a sheet, and he turns it over and begins writing sums on the back.'
+            p2: 'The printed number lies on the windowsill of the shop, a page of index after the letter, one page number to a line. Chevalier picks up a copy and runs his finger down the column of numbers.'
+            p1: 'Near dawn Galois adds a hurried line in the margin of a page and puts down the pen. The two bundles lie side by side on the table, and the top one bears Chevalier''s name.'
         relic: "A hurried letter"
         relic_desc: "Pages crossed with figures and the words that he had no time."
         points:
@@ -65,6 +92,33 @@ events:
         place: "巴黎"
         figure: "埃瓦里斯特·伽罗瓦"
         story: '1832 年 4 月 29 日，埃瓦里斯特·伽罗瓦在巴黎获释出狱。5 月 29 日夜里，他给朋友奥古斯特·舍瓦利耶写信，概述自己关于哪些方程能用根式求解的发现，托他把信刊出。第二天清晨，他在决斗中腹部中枪，被丢在原地，5 月 31 日死在科钦医院，年仅二十岁。那年九月，舍瓦利耶刊出了这封信。十四年后，约瑟夫·刘维尔刊出了他的论文。'
+        story_prose:
+          opening:
+            - '1832 年 5 月，巴黎。二十岁的埃瓦里斯特·伽罗瓦一个月前刚获释出狱。他在少年时就找到了方程能否用根式求解的条件，这套想法后来开出了群论，可那时几乎没人读懂。'
+            - '史实里，5 月 29 日夜里他给朋友奥古斯特·舍瓦利耶写信，概述自己的发现，托他把信刊出；第二天清晨他在决斗中腹部中枪，被丢在原地，5 月 31 日死在科钦医院。那年九月信刊了出来，他的论文要到十四年后才由刘维尔刊行。在这条分支里，他住处有个借给他墨水的看门老妇人，科钦医院门口有个送了十年柴的车夫，印坊里有个抱怨等号不够用的排字工。'
+            - '这一趟用得上几种人：管过档案、做过翻译或校对的人，或者有条理、熬得住夜的人，守得住那封信和那些稿子；懂医护、带对了急救包或药的人，赶得上那天清晨；管过档案、做过翻译、又说得动编辑的人，让后来的人读得到下文。'
+          outcomes:
+            all: '伽罗瓦活了下来。那年九月，信和一页索引一起刊了出来，有人照着页码来借稿子。舍瓦利耶把他们问的页码抄成一张单子，伽罗瓦坐在桌边，一条一条往下答。'
+            p3: '伽罗瓦在医院里躺到六月才下床。那年夏天，他又坐回桌前，桌上摊着那封信的草稿，页边那行字还在。'
+            p2: '九月以后，读到这封信的人可以照着索引借看抄本，问题连着页码寄回舍瓦利耶手里。1846 年，刘维尔刊出了他的论文。'
+            p1: '那年九月，舍瓦利耶把 5 月 29 日那封信刊在《百科评论》上。十四年后，刘维尔刊出了他的论文。'
+          none: '6 月 2 日，伽罗瓦葬进蒙帕纳斯公墓的公共墓穴。看门的老妇人把他借去的那瓶墨水收了回来，在账本上划掉了一行。'
+          desync: '5 月 29 日深夜，那封信和信里提到的稿子散在桌子两头，没有人包起来。{staff}被召回时，蜡烛烧到了底，蜡油淌在一页稿纸的边上。'
+          not_admitted: '{staff}没能进那栋楼，只在街角站过几个晚上。楼上有一扇窗的灯一直亮到天快亮，有一回窗开了，一张揉皱的纸落在石板路上。'
+          points:
+            p1:
+              class_lettered: '5 月 29 日夜里，桌上摊满了稿纸，那封写给舍瓦利耶的信写了一页又一页，信里提到的论文压在几本书底下。{staff}跟纸和字打惯了交道，趁他还醒着，一页页递给他核过，把信单独折好，论文按他报的顺序另捆一包，两包分别写上收件人，等天亮托人送去给舍瓦利耶。天快亮时，伽罗瓦在一页稿纸的边上匆匆添了一行字，把笔搁下。桌上两个纸包并排放着，上面那个写着舍瓦利耶的名字。'
+              else: '5 月 29 日夜里，桌上摊满了稿纸，那封写给舍瓦利耶的信写了一页又一页，信里提到的论文压在几本书底下。{staff}做事有条理，熬得住夜，守在桌边，他写完一页就收一页，把信单独折好，论文按他报的顺序另捆一包，两包分别写上收件人，等天亮托人送去给舍瓦利耶。天快亮时，伽罗瓦在一页稿纸的边上匆匆添了一行字，把笔搁下。桌上两个纸包并排放着，上面那个写着舍瓦利耶的名字。'
+            p3:
+              class_medical: '5 月 30 日清晨，枪声过后，城外那片空地上只剩他一个人躺在草里，旁边的人都走了。{staff}懂医护，几分钟内赶到，跪下来用纱布压住他腹部的伤口，压了很久才止住血，又用带来的药防着伤口发炎，拦下一辆路过的车，把他送到医生手里。几天后，他在病床上醒过来，伸手要纸。护士给了他半张，他把纸翻过来，在背面写起了算式。'
+              else: '5 月 30 日清晨，枪声过后，城外那片空地上只剩他一个人躺在草里，旁边的人都走了。{staff}几分钟内赶到，打开带来的纳米医疗箱，照着说明给他止住了血，又防着伤口发炎，拦下一辆路过的车，把他送到医生手里。几天后，他在病床上醒过来，伸手要纸。护士给了他半张，他把纸翻过来，在背面写起了算式。'
+            p2:
+              class_lettered: '九月，那一期《百科评论》在小印坊里排版，排字工嘀咕着又去隔壁字盘借等号。{staff}管惯了文书，把舍瓦利耶手里的稿子按页编了号，抄成一页索引，请编辑排在信的后面，又写信约好一位愿意逐页读下去的数学同行。印好的那一期摆在印坊的窗台上，信后面多了一页索引，一行一个页码。舍瓦利耶拿起一本，用指头顺着那一列页码往下数。'
+              else: '九月，那一期《百科评论》在小印坊里排版，排字工嘀咕着又去隔壁字盘借等号。{staff}做事有条理，话也说得动人，坐在编辑桌前，把舍瓦利耶手里的稿子一页页报给他听，说动他在信后面添一页索引，又约好一位愿意逐页读下去的数学同行。印好的那一期摆在印坊的窗台上，信后面多了一页索引，一行一个页码。舍瓦利耶拿起一本，用指头顺着那一列页码往下数。'
+          excerpts:
+            p3: '几天后，他在病床上醒过来，伸手要纸。护士给了他半张，他把纸翻过来，在背面写起了算式。'
+            p2: '印好的那一期摆在印坊的窗台上，信后面多了一页索引，一行一个页码。舍瓦利耶拿起一本，用指头顺着那一列页码往下数。'
+            p1: '天快亮时，伽罗瓦在一页稿纸的边上匆匆添了一行字，把笔搁下。桌上两个纸包并排放着，上面那个写着舍瓦利耶的名字。'
         relic: "一封匆忙写就的信"
         relic_desc: "写满算式的信页，页边写着没有时间了。"
         points:
@@ -87,9 +141,9 @@ events:
             who: galois_paris
             bio: '伽罗瓦挺过了 1832 年 5 月的决斗。他在巴黎继续做数学，生前就看到自己关于方程的理论被人读懂、讨论。'
         vignettes:
-          candle: '5 月 29 日夜里，{staff}替看门的老妇人往楼上送第二支蜡烛。她嘟囔说，这位年轻先生的灯从天黑亮到现在，墨水也是从她这儿借的，回头得记进账里。'
-          cart: '5 月 31 日，{staff}在科钦医院门口帮一个车夫卸柴。车夫说，昨天抬进去一个年轻人，今早就盖上了布。他往这儿送了十年柴，最受不了的就是这种天气好的早上。'
-          type: '夏末，{staff}在一家小印坊里帮着捡撒了一地的铅字。排字工抱怨这一期有封信满纸算式，等号得一个个从隔壁字盘里借。'
+          candle: '5 月 29 日夜里，{staff}替看门的老妇人往楼上送第二支蜡烛，楼梯窄，烛火被风压得一歪一歪。她嘟囔说，这位年轻先生的灯从天黑亮到现在，墨水也是从她这儿借的，回头得记进账里。'
+          cart: '5 月 31 日，{staff}在科钦医院门口帮一个车夫卸柴，柴上还带着露水。车夫说，昨天抬进去一个年轻人，今早就盖上了布。他往这儿送了十年柴，最受不了的就是这种天气好的早上。'
+          type: '夏末，{staff}在一家小印坊里帮着捡撒了一地的铅字，指头上沾满了油墨。排字工抱怨这一期有封信满纸算式，等号得一个个从隔壁字盘里借。'
 text:
   en:
     name: Évariste Galois

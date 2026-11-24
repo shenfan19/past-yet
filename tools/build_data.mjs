@@ -349,7 +349,8 @@ let storyLine = '';
   const refIds = new Set(refCards.map((c) => c.id));
   const echoRefIds = new Set(refCards.filter((card) => card.status === 'checked').map((card) => card.id));
   const traitIds = new Set(traitCards.map((c) => c.id));
-  function checkVignettes(id, variants, localText) {
+  // a vignette is chosen by the traits of the traveller and, in a scene story, by the star points won or missed on the trip, see vignetteFor in js/backend.js
+  function checkVignettes(id, variants, localText, pointIds = null) {
     if (variants === undefined) return;
     if (!Array.isArray(variants) || !variants.length) {
       fail(`${id} needs a non-empty list of vignettes`);
@@ -362,8 +363,15 @@ let storyLine = '';
         continue;
       }
       ids.add(v.id);
-      if (i === variants.length - 1 ? v.traits !== undefined : !Array.isArray(v.traits) || !v.traits.length || v.traits.some((t) => !traitIds.has(t))) {
-        fail(`${id} vignette ${v.id} needs known traits, or must be the final unconditional vignette`);
+      const conds = ['won', 'missed'].filter((k) => v[k] !== undefined);
+      for (const k of conds) {
+        if (!pointIds) fail(`${id} vignette ${v.id} names star points by ${k}, which only a scene story has`);
+        else if (!Array.isArray(v[k]) || !v[k].length || v[k].some((p) => !pointIds.has(p))) fail(`${id} vignette ${v.id} needs known star points in ${k}`);
+      }
+      if (v.traits !== undefined && (!Array.isArray(v.traits) || !v.traits.length || v.traits.some((t) => !traitIds.has(t)))) fail(`${id} vignette ${v.id} needs known traits`);
+      const conditional = v.traits !== undefined || conds.length > 0;
+      if (i === variants.length - 1 ? conditional : !conditional) {
+        fail(`${id} vignette ${v.id}: every vignette but the last needs traits or star points, and the last has none`);
       }
       for (const lang of STORY_LANGS) {
         const line = localText(lang)?.vignettes?.[v.id];
@@ -373,7 +381,7 @@ let storyLine = '';
   }
   for (const ev of eventCards) {
     for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
-    checkVignettes(`event ${ev.id}`, ev.scene?.vignettes, (lang) => ev.text[lang]);
+    checkVignettes(`event ${ev.id}`, ev.scene?.vignettes, (lang) => ev.text[lang], new Set((ev.scene?.points ?? []).map((p) => p.id)));
     // story prose, cards/README.md: complete when present, so no won point or ending falls back to the plain line in the middle of the prose
     const points = ev.scene?.points ?? [];
     const pointIds = new Set(points.map((point) => point.id));

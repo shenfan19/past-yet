@@ -2,7 +2,7 @@ order: 164
 events:
   riemann_selasca:
     order: 104
-    build_step: 4
+    build_step: 3
     year: 1866
     # two office days from the planned arrival on 23 June 1866, through the last work of 19 July and the death of 20 July
     date: '1866-06-23'
@@ -26,13 +26,34 @@ events:
       vignettes:
         - {id: figs, traits: [kind, patient, calm, quiet, sensitive, attached], day: 25.5}
         - {id: boat, traits: [bold, cheerful, wanderer, cosmopolitan, hardy, handy, streetwise], day: 10}
-        - {id: chair, day: 40}
+        - {id: chair, missed: [p2], day: 40}
+        - {id: harvest, day: 40}
     text:
       en:
         name: "The last paper"
         place: "Selasca"
         figure: "Bernhard Riemann"
         story: 'Bernhard Riemann fell ill in 1862 and travelled to Italy more than once while suffering from tuberculosis. In June 1866 he came for the third time, to Selasca on Lake Maggiore. On 19 July, resting under a fig tree, he was still working on his last paper, which he did not finish. He died there the next day, aged thirty nine. Ten years later his collected works came out, with Richard Dedekind among the editors.'
+        story_prose:
+          opening:
+            - 'Lake Maggiore in the north of Italy, June 1866. The mathematician Bernhard Riemann, thirty nine, has come south for his health for the third time and taken rooms at Selasca on the shore. His work on the geometry of curved spaces and on the distribution of primes opened major fields, and by now he has had tuberculosis for nearly four years.'
+            - 'In history, on 19 July he lay resting under a fig tree, still working on his last paper, which he did not finish; the next day he died there. Ten years later his collected works came out, edited by Heinrich Weber with Richard Dedekind. In this branch, his landlord has a small daughter who clears the fallen figs from under the tree for him every day, and a boatman on the lake has had to teach his wife to row.'
+            - 'A few kinds of people can help on this trip: someone who has lectured at a university, built models or read proofs, or someone learned and patient, to keep up with the formulas he dictates; someone who knows medicine and carries the nano medical kit, to cure a disease the age could not.'
+          outcomes:
+            all: 'That autumn Riemann went back to Göttingen and taught again. Among the papers he took home, the last one ran several pages longer, dictated under the fig tree.'
+            p2: 'That autumn Riemann went back north to Göttingen. On the morning he left he sat a while in the chair under the fig tree, then folded a page of notes and put it in his coat pocket.'
+            p1: 'The last paper went several pages further, in his own words. When the collected works came out ten years later, those pages were printed with it.'
+          none: 'On 20 July Riemann died at Selasca. The chair under the fig tree stood empty, two figs had fallen on its seat, and nobody picked them up.'
+          not_admitted: '{staff} never got into the house, and only helped unload a few boats at the landing in Pallanza. Across the water, on the Selasca side, stood a great fig tree with a chair beneath it.'
+          points:
+            p1:
+              class_learned: 'On the afternoon of 13 July Riemann sits in the chair under the fig tree, the paper spread on his knees, stopping after every few lines to cough. {staff}, who has lectured at a university, pulls up a stool beside him and writes down each sentence as he says it, not one index in the formulas wrong, and keeps the finished pages in order under a stone. Towards evening a wind gets up, and Riemann draws out the top page and holds it close to his eyes for a long time. He puts it back and sets the stone on it again.'
+              class_lettered: 'On the afternoon of 13 July Riemann sits in the chair under the fig tree, the paper spread on his knees, stopping after every few lines to cough. {staff}, who has read proofs, pulls up a stool beside him and writes down each sentence as he says it, reads every finished page back to him once, and keeps the pages in order under a stone. Towards evening a wind gets up, and Riemann draws out the top page and holds it close to his eyes for a long time. He puts it back and sets the stone on it again.'
+              else: 'On the afternoon of 13 July Riemann sits in the chair under the fig tree, the paper spread on his knees, stopping after every few lines to cough. {staff}, well read and patient, pulls up a stool beside him and writes down each sentence as he says it, lays down the pen and waits whenever he coughs, and keeps the pages in order under a stone. Towards evening a wind gets up, and Riemann draws out the top page and holds it close to his eyes for a long time. He puts it back and sets the stone on it again.'
+            p2: 'On the night of 17 July Riemann is coughing too hard to sit up, and the landlord''s small daughter stands in the doorway with a lamp, afraid to come in. {staff}, who knows medicine, opens the nano medical kit brought along, uses it as its instructions say, and stays by the bed, now and then laying a hand on his forehead. By daybreak he is asleep, his breathing a little longer. Three days later, in the morning, he walks out to the fig tree by himself and sits a while in the chair. He bends to pick up a fallen fig by his foot and lays it beside his papers.'
+          excerpts:
+            p2: 'Three days later, in the morning, he walks out to the fig tree by himself and sits a while in the chair. He bends to pick up a fallen fig by his foot and lays it beside his papers.'
+            p1: 'Towards evening a wind gets up, and Riemann draws out the top page and holds it close to his eyes for a long time. He puts it back and sets the stone on it again.'
         relic: "A page of notes"
         relic_desc: "A page of unfinished formulas in a small hand."
         points:
@@ -54,11 +75,32 @@ events:
           figs: 'On the evening of 18 July {staff} helps the landlord''s small daughter clear fallen figs from under the tree. The chair there is for the German gentleman, she explains, and if she misses one, his papers come out purple.'
           boat: 'Early in July {staff} helps a boatman unload a cargo of lemons at Pallanza. There are half as many boats on the lake this summer, the boatman says; the young men have all been called up, and he has had to teach his wife to row.'
           chair: 'In August {staff} helps the landlord carry the chair in from under the fig tree. He wipes it down with his sleeve again and again, and says the tree has never borne so many figs as this year, and nobody left to sit under it.'
+          harvest: 'In August {staff} helps the landlord pick figs into flat baskets for the market at Intra. The tree has never borne so many as this year, he says, and the ones that split in the sun he sets aside on the windowsill for the house.'
       zh:
         name: "最后一篇论文"
         place: "塞拉斯卡"
         figure: "伯恩哈德·黎曼"
         story: '1862 年，伯恩哈德·黎曼病倒，此后患肺结核，几次南下意大利养病。1866 年 6 月，他第三次来，住进马焦雷湖畔的塞拉斯卡。7 月 19 日，他在无花果树下休息，仍在写最后一篇论文，没有写完。第二天，他在那里去世，三十九岁。十年后，他的全集出版，理查德·戴德金参与了编订。'
+        story_prose:
+          opening:
+            - '1866 年 6 月，意大利北部的马焦雷湖畔。三十九岁的数学家伯恩哈德·黎曼第三次南下养病，住进湖边的塞拉斯卡。他在弯曲空间的几何和素数分布上的工作开辟了重要领域，这时他患肺结核已近四年。'
+            - '史实里，7 月 19 日他躺在无花果树下休息，仍在写最后一篇论文，没有写完；第二天他死在那里。十年后，他的全集由海因里希·韦伯编订、理查德·戴德金参与出版。在这条分支里，房东有个小女儿，每天替他捡树下的落果，湖上有个只好教老婆划桨的船夫。'
+            - '这一趟用得上几种人：教过大学、做过建模或校对的人，或者有学问、耐得住性子的人，跟得上他口述的公式；懂医护、带着纳米医疗箱的人，治得了那个时代治不好的病。'
+          outcomes:
+            all: '那年秋天，黎曼回到哥廷根，又上起了课。他带回去的稿子里，最后那篇多了几页，是在无花果树下口述的。'
+            p2: '那年秋天，黎曼回到北边的哥廷根。临走那天早上，他在无花果树下的椅子上坐了一会儿，把一页稿纸折好，放进了外衣口袋。'
+            p1: '最后那篇论文多写了几页，用的是他自己的话。十年后全集出版，这几页随那篇论文一起印了出来。'
+          none: '7 月 20 日，黎曼在塞拉斯卡去世。无花果树下的椅子空着，椅面上落了两个果子，没有人去捡。'
+          not_admitted: '{staff}没能进那户人家，只在帕兰扎码头帮人卸过几回货。从湖上望过去，塞拉斯卡那边有一棵很大的无花果树，树底下摆着一把椅子。'
+          points:
+            p1:
+              class_learned: '7 月 13 日下午，黎曼坐在无花果树下的椅子里，稿纸摊在膝头，写几行就要停下来咳一阵。{staff}教过大学，搬一张小凳坐在他旁边，他说一句，就照着记一句，公式里的指标一个也没记错，记完的稿页按页码压在一块石头底下。傍晚起了风，黎曼伸手把最上面那一页抽出来，凑到眼前看了很久。他把它放回去，又用那块石头压好。'
+              class_lettered: '7 月 13 日下午，黎曼坐在无花果树下的椅子里，稿纸摊在膝头，写几行就要停下来咳一阵。{staff}做过校对，搬一张小凳坐在他旁边，他说一句，就照着记一句，记完一页再念给他听一遍，稿页按页码压在一块石头底下。傍晚起了风，黎曼伸手把最上面那一页抽出来，凑到眼前看了很久。他把它放回去，又用那块石头压好。'
+              else: '7 月 13 日下午，黎曼坐在无花果树下的椅子里，稿纸摊在膝头，写几行就要停下来咳一阵。{staff}读过不少书，也耐得住性子，搬一张小凳坐在他旁边，他说一句，就照着记一句，他咳的时候就停笔等着，稿页按页码压在一块石头底下。傍晚起了风，黎曼伸手把最上面那一页抽出来，凑到眼前看了很久。他把它放回去，又用那块石头压好。'
+            p2: '7 月 17 日夜里，黎曼咳得坐不起来，房东的小女儿端着灯站在门口，不敢进去。{staff}懂医护，打开带来的纳米医疗箱，照着说明给他用上，守在床边，隔一阵摸一回他的额头。天亮时他睡着了，呼吸长了一些。三天后的早上，他自己走到无花果树下，在椅子上坐了一会儿。他弯腰拾起脚边一个落下的无花果，放在了稿纸旁边。'
+          excerpts:
+            p2: '三天后的早上，他自己走到无花果树下，在椅子上坐了一会儿。他弯腰拾起脚边一个落下的无花果，放在了稿纸旁边。'
+            p1: '傍晚起了风，黎曼伸手把最上面那一页抽出来，凑到眼前看了很久。他把它放回去，又用那块石头压好。'
         relic: "一页笔记"
         relic_desc: "一页写着没完成公式的纸，字很小。"
         points:
@@ -77,9 +119,10 @@ events:
             who: riemann_selasca
             bio: '这条时间线里，黎曼在 1866 年夏天治好了肺结核。他回到哥廷根，又工作了许多年。'
         vignettes:
-          figs: '7 月 18 日傍晚，{staff}帮房东的小女儿把无花果树下的落果捡干净。她说树下那把椅子是给德国先生摆的，漏掉一个，他的稿纸就要染成紫的。'
-          boat: '七月初，{staff}帮湖上的船夫把一船柠檬卸到帕兰扎码头。船夫说今年夏天湖上的船少了一半，年轻人都被叫去当兵了，他只好教老婆划桨。'
-          chair: '八月，{staff}帮房东把无花果树下那把椅子搬进屋。房东用袖子擦了又擦，说这树从没结过今年这么多的果子，树底下却没人坐了。'
+          figs: '7 月 18 日傍晚，湖面上起了一层薄雾，{staff}帮房东的小女儿把无花果树下的落果捡干净。她说树下那把椅子是给德国先生摆的，漏掉一个，他的稿纸就要染成紫的。'
+          boat: '七月初，{staff}帮湖上的船夫把一船柠檬卸到帕兰扎码头，筐底的柠檬压破了几个，满码头都是酸味。船夫说今年夏天湖上的船少了一半，年轻人都被叫去当兵了，他只好教老婆划桨。'
+          chair: '八月，{staff}帮房东把无花果树下那把椅子搬进屋，椅背上还留着一块晒褪了色的印子。房东用袖子擦了又擦，说这树从没结过今年这么多的果子，树底下却没人坐了。'
+          harvest: '八月，{staff}帮房东把无花果一个个摘下来，摊进扁筐，准备送去因特拉的集市，指头上沾满了白色的果浆。房东说这树从没结过今年这么多的果子，晒裂了口的那些挑出来，摆在窗台上留给家里吃。'
 text:
   en:
     name: Bernhard Riemann
