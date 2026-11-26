@@ -250,6 +250,7 @@ emitYaml('encyclopedia.yaml', {
 const headerLines = read('config/header_lines.yaml');
 // the story cards a language carries in its own files under cards/text, such as the Traditional Chinese catalogue, read again by the story prose check
 const langCatalog = {};
+const langEras = {};
 for (const lang of LANGS) {
   const text = {};
   const partialDir = `text/${lang}`;
@@ -286,6 +287,7 @@ for (const lang of LANGS) {
     if (inCard !== undefined) (text.eras = text.eras || {})[id] = inCard;
     else if (exists(rel)) (text.eras = text.eras || {})[id] = read(rel);
   }
+  langEras[lang] = text.eras || {};
   emitYaml(`i18n/text.${lang}.yaml`, text);
 
   const enc = {};
@@ -382,8 +384,11 @@ let storyLine = '';
   for (const ev of eventCards) {
     for (const ref of ev.refs || []) if (!refIds.has(ref)) fail(`event ${ev.id} names unknown source ${ref}`);
     checkVignettes(`event ${ev.id}`, ev.scene?.vignettes, (lang) => ev.text[lang], new Set((ev.scene?.points ?? []).map((p) => p.id)));
-    // story prose, cards/README.md: complete when present, so no won point or ending falls back to the plain line in the middle of the prose
-    const points = ev.scene?.points ?? [];
+    const texts = Object.fromEntries(LANGS.map((lang) => [lang, ev.text[lang] ?? langCatalog[lang][ev.id]]).filter(([, t]) => t !== undefined));
+    checkStoryProse(ev.id, ev.scene?.points ?? [], texts);
+  }
+  // Scene and model prose use the same fields, keyed by the stars of the route the player runs.
+  function checkStoryProse(id, points, texts) {
     const pointIds = new Set(points.map((point) => point.id));
     const paragraph = (value) => typeof value === 'string' && !!value.trim() && !value.includes('\n');
     // a paragraph of a point is one string, or a mapping keyed by tags joined by + with an `else`, read for the employee like the remarks
@@ -391,44 +396,42 @@ let storyLine = '';
     // the shape compared across languages: the fields in any order, the keys within a field in their order, since the order of outcomes and excerpts is their priority
     const shape = (prose) => JSON.stringify(Object.fromEntries(Object.entries(prose).sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => [k, isObj(v) ? Object.fromEntries(Object.entries(v).map(([id, x]) => [id, isObj(x) ? Object.keys(x) : 1])) : Array.isArray(v) ? v.length : 1])));
     const shapes = {};
-    // the text of the story in every language that carries it: the person card, and over it nothing, else the language's own catalogue file
-    const texts = Object.fromEntries(LANGS.map((lang) => [lang, ev.text[lang] ?? langCatalog[lang][ev.id]]).filter(([, t]) => t !== undefined));
     for (const [lang, text] of Object.entries(texts)) {
       const prose = text.story_prose;
       if (prose === undefined) continue;
-      const where = ev.id + ' ' + lang + ' story_prose';
+      const where = id + ' ' + lang + ' story_prose';
       if (!isObj(prose)) {
         fail(where + ' must be a mapping');
         continue;
       }
       for (const key of Object.keys(prose)) if (!['opening', 'points', 'outcomes', 'none', 'desync', 'not_admitted', 'excerpts'].includes(key)) fail(where + ' has an unknown field ' + key);
-      if (!Array.isArray(prose.opening) || !prose.opening.length || !prose.opening.every(paragraph)) fail(where + '.opening must contain nonempty paragraphs');
+      if (!Array.isArray(prose.opening) || prose.opening.length !== 3 || !prose.opening.every(paragraph)) fail(where + '.opening must contain three nonempty paragraphs');
       const endings = ['none', 'not_admitted', ...(points.some((p) => p.guard) ? ['desync'] : [])];
       for (const key of endings) if (!paragraph(prose[key])) fail(where + '.' + key + ' must be one paragraph');
-      if (prose.desync !== undefined && !endings.includes('desync')) fail(where + '.desync is never read: the scene has no guard point');
+      if (prose.desync !== undefined && !endings.includes('desync')) fail(where + '.desync is never read: the story has no guard point');
       for (const key of ['points', 'outcomes', 'excerpts']) {
         if (!isObj(prose[key])) {
           fail(where + '.' + key + ' must be a mapping keyed by point ID');
           continue;
         }
         for (const [id, value] of Object.entries(prose[key])) {
-          if (!(pointIds.has(id) || (key === 'outcomes' && id === 'all'))) fail(where + '.' + key + '.' + id + ' is not a point of the scene');
+          if (!(pointIds.has(id) || (key === 'outcomes' && id === 'all'))) fail(where + '.' + key + '.' + id + ' is not a point of the story');
           else if (key === 'points' ? !variants(value) : !paragraph(value)) fail(where + '.' + key + '.' + id + (key === 'points' ? ' needs a paragraph, or paragraphs keyed by tags with an else' : ' needs a paragraph'));
           else if (key === 'excerpts' && !(variants(prose.points?.[id]) ?? []).every((x) => x.includes(value))) fail(where + '.excerpts.' + id + ' must quote every paragraph of its point');
         }
       }
-      if (isObj(prose.points)) for (const id of pointIds) if (!(id in prose.points)) fail(where + '.points.' + id + ' is missing: every point of the scene needs its paragraph');
+      if (isObj(prose.points)) for (const id of pointIds) if (!(id in prose.points)) fail(where + '.points.' + id + ' is missing: every point of the story needs its paragraph');
       if (isObj(prose.outcomes) && !Object.keys(prose.outcomes).some((id) => id !== 'all')) fail(where + '.outcomes needs a paragraph for at least one point');
       shapes[lang] = shape(prose);
     }
     // Chinese is written first and is the master; English and the other languages follow once the Chinese is approved. A language that has not
     // been written leaves the block out and tells the trip in plain lines; one that has must match the Chinese field for field and key for key.
     if (Object.keys(shapes).length) {
-      if (!shapes.zh) fail(ev.id + ' story_prose is written in ' + Object.keys(shapes).join(', ') + ' but not in zh, which is written first');
-      else for (const [lang, sh] of Object.entries(shapes)) if (sh !== shapes.zh) fail(ev.id + ' ' + lang + ' story_prose does not have the same fields and keys as zh');
+      if (!shapes.zh) fail(id + ' story_prose is written in ' + Object.keys(shapes).join(', ') + ' but not in zh, which is written first');
+      else for (const [lang, sh] of Object.entries(shapes)) if (sh !== shapes.zh) fail(id + ' ' + lang + ' story_prose does not have the same fields and keys as zh');
       // a story is written whole: once the Chinese prose is there, English, the fallback, and every language that carries the card have theirs,
       // so no language shows the plain lines for one story while it reads the prose for another
-      if (shapes.zh) for (const lang of LANGS) if (!shapes[lang] && (lang === config.i18n.fallback || texts[lang])) fail(ev.id + ' story_prose is written in zh but not in ' + lang + (lang === config.i18n.fallback ? ', the fallback' : ', which carries the card') + (config.i18n.convert?.[lang] ? '; run python tools/story_prose_convert.py ' + ev.id : ''));
+      if (shapes.zh) for (const lang of LANGS) if (!shapes[lang] && (lang === config.i18n.fallback || texts[lang])) fail(id + ' story_prose is written in zh but not in ' + lang + (lang === config.i18n.fallback ? ', the fallback' : ', which carries the card') + (config.i18n.convert?.[lang] && !config.eras.includes(id) ? '; run python tools/story_prose_convert.py ' + id : ''));
     }
   }
   const modelOf = (era) => (era && eraDir[era] ? (eraModel[era] ?? modelOfDir(eraDir[era])).raw : null);
@@ -438,6 +441,8 @@ let storyLine = '';
     const meta = modelOf(id).metadata;
     if (meta.vignettes !== undefined && !eventSources.has(meta.vignette_source)) fail(`model ${id} needs a wiki event as its vignette source`);
     checkVignettes(`model ${id}`, meta.vignettes, (lang) => modelText(id, lang));
+    const texts = Object.fromEntries(LANGS.map((lang) => [lang, langEras[lang][id]]).filter(([, t]) => t !== undefined));
+    checkStoryProse(id, modelOf(id).star_points, texts);
   }
   const people = [];
   const reviewByPerson = new Map();
@@ -490,9 +495,10 @@ let storyLine = '';
   storyLine += `
 open stories without the echoes full and none: ${noEcho.length}/${open.length}${noEcho.length ? ', the first ' + noEcho.slice(0, 8).map((row) => row.event).join(', ') : ''}`;
   // every open story with a scene is told by its Chinese story prose; the list is the work left, and the story agent takes its batches from it
-  const noProse = open.filter((event) => event.scene && !event.text?.zh?.story_prose).map((event) => event.id);
+  const hasStory = (event) => event.scene || config.eras.includes(event.era);
+  const noProse = open.filter((event) => hasStory(event) && !(config.eras.includes(event.era) ? langEras.zh[event.era]?.story_prose : event.text?.zh?.story_prose)).map((event) => event.id);
   storyLine += `
-open stories without Chinese story prose: ${noProse.length}/${open.filter((event) => event.scene).length}${noProse.length ? ': ' + noProse.join(', ') : ''}`;
+open stories without Chinese story prose: ${noProse.length}/${open.filter(hasStory).length}${noProse.length ? ': ' + noProse.join(', ') : ''}`;
   if (storyDetails) storyLine += '\n' + rows.map(({ event, owner, gaps }) =>
     `  ${event} (${owner || 'unlinked'}): ${gaps.length ? gaps.join('; ') : 'structural checks clear; editorial review still required'}`).join('\n');
 }

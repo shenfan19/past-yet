@@ -1,6 +1,6 @@
 // The portrait share card shows the outcome, historical echo and a short selection from the report.
 // The site address and a QR code from a matrix shipped with the game are on it. Nothing is uploaded and no outside service is asked.
-import { staffName, isoDateLabel, storyProse } from './narrate.js';
+import { staffName, isoDateLabel, tripStoryProse } from './narrate.js';
 
 export function createShare(X) {
   const { D, ctx, T, U, esc } = X;
@@ -17,14 +17,14 @@ export function createShare(X) {
   const fileName = (d) => d === null ? C.home_file_name : C.file_name;
 
   // Keep a few short passages from the record, config.share.record_lines at most, in the order they happened.
-  // points: the paragraphs of the won points from the story prose, which stand in for their lines
-  function pickLines(timeline, points) {
+  // A written passage stands in for the original line of a won point.
+  function pickLines(timeline, prose) {
     const N = C.record_lines;
     const rank = (t) => (t.star ? 0 : t.own ? 1 : t.kind === 'vignette' ? 2 : t.tag === 'history' ? 3 : 4);
     const chosen = timeline.map((t, i) => ({ t, i })).filter(({ t }) => t.kind !== 'remark' && rank(t) < 4)
       .sort((a, b) => rank(a.t) - rank(b.t) || (b.t.importance || 0) - (a.t.importance || 0) || a.i - b.i).slice(0, N).sort((a, b) => a.i - b.i);
     return chosen.map(({ t }) => {
-      const passage = (t.kind === 'point' && t.star ? points?.[t.id] : null) ?? t.text;
+      const passage = prose?.line(t) ?? t.text;
       const text = passage.match(/^.*?(?:[。！？]|[.!?](?=\s|$))/u)?.[0] ?? passage;
       return { text, star: !!t.star, history: t.tag === 'history' };
     });
@@ -57,18 +57,17 @@ export function createShare(X) {
       echo: echoOf(d),
       points: [],
     };
+    const prose = tripStoryProse(D, d, who, () => ctx.backend.staffTags(d.eraId, d.spec.staffId), d.light ? null : ctx.era(d.eraId).raw.star_points);
+    const excerpt = prose?.excerpt;
     if (d.light) {
       const c = T.catalog[d.eraId];
       const ev = D.get('catalog.events').find((x) => x.id === d.eraId);
       const o = R.outcomeId;
-      // the same story prose the report reads, see storyProse in narrate.js
-      const prose = storyProse(c.story_prose, d, who, () => ctx.backend.staffTags(d.eraId, d.spec.staffId));
-      const excerpt = prose?.excerpt;
       return {
         name: c.name,
         outcome: U.report.stamp[ctx.backend.stampOf(d)],
         text: excerpt ? [excerpt] : R.timeline ? [] : [U.light.summary[o].replace('{staff}', who).replace('{place}', c.place).replace('{figure}', c.figure)],
-        lines: excerpt ? [] : R.timeline ? pickLines(R.timeline, prose?.points) : null,
+        lines: excerpt ? [] : R.timeline ? pickLines(R.timeline, prose) : null,
         echo: echoOf(d),
         points: excerpt || R.timeline ? [] : (R.points || []).map((p) => ({ hit: p.hit, redeem: !!p.redeem, text: ev.scene ? c.points[p.id] : U.light.points[p.id] })),
       };
@@ -76,8 +75,8 @@ export function createShare(X) {
     return {
       name: T.eras[d.eraId].name,
       outcome: U.report.stamp[ctx.backend.stampOf(d)],
-      text: R.summary ? [R.summary] : [],
-      lines: pickLines(R.timeline || []),
+      text: excerpt ? [excerpt] : R.summary ? [R.summary] : [],
+      lines: excerpt ? [] : pickLines(R.timeline || [], prose),
       echo: echoOf(d),
     };
   }

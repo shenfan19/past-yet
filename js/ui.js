@@ -1,4 +1,4 @@
-import { diffRows, kitText, staffName, staffTraits, itemText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel, storyProse } from './narrate.js';
+import { diffRows, kitText, staffName, staffTraits, itemText, firstSentence, fmtYear, staffProfile, radarSvg, staffSaying, isoDateLabel, tripStoryProse } from './narrate.js';
 import { pointsLeft, founderProblem } from './founder.js';
 import { createWiki } from './wiki.js';
 import { createShop } from './shop.js';
@@ -654,7 +654,7 @@ export function createUI(D, ctx, DEV = false) {
     const done = office.tripsOf(id);
     const ideas = office.plotsFor(id).map((pid) => `<li>${esc(ET.plots[pid].name)}${U.fmt.paren.replace('{x}', esc(ET.plots[pid].character))}</li>`).join('');
     const head = `<div class="row sp"><h3>${esc(ET.name)}${!eraOpen(id) ? ' ' + hiddenChip() : ''}</h3><span class="muted">${esc(travelTime(ctx.backend.eraStay(id)))}</span></div>
-      <p class="muted">${esc(ET.blurb)}</p><div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
+      ${ET.story_prose ? ET.story_prose.opening.map((paragraph) => `<p>${esc(paragraph)}</p>`).join('') : `<p class="muted">${esc(ET.blurb)}</p>`}<div class="muted">${esc(ET.protagonist)} · ${esc(ET.protagonist_role)}</div>
       <div class="muted">${U.stars.best}${COLON}${starsHtml(ctx.S().stars[id] || 0, id)}</div>
       <div class="muted">${(ctx.backend.maxStars(id) === 3 ? U.dispatch.find_chance : U.dispatch.find_chance_n.replace('{n}', String(ctx.backend.maxStars(id)))).replace('{p}', String(Math.round(ctx.backend.findOdds(id).p * 100)))}</div>
       <div class="sec">${U.stars.points}</div><ul class="sync">${ctx.era(id).raw.star_points.map((p) => `<li>☆ ${esc(ET.star_points[p.id])}</li>`).join('')}</ul>
@@ -671,7 +671,7 @@ export function createUI(D, ctx, DEV = false) {
     const relicId = 'relic_' + id;
     const own = anchored(relicId);
     const tags = catalogTags(id).map((t) => `<span class="chip">${esc(T.tags[t])}</span>`).join('');
-    const opening = c.story_prose?.opening ?? [c.story];
+    const opening = T.eras[ev.era]?.story_prose?.opening ?? c.story_prose?.opening ?? [c.story];
     return `<div class="lbox"><div class="lscroll pad" data-keep="placefile" style="max-height:${D.get('config.ui.box_h.story')}px">
       <div class="row sp"><h3>${esc(c.name)}${own ? '' : ' ' + hiddenChip()}</h3><span class="muted">${esc(fmtYear(D, ev.year))} · ${esc(c.place)}</span></div>
       <div>${tags}</div>
@@ -965,7 +965,7 @@ export function createUI(D, ctx, DEV = false) {
     const spec = cur.spec;
     const R = cur.report;
     // the story prose of the card, read for this trip and this employee, see storyProse in narrate.js
-    const prose = cur.light ? storyProse(T.catalog[cur.eraId].story_prose, cur, S.staff, () => ctx.backend.staffTags(cur.eraId, spec.staffId)) : null;
+    const prose = tripStoryProse(D, cur, S.staff, () => ctx.backend.staffTags(cur.eraId, spec.staffId), cur.light ? null : ctx.era(cur.eraId).raw.star_points);
     const ending = prose?.ending;
     const notes = [];
     const noteOf = (key, text) => { let n = notes.findIndex((x) => x.key === key); if (n < 0) { notes.push({ key, text }); n = notes.length - 1; } return n + 1; };
@@ -982,11 +982,11 @@ export function createUI(D, ctx, DEV = false) {
     // On a narrow screen both sides stand right of the axis. Another employee met in the same time can later take the right side in a colour of their own.
     const cell = (history, body) => (history ? `<div class="what l">${body}</div><span class="when">%W</span><div class="what r"></div>` : `<div class="what l"></div><span class="when">%W</span><div class="what r"><div class="bubble">${body}</div></div>`);
     const tlLine = (t) => {
-      const vignette = prose && t.kind === 'vignette' ? T.catalog[cur.eraId].vignettes?.[R.vignette] : null;
+      const vignette = cur.light && prose && t.kind === 'vignette' ? T.catalog[cur.eraId].vignettes?.[R.vignette] : null;
       const [lead, rest] = splitLead(vignette?.replaceAll('{staff}', S.staff) ?? t.text);
       const refs = lineKind(t) === 'history' ? sup(S.factRefs(t.fact).map((r) => noteOf('ref:' + r, D.get('enc_text.refs.' + r) || r))) : '';
       const why = DEV && t.why ? `<div class="why">${esc(U.report.why[t.why.kind] + COLON + t.why.expr + (t.why.vals && t.why.vals.length ? SEP + t.why.vals.map(([k, v]) => k + ' = ' + v).join(', ') : ''))}</div>` : '';
-      const written = t.kind === 'point' && t.star ? prose?.points[t.id] : null;
+      const written = prose?.line(t);
       const mark = t.star ? '<span class="starmark">★</span> ' : '';
       const story = `${mark}${esc(written ?? rest)}`;
       const body = `${story}${t.times > 1 ? ' ' + esc(U.report.times.replace('{n}', String(t.times))) : ''}${refs}${why}`;

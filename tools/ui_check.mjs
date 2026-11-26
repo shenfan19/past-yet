@@ -145,6 +145,16 @@ try {
     const g = window.__game, o = g.ui.office, S = g.ctx.S();
     const d = o.launch('sun_yat_sen_1924', { seed: 1, staffId: 's_ning', items: {} });
     d.readyDay = S.clock.day; o.claim(d.id);
+    const prose = g.D.get('text.eras.sun_yat_sen_1924').story_prose;
+    const excerptId = Object.keys(prose.excerpts).find((id) => d.report.points.some((p) => p.id === id && p.hit && !p.cut));
+    const excerpt = prose.excerpts[excerptId]?.replaceAll('{staff}', d.report.staff);
+    g.ui.state.modal = { kind: 'report', id: d.id };
+    g.ui.render();
+    const inRecord = !!excerpt && Array.from(document.querySelectorAll('#modal .tl li.star')).some((line) => line.textContent.includes(excerpt));
+    document.querySelector('#modal [data-act=shareopen]').click();
+    const inShare = !!excerpt && document.querySelector('#modal #sharecanvas')?.getAttribute('aria-label').includes(excerpt);
+    g.ui.state.modal = null;
+    g.ui.state.modalStack = [];
     const an = g.D.get('antiques.antiques');
     const odds = g.ctx.backend.findOdds ? g.ctx.backend.findOdds('sun_yat_sen_1924') : null;
     const events = g.D.get('catalog.events');
@@ -154,7 +164,7 @@ try {
       medium: an.relic_sun_yat_sen_guangzhou.kind === 'medium' && !an.relic_sun_yat_sen_guangzhou.playable,
       found: d.paid.antique || null,
       foundYear: d.paid.antique ? (an[d.paid.antique].era ? g.ctx.era(an[d.paid.antique].era).raw.metadata.era.year : events.find((x) => x.id === an[d.paid.antique].event).year) : null,
-      stay: g.ctx.backend.eraStay('sun_yat_sen_1924'),
+      stay: g.ctx.backend.eraStay('sun_yat_sen_1924'), inRecord, inShare,
     };
     // the trip is taken back out so the rest of the checks start from a clean log
     S.dispatches = S.dispatches.filter((x) => x.id !== d.id); if (S.trips) S.trips = S.trips.filter((x) => x.id !== d.id); S.seq -= 1; S.staff.s_ning.restUntil = 0; delete S.staff.s_ning.storyBests; S.visited = S.visited.filter((x) => x !== 'sun_yat_sen_1924'); delete S.stars.sun_yat_sen_1924; S.energy = 0; g.ctx.save(); g.ui.render();
@@ -164,6 +174,7 @@ try {
   ok('the statue that opens the first place is a medium, not an antique', ep.medium);
   ok('an antique found on a trip is from an earlier year', ep.found === null || ep.foundYear < 1924);
   ok('a story can carry its own length of stay', ep.stay === 7);
+  ok('a full model’s report and share caption use the same won passage', ep.inRecord && ep.inShare);
   // the real pace is one minute a day at 1x, the test runs the clock at three seconds a day
   ok('1x is one real minute per game day', await page.evaluate(() => window.__game.D.get('config.clock').sec_per_day === 60));
   await page.evaluate(() => { window.__game.D.get('config.clock').sec_per_day = 3; });

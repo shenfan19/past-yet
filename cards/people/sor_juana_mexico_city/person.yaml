@@ -22,7 +22,7 @@ events:
       points:
         - {id: p1, kind: endure, guard: true, day: 45, req: {"any":[{"job":["nurse","caregiver","midwife","paramedic","doctor","physician","pharmacist","cook","chef"]},{"trait":["vigil","patient"]},{"provides":"vigil"}]}}
         - {id: p2, kind: care, day: 75, req: {"any":[{"job":["nurse","midwife","paramedic","doctor","physician","pharmacist"]},{"provides":"cure"},{"item":"antibiotic"}]}}
-        - {id: p3, kind: care, day: 92, req: {"any":[{"provides":"cure"},{"job":["doctor","physician"],"item":"antibiotic"}]}}
+        - {id: p3, kind: care, day: 92, overturns: [death], req: {"any":[{"provides":"cure"},{"job":["doctor","physician"],"item":"antibiotic"}]}}
       vignettes:
         - {id: kitchen, traits: [curious, glib], day: 25}
         - {id: shelf, traits: [methodical, vigil], day: 50}
@@ -33,6 +33,27 @@ events:
         place: "Mexico City"
         figure: "Sor Juana Inés de la Cruz"
         story: 'In 1690 the bishop of Puebla published, without her leave, Sor Juana''s critique of a sermon as the Carta Atenagórica, with a letter signed Sor Filotea. Her reply is dated 1 March 1691. In 1693 she sold her books and instruments, and in 1694 she renewed her vows. She died on 17 April 1695 in the convent of San Jerónimo, after nursing her sisters through an epidemic.'
+        story_prose:
+          opening:
+            - 'Mexico City, early 1695. Juana’s books and instruments had been sold two years earlier. She had written a long letter defending her pursuit of learning. By the time it appeared in a collection of her work, she was gone.'
+            - 'In history, an epidemic spread through the city. Juana cared for those who fell ill and died herself in April. In this branch, there is room for a table by the empty shelves, where those tending the sick can leave water and dry cloths.'
+            - 'This trip calls for someone who can keep a sickroom going through a change of hands. It also needs people who know how to tend the sick and have the right medicine or equipment with them.'
+          points:
+            p1: 'The next shift was late. {staff} set the water, clean cloths and empty bowls in separate places and freed a hand to tend the next bed. Someone by the door rolled up both sleeves again. The pile of dry cloths was lower, with one square fold still showing at the bottom.'
+            p2: 'The woman in one bed could not get up. {staff} stayed while she drank and tended her with the remedies and care available. After dawn she reached for the edge of the bed. When {staff} held out the bowl, she freed one hand to cup its base.'
+            p3: 'Juana fell ill too. {staff} treated her with the supplies brought along and waited by the bed until she could take another sip. She handed back the empty bowl and touched the page beside her pillow. Her fingertips were wet, and she nudged the paper towards the dry corner of the bed.'
+          outcomes:
+            all: 'After April, both women could stand at the sickroom table again. One stacked the freshly dried cloths, and the other went back to the empty shelves and added a few lines to a page.'
+            p3: 'After April, Juana could sit at her table again. The shelves were still bare, but there were freshly written pages at the edge of the table.'
+            p2: 'After April, the woman came back to help in the sickroom. Standing by the bed where she had lain, she shook out a clean cloth.'
+            p1: 'More people fell ill, and the work in the sickroom went on. At the change of watch, someone set the clean bowls upside down on the table.'
+          none: 'The water jug stood untouched all night. At dawn there was a patch of light just below its spout, visible through the door.'
+          not_admitted: '{staff} never got into the room where the sick were being tended. Through a crack in the door, a table leg and an empty water jar were just visible.'
+          desync: 'No one came to take over at the bedside. When the agency recalled {staff}, the bowl of warm water still sat at the corner of the table.'
+          excerpts:
+            p3: 'She handed back the empty bowl and touched the page beside her pillow. Her fingertips were wet, and she nudged the paper towards the dry corner of the bed.'
+            p2: 'After dawn she reached for the edge of the bed. When {staff} held out the bowl, she freed one hand to cup its base.'
+            p1: 'Someone by the door rolled up both sleeves again. The pile of dry cloths was lower, with one square fold still showing at the bottom.'
         relic: "A quill pen"
         relic_desc: "A quill with a split tip beside an empty shelf."
         points:
@@ -61,6 +82,27 @@ events:
         place: "墨西哥城"
         figure: "胡安娜修女"
         story: '1690 年，普埃布拉主教未经她同意，把她批评一篇布道的文章刊印出来，题为《雅典娜信札》，附信署名“菲洛特亚修女”。她的《答菲洛特亚修女》署 1691 年 3 月 1 日。1693 年她卖掉了书和乐器，1694 年重申誓愿。1695 年 4 月 17 日，她在照顾染疫的修女之后，死于圣杰罗姆修道院。'
+        story_prose:
+          opening:
+            - '1695 年初，墨西哥城。胡安娜的书和乐器两年前已经卖掉。她写过一封为读书和求学辩护的长信，信到后来结集出版时，她已不在人世。'
+            - '史实里，疫病蔓延，她照顾病倒的人，自己也在四月去世。在这条分支里，空书架旁还有地方放一张桌子，照料病人的人可以在那儿搁水和干布。'
+            - '这一趟用得上守得住病房、能把照料接下去的人。懂得看病、带着合用药物或器材的人也有用处。'
+          points:
+            p1: '病房里接班的人迟迟没来。{staff}把水、净布和空碗分开放，腾出手去看下一张床。门边有人把两只袖口挽了又挽。桌角那摞干布矮下去一截，底下还有一张叠得方方正正。'
+            p2: '有一张床上躺着起不了身的病人。{staff}守着她喝水，按手边的药和照料办法接着看护。天亮以后，她伸手扶住了床沿。{staff}把碗递过去时，她腾出一只手托住了碗底。'
+            p3: '胡安娜也倒下了。{staff}用带来的药或器材为她治疗，在床边等她能再喝一口水。她把空碗递回来，在枕边的纸上摸了一下。指尖还沾着水，她把纸往干燥的床角挪了挪。'
+          outcomes:
+            all: '那年四月过后，两个人又站到了病房的桌旁。一个把新晾好的布摞起来，另一个回到空书架旁，在纸上添了几行。'
+            p3: '四月过后，胡安娜又有了坐到桌前的时候。书架仍空着，桌边有几张新写的纸。'
+            p2: '四月过后，那位病人又来病房帮忙。她站在自己躺过的床边，把一条洗净的布抖开。'
+            p1: '病房里倒下的人渐多，照料仍接了下去。换班时，有人把洗净的碗倒扣在桌上。'
+          none: '桌上的水壶一夜没动。天亮时，隔着门还能看见壶嘴下方那一小块亮光。'
+          not_admitted: '{staff}没能进到照料病人的屋里。门缝里露出桌脚，旁边靠着一只空水罐。'
+          desync: '床边等不到接手的人。{staff}被召回时，盛着温水的碗还放在桌角。'
+          excerpts:
+            p3: '她把空碗递回来，在枕边的纸上摸了一下。指尖还沾着水，她把纸往干燥的床角挪了挪。'
+            p2: '天亮以后，她伸手扶住了床沿。{staff}把碗递过去时，她腾出一只手托住了碗底。'
+            p1: '门边有人把两只袖口挽了又挽。桌角那摞干布矮下去一截，底下还有一张叠得方方正正。'
         relic: "一支羽毛笔"
         relic_desc: "一支笔尖裂开的羽毛笔，旁边是空书架。"
         points:
@@ -81,9 +123,9 @@ events:
             was: '1695 年 4 月 17 日，胡安娜修女在照顾病倒的修女之后去世。'
             now: '{staff}用带来的药治好了她，她熬过了四月。后来几年，她在修道院里又写下了一些东西，写了什么，这一趟的记录里没有。'
         vignettes:
-          kitchen: '{staff}看着一枚蛋在热油里凝住，在糖浆里却散开，在一张碎纸上记下哪口锅是哪样，也不为给谁看。'
-          shelf: '{staff}擦净屋里的空书架，木板上还看得出书立过的地方，一块块颜色深些，没去动它。'
-          bells: '{staff}在院子里数着报丧的钟声，有一晚响了两回，数完又回去看着水壶。'
+          kitchen: '一枚蛋在热油里凝住，在糖浆里却散开。{staff}在碎纸上记下两口锅的差别，把纸折起来放在手边。'
+          shelf: '{staff}沿着空书架擦了一遍。木板上还留着一块块深色的书印，抹布擦到那里便抬了起来。'
+          bells: '有一晚，{staff}在院子里听见两回报丧的钟响。第二回的声音落下去，又回屋去看火上的水壶。'
 text:
   en:
     name: Sor Juana Inés de la Cruz

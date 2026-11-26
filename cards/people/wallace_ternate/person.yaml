@@ -22,7 +22,7 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 10, req: {"any":[{"job":["doctor","physician","nurse","paramedic","midwife","caregiver","pharmacist"]},{"trait":["vigil","patient"],"stat":{"will":8}}]}}
         - {id: p2, kind: care, day: 100, req: {"any":[{"job":["doctor","physician","nurse","paramedic","midwife"]},{"item":"first_aid_kit"},{"item":"antibiotic"}]}}
-        - {id: p3, kind: care, day: 140, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"any":[{"item":"antibiotic"},{"item":"ors_pack"}]},{"provides":"cure"}]}}
+        - {id: p3, kind: care, day: 140, overturns: [jumaat_death], req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"any":[{"item":"antibiotic"},{"item":"ors_pack"}]},{"provides":"cure"}]}}
       vignettes:
         - {id: places, traits: [methodical, vigil], day: 25}
         - {id: claim, traits: [curious, skeptical], day: 35}
@@ -33,6 +33,27 @@ events:
         place: "Ternate"
         figure: "Alfred Russel Wallace"
         story: 'In February 1858, after a bout of fever in the Moluccas, Alfred Russel Wallace wrote an essay on how varieties depart from their original type. It bears the date and place February 1858, Ternate. On 25 March Wallace sailed from Ternate with a party that included the young hunter Jumaat. They reached Dorey on the coast of New Guinea. The essay went to Charles Darwin in England; on 1 July it was read alongside Darwin’s work in London, with neither author in the room.'
+        story_prose:
+          opening:
+            - 'The Moluccas, February 1858. After a fever, Wallace writes an essay about how varieties diverge from their original forms. He dates it at Ternate.'
+            - 'In history, the essay reached England. Wallace sailed to Dorey, where he injured his ankle. Jumaat, who travelled with him, died there in June. In this branch, someone can keep watch while Wallace writes and make the crossing to Dorey.'
+            - 'This trip needs someone who can stay by a sickbed and give its occupant time to rest. It also needs someone who knows wound care or brings the right supplies.'
+          points:
+            p1: 'When the fever lets up, {staff} stays nearby and moves the paper and water into Wallace’s reach. He writes the name of the place and pauses. {staff} catches the corner of a sheet lifting by the window.'
+            p2: 'In Dorey, {staff} tends Wallace’s ankle, waits until he can bear weight and goes a few steps farther with him. The mud is still wet outside the door. Wallace steps into it, and the second print is as deep as the first.'
+            p3: 'Jumaat cannot get out of bed. {staff} stays with him and uses the supplies brought along, until he can move the bowl himself. At first Jumaat holds the bowl with both hands, then lets one go. Water runs along his wrist and drips beside the bed.'
+          outcomes:
+            all: 'The paper eventually reached England. When the boat left Dorey, Jumaat drew his legs over the side and Wallace made room on the bench.'
+            p3: 'There was room for one more on the boat in late July. Jumaat sat down with the bowl by his feet.'
+            p2: 'Wallace went back into the forest while the steamer was in Dorey. A little way along, he bent down to wipe the mud from his shoe.'
+            p1: 'The essay was later read in London. On opening the manuscript, the last line still said Ternate.'
+          none: 'There was a table by the window. As the damp came in, the outer corner of a sheet began to curl.'
+          not_admitted: '{staff} did not get a place with the party. A rope went slack at the quay and traced a line across the water.'
+          desync: 'The paper by the bed lay unfinished. When {staff} was recalled, a patch of damp still marked the inside of the frame.'
+          excerpts:
+            p3: 'At first Jumaat holds the bowl with both hands, then lets one go. Water runs along his wrist and drips beside the bed.'
+            p2: 'The mud is still wet outside the door. Wallace steps into it, and the second print is as deep as the first.'
+            p1: 'He writes the name of the place and pauses. {staff} catches the corner of a sheet lifting by the window.'
         relic: "A beetle in a pin box"
         relic_desc: "A collected beetle in a small tin box."
         points:
@@ -61,6 +82,27 @@ events:
         place: "特尔纳特"
         figure: "阿尔弗雷德·拉塞尔·华莱士"
         story: '1858 年 2 月，阿尔弗雷德·拉塞尔·华莱士在摩鹿加群岛发烧，退烧后写了一篇论文，谈变种怎样偏离原型。论文落款是「特尔纳特，1858 年 2 月」。3 月 25 日，他从特尔纳特乘船出发，同行的有年轻猎手朱马特，一行人抵达新几内亚海岸的多雷。论文寄到了英格兰。7 月 1 日，他与达尔文的文章在伦敦一同宣读，两位作者都不在场。'
+        story_prose:
+          opening:
+            - '1858 年 2 月，摩鹿加群岛。华莱士在一阵高烧后写下论文，说明生物的变种怎样偏离原型。他在稿末写下特尔纳特。'
+            - '史实里，论文寄到了英国，华莱士随船去了多雷，在那里伤了脚踝。同行的朱马特在六月病逝。在这条分支里，有人能在写稿时守夜，也能跟着船去多雷。'
+            - '这一趟用得上能守住病榻、让人歇过一阵的人。熟悉伤口照料、带来合用药物或器材的人，也会有事做。'
+          points:
+            p1: '华莱士烧稍退时，{staff}守在一旁，把纸和水挪到他伸手够得着的地方。他落笔写下地名，手停了一会儿。{staff}把窗边那张已经掀起的纸用指尖按住。'
+            p2: '到多雷以后，{staff}照料华莱士受伤的脚踝，等他能把脚踩稳，再陪他试着多走几步。门外泥还湿着。华莱士把鞋踏进去，第二个脚印落得和头一个一样实。'
+            p3: '朱马特卧床起不来。{staff}守着他，用带来的药物或器材照料，等他能自己挪动水碗。朱马特先拿两只手捧碗，后来松开一只。碗里的水沿着他的手腕滴到床边。'
+          outcomes:
+            all: '论文后来到了英国。多雷的船离岸时，朱马特把腿收过船沿，华莱士留出一截长凳。'
+            p3: '七月底的船上多留了一个位置。朱马特坐下来，脚边放着那只喝水的碗。'
+            p2: '汽船停在多雷的那些天，华莱士又进了林子。走出一段，他弯腰掸掉鞋上的泥。'
+            p1: '寄出的论文后来在伦敦宣读。展开稿纸，最后一行还留着「特尔纳特」。'
+          none: '屋里剩一张靠窗的桌子。潮气上来时，最外边的纸角慢慢弯了起来。'
+          not_admitted: '{staff}没能跟上这一行人。码头的缆绳松下来，在水面划了一道。'
+          desync: '病床边的纸没写完。{staff}被召回时，窗框内侧还留着一小片湿。'
+          excerpts:
+            p3: '朱马特先拿两只手捧碗，后来松开一只。碗里的水沿着他的手腕滴到床边。'
+            p2: '门外泥还湿着。华莱士把鞋踏进去，第二个脚印落得和头一个一样实。'
+            p1: '他落笔写下地名，手停了一会儿。{staff}把窗边那张已经掀起的纸用指尖按住。'
         relic: "针盒里的一只甲虫"
         relic_desc: "一只收集来的甲虫，放在小锡盒里。"
         points:
@@ -81,9 +123,9 @@ events:
             was: '1858 年 6 月 26 日，十八岁上下的朱马特在多雷病逝，华莱士写他是个安静的小伙子，活干得踏实。'
             now: '{staff}守着他退了烧、止住了病，七月底离开多雷时，他也在船上。'
         vignettes:
-          places: '{staff}抄写当天鸟类标本的签条，在每张旁边写上岛名，这一抽屉皮子没有采集人在旁边也读得懂。'
-          claim: '两座岛上的甲虫长得很像，{staff}把一盘甲虫分成两排，中间留出空隙，没人吩咐。'
-          mail: '{staff}把一封长信的稿页包进油纸，打了个双结，像水手捆海图那样。'
+          places: '{staff}抄下鸟类标本的签条，在每张旁补上岛名。放回最后一张时，签角卡进了抽屉的木缝。'
+          claim: '{staff}把两座岛上的甲虫排成两行，给相像的那两只之间留了一指宽。合上盘盖前，还能看见那道空隙。'
+          mail: '{staff}把一封长信包进油纸，像水手捆海图那样打了双结。油纸上有一点水，绳结压得很紧。'
 text:
   en:
     name: Alfred Russel Wallace

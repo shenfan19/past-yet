@@ -359,11 +359,28 @@ export function keyByTags(map, tags) {
   return Object.keys(map).find((k) => k !== 'else' && k.split('+').every((t) => tags.has(t))) ?? (map.else !== undefined ? 'else' : null);
 }
 
-// What the story prose of a catalogue event, text.<language>.story_prose in cards/README.md, gives one trip: the paragraph under the stamp, the
+// The prose of a finished trip supplies the paragraph under the stamp, the
 // paragraph of each won point and the excerpt of the share card. A paragraph of a point is one string, or a mapping keyed by tags like the remarks,
 // read for the employee. The report, the share card and tools/story_probe.mjs all read it here, so they tell the same story.
 // d: the trip, with its report and, when it ended early, recalled or evacuation; staff: the name of the employee;
 // tagsOf: what the employee is, a function asked only when a paragraph is written in variants, so a report that needs no tags never looks them up
+export function tripStoryProse(D, d, staff, tagsOf, modelPoints) {
+  const prose = D.get('text.' + (d.light ? 'catalog' : 'eras'))?.[d.eraId]?.story_prose;
+  // Saves from an older model can describe a different set of stars. Keep their recorded prose.
+  if (!prose || (!d.light && d.report.points?.some((point) => !Object.hasOwn(prose.points, point.id)))) return null;
+  const written = storyProse(prose, d, staff, tagsOf);
+  if (!written) return null;
+  const milestonePoints = new Map((modelPoints || []).map((p) => [p.milestone, p.id]));
+  return {
+    ...written,
+    line(t) {
+      if (!t.star) return null;
+      const id = d.light ? (t.kind === 'point' ? t.id : null) : (t.kind === 'milestone' ? milestonePoints.get(t.id) : null);
+      return id ? written.points[id] : null;
+    },
+  };
+}
+
 export function storyProse(prose, d, staff, tagsOf = () => []) {
   if (!prose) return null;
   let tags = null;

@@ -23,7 +23,7 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"trait":["bold","charismatic","calm"],"stat":{"will":7}},{"job":["union_organizer","teacher","radio_host"],"stat":{"will":6}},{"item":"golden_apple","stat":{"will":5}}]}}
         - {id: p2, kind: hold, day: 40, req: {"any":[{"job":["writer","translator","proofreader","musician"]},{"trait":["artistic","scholarly"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: care, day: 49, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":6}},{"job":["nurse","pharmacist","paramedic"],"item":"handbook"},{"item":"nano_kit","stat":{"will":6}}]}}
+        - {id: p3, kind: care, day: 49, overturns: [plato_ill], req: {"any":[{"job":["doctor","physician"],"stat":{"wit":6}},{"job":["nurse","pharmacist","paramedic"],"item":"handbook"},{"item":"nano_kit","stat":{"will":6}}]}}
       vignettes:
         - {id: rumours, traits: [skeptical, scholarly, curious, streetwise], day: 19}
         - {id: harbour, traits: [vigil, patient, quiet, attached, sensitive], day: 32}
