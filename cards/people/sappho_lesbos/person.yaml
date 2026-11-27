@@ -2,56 +2,84 @@ order: 168
 events:
   sappho_lesbos:
     order: 180
-    build_step: 1
-    year: -600
+    build_step: 4
+    ready: true
+    year: -596
+    stay: 2
     lon: 26.56
     lat: 39.1
     region: europe
     field: literature
     tier: 2
     channels: {G: 1}
-    regret: true
-    refs: [sappho_lesbos_papyrus]
+    refs: [sappho_lesbos_parian, sappho_lesbos_exile_study, sappho_lesbos_papyrus]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"any":[{"trait":["methodical","handy"]},{"job":["musician"]}]}}
-        - {id: p2, kind: care, req: {"trait":["faithful","calm","cheerful"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"item":"neural_chip"}}
-      vignettes:
-        - {id: breath, traits: [methodical, handy, artistic]}
-        - {id: repeat, traits: [faithful, calm, cheerful]}
-        - {id: blank}
+        - {"id":"p1","kind":"trust","day":7,"req":{"any":[{"job":["sailor","ferryman","courier","navigator"],"stat":{"will":6}},{"trait":["attached","kind","wanderer"],"stat":{"will":6,"constitution":5}}]}}
     text:
       en:
-        name: 'Before the next breath'
-        place: "Mytilene"
-        figure: "Sappho"
-        story: 'A much later papyrus preserved by the British Library carries part of a poem attributed to Sappho about her brother. The modern fragment supplies part of the theme. Its missing words and the sound of the song remain unknown.'
-        relic: 'A rehearsal scrap'
-        relic_desc: 'A prop from the imagined rehearsal, with one pause marked.'
+        name: 'Before the ship leaves'
+        place: 'Mytilene, Lesbos'
+        figure: 'Sappho'
+        story: 'The Parian Marble records Sappho leaving Mytilene for Sicily in exile. Its damaged date leaves the exact year uncertain. In this branch one person she hoped to see has not heard when the ship is leaving.'
+        story_prose:
+          opening:
+            - 'The shore at Mytilene. Centuries after Sappho sailed to Sicily, a stone on Paros recorded the voyage. The year on that stone is now damaged.'
+            - 'In history, Sappho left Mytilene in exile for Sicily. The reason is unknown. In this branch there is someone she wants to see before she goes, and the boatmen are already passing baggage aboard.'
+            - 'Someone who knows the landing and the neighbouring streets can help. Finding someone who has yet to hear when the boat leaves will do more than urging a boatman to hurry.'
+          points:
+            p1: '{staff} asks where the baggage goes, leaves Sappho’s bundle in a boatman’s care and looks for the door she described. By the time they come back, the people loading the boat have cleared a stretch of shore. The visitor reties the knot that has come loose at Sappho’s wrist. Sappho leaves her hand where it is until the boatman calls for her.'
+          outcomes:
+            all: 'As the boat pulls away, Sappho raises the hand with the cord. The visitor stays on the stone passengers step on when they come ashore.'
+            p1: 'As the boat pulls away, Sappho raises the hand with the cord. The visitor stays on the stone passengers step on when they come ashore.'
+          none: 'The boat leaves first. By the time the visitor finds the landing, there is only a length of wet rope left on the stone.'
+          not_admitted: '{staff} reaches the shore but finds no one who knows Sappho. Someone crouches on the last step, straightening a length of rope.'
+          excerpts:
+            p1: 'The visitor reties the knot that has come loose at Sappho’s wrist. Sappho leaves her hand where it is until the boatman calls for her.'
+        relic: 'A knotted cord'
+        relic_desc: 'An imagined cord worn by someone waiting with her at the landing.'
         points:
-          p1: 'Find where the listener stopped to breathe'
-          p2: 'Give the hesitant singer a second entrance before the lamp goes out'
-          p3: 'Separate the missing words from the sounds you could follow'
-        vignettes:
-          breath: 'Phile has written one long run of words and keeps losing her breath halfway through. You tap the table when she actually stops. She marks that place and tries the line again. Centuries later there will be scraps of the words. You have caught a pause that a scrap could never contain.'
-          repeat: 'Myrto mouths the entrance twice without making a sound. Phile is about to take the lamp away. You tap the opening beat from beside her and she finally joins in. For one line there are two voices at the table. The second voice is the thing she had come to find.'
-          blank: 'Someone asks what the returning brother does after the last words you remember from the future fragment. You could give them an ending on the spot. Instead you mark the place where your memory of the words runs out. When the lamp goes, the unfinished space is still there.'
+          p1: 'Bring one person Sappho wants to see to the landing before she has to leave for Sicily'
+        points_fail:
+          p1: 'The ship left before the employee could bring the person Sappho had asked to see.'
+        shift:
+          p1:
+            was: 'Around the turn of the seventh and sixth centuries BC: the Parian Marble records Sappho sailing from Mytilene to Sicily in exile.'
+            now: '{staff} brings the person Sappho asked for to the landing. The two get time together before Sappho boards.'
+            who: sappho_lesbos
+            bio: 'Sappho had time to say goodbye in person before leaving Mytilene for Sicily.'
       zh:
-        name: '下一口气之前'
-        place: "米蒂利尼"
-        figure: "萨福"
-        story: '大英图书馆藏有一片晚出许多世纪的纸莎草，上面留着一首归于萨福、写及兄长的诗的部分文字。残片提供了部分题材，缺失的诗句和歌声依然无从听见。'
-        relic: '一片习唱用的纸莎草'
-        relic_desc: '习唱中的道具，标过一处换气。'
+        name: '船还没走'
+        place: '莱斯博斯岛米蒂利尼'
+        figure: '萨福'
+        story: '《帕罗斯编年碑》记载，萨福离开米蒂利尼流亡西西里。碑文的日期有残缺，年份只能取约数。在这条分支里，她想见的人还不知道船几点开。'
+        story_prose:
+          opening:
+            - '米蒂利尼的海岸。离萨福去西西里已有几百年时，帕罗斯的一块石碑才记下这一趟远行。现在连碑上的年份也残了。'
+            - '史实里，萨福离开米蒂利尼流亡西西里，原因无从确知。在这条分支里，她有一位想当面道别的人，船家却已经在把行李往船上递。'
+            - '这趟用得上认得码头和街巷的人。知道托谁找到一个还没听到船讯的人，比催船家有用。'
+          points:
+            p1: '{staff}把随船放行李的地方问清，托船家看着萨福的包，然后照她说的门口标记去找人。两人赶回渡口时，搬东西的人刚空出一截岸边。那人替萨福把手上松开的结系好。萨福没有把手收回去，直到船家来叫她。'
+          outcomes:
+            all: '船从岸边退开时，萨福抬起系绳的那只手。岸上的人一直站在下船时要踩的那块石头上。'
+            p1: '船从岸边退开时，萨福抬起系绳的那只手。岸上的人一直站在下船时要踩的那块石头上。'
+          none: '船先走了。等那人找到渡口时，留在石上的只是一截浸湿的缆绳。'
+          not_admitted: '{staff}到了岸边，没能找到认识萨福的人。有人蹲在最末一级石阶上，把手里的绳理直。'
+          excerpts:
+            p1: '那人替萨福把手上松开的结系好。萨福没有把手收回去，直到船家来叫她。'
+        relic: '一根打过结的绳'
+        relic_desc: '分支里的绳，和她一起等船的人系在手上。'
         points:
-          p1: '找出听者在哪里停下来换气'
-          p2: '熄灯前再给犹豫的人一次起唱的机会'
-          p3: '把没听清的字和能跟上的声音分开'
-        vignettes:
-          breath: '菲勒把词全串成一行，念到一半总要换气。她一停，你就在桌上轻敲一下。她记住那处停顿，又试了一遍。几个世纪后还会有残存的字迹，你听见的这口气，却留不进残片里。'
-          repeat: '米尔托两次张嘴，都没唱出声。菲勒已经要把灯拿走。你在米尔托身边敲出开头一拍，她终于唱了进来。有一行，桌边有两个人的声音。她今天来，就是为了跟上这一行。'
-          blank: '有人问，唱到你记得的那几句以后，归来的兄长又做了什么。你原可以当场接一个结尾。你只在记忆断掉的地方做了记号。灯灭时，那一段空处依然留着。'
+          p1: '在去西西里的船出发前，把萨福想见的人带到渡口'
+        points_fail:
+          p1: '船离岸以前，员工没能把萨福请来道别的人带到。'
+        shift:
+          p1:
+            was: '约公元前七世纪末至六世纪初，《帕罗斯编年碑》记萨福自米蒂利尼渡海流亡西西里。'
+            now: '{staff}带着萨福托找的人走到渡口。上船前，两个人还有时间当面道别。'
+            who: sappho_lesbos
+            bio: '离开米蒂利尼去西西里以前，萨福有机会和她想见的人当面道别。'
 text:
   en:
     name: Sappho
@@ -59,24 +87,29 @@ text:
   zh:
     name: 萨福
     text: 莱斯博斯的希腊诗人，活跃于公元前 600 年前后。她写关于渴望与失去的抒情诗，古代汇编成九卷，如今只留下一首完整的诗和一些残片。
-hook: {en: 'A voice stops before the words do.', zh: '声音停了，词还来不及写完。'}
+hook: {en: 'Before the ship leaves', zh: '船还没走'}
 facts:
+  exile:
+    date: '-596'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [sappho_lesbos_parian, sappho_lesbos_exile_study]
+    text:
+      en: 'Around the turn of the seventh and sixth centuries BC: the Parian Marble records Sappho sailing from Mytilene to Sicily in exile.'
+      zh: '约公元前七世纪末至六世纪初，《帕罗斯编年碑》记萨福自米蒂利尼渡海流亡西西里。'
+    line:
+      en: 'Around the turn of the seventh and sixth centuries BC: the Parian Marble records Sappho sailing from Mytilene to Sicily in exile.'
+      zh: '约公元前七世纪末至六世纪初，《帕罗斯编年碑》记萨福自米蒂利尼渡海流亡西西里。'
   papyrus:
     date: '250'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [sappho_lesbos_papyrus]
     text:
       en: 'The catalogue identifies the surviving piece as fragment 5 of a poem about Sappho’s brother Charaxus. The catalogue dates the manuscript to the third century CE.'
       zh: '馆藏目录将现存片段列为萨福书写兄长卡拉克索斯的第5号残篇，目录将这份传抄本定为公元三世纪。'
-bystanders:
-  phile:
-    invented: true
-    text: {en: 'A fictional listener who has one lamp left for rehearsal.', zh: '虚构听众菲勒，只剩一盏灯可供习唱。'}
-  myrto:
-    invented: true
-    text: {en: 'A fictional singer trying to join for a single line.', zh: '虚构歌者米尔托，想跟上其中一行。'}
 wiki:
   refs:
     sappho_lesbos_papyrus:
@@ -85,16 +118,60 @@ wiki:
       text:
         en: 'British Library, Papyrus 739, fragment 5 https://searcharchives.bl.uk/catalog/040-002105127'
         zh: '大英图书馆，纸莎草文书739号，萨福残篇第5号 https://searcharchives.bl.uk/catalog/040-002105127'
+    sappho_lesbos_parian:
+      order: 2227
+      status: checked
+      text:
+        en: 'Digital Fragmenta Historicorum Graecorum, Parian Marble entry 36 https://www.dfhg-project.org/DFHG/urn_retriever.php?URN=urn%3Alofts%3Afhg.1.marmor_parium.ii%3A36'
+        zh: '希腊史家残篇数字版，《帕罗斯编年碑》第 36 条 https://www.dfhg-project.org/DFHG/urn_retriever.php?URN=urn%3Alofts%3Afhg.1.marmor_parium.ii%3A36'
+    sappho_lesbos_exile_study:
+      order: 2228
+      status: checked
+      text:
+        en: 'Mnemosyne, Sappho’s Exile in Sicily and Her Statue in Syracuse https://www.academia.edu/170883514/Sapphos_Exile_in_Sicily_and_Her_Statue_in_Syracuse'
+        zh: '《Mnemosyne》，萨福在西西里的流亡与锡拉库萨雕像 https://www.academia.edu/170883514/Sapphos_Exile_in_Sicily_and_Her_Statue_in_Syracuse'
+    sappho_lesbos_echo_source_full:
+      order: 2306
+      status: checked
+      text:
+        en: 'Sappho, fragment 94, Greek text https://ancientlibrary.net/sappho-fragments/'
+        zh: '萨福残篇第 94 首，希腊原文 https://ancientlibrary.net/sappho-fragments/'
+    sappho_lesbos_echo_source_none:
+      order: 2307
+      status: checked
+      text:
+        en: 'Sappho, fragment 94, Greek text https://ancientlibrary.net/sappho-fragments/'
+        zh: '萨福残篇第 94 首，希腊原文 https://ancientlibrary.net/sappho-fragments/'
+quotes:
+  sappho_lesbos_echo_full:
+    order: 1
+    tier: full
+    date: '-596'
+    checked: official_record
+    sources: [sappho_lesbos_echo_source_full]
+    original: grc
+    text:
+      en: {"who":"Sappho","quote":"Go well, and remember me.","occasion":"Fragment 94, one voice speaking to someone who is leaving. The poem is not an account of the exile."}
+      zh: {"who":"萨福","quote":"愿你走好，也请记得我。","occasion":"残篇第 94 首，诗中一人向离去的人道别。它并非流亡纪事。"}
+      grc: {"who":"Sappho","quote":"χαίροιςʼ ἔρχεο κἄμεθεν μέμναιςʼ","occasion":"Fragment 94, one voice speaking to someone who is leaving. The poem is not an account of the exile."}
+  sappho_lesbos_echo_none:
+    order: 2
+    tier: none
+    date: '-596'
+    checked: official_record
+    sources: [sappho_lesbos_echo_source_none]
+    original: grc
+    text:
+      en: {"who":"Sappho","quote":"Sappho, truly I leave you unwillingly.","occasion":"Fragment 94, the other voice in the same poem. Its date is unknown."}
+      zh: {"who":"萨福","quote":"萨福，我实在不愿离开你。","occasion":"同一残篇中另一人的话。作品日期不详。"}
+      grc: {"who":"Sappho","quote":"Ψάπφʼ, ἦ μάν ςʼ ἀέκοιςʼ ἀπυλιμπάνω.","occasion":"Fragment 94, the other voice in the same poem. Its date is unknown."}
 self_check:
-  fact: papyrus
-  quote_line: '你听见的这口气，却留不进残片里。'
-  regret_choice: 'blank 补一句能解围，也会把虚构混成听见的歌词。'
-  bookend: '出声前的停顿与熄灯留下的空处呼应。'
-  share_line: '一行里，桌边有两个人的声音。'
-  share_number: 'repeat 的两把嗓音，取自虚构习唱。'
-  knowing: 'blank 只记得后世残片保留的字。'
-  near: 'papyrus 支持诗歌题材；习唱的日期无法从馆藏推出。'
-  lever: 'repeat 让一人唱变成两人合唱。'
-  missed: 'blank 离开前没听到残篇之后。'
-  brought: 'breath 记下字里留不住的停顿。'
+  fact: exile
+  quote_line: '约公元前七世纪末至六世纪初，《帕罗斯编年碑》记萨福自米蒂利尼渡海流亡西西里。'
+  regret_choice: '船离岸以前，员工没能把萨福请来道别的人带到。'
+  bookend: '《帕罗斯编年碑》记载，萨福离开米蒂利尼流亡西西里。碑文的日期有残缺，年份只能取约数。在这条分支里，她想见的人还不知道船几点开。 {staff}带着萨福托找的人走到渡口。上船前，两个人还有时间当面道别。'
+  share_number: '596'
+  lever: p1
+  missed: '船离岸以前，员工没能把萨福请来道别的人带到。'
+  share_line: '船还没走'
 pack: {license: MIT, version: 1, languages: [en, zh]}

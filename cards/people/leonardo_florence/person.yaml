@@ -2,7 +2,8 @@ order: 121
 events:
   leonardo_florence:
     order: 15
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1503
     date: '1503-09-19'
     stay: 4
@@ -28,6 +29,24 @@ events:
         place: Florence
         figure: Leonardo da Vinci
         story: 'The Louvre dates the beginning of Leonardo''s portrait known as the Mona Lisa to around 1503 and records that he kept working on it later.'
+        story_prose:
+          opening:
+            - 'Inside the Florence workshop the panels have been moved from the window to make room for a new rack. An agent comes to ask where Lisa’s portrait is. An apprentice stops him from putting a hand on a panel that is still wet.'
+            - 'Agostino Vespucci’s dated note of October 1503 mentions Leonardo’s portrait of Lisa. The painting later remained with the artist. Here you can save it a place for work and storage, and arrange for Lisa to see as much as Leonardo is willing to show.'
+            - 'Send someone who can judge the rack, the panel and the daylight. To arrange a viewing, bring the sitter, painter and agent together at an agreed hour.'
+          points:
+            p1: 'The apprentice wants to squeeze one more space from the old rack. You ask him to slide an empty panel in first and watch its corner touch the painting beside it. He clears a space by the window and asks Leonardo to mark the slot. Later, the person putting the work away touches the label for this panel before he reaches for the rack.'
+            p2: 'The painter asks for a dry practice board to shield his paints. He turns the portrait to the door himself and shows Lisa where to stand. She asks if he will need her in the same pose next time. He looks at the back of the chair and tells the apprentice to mark where it stands. After Lisa leaves, Leonardo turns the panel back into his light.'
+          outcomes:
+            all: 'The workshop still has room for the picture. Lisa has seen how far it has come, and Leonardo still keeps the panel.'
+            p1: 'The panel has daylight and a labelled storage slot. The agent can ask how it is going. A viewing still has no agreed day.'
+            p2: 'Lisa has seen the work once. The panel is damaged later, and the trip brings home the scene in which she saw it.'
+          none: 'There is still no room in the rack. By the door, a visitor learns only that the painter has not handed it over.'
+          not_admitted: 'The apprentice asks you to make room for the people bringing in the rack. From outside the door you cannot see the front of the panel.'
+          desync: 'The old rack squeezes and damages the wet panel. The historical portrait is no longer preserved and the office recalls the traveller.'
+          excerpts:
+            p1: 'Later, the person putting the work away touches the label for this panel before he reaches for the rack.'
+            p2: 'After Lisa leaves, Leonardo turns the panel back into his light.'
         relic: A mirror-written notebook page
         relic_desc: A page of backwards script that needs a mirror to read.
         points:
@@ -53,6 +72,24 @@ events:
         place: 佛罗伦萨
         figure: 列奥纳多·达·芬奇
         story: '卢浮宫把列奥纳多开始画《蒙娜丽莎》的时间定在约 1503 年，并记载他后来仍在继续修改。'
+        story_prose:
+          opening:
+            - '佛罗伦萨的工房里，平日靠窗的板子已经挪开，那里要摆进新工作用的架子。经办人来问丽莎的画像放在哪。学徒抱着空架，叫他别去扶还没有干的板。'
+            - '1503 年 10 月，韦斯普奇的批注提到达·芬奇画丽莎。画像后来留在画家手中。这里可以让画板有一处安全又能干活的地儿，还可以约一天，让丽莎来看画家愿意给她看的阶段稿。'
+            - '能察看架子、板材和日照的员工先替工房安排位置。善于召集人的员工再联系丽莎与经办人，把看稿时间定下来。'
+          points:
+            p1: '学徒想在旧架里再挤一个空。你请他先把一块空板向里推，见到板角贴住了旁边一幅画。你跟他把窗下最窄的架格单留出来，再请画家写一个装卸时认得出的记号。晚些时候有人收画，伸手先摸到了留给这块板的签条。'
+            p2: '画家叫学徒把另一张干透的练习拿来挡住手边的颜料。他自己把愿给丽莎看的画像转向门里。丽莎站在他选的位置，问下回是否还要照那样坐。他对照椅背想了片刻，请学徒把凳子的位置记下。丽莎走后，画家把画板转回自己的光里。'
+          outcomes:
+            all: '工房里还有一个能继续画的位子。丽莎知道这块板已经画到了哪里，画家仍自己保管它。'
+            p1: '画像的暂存格有了签条和光。经办人能问到进度，室内还没有约好看稿的日子。'
+            p2: '丽莎已看过一回。画板后来受损，这段相约看画的记录随员工带回。'
+          none: '架子还没腾出。来询问的人在门边等过一阵，只问到画还没交。'
+          not_admitted: '学徒请来客让开扛架的人。画板在里面，门边看不到正面。'
+          desync: '未干的画板送进旧架时被邻板挤坏。原有画像无法保住，事务所召回员工。'
+          excerpts:
+            p1: '晚些时候有人收画，伸手先摸到了留给这块板的签条。'
+            p2: '丽莎走后，画家把画板转回自己的光里。'
         relic: 一页镜像书写的笔记
         relic_desc: 一页反着写的字，要对着镜子才读得出。
         points:
@@ -115,6 +152,43 @@ wiki:
       text:
         en: 'Louvre, Portrait of Lisa Gherardini (Mona Lisa), INV 779, with institutional dating and provenance. https://collections.louvre.fr/ark:/53355/cl010062370'
         zh: 'Louvre, Portrait of Lisa Gherardini (Mona Lisa), INV 779, with institutional dating and provenance. https://collections.louvre.fr/ark:/53355/cl010062370'
+    leonardo_florence_story_echo_source_full:
+      order: 2487
+      status: checked
+      text:
+        en: 'Heidelberg University Library, Vespucci note, facsimile and transcription https://archiv.ub.uni-heidelberg.de/artdok/410/1/Probst_MonaLisa_2008.pdf'
+        zh: '海德堡大学图书馆，韦斯普奇批注影印与转录 https://archiv.ub.uni-heidelberg.de/artdok/410/1/Probst_MonaLisa_2008.pdf'
+    leonardo_florence_story_echo_source_none:
+      order: 2488
+      status: checked
+      text:
+        en: 'Heidelberg University Library, Vespucci note, facsimile and transcription https://archiv.ub.uni-heidelberg.de/artdok/410/1/Probst_MonaLisa_2008.pdf'
+        zh: '海德堡大学图书馆，韦斯普奇批注影印与转录 https://archiv.ub.uni-heidelberg.de/artdok/410/1/Probst_MonaLisa_2008.pdf'
+quotes:
+  leonardo_florence_story_echo_full:
+    order: 1
+    tier: full
+    date: '1503-10'
+    checked: official_record
+    sources: [leonardo_florence_story_echo_source_full]
+    original: la
+    contextual: true
+    text:
+      en: {"who":"Agostino Vespucci","quote":"the head of Lisa del Giocondo","occasion":"A dated marginal note names the sitter while comparing Leonardo with Apelles."}
+      zh: {"who":"阿戈斯蒂诺·韦斯普奇","quote":"丽莎·德尔·焦孔多的头部。","occasion":"纪年批注将达·芬奇与阿佩莱斯相比时写下这幅肖像的人名。"}
+      la: {"who":"Agostino Vespucci","quote":"caput Lise del Giocondo","occasion":"A dated marginal note names the sitter while comparing Leonardo with Apelles."}
+  leonardo_florence_story_echo_none:
+    order: 2
+    tier: none
+    date: '1503-10'
+    checked: official_record
+    sources: [leonardo_florence_story_echo_source_none]
+    original: la
+    contextual: true
+    text:
+      en: {"who":"Agostino Vespucci","quote":"We shall see what he does with the hall of the Great Council.","occasion":"The marginal note turns from the portrait to the civic commission."}
+      zh: {"who":"阿戈斯蒂诺·韦斯普奇","quote":"我们且看他会怎样画大议会厅。","occasion":"同一页边批注从肖像提到另一项市政委托。"}
+      la: {"who":"Agostino Vespucci","quote":"Videbimus, quid faciet de aula magni consilii","occasion":"The marginal note turns from the portrait to the civic commission."}
 self_check:
   quote_line: '你请学徒指一指，脸从哪儿结束，背景从哪儿开始。'
   fact: lisa_portrait

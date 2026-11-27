@@ -2,7 +2,8 @@ order: 64
 events:
   enheduanna_ur:
     order: 49
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -2250
     stay: 2
     lon: 46.1
@@ -26,8 +27,22 @@ events:
         place: Ur, Mesopotamia
         figure: Enheduanna
         story: 'An inscribed disc from Ur names Enheduanna as a daughter of Sargon. In The Exaltation of Inana, the speaker calls herself Enheduanna and describes being driven from the temple. She compares her flight to that of a swallow and speaks of thorns and exhaustion. The date and route of the journey are uncertain.'
-        relic: A carved calcite disc
-        relic_desc: A carved disc showing a priestess at an offering.
+        story_prose:
+          opening:
+            - 'Outside Ur the stones are hard to see by dusk. Enheduanna stops by a thorn bush and lifts an empty water jar. Someone walking with her remembers a doorway farther along where they might sit.'
+            - 'The disc inscription preserves Enheduanna’s name. A poem transmitted in later copies and traditionally attributed to her describes displacement and thorns in another land. This trip takes its setting from the poem and gives her a place to stop on the road.'
+            - 'Send someone used to a long walk with water to share. At the first occupied house, ask whether she wants to wait there till morning.'
+          points:
+            p1: 'Her companion wants to save the water till the next yard. You ask Enheduanna if she wants to keep walking. She points with her empty jar to the wall nearest you. You give her water and ask the person at the door if she can sit there till dawn. For the first time in half a day, she sets a full jar down on level ground.'
+          outcomes:
+            all: 'She spends the night inside the low wall. The later poem still speaks of thorns. The trip has a separate record of the place she found before dark.'
+            p1: 'The household makes room for Enheduanna by the door. Before leaving, she asks her companion to fill his jar as well.'
+          none: 'No answer comes from beyond the wall before dark. The party has to keep walking.'
+          not_admitted: 'The party recognises its own company and does not call you along. You have only time to set the water jar by the door.'
+          excerpts:
+            p1: 'For the first time in half a day, she sets a full jar down on level ground.'
+        relic: 'A clay water cup'
+        relic_desc: 'A small cup belonging to the fictional household by the road.'
         points:
           p1: 'After Enheduanna is driven from the temple, carry water and help her reach a place to rest'
         points_fail:
@@ -39,16 +54,30 @@ events:
             who: enheduanna_ur
             bio: 'In this branch Enheduanna has company and finds somewhere to rest after leaving the temple.'
         vignettes:
-          inscription: 'You remember that the museum will catalogue both faces. The stoneworker has set the disc down with the inscription against the bench. You draw the relief while he works, then get a second drawing when he turns it over. You can take home two views. They do not say who first composed the hymn.'
-          support: 'The stoneworker asks you to steady a pad beside the disc. With both hands on it you miss the first glimpse of the inscription. He leaves enough time for you to mark on your sketch which side you missed. The name itself will have to wait for another visit.'
-          edge: 'The two sides fill the stoneworker’s account of the disc. On your sketch you also mark how thick the edge is, so you can tell which two drawings belong to the same object. You leave with one sketch and no copy of the hymn.'
+          inscription: '{staff} checks what the household charges to refill a jar. The person at the door says they can drink first and discuss the rest after daylight.'
+          support: '{staff} asks the companion to set down the jar before helping someone to the low wall. This time the jar stays upright.'
+          edge: '{staff} checks whether the place beside the doorway is free. Someone inside moves a basket away from the bench.'
       zh:
         name: '穿过荆棘的山路'
         place: 美索不达米亚乌尔
         figure: 恩赫杜安娜
         story: '乌尔出土的一块圆盘刻有恩赫杜安娜的名字，也记载她是萨尔贡的女儿。《伊南娜颂》以恩赫杜安娜的口吻写到被逐出神庙，像燕子一样离开窗边，走过荆棘时力气已经耗尽。何时走的、走了哪条路，难以确定。'
-        relic: 一块方解石圆盘
-        relic_desc: 圆盘上刻着一位女祭司在献祭。
+        story_prose:
+          opening:
+            - '乌尔外的路一到傍晚，脚下石头就看不清了。恩赫杜安娜停在带刺的灌木边，把空水罐提起来看了看。同行的人还记得前面有一处能坐下的屋檐。'
+            - '圆盘铭文留下了恩赫杜安娜的名字。后世抄存、传统上归于她的诗歌讲到被逐与异地的荆棘。这趟借诗中的情境设定离开乌尔后的行路，能做的是让她停一会儿。'
+            - '派有走远路经验的人带上水壶。遇到第一个有人居住的地方，先问她愿不愿意在那儿等天亮。'
+          points:
+            p1: '同行人想把水留到下一处院子。你问恩赫杜安娜现在想往前还是停，她用空罐指了一下近处的矮墙。你把水递给她，同开门的人商量借坐到天明。走了半日，她第一次把装水的罐稳稳放到地上。'
+          outcomes:
+            all: '她在矮墙里歇过一夜。日后传下来的诗还写着荆棘，这趟记录多了在天黑前停下的一小段。'
+            p1: '那户人把门边的位置让给恩赫杜安娜。出门前，她让同行人也把水罐添满。'
+          none: '矮墙后的人没来得及答话，天已暗下去。路上的人只有继续往前走。'
+          not_admitted: '同行人认得自己的队伍，没有叫你跟上。你只来得及把手里的水罐递到门边。'
+          excerpts:
+            p1: '走了半日，她第一次把装水的罐稳稳放到地上。'
+        relic: '一只陶水杯'
+        relic_desc: '路旁那户虚构人家的小杯。'
         points:
           p1: '恩赫杜安娜离开神庙后，带上水，陪她走到可以歇脚的地方'
         points_fail:
@@ -60,9 +89,9 @@ events:
             who: enheduanna_ur
             bio: '这条分支里，恩赫杜安娜离开神庙后有人同行，也有一处地方歇脚。'
         vignettes:
-          inscription: '你记得后世博物馆会登记正反两面。石工把刻字一面朝下搁在木台上。你趁他干活先画下浮雕，翻面后又补了一张。两幅图都能带回去，最先写那首诗的人是谁，图上答不出来。'
-          support: '石工请你扶稳圆盘旁的垫子。你腾不出手来，错过了刻字面刚翻起的时候。收工前，他留了点时间让你在草图上圈出漏看的那一面。上面的人名只能下趟再来核对。'
-          edge: '石工记了圆盘的正反面。你又在草图上添了边缘的厚薄，好认出哪两幅画的是同一件东西。收队时手里有一张图，那首诗的抄本却没带回来。'
+          inscription: '{staff}问添一罐水要给多少。门边的人请他们先喝，其他事等天亮再说。'
+          support: '{staff}请同行人先放下水罐，再扶人到矮墙边。水罐这次稳住了。'
+          edge: '{staff}问门旁能不能坐，屋里有人把长凳上的篮子拿了下去。'
 text:
   en:
     name: Enheduanna
@@ -127,6 +156,41 @@ wiki:
       text:
         en: 'English Wikipedia, Enheduanna, on the rebellion at Ur and the authorship debate (citing Zgoll 1997, Glassner 2009) https://en.wikipedia.org/wiki/Enheduanna'
         zh: '英文维基百科，恩赫杜安娜条，乌尔叛乱与作者归属之争（引 Zgoll 1997、Glassner 2009） https://en.wikipedia.org/wiki/Enheduanna'
+    enheduanna_ur_story_echo_source_full:
+      order: 2511
+      status: checked
+      text:
+        en: 'The Exaltation of Inana, cuneiform text and annotated edition, line 67 https://enheduana.org/exaltation/'
+        zh: '《伊南娜颂》第 67 行，楔形文字与注释版 https://enheduana.org/exaltation/'
+    enheduanna_ur_story_echo_source_none:
+      order: 2512
+      status: checked
+      text:
+        en: 'The Exaltation of Inana, cuneiform text and annotated edition, line 106 https://enheduana.org/exaltation/'
+        zh: '《伊南娜颂》第 106 行，楔形文字与注释版 https://enheduana.org/exaltation/'
+quotes:
+  enheduanna_ur_story_echo_full:
+    order: 1
+    tier: full
+    date: '-2250'
+    checked: official_record
+    sources: [enheduanna_ur_story_echo_source_full]
+    original: sux
+    text:
+      en: {"who":"Enheduanna","quote":"I am Enheduanna.","occasion":"Line 67 in the poem traditionally attributed to Enheduanna. The date is approximate and labels the story period."}
+      zh: {"who":"恩赫杜安娜","quote":"我是恩赫杜安娜。","occasion":"传统归于恩赫杜安娜的诗歌第 67 行。日期为故事取用的约略时代。"}
+      sux: {"who":"Enheduanna","quote":"𒂗 𒃶 𒌌 𒀭 𒈾 𒈨 𒂗","occasion":"Line 67 in the poem traditionally attributed to Enheduanna. The date is approximate and labels the story period."}
+  enheduanna_ur_story_echo_none:
+    order: 2
+    tier: none
+    date: '-2250'
+    checked: official_record
+    sources: [enheduanna_ur_story_echo_source_none]
+    original: sux
+    text:
+      en: {"who":"Enheduanna","quote":"to the thorns of a foreign land","occasion":"A phrase from line 106. Translations differ about who sends the speaker there."}
+      zh: {"who":"恩赫杜安娜","quote":"到异乡的荆棘中。","occasion":"第 106 行的一段。各译本对谁让叙述者走到那里有不同理解。"}
+      sux: {"who":"Enheduanna","quote":"𒄑 𒄉 𒆳 𒊏 𒆤","occasion":"A phrase from line 106. Translations differ about who sends the speaker there."}
 self_check:
   fact: disc
   quote_line: '两幅图都能带回去，最先写那首诗的人是谁，图上答不出来。'

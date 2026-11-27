@@ -2,7 +2,8 @@ order: 87
 events:
   heo_nanseolheon_hanyang:
     order: 197
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1589
     lon: 126.98
     lat: 37.57
@@ -26,6 +27,24 @@ events:
         place: "Hanyang"
         figure: "Heo Nanseolheon"
         story: 'Heo Gyun compiled surviving work by his sister Heo Nanseolheon after her death. A Joseon woodblock edition of her collected works survives from 1608.'
+        story_prose:
+          opening:
+            - 'The copyist weighs a fresh paper sleeve down with a stone and hands you two sheets with the same opening. One was for practice and someone has asked to borrow the other. He remembers taking both from beside the window.'
+            - 'In history Heo Nanseolheon’s brother Heo Gyun gathered the surviving work after her death. The 1597 selection and surviving 1608 edition differ in places. Here you can keep the copies where he will find them and ask the poet which poems she wishes to share.'
+            - 'Send someone who can compare hands and headings to sort the drafts. A traveller who can explain who wants to read them can then put the question to the poet herself.'
+          points:
+            p1: 'The copyist points to the stronger ink. You lay both versions side by side and show him a correction at the end of the paler copy. He makes a note on the sleeve so the two can be found again. Two sheets go under one heading, and the fold stops well short of the writing.'
+            p2: 'Heo moves the copyist’s first choice back to her side of the table. She picks another to fill its place. When you ask whose name belongs on the packet, she takes the brush and signs the first sheet herself, then hands back the pages in order. She asks the copyist to copy the signature too.'
+          outcomes:
+            all: 'When Heo Gyun assembles the collection, he keeps the small packet in the order his sister left it. The name copied at her request stays on its first sheet.'
+            p1: 'Both versions can be found. Heo Gyun can compare them when he compiles the collection. He has no record of his sister’s own choice.'
+            p2: 'She has signed a few poems herself. The other papers have gone astray; what comes home is a record of her choice on this visit.'
+          none: 'The loose copies remain mixed on the table. The later collection still depends on what the family can find.'
+          not_admitted: 'The copyist asks for a heading from the other side of the door. When no one can name one, he keeps the sleeve on the table.'
+          desync: 'On your return the copyist recognises only the empty sleeve. The papers required for the later collection have gone astray, and the office recalls the traveller.'
+          excerpts:
+            p1: 'Two sheets go under one heading, and the fold stops well short of the writing.'
+            p2: 'She asks the copyist to copy the signature too.'
         relic: "A sheet of poems"
         relic_desc: "A sheet of fine paper with brushed poems on flowers and distant places."
         points:
@@ -51,6 +70,24 @@ events:
         place: "汉阳"
         figure: "许兰雪轩"
         story: '许兰雪轩去世后，弟弟许筠整理了她留存的作品，现存刊本中有 1608 年的朝鲜木刻本。'
+        story_prose:
+          opening:
+            - '抄写人把新裁的纸套压在镇纸底下，递来两张首句一样的散页。一张是练笔，一张有人来借读。他只记得两张纸都从窗边拿来。'
+            - '史实里，许兰雪轩去世后，弟弟许筠整理留存的诗文。1597 年选本与现存的 1608 年刊本有异文。这一趟先保住能找到的底稿，还可以请她亲自挑出愿意传阅的几篇。'
+            - '能对读笔迹和题头的员工先理出同篇异稿。能把借阅的来意讲明白的人，再去问她哪几首可以送到门外。'
+          points:
+            p1: '抄写人指着墨色最深的那张说要留它。你让他把两张诗页并在一起，看到浅墨页的尾句另有一笔修改。他照你指出的位置在纸套上写了存放处，才把两稿都收进去。两张纸从此用一个题头，套口留了足够宽的边。'
+            p2: '许兰雪轩把抄写人挑的第一首移到自己手边，另选一首填进空处。你问这一叠该写借谁的名字，她把笔接过来，在最上面的纸边写下自己的名字，再把纸叠照原来的次序递还。她让抄写人把署名也誊一遍。'
+          outcomes:
+            all: '后来许筠编集时，那一小叠仍按姐姐递出时的次序放在一起。抄写人誊下的名字留在头一页。'
+            p1: '同篇异稿都找得到。许筠编集时可以自己对读，诗人在世时会怎样取舍，仍无从得知。'
+            p2: '她为几首诗亲自写下署名。存稿的来路出了岔子，署名留下的选择只能随本趟短记带回。'
+          none: '抄书桌上仍只有混在一起的纸。后来家人只能从余下的稿子挑选；本趟记录没有带回来一份作者选目。'
+          not_admitted: '抄写人隔门问来客要借哪一首。没人能说出题头，他把纸套留在桌上。'
+          desync: '再去问存稿放在哪里时，抄写人只认得已经空了的纸套。编集所需的底稿失去下落，事务所召回员工。'
+          excerpts:
+            p1: '两张纸从此用一个题头，套口留了足够宽的边。'
+            p2: '她让抄写人把署名也誊一遍。'
         relic: "一页诗稿"
         relic_desc: "一页细纸，用毛笔写着写花和远方的诗。"
         points:
@@ -128,6 +165,41 @@ wiki:
       text:
         en: 'Academy of Korean Studies, collection catalogue for Nanseolheonjip https://encykorea.aks.ac.kr/Article/E0011704'
         zh: '韩国学中央研究院，《兰雪轩集》馆藏条目 https://encykorea.aks.ac.kr/Article/E0011704'
+    heo_nanseolheon_hanyang_story_echo_source_full:
+      order: 2457
+      status: checked
+      text:
+        en: 'Collected works of Heo Nanseolheon, digitised edition https://gasa.go.kr/GDATA/pdf/A00000535.pdf'
+        zh: '《许夫人兰雪轩集》影印 https://gasa.go.kr/GDATA/pdf/A00000535.pdf'
+    heo_nanseolheon_hanyang_story_echo_source_none:
+      order: 2458
+      status: checked
+      text:
+        en: 'Collected works of Heo Nanseolheon, digitised edition https://gasa.go.kr/GDATA/pdf/A00000535.pdf'
+        zh: '《许夫人兰雪轩集》影印 https://gasa.go.kr/GDATA/pdf/A00000535.pdf'
+quotes:
+  heo_nanseolheon_hanyang_story_echo_full:
+    order: 1
+    tier: full
+    date: '1608'
+    checked: official_record
+    sources: [heo_nanseolheon_hanyang_story_echo_source_full]
+    original: zh-Hant
+    text:
+      en: {"who":"Heo Nanseolheon","quote":"I dreamed I entered the lotus city, riding high on a red dragon.","occasion":"From ‘Poem on Seeking the Immortals,’ preserved in her posthumous collection. The date labels an edition, and the poem is undated."}
+      zh: {"who":"许兰雪轩","quote":"梦中进入芙蓉城，高高骑着一条赤龙。","occasion":"《望仙谣》诗句，见身后所辑诗集。所标为刊本年份，作诗年份未详。"}
+      zh-Hant: {"who":"许兰雪轩","quote":"夢入芙蓉城，翹翹乘赤龍。","occasion":"《望仙谣》诗句，见身后所辑诗集。所标为刊本年份，作诗年份未详。"}
+  heo_nanseolheon_hanyang_story_echo_none:
+    order: 2
+    tier: none
+    date: '1608'
+    checked: official_record
+    sources: [heo_nanseolheon_hanyang_story_echo_source_none]
+    original: zh-Hant
+    text:
+      en: {"who":"Heo Nanseolheon","quote":"Last year I lost my beloved daughter. This year I lost my beloved son.","occasion":"Opening of ‘Mourning My Children,’ preserved in the posthumous collection. The date labels an edition."}
+      zh: {"who":"许兰雪轩","quote":"去年失去爱女，今年失去爱子。","occasion":"《哭子》开头，见身后所辑诗集。所标为刊本年份。"}
+      zh-Hant: {"who":"许兰雪轩","quote":"去年喪愛女，今年喪愛子。","occasion":"《哭子》开头，见身后所辑诗集。所标为刊本年份。"}
 self_check:
   fact: edition
   quote_line: '送出门的纸多了一张带署名的。'

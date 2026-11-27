@@ -2,55 +2,84 @@ order: 122
 events:
   li_bai_changan:
     order: 72
-    build_step: 1
-    year: 750
-    lon: 108.94
-    lat: 34.27
+    build_step: 4
+    ready: true
+    year: 759
+    stay: 2
+    lon: 109.88
+    lat: 31.08
     region: asia
     field: literature
     tier: 2
     channels: {T: 1, S: 1}
-    refs: [li_bai_changan_primary]
+    refs: [li_bai_changan_old_tang, li_bai_changan_afterword, li_bai_changan_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, req: {"trait":["sensitive","glib","charismatic"]}}
-        - {id: p2, kind: persuade, req: {"stat": {"finesse": 8}}}
-        - {id: p3, kind: care, req: {"luck": 0.4}}
-      vignettes:
-        - {id: verse, traits: [artistic, quiet]}
-        - {id: palace, traits: [curious, bold]}
-        - {id: copy}
+        - {"id":"p1","kind":"trust","day":8,"req":{"any":[{"job":["sailor","ferryman","ferry_pilot","courier"],"stat":{"will":5}},{"trait":["streetwise","wanderer","methodical"],"stat":{"wit":6,"will":6}}]}}
     text:
       en:
-        name: Poems of wine, moon and travel
-        place: Chang'an, China
-        figure: Li Bai
-        story: 'Three pieces traditionally attributed to Li Bai are transmitted as the Qingping Tune. An accompanying account tells of a court performance, but is not a contemporary record of a particular evening.'
-        relic: A small wine cup
-        relic_desc: A cup with a faint line of moon painted inside.
+        name: 'News by the river'
+        place: 'Wushan on the Yangtze'
+        figure: 'Li Bai'
+        story: 'Li Bai was sentenced to exile in Yelang and was pardoned on the way. One account in his collected works associates the pardon with Wushan. The exact day on which he heard is uncertain.'
+        story_prose:
+          opening:
+            - 'A landing near Wushan, around 759. Li Bai is travelling upriver towards exile in Yelang. An account of his journey will later associate this stretch of river with his pardon.'
+            - 'In history, the pardon came before he reached Yelang. The day on which he heard has not been established. In this branch a traveller has brought a written copy of the news while the next boat upstream is still loading.'
+            - 'This trip needs someone who knows the boats and their stops. Someone has to find out who saw the original and where it was copied before putting the news into Li Bai’s hands.'
+          points:
+            p1: '{staff} asks the messenger who gave him the copy, then finds a passenger who knows that person’s hand. Only when the two accounts agree does {staff} hurry down to the landing with the page. Li Bai unfolds it and reads the last line twice. As the crew calls for passengers, he rolls up the bedding already in the upstream boat and hands it to a boatman going the other way.'
+          outcomes:
+            all: 'As the downstream boat turns past the landing, Li Bai folds the copy again. His sleeve is still wet. He covers the fold with the dry side.'
+            p1: 'As the downstream boat turns past the landing, Li Bai folds the copy again. His sleeve is still wet. He covers the fold with the dry side.'
+          none: 'The upstream boat is well away by the time someone brings the news to its berth. A stray length of straw rope lies beside the mooring post.'
+          not_admitted: '{staff} never gets as far as the boat. The awnings are close enough together to hear people packing inside them.'
+          excerpts:
+            p1: 'Li Bai unfolds it and reads the last line twice. As the crew calls for passengers, he rolls up the bedding already in the upstream boat and hands it to a boatman going the other way.'
+        relic: 'A dry message wrapper'
+        relic_desc: 'An imagined wrapper a boat passenger could keep dry on the river.'
         points:
-          p1: 'Listen for a change between two lines'
-          p2: 'Ask how a remembered performance was passed down'
-          p3: 'Leave the written verse legible for the next singer'
-        vignettes:
-          verse: 'The singer stops at the line that fits the tune poorly. You ask them to speak it before singing it again. Their second breath falls where the thought turns.'
-          palace: 'The singer hears you ask who was in the palace that night. They set down the copied poem and ask which account you read. You leave a note that the two were handed down separately.'
-          copy: 'You keep the page open while the singer marks the place that always makes them pause. You can carry the written lines away and still remember where to listen for that pause.'
+          p1: 'Get confirmed news of the pardon to Li Bai before his boat continues upstream'
+        points_fail:
+          p1: 'The employee did not manage to bring the news before the boat set off.'
+        shift:
+          p1:
+            was: 'Around 759: Li Bai was pardoned on the way to Yelang. An afterword to his collected works places him near Wushan at the time.'
+            now: '{staff} brings the news to the landing before the next departure. Li Bai turns back with that morning’s boat downstream.'
+            who: li_bai_changan
+            bio: 'Li Bai heard of his pardon before his next boat departed and was able to turn back sooner.'
       zh:
-        name: 关于酒、月和远方的诗
-        place: 中国长安
-        figure: 李白
-        story: '《清平调》三首传为李白所作。附录讲了宫中演唱的故事，属于后来的记述。'
-        relic: 一只小酒杯
-        relic_desc: 杯底画着一弯淡淡的月。
+        name: '江边来了一封信'
+        place: '巫山江边'
+        figure: '李白'
+        story: '李白被流放夜郎，途中遇赦。《李白集》后序把得释的行程写到巫山。消息究竟哪天传到他手里并不清楚。'
+        story_prose:
+          opening:
+            - '巫山一带的江岸，约 759 年。李白正沿江赴夜郎，后来记他行程的人把遇赦一事写到了这里。'
+            - '史实里，他途中遇赦而归，消息确切哪天传到他手里已不可考。在这条分支里，渡口有人带来抄下的消息，上游的船正在装货。'
+            - '这趟需要认得沿江船路的人。还得能问清消息是哪个渡口传来的、谁看过原件，才好把它递到李白手里。'
+          points:
+            p1: '{staff}先问带信人从谁手里拿来的抄件，再去找认得那人笔迹的船客。两处话对上，这才拿着纸赶下渡口。李白展开纸，把最后一行又看了一遍。船上人在催，他把原先放在上行船里的铺盖卷起来，递给了下水船的伙计。'
+          outcomes:
+            all: '下水船绕过渡口时，李白把抄件重新叠好。袖口还是湿的，他拿干的一面掩住折痕。'
+            p1: '下水船绕过渡口时，李白把抄件重新叠好。袖口还是湿的，他拿干的一面掩住折痕。'
+          none: '上行船已经走远，有人把消息带到空着的船位。缆桩旁只剩别人没有带走的一根草绳。'
+          not_admitted: '{staff}没能到那条船边。岸上各家的船篷挨得很近，能听见有人在里头收行李。'
+          excerpts:
+            p1: '李白展开纸，把最后一行又看了一遍。船上人在催，他把原先放在上行船里的铺盖卷起来，递给了下水船的伙计。'
+        relic: '一张护信纸'
+        relic_desc: '分支里的护信纸，渡江时可以把信包好。'
         points:
-          p1: '听出两句之间转折在哪里'
-          p2: '问清一个演唱故事是怎样传下来的'
-          p3: '把诗抄得清楚，留给下一个歌者'
-        vignettes:
-          verse: '唱到不贴曲的一行，歌者停住。你请他先念，再唱一次。第二遍换气，恰好落在诗意转过去的地方。'
-          palace: '歌者听你问那晚宫里有哪些人，便放下抄诗，问你读的是哪段记载。你在旁写下，诗和讲那一夜的故事各有来处。'
-          copy: '歌者标出每次唱到都会停一下的地方，你一直替他翻开那页。带走诗句时，你还记得要在哪一处听那一停。'
+          p1: '赶在船再往上游走之前，把核实过的赦讯送到李白手里'
+        points_fail:
+          p1: '船开以前，员工没能把消息送到。'
+        shift:
+          p1:
+            was: '约 759 年，李白流放夜郎途中遇赦。《李白集》后序把这段行程写到巫山。'
+            now: '{staff}赶在下一趟船开之前到达渡口。李白听完消息，搭当日下行的船往回走。'
+            who: li_bai_changan
+            bio: '李白赶在下一趟船开以前收到赦讯，提前踏上归途。'
 text:
   en:
     name: Li Bai
@@ -58,21 +87,29 @@ text:
   zh:
     name: 李白
     text: 唐代诗人，701 年生，762 年去世。他写酒、友情和月亮的抒情诗，曾在长安宫廷任职，后来离开。他的许多诗至今仍被传诵。
-hook: {en: 'Can a poem travel without its tune?', zh: '诗传下来了，曲子呢'}
+hook: {en: 'News by the river', zh: '江边来了一封信'}
 facts:
+  pardon:
+    date: '759'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [li_bai_changan_old_tang, li_bai_changan_afterword]
+    text:
+      en: 'Around 759: Li Bai was pardoned on the way to Yelang. An afterword to his collected works places him near Wushan at the time.'
+      zh: '约 759 年，李白流放夜郎途中遇赦。《李白集》后序把这段行程写到巫山。'
+    line:
+      en: 'Around 759: Li Bai was pardoned on the way to Yelang. An afterword to his collected works places him near Wushan at the time.'
+      zh: '约 759 年，李白流放夜郎途中遇赦。《李白集》后序把这段行程写到巫山。'
   qingping_tradition:
     date: '750'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [li_bai_changan_primary]
     text:
       en: 'Three pieces traditionally attributed to Li Bai are transmitted as the Qingping Tune. An accompanying account tells of a court performance, but is not a contemporary record of a particular evening.'
       zh: '《清平调》三首传为李白所作。附录讲了宫中演唱的故事，属于后来的记述。'
-bystanders:
-  li_bai_changan_reader:
-    invented: true
-    text: {en: 'An invented singer comparing a remembered tune with the written verse.', zh: '一位虚构的歌者，正把记得的曲子和写下来的诗对着看。'}
 wiki:
   refs:
     li_bai_changan_primary:
@@ -81,11 +118,60 @@ wiki:
       text:
         en: 'Li Bai, Qingping Tune poems, and the accompanying later account of the court performance, Wikisource. https://zh.wikisource.org/wiki/清平調'
         zh: 'Li Bai, Qingping Tune poems, and the accompanying later account of the court performance, Wikisource. https://zh.wikisource.org/wiki/清平調'
+    li_bai_changan_old_tang:
+      order: 2206
+      status: checked
+      text:
+        en: 'Old Book of Tang, biography of Li Bai https://www.shidianguji.com/zh/book/SK0723/chapter/1m1etge9srqqi'
+        zh: '《旧唐书》卷一九〇下，李白传 https://www.shidianguji.com/zh/book/SK0723/chapter/1m1etge9srqqi'
+    li_bai_changan_afterword:
+      order: 2207
+      status: checked
+      text:
+        en: 'Afterword to the Collected Works of Li Bai, account of the pardon https://www.shidianguji.com/zh/book/SBCK132/chapter/1kmb4a748clju'
+        zh: '《李白集》后序，遇赦行程 https://www.shidianguji.com/zh/book/SBCK132/chapter/1kmb4a748clju'
+    li_bai_changan_echo_source_full:
+      order: 2304
+      status: checked
+      text:
+        en: 'Li Bai, Early Departure from White Emperor City https://zh.wikisource.org/zh-hant/早發白帝城'
+        zh: '李白《早发白帝城》 https://zh.wikisource.org/zh-hant/早發白帝城'
+    li_bai_changan_echo_source_none:
+      order: 2305
+      status: checked
+      text:
+        en: 'Li Bai, To Official Xin on Being Exiled to Yelang https://zh.wikisource.org/zh-hant/流夜郎贈辛判官'
+        zh: '李白《流夜郎赠辛判官》 https://zh.wikisource.org/zh-hant/流夜郎贈辛判官'
+quotes:
+  li_bai_changan_echo_full:
+    order: 1
+    tier: full
+    date: '759'
+    checked: official_record
+    sources: [li_bai_changan_echo_source_full]
+    original: zh-Hant
+    text:
+      en: {"who":"Li Bai","quote":"At dawn I leave White Emperor City amid bright clouds. A thousand li to Jiangling, and I am back in a day.","occasion":"Early Departure from White Emperor City. The poem’s dating is disputed."}
+      zh: {"who":"李白","quote":"清早辞别彩云间的白帝城，一天就回到千里之外的江陵。","occasion":"《早发白帝城》。诗的具体写作年代有不同说法。"}
+      zh-Hant: {"who":"李白","quote":"朝辭白帝彩雲間，千里江陵一日還。","occasion":"《早发白帝城》。诗的具体写作年代有不同说法。"}
+  li_bai_changan_echo_none:
+    order: 2
+    tier: none
+    date: '758'
+    checked: official_record
+    sources: [li_bai_changan_echo_source_none]
+    original: zh-Hant
+    text:
+      en: {"who":"Li Bai","quote":"I grieve to be sent so far away to Yelang. When will a pardon let me return?","occasion":"To Official Xin on Being Exiled to Yelang, a poem written around the time of the exile."}
+      zh: {"who":"李白","quote":"我愁将远远贬去夜郎，哪一天才会有赦令让我回去？","occasion":"《流夜郎赠辛判官》，约作于流放之际。"}
+      zh-Hant: {"who":"李白","quote":"我愁遠謫夜郎去，何日金雞放赦回。","occasion":"《流夜郎赠辛判官》，约作于流放之际。"}
 self_check:
-  quote_line: '唱到不贴曲的一行，歌者停住。'
-  fact: qingping_tradition
-  regret_choice: '略过「听出两句之间转折在哪里」，这处细节便留给下一位核对。'
-  bookend: '从「诗传下来了，曲子呢」开始，以员工留下的观察或更正收尾。'
-  share_line: '诗传下来了，曲子呢'
-  share_number: '750'
+  fact: pardon
+  quote_line: '约 759 年，李白流放夜郎途中遇赦。《李白集》后序把这段行程写到巫山。'
+  regret_choice: '船开以前，员工没能把消息送到。'
+  bookend: '李白被流放夜郎，途中遇赦。《李白集》后序把得释的行程写到巫山。消息究竟哪天传到他手里并不清楚。 {staff}赶在下一趟船开之前到达渡口。李白听完消息，搭当日下行的船往回走。'
+  share_number: '759'
+  lever: p1
+  missed: '船开以前，员工没能把消息送到。'
+  share_line: '江边来了一封信'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -2,56 +2,84 @@ order: 92
 events:
   hipparchus_rhodes:
     order: 182
-    build_step: 1
+    build_step: 4
+    ready: true
     year: -130
+    stay: 2
     lon: 28.23
     lat: 36.43
     region: europe
     field: science
     tier: 2
     channels: {V: 2, C: 1}
-    regret: true
-    refs: [hipparchus_rhodes_palimpsest, hipparchus_rhodes_debate]
+    refs: [hipparchus_rhodes_commentary, hipparchus_rhodes_manitius, hipparchus_rhodes_palimpsest, hipparchus_rhodes_debate]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["curious","quiet"]}}
-        - {id: p2, kind: hold, req: {"stat":{"wit":7}}}
-        - {id: p3, kind: hold, redeem: true, req: {"job":["archivist","student"]}}
-      vignettes:
-        - {id: edges, traits: [methodical, scholarly]}
-        - {id: copy, traits: [curious, quiet]}
-        - {id: outline}
+        - {"id":"p1","kind":"persuade","day":8,"req":{"any":[{"job":["university_lecturer","translator","archivist"],"stat":{"wit":7}},{"trait":["curious","methodical","scholarly"],"stat":{"wit":7,"will":5}}]}}
     text:
       en:
-        name: 'The four edges of a star group'
-        place: "Rhodes"
-        figure: "Hipparchus"
-        story: 'Multispectral images of the Codex Climaci Rescriptus have revealed erased Greek astronomical writing, including numerical limits for Corona Borealis. A 2022 study attributed the passage to Hipparchus’ catalogue; that attribution has been debated.'
-        relic: "A bronze armillary ring"
-        relic_desc: "A graduated ring used to measure the position of a star."
+        name: 'One night to check the poem'
+        place: 'Rhodes'
+        figure: 'Hipparchus'
+        story: 'Hipparchus’s surviving commentary identifies errors in a widely read poem about the sky. In this branch a reader is about to use the poem to tell others which stars rise together.'
+        story_prose:
+          opening:
+            - 'Rhodes, late in the second century BC. People use a poem to remember which stars rise together. In the commentary that survives, Hipparchus checks claims like these one by one.'
+            - 'In history, the commentary shows where familiar lines did not match what could be seen. In this branch a reader has already taught one of those lines and means to teach it the same way again.'
+            - 'Someone who can follow the book’s claims is useful. It will also take someone who can persuade a reader who has already taught the lesson to wait outside a little longer.'
+          points:
+            p1: '{staff} asks the reader to say the line he means to teach, then goes with him and Hipparchus where they can see low on the horizon. When the first star shows, the reader starts to say there they both are. He stops halfway. The other place is still dark. He keeps a finger pointing at it and lowers his hand only when the second star comes up.'
+          outcomes:
+            all: 'The next time he teaches, he closes the book first and asks the pupils to wait for the first rising. He leaves the second half of the familiar line until the other light appears.'
+            p1: 'The next time he teaches, he closes the book first and asks the pupils to wait for the first rising. He leaves the second half of the familiar line until the other light appears.'
+          none: 'The reader recites the old line as before. The door has already closed when the second star comes into view low outside.'
+          not_admitted: '{staff} never sees the reader. Through a closed door someone recites a line twice.'
+          excerpts:
+            p1: 'The other place is still dark. He keeps a finger pointing at it and lowers his hand only when the second star comes up.'
+        relic: 'Two marks at the horizon'
+        relic_desc: 'An imagined observing strip with places for two separate risings.'
         points:
-          p1: 'Find the marked extremity of a star group on the drawing'
-          p2: 'Keep the two axes distinct while comparing the marks'
-          p3: 'Copy the extent and the stars that establish it together'
-        vignettes:
-          edges: 'The observer has chosen the brightest mark as the edge of the group. You show him the dimmer point farther along the row. He moves one boundary tick and names the point in the margin. You take that revision home. The sheet does not tell you who will write the full catalogue.'
-          copy: 'You recall that later readers will have only a few limits left to compare. The observer has written a span but left out which way he measured it. You name the axis before he calls the number a second time. Your copy now has both. The other axis is still waiting when you go.'
-          outline: 'You copy the two ends of the marked span before the observer tidies the page. The helper can redraw the limits even if the sketch moves. You bring back two ticks and a direction. The next group is still waiting to be marked.'
+          p1: 'Persuade the reader to observe for one night with Hipparchus before teaching the disputed rising'
+        points_fail:
+          p1: 'The employee did not persuade the reader to check the poem against the sky that night.'
+        shift:
+          p1:
+            was: 'Late second century BC: Hipparchus’s commentary pointed out that some stars described together in the familiar poem did not rise together.'
+            now: '{staff} brings the reader back for a night of observation. The reader watches the two risings separately and changes the instruction they give their own pupils.'
+            who: hipparchus_rhodes
+            bio: 'A reader using the old poem tested one disputed rising and passed on a corrected account.'
       zh:
-        name: '星群的四处边界'
-        place: "罗得岛"
-        figure: "喜帕恰斯"
-        story: '《阶梯抄本》的多光谱影像显出被擦去的希腊天文文字，其中有北冕座范围的数值。2022 年有研究将这一段归于喜帕恰斯星表，但归属仍有讨论。'
-        relic: "一只青铜浑仪环"
-        relic_desc: "一只带刻度的环，用来量星的位置。"
+        name: '今夜亲眼再看一次'
+        place: '罗得岛'
+        figure: '喜帕恰斯'
+        story: '喜帕恰斯留下的评注指出，一首流传很广的观星诗里有失准之处。在这条分支里，一位读者准备照诗里写的星位教给别人。'
+        story_prose:
+          opening:
+            - '约公元前二世纪末，罗得岛。观星的人读诗，也靠它记哪几颗星会一道升起。喜帕恰斯后来留下的评注逐处核这类说法。'
+            - '史实里，评注指出熟读的诗句有些与观察不合。在这条分支里，一位读者已经把其中一句教给学生，准备照原话再讲一次。'
+            - '这趟用得上能明白书里说法的人。还得说得动一个已经讲过这堂课的人，再到外面多等一会儿。'
+          points:
+            p1: '{staff}请那位读者把准备教的一句读一遍，再陪他和喜帕恰斯走到能看清低处的地方。第一处星光露出时，读者抬手想说就是这两颗，话到一半停了。另一个位置还是黑的。他用指头空指着那里，等到第二颗出来才把手放下。'
+          outcomes:
+            all: '下次教学生，他先把书合上，请大家等第一颗升起来。念到那句熟诗时，他把后半句留到下一道光出现。'
+            p1: '下次教学生，他先把书合上，请大家等第一颗升起来。念到那句熟诗时，他把后半句留到下一道光出现。'
+          none: '那人照旧读完了那句诗。屋门已经合上，第二颗星才从外面低处露出。'
+          not_admitted: '{staff}没能见到那位读者，只听见有人隔门背诵一句，念了两遍。'
+          excerpts:
+            p1: '另一个位置还是黑的。他用指头空指着那里，等到第二颗出来才把手放下。'
+        relic: '地平线上的两道刻记'
+        relic_desc: '分支里的观测纸条，两道刻记分别记下两次升起。'
         points:
-          p1: '在练习图上找出所标的星群边界'
-          p2: '对照标记时，把两个方向分开'
-          p3: '把范围和用来界定它的星一同抄下'
-        vignettes:
-          edges: '观察帮工用最亮的那点当边界。你指给他看，同一方向还有个暗些的点伸得更远。他挪一格边界，在页边记下所取的那颗。你把订正带回去，整部星表究竟会由谁写定，这张图答不出。'
-          copy: '你想起后世能拿来对照的边界数只剩几处。帮工写了一个跨度，却漏写沿哪个方向量。等他重报数字前，你先补上是哪一轴。副本上这两项都齐了，你走时另一轴还没核。'
-          outline: '观察帮工收纸前，你把标出的跨度两端抄好。草图移了，他还能再标出范围。你带回来两个刻记和一个方向，下一组星还没开始标。'
+          p1: '说服那位读者和喜帕恰斯同看一夜，再决定怎么教那两处星位'
+        points_fail:
+          p1: '员工没能说服那位读者留下来对照一夜。'
+        shift:
+          p1:
+            was: '约公元前二世纪末，喜帕恰斯在评注中指出，常读的观星诗里有些并写的星并不同时升起。'
+            now: '{staff}请那位读者重新来观测一夜。读者分开看到两次升起，改了原本要教给学生的说法。'
+            who: hipparchus_rhodes
+            bio: '一位用旧诗教观星的读者亲自复核了有争议的星位，把修正后的观察教给学生。'
 text:
   en:
     name: Hipparchus
@@ -59,13 +87,25 @@ text:
   zh:
     name: 喜帕恰斯
     text: 希腊天文学家，约公元前 190 年生，约公元前 120 年去世，在罗得岛观测。他编制星表，发现岁差，并为天文学发展了三角学。
-hook: {en: 'Which stars set the edges of the group?', zh: '这组星的边界由谁来定？'}
+hook: {en: 'One night to check the poem', zh: '今夜亲眼再看一次'}
 facts:
+  commentary:
+    date: '-130'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [hipparchus_rhodes_commentary, hipparchus_rhodes_manitius]
+    text:
+      en: 'Late second century BC: Hipparchus’s commentary pointed out that some stars described together in the familiar poem did not rise together.'
+      zh: '约公元前二世纪末，喜帕恰斯在评注中指出，常读的观星诗里有些并写的星并不同时升起。'
+    line:
+      en: 'Late second century BC: Hipparchus’s commentary pointed out that some stars described together in the familiar poem did not rise together.'
+      zh: '约公元前二世纪末，喜帕恰斯在评注中指出，常读的观星诗里有些并写的星并不同时升起。'
   palimpsest:
     date: '-130'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [hipparchus_rhodes_palimpsest]
     text:
       en: 'The study transcribes a passage on the boundaries of Corona Borealis from the erased writing and argues for attribution to Hipparchus.'
@@ -74,15 +114,11 @@ facts:
     date: '-130'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [hipparchus_rhodes_debate]
     text:
       en: 'A later astronomical analysis questions the proposed attribution.'
       zh: '后续天文数据分析质疑该归属。'
-bystanders:
-  observer:
-    invented: true
-    text: {en: 'A fictional assistant checking the boundary of a practice star group.', zh: '虚构的观察帮工，需要核对练习图上星群的一个边界。'}
 wiki:
   refs:
     hipparchus_rhodes_palimpsest:
@@ -97,16 +133,60 @@ wiki:
       text:
         en: 'An astronomical analysis of the data in the pseudo-Hipparchus palimpsest in the Codex Climaci Rescriptus, Journal for the History of Astronomy, 2024 https://doi.org/10.1177/00218286241256345'
         zh: '《阶梯抄本》重写底本文字的天文数据分析，《天文学史杂志》，2024 https://doi.org/10.1177/00218286241256345'
+    hipparchus_rhodes_commentary:
+      order: 2230
+      status: checked
+      text:
+        en: 'University of Michigan collections, Hipparchus on Aratus’s Phaenomena https://www.early-astronomy-um.org/ancient_hipparchus.php'
+        zh: '密歇根大学馆藏，喜帕恰斯评注阿拉托斯《物象》 https://www.early-astronomy-um.org/ancient_hipparchus.php'
+    hipparchus_rhodes_manitius:
+      order: 2231
+      status: checked
+      text:
+        en: 'Hipparchus, Commentary on the Phaenomena of Aratus and Eudoxus, Greek text https://ancientlibrary.net/hipparchus-of-nicaea-commentary-on-the-phaenomena-of-aratus-and-eudoxus/3/'
+        zh: '喜帕恰斯《阿拉托斯与欧多克索斯〈物象〉评注》希腊原文 https://ancientlibrary.net/hipparchus-of-nicaea-commentary-on-the-phaenomena-of-aratus-and-eudoxus/3/'
+    hipparchus_rhodes_echo_source_full:
+      order: 2320
+      status: checked
+      text:
+        en: 'Hipparchus, Commentary on the Phaenomena, Book III, Greek text https://ancientlibrary.net/hipparchus-of-nicaea-commentary-on-the-phaenomena-of-aratus-and-eudoxus/3/'
+        zh: '喜帕恰斯《〈物象〉评注》第三卷，希腊原文 https://ancientlibrary.net/hipparchus-of-nicaea-commentary-on-the-phaenomena-of-aratus-and-eudoxus/3/'
+    hipparchus_rhodes_echo_source_none:
+      order: 2321
+      status: checked
+      text:
+        en: 'Hipparchus, Commentary on the Phaenomena, Book III, Greek text https://ancientlibrary.net/hipparchus-of-nicaea-commentary-on-the-phaenomena-of-aratus-and-eudoxus/3/'
+        zh: '喜帕恰斯《〈物象〉评注》第三卷，希腊原文 https://ancientlibrary.net/hipparchus-of-nicaea-commentary-on-the-phaenomena-of-aratus-and-eudoxus/3/'
+quotes:
+  hipparchus_rhodes_echo_full:
+    order: 1
+    tier: full
+    date: '-130'
+    checked: official_record
+    sources: [hipparchus_rhodes_echo_source_full]
+    original: grc
+    text:
+      en: {"who":"Hipparchus","quote":"And the first star to rise is …","occasion":"Commentary on the Phaenomena, Book III, separating the first rising star in a group from the others."}
+      zh: {"who":"喜帕恰斯","quote":"而最先升起的那颗星是……","occasion":"《〈物象〉评注》第三卷，分辨一组星里先升起的那一颗。"}
+      grc: {"who":"Hipparchus","quote":"καὶ πρῶτος μὲν ἀστὴρ ἀνατέλλει","occasion":"Commentary on the Phaenomena, Book III, separating the first rising star in a group from the others."}
+  hipparchus_rhodes_echo_none:
+    order: 2
+    tier: none
+    date: '-130'
+    checked: official_record
+    sources: [hipparchus_rhodes_echo_source_none]
+    original: grc
+    text:
+      en: {"who":"Hipparchus","quote":"Next we shall speak of the setting.","occasion":"Commentary on the Phaenomena, Book III, turning from risings to settings."}
+      zh: {"who":"喜帕恰斯","quote":"接下来，我们说星怎样落下。","occasion":"《〈物象〉评注》第三卷，从谈升起转到谈落下。"}
+      grc: {"who":"Hipparchus","quote":"Ἑξῆς δὲ ἐροῦμεν περὶ τῆς καταδύσεως","occasion":"Commentary on the Phaenomena, Book III, turning from risings to settings."}
 self_check:
-  fact: palimpsest
-  quote_line: '同一方向还有个暗些的点伸得更远。'
-  regret_choice: '拿最亮的一点当边界，图的范围就被画小了。'
-  bookend: '从一个亮点到写清两端的跨度。'
-  share_line: '边界由伸得最远的点定。'
-  share_number: '两个刻记'
-  knowing: 'copy 员工知道后世留下的是零碎数值。'
-  near: 'palimpsest 给出北冕座残存的数据，debate 标明归属争论。'
-  lever: '补方向或挪一个边界。'
-  missed: '收队时另一个方向还没有核。'
-  brought: '带两个端点的抄图。'
+  fact: commentary
+  quote_line: '约公元前二世纪末，喜帕恰斯在评注中指出，常读的观星诗里有些并写的星并不同时升起。'
+  regret_choice: '员工没能说服那位读者留下来对照一夜。'
+  bookend: '喜帕恰斯留下的评注指出，一首流传很广的观星诗里有失准之处。在这条分支里，一位读者准备照诗里写的星位教给别人。 {staff}请那位读者重新来观测一夜。读者分开看到两次升起，改了原本要教给学生的说法。'
+  share_number: '130'
+  lever: p1
+  missed: '员工没能说服那位读者留下来对照一夜。'
+  share_line: '今夜亲眼再看一次'
 pack: {license: MIT, version: 1, languages: [en, zh]}

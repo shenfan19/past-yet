@@ -2,7 +2,8 @@ order: 190
 events:
   terence_rome:
     order: 176
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -165
     lon: 12.49
     lat: 41.89
@@ -25,6 +26,20 @@ events:
         place: "Rome"
         figure: "Terence"
         story: 'The prologues to Terence’s Hecyra describe interruptions. They recall the draw of boxing and a tightrope performer, then a crowd rushing in when gladiators were announced. The map year locates the early productions, while the second prologue looks back on them.'
+        story_prose:
+          opening:
+            - 'Rome, around 165 BC. The prologues to Hecyra will record what happened the first time it was put on. The players are waiting for the audience to settle.'
+            - 'In history, the audience was distracted by other entertainment and the comedy did not reach its end. In this branch the first few rows have not yet gone. They simply cannot hear who is meant to speak next.'
+            - 'Someone who can speak above a crowd and knows when to hand the room back to the actors could help.'
+          points:
+            p1: '{staff} asks the front row to take their places, then points out the actor already waiting to speak. A man asks when the other entertainment starts. {staff} hears him out and asks him to wait for just one line. The actor does not raise his voice. A few people turn round, and the people behind them quieten too. When the last line is spoken, the man nearest the stage takes his hand off its edge. The people behind him wait for him to stand before moving.'
+          outcomes:
+            all: 'When the crew come to untie the ropes, a few people are still sitting, talking about the line they have just heard.'
+            p1: 'The last scene is over before the people at the front begin to get up.'
+          none: 'The crowd moves towards the other show. On stage the actor stops in the middle of a line.'
+          not_admitted: '{staff} never reaches the first row. Someone stands nearby and soon there are only backs to look at.'
+          excerpts:
+            p1: 'When the last line is spoken, the man nearest the stage takes his hand off its edge. The people behind him wait for him to stand before moving.'
         relic: "A comic mask"
         relic_desc: "A linen mask with a raised brow, worn by an actor."
         points:
@@ -46,6 +61,20 @@ events:
         place: "罗马"
         figure: "泰伦提乌斯"
         story: '泰伦提乌斯的《婆母》序言回顾演出受扰的经过，先提拳击和走绳的吸引力，再写角斗表演的消息引得人群涌来。'
+        story_prose:
+          opening:
+            - '罗马，约公元前 165 年。《婆母》的演出序言后来记下头一回上台遇到的事。开场时，台上的人还在等观众静下来。'
+            - '史实里，看客被别处的节目分了心，戏没演完。在这条分支里，靠台的几排人还没走，他们只是听不清现在该谁开口。'
+            - '这趟用得上敢在热闹里说几句话、知道什么时候该把声音交还给演员的人。'
+          points:
+            p1: '{staff}先请前排的人坐回去，指给后面的人看台上已经站好的演员。有人还在问另一场表演何时开始，{staff}听完才请他等一句。说话的演员没提高嗓门。几个人转了头，把后面也带得静下来。 最后一句说完，最靠前的观众把手从台沿收回。等他起身，后头的人才跟着动。'
+          outcomes:
+            all: '收场的人来解台边的绳时，几个人仍坐着说刚才那一句。'
+            p1: '尾声过去了，前排的人才陆续从座位上起身。'
+          none: '人群往另一边涌去。台上的人把已经开口的半句收了回去。'
+          not_admitted: '{staff}没有挤到前排。近处有人站起来，视线里很快只剩背影。'
+          excerpts:
+            p1: '最后一句说完，最靠前的观众把手从台沿收回。等他起身，后头的人才跟着动。'
         relic: "一副喜剧面具"
         relic_desc: "一副亚麻面具，眉毛高挑，演员戴的。"
         points:
@@ -117,6 +146,43 @@ wiki:
       text:
         en: 'Terence, Hecyra, Prologues I and II, Latin text https://thelatinlibrary.com/ter.hecyra.html'
         zh: '泰伦提乌斯《婆母》第一、第二序言拉丁文 https://thelatinlibrary.com/ter.hecyra.html'
+    terence_rome_story_echo_source_full:
+      order: 2436
+      status: checked
+      text:
+        en: 'Terence, Hecyra, Prologue II, Latin text https://thelatinlibrary.com/ter.hecyra.html'
+        zh: '泰伦提乌斯《婆母》第二序言，拉丁原文 https://thelatinlibrary.com/ter.hecyra.html'
+    terence_rome_story_echo_source_none:
+      order: 2437
+      status: checked
+      text:
+        en: 'Terence, Hecyra, Prologue II, Latin text https://thelatinlibrary.com/ter.hecyra.html'
+        zh: '泰伦提乌斯《婆母》第二序言，拉丁原文 https://thelatinlibrary.com/ter.hecyra.html'
+quotes:
+  terence_rome_story_echo_full:
+    order: 1
+    tier: full
+    date: '-165'
+    checked: official_record
+    sources: [terence_rome_story_echo_source_full]
+    original: la
+    contextual: true
+    text:
+      en: {"who":"Terence’s prologue-speaker","quote":"Hear the case for my sake, and grant us silence.","occasion":"Second prologue to Hecyra, asking the audience to let the actors be heard."}
+      zh: {"who":"泰伦提乌斯笔下的报幕人","quote":"请为我听一听我们的请求，给我们一点安静。","occasion":"《婆母》第二序言，报幕人请观众让演员能被听见。"}
+      la: {"who":"Terence’s prologue-speaker","quote":"mea causa causam accipite et date silentium","occasion":"Second prologue to Hecyra, asking the audience to let the actors be heard."}
+  terence_rome_story_echo_none:
+    order: 2
+    tier: none
+    date: '-165'
+    checked: official_record
+    sources: [terence_rome_story_echo_source_none]
+    original: la
+    contextual: true
+    text:
+      en: {"who":"Terence’s prologue-speaker","quote":"They made me leave the stage before my time.","occasion":"Second prologue to Hecyra, recounting the first interrupted performance."}
+      zh: {"who":"泰伦提乌斯笔下的报幕人","quote":"这些声响让我没到收场便离了台。","occasion":"《婆母》第二序言，回顾首次演出中断。"}
+      la: {"who":"Terence’s prologue-speaker","quote":"fecere ut ante tempus exirem foras","occasion":"Second prologue to Hecyra, recounting the first interrupted performance."}
 self_check:
   fact: prologues
   quote_line: '他问后人知不知道收场时演员说到哪儿。'

@@ -2,7 +2,8 @@ order: 28
 events:
   bell_boston:
     order: 96
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1876
     date: '1876-02-26'
     stay: 5
@@ -28,6 +29,24 @@ events:
         place: Boston
         figure: Alexander Graham Bell
         story: 'Alexander Graham Bell’s laboratory notebook records that on 10 March 1876 in Boston, Thomas Watson heard and understood words Bell spoke into the transmitter. At the Philadelphia Centennial Exhibition on 25 June, Bell demonstrated the telephone to judges.'
+        story_prose:
+          opening:
+            - 'In Boston the two rooms have their doors shut. Watson covers an ear and listens while Bell pauses over the bench and asks if they can try one more sentence. Someone thinks the work is done and starts to put the apparatus away.'
+            - 'On 10 March 1876 Bell recorded that Watson understood words sent from another room. In June Bell demonstrated at the Centennial Exhibition in Philadelphia. Here you can preserve the trial and help his colleagues agree what his Boston students will do while he is away.'
+            - 'Someone who can mind the equipment and listen closely can help with the two rooms. Before the exhibition, ask someone good with staff schedules to check the teaching arrangements.'
+          points:
+            p1: 'Watson comes out and says he heard it. You leave the written sentence face down and ask him to say what came through from beginning to end. Bell picks up his pen when he hears the words without prompting. The men change places and close the doors again. This time Watson will speak.'
+            p2: 'A colleague opens the timetable and says that some students know only Bell. Bell reads out the exercises already set and asks the next teacher to fill the empty hours. You help make a copy of the agreed timetable for the families. Before the case is packed, Bell slips his copy and the railway ticket into different pockets.'
+          outcomes:
+            all: 'The March trial stays in the notebook. When the demonstration begins in Philadelphia, the classes in Boston follow their agreed schedule.'
+            p1: 'Watson repeats what he heard. The preparations for June still lack a usable teaching plan.'
+            p2: 'The students have someone to take their classes. A final confirmation is missing from the March notebook, and the trip preserves only the arrangements for June.'
+          none: 'The apparatus goes back on the bench with no confirmed words from the next room. The teaching timetable still has a gap.'
+          not_admitted: 'The doors to both rooms are closed. Someone answers through one of them and leaves no place for a visitor at the bench.'
+          desync: 'The historical repetition or the exhibition demonstration is lost. The office recalls the traveller after the trip falls out of sync.'
+          excerpts:
+            p1: 'The men change places and close the doors again. This time Watson will speak.'
+            p2: 'Before the case is packed, Bell slips his copy and the railway ticket into different pockets.'
         relic: A telephone receiver
         relic_desc: A wooden handpiece with a thin diaphragm.
         points:
@@ -50,6 +69,24 @@ events:
         place: 波士顿
         figure: 亚历山大·格雷厄姆·贝尔
         story: '亚历山大·格雷厄姆·贝尔的实验笔记记载，1876 年 3 月 10 日在波士顿，托马斯·沃森听懂了贝尔对着发话装置说的话。6 月 25 日，贝尔在费城百年博览会上向评委演示了电话。'
+        story_prose:
+          opening:
+            - '波士顿的房门各关一扇。沃森在隔壁按住一侧耳朵等声音，贝尔把手停在桌上，问还要不要再试一句。有人以为已经试完，想收起装置。'
+            - '1876 年 3 月 10 日，贝尔记录沃森听懂了从另一房间传来的话。同年 6 月，贝尔去费城百年博览会演示。你可以保住那次试验，还可以请同事在他离开前明确学生这边的安排。'
+            - '懂得看守器材和听辨语句的人先留在房间两头。善于跟教师商议的人再去核贝尔离校几天的课。'
+          points:
+            p1: '沃森从屋里走出来，说听见了。你把预先写好的纸收回桌底，请他把听到的句子从头说一遍。贝尔拿起笔，记下他并不需要再问的话。两人换了位置，门重新关上，这次轮到沃森出声。'
+            p2: '同事摊开一张排班单，说有人来上课只认得贝尔。贝尔一边读出几位学生该做的练习，一边请下一位老师把空出来的时间填上。你帮他们把改好的那张另外誊给学生家里。装箱前，贝尔把自己的副本和车票收在不同的口袋。'
+          outcomes:
+            all: '三月的听辨记录留在实验簿。费城演示开始时，波士顿的学生仍按事先说好的安排上课。'
+            p1: '沃森复述了实际听见的话。六月的准备还没有形成能照做的分工。'
+            p2: '学生这边有了接手的人。三月的笔记缺最后一次确认，事务所只带回了这次排班的记录。'
+          none: '装置重新躺回台上，隔壁没有一份核过的复述。学生的课表还等人补。'
+          not_admitted: '两间屋的门都关着。有人从里面应声，但试验台没有为来客腾出位置。'
+          desync: '史有的试验复述或六月演示缺了一项。行程脱节，事务所发来召回。'
+          excerpts:
+            p1: '两人换了位置，门重新关上，这次轮到沃森出声。'
+            p2: '装箱前，贝尔把自己的副本和车票收在不同的口袋。'
         relic: 一只电话听筒
         relic_desc: 一个木制听筒，里面有一片薄薄的振膜。
         points:
@@ -134,6 +171,39 @@ wiki:
       text:
         en: 'Library of Congress, Alexander Graham Bell laboratory notebook, entry for 10 March 1876 https://www.loc.gov/resource/magbell.25300201/?sp=22'
         zh: '美国国会图书馆，贝尔实验笔记 1876 年 3 月 10 日条 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+    bell_boston_story_echo_source_full:
+      order: 2523
+      status: checked
+      text:
+        en: 'Library of Congress, laboratory notebook, 10 March 1876 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+        zh: '美国国会图书馆，贝尔 1876 年 3 月 10 日试验笔记 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+    bell_boston_story_echo_source_none:
+      order: 2524
+      status: checked
+      text:
+        en: 'Library of Congress, laboratory notebook, 10 March 1876 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+        zh: '美国国会图书馆，贝尔 1876 年 3 月 10 日试验笔记 https://www.loc.gov/resource/magbell.25300201/?sp=22'
+quotes:
+  bell_boston_story_echo_full:
+    order: 1
+    tier: full
+    date: '1876-03-10'
+    checked: official_record
+    sources: [bell_boston_story_echo_source_full]
+    original: en
+    text:
+      en: {"who":"Alexander Graham Bell","quote":"I asked him to repeat the words","occasion":"Bell’s notebook records how he checked what Watson had heard."}
+      zh: {"who":"亚历山大·格雷厄姆·贝尔","quote":"我请他把听到的话复述一遍。","occasion":"贝尔的试验笔记写下他怎样确认沃森听到的话。"}
+  bell_boston_story_echo_none:
+    order: 2
+    tier: none
+    date: '1876-03-10'
+    checked: official_record
+    sources: [bell_boston_story_echo_source_none]
+    original: en
+    text:
+      en: {"who":"Alexander Graham Bell","quote":"The effect was very indistinct and muffled.","occasion":"Bell describes listening after the two men changed places."}
+      zh: {"who":"亚历山大·格雷厄姆·贝尔","quote":"听起来很模糊，声音也发闷。","occasion":"两人调换房间以后，贝尔记下自己的听感。"}
 self_check:
   fact: notebook
   quote_line: '传过来两个完整的词，最后一个留了空。'

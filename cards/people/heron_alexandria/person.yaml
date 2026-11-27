@@ -2,7 +2,8 @@ order: 88
 events:
   heron_alexandria:
     order: 183
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 62
     lon: 29.92
     lat: 31.2
@@ -25,6 +26,20 @@ events:
         place: "Alexandria"
         figure: "Heron"
         story: 'Hero’s Mechanics describes machines for lifting and moving heavy loads. Fragments of the original Greek survive alongside a complete Arabic translation. The visit to his workshop is set around AD 62, an approximate date for his activity.'
+        story_prose:
+          opening:
+            - 'Alexandria, around AD 62. Hero’s Mechanics, written in Greek, describes how devices can help move a heavy load.'
+            - 'In history, the Greek survives only in fragments, while the complete work survives in Arabic translation. In this branch a copy is waiting to have its diagrams checked, and someone is willing to store it separately.'
+            - 'Someone who can match a diagram to its words can help. It also takes someone who can arrange for a book to change hands.'
+          points:
+            p1: '{staff} moves the copy to the stool in the best light and asks Hero to look at two lines drawn the same length. One must be read with another page. The copyist transfers the mark from the original, then asks the person who will take the copy to find the place himself. The reader takes the roll to the doorway before opening it again. When he reaches the corrected mark, he leaves his finger there.'
+          outcomes:
+            all: 'The second roll never goes back onto the workshop’s shelf. Whenever it is borrowed, the same mark can still lead a reader to the page.'
+            p1: 'The reader ties the copy separately before he leaves. The old rolls stay in the workshop; the corrected one goes out the door.'
+          none: 'The copy remains among the older rolls. Before the door shuts, someone who came for it draws back their hand.'
+          not_admitted: '{staff} never gets into the workshop. Someone can be heard pulling a stool into the light.'
+          excerpts:
+            p1: 'The reader takes the roll to the doorway before opening it again. When he reaches the corrected mark, he leaves his finger there.'
         relic: 'A marked model threshold'
         relic_desc: 'A piece from the fictional workshop model, with a nick where the door rubbed.'
         points:
@@ -46,6 +61,20 @@ events:
         place: "亚历山大"
         figure: "希罗"
         story: '希罗在《机械学》中写到怎样用器械搬动重物。希腊文原著只留下残篇，完整内容见于阿拉伯译本。派遣年份约为公元 62 年，作坊情节由游戏虚构。'
+        story_prose:
+          opening:
+            - '约公元 62 年，亚历山大港。希罗的《机械学》讲怎样借器械搬动重物，原著用希腊文写成。'
+            - '史实里，希腊原文只存残篇，全书由阿拉伯译本保存下来。在这条分支里，一份抄本还等着核图，作坊里有人愿意把校好的那份另存一处。'
+            - '这趟用得上能看懂图和字怎样对在一起的人，也需要有人办得妥一卷书的交接。'
+          points:
+            p1: '{staff}把抄本挪到作坊里光足的那张凳上，请希罗看两处画得同样长的线。原来其中一处要跟着另一页读。抄写人照着原页把记号改好，先让来领卷的人也试着找了一遍。 那人把卷带到门外才重新摊开。他找到刚才改过的那一处，把指尖停在那里。'
+          outcomes:
+            all: '另存的那一份没再和工坊的卷册放回同一架。日后借出时，领卷的人还能按相同的记号回到那页。'
+            p1: '领卷的人走前将它单独系好。架上的旧卷留在工坊，那份校过的已经出了门。'
+          none: '抄本还是和旧卷待在一处。关门前，没能领走的人把手收了回去。'
+          not_admitted: '{staff}没能进作坊。在门外还能听见有人把凳子拉到亮处。'
+          excerpts:
+            p1: '那人把卷带到门外才重新摊开。他找到刚才改过的那一处，把指尖停在那里。'
         relic: '标过的模型门槛'
         relic_desc: '工坊的模型零件，在门曾蹭到的位置留了一道刻痕。'
         points:
@@ -110,6 +139,41 @@ wiki:
       text:
         en: 'Hero, Pneumatics §37, Bennet Woodcroft translation https://www.gutenberg.org/files/77400/77400-h/77400-h.htm'
         zh: '希罗《气动装置》第37节，贝内特·伍德克罗夫特译 https://www.gutenberg.org/files/77400/77400-h/77400-h.htm'
+    heron_alexandria_story_echo_source_full:
+      order: 2439
+      status: checked
+      text:
+        en: 'Hero, Pneumatica, Book I, Greek edition in Perseus https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0559.tlg001.1st1K-grc1:1/'
+        zh: '希罗《气体学》第一卷，珀耳修斯古典文献库希腊文 https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0559.tlg001.1st1K-grc1:1/'
+    heron_alexandria_story_echo_source_none:
+      order: 2440
+      status: checked
+      text:
+        en: 'Hero, Pneumatica, Book I, Greek edition in Perseus https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0559.tlg001.1st1K-grc1:1/'
+        zh: '希罗《气体学》第一卷，珀耳修斯古典文献库希腊文 https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0559.tlg001.1st1K-grc1:1/'
+quotes:
+  heron_alexandria_story_echo_full:
+    order: 1
+    tier: full
+    date: '62'
+    checked: official_record
+    sources: [heron_alexandria_story_echo_source_full]
+    original: grc
+    text:
+      en: {"who":"Hero of Alexandria","quote":"Some provide the most necessary uses in this life.","occasion":"Pneumatica, Book I, describing the usefulness of devices."}
+      zh: {"who":"亚历山大的希罗","quote":"其中一些，给日常生活提供最要紧的用处。","occasion":"《气体学》第一卷，谈器械能解决什么实际需要。"}
+      grc: {"who":"Hero of Alexandria","quote":"αἱ μὲν ἀναγκαιοτάτας τῷ βίῳ τούτῳ χρείας παρέχουσαι","occasion":"Pneumatica, Book I, describing the usefulness of devices."}
+  heron_alexandria_story_echo_none:
+    order: 2
+    tier: none
+    date: '62'
+    checked: official_record
+    sources: [heron_alexandria_story_echo_source_none]
+    original: grc
+    text:
+      en: {"who":"Hero of Alexandria","quote":"Before the discussion to come, we must consider the void first.","occasion":"Pneumatica, Book I, introducing the questions behind the devices."}
+      zh: {"who":"亚历山大的希罗","quote":"谈后面的事以前，应当先说清何谓虚空。","occasion":"《气体学》第一卷，先提出器械背后的问题。"}
+      grc: {"who":"Hero of Alexandria","quote":"Πρὸ δὲ τῶν λέγεσθαι μελλόντων πρῶτον περὶ κενοῦ διαληπτέον","occasion":"Pneumatica, Book I, introducing the questions behind the devices."}
 self_check:
   fact: doors
   quote_line: '他请你留住记号，好叫他下次认得出这处。'

@@ -2,7 +2,8 @@ order: 125
 events:
   lili_boulanger_paris:
     order: 149
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1918
     date: '1918-01-01'
     stay: 3
@@ -27,8 +28,22 @@ events:
         place: "Mézy sur Seine"
         figure: "Lili Boulanger"
         story: 'Lili Boulanger was gravely ill in the winter of 1918 at Mézy-sur-Seine. Accounts of her last work describe her dictating Pie Jesu to her sister Nadia. The score calls for voice, string quartet, harp and organ. Lili died on 15 March, aged twenty-four.'
-        relic: "A pencil"
-        relic_desc: "A short pencil beside blank staff paper."
+        story_prose:
+          opening:
+            - 'There are two piles on the music table, the fair copy and the pages waiting for dictation. Nadia has just written down a note when Lili asks her to set the pen down. Through the thin paper it is hard to read the last bar that has been written.'
+            - 'During her final illness Lili Boulanger dictated the music for Pie Jesu to her sister Nadia. Lili died on 15 March 1918. Here she can pause at her own pace and have someone read back where she stopped when she wants to continue.'
+            - 'Someone who reads music can mark Nadia’s place. Let Lili say when she is ready before reading back the passage.'
+          points:
+            p1: 'Nadia starts to turn the page. Lili asks her to wait. You put a narrow slip where both of them can see the last bar. The room is quiet for a while. Once Lili speaks, you count back the beats Nadia has marked. Lili changes one note, and Nadia carries on at the same line.'
+          outcomes:
+            all: 'Lili decides when to continue. The passages she dictated stay on the table, and the later record still marks her death on 15 March.'
+            p1: 'Nadia returns to the marked place when Lili is ready. This time Lili does not have to repeat the passage she dictated before the pause.'
+          none: 'After the break the sisters still have to find their place. Lili uses some of the time to dictate a passage again.'
+          not_admitted: 'Nadia asks the visitor to wait outside and keep the passage quiet. Only the sisters hear the last phrase before they stop.'
+          excerpts:
+            p1: 'Lili changes one note, and Nadia carries on at the same line.'
+        relic: 'A narrow paper marker'
+        relic_desc: 'An invented slip marking the bar where the dictation stopped.'
         points:
           p1: 'When Lili asks for a break, mark the place for Nadia and read back the last passage when Lili wants to begin again'
         points_fail:
@@ -38,16 +53,30 @@ events:
             was: 'Accounts of Pie Jesu describe Nadia helping Lili write down the music when Lili was very ill.'
             now: 'In this branch {staff} keeps their place when Lili stops. When she is ready, Nadia reads back the last passage and her sister can begin exactly where she chose to pause.'
         vignettes:
-          entry: 'The copyist has marked the singer’s entry on an instrumental part. You lay that sheet next to the full score and ask him to point to the voice. He moves one mark. You take a scrap with both places on it. The rehearsal begins after your return.'
-          visitor: 'You tell the copyist that future readers will come looking for every part listed for the work. He sets the organ pages aside so they won’t be mistaken for a spare voice copy. You help him tie them separately. You never get to hear those two parts together.'
-          stand: 'You give the copyist space to lay out the voice, the quartet, the harp and the organ without overlapping them. He returns the harp sheet to its own pile. You copy the list of parts into your notebook. By the time the stands are ready, your own place is empty.'
+          entry: '{staff} asks Nadia to point to the most recent note before the page is turned. She keeps a finger on that line as she checks the voice above it.'
+          visitor: 'A person at the door asks how much music remains. {staff} keeps the question outside while Lili decides whether to rest.'
+          stand: '{staff} makes room on the stand for Nadia to put down her pen without covering the score.'
       zh:
         name: '桌上摊着几份声部谱'
         place: "梅齐"
         figure: "莉莉·布朗热"
         story: '1918 年冬，莉莉·布朗热在塞纳河畔梅齐病得很重。关于她最后一部作品的记述写到，她把《Pie Jesu》口述给姐姐娜迪亚。乐谱写给人声、弦乐四重奏、竖琴和管风琴。3 月 15 日，莉莉去世，终年二十四岁。'
-        relic: "一支铅笔"
-        relic_desc: "一支短铅笔，旁边是空白的五线谱纸。"
+        story_prose:
+          opening:
+            - '谱桌上的纸分成已誊好和还等着口述的两份。娜迪亚刚写下一个音，莉莉请她先把笔放一放。隔着几张薄纸，已经写下的最后一小节还有些看不清。'
+            - '莉莉·布朗热病中口述了她生命最后阶段的乐曲《Pie Jesu》，由姐姐娜迪亚记谱。她在 1918 年 3 月 15 日去世。这里能做的是按她自己的节奏暂停，等她要继续时把最后记下的地方还给她。'
+            - '会读谱的员工可以陪娜迪亚记位置。等莉莉说想继续时，才念出上一段。'
+          points:
+            p1: '娜迪亚要顺手翻过去，莉莉说先别。你拿一根窄纸条标在刚才那一节，给两个人都能看见的位置。屋里歇了一会儿，等莉莉先开口，你才把娜迪亚记下的几拍数给她听。莉莉改了一个音，娜迪亚就在原来的那一行接着写。'
+          outcomes:
+            all: '莉莉自己定了何时继续。桌上留下口述过的乐句，三月十五日的死讯仍进了后来的记录。'
+            p1: '等她准备好，娜迪亚从标出的地方继续记谱。这一回，她不用重说暂停前的整段。'
+          none: '停了一会儿再看谱时，姐妹要从上面几行找起。莉莉又将刚才说过的一段分开说完。'
+          not_admitted: '娜迪亚请来客把脚步放轻，在外面等。休息前最后那一段仍只有姐妹俩听到。'
+          excerpts:
+            p1: '莉莉改了一个音，娜迪亚就在原来的那一行接着写。'
+        relic: '一条夹谱的窄纸'
+        relic_desc: '虚构夹条，记口述暂时停在第几小节。'
         points:
           p1: '莉莉想歇一会儿时替娜迪亚标好谱上的位置，再按莉莉的意思念回刚记下的一段'
         points_fail:
@@ -57,9 +86,9 @@ events:
             was: '关于《Pie Jesu》的记述写到，莉莉病重时由姐姐娜迪亚帮她记谱。'
             now: '这条分支里，莉莉停下时，{staff}替姐妹俩留好了记号。等莉莉觉得能继续了，娜迪亚念回最后一段，莉莉从自己挑的停顿处接着说。'
         vignettes:
-          entry: '抄谱人把歌声进来的记号划在了一张器乐分谱上。你把它跟总谱并排搁好，请他指出人声那一行。他挪了一个记号。你带走写着两处位置的纸角。真正的排练在你回去之后才开始。'
-          visitor: '你告诉抄谱人，后来的读者会照着编制来找各声部。他另收好管风琴谱，省得有人当成多出一份声乐谱。你帮他单独系住那一叠。这两份谱合起来响是什么样，你始终没听到。'
-          stand: '你腾出桌面，让抄谱人把人声、弦乐四重奏、竖琴和管风琴分开放。他把竖琴谱放回该去的那一叠。你把编制抄进簿子。等谱架摆好，你站过的地方已经空了。'
+          entry: '{staff}请娜迪亚翻页前指一下刚记的音。她用手指压着那一行，再核上面的声部。'
+          visitor: '门口有人问还剩多少谱。莉莉决定是否休息时，{staff}请来人把话先留在外面。'
+          stand: '{staff}在谱架上腾出一块地方，让娜迪亚搁笔时不用压住谱纸。'
 text:
   en:
     name: Lili Boulanger
@@ -151,6 +180,42 @@ wiki:
       text:
         en: 'Bibliothèque nationale de France, Lili Boulanger, Pie Jesu, catalogue record https://catalogue.bnf.fr/ark:/12148/cb39749643r'
         zh: '法国国家图书馆，莉莉·布朗热《Pie Jesu》乐谱目录 https://catalogue.bnf.fr/ark:/12148/cb39749643r'
+    lili_boulanger_paris_story_echo_source_full:
+      order: 2547
+      status: checked
+      text:
+        en: 'Lili Boulanger, Pie Jesu, printed Durand score, Sibley Music Library scan https://imslp.org/wiki/Pie_Jesu_(Boulanger,_Lili)'
+        zh: '莉莉·布朗热《Pie Jesu》，迪朗谱本，西布利音乐图书馆扫描 https://imslp.org/wiki/Pie_Jesu_(Boulanger,_Lili)'
+    lili_boulanger_paris_story_echo_source_none:
+      order: 2548
+      status: checked
+      text:
+        en: 'Lili Boulanger, Pie Jesu, printed Durand score, Sibley Music Library scan https://imslp.org/wiki/Pie_Jesu_(Boulanger,_Lili)'
+        zh: '莉莉·布朗热《Pie Jesu》，迪朗谱本，西布利音乐图书馆扫描 https://imslp.org/wiki/Pie_Jesu_(Boulanger,_Lili)'
+quotes:
+  lili_boulanger_paris_story_echo_full:
+    order: 1
+    tier: full
+    date: '1918'
+    checked: official_record
+    sources: [lili_boulanger_paris_story_echo_source_full]
+    original: fr
+    text:
+      en: {"who":"Lili Boulanger","quote":"Fairly slow.","occasion":"Tempo instruction at the opening of the score she dictated to Nadia."}
+      zh: {"who":"莉莉·布朗热","quote":"稍慢。","occasion":"莉莉口授给娜迪亚的乐谱开头所用的速度提示。"}
+      fr: {"who":"Lili Boulanger","quote":"Assez lent","occasion":"Tempo instruction at the opening of the score she dictated to Nadia."}
+  lili_boulanger_paris_story_echo_none:
+    order: 2
+    tier: none
+    date: '1918'
+    checked: official_record
+    sources: [lili_boulanger_paris_story_echo_source_none]
+    original: la
+    contextual: true
+    text:
+      en: {"who":"Pie Jesu score","quote":"grant them rest","occasion":"Words set by Lili Boulanger in the work she dictated near the end of her life."}
+      zh: {"who":"《Pie Jesu》乐谱","quote":"赐予他们安息。","occasion":"莉莉去世前口述的作品中写入旋律的拉丁语词句。"}
+      la: {"who":"Pie Jesu score","quote":"dona eis requiem","occasion":"Words set by Lili Boulanger in the work she dictated near the end of her life."}
 self_check:
   fact: death
   quote_line: '等谱架摆好，你站过的地方已经空了。'

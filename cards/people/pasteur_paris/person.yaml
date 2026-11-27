@@ -2,7 +2,8 @@ order: 152
 events:
   pasteur_paris:
     order: 36
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1859
     date: '1859-07-01'
     stay: 3
@@ -27,8 +28,22 @@ events:
         place: Arbois
         figure: Louis Pasteur
         story: 'In the summer of 1859 Pasteur''s eldest daughter Jeanne, nine years old, was staying with her grandfather at Arbois while her father worked in Paris. In September she fell ill with typhoid fever and died there.'
-        relic: 'An arrival slip'
-        relic_desc: 'An invented record that distinguishes arrival from later news.'
+        story_prose:
+          opening:
+            - 'A short letter from Paris sits by the window of Jeanne’s grandfather’s house in Arbois. Jeanne has not gone into the yard this afternoon. Her grandfather goes to the bedside every so often. From there he can hear when someone comes for the mail.'
+            - 'Jeanne stayed with her grandfather in the summer of 1859. In history she died of typhoid in September. In this branch the office’s fictional medical kit can change the course of her illness. Her grandfather may get to write that she is sitting up again.'
+            - 'Send a traveller with care experience and the office’s nano kit. Ask her grandfather where he needs help, and stay nearby while he waits for her to wake.'
+          points:
+            p1: 'Her grandfather moves the chair where he can see the bed. You pass the office kit to the caregiver and let him stay where Jeanne wants him. When she wakes and asks to sit up, he takes out his letter paper and asks what she would like him to add. She asks him to write to Mama first, then thinks of a sentence for Papa.'
+          outcomes:
+            all: 'Her grandfather writes to say she is recovering. He leaves the short letter beside the one her father sent, ready for the post.'
+            p1: 'Jeanne has enough strength to sit up for a while. Her grandfather can write to her parents in the words she used when she woke.'
+          none: 'When someone comes for the mail, her grandfather folds the sheet one more time. In history Jeanne did not recover from that illness.'
+          not_admitted: 'The family has yet to admit the visitor. The person collecting the mail leaves first, and the letter from Paris remains indoors.'
+          excerpts:
+            p1: 'She asks him to write to Mama first, then thinks of a sentence for Papa.'
+        relic: 'An envelope from Arbois'
+        relic_desc: 'A fictional copy of the envelope kept by Jeanne’s grandfather.'
         points:
           p1: 'Bring the office’s medical kit to Jeanne’s grandfather and help him care for her when the fever takes hold'
         points_fail:
@@ -40,16 +55,30 @@ events:
             who: pasteur_paris
             bio: 'In this branch Pasteur’s eldest daughter Jeanne recovers from typhoid fever at Arbois in 1859.'
         vignettes:
-          date: 'Claire has copied the day the letter was brought in beside the name in the arrival register. You set the envelope next to the register, and she finds the difference. Both dates stay on the desk, each beside the event it marks.'
-          address: 'Émile has offered to take the family’s reply while Claire keeps the register. You give him a narrow slip with just the address he needs. He checks it before leaving and the register stays closed while the visitors wait.'
-          future: 'You know this case will be remembered long after the boy leaves. Claire needs a line describing what is known today. You enter the arrival and leave the later news for its own date. The latest envelope is still unopened when your visit ends.'
+          date: 'The grandfather starts to put the date of the last letter on this one. {staff} sets the two envelopes beside each other and checks the date with him.'
+          address: 'Before the courier goes, {staff} reads the Paris address back to the grandfather. The letter stays folded until the family can open it.'
+          future: '{staff} places a fresh sheet beside the one brought from Paris. There is room to add the next thing Jeanne says.'
       zh:
         name: '阿尔布瓦的那个夏天'
         place: 阿尔布瓦
         figure: 路易·巴斯德
         story: '1859 年夏，巴斯德在巴黎做研究，九岁的长女让娜住在阿尔布瓦的祖父家。九月她染上伤寒，死在那里。'
-        relic: '一张抵达登记副页'
-        relic_desc: '登记副页，分开记录抵达与后来的来信。'
+        story_prose:
+          opening:
+            - '从巴黎寄来的一封短信放在阿尔布瓦祖父家的窗边。让娜下午没有去院里，祖父隔一会儿到床边看看，从那里还能听见门外收信的脚步。'
+            - '1859 年夏，让娜住在祖父家。史实里，她在九月因伤寒去世。分支里允许事务所带来的虚构医疗箱改变这次病程，让祖父可以写信说她已经坐得起来。'
+            - '让有照护经验的人带上事务所的纳米医疗箱。先问祖父需要哪种帮忙，再在旁边陪他等让娜醒过来。'
+          points:
+            p1: '祖父把椅背挪到能看见床的地方。你把事务所的医疗箱交给照护员工，请祖父留在让娜想让他在的地方。等她醒来想坐起，祖父把信纸拿出来，问她要加哪句话。她让他先写信寄给妈妈，再想一句给爸爸。'
+          outcomes:
+            all: '祖父寄出一封平安信。信写得很短，夹在爸爸原先寄来的信旁等邮差来取。'
+            p1: '让娜慢慢有力气在床边坐一会儿。祖父能把她醒来时自己说的话写给父母。'
+          none: '等外头来取信时，祖父把纸重新叠了一次。史实中，让娜没能从那次病里恢复。'
+          not_admitted: '家人尚未同意让来客进屋。门外等着送信的人先走了，窗边那封来信仍收在屋里。'
+          excerpts:
+            p1: '她让他先写信寄给妈妈，再想一句给爸爸。'
+        relic: '阿尔布瓦寄信的信封'
+        relic_desc: '让娜祖父留在桌上的一只虚构信封。'
         points:
           p1: '等让娜发烧时，带事务所的纳米医疗箱去祖父家，帮祖父照护她'
         points_fail:
@@ -61,9 +90,9 @@ events:
             who: pasteur_paris
             bio: '这条分支里，巴斯德的长女让娜在 1859 年阿尔布瓦的那场伤寒后康复。'
         vignettes:
-          date: '克莱尔把来信送到的日子抄进了抵达簿。你把信封摆到登记簿旁，她看出了两处不同。两天都留在桌上，各标它真正对应的事。'
-          address: '埃米尔愿意代送家人的回信，克莱尔留守登记簿。你递给他一张窄条，只写他要核对的地址。他出门前核过一遍，有旁人等候时，登记簿仍合着。'
-          future: '你知道男孩离开许久后，人们还会谈到这个病例。克莱尔要填的是今天确知的事。你记下抵达，将以后到的消息留给它自己的日期。你走时，最新一封信还没拆。'
+          date: '祖父差点把上一封信的日期抄到这一封。{staff}将两个信封并排放好，陪他重新核一遍。'
+          address: '邮差动身前，{staff}把巴黎的地址念给祖父听。那封信仍折着，留给家人来拆。'
+          future: '{staff}在巴黎来信旁放一张干净纸。等让娜再说话，那里还有地方可写。'
 text:
   en:
     name: Louis Pasteur
@@ -72,6 +101,30 @@ text:
     name: 路易·巴斯德
     text: 法国化学家与微生物学家，1822 年生，1895 年去世。他研究发酵和腐败，发展了巴氏消毒法。他有两个女儿死于伤寒，让娜在 1859 年，塞西尔在 1866 年。1885 年，巴斯德团队为被狗咬伤的约瑟夫·迈斯特接种狂犬病疫苗。
 quotes:
+  pasteur_paris_story_echo_full:
+    order: 1
+    tier: full
+    date: '1879'
+    checked: official_record
+    sources: [pasteur_paris_story_echo_source_full]
+    original: fr
+    contextual: true
+    text:
+      en: {"who":"Jean-Baptiste Pasteur","quote":"It is here that my father spent his whole childhood.","occasion":"Jeanne’s younger brother describes the Arbois family home in a later letter to René Vallery-Radot."}
+      zh: {"who":"让-巴蒂斯特·巴斯德","quote":"我父亲的童年全在这里度过。","occasion":"让娜的弟弟后来写信给勒内·瓦莱里-拉多，谈起阿尔布瓦的老屋。"}
+      fr: {"who":"Jean-Baptiste Pasteur","quote":"C’est ici que mon père a passé toute son enfance","occasion":"Jeanne’s younger brother describes the Arbois family home in a later letter to René Vallery-Radot."}
+  pasteur_paris_story_echo_none:
+    order: 2
+    tier: none
+    date: '1859-09-10'
+    checked: official_record
+    sources: [pasteur_paris_story_echo_source_none]
+    original: fr
+    contextual: true
+    text:
+      en: {"who":"Gravestone inscription","quote":"Jeanne Pasteur, died in Arbois on 10 September 1859 aged nine and a half.","occasion":"The inscription names the girl and gives the place, date and age at death. The date shown is the death date."}
+      zh: {"who":"墓碑铭文","quote":"让娜·巴斯德，1859 年 9 月 10 日卒于阿尔布瓦，九岁半。","occasion":"墓碑记姓名、去世时间、地点和年纪。所标日期为去世日。"}
+      fr: {"who":"Gravestone inscription","quote":"Jeanne Pasteur décédée à Arbois le 10/9/1859 à l’âge de 9 ans ½","occasion":"The inscription names the girl and gives the place, date and age at death. The date shown is the death date."}
   pasteur:
     order: 5
     text:
@@ -173,6 +226,18 @@ wiki:
       text:
         en: 'Institut Pasteur, Louis Pasteur’s final years, Joseph Meister chronology https://www.pasteur.fr/en/about-us/final-years-1877-1887'
         zh: '巴斯德研究所，巴斯德生平末期，约瑟夫·迈斯特纪年 https://www.pasteur.fr/en/about-us/final-years-1877-1887'
+    pasteur_paris_story_echo_source_full:
+      order: 2508
+      status: checked
+      text:
+        en: 'Jean-Baptiste Pasteur’s letter, quoted in the French Academy’s Comptes Rendus Biologies https://comptes-rendus.academie-sciences.fr/biologies/articles/en/10.5802/crbiol.84/'
+        zh: '法国科学院《生物学纪要》所引让-巴蒂斯特·巴斯德信 https://comptes-rendus.academie-sciences.fr/biologies/articles/en/10.5802/crbiol.84/'
+    pasteur_paris_story_echo_source_none:
+      order: 2509
+      status: checked
+      text:
+        en: 'Arbois cemetery, Jeanne Pasteur inscription transcribed by the Pasteur family archive https://pasteur.net/dossiers/louis-pasteur/genealogie-de-louis-pasteur/les-descendants-de-louis-pasteur/'
+        zh: '阿尔布瓦墓园，让娜·巴斯德墓碑铭文，巴斯德家族档案转录 https://pasteur.net/dossiers/louis-pasteur/genealogie-de-louis-pasteur/les-descendants-de-louis-pasteur/'
 self_check:
   fact: death
   quote_line: '两天都留在桌上，各标它真正对应的事。'

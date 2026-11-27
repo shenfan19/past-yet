@@ -2,7 +2,7 @@ order: 223
 events:
   humboldt_chimborazo:
     order: 213
-    build_step: 2
+    build_step: 4
     year: 1802
     lon: -78.82
     lat: -1.47
@@ -26,6 +26,20 @@ events:
         place: "Mount Chimborazo, Ecuador"
         figure: "Alexander von Humboldt"
         story: 'On 23 June 1802 Humboldt climbed Chimborazo with Aimé Bonpland and Carlos Montúfar. The porters would go no further; the three went on with nosebleeds, vomiting and dizziness, until a deep gully below the summit stopped them, and they turned back.'
+        story_prose:
+          opening:
+            - 'Above the snow line of Chimborazo, Bonpland hands Humboldt the barometer to free a hand for his bag. Montúfar stops where he can see ahead. You cannot see the far side of the gully he points to until the cloud moves.'
+            - 'On 23 June 1802 Humboldt’s party climbed Chimborazo and turned back at a deep gully. This branch lets the group find a way to continue. A summit report counts only once everyone comes down.'
+            - 'Send someone who can look after companions at altitude. Even with office gear available, ask each of the climbers whether they want to go on.'
+          points:
+            p1: 'Someone steps to the snow’s edge and comes back to tell Humboldt there is nowhere firm to stand. You have the party rest on secure ground until the others have looked at the terrain and everyone can decide whether to go on. Humboldt and Bonpland take turns carrying the instrument. Montúfar stays where he can see both on the way back. Only at the rock where they rested do they take out the half page written at the top.'
+          outcomes:
+            all: 'All the climbers reach the top and return to their resting place. The report gives the time they came down beside the entry from the summit.'
+            p1: 'The group goes up by the way they found in this branch and returns in the order agreed before climbing.'
+          none: 'The party sees the gully and turns back. Where the others are waiting, its records give the height actually reached and what they could see.'
+          not_admitted: 'There was no place for the visitor when the party left. You receive an empty instrument case below.'
+          excerpts:
+            p1: 'Only at the rock where they rested do they take out the half page written at the top.'
         relic: "A barometer"
         relic_desc: "A mercury barometer with heights marked on the glass."
         points:
@@ -47,6 +61,20 @@ events:
         place: "厄瓜多尔钦博拉索山"
         figure: "亚历山大·冯·洪堡"
         story: '1802 年 6 月 23 日，洪堡与埃梅·邦普兰、卡洛斯·蒙图法尔攀登钦博拉索山。挑夫不肯再往上走，三人流着鼻血、呕吐、头晕，继续向上，直到山顶以下一道深沟挡住去路，只得折返。'
+        story_prose:
+          opening:
+            - '钦博拉索山的雪线上，邦普兰把气压计交给洪堡，腾出手来扶自己的包。蒙图法尔停在一块能看见前方的石上。他指的深沟，在云挪开以前看不到边。'
+            - '1802 年 6 月 23 日，洪堡等人攀登钦博拉索，因深沟折返。这里的分支让一行人找到可以续行的路，从山顶下来才能带回结果。'
+            - '找能在高处照应同伴的员工。用事务所道具相助时，仍让每个人自己说愿不愿继续。'
+          points:
+            p1: '前面有人踩到雪边就停了，下来告诉洪堡那里没有稳的落脚处。你让一行人先在能站稳的地方歇下，等另一组把可走的地形看明白，再商量要不要继续。洪堡和邦普兰交换着提仪器，回来时蒙图法尔走在能看见两人的地方。下到原先歇脚的石边，他们才取出在顶上写的那半页记录。'
+          outcomes:
+            all: '这一趟确实到了顶，也全员回到原先的歇脚处。报告在山顶记录旁另记了下来的时刻。'
+            p1: '他们沿本趟找到的路上去，也照原先约好的次序回到山下。'
+          none: '看到深沟，一行人折返。回到有同伴等着的地方，纸上只有他们实际到过的高度和所见。'
+          not_admitted: '队伍出发时没留下带你同行的位置。你在下面接到一只空的仪器套。'
+          excerpts:
+            p1: '下到原先歇脚的石边，他们才取出在顶上写的那半页记录。'
         relic: "一支气压计"
         relic_desc: "一支装着水银的气压计，玻璃管上刻着高度。"
         points:
@@ -125,6 +153,18 @@ wiki:
           name: 攀登的计划
           text: 爬多快、歇多久，是队伍在山坡上自己的选择。
   refs:
+    humboldt_chimborazo_story_echo_source_full:
+      order: 2577
+      status: checked
+      text:
+        en: 'University of Bern, digital Humboldt edition, quoting the 1837 account https://humboldt.unibe.ch/erschliessung/transversal/08_bergwerke_und_vulkane'
+        zh: '伯尔尼大学洪堡数字版，所引 1837 年攀登记 https://humboldt.unibe.ch/erschliessung/transversal/08_bergwerke_und_vulkane'
+    humboldt_chimborazo_story_echo_source_none:
+      order: 2578
+      status: checked
+      text:
+        en: 'University of Bern, digital Humboldt edition, quoting the 1837 account https://humboldt.unibe.ch/erschliessung/transversal/08_bergwerke_und_vulkane'
+        zh: '伯尔尼大学洪堡数字版，所引 1837 年攀登记 https://humboldt.unibe.ch/erschliessung/transversal/08_bergwerke_und_vulkane'
     humboldt_dhm:
       order: 140
       status: checked
@@ -422,6 +462,29 @@ bystanders:
   diego:
     invented: true
     text: {en: 'Diego, a fictional carrier who needs to leave before fog closes in.', zh: '虚构挑夫迭戈，得赶在雾合拢前走。'}
+quotes:
+  humboldt_chimborazo_story_echo_full:
+    order: 1
+    tier: full
+    date: '1837'
+    checked: official_record
+    sources: [humboldt_chimborazo_story_echo_source_full]
+    original: de
+    text:
+      en: {"who":"Alexander von Humboldt","quote":"Reaching great heights is of little scientific interest.","occasion":"A remark in Humboldt’s later published account of attempts on Chimborazo."}
+      zh: {"who":"亚历山大·冯·洪堡","quote":"到达很高的地方并无多少科学意义。","occasion":"洪堡后来刊出钦博拉索攀登记时写下的话。"}
+      de: {"who":"Alexander von Humboldt","quote":"Das Erreichen grosser Höhen ist von geringem wissenschaftlichen Interesse","occasion":"A remark in Humboldt’s later published account of attempts on Chimborazo."}
+  humboldt_chimborazo_story_echo_none:
+    order: 2
+    tier: none
+    date: '1837'
+    checked: official_record
+    sources: [humboldt_chimborazo_story_echo_source_none]
+    original: de
+    text:
+      en: {"who":"Alexander von Humboldt","quote":"The urge to vomit was accompanied by some dizziness.","occasion":"Humboldt’s later account describes the effects of the ascent on the group."}
+      zh: {"who":"亚历山大·冯·洪堡","quote":"想吐时还伴随一点眩晕。","occasion":"洪堡后来记攀登给一行人带来的不适。"}
+      de: {"who":"Alexander von Humboldt","quote":"Der Drang zum Erbrechen war mit etwas Schwindel verbunden","occasion":"Humboldt’s later account describes the effects of the ascent on the group."}
 self_check:
   fact: crevasse
   quote_line: '纸上只留最后核实的地点，下一次读数得等。'

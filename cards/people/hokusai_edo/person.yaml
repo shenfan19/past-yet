@@ -2,7 +2,8 @@ order: 95
 events:
   hokusai_edo:
     order: 80
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1831
     lon: 139.77
     lat: 35.68
@@ -26,6 +27,24 @@ events:
         place: Edo, Japan
         figure: Katsushika Hokusai
         story: 'Hokusai''s Under the Wave off Kanagawa is a woodblock print in Thirty-six Views of Mount Fuji. The Met dates its impression to about 1830–1832.'
+        story_prose:
+          opening:
+            - 'An Edo publisher lays three fresh impressions on the counter. On the darkest, a small part of the crest has filled in. On the palest, distant Fuji is hard to see. The carver reaches for one sheet and the printer for another.'
+            - 'Under the Wave off Kanagawa is one of Hokusai’s Thirty-six Views of Mount Fuji. Surviving impressions preserve changes such as wear to the blocks. You can put a shared reference by the press and ask the publisher to keep a sequence that can be checked later.'
+            - 'Have someone who knows prints compare the sheets. Someone who can arrange custody can ask Hokusai, the printer and the publisher how to keep later samples.'
+          points:
+            p1: 'The carver carries one proof to the window, where he can just see Fuji through the blue. You ask the printer to look at the crest in the same light and compare it with a different sheet. They both put a finger by the same clear line. The chosen proof gets a small mark in its corner. The space above the distant mountain stays clear.'
+            p2: 'A clerk slips the samples into the sale stack. The publisher asks if they can find them again next time. You have Hokusai and the printer write an order on the wrapper and leave it open at one end for later proofs. The next sheet off the block goes to the back of the set before it goes anywhere near the counter.'
+          outcomes:
+            all: 'The first impressions go on sale and the workshop still has a set to compare. When a different printer takes over, the order can still be read by turning the pages.'
+            p1: 'The carver and printer finish the first run from one proof. Later samples disperse among the sale copies.'
+            p2: 'The samples have an order. The first run is still held back because the line breaks. The traveller brings home the scene where the proofs were ordered.'
+          none: 'The publisher stands the cleanest-looking sheet by the till. The people who come to check the crest are still looking at different copies.'
+          not_admitted: 'The publisher asks which printer brought you. Nobody knows the visitor, and the proofs go back behind the counter.'
+          desync: 'The wave keeps breaking at the same place and the first batch does not leave the shop. The office recalls the traveller.'
+          excerpts:
+            p1: 'The chosen proof gets a small mark in its corner. The space above the distant mountain stays clear.'
+            p2: 'The next sheet off the block goes to the back of the set before it goes anywhere near the counter.'
         relic: A woodblock for printing
         relic_desc: A carved plank of cherry wood.
         points:
@@ -51,6 +70,24 @@ events:
         place: 日本江户
         figure: 葛饰北斋
         story: '葛饰北斋的《神奈川冲浪里》是《富岳三十六景》中的木版画。大都会艺术博物馆将所藏这一印本约定年为 1830 至 1832 年。'
+        story_prose:
+          opening:
+            - '江户的版元把三张刚摺出的样纸排在柜上。最浓的那张，浪尖有一小段连成一片；最淡的那张，远处的富士几乎看不见。刻工来取一张，摺师伸手想拿另一张。'
+            - '《神奈川冲浪里》是北斋《富岳三十六景》的一幅。存世印张可用来比较版木磨损等变化。这一趟能为首批出样留一张共同的参照，还能另存一套按印次可查的样张。'
+            - '会辨印纹或画面的员工先做选样。善于商量保管的人再与北斋、摺师和版元约定添样办法。'
+          points:
+            p1: '刻工把一张样移到窗旁，才在蓝色里认出富士。你请摺师站在相同的地方看浪尖，再对比另一张深浅刚好的。两人同时点在同一段轮廓上。留给工房的那张只在角上做了一个小记号，远山前面整片都很亮。'
+            p2: '伙计把对照样往待售的印堆里一插，版元问还能不能在下次开印时找回。你请北斋和摺师一起在套纸上标好序，另留一道能添后来样张的开口。下一张出样送来，版元没有直接往柜上摆，先把它夹到了对照套的末尾。'
+          outcomes:
+            all: '首批印张出柜，工房仍留有可对读的样张。以后交给另一个摺师时，也能看出它们哪个先印。'
+            p1: '刻工和摺师照同一张样印完首批。后来那些样张又各自散到货堆里。'
+            p2: '样张已定了归档次序。首批仍因断线留在店里，回程只保留整理样张的这一段。'
+          none: '版元把看着最顺眼的一张单摆在柜边。再来核浪尖的人各持一张，仍对不上。'
+          not_admitted: '版元问你跟哪位摺师来的。没人认领来客，样纸刚摞好就收回了。'
+          desync: '首批样张在浪尖同一处仍断线，没能离开印坊。事务所按同步失败召回员工。'
+          excerpts:
+            p1: '留给工房的那张只在角上做了一个小记号，远山前面整片都很亮。'
+            p2: '下一张出样送来，版元没有直接往柜上摆，先把它夹到了对照套的末尾。'
         relic: 一块印刷用的木版
         relic_desc: 一块雕好的樱木版。
         points:
@@ -113,6 +150,41 @@ wiki:
       text:
         en: 'Katsushika Hokusai, Under the Wave off Kanagawa, c. 1830–1832. Metropolitan Museum of Art, JP1847. https://www.metmuseum.org/art/collection/search/45434'
         zh: 'Katsushika Hokusai, Under the Wave off Kanagawa, c. 1830–1832. Metropolitan Museum of Art, JP1847. https://www.metmuseum.org/art/collection/search/45434'
+    hokusai_edo_story_echo_source_full:
+      order: 2520
+      status: checked
+      text:
+        en: 'Keio University Libraries, Under the Wave off Kanagawa, digital impression https://dcollections.lib.keio.ac.jp/ja/ukiyoe/0726'
+        zh: '庆应义塾大学图书馆，《神奈川冲浪里》版画数字藏品 https://dcollections.lib.keio.ac.jp/ja/ukiyoe/0726'
+    hokusai_edo_story_echo_source_none:
+      order: 2521
+      status: checked
+      text:
+        en: 'Kanagawa Prefectural Museum of Cultural History, digital impression https://ch.kanagawa-museum.jp/dm/ukiyoe/rekisi/kouki/d_kouki07.html'
+        zh: '神奈川县立历史博物馆，版画数字藏品 https://ch.kanagawa-museum.jp/dm/ukiyoe/rekisi/kouki/d_kouki07.html'
+quotes:
+  hokusai_edo_story_echo_full:
+    order: 1
+    tier: full
+    date: '1831'
+    checked: official_record
+    sources: [hokusai_edo_story_echo_source_full]
+    original: ja
+    text:
+      en: {"who":"Katsushika Hokusai","quote":"Drawn by Iitsu, formerly Hokusai.","occasion":"The artist’s signature beside the title cartouche. The date is approximate."}
+      zh: {"who":"葛饰北斋","quote":"北斋改名为一，绘。","occasion":"版画题框旁的落款。日期为约略刊行年。"}
+      ja: {"who":"Katsushika Hokusai","quote":"北斎改為一筆","occasion":"The artist’s signature beside the title cartouche. The date is approximate."}
+  hokusai_edo_story_echo_none:
+    order: 2
+    tier: none
+    date: '1831'
+    checked: official_record
+    sources: [hokusai_edo_story_echo_source_none]
+    original: ja
+    text:
+      en: {"who":"Katsushika Hokusai","quote":"Thirty-six Views of Mount Fuji: Under the Wave off Kanagawa.","occasion":"The printed title. The date is approximate."}
+      zh: {"who":"葛饰北斋","quote":"富岳三十六景，神奈川冲浪里。","occasion":"版画所印题名。日期为约略刊行年。"}
+      ja: {"who":"Katsushika Hokusai","quote":"冨嶽三十六景　神奈川沖浪裏","occasion":"The printed title. The date is approximate."}
 self_check:
   quote_line: '版画商指着浪花，你请他用手遮住浪头。'
   fact: great_wave

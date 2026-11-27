@@ -2,7 +2,8 @@ order: 84
 events:
   gutenberg_mainz:
     order: 14
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1455
     date: '1455-06-01'
     stay: 6
@@ -28,6 +29,24 @@ events:
         place: Mainz
         figure: Johannes Gutenberg
         story: 'Johann Fust financed Gutenberg’s printing work in Mainz. The 42-line book survives, along with a document from 6 November 1455 recording Fust’s demand for repayment and interest. The document does not record which tools either man kept.'
+        story_prose:
+          opening:
+            - 'A Mainz printer holds a fresh sheet to the light and makes a mark in its corner. The paper supplier asks whether he will be paid this time. Gutenberg has a pile of pages to check. Fust has a sum to settle.'
+            - 'The forty-two-line edition was completed around this time. A notarial instrument dated 6 November 1455 records the dispute between Gutenberg and Fust. Here you can keep the run supplied and ask them to agree which tools Gutenberg can still use when the partnership ends.'
+            - 'Send someone who can check the paper, type and wages. To settle the question of the tools, you also need someone who can get both men to hear an agreement read aloud.'
+          points:
+            p1: 'The printer counts his stack and says he will need another. You have the supplier count that day’s finished sheets against the work slip, then list the next lot and the wages on separate lines with Gutenberg. The supplier rubs away the mark for taking the stock back. Next morning a fresh sheet is ready on the bed of the press.'
+            p2: 'Fust brings the whole account. It does not show what each advance paid for. You ask Gutenberg to begin with the tools he still needs, and have the clerk read the terms for each item to both men. Each takes a copy and the wooden handle stays on its hook. Gutenberg folds his copy into the wages book as he leaves.'
+          outcomes:
+            all: 'The forty-two-line edition is finished and its backers still have accounts to settle. Each man has a copy of the agreement about the tools Gutenberg can use.'
+            p1: 'The printers get through the run and the finished sheets leave the shop. The notary will still hear the argument about tools and money.'
+            p2: 'There is a written list of tools he can use. The edition has fallen out of sync and the trip brings back only the record of the discussion.'
+          none: 'An unfinished sheet remains on the press. The workers and supplier are still waiting for an answer.'
+          not_admitted: 'A printer asks through the doorway whether the visitor has come for the paper or the accounts. Nobody brings you in. From outside there is just the sound of a board set down on the bench.'
+          desync: 'The press stops partway through. The paper and wages have run out. The publication falls out of sync and the office recalls the traveller.'
+          excerpts:
+            p1: 'Next morning a fresh sheet is ready on the bed of the press.'
+            p2: 'Gutenberg folds his copy into the wages book as he leaves.'
         relic: A lead type sort
         relic_desc: One small letter of lead and tin, backwards.
         points:
@@ -53,6 +72,24 @@ events:
         place: 美因茨
         figure: 古腾堡
         story: '约翰·富斯特出钱支持古腾堡在美因茨印书。四十二行本留了下来，1455 年 11 月 6 日记下富斯特追讨借款和利息的公证书也在。文书没有写清官司以后各人拿了哪些工具。'
+        story_prose:
+          opening:
+            - '美因茨的印工把新印的一张举到光下，在页角做个小记号。送纸的人问他这次能不能结钱。古腾堡手里是一叠要核的页，富斯特手里是一笔要对的账。'
+            - '史实里，四十二行本在这一时期印成。1455 年 11 月 6 日的公证书留下古腾堡与富斯特争执的记录。这趟可先保住这一批工料，并另外争取两人说清哪些工具散伙后还能用。'
+            - '懂印工或核账的人可以替印坊核纸、活字和工钱。要谈器具，还要有人能请两边坐下，把商量结果写进纸里。'
+          points:
+            p1: '印工算过纸堆，说还有一叠需要补。你让送纸人照着计工单点过当天印好的份数，再同古腾堡一起把下一批纸和工钱分列。送纸人擦去原先写着要收回的记号。第二天，压床上放着能继续接印的第一张新纸。'
+            p2: '富斯特拿来一份总账，说看不出哪件是借款置办的。你请古腾堡从眼下还要用的工具讲起，请书记把可继续使用的器具逐条读给两人听。两人各取一份副本，木柄还留在原来的钩上。离开时，古腾堡把自己那份折进工钱簿。'
+          outcomes:
+            all: '四十二行本印完，富斯特和古腾堡仍要解开账上的纠纷。可继续使用的器具已有两人各自收起的副本。'
+            p1: '工班继续印下去，成书的页叠出门。公证人仍会见到两边争论工具和钱。'
+            p2: '一份工具使用清单已经写出。书还印不下去，本趟只收回这份商议记录。'
+          none: '印床剩着没揭下的一页，工料还等双方答复。'
+          not_admitted: '门里的印工问来客找送纸的还是找记账的。无人招呼你进来，外头只听见木板落在台上的一声。'
+          desync: '印床停在半途，纸和工钱都没有接上。原有刊印史失去同步，事务所召回员工。'
+          excerpts:
+            p1: '第二天，压床上放着能继续接印的第一张新纸。'
+            p2: '离开时，古腾堡把自己那份折进工钱簿。'
         relic: 一粒铅字
         relic_desc: 铅锡合金的一个小字，是反着的。
         points:
@@ -173,6 +210,43 @@ wiki:
       text:
         en: 'Biblia latina, Mainz, around 1454–1455. Morgan Library & Museum, PML 12. https://www.themorgan.org/incunables/136021'
         zh: 'Biblia latina, Mainz, around 1454–1455. Morgan Library & Museum, PML 12. https://www.themorgan.org/incunables/136021'
+    gutenberg_mainz_story_echo_source_full:
+      order: 2484
+      status: checked
+      text:
+        en: 'Helmasperger Instrument, diplomatic text at Bibliotheca Augustana https://www.tha.de/~harsch/germanica/Chronologie/15Jh/Helmasperger/hel_text.html'
+        zh: '奥古斯塔纳文库《赫尔马斯佩格公证书》摹录 https://www.tha.de/~harsch/germanica/Chronologie/15Jh/Helmasperger/hel_text.html'
+    gutenberg_mainz_story_echo_source_none:
+      order: 2485
+      status: checked
+      text:
+        en: 'Helmasperger Instrument, diplomatic text at Bibliotheca Augustana https://www.tha.de/~harsch/germanica/Chronologie/15Jh/Helmasperger/hel_text.html'
+        zh: '奥古斯塔纳文库《赫尔马斯佩格公证书》摹录 https://www.tha.de/~harsch/germanica/Chronologie/15Jh/Helmasperger/hel_text.html'
+quotes:
+  gutenberg_mainz_story_echo_full:
+    order: 1
+    tier: full
+    date: '1455-11-06'
+    checked: official_record
+    sources: [gutenberg_mainz_story_echo_source_full]
+    original: de
+    contextual: true
+    text:
+      en: {"who":"Ulrich Helmasperger","quote":"for the work of the books","occasion":"The notarial record preserves the phrase in its summary of Gutenberg’s reply."}
+      zh: {"who":"乌尔里希·赫尔马斯佩格","quote":"用于印书这项工作。","occasion":"公证书在记述古腾堡答辩时保留了印书工程的这一称呼。"}
+      de: {"who":"Ulrich Helmasperger","quote":"uff das werck der bucher","occasion":"The notarial record preserves the phrase in its summary of Gutenberg’s reply."}
+  gutenberg_mainz_story_echo_none:
+    order: 2
+    tier: none
+    date: '1455-11-06'
+    checked: official_record
+    sources: [gutenberg_mainz_story_echo_source_none]
+    original: de
+    contextual: true
+    text:
+      en: {"who":"Ulrich Helmasperger","quote":"what he received out of that same borrowed money","occasion":"A clause in Fust’s sworn statement as transcribed in the instrument."}
+      zh: {"who":"乌尔里希·赫尔马斯佩格","quote":"他从那笔借款里实际收到的钱。","occasion":"公证书抄录富斯特宣誓陈述的一段。"}
+      de: {"who":"Ulrich Helmasperger","quote":"was ym deʒ ſelbñ ußgenũmen geldes worden iſt","occasion":"A clause in Fust’s sworn statement as transcribed in the instrument."}
 self_check:
   quote_line: '学徒正要把一枚活字扔回字格，你认出它放错了。'
   fact: bible

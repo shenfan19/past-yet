@@ -2,55 +2,85 @@ order: 176
 events:
   shakespeare_globe:
     order: 18
-    build_step: 1
-    year: 1599
-    lon: -0.09
-    lat: 51.51
+    build_step: 4
+    ready: true
+    year: 1596
+    date: '1596-08-01'
+    stay: 2
+    lon: -1.71
+    lat: 52.19
     region: europe
     field: literature
     tier: 3
     channels: {S: 1, W: 1}
-    refs: [shakespeare_globe_primary]
+    refs: [shakespeare_globe_register, shakespeare_globe_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: persuade, req: {"stat": {"finesse": 6}}}
-        - {id: p2, kind: trust, req: {"trait":["glib","artistic","cosmopolitan"]}}
-        - {id: p3, kind: hold, req: {"luck": 0.5}}
-      vignettes:
-        - {id: back_row, traits: [artistic, quiet]}
-        - {id: space, traits: [bold, glib]}
-        - {id: cue}
+        - {"id":"p1","kind":"trust","day":8,"req":{"any":[{"job":["courier","driver","rideshare_driver"],"stat":{"will":5}},{"trait":["attached","kind","streetwise"],"stat":{"will":6}}]}}
     text:
       en:
-        name: A playhouse for everyone
-        place: London
-        figure: William Shakespeare
-        story: 'The Chorus in Henry V asks the audience to imagine places and events beyond what a stage can show. The play belongs to the Globe''s early years.'
-        relic: A goose quill
-        relic_desc: A feather cut for writing, ink still on the tip.
+        name: 'A message for his father'
+        place: 'Stratford-upon-Avon'
+        figure: 'William Shakespeare'
+        story: 'The Stratford register records Hamnet Shakespeare’s burial on 11 August 1596. It does not say where his father was before the burial. In this branch a household asks for help getting a message to him.'
+        story_prose:
+          opening:
+            - 'Stratford-upon-Avon, August 1596. The parish register will preserve the boy’s name and the date of his burial. Hamnet is eleven.'
+            - 'In history, Hamnet was buried on 11 August. The register gives no date for his father’s return. In this branch the household folds a letter and hopes someone will take it before dark.'
+            - 'Someone who knows where travellers stop could help here. So could someone who can persuade a stranger to go a little farther with a letter.'
+          points:
+            p1: '{staff} asks twice at the door before finding a messenger who knows the next place to stop. The messenger reads the name on the outside and slips it into a dry inside pocket. Hamnet is still awake when William comes home. The boy moves over to make a little room for his father at the edge of the bed.'
+          outcomes:
+            all: 'William sits there until the window goes dark. When he gets up for water, he moves his chair closer so that he can find it on his way back.'
+            p1: 'William sits there until the window goes dark. When he gets up for water, he moves his chair closer so that he can find it on his way back.'
+          none: 'Dusk reaches the doorway. The folded letter is still under the cup.'
+          not_admitted: '{staff} never gets inside the house where they are waiting. Someone passes the door. It does not open.'
+          excerpts:
+            p1: 'Hamnet is still awake when William comes home. The boy moves over to make a little room for his father at the edge of the bed.'
+        relic: 'A folded message'
+        relic_desc: 'An imagined letter with a place for the bearer to add the name of the next person who can help.'
         points:
-          p1: 'Find a place where the cue can be heard'
-          p2: 'Help the player make a place clear without scenery'
-          p3: 'Stay through one more run of the entrance'
-        vignettes:
-          back_row: 'You stand at the edge of the yard and signal when the last words vanish into the room. The player tries the cue again, this time facing the audience.'
-          space: 'You ask how the player will fit a whole countryside on the boards. He points to a single doorway and asks you to cross it as if it were a day''s journey.'
-          cue: 'You listen for the one word that sends the next player on. They run the same entrance again and this time the door opens on the word.'
+          p1: 'Find someone who can reach Shakespeare and get the household’s message to him in time for a visit'
+        points_fail:
+          p1: 'The employee found no one who could promise to deliver the message in time.'
+        shift:
+          p1:
+            was: '11 August 1596: Hamnet Shakespeare was buried in Stratford-upon-Avon. The register does not record whether his father was with him beforehand.'
+            now: '{staff} finds a messenger who can reach Shakespeare. In this branch he comes home in time to spend an evening with his son.'
+            who: shakespeare_globe
+            bio: 'William Shakespeare was able to spend an evening with Hamnet shortly before his son’s death.'
       zh:
-        name: 人人都能进的剧场
-        place: 伦敦
-        figure: 威廉·莎士比亚
-        story: '《亨利五世》的开场合唱请观众想象舞台呈现不了的地点和事件。'
-        relic: 一支鹅毛笔
-        relic_desc: 削好的羽毛笔，笔尖上还有墨。
+        name: '给父亲捎句话'
+        place: '斯特拉特福'
+        figure: '威廉·莎士比亚'
+        story: '斯特拉特福的登记簿记着哈姆内特于 1596 年 8 月 11 日下葬，葬前他的父亲在哪里没有记载。在这条分支里，家里托人给他递信。'
+        story_prose:
+          opening:
+            - '1596 年八月的斯特拉特福。教区的登记簿后来会留下孩子的名字和下葬的日子。哈姆内特十一岁。'
+            - '史实里，哈姆内特在 8 月 11 日下葬，登记簿没说父亲何时回家。在这条分支里，家里折好一封信，想托人赶在天黑前带走。'
+            - '这趟用得上熟悉路上落脚处的人。能让陌生人答应多走一程，也能帮这封信继续往前。'
+          points:
+            p1: '{staff}在门口问了两遍，终于找到一位认得下一处落脚地的捎信人。那人读过信外的名字，把信放进干燥的内袋。威廉赶回来时，哈姆内特还醒着。孩子往床里让了让，给父亲在床沿挪出一点地方。'
+          outcomes:
+            all: '威廉坐到窗外全黑。起身取水时，他把椅子挪得离床更近，免得回来时找不着。'
+            p1: '威廉坐到窗外全黑。起身取水时，他把椅子挪得离床更近，免得回来时找不着。'
+          none: '暮色到了门口，折过的信还压在杯子底下。'
+          not_admitted: '{staff}没能进到等信的那户人家。门口有人走过，屋里没有开门。'
+          excerpts:
+            p1: '威廉赶回来时，哈姆内特还醒着。孩子往床里让了让，给父亲在床沿挪出一点地方。'
+        relic: '折起来的一封信'
+        relic_desc: '分支里的信，折角留给捎信人记下一位可以托付的人。'
         points:
-          p1: '找一个能听清接词的位置'
-          p2: '帮演员在没有布景时交代身在何处'
-          p3: '留下来再核对一遍上场信号'
-        vignettes:
-          back_row: '你站到院场边缘，听不见尾字时就举手。演员再试一遍，这一次转过身朝向观众。'
-          space: '你问演员怎么把整片乡野塞上几块台板。他指着一道门，请你穿过去，走得像刚赶了一整天路。'
-          cue: '你听清了哪一个字是下一人上场的信号。他们再试一次，这回字音一落，门便开了。'
+          p1: '找到能联系莎士比亚的人，把家里那封信及时送到，让父子见一面'
+        points_fail:
+          p1: '员工没找到能及时把信送到的人。'
+        shift:
+          p1:
+            was: '1596 年 8 月 11 日，哈姆内特·莎士比亚在斯特拉特福下葬，登记簿没记父亲葬前是否在场。'
+            now: '{staff}找到能联系莎士比亚的捎信人。这一回，他赶回家，和儿子度过了一个晚上。'
+            who: shakespeare_globe
+            bio: '莎士比亚在哈姆内特去世前陪了儿子一晚。'
 text:
   en:
     name: William Shakespeare
@@ -58,21 +88,29 @@ text:
   zh:
     name: 威廉·莎士比亚
     text: 英国剧作家与诗人，1564 年生，1616 年去世。他为在伦敦环球剧院演出的剧团写了约三十七部戏，包括《哈姆雷特》和《麦克白》，环球剧院于 1599 年开张，他也写十四行诗。
-hook: {en: 'Can one stage hold a kingdom?', zh: '一座台能装下多少地方'}
+hook: {en: 'A message for his father', zh: '给父亲捎句话'}
 facts:
+  burial:
+    date: '1596-08-11'
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [shakespeare_globe_register]
+    text:
+      en: '11 August 1596: Hamnet Shakespeare was buried in Stratford-upon-Avon. The register does not record whether his father was with him beforehand.'
+      zh: '1596 年 8 月 11 日，哈姆内特·莎士比亚在斯特拉特福下葬，登记簿没记父亲葬前是否在场。'
+    line:
+      en: '11 August 1596: Hamnet Shakespeare was buried in Stratford-upon-Avon. The register does not record whether his father was with him beforehand.'
+      zh: '1596 年 8 月 11 日，哈姆内特·莎士比亚在斯特拉特福下葬，登记簿没记父亲葬前是否在场。'
   wooden_o:
     date: '1599'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [shakespeare_globe_primary]
     text:
       en: 'The Chorus in Henry V asks the audience to imagine places and events beyond what a stage can show. The play belongs to the Globe''s early years.'
       zh: '《亨利五世》的开场合唱请观众想象舞台呈现不了的地点和事件。'
-bystanders:
-  shakespeare_globe_reader:
-    invented: true
-    text: {en: 'An invented player trying out an entrance and a cue.', zh: '一位虚构的演员，正在试走位、听接词。'}
 wiki:
   refs:
     shakespeare_globe_primary:
@@ -81,11 +119,52 @@ wiki:
       text:
         en: 'William Shakespeare, Henry V, Prologue and text history, Folger Shakespeare Library edition and Folgerpedia. https://folgerpedia.folger.edu/Henry_V'
         zh: 'William Shakespeare, Henry V, Prologue and text history, Folger Shakespeare Library edition and Folgerpedia. https://folgerpedia.folger.edu/Henry_V'
+    shakespeare_globe_register:
+      order: 2200
+      status: checked
+      text:
+        en: 'Folger Shakespeare Library and Shakespeare Birthplace Trust, Stratford parish register DR243/1 https://shakespearedocumented.folger.edu/node/462'
+        zh: '福尔杰莎士比亚图书馆与莎士比亚出生地信托，斯特拉特福教区登记簿 DR243/1 https://shakespearedocumented.folger.edu/node/462'
+    shakespeare_globe_echo_source_full:
+      order: 2300
+      status: checked
+      text:
+        en: 'Folger Shakespeare Library, Sonnet 30 https://www.folger.edu/explore/shakespeares-works/shakespeares-sonnets/read/30/'
+        zh: '福尔杰莎士比亚图书馆，《十四行诗》第 30 首 https://www.folger.edu/explore/shakespeares-works/shakespeares-sonnets/read/30/'
+    shakespeare_globe_echo_source_none:
+      order: 2301
+      status: checked
+      text:
+        en: 'Folger Shakespeare Library, King John, Act 3, scene 4 https://www.folger.edu/explore/shakespeares-works/king-john/read/3/4/'
+        zh: '福尔杰莎士比亚图书馆，《约翰王》第三幕第四场 https://www.folger.edu/explore/shakespeares-works/king-john/read/3/4/'
+quotes:
+  shakespeare_globe_echo_full:
+    order: 1
+    tier: full
+    date: '1609'
+    checked: official_record
+    sources: [shakespeare_globe_echo_source_full]
+    original: en
+    text:
+      en: {"who":"William Shakespeare","quote":"But if the while I think on thee, dear friend,","occasion":"Sonnet 30, where the thought of a friend interrupts the speaker’s recollection of losses."}
+      zh: {"who":"威廉·莎士比亚","quote":"但若此刻我想起你，亲爱的朋友，","occasion":"《十四行诗》第 30 首，诗中人想起友人，一时止住了追忆。"}
+  shakespeare_globe_echo_none:
+    order: 2
+    tier: none
+    date: '1623'
+    checked: official_record
+    sources: [shakespeare_globe_echo_source_none]
+    original: en
+    text:
+      en: {"who":"William Shakespeare","quote":"Grief fills the room up of my absent child,","occasion":"Constance in King John, Act 3, scene 4. Dialogue from a play."}
+      zh: {"who":"威廉·莎士比亚","quote":"悲伤填满了孩子不在的房间，","occasion":"《约翰王》第三幕第四场，康斯坦丝的台词。"}
 self_check:
-  quote_line: '你站到院场边缘，听不见尾字时就举手。'
-  fact: wooden_o
-  regret_choice: '略过「找一个能听清接词的位置」，这处细节便留给下一位核对。'
-  bookend: '从「一座台能装下多少地方」开始，以员工留下的观察或更正收尾。'
-  share_line: '一座台能装下多少地方'
-  share_number: '1599'
+  fact: burial
+  quote_line: '1596 年 8 月 11 日，哈姆内特·莎士比亚在斯特拉特福下葬，登记簿没记父亲葬前是否在场。'
+  regret_choice: '员工没找到能及时把信送到的人。'
+  bookend: '斯特拉特福的登记簿记着哈姆内特于 1596 年 8 月 11 日下葬，葬前他的父亲在哪里没有记载。在这条分支里，家里托人给他递信。 {staff}找到能联系莎士比亚的捎信人。这一回，他赶回家，和儿子度过了一个晚上。'
+  share_number: '1596'
+  lever: p1
+  missed: '员工没找到能及时把信送到的人。'
+  share_line: '给父亲捎句话'
 pack: {license: MIT, version: 1, languages: [en, zh]}

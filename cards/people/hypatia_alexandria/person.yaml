@@ -2,7 +2,8 @@ order: 99
 events:
   hypatia_alexandria:
     order: 10
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 415
     date: '0415-01-01'
     stay: 3
@@ -27,8 +28,22 @@ events:
         place: Alexandria
         figure: Hypatia
         story: 'Early in 415 Hypatia still teaches mathematics and philosophy in Alexandria, and the city magistrates come to hear her. Between the prefect of the city and another faction a feud grows sharper by the week, and she is drawn into it through her ties to the prefect.'
-        relic: 'A sketched float scale'
-        relic_desc: 'A fictional workshop sketch showing where the mark is read.'
+        story_prose:
+          opening:
+            - 'Morning teaching has just ended in Alexandria. A student leaves a marked wooden strip on the table and asks Hypatia if they should come to the same room tomorrow. The talk in the street has changed. She had meant to teach here as usual.'
+            - 'Hypatia was killed in Alexandria in March 415. Late-antique accounts also record her reputation for teaching philosophy in public. This branch can give her a reason to change her plans and stay with someone willing to receive her.'
+            - 'Send a traveller who can hear out her students and talk over the new arrangements with their teacher. She needs to agree on where to go and choose someone to take back the borrowed books.'
+          points:
+            p1: 'Hypatia asks who is still waiting for a book she promised to lend. You ask her to name someone who can handle the loans, then explain which friend has offered her a room. She writes the unfinished question on the back of the wooden strip and hands it to the student still by the table. Later that day books are still returned, and their teacher is already at her friend’s house.'
+          outcomes:
+            all: 'Someone in the friend’s house asks her to finish the problem. This branch still has a record of her teaching in March.'
+            p1: 'She agrees to change the day’s plans and reaches the friend who opens the door for her. The teaching table stands empty for a while.'
+          none: 'A student comes to return the marked strip and hears that Hypatia has been killed. He sets it where he sat for the last lesson.'
+          not_admitted: 'The student closes the list of people borrowing books. The visitor’s name was never entered, and the strip stays on the table when the door shuts.'
+          excerpts:
+            p1: 'Later that day books are still returned, and their teacher is already at her friend’s house.'
+        relic: 'A marked wooden strip'
+        relic_desc: 'A fictional teaching aid with part of a problem on its back.'
         points:
           p1: 'Before the worst of that March, persuade her to leave Alexandria for a while, or to take another road on the day, and save her'
         points_fail:
@@ -40,16 +55,30 @@ events:
             who: hypatia_alexandria
             bio: 'In this timeline Hypatia listened and left Alexandria before March 415, came through that spring, and later went back to teaching in the city.'
         vignettes:
-          scale: 'Timon holds his thumb over the mark and calls it the result. Nysa takes a reading from where the float meets the surface. You ask them to put down the tube and look again while it stands free. This time they read the same mark. Nysa adds where they were standing to the record.'
-          copy: 'Nysa has one side of a tablet left and wants to copy the result in large letters. You fit the observation on the top half and let her draw the cylinder below it. The next reader will have both the result and a place to look for it on the instrument.'
-          name: 'You could offer a future name for the device. Timon has a cloth in one hand and is about to lift the float out of the cup. You use the last quiet moment to ask Nysa for one independent reading. You leave without seeing what the recipient makes of the finished instrument.'
+          scale: 'The student points to the wrong mark on the wooden strip. {staff} asks him to show where his count began. He moves his finger one place back.'
+          copy: '{staff} asks which books have still to be returned and writes their names where the next student can find them.'
+          name: '{staff} checks with the student where to take a borrowed volume if the room is closed. The student folds the answer into its cover.'
       zh:
         name: '那年三月的亚历山大'
         place: 亚历山大
         figure: 希帕提娅
         story: '415 年初，希帕提娅仍在亚历山大讲授数学与哲学，城里的官员也来听她讲。城中长官与另一股势力的积怨一周比一周深，她因与长官往来，被卷进了这场争执。'
-        relic: '一张浮标刻线图'
-        relic_desc: '试验台的刻线图，画出了从哪里读数。'
+        story_prose:
+          opening:
+            - '亚历山大港的早课刚散，有个学生把画着刻度的木片留在桌上。他问希帕提娅，明天还到这一间吗。街上传的话已经变了，她本来打算像往常一样来讲课。'
+            - '史实里，415 年三月希帕提娅在亚历山大遇害。晚古代记述同时留下她公开讲授哲学的声名。这条分支可以请她暂别平常的行程，先到愿留她住的人家。'
+            - '能听懂学生顾虑并与老师谈成安排的员工有用。新的会面点要让她自己同意，再把归还借书的事托付给人。'
+          points:
+            p1: '希帕提娅先问谁还没拿到答应借读的书。你请她挑出一个能代为交接的人，然后把一位朋友愿让她借住的消息说清。她把没讲完的题目写到木片背面，交给还站在桌边的学生。那天晚些时候，借出去的书仍有人送还，老师已经到了朋友家。'
+          outcomes:
+            all: '朋友屋里有人请她接着讲那道未完的题。这个分支的三月留下了她讲课的记录。'
+            p1: '她同意改动那天的行程，到了愿意把门打开的朋友家。原来的讲桌暂时空着。'
+          none: '几天后，学生来还刻度板，听到希帕提娅已经遇害。他把木片放在最后一次听课的位置。'
+          not_admitted: '学生收好借书人的名单。他没有在名单上找到来客，教室关门后，木片仍在桌上。'
+          excerpts:
+            p1: '那天晚些时候，借出去的书仍有人送还，老师已经到了朋友家。'
+        relic: '一片带刻线的木片'
+        relic_desc: '虚构的授课用具，背面写着没讲完的题。'
         points:
           p1: '三月风声最紧之前，劝她暂离亚历山大，或那天改走别的路，救下她'
         points_fail:
@@ -61,9 +90,9 @@ events:
             who: hypatia_alexandria
             bio: '这条时间线里，希帕提娅听了劝，415 年三月之前离开亚历山大，躲过了那个春天，后来回城继续教书。'
         vignettes:
-          scale: '提蒙用拇指按住一道刻线，说这就是结果。妮萨照浮标接触液面的位置读。你请他们松开手，等浮标自己立稳再看一遍。这次两人报的是同一格。妮萨把读数时站的位置也写了进去。'
-          copy: '妮萨只剩一面蜡板，原想用大字把结果一抄。你把观察写在上半边，留给她在下面画仪器。下一个读到的人，既有读数，也有图可循，知道刻线该从哪里看。'
-          name: '你原可以讲讲后世怎么称呼这件器具。提蒙已一手拿布，要把浮标从杯里提出去。你趁最后这点安静，请妮萨自己再读一次。收信人拿到成品后会怎样用，你已看不到了。'
+          scale: '学生指错了木片上的刻线。{staff}问他从哪里开始数，他把手指往回挪了一格。'
+          copy: '{staff}问还有哪几册书没还，写下名字，放在下一个学生也能找到的地方。'
+          name: '{staff}问学生教室关门后到哪儿还书。学生把写好地址的纸夹进封里。'
 text:
   en:
     name: Hypatia
@@ -153,6 +182,43 @@ wiki:
       text:
         en: 'Synesius of Cyrene, Letter 15, Livius https://www.livius.org/sources/content/synesius/synesius-letter-015/'
         zh: '昔涅修斯书信第15封，Livius https://www.livius.org/sources/content/synesius/synesius-letter-015/'
+    hypatia_alexandria_story_echo_source_full:
+      order: 2481
+      status: checked
+      text:
+        en: 'Socrates Scholasticus, Church History VII.15, Greek text https://earlychurchtexts.com/main/socrates/murder_of_hypatia.shtml'
+        zh: '苏格拉底·斯科拉斯提库斯《教会史》七卷十五章希腊文 https://earlychurchtexts.com/main/socrates/murder_of_hypatia.shtml'
+    hypatia_alexandria_story_echo_source_none:
+      order: 2482
+      status: checked
+      text:
+        en: 'Socrates Scholasticus, Church History VII.15, Greek text https://earlychurchtexts.com/main/socrates/murder_of_hypatia.shtml'
+        zh: '苏格拉底·斯科拉斯提库斯《教会史》七卷十五章希腊文 https://earlychurchtexts.com/main/socrates/murder_of_hypatia.shtml'
+quotes:
+  hypatia_alexandria_story_echo_full:
+    order: 1
+    tier: full
+    date: '415'
+    checked: official_record
+    sources: [hypatia_alexandria_story_echo_source_full]
+    original: grc
+    contextual: true
+    text:
+      en: {"who":"Socrates Scholasticus","quote":"to explain the philosophical subjects to those who wished to hear","occasion":"The later historian describes Hypatia’s teaching in the chapter about the events of 415."}
+      zh: {"who":"苏格拉底·斯科拉斯提库斯","quote":"向愿意听的人讲解各门哲学。","occasion":"后世史家在记 415 年事件的一章里描写希帕提娅授课。"}
+      grc: {"who":"Socrates Scholasticus","quote":"πάντα τὰ φιλόσοφα μαθήματα τοῖς βουλομένοις ἐκτίθεσθαι","occasion":"The later historian describes Hypatia’s teaching in the chapter about the events of 415."}
+  hypatia_alexandria_story_echo_none:
+    order: 2
+    tier: none
+    date: '415'
+    checked: official_record
+    sources: [hypatia_alexandria_story_echo_source_none]
+    original: grc
+    contextual: true
+    text:
+      en: {"who":"Socrates Scholasticus","quote":"There was a woman in Alexandria named Hypatia.","occasion":"The historian introduces Hypatia in the chapter about her death. The date is of the event described."}
+      zh: {"who":"苏格拉底·斯科拉斯提库斯","quote":"亚历山大有一位女子，名叫希帕提娅。","occasion":"史家在记载她遇害的一章介绍她。日期取所记事件。"}
+      grc: {"who":"Socrates Scholasticus","quote":"Ἦν τις γυνὴ ἐν τῇ Ἀλεξανδρείᾳ, τοὔνομα Ὑπατία","occasion":"The historian introduces Hypatia in the chapter about her death. The date is of the event described."}
 self_check:
   fact: hydroscope
   quote_line: '妮萨把读数时站的位置也写了进去。'

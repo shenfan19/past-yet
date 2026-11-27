@@ -2,7 +2,8 @@ order: 224
 events:
   banneker_maryland:
     order: 214
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1791
     date: '1791-08-01'
     stay: 2
@@ -28,6 +29,24 @@ events:
         place: "Maryland"
         figure: "Benjamin Banneker"
         story: 'On 19 August 1791, Benjamin Banneker wrote to Thomas Jefferson, sent a manuscript of his almanac for the following year, and challenged racial prejudice and slavery. The packing table and its two helpers are imagined. Players can protect the connection between the letter and the work it accompanies.'
+        story_prose:
+          opening:
+            - 'The printer’s messenger and the outgoing post are both at the door. Banneker writes the mills’ name on the letter and turns his almanac to its last page to make sure his handwritten copy is still on the table. He has things to say in that letter he will only send once.'
+            - 'On 19 August 1791 Benjamin Banneker sent Thomas Jefferson a manuscript almanac with a letter challenging the denial of liberty to Black people. A fire in 1806 destroyed much of what he kept at home, although at least one manuscript journal survived. This branch can leave more of his chosen papers somewhere else.'
+            - 'Have a traveller who can check the printer’s copy against the handwritten one mind both packets. If a copyist can make time for an extra set, ask Banneker which notes may be copied.'
+          points:
+            p1: 'The messenger turns both sets to July and finds nearly the same column of figures. You ask Banneker to identify the manuscript meant for Jefferson, and the postman to read the name on the envelope aloud. One thread goes round letter and almanac. The printer’s papers lie flat on the counter. The postman reads the address before he reaches for the knot.'
+            p2: 'The copyist brings a thick sleeve. Banneker lifts out a few sheets and leaves the dated observations and workings he can check. He asks you to read back a corrected figure and check that the old one was left out of the calculation. At the other house, the keeper opens the extra set and reads the first date aloud.'
+          outcomes:
+            all: 'Jefferson’s reply acknowledges both items. When fire reaches the house years later, the copy elsewhere still holds the observations Banneker agreed to share.'
+            p1: 'The letter and almanac go out together. More of the working papers stay at home and are lost with many of his belongings.'
+            p2: 'A checked set has been left away from the house. The outgoing mail goes wrong, and the traveller brings home the date read on the spare set.'
+          none: 'There is no separately marked packet on the table. Readers can consult only the working notes that survived in history.'
+          not_admitted: 'The printer’s man checks names before closing his box. He does not recognise the visitor and puts the packet back by Banneker’s door.'
+          desync: 'The printer collects the only almanac that can go with the letter. The historical enclosure is missing and the office recalls the traveller.'
+          excerpts:
+            p1: 'The postman reads the address before he reaches for the knot.'
+            p2: 'At the other house, the keeper opens the extra set and reads the first date aloud.'
         relic: 'A duplicate wrapper label'
         relic_desc: 'A fictional copy naming the almanac and its accompanying letter.'
         points:
@@ -53,6 +72,24 @@ events:
         place: "马里兰"
         figure: "本杰明·班纳克"
         story: '1791年8月19日，本杰明·班纳克致信托马斯·杰斐逊，随信送去下一年的历书手稿，质问种族偏见与奴隶制度。'
+        story_prose:
+          opening:
+            - '印坊的信使和要离开的邮差都在门口。班纳克把磨坊附近的地名写上信，又把历书翻到末页，确认亲笔的那份还在桌上。信里有些话只寄这一次。'
+            - '史实里，班纳克在 1791 年 8 月 19 日给杰斐逊写信，随信寄了亲笔年历，质问黑人为何被剥夺自由。1806 年住宅失火，他的大部分遗物损毁，至少一本手写笔记幸存。分支里还能另存他愿让人读的草算和观测笔记。'
+            - '让能核对送印稿和亲笔稿的人守着两个纸包。若能说服印坊为家外另存的一份留出时间，让班纳克自己挑要抄的页。'
+          points:
+            p1: '理事把两份稿都翻到七月，看见差不多相同的一列数。你请班纳克指认给杰斐逊的那份，再请信使当面念出封上的收件人。信和亲笔年历捆在同一根细绳里；给印坊的纸平放在柜上。邮差读完地址，才把手伸向绳结。'
+            p2: '抄写人递来一个很厚的纸套。班纳克从底下抽出几页，留下有日期、能核查的观测和草算。他让你读一处改过的数，看抄本有没有把旧数也算进去。那份副稿送到住家外时，保管人照着第一页读了一遍日期。'
+          outcomes:
+            all: '杰斐逊的回信确认两个东西都收到。多年后火烧到屋里，屋外那份副稿仍留着班纳克准人抄下的笔记。'
+            p1: '信和历书一起寄出。更多草算仍留在家里，后来随住宅里的许多物件一起损毁。'
+            p2: '住家外已有一份核过的副稿。邮包出了差错，员工短记只留着出门前在副稿上看见的日期。'
+          none: '屋里找不到分开标记的纸包。后来能读到的草算，仍只有原先侥幸留存的部分。'
+          not_admitted: '印坊的人关上箱子前要核来客的名字。没认出来，他把纸包放回班纳克的门边。'
+          desync: '印坊从桌上取走了唯一能随信寄出的历书。信件失去史有的附件，事务所召回员工。'
+          excerpts:
+            p1: '邮差读完地址，才把手伸向绳结。'
+            p2: '那份副稿送到住家外时，保管人照着第一页读了一遍日期。'
         relic: '一张留底的信包签'
         relic_desc: '留底签，写明里头有历书，也有随附的信。'
         points:
@@ -157,6 +194,40 @@ wiki:
       text:
         en: 'U.S. National Park Service, the Banneker–Jefferson correspondence https://home.nps.gov/articles/000/inde-bbanneker-letters-tjefferson-1791.htm'
         zh: '美国国家公园管理局，班纳克与杰斐逊往来书信 https://home.nps.gov/articles/000/inde-bbanneker-letters-tjefferson-1791.htm'
+    banneker_maryland_story_echo_source_full:
+      order: 2463
+      status: checked
+      text:
+        en: 'Founders Online, Banneker to Jefferson, 19 August 1791 https://founders.archives.gov/documents/Jefferson/01-22-02-0049'
+        zh: '美国国家档案馆，班纳克致杰斐逊书 https://founders.archives.gov/documents/Jefferson/01-22-02-0049'
+    banneker_maryland_story_echo_source_none:
+      order: 2464
+      status: checked
+      text:
+        en: 'Library of Congress, Jefferson to Banneker, 30 August 1791 https://www.loc.gov/item/mtjbib005579/'
+        zh: '美国国会图书馆，杰斐逊致班纳克书 https://www.loc.gov/item/mtjbib005579/'
+quotes:
+  banneker_maryland_story_echo_full:
+    order: 1
+    tier: full
+    date: '1791-08-19'
+    checked: official_record
+    sources: [banneker_maryland_story_echo_source_full]
+    original: en
+    text:
+      en: {"who":"Benjamin Banneker","quote":"I chose to send it to you in manuscript previous thereto","occasion":"Banneker tells Jefferson why he encloses his handwritten almanac ahead of publication."}
+      zh: {"who":"本杰明·班纳克","quote":"在出版之前，我选择先把手稿寄给您。","occasion":"班纳克说明为何在出版前寄上自己的亲笔年历。"}
+  banneker_maryland_story_echo_none:
+    order: 2
+    tier: none
+    date: '1791-08-30'
+    checked: official_record
+    sources: [banneker_maryland_story_echo_source_none]
+    original: en
+    contextual: true
+    text:
+      en: {"who":"Thomas Jefferson","quote":"I thank you, sincerely, for your letter of the 19th instant, and for the Almanac it contained.","occasion":"Jefferson acknowledges both items in his reply."}
+      zh: {"who":"托马斯·杰斐逊","quote":"我诚挚感谢您本月十九日的来信，感谢随信寄来的年历。","occasion":"杰斐逊的回信确认两件东西都已收到。"}
 self_check:
   fact: letter
   quote_line: '表随寄件人署名上路，他要说的话也跟着去。'

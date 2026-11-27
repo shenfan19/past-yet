@@ -2,7 +2,8 @@ order: 104
 events:
   ibn_sina_hamadan:
     order: 57
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1037
     date: '1037-05-01'
     stay: 2
@@ -27,8 +28,22 @@ events:
         place: Hamadan, Persia
         figure: Ibn Sina
         story: 'Ibn Sina finished his five-book Canon of Medicine at Hamadan years before his final journey. In the account continued by his companion al-Juzjani, Ibn Sina suffers repeated attacks of abdominal pain. He dies in 1037 on a journey to Hamadan with the ruler he serves.'
-        relic: 'A practice index strip'
-        relic_desc: 'A fictional marker distinguishing two of the five books.'
+        story_prose:
+          opening:
+            - 'The party on its way to Hamadan is gathering its bedding. Ibn Sina sets down his papers and asks whether they can wait a little. A companion sees him hold his abdomen and looks around for somewhere he can lie down.'
+            - 'The continuation of his biography records recurrent pain near the end of his life. Ibn Sina died in Hamadan in 1037. In this branch you can ask where he wants to stop and have someone stay with him while he rests.'
+            - 'Someone with care experience can ask him when he wants to stop. Find a companion he already knows. He and the party can decide how long to wait.'
+          points:
+            p1: 'Someone asks whether it is time to help him up. You crouch by the blanket and ask where he would like to stop. He points to a shady place farther in, where he will have something to lean against. You ask a companion to pass his things to someone else and sit where Ibn Sina can see him. The next knock gets an answer from inside asking for a little more time.'
+          outcomes:
+            all: 'On this leg of the trip, the party waits for Ibn Sina to say when he can get up. He still dies after arriving in Hamadan.'
+            p1: 'One companion stays to sit with him. Nobody asks him to hurry to catch the luggage already packed.'
+          none: 'The others are ready again and there is still nowhere for him to lie down. They have more road ahead.'
+          not_admitted: 'One of the party thanks you and asks visitors he has not arranged to see to wait outside. You cannot ask what he wants.'
+          excerpts:
+            p1: 'The next knock gets an answer from inside asking for a little more time.'
+        relic: 'A folded scrap of paper'
+        relic_desc: 'A fictional travelling note marking where the party stopped.'
         points:
           p1: 'When the pain returns, ask Ibn Sina where he wants to stop and arrange for someone to stay with him while he rests'
         points_fail:
@@ -38,16 +53,30 @@ events:
             was: 'Al-Juzjani’s account describes relapses and Ibn Sina’s death at Hamadan in 1037.'
             now: 'In this branch {staff} makes a place for Ibn Sina to rest when the pain returns. A companion stays with him and takes his reply to the people waiting to set out.'
         vignettes:
-          section: 'Ruqayya sends both requests to the same heading because both mention remedies. You ask her to open the index and point out which entry concerns a single substance and which concerns compounds. She puts one tab on each book. The two people at the table can now look for their entries without waiting for each other.'
-          sleeve: 'Yahya has to carry one copy away. Its guide slips will slide out if he tips the board. You help him fold the empty wrapper over the bookmarks while Ruqayya copies the two headings for the reader staying behind. The bench keeps a small index even when the book is gone.'
-          afterlife: 'You have seen the five books divided differently in a much later binding. Yahya asks where the first heading begins in this copy. You find its first line and leave the dates of future editions out of his note. You will miss his next reader trying the index from scratch.'
+          section: '{staff} asks how far they travelled after their last stop and puts the answer on a scrap that can be read back later.'
+          sleeve: 'Someone starts to roll up the bedding. {staff} asks them to leave one blanket unfolded until Ibn Sina decides whether to go.'
+          afterlife: '{staff} asks who will wait in the room while the others get ready. One companion carries his things back indoors.'
       zh:
         name: '最后一次腹痛'
         place: 波斯哈马丹
         figure: 伊本·西那
         story: '伊本·西那早年在哈马丹写完了五卷《医典》。随行的朱兹贾尼在续传中记下他的腹痛反复发作。1037 年，他随效力的君主前往哈马丹，在那里去世。'
-        relic: '一张练习索引条'
-        relic_desc: '读书签，区分全书五卷中的两卷。'
+        story_prose:
+          opening:
+            - '去哈马丹的一行人正在收起铺地的毯。伊本·西那放下手里的纸，问他们能不能再等一会儿。随行人见他把手按在腹部，却一时找不到能躺下的地方。'
+            - '续传记伊本·西那晚年腹痛反复，于 1037 年在哈马丹去世。这一趟可以询问他自己的意愿，让同行的人在路上陪他歇息。'
+            - '让有照护经验的人去问他什么时候想停，再找他熟悉的同行人陪他。能等多久由他和同行的人商量。'
+          points:
+            p1: '有人来问是不是该扶他起来。你蹲在毯边问他想在哪里停，他指了指里侧的暗处，说那里不用一直撑着身子。你请同行的人把手里的东西交给别人拿，坐到他能看见的地方。再次有人来敲门时，屋里答了一声还请再等。'
+          outcomes:
+            all: '这一程里有人等伊本·西那自己说可以起身。后来到了哈马丹，他仍在那里去世。'
+            p1: '有人留下来陪他，没有催他赶上已经收好的行李。'
+          none: '同行人等得差不多了，仍没能找到方便他躺下的地方。路还要接着走。'
+          not_admitted: '随行人替伊本·西那谢过来客，请没约好的人在外头等。你没能问到他的意思。'
+          excerpts:
+            p1: '再次有人来敲门时，屋里答了一声还请再等。'
+        relic: '一张折起的路记'
+        relic_desc: '虚构的随行纸条，写着一行人在哪儿停过。'
         points:
           p1: '腹痛再犯时，问伊本·西那想在哪里停下，找个人陪他歇一歇'
         points_fail:
@@ -57,9 +86,9 @@ events:
             was: '朱兹贾尼的续传记载伊本·西那的腹痛反复发作，1037 年在哈马丹去世。'
             now: '这条分支里，腹痛再犯时，{staff}给伊本·西那找到了歇脚处。有同伴陪他停下，也替他把回话带给等出发的人。'
         vignettes:
-          section: '鲁卡娅见两张单都提到药物，便指向同个题头。你请她打开索引，指出哪条是单味，哪条是复方。她给两卷各夹一签。桌边的两个人现在可以各找各的条目了。'
-          sleeve: '叶海亚得带走一份抄本，板一斜，索引签就会滑掉。你帮他用空封纸把几个签护好，鲁卡娅则替还留在桌边的人另抄两个题头。书带走后，桌上还有一张小索引。'
-          afterlife: '你见过后世的装帧，同样五卷却分成不同的册子。叶海亚问，在手里这部抄本哪儿才是第一个题头。你找到开头那行，把后世版本的日子留在纸外。接手人第一次自己试索引，你已经看不到了。'
+          section: '{staff}问上一次歇脚之后又走了多远，把回答写在一张便于翻查的纸上。'
+          sleeve: '有人开始收铺盖。{staff}请他们暂留一张毯，等伊本·西那自己决定何时走。'
+          afterlife: '{staff}问大家准备出发时谁留在屋里等。有一位同行人把行李提回里间。'
 text:
   en:
     name: Ibn Sina
@@ -145,6 +174,41 @@ wiki:
       text:
         en: 'Bodleian Libraries, The Canon of Medicine, object guide https://bodwhatson.web.ox.ac.uk/sites/default/files/bodwhatson/documents/media/mim-canon-medicine.pdf'
         zh: '博德利图书馆，《医典》藏品解说 https://bodwhatson.web.ox.ac.uk/sites/default/files/bodwhatson/documents/media/mim-canon-medicine.pdf'
+    ibn_sina_hamadan_story_echo_source_full:
+      order: 2514
+      status: checked
+      text:
+        en: 'Ibn Sina, Canon of Medicine, Book I, Arabic text https://ar.wikisource.org/wiki/القانون_في_الطب_-_الكتاب_الأول'
+        zh: '伊本·西那《医典》第一卷，阿拉伯语原文 https://ar.wikisource.org/wiki/القانون_في_الطب_-_الكتاب_الأول'
+    ibn_sina_hamadan_story_echo_source_none:
+      order: 2515
+      status: checked
+      text:
+        en: 'Ibn Sina, Canon of Medicine, Book I, Arabic text https://ar.wikisource.org/wiki/القانون_في_الطب_-_الكتاب_الأول'
+        zh: '伊本·西那《医典》第一卷，阿拉伯语原文 https://ar.wikisource.org/wiki/القانون_في_الطب_-_الكتاب_الأول'
+quotes:
+  ibn_sina_hamadan_story_echo_full:
+    order: 1
+    tier: full
+    date: '1025'
+    checked: official_record
+    sources: [ibn_sina_hamadan_story_echo_source_full]
+    original: ar
+    text:
+      en: {"who":"Ibn Sina","quote":"Medicine is a science through which one learns the conditions of the human body.","occasion":"Opening of the Canon of Medicine. The date is an approximate completion year."}
+      zh: {"who":"伊本·西那","quote":"医学是一门认识人体状态的学问。","occasion":"《医典》开头。所标年份为约略成书时间。"}
+      ar: {"who":"Ibn Sina","quote":"إن الطب علم يتعرف منه أحوال بدن الإنسان","occasion":"Opening of the Canon of Medicine. The date is an approximate completion year."}
+  ibn_sina_hamadan_story_echo_none:
+    order: 2
+    tier: none
+    date: '1025'
+    checked: official_record
+    sources: [ibn_sina_hamadan_story_echo_source_none]
+    original: ar
+    text:
+      en: {"who":"Ibn Sina","quote":"When a thing has causes, knowledge of it is complete only when those causes are known.","occasion":"Book I, second chapter, on what one needs to know about a condition."}
+      zh: {"who":"伊本·西那","quote":"事物若有成因，知道成因，认识才能完备。","occasion":"《医典》第一卷第二章，谈怎样认识身体的状态。"}
+      ar: {"who":"Ibn Sina","quote":"والعلم بكل شيء إنما يحصل ويتمّ إذا كان له أسباب يعلم أسبابه","occasion":"Book I, second chapter, on what one needs to know about a condition."}
 self_check:
   fact: canon
   quote_line: '书带走后，桌上还有一张小索引。'

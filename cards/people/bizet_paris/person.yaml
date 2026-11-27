@@ -2,7 +2,8 @@ order: 32
 events:
   bizet_paris:
     order: 131
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1875
     date: '1875-02-14'
     stay: 4
@@ -28,6 +29,24 @@ events:
         place: "Paris"
         figure: "Georges Bizet"
         story: 'Carmen opened at the Opéra-Comique on 3 March 1875 after a long rehearsal period. The press was mixed and the production continued through the spring. On 3 June Bizet died in Bougival, aged thirty-six.'
+        story_prose:
+          opening:
+            - 'The Opéra-Comique has one last rehearsal left. The chorus enters on time, but crossing the stage delays its second line. Someone at the piano asks whether the orchestra wants time on its own or whether they should start again from the move on stage.'
+            - 'Carmen premiered in Paris on 3 March 1875. Bizet died that June. You can give the cast and orchestra another run together and later pass Bizet the exact section a singer wants to rehearse.'
+            - 'Use someone who can count the entrance with both sides. After the performance, someone can write down the singer’s concern with the number and the first words of the section.'
+          points:
+            p1: 'The orchestra wants to begin at the bar it misheard. You ask the chorus to go back to its first position and show the conductor where it has to be before it can sing as one. After one stop, everyone starts from the word that brings the chorus in. When it fits on the second attempt, the person at the stage door signals to go on.'
+            p2: 'Someone writes ‘difficult entrance’ on a slip after the show. You ask her to sing the previous line and have another singer identify which time they hear it. Bizet checks whose request it is and slides the slip into the score they used that night. The first words stick out where the singer who asked can find them next time.'
+          outcomes:
+            all: 'The curtain opens on 3 March. Bizet gets a note that identifies the passage, and the record still carries his death in June.'
+            p1: 'The curtain goes up on time. The performers send a short note later, and Bizet still has to ask which part it concerns.'
+            p2: 'Bizet receives the slip and can find its first words in the score. The premiere has fallen out of sync, and only the handover survives in the trip record.'
+          none: 'Two marks look the same on the score. The people leaving still cannot agree which one brings in the chorus.'
+          not_admitted: 'The person at the stage door never finds your name. You stand clear of the entrance and hear the singers count a few beats again.'
+          desync: 'The rehearsal breaks down and the 3 March premiere fails to begin. The office recalls the traveller.'
+          excerpts:
+            p1: 'When it fits on the second attempt, the person at the stage door signals to go on.'
+            p2: 'The first words stick out where the singer who asked can find them next time.'
         relic: "A fan"
         relic_desc: "A painted paper fan from the stalls."
         points:
@@ -51,6 +70,24 @@ events:
         place: "巴黎"
         figure: "乔治·比才"
         story: '《卡门》经过数月排练，于 1875 年 3 月 3 日在巴黎喜歌剧院首演。报刊评价不一，剧院在那年春天继续演出。6 月 3 日，比才在布日瓦尔去世，终年三十六岁。'
+        story_prose:
+          opening:
+            - '巴黎喜歌剧院的排练剩下最后一轮。合唱第一声准时进了，第二句却被走位挤到后面。钢琴边的人问，是先给乐队留时间，还是从舞台上的那一步重新来。'
+            - '《卡门》于 1875 年 3 月 3 日在巴黎首演，比才同年六月去世。这里可以先给合唱和乐队一次合排，演出后再把歌手确切想重过的段落交给比才。'
+            - '让踩得准进声时刻的员工先和舞台两边对好。演出完，有人可把歌手的话按曲目和词头写下。'
+          points:
+            p1: '乐队想从自己听错的那小节开始。你请台上的歌手先退回原位，让指挥看见他们要走到哪里才能齐声。停了一次以后，全组从入场的那个字再唱。第二次才合上时，管台的人从门边打了个手势，可以往后接了。'
+            p2: '演后有人在便条上写「进来难」。你请她哼出前一句，叫另一位歌手指出是第几回听到这个开头的。比才接了纸，先看清哪几个人说的，再把它夹进当晚用的谱。词头仍露在外头，下次想重过的人一眼能找到。'
+          outcomes:
+            all: '3 月 3 日首演照期开始。演后比才收到能指到段落的便条，六月的死讯仍按史实进入记录。'
+            p1: '幕照常拉开。之后歌手只送来一条简略的消息，比才还得等人回来说明。'
+            p2: '一张标清词头的便条已经递到比才手里。首演日期出了差错，回程只保留这段交接。'
+          none: '谱上留下两处看着一样的记号。下班离场的人仍说不清合唱应该在哪一处进。'
+          not_admitted: '管台的人没在名单里找到来客，让你站在不碍门的地方。歌手在里面重新数了几拍。'
+          desync: '排练没能合拢，3 月 3 日的首演未开始。事务所按同步失败召回员工。'
+          excerpts:
+            p1: '第二次才合上时，管台的人从门边打了个手势，可以往后接了。'
+            p2: '词头仍露在外头，下次想重过的人一眼能找到。'
         relic: "一把折扇"
         relic_desc: "一把来自池座的彩绘纸扇。"
         points:
@@ -170,6 +207,43 @@ wiki:
       text:
         en: 'Opéra-Comique, premieres and theatre history https://www.opera-comique.com/fr/la-creation-a-l-opera-comique-en-10-dates-cles-0'
         zh: '巴黎喜歌剧院，剧院首演纪事 https://www.opera-comique.com/fr/la-creation-a-l-opera-comique-en-10-dates-cles-0'
+    bizet_paris_story_echo_source_full:
+      order: 2538
+      status: checked
+      text:
+        en: 'Carmen, libretto, Meilhac and Halévy collected theatre edition https://fr.wikisource.org/wiki/Carmen_(opéra)/Texte_entier'
+        zh: '《卡门》剧本，梅亚克与阿莱维戏剧集 https://fr.wikisource.org/wiki/Carmen_(opéra)/Texte_entier'
+    bizet_paris_story_echo_source_none:
+      order: 2539
+      status: checked
+      text:
+        en: 'Carmen, libretto, Meilhac and Halévy collected theatre edition https://fr.wikisource.org/wiki/Carmen_(opéra)/Texte_entier'
+        zh: '《卡门》剧本，梅亚克与阿莱维戏剧集 https://fr.wikisource.org/wiki/Carmen_(opéra)/Texte_entier'
+quotes:
+  bizet_paris_story_echo_full:
+    order: 1
+    tier: full
+    date: '1875-03-03'
+    checked: official_record
+    sources: [bizet_paris_story_echo_source_full]
+    original: fr
+    contextual: true
+    text:
+      en: {"who":"Henri Meilhac and Ludovic Halévy","quote":"Near the ramparts of Seville.","occasion":"The opening of Carmen’s Seguidilla in Act I. The date is the premiere."}
+      zh: {"who":"亨利·梅亚克、吕多维克·阿莱维","quote":"在塞维利亚的城墙旁。","occasion":"第一幕卡门所唱塞吉迪亚舞曲的开头。日期为首演日。"}
+      fr: {"who":"Henri Meilhac and Ludovic Halévy","quote":"Près des remparts de Séville","occasion":"The opening of Carmen’s Seguidilla in Act I. The date is the premiere."}
+  bizet_paris_story_echo_none:
+    order: 2
+    tier: none
+    date: '1875-03-03'
+    checked: official_record
+    sources: [bizet_paris_story_echo_source_none]
+    original: fr
+    contextual: true
+    text:
+      en: {"who":"Henri Meilhac and Ludovic Halévy","quote":"Love is a rebellious bird.","occasion":"Opening of the Habanera text in the collected libretto. The date is the premiere."}
+      zh: {"who":"亨利·梅亚克、吕多维克·阿莱维","quote":"爱情是一只不驯的鸟。","occasion":"剧本所收哈巴涅拉舞曲的开头。日期为首演日。"}
+      fr: {"who":"Henri Meilhac and Ludovic Halévy","quote":"L’amour est un oiseau rebelle","occasion":"Opening of the Habanera text in the collected libretto. The date is the premiere."}
 self_check:
   fact: rehearsals
   quote_line: '一张节目单收进抽屉。你走时还没有第二个人来翻看。'

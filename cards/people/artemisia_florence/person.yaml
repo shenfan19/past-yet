@@ -2,7 +2,8 @@ order: 22
 events:
   artemisia_florence:
     order: 146
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1616
     date: '1616-07-05'
     stay: 3
@@ -28,6 +29,24 @@ events:
         place: "Florence"
         figure: "Artemisia Gentileschi"
         story: 'Artemisia Gentileschi became the first woman admitted to Florence''s Academy of the Arts of Drawing in 1616. Her Florentine years include the work now known as Self-Portrait as a Lute Player.'
+        story_prose:
+          opening:
+            - 'The shop in Florence has two account books open. Pigments go in one, and a slip for the academy fee is tucked into the other. Artemisia asks the clerk to keep them separate and tell her the day in July when she can collect her receipt.'
+            - 'The Florentine drawing academy admitted Artemisia on 19 July 1616. She was also working on commissions. In this branch you can get the admission fee in place and help her secure a dated advance in her next painting agreement.'
+            - 'Someone who is good with accounts can check the academy payment. Someone who can put a spoken agreement in writing can help her ask the client for the date she needs.'
+          points:
+            p1: 'The clerk has filed the academy slip among pigment bills that need settling. You ask Artemisia which payment has to go first and check the name of the recipient beside the date of admission. The clerk pulls out the receipt and leaves a copy for her. She takes the slip with her name on it away from the counter.'
+            p2: 'When the last payment comes in, the patron asks how early she can begin the next painting. Artemisia pushes her pigment bill over and waits as he reads it aloud. You ask the clerk to record an advance due before work starts and give one copy to each person. When she goes to buy pigments, she takes the paper that shows when she can draw the money.'
+          outcomes:
+            all: 'The academy accepts the fee. The next agreement now gives the advance a date. Artemisia pays for the pigments and stretches the first canvas.'
+            p1: 'Artemisia is admitted on the historical date. When she next wants to order supplies, she will still have to ask her patron for the money.'
+            p2: 'The advance goes into the next agreement. The academy fee is late, and the trip preserves only the negotiation over the painting.'
+          none: 'Receipts for the two expenses are still in the same pile. The shopkeeper asks once more which should be paid first.'
+          not_admitted: 'The clerk has seats for the people he expects. You stay outside and watch someone file the academy slip among the pigment bills.'
+          desync: 'The fee is not paid on the day. The enrolment falls out of sync and the office recalls the traveller.'
+          excerpts:
+            p1: 'She takes the slip with her name on it away from the counter.'
+            p2: 'When she goes to buy pigments, she takes the paper that shows when she can draw the money.'
         relic: "A pigment jar"
         relic_desc: "A small jar of ground lapis blue."
         points:
@@ -53,6 +72,24 @@ events:
         place: "佛罗伦萨"
         figure: "阿尔泰米西娅·真蒂莱斯基"
         story: '1616 年，阿尔泰米西娅·真蒂莱斯基成为佛罗伦萨绘画学院接纳的首位女性。现称《弹鲁特琴的自画像》的作品属于她在佛罗伦萨的时期。'
+        story_prose:
+          opening:
+            - '佛罗伦萨的画材铺开着两本账。颜料记在一本里，另一册夹了学院费用的条子。阿尔泰米西娅请经手人把这两笔分开，再问七月哪一天能拿到缴费的回单。'
+            - '1616 年 7 月 19 日，阿尔泰米西娅获佛罗伦萨绘画学院接纳。她那年也在做委托画。这里可以帮她办妥入会费，再从下一份画约里争取开工前的预付款。'
+            - '懂核账的人可以先清点学院的钱。擅长把口头约定落实到纸面的人，可帮她按想要的日期问委托方。'
+          points:
+            p1: '账房把学院单夹在着急结清的颜料账里。你请阿尔泰米西娅说清哪笔要先交，再把收款人与入会日期一起核定。经手人把学院的回单抽出来，旁边空了一联给她自己留。她把写着名字的那一联带出了柜台。'
+            p2: '最后一笔画款结清时，委托人问下一张画能早几天开工。阿尔泰米西娅把颜料单推给他，看着对方逐项念完。你替他们请书记把预付款日写在开工之前，让双方各有一份。她之后去取颜料，带的是已经能照约收款的纸。'
+          outcomes:
+            all: '学院收下入会费，下一份画约也已经写好预付款的日子。她按约买到颜料，再把第一张画布架起来。'
+            p1: '入会照史实办成。到了下一次订颜料时，先付款的事还得另找对方开口。'
+            p2: '预付款的条款写下了。入会费未赶上，回程只带回画约交接的一段。'
+          none: '两笔钱仍在同一沓票里，画材铺只好再问哪一笔先付。'
+          not_admitted: '账房给预约过的人留了位子。你没进里间，只看见有人把学院的纸条夹回账中。'
+          desync: '入会费没有按日交妥。学院的录名与史实脱节，事务所召回员工。'
+          excerpts:
+            p1: '她把写着名字的那一联带出了柜台。'
+            p2: '她之后去取颜料，带的是已经能照约收款的纸。'
         relic: "一罐颜料"
         relic_desc: "一小罐磨好的青金石蓝。"
         points:
@@ -146,6 +183,41 @@ wiki:
       text:
         en: 'Artemisia Gentileschi, Self-Portrait as a Lute Player, about 1615–18, Wadsworth Atheneum. National Gallery records her 1616 admission to the Florentine drawing academy. https://www.thewadsworth.org/event/gallery-music-artemisia-gentileschis-self-portrait-as-a-lute-player/'
         zh: 'Artemisia Gentileschi, Self-Portrait as a Lute Player, about 1615–18, Wadsworth Atheneum. National Gallery records her 1616 admission to the Florentine drawing academy. https://www.thewadsworth.org/event/gallery-music-artemisia-gentileschis-self-portrait-as-a-lute-player/'
+    artemisia_florence_story_echo_source_full:
+      order: 2541
+      status: checked
+      text:
+        en: 'Artemisia’s Ruffo correspondence quoted by the Museo Diocesano di Napoli https://www.museodiocesanonapoli.com/Artemisia%20a%20Napoli%20%281630-1654%29.pdf'
+        zh: '那不勒斯教区博物馆所引阿尔泰米西娅致鲁福书信 https://www.museodiocesanonapoli.com/Artemisia%20a%20Napoli%20%281630-1654%29.pdf'
+    artemisia_florence_story_echo_source_none:
+      order: 2542
+      status: checked
+      text:
+        en: 'Artemisia’s Ruffo correspondence quoted by the Museo Diocesano di Napoli https://www.museodiocesanonapoli.com/Artemisia%20a%20Napoli%20%281630-1654%29.pdf'
+        zh: '那不勒斯教区博物馆所引阿尔泰米西娅致鲁福书信 https://www.museodiocesanonapoli.com/Artemisia%20a%20Napoli%20%281630-1654%29.pdf'
+quotes:
+  artemisia_florence_story_echo_full:
+    order: 1
+    tier: full
+    date: '1649'
+    checked: official_record
+    sources: [artemisia_florence_story_echo_source_full]
+    original: it
+    text:
+      en: {"who":"Artemisia Gentileschi","quote":"what a woman can do","occasion":"Words from a later letter to Antonio Ruffo concerning the work she was prepared to deliver."}
+      zh: {"who":"阿尔泰米西娅·真蒂莱斯基","quote":"女人能做到什么。","occasion":"她后来致安东尼奥·鲁福的信里谈即将交出的画作。"}
+      it: {"who":"Artemisia Gentileschi","quote":"quello che sa fare una donna","occasion":"Words from a later letter to Antonio Ruffo concerning the work she was prepared to deliver."}
+  artemisia_florence_story_echo_none:
+    order: 2
+    tier: none
+    date: '1649'
+    checked: official_record
+    sources: [artemisia_florence_story_echo_source_none]
+    original: it
+    text:
+      en: {"who":"Artemisia Gentileschi","quote":"the spirit of Caesar in a woman’s soul","occasion":"She uses the phrase in a later price negotiation with Antonio Ruffo."}
+      zh: {"who":"阿尔泰米西娅·真蒂莱斯基","quote":"一个女人心里有恺撒的气概。","occasion":"后来她与安东尼奥·鲁福谈价格时用的这句话。"}
+      it: {"who":"Artemisia Gentileschi","quote":"un animo di Cesare nell’anima d’una donna","occasion":"She uses the phrase in a later price negotiation with Antonio Ruffo."}
 self_check:
   quote_line: '访客面对镜子，问哪种姿势看着自然。'
   fact: self_portrait

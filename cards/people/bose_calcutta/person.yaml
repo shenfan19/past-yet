@@ -2,55 +2,84 @@ order: 36
 events:
   bose_calcutta:
     order: 81
-    build_step: 1
-    year: 1901
+    build_step: 4
+    ready: true
+    year: 1885
+    stay: 2
     lon: 88.36
     lat: 22.57
     region: asia
     field: science
     tier: 2
     channels: {H: 2}
-    refs: [bose_calcutta_polarisation]
+    refs: [bose_calcutta_geddes, bose_calcutta_salary_history, bose_calcutta_polarisation]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["curious","skeptical","handy"]}}
-        - {id: p2, kind: persuade, req: {"trait":["glib","ambitious","streetwise"]}}
-        - {id: p3, kind: hold, req: {"job":["electrician","mechanic"]}}
-      vignettes:
-        - {id: return, traits: [methodical, skeptical]}
-        - {id: mark, traits: [curious, handy]}
-        - {id: reading}
+        - {"id":"p1","kind":"persuade","day":12,"req":{"any":[{"job":["accountant","tax_preparer","university_lecturer"],"stat":{"will":6}},{"trait":["glib","charismatic","methodical"],"stat":{"wit":6,"will":6}}]}}
     text:
       en:
-        name: 'Turn the book a quarter turn'
-        place: Calcutta
-        figure: Jagadish Chandra Bose
-        story: 'In a paper read on 28 January 1897, Jagadis Chunder Bose reports that a bound book placed in a beam of electric rays transmitted the radiation much more readily after a quarter turn.'
-        relic: A crescograph part
-        relic_desc: A lever that magnified a plant's growth ten thousand times.
+        name: 'The cheque he would not cash'
+        place: 'Calcutta'
+        figure: 'Jagadish Chandra Bose'
+        story: 'In 1885 Bose began teaching physics at Presidency College. His pay was below that offered to European colleagues. He kept teaching and refused the lower pay during the dispute.'
+        story_prose:
+          opening:
+            - 'Calcutta, 1885. Bose teaches physics at Presidency College. The college offers him less than European colleagues doing the same work. He continues to teach.'
+            - 'In history, about three years went by before the dispute was resolved. In this branch the first amount has yet to be collected, and there is still time for the office to issue a different cheque.'
+            - 'Someone who can read salary terms will be useful here. It also takes someone who can get the person responsible for signing to hear how the two teaching assignments compare.'
+          points:
+            p1: '{staff} puts a week of classes and both sets of salary terms on one page, then waits with Bose in the office while a ledger is brought down. Once the new terms are written, Bose follows the number with a finger. The cheque comes across the desk again. This time he takes it in both hands.'
+          outcomes:
+            all: 'When Bose gets back to the classroom, the demonstration is still to be set out. He puts the cheque in his pocket and clears a space for the pupils first.'
+            p1: 'When Bose gets back to the classroom, the demonstration is still to be set out. He puts the cheque in his pocket and clears a space for the pupils first.'
+          none: 'The office sends the original amount again. Bose looks at it and pushes the paper back across the counter.'
+          not_admitted: '{staff} never gets inside the room where the terms are signed. A class ends at the other end of the hall and the boards creak underfoot.'
+          excerpts:
+            p1: 'The cheque comes across the desk again. This time he takes it in both hands.'
+        relic: 'A salary receipt'
+        relic_desc: 'An imagined receipt for the first cheque he agreed to take in this branch.'
         points:
-          p1: 'Read the detector before changing the book’s orientation'
-          p2: 'Persuade the mechanic to try the first orientation again'
-          p3: 'Mark the starting orientation on the apparatus sketch'
-        vignettes:
-          return: 'The mechanic turns the book and the response drops. You ask him to turn it back instead of packing away the apparatus. The response returns on this run. Now both changes go in the record. There is no time to try a second material.'
-          mark: 'The mechanic says he can remember which way the pages faced. You make one orientation mark on the drawing and one corresponding mark on the holder. He can return to the starting angle without guessing. The next comparison belongs to his shift.'
-          reading: 'You copy the reading beside a sketch of the book before touching anything. After the turn, you put the second reading on a fresh line. You bring home the pair. From two readings alone, the question of drift stays open.'
+          p1: 'Get a written equal-pay offer to Bose during his first year of teaching'
+        points_fail:
+          p1: 'The employee did not secure equal terms during that first year, and Bose continued to refuse the lower pay.'
+        shift:
+          p1:
+            was: '1885: Bose began teaching at Presidency College. He refused the lower pay, and the dispute took about three years to resolve.'
+            now: '{staff} secures a written offer on the same terms as his colleagues. Bose reads it and accepts the first cheque issued on those terms.'
+            who: bose_calcutta
+            bio: 'Bose received equal terms in his first year at Presidency College.'
       zh:
-        name: '把书转回原来的方向'
-        place: 加尔各答
-        figure: 贾格迪什·钱德拉·博斯
-        story: '博斯在 1897 年 1 月 28 日宣读的论文中记载，把一本装订好的书置于电波束中，转过四分之一圈，电波便更容易通过。'
-        relic: 一个植物生长记录仪的部件
-        relic_desc: 一根把植物的生长放大一万倍的杠杆。
+        name: '那张一直没有兑的支票'
+        place: '加尔各答'
+        figure: '贾格迪什·钱德拉·博斯'
+        story: '1885 年，博斯到总统学院教物理。他的薪俸低于欧洲同事。他继续授课，但在争议解决前不肯领较低的薪俸。'
+        story_prose:
+          opening:
+            - '1885 年，加尔各答。博斯在总统学院教物理。学校给他的薪俸低于做同样工作的欧洲同事，他仍照常上课。'
+            - '史实里，从拒领较低薪俸到争议解决过了约三年。在这条分支里，头一笔钱还没领，账房仍有机会重开一张支票。'
+            - '这趟用得上读得懂薪俸条款的人。把两份工作摆在一起谈时，还需要有人能让负责签字的人听完。'
+          points:
+            p1: '{staff}把同一周的课表抄在一张纸上，对照两份薪俸条件，陪博斯到办公室等一本账簿送来。博斯等对方把新条款写完，拿指尖沿着数目读了一遍。那张支票又从桌面另一头递过来。这一回，他用两只手接住了。'
+          outcomes:
+            all: '博斯回到课堂时，桌上的实验还没摆好。他把支票装进衣袋，先把留给学生的位置擦干净。'
+            p1: '博斯回到课堂时，桌上的实验还没摆好。他把支票装进衣袋，先把留给学生的位置擦干净。'
+          none: '账房又送来原来那笔数目。博斯看了一眼，把那张纸原样推回柜台。'
+          not_admitted: '{staff}没能进签字的那间办公室。走廊那头有人下课，木地板响了一阵。'
+          excerpts:
+            p1: '那张支票又从桌面另一头递过来。这一回，他用两只手接住了。'
+        relic: '一张薪俸收据'
+        relic_desc: '分支里的收据，记着他愿意领的第一张支票。'
         points:
-          p1: '转动书本前先读一次检波结果'
-          p2: '请工场帮工转回第一个方向复验'
-          p3: '在装置草图上标出起始方向'
-        vignettes:
-          return: '帮工转过那本书，读数变弱了。你请他先别收，把书转回原位。这次读数也跟着回来了。表里写下了两次变化，第二种材料还来不及试。'
-          mark: '帮工说原来朝哪边他自己记得。你在图上做一个记号，又在夹架上找到与它相合的位置标出来。他回到起始方向便不用靠猜。下一轮对照轮到他自己做。'
-          reading: '碰装置之前，你先画下书页朝哪边，再把读数写在旁边。转过书，在新的一行记第二个读数。两行都能带回去。仅凭这两下，还分不清有没有漂移。'
+          p1: '在博斯执教的第一年，为他争取一份与同事同等薪俸的书面答复'
+        points_fail:
+          p1: '员工没在第一年谈成同等条件，博斯仍不肯领较低的薪俸。'
+        shift:
+          p1:
+            was: '1885 年，博斯开始在总统学院教书。他拒领较低的薪俸，争议约三年才解决。'
+            now: '{staff}争取到与同事同等的书面薪俸条件。博斯读过条款，领了按这个条件开出的第一张支票。'
+            who: bose_calcutta
+            bio: '博斯在总统学院执教第一年便获得了同等薪俸。'
 text:
   en:
     name: Jagadish Chandra Bose
@@ -58,21 +87,29 @@ text:
   zh:
     name: 贾格迪什·钱德拉·博斯
     text: 印度物理学家与生物学家，1858 年生，1937 年去世，在加尔各答工作。他制造并探测毫米波无线电，后来用灵敏仪器测量植物的反应。
-hook: {en: 'Did the orientation change or did the detector drift?', zh: '转了方向，还是读数自己变了？'}
+hook: {en: 'The cheque he would not cash', zh: '那张一直没有兑的支票'}
 facts:
+  salary_wait:
+    date: '1885'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [bose_calcutta_geddes, bose_calcutta_salary_history]
+    text:
+      en: '1885: Bose began teaching at Presidency College. He refused the lower pay, and the dispute took about three years to resolve.'
+      zh: '1885 年，博斯开始在总统学院教书。他拒领较低的薪俸，争议约三年才解决。'
+    line:
+      en: '1885: Bose began teaching at Presidency College. He refused the lower pay, and the dispute took about three years to resolve.'
+      zh: '1885 年，博斯开始在总统学院教书。他拒领较低的薪俸，争议约三年才解决。'
   polarisation:
     date: '1897-01-28'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [bose_calcutta_polarisation]
     text:
       en: 'Bose describes experiments in which the selective transmission of electric radiation depends on orientation. One example uses a bound book and repeats the test with its edge turned by 90 degrees.'
       zh: '博斯报告电辐射通过材料的程度与材料取向有关。其中一个例子使用装订好的书，改变书边的取向九十度后重新测试。'
-bystanders:
-  mechanic:
-    invented: true
-    text: {en: 'A fictional workshop mechanic who has turned the book once and is ready to move on.', zh: '虚构的工场帮工，已经转了一回那本书，想往下试。'}
 wiki:
   refs:
     bose_calcutta_polarisation:
@@ -81,16 +118,58 @@ wiki:
       text:
         en: 'J. C. Bose, On the Selective Conductivity exhibited by certain Polarising Substances, Proceedings of the Royal Society of London, vol. 60 https://en.wikisource.org/wiki/Proceedings_of_the_Royal_Society_of_London/Volume_60/On_the_Selective_Conductivity_exhibited_by_certain_Polarising_Substances'
         zh: '博斯，《若干偏振物质的选择性导电》，《伦敦皇家学会会刊》第 60 卷 https://en.wikisource.org/wiki/Proceedings_of_the_Royal_Society_of_London/Volume_60/On_the_Selective_Conductivity_exhibited_by_certain_Polarising_Substances'
+    bose_calcutta_geddes:
+      order: 2212
+      status: checked
+      text:
+        en: 'Patrick Geddes, The Life and Work of Sir Jagadis C. Bose, account of the early salary dispute https://archive.org/details/sirjagadisbose00geddrich'
+        zh: '帕特里克·格迪斯《贾格迪什·钱德拉·博斯的生平与工作》，早年薪俸争议 https://archive.org/details/sirjagadisbose00geddrich'
+    bose_calcutta_salary_history:
+      order: 2213
+      status: checked
+      text:
+        en: 'Historical analysis of Bose’s salary protest https://doi.org/10.1080/15592324.2020.1818030'
+        zh: '博斯薪俸抗争的研究回顾 https://doi.org/10.1080/15592324.2020.1818030'
+    bose_calcutta_echo_source_full:
+      order: 2308
+      status: checked
+      text:
+        en: 'J. C. Bose, The Voice of Life, in His Life and Speeches https://www.gutenberg.org/files/22085/22085-h/22085-h.htm'
+        zh: '博斯《生命之声》，收于《生平与演说》 https://www.gutenberg.org/files/22085/22085-h/22085-h.htm'
+    bose_calcutta_echo_source_none:
+      order: 2309
+      status: checked
+      text:
+        en: 'J. C. Bose, The Voice of Life, in His Life and Speeches https://www.gutenberg.org/files/22085/22085-h/22085-h.htm'
+        zh: '博斯《生命之声》，收于《生平与演说》 https://www.gutenberg.org/files/22085/22085-h/22085-h.htm'
+quotes:
+  bose_calcutta_echo_full:
+    order: 1
+    tier: full
+    date: '1917'
+    checked: official_record
+    sources: [bose_calcutta_echo_source_full]
+    original: en
+    text:
+      en: {"who":"Jagadish Chandra Bose","quote":"the whole-hearted devotion and faith of one man","occasion":"The Voice of Life, remembering his decision to pursue research despite scant resources."}
+      zh: {"who":"贾格迪什·钱德拉·博斯","quote":"一个人全心的投入与信念","occasion":"《生命之声》，回忆自己在资源不足时立意继续研究。"}
+  bose_calcutta_echo_none:
+    order: 2
+    tier: none
+    date: '1917'
+    checked: official_record
+    sources: [bose_calcutta_echo_source_none]
+    original: en
+    text:
+      en: {"who":"Jagadish Chandra Bose","quote":"some of the most difficult problems connected with Electric Waves found their solution in my Laboratory","occasion":"The Voice of Life, looking back on the experiments he later conducted."}
+      zh: {"who":"贾格迪什·钱德拉·博斯","quote":"关于电波的一些最棘手的问题，在我的实验室得到了解答。","occasion":"《生命之声》，回顾他后来开展的电波实验。"}
 self_check:
-  fact: polarisation
-  quote_line: '仅凭这两下，还分不清有没有漂移。'
-  regret_choice: '只转过去就收工，留下的两项读数不能回答是否漂移。'
-  bookend: '从改变方向到回到原来位置。'
-  share_line: '我让那本书转了回去。'
-  share_number: '三次读数'
-  knowing: '后来仍要靠回到基线分清装置漂移。'
-  near: 'polarisation 锚定材料取向与透过信号。'
-  lever: '复验第三次读数。'
-  missed: '未试第二种材料。'
-  brought: '带位置标记的读数。'
+  fact: salary_wait
+  quote_line: '1885 年，博斯开始在总统学院教书。他拒领较低的薪俸，争议约三年才解决。'
+  regret_choice: '员工没在第一年谈成同等条件，博斯仍不肯领较低的薪俸。'
+  bookend: '1885 年，博斯到总统学院教物理。他的薪俸低于欧洲同事。他继续授课，但在争议解决前不肯领较低的薪俸。 {staff}争取到与同事同等的书面薪俸条件。博斯读过条款，领了按这个条件开出的第一张支票。'
+  share_number: '1885'
+  lever: p1
+  missed: '员工没在第一年谈成同等条件，博斯仍不肯领较低的薪俸。'
+  share_line: '那张一直没有兑的支票'
 pack: {license: MIT, version: 1, languages: [en, zh]}

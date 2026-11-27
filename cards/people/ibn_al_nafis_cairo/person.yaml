@@ -2,56 +2,84 @@ order: 100
 events:
   ibn_al_nafis_cairo:
     order: 171
-    build_step: 1
-    year: 1242
+    build_step: 4
+    ready: true
+    year: 1288
+    stay: 2
     lon: 31.24
     lat: 30.04
     region: africa
     field: medicine
     tier: 2
     channels: {E: 2, V: 1}
-    regret: true
-    refs: [ibn_al_nafis_cairo_transit]
+    refs: [ibn_al_nafis_cairo_late_biography, ibn_al_nafis_cairo_bodleian, ibn_al_nafis_cairo_transit]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"stat":{"wit":7}}}
-        - {id: p2, kind: hold, req: {"job":["physician","doctor","nurse","pharmacist","midwife"]}}
-        - {id: p3, kind: trust, redeem: true, req: {"any":[{"trait":["kind","cosmopolitan"]},{"job":["student","teacher"]}]}}
-      vignettes:
-        - {id: trace, traits: [methodical, curious, scholarly]}
-        - {id: layer, traits: [kind, cosmopolitan, patient]}
-        - {id: name}
+        - {"id":"p1","kind":"trust","day":8,"req":{"any":[{"job":["archivist","restorer","bookseller"],"stat":{"wit":6,"will":5}},{"trait":["scholarly","methodical","patient"],"stat":{"wit":7,"will":5}}]}}
     text:
       en:
-        name: 'The route in the margin'
-        place: "Cairo"
-        figure: "Ibn al-Nafis"
-        story: 'In his thirteenth-century anatomical commentary on Ibn Sina’s Canon, Ibn al-Nafis says blood passes from the right side of the heart to the left through the lungs and rejects a direct passage through the partition. The Cairo scene is an imagined comparison of text and practice diagrams, with 1242 used as a conventional setting.'
-        relic: 'Two practice diagrams'
-        relic_desc: 'An imagined pair kept for comparing two descriptions.'
+        name: 'One volume in another reader’s hands'
+        place: 'Cairo'
+        figure: 'Ibn al-Nafis'
+        story: 'Ibn al-Nafis left his library to a hospital late in his life. His projected medical encyclopedia was unfinished and surviving parts are dispersed. In this branch a second reader offers to take responsibility for one of the completed volumes.'
+        story_prose:
+          opening:
+            - 'Cairo, 1288. Late in his life Ibn al-Nafis left his library to a hospital. His large planned medical encyclopedia remained unfinished, and only parts can still be read today.'
+            - 'In history, the biographies record where he left his library without tracing every volume afterwards. In this branch a reader who often comes by wants to finish the volume he has been reading.'
+            - 'Someone who understands how a book is lent and returned can help. The agreement has to give later readers an address they can actually find.'
+          points:
+            p1: 'The reader originally wanted the loan only until the end of the month. {staff} asks the two to agree first where the volume will be kept and who will open the door for another reader. Ibn al-Nafis turns the cover over and points out what he has yet to check. The reader lays the slip on the book, one thumb half covering the name he has just signed. He moves it only when the ink has dried.'
+          outcomes:
+            all: 'Someone later comes looking for the volume at the address on the slip. The person at the door takes the book down and hands over the paper at the first leaf with it.'
+            p1: 'Someone later comes looking for the volume at the address on the slip. The person at the door takes the book down and hands over the paper at the first leaf with it.'
+          none: 'Nobody leaves an address at which the volume can stay available. The slip lies blank. The book is still in the same pile.'
+          not_admitted: '{staff} never gets inside. The person by the window turns a page without hearing the steps outside.'
+          excerpts:
+            p1: 'The reader lays the slip on the book, one thumb half covering the name he has just signed. He moves it only when the ink has dried.'
+        relic: 'A named loan slip'
+        relic_desc: 'An imagined slip giving the name of the reader who accepted responsibility.'
         points:
-          p1: 'Compare the diagram with the passage the student is reading'
-          p2: 'Keep the earlier outline available while the new one is traced'
-          p3: 'Help the next reader tell the two drawn routes apart'
-        vignettes:
-          trace: 'Hassan’s hand goes straight across the middle of the copy. Salma taps the line she has just read. You ask him to trace the route again while she follows the text. He redraws it via the lungs and marks the earlier line as a separate reading.'
-          layer: 'Salma is ready to rub out the older outline so that only one explanation remains. You slide a clean leaf underneath and let Hassan trace the second route there. A new reader can now lay the two together and ask what has changed.'
-          name: 'You know the later label for this part of the journey of the blood. Hassan wants to know where the commentator’s objection appears. You bracket that line instead of giving him a new title for his picture. The copy leaves the room before you hear whether his teacher accepts it.'
+          p1: 'Ask Ibn al-Nafis to entrust one completed volume to a second reader who agrees to keep it accessible'
+        points_fail:
+          p1: 'The employee did not find a second reader willing to take responsibility for the volume.'
+        shift:
+          p1:
+            was: '1288: Ibn al-Nafis died and left his library to a hospital. Only portions of his large medical encyclopedia survive today.'
+            now: '{staff} arranges a custodian for one completed volume and has the recipient record where it can be consulted. The rest of the library follows his original plans.'
+            who: ibn_al_nafis_cairo
+            bio: 'One volume of his unfinished encyclopedia remained accessible in the branch through a second custodian.'
       zh:
-        name: '画在页边的路径'
-        place: "开罗"
-        figure: "伊本·纳菲斯"
-        story: '伊本·纳菲斯在十三世纪为伊本·西那《医典》作的解剖注释中，认为血由心脏右侧经肺到左侧，反对它直接穿过中隔的说法。'
-        relic: '两张解剖注释练习图'
-        relic_desc: '练习图，两张一并留下对照说法。'
+        name: '单独托给一位读者'
+        place: '开罗'
+        figure: '伊本·纳菲斯'
+        story: '伊本·纳菲斯临终把藏书留给医院。他计划撰写的医学大全没有完成，现存卷册分散。在这条分支里，还有一位读者愿意接下一卷自己能够保管的成稿。'
+        story_prose:
+          opening:
+            - '1288 年，开罗。伊本·纳菲斯临终把藏书留给了医院。他那部计划写得很长的医学大全没有写完，今天尚见的只是一部分。'
+            - '史实里，传记记下了他的藏书处置，没逐一说清每卷后来到了哪里。在这条分支里，有位常来翻书的读者，想把自己正在读的一卷借完。'
+            - '这趟用得上懂书怎么归还、怎么借出去的人。约定得留下后来人也找得到的地址。'
+          points:
+            p1: '读者本来只想借到月底。{staff}请两人先说定，这一卷最后放在哪里、旁人来读时找谁开门。伊本·纳菲斯翻过封面，给他指出尚未校过的地方。读者把借据摊在书上，用拇指把自己刚签的名字盖住了一半。等纸上的墨干透，他才把手移开。'
+          outcomes:
+            all: '后来有人按借据的地址来找这卷书。开门的人取下卷册，把夹在第一叶里的纸一同递过去。'
+            p1: '后来有人按借据的地址来找这卷书。开门的人取下卷册，把夹在第一叶里的纸一同递过去。'
+          none: '没有人肯留下可以长期借阅的地址。借据还摊着，书仍在原来那摞里。'
+          not_admitted: '{staff}没能进屋。窗边的人转过一页，没听见门外的脚步。'
+          excerpts:
+            p1: '读者把借据摊在书上，用拇指把自己刚签的名字盖住了一半。等纸上的墨干透，他才把手移开。'
+        relic: '一张署名的借据'
+        relic_desc: '分支里的借据，记着谁答应照看这一卷。'
         points:
-          p1: '用学生正在读的一段核对图'
-          p2: '另描新图时，把旧轮廓留在手边'
-          p3: '帮接手的人认出两条画出的路径'
-        vignettes:
-          trace: '哈桑一笔穿过练习图正中。萨尔玛点了点自己刚读的一行。你请他照她读的内容再划一遍。他重画路线，让它经过肺，并标清早先一笔对应另一种说法。'
-          layer: '萨尔玛准备擦掉旧轮廓，桌上只留下一个讲法。你在底下垫一张干净的纸，让哈桑把第二条路线描在那里。新读者可以把两张叠看，自己问哪里变了。'
-          name: '你知道后世怎样称呼血液走的这一程。哈桑问的是注释到底在哪儿提出异议。你框住那句，让他照原文查。图已经带出屋子，老师是否认可，你走前还听不到。'
+          p1: '请伊本·纳菲斯把一卷成稿托给另一位读者，并确认后来的人还能借阅'
+        points_fail:
+          p1: '员工没能找到愿意对这一卷负责的读者。'
+        shift:
+          p1:
+            was: '1288 年，伊本·纳菲斯去世，将藏书留给医院。他的医学大全今天只存部分卷册。'
+            now: '{staff}请到另一位保管人，在交接时写明日后在哪里可以查阅。其余藏书照他的原意托付。'
+            who: ibn_al_nafis_cairo
+            bio: '他的医学大全有一卷在分支里交由第二位保管人，后来仍可借阅。'
 text:
   en:
     name: Ibn al-Nafis
@@ -59,24 +87,29 @@ text:
   zh:
     name: 伊本·纳菲斯
     text: 十三世纪的医生，在大马士革求学，后来在开罗行医。他为伊本·西那《医典》所作的解剖注释认为，血液从心脏右侧经肺到达左侧。
-hook: {en: 'Which arrow came from the commentary?', zh: '哪一笔箭头出自注释？'}
+hook: {en: 'One volume in another reader’s hands', zh: '单独托给一位读者'}
 facts:
+  collection:
+    date: '1288'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [ibn_al_nafis_cairo_late_biography, ibn_al_nafis_cairo_bodleian]
+    text:
+      en: '1288: Ibn al-Nafis died and left his library to a hospital. Only portions of his large medical encyclopedia survive today.'
+      zh: '1288 年，伊本·纳菲斯去世，将藏书留给医院。他的医学大全今天只存部分卷册。'
+    line:
+      en: '1288: Ibn al-Nafis died and left his library to a hospital. Only portions of his large medical encyclopedia survive today.'
+      zh: '1288 年，伊本·纳菲斯去世，将藏书留给医院。他的医学大全今天只存部分卷册。'
   transit:
     date: '1242'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [ibn_al_nafis_cairo_transit]
     text:
       en: 'The research discusses the anatomical commentary’s claim about passage through the lungs and later readers of medieval commentaries.'
       zh: '研究讨论解剖注释所说的经肺通路，也谈及后来阅读中世纪医学注释的人。'
-bystanders:
-  hassan:
-    invented: true
-    text: {en: 'A fictional student drawing a route he must check against the text.', zh: '虚构学生哈桑，自己画出一条路，还需与正文核对。'}
-  salma:
-    invented: true
-    text: {en: 'A fictional reader holding the commentary open.', zh: '虚构读者萨尔玛，翻着注释那页。'}
 wiki:
   refs:
     ibn_al_nafis_cairo_transit:
@@ -85,16 +118,60 @@ wiki:
       text:
         en: 'Qatar Digital Library, Nahyan Fancy, Ibn al-Nafīs and Pulmonary Transit https://www.qdl.qa/en/ibn-al-naf%C4%ABs-and-pulmonary-transit'
         zh: '卡塔尔数字图书馆，纳赫扬·范西，《伊本·纳菲斯与肺部通路》 https://www.qdl.qa/en/ibn-al-naf%C4%ABs-and-pulmonary-transit'
+    ibn_al_nafis_cairo_late_biography:
+      order: 2221
+      status: checked
+      text:
+        en: 'Ibn al-Nafis, manuscript biography translated and annotated by Emilie Savage-Smith and colleagues https://www.ncbi.nlm.nih.gov/books/NBK621353/'
+        zh: '伊本·纳菲斯传，萨维奇-史密斯等校译 https://www.ncbi.nlm.nih.gov/books/NBK621353/'
+    ibn_al_nafis_cairo_bodleian:
+      order: 2222
+      status: checked
+      text:
+        en: 'Bodleian Library MS Pococke 248, description of surviving parts of The Complete Book https://iiif.biblissima.fr/collections/manifest/a60376b3379c18e4b760d5aa97ad725662569e36'
+        zh: '牛津大学博德利图书馆 MS Pococke 248，《医学大全》存稿说明 https://iiif.biblissima.fr/collections/manifest/a60376b3379c18e4b760d5aa97ad725662569e36'
+    ibn_al_nafis_cairo_echo_source_full:
+      order: 2318
+      status: checked
+      text:
+        en: 'Ibn al-Nafis, Commentary on the Anatomy of the Canon, Arabic text https://usul.ai/ms/t/sharh-tashrih-qanun/135'
+        zh: '伊本·纳菲斯《〈医典〉解剖学评注》，阿拉伯原文 https://usul.ai/ms/t/sharh-tashrih-qanun/135'
+    ibn_al_nafis_cairo_echo_source_none:
+      order: 2319
+      status: checked
+      text:
+        en: 'Ibn al-Nafis, Commentary on the Anatomy of the Canon, Arabic text https://usul.ai/ms/t/sharh-tashrih-qanun/135'
+        zh: '伊本·纳菲斯《〈医典〉解剖学评注》，阿拉伯原文 https://usul.ai/ms/t/sharh-tashrih-qanun/135'
+quotes:
+  ibn_al_nafis_cairo_echo_full:
+    order: 1
+    tier: full
+    date: '1288'
+    checked: official_record
+    sources: [ibn_al_nafis_cairo_echo_source_full]
+    original: ar
+    text:
+      en: {"who":"Ibn al-Nafis","quote":"The reason this passes, while that blood cannot.","occasion":"Commentary on the Anatomy of the Canon, part of an argument that asks what could explain two different observations. The date of the passage is uncertain."}
+      zh: {"who":"伊本·纳菲斯","quote":"为何这一种能通过，而那样的血却不能。","occasion":"《〈医典〉解剖学评注》一节，追问两种现象为什么不同。具体写作日期不详。"}
+      ar: {"who":"Ibn al-Nafis","quote":"السبب في نفوذ هذه وتعذر ذلك الدم","occasion":"Commentary on the Anatomy of the Canon, part of an argument that asks what could explain two different observations. The date of the passage is uncertain."}
+  ibn_al_nafis_cairo_echo_none:
+    order: 2
+    tier: none
+    date: '1288'
+    checked: official_record
+    sources: [ibn_al_nafis_cairo_echo_source_none]
+    original: ar
+    text:
+      en: {"who":"Ibn al-Nafis","quote":"The severity of the harm in that is plain.","occasion":"Commentary on the Anatomy of the Canon, weighing what would follow if an explanation were true. The date of the passage is uncertain."}
+      zh: {"who":"伊本·纳菲斯","quote":"那样的危害，显而易见。","occasion":"《〈医典〉解剖学评注》一节，讨论某种解释成立时会带来什么后果。具体写作日期不详。"}
+      ar: {"who":"Ibn al-Nafis","quote":"وفي ذلك من شدة الضرر ما لا يخفى","occasion":"Commentary on the Anatomy of the Canon, weighing what would follow if an explanation were true. The date of the passage is uncertain."}
 self_check:
-  fact: transit
-  quote_line: '新读者可以把两张叠看，自己问哪里变了。'
-  regret_choice: 'layer 擦掉旧图便看不出两种说法差在哪里。'
-  bookend: '先过中间，后从另一处绕行。'
-  share_line: '两张图，一段可核对的注释。'
-  share_number: 'layer 两张虚构练习图。'
-  knowing: 'name 知道后世的术语。'
-  near: 'transit 路径差异有十三世纪注释为据。'
-  lever: 'layer 让后来人能把两图叠看。'
-  missed: 'name 来不及听老师判断。'
-  brought: 'layer 带回虚构的对照图。'
+  fact: collection
+  quote_line: '1288 年，伊本·纳菲斯去世，将藏书留给医院。他的医学大全今天只存部分卷册。'
+  regret_choice: '员工没能找到愿意对这一卷负责的读者。'
+  bookend: '伊本·纳菲斯临终把藏书留给医院。他计划撰写的医学大全没有完成，现存卷册分散。在这条分支里，还有一位读者愿意接下一卷自己能够保管的成稿。 {staff}请到另一位保管人，在交接时写明日后在哪里可以查阅。其余藏书照他的原意托付。'
+  share_number: '1288'
+  lever: p1
+  missed: '员工没能找到愿意对这一卷负责的读者。'
+  share_line: '单独托给一位读者'
 pack: {license: MIT, version: 1, languages: [en, zh]}

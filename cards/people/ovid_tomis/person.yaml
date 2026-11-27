@@ -2,7 +2,8 @@ order: 151
 events:
   ovid_tomis:
     order: 186
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 9
     lon: 28.65
     lat: 44.18
@@ -26,6 +27,24 @@ events:
         place: "Tomis"
         figure: "Ovid"
         story: 'In Book II of Tristia, Ovid describes his offences as a poem and an error, and declines to explain the latter. The event year sets the visit during exile.'
+        story_prose:
+          opening:
+            - 'Ovid is in exile at Tomis on the Black Sea. In the second book of the Tristia he says he was punished for a poem and an error. He does not say what the error was.'
+            - 'In history, the third book preserves a poem about lying ill. In this branch there are days when even the water is hard for him to take, and he has yet to find a traveller to carry the pages out.'
+            - 'This trip needs someone willing to look after a patient. It also needs someone who understands the crossing and can ask a traveller where the packet could be handed on.'
+          points:
+            p2: '{staff} finds a traveller familiar with the winter passage, asks where the packet can go to the next carrier, then has Ovid put the recipient’s name where it can be read. The traveller flattens the inner and outer wrapper separately. Before they cast off he turns the address over for the people on shore to check once more. Ovid nods across the side of the boat.'
+            p1: '{staff} asks what food Ovid can still eat, finds a little of it nearby and leaves water by his bed. When Ovid reaches for a draft, {staff} moves the cup closer. He drinks first and takes the page a little later. The shadow of the cup across it shrinks to a small corner.'
+          outcomes:
+            all: 'The traveller with the pages has left the harbour. Someone changes the water by the bed once more, and Ovid takes out another sheet.'
+            p2: 'At the shore the traveller tells Ovid exactly where the packet will go. Ovid listens to the last stop.'
+            p1: 'There are a few stretches now when he can lie quietly. More water is always brought before his cup is empty.'
+          none: 'The boats remain on the sheltered side of the harbour. The packet waiting for a traveller stays on the corner of the table.'
+          not_admitted: '{staff} never meets anyone who can get them in. A leaf falls into the water left at the door.'
+          desync: 'Nobody will carry the poems. When the agency calls {staff} back, the address still lies around the packet.'
+          excerpts:
+            p2: 'Before they cast off he turns the address over for the people on shore to check once more. Ovid nods across the side of the boat.'
+            p1: 'He drinks first and takes the page a little later. The shadow of the cup across it shrinks to a small corner.'
         relic: "A wax writing tablet"
         relic_desc: "A tablet of letters in verse begun on the road to exile."
         points:
@@ -49,6 +68,24 @@ events:
         place: "托米"
         figure: "奥维德"
         story: '奥维德在《哀歌》第二卷把获罪的缘由写成一首诗和一个过失，接着避谈那个过失。'
+        story_prose:
+          opening:
+            - '奥维德在黑海边的托米斯流放。《哀歌》第二卷说他因一首诗和一个过失获罪，没有把那个过失写出来。'
+            - '史实里，第三卷留有他卧病时写的一首诗，作品后来流传下来。在这条分支里，有几天他连水都喝不惯，整理好的稿件还找不到能往外捎的船。'
+            - '这趟需要愿意照看病人的人，也需要认得海路、肯和出行的人问清能把纸件带到哪里的人。'
+          points:
+            p2: '{staff}约到一个熟悉冬季行程的船客，先问他离开托米斯以后会在哪一站交给下一位，再请奥维德把名字写在能看见的地方。船客把里外两层包纸分别压平。 开船以前，他把写着地址的一面翻出来，让岸上的人再看一次。奥维德隔着船帮点了点头。'
+            p1: '{staff}问他什么样的饭还吃得下，向邻里找来一小份，又把可以喝的水放在床旁。奥维德想伸手拿稿子时，{staff}把杯往他手边推了一下。 他先喝水，过了一会儿才把那一页拿过来。横过纸角的杯影缩成很小一片。'
+          outcomes:
+            all: '载稿的人已经出了港。屋里的人把床边的水换过一次，奥维德又拿出一张空纸来。'
+            p2: '船客带着诗卷离开前，到岸边把去向说了一遍。奥维德一直听到最后一站。'
+            p1: '一天里他有了几段可以安静躺着的时候。床边能喝的水始终没断。'
+          none: '船只停在背风的一边，等不到出港的消息。托人带的纸还放在桌角。'
+          not_admitted: '{staff}没遇上能带他进屋的人。门边那碗水放了很久，沿口落进一片叶子。'
+          desync: '诗没人肯带走。事务所召回{staff}时，写好去处的纸仍包在外层。'
+          excerpts:
+            p2: '开船以前，他把写着地址的一面翻出来，让岸上的人再看一次。奥维德隔着船帮点了点头。'
+            p1: '他先喝水，过了一会儿才把那一页拿过来。横过纸角的杯影缩成很小一片。'
         relic: "一块写字蜡板"
         relic_desc: "一块板，上面是流放路上起笔的诗体书信。"
         points:
@@ -112,6 +149,41 @@ wiki:
       text:
         en: 'Ovid, Tristia II, 207–208, translated by A. S. Kline https://www.poetryintranslation.com/PITBR/Latin/OvidTristiaBkTwo.php'
         zh: '奥维德《哀歌》第二卷第 207–208 行，A. S. Kline 英译 https://www.poetryintranslation.com/PITBR/Latin/OvidTristiaBkTwo.php'
+    ovid_tomis_story_echo_source_full:
+      order: 2448
+      status: checked
+      text:
+        en: 'Ovid, Tristia I.1, Latin text https://monumenta.ch/latein/text.php?domain=&hide_apparatus=1&inframe=1&lang=0&level=3&links=1&rumpfid=Ovidius%2C+Tristia%2C+01&tabelle=Ovidius'
+        zh: '奥维德《哀歌》第一卷第一首，拉丁原文 https://monumenta.ch/latein/text.php?domain=&hide_apparatus=1&inframe=1&lang=0&level=3&links=1&rumpfid=Ovidius%2C+Tristia%2C+01&tabelle=Ovidius'
+    ovid_tomis_story_echo_source_none:
+      order: 2449
+      status: checked
+      text:
+        en: 'Ovid, Tristia I.1, Latin text https://monumenta.ch/latein/text.php?domain=&hide_apparatus=1&inframe=1&lang=0&level=3&links=1&rumpfid=Ovidius%2C+Tristia%2C+01&tabelle=Ovidius'
+        zh: '奥维德《哀歌》第一卷第一首，拉丁原文 https://monumenta.ch/latein/text.php?domain=&hide_apparatus=1&inframe=1&lang=0&level=3&links=1&rumpfid=Ovidius%2C+Tristia%2C+01&tabelle=Ovidius'
+quotes:
+  ovid_tomis_story_echo_full:
+    order: 1
+    tier: full
+    date: '9'
+    checked: official_record
+    sources: [ovid_tomis_story_echo_source_full]
+    original: la
+    text:
+      en: {"who":"Ovid","quote":"Little book, you will go into the city without me. I do not begrudge you.","occasion":"The first line of Tristia, addressing the volume that the exiled poet is sending away."}
+      zh: {"who":"奥维德","quote":"小书啊，你会独自进城，我并不妒羡。","occasion":"《哀歌》开头，流放者对即将送走的诗卷说话。"}
+      la: {"who":"Ovid","quote":"Parve - nec invideo - sine me, liber, ibis in urbem","occasion":"The first line of Tristia, addressing the volume that the exiled poet is sending away."}
+  ovid_tomis_story_echo_none:
+    order: 2
+    tier: none
+    date: '9'
+    checked: official_record
+    sources: [ovid_tomis_story_echo_source_none]
+    original: la
+    text:
+      en: {"who":"Ovid","quote":"Go unadorned, as is fitting for an exile’s book.","occasion":"Tristia I.1, on the form in which the book should travel."}
+      zh: {"who":"奥维德","quote":"去吧，不着装饰，才像一个流放之人的书。","occasion":"《哀歌》第一卷第一首，交代诗卷该以什么样子上路。"}
+      la: {"who":"Ovid","quote":"vade, sed incultus, qualem decet exulis esse","occasion":"Tristia I.1, on the form in which the book should travel."}
 self_check:
   fact: tristia
   quote_line: '人带着这份说不清的稿子走了。'

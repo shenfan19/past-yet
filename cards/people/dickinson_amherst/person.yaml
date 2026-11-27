@@ -2,7 +2,8 @@ order: 56
 events:
   dickinson_amherst:
     order: 119
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1886
     date: '1886-05-01'
     stay: 2
@@ -29,6 +30,27 @@ events:
         place: "Amherst"
         figure: "Emily Dickinson"
         story: 'Emily Dickinson died at home in Amherst on 15 May 1886. Her sister Lavinia carried out her request to burn her incoming letters and found hundreds of poems. The earliest editors later took apart the booklets in which Emily had sewn many of the poems.'
+        story_prose:
+          opening:
+            - 'At the Amherst house, Lavinia sees the corner of a folded sheet underneath a pile of letters. Some of Emily’s stitched booklets are nearby. Someone upstairs asks whether to leave a light on. The papers all go onto the lid of the nearest box for the moment.'
+            - 'Emily Dickinson died in 1886. Her sister Lavinia found a large body of poems while dealing with the letters, and many fascicles were later disbound. You can first arrange some care the way Emily wants it, then help Lavinia distinguish letters from poems and keep one booklet intact.'
+            - 'A traveller with experience in care can ask Emily what she wants overnight. Someone who reads manuscripts can help Lavinia recognise the stitching and variant words and preserve the order they were found in.'
+          points:
+            p1: 'Lavinia picks up the loose sheets and says the letters can go together. You ask her to untie the string underneath first. She finds a few pages folded to the same size in her sister’s hand and places them by a lamp to read. Only after she has moved the two piles onto different lids does she call the family to look.'
+            p2: 'Lavinia asks whether the transcript can keep the easiest word to read on each page. You have her show the copyist two words beside the same line, then trace the fold and stitch holes on the copy. The booklet stays sewn up, and the wrapper has its page order. On the next reading the fold leads the copyist back to the same alternative word.'
+            p3: 'You ask Emily whether she wants someone in the next room tonight. She gestures with the lamp and asks for the hall door to stay ajar so she can be heard if she calls. The family puts water and a chair where she asks. The last person on watch treads softly on the way out. Emily can still tell who it is.'
+          outcomes:
+            all: 'Emily spends the evening as she asked. After her death the surviving papers include one booklet that can still be read with its stitching and alternative words intact.'
+            p1: 'Letters and poems are kept separately, and the unpublished poems survive. Some booklets are still taken apart when the family deals with the rest.'
+            p2: 'One booklet’s folds and alternative words have been copied. The rest of the papers have gone astray, and the trip remembers the copying of that one booklet.'
+            p3: 'When Emily calls that night, there is someone close enough to hear. The family must still sort the papers themselves.'
+          none: 'Folded paper is all that remains by the lamp. No one makes new arrangements for the night.'
+          not_admitted: 'Someone answers from inside and says the family cannot receive visitors now. The two piles have yet to be opened.'
+          desync: 'Letters and poems are mixed. Some papers that survive in history cannot be recovered in this branch. The office recalls the traveller.'
+          excerpts:
+            p1: 'Only after she has moved the two piles onto different lids does she call the family to look.'
+            p2: 'On the next reading the fold leads the copyist back to the same alternative word.'
+            p3: 'Emily can still tell who it is.'
         relic: "A sewn booklet"
         relic_desc: "A few pages sewn by hand with a poem on each."
         points:
@@ -57,6 +79,27 @@ events:
         place: "阿默斯特"
         figure: "艾米莉·狄金森"
         story: '1886 年 5 月 15 日，艾米莉·狄金森在阿默斯特家中去世。妹妹拉维尼娅按姐姐的要求销毁了收到的来信，又发现数百首诗。早期编者后来将艾米莉手缝成册的诗稿拆开整理。'
+        story_prose:
+          opening:
+            - '阿默斯特家里，拉维尼娅看见一摞来信下压着一角折过的纸。旁边还有艾米莉已经缝好的小本。楼上的人问今晚要不要留灯，纸页暂时全放在手边的箱子上。'
+            - '艾米莉·狄金森于 1886 年去世。姐妹拉维尼娅处理她的来信时发现大量诗稿，后来不少诗册被拆开。这次可以先约一晚合艾米莉心意的照护；之后还要分清信与诗，争取整册留下一份。'
+            - '擅长照顾人的员工先问艾米莉怎么安排夜里的屋子。熟悉手稿的人再帮拉维尼娅识别缝线和备选词，按发现时的顺序核对。'
+          points:
+            p1: '拉维尼娅提起一摞散纸，说来信归一处。你请她先拆开夹在下面的细绳，那里几张折成同一大小的纸，用的是姐姐自己的字。她把信另放，把诗放在一盏不烫纸的灯旁慢慢看。她最后把两摞挪到两只箱盖上，才叫家人来认。'
+            p2: '拉维尼娅问抄本能不能只留各页最好读的词。你请她指给抄写人看同一行旁边补过的两个字，再把折痕和线孔的位置单独画在副稿上。封套写好页序，小册没有拆。再翻一遍时，抄写人能按折线回到同一个备选词。'
+            p3: '你问艾米莉今晚愿不愿有人在隔壁。她把灯往窗口指了一下，请那人把走廊的门虚掩着，自己想叫时听得见。家人照她说的，把水和一张可挪的椅子放好。要走的时候，最后一位值夜人把脚步放轻，她还能听出是谁。'
+          outcomes:
+            all: '艾米莉那晚按自己的意思歇息。她去世以后，留存的诗稿中有一本从缝线到备选词都能重新查阅。'
+            p1: '来信与诗稿分开存放，未刊诗还在。家人日后处理原稿，仍有册页拆散。'
+            p2: '一册的折页和备选词留了副本。其余诗稿的存放出了差错，只有这册的抄录过程随报告带回。'
+            p3: '她夜里开口时，有人就在听得见的地方。诗稿的处理还要等家人自己辨认。'
+          none: '灯边只留下一些折过的纸，没有人替艾米莉安排那一夜。'
+          not_admitted: '有人从门里应了一声，说家里现在不能接访。两摞纸还没摊开。'
+          desync: '诗稿和来信混到一起，原来会存世的一批散页找不回了。事务所因同步失败召回员工。'
+          excerpts:
+            p1: '她最后把两摞挪到两只箱盖上，才叫家人来认。'
+            p2: '再翻一遍时，抄写人能按折线回到同一个备选词。'
+            p3: '要走的时候，最后一位值夜人把脚步放轻，她还能听出是谁。'
         relic: "一册手缝的小本"
         relic_desc: "几页手工缝起来的纸，每页一首诗。"
         points:
@@ -137,6 +180,39 @@ wiki:
       text:
         en: 'Emily Dickinson collection, manuscript poems. Amherst College Archives and Special Collections. https://archivesspace.amherst.edu/repositories/2/archival_objects/61973'
         zh: 'Emily Dickinson collection, manuscript poems. Amherst College Archives and Special Collections. https://archivesspace.amherst.edu/repositories/2/archival_objects/61973'
+    dickinson_amherst_story_echo_source_full:
+      order: 2532
+      status: checked
+      text:
+        en: 'Houghton Library manuscript from Fascicle 22, transcribed by Dartmouth https://journeys.dartmouth.edu/whiteheat/i-dwell-in-possibility-f466a-j657/'
+        zh: '哈佛霍顿图书馆第 22 册手稿，达特茅斯学院转录 https://journeys.dartmouth.edu/whiteheat/i-dwell-in-possibility-f466a-j657/'
+    dickinson_amherst_story_echo_source_none:
+      order: 2533
+      status: checked
+      text:
+        en: 'Houghton Library manuscript from Fascicle 22, transcribed by Dartmouth https://journeys.dartmouth.edu/whiteheat/i-dwell-in-possibility-f466a-j657/'
+        zh: '哈佛霍顿图书馆第 22 册手稿，达特茅斯学院转录 https://journeys.dartmouth.edu/whiteheat/i-dwell-in-possibility-f466a-j657/'
+quotes:
+  dickinson_amherst_story_echo_full:
+    order: 1
+    tier: full
+    date: '1862'
+    checked: official_record
+    sources: [dickinson_amherst_story_echo_source_full]
+    original: en
+    text:
+      en: {"who":"Emily Dickinson","quote":"More numerous of Windows","occasion":"A line in Fascicle 22’s copy of ‘I dwell in Possibility.’ The date is approximate."}
+      zh: {"who":"艾米莉·狄金森","quote":"窗户更多。","occasion":"第 22 册《我住在可能之中》抄稿中的一行。日期为约略抄写年份。"}
+  dickinson_amherst_story_echo_none:
+    order: 2
+    tier: none
+    date: '1862'
+    checked: official_record
+    sources: [dickinson_amherst_story_echo_source_none]
+    original: en
+    text:
+      en: {"who":"Emily Dickinson","quote":"I dwell in Possibility –","occasion":"Opening line of the poem as copied into Fascicle 22. The date is approximate."}
+      zh: {"who":"艾米莉·狄金森","quote":"我住在可能之中——","occasion":"第 22 册所收诗篇起句。日期为约略抄写年份。"}
 self_check:
   quote_line: '读者朗读时把破折号滑了过去。'
   fact: manuscripts

@@ -2,7 +2,8 @@ order: 108
 events:
   jianzhen_nara:
     order: 162
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 750
     stay: 7
     lon: 112.47
@@ -27,8 +28,25 @@ events:
         place: "Lingnan"
         figure: "Jianzhen"
         story: 'Jianzhen’s fifth attempt to sail to Japan brought him to Hainan instead. On the long way back, Eiei, a monk who had come to ask him to travel to Japan, fell ill and died at Duanzhou. Jianzhen lost his sight on the journey. Accounts give different explanations.'
-        relic: 'A practice wrapper label'
-        relic_desc: 'An invented label used by the fictional temple helpers.'
+        story_prose:
+          opening:
+            - 'In Duanzhou a companion sets the newly copied route papers by the door. Someone inside Eiei’s room has asked the people bringing messages to wait. Jianzhen comes by to ask whether he can sit inside for a little while.'
+            - 'The account of Jianzhen’s voyages records Eiei’s death at Duanzhou. Jianzhen’s sight later grew worse, and the party went back toward Yangzhou. This branch takes two small moments from the journey. You can give the two men time to speak and later read the onward route to Jianzhen.'
+            - 'Someone with experience in care can ask what Eiei wants. A traveller who can read the papers and listen to different people can later read the route to Jianzhen, stop by stop.'
+          points:
+            p1: 'After the person asking about departure goes away, you ask Eiei if he wants Jianzhen to come in. He nods and asks for a stool that leaves the door clear. You agree with the others to hold their messages, then wait in the yard. From inside there are two voices. When they grow softer, nobody hurries them.'
+            p2: 'The papers are folded in a stack, and a companion is about to tell Jianzhen the route he decided on. You read out the stops still in question and say where the party might have to stay overnight. Jianzhen asks for a name once more before saying which stage he wants to take first. Someone writes his choice on the sheet that held only place names.'
+          outcomes:
+            all: 'The two men have time to speak. Eiei still dies in Duanzhou. Later, when Jianzhen cannot read the papers, they travel by a route he has heard aloud.'
+            p1: 'The two men are able to meet. Eiei still dies, and the later route papers will need someone to explain them to Jianzhen.'
+            p2: 'Jianzhen hears the next stages and decides for himself where he wants to go. The chance to spend time with Eiei has already passed.'
+          none: 'The route papers go back in their bundle. The messages in the room and the places ahead still await someone to read them out.'
+          not_admitted: 'You never enter the room where Eiei is staying. The papers are taken away and nobody reads them by the door.'
+          excerpts:
+            p1: 'From inside there are two voices. When they grow softer, nobody hurries them.'
+            p2: 'Someone writes his choice on the sheet that held only place names.'
+        relic: 'A sheet of route notes'
+        relic_desc: 'An invented sheet from the party’s journey north.'
         points:
           p1: 'At Duanzhou, ask how Eiei wants to be cared for and make time for him to speak with Jianzhen'
           p2: 'As Jianzhen’s sight fails, have the party read its plans aloud so he can decide how he wants to continue'
@@ -43,16 +61,33 @@ events:
             was: 'Accounts say that Jianzhen lost his sight on this journey. He later sailed to Japan.'
             now: 'In this branch {staff} reads out the next stops. Jianzhen asks the others to change one stop and tells them when he wants to set out again.'
         vignettes:
-          sound: 'Chiyo points to the right bundle from across the room. Jun still cannot tell which one she means on the crowded shelf. You ask her to read the opening aloud instead. Jun finds the matching words on the wrapper and sets the bundle down for the next reader.'
-          tie: 'Jun starts to retie a loose wrapper before checking the order. You hold the bundle as Chiyo reads the first line of each part in turn. He puts one misplaced part back. The bundle will now open in the order in which they practised it.'
-          temple: 'You know the name of the temple that will be founded in 759. Chiyo only needs to mark where to take this reading in the morning. You help her write Tōdai-ji on the wrapper. The other temple still belongs to a future you will not see on this visit.'
+          sound: 'A companion points to the next town on the sheet. {staff} asks for the name to be read twice while Jianzhen listens.'
+          tie: 'The party is about to tie the route papers shut. {staff} holds the bundle open until someone checks the order of the stops.'
+          temple: '{staff} answers a question in the yard so the people inside can finish speaking without raising their voices.'
       zh:
         name: '回扬州的长路'
         place: "岭南"
         figure: "鉴真"
         story: '鉴真第五次尝试前往日本，船却被风吹到海南。北返途中，曾来扬州请他东渡的日僧荣叡在端州病逝。鉴真在路上失明，两部早期文献对经过的记述不同。'
-        relic: '一张练习用的卷签'
-        relic_desc: '故事中的帮工使用的经卷签。'
+        story_prose:
+          opening:
+            - '端州，同行人把刚抄好的路引搁在门边。荣叡的屋里有人坐着，几次让外面传话的人等。鉴真来问，能不能让他先进去坐一会儿。'
+            - '《唐大和上东征传》记鉴真一行过端州时，荣叡在那里去世。其后鉴真视力减退，一行继续返回扬州。分支借这段行程写两件小事，先给两人留一段说话的时间，之后让鉴真听得到行程。'
+            - '懂照护的人可以先去问荣叡所愿。会读路引或能听清多方说法的人，再把后面的去向一处处念给鉴真。'
+          points:
+            p1: '等外面来问行期的人走开，你先问荣叡愿不愿让鉴真进来。他点头，要端来一把不挡门的凳子。你与旁人说定这段工夫先不传话，转到院子里等。门里传来两个人说话的声音，声音轻了也没人催他们。'
+            p2: '路引叠了几层，同行人正想直接告诉鉴真已经定好的走法。你先把还没确定的几个地方念出声，让他听见哪里需要留一宿。鉴真问其中一处的名字，又听了一遍，才说自己想先走哪一段。有人把他的决定写到原先只留着地名的那张纸上。'
+          outcomes:
+            all: '荣叡和鉴真有过一段说话的工夫，荣叡仍在端州去世。往后鉴真看不清字时，一行人照着他听过的路线走。'
+            p1: '两人保住那一场会面。荣叡仍去世；后来路引上的字，鉴真还要别人慢慢转告。'
+            p2: '鉴真听过下一程，自己说了想走的路。荣叡身边那段没说完的话没有补回来。'
+          none: '路引重新捆成一束。屋里要传的话和屋外要走的路，都还等旁人来说明。'
+          not_admitted: '你没能进荣叡借住的屋子。另一份路引随同行人收回，没从门边念出声。'
+          excerpts:
+            p1: '门里传来两个人说话的声音，声音轻了也没人催他们。'
+            p2: '有人把他的决定写到原先只留着地名的那张纸上。'
+        relic: '一页行程纸'
+        relic_desc: '虚构路记，记一行人北上的去向。'
         points:
           p1: '在端州问荣叡想怎样被照料，再替他和鉴真留一段能说话的时间'
           p2: '鉴真看不清时，把一行人的行程念出声，请他自己决定接下来怎么走'
@@ -67,9 +102,9 @@ events:
             was: '早期文献记载鉴真在这趟归途中失明，后来仍东渡日本。'
             now: '这条分支里，{staff}把接下来几个落脚处念给鉴真听。鉴真请同行改了一站，也说明自己想什么时候再出发。'
         vignettes:
-          sound: '千代隔着屋子指给人看，可架上摆得太满，准还是分不清她指哪束。你请她念出开头。准听着去对包纸上的字，找到那一束，给接读的人摆了出来。'
-          tie: '准想先把松开的包纸捆上，还没核对里面的次序。你扶着那束经卷，千代挨个念每部分的头一句。准把放错的一份放了回去。下次打开时，次序就是他们练过的那样。'
-          temple: '你知道759年还会有一座寺。千代只要写清明早这束经往哪里送。你帮她在包纸上写东大寺。另一座寺还在未来，这趟见不到。'
+          sound: '同行人指着纸上的下一站。鉴真在听，{staff}请对方把地名念两次。'
+          tie: '一行人要把路引捆起来。{staff}撑开纸束，待有人核对完去处的先后。'
+          temple: '{staff}到院里回答来人的问题，屋里的两人不用提高声音就能把话讲完。'
 text:
   en:
     name: Jianzhen
@@ -177,6 +212,43 @@ wiki:
       text:
         en: 'Tōshōdai-ji, temple history and foundation https://www.toshodaiji.jp/s/about-eng.html'
         zh: '唐招提寺，寺院沿革与创建 https://www.toshodaiji.jp/s/about-eng.html'
+    jianzhen_nara_story_echo_source_full:
+      order: 2550
+      status: checked
+      text:
+        en: 'Ōmi no Mifune, Tō Daiwajō Tōseiden, original text https://zh.wikisource.org/wiki/唐大和上東征傳'
+        zh: '真人元开《唐大和上东征传》原文 https://zh.wikisource.org/wiki/唐大和上東征傳'
+    jianzhen_nara_story_echo_source_none:
+      order: 2551
+      status: checked
+      text:
+        en: 'Ōmi no Mifune, Tō Daiwajō Tōseiden, original text https://zh.wikisource.org/wiki/唐大和上東征傳'
+        zh: '真人元开《唐大和上东征传》原文 https://zh.wikisource.org/wiki/唐大和上東征傳'
+quotes:
+  jianzhen_nara_story_echo_full:
+    order: 1
+    tier: full
+    date: '779'
+    checked: official_record
+    sources: [jianzhen_nara_story_echo_source_full]
+    original: zh-Hant
+    contextual: true
+    text:
+      en: {"who":"Ōmi no Mifune","quote":"They went down the Gui River, reached Wuzhou after seven days, and then came to Longxing Temple in Duanzhou.","occasion":"The later biography lists these stops before recording Eiei’s death. Its date is that of the text."}
+      zh: {"who":"真人元开","quote":"顺桂江而下，七日到梧州，再到端州龙兴寺。","occasion":"后世传记记荣叡去世前的几处停靠。日期为传记成书年。"}
+      zh-Hant: {"who":"真人元开","quote":"下桂江，七日至梧州，次至端州龍興寺。","occasion":"后世传记记荣叡去世前的几处停靠。日期为传记成书年。"}
+  jianzhen_nara_story_echo_none:
+    order: 2
+    tier: none
+    date: '779'
+    checked: official_record
+    sources: [jianzhen_nara_story_echo_source_none]
+    original: zh-Hant
+    contextual: true
+    text:
+      en: {"who":"Ōmi no Mifune","quote":"Eiei died suddenly, and the master was in deep grief.","occasion":"The biography describes what happened in Duanzhou. The date is that of the text."}
+      zh: {"who":"真人元开","quote":"荣叡突然去世，鉴真十分悲痛。","occasion":"传记记端州发生的事。日期为传记成书年。"}
+      zh-Hant: {"who":"真人元开","quote":"榮叡師奄然遷化，大和上哀慟悲切","occasion":"传记记端州发生的事。日期为传记成书年。"}
 self_check:
   fact: arrival
   quote_line: '准听着去对包纸上的字。'

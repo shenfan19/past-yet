@@ -2,55 +2,84 @@ order: 13
 events:
   al_haytham_cairo:
     order: 55
-    build_step: 1
-    year: 1011
-    lon: 31.24
-    lat: 30.04
+    build_step: 4
+    ready: true
+    year: 1020
+    stay: 2
+    lon: 31.23
+    lat: 30.01
     region: africa
     field: science
     tier: 3
     channels: {V: 1}
-    refs: [al_haytham_cairo_aperture]
+    refs: [al_haytham_cairo_fire, al_haytham_cairo_chronicle, al_haytham_cairo_aperture]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["artistic","methodical","quiet"]}}
-        - {id: p2, kind: hold, req: {"stat": {"wit": 7}}}
-        - {id: p3, kind: endure, req: {"luck": 0.5}}
-      vignettes:
-        - {id: slit, traits: [methodical, artistic, quiet]}
-        - {id: cover, traits: [patient, handy, kind]}
-        - {id: term}
+        - {"id":"p1","kind":"endure","day":8,"req":{"any":[{"job":["paramedic","caregiver"],"stat":{"constitution":5}},{"trait":["hardy","bold","patient"],"stat":{"constitution":7,"will":6}}]}}
     text:
       en:
-        name: 'One slit of light'
-        place: Cairo
-        figure: Ibn al-Haytham
-        story: 'In the Book of Optics, Ibn al-Haytham discusses seeing parts of an object through an aperture as the object is moved.'
-        relic: 'A practice aperture screen'
-        relic_desc: 'An imagined screen used to compare two positions.'
+        name: 'A room on the far bank'
+        place: 'Fustat'
+        figure: 'Ibn al-Haytham'
+        story: 'Fustat suffered fires during unrest in 1020. Ibn al-Haytham’s optical work belonged to his years in Egypt. In this branch he is meeting a reader who has a borrowed optical manuscript in one of the affected streets.'
+        story_prose:
+          opening:
+            - 'Fustat, 1020. The chronicles describe fires leaving homes and belongings ruined. During his years in Egypt, Ibn al-Haytham studied how light reaches the eye.'
+            - 'In history, homes were lost in the fires. The sources do not place Ibn al-Haytham on a particular street. In this branch a reader with whom he planned to go over some pages lives in one of the affected streets.'
+            - 'Someone who can stay clear-headed and give directions can help. The manuscript can be read later. First find out whether the reader can make it as far as the end of the street.'
+          points:
+            p1: 'When {staff} finds the reader, the light has already faded behind his door. He wants to go back for another page. {staff} asks him to bring out the stack he has and leave by the way the neighbours have cleared. In a house that can put him up, he sits with the uneven stack on his knees. A sheet slips to the floor. The person across from him picks it up and puts it back where he points.'
+          outcomes:
+            all: 'Ibn al-Haytham comes to see him later. The household has only one stool, so the two sit by a low table and look for the page again.'
+            p1: 'Ibn al-Haytham comes to see him later. The household has only one stool, so the two sit by a low table and look for the page again.'
+          none: 'The street eventually closes. When Ibn al-Haytham asks, all he can do is fold the slip recording the loan into his hand.'
+          not_admitted: '{staff} waits at the far end of the street for someone to show the way. A voice calls to shut a door, and soon cannot be heard clearly.'
+          excerpts:
+            p1: 'A sheet slips to the floor. The person across from him picks it up and puts it back where he points.'
+        relic: 'A spare set of leaves'
+        relic_desc: 'An imagined set of optical notes entrusted to another household in the branch.'
         points:
-          p1: 'Match the visible mark to the one on the moving board'
-          p2: 'Hold the screen still while the board moves'
-          p3: 'Stay to watch the trial with one mark covered'
-        vignettes:
-          slit: 'Maryam sees the dark edge and records the whole stripe. You ask Yusuf to slide the board until a different strip shows through. She draws both positions next to the one opening. She can now tell a change in the board’s position from a change in the slit.'
-          cover: 'Yusuf wants to swing the lamp round for a better view. You keep it where it is and let him cover one mark on the board. Maryam calls out when that mark disappears. By the time the door is opened, she has tried one change she can make again.'
-          term: 'You know the name later readers will give to experiments with small openings. Maryam has time for one observation before the room must be shared again. You ask her to say which mark she actually sees. The room brightens before anyone can repeat it.'
+          p1: 'Get the reader out before the fire reaches the street and find a safe place for the borrowed manuscript'
+        points_fail:
+          p1: 'The employee did not reach the reader in time to help them leave with the borrowed pages.'
+        shift:
+          p1:
+            was: '1020: parts of Fustat were set on fire during unrest. The record does not say where Ibn al-Haytham or his manuscripts were that day.'
+            now: '{staff} takes the reader to a household outside the affected streets. Ibn al-Haytham can resume going through the manuscript with the reader there.'
+            who: al_haytham_cairo
+            bio: 'During the fires at Fustat, a reader and the pages entrusted to them reached safety.'
       zh:
-        name: '窄缝里的一线光'
-        place: 开罗
-        figure: 伊本·海赛姆
-        story: '伊本·海赛姆在《光学书》中讨论移动物体时，观察者怎样透过小孔依次看到物体的各部分。'
-        relic: '一块练习用的小孔屏'
-        relic_desc: '工坊用来比较两个位置的小孔屏。'
+        name: '借来的那叠光学笔记'
+        place: '福斯塔特'
+        figure: '伊本·海赛姆'
+        story: '1020 年，福斯塔特在动乱中失火。伊本·海赛姆曾在埃及研究光学。在这条分支里，他约了一位读者讨论光学，借出的手稿正在受灾的街上。'
+        story_prose:
+          opening:
+            - '1020 年的福斯塔特。编年史说城中几处失火，许多住处和物件没能保住。伊本·海赛姆在埃及这些年研究光怎样进入眼睛。'
+            - '史实里，火烧到了住人的街区，史料并未记伊本·海赛姆当天在哪里。在这条分支里，一位约好同他读稿的人住在受灾的街上。'
+            - '这趟需要临急还能说得清路的人。手稿可以稍后翻看，先得知道读稿的人能不能走到街口。'
+          points:
+            p1: '{staff}找到读者时，门里的光已经暗下来。那人想再进去找一页稿，{staff}请他先把手上的一叠带出来，顺着街坊空出的路离开。等到了能暂住的人家，他坐下，把那叠没有齐边的纸放到膝上。一张纸滑下来。对面的主人弯腰拾起，放回那人指着的地方。'
+          outcomes:
+            all: '稍后伊本·海赛姆来看他。家里只有一张凳子，两个人便在矮桌旁坐下，把那一页重新找出来。'
+            p1: '稍后伊本·海赛姆来看他。家里只有一张凳子，两个人便在矮桌旁坐下，把那一页重新找出来。'
+          none: '街口后来堵住了。伊本·海赛姆来问时，只能把借稿的纸签折进自己手里。'
+          not_admitted: '{staff}在街外等不到领路的人。门洞里有人喊关门，声音很快就听不清了。'
+          excerpts:
+            p1: '一张纸滑下来。对面的主人弯腰拾起，放回那人指着的地方。'
+        relic: '另托的一叠稿纸'
+        relic_desc: '分支里的光学笔记，临时托给另一户人家保管。'
         points:
-          p1: '把孔里看见的记号与移动板上的记号对上'
-          p2: '板在移动时，把小孔屏扶稳'
-          p3: '再等等，看遮住一处记号后怎样'
-        vignettes:
-          slit: '玛丽亚姆看见暗边，就把整条画进了记录。你请优素福挪动练习板，让隔着小孔换见另一条。她在同一个孔边画下两个位置，分得清是板在动，还是孔在动。'
-          cover: '优素福想转动灯让人看得清些。你让灯留在原处，请他遮住板上一道记号。那道记号一消失，玛丽亚姆马上出声。等人开门时，她已经试过一次自己还能重做的变化。'
-          term: '你知道后世怎样称呼小孔实验。屋子马上要腾给别人，玛丽亚姆只来得及看一次。你请她说清自己到底看见了哪一道。屋里亮起来时，已经来不及再试。'
+          p1: '赶在火势蔓延之前带读者离开，并给借出的手稿找到一处能存放的地方'
+        points_fail:
+          p1: '员工没能及时赶到，帮读者带着那叠稿纸离开。'
+        shift:
+          p1:
+            was: '1020 年，福斯塔特一些街区在动乱中失火。史料没记伊本·海赛姆及其手稿当日所在。'
+            now: '{staff}把读者带到远离受灾街区的人家。伊本·海赛姆后来仍能和那位读者一起读这份手稿。'
+            who: al_haytham_cairo
+            bio: '福斯塔特失火时，一位读者和寄在他手里的光学稿纸一同到了安全的地方。'
 text:
   en:
     name: Ibn al-Haytham
@@ -58,24 +87,29 @@ text:
   zh:
     name: 伊本·海赛姆
     text: 阿拉伯数学家与光学家，约 965 年生，约 1040 年去世，在开罗工作。他的《光学书》提出视觉来自进入眼睛的光，并依靠实验论证，被视为实验方法的早期代表。
-hook: {en: 'Which mark can you see through the hole?', zh: '隔着小孔，你究竟看到了哪一道？'}
+hook: {en: 'A room on the far bank', zh: '借来的那叠光学笔记'}
 facts:
+  fustat_fire:
+    date: '1020'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [al_haytham_cairo_fire, al_haytham_cairo_chronicle]
+    text:
+      en: '1020: parts of Fustat were set on fire during unrest. The record does not say where Ibn al-Haytham or his manuscripts were that day.'
+      zh: '1020 年，福斯塔特一些街区在动乱中失火。史料没记伊本·海赛姆及其手稿当日所在。'
+    line:
+      en: '1020: parts of Fustat were set on fire during unrest. The record does not say where Ibn al-Haytham or his manuscripts were that day.'
+      zh: '1020 年，福斯塔特一些街区在动乱中失火。史料没记伊本·海赛姆及其手稿当日所在。'
   aperture:
     date: '1011'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [al_haytham_cairo_aperture]
     text:
       en: 'The text describes seeing the part of a moving object that aligns with an aperture.'
       zh: '书中讨论物体移动时所见部分如何与小孔位置相合。'
-bystanders:
-  maryam:
-    invented: true
-    text: {en: 'A fictional observer drawing what is visible through the opening.', zh: '虚构观察者玛丽亚姆，画下透过小孔看到的部分。'}
-  yusuf:
-    invented: true
-    text: {en: 'A fictional helper who moves the marked board.', zh: '虚构帮工优素福，负责挪动记过号的板。'}
 wiki:
   refs:
     al_haytham_cairo_aperture:
@@ -84,16 +118,60 @@ wiki:
       text:
         en: 'Ibn al-Haytham, Book of Optics I, A. I. Sabra translation, Warburg Institute https://resources.warburg.sas.ac.uk/pdf/ffh360b2205460.pdf'
         zh: '伊本·海赛姆《光学书》第一卷，A. I. 萨布拉译，瓦尔堡研究所 https://resources.warburg.sas.ac.uk/pdf/ffh360b2205460.pdf'
+    al_haytham_cairo_fire:
+      order: 2218
+      status: checked
+      text:
+        en: 'Yaacov Lev, State and Society in Fatimid Egypt, account of the 1020 fire https://heritage.ismaili.net/sites/default/files/files/node-29163-state%20and%20society%20in%20fatimid%20egypt%20by%20yaacov%20lev%20.pdf'
+        zh: '雅各夫·莱夫《法蒂玛时代埃及的国家与社会》，1020 年福斯塔特火灾 https://heritage.ismaili.net/sites/default/files/files/node-29163-state%20and%20society%20in%20fatimid%20egypt%20by%20yaacov%20lev%20.pdf'
+    al_haytham_cairo_chronicle:
+      order: 2219
+      status: checked
+      text:
+        en: 'Yaḥyā ibn Saʿīd, chronicle of al-Ḥākim’s reign https://openchronicles.org/books/yahya-al-hakim/the-caliphate-of-al-hakim.html'
+        zh: '叶海亚·伊本·赛义德编年史，哈基姆在位纪事 https://openchronicles.org/books/yahya-al-hakim/the-caliphate-of-al-hakim.html'
+    al_haytham_cairo_echo_source_full:
+      order: 2314
+      status: checked
+      text:
+        en: 'Ibn al-Haytham, Book of Optics, first book, Arabic text https://www.islamicbook.ws/amma/almnadhr.pdf'
+        zh: '伊本·海赛姆《光学书》第一卷，阿拉伯原文 https://www.islamicbook.ws/amma/almnadhr.pdf'
+    al_haytham_cairo_echo_source_none:
+      order: 2315
+      status: checked
+      text:
+        en: 'Ibn al-Haytham, Book of Optics, first book, Arabic text https://www.islamicbook.ws/amma/almnadhr.pdf'
+        zh: '伊本·海赛姆《光学书》第一卷，阿拉伯原文 https://www.islamicbook.ws/amma/almnadhr.pdf'
+quotes:
+  al_haytham_cairo_echo_full:
+    order: 1
+    tier: full
+    date: '1020'
+    checked: official_record
+    sources: [al_haytham_cairo_echo_source_full]
+    original: ar
+    text:
+      en: {"who":"Ibn al-Haytham","quote":"To seek the truth rather than lean towards opinions.","occasion":"Book of Optics, opening discussion of how the author will test claims."}
+      zh: {"who":"伊本·海赛姆","quote":"求索事实，不偏从成说。","occasion":"《光学书》开篇，说明如何检验已有的说法。"}
+      ar: {"who":"Ibn al-Haytham","quote":"طلب الحق لا الميل مع الآراء","occasion":"Book of Optics, opening discussion of how the author will test claims."}
+  al_haytham_cairo_echo_none:
+    order: 2
+    tier: none
+    date: '1020'
+    checked: official_record
+    sources: [al_haytham_cairo_echo_source_none]
+    original: ar
+    text:
+      en: {"who":"Ibn al-Haytham","quote":"For the facts are obscure and the ends are hidden.","occasion":"Book of Optics, introduction on why the inquiry is difficult."}
+      zh: {"who":"伊本·海赛姆","quote":"因为真相幽微，所求也隐而未明。","occasion":"《光学书》序论，谈探究之难。"}
+      ar: {"who":"Ibn al-Haytham","quote":"فالحقائق غامضة، والغايات خفية","occasion":"Book of Optics, introduction on why the inquiry is difficult."}
 self_check:
-  fact: aperture
-  quote_line: '屋里亮起来时，已经来不及再试。'
-  regret_choice: 'cover 同时挪灯就少了一次容易解释的试验。'
-  bookend: '从小孔开始，到开门时失去观测条件。'
-  share_line: '一道小孔，两次看见。'
-  share_number: 'slit 两个练习位置。'
-  knowing: 'term 知道后来的实验名称。'
-  near: 'aperture 对照书中小孔观测。'
-  lever: 'cover 留下一次能再做的单项变化。'
-  missed: 'term 房间亮起，离开前无法复验。'
-  brought: 'slit 带回记有两个位置的虚构图。'
+  fact: fustat_fire
+  quote_line: '1020 年，福斯塔特一些街区在动乱中失火。史料没记伊本·海赛姆及其手稿当日所在。'
+  regret_choice: '员工没能及时赶到，帮读者带着那叠稿纸离开。'
+  bookend: '1020 年，福斯塔特在动乱中失火。伊本·海赛姆曾在埃及研究光学。在这条分支里，他约了一位读者讨论光学，借出的手稿正在受灾的街上。 {staff}把读者带到远离受灾街区的人家。伊本·海赛姆后来仍能和那位读者一起读这份手稿。'
+  share_number: '1020'
+  lever: p1
+  missed: '员工没能及时赶到，帮读者带着那叠稿纸离开。'
+  share_line: '借来的那叠光学笔记'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -2,7 +2,8 @@ order: 98
 events:
   hua_tuo_xuchang:
     order: 163
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 208
     lon: 113.85
     lat: 34.03
@@ -26,6 +27,23 @@ events:
         place: "Xuchang"
         figure: "Hua Tuo"
         story: 'The later Sanguozhi says that Hua Tuo was confined at Xu and recounts a failed attempt to pass on a book from prison.'
+        story_prose:
+          opening:
+            - 'Xu, at the end of the Eastern Han. Chen Shou’s history records how Hua Tuo’s imprisonment ended, and mentions a volume that did not survive.'
+            - 'In history, the keeper did not dare take the volume Hua Tuo offered him. It was burned. In this branch someone will ask whether a friend may claim it, and someone is considering a petition for clemency.'
+            - 'Someone who understands how petitions and records pass from hand to hand can help. The book and the petition will each need someone willing to hear a separate request.'
+          points:
+            p2: '{staff} asks the person willing to carry the petition to wait, then checks the name and the case with him. After taking it, he calls them back and writes an acknowledgment on the duplicate. A few days later Hua Tuo walks out through the gate and sees the people waiting. Someone by the gate offers him an arm. He stands by himself a moment before taking it.'
+            p1: 'The keeper starts to take Hua Tuo’s book, then draws his hand back. {staff} asks whose name can go down as the recipient, and brings someone from Hua Tuo’s household to sign. Only after the register is opened at a new page is the volume passed out. The recipient cannot find cloth to wrap it. He takes off his outer garment and spreads it across the table.'
+          outcomes:
+            all: 'When Hua Tuo comes home someone has left the wrapped book by the door for him. He recognises the corner of cloth used to tie it.'
+            p2: 'People who know Hua Tuo accompany him out. Only after they are beyond the prison do they turn slowly at the first corner.'
+            p1: 'The book stays with the person who took it. The cloth is still tied, with the spine pressing a line into the fold.'
+          none: 'The keeper closes the register. The paper has begun to curl. The page for anyone claiming the book remains empty.'
+          not_admitted: '{staff} never sees the clerk. Under the window, the desk does not move before the place closes.'
+          excerpts:
+            p2: 'Someone by the gate offers him an arm. He stands by himself a moment before taking it.'
+            p1: 'The recipient cannot find cloth to wrap it. He takes off his outer garment and spreads it across the table.'
         relic: 'A copy of the practice register'
         relic_desc: 'An invented register leaf that distinguishes a report from a delivery.'
         points:
@@ -52,6 +70,23 @@ events:
         place: "许昌"
         figure: "华佗"
         story: '晚出的《三国志》说华佗被关入许狱，并记他试图从狱中交出一卷书而未成。'
+        story_prose:
+          opening:
+            - '东汉末年的许。陈寿的《三国志》记下华佗在狱中的结局，也记一卷没有流传下来的书。'
+            - '史实里，狱吏不敢收华佗交来的书，书后来被烧去。在这条分支里，有人愿意问清书卷可不可以由亲友领取，也有人想试着递一份宽免请求。'
+            - '这趟用得上熟悉文书来往的人，得能把领书和求宽免说成两件事，各自找到肯听完的人。'
+          points:
+            p2: '{staff}请肯转呈的人等一等，把请求里的姓名和案子逐项对清。他收下以后又叫人回来，把受理的字样写在副本上。几天后，华佗从门里出来，见到等他的人。 门边的人伸手想扶他。他先站了一会儿，才把手递过去。'
+            p1: '狱吏一看是华佗的书，手伸出去又缩了回来。{staff}问清由谁具名受领，另请一位亲友到值房登记。簿子翻到新一页以后，那卷书才移到门外。 领书的人找不到合适的包布，便把外衣解下来铺在桌上。'
+          outcomes:
+            all: '华佗回去时，有人把包好的书放在门边等他。他认出用来打结的那一角衣布。'
+            p2: '熟人陪华佗离开许狱，走到外面才慢慢转过第一个街角。'
+            p1: '那卷书先留在领书的人家里。包布没有拆，书脊压下的一条折痕还在。'
+          none: '值房的人收起登记簿。纸角已经卷起来了，本该写领书人的那页仍空着。'
+          not_admitted: '{staff}没有见到经办人。窗下的桌子直到收工也没有挪动。'
+          excerpts:
+            p2: '门边的人伸手想扶他。他先站了一会儿，才把手递过去。'
+            p1: '领书的人找不到合适的包布，便把外衣解下来铺在桌上。'
         relic: '一页练习登记簿的副本'
         relic_desc: '登记副页，区分传闻与实际交接。'
         points:
@@ -132,6 +167,43 @@ wiki:
       text:
         en: 'Chen Shou, Sanguozhi 29, biography of Hua Tuo https://zh.wikisource.org/wiki/三國志/卷29#華佗'
         zh: '陈寿《三国志》卷二十九《方技传·华佗》 https://zh.wikisource.org/wiki/三國志/卷29#華佗'
+    hua_tuo_xuchang_story_echo_source_full:
+      order: 2421
+      status: checked
+      text:
+        en: 'Chen Shou, Records of the Three Kingdoms, vol. 29 https://zh.wikisource.org/zh-hant/三國志/卷29'
+        zh: '陈寿《三国志》卷二十九《华佗传》 https://zh.wikisource.org/zh-hant/三國志/卷29'
+    hua_tuo_xuchang_story_echo_source_none:
+      order: 2422
+      status: checked
+      text:
+        en: 'Chen Shou, Records of the Three Kingdoms, vol. 29 https://zh.wikisource.org/zh-hant/三國志/卷29'
+        zh: '陈寿《三国志》卷二十九《华佗传》 https://zh.wikisource.org/zh-hant/三國志/卷29'
+quotes:
+  hua_tuo_xuchang_story_echo_full:
+    order: 1
+    tier: full
+    date: '208'
+    checked: official_record
+    sources: [hua_tuo_xuchang_story_echo_source_full]
+    original: zh-Hant
+    contextual: true
+    text:
+      en: {"who":"Hua Tuo, as recorded by Chen Shou","quote":"This can save lives.","occasion":"Words ascribed to Hua Tuo as he offered the book to his keeper."}
+      zh: {"who":"《三国志》记华佗","quote":"这卷书能救人。","occasion":"《三国志》所载华佗递出书卷时说的话。"}
+      zh-Hant: {"who":"《三国志》记华佗","quote":"此可以活人。","occasion":"《三国志》所载华佗递出书卷时说的话。"}
+  hua_tuo_xuchang_story_echo_none:
+    order: 2
+    tier: none
+    date: '208'
+    checked: official_record
+    sources: [hua_tuo_xuchang_story_echo_source_none]
+    original: zh-Hant
+    contextual: true
+    text:
+      en: {"who":"Chen Shou","quote":"The keeper feared the law and would not take it.","occasion":"The Records of the Three Kingdoms on why the keeper declined the volume."}
+      zh: {"who":"陈寿","quote":"狱吏畏惧法令，没有收下。","occasion":"《三国志》叙述狱吏为何没有接下书。"}
+      zh-Hant: {"who":"陈寿","quote":"吏畏法不受","occasion":"《三国志》叙述狱吏为何没有接下书。"}
 self_check:
   fact: account
   quote_line: '架上仍留空，话是谁说的也记在旁边。'

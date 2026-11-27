@@ -2,7 +2,8 @@ order: 218
 events:
   zeami_sado:
     order: 208
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1435
     date: '1435-04-01'
     stay: 2
@@ -27,6 +28,20 @@ events:
         place: "Sado Island"
         figure: "Zeami"
         story: 'Zeami’s son Motomasa died in 1432. Zeami wrote about the loss in Kyakuraika before he was exiled to Sado in 1434. Kintōsho, the collection of chants that recalls his journey and exile on the island, is dated 1436.'
+        story_prose:
+          opening:
+            - 'On Sado a reader comes with a sheet small enough to fold into a pocket. Zeami has already heard him practise twice by the door, breathing at a different point each time. From his seat he asks where the reader means to begin.'
+            - 'Zeami was exiled to Sado in later life and wrote about the island in Kintōsho. This branch gives him a short reading he can choose to hear and a pause he can choose himself. The later work still comes down as it did in history.'
+            - 'Send someone who will listen to the words and their rhythm. Ask whether Zeami wants to hear them, and record the pause he chooses on its own slip.'
+          points:
+            p1: 'The reader takes a breath at the end of the phrase. Zeami asks him to start again at the same place and raises a hand partway through. You watch where the hand stops the words, and mark the slip after the reading ends. On the third attempt the reader stops at that word without looking down, before Zeami raises his hand.'
+          outcomes:
+            all: 'The slip preserves the pause Zeami chose after hearing the line. It goes beside the page while he goes on writing about the island.'
+            p1: 'Zeami has chosen the pause himself. The reader says he will bring the same sheet next time.'
+          none: 'The reader cannot stay long enough to be called in. His folded sheet still has no mark for the pause.'
+          not_admitted: 'The visitor has yet to be invited to read. The reader folds his page and steps away from the door.'
+          excerpts:
+            p1: 'On the third attempt the reader stops at that word without looking down, before Zeami raises his hand.'
         relic: "A Noh mask"
         relic_desc: "A small wooden mask with a fine line of lacquer between the brows."
         points:
@@ -46,6 +61,20 @@ events:
         place: "佐渡岛"
         figure: "世阿弥"
         story: '1432 年，世阿弥的儿子元雅去世。世阿弥在《却来华》中写到这场失去，1434 年被流放佐渡。《金岛书》记着他渡海和在岛上的经历，定稿记年为 1436 年。'
+        story_prose:
+          opening:
+            - '佐渡岛上，一位念词人拿来一张能折进口袋的纸。世阿弥已经听见他在门口练过两遍，每回都在不一样的地方歇气。他坐着问，这次想从哪一句开始。'
+            - '世阿弥晚年被流放到佐渡，《金岛书》留下在岛上的见闻。这个分支只设一次由他选听、选停顿的小排演，后来留存的著作仍按史实成稿。'
+            - '让听得清节奏或擅长读词的员工问世阿弥是否愿听。先念一遍，再把他自己点的停顿记在独立纸条上。'
+          points:
+            p1: '念词人第一遍在词尾换气。世阿弥请他从同一处再念，到了句中抬一下手。你看着他的手示意哪里停，等念完才把停法记在纸条边上。第三遍，念词人没去看纸，在世阿弥抬手前就自己停在那个字上。'
+          outcomes:
+            all: '纸条留下了他听后点出的停顿。世阿弥把它夹回原先的页旁，之后还会写他自己在岛上的见闻。'
+            p1: '世阿弥亲自挑出停顿，念词人说下次带同一页来。'
+          none: '念词人没等到能走进来的时候。那一折纸上还没有标停顿。'
+          not_admitted: '来客还没得到允许诵读。念词人收好纸，从门外退了回去。'
+          excerpts:
+            p1: '第三遍，念词人没去看纸，在世阿弥抬手前就自己停在那个字上。'
         relic: "一张能面"
         relic_desc: "一张小小的木面，眉间有细细的漆痕。"
         points:
@@ -165,6 +194,41 @@ wiki:
       text:
         en: 'Sado City, cultural-property record for the Shinjimen Beshimi mask https://www.city.sado.niigata.jp/site/bunkazai/4996.html'
         zh: '佐渡市有形文化财记录，神事面べしみ https://www.city.sado.niigata.jp/site/bunkazai/4996.html'
+    zeami_sado_story_echo_source_full:
+      order: 2562
+      status: checked
+      text:
+        en: 'Hyogo Prefectural Museum of Literature, Noh and Kyōgen, extracts from Kakyō https://www.artm.pref.hyogo.jp/bungaku/kikaku/noukyougen/'
+        zh: '兵库县立文学馆，能与狂言展所引《花镜》 https://www.artm.pref.hyogo.jp/bungaku/kikaku/noukyougen/'
+    zeami_sado_story_echo_source_none:
+      order: 2563
+      status: checked
+      text:
+        en: 'Fūshikaden, oral instructions, Japanese primary text https://tbqr.sanseido-publ.co.jp/09-seisenkoten/contents/res/a15_7_1.pdf'
+        zh: '《风姿花传》别纸口传日文原文 https://tbqr.sanseido-publ.co.jp/09-seisenkoten/contents/res/a15_7_1.pdf'
+quotes:
+  zeami_sado_story_echo_full:
+    order: 1
+    tier: full
+    date: '1424'
+    checked: official_record
+    sources: [zeami_sado_story_echo_source_full]
+    original: ja
+    text:
+      en: {"who":"Zeami","quote":"One must not forget the beginnings.","occasion":"From Kakyō, where Zeami speaks of beginnings at different stages of experience."}
+      zh: {"who":"世阿弥","quote":"不可忘记初学之时。","occasion":"《花镜》论不同阶段的初学之心。"}
+      ja: {"who":"Zeami","quote":"初心不可忘","occasion":"From Kakyō, where Zeami speaks of beginnings at different stages of experience."}
+  zeami_sado_story_echo_none:
+    order: 2
+    tier: none
+    date: '1400'
+    checked: official_record
+    sources: [zeami_sado_story_echo_source_none]
+    original: ja
+    text:
+      en: {"who":"Zeami","quote":"Kept hidden, it can be the flower. Without concealment it cannot bloom.","occasion":"From the oral instructions collected with Fūshikaden, on withholding a device to keep the audience’s surprise. The date is the approximate period of the work."}
+      zh: {"who":"世阿弥","quote":"藏而不露，方能成花。若一味显露，便无花可言。","occasion":"《风姿花传》别纸口传，谈表演中保留可给观众带来意外的东西。日期为著作的大致写作时期。"}
+      ja: {"who":"Zeami","quote":"秘すれば花なり、秘せずは花なるべからず","occasion":"From the oral instructions collected with Fūshikaden, on withholding a device to keep the audience’s surprise. The date is the approximate period of the work."}
 self_check:
   fact: island
   quote_line: '你记下两个停顿。载世阿弥来岛的船，你已经赶不上了。'

@@ -2,7 +2,8 @@ order: 24
 events:
   bach_leipzig:
     order: 23
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1750
     date: '1750-03-01'
     stay: 2
@@ -27,6 +28,20 @@ events:
         place: Leipzig
         figure: Johann Sebastian Bach
         story: 'By the spring of 1750 Bach could barely read or write because of his eyesight. The travelling oculist John Taylor operated on him in Leipzig, and complications led to a second operation. Bach died on 28 July 1750.'
+        story_prose:
+          opening:
+            - 'The Leipzig music stand has been moved to the window. Bach hears the helper turn a sheet upside down and asks him to begin by reading its part. John Taylor is in town. Someone in the house is waiting for Bach to say when he can see him.'
+            - 'In spring 1750 Taylor operated on Bach’s eyes, and a second operation followed. Bach died on 28 July. This branch lets him hear another caregiver’s opinion and decide whether a reader would help him with his scores.'
+            - 'Send someone with care experience to hear his concerns. A musician can ask whom he would like to read for him. Let the household say when there is time to talk.'
+          points:
+            p1: 'Bach pushes the score toward the visitor. You ask another caregiver to let him finish describing what worries him before discussing whether he can wait. Bach asks the family to decline the appointment and calls for a singer he knows to read two of the parts that afternoon. At the end of the first passage he asks the singer to read out the rests once more.'
+          outcomes:
+            all: 'That spring Bach sets a few readings for the hours with the best light. Someone reads and he listens with a hand on the keyboard case. The household still announces his death in July.'
+            p1: 'Taylor’s appointment is cancelled. When the light reaches the stand, the reader starts at the pause Bach asked for.'
+          none: 'The appointment goes ahead. Later, when the family clears the music stand, a page someone might have read for him is still on the table.'
+          not_admitted: 'The family asks those waiting to stay in the front room. The traveller is never called in and hears nothing of what is discussed.'
+          excerpts:
+            p1: 'At the end of the first passage he asks the singer to read out the rests once more.'
         relic: An organ pipe cut from quill
         relic_desc: A small pipe, tuned and tested, left unsold.
         points:
@@ -48,6 +63,20 @@ events:
         place: 莱比锡
         figure: 约翰·塞巴斯蒂安·巴赫
         story: '到 1750 年春，巴赫的视力已差到难以读写。游方眼医约翰·泰勒在莱比锡给他动刀，术后并发症又引出了第二次手术。同年 7 月 28 日，巴赫去世。'
+        story_prose:
+          opening:
+            - '莱比锡的谱架靠向窗口。巴赫听见来帮忙的人把纸倒过来，便请他先读纸上的声部。约翰·泰勒在城里行医，家里有人等巴赫答复哪天见他。'
+            - '1750 年春，泰勒为巴赫做眼科手术，后来又进行第二次。巴赫当年 7 月 28 日去世。这个分支里，他能听到另一位医护人员的意见，再决定是否改用别人读谱帮忙。'
+            - '派有医护经验的人去听他自己的顾虑，让识谱的员工确认他愿意由谁代读。进屋前，先问家人什么时段方便他谈。'
+          points:
+            p1: '他把谱纸往来客面前推了推。你请另一位医护人员先听巴赫把最担心的事说完，再说眼下可以先等一等。巴赫请家人回话推掉预约，叫熟识的歌者下午来替他念两个声部。第一段弹完，他让那位歌者把刚才的休止再从头念一次。'
+          outcomes:
+            all: '这一春巴赫把几次读谱排到光足的时候。有人读，他扶着琴沿听。七月家中仍传出他的死讯。'
+            p1: '泰勒没有来动手术。下午光照到谱架时，帮手按巴赫自己的要求从该停的地方读起。'
+          none: '约好的拜访照常进行。后来家人收拾谱架，桌上还压着没人来得及代读的一页。'
+          not_admitted: '家人把等回话的人请到外间。没排上见面，你听不到里面有人讨论什么。'
+          excerpts:
+            p1: '第一段弹完，他让那位歌者把刚才的休止再从头念一次。'
         relic: 一根小风琴管
         relic_desc: 一根调好音、试过音的小管子，没有卖掉。
         points:
@@ -165,6 +194,43 @@ wiki:
       text:
         en: 'Johann Sebastian Bach, Die Elenden sollen essen, BWV 75. Text and first-performance record, University of Illinois Music and Performing Arts Library. https://scalar.library.illinois.edu/scalar/bachcantatas/bdii'
         zh: 'Johann Sebastian Bach, Die Elenden sollen essen, BWV 75. Text and first-performance record, University of Illinois Music and Performing Arts Library. https://scalar.library.illinois.edu/scalar/bachcantatas/bdii'
+    bach_leipzig_story_echo_source_full:
+      order: 2499
+      status: checked
+      text:
+        en: 'Bach-Dokumente, Leipzig notice on John Taylor, 1 April 1750 https://jsbach.de/dokumente/1750-1-april-leipzig-erfolg-der-augenoperation-john-taylors'
+        zh: '《巴赫文献》，1750 年 4 月 1 日莱比锡报道 https://jsbach.de/dokumente/1750-1-april-leipzig-erfolg-der-augenoperation-john-taylors'
+    bach_leipzig_story_echo_source_none:
+      order: 2500
+      status: checked
+      text:
+        en: 'Bach-Dokumente, Anna Magdalena Bach’s petition, 17 October 1750 https://jsbach.de/dokumente/1750-17-oktober-leipzig-bitte-um-zuweisung-eines-vormundes'
+        zh: '《巴赫文献》，安娜·玛格达莱娜·巴赫 1750 年 10 月 17 日的申请书 https://jsbach.de/dokumente/1750-17-oktober-leipzig-bitte-um-zuweisung-eines-vormundes'
+quotes:
+  bach_leipzig_story_echo_full:
+    order: 1
+    tier: full
+    date: '1750-10-17'
+    checked: official_record
+    sources: [bach_leipzig_story_echo_source_none]
+    original: de
+    contextual: true
+    text:
+      en: {"who":"Anna Magdalena Bach","quote":"died and left me five minor children","occasion":"Anna Magdalena Bach reports the death in her petition for a guardian for the children."}
+      zh: {"who":"安娜·玛格达莱娜·巴赫","quote":"去世，给我留下五个未成年的孩子。","occasion":"安娜·玛格达莱娜·巴赫在申请为孩子指定监护人的文书里记下死讯。"}
+      de: {"who":"Anna Magdalena Bach","quote":"verstorben und mir 5. unmündige Kinder hinterlaßen","occasion":"Anna Magdalena Bach reports the death in her petition for a guardian for the children."}
+  bach_leipzig_story_echo_none:
+    order: 2
+    tier: none
+    date: '1750-04-01'
+    checked: official_record
+    sources: [bach_leipzig_story_echo_source_full]
+    original: de
+    contextual: true
+    text:
+      en: {"who":"Leipzig newspaper notice","quote":"so that he had regained the full sharpness of his sight","occasion":"This is the newspaper’s immediate claim after Taylor’s operation. The account of lasting complications differs."}
+      zh: {"who":"莱比锡报纸","quote":"以至于他完全恢复了清晰的视力。","occasion":"报纸在泰勒动手术后随即做出的报道，后来的病情记录另有记载。"}
+      de: {"who":"Leipzig newspaper notice","quote":"so daß er die völlige Schärfe seines Gesichts wieder bekommen hat","occasion":"This is the newspaper’s immediate claim after Taylor’s operation. The account of lasting complications differs."}
 self_check:
   quote_line: '你听出低声部比歌者预想的早到一口气。'
   fact: eyes

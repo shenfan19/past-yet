@@ -2,7 +2,8 @@ order: 78
 events:
   galileo_padua:
     order: 19
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1610
     date: '1610-01-04'
     stay: 4
@@ -28,6 +29,24 @@ events:
         place: Padua
         figure: Galileo Galilei
         story: 'In the Starry Messenger, Galileo records changing positions of four small bodies near Jupiter and concludes that they orbit it.'
+        story_prose:
+          opening:
+            - 'At the end of a January observation in Padua, Galileo draws points of light beside Jupiter. Their positions change on the next evening. A copyist stacks the drawings by size, and the person taking them to Venice asks which night goes first.'
+            - 'The observations of Jupiter’s moons appeared in the Sidereus Nuncius in 1610. An April trial in Bologna drew objections and Horký later printed a pamphlet against the book. In this branch you can keep the January nights in order and let some of the guests see the points themselves.'
+            - 'Send someone who can compare sketches and dates to check the printer’s copy. At Magini’s house, help the visitors find an unmistakable bright star before looking back at Jupiter.'
+          points:
+            p1: 'You ask the copyist which came first, the night with three points or the night with two. He brings out the notebook and sees he has them reversed. Galileo reads the dates and you match each corner to its entry before handing over the set for Venice. The copyist turns to the second night and nods when he sees how the points have changed places.'
+            p2: 'The first guest at Magini’s pulls back and says he has seen only a wash of light. Galileo makes room. You have the guest find one bright star he recognises, then return to Jupiter. The guest settles in his seat and puts a hand up to get his companion’s attention. He asks her to count for herself before he says the number he saw.'
+          outcomes:
+            all: 'The printed diagrams keep their January order. In Bologna the guests record their own counts and ask where the points will be the next night.'
+            p1: 'The copy for Venice is in order. In Bologna there will still be letters and a pamphlet contesting the observations.'
+            p2: 'At least one guest can give his own count of the lights beside Jupiter. The print record goes out of sync and the count remains in the traveller’s account.'
+          none: 'The copyist stacks the sheets by size, without putting the nights in order.'
+          not_admitted: 'Someone by the door asks who brought you. You stay outside and see the copyist put the loose pictures into a sleeve.'
+          desync: 'The loose diagrams change places in the printer’s copy. The original sequence falls out of sync and the office recalls the traveller.'
+          excerpts:
+            p1: 'The copyist turns to the second night and nods when he sees how the points have changed places.'
+            p2: 'He asks her to count for herself before he says the number he saw.'
         relic: A ground lens
         relic_desc: A small glass lens, polished by hand.
         points:
@@ -53,6 +72,24 @@ events:
         place: 帕多瓦
         figure: 伽利略
         story: '伽利略在《星际信使》中记录了木星附近四个小天体的位置变化，并判断它们绕木星运行。'
+        story_prose:
+          opening:
+            - '帕多瓦一月的观测结束，伽利略把一排光点画在木星旁边。第二晚位置有了变化，抄写人把两张图按纸的大小叠放。去威尼斯的人问，他该照哪一天的图先排。'
+            - '1610 年，《星际信使》刊出对木星卫星的连续观测。那年四月博洛尼亚有一次观测尝试，霍尔基后来印文质疑。分支能先保住一月的图稿日序，再帮来客实际看到几颗光点。'
+            - '让会对图和记日期的人整理付印稿。到马吉尼家，要让来客先看清亮星，再自己看木星旁边。'
+          points:
+            p1: '你问抄写人是先看到了三颗还是先看到了两颗。他把记录簿拿来，发现正好反了。伽利略逐夜读出日期，你把页角和簿上的观测时刻一一对过，再将图交给去威尼斯的抄写人。他翻到第二夜才点头，认得出那些光点怎样换了位置。'
+            p2: '进马吉尼家的第一个来客撤回了眼睛，说只看见一层薄光。伽利略让出位置，你请来客先找一颗能认出的亮星，再回到木星那里。来客坐稳后抬起手，隔着桌子指给同伴看。他叫第二个人也数一次，先把自己数到的几个按在心里。'
+          outcomes:
+            all: '印出来的图保留一月日序。博洛尼亚那晚，来客还留下各自记下的数目，问下一夜会换到哪里。'
+            p1: '威尼斯的排印稿顺序正确。博洛尼亚的争议仍会有写信和印小册子的经过。'
+            p2: '至少一位来客能自己报出木星旁的光点。印刷稿日序失去同步，这一小段只能随旅途记录保存。'
+          none: '抄写人用纸的大小整理，图仍没有排出夜夜的先后。'
+          not_admitted: '门边的人问来客跟谁一道。你没能进屋，最后看到的是抄写人把图收入纸套。'
+          desync: '散开的图在排印稿里换了日序，原有观测记述失去同步，事务所召回员工。'
+          excerpts:
+            p1: '他翻到第二夜才点头，认得出那些光点怎样换了位置。'
+            p2: '他叫第二个人也数一次，先把自己数到的几个按在心里。'
         relic: 一片磨制的透镜
         relic_desc: 一片小小的玻璃透镜，是手工磨出来的。
         points:
@@ -121,6 +158,41 @@ wiki:
       text:
         en: 'Galileo Galilei, Sidereus nuncius, Venice, 1610. University of Padua copy, Library of Congress facsimile. https://www.loc.gov/resource/gdcwdl.wdl_04170/?st=gallery'
         zh: 'Galileo Galilei, Sidereus nuncius, Venice, 1610. University of Padua copy, Library of Congress facsimile. https://www.loc.gov/resource/gdcwdl.wdl_04170/?st=gallery'
+    galileo_padua_story_echo_source_full:
+      order: 2490
+      status: checked
+      text:
+        en: 'Galileo, Sidereus Nuncius, Latin transcription https://la.wikisource.org/wiki/Sidereus_Nuncius'
+        zh: '伽利略《星际信使》拉丁文转录 https://la.wikisource.org/wiki/Sidereus_Nuncius'
+    galileo_padua_story_echo_source_none:
+      order: 2491
+      status: checked
+      text:
+        en: 'Galileo, Sidereus Nuncius, Latin edition https://www.nuovorinascimento.org/n-rinasc/astrit/pdf/galilei/sidereus_nuncius.pdf'
+        zh: '伽利略《星际信使》拉丁文校本 https://www.nuovorinascimento.org/n-rinasc/astrit/pdf/galilei/sidereus_nuncius.pdf'
+quotes:
+  galileo_padua_story_echo_full:
+    order: 1
+    tier: full
+    date: '1610'
+    checked: official_record
+    sources: [galileo_padua_story_echo_source_full]
+    original: la
+    text:
+      en: {"who":"Galileo Galilei","quote":"four wandering stars, known or observed by none of those who preceded us","occasion":"In the printed report Galileo introduces the four objects found near Jupiter."}
+      zh: {"who":"伽利略·伽利莱","quote":"四颗游星，在我们以前无人知道或观测到。","occasion":"伽利略在刊行报告开头介绍木星附近发现的四颗天体。"}
+      la: {"who":"Galileo Galilei","quote":"quatuor Erraticas Stellas, nemini eorum qui ante nos cognitas aut observatas","occasion":"In the printed report Galileo introduces the four objects found near Jupiter."}
+  galileo_padua_story_echo_none:
+    order: 2
+    tier: none
+    date: '1610'
+    checked: official_record
+    sources: [galileo_padua_story_echo_source_none]
+    original: la
+    text:
+      en: {"who":"Galileo Galilei","quote":"three little stars, small, standing near it","occasion":"The report describes what Galileo saw near Jupiter on 7 January."}
+      zh: {"who":"伽利略·伽利莱","quote":"它旁边有三颗小星。","occasion":"报告记 1 月 7 日在木星旁所见。"}
+      la: {"who":"Galileo Galilei","quote":"tres illi adstare Stellulas, exiguas","occasion":"The report describes what Galileo saw near Jupiter on 7 January."}
 self_check:
   quote_line: '你拦住正要把两页按纸边对齐的誊写员。'
   fact: jupiter

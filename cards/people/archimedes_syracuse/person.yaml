@@ -2,7 +2,8 @@ order: 19
 events:
   archimedes_syracuse:
     order: 8
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -212
     stay: 2
     lon: 15.29
@@ -26,8 +27,22 @@ events:
         place: Syracuse, Sicily
         figure: Archimedes
         story: 'Archimedes devised machines to help defend Syracuse during the Roman siege. When the city fell in 212 BC, he was killed. Plutarch gives several versions of how it happened.'
-        relic: 'A marked toy hull'
-        relic_desc: 'A practice hull from the fictional workshop.'
+        story_prose:
+          opening:
+            - 'The street cries stop on the day Syracuse falls. A neighbour stands inside with a writing tablet and asks whether you have come for the older man who draws figures. Archimedes once borrowed a board from him.'
+            - 'Archimedes was killed when Roman forces took Syracuse. Ancient accounts differ about the circumstances. In this branch you can find him and stay with him until he has somewhere to spend the night.'
+            - 'Send a traveller who can recognise him and ask the neighbours where he went. He can decide for himself what to do with his drawing board.'
+          points:
+            p1: 'Archimedes turns the board half a circle and says it still needs a line. You show him the neighbour’s old tablet so he knows someone outside can carry the drawing. He taps the frame once with a finger and hands it over. In the room where he is to stay, he asks first whether the board has arrived too.'
+          outcomes:
+            all: 'After the fall of the city, there is still news of Archimedes in this branch. Someone in the house sets his board beside a stool where he can sit.'
+            p1: 'You stay with him until he reaches shelter. He lifts the cover from the board and can still finish the last line.'
+          none: 'The neighbours hear that Archimedes was killed when the city fell. The surviving accounts will differ about the circumstances.'
+          not_admitted: 'The neighbour keeps the visitor outside. Someone takes a board from the entryway before you can read the name on it.'
+          excerpts:
+            p1: 'In the room where he is to stay, he asks first whether the board has arrived too.'
+        relic: 'A wax drawing tablet'
+        relic_desc: 'A practice tablet marked with a line from the fictional neighbour’s house.'
         points:
           p1: 'Find Archimedes while the city is falling and stay with him until he reaches shelter'
         points_fail:
@@ -39,16 +54,30 @@ events:
             who: archimedes_syracuse
             bio: 'In this timeline Archimedes came safely through the fall of Syracuse in 212 BC and lived on.'
         vignettes:
-          load: 'Tyche expects the wide boat to send more water over the rim. You give both boats equal total weight. The wider hull sits shallower and the two catches balance. She keeps both boats instead of cutting down the larger one to match the smaller.'
-          settle: 'Nikon has to return the basin before the workshop closes. He starts the second trial while the first catch is still sloshing. You send Tyche to return the weights and use the time to let the bowl settle. Nikon weighs the water again. He leaves with a second reading and still gets the basin back.'
-          crown: 'You ask Nikon whether Archimedes ever tested a king’s crown in a bath. He looks down at the two toy boats and asks whose crown you could put on the scale. You have the tale a Roman author will tell long after this workshop. You leave with the mark from the trial you can actually repeat.'
+          load: '{staff} puts the old board under the newer one and asks which drawing needs to stay legible. The neighbour points to the wax still exposed.'
+          settle: 'The neighbour starts to clear the writing board from the stool. {staff} asks him to leave a place where someone can sit with it.'
+          crown: '{staff} asks the neighbour to describe the board that was lent. The neighbour traces with two fingers how wide it was.'
       zh:
         name: '城破的那一天'
         place: 西西里锡拉库扎
         figure: 阿基米德
         story: '罗马围攻叙拉古时，阿基米德设计器械相助。公元前 212 年，叙拉古城破，他在城里遇害。普鲁塔克记下了几种不同的说法。'
-        relic: '留着吃水线的小舟'
-        relic_desc: '工坊里拿来练习的小舟。'
+        story_prose:
+          opening:
+            - '叙拉古城破那天，平日从街上传来的叫卖声停了。一个邻人抱着写字板站在门里，问你是不是来找画几何图的老人。他记得阿基米德借走过一块板。'
+            - '史实里，阿基米德在罗马攻下叙拉古时遇害。古代作者记下不同经过。在这条分支里，可以找到他，陪他到能暂时安顿的地方。'
+            - '找能认出他、和邻人问清去向的员工。需要带走的是还在屋里的人，他的图板由他自己决定放哪儿。'
+          points:
+            p1: '阿基米德把板转了半圈，说这里还少一道线。你把邻人借出的旧板拿给他，让他知道门外有人能收着这份图。他用手指在木框上点了一下，随后把自己的板交出去。到借宿的屋子里，他先问那块板是不是也到了。'
+          outcomes:
+            all: '这条分支在叙拉古城破之后仍留有阿基米德的消息。新屋里有人把图板放在一张能坐下来的凳旁。'
+            p1: '你陪他到了暂住处。他掀起图板上的布，还能接着画最后那一道线。'
+          none: '邻人只听到城破时阿基米德遇害的消息。不同的说法都没有让那个上午重来。'
+          not_admitted: '邻人没把来客带进里屋。门内有人收走一块旧板，板上的名字仍看不清。'
+          excerpts:
+            p1: '到借宿的屋子里，他先问那块板是不是也到了。'
+        relic: '留着划线的蜡板'
+        relic_desc: '虚构邻人家借出的一块练习板，上面还留着一道线。'
         points:
           p1: '城破时找到阿基米德，一路陪他到能暂避的地方'
         points_fail:
@@ -60,9 +89,9 @@ events:
             who: archimedes_syracuse
             bio: '这条时间线里，阿基米德平安度过公元前 212 年叙拉古城破的那一天，活了下来。'
         vignettes:
-          load: '堤刻以为宽舟会挤出更多水。你把两只舟配到同样重。宽舟吃水浅一些，接到的两份水却一样重。她把两只舟都留下了，原本还想把大的削成小的那样。'
-          settle: '尼孔关坊前得还水盆，头一回接的水还在晃，就要做第二回。你请堤刻先去还砝码，趁空等水静下来。尼孔又称了一次，走时多带走一次读数，水盆也赶得及还。'
-          crown: '你问尼孔，阿基米德是不是在浴池里验过国王的冠。他低头看看两只小舟，问你有哪一顶冠可以拿来上秤。你知道的是很久以后罗马人会讲的故事。带走的，是这盆水还能重做一遍的刻痕。'
+          load: '{staff}把旧板垫在新板下面，问哪一幅图得留清楚。邻人指了指还露着的蜡面。'
+          settle: '邻人要把蜡板从凳子上收走。{staff}请他留一个能拿着板坐下的位置。'
+          crown: '{staff}请邻人说说借出的蜡板。对方用两根手指比了板的宽度。'
 text:
   en:
     name: Archimedes
@@ -147,6 +176,41 @@ wiki:
       text:
         en: 'Vitruvius, On Architecture IX, preface 9–12 https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Vitruvius/9%2A.html'
         zh: '维特鲁威《建筑十书》第九书序言9—12 https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Vitruvius/9%2A.html'
+    archimedes_syracuse_story_echo_source_full:
+      order: 2478
+      status: checked
+      text:
+        en: 'Archimedes, Method, preface, Greek edition by Charles Mugler https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0552.tlg010.1st1K-grc1:pr1/'
+        zh: '阿基米德《方法》序言，查尔斯·米格勒希腊文校本 https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0552.tlg010.1st1K-grc1:pr1/'
+    archimedes_syracuse_story_echo_source_none:
+      order: 2479
+      status: checked
+      text:
+        en: 'Archimedes, On Spirals, preface, Greek edition by Charles Mugler https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0552.tlg004.1st1K-grc1:pr/'
+        zh: '阿基米德《论螺线》序言，查尔斯·米格勒希腊文校本 https://beta.perseus.tufts.edu/urn:cts:greekLit:tlg0552.tlg004.1st1K-grc1:pr/'
+quotes:
+  archimedes_syracuse_story_echo_full:
+    order: 1
+    tier: full
+    date: '-212'
+    checked: official_record
+    sources: [archimedes_syracuse_story_echo_source_full]
+    original: grc
+    text:
+      en: {"who":"Archimedes","quote":"Archimedes sends his good wishes to Eratosthenes.","occasion":"Opening of the Method, addressed to Eratosthenes. The date marks the story’s year. The work’s date is uncertain."}
+      zh: {"who":"阿基米德","quote":"阿基米德问候埃拉托色尼。","occasion":"《方法》开头问候埃拉托色尼。所标年份取卡片时代，成书时间未定。"}
+      grc: {"who":"Archimedes","quote":"Ἀρχιμήδης Ἐρατοσθένει εὖ πράττειν.","occasion":"Opening of the Method, addressed to Eratosthenes. The date marks the story’s year. The work’s date is uncertain."}
+  archimedes_syracuse_story_echo_none:
+    order: 2
+    tier: none
+    date: '-212'
+    checked: official_record
+    sources: [archimedes_syracuse_story_echo_source_none]
+    original: grc
+    text:
+      en: {"who":"Archimedes","quote":"Archimedes greets Dositheus.","occasion":"Opening of On Spirals, addressed to Dositheus. The date marks the story’s year. The work’s date is uncertain."}
+      zh: {"who":"阿基米德","quote":"阿基米德问候多西修斯。","occasion":"《论螺线》开头问候多西修斯。所标年份取卡片时代，成书时间未定。"}
+      grc: {"who":"Archimedes","quote":"Ἀρχιμήδης Δοσνθέῳ χαίρειν","occasion":"Opening of On Spirals, addressed to Dositheus. The date marks the story’s year. The work’s date is uncertain."}
 self_check:
   fact: floating
   quote_line: '两份接到的水一样重。'

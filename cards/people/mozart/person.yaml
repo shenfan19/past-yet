@@ -76,7 +76,8 @@ events:
           applause: '你知道莫扎特会在信里提到掌声。扬问，那一个多出来的休止会不会有人听出来。你交给他改好的谱，指给他在哪儿等安娜开口。离开时幕已经升起，那句还没到。'
   mozart_requiem_vienna:
     order: 112
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1791
     date: '1791-11-15'
     stay: 2
@@ -102,6 +103,24 @@ events:
         place: "Vienna"
         figure: "Wolfgang Amadeus Mozart"
         story: 'Mozart died in Vienna in December 1791 with the Requiem incomplete. The Austrian National Library preserves working material and a delivery score with contributions by Franz Xaver Süssmayr.'
+        story_prose:
+          opening:
+            - 'In Vienna, a runner reaches for the neatest pile on the table. Mozart asks from his bed whether the instrumental parts for the opening are still there. Constanze asks the runner to wait. Some of the other pages are drafts that have not been put away.'
+            - 'Mozart fell ill in his last weeks and died on 5 December 1791. The Requiem remained unfinished, although he had fully scored its opening. Here you can keep that section together and have a caregiver bring the office’s fictional medical kit.'
+            - 'A reader who can distinguish the instrumental parts from working sheets can help Constanze sort them. Use someone with the kit and experience in care, after asking the household and Mozart what he wants.'
+          points:
+            p1: 'The runner turns two sheets and says both name the same voice. You and Constanze ask for the fully scored pile and check the pages to the end of its opening. The drafts go apart with a label. At the door the runner checks inside the wrapper and outside it so he knows which set to give the copyist first.'
+            p2: 'Someone brings a clean sheet to the bedside and asks if there will be copying today. You explain the office kit to Mozart and his family and ask the copyist to wait in the other room. When Mozart wakes later, his fever has lifted. He asks them to move the table closer and opens only the page where he stopped.'
+          outcomes:
+            all: 'The opening parts can be used again, and Mozart can work at the table. The pages after them are still blank when you leave. Nobody yet knows how he will finish them.'
+            p1: 'The opening is still one complete packet. Mozart dies on 5 December and the remaining score is left to others.'
+            p2: 'Mozart recovers, but the original opening is scattered. This visit preserves the moment he wakes and asks to see the score.'
+          none: 'Unfinished phrases lie by the bed. Mozart dies on 5 December and the several piles are still waiting for someone to identify them.'
+          not_admitted: 'Constanze did not arrange for this visitor. The copyist stays outside and never sees what is in the pile.'
+          desync: 'The opening parts become mixed with loose pages and the historical handover falls out of sync. The office recalls the traveller.'
+          excerpts:
+            p1: 'At the door the runner checks inside the wrapper and outside it so he knows which set to give the copyist first.'
+            p2: 'He asks them to move the table closer and opens only the page where he stopped.'
         relic: 'An unfinished practice leaf'
         relic_desc: 'A fictional copying leaf showing where the surviving notes stop.'
         points:
@@ -127,6 +146,24 @@ events:
         place: "维也纳"
         figure: "沃尔夫冈·阿马德乌斯·莫扎特"
         story: '莫扎特1791年12月在维也纳去世时，《安魂曲》尚未完成。奥地利国家图书馆保有工作稿和含弗朗茨·克萨韦尔·苏斯迈尔补写的交付谱。'
+        story_prose:
+          opening:
+            - '维也纳，送谱的人伸手去拿桌上最整齐的那摞。莫扎特从床边问，第一段的器乐页还在不在。康斯坦策让来人先等一等，另几张是没来得及收起的草稿。'
+            - '莫扎特在 1791 年最后几周病重，12 月 5 日去世。《安魂曲》当时尚未完成，开篇已有完整配器。分支里可以先保住那一叠已写成的开篇，也可以带事务所的虚构医疗箱去帮忙照护。'
+            - '认得乐器谱和草稿笔迹的人帮康斯坦策把纸分开。另需会照护病人且有医疗箱的员工，先问病人和家人的意愿。'
+          points:
+            p1: '跑腿的人把两张纸掀开，指给你看上面都有同样的声部名字。你和康斯坦策请他再找完整配器的那一叠，逐页核到开篇结尾，草页标明后另放。纸包递到门边时，他里面外面都看一遍，知道哪一包可以先交给抄谱人。'
+            p2: '有人把鲜纸端到床边，问今天还抄不抄。你向莫扎特和家人说明带来的事务所医疗箱，然后让等着抄谱的人先回外屋。后来他醒了，烧已经退下去。他请家人把桌挪近一点，只翻开原来停住的那一页。'
+          outcomes:
+            all: '开篇的分谱能重新取用，莫扎特也能回到桌前。你离开时，后面还空着，没有人知道他会怎样写完。'
+            p1: '第一段仍是一件完整的纸包。12 月 5 日莫扎特去世，后面的曲谱留给别人补写。'
+            p2: '莫扎特从病中恢复，但开篇的原谱已经拆散。本趟保留他醒来想翻谱的经过。'
+          none: '床边摊着还没抄完的乐句。莫扎特在 12 月 5 日去世，几摞纸仍等人来分辨。'
+          not_admitted: '来人和康斯坦策没有约过时间。抄谱人停在屋外，没能看到那一叠纸写了什么。'
+          desync: '开篇的完整分谱混进散页，原有谱件的交接没法对上，事务所召回员工。'
+          excerpts:
+            p1: '纸包递到门边时，他里面外面都看一遍，知道哪一包可以先交给抄谱人。'
+            p2: '他请家人把桌挪近一点，只翻开原来停住的那一页。'
         relic: '一页留白的练习谱'
         relic_desc: '抄谱习作，留着已经写下的乐句停住的位置。'
         points:
@@ -250,6 +287,43 @@ wiki:
       text:
         en: 'Austrian National Library, The autograph of Mozart’s Requiem https://www.onb.ac.at/sammlungen/musiksammlung/200-jahre-musiksammlung/autograf-des-mozart-requiems'
         zh: '奥地利国家图书馆，莫扎特《安魂曲》手稿专题 https://www.onb.ac.at/sammlungen/musiksammlung/200-jahre-musiksammlung/autograf-des-mozart-requiems'
+    mozart_requiem_vienna_story_echo_source_full:
+      order: 2529
+      status: checked
+      text:
+        en: 'Austrian National Library, Requiem KV 626, autograph https://www.onb.ac.at/en/departments/department-of-music/200-years-of-the-department-of-music/mozarts-requiem-spitzenobjekt-der-musiksammlung'
+        zh: '奥地利国家图书馆，《安魂曲》KV 626 手稿 https://www.onb.ac.at/en/departments/department-of-music/200-years-of-the-department-of-music/mozarts-requiem-spitzenobjekt-der-musiksammlung'
+    mozart_requiem_vienna_story_echo_source_none:
+      order: 2530
+      status: checked
+      text:
+        en: 'New Mozart Edition, Requiem, critical introduction quoting Constanze’s letter https://dme.mozarteum.at/DME/objs/pdf/nma_14_-23_-3.pdf'
+        zh: '《莫扎特新全集·安魂曲》校勘序所引康斯坦策书信 https://dme.mozarteum.at/DME/objs/pdf/nma_14_-23_-3.pdf'
+quotes:
+  mozart_requiem_vienna_story_echo_full:
+    order: 1
+    tier: full
+    date: '1791'
+    checked: official_record
+    sources: [mozart_requiem_vienna_story_echo_source_full]
+    original: la
+    contextual: true
+    text:
+      en: {"who":"Requiem autograph","quote":"Eternal rest.","occasion":"Opening text of the Introit in Mozart’s score."}
+      zh: {"who":"《安魂曲》手稿","quote":"永恒的安息。","occasion":"莫扎特总谱开篇《进堂咏》的起句。"}
+      la: {"who":"Requiem autograph","quote":"Requiem aeternam","occasion":"Opening text of the Introit in Mozart’s score."}
+  mozart_requiem_vienna_story_echo_none:
+    order: 2
+    tier: none
+    date: '1800-01-30'
+    checked: official_record
+    sources: [mozart_requiem_vienna_story_echo_source_none]
+    original: de
+    contextual: true
+    text:
+      en: {"who":"Constanze Mozart","quote":"The owner and commissioner of the Requiem, whose name has been entirely concealed since 1791, has come forward.","occasion":"Constanze writes to the Leipzig publishers about the commission. Her letter was written years after the work was left unfinished."}
+      zh: {"who":"康斯坦策·莫扎特","quote":"《安魂曲》的所有者和委托者已经现身。自 1791 年以来，他的姓名一直保密。","occasion":"康斯坦策在《安魂曲》留下残稿多年后，写信给莱比锡出版商谈到委托人。"}
+      de: {"who":"Constanze Mozart","quote":"Der Eigenthümer und Besteller des Requiems, dessen Name seit 1791. gänzlich verborgen geblieben ist, hat sich eingefunden","occasion":"Constanze writes to the Leipzig publishers about the commission. Her letter was written years after the work was left unfinished."}
 self_check:
   fact: prague_premiere
   quote_line: '布拉格｜划掉的休止还留在谱上。 维也纳｜交稿后，下一个人翻到这里，就知道另一只手得从哪儿起笔。'

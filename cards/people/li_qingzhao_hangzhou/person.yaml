@@ -2,78 +2,114 @@ order: 123
 events:
   li_qingzhao_hangzhou:
     order: 154
-    build_step: 1
-    year: 1150
-    lon: 120.15
-    lat: 30.27
+    build_step: 4
+    ready: true
+    year: 1131
+    stay: 2
+    lon: 120.58
+    lat: 30.01
     region: asia
     field: literature
     tier: 1
     channels: {Y: 1, G: 1}
-    regret: true
-    refs: [li_qingzhao_hangzhou_primary]
+    refs: [li_qingzhao_hangzhou_postscript, li_qingzhao_hangzhou_primary]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["quiet","methodical","skeptical"]}}
-        - {id: p2, kind: trust, req: {"luck":0.5}}
-        - {id: p3, kind: hold, redeem: true, req: {"any":[{"job":["archivist","teacher"]},{"stat":{"will":7}}]}}
-      vignettes:
-        - {id: trace, traits: [scholarly, methodical]}
-        - {id: missing, traits: [sensitive, patient]}
-        - {id: book}
+        - {"id":"p1","kind":"trust","day":8,"req":{"any":[{"job":["archivist","restorer","antique_dealer"],"stat":{"will":5}},{"trait":["methodical","kind","patient"],"stat":{"wit":6,"will":5}}]}}
     text:
       en:
-        name: "The lost collection"
-        place: "Hangzhou"
-        figure: "Li Qingzhao"
-        story: 'Li Qingzhao''s postface to the Jinshi lu recalls how she and Zhao Mingcheng gathered books and inscriptions and how much of the collection was later dispersed.'
-        relic: "A rubbing of an old inscription"
-        relic_desc: "Ink pressed from a stone, the kind she and her husband collected."
+        name: 'Leave this chest with a neighbour'
+        place: 'Kuaiji'
+        figure: 'Li Qingzhao'
+        story: 'Li Qingzhao wrote that her books and pictures had already suffered repeated losses when she lodged in Kuaiji. She described a theft there and the recovery of eighteen scrolls.'
+        story_prose:
+          opening:
+            - 'By the time Li Qingzhao lodges in Kuaiji, she has already lost books and pictures several times. Writing her afterword to the Record of Metal and Stone, she could still account for much of what went missing on this part of the journey.'
+            - 'In history, a theft in Kuaiji cost her more of the collection. She recovered eighteen scrolls. In this branch the chests are still in the room. One stands near enough to the bed that she can reach it without rising.'
+            - 'Someone who knows how to look after books and pictures can help. If the neighbours hesitate, it takes patience to agree on where a chest would go and which door she should knock on when she wants it back.'
+          points:
+            p1: 'Li Qingzhao opens the chest by the bed, takes out two scrolls and returns one. {staff} asks the neighbour to look at the chest and its lock, then has them each put a mark on the same tally. Before they carry it out, Li slips a short brush into the gap beneath the lid. The neighbour takes the weight from below; she takes the other end, and together they cross the threshold.'
+          outcomes:
+            all: 'When she gets the chest back, she looks first for the brush. It is still by the lid. On a corner of paper she tries a stroke. The ink spreads more slowly than she remembers.'
+            p1: 'When she gets the chest back, she looks first for the brush. It is still by the lid. On a corner of paper she tries a stroke. The ink spreads more slowly than she remembers.'
+          none: 'After the theft she lays out the scrolls she was able to recover. When she finishes counting, her hands come to rest on the bare part of the table.'
+          not_admitted: '{staff} never meets Li Qingzhao. Through the door comes the sound of a chest being shut.'
+          excerpts:
+            p1: 'Before they carry it out, Li slips a short brush into the gap beneath the lid. The neighbour takes the weight from below; she takes the other end, and together they cross the threshold.'
+        relic: 'A chest tally'
+        relic_desc: 'An imagined tally for the one chest she chose to leave elsewhere.'
         points:
-          p1: 'Distinguish a recollection from a catalogue entry'
-          p2: 'Keep the incomplete copy open at the right place'
-          p3: 'Record a missing entry without guessing its wording'
-        vignettes:
-          trace: 'The reader recognises a title and reaches for the next page. You ask whether they can identify the object too. They stop and copy the place name before the missing line.'
-          missing: 'There is a gap in the list. The reader hesitates over what to add. You keep the place with a short note of what was missing, leaving room for a later reader to find it.'
-          book: 'You set the postface beside the numbered list. The reader turns from one to the other before reading aloud, and the names start to sound like things that were once held and carried.'
+          p1: 'Arrange for a trusted neighbour to take charge of one chest Li Qingzhao chooses before the theft'
+        points_fail:
+          p1: 'The employee did not find anyone who could take charge of the chest.'
+        shift:
+          p1:
+            was: 'Around 1131: Li Qingzhao recalled a theft at her lodgings in Kuaiji. She recovered eighteen scrolls afterwards.'
+            now: '{staff} arranges for one chest of her choice to be kept in another household. Li Qingzhao retrieves it later with its contents intact.'
+            who: li_qingzhao_hangzhou
+            bio: 'Li Qingzhao recovered a chest of books and pictures she had left in a neighbour’s care.'
       zh:
-        name: "失去的藏品"
-        place: "杭州"
-        figure: "李清照"
-        story: '李清照在《金石录后序》中回忆她与赵明诚搜求书籍金石，以及后来收藏散失的经过。'
-        relic: "一张古碑拓片"
-        relic_desc: "用墨从石头上拓下来的纸，是她和丈夫曾经收集的那种。"
+        name: '这一箱先寄在邻家'
+        place: '会稽'
+        figure: '李清照'
+        story: '李清照记下，寓居会稽时，她的书画已经历过几次散失。她在当地又遇失窃，后来寻回十八轴。'
+        story_prose:
+          opening:
+            - '李清照到会稽寓居时，手里的书画已经散过几回。她后来写《金石录后序》，还能说清这一趟陆续失了些什么。'
+            - '史实里，她在会稽遭窃，后来寻回十八轴。在这条分支里，箱子还都在房里。有一箱靠着床，她每天伸手就够得着。'
+            - '这趟用得上懂得照管书画的人。遇到别人不肯答应，还得耐着性子问清东西能放在哪、她要取时该敲哪扇门。'
+          points:
+            p1: '李清照打开靠着床的箱子，翻出两卷，放回去一卷。{staff}请邻人先来认好箱子和锁，再让两人在同一张箱签上各按一个记号。搬出门以前，她又把一支短笔塞进盖下的空处。邻人托住箱底，她提着另一边，两个人一前一后过了门槛。'
+          outcomes:
+            all: '后来她取回箱子，先找的就是那支笔。笔还躺在盖边。她从纸角试了一道，墨洇开得比从前慢。'
+            p1: '后来她取回箱子，先找的就是那支笔。笔还躺在盖边。她从纸角试了一道，墨洇开得比从前慢。'
+          none: '东西散去以后，她把寻回的卷轴摊开数。数到最后，她把两手停在空出来的桌面上。'
+          not_admitted: '{staff}没能见到李清照。隔着门，屋里传来箱盖合上的声音。'
+          excerpts:
+            p1: '搬出门以前，她又把一支短笔塞进盖下的空处。邻人托住箱底，她提着另一边，两个人一前一后过了门槛。'
+        relic: '一张箱签'
+        relic_desc: '分支里的箱签，标记李清照亲自挑出、另寄在邻家的一箱。'
         points:
-          p1: '分清后序里的回忆与目录条目'
-          p2: '把残抄翻开，保留需要核对的那页'
-          p3: '记下残缺处，别用猜来的字填满'
-        vignettes:
-          trace: '读者认出题名就要翻页。你问他能不能认出所记之物。他停下来，先补抄缺行前的地名。'
-          missing: '清单中间空了一处，读者犹豫补什么。你用小字记清缺了什么，留着地方，等后面的人查到再填。'
-          book: '你把后序搁到编号的目录旁。读者开口之前在两边来回看了一遍。念出来时，那些名目像是从前真有人抱在手里、带上路的东西。'
+          p1: '请一位可靠的邻人，在失窃前接下李清照亲自挑出的一箱书画'
+        points_fail:
+          p1: '员工没能找到肯替她收存那一箱的人。'
+        shift:
+          p1:
+            was: '约 1131 年，李清照记述在会稽寓居时遭遇失窃，后来寻回十八轴。'
+            now: '{staff}请到邻人，把她亲自挑的那一箱收在另一处。李清照后来回来取箱，里面的东西还在。'
+            who: li_qingzhao_hangzhou
+            bio: '李清照收回了一箱曾寄在邻家保管的书画。'
 text:
   en:
     name: Li Qingzhao
-    text: Chinese poet of the Song, about 1084 to about 1155. She wrote lyrics on love and loss, lost her home and husband in the fall of the north in 1127, and spent her later years in the south.
+    text: Chinese poet of the Song, about 1084 to about 1155. She moved south after 1127, lost her husband in 1129, and wrote about the books and objects they had gathered together.
   zh:
     name: 李清照
-    text: 宋代词人，约 1084 年生，约 1155 年去世。她写爱情与失去的词，1127 年北方沦陷，家园与丈夫都失去了，晚年住在南方。
-hook: {en: 'What can a catalogue still remember?', zh: '东西散了，目录还记得吗'}
+    text: 宋代词人，约 1084 年生，约 1155 年去世。她在 1127 年以后南渡，丈夫于 1129 年去世。她后来写下了两人共同收集的书籍和器物。
+hook: {en: 'Leave this chest with a neighbour', zh: '这一箱先寄在邻家'}
 facts:
+  theft:
+    date: '1131'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [li_qingzhao_hangzhou_postscript]
+    text:
+      en: 'Around 1131: Li Qingzhao recalled a theft at her lodgings in Kuaiji. She recovered eighteen scrolls afterwards.'
+      zh: '约 1131 年，李清照记述在会稽寓居时遭遇失窃，后来寻回十八轴。'
+    line:
+      en: 'Around 1131: Li Qingzhao recalled a theft at her lodgings in Kuaiji. She recovered eighteen scrolls afterwards.'
+      zh: '约 1131 年，李清照记述在会稽寓居时遭遇失窃，后来寻回十八轴。'
   postface:
     date: '1132'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [li_qingzhao_hangzhou_primary]
     text:
       en: 'Li Qingzhao''s postface to the Jinshi lu recalls how she and Zhao Mingcheng gathered books and inscriptions and how much of the collection was later dispersed.'
       zh: '李清照在《金石录后序》中回忆她与赵明诚搜求书籍金石，以及后来收藏散失的经过。'
-bystanders:
-  li_qingzhao_hangzhou_reader:
-    invented: true
-    text: {en: 'An invented reader trying to identify an entry from an incomplete copy.', zh: '一位虚构的读者，想从残抄里认出一则条目。'}
 wiki:
   refs:
     li_qingzhao_hangzhou_primary:
@@ -82,11 +118,54 @@ wiki:
       text:
         en: 'Li Qingzhao, Postface to the Catalogue of Inscriptions on Metal and Stone, dated in the transmitted text to Shaoxing 2. https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
         zh: 'Li Qingzhao, Postface to the Catalogue of Inscriptions on Metal and Stone, dated in the transmitted text to Shaoxing 2. https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+    li_qingzhao_hangzhou_postscript:
+      order: 2203
+      status: checked
+      text:
+        en: 'Li Qingzhao, Afterword to the Record of Metal and Stone https://zh.wikisource.org/zh-hans/金石錄後序_(李清照)'
+        zh: '李清照《金石录后序》 https://zh.wikisource.org/zh-hans/金石錄後序_(李清照)'
+    li_qingzhao_hangzhou_echo_source_full:
+      order: 2302
+      status: checked
+      text:
+        en: 'Li Qingzhao, Afterword to the Record of Metal and Stone, Traditional transcription https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+        zh: '李清照《金石录后序》，繁体校读 https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+    li_qingzhao_hangzhou_echo_source_none:
+      order: 2303
+      status: checked
+      text:
+        en: 'Li Qingzhao, Afterword to the Record of Metal and Stone, Traditional transcription https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+        zh: '李清照《金石录后序》，繁体校读 https://zh.wikisource.org/zh-hant/金石錄後序_(李清照)'
+quotes:
+  li_qingzhao_hangzhou_echo_full:
+    order: 1
+    tier: full
+    date: '1134'
+    checked: official_record
+    sources: [li_qingzhao_hangzhou_echo_source_full]
+    original: zh-Hant
+    text:
+      en: {"who":"Li Qingzhao","quote":"Two days later, a neighbour, Zhong Fuhao, brought out eighteen scrolls and asked for the reward.","occasion":"Afterword to the Record of Metal and Stone, recollecting the scrolls recovered in Kuaiji."}
+      zh: {"who":"李清照","quote":"两天以后，邻人钟复皓拿出十八轴，来求赏。","occasion":"《金石录后序》，记会稽失窃后寻回的卷轴。"}
+      zh-Hant: {"who":"李清照","quote":"後二日，鄰人鐘復皓出十八軸求賞","occasion":"《金石录后序》，记会稽失窃后寻回的卷轴。"}
+  li_qingzhao_hangzhou_echo_none:
+    order: 2
+    tier: none
+    date: '1134'
+    checked: official_record
+    sources: [li_qingzhao_hangzhou_echo_source_none]
+    original: zh-Hant
+    text:
+      en: {"who":"Li Qingzhao","quote":"One night, someone made a hole in the wall and carried off five chests.","occasion":"Afterword to the Record of Metal and Stone, recollecting the theft at her lodgings."}
+      zh: {"who":"李清照","quote":"忽然有一夜，有人凿开墙壁，把五只箱子背走了。","occasion":"《金石录后序》，记会稽寓所失窃。"}
+      zh-Hant: {"who":"李清照","quote":"忽一夕，穴壁負五簏去","occasion":"《金石录后序》，记会稽寓所失窃。"}
 self_check:
-  quote_line: '读者认出题名就要翻页。'
-  fact: postface
-  regret_choice: '略过「分清后序里的回忆与目录条目」，这处细节便留给下一位核对。'
-  bookend: '从「东西散了，目录还记得吗」开始，以员工留下的观察或更正收尾。'
-  share_line: '东西散了，目录还记得吗'
-  share_number: '1132'
+  fact: theft
+  quote_line: '约 1131 年，李清照记述在会稽寓居时遭遇失窃，后来寻回十八轴。'
+  regret_choice: '员工没能找到肯替她收存那一箱的人。'
+  bookend: '李清照记下，寓居会稽时，她的书画已经历过几次散失。她在当地又遇失窃，后来寻回十八轴。 {staff}请到邻人，把她亲自挑的那一箱收在另一处。李清照后来回来取箱，里面的东西还在。'
+  share_number: '1131'
+  lever: p1
+  missed: '员工没能找到肯替她收存那一箱的人。'
+  share_line: '这一箱先寄在邻家'
 pack: {license: MIT, version: 1, languages: [en, zh]}

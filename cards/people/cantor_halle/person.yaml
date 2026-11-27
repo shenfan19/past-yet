@@ -2,7 +2,8 @@ order: 44
 events:
   cantor_halle:
     order: 110
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1917
     date: '1917-07-15'
     stay: 6
@@ -28,8 +29,25 @@ events:
         place: "Halle"
         figure: "Georg Cantor"
         story: 'Cantor retired in 1913 and spent his last years ill and short of food in wartime Germany. In 1917 he entered the clinic in Halle for the last time. He wrote to his wife asking to come home and died in the clinic on 6 January 1918.'
-        relic: "A set of index cards"
-        relic_desc: "Cards covered with lists that never end."
+        story_prose:
+          opening:
+            - 'A chair stands by the window of the clinic in Halle. Cantor sets down a letter he has yet to fold and asks whether anyone will come today. The kitchen ledger has just been brought upstairs. The person carrying the meals is also waiting.'
+            - 'Cantor spent his last wartime months in a Halle clinic and died on 6 January 1918. This visit can arrange for him to see a family member and for the kitchen to make a workable meal plan.'
+            - 'Send someone who will hear whom he wants to see before arranging a visit. Someone who can check what the kitchen has can find a meal he is able to eat.'
+          points:
+            p1: 'You write two possible days beneath the letter. Cantor considers them, then names the family member he wants you to ask first. Once there is a date, an attendant moves the chair away from the corridor. People pass outside that afternoon, and the person in the chair can still hear each word.'
+            p2: 'The kitchen can say only which days it expects to have something spare. You ask which it can guarantee, check what the family can send, then ask Cantor what he can finish. The next time his meal comes he looks at the clock and says it is the hour they agreed on yesterday.'
+          outcomes:
+            all: 'There is an extra visit that winter and some meals come at the hour agreed. In January the family still receives word that he has died in Halle.'
+            p1: 'Cantor sees the person he most wanted to see. The kitchen can still serve him only what it has to spare that day.'
+            p2: 'There are more regular meals. His family cannot come and sends its regards by letter instead.'
+          none: 'The chair still looks out of the window. The kitchen folds away the ledger and has no days to promise.'
+          not_admitted: 'The attendant says there was no visit arranged today. You leave the folded paper by the door.'
+          excerpts:
+            p1: 'People pass outside that afternoon, and the person in the chair can still hear each word.'
+            p2: 'The next time his meal comes he looks at the clock and says it is the hour they agreed on yesterday.'
+        relic: 'An unused envelope'
+        relic_desc: 'An invented envelope left beside the letters in Halle.'
         points:
           p1: 'Ask Cantor whom he most wants to see and arrange a quiet visit at the clinic in Halle'
           p2: 'Ask the kitchen and his family what food they can spare that winter, and arrange a regular meal he can finish'
@@ -44,16 +62,33 @@ events:
             was: 'Cantor was ill in his final years and food was scarce in wartime Germany.'
             now: 'In this branch {staff} arranges a dependable meal for Cantor, so on those days he can eat without waiting for a parcel.'
         vignettes:
-          list: 'The learner says the list is already endless. You ask what would show that everything is on it. They leave a second line for the reasoning rather than merely extending the first.'
-          after: 'The learner copies several numbers and forgets the rule for getting the next. You ask them to put the rule first so another person can carry on where the slate ends.'
-          end: 'You move the sample list to the side of the slate and let the learner add a line describing which numbers it is meant to include.'
+          list: 'An attendant starts to put a reply among the outgoing mail. {staff} checks the names on the two covers and returns the reply to Cantor’s table.'
+          after: 'A bowl goes past the window. {staff} asks who is still waiting for dinner, and the attendant checks the kitchen list again.'
+          end: '{staff} asks Cantor where he wants the chair. He points to the place from which a visitor could see him without standing in the doorway.'
       zh:
         name: "疗养院寄出的信"
         place: "哈雷"
         figure: "格奥尔格·康托尔"
         story: '康托尔 1913 年退休，晚年多病，又遇上战时缺粮。1917 年，他最后一次住进哈雷的疗养院。他写信给妻子，请求回家，1918 年 1 月 6 日在院中去世。'
-        relic: "一叠索引卡片"
-        relic_desc: "卡片上写满了永远列不完的清单。"
+        story_prose:
+          opening:
+            - '哈雷疗养院的窗边放着一把椅子。康托尔写完一封信，把还没装封的纸放下，问今天还有没有人来。走廊里的伙房账单刚送上楼，送餐的人也在等。'
+            - '康托尔在战时最后一段日子住在哈雷疗养院，1918 年 1 月 6 日去世。家人探望和那一冬的食物是这趟能做的事。两件各自商量。'
+            - '派能听完他的话再安排的人，问谁来见他最合适。能跟伙房核实供应的人，再去找一顿他吃得下的饭。'
+          points:
+            p1: '你把两个可来访的日子写到信纸下面。康托尔看了片刻，请你先带去给他指定的那位家人。探访订下来以后，值班人把椅子放到稍离走廊的地方。那天外面有人经过，椅子上的人也听清了他正说的话。'
+            p2: '伙房的人只肯说哪几天有余量。你请他把能保证的几天圈出来，回头又和来人核了家里能匀的食物，再问康托尔哪样吃得下。下一次有人送餐，他看了看钟，说和昨日约好的是同一个时刻。'
+          outcomes:
+            all: '那年冬天多了一次探望，也有几顿能按时端来的饭。到了次年一月，家人仍收到他在哈雷去世的消息。'
+            p1: '康托尔见到自己想见的人。后来送饭仍取决于当日能匀出什么。'
+            p2: '他有了较安稳的饭点。家里的人没能到椅子上坐下，只从回信问候他。'
+          none: '椅子仍朝着窗。伙房的人把账单再折起来，送餐的日子还定不下。'
+          not_admitted: '值班人替房里传话，今天没有约见。你把带来的纸留在门口的信盘。'
+          excerpts:
+            p1: '那天外面有人经过，椅子上的人也听清了他正说的话。'
+            p2: '下一次有人送餐，他看了看钟，说和昨日约好的是同一个时刻。'
+        relic: '一只没用过的信封'
+        relic_desc: '虚构信封，留在哈雷的来信旁。'
         points:
           p1: '问康托尔最想见谁，帮他约一次在哈雷疗养院里能安静说话的探望'
           p2: '和伙房及家人核对冬天还能匀出哪些食物，给他安排一顿能按时吃上的饭'
@@ -68,9 +103,9 @@ events:
             was: '康托尔晚年多病，战时德国又缺粮。'
             now: '这条分支里，{staff}让康托尔按时吃上了一顿饭。这几天他饿了，不用先等家里送东西过来。'
         vignettes:
-          list: '学算者说这张表已经写不到头。你问怎样才知道什么都在上面。他另留一行记理由，没只顾把第一行续长。'
-          after: '学算者抄了几个数，却忘了下一个该怎么算。你请他先写规则，石板写到边，换个人也能接下去。'
-          end: '你把示例数列移到石板一边，请学算者另添一行，说明它本来打算把哪些数列进去。'
+          list: '值班人差点把回信放进要寄出去的信里。{staff}核过两个封面上的名字，把回信放回康托尔桌上。'
+          after: '有只碗从窗前经过。{staff}问谁还在等饭，值班人又把伙房的单子核了一遍。'
+          end: '{staff}问康托尔希望把椅子放在哪。他指着一个来客坐定就能看见他的位置。'
 text:
   en:
     name: Georg Cantor
@@ -129,7 +164,7 @@ facts:
 bystanders:
   cantor_halle_reader:
     invented: true
-    text: {en: 'An invented learner copying a sequence onto a slate.', zh: '一位虚构的学算者，正往石板上抄一个数列。'}
+    text: {en: 'A fictional attendant at the Halle clinic who handles letters and meals.', zh: '哈雷疗养院里收送书信和饭食的一位虚构值班人。'}
 wiki:
   refs:
     cantor_halle_mactutor:
@@ -162,6 +197,41 @@ wiki:
       text:
         en: 'Georg Cantor, On a Property of the Collection of All Real Algebraic Numbers, Journal für die reine und angewandte Mathematik 77 (1874), 258–262. Göttingen scan. https://gdz.sub.uni-goettingen.de/id/PPN243919689_0077?tify=%7B%22view%22%3A%22info%22%2C%22pages%22%3A%5B266%5D%7D'
         zh: 'Georg Cantor, On a Property of the Collection of All Real Algebraic Numbers, Journal für die reine und angewandte Mathematik 77 (1874), 258–262. Göttingen scan. https://gdz.sub.uni-goettingen.de/id/PPN243919689_0077?tify=%7B%22view%22%3A%22info%22%2C%22pages%22%3A%5B266%5D%7D'
+    cantor_halle_story_echo_source_full:
+      order: 2526
+      status: checked
+      text:
+        en: 'Cantor, Journal für die reine und angewandte Mathematik 77, Göttingen facsimile https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0077/LOG_0014.pdf'
+        zh: '康托尔，《纯粹与应用数学杂志》第 77 卷，哥廷根影印 https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0077/LOG_0014.pdf'
+    cantor_halle_story_echo_source_none:
+      order: 2527
+      status: checked
+      text:
+        en: 'Cantor, Journal für die reine und angewandte Mathematik 77, Göttingen facsimile https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0077/LOG_0014.pdf'
+        zh: '康托尔，《纯粹与应用数学杂志》第 77 卷，哥廷根影印 https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0077/LOG_0014.pdf'
+quotes:
+  cantor_halle_story_echo_full:
+    order: 1
+    tier: full
+    date: '1874'
+    checked: official_record
+    sources: [cantor_halle_story_echo_source_full]
+    original: de
+    text:
+      en: {"who":"Georg Cantor","quote":"infinitely many numbers of (ω) lie in every neighbourhood of any conceived number α","occasion":"An early paper describes the density of real algebraic numbers before enumerating them."}
+      zh: {"who":"格奥尔格·康托尔","quote":"任意想到的数 α 的任何邻域中，都有无穷多个来自 (ω) 的数。","occasion":"这篇早期论文在列数之前，说明实代数数的稠密性。"}
+      de: {"who":"Georg Cantor","quote":"in jeder Nähe irgend einer gedachten Zahl α unendlich viele Zahlen aus (ω) liegen","occasion":"An early paper describes the density of real algebraic numbers before enumerating them."}
+  cantor_halle_story_echo_none:
+    order: 2
+    tier: none
+    date: '1874'
+    checked: official_record
+    sources: [cantor_halle_story_echo_source_none]
+    original: de
+    text:
+      en: {"who":"Georg Cantor","quote":"in the form of an infinite series ordered by a rule","occasion":"The introduction describes how the same set of real algebraic numbers can be put in a sequence."}
+      zh: {"who":"格奥尔格·康托尔","quote":"以按规则排列的无限数列的形式。","occasion":"同一篇论文开头说明如何把实代数数依规则排入一个数列。"}
+      de: {"who":"Georg Cantor","quote":"in der Form einer unendlichen gesetzmässigen Reihe","occasion":"The introduction describes how the same set of real algebraic numbers can be put in a sequence."}
 self_check:
   quote_line: '学算者说这张表已经写不到头。'
   fact: clinic

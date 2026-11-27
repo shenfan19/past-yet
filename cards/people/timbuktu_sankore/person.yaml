@@ -2,69 +2,110 @@ order: 193
 events:
   timbuktu_sankore:
     order: 54
-    build_step: 1
-    year: 1327
+    build_step: 4
+    ready: true
+    year: 1468
+    stay: 2
     lon: -3
     lat: 16.77
     region: africa
     field: thought
     tier: 2
     channels: {H: 3}
-    refs: [timbuktu_sankore_year, timbuktu_sankore_astronomy]
+    refs: [timbuktu_sankore_walata, timbuktu_sankore_western_sudan, timbuktu_sankore_year, timbuktu_sankore_astronomy]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"trait":["curious","wanderer","methodical"]}}
-        - {id: p2, kind: hold, req: {"any":[{"job":["archivist"]},{"trait":["hardy"]}]}}
-        - {id: p3, kind: endure, req: {"provides":"warmth"}}
-      vignettes:
-        - {id: title, traits: [curious, methodical, wanderer]}
-        - {id: wind, traits: [hardy, handy, patient]}
-        - {id: collection}
+        - {"id":"p1","kind":"endure","day":8,"req":{"any":[{"job":["driver","courier","navigator"],"stat":{"constitution":6}},{"trait":["hardy","wanderer","streetwise"],"stat":{"constitution":7,"will":5}}]}}
     text:
       en:
-        name: 'A page by the mosque'
-        place: Timbuktu, Mali
-        figure: Mansa Musa and the scholars of Sankore
-        story: 'Timbuktu’s monuments and manuscript collections document a long history of learning, especially in later centuries. A heritage survey associates the date 1327 with Djingareyber. The surviving 1733 astronomy manuscript in the source notes belongs to a much later time.'
-        relic: 'A reader’s marker'
-        relic_desc: 'A fictional marker for finding one line on a loose page.'
+        name: 'A place on a departing caravan'
+        place: 'Timbuktu, Mali'
+        figure: 'The scholars of Timbuktu'
+        story: 'After Timbuktu changed hands around 1468, scholars left the city for places including Walata. In this branch one household needs a place with a group planning to leave together.'
+        story_prose:
+          opening:
+            - 'Around 1468, Timbuktu changed hands. A later chronicler remembered learned families leaving the city, with some going to Walata.'
+            - 'In history, the chronicle recorded the departing groups. In this branch one household is already packing, but several water bags have yet to be marked. They do not know which party will wait.'
+            - 'Someone who understands how a travelling party is organised can help. They will have to find out who is still expected, and go the first stretch with the family.'
+          points:
+            p1: '{staff} goes from one party to another until a guide agrees to wait, then comes back to help the household count the water and the bundles. At the first stop, another family unrolls a mat. The smallest child brings over the household’s smallest water bag and puts it between the two mats. The bag stays upright when he lets go.'
+          outcomes:
+            all: 'Next morning the two mats beside each other are rolled up. The small bag is passed up first, and then someone lifts the child.'
+            p1: 'Next morning the two mats beside each other are rolled up. The small bag is passed up first, and then someone lifts the child.'
+          none: 'By the time someone comes back to ask, the last group has gone. The household carries its tied bundles back through the door.'
+          not_admitted: '{staff} does not find the household. Beside a door, someone moves two water bags together.'
+          excerpts:
+            p1: 'The smallest child brings over the household’s smallest water bag and puts it between the two mats. The bag stays upright when he lets go.'
+        relic: 'A water bag tally'
+        relic_desc: 'An imagined tally used to count the water bags entrusted to the household.'
         points:
-          p1: 'See whether the heading on the loose practice leaf still makes sense'
-          p2: 'Hold the standing reader’s place while the writing is gathered'
-          p3: 'Wait through the second reading to catch which heading is hers'
-        vignettes:
-          title: 'Aminata finds a practice leaf under a board. Its top line identifies the topic but leaves out who copied it. You walk it back to the reading bench before the seats are cleared. She recognises the hand, and the borrowed sheet goes back to the person who lent it.'
-          wind: 'Musa has gathered the loose pages and is ready to close the door. Aminata is still at the middle of a line. You hold a spare scrap at the place she indicates while he lifts the pages. When she comes back, the one place she wants to find is still marked.'
-          collection: 'You have seen photographs of a much later Timbuktu astronomy manuscript. Musa points to his neighbour’s loose exercise and asks how to describe it. You take its heading from the page in his hands. The later book will be copied generations after you leave.'
+          p1: 'Find a place for one household with a departing caravan and escort them to their first safe stop'
+        points_fail:
+          p1: 'The group left before the employee could arrange a place for the household.'
+        shift:
+          p1:
+            was: 'Around 1468: after Timbuktu changed hands, scholars fled. Some went to Walata.'
+            now: '{staff} helps one household join a group travelling towards Walata and escorts them to the first safe stop.'
+            who: timbuktu_sankore
+            bio: 'One household leaving Timbuktu found a group to travel with and reached its first stop safely.'
       zh:
-        name: '清真寺旁的一页纸'
-        place: 马里廷巴克图
-        figure: 曼萨·穆萨与桑科雷的学者们
-        story: '廷巴克图的建筑和藏书留下长期讲学与读书的痕迹，后世材料尤丰。出处中1733年的存世天文抄本远晚于这一场景。'
-        relic: '一张读书人留下的夹纸'
-        relic_desc: '夹纸，用来指出散页上的一行。'
+        name: '还赶得上一队人'
+        place: '马里廷巴克图'
+        figure: '廷巴克图的学者们'
+        story: '1468 年前后，廷巴克图易手后，一些学者离开当地，有人去了瓦拉塔。在这条分支里，其中一户人家想找一队能同行的人。'
+        story_prose:
+          opening:
+            - '约 1468 年，廷巴克图易手。后来写下这段历史的人，记得有读书人离开了城，有些人去了瓦拉塔。'
+            - '史实里，编年史写到离城的队伍。在这条分支里，有一户人家已经收行李，几个水袋却还没有系上记号。他们不知道哪队肯等。'
+            - '这趟需要认得同行规矩的人，能问清队伍在等谁，还能陪走第一程。'
+          points:
+            p1: '{staff}在几队人里问到一位愿意等这户人家的领路人，回来请他们点清水和要带的东西。到第一处落脚点，另一家摊开了一张席。那户人家的孩子把家里最小的水袋提过去，放在两张席之间。他松开手以后，小袋子还站得住。'
+          outcomes:
+            all: '第二天，队伍收起两张挨在一起的席。那只小水袋先被递上去，然后才有人把孩子抱上来。'
+            p1: '第二天，队伍收起两张挨在一起的席。那只小水袋先被递上去，然后才有人把孩子抱上来。'
+          none: '再有人回头问时，最后一队已经走了。一家人把打了结的行李搬回门内。'
+          not_admitted: '{staff}没有问到那户人家。有人在门边把两只水袋往一起拢。'
+          excerpts:
+            p1: '那户人家的孩子把家里最小的水袋提过去，放在两张席之间。他松开手以后，小袋子还站得住。'
+        relic: '水袋上的计数签'
+        relic_desc: '分支里的计数签，用来核对那户人家带走的水袋。'
         points:
-          p1: '看脱开的一页，题头还读不读得通'
-          p2: '收纸时帮站着读的人保住读到的位置'
-          p3: '再听她读一遍，记清那页应归哪个题头'
-        vignettes:
-          title: '阿米娜塔在板下找到一张练习纸，第一行写了题目，却没写谁抄的。板凳收走前，你拿回读书的地方。她认出笔迹，借来的那页便回到原主手里。'
-          wind: '穆萨收拢散纸，准备关门。阿米娜塔还读到一行中间。搬纸前你照她指的地方夹一张废纸。她下回回来，要找的那一处还在。'
-          collection: '你看过一部远晚于此时的廷巴克图天文抄本的照片。穆萨指着邻居那页散纸，问该怎样记它。你照他手里这页写题名。后世那部书，还要过许多代人才会抄成。'
+          p1: '替一户离城的人家找到能同行的商队，陪他们到第一处安全的落脚点'
+        points_fail:
+          p1: '商队出发前，员工没能替那户人家留到位置。'
+        shift:
+          p1:
+            was: '1468 年前后，廷巴克图易手后有学者离开，一些人去了瓦拉塔。'
+            now: '{staff}让那户人家跟上去瓦拉塔方向的一队人，陪他们走到第一处安全的落脚点。'
+            who: timbuktu_sankore
+            bio: '离开廷巴克图的一户人家找到了同行者，平安到达第一处落脚点。'
 text:
   en:
-    name: Mansa Musa and the scholars of Sankore
-    text: Mansa Musa, emperor of Mali, and the scholars of Sankore. After his pilgrimage to Mecca in 1324 and 1325 Musa is said to have brought scholars and architects back, and in the following centuries the mosque and its school at Timbuktu became a centre of learning.
+    name: 'The scholars of Timbuktu'
+    text: 'After Timbuktu changed hands around 1468, scholars left the city for places including Walata.'
   zh:
-    name: 曼萨·穆萨与桑科雷的学者们
-    text: 马里皇帝曼萨·穆萨与桑科雷的学者们。据说穆萨在 1324 至 1325 年到麦加朝觐后带回了学者和建筑师，此后数百年里，廷巴克图的清真寺及其学校成为学术中心。
-hook: {en: 'A heading has to stay with the page.', zh: '借出去的纸，得知道从哪儿来的。'}
+    name: '廷巴克图的学者们'
+    text: '1468 年前后，廷巴克图易手后，一些学者离开当地，有人去了瓦拉塔。'
+hook: {en: 'A place on a departing caravan', zh: '还赶得上一队人'}
 facts:
+  departure:
+    date: '1468'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [timbuktu_sankore_walata, timbuktu_sankore_western_sudan]
+    text:
+      en: 'Around 1468: after Timbuktu changed hands, scholars fled. Some went to Walata.'
+      zh: '1468 年前后，廷巴克图易手后有学者离开，一些人去了瓦拉塔。'
+    line:
+      en: 'Around 1468: after Timbuktu changed hands, scholars fled. Some went to Walata.'
+      zh: '1468 年前后，廷巴克图易手后有学者离开，一些人去了瓦拉塔。'
   year:
     date: '1327'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [timbuktu_sankore_year]
     text:
       en: 'The survey associates 1327 with Djingareyber through a reported inscription.'
@@ -73,18 +114,11 @@ facts:
     date: '1733'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [timbuktu_sankore_astronomy]
     text:
       en: 'The exhibition reproduces an astronomical manuscript that was copied in Timbuktu in 1733. The late manuscript is a comparative source.'
       zh: '展览呈现一份1733年抄于廷巴克图的天文手稿。晚出的抄本仅供对照。'
-bystanders:
-  aminata:
-    invented: true
-    text: {en: 'A fictional reader who wants to return a borrowed practice leaf.', zh: '虚构读者阿米娜塔，要把借来的练习纸还给人。'}
-  musa:
-    invented: true
-    text: {en: 'A fictional keeper closing the room after a reading.', zh: '虚构帮工穆萨，读完后负责关屋。'}
 wiki:
   refs:
     timbuktu_sankore_year:
@@ -99,16 +133,62 @@ wiki:
       text:
         en: 'Library of Congress, Ancient Manuscripts from the Desert Libraries of Timbuktu, exhibition https://www.loc.gov/exhibits/mali/mali-exhibit.html'
         zh: '美国国会图书馆，廷巴克图手稿展 https://www.loc.gov/exhibits/mali/mali-exhibit.html'
+    timbuktu_sankore_walata:
+      order: 2224
+      status: checked
+      text:
+        en: 'CODESRIA study of Walata and the movement of scholars from Timbuktu https://publication.codesria.org/index.php/pub/catalog/download/141/1225/4143'
+        zh: '非洲社会科学研究发展理事会，瓦拉塔与廷巴克图学者迁徙研究 https://publication.codesria.org/index.php/pub/catalog/download/141/1225/4143'
+    timbuktu_sankore_western_sudan:
+      order: 2225
+      status: checked
+      text:
+        en: 'The Cambridge History of Africa, Western Maghrib and Sudan, contemporary chronicle references https://sahistory.org.za/sites/default/files/archive-files3/roland_oliver_the_cambridge_history_of_africa_vbook4you.pdf'
+        zh: '《剑桥非洲史》，西马格里布与苏丹，迁徙编年记载 https://sahistory.org.za/sites/default/files/archive-files3/roland_oliver_the_cambridge_history_of_africa_vbook4you.pdf'
+    timbuktu_sankore_echo_source_full:
+      order: 2312
+      status: checked
+      text:
+        en: 'Al-Saʿdi, Tarikh al-Sudan, Arabic text of the departure https://dhspriory.org/kenny/NWAfrA/NWTarikhSudan.htm'
+        zh: '萨阿迪《苏丹史》，记离城一节的阿拉伯文 https://dhspriory.org/kenny/NWAfrA/NWTarikhSudan.htm'
+    timbuktu_sankore_echo_source_none:
+      order: 2313
+      status: checked
+      text:
+        en: 'Al-Saʿdi, Tarikh al-Sudan, Arabic text of the departure https://dhspriory.org/kenny/NWAfrA/NWTarikhSudan.htm'
+        zh: '萨阿迪《苏丹史》，记离城一节的阿拉伯文 https://dhspriory.org/kenny/NWAfrA/NWTarikhSudan.htm'
+quotes:
+  timbuktu_sankore_echo_full:
+    order: 1
+    tier: full
+    date: '1655'
+    checked: official_record
+    sources: [timbuktu_sankore_echo_source_full]
+    original: ar
+    contextual: true
+    text:
+      en: {"who":"Al-Saʿdi","quote":"And he set out with them for Biru.","occasion":"The later Tarikh al-Sudan describes the group leaving for Biru, also known as Walata."}
+      zh: {"who":"萨阿迪","quote":"他和他们一道往比鲁去了。","occasion":"后出的《苏丹史》记队伍前往比鲁，即瓦拉塔。"}
+      ar: {"who":"Al-Saʿdi","quote":"ومشى بهم إلى بير","occasion":"The later Tarikh al-Sudan describes the group leaving for Biru, also known as Walata."}
+  timbuktu_sankore_echo_none:
+    order: 2
+    tier: none
+    date: '1655'
+    checked: official_record
+    sources: [timbuktu_sankore_echo_source_none]
+    original: ar
+    contextual: true
+    text:
+      en: {"who":"Al-Saʿdi","quote":"Akil decided at that moment to flee.","occasion":"The later Tarikh al-Sudan records the decision to leave; it does not record the family of the game’s branch."}
+      zh: {"who":"萨阿迪","quote":"阿基勒当时便决定离开。","occasion":"后出的《苏丹史》记下离城的决定。游戏里随队的一家归分支虚构。"}
+      ar: {"who":"Al-Saʿdi","quote":"فعزم أكل على الهروب ساعتئذ","occasion":"The later Tarikh al-Sudan records the decision to leave; it does not record the family of the game’s branch."}
 self_check:
-  fact: year
-  quote_line: '借来的那页便回到原主手里。'
-  regret_choice: 'collection 认成后世馆藏会交错人。'
-  bookend: '从来路不清的一页，到还给原来的读者。'
-  share_line: '一页练习纸，有人等它回来。'
-  share_number: '1733抄本的纪年来自馆方。'
-  knowing: 'collection 看过后世馆藏。'
-  near: 'year 用有文献依据的城中背景。'
-  lever: 'title 把一页交还实际借出的人。'
-  missed: 'collection 后世抄本还没有出现。'
-  brought: 'wind 带回自用的虚构标记纸。'
+  fact: departure
+  quote_line: '1468 年前后，廷巴克图易手后有学者离开，一些人去了瓦拉塔。'
+  regret_choice: '商队出发前，员工没能替那户人家留到位置。'
+  bookend: '1468 年前后，廷巴克图易手后，一些学者离开当地，有人去了瓦拉塔。在这条分支里，其中一户人家想找一队能同行的人。 {staff}让那户人家跟上去瓦拉塔方向的一队人，陪他们走到第一处安全的落脚点。'
+  share_number: '1468'
+  lever: p1
+  missed: '商队出发前，员工没能替那户人家留到位置。'
+  share_line: '还赶得上一队人'
 pack: {license: MIT, version: 1, languages: [en, zh]}

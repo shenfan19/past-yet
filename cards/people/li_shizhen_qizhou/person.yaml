@@ -2,55 +2,84 @@ order: 124
 events:
   li_shizhen_qizhou:
     order: 78
-    build_step: 1
-    year: 1578
+    build_step: 4
+    ready: true
+    year: 1592
+    stay: 2
     lon: 115.44
     lat: 30.23
     region: asia
     field: medicine
     tier: 2
     channels: {E: 1, L: 2, T: 1}
-    refs: [li_shizhen_qizhou_draft, li_shizhen_qizhou_edition]
+    refs: [li_shizhen_qizhou_registry, li_shizhen_qizhou_edition_note, li_shizhen_qizhou_draft, li_shizhen_qizhou_edition]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: endure, req: {"stat":{"constitution":6}}}
-        - {id: p2, kind: notice, req: {"trait":["methodical","skeptical","curious"]}}
-        - {id: p3, kind: hold, req: {"any":[{"job":["pharmacist","archivist"]},{"trait":["hardy"]}]}}
-      vignettes:
-        - {id: names, traits: [methodical, skeptical, curious]}
-        - {id: wrap, traits: [hardy, faithful, handy]}
-        - {id: print}
+        - {"id":"p1","kind":"persuade","day":9,"req":{"any":[{"job":["pharmacist","archivist","proofreader"],"stat":{"wit":6}},{"trait":["methodical","charismatic","scholarly"],"stat":{"wit":6,"will":6}}]}}
     text:
       en:
-        name: 'Which name goes with the entry'
-        place: Qizhou, China
-        figure: Li Shizhen
-        story: 'Li Shizhen completed a draft of the Bencao Gangmu in 1578. Early printed editions came later and included illustrations and editorial apparatus.'
-        relic: 'A copied specimen label'
-        relic_desc: 'A fictional work label with a place left for an alternate name.'
+        name: 'A proof while he can still read it'
+        place: 'Qizhou'
+        figure: 'Li Shizhen'
+        story: 'Li Shizhen revised the Compendium of Materia Medica over many years. The Jinling edition appeared after his death. In this branch a printer can send him a single trial page.'
+        story_prose:
+          opening:
+            - 'Qizhou, around 1592. Li Shizhen has spent years revising the Compendium of Materia Medica. The book he can open and still change himself is his manuscript.'
+            - 'In history, the complete Jinling edition appeared after he died. In this branch a printer has struck off a trial page. Whether it can reach Qizhou from Jinling has yet to be settled.'
+            - 'Someone who knows printing or proofing can help here. Each end needs to know who will read the sheet and who will carry it back after it is marked.'
+          points:
+            p1: '{staff} agrees with the printer to send just one sheet, entrusts it to a traveller who goes between the two places, and arranges for it to be collected on the return journey. Li spreads the proof and the manuscript side by side and rests a fingernail beside the line he wants. He writes a character in the margin and waits for it to dry before folding the two sheets separately.'
+          outcomes:
+            all: 'The traveller comes back the next day. Li hands over the dry sheet, his finger still resting over the character he corrected.'
+            p1: 'The traveller comes back the next day. Li hands over the dry sheet, his finger still resting over the character he corrected.'
+          none: 'No proof comes. Li changes the character in his manuscript and moves the ink farther from the edge of the paper.'
+          not_admitted: '{staff} never meets anyone who can carry the proof. Bundles of paper pass through the shop door, each marked for a different address.'
+          excerpts:
+            p1: 'Li spreads the proof and the manuscript side by side and rests a fingernail beside the line he wants. He writes a character in the margin and waits for it to dry before folding the two sheets separately.'
+        relic: 'A single proof'
+        relic_desc: 'An imagined proof that still has space for the author’s marks.'
         points:
-          p1: 'Bring both labels back before the study table is cleared'
-          p2: 'Check whether the two names came from the same place'
-          p3: 'Keep the alternate name and its source with the entry'
-        vignettes:
-          names: 'Alin has written the name she heard at market beside the one on the specimen wrapper. You ask which vendor called it that. She remembers the stall but not the district. The entry keeps both names and identifies only the source she can actually place.'
-          wrap: 'Ahe has time to carry one wrapped sample before the room closes. You put its tag inside the wrapper and copy it onto a scrap before he takes it. When the table is cleared, Alin can still see which name travelled with that sample.'
-          print: 'You remember a printed illustration of the entry. Alin wants to know whether she can use it to settle the name on her own wrapper. You leave the name with the source she can describe. The later woodcut will not be ready on this visit.'
+          p1: 'Get the printer to send one trial page to Qizhou while Li Shizhen can still check it'
+        points_fail:
+          p1: 'The employee did not arrange for a proof to reach him in time.'
+        shift:
+          p1:
+            was: 'By 1596: the Jinling edition appeared after Li Shizhen’s death. He did not live to see the complete book in print.'
+            now: '{staff} secures one trial page. Li Shizhen reads it at his table and sends it back with a correction in the margin.'
+            who: li_shizhen_qizhou
+            bio: 'Li Shizhen saw and marked one printed proof of his book before the full edition appeared.'
       zh:
-        name: '哪个名字归在哪一条'
-        place: 中国蕲州
-        figure: 李时珍
-        story: '李时珍于1578年完成《本草纲目》初稿，带编排体例和插图的早期印本问世在后。'
-        relic: '一张抄留的样本签'
-        relic_desc: '工作标签，给另一种叫法留有位置。'
+        name: '送来一页试印'
+        place: '蕲州'
+        figure: '李时珍'
+        story: '李时珍多年修订《本草纲目》，后来金陵本在他去世后问世。在这条分支里，印工可以先给他寄一页试印。'
+        story_prose:
+          opening:
+            - '约 1592 年，蕲州。李时珍已经用了很多年改订《本草纲目》。他生前能反复翻开的，是自己还可以动笔的稿本。'
+            - '史实里，完整的金陵本在他身后才问世。在这条分支里，印工手里有一张先试出来的纸，能不能从金陵寄到蕲州还没说定。'
+            - '这趟用得上熟悉出版或校对的人。要能跟两地的人讲清，纸寄来给谁看，改完又托谁带回。'
+          points:
+            p1: '{staff}先和印工说好只寄一页，请往返两地的熟人带到蕲州，又约他返程来取。李时珍把旧稿和这张纸摊开，用指甲划住自己要对的一行。他在页边写了个字，等墨干，才把两张纸分别叠回去。'
+          outcomes:
+            all: '来取的人隔天才到。李时珍把干了的纸交给他，手指还停在自己改过的那个字上。'
+            p1: '来取的人隔天才到。李时珍把干了的纸交给他，手指还停在自己改过的那个字上。'
+          none: '始终没有试印送来。他在稿本上改过那个字，又把墨放到远离纸边的地方。'
+          not_admitted: '{staff}没见到能托带试印的人。几捆纸从铺门进出，包裹上的收处各不相同。'
+          excerpts:
+            p1: '李时珍把旧稿和这张纸摊开，用指甲划住自己要对的一行。他在页边写了个字，等墨干，才把两张纸分别叠回去。'
+        relic: '一页试印'
+        relic_desc: '分支里的试印，页边留给作者亲自改字。'
         points:
-          p1: '清桌前把两张签都找回来'
-          p2: '核对两个名字是不是在同一地听来的'
-          p3: '把异名和它的来处一并留在条目旁'
-        vignettes:
-          names: '阿林把集市上听来的名字写在样本包纸的名字旁。你问是哪一摊这样叫。她记得摊子，说不上是哪一乡的叫法。条目留住两个名字，只注明她还指得出的来处。'
-          wrap: '屋子要关，阿禾只来得及送一包样本。你把签一并放入包内，交给他前另抄在纸头上。桌子清出来后，阿林还查得到哪一个名字随样本送去了。'
-          print: '你记得后世印本里这条的图。阿林问，照那幅图能不能断定自己包纸上的名字。你把名字和她说得清的来处一起留在纸上。后来那块刻图的木版，这一趟等不到。'
+          p1: '请印工先送一页试印到蕲州，让李时珍还有机会亲自校一遍'
+        points_fail:
+          p1: '员工没能安排试印及时送到。'
+        shift:
+          p1:
+            was: '至 1596 年，金陵本已在李时珍身后问世。他未见全书刊行。'
+            now: '{staff}争取到一页试印。李时珍在桌边读完，往页边写了一条改字意见，把那页送回去。'
+            who: li_shizhen_qizhou
+            bio: '全书问世以前，李时珍亲自看过并改过一张试印。'
 text:
   en:
     name: Li Shizhen
@@ -58,13 +87,25 @@ text:
   zh:
     name: 李时珍
     text: 明代医生，1518 年生，1593 年去世。他花了近三十年写成《本草纲目》，记载约一千九百种药物，书在他去世后刊行。
-hook: {en: 'Two names have slipped onto the same label.', zh: '两个名字，怎么都贴到这一份上？'}
+hook: {en: 'A proof while he can still read it', zh: '送来一页试印'}
 facts:
+  after_death_edition:
+    date: '1596'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [li_shizhen_qizhou_registry, li_shizhen_qizhou_edition_note]
+    text:
+      en: 'By 1596: the Jinling edition appeared after Li Shizhen’s death. He did not live to see the complete book in print.'
+      zh: '至 1596 年，金陵本已在李时珍身后问世。他未见全书刊行。'
+    line:
+      en: 'By 1596: the Jinling edition appeared after Li Shizhen’s death. He did not live to see the complete book in print.'
+      zh: '至 1596 年，金陵本已在李时珍身后问世。他未见全书刊行。'
   draft:
     date: '1578'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [li_shizhen_qizhou_draft]
     text:
       en: 'The study dates completion of the compilation to 1578 and distinguishes later printed editions and illustrations.'
@@ -73,18 +114,11 @@ facts:
     date: '1603'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [li_shizhen_qizhou_edition]
     text:
       en: 'The digitized early edition includes editorial front matter, contents and illustrations, with a reprint preface dated 1603.'
       zh: '数字化早期刻本包括卷首体例、目录和插图，并见1603年重刻序。'
-bystanders:
-  alin:
-    invented: true
-    text: {en: 'A fictional helper who remembers different names for a study specimen.', zh: '虚构帮工阿林，记得一个练习样本的不同叫法。'}
-  ahe:
-    invented: true
-    text: {en: 'A fictional runner collecting one wrapped sample before closing.', zh: '虚构送件人阿禾，关门前要送走一包样本。'}
 wiki:
   refs:
     li_shizhen_qizhou_draft:
@@ -99,16 +133,60 @@ wiki:
       text:
         en: 'Library of Congress, Bencao Gangmu, digitized early edition https://www.loc.gov/item/2021666452/'
         zh: '美国国会图书馆，《本草纲目》早期刻本影像 https://www.loc.gov/item/2021666452/'
+    li_shizhen_qizhou_registry:
+      order: 2209
+      status: checked
+      text:
+        en: 'State Archives Administration of China, Memory of the World nomination of the Compendium of Materia Medica https://www.saac.gov.cn/mowcn/cn/c100512/202104/2ab535184bda44f3838a926ef5ee79ea/files/1768d0b858d746f29b0d102b5711335c.pdf'
+        zh: '国家档案局，《本草纲目》世界记忆申报 https://www.saac.gov.cn/mowcn/cn/c100512/202104/2ab535184bda44f3838a926ef5ee79ea/files/1768d0b858d746f29b0d102b5711335c.pdf'
+    li_shizhen_qizhou_edition_note:
+      order: 2210
+      status: checked
+      text:
+        en: 'Hubei University of Chinese Medicine, introductory exhibit on the Jinling edition https://zybbg.hbucm.edu.cn/info/1022/1083.htm'
+        zh: '湖北中医药大学中药标本馆，金陵本沿革 https://zybbg.hbucm.edu.cn/info/1022/1083.htm'
+    li_shizhen_qizhou_echo_source_full:
+      order: 2316
+      status: checked
+      text:
+        en: 'Wang Shizhen, original preface to the Compendium of Materia Medica https://zh.wikisource.org/zh/本草綱目/序'
+        zh: '王世贞，《本草纲目》原序 https://zh.wikisource.org/zh/本草綱目/序'
+    li_shizhen_qizhou_echo_source_none:
+      order: 2317
+      status: checked
+      text:
+        en: 'Wang Shizhen, original preface to the Compendium of Materia Medica https://zh.wikisource.org/zh/本草綱目/序'
+        zh: '王世贞，《本草纲目》原序 https://zh.wikisource.org/zh/本草綱目/序'
+quotes:
+  li_shizhen_qizhou_echo_full:
+    order: 1
+    tier: full
+    date: '1590'
+    checked: official_record
+    sources: [li_shizhen_qizhou_echo_source_full]
+    original: zh-Hant
+    text:
+      en: {"who":"Li Shizhen, as recorded by Wang Shizhen","quote":"I removed repetitions, filled gaps and corrected errors.","occasion":"Wang Shizhen’s preface, reporting how Li describes his revisions."}
+      zh: {"who":"李时珍，由王世贞转述","quote":"重复的删去，缺漏的补上，讹错的订正。","occasion":"王世贞《本草纲目》原序中转述李时珍的改订。"}
+      zh-Hant: {"who":"李时珍，由王世贞转述","quote":"複者芟之，闕者緝之，訛者繩之","occasion":"王世贞《本草纲目》原序中转述李时珍的改订。"}
+  li_shizhen_qizhou_echo_none:
+    order: 2
+    tier: none
+    date: '1590'
+    checked: official_record
+    sources: [li_shizhen_qizhou_echo_source_none]
+    original: zh-Hant
+    text:
+      en: {"who":"Li Shizhen, as recorded by Wang Shizhen","quote":"Over thirty years I consulted more than eight hundred authors and revised the manuscript three times.","occasion":"Wang Shizhen’s preface, reporting Li’s account of the work."}
+      zh: {"who":"李时珍，由王世贞转述","quote":"前后过了三十年，查过八百多家书，稿子改过三次。","occasion":"王世贞《本草纲目》原序中转述李时珍的编书过程。"}
+      zh-Hant: {"who":"李时珍，由王世贞转述","quote":"歲歷三十稔，書考八百餘家，稿凡三易","occasion":"王世贞《本草纲目》原序中转述李时珍的编书过程。"}
 self_check:
-  fact: draft
-  quote_line: '条目留住两个名字，只注明她还指得出的来处。'
-  regret_choice: 'print 用后世图画硬断当下地名会误写出处。'
-  bookend: '从两名挤一签，到留有来路的条目。'
-  share_line: '一个样本，两个记下的叫法。'
-  share_number: 'names 两种虚构叫法。'
-  knowing: 'print 知道后来的刻本有图。'
-  near: 'draft 区分初稿与印本。'
-  lever: 'wrap 清桌后仍能知道样本随哪张签走。'
-  missed: 'print 此行等不到后来刻图。'
-  brought: 'wrap 带回复写的练习样本签。'
+  fact: after_death_edition
+  quote_line: '至 1596 年，金陵本已在李时珍身后问世。他未见全书刊行。'
+  regret_choice: '员工没能安排试印及时送到。'
+  bookend: '李时珍多年修订《本草纲目》，后来金陵本在他去世后问世。在这条分支里，印工可以先给他寄一页试印。 {staff}争取到一页试印。李时珍在桌边读完，往页边写了一条改字意见，把那页送回去。'
+  share_number: '1592'
+  lever: p1
+  missed: '员工没能安排试印及时送到。'
+  share_line: '送来一页试印'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -2,7 +2,8 @@ order: 118
 events:
   lavoisier_paris:
     order: 27
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1793
     date: '1793-10-25'
     stay: 2
@@ -28,6 +29,23 @@ events:
         place: Paris
         figure: Antoine Lavoisier
         story: 'On 24 November 1793 the arrest of all the former tax farmers was ordered, and Lavoisier and his father-in-law Jacques Paulze were among those imprisoned. On 8 May 1794 the two of them and other former tax farmers were condemned and put to death in Paris on the same day.'
+        story_prose:
+          opening:
+            - 'In Paris, Jacques Paulze spreads an account out for his daughter. Antoine Lavoisier reads from a different page at the other end of the table. Both men mean to stay in the city to explain their books. Someone in the family asks who could look after the ledgers in their place.'
+            - 'On 24 November 1793 the authorities ordered the arrest of the former tax farmers. Paulze and Lavoisier were both executed on 8 May 1794. In this branch you can ask both men to consider leaving Paris. Each decides for himself.'
+            - 'Someone who can hear each man’s reasons can speak with them in turn. A traveller who knows his way around accounts can also list the papers for the family to keep.'
+          points:
+            p1: 'Paulze says handing over an entire book will leave his family with no idea which questions to expect. You ask him to mark each page as he speaks. His daughter checks the accounts he points out before taking the whole ledger. When he hears her read back his marks, he stands and pushes his chair back under the table.'
+            p2: 'Lavoisier holds a statement with two entries he thinks he still has to explain himself. You ask if he can write the explanations for the person taking over. After hearing both read back to him, he asks his family to say he has left Paris if anyone calls. He puts the page beside them before he leaves, and leaves a blank sheet underneath it.'
+          outcomes:
+            all: 'Both men leave the city separately. When the family opens the books in May there is news from each of them. Both are alive.'
+            p1: 'Paulze leaves and is still alive after the following May. Lavoisier stays in Paris and is later executed.'
+            p2: 'Lavoisier leaves and is still alive after the following May. Jacques Paulze stays in Paris and is later executed.'
+          none: 'The family moves away from the table. Both men stay in the city and both names appear in the list of those executed the following May.'
+          not_admitted: 'The visitor has no calling card expected by the family. Someone closes the ledger and keeps it on the table.'
+          excerpts:
+            p1: 'When he hears her read back his marks, he stands and pushes his chair back under the table.'
+            p2: 'He puts the page beside them before he leaves, and leaves a blank sheet underneath it.'
         relic: A precision balance
         relic_desc: A fine balance that kept the books of chemistry.
         points:
@@ -54,6 +72,23 @@ events:
         place: 巴黎
         figure: 拉瓦锡
         story: '1793 年 11 月 24 日，所有前包税官被下令逮捕，拉瓦锡和岳父雅克·保尔兹都在其中，先后入狱。1794 年 5 月 8 日，两人与其他前包税官同日在巴黎被判处死刑并处死。'
+        story_prose:
+          opening:
+            - '巴黎，雅克·保尔兹把一份账摊给女儿看。安托万·拉瓦锡在另一头逐页读，两个人都准备留在城里说明自己的账。有家人提议先把册子交给肯保管的人。'
+            - '1793 年 11 月 24 日，前包税官被下令逮捕。保尔兹和拉瓦锡后来于 1794 年 5 月 8 日同日被处死。这一趟可以分别劝两个人先离城，各自作决定。'
+            - '善于听人把理由说完的员工可以分别见他们。熟悉账册的员工也能帮忙列出交给家人的东西，让接手的人找得到。'
+          points:
+            p1: '保尔兹说单把整册给家人，他们还是不知道哪些地方有账要问。你请他边说边挑出要做标记的页。女儿把他指到的账核过一遍，才伸手接整本。他听她念出记号，站起身把椅子推回桌边。'
+            p2: '拉瓦锡拿着一张核好的对账单，说里面有两行得由他亲自解释。你问能否先把解释写给保管人。等家人逐条读回，他才请他们转告来找他的人，自己已经离开巴黎。临走，他把答过的那张搁到家人手边，留出下面一张空纸。'
+          outcomes:
+            all: '两个人各自离开了巴黎。家人到五月开账册时收到各自的消息，两人都还活着。'
+            p1: '雅克先走，在次年五月之后仍有消息。拉瓦锡留在巴黎，后来被处死。'
+            p2: '拉瓦锡先走，在次年五月之后仍有消息。雅克·保尔兹留在巴黎，后来被处死。'
+          none: '家人从账桌边散开，两人都留在城中。次年五月，他们的名姓仍出现在同日的死刑名单中。'
+          not_admitted: '来问话的人没有家里约过的名帖。桌上的账册合起来，留在已经坐定的人手里。'
+          excerpts:
+            p1: '他听她念出记号，站起身把椅子推回桌边。'
+            p2: '临走，他把答过的那张搁到家人手边，留出下面一张空纸。'
         relic: 一台精密天平
         relic_desc: 一台精细的天平，给化学记账。
         points:
@@ -184,6 +219,41 @@ wiki:
       text:
         en: 'Antoine Lavoisier, Traité élémentaire de chimie, vol. 1, Paris, 1789. Smithsonian Libraries scan. https://library.si.edu/digital-library/book/traiteyeyleyment1lavo'
         zh: 'Antoine Lavoisier, Traité élémentaire de chimie, vol. 1, Paris, 1789. Smithsonian Libraries scan. https://library.si.edu/digital-library/book/traiteyeyleyment1lavo'
+    lavoisier_paris_story_echo_source_full:
+      order: 2502
+      status: checked
+      text:
+        en: 'Traité élémentaire de chimie, preliminary discourse https://fr.wikisource.org/wiki/Trait%C3%A9_%C3%A9l%C3%A9mentaire_de_chimie/Discours_pr%C3%A9liminaire'
+        zh: '《化学基础论》序论 https://fr.wikisource.org/wiki/Trait%C3%A9_%C3%A9l%C3%A9mentaire_de_chimie/Discours_pr%C3%A9liminaire'
+    lavoisier_paris_story_echo_source_none:
+      order: 2503
+      status: checked
+      text:
+        en: 'Traité élémentaire de chimie, preliminary discourse https://fr.wikisource.org/wiki/Trait%C3%A9_%C3%A9l%C3%A9mentaire_de_chimie/Discours_pr%C3%A9liminaire'
+        zh: '《化学基础论》序论 https://fr.wikisource.org/wiki/Trait%C3%A9_%C3%A9l%C3%A9mentaire_de_chimie/Discours_pr%C3%A9liminaire'
+quotes:
+  lavoisier_paris_story_echo_full:
+    order: 1
+    tier: full
+    date: '1789'
+    checked: official_record
+    sources: [lavoisier_paris_story_echo_source_full]
+    original: fr
+    text:
+      en: {"who":"Antoine Lavoisier","quote":"The word must give rise to the idea.","occasion":"The preliminary discourse links the words of chemistry to ideas and facts."}
+      zh: {"who":"安托万·拉瓦锡","quote":"词应当唤起那个概念。","occasion":"拉瓦锡在序论中说明化学用词、概念和事实之间的关系。"}
+      fr: {"who":"Antoine Lavoisier","quote":"Le mot doit faire naître l’idée","occasion":"The preliminary discourse links the words of chemistry to ideas and facts."}
+  lavoisier_paris_story_echo_none:
+    order: 2
+    tier: none
+    date: '1789'
+    checked: official_record
+    sources: [lavoisier_paris_story_echo_source_none]
+    original: fr
+    text:
+      en: {"who":"Antoine Lavoisier","quote":"if we had no exact expressions to convey them","occasion":"The same discourse distinguishes the certainty of facts from the precision needed to describe them."}
+      zh: {"who":"安托万·拉瓦锡","quote":"若没有准确的词句来表达它们。","occasion":"同一序论谈到描述确实的事实仍需要准确的词句。"}
+      fr: {"who":"Antoine Lavoisier","quote":"si nous n’avions pas des expressions exactes pour les rendre","occasion":"The same discourse distinguishes the certainty of facts from the precision needed to describe them."}
 self_check:
   quote_line: '两个数字对得很齐，其中一行的单位却串了列。'
   fact: arrest

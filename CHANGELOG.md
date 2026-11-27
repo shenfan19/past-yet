@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+- Eleven stories are now available in normal play, including Shakespeare in Stratford, Li Qingzhao in Kuaiji, Vesalius in Regensburg, and Sappho before leaving Mytilene. Each has written reports in Simplified Chinese and English, two sourced echoes, and an excerpt for sharing.
+- Seven more stories are now available in normal play: Bessie Coleman, Fanny Hensel, Camille Claudel, Emily Brontë, Qu Yuan, Sima Qian and Du Fu. Their Simplified Chinese and English reports have written branches, sourced echoes and share excerpts.
+- Twelve more stories are now available in normal play: Hua Tuo, Kenji Miyazawa, Ichiyō Higuchi, Rumi, Taqi al-Din, Terence, Heron, Pliny the Elder, Galen, Ovid, Empedocles and Hildegard of Bingen. All twelve have Simplified Chinese and English reports with sourced echoes and share excerpts.
+- Six more stories are now available in normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts: Heo Nanseolheon, Mirza Ghalib, Benjamin Banneker, Maria Mitchell, Caroline Herschel and Sofia Kovalevskaya.
+- Added David Fleay, Archimedes, Hypatia, Gutenberg, Leonardo da Vinci and Galileo to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+- Added Leeuwenhoek, Newton, Bach, Lavoisier, Faraday and Pasteur to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+- Added Enheduanna, Ibn Sina, Al-Jazari, Hokusai, Alexander Graham Bell and Georg Cantor to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+- Added Mozart’s Requiem, Emily Dickinson, Heinrich Hertz, Bizet, Artemisia Gentileschi and Georg Büchner to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+- Added Lili Boulanger, Jianzhen, Sei Shōnagon, Ibn Rushd, the Maya book at Maní and Zeami to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+
 - The report now says which traveller you are to reach the place, such as “You are traveller number 12 to come here”. The count comes from an anonymous counting service; no save and no identifier are sent, and the line stays empty when the service cannot be reached. About, Data and privacy explains it.
 - New story prose for Omar Khayyam, the Wright brothers, Van Gogh, Hargrave, Lalibela, Ife and Great Zimbabwe. All 65 open stories now have written reports. The three archaeological stories use documented conservation and excavation episodes. Ife’s share card quotes the reconstruction of the excavation plan.
 - Older saved reports keep their arrival year, recorded passages and original star limits. Unclaimed trips settle against the star limit recorded when they departed.

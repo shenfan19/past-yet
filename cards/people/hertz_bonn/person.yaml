@@ -2,7 +2,8 @@ order: 89
 events:
   hertz_bonn:
     order: 123
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1893
     date: '1893-09-05'
     stay: 4
@@ -27,8 +28,22 @@ events:
         place: "Bonn"
         figure: "Heinrich Hertz"
         story: 'From early 1892 Hertz suffered again and again from a painful illness of the nose and throat, so bad at times that he could not work. In 1893 he went back to lecturing in Bonn while undergoing several operations, and finished his Principles of Mechanics. He died in Bonn on 1 January 1894, aged thirty six; the book came out after his death.'
-        relic: "A spark gap"
-        relic_desc: "A small brass spark gap from his experiments."
+        story_prose:
+          opening:
+            - 'The lecture schedule is already up in Bonn. Hertz has his notes for a class in one hand and a few lines he wants to check in the Principles of Mechanics. He asks a younger colleague how many students are waiting with questions.'
+            - 'Hertz worked on the Principles during his final illness, sent the manuscript off in December 1893 and died on 1 January. You can arrange for a colleague to take one lecture and let Hertz decide how to spend the time.'
+            - 'Someone who knows how a class runs can help collect the students’ questions. Even with a colleague available to answer them, let Hertz decide which class he will hand over.'
+          points:
+            p1: 'The colleague lays out two schedules and says he can take the later class, if he knows which questions the students have already asked. You have Hertz choose the lesson and mark the two places that need answers. Before the colleague leaves with the schedule, he says which room he will be in. Hertz takes the slip from his lecture notes and clips it to the page of the mechanics book he wants to check.'
+          outcomes:
+            all: 'The students bring their questions to the colleague’s lecture. The manuscript goes out on schedule and Hertz dies on New Year’s Day.'
+            p1: 'A colleague takes the class. Hertz rests for some of the time he has gained before looking at the marks on the manuscript.'
+          none: 'The schedule stays in Hertz’s hands. He closes the manuscript with those few lines still to check.'
+          not_admitted: 'Nobody has arranged to see you before the lecture. The students wait a little in the hall and go back to the building where the timetable is posted.'
+          excerpts:
+            p1: 'Hertz takes the slip from his lecture notes and clips it to the page of the mechanics book he wants to check.'
+        relic: 'A folded lecture sheet'
+        relic_desc: 'An invented timetable sheet with one lecture marked.'
         points:
           p1: 'Ask Hertz which lecture he would let a colleague cover, and arrange for someone to take questions on that day'
         points_fail:
@@ -38,16 +53,30 @@ events:
             was: 'Hertz continued teaching in Bonn in 1893 while ill and finished his Principles of Mechanics before he died.'
             now: 'In this branch Hertz lets a colleague cover one lecture. He uses the time to rest and dictate a correction to the manuscript before sending it away.'
         vignettes:
-          repeat: 'The assistant is writing ‘none’ after one glance. You put the receiver back where it was and ask him to watch through the lens again. A brief spark appears on the second look. You change the first entry to ‘uncertain’. Its cause is still open when you leave.'
-          signal: 'You know later devices will carry signals much farther. The assistant asks if the spark itself can carry a sentence. You leave two empty columns on his page, one for a recognised spark and one for any pattern he can reproduce. There is time to fill only the first.'
-          gap: 'You hold the written record at the bench and let the assistant call out what he sees. One entry remains blank because neither of you had a decent view of the gap. You bring back that honest blank. Further trials are still on his list.'
+          repeat: '{staff} reads the two questions back to the colleague. He marks the one he can answer without opening Hertz’s manuscript.'
+          signal: 'A student is waiting outside the wrong classroom. {staff} points to the room the substitute has written on the schedule.'
+          gap: '{staff} leaves a blank line for the lecturer’s answers and sets the sheet where the next student can find it.'
       zh:
         name: '最后一个学期'
         place: "波恩"
         figure: "海因里希·赫兹"
         story: '1892 年初起，赫兹的鼻子和喉咙反复剧痛，有时痛得无法工作。1893 年他一边做了几次手术，一边回到波恩大学讲课，写完了《力学原理》。1894 年 1 月 1 日，他在波恩去世，年仅三十六岁，书在他死后出版。'
-        relic: "一个火花隙"
-        relic_desc: "他做实验用过的一个小铜火花隙。"
+        story_prose:
+          opening:
+            - '波恩的教室门口已经贴了课表。赫兹手里有自己要讲的一页，还有《力学原理》上想再看一眼的几行。他问年轻同事，此刻有几个学生等着问课。'
+            - '赫兹在末病中继续整理《力学原理》，1893 年 12 月交稿，次年 1 月 1 日去世。你可以替他办下一堂课的交接，让他决定怎么用空下来的一段时间。'
+            - '熟悉课堂的人可以帮忙核一遍学生的题。会有人代讲和回答时，仍由赫兹自己决定哪堂能交过去。'
+          points:
+            p1: '同事把两张课单摊开，说后一堂他可以替上，却不知道哪些问题学生已经问过。你请赫兹挑出当天的那张，并把应当接着答的两处圈明。同事把课单拿走前，当面说了答疑会在哪间屋里。赫兹把原来夹在讲稿里的纸取下来，夹到力学书稿要校的那一页。'
+          outcomes:
+            all: '学生照约定在那位同事的课堂上问了问题。书稿按时交出，赫兹在次年元日去世。'
+            p1: '有同事去教那一堂课。赫兹拿到空出来的时间，先歇了一会儿，再看稿上的记号。'
+          none: '课单还在赫兹手里。他把书稿合上，留着下回再核那几行。'
+          not_admitted: '没人答应在开讲前见你。走廊里的学生等了一阵，又回到贴课表的那栋楼。'
+          excerpts:
+            p1: '赫兹把原来夹在讲稿里的纸取下来，夹到力学书稿要校的那一页。'
+        relic: '一张折过的课单'
+        relic_desc: '虚构的课单，其中一堂做了记号。'
         points:
           p1: '问赫兹哪一堂课可以交给同事，帮他安排当天由谁回答学生的提问'
         points_fail:
@@ -57,9 +86,9 @@ events:
             was: '赫兹于 1893 年在波恩带病讲课，在去世前完成了《力学原理》。'
             now: '这条分支里，赫兹请同事代一堂课，自己先歇了一会儿。稿子送出去以前，他还能口述一处更正，请人记下来。'
         vignettes:
-          repeat: '帮工瞥一眼就要写「无」。你把接收环放回原处，请他透过镜头再看一遍。第二眼见到一点短促火花。你把第一条改成「未看清」。第一回究竟有没有，收队时仍无法断定。'
-          signal: '你知道后来的装置会把信号送到更远处。帮工问这么一点火花能不能送一句话。你在他的记录上各留一栏，一栏记认出的火花，一栏记能重现的变化。收队前，只来得及填第一栏。'
-          gap: '你拿着记录守在台边，让帮工报自己看清的东西。有一格还空着，因为两人都没看准缝上发生了什么。你带回这个没乱填的空格，帮工单上还有几回要试。'
+          repeat: '{staff}把两个问题念给代课的同事。他把不用翻赫兹书稿就能回答的那一个圈起来。'
+          signal: '有学生在等错了的教室外。{staff}指给他看代课同事在课表上记的那一间。'
+          gap: '{staff}在纸上空一行留给讲师写答复，把纸放到下一位学生找得到的地方。'
 text:
   en:
     name: Heinrich Hertz
@@ -152,6 +181,41 @@ wiki:
       text:
         en: 'Fraunhofer Heinrich Hertz Institute, The most important experiments of Heinrich Hertz, 1886–1888 chronology https://www.hhi.fraunhofer.de/en/fraunhofer-hhi-the-institute/about-us/history-of-hhi/the-most-important-experiments-of-heinrich-hertz.html'
         zh: '弗劳恩霍夫海因里希·赫兹研究所，赫兹主要实验年表 https://www.hhi.fraunhofer.de/en/fraunhofer-hhi-the-institute/about-us/history-of-hhi/the-most-important-experiments-of-heinrich-hertz.html'
+    hertz_bonn_story_echo_source_full:
+      order: 2535
+      status: checked
+      text:
+        en: 'Hertz, Die Prinzipien der Mechanik, introduction, Darmstadt digital edition https://hertz.ulb.tu-darmstadt.de/435/'
+        zh: '赫兹《力学原理》导言，达姆施塔特数字版 https://hertz.ulb.tu-darmstadt.de/435/'
+    hertz_bonn_story_echo_source_none:
+      order: 2536
+      status: checked
+      text:
+        en: 'Hertz, Die Prinzipien der Mechanik, introduction, Darmstadt digital edition https://hertz.ulb.tu-darmstadt.de/435/'
+        zh: '赫兹《力学原理》导言，达姆施塔特数字版 https://hertz.ulb.tu-darmstadt.de/435/'
+quotes:
+  hertz_bonn_story_echo_full:
+    order: 1
+    tier: full
+    date: '1894'
+    checked: official_record
+    sources: [hertz_bonn_story_echo_source_full]
+    original: de
+    text:
+      en: {"who":"Heinrich Hertz","quote":"We form mental images or symbols of external objects.","occasion":"Hertz introduces his treatment of mechanics. The date is the first publication year."}
+      zh: {"who":"海因里希·赫兹","quote":"我们在心里形成外界事物的图像或符号。","occasion":"赫兹在《力学原理》导言里的表述。所标为首版刊行年。"}
+      de: {"who":"Heinrich Hertz","quote":"Wir machen uns innere Scheinbilder oder Symbole der äußeren Gegenstände","occasion":"Hertz introduces his treatment of mechanics. The date is the first publication year."}
+  hertz_bonn_story_echo_none:
+    order: 2
+    tier: none
+    date: '1894'
+    checked: official_record
+    sources: [hertz_bonn_story_echo_source_none]
+    original: de
+    text:
+      en: {"who":"Heinrich Hertz","quote":"that it enable us to foresee future experience","occasion":"The introduction describes what a knowledge of nature should enable us to do."}
+      zh: {"who":"海因里希·赫兹","quote":"让我们能够预见未来的经验。","occasion":"导言谈认识自然能够让人做到什么。"}
+      de: {"who":"Heinrich Hertz","quote":"daß sie uns befähige, zukünftige Erfahrungen vorauszusehen","occasion":"The introduction describes what a knowledge of nature should enable us to do."}
 self_check:
   fact: illness
   quote_line: '你把第一条改成「未看清」。'

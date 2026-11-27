@@ -2,7 +2,8 @@ order: 226
 events:
   mitchell_nantucket:
     order: 216
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1847
     date: '1847-09-18'
     stay: 3
@@ -28,6 +29,24 @@ events:
         place: "Nantucket"
         figure: "Maria Mitchell"
         story: 'A letter reproduced in Maria Mitchell: Life, Letters, and Journals reports that Mitchell discovered a telescopic comet at Nantucket on 1 October 1847. Her father noted the discovery and wrote to the Harvard observatory’s director by the first mail to the mainland.'
+        story_prose:
+          opening:
+            - 'A gust crosses the Nantucket rooftop. Maria Mitchell slides her notes under the lamp to hold them still. She means to record where the object was and at what hour. Her father waits a floor below to hear the figures. Weather is keeping the mail boat in.'
+            - 'Mitchell found a comet on 1 October 1847. Her father wrote to William Bond in Cambridge. The Danish medal was awarded later after correspondence about the claim. Here you can get the first notice on the outgoing mail and send a second to the recipient designated for the prize.'
+            - 'Someone who reads sky charts or checks times can help with the notice. Use someone familiar with post to arrange the two addresses.'
+          points:
+            p1: 'Maria reads the hour and her father asks which bright star she used as a guide. You read the position back to him and find that the notice for Bond still lacks the date. The ink is barely dry when a voice at the wharf calls for the mail. The date is legible by the time the postman puts the first letter in his sack.'
+            p2: 'The second page has the same observing hour. The envelope needs a different address. You read the rules aloud, and the postman makes a separate entry for the recipient they name. Maria waits for him to finish before putting away her observations. Two letters leave the island, and only one will cross the Atlantic.'
+          outcomes:
+            all: 'The Danish recipient gets a notice that follows the published procedure. When the award is considered, Mitchell can produce the dated dispatch record in place of the later appeal.'
+            p1: 'Cambridge receives the notice carried by the first mail. The medal will still require correspondence of its own.'
+            p2: 'The second address has been checked. The first post to Cambridge has gone wrong and the branch cannot be kept intact.'
+          none: 'The rooftop notes stay in the house. The unmailed notice gives the award committee nothing to date.'
+          not_admitted: 'The family asks from downstairs who has come. The notes remain on the roof while you hear the postman pass in the street.'
+          desync: 'Bond’s letter misses the first mail. The office recalls the traveller when the trip falls out of sync; the original observations are still in the house.'
+          excerpts:
+            p1: 'The date is legible by the time the postman puts the first letter in his sack.'
+            p2: 'Two letters leave the island, and only one will cross the Atlantic.'
         relic: "A small telescope"
         relic_desc: "A small brass telescope with a trace of sea salt on the tube."
         points:
@@ -53,6 +72,24 @@ events:
         place: "楠塔基特"
         figure: "玛丽亚·米切尔"
         story: '《玛丽亚·米切尔生平、书信与日记》所录的书信记载，她在 1847 年 10 月 1 日于楠塔基特发现一颗需用望远镜观测的彗星。父亲记下发现，并托首班去大陆的邮船寄信给哈佛天文台主任。'
+        story_prose:
+          opening:
+            - '楠塔基特的屋顶上有一阵风，玛丽亚·米切尔把便笺压到灯座下面。她要记下看见天体的方位和时刻。父亲在下层等着听她读一遍；风雨还拦着邮船。'
+            - '1847 年 10 月 1 日，米切尔发现一颗彗星。她父亲给剑桥的威廉·邦德写信，发现后来经交涉获颁丹麦金牌。这里可以先确保通知搭上首班离岛邮件，再写一份给丹麦方面指定的人。'
+            - '能认读星图或读准时刻的人可帮忙核通知，熟悉邮务的人可办两处收件地址。'
+          points:
+            p1: '玛丽亚念出时刻，父亲问一遍是沿哪颗亮星找上去的。你把指示重读给他听，发现写给邦德的通知还少了日期。墨刚干，码头那边就传来准备装船的声音。邮差把第一封信塞进袋里时，日期已经能读清。'
+            p2: '第二张纸上有同样的观测时刻，信封却不能照抄头一份。你把公告所列的收件人读给邮差听，让他给这封信另记一条去向。玛丽亚在边上等他写完，才收起她那份观测。两封都出了岛，只有一封要过大西洋。'
+          outcomes:
+            all: '丹麦收件人收到按例填写的发现通报。到评奖时，米切尔拿得出首次寄送的记录，不必另请人补陈经过。'
+            p1: '剑桥收到首班邮船带来的发现通知。关于金牌的通信还要另起一轮。'
+            p2: '另一个收件地址已经核对。通向剑桥的首班邮件出了差错，这个分支无法完整保留。'
+          none: '屋顶的便笺仍在家中。法律和奖励都不会随着一条未寄的观测自己改变。'
+          not_admitted: '家人从楼下问来客是谁。便笺留在屋顶，你只能听见邮差从街上走过去。'
+          desync: '码头那封给邦德的通知没赶上首班邮件。事务所按脱节召回，屋里的原始观测还在。'
+          excerpts:
+            p1: '邮差把第一封信塞进袋里时，日期已经能读清。'
+            p2: '两封都出了岛，只有一封要过大西洋。'
         relic: "一架小望远镜"
         relic_desc: "一架小小的黄铜望远镜，镜筒上有海盐的痕迹。"
         points:
@@ -115,6 +152,41 @@ wiki:
       text:
         en: 'Maria Mitchell: Life, Letters, and Journals, appendix, Edward Everett’s letter on the discovery https://www.gutenberg.org/cache/epub/10202/pg10202.html'
         zh: '《玛丽亚·米切尔生平、书信与日记》附录，爱德华·埃弗里特关于发现彗星的信 https://www.gutenberg.org/cache/epub/10202/pg10202.html'
+    mitchell_nantucket_story_echo_source_full:
+      order: 2466
+      status: checked
+      text:
+        en: 'Life, Letters, and Journals, letter from William Mitchell to William C. Bond https://dev.gutenberg.org/cache/epub/10202/pg10202-images.html'
+        zh: '《玛丽亚·米切尔生平、书信与日记》，威廉·米切尔致威廉·C. 邦德书 https://dev.gutenberg.org/cache/epub/10202/pg10202-images.html'
+    mitchell_nantucket_story_echo_source_none:
+      order: 2467
+      status: checked
+      text:
+        en: 'Life, Letters, and Journals, Everett to Schumacher, 15 January 1848 https://dev.gutenberg.org/cache/epub/10202/pg10202-images.html'
+        zh: '《玛丽亚·米切尔生平、书信与日记》，埃弗里特致舒马赫 https://dev.gutenberg.org/cache/epub/10202/pg10202-images.html'
+quotes:
+  mitchell_nantucket_story_echo_full:
+    order: 1
+    tier: full
+    date: '1847-10-03'
+    checked: official_record
+    sources: [mitchell_nantucket_story_echo_source_full]
+    original: en
+    contextual: true
+    text:
+      en: {"who":"William Mitchell","quote":"Maria discovered a telescopic comet at half-past ten on the evening of the first instant","occasion":"Her father reports the discovery to William C. Bond from Nantucket."}
+      zh: {"who":"威廉·米切尔","quote":"玛丽亚在本月一日晚上十点半发现了一颗望远镜彗星。","occasion":"她父亲从楠塔基特向威廉·C. 邦德报告所见。"}
+  mitchell_nantucket_story_echo_none:
+    order: 2
+    tier: none
+    date: '1848-01-15'
+    checked: official_record
+    sources: [mitchell_nantucket_story_echo_source_none]
+    original: en
+    contextual: true
+    text:
+      en: {"who":"Edward Everett","quote":"you may feel it in your power to award the medal to Miss Maria Mitchell","occasion":"Everett presses the medal case in a letter to Heinrich Christian Schumacher."}
+      zh: {"who":"爱德华·埃弗里特","quote":"您或可将这枚奖章授予玛丽亚·米切尔小姐。","occasion":"埃弗里特致海因里希·克里斯蒂安·舒马赫，为金牌一事再次陈情。"}
 self_check:
   fact: comet
   quote_line: '你带回一个可以再找的位置。'

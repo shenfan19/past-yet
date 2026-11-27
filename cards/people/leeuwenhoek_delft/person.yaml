@@ -2,7 +2,8 @@ order: 120
 events:
   leeuwenhoek_delft:
     order: 21
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1677
     date: '1677-05-01'
     stay: 7
@@ -28,6 +29,24 @@ events:
         place: Delft
         figure: Antonie van Leeuwenhoek
         story: 'In October 1676 Leeuwenhoek wrote from Delft that a drop of pepper water held thousands of little animals. The Royal Society in London asked how it might verify his observations. From May to August 1677, eight witnesses in and around Delft looked through his lenses and put their observations in writing. He sent their statements to London on 5 October. Robert Hooke later showed the little animals to members of the Society.'
+        story_prose:
+          opening:
+            - 'In Delft, Leeuwenhoek hands a brass plate to the first visitor. The visitor closes one eye and still sees nothing. The other is already holding a pen, waiting to hear what he says.'
+            - 'In 1676 Leeuwenhoek described tiny animals in water to London. Eight witnesses in Delft signed testimonies over the next year, and their accounts went with his letter of 5 October. You can keep the first two witnesses at the lens and check the enclosures before the autumn mail.'
+            - 'Send someone who can guide another observer at the lens. In autumn you will need someone who can check all the signatures against the outgoing envelope.'
+          points:
+            p1: 'The first witness turns the plate and loses the patch of light. Leeuwenhoek asks him to move his eye back until it reappears. The man writes how the small things move. You turn his sheet over until the other witness can look and write for himself. Only when both have finished do they exchange sheets and smile at the two descriptions.'
+            p2: 'The October envelope already contains the letter. You lift a late statement from the table and have Leeuwenhoek read out the joint signatures before checking the sheets in order. The last name is not in the corner where you expect it. A fold has to be lifted before the last name can go onto the enclosure list.'
+          outcomes:
+            all: 'The statements leave Delft with the letter. A reader can trace each account to a signed sheet. Hooke will also show the tiny animals to others in London.'
+            p1: 'The first two witnesses have put down their own observations. An enclosure later goes missing from the October mail.'
+            p2: 'The loose papers on the table are accounted for. The earliest signed account is missing, and the packet can no longer match the historical one.'
+          none: 'The lens stands where it stood. No signed evidence stays behind after the visitors look.'
+          not_admitted: 'Your name is missing from the appointment. The apprentice takes the brass plate inside and closes the door.'
+          desync: 'The earliest signatures or an October enclosure are missing. The testimonies fall out of sync, and the office recalls the traveller.'
+          excerpts:
+            p1: 'Only when both have finished do they exchange sheets and smile at the two descriptions.'
+            p2: 'A fold has to be lifted before the last name can go onto the enclosure list.'
         relic: A tiny brass lens plate
         relic_desc: A thumb sized plate holding one very small, very clear lens.
         points:
@@ -50,6 +69,24 @@ events:
         place: 代尔夫特
         figure: 列文虎克
         story: '1676 年 10 月，列文虎克从代尔夫特写信说，一滴胡椒水里有成千上万的小动物。伦敦皇家学会来信询问怎样核实他的观察。次年 5 月到 8 月，代尔夫特一带有八人先后凑到透镜前看过，写下证词，10 月 5 日随信寄往伦敦。后来，胡克在学会上让会员们亲眼看到了小动物。'
+        story_prose:
+          opening:
+            - '代尔夫特，列文虎克把黄铜板递给第一位来客。来客闭一只眼，还是什么都没看见。旁边一位已经拿起笔，却在等他说看到了什么。'
+            - '1676 年，列文虎克把水里小动物的观察寄往伦敦。次年，代尔夫特有八人陆续签下证词，10 月 5 日寄出。你能守住第一批见证的交接，再在封口前核对十月的每一张附页。'
+            - '找会引导别人看清细处的人先守在透镜旁。秋天要用能核署名和邮封的员工把信送出。'
+          points:
+            p1: '第一位见证人把黄铜板转过来，原先那点亮光不见了。列文虎克请他把眼移回来，直到又能看见。他写下小动物活动的样子，你把纸反扣在桌上，请第二个人自己看完再拿笔。两位写完才交换纸张，对着各自的字同时笑了一下。'
+            p2: '十月的封套里已经放进了信。你从外面拈起一张晚到的证词，请列文虎克念出联名处，再照日期逐张核。最后一页的签名不在你习惯找的那一角。手指掀开那折纸，才把最后一个名字补进附页单。'
+          outcomes:
+            all: '证词随信离开代尔夫特。读信的人能把一行说法查回一张署了名的纸；随后胡克在伦敦也让同事亲眼看见。'
+            p1: '最早两位见证人已经写下了各自的观察。十月那只邮封后来有一页没对齐。'
+            p2: '你按署名理好了桌上的纸。清点仍缺最初的证词，寄件无法对上历史。'
+          none: '透镜还立在原处，来客只看过一眼，桌边没有留下可寄的证词。'
+          not_admitted: '来客与列文虎克的约定没有你的名字。学徒把黄铜板拿进屋内，带上了门。'
+          desync: '最早的签认或十月寄出的附件已缺，证词与旧日记录不能相合。事务所召回员工。'
+          excerpts:
+            p1: '两位写完才交换纸张，对着各自的字同时笑了一下。'
+            p2: '手指掀开那折纸，才把最后一个名字补进附页单。'
         relic: 一块小黄铜透镜板
         relic_desc: 拇指大的板子，里面嵌着一片极小又极清晰的透镜。
         points:
@@ -184,6 +221,41 @@ wiki:
       text:
         en: 'Antoni van Leeuwenhoek to Henry Oldenburg, Delft, 21 April 1676, Royal Society Archives EL/L1/18. https://makingscience.royalsociety.org/items/el_l1_18/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
         zh: 'Antoni van Leeuwenhoek to Henry Oldenburg, Delft, 21 April 1676, Royal Society Archives EL/L1/18. https://makingscience.royalsociety.org/items/el_l1_18/letter-from-antoni-van-leeuwenhoek-to-henry-oldenburg-dated-at-delft'
+    leeuwenhoek_delft_story_echo_source_full:
+      order: 2493
+      status: checked
+      text:
+        en: 'Leeuwenhoek letters, 5 October 1677, enclosure by Aldert Hodenpijl https://www.dbnl.org/tekst/leeu027alle02_01/leeu027alle02_01_0013.php'
+        zh: '《列文虎克书信集》1677 年 10 月 5 日书信所附霍登派尔证词 https://www.dbnl.org/tekst/leeu027alle02_01/leeu027alle02_01_0013.php'
+    leeuwenhoek_delft_story_echo_source_none:
+      order: 2494
+      status: checked
+      text:
+        en: 'Leeuwenhoek letters, 23 March 1677, original Dutch https://www.dbnl.org/tekst/leeu027alle02_01/leeu027alle02_01_0011.php'
+        zh: '《列文虎克书信集》1677 年 3 月 23 日荷兰语原文 https://www.dbnl.org/tekst/leeu027alle02_01/leeu027alle02_01_0011.php'
+quotes:
+  leeuwenhoek_delft_story_echo_full:
+    order: 1
+    tier: full
+    date: '1677-08-13'
+    checked: official_record
+    sources: [leeuwenhoek_delft_story_echo_source_full]
+    original: en
+    contextual: true
+    text:
+      en: {"who":"Aldert Hodenpijl","quote":"in every part or Division I saw hundreds of living Creatures","occasion":"English text of Hodenpijl’s attestation, one of the documents sent in October 1677."}
+      zh: {"who":"阿尔德特·霍登派尔","quote":"每一格里我都看见数以百计的活物。","occasion":"霍登派尔证词英文本，1677 年十月附信寄出的材料之一。"}
+  leeuwenhoek_delft_story_echo_none:
+    order: 2
+    tier: none
+    date: '1677-03-23'
+    checked: official_record
+    sources: [leeuwenhoek_delft_story_echo_source_none]
+    original: nl
+    text:
+      en: {"who":"Antonie van Leeuwenhoek","quote":"it is hard to comprehend such a thing","occasion":"He considers why people who have not seen through the lens hesitate over his account."}
+      zh: {"who":"安东尼·范·列文虎克","quote":"这件事很难理解。","occasion":"他提到未曾从透镜里看过的人，为何不易理解他的报告。"}
+      nl: {"who":"Antonie van Leeuwenhoek","quote":"swaer is om sulcx te bevatten","occasion":"He considers why people who have not seen through the lens hesitate over his account."}
 self_check:
   quote_line: '通信者写了句「有东西在动」。'
   fact: testimonials

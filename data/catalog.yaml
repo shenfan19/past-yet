@@ -446,7 +446,8 @@ events:
       - AI
       - Fan Shen
   - id: archimedes_syracuse
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -212
     stay: 2
     lon: 15.29
@@ -582,7 +583,8 @@ events:
       - AI
       - Fan Shen
   - id: hypatia_alexandria
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 415
     date: '0415-01-01'
     stay: 3
@@ -861,7 +863,8 @@ events:
       - AI
       - Fan Shen
   - id: gutenberg_mainz
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1455
     date: '1455-06-01'
     stay: 6
@@ -937,7 +940,8 @@ events:
       - AI
       - Fan Shen
   - id: leonardo_florence
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1503
     date: '1503-09-19'
     stay: 4
@@ -1112,10 +1116,13 @@ events:
       - AI
       - Fan Shen
   - id: vesalius_padua
-    build_step: 1
-    year: 1543
-    lon: 11.87
-    lat: 45.4
+    build_step: 4
+    ready: true
+    year: 1546
+    date: '1546-06-01'
+    stay: 2
+    lon: 12.1
+    lat: 49.02
     region: europe
     field: medicine
     tier: 2
@@ -1123,50 +1130,43 @@ events:
       E: 1
       L: 1
     refs:
+      - vesalius_padua_letter
+      - vesalius_padua_figures
       - vesalius_padua_print
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            provides: cure
-        - id: p2
-          kind: hold
-          req:
-            stat:
-              finesse: 7
-        - id: p3
-          kind: care
+          kind: persuade
+          day: 9
           req:
             any:
               - job:
-                  - nurse
-                  - midwife
-                  - physician
-                  - paramedic
-                  - doctor
+                  - restorer
+                  - proofreader
+                  - archivist
+                  - illustrator
+                stat:
+                  wit: 6
+                  will: 5
               - trait:
-                  - cheerful
-      vignettes:
-        - id: letter
-          traits:
-            - methodical
-            - curious
-            - skeptical
-        - id: hold
-          traits:
-            - handy
-            - patient
-            - kind
-        - id: credit
+                  - methodical
+                  - scholarly
+                  - skeptical
+                stat:
+                  wit: 7
+                  will: 6
     authors:
       - AI
       - Fan Shen
   - id: shakespeare_globe
-    build_step: 1
-    year: 1599
-    lon: -0.09
-    lat: 51.51
+    build_step: 4
+    ready: true
+    year: 1596
+    date: '1596-08-01'
+    stay: 2
+    lon: -1.71
+    lat: 52.19
     region: europe
     field: literature
     tier: 3
@@ -1174,40 +1174,34 @@ events:
       S: 1
       W: 1
     refs:
+      - shakespeare_globe_register
       - shakespeare_globe_primary
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: persuade
-          req:
-            stat:
-              finesse: 6
-        - id: p2
           kind: trust
+          day: 8
           req:
-            trait:
-              - glib
-              - artistic
-              - cosmopolitan
-        - id: p3
-          kind: hold
-          req:
-            luck: 0.5
-      vignettes:
-        - id: back_row
-          traits:
-            - artistic
-            - quiet
-        - id: space
-          traits:
-            - bold
-            - glib
-        - id: cue
+            any:
+              - job:
+                  - courier
+                  - driver
+                  - rideshare_driver
+                stat:
+                  will: 5
+              - trait:
+                  - attached
+                  - kind
+                  - streetwise
+                stat:
+                  will: 6
     authors:
       - AI
       - Fan Shen
   - id: galileo_padua
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1610
     date: '1610-01-04'
     stay: 4
@@ -1339,7 +1333,8 @@ events:
       - AI
       - Fan Shen
   - id: leeuwenhoek_delft
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1677
     date: '1677-05-01'
     stay: 7
@@ -1414,7 +1409,8 @@ events:
       - AI
       - Fan Shen
   - id: newton_cambridge
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1687
     date: '1687-05-28'
     stay: 4
@@ -1483,7 +1479,8 @@ events:
       - AI
       - Fan Shen
   - id: bach_leipzig
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1750
     date: '1750-03-01'
     stay: 2
@@ -1741,7 +1738,8 @@ events:
       - AI
       - Fan Shen
   - id: lavoisier_paris
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1793
     date: '1793-10-25'
     stay: 2
@@ -1977,7 +1975,8 @@ events:
       - AI
       - Fan Shen
   - id: faraday_london
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1831
     date: '1831-08-16'
     stay: 6
@@ -2045,7 +2044,7 @@ events:
       - AI
       - Fan Shen
   - id: darwin_galapagos
-    build_step: 2
+    build_step: 4
     year: 1835
     lon: -90.3
     lat: -0.6
@@ -2491,7 +2490,8 @@ events:
       - AI
       - Fan Shen
   - id: pasteur_paris
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1859
     date: '1859-07-01'
     stay: 3
@@ -2908,7 +2908,8 @@ events:
       - AI
       - Fan Shen
   - id: enheduanna_ur
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -2250
     stay: 2
     lon: 46.1
@@ -2989,7 +2990,7 @@ events:
     refs:
       - hammurabi_babylon_primary
       - hammurabi_code_wiki
-      - hammurabi_bm_copy
+      - hammurabi_louvre_copy
       - hammurabi_britannica
       - hammurabi_history_com
       - hammurabi_find_record
@@ -3201,8 +3202,10 @@ events:
       - AI
       - Fan Shen
   - id: timbuktu_sankore
-    build_step: 1
-    year: 1327
+    build_step: 4
+    ready: true
+    year: 1468
+    stay: 2
     lon: -3
     lat: 16.77
     region: africa
@@ -3211,86 +3214,70 @@ events:
     channels:
       H: 3
     refs:
+      - timbuktu_sankore_walata
+      - timbuktu_sankore_western_sudan
       - timbuktu_sankore_year
       - timbuktu_sankore_astronomy
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - curious
-              - wanderer
-              - methodical
-        - id: p2
-          kind: hold
+          kind: endure
+          day: 8
           req:
             any:
               - job:
-                  - archivist
+                  - driver
+                  - courier
+                  - navigator
+                stat:
+                  constitution: 6
               - trait:
                   - hardy
-        - id: p3
-          kind: endure
-          req:
-            provides: warmth
-      vignettes:
-        - id: title
-          traits:
-            - curious
-            - methodical
-            - wanderer
-        - id: wind
-          traits:
-            - hardy
-            - handy
-            - patient
-        - id: collection
+                  - wanderer
+                  - streetwise
+                stat:
+                  constitution: 7
+                  will: 5
     authors:
       - AI
       - Fan Shen
   - id: al_haytham_cairo
-    build_step: 1
-    year: 1011
-    lon: 31.24
-    lat: 30.04
+    build_step: 4
+    ready: true
+    year: 1020
+    stay: 2
+    lon: 31.23
+    lat: 30.01
     region: africa
     field: science
     tier: 3
     channels:
       V: 1
     refs:
+      - al_haytham_cairo_fire
+      - al_haytham_cairo_chronicle
       - al_haytham_cairo_aperture
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - artistic
-              - methodical
-              - quiet
-        - id: p2
-          kind: hold
-          req:
-            stat:
-              wit: 7
-        - id: p3
           kind: endure
+          day: 8
           req:
-            luck: 0.5
-      vignettes:
-        - id: slit
-          traits:
-            - methodical
-            - artistic
-            - quiet
-        - id: cover
-          traits:
-            - patient
-            - handy
-            - kind
-        - id: term
+            any:
+              - job:
+                  - paramedic
+                  - caregiver
+                stat:
+                  constitution: 5
+              - trait:
+                  - hardy
+                  - bold
+                  - patient
+                stat:
+                  constitution: 7
+                  will: 6
     authors:
       - AI
       - Fan Shen
@@ -3346,7 +3333,8 @@ events:
       - AI
       - Fan Shen
   - id: ibn_sina_hamadan
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1037
     date: '1037-05-01'
     stay: 2
@@ -3490,7 +3478,8 @@ events:
       - AI
       - Fan Shen
   - id: al_jazari_diyarbakir
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1206
     date: '1206-01-03'
     stay: 3
@@ -3642,7 +3631,7 @@ events:
       - AI
       - Fan Shen
   - id: ulugh_beg_samarkand
-    build_step: 2
+    build_step: 4
     year: 1449
     date: '1449-09-01'
     stay: 2
@@ -3880,10 +3869,12 @@ events:
       - AI
       - Fan Shen
   - id: li_bai_changan
-    build_step: 1
-    year: 750
-    lon: 108.94
-    lat: 34.27
+    build_step: 4
+    ready: true
+    year: 759
+    stay: 2
+    lon: 109.88
+    lat: 31.08
     region: asia
     field: literature
     tier: 2
@@ -3891,35 +3882,31 @@ events:
       T: 1
       S: 1
     refs:
+      - li_bai_changan_old_tang
+      - li_bai_changan_afterword
       - li_bai_changan_primary
     scene:
+      star_rules: 2
       points:
         - id: p1
           kind: trust
+          day: 8
           req:
-            trait:
-              - sensitive
-              - glib
-              - charismatic
-        - id: p2
-          kind: persuade
-          req:
-            stat:
-              finesse: 8
-        - id: p3
-          kind: care
-          req:
-            luck: 0.4
-      vignettes:
-        - id: verse
-          traits:
-            - artistic
-            - quiet
-        - id: palace
-          traits:
-            - curious
-            - bold
-        - id: copy
+            any:
+              - job:
+                  - sailor
+                  - ferryman
+                  - ferry_pilot
+                  - courier
+                stat:
+                  will: 5
+              - trait:
+                  - streetwise
+                  - wanderer
+                  - methodical
+                stat:
+                  wit: 6
+                  will: 6
     authors:
       - AI
       - Fan Shen
@@ -4142,8 +4129,10 @@ events:
       - AI
       - Fan Shen
   - id: li_shizhen_qizhou
-    build_step: 1
-    year: 1578
+    build_step: 4
+    ready: true
+    year: 1592
+    stay: 2
     lon: 115.44
     lat: 30.23
     region: asia
@@ -4154,43 +4143,31 @@ events:
       L: 2
       T: 1
     refs:
+      - li_shizhen_qizhou_registry
+      - li_shizhen_qizhou_edition_note
       - li_shizhen_qizhou_draft
       - li_shizhen_qizhou_edition
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: endure
-          req:
-            stat:
-              constitution: 6
-        - id: p2
-          kind: notice
-          req:
-            trait:
-              - methodical
-              - skeptical
-              - curious
-        - id: p3
-          kind: hold
+          kind: persuade
+          day: 9
           req:
             any:
               - job:
                   - pharmacist
                   - archivist
+                  - proofreader
+                stat:
+                  wit: 6
               - trait:
-                  - hardy
-      vignettes:
-        - id: names
-          traits:
-            - methodical
-            - skeptical
-            - curious
-        - id: wrap
-          traits:
-            - hardy
-            - faithful
-            - handy
-        - id: print
+                  - methodical
+                  - charismatic
+                  - scholarly
+                stat:
+                  wit: 6
+                  will: 6
     authors:
       - AI
       - Fan Shen
@@ -4277,7 +4254,8 @@ events:
       - AI
       - Fan Shen
   - id: hokusai_edo
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1831
     lon: 139.77
     lat: 35.68
@@ -4336,8 +4314,10 @@ events:
       - AI
       - Fan Shen
   - id: bose_calcutta
-    build_step: 1
-    year: 1901
+    build_step: 4
+    ready: true
+    year: 1885
+    stay: 2
     lon: 88.36
     lat: 22.57
     region: asia
@@ -4346,39 +4326,30 @@ events:
     channels:
       H: 2
     refs:
+      - bose_calcutta_geddes
+      - bose_calcutta_salary_history
       - bose_calcutta_polarisation
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - curious
-              - skeptical
-              - handy
-        - id: p2
           kind: persuade
+          day: 12
           req:
-            trait:
-              - glib
-              - ambitious
-              - streetwise
-        - id: p3
-          kind: hold
-          req:
-            job:
-              - electrician
-              - mechanic
-      vignettes:
-        - id: return
-          traits:
-            - methodical
-            - skeptical
-        - id: mark
-          traits:
-            - curious
-            - handy
-        - id: reading
+            any:
+              - job:
+                  - accountant
+                  - tax_preparer
+                  - university_lecturer
+                stat:
+                  will: 6
+              - trait:
+                  - glib
+                  - charismatic
+                  - methodical
+                stat:
+                  wit: 6
+                  will: 6
     authors:
       - AI
       - Fan Shen
@@ -5171,7 +5142,8 @@ events:
       - AI
       - Fan Shen
   - id: bell_boston
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1876
     date: '1876-02-26'
     stay: 5
@@ -6096,7 +6068,8 @@ events:
       - AI
       - Fan Shen
   - id: cantor_halle
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1917
     date: '1917-07-15'
     stay: 6
@@ -6264,7 +6237,8 @@ events:
       - AI
       - Fan Shen
   - id: mozart_requiem_vienna
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1791
     date: '1791-11-15'
     stay: 2
@@ -6627,6 +6601,7 @@ events:
           overturns:
             - burial
             - baker
+            - art_of_painting
             - inventory
             - petition
             - trustee
@@ -6922,7 +6897,8 @@ events:
       - AI
       - Fan Shen
   - id: dickinson_amherst
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1886
     date: '1886-05-01'
     stay: 2
@@ -7296,7 +7272,8 @@ events:
       - AI
       - Fan Shen
   - id: hertz_bonn
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1893
     date: '1893-09-05'
     stay: 4
@@ -8024,7 +8001,8 @@ events:
       - AI
       - Fan Shen
   - id: bizet_paris
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1875
     date: '1875-02-14'
     stay: 4
@@ -8569,7 +8547,8 @@ events:
       - AI
       - Fan Shen
   - id: bessie_coleman_jacksonville
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1926
     date: '1926-04-15'
     stay: 1
@@ -8870,7 +8849,8 @@ events:
       - AI
       - Fan Shen
   - id: fanny_mendelssohn_berlin
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1847
     date: '1847-04-26'
     stay: 2
@@ -8958,7 +8938,8 @@ events:
       - AI
       - Fan Shen
   - id: camille_claudel_paris
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1913
     lon: 2.36
     lat: 48.85
@@ -9023,7 +9004,8 @@ events:
       - AI
       - Fan Shen
   - id: artemisia_florence
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1616
     date: '1616-07-05'
     stay: 3
@@ -9085,7 +9067,8 @@ events:
       - AI
       - Fan Shen
   - id: buchner_zurich
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1837
     date: '1837-01-16'
     stay: 2
@@ -9151,7 +9134,8 @@ events:
       - AI
       - Fan Shen
   - id: emily_bronte_haworth
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1848
     date: '1848-06-24'
     stay: 7
@@ -9253,7 +9237,8 @@ events:
       - AI
       - Fan Shen
   - id: lili_boulanger_paris
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1918
     date: '1918-01-01'
     stay: 3
@@ -9314,7 +9299,8 @@ events:
       - AI
       - Fan Shen
   - id: qu_yuan_miluo
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -278
     lon: 113
     lat: 28.9
@@ -9389,7 +9375,8 @@ events:
       - AI
       - Fan Shen
   - id: sima_qian_changan
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -98
     lon: 108.95
     lat: 34.27
@@ -9494,7 +9481,8 @@ events:
       - AI
       - Fan Shen
   - id: du_fu_xiang_river
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 770
     lon: 112.94
     lat: 28.23
@@ -9582,52 +9570,42 @@ events:
       - AI
       - Fan Shen
   - id: li_qingzhao_hangzhou
-    build_step: 1
-    year: 1150
-    lon: 120.15
-    lat: 30.27
+    build_step: 4
+    ready: true
+    year: 1131
+    stay: 2
+    lon: 120.58
+    lat: 30.01
     region: asia
     field: literature
     tier: 1
     channels:
       'Y': 1
       G: 1
-    regret: true
     refs:
+      - li_qingzhao_hangzhou_postscript
       - li_qingzhao_hangzhou_primary
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            trait:
-              - quiet
-              - methodical
-              - skeptical
-        - id: p2
           kind: trust
-          req:
-            luck: 0.5
-        - id: p3
-          kind: hold
-          redeem: true
+          day: 8
           req:
             any:
               - job:
                   - archivist
-                  - teacher
-              - stat:
-                  will: 7
-      vignettes:
-        - id: trace
-          traits:
-            - scholarly
-            - methodical
-        - id: missing
-          traits:
-            - sensitive
-            - patient
-        - id: book
+                  - restorer
+                  - antique_dealer
+                stat:
+                  will: 5
+              - trait:
+                  - methodical
+                  - kind
+                  - patient
+                stat:
+                  wit: 6
+                  will: 5
     authors:
       - AI
       - Fan Shen
@@ -10146,7 +10124,8 @@ events:
       - AI
       - Fan Shen
   - id: jianzhen_nara
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 750
     stay: 7
     lon: 112.47
@@ -10222,7 +10201,8 @@ events:
       - AI
       - Fan Shen
   - id: hua_tuo_xuchang
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 208
     lon: 113.85
     lat: 34.03
@@ -10292,7 +10272,8 @@ events:
       - AI
       - Fan Shen
   - id: miyazawa_kenji_hanamaki
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1933
     date: '1933-08-01'
     stay: 2
@@ -10375,7 +10356,8 @@ events:
       - AI
       - Fan Shen
   - id: higuchi_ichiyo_tokyo
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1896
     date: '1896-03-24'
     stay: 4
@@ -10465,7 +10447,8 @@ events:
       - AI
       - Fan Shen
   - id: sei_shonagon_kyoto
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1000
     date: '1000-12-01'
     stay: 2
@@ -10577,7 +10560,8 @@ events:
       - AI
       - Fan Shen
   - id: ibn_rushd_lucena
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1195
     date: '1195-08-01'
     stay: 2
@@ -10660,7 +10644,8 @@ events:
       - AI
       - Fan Shen
   - id: rumi_konya
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1273
     date: '1273-11-28'
     stay: 2
@@ -10729,8 +10714,10 @@ events:
       - AI
       - Fan Shen
   - id: ibn_al_nafis_cairo
-    build_step: 1
-    year: 1242
+    build_step: 4
+    ready: true
+    year: 1288
+    stay: 2
     lon: 31.24
     lat: 30.04
     region: africa
@@ -10739,48 +10726,32 @@ events:
     channels:
       E: 2
       V: 1
-    regret: true
     refs:
+      - ibn_al_nafis_cairo_late_biography
+      - ibn_al_nafis_cairo_bodleian
       - ibn_al_nafis_cairo_transit
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
-          req:
-            stat:
-              wit: 7
-        - id: p2
-          kind: hold
-          req:
-            job:
-              - physician
-              - doctor
-              - nurse
-              - pharmacist
-              - midwife
-        - id: p3
           kind: trust
-          redeem: true
+          day: 8
           req:
             any:
-              - trait:
-                  - kind
-                  - cosmopolitan
               - job:
-                  - student
-                  - teacher
-      vignettes:
-        - id: trace
-          traits:
-            - methodical
-            - curious
-            - scholarly
-        - id: layer
-          traits:
-            - kind
-            - cosmopolitan
-            - patient
-        - id: name
+                  - archivist
+                  - restorer
+                  - bookseller
+                stat:
+                  wit: 6
+                  will: 5
+              - trait:
+                  - scholarly
+                  - methodical
+                  - patient
+                stat:
+                  wit: 7
+                  will: 5
     authors:
       - AI
       - Fan Shen
@@ -10936,7 +10907,8 @@ events:
       - AI
       - Fan Shen
   - id: taqi_al_din_istanbul
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1580
     date: '1580-01-03'
     stay: 3
@@ -11076,7 +11048,8 @@ events:
       - AI
       - Fan Shen
   - id: terence_rome
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -165
     lon: 12.49
     lat: 41.89
@@ -11274,8 +11247,10 @@ events:
       - AI
       - Fan Shen
   - id: sappho_lesbos
-    build_step: 1
-    year: -600
+    build_step: 4
+    ready: true
+    year: -596
+    stay: 2
     lon: 26.56
     lat: 39.1
     region: europe
@@ -11283,44 +11258,32 @@ events:
     tier: 2
     channels:
       G: 1
-    regret: true
     refs:
+      - sappho_lesbos_parian
+      - sappho_lesbos_exile_study
       - sappho_lesbos_papyrus
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
+          kind: trust
+          day: 7
           req:
             any:
-              - trait:
-                  - methodical
-                  - handy
               - job:
-                  - musician
-        - id: p2
-          kind: care
-          req:
-            trait:
-              - faithful
-              - calm
-              - cheerful
-        - id: p3
-          kind: trust
-          redeem: true
-          req:
-            item: neural_chip
-      vignettes:
-        - id: breath
-          traits:
-            - methodical
-            - handy
-            - artistic
-        - id: repeat
-          traits:
-            - faithful
-            - calm
-            - cheerful
-        - id: blank
+                  - sailor
+                  - ferryman
+                  - courier
+                  - navigator
+                stat:
+                  will: 6
+              - trait:
+                  - attached
+                  - kind
+                  - wanderer
+                stat:
+                  will: 6
+                  constitution: 5
     authors:
       - AI
       - Fan Shen
@@ -11371,8 +11334,10 @@ events:
       - AI
       - Fan Shen
   - id: hipparchus_rhodes
-    build_step: 1
+    build_step: 4
+    ready: true
     year: -130
+    stay: 2
     lon: 28.23
     lat: 36.43
     region: europe
@@ -11381,45 +11346,38 @@ events:
     channels:
       V: 2
       C: 1
-    regret: true
     refs:
+      - hipparchus_rhodes_commentary
+      - hipparchus_rhodes_manitius
       - hipparchus_rhodes_palimpsest
       - hipparchus_rhodes_debate
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: notice
+          kind: persuade
+          day: 8
           req:
-            trait:
-              - curious
-              - quiet
-        - id: p2
-          kind: hold
-          req:
-            stat:
-              wit: 7
-        - id: p3
-          kind: hold
-          redeem: true
-          req:
-            job:
-              - archivist
-              - student
-      vignettes:
-        - id: edges
-          traits:
-            - methodical
-            - scholarly
-        - id: copy
-          traits:
-            - curious
-            - quiet
-        - id: outline
+            any:
+              - job:
+                  - university_lecturer
+                  - translator
+                  - archivist
+                stat:
+                  wit: 7
+              - trait:
+                  - curious
+                  - methodical
+                  - scholarly
+                stat:
+                  wit: 7
+                  will: 5
     authors:
       - AI
       - Fan Shen
   - id: heron_alexandria
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 62
     lon: 29.92
     lat: 31.2
@@ -11476,7 +11434,8 @@ events:
       - AI
       - Fan Shen
   - id: pliny_stabiae
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 79
     lon: 14.48
     lat: 40.71
@@ -11579,7 +11538,8 @@ events:
       - AI
       - Fan Shen
   - id: galen_rome
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 192
     date: '0192-02-01'
     stay: 3
@@ -11658,7 +11618,8 @@ events:
       - AI
       - Fan Shen
   - id: ovid_tomis
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 9
     lon: 28.65
     lat: 44.18
@@ -11738,7 +11699,8 @@ events:
       - AI
       - Fan Shen
   - id: empedocles_akragas
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -440
     lon: 13.59
     lat: 37.29
@@ -11839,7 +11801,8 @@ events:
       - AI
       - Fan Shen
   - id: hildegard_bingen
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1179
     lon: 7.92
     lat: 49.97
@@ -11978,7 +11941,8 @@ events:
       - AI
       - Fan Shen
   - id: maya_codices_mani
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1562
     date: '1562-06-20'
     stay: 1
@@ -12188,7 +12152,7 @@ events:
       - AI
       - Fan Shen
   - id: tupaia_tahiti
-    build_step: 2
+    build_step: 4
     year: 1770
     date: '1770-06-01'
     stay: 7
@@ -12280,7 +12244,8 @@ events:
       - AI
       - Fan Shen
   - id: heo_nanseolheon_hanyang
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1589
     lon: 126.98
     lat: 37.57
@@ -12344,7 +12309,8 @@ events:
       - AI
       - Fan Shen
   - id: ghalib_delhi
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1850
     lon: 77.23
     lat: 28.65
@@ -12937,7 +12903,8 @@ events:
       - AI
       - Fan Shen
   - id: zeami_sado
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1435
     date: '1435-04-01'
     stay: 2
@@ -13300,7 +13267,8 @@ events:
       - AI
       - Fan Shen
   - id: banneker_maryland
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1791
     date: '1791-08-01'
     stay: 2
@@ -13481,7 +13449,8 @@ events:
       - AI
       - Fan Shen
   - id: mitchell_nantucket
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1847
     date: '1847-09-18'
     stay: 3
@@ -13546,7 +13515,8 @@ events:
       - AI
       - Fan Shen
   - id: caroline_herschel_slough
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1786
     date: '1786-07-20'
     stay: 5
@@ -13611,7 +13581,8 @@ events:
       - AI
       - Fan Shen
   - id: kovalevskaya_stockholm
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1888
     date: '1888-10-25'
     stay: 4
@@ -13938,7 +13909,8 @@ events:
       - AI
       - Fan Shen
   - id: david_fleay_healesville
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1943
     date: '1943-12-20'
     stay: 3

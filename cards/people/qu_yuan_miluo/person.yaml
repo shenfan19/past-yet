@@ -2,7 +2,8 @@ order: 160
 events:
   qu_yuan_miluo:
     order: 151
-    build_step: 2
+    build_step: 4
+    ready: true
     year: -278
     lon: 113
     lat: 28.9
@@ -26,6 +27,24 @@ events:
         place: "Miluo River"
         figure: "Qu Yuan"
         story: 'The Songs of Chu transmits The Fisherman, a literary exchange between Qu Yuan and a fisherman. The later biography in the Records also preserves a version of the dialogue.'
+        story_prose:
+          opening:
+            - 'On a riverbank in Chu. Readers of the Songs of Chu will know verses attributed to the exiled Qu Yuan, and an account in which he meets a fisherman by the water.'
+            - 'The received Records describe him reciting by the marsh, his face drawn. In this branch someone wants to take the verses away, with one bundle still unfinished.'
+            - 'Someone who knows books and river crossings can help. So can someone who can find a quiet place and leave a meal there.'
+          points:
+            p2: '{staff} asks someone selling food to keep a place open, sets down the bowl, and steps aside. Qu Yuan sits and puts the slips at his left hand. He eats a little before taking one out himself. He reads the line a second time. Someone seated by the door shifts farther into the room.'
+            p1: 'People crossing the river are packing. {staff} asks Qu Yuan which bundle he wants kept and asks the person copying to read back the last line. Qu Yuan finds the slip that belongs between two others and sets it down in its place. The carrier threads the cord back through and leaves the knot on the outside. A hand can find it the next time the bundle is opened.'
+          outcomes:
+            all: 'The carrier takes the bundle away. At the boat he still remembers a line he heard over the meal, and only then opens the copy to find it.'
+            p2: 'After the bowls are cleared, the people who are still there stay a little longer. In the quiet Qu Yuan takes up the same slip again.'
+            p1: 'The copy goes downriver. Once the carrier sits, he turns the knot round to the hand nearest it.'
+          none: 'The place put out for the meal remains empty. After dark the wind lifts a corner of the mat.'
+          not_admitted: '{staff} never finds the place set out for the meal. The ferryman draws in a plank, and water still passes underneath.'
+          desync: 'A part of the copy is missing between two slips. The carrier has just reached the shore when the agency calls {staff} back.'
+          excerpts:
+            p2: 'He reads the line a second time. Someone seated by the door shifts farther into the room.'
+            p1: 'The carrier threads the cord back through and leaves the knot on the outside. A hand can find it the next time the bundle is opened.'
         relic: "A bamboo slip of verse"
         relic_desc: "A slip of bamboo carrying a few lines of a long poem."
         points:
@@ -49,6 +68,24 @@ events:
         place: "汨罗江"
         figure: "屈原"
         story: '《楚辞》传有《渔父》，写屈原与渔父的文辞问答。《史记》本传也保留了一版对话。传本对话是文献中的记述。'
+        story_prose:
+          opening:
+            - '楚地江边。后人读《楚辞》，读到有些诗被归给离乡的屈原，也读到他在水边遇到一位渔父的故事。'
+            - '传世的《史记》写他在泽畔行吟，面容憔悴。在这条分支里，有人想把手头的诗带走，还剩一束没抄完。'
+            - '这趟用得上熟悉书简和渡口的人，也用得上能找一处安静地方、把饭留下的人。'
+          points:
+            p2: '{staff}请卖饭的人先留一处空着的席，把饭端来以后退到一旁。屈原坐下，把诗简放在自己左手边。他先吃了几口，后来自己取出一枚来。 他把那一句重新念了一遍。原先挨着门坐的人，把身子往里挪了挪。'
+            p1: '要过江的人已经在收拾，{staff}先问屈原要留哪束，再让抄写的人把已经记下的末句念出来。屈原找出缺在两枚之间的那一枚，放到原处。 送抄件的人把绳穿回来，把结留在外面。下次要重读，手一摸就找得到。'
+          outcomes:
+            all: '送抄件的人把那一束带走了。临行前，他还记得席上听到的一句，到了船边才又翻出来找。'
+            p2: '饭碗收走以后，留在屋里的人没有急着一起走。屈原借着那一点安静，又把同一枚简拿起来。'
+            p1: '抄件跟着下水的船走了。拿着它的人坐下以后，先把绳结转到了自己手边。'
+          none: '开饭前的位置一直没人坐。天暗以后，被风掀动的是空席的一角。'
+          not_admitted: '{staff}没能找到留饭的地方。摆渡人收了木板，江水仍从板下穿过去。'
+          desync: '两枚简之间漏了一段。拿抄件的人刚到岸边，事务所便召回了{staff}。'
+          excerpts:
+            p2: '他把那一句重新念了一遍。原先挨着门坐的人，把身子往里挪了挪。'
+            p1: '送抄件的人把绳穿回来，把结留在外面。下次要重读，手一摸就找得到。'
         relic: "一片写诗的竹简"
         relic_desc: "一片竹简，上面是一首长诗中的几行。"
         points:
@@ -103,6 +140,43 @@ wiki:
       text:
         en: 'The Fisherman, Songs of Chu, with Wang Yi''s received commentary; Records of the Grand Historian, vol. 84, three commentaries edition. https://zh.wikisource.org/zh-hant/漁父'
         zh: 'The Fisherman, Songs of Chu, with Wang Yi''s received commentary; Records of the Grand Historian, vol. 84, three commentaries edition. https://zh.wikisource.org/zh-hant/漁父'
+    qu_yuan_miluo_story_echo_source_full:
+      order: 2412
+      status: checked
+      text:
+        en: 'Songs of Chu, The Fisherman, received text https://zh.wikisource.org/zh-hant/漁父'
+        zh: '《楚辞·渔父》传本 https://zh.wikisource.org/zh-hant/漁父'
+    qu_yuan_miluo_story_echo_source_none:
+      order: 2413
+      status: checked
+      text:
+        en: 'Songs of Chu, The Fisherman, received text https://zh.wikisource.org/zh-hant/漁父'
+        zh: '《楚辞·渔父》传本 https://zh.wikisource.org/zh-hant/漁父'
+quotes:
+  qu_yuan_miluo_story_echo_full:
+    order: 1
+    tier: full
+    date: '-278'
+    checked: official_record
+    sources: [qu_yuan_miluo_story_echo_source_full]
+    original: zh-Hant
+    contextual: true
+    text:
+      en: {"who":"Qu Yuan in The Fisherman","quote":"He walked, reciting by the marsh.","occasion":"The opening of The Fisherman, a literary account of Qu Yuan in exile."}
+      zh: {"who":"《渔父》中的屈原","quote":"沿着水泽边走边吟。","occasion":"《渔父》开头描写放逐中的屈原，属于传本文辞。"}
+      zh-Hant: {"who":"《渔父》中的屈原","quote":"行吟澤畔","occasion":"《渔父》开头描写放逐中的屈原，属于传本文辞。"}
+  qu_yuan_miluo_story_echo_none:
+    order: 2
+    tier: none
+    date: '-278'
+    checked: official_record
+    sources: [qu_yuan_miluo_story_echo_source_none]
+    original: zh-Hant
+    contextual: true
+    text:
+      en: {"who":"Narrator of The Fisherman","quote":"The fisherman smiled, tapped his oar and went away.","occasion":"Narration in The Fisherman, as the two figures part."}
+      zh: {"who":"《渔父》叙述者","quote":"渔父微微一笑，敲着船桨离开。","occasion":"《渔父》的叙述，两人谈过以后分别。"}
+      zh-Hant: {"who":"《渔父》叙述者","quote":"漁父莞爾而笑，鼓枻而去","occasion":"《渔父》的叙述，两人谈过以后分别。"}
 self_check:
   quote_line: '渡船人听来的收尾跟你带来的不同。'
   fact: fisherman_tradition

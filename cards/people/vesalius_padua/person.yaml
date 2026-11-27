@@ -2,55 +2,85 @@ order: 199
 events:
   vesalius_padua:
     order: 17
-    build_step: 1
-    year: 1543
-    lon: 11.87
-    lat: 45.4
+    build_step: 4
+    ready: true
+    year: 1546
+    date: '1546-06-01'
+    stay: 2
+    lon: 12.1
+    lat: 49.02
     region: europe
     field: medicine
     tier: 2
     channels: {E: 1, L: 1}
-    refs: [vesalius_padua_print]
+    refs: [vesalius_padua_letter, vesalius_padua_figures, vesalius_padua_print]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: notice, req: {"provides":"cure"}}
-        - {id: p2, kind: hold, req: {"stat":{"finesse":7}}}
-        - {id: p3, kind: care, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor"]},{"trait":["cheerful"]}]}}
-      vignettes:
-        - {id: letter, traits: [methodical, curious, skeptical]}
-        - {id: hold, traits: [handy, patient, kind]}
-        - {id: credit}
+        - {"id":"p1","kind":"persuade","day":9,"req":{"any":[{"job":["restorer","proofreader","archivist","illustrator"],"stat":{"wit":6,"will":5}},{"trait":["methodical","scholarly","skeptical"],"stat":{"wit":7,"will":6}}]}}
     text:
       en:
-        name: 'The letter under the figure'
-        place: Padua
-        figure: Andreas Vesalius
-        story: 'Vesalius prepared the Fabrica while teaching in Padua. The woodblocks were sent from Venice to Johannes Oporinus, and the book appeared in Basel in 1543.'
-        relic: 'A checked teaching figure'
-        relic_desc: 'A fictional reader’s copy with a corrected figure reference.'
+        name: 'The two versions of the plate'
+        place: 'Regensburg'
+        figure: 'Andreas Vesalius'
+        story: 'In a letter written at Regensburg in 1546, Vesalius criticised an edition that copied and reduced his illustrations. He objected to the distortions in some of the copied figures.'
+        story_prose:
+          opening:
+            - 'Regensburg, June 1546. Vesalius is writing to a colleague about another book that copied his illustrations. He objects to the reduction in scale and questions the course of some of its lines.'
+            - 'In history, his letter preserved those objections. Later comparison found that not every objection corresponded to a substantial difference. In this branch a bookseller still has a stack of copies to send out.'
+            - 'Someone who can recognise the two editions can help. It will also take someone who can persuade the bookseller to put the same note into each copy before it goes.'
+          points:
+            p1: '{staff} lays out both editions on the counter, marking where a figure is simply smaller and where Vesalius raised a specific objection. The bookseller asks which claims can be made with confidence. They strike out what has not been checked, leaving page numbers a reader can look up. The bookseller opens the top copy and slips the note in next to the plate. When the book closes, a thin edge of white still shows.'
+          outcomes:
+            all: 'After the books go out, one reader borrows the other edition using the page numbers on the slip. Both figures lie on the table, with the same pen across them.'
+            p1: 'After the books go out, one reader borrows the other edition using the page numbers on the slip. Both figures lie on the table, with the same pen across them.'
+          none: 'The bookseller ties the last bundle. The half-written slip is still under the counter.'
+          not_admitted: '{staff} never sees the bookseller. A sample lies open at a plate, turned briefly by a customer passing the counter.'
+          excerpts:
+            p1: 'The bookseller opens the top copy and slips the note in next to the plate. When the book closes, a thin edge of white still shows.'
+        relic: 'A proof with two marks'
+        relic_desc: 'An imagined print with separate marks for the two editions.'
         points:
-          p1: 'Compare the figure letter with the corresponding text'
-          p2: 'Hold the two copies in place while the mismatched letter is marked'
-          p3: 'Help the next reader retrace the correction'
-        vignettes:
-          letter: 'Lucia puts her finger on the letter in the margin. Marco points to a different place on the figure. You move the practice sheet against the open book until both can see where the copy drifted. Lucia changes the reference and leaves the displaced one legible in the margin.'
-          hold: 'The borrowed book has to go back and Marco still needs the figure. You hold the book open until he can mark both the image and its letter on a sheet of his own. When the owner takes the book, there is still something he can check at his desk.'
-          credit: 'You know later readers will try to name the people who made the illustrations. Lucia asks whether to put an artist’s name at the top of her practice copy. You can point to the printed figure but cannot settle who drew it. She leaves a line for a source, then closes the book.'
+          p1: 'Get the bookseller to include a note identifying the disputed plates with the copies still in stock'
+        points_fail:
+          p1: 'The employee did not reach an agreement with the distributor, and the copies went out without that sheet.'
+        shift:
+          p1:
+            was: '13 June 1546: Vesalius wrote from Regensburg and criticised what he took to be distortions in the copied figures.'
+            now: '{staff} gets the distributor to enclose a sheet identifying the disputed plates and pointing readers to the originals.'
+            who: vesalius_padua
+            bio: 'Readers of the copied edition received a note identifying the figures Vesalius disputed.'
       zh:
-        name: '图下那个字母'
-        place: 帕多瓦
-        figure: 维萨里
-        story: '维萨里在帕多瓦任教时筹备《人体构造》，木刻版从威尼斯送交约翰内斯·奥波里努斯，1543年在巴塞尔刊印。'
-        relic: '一页校过的习作图'
-        relic_desc: '读者拿来习作的一页，图文对应的记号已经订正。'
+        name: '同一幅图的两个版本'
+        place: '雷根斯堡'
+        figure: '安德烈亚斯·维萨里'
+        story: '维萨里在 1546 年从雷根斯堡写出一封信，批评一部缩小翻刻他插图的书。他认为有些图在翻刻后出现失真。'
+        story_prose:
+          opening:
+            - '1546 年六月，维萨里在雷根斯堡写信。他谈到另一部翻刻过自己插图的书，反对其中的缩印，也质疑有些线条的走向。'
+            - '史实里，这封信留下了他的批评。后人拿两版互相对照，发现并非所有疑处都有实质差异。在这条分支里，书商手上还压着一批未发出的书。'
+            - '这趟需要能辨认不同版次的人，也需要有人能跟书商谈妥，给将要发出的每册书夹进同一张附页。'
+          points:
+            p1: '{staff}把两版摊在柜台上，逐处标明哪里只是印得小、哪里是维萨里提到的疑点。书商问有几处能写得肯定。两人把没核实的断语划掉，只留下读者可以翻回去看的页码。书商翻开最上面那本，把附页夹进图旁。再合上书时，纸边还露出一线白。'
+          outcomes:
+            all: '书发出去以后，有人按附页上的页码找另一版借看。两张图平放在桌上，中间压着同一支笔。'
+            p1: '书发出去以后，有人按附页上的页码找另一版借看。两张图平放在桌上，中间压着同一支笔。'
+          none: '书商捆好最后一摞书。那张只写了一半的附页还留在柜台下。'
+          not_admitted: '{staff}没能见到掌柜。柜台上的样书已经翻到图页，只有买书的人过去翻了一下。'
+          excerpts:
+            p1: '书商翻开最上面那本，把附页夹进图旁。再合上书时，纸边还露出一线白。'
+        relic: '两处有记号的校样'
+        relic_desc: '分支里的校样，用两个记号辨认两种版次。'
         points:
-          p1: '核对图上字母与正文说的是否同一处'
-          p2: '两份图放在一处，等人标出对不上的字母'
-          p3: '帮接手的读者看清改动是从哪里来的'
-        vignettes:
-          letter: '露琪亚用手指点住页边一个字母，马可却指到图上另一处。你把练习纸移到打开的书旁，让两人看清符号从哪儿抄偏了。露琪亚改好索引，页边还认得出原来那个错位的标记。'
-          hold: '借来的印本得还，马可还要看图。你帮他撑开书，等他在自己的纸上记下图的位置和字母。书主取走之后，他回到桌前还能查到一份。'
-          credit: '你知道后人会试图认出制图者。露琪亚问练习页上要不要署画工名字。你找得到印本里的图，却定不了谁画的。她留一行待写来处，合上了书。'
+          p1: '请书商给尚未发出的翻刻本夹一张附页，指出哪些图值得对照原版'
+        points_fail:
+          p1: '经销人没答应，手里的书仍没有附上那张勘误。'
+        shift:
+          p1:
+            was: '1546 年 6 月 13 日，维萨里从雷根斯堡写信，质疑翻刻图出现失真。'
+            now: '{staff}说服经销人附上勘误，列出受质疑的图版，供读者翻查原版。'
+            who: vesalius_padua
+            bio: '翻刻本的读者拿到了一张标明维萨里对哪些图有异议的附页。'
 text:
   en:
     name: Andreas Vesalius
@@ -58,24 +88,29 @@ text:
   zh:
     name: 维萨里
     text: 佛兰德解剖学家，1514 年生，1564 年去世，曾在帕多瓦任教。他 1543 年的《人体构造》配有取自亲自解剖的细致插图，纠正了盖伦的许多说法。
-hook: {en: 'The letter under the picture points elsewhere.', zh: '图下的字母，指到了别处。'}
+hook: {en: 'The two versions of the plate', zh: '同一幅图的两个版本'}
 facts:
+  complaint:
+    date: '1546-06-13'
+    checked: two_sources
+    level: usable
+    use: [story, history, wiki]
+    sources: [vesalius_padua_letter, vesalius_padua_figures]
+    text:
+      en: '13 June 1546: Vesalius wrote from Regensburg and criticised the distortions he saw in the copied figures.'
+      zh: '1546 年 6 月 13 日，维萨里从雷根斯堡写信，批评翻刻图出现的失真。'
+    line:
+      en: '13 June 1546: Vesalius wrote from Regensburg and criticised the distortions he saw in the copied figures.'
+      zh: '1546 年 6 月 13 日，维萨里从雷根斯堡写信，批评翻刻图出现的失真。'
   print:
     date: '1543'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    use: [wiki]
     sources: [vesalius_padua_print]
     text:
       en: 'The museum describes preparation at Padua, transport of blocks from Venice to Basel, and the 1543 printing. It notes that the packing correspondence does not name the artists.'
       zh: '馆方记述帕多瓦的筹备、木刻版从威尼斯运到巴塞尔及1543年刊印，也指出相关通信未列画工姓名。'
-bystanders:
-  lucia:
-    invented: true
-    text: {en: 'A fictional reader checking the figure reference.', zh: '虚构读者露琪亚，在校图中文字的指向。'}
-  marco:
-    invented: true
-    text: {en: 'A fictional student working with a borrowed book.', zh: '虚构学生马可，要用借来的书核对图。'}
 wiki:
   refs:
     vesalius_padua_print:
@@ -84,16 +119,60 @@ wiki:
       text:
         en: 'U.S. National Library of Medicine, Illustrating De Fabrica, early printed figures and correspondence https://circulatingnow.nlm.nih.gov/2014/07/08/illustrating-de-fabrica/amp/'
         zh: '美国国家医学图书馆，《人体构造》的插图，早期印图与通信 https://circulatingnow.nlm.nih.gov/2014/07/08/illustrating-de-fabrica/amp/'
+    vesalius_padua_letter:
+      order: 2215
+      status: checked
+      text:
+        en: 'Austrian National Library, Vesalius’s 1546 letter from Regensburg https://viewer.onb.ac.at/ABO_%2BZ178164202'
+        zh: '奥地利国家图书馆，维萨里 1546 年雷根斯堡书信 https://viewer.onb.ac.at/ABO_%2BZ178164202'
+    vesalius_padua_figures:
+      order: 2216
+      status: checked
+      text:
+        en: 'University of Edinburgh Library, Vesalius’s criticism of the copied engravings https://www.arsanatomica.lib.ed.ac.uk/superimp.html'
+        zh: '爱丁堡大学图书馆，维萨里对翻刻图版的批评 https://www.arsanatomica.lib.ed.ac.uk/superimp.html'
+    vesalius_padua_echo_source_full:
+      order: 2310
+      status: checked
+      text:
+        en: 'Andreas Vesalius, letter to Oporinus, first edition of De humani corporis fabrica, p. 20 https://sourcelibrary.org/book/de-humani-corporis-fabrica-1543-first-edition-vesalius/page/6953e55777f38f6761bf05e3'
+        zh: '维萨里致奥波里努斯信，《人体构造》首版第 20 页 https://sourcelibrary.org/book/de-humani-corporis-fabrica-1543-first-edition-vesalius/page/6953e55777f38f6761bf05e3'
+    vesalius_padua_echo_source_none:
+      order: 2311
+      status: checked
+      text:
+        en: 'Andreas Vesalius, letter to Oporinus, first edition of De humani corporis fabrica, p. 20 https://sourcelibrary.org/book/de-humani-corporis-fabrica-1543-first-edition-vesalius/page/6953e55777f38f6761bf05e3'
+        zh: '维萨里致奥波里努斯信，《人体构造》首版第 20 页 https://sourcelibrary.org/book/de-humani-corporis-fabrica-1543-first-edition-vesalius/page/6953e55777f38f6761bf05e3'
+quotes:
+  vesalius_padua_echo_full:
+    order: 1
+    tier: full
+    date: '1543'
+    checked: official_record
+    sources: [vesalius_padua_echo_source_full]
+    original: la
+    text:
+      en: {"who":"Andreas Vesalius","quote":"They can never be shown large enough to students.","occasion":"Letter to his printer at the front of the 1543 Fabrica, discussing illustrations in earlier editions."}
+      zh: {"who":"安德烈亚斯·维萨里","quote":"给学生看的图，再大也不算大。","occasion":"1543 年初版卷首致印工信，谈早先版本的图版。"}
+      la: {"who":"Andreas Vesalius","quote":"nunquam satis magnae Studiosis proponi poterunt","occasion":"Letter to his printer at the front of the 1543 Fabrica, discussing illustrations in earlier editions."}
+  vesalius_padua_echo_none:
+    order: 2
+    tier: none
+    date: '1543'
+    checked: official_record
+    sources: [vesalius_padua_echo_source_none]
+    original: la
+    text:
+      en: {"who":"Andreas Vesalius","quote":"How little use I thought those copies could be to your printing.","occasion":"Letter to his printer at the front of the 1543 Fabrica, rejecting earlier copies as printing models."}
+      zh: {"who":"安德烈亚斯·维萨里","quote":"我认为那些翻刻，对你的这次印刷实在用处不大。","occasion":"1543 年初版卷首致印工信，说明早先的翻刻不宜用作此次印刷的底本。"}
+      la: {"who":"Andreas Vesalius","quote":"quàm parum illa impressioni tuæ adhibenda putauerim","occasion":"Letter to his printer at the front of the 1543 Fabrica, rejecting earlier copies as printing models."}
 self_check:
-  fact: print
-  quote_line: '她留一行待写来处，合上了书。'
-  regret_choice: 'credit 猜名会留下没法核实的署名。'
-  bookend: '从字母错位，到给来处留行。'
-  share_line: '图和字母要对得上。'
-  share_number: 'letter 图与文的两处标记。'
-  knowing: 'credit 员工知道后世会探究画工。'
-  near: 'print 区分帕多瓦准备和巴塞尔出版。'
-  lever: 'hold 让借书归还后仍有可核对内容。'
-  missed: 'credit 此行无法确认执笔的人。'
-  brought: 'letter 带回虚构的对照页。'
+  fact: complaint
+  quote_line: '1546 年 6 月 13 日，维萨里从雷根斯堡写信，批评翻刻图出现的失真。'
+  regret_choice: '经销人没答应，手里的书仍没有附上那张勘误。'
+  bookend: '维萨里在 1546 年从雷根斯堡写出一封信，批评一部缩小翻刻他插图的书。他指出有些图在翻刻后出现失真。 {staff}说服经销人附上勘误，列出受质疑的图版，供读者翻查原版。'
+  share_number: '1546'
+  lever: p1
+  missed: '经销人没答应，手里的书仍没有附上那张勘误。'
+  share_line: '同一幅图的两个版本'
 pack: {license: MIT, version: 1, languages: [en, zh]}

@@ -2,7 +2,8 @@ order: 77
 events:
   galen_rome:
     order: 185
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 192
     date: '0192-02-01'
     stay: 3
@@ -29,6 +30,27 @@ events:
         place: "Rome"
         figure: "Galen"
         story: 'In On Avoiding Distress, Galen describes losing books and other possessions in Rome’s fire of 192. He distinguishes his missing copies from works he believed he could no longer recover.'
+        story_prose:
+          opening:
+            - 'Rome, 192. Galen has sent some rolls towards Campania and left books and objects in storage in Rome. Later, in On Avoiding Distress, he remembers those things separately.'
+            - 'In history the fire destroyed books including work he thought he could never replace. In this branch one load goes early. Someone can look through the lists with him before it is closed.'
+            - 'Someone who knows which books go with which load can help. Someone also needs to ask the craftspeople which instruments could be made again from memory, and which could not.'
+          points:
+            p3: '{staff} finds the comedy glossary on the Rome store list and asks Galen to look at its destination again. Galen opens it to a place he often consults, then tells the person loading the early shipment to put it with the books for Campania. As the lid is being put on, Galen reaches back to turn the tie upwards so it will not be caught underneath.'
+            p2: 'The store has not taken all the instruments yet. {staff} asks a craft worker which would be hardest to remake and has him prepare a second model at his bench. He waits for the wax to set and marks the underside. When someone comes to clear the bench, he keeps the model in his hand. The second one goes right at the back of his drawer.'
+            p1: '{staff} separates the two manifests and has the person loading the early shipment read back the one for Campania. Someone lifts a roll that was almost put in the Rome pile. After checking with Galen, he moves it to the load leaving first. Before tying it shut the loader writes the destination on top again. Someone winds the loose end of the cord round a corner.'
+          outcomes:
+            all: 'The books sent out early are still available when needed. Someone follows the label to the comedy glossary, and at the workshop the spare model is still there.'
+            p3: 'The manuscript goes ahead of the fire, its tie facing upwards. Anyone looking later can recognise it without taking the load apart.'
+            p2: 'Before making the instrument again the craftsman opens his own drawer and takes the model out.'
+            p1: 'The rolls marked to go early leave first. The list for the Rome store stays behind.'
+          none: 'The early shipment is already loaded. The rolls that missed it are put away as before.'
+          not_admitted: '{staff} never meets the person loading. Footsteps carrying things recede beyond the store door.'
+          desync: 'The early rolls are filed with the Rome stock. The ink of the mistaken entry is still wet when the agency calls {staff} back.'
+          excerpts:
+            p3: 'As the lid is being put on, Galen reaches back to turn the tie upwards so it will not be caught underneath.'
+            p2: 'When someone comes to clear the bench, he keeps the model in his hand. The second one goes right at the back of his drawer.'
+            p1: 'Before tying it shut the loader writes the destination on top again. Someone winds the loose end of the cord round a corner.'
         relic: 'An inventory leaf'
         relic_desc: 'A fictional inventory with one surviving title and an empty copy column.'
         points:
@@ -59,6 +81,27 @@ events:
         place: "罗马"
         figure: "盖伦"
         story: '盖伦在《论免于忧苦》中叙述罗马192年火灾给自己的藏书和物品带来的损失，也叙说哪些书在他看来已经无从补回。'
+        story_prose:
+          opening:
+            - '192 年，罗马。盖伦把一些卷册送往坎帕尼亚，也有书和物件放在罗马的仓间。后来，他在《论免于忧苦》里分开回忆了这些东西。'
+            - '史实里，火灾烧掉一批藏书，其中有他认为再找不到的词汇手稿。在这条分支里，一批货先走，正好有人可以在装货前和他一起再看一遍。'
+            - '这趟用得上知道两批书各该去何处的人。还有人须把工坊里能重做和难重做的物件分开问清。'
+          points:
+            p3: '{staff}把那部喜剧词汇手稿从罗马仓间的单子里挑出来，请盖伦再看一次他原先写的收处。盖伦翻到常查的一页，合上以后，让先行的装货人把它放进给坎帕尼亚的那批。 装货人刚要合盖，盖伦又把手伸进去，把卷上的系带翻过来，免得它压在底下。'
+            p2: '仓间还没收走所有器械。{staff}先问工匠哪件日后最难重做，请他留在工作台旁做第二份样。工匠等蜡变硬，在底下写了一笔记号。 有人来催着收桌，工匠没把它递出去。他把第二份放在抽屉最里面。'
+            p1: '{staff}把两张送货单分开，请先行的装货人照着坎帕尼亚那张重念一遍。有人拿起差点放进罗马那堆的卷，等盖伦确认，才把它放回先走的货里。 捆好之前，装货人把目的地重新写在最上面。另一个人把空出来的绳头绕过箱角。'
+          outcomes:
+            all: '先行的书后来能够借来。有人顺着标签读到那份喜剧词汇，工坊里也还能找出自己留下的蜡样。'
+            p3: '那份手稿随先走的货离开城里，卷带朝上。以后有人要找，第一眼就知道是哪件。'
+            p2: '工匠日后重做那件东西前，先去把自己的抽屉打开，找出试样。'
+            p1: '该先走的卷还是先走。罗马仓间的那张单子留在原处。'
+          none: '先走的货已经装完。没有赶上的卷仍照原来的去处收着。'
+          not_admitted: '{staff}没见到负责装货的人。搬运的脚步声从仓门里慢慢远了。'
+          desync: '本来先走的卷并入罗马仓间。事务所召回{staff}时，旧单上那道误抄的墨还没干。'
+          excerpts:
+            p3: '装货人刚要合盖，盖伦又把手伸进去，把卷上的系带翻过来，免得它压在底下。'
+            p2: '有人来催着收桌，工匠没把它递出去。他把第二份放在抽屉最里面。'
+            p1: '捆好之前，装货人把目的地重新写在最上面。另一个人把空出来的绳头绕过箱角。'
         relic: '一页书目'
         relic_desc: '书目，有个书名依然可读，存卷一栏留空。'
         points:
@@ -136,6 +179,41 @@ wiki:
       text:
         en: 'Galen, On Avoiding Distress, English translation, NCBI Bookshelf https://www.ncbi.nlm.nih.gov/books/NBK613950/?report=printable'
         zh: '盖伦《论免于忧苦》英译，美国国家医学图书馆书库 https://www.ncbi.nlm.nih.gov/books/NBK613950/?report=printable'
+    galen_rome_story_echo_source_full:
+      order: 2445
+      status: checked
+      text:
+        en: 'Galen, On Avoiding Distress, edited by Polemis and Xenophontos https://www.ncbi.nlm.nih.gov/books/NBK613950/'
+        zh: '盖伦《论免于忧苦》，波莱米斯与克塞诺丰托斯校勘本 https://www.ncbi.nlm.nih.gov/books/NBK613950/'
+    galen_rome_story_echo_source_none:
+      order: 2446
+      status: checked
+      text:
+        en: 'Galen, On Avoiding Distress, edited by Polemis and Xenophontos https://www.ncbi.nlm.nih.gov/books/NBK613950/'
+        zh: '盖伦《论免于忧苦》，波莱米斯与克塞诺丰托斯校勘本 https://www.ncbi.nlm.nih.gov/books/NBK613950/'
+quotes:
+  galen_rome_story_echo_full:
+    order: 1
+    tier: full
+    date: '192'
+    checked: official_record
+    sources: [galen_rome_story_echo_source_full]
+    original: grc
+    text:
+      en: {"who":"Galen","quote":"I lost them all on the same day.","occasion":"On Avoiding Distress, recounting the books lost in the fire."}
+      zh: {"who":"盖伦","quote":"我是在同一天失去这些的。","occasion":"《论免于忧苦》，记火灾中失去的书。"}
+      grc: {"who":"Galen","quote":"ἀπώλεσα κατὰ τὴν αὐτὴν ἡμέραν","occasion":"On Avoiding Distress, recounting the books lost in the fire."}
+  galen_rome_story_echo_none:
+    order: 2
+    tier: none
+    date: '192'
+    checked: official_record
+    sources: [galen_rome_story_echo_source_none]
+    original: grc
+    text:
+      en: {"who":"Galen","quote":"So that there would be no word too many, and none missing.","occasion":"On Avoiding Distress, on the care he took in correcting texts."}
+      zh: {"who":"盖伦","quote":"要做到一句里既不多一个词，也不少一个词。","occasion":"《论免于忧苦》，盖伦回忆自己如何校订文字。"}
+      grc: {"who":"Galen","quote":"ὡς μήτε τι περιττεύειν ῥῆμα μήτε ἐλλείπειν","occasion":"On Avoiding Distress, on the care he took in correcting texts."}
 self_check:
   fact: fire
   quote_line: '狄翁只问，明天桌上能放哪本。'

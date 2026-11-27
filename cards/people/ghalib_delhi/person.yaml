@@ -2,7 +2,8 @@ order: 81
 events:
   ghalib_delhi:
     order: 198
-    build_step: 2
+    build_step: 4
+    ready: true
     year: 1850
     lon: 77.23
     lat: 28.65
@@ -25,6 +26,20 @@ events:
         place: "Delhi"
         figure: "Mirza Ghalib"
         story: 'By the time of this Delhi visit, Ghalib’s Urdu divan had already been printed in 1841. Its ghazals can be browsed by their rhyme and refrain endings.'
+        story_prose:
+          opening:
+            - 'Someone walks into a Delhi bookshop reciting as much of a poem as they remember, all the way to its last word. The bookseller asks you to listen once more and write down the rhyme and refrain. He will take the slip to the printed book.'
+            - 'Ghalib’s Urdu divan was already in print. The king commissioned him to write a history of the Timurids. The first part appeared and the projected second volume remained unfinished. You can put the papers for the later reigns in order so he has somewhere to begin after delivering the first book.'
+            - 'Send someone who can match variant names to dates. A reader who knows both kinds of writing can also identify where the history quotes verse.'
+          points:
+            p1: 'Ghalib pulls a sheet from the pile and asks you to read its last line. The page looks like history until the sentence runs into a line of verse in the margin. You put the quotation’s source on its wrapper and give the papers that follow Humayun their own gathering. Ghalib turns to the first blank page and writes the opening line of a second volume.'
+          outcomes:
+            all: 'When the first book goes out, the next gathering is already beside it. There is a beginning when you leave, and plenty of space below it.'
+            p1: 'The later reigns now have a gathering of their own. Ghalib can begin the draft and the pages to come are his to write.'
+          none: 'The bookseller finds the ghazal by following the slip. The papers for the later reigns stay in their pile, and no completed sequel follows the first volume.'
+          not_admitted: 'The slip reaches the shop, where nobody recognises its bearer. The papers remain under a half-open account book.'
+          excerpts:
+            p1: 'Ghalib turns to the first blank page and writes the opening line of a second volume.'
         relic: "A page of ghazals"
         relic_desc: "A page of Urdu verse in his own hand, with corrections."
         points:
@@ -46,6 +61,20 @@ events:
         place: "德里"
         figure: "迦利布"
         story: '这趟去德里时，迦利布的乌尔都语诗集已于 1841 年刊印。读者可以按加扎勒的韵脚、叠句结尾来翻找。'
+        story_prose:
+          opening:
+            - '德里书铺里，有人一路念着听过的诗来找刊本，只记得尾字。卖书人请你再听一回，把听清的韵脚和叠句写到一张纸上。他要拿着纸条去翻书。'
+            - '史实里，迦利布的乌尔都语诗集已有刊本。他受托编写帖木儿王朝史，第一卷刊行，续卷没有写成。这次能帮他把后几朝的材料单独排好，让他交卷以后可以接着写。'
+            - '擅长对照异名和年代的员工可以按朝次分纸。懂不同文体的人还可以帮忙识别哪一页是引诗，哪一页才是本朝记录。'
+          points:
+            p1: '迦利布从纸堆里抽出一张，叫你读末行。那页看着像一段史文，末行却跟页边抄的韵句相连。你把引用出处写在包纸上，从待排序的几页里抽走它，再把胡马雍之后的材料另立一册。迦利布试翻到空白处，写下了续卷的第一行。'
+          outcomes:
+            all: '等第一卷交出去，旁边已有一册能接上去的纸。你走的时候，第二卷开了头，下面还空着许多页。'
+            p1: '后几朝的资料有了自己的册子。迦利布可以继续起草，往后的篇章仍要由他一页页写。'
+          none: '卖书人照纸条找到了诗句。续卷的材料仍积在原来的纸堆里，刊行的第一卷之后没有完稿。'
+          not_admitted: '纸条送进书铺，店里无人识得来客。半开的账册下面，还压着那几张没交出的材料。'
+          excerpts:
+            p1: '迦利布试翻到空白处，写下了续卷的第一行。'
         relic: "一页格扎勒诗稿"
         relic_desc: "一页他亲笔写的乌尔都语诗，有修改的痕迹。"
         points:
@@ -107,6 +136,41 @@ wiki:
       text:
         en: 'Mirza Ghalib, Urdu Divan, 1841 first-edition facsimile https://franpritchett.com/00ghalib/texts/editions/index.html'
         zh: '迦利布《乌尔都语诗集》1841 年初版影印 https://franpritchett.com/00ghalib/texts/editions/index.html'
+    ghalib_delhi_story_echo_source_full:
+      order: 2460
+      status: checked
+      text:
+        en: 'Urdu divan, first ghazal, verse 1 https://www.franpritchett.com/00ghalib/001/1_01.html'
+        zh: '《乌尔都语诗集》第一首第一联 https://www.franpritchett.com/00ghalib/001/1_01.html'
+    ghalib_delhi_story_echo_source_none:
+      order: 2461
+      status: checked
+      text:
+        en: 'Urdu divan, first ghazal, verse 1 https://www.franpritchett.com/00ghalib/001/1_01.html'
+        zh: '《乌尔都语诗集》第一首第一联 https://www.franpritchett.com/00ghalib/001/1_01.html'
+quotes:
+  ghalib_delhi_story_echo_full:
+    order: 1
+    tier: full
+    date: '1841'
+    checked: official_record
+    sources: [ghalib_delhi_story_echo_source_full]
+    original: ur
+    text:
+      en: {"who":"Mirza Ghalib","quote":"Whose bold writing does the image appeal against?","occasion":"The opening of the divan’s first ghazal. The date is that of the first printed divan."}
+      zh: {"who":"迦利布","quote":"画中人向谁申诉这大胆的笔墨？","occasion":"诗集第一首加扎勒的开头，日期为初版刊行年。"}
+      ur: {"who":"Mirza Ghalib","quote":"نقش فریادی ہے کس کی شوخیٔ تحریر کا","occasion":"The opening of the divan’s first ghazal. The date is that of the first printed divan."}
+  ghalib_delhi_story_echo_none:
+    order: 2
+    tier: none
+    date: '1841'
+    checked: official_record
+    sources: [ghalib_delhi_story_echo_source_none]
+    original: ur
+    text:
+      en: {"who":"Mirza Ghalib","quote":"Every figure in the picture wears a robe of paper.","occasion":"Second line of the same couplet, whose closing words recur throughout the ghazal."}
+      zh: {"who":"迦利布","quote":"画里的每个人都穿着纸衣。","occasion":"同一诗联的下句，句末叠句在全诗中反复出现。"}
+      ur: {"who":"Mirza Ghalib","quote":"کاغذی ہے پیرہن ہر پیکر تصویر کا","occasion":"Second line of the same couplet, whose closing words recur throughout the ghazal."}
 self_check:
   fact: divan
   quote_line: '你能带回记得住的那几个字，整句却已经有些想不起来了。'
