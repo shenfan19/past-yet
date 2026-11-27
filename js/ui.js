@@ -1045,6 +1045,7 @@ export function createUI(D, ctx, DEV = false) {
     const page = `
       <p><button class="ghost" data-act="modalclose">‹ ${U.report.back}</button></p>
       <div class="row sp"><h2>${protagonistHtml(cur)} · ${esc(S.title)}</h2><span class="stamp">${esc(outcomeOf(cur))}</span></div>
+      <p class="muted pulse-rank" data-pulse-key="era:${esc(cur.eraId)}"></p>
       ${ending ? `<p class="lead">${esc(ending)}</p>` : ''}
       ${echoHtml(cur.echo ?? ctx.backend.echoOf(cur))}
       <div class="row" style="margin:16px 0">${S.buttons}</div>${vsHtml}
@@ -1360,6 +1361,16 @@ export function createUI(D, ctx, DEV = false) {
     const bg = modalEl.querySelector('.modalbg');
     if (bg && bg.scrollTop !== scroll) bg.scrollTop = scroll;
     if (st.modal && st.modal.kind === 'share') share.draw(share.dispatch(st.modal.id));
+    fillPulseRank();
+  }
+
+  // The rank of this traveller at a place, from the shared counting service; nothing is shown when it cannot be reached.
+  function fillPulseRank() {
+    const el = modalEl.querySelector('[data-pulse-key]');
+    if (!el || el.textContent || !window.LMPulse || !/^era:[a-z0-9_]{1,60}$/.test(el.dataset.pulseKey)) return;
+    window.LMPulse.event(el.dataset.pulseKey).then((r) => {
+      if (r && r.rank && el.isConnected) el.textContent = U.report.pulse_rank.replace('{n}', String(r.rank));
+    });
   }
   modalEl.addEventListener('click', (ev) => {
     if (ev.target.dataset && ev.target.dataset.bg) { closeModal(); return; }

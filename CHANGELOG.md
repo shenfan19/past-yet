@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- The report now says which traveller you are to reach the place, such as “You are traveller number 12 to come here”. The count comes from an anonymous counting service; no save and no identifier are sent, and the line stays empty when the service cannot be reached. About, Data and privacy explains it.
 - New story prose for Omar Khayyam, the Wright brothers, Van Gogh, Hargrave, Lalibela, Ife and Great Zimbabwe. All 65 open stories now have written reports. The three archaeological stories use documented conservation and excavation episodes. Ife’s share card quotes the reconstruction of the excavation plan.
 - Older saved reports keep their arrival year, recorded passages and original star limits. Unclaimed trips settle against the star limit recorded when they departed.
 
