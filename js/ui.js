@@ -311,10 +311,13 @@ export function createUI(D, ctx, DEV = false) {
       st.cart = keepItems(o.cart);
       st.sort = o.sort || {};
       Object.assign(st.wiki, o.wiki);
-      const keepArticle = (id) => !id?.startsWith('items:') || (Object.hasOwn(items, id.slice(6)) && !items[id.slice(6)].retired);
-      st.wiki.pos = st.wiki.hist.slice(0, st.wiki.pos + 1).filter(keepArticle).length - 1;
-      st.wiki.hist = st.wiki.hist.filter(keepArticle);
-      if (!keepArticle(st.wiki.cur)) st.wiki.cur = st.wiki.hist[st.wiki.pos] || null;
+      if (st.wiki.hist.length || st.wiki.cur) {
+        const articleIds = new Set(wiki.articles().map((article) => article.id));
+        const keepArticle = (id) => articleIds.has(id);
+        st.wiki.pos = st.wiki.hist.slice(0, st.wiki.pos + 1).filter(keepArticle).length - 1;
+        st.wiki.hist = st.wiki.hist.filter(keepArticle);
+        if (!keepArticle(st.wiki.cur)) st.wiki.cur = st.wiki.hist[st.wiki.pos] || null;
+      }
       if (!Object.hasOwn(T.tags, st.wiki.tag)) st.wiki.tag = '';
       Object.assign(st.map, o.map);
       if (o.form && visibleEras().includes(o.form.eraId) && hiredIds().includes(o.form.staffId)) st.form = { ...st.form, ...o.form, items: keepItems(o.form.items) };

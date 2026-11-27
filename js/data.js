@@ -100,7 +100,12 @@ export async function loadData(readText, parse, pickLang, opts = {}) {
     o.catalog.events = o.catalog.events.filter((e) => !gone.has(e.id));
     for (const e of o.catalog.events) if (drafts.has(e.era)) delete e.era;
     const hidden = (c) => (c.era && drafts.has(c.era)) || (c.unlock && c.unlock.era && drafts.has(c.unlock.era)) || (c.events && c.events.length && c.events.every((x) => gone.has(x)));
-    for (const k of Object.keys(o.encyclopedia.sections)) o.encyclopedia.sections[k] = o.encyclopedia.sections[k].filter((c) => !hidden(c));
+    for (const k of Object.keys(o.encyclopedia.sections)) {
+      const cards = o.encyclopedia.sections[k].filter((c) => !hidden(c));
+      // A person can have both open and unpublished episodes. The wiki uses the first remaining episode as the entry point.
+      for (const c of cards) if (c.events) c.events = c.events.filter((id) => !gone.has(id));
+      o.encyclopedia.sections[k] = cards;
+    }
   }
   // every catalogue event has a relic, which is an antique: it points at the event and sells for money.
   // The event the game starts from has a medium in its place, such as a statue of today: it opens the place, is not an antique, is never found and never sold.

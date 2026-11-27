@@ -711,6 +711,33 @@ try {
     await p2.goto(`http://127.0.0.1:${port}/index.html?lang=zh`);
     await p2.waitForFunction(() => window.__game && window.__game.D);
     const shown = await p2.evaluate(() => { const D = window.__game.D, S = window.__game.ctx.S(); const evs = D.get('catalog.events'); const ids = new Set(evs.map((e) => e.id)); return { all: evs.every((e) => e.ready && !e.draft), eras: D.get('config.eras').every((id) => evs.some((e) => e.era === id)), relics: Object.values(D.get('antiques.antiques')).every((a) => ids.has(a.event) || !a.event), start: S.locks.every((x) => ids.has(x.replace('relic_', ''))), n: evs.length }; });
+    await p2.evaluate(async () => {
+      const { ctx, ui } = window.__game;
+      ctx.S().welcomed = true;
+      ctx.S().locks.push('relic_mozart_requiem_vienna');
+      ui.state.modal = null;
+      ui.render();
+      await ctx.save();
+    });
+    await p2.click('#tools [data-id=wiki]');
+    await p2.click('#wiki-list .wcat[data-cat=people] summary');
+    await p2.click('#wiki-list [data-id="people:mozart"]');
+    ok('the wiki opens Mozart from his released episode', await p2.locator('#wiki-article [data-id="events:c:mozart_requiem_vienna"]').isVisible()
+      && await p2.locator('#wiki-article [data-id="events:c:mozart_prague"]').count() === 0);
+    await p2.addInitScript(() => {
+      const hist = ['people:mozart', 'events:c:mozart_prague'];
+      sessionStorage.setItem('teleporter_ui_state', JSON.stringify({
+        modal: { kind: 'wiki' }, wiki: { hist, pos: 1, cur: hist[1] },
+      }));
+    });
+    await p2.reload();
+    await p2.waitForSelector('#wiki-article [data-id="events:c:mozart_requiem_vienna"]');
+    ok('restoring a wiki skips the missing episode', await p2.locator('[data-act=wikiback]').isDisabled()
+      && await p2.locator('[data-act=wikifwd]').isDisabled());
+    await p2.click('#modal .mclose');
+    await p2.click('#tabs [data-tab=shop]');
+    ok('closing the restored wiki gives the page back', await p2.locator('#modal .modalbg').count() === 0
+      && await p2.locator('#tabs [data-tab=shop].on').isVisible());
     await solo.close();
     ok('without dev only the stories turned on are in the game, with their places, antiques and start', shown.all && shown.eras && shown.relics && shown.start && shown.n >= 1);
   }
