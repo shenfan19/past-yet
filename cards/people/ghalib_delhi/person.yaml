@@ -10,7 +10,7 @@ events:
     field: literature
     tier: 2
     channels: {S: 1, Y: 1}
-    refs: [ghalib_delhi_divan]
+    refs: [ghalib_delhi_divan, ghalib_delhi_history]
     scene:
       star_rules: 2
       points:
@@ -30,13 +30,13 @@ events:
         points:
           p1: 'Help him gather and sort the sources for the second half of the Timurid history the king has asked of him, so that he carries the work on past its first part'
         points_fail:
-          p1: 'The sources for the second half stayed scattered. In this branch he still wrote only the first part, and the sequel he had planned was never written.'
+          p1: 'The first volume is finished. In this branch as in history, the plan for the second does not become a finished manuscript.'
         shift:
           p1:
             was: 'On 4 July 1850 Bahadur Shah engaged Ghalib to write a history of the Timurid house; the first part, Mehr-e nimroz, came out in 1854 or 1855 and ends with the death of Humayun, and the sequel he planned was never written.'
-            now: '{staff} helped him put the sources for the later reigns in order while the commission was new. In this timeline he went on past the first part and finished the history he had been asked for.'
+            now: 'Ghalib has a separate set of source notes for the later reigns. After turning in the first volume, he has enough material at hand to start the second.'
             who: ghalib_delhi
-            bio: 'In this line Ghalib finished the whole of the history Bahadur Shah had asked him to write, not only its first part.'
+            bio: 'In this branch Ghalib begins a draft of the second volume after the first is delivered.'
         vignettes:
           refrain: 'The bookseller remembers the image in the verse and keeps looking for it in the wrong place. You ask for the words he heard repeated. He gives you the ending, and you find the right group in the printed book. You write one page reference. Who first brought the verse into the shop is still a mystery to him.'
           future: 'You tell the bookseller that later readers will compare several editions. He asks if that will help him find the line he needs today. You add the edition year to his slip, then mark the ending. You leave before he can check it against another copy.'
@@ -51,13 +51,13 @@ events:
         points:
           p1: '帮他把国王托付的帖木儿王朝史后半部的材料收齐理好，让他写完上半部以后接着写下去'
         points_fail:
-          p1: '后半部的材料照旧散在各处，这条分支里他还是只写成了上半部，计划中的续篇始终没有动笔。'
+          p1: '第一卷仍然写成。原先计划的第二卷照史实没有留下完稿。'
         shift:
           p1:
             was: '1850 年 7 月 4 日，巴哈杜尔·沙请迦利布撰写帖木儿王朝史；上半部《正午的太阳》1854 至 1855 年间刊行，写到胡马雍去世为止，他计划中的续篇没有写成。'
-            now: '{staff}趁这份差事刚接下时，帮他把后几朝的材料理出了头绪，这条时间线里他写完上半部又接着写了下去，把国王托付的史书写完了。'
+            now: '后几朝的材料在迦利布手里单独成册。交了第一卷以后，他能拿出这一册，开始起草第二卷。'
             who: ghalib_delhi
-            bio: 'IF 线里，迦利布写完了巴哈杜尔·沙托付的整部王朝史，不只是上半部。'
+            bio: '这条分支里，迦利布交了第一卷以后，接着起草了第二卷。'
         vignettes:
           refrain: '卖书人记得诗里的意象，却一直翻错地方。你问他反复听到的是什么词。他念出结尾，你才在刊本里翻到对应的一组。你记下一个页码。最早把这一句念进店里的人是谁，他仍说不上来。'
           future: '你告诉卖书人，以后的读者会把几个版本摆在一起对。他问那能不能帮他找到今天这一句。你在他的条子上补了版本年份，又标出结尾。等他有另一本可核对时，你已经走了。'
@@ -71,6 +71,15 @@ text:
     text: 德里诗人，1797 年生，1869 年去世，用乌尔都语和波斯语写作。他的加扎勒诗是这门语言中最受喜爱的作品之一。他经历了 1857 年的起义，晚年债务缠身。
 hook: {en: 'Which refrain tells you where to look?', zh: '哪一个韵脚能找到诗？'}
 facts:
+  history:
+    date: '1855'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [ghalib_delhi_history]
+    text:
+      en: 'Ghalib’s letter to Nabi Baksh Haqir says that he delivered the first volume and intended to write the second. The first was published and the planned second volume was not finished.'
+      zh: '迦利布给纳比·巴赫什·哈基尔的来信说，他已经交付第一卷，打算继续写第二卷。第一卷后来刊行，计划中的第二卷没有写完。'
   divan:
     date: '1841'
     checked: official_record
@@ -86,6 +95,12 @@ bystanders:
     text: {en: 'A fictional bookseller trying to find a verse someone recited in the shop.', zh: '虚构的卖书人，想找出先前客人在铺里念的一句诗。'}
 wiki:
   refs:
+    ghalib_delhi_history:
+      order: 830
+      status: checked
+      text:
+        en: 'Ghalib’s letter to Nabi Baksh Haqir, reproduced in Ghalib: The Man and His Verse, pp. 91–93, Indira Gandhi National Centre for the Arts digital library. https://ignca.gov.in/Asi_data/49566.pdf'
+        zh: '迦利布致纳比·巴赫什·哈基尔信，载《迦利布与他的诗》第 91 至 93 页，英迪拉·甘地国家艺术中心数字馆藏。https://ignca.gov.in/Asi_data/49566.pdf'
     ghalib_delhi_divan:
       order: 486
       status: checked

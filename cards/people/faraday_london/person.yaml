@@ -12,12 +12,12 @@ events:
     field: science
     tier: 2
     channels: {L: 1, T: 1}
-    refs: [faraday_london_primary, faraday_induction_manuscript, faraday_diary_ri, faraday_1832_delay]
+    refs: [faraday_london_primary, faraday_disc_first_series, faraday_induction_manuscript, faraday_diary_ri]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["electrician","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":7}}]}}
-        - {id: p2, kind: persuade, day: 103, req: {"any":[{"job":["electrician","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["methodical","vigil"],"stat":{"will":8}}]}}
+        - {id: p2, kind: hold, guard: true, day: 73, req: {"any":[{"job":["electrician","mechanic"],"stat":{"finesse":7,"will":6}},{"trait":["methodical","handy"],"stat":{"finesse":6,"wit":7}}]}}
       vignettes:
         - {id: instant, traits: [methodical, vigil]}
         - {id: skeptic, traits: [skeptical, curious]}
@@ -27,23 +27,20 @@ events:
         name: Electricity from magnetism
         place: London
         figure: Michael Faraday
-        story: 'On 29 August 1831 Faraday recorded a transient needle movement using two sets of coils wound around an iron ring.'
+        story: 'On 29 August 1831 Faraday recorded a momentary movement of the needle in his ring experiment. On 28 October he turned a copper disc between the poles of a magnet and obtained a current while the disc kept turning.'
         relic: An iron ring and coil
         relic_desc: Two coils of wire on a ring of soft iron.
         points:
           p1: 'Watch the switching and the needle separately to preserve the fleeting deflection in Faraday''s ring experiment'
-          p2: 'Before review delays the printed paper, persuade the Royal Society to circulate an abstract with the date it received the work'
+          p2: 'Keep the collector in contact with the copper disc as it turns, so Faraday can observe the current while the disc is in motion'
         points_fail:
           p1: 'The needle is back at rest before anyone looks. The experiment is entered as a null result, and the office recalls the employee after a loss of sync.'
-          p2: 'Printing remains slow. Faraday has to write again, and readers struggle to place the various accounts in order.'
+          p2: 'The contact slips while the disc is turning. There is no sustained reading in this branch, and the office recalls the employee.'
         shift:
           p1:
             was: 'On 29 August 1831 Faraday observed a brief induced current when the iron-ring apparatus was switched on and off.'
           p2:
-            was: 'On 24 November 1831 the Royal Society heard Faraday''s paper. Printing was delayed into the next year, and Faraday wrote to hurry it along.'
-            now: '{staff} has the Society send a dated abstract while the review runs its course. Readers can check which results Faraday had reported by the date of the reading.'
-            who: faraday_london
-            bio: 'Faraday had a dated Society abstract before his induction paper appeared in print. He could use the same arrangement to put later experiments on the public record.'
+            was: 'On 28 October 1831 Faraday observed a current while a copper disc turned between the poles of a magnet.'
         vignettes:
           instant: 'The assistant writes that the needle moved. You leave space for when it moved. By the time he looks back at the instrument, the needle has settled.'
           skeptic: 'You ask whether the reading stayed put. The assistant points to the blank after the first mark. Together you label it as a return to rest so nobody mistakes the blank for a missed reading.'
@@ -52,23 +49,20 @@ events:
         name: 从磁里得到电
         place: 伦敦
         figure: 迈克尔·法拉第
-        story: '1831 年 8 月 29 日，法拉第记录了铁环上线圈实验中指针的短暂偏转。'
+        story: '1831 年 8 月 29 日，法拉第在铁环实验中记录了指针的短暂偏转。10 月 28 日，他让铜盘在磁铁两极之间转动，转动时能持续产生电流。'
         relic: 一个铁环和线圈
         relic_desc: 软铁环上绕着两组线圈。
         points:
           p1: '两人分看接通时刻和表针，护住铁环实验里转瞬即逝的偏转'
-          p2: '在审稿拖慢刊印前，劝皇家学会发出一份有接收日期的实验摘要'
+          p2: '让集电片贴住转动的铜盘，让法拉第看清盘一直转时电流能不能持续'
         points_fail:
           p1: '表针摆回去才有人抬头，这一趟把实验记成无结果。行程同步失败，员工被召回。'
-          p2: '刊印仍然拖延，法拉第只能另去催问，读者也难判断几封先后传出的通信。'
+          p2: '铜盘转动时接触处滑开了。这条分支里没有测出持续电流，事务所因同步失败召回员工。'
         shift:
           p1:
             was: '1831 年 8 月 29 日，法拉第在铁环装置接通和断开时观察到了短暂的感应电流。'
           p2:
-            was: '1831 年 11 月 24 日论文在皇家学会宣读，刊印延至翌年，法拉第在等候期间致信催促。'
-            now: '{staff}让学会在不动正式审稿程序的情况下附发注明宣读日期的摘要。读者可以从有日期的版本核对法拉第公布了哪些结果。'
-            who: faraday_london
-            bio: '法拉第的感应研究在正式论文前已有注明日期的学会摘要。他后来能用同样办法给后续试验留下公开的时间记录。'
+            was: '1831 年 10 月 28 日，法拉第观察到铜盘在磁极之间转动时产生的电流。'
         vignettes:
           instant: '助手写下「指针偏转」。你腾出一栏补记何时偏转。他再回头时，针已经归位了。'
           skeptic: '你问读数有没有一直停在那里。助手指给你看第一道记号后面的空白。你们补上「回到静止」，免得后来人当成漏记。'
@@ -88,6 +82,19 @@ quotes:
       zh: {who: 法拉第, quote: "只要不违背自然规律，再奇妙的事也可能是真的。"}
 hook: {en: 'The needle moves, then settles.', zh: '针动了一下，又归零'}
 facts:
+  disc:
+    date: '1831-10-28'
+    stay_day: 73
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [faraday_disc_first_series, faraday_diary_ri]
+    text:
+      en: 'In October 1831 Faraday rotated a copper disc between the poles of a magnet. To measure the current, he put contacts at the axis and the rim.'
+      zh: '1831 年 10 月，法拉第让铜盘在磁铁的两极之间转动，用轴和盘沿两处的接点测量电流。'
+    line:
+      en: '28 October 1831: the copper disc yields a current as it turns.'
+      zh: '1831 年 10 月 28 日，铜盘转动时产生了电流。'
   ring:
     date: '1831-08-29'
     checked: official_record
@@ -103,6 +110,12 @@ bystanders:
     text: {en: 'An invented assistant keeping a copy of the observations.', zh: '一位虚构的助手，正在誊写观察记录。'}
 wiki:
   refs:
+    faraday_disc_first_series:
+      order: 829
+      status: checked
+      text:
+        en: 'Faraday, Experimental Researches in Electricity, first series, §§ 80–90, NOAA Library digitization of the 1839 collected edition. https://library.oarcloud.noaa.gov/docs.lib/htdocs/rescue/Rarebook_treasures/QC503F211839_PDF/QC503F211839v1.pdf'
+        zh: '法拉第《电学实验研究》第一辑，第 80 至 90 段。美国国家海洋和大气管理局图书馆藏 1839 年合刊。https://library.oarcloud.noaa.gov/docs.lib/htdocs/rescue/Rarebook_treasures/QC503F211839_PDF/QC503F211839v1.pdf'
     faraday_induction_manuscript:
       order: 826
       status: checked

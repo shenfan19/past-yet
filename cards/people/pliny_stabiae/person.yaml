@@ -16,7 +16,7 @@ events:
       points:
         - {id: p1, kind: hold, day: 15.1, req: {"any":[{"job":["sailor","navigator","ferryman","ferry_pilot","fisherman","fisher"],"stat":{"will":5}},{"trait":["bold","vigil"],"stat":{"wit":6}},{"item":"scout_drone","stat":{"will":5}}]}}
         - {id: p2, kind: hold, guard: true, day: 15.38, req: {"any":[{"job":["sailor","navigator","ferryman","ferry_pilot"],"stat":{"will":7}},{"trait":["bold","hardy"],"stat":{"constitution":7,"will":6}},{"item":"exoskeleton","stat":{"will":6}}]}}
-        - {id: p3, kind: care, day: 15.74, req: {"any":[{"job":["paramedic","doctor","physician","nurse"],"item":"gas_mask"},{"job":["paramedic","doctor","physician","nurse"],"item":"oxygen_can","stat":{"constitution":6}},{"trait":["hardy","vigil"],"item":"gas_mask","stat":{"constitution":8}}]}}
+        - {id: p3, kind: care, day: 15.74, overturns: [death], req: {"any":[{"job":["paramedic","doctor","physician","nurse"],"item":"gas_mask"},{"job":["paramedic","doctor","physician","nurse"],"item":"oxygen_can","stat":{"constitution":6}},{"trait":["hardy","vigil"],"item":"gas_mask","stat":{"constitution":8}}]}}
       vignettes:
         - {id: wind, traits: [streetwise, wanderer]}
         - {id: lantern, traits: [bold, hardy, kind]}
@@ -39,7 +39,7 @@ events:
           p3: 'He fell on the beach at Stabiae as history has it, and in this branch too he could not be kept.'
         shift:
           p1:
-            was: 'On the day of the eruption in 79, the Elder Pliny changed his plans after a message from Rectina begging to be taken away; shallows and debris from the mountain blocked the shore, and he turned for Pomponianus at Stabiae.'
+            was: 'In AD 79 Rectina’s message prompted the Elder Pliny to sail out to help. His nephew describes the obstructed shore and the course to Stabiae, but does not say what became of Rectina.'
             now: 'The ship came in to her shore and Rectina was taken aboard. She went on with the ship to Stabiae.'
           p2:
             was: 'Pliny the Younger later told Tacitus that his uncle reached Pomponianus at Stabiae on a following wind, the same wind that kept the boats from leaving.'
@@ -69,7 +69,7 @@ events:
           p3: '他照史实倒在斯塔比亚的海滩上，这条分支里也没能留住他。'
         shift:
           p1:
-            was: '公元 79 年喷发那天，老普林尼收到雷克蒂娜请他救她离开的信，改了计划出海；浅滩和山上落下的碎石挡住海岸，他转去斯塔比亚找庞波尼阿努斯。'
+            was: '公元 79 年，雷克蒂娜来信求救，老普林尼改了计划出海。小普林尼记下海岸受阻及船驶向斯塔比亚的经过，没有交代雷克蒂娜的下落。'
             now: '船靠上了她那片海岸，雷克蒂娜被接上船，随船到了斯塔比亚。'
           p2:
             was: '小普林尼后来写信告诉塔西佗，舅舅乘顺风到斯塔比亚见到庞波尼阿努斯，同一阵风挡住了船离岸。'
@@ -91,6 +91,19 @@ text:
     text: 罗马作家与海军指挥官，公元 23 年生，79 年去世。他的《博物志》用三十七卷汇集知识。维苏威火山喷发时，他在斯塔比亚附近试图救人而去世。
 hook: {en: 'The wind that brings help also holds the boats.', zh: '送来援手的风，船却出不去。'}
 facts:
+  death:
+    date: '79'
+    stay_day: 16
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [pliny_stabiae_letter_616]
+    text:
+      en: 'Pliny the Younger wrote that his uncle collapsed near the shore at Stabiae and that his body was found after the eruption. He suggested that smoke had obstructed his breathing.'
+      zh: '小普林尼在信中记下舅舅在斯塔比亚海岸附近倒下，喷发之后遗体被找到。他把呼吸受阻归因于烟尘。'
+    line:
+      en: 'AD 79: according to his nephew, the Elder Pliny dies at Stabiae during the eruption.'
+      zh: '公元 79 年，据小普林尼的书信，老普林尼在喷发期间死于斯塔比亚。'
   letter:
     date: '79'
     checked: official_record

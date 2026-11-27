@@ -16,7 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 20, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
+        - {id: p1, kind: care, day: 20, overturns: [operations], req: {"any":[{"job":["doctor","physician","medical_teacher"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist"],"stat":{"will":5}}]}}
       vignettes:
         - {id: entry, traits: [artistic, quiet]}
         - {id: rest, traits: [methodical, patient]}
@@ -26,19 +26,19 @@ events:
         name: The spring the oculist came
         place: Leipzig
         figure: Johann Sebastian Bach
-        story: 'By the spring of 1750 Bach''s eyes had failed so far that he could hardly read or write. At the end of March the travelling English oculist John Taylor came to Leipzig and operated twice on his cataracts. After the operations Bach was blind, and he died in Leipzig on 28 July.'
+        story: 'By the spring of 1750 Bach could barely read or write because of his eyesight. The travelling oculist John Taylor operated on him in Leipzig, and complications led to a second operation. Bach died on 28 July 1750.'
         relic: An organ pipe cut from quill
         relic_desc: A small pipe, tuned and tested, left unsold.
         points:
-          p1: 'Before the oculist Taylor operates, talk Bach out of the operation and treat the cataracts properly'
+          p1: 'Give Bach a second medical opinion before he consents to Taylor’s operation, and offer to arrange help with reading while he decides'
         points_fail:
-          p1: 'As in history Taylor operates twice at the end of March and in early April. Bach is left blind, and he dies in July.'
+          p1: 'Bach has no second opinion to weigh. He goes ahead with the operation, and complications lead to a second one.'
         shift:
           p1:
-            was: 'End of March to early April 1750: the English oculist John Taylor operated twice on Bach''s cataracts in Leipzig. Bach was blind afterwards, and he died on 28 July that year.'
-            now: 'He never let Taylor operate. His cataracts were treated, and he could see the music on the page again.'
+            was: 'In spring 1750 John Taylor operated on Bach’s eyes in Leipzig. Complications led to a second operation.'
+            now: 'In this branch Bach decides to decline Taylor’s operation after speaking with {staff}. His sight remains poor, and he arranges for someone to read through a score with him in daylight.'
             who: bach_leipzig
-            bio: 'In this timeline Bach kept away from the two operations of spring 1750. His cataracts were treated, and he could see again in Leipzig.'
+            bio: 'In this branch Bach declines Taylor’s operation in spring 1750 and arranges help with reading his scores.'
         vignettes:
           entry: 'You hear the lower part arrive a breath before the singer expects it. You have them listen from the other side of the room. This time they raise their head before the cue.'
           rest: 'The singer loses count during the rest. You copy the line they can hear while waiting, and they mark the word that comes just before their own entrance.'
@@ -47,19 +47,19 @@ events:
         name: 眼医进城的那个春天
         place: 莱比锡
         figure: 约翰·塞巴斯蒂安·巴赫
-        story: '到 1750 年春，巴赫的眼睛已坏到难以读写。3 月底，英国游方眼医约翰·泰勒来到莱比锡，接连两次给他做白内障手术。手术之后他双目失明，7 月 28 日在莱比锡去世。'
+        story: '到 1750 年春，巴赫的视力已差到难以读写。游方眼医约翰·泰勒在莱比锡给他动刀，术后并发症又引出了第二次手术。同年 7 月 28 日，巴赫去世。'
         relic: 一根小风琴管
         relic_desc: 一根调好音、试过音的小管子，没有卖掉。
         points:
-          p1: '泰勒进城动刀之前，劝巴赫别让他动刀，把他的白内障好好治好'
+          p1: '在巴赫同意泰勒动刀前给他第二个医护意见，趁他还在考虑，问他是否愿意请人帮忙读谱'
         points_fail:
-          p1: '泰勒照史实在三月底、四月初给他动了两次刀，他双目失明，七月病逝。'
+          p1: '巴赫没听到第二个医护意见，照原定安排接受手术。术后出现并发症，又动了一次刀。'
         shift:
           p1:
-            was: '1750 年 3 月底至 4 月初，英国眼医约翰·泰勒在莱比锡两次为巴赫做白内障手术，术后他双目失明，同年 7 月 28 日去世。'
-            now: '他没让泰勒动刀，白内障治好了，又看得清谱纸上的音符。'
+            was: '1750 年春，约翰·泰勒在莱比锡给巴赫做眼科手术。术后出现并发症，又动了一次刀。'
+            now: '这条分支里，巴赫听过{staff}的意见后，推掉了泰勒的手术。他的视力仍差，便请人在白天陪他读谱。'
             who: bach_leipzig
-            bio: '这条时间线里，巴赫在 1750 年春避开了那两次手术，白内障治好，在莱比锡重新看得清东西。'
+            bio: '这条分支里，巴赫在 1750 年春推掉泰勒的手术，请人帮他读谱。'
         vignettes:
           entry: '你听出低声部比歌者预想的早到一口气。你请他换到屋子另一边听。这次，提示还没来，他就抬起了头。'
           rest: '歌者一唱到休止就数乱。你抄下等待时能听到的另一行，他在自己开口前的那个字上做了记号。'
@@ -67,10 +67,10 @@ events:
 text:
   en:
     name: Johann Sebastian Bach
-    text: German composer and organist, 1685 to 1750. From 1723 he was cantor of the St Thomas Church in Leipzig, where he wrote cantatas, passions and keyboard works. In 1750 he went blind after two eye operations and died that July. His music was little known outside a circle of musicians until the revival of the nineteenth century.
+    text: German composer and organist, 1685 to 1750. From 1723 he was cantor of St Thomas in Leipzig, where he wrote cantatas, passions and keyboard works. He suffered from severe eyesight problems in his last years and died in July 1750.
   zh:
     name: 约翰·塞巴斯蒂安·巴赫
-    text: 德国作曲家与管风琴家，1685 年生，1750 年去世。1723 年起他担任莱比锡圣托马斯教堂的乐长，写下清唱剧、受难曲和键盘作品。1750 年两次眼科手术后他双目失明，同年 7 月去世。他的音乐在十九世纪复兴之前，除音乐圈外鲜为人知。
+    text: 德国作曲家与管风琴家，1685 年生，1750 年去世。1723 年起他担任莱比锡圣托马斯教堂的乐长，写下清唱剧、受难曲和键盘作品。晚年视力严重受损，1750 年 7 月去世。
 hook: {en: 'The oculist is in town, and the notes are blurring.', zh: '眼医进城了，谱纸上的音符越来越模糊'}
 facts:
   eyes:
@@ -86,18 +86,18 @@ facts:
       en: 'Spring 1750: Bach can hardly read or write for his eyes.'
       zh: '1750 年春，巴赫的眼睛已几乎不能读写。'
   operations:
-    date: '1750-03-28'
+    date: '1750'
     stay_day: 27
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [bach_leipzig_zegers, bach_leipzig_taylor]
+    sources: [bach_leipzig_zegers, bach_leipzig_chronology]
     text:
-      en: 'Between the end of March and early April 1750 the English oculist John Taylor operated twice on Bach''s cataracts in Leipzig; afterwards Bach was blind.'
-      zh: '1750 年 3 月底到 4 月初，英国眼医约翰·泰勒在莱比锡两次为巴赫做白内障手术，术后巴赫双目失明。'
+      en: 'In spring 1750 John Taylor operated on Bach’s eyes in Leipzig. Complications led to a second operation.'
+      zh: '1750 年春，约翰·泰勒在莱比锡给巴赫做眼科手术。术后出现并发症，又动了一次刀。'
     line:
-      en: 'End of March 1750: the oculist John Taylor operates on Bach''s eyes, and a week later operates again.'
-      zh: '1750 年 3 月底，眼医约翰·泰勒为巴赫的眼睛动刀，约一周后又动了一次。'
+      en: 'Spring 1750: John Taylor operates on Bach’s eyes. Complications require a second operation.'
+      zh: '1750 年春，约翰·泰勒给巴赫做眼科手术。术后出现并发症，又动了一次刀。'
   death:
     date: '1750-07-28'
     checked: two_sources
@@ -107,6 +107,7 @@ facts:
     text:
       en: 'Bach died in Leipzig on 28 July 1750.'
       zh: '1750 年 7 月 28 日，巴赫在莱比锡去世。'
+    line: {en: '28 July 1750: Bach died in Leipzig.', zh: '1750 年 7 月 28 日，巴赫在莱比锡去世。'}
   cantata:
     date: '1723-05-30'
     checked: official_record
@@ -156,8 +157,8 @@ wiki:
       order: 12
       status: checked
       text:
-        en: 'Bach Archive chronology https://www.bachmuseumleipzig.de/en/node/1480'
-        zh: '巴赫档案馆年表 https://www.bachmuseumleipzig.de/en/node/1480'
+        en: 'Bach Archive chronology https://www.bach-leipzig.de/de/neutral/johann-sebastian-bach-%E2%80%93-eine-chronologie'
+        zh: '巴赫档案馆年表 https://www.bach-leipzig.de/de/neutral/johann-sebastian-bach-%E2%80%93-eine-chronologie'
     bach_leipzig_primary:
       order: 133
       status: checked

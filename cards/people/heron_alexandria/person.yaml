@@ -10,7 +10,7 @@ events:
     field: technology
     tier: 2
     channels: {T: 1, H: 2}
-    refs: [heron_alexandria_doors]
+    refs: [heron_alexandria_mechanica, heron_alexandria_doors]
     scene:
       star_rules: 2
       points:
@@ -21,43 +21,43 @@ events:
         - {id: future}
     text:
       en:
-        name: 'The second movement'
+        name: 'The figure beside the line'
         place: "Alexandria"
         figure: "Heron"
-        story: 'In the Pneumatics, Hero of Alexandria describes doors that open when a fire is kindled and shut when it goes out. The book gives a design. The miniature doors, fault and workshop helpers in this Alexandrian rehearsal are imagined, with 62 CE used as a setting.'
+        story: 'Hero’s Mechanics describes machines for lifting and moving heavy loads. Fragments of the original Greek survive alongside a complete Arabic translation. The visit to his workshop is set around AD 62, an approximate date for his activity.'
         relic: 'A marked model threshold'
         relic_desc: 'A piece from the fictional workshop model, with a nick where the door rubbed.'
         points:
-          p1: 'Help him have the Mechanics copied several times in Greek, with its figures, so the original is not lost'
+          p1: 'Help Hero check the figures on a Greek copy of the Mechanics and arrange to keep that copy apart from the workshop’s own rolls'
         points_fail:
-          p1: 'The Greek Mechanics stayed in the few copies it had. In this branch the original was lost all the same, and the book survived only in a later Arabic translation.'
+          p1: 'The workshop keeps its own rolls. In this branch, as in history, only fragments of the Greek text survive, while an Arabic translation preserves the complete work.'
         shift:
           p1:
-            was: 'In the first century AD Heron wrote the Mechanics in Greek; the Greek original was later lost, and the complete text survives only in the Arabic translation made by Qusta ibn Luqa in the ninth century.'
-            now: '{staff} helped him have the Mechanics copied several times in Greek, figures and all. In this timeline the original came down to later readers.'
+            was: 'Hero wrote the Mechanics in Greek in the first century AD. Only fragments of the Greek text survive. Qusṭā ibn Lūqā’s Arabic translation preserves the complete work.'
+            now: 'A checked copy of the Greek text and its figures is stored away from the workshop. In this branch that copy reaches later readers.'
             who: heron_alexandria
-            bio: 'In this line the Greek text of Heron''s Mechanics was not lost, and later engineers read it in his own words.'
+            bio: 'In this branch a complete Greek copy of the Mechanics survives alongside the Arabic tradition.'
         vignettes:
           threshold: 'Nikanor fits the miniature door to the bench and the return stops a finger’s width short. You mark the spot where it rubs. A flat lentil husk has caught under the model; he brushes it out. Once the door shuts, he asks you to leave the mark so he can find the spot again.'
           audience: 'Berenikē has already seen the swing that opens the door and reaches for her cloak. You ask her to watch the far edge for one more count. When it returns she spots a sliver of light that Nikanor missed. He keeps the model on the bench for a second trial instead of sending it out.'
           future: 'You could tell Nikanor how distant readers will put these pages beside pictures of machines. He is watching his doorway settle with a faint click. You listen with him. When you leave, he is calling the customer back to see the one motion she missed.'
       zh:
-        name: '门的第二个动作'
+        name: '字旁边那一幅图'
         place: "亚历山大"
         figure: "希罗"
-        story: '亚历山大的希罗在《气动装置》中描述一种点火时开启、熄火后关闭的门。书留下的是设计。'
+        story: '希罗在《机械学》中写到怎样用器械搬动重物。希腊文原著只留下残篇，完整内容见于阿拉伯译本。派遣年份约为公元 62 年，作坊情节由游戏虚构。'
         relic: '标过的模型门槛'
         relic_desc: '工坊的模型零件，在门曾蹭到的位置留了一道刻痕。'
         points:
-          p1: '帮他把希腊文的《机械学》连图多抄几部，不让原本失传'
+          p1: '帮希罗给《机械学》的一份希腊文抄本核清插图，把它与工坊的卷册分开放'
         points_fail:
-          p1: '希腊文的《机械学》照旧只有那几部抄本，这条分支里原本还是失传了，全书只靠后来的阿拉伯文译本留下。'
+          p1: '作坊还是只把卷册留在自己手里。这条分支和史实一样，希腊文字只存残篇，阿拉伯译本保住了全书。'
         shift:
           p1:
-            was: '公元一世纪，希罗用希腊文写成《机械学》；希腊文原本后来失传，全书只靠九世纪古斯塔·伊本·卢加的阿拉伯文译本留下。'
-            now: '{staff}帮他把希腊文的《机械学》连图多抄了几部，这条时间线里原本传到了后世。'
+            was: '公元一世纪，希罗用希腊文写成《机械学》。希腊文只存残篇，古斯塔·伊本·卢加的阿拉伯译本留下了全书。'
+            now: '核过图文的希腊文副本存在工坊以外的地方。这条分支里，后世读者还能读到这一份。'
             who: heron_alexandria
-            bio: 'IF 线里，希罗《机械学》的希腊文原本没有失传，后世的工匠照他自己的话读这部书。'
+            bio: '这条分支里，《机械学》的一份完整希腊文抄本与阿拉伯译本一同传到后世。'
         vignettes:
           threshold: '尼卡诺尔把模型架上台，门往回收时差一指宽闭合。你标出摩擦的地方。模型底下卡了片扁豆皮，他把它扫出来。门终于关严，他请你留住记号，好叫他下次认得出这处。'
           audience: '贝勒尼刻看见门往外打开，已经去拿披风。你请她再等一会儿，盯紧远侧的边。门回来时，她看见尼卡诺尔漏掉的一线亮光。他把模型留在台上再试一次，没急着交货。'
@@ -71,6 +71,15 @@ text:
     text: 公元一世纪在亚历山大工作的希腊工程师。他描述了汽转球、自动门和投币售水装置，也写过几何学与土地测量的著作。
 hook: {en: 'The door opens. Will it close again?', zh: '门开了，还关得上吗？'}
 facts:
+  mechanics:
+    date: '62'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [heron_alexandria_mechanica]
+    text:
+      en: 'The British Library describes the complete Arabic translation of the Mechanics and identifies surviving fragments of the Greek. The year on this card places Hero in the first century and does not date a specific work.'
+      zh: '大英图书馆著录《机械学》阿拉伯译本及存世希腊文残篇。卡片年份用于标明希罗活动的大致时代，作品写成年份未明。'
   doors:
     date: '62'
     checked: official_record
@@ -89,6 +98,12 @@ bystanders:
     text: {en: 'A fictional customer who has seen only the opening motion.', zh: '虚构客人贝勒尼刻，一开始只看到了开门。'}
 wiki:
   refs:
+    heron_alexandria_mechanica:
+      order: 826
+      status: checked
+      text:
+        en: 'British Library, Add MS 23390, fols. 3r–50r, Mechanics in Arabic with references to editions of the Greek fragments. https://searcharchives.bl.uk/catalog/040-002621534'
+        zh: '大英图书馆 Add MS 23390，第 3r–50r 叶，《机械学》阿拉伯文写本及希腊文残篇书目。https://searcharchives.bl.uk/catalog/040-002621534'
     heron_alexandria_doors:
       order: 825
       status: checked

@@ -12,11 +12,11 @@ events:
     field: literature
     tier: 1
     channels: {G: 1, S: 1}
-    refs: [sei_shonagon_kyoto_teishi_wiki, sei_shonagon_kyoto_teishi_ja, sei_shonagon_kyoto_britannica, sei_shonagon_kyoto_opening]
+    refs: [sei_shonagon_kyoto_britannica, sei_shonagon_kyoto_opening, sei_shonagon_kyoto_kiryaku, sei_shonagon_kyoto_kobe]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 42, req: {"any":[{"job":["midwife"],"stat":{"finesse":6}},{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
+        - {id: p1, kind: care, day: 42, req: {"any":[{"job":["midwife"],"stat":{"finesse":6}},{"job":["doctor","physician","nurse","paramedic","caregiver","medical_teacher"],"stat":{"will":6}},{"trait":["patient","quiet","kind"],"stat":{"will":7}}]}}
       vignettes:
         - {id: compare, traits: [scholarly, skeptical, methodical]}
         - {id: colour, traits: [artistic, curious, kind]}
@@ -26,19 +26,17 @@ events:
         name: 'The winter the empress was due'
         place: "Kyoto"
         figure: "Sei Shonagon"
-        story: 'Sei Shōnagon had served the empress Teishi at court since about 993. At the end of 1000 Teishi was expecting her third child. On 13 January 1001 she gave birth to a daughter, Princess Bishi, and died soon after, aged twenty four. With her death Sei Shōnagon''s years at court came to an end.'
+        story: 'Sei Shōnagon served the empress Teishi and later wrote about life around her in The Pillow Book. Near the end of the second year of Chōhō, Teishi gave birth to a daughter, Princess Bishi, and died soon afterward.'
         relic: "A folded list"
         relic_desc: "A sheet of lightly written lists of things that please and things that do not."
         points:
-          p1: 'Stay with Teishi through the birth, bring the child safely and save the mother'
+          p1: 'Ask whom Teishi wants near her as she prepares to give birth, and help Shōnagon make room for those people'
         points_fail:
-          p1: 'As in history Teishi dies soon after the birth of her daughter, aged twenty four. Sei Shōnagon leaves the court.'
+          p1: 'Someone is at the door with the next message before there is time to ask whom Teishi wants beside her.'
         shift:
           p1:
-            was: '13 January 1001, the sixteenth day of the twelfth month of Chōhō 2: the empress Teishi, whom Sei Shōnagon served, gave birth to Princess Bishi and died soon after, aged twenty four.'
-            now: 'The birth went safely, and Teishi lived.'
-            who: sei_shonagon_kyoto
-            bio: 'In this timeline the empress Teishi came through the birth of early 1001 alive, and Sei Shōnagon still had her mistress.'
+            was: 'The court chronicles record Princess Bishi’s birth and Teishi’s death soon after.'
+            now: 'In this branch {staff} keeps the other visitors at the door until Teishi says whom she wants to see. Shōnagon has time to listen before she carries the next message out.'
         vignettes:
           compare: 'You recognise the opening from a future edition. The copyist has skipped the edge of the mountain while reciting it. You ask where the light first shows, and the omitted place returns to the practice copy. You save the correction on a folded list. From this doorway the mountain itself stays out of sight.'
           colour: 'The painter’s purple you remember is too dark for that sky. The copyist lets you use an offcut. You put a thin grey line over a small patch of violet, and the two of you wait for the paper to dry. By then the colour outside has gone.'
@@ -47,19 +45,17 @@ events:
         name: '皇后临产的那个冬天'
         place: "京都"
         figure: "清少纳言"
-        story: '清少纳言约从 993 年起在宫中侍奉皇后定子。1000 年岁末，定子怀着第三个孩子。1001 年 1 月 13 日，她生下女儿媄子内亲王，随即去世，年二十四。清少纳言的宫中岁月随她的去世结束。'
+        story: '清少纳言侍奉藤原定子，也在《枕草子》中写过定子身边的人和事。长保二年岁末，定子生下女儿媄子内亲王，不久去世。'
         relic: "一张折起来的清单"
         relic_desc: "一张轻轻写着喜欢和不喜欢的事的单子。"
         points:
-          p1: '定子临产时守在她身边，让孩子平安落地，把母亲救下来'
+          p1: '临产前问定子想让谁留在近处，帮清少纳言把位置留给她想见的人'
         points_fail:
-          p1: '定子照史实在生下女儿后随即去世，年二十四，清少纳言离开宫中。'
+          p1: '门外又有人来传话。屋里还没来得及问定子愿意让谁留下。'
         shift:
           p1:
-            was: '长保二年十二月十六日（1001 年 1 月 13 日），清少纳言侍奉的皇后定子生下媄子内亲王后随即去世，年二十四。'
-            now: '孩子平安落地，定子活了下来。'
-            who: sei_shonagon_kyoto
-            bio: '这条时间线里，清少纳言侍奉的皇后定子平安度过 1001 年初的生产，她的主人还在。'
+            was: '宫廷纪事记载媄子内亲王出生，定子随后去世。'
+            now: '这条分支里，{staff}请其他来人先在门边等，屋里留谁由定子自己说。清少纳言听完她的话，还来得及把下一条消息带出去。'
         vignettes:
           compare: '你认出后世版本的开头。抄写人念漏了山际，你问光最先从哪里出来，他把漏掉的地方补到练习纸上。你把这处订正记进折起来的清单。从这扇门望出去，山本身却被挡着。'
           colour: '你印象里的紫颜料太深了。抄写人分你一张纸边，你在淡紫上压了一笔细灰。两人等纸干，再往门外望，天上已不是那个颜色。'
@@ -71,14 +67,14 @@ text:
   zh:
     name: 清少纳言
     text: 平安时代的日本宫廷女官，约 966 年生。她的《枕草子》收集了京都宫廷生活的清单、观察和轶事，口吻犀利而机智。
-hook: {en: 'The empress is due before the year turns.', zh: '年关前，皇后就要临产。'}
+hook: {en: 'Who does Teishi want beside her?', zh: '定子想让谁留在身边？'}
 facts:
   service:
     date: '993'
     checked: two_sources
     level: usable
     use: [story, wiki]
-    sources: [sei_shonagon_kyoto_britannica, sei_shonagon_kyoto_teishi_wiki]
+    sources: [sei_shonagon_kyoto_britannica, sei_shonagon_kyoto_kobe]
     text:
       en: 'From about 993 to 1000 Sei Shōnagon served the empress Teishi at the court in Kyoto.'
       zh: '约 993 年到 1000 年，清少纳言在京都宫中侍奉皇后定子。'
@@ -88,13 +84,13 @@ facts:
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [sei_shonagon_kyoto_teishi_wiki, sei_shonagon_kyoto_teishi_ja]
+    sources: [sei_shonagon_kyoto_kiryaku, sei_shonagon_kyoto_kobe]
     text:
-      en: 'On the sixteenth day of the twelfth month of Chōhō 2, 13 January 1001, the empress Teishi died soon after giving birth to Princess Bishi, aged twenty four.'
-      zh: '长保二年十二月十六日（1001 年 1 月 13 日），皇后定子生下媄子内亲王后随即去世，年二十四。'
+      en: 'Near the end of the second year of Chōhō, Teishi gave birth to Princess Bishi and died soon afterward. The date on the card refers to her death.'
+      zh: '长保二年岁末，定子生下媄子内亲王，不久去世。卡片上的日期是卒日。'
     line:
-      en: 'The empress Teishi gives birth to a daughter and dies soon after.'
-      zh: '皇后定子生下一个女儿，随即去世。'
+      en: 'After the birth of Princess Bishi, Teishi dies on the sixteenth day of the twelfth month of Chōhō 2.'
+      zh: '媄子内亲王出生后，定子于长保二年十二月十六日去世。'
   opening:
     date: '1000'
     checked: official_record
@@ -110,18 +106,18 @@ bystanders:
     text: {en: 'A fictional copyist practising the opening on an offcut of paper.', zh: '虚构的抄写人，用裁剩的纸边练开头几行。'}
 wiki:
   refs:
-    sei_shonagon_kyoto_teishi_wiki:
+    sei_shonagon_kyoto_kiryaku:
       order: 899
       status: checked
       text:
-        en: 'Wikipedia, Fujiwara no Teishi https://en.wikipedia.org/wiki/Fujiwara_no_Teishi'
-        zh: '维基百科，藤原定子 https://en.wikipedia.org/wiki/Fujiwara_no_Teishi'
-    sei_shonagon_kyoto_teishi_ja:
+        en: 'Nihon Kiryaku, part II, vol. 10, reign of Emperor Ichijō. https://miko.org/~uraki/kuon/furu/text/kiryaku/b10.htm'
+        zh: '《日本纪略》后篇十，一条天皇中卷。https://miko.org/~uraki/kuon/furu/text/kiryaku/b10.htm'
+    sei_shonagon_kyoto_kobe:
       order: 900
       status: checked
       text:
-        en: 'Japanese Wikipedia, Fujiwara no Teishi, citing the Gonki entry of Chōhō 2.12.16 https://ja.wikipedia.org/wiki/藤原定子'
-        zh: '日文维基百科，藤原定子，引《权记》长保二年十二月十六日条 https://ja.wikipedia.org/wiki/藤原定子'
+        en: 'Chronology of Sei Shōnagon and Empress Teishi, Kobe University Repository, entries for the twelfth month of Chōhō 2. https://da.lib.kobe-u.ac.jp/da/kernel/81011754/81011754.pdf'
+        zh: '神户大学机构文库所收《枕草子》相关年表，长保二年十二月条。https://da.lib.kobe-u.ac.jp/da/kernel/81011754/81011754.pdf'
     sei_shonagon_kyoto_britannica:
       order: 901
       status: checked

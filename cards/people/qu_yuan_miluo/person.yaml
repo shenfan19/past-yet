@@ -16,7 +16,6 @@ events:
       points:
         - {id: p1, kind: hold, guard: true, day: 30, req: {"any":[{"trait":["bold","hardy","vigil"],"stat":{"constitution":7}},{"job":["archivist","bookseller","ferryman","ferry_pilot","fisher","navigator"],"stat":{"will":7}},{"provides":"scout","trait":["vigil","quiet","methodical"]}]}}
         - {id: p2, kind: care, day: 90, req: {"any":[{"job":["nurse","doctor","physician","caregiver","paramedic","cook","chef"]},{"trait":["kind","patient","attached"],"stat":{"constitution":5}}]}}
-        - {id: p3, kind: persuade, day: 150, req: {"any":[{"trait":["kind","patient","calm","attached"],"stat":{"will":9}},{"job":["doctor","physician","nurse","caregiver"],"stat":{"will":8}}]}}
       vignettes:
         - {id: two_tales, traits: [curious, skeptical]}
         - {id: refrain, traits: [artistic, quiet]}
@@ -30,24 +29,17 @@ events:
         relic: "A bamboo slip of verse"
         relic_desc: "A slip of bamboo carrying a few lines of a long poem."
         points:
-          p1: 'When the Qin army takes Ying and the war comes south, keep safe the poems Qu Yuan has written in exile'
-          p2: 'While Qu Yuan wanders the marshes worn and wasted, see that he eats, sleeps and is looked after'
-          p3: 'Stay with Qu Yuan by the Miluo River and keep him in this world'
+          p1: 'Ask Qu Yuan which bundle he wants copied and help a reader keep those verses together while people are leaving'
+          p2: 'Offer Qu Yuan a place to eat and sit down, and listen if he wants to read one of his verses aloud'
         points_fail:
-          p1: 'The slips are lost in the flight from the war and his poems do not come down. This branch falls out of step with history and the office recalls the employee.'
-          p2: 'No one looks after him, and in this branch he walks the river banks as worn as the records say.'
-          p3: 'In this branch, as in history, he goes into the Miluo River.'
+          p1: 'The reader leaves with a gap between two slips. The office recalls {staff} when the copy falls out of sync.'
+          p2: 'The meal is ready but the place to sit has been taken. There is no chance to offer him a quiet hour.'
         shift:
           p1:
-            was: 'In 278 BC the Qin general Bai Qi took Ying, the capital of Chu; the poems attributed to Qu Yuan were later collected in the Songs of Chu.'
+            was: 'Poems attributed to Qu Yuan were collected in the Songs of Chu. The handover imagined here is one way readers might keep a set of verses together.'
           p2:
             was: 'The Records of the Grand Historian say that Qu Yuan, in exile, walked the marsh banks with his hair unbound, his face haggard and his body wasted.'
-            now: '{staff} keeps him fed and sheltered through the wet season. He is less worn when he comes to the river.'
-          p3:
-            was: 'The Records of the Grand Historian say Qu Yuan drowned himself in the Miluo River; the year is usually given as about 278 BC, and accounts differ.'
-            now: '{staff} stays with him at the river through those days. Qu Yuan lives on in the south of Chu and goes on writing.'
-            who: qu_yuan_miluo
-            bio: 'In this branch Qu Yuan did not go into the Miluo River. He lived out his years by the rivers of the south of Chu and kept writing poems.'
+            now: 'In this branch Qu Yuan accepts a meal. He sets a bundle of verses beside him and decides which one to read aloud before he leaves.'
         vignettes:
           two_tales: 'The ferryman has heard a different ending from the one you brought. You listen as they tell it through and mark whose telling it is before comparing the lines.'
           refrain: 'The ferryman starts humming after the question in the tale. You wait until the tune ends before asking where they first heard the words.'
@@ -60,24 +52,17 @@ events:
         relic: "一片写诗的竹简"
         relic_desc: "一片竹简，上面是一首长诗中的几行。"
         points:
-          p1: '秦军拔郢、战事南下时，护住屈原流放中写下的诗稿'
-          p2: '屈原在泽畔憔悴枯槁时，照看他的吃住，让他有人照应'
-          p3: '在汨罗江边陪着屈原，把他留在人世'
+          p1: '众人要分头走时，问屈原想留哪一束诗简，帮读者照着次序抄全'
+          p2: '给屈原留一餐饭和一个能歇脚的位置，若他愿意，就坐着听他念一首诗'
         points_fail:
-          p1: '竹简在逃难里散失，他的诗没有传下来。这条分支与历史脱节，员工被送回。'
-          p2: '没有人照看他，这条分支里他照记载那样憔悴地行走在江边。'
-          p3: '这条分支里，他和历史上一样投了汨罗江。'
+          p1: '读者带走的抄件，两枚简之间漏了一截。记录脱节，事务所召回{staff}。'
+          p2: '饭备好了，能歇脚的位置却被占了。没人能请他坐下安静待一会儿。'
         shift:
           p1:
-            was: '公元前 278 年，秦将白起攻下楚都郢；归于屈原的诗作后来收进《楚辞》。'
+            was: '《楚辞》收有归于屈原的诗作。故事中的诗简交接，是分支对传抄过程的演绎。'
           p2:
             was: '《史记》记屈原流放时披发行吟泽畔，颜色憔悴，形容枯槁。'
-            now: '{staff}在雨季里给他张罗吃住。他走到江边时，没有原来那样憔悴。'
-          p3:
-            was: '《史记》记屈原自投汨罗江而死，年份通常定在公元前 278 年前后，各家说法不一。'
-            now: '{staff}在江边陪他度过了那些日子。屈原在楚国南方活了下来，接着写诗。'
-            who: qu_yuan_miluo
-            bio: '在这条分支里，屈原没有投江。他在楚国南方的江水边度过余年，一直写诗。'
+            now: '这条分支里，屈原接下饭食，把一束诗简搁在身边。离开以前，他挑了一首念给留下来的人听。'
         vignettes:
           two_tales: '渡船人听来的收尾跟你带来的不同。你听他把整段讲完，先记是谁传的，再对照两处词句。'
           refrain: '故事讲到问话，渡船人接着哼起来。你等曲子完了才问，他最早从哪里听到这些话。'
@@ -85,10 +70,10 @@ events:
 text:
   en:
     name: Qu Yuan
-    text: Poet and minister of the state of Chu, about 340 BC to about 278 BC. His long poem Li Sao is a founding work of Chinese poetry. After the fall of the Chu capital he is said to have drowned himself in the Miluo River, and the Dragon Boat Festival is linked to his memory.
+    text: Poet and minister of the state of Chu. His long poem Li Sao is a foundational work of Chinese poetry. The Records of the Grand Historian place his death at the Miluo River. His birth and death years are debated.
   zh:
     name: 屈原
-    text: 楚国诗人与大臣，约公元前 340 年生，约公元前 278 年去世。他的长诗《离骚》是中国诗歌的奠基之作。楚国都城陷落后，据说他投汨罗江自尽，端午节与对他的纪念有关。
+    text: 楚国诗人与大臣。《离骚》是中国诗歌的奠基之作。《史记》将屈原去世的地点记为汨罗江，生卒年份仍有异说。
 hook: {en: 'A fisherman is also a voice in a story.', zh: '渔父在书中，是谁的声音'}
 facts:
   fisherman_tradition:

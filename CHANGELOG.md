@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- New story prose for Omar Khayyam, the Wright brothers, Van Gogh, Hargrave, Lalibela, Ife and Great Zimbabwe. All 65 open stories now have written reports. The three archaeological stories use documented conservation and excavation episodes. Ife’s share card quotes the reconstruction of the excavation plan.
+- Older saved reports keep their arrival year, recorded passages and original star limits. Unclaimed trips settle against the star limit recorded when they departed.
+
 - New Chinese and English story prose for Modigliani, Wallace, Hooke, Leavitt, Su Shi, Tang Xianzu, Xu Xiake and Savitribai Phule. Wallace, Su Shi and Savitribai Phule also have Traditional Chinese prose. When Jumaat is saved, the trip record leaves out his historical death.
 
 - Guangzhou 1924 now has a new opening, a passage for each of its five university errands and new return scenes in all eight languages. The report and share card read the same passage from a star won on the trip.

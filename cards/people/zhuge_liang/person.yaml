@@ -18,8 +18,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: trust, guard: true, day: 7, req: {any: [{job: [archivist, courier]}, {stat: {will: 5}}]}}
-        - {id: p2, kind: care, day: 10, req: {any: [{job: [doctor, nurse, caregiver]}, {trait: [kind], stat: {constitution: 5}}]}}
-        - {id: p3, kind: hold, day: 18, req: {any: [{job: [archivist, courier, translator], stat: {wit: 5}}, {stat: {will: 7, finesse: 6}}]}}
+        - {id: p2, kind: hold, day: 18, req: {any: [{job: [archivist, courier, translator], stat: {wit: 5}}, {trait: [methodical, kind], stat: {will: 7}}]}}
       vignettes:
         - {id: bowl, traits: [kind, quiet], day: 2}
         - {id: register, traits: [methodical, scholarly], day: 7}
@@ -34,21 +33,16 @@ events:
         relic_desc: A game keepsake. The tally has one space for the outgoing letter and one for the reply.
         points:
           p1: Help the scribe keep the written recommendation with the letters going to Chengdu
-          p2: Have routine papers held at the desk and give the sick man an afternoon to rest
-          p3: Put Jiang Wan's acknowledgment in Zhuge Liang's hands while he can still read it
+          p2: Ask the courier from Chengdu to write a private note confirming receipt. Take it to the bedside before the next bundle of routine papers
         points_fail:
           p1: In this branch the recommendation is misfiled and misses the regular dispatch. The court has to wait for it.
-          p2: Even in the sickroom, routine papers keep arriving at his bedside.
-          p3: By the time the answer arrives, there is nobody left to read it.
+          p2: The courier's note waits with the routine papers. The return column is still empty when the lamp is put out.
         shift:
           p1:
-            was: The biography records Zhuge Liang's private recommendation to the emperor without describing how a reply would have reached the camp.
+            was: Jiang Wan's biography records that Zhuge Liang privately recommended him to the emperor.
           p2:
-            was: Zhuge Liang fell ill and died with the army.
-            now: The routine papers wait at the desk and the sickroom stays quiet for one afternoon.
-          p3:
-            was: Jiang Wan took office after Zhuge Liang's death. The biographies do not record an acknowledgment reaching the camp during his life.
-            now: In this branch, Chengdu sends a private acknowledgment early. Zhuge Liang reads that Jiang Wan has agreed to take over. After his death, Jiang still takes office.
+            was: Jiang Wan took office after Zhuge Liang's death. The biographies leave open whether news of receipt reached the camp during his life.
+            now: In this branch Zhuge Liang reads the courier's note at his bedside and learns that the court has received his recommendation. Jiang Wan still takes office after his death.
         vignettes:
           bowl: The attendant changes the bowl of water at the bedside. The water from the last visit is still warm.
           register: The scribe leaves the return column empty. The date can go in when something arrives.
@@ -62,21 +56,16 @@ events:
         relic_desc: 游戏中的纪念物。木牍上划了两格，一格记去信，一格记回音。
         points:
           p1: 帮书佐把密表归到送往成都的文书里，赶上这班信使
-          p2: 请书佐暂缓送进例行文书，照料病中的诸葛亮，让他安静歇一下午
-          p3: 趁诸葛亮还看得清字，把蒋琬愿意接手的回信交到他手上
+          p2: 请从成都回来的信使写张私笺报平安，赶在下一摞例行文书之前把回音送到榻边
         points_fail:
           p1: 这条分支里密表搁错了地方，误了这班信使。朝廷要等下一班才能收到。
-          p2: 日常文书照样一摞摞送到病榻边。
-          p3: 回信送到时，等它的人已经不在了。
+          p2: 信使的私笺压在例行文书底下。灯熄的时候，回文那一格还空着。
         shift:
           p1:
-            was: 本传记下了诸葛亮密表后主，回程文书如何收领未见记载。
+            was: 《蒋琬传》记载诸葛亮曾密表后主，推荐蒋琬接手。
           p2:
-            was: 诸葛亮在军中病逝。
-            now: 例行文书暂放在案上，病榻边安静了一个下午。
-          p3:
-            was: 蒋琬在诸葛亮死后受任，两篇本传都未记载诸葛亮生前收到答复。
-            now: 这条分支里，成都提前回了私信。诸葛亮亲眼看到蒋琬愿意接手。他死后，蒋琬仍受任。
+            was: 蒋琬在诸葛亮死后受任，两篇本传都未记载诸葛亮生前收到回音。
+            now: 这条分支里，诸葛亮在榻边读到信使的私笺，知道朝廷已经收到密表。蒋琬仍在他死后受任。
         vignettes:
           bowl: 侍从来换榻边一碗清水，上一碗还温着。
           register: 书佐把回文那一栏空着，等有信来再补日期。
@@ -93,10 +82,11 @@ facts:
   death:
     date: '234'
     checked: official_record
-    level: usable
+    level: careful
     use: [history, story, wiki]
     sources: [sanguozhi_zhuge]
     text: {en: 'Zhuge Liang fell ill and died with the army at Wuzhang Plains during his last campaign.', zh: '诸葛亮最后一次北伐驻五丈原，患病而卒于军。'}
+    line: {en: '234: Zhuge Liang fell ill and died with the army at Wuzhang Plains.', zh: '234 年，诸葛亮在五丈原患病，卒于军中。'}
   recommendation:
     date: '234'
     checked: official_record
@@ -112,6 +102,7 @@ facts:
     use: [history, story, wiki]
     sources: [sanguozhi_jiang_wan]
     text: {en: 'After Zhuge Liang died, Jiang Wan was appointed Director of the Imperial Secretariat.', zh: '诸葛亮死后，蒋琬被任为尚书令。'}
+    line: {en: '234: After Zhuge Liang died, Jiang Wan was appointed Director of the Imperial Secretariat.', zh: '234 年，诸葛亮死后，蒋琬被任为尚书令。'}
 bystanders:
   camp_scribe:
     invented: true
@@ -136,7 +127,7 @@ wiki:
 self_check:
   quote_line: '成都的回信赶得上吗？'
   fact: appointment
-  regret_choice: '等朝廷正式任命已来不及。员工可以赶在病逝前让诸葛亮看到蒋琬愿意接手的回信。'
+  regret_choice: '等朝廷正式任命已来不及。员工可以赶在病逝前让诸葛亮看到密表送达的回音。'
   bookend: '开场给回信留一格，收尾看那一格有没有填上。'
   share_line: '他没等到任命，可他看见了回信。'
   share_number: '一格回音'

@@ -14,8 +14,8 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: persuade, day: 160, req: {"any":[{"job":["archivist","translator","proofreader","bookseller","writer","former_monk"]},{"trait":["streetwise","glib"],"stat":{"will":4}}]}}
-        - {id: p2, kind: hold, day: 150, req: {"any":[{"item":"holo_cloak","trait":["bold","streetwise","vigil"]},{"item":"holo_cloak","stat":{"will":8}}]}}
+        - {id: p1, kind: persuade, day: 149, overturns: [manuscript_lost], req: {"any":[{"job":["archivist","translator","proofreader","bookseller","writer","former_monk"]},{"trait":["streetwise","glib"],"stat":{"will":4}}]}}
+        - {id: p2, kind: persuade, day: 151, overturns: [death], req: {"any":[{"job":["archivist","translator","proofreader"],"stat":{"wit":7,"will":8}},{"trait":["charismatic","methodical"],"stat":{"wit":8,"will":8}}]}}
       vignettes:
         - {id: notice, traits: [scholarly, skeptical, methodical]}
         - {id: shift, traits: [faithful, patient, kind]}
@@ -30,19 +30,19 @@ events:
         relic_desc: 'An invented register leaf that distinguishes a report from a delivery.'
         points:
           p1: 'When the jailer is too afraid to take the book, keep it out of the fire'
-          p2: 'Get him out of the prison at Xu alive'
+          p2: 'Before the sentence is carried out, get a request for clemency back to someone who can reconsider it so Hua Tuo can leave the prison alive'
         points_fail:
           p1: 'The jailer feared the law and would not take it, and Hua Tuo burned the book. In this branch nothing of it is left.'
           p2: 'He was put to death in the prison at Xu, as in history. In this branch he never treated another patient.'
         shift:
           p1:
-            was: 'In 208, about to die, Hua Tuo held out a book to the jailer, saying it could save lives; the jailer feared the law and would not take it, and Hua Tuo had it burned.'
+            was: 'Around 208, the Sanguozhi records that a jailer refused the book Hua Tuo offered him, and that Hua Tuo burned it.'
             now: 'The book left the prison in someone''s keeping, and was copied before it could be lost.'
           p2:
-            was: 'In 208 Hua Tuo was held in the prison at Xu on Cao Cao''s order and put to death there, though Xun Yu asked that he be spared.'
-            now: '{staff} got him out of the prison at Xu before the end. He went home under another name, kept treating people in the villages, and taught the students he already had for some more years.'
+            was: 'Around 208, the Sanguozhi records that Hua Tuo was put to death although there had been a plea for clemency.'
+            now: 'In this branch the plea is heard again, and the order is changed. Hua Tuo leaves the prison at Xu alive.'
             who: hua_tuo_xuchang
-            bio: 'In this timeline Hua Tuo left the prison at Xu alive in 208. He lived out his years as a country physician under another name, and his students learned from him for longer.'
+            bio: 'In this branch Hua Tuo is spared and leaves the prison at Xu alive.'
         vignettes:
           notice: 'Ajin heard there was a volume and has written it under items received. You ask her to touch the shelf where it would go. She moves the line to a report column, leaves the space on the shelf empty and keeps the source of the report beside it.'
           shift: 'Achang wants to close the book before calling the next keeper. You ask him to read the entries aloud one time. When he reaches the unwitnessed delivery, they agree to leave that line waiting. The next keeper can see what has yet to be confirmed.'
@@ -56,19 +56,19 @@ events:
         relic_desc: '登记副页，区分传闻与实际交接。'
         points:
           p1: '狱吏畏法不敢收时，不让那卷书被烧掉'
-          p2: '让他活着走出许狱'
+          p2: '在判决执行前，让宽免的请求重新送到能复议的人手中，使华佗得以活着走出许狱'
         points_fail:
           p1: '狱吏畏法不收，华佗把书烧了，这条分支里那卷书一页也没留下。'
           p2: '他照史实死在许狱，这条分支里他再没给人看过病。'
         shift:
           p1:
-            was: '208 年，华佗临死前拿出一卷书交给狱吏，说这书可以救活人；狱吏怕犯法不敢收，华佗便要火把它烧了。'
+            was: '约 208 年，《三国志》记华佗递出的书卷被狱吏拒收，后来由华佗烧去。'
             now: '那卷书有人收着带出了许狱，没散失之前已经抄了一份。'
           p2:
-            was: '208 年，华佗因曹操下令被关进许狱，荀彧为他求情，曹操不许，华佗死在狱中。'
-            now: '{staff}在最后那几天把他带出了许狱。他改了名字回乡，在乡里接着给人看病，原有的几个弟子又跟他学了些年。'
+            was: '约 208 年，《三国志》记曾有人为华佗求情，华佗仍在许狱被处死。'
+            now: '这条分支里，宽免的请求重新获准审议，判决改了。华佗活着走出许狱。'
             who: hua_tuo_xuchang
-            bio: '在这条时间线里，208 年华佗活着走出了许狱。他改名在乡间行医度过余生，弟子跟他学得更久。'
+            bio: '这条分支里，华佗获宽免，活着走出许狱。'
         vignettes:
           notice: '阿瑾听说有一卷书，便写进已收物件。你请她指给你看书该搁在哪层。她把那一行移到传闻栏，架上仍留空，话是谁说的也记在旁边。'
           shift: '阿长想合上登记簿，再叫下一班来。你请他先把这几行念一遍。念到没人亲见的交接，两人商量把那一栏先挂着。接手人看得见还有哪一笔没核实。'
@@ -82,6 +82,32 @@ text:
     text: 汉末医生。《三国志》的后出传记叙述其行医经过，把五禽戏归于他，也记下他因曹操下令而被关押、遇害。
 hook: {en: 'There is still a name for the lost book.', zh: '书已不在，名字还能怎么写？'}
 facts:
+  manuscript_lost:
+    date: '208'
+    stay_day: 150
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [hua_tuo_xuchang_account]
+    text:
+      en: 'The later Sanguozhi says that the jailer refused the book Hua Tuo offered and Hua Tuo burned it. The account gives no exact date.'
+      zh: '后出的《三国志》记狱吏没有接收华佗交出的书，华佗把书烧了。传记未写确切日期。'
+    line:
+      en: 'The Sanguozhi records that the jailer refuses the book. Hua Tuo burns it.'
+      zh: '《三国志》记狱吏没有收下那卷书，华佗把书烧了。'
+  death:
+    date: '208'
+    stay_day: 152
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [hua_tuo_xuchang_account]
+    text:
+      en: 'The Sanguozhi says that Hua Tuo died in custody at Xu after a request for clemency had been denied. The account gives no exact date.'
+      zh: '《三国志》记为华佗求情未果，他在许狱遇害。传记未写确切日期。'
+    line:
+      en: 'The Sanguozhi records Hua Tuo’s death at Xu.'
+      zh: '《三国志》记华佗在许狱遇害。'
   account:
     date: '208'
     checked: official_record
@@ -104,8 +130,8 @@ wiki:
       order: 949
       status: checked
       text:
-        en: 'Chen Shou, Sanguozhi 29, biography of Hua Tuo https://chinesebooks.github.io/shishu/sanguozhi/211722.html'
-        zh: '陈寿《三国志》卷二十九《方技传·华佗》 https://chinesebooks.github.io/shishu/sanguozhi/211722.html'
+        en: 'Chen Shou, Sanguozhi 29, biography of Hua Tuo https://zh.wikisource.org/wiki/三國志/卷29#華佗'
+        zh: '陈寿《三国志》卷二十九《方技传·华佗》 https://zh.wikisource.org/wiki/三國志/卷29#華佗'
 self_check:
   fact: account
   quote_line: '架上仍留空，话是谁说的也记在旁边。'

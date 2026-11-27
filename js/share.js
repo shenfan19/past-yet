@@ -82,7 +82,7 @@ export function createShare(X) {
   }
   function starsOf(d) {
     const won = d.stars || 0;
-    return '★'.repeat(won) + '☆'.repeat(Math.max(0, ctx.backend.maxStars(d.eraId) - won));
+    return '★'.repeat(won) + '☆'.repeat(Math.max(0, (d.max ?? ctx.backend.maxStars(d.eraId)) - won));
   }
 
   const notice = `${H.fiction_note} ${H.feedback_note}`;

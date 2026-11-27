@@ -12,11 +12,11 @@ events:
     field: medicine
     tier: 2
     channels: {E: 1, V: 2, S: 1}
-    refs: [ibn_sina_hamadan_wiki, ibn_sina_hamadan_dsb, ibn_sina_hamadan_canon, ibn_sina_hamadan_date, ibn_sina_hamadan_nlm_completion]
+    refs: [ibn_sina_hamadan_wiki, ibn_sina_hamadan_dsb, ibn_sina_hamadan_canon, ibn_sina_hamadan_date, ibn_sina_hamadan_nlm_completion, ibn_sina_hamadan_juzjani]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 45, overturns: [death], req: {"any":[{"job":["physician","doctor","nurse","paramedic","pharmacist","medical_teacher"],"stat":{"will":6}},{"provides":"cure","job":["nurse","caregiver","paramedic","pharmacist","midwife"],"stat":{"will":5}},{"provides":"cure","trait":["kind","patient","methodical"],"stat":{"wit":6,"will":6}}]}}
+        - {id: p1, kind: care, day: 45, req: {"any":[{"job":["physician","doctor","nurse","paramedic","pharmacist","medical_teacher","caregiver","midwife"],"stat":{"will":5}},{"trait":["kind","patient","methodical"],"stat":{"wit":6,"will":6}}]}}
       vignettes:
         - {id: section, traits: [methodical, curious, scholarly]}
         - {id: sleeve, traits: [handy, patient, vigil]}
@@ -26,19 +26,17 @@ events:
         name: 'The last attack of colic'
         place: Hamadan, Persia
         figure: Ibn Sina
-        story: 'Ibn Sina finished his Canon of Medicine, a work in five books that was taught for centuries, at Hamadan. He had suffered from colic all his life. In 1037, travelling with the army of the ruler he served, he was struck by a severe attack, and he died soon afterwards at Hamadan, in June 1037, aged about fifty seven.'
+        story: 'Ibn Sina finished his five-book Canon of Medicine at Hamadan years before his final journey. In the account continued by his companion al-Juzjani, Ibn Sina suffers repeated attacks of abdominal pain. He dies in 1037 on a journey to Hamadan with the ruler he serves.'
         relic: 'A practice index strip'
         relic_desc: 'A fictional marker distinguishing two of the five books.'
         points:
-          p1: 'When the colic strikes Ibn Sina on the road, treat him and cure him'
+          p1: 'When the pain returns, ask Ibn Sina where he wants to stop and arrange for someone to stay with him while he rests'
         points_fail:
-          p1: 'As in history the attack does not let up, and in June he dies at Hamadan.'
+          p1: 'The party is ready to move again before you have made a place for him to lie down.'
         shift:
           p1:
-            was: '22 June 1037: struck by a severe attack of colic while travelling with the army, Ibn Sina died soon afterwards at Hamadan, aged about fifty seven.'
-            now: 'The attack of colic on the road was treated in time, and he recovered.'
-            who: ibn_sina_hamadan
-            bio: 'In this timeline Ibn Sina was cured of the colic that struck him in 1037 and lived on past that summer.'
+            was: 'Al-Juzjani’s account describes relapses and Ibn Sina’s death at Hamadan in 1037.'
+            now: 'In this branch {staff} makes a place for Ibn Sina to rest when the pain returns. A companion stays with him and takes his reply to the people waiting to set out.'
         vignettes:
           section: 'Ruqayya sends both requests to the same heading because both mention remedies. You ask her to open the index and point out which entry concerns a single substance and which concerns compounds. She puts one tab on each book. The two people at the table can now look for their entries without waiting for each other.'
           sleeve: 'Yahya has to carry one copy away. Its guide slips will slide out if he tips the board. You help him fold the empty wrapper over the bookmarks while Ruqayya copies the two headings for the reader staying behind. The bench keeps a small index even when the book is gone.'
@@ -47,19 +45,17 @@ events:
         name: '最后一次腹痛'
         place: 波斯哈马丹
         figure: 伊本·西那
-        story: '伊本·西那在哈马丹写完《医典》，这部五卷的书后来教了几百年的医生。他一生常犯腹绞痛。1037 年随他效力的君主的军队出行，他的腹绞痛重重发作，不久在哈马丹去世，那是 1037 年 6 月，年约五十七。'
+        story: '伊本·西那早年在哈马丹写完了五卷《医典》。随行的朱兹贾尼在续传中记下他的腹痛反复发作。1037 年，他随效力的君主前往哈马丹，在那里去世。'
         relic: '一张练习索引条'
         relic_desc: '读书签，区分全书五卷中的两卷。'
         points:
-          p1: '伊本·西那在路上腹绞痛发作时，给他医治，把他治好'
+          p1: '腹痛再犯时，问伊本·西那想在哪里停下，找个人陪他歇一歇'
         points_fail:
-          p1: '他的腹痛照史实没有缓下来，6 月在哈马丹去世。'
+          p1: '一行人又在等着出发，还没腾出能让他躺下的地方。'
         shift:
           p1:
-            was: '1037 年 6 月 22 日，随军出行途中腹绞痛重重发作的伊本·西那，不久在哈马丹去世，年约五十七。'
-            now: '路上那次腹绞痛及时得到医治，他好了起来。'
-            who: ibn_sina_hamadan
-            bio: '这条时间线里，伊本·西那 1037 年那次腹绞痛被治好，他活过了那个夏天。'
+            was: '朱兹贾尼的续传记载伊本·西那的腹痛反复发作，1037 年在哈马丹去世。'
+            now: '这条分支里，腹痛再犯时，{staff}给伊本·西那找到了歇脚处。有同伴陪他停下，也替他把回话带给等出发的人。'
         vignettes:
           section: '鲁卡娅见两张单都提到药物，便指向同个题头。你请她打开索引，指出哪条是单味，哪条是复方。她给两卷各夹一签。桌边的两个人现在可以各找各的条目了。'
           sleeve: '叶海亚得带走一份抄本，板一斜，索引签就会滑掉。你帮他用空封纸把几个签护好，鲁卡娅则替还留在桌边的人另抄两个题头。书带走后，桌上还有一张小索引。'
@@ -74,18 +70,18 @@ text:
 hook: {en: 'The physician who wrote the Canon cannot cure his own colic.', zh: '写《医典》的医生，治不好自己的腹痛。'}
 facts:
   death:
-    date: '1037-06-22'
+    date: '1037'
     stay_day: 52
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [ibn_sina_hamadan_wiki, ibn_sina_hamadan_dsb]
+    sources: [ibn_sina_hamadan_juzjani, ibn_sina_hamadan_dsb]
     text:
-      en: 'Ibn Sina had suffered from colic all his life. In 1037, travelling with the army of the ruler he served, he was struck by a severe attack and died soon afterwards at Hamadan, where he was buried; the date is given as 22 June 1037.'
-      zh: '伊本·西那一生常犯腹绞痛。1037 年随他效力的君主的军队出行时，腹绞痛重重发作，不久在哈马丹去世并葬在那里，卒日记作 1037 年 6 月 22 日。'
+      en: 'Ibn Sina suffered repeated attacks of abdominal pain and died at Hamadan in 1037.'
+      zh: '伊本·西那的腹痛反复发作，1037 年在哈马丹去世。'
     line:
-      en: '22 June 1037: Ibn Sina dies at Hamadan after a severe attack of colic.'
-      zh: '1037 年 6 月 22 日，伊本·西那腹绞痛发作后在哈马丹去世。'
+      en: '1037: Ibn Sina dies at Hamadan.'
+      zh: '1037 年，伊本·西那在哈马丹去世。'
   canon:
     date: '1025'
     checked: official_record
@@ -113,6 +109,12 @@ bystanders:
     text: {en: 'A fictional messenger who has to carry the copying board away.', zh: '虚构送件人叶海亚，要把抄书板带走。'}
 wiki:
   refs:
+    ibn_sina_hamadan_juzjani:
+      order: 609
+      status: checked
+      text:
+        en: 'Dimitri Gutas, Avicenna ii. Biography, Encyclopaedia Iranica, discussing the continuation attributed to al-Juzjani. https://www.iranicaonline.org/articles/avicenna-ii/'
+        zh: '迪米特里·古塔斯，《阿维森纳：生平》，《伊朗百科全书》，引朱兹贾尼续传。https://www.iranicaonline.org/articles/avicenna-ii/'
     ibn_sina_hamadan_wiki:
       order: 1415
       status: checked

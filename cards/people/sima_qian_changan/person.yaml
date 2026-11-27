@@ -10,13 +10,13 @@ events:
     field: literature
     tier: 3
     channels: {S: 3, G: 2}
-    refs: [sima_qian_changan_primary]
+    refs: [sima_qian_changan_primary, sima_qian_changan_letter_date]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 20, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":7}},{"trait":["scholarly","methodical"],"stat":{"wit":8}},{"item":"period_costume","trait":["scholarly","methodical","quiet"],"stat":{"wit":6}}]}}
         - {id: p2, kind: care, day: 60, req: {"any":[{"job":["nurse","midwife","physician","paramedic","doctor","caregiver"],"stat":{"will":5}},{"trait":["kind","patient"],"stat":{"will":7}},{"item":"gift_box","trait":["kind","patient","streetwise","glib"]}]}}
-        - {id: p3, kind: persuade, day: 120, req: {"any":[{"job":["accountant","market_trader","antique_dealer","shopkeeper","bookseller"],"stat":{"will":6,"luck":6}},{"trait":["charismatic","glib"],"stat":{"will":8}},{"item":"golden_apple","stat":{"wit":5,"will":6}}]}}
+        - {id: p3, kind: persuade, day: 120, overturns: [sentence], req: {"any":[{"job":["accountant","market_trader","antique_dealer","shopkeeper","bookseller"],"stat":{"will":6,"luck":6}},{"trait":["charismatic","glib"],"stat":{"will":8}},{"item":"golden_apple","stat":{"wit":5,"will":6}}]}}
       vignettes:
         - {id: dates, traits: [methodical, vigil]}
         - {id: witness, traits: [curious, skeptical]}
@@ -32,7 +32,7 @@ events:
         points:
           p1: 'While Sima Qian is in prison, keep the unfinished drafts of his history whole and in order at his home'
           p2: 'Bring food and clothing into the prison and spare him the worst of the jailers'' humiliations'
-          p3: 'Raise the money that the law allows to redeem his sentence, so that Sima Qian is spared the punishment of castration'
+          p3: 'Ask people who know Sima Qian to contribute and present their offer to the officials before the sentence is carried out'
         points_fail:
           p1: 'The bundles at his home come loose and are scattered, and the drafts are not there when he comes out. This branch falls out of step with history and the office recalls the employee.'
           p2: 'Nobody reaches him in prison, and in this branch he bows his head to the jailers as he later wrote that he did.'
@@ -42,10 +42,10 @@ events:
             was: 'In about 98 BC, when Sima Qian was imprisoned after the Li Ling affair, his history was, in his own words, only roughly begun and not yet finished.'
           p2:
             was: 'In about 98 BC Sima Qian was imprisoned for defending Li Ling; in his letter to Ren An he wrote of how he had to abase himself before the jailers.'
-            now: '{staff} brings him food and warm clothing and pays the gatekeepers to leave him alone. He passes the months in prison in somewhat less shame.'
+            now: 'In this branch {staff} gets food and warm clothing delivered to Sima Qian. He has a meal and something to wrap himself in at night.'
           p3:
             was: 'In about 98 BC Sima Qian was sentenced for defending Li Ling; his family was too poor to redeem the sentence, no friend spoke for him, and he was punished by castration.'
-            now: '{staff} raises the redemption money from merchants and old acquaintances and it is paid before the sentence is carried out. Sima Qian leaves prison unharmed in body. He goes home to the bamboo slips and finishes the history.'
+            now: 'In this branch the officials accept the payment offered by the people {staff} brought together. Sima Qian is spared that punishment and can go back to his unfinished work.'
             who: sima_qian_changan
             bio: 'In this timeline Sima Qian redeemed his sentence and was not castrated. He still finished his history of the past down to his own day.'
         vignettes:
@@ -62,7 +62,7 @@ events:
         points:
           p1: '司马迁下狱期间，护住他家中尚未写完的史稿，不散不乱'
           p2: '往狱里送饭送衣，让他少受狱吏的折辱'
-          p3: '凑足依律赎罪的钱，让司马迁免受宫刑'
+          p3: '请认识司马迁的人凑一笔钱，趁刑罚还没执行，把他们愿出的钱报给经办官吏'
         points_fail:
           p1: '家中的竹简绳断简散，等他出狱时草稿已不全。这条分支与历史脱节，员工被送回。'
           p2: '没人进得了狱门，这条分支里他照样像后来信里写的那样，见了狱吏便低头叩地。'
@@ -72,10 +72,10 @@ events:
             was: '约公元前 98 年，司马迁因李陵之事下狱，按他自己的话，书当时只是草创，还没写完。'
           p2:
             was: '约公元前 98 年，司马迁因替李陵辩解下狱，他在《报任安书》里写到自己在狱吏面前受的屈辱。'
-            now: '{staff} 往狱里送去饭食和冬衣，又打点了看守。他在狱中的几个月少受了些屈辱。'
+            now: '这条分支里，{staff}把饭食和冬衣送到了司马迁手上。夜里他有衣服裹身，也多了一餐热饭。'
           p3:
             was: '约公元前 98 年，司马迁因替李陵辩解获罪，家贫无钱自赎，亲友没有人替他说话，受了宫刑。'
-            now: '{staff} 向商人和旧识四处凑钱，赶在行刑前交上了赎金。司马迁出狱时身体完好。他回到家中的竹简前，把书写完。'
+            now: '这条分支里，经办官吏接受了{staff}替众人送交的那笔钱。司马迁免于这次刑罚，可以回去继续写手里的史书。'
             who: sima_qian_changan
             bio: '这条时间线里，司马迁交钱赎罪，没有受宫刑。他照样把从上古写到当代的那部史书写完了。'
         vignettes:
@@ -98,20 +98,36 @@ quotes:
 hook: {en: 'What should a historian leave unresolved?', zh: '哪一条该先存疑'}
 facts:
   letter_to_ren_an:
-    date: '-98'
+    date: '-91'
     checked: official_record
     level: usable
     use: [story, wiki]
-    sources: [sima_qian_changan_primary]
+    sources: [sima_qian_changan_primary, sima_qian_changan_letter_date]
+    note: 'This date represents one proposed year for the later letter. Another common dating is 93 BCE. The earlier game window represents the imprisonment.'
     text:
       en: 'The Book of Han preserves Sima Qian''s letter to Ren An, in which he discusses the aims and organization of his historical work.'
       zh: '《汉书·司马迁传》保存《报任安书》，信中谈到著史的用意和全书体例。'
+  sentence:
+    date: '-98'
+    stay_day: 150
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [sima_qian_changan_primary]
+    text: {en: 'In his later letter Sima Qian recalled lacking the money to redeem himself after the Li Ling affair and receiving punishment.', zh: '司马迁在后来的书信中追述李陵之事，记自己家贫无钱自赎，终于受刑。'}
+    line: {en: 'After the Li Ling affair, Sima Qian is punished.', zh: '李陵之事后，司马迁获罪受刑。'}
 bystanders:
   sima_qian_changan_reader:
     invented: true
     text: {en: 'An invented clerk weighing two entries that disagree.', zh: '一位虚构的书吏，桌上两条记载彼此抵触。'}
 wiki:
   refs:
+    sima_qian_changan_letter_date:
+      order: 202
+      status: checked
+      text:
+        en: 'The Letter to Ren An, reappraisal chapter discussing the proposals of 93 and 91 BCE, p. 28 n. 3. https://oss0.changxianggu.com/book/chapter/269_9787040561104.pdf'
+        zh: '〈篇外之篇：《报任安书》的价值再解读〉第 28 页注 3，列前 93、前 91 年两说。https://oss0.changxianggu.com/book/chapter/269_9787040561104.pdf'
     sima_qian_changan_primary:
       order: 200
       status: checked

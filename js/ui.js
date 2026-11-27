@@ -171,8 +171,11 @@ export function createUI(D, ctx, DEV = false) {
   // stars: filled and empty marks coloured by the count, bronze, silver and gold
   const STAR_MAX = D.get('config.stars.max');
   // the stars of a place: how many it has is the number of its sync points, so a place id gives the length of the row
-  const starsHtml = (n, place) => { const m = place ? ctx.backend.maxStars(place) : STAR_MAX; return starRow(n, m); };
-  const starRow = (n, STAR_MAX) => `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(STAR_MAX)))}>${'★'.repeat(n)}${'☆'.repeat(STAR_MAX - n)}</span>`;
+  const starsHtml = (n, place, savedMax) => starRow(n, savedMax ?? (place ? ctx.backend.maxStars(place) : STAR_MAX));
+  const starRow = (n, max) => {
+    const total = Math.max(n, max);
+    return `<span class="stars s${n}"${tip(U.stars.label.replace('{n}', String(n)).replace('{m}', String(total)))}>${'★'.repeat(n)}${'☆'.repeat(total - n)}</span>`;
+  };
   // the sync points of a trip, hit or not, with the words of the place
   // a point that a trait made up for, or that a trait lost, says so, because the timeline shows what happened and the traits then changed the count
   const pointsHtml = (cur, textOf) => `<ul class="sync">${cur.report.points.map((p) => `<li class="${p.hit ? 'hit' : 'miss'}${p.bonus ? ' bonus' : ''}">${p.redeem ? (p.hit ? '♥' : '♡') : (p.hit ? '★' : '☆')} ${p.day ? `<span class="muted">${esc(U.report.participation.day.replace('{day}', String(p.day)))} · </span>` : ''}${esc(textOf(p.id))}${p.bonus ? ` <span class="chip trait">${U.stars.by_trait}</span>` : ''}${p.sure ? ` <span class="chip trait">${U.stars.by_secretary}</span>` : ''}</li>`).join('')}</ul>`;
@@ -611,7 +614,7 @@ export function createUI(D, ctx, DEV = false) {
     const trips = pg.shown;
     const done = trips.map((t) => `<tr${t.archived ? ' class="archived"' : ''}>
       <td>${fmtYear(D, yearOfPlace(t.place, t.light))}</td><td>${esc(shortOfPlace(t.place, t.light))}</td><td>${staffLink(t.staffId)}</td>
-      <td>${starsHtml(t.stars || 0, t.place)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td>
+      <td>${starsHtml(t.stars || 0, t.place, t.max)}${t.newBest ? ` <span class="chip" ${tip(U.stars.new_best)}>↑</span>` : ''}</td>
       <td>${protagonistHtml({ eraId: t.place, light: t.light })}</td>
       <td><div class="log-actions">${keptIds.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : ''}<button class="ghost" data-act="${t.archived ? 'restore' : 'archive'}" data-id="${t.id}">${t.archived ? U.office.restore : U.office.archive}</button></div></td>
     </tr>`);
@@ -643,7 +646,7 @@ export function createUI(D, ctx, DEV = false) {
     const body = `<ul class="trips">${page.shown.map((t) => {
         const oc = t.stamp ? U.report.stamp[t.stamp] : t.recalled ? U.report.recalled : t.evacuated ? U.report.evacuated : t.light ? U.light.outcome[t.outcome] : T.outcomes[t.outcome].name;
         const view = kept.has(t.id) ? `<button class="ghost" data-act="open" data-id="${t.id}">${U.report.view}</button>` : `<span class="muted small">${U.archive.trip_gone}</span>`;
-        return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place)}${t.redeemed ? ' <span class="chip">♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
+        return `<li${t.archived ? ' class="archived"' : ''}><span class="muted">${U.archive.trip_day.replace('{d}', t.day)}</span> ${staffLink(t.staffId)} ${starsHtml(t.stars, t.place, t.max)}${t.redeemed ? ' <span class="chip">♥</span>' : ''} <span class="muted">${esc(oc)}</span> ${view}</li>`;
       }).join('')}</ul>`;
     return heading + page.html + body;
   }
@@ -802,7 +805,7 @@ export function createUI(D, ctx, DEV = false) {
       <div class="sec">${U.stars.points}</div>${pointsHtml(cur, (id) => (ev.scene ? c.points[id] : U.light.points[id]))}${cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : ''}
       <div class="sec">${U.report.accounts}</div>
       <table><tbody>
-        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
+        <tr><td>${U.stars.col}</td><td class="num">${starsHtml(cur.stars || 0, cur.eraId, cur.max)}${cur.newBest ? ' ' + U.stars.new_best : ''}</td></tr>
         ${grownRow(P)}
         <tr><td>${U.report.antique_gain}</td><td class="num">${P.antique ? `${wl('antiques:' + P.antique, T.antiques[P.antique].name)}${P.duplicate ? ' · ' + U.report.antique_dup : ''}` : U.report.antique_none}</td></tr>
         <tr><td>${U.report.rest}</td><td class="num">${P.restDays} ${U.report.days}</td></tr>
@@ -944,11 +947,13 @@ export function createUI(D, ctx, DEV = false) {
     const c = T.catalog[cur.eraId];
     const ev = D.get('catalog.events').find((x) => x.id === cur.eraId);
     const EF = D.get('encyclopedia.event_facts')?.[ev.id];
+    const year = cur.report.timeline?.find((line) => line.kind === 'arrive')?.year ?? ev.year;
     return {
-      title: c.name, year: ev.year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
+      title: c.name, year, staff: staffName(D, cur.spec.staffId), place: c.place, anchor: 'relic_' + ev.id,
       sources: ev.refs ? ' ' + wl('events:c:' + ev.id, U.light.sources) : '',
       timeline: cur.report.timeline, factRefs: (fact) => (fact && EF ? EF.facts.find((f) => f.id === fact)?.sources || [] : []),
-      summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '', shift: shiftHtml(cur, ev.scene?.points, ev.scene?.star_rules === 2, c),
+      summary: null, modelNote: null, stay: null, before: '', afterRecord: '', numbers: '',
+      shift: year === ev.year ? shiftHtml(cur, ev.scene?.points, ev.scene?.star_rules === 2, c) : '',
       cost: null, restDays: cur.paid.restDays, pointText: (pid) => (ev.scene ? c.points[pid] : U.light.points[pid]), hints: [],
       warn: cur.report.found ? `<p class="warnline">${U.light.found[cur.report.found]}</p>` : '', body: cur.report.body,
       buttons: `<button class="primary" data-act="shareopen" data-id="${cur.id}">${U.share.button}</button>`,
@@ -1186,7 +1191,7 @@ export function createUI(D, ctx, DEV = false) {
         { k: 'no', label: '#', w: '8%', cls: 'num', cell: (r) => `<span class="muted">${r.id.slice(1)}</span>` },
         { k: 'year', label: U.report.year, w: '16%', cell: (r) => fmtYear(D, yearOfPlace(r.place, r.light)) },
         { k: 'place', label: U.report.place, w: '36%', cell: (r) => `<span class="nowrap${r.archived ? ' archived' : ''}">${esc(shortOfPlace(r.place, r.light))}</span>` },
-        { k: 'stars', label: U.stars.col, w: '24%', cell: (r) => `${starsHtml(r.stars || 0, r.place)}${r.redeemed ? ' <span class="chip">♥</span>' : ''}` },
+        { k: 'stars', label: U.stars.col, w: '24%', cell: (r) => `${starsHtml(r.stars || 0, r.place, r.max)}${r.redeemed ? ' <span class="chip">♥</span>' : ''}` },
         { k: 'act', label: '', w: '16%', cls: 'num', cell: (r) => (keptIds.has(r.id) ? `<button class="ghost" data-act="open" data-id="${r.id}">${U.report.view}</button>` : '') },
       ],
     });

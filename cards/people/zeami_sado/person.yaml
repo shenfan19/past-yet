@@ -12,7 +12,7 @@ events:
     field: literature
     tier: 1
     channels: {C: 2, G: 2, S: 1}
-    refs: [zeami_sado_island, zeami_sado_jawiki, zeami_sado_amano, zeami_sado_motomasa, zeami_sado_corpus, zeami_sado_nearman]
+    refs: [zeami_sado_island, zeami_sado_amano, zeami_sado_motomasa, zeami_sado_corpus, zeami_sado_nearman, zeami_sado_ntj]
     scene:
       star_rules: 2
       points:
@@ -26,19 +26,17 @@ events:
         name: 'The island on the page'
         place: "Sado Island"
         figure: "Zeami"
-        story: 'In the eighth month of 1432 Zeami''s eldest son Motomasa, the heir of his troupe, died far from home in Ise. Some months later Zeami wrote that with Motomasa gone the way of their school had been cut off. In 1434, past seventy, he was exiled to Sado, and on the island he wrote Kintōsho. His treatises stayed hidden for centuries and were published only in 1909.'
+        story: 'Zeami’s son Motomasa died in 1432. Zeami wrote about the loss in Kyakuraika before he was exiled to Sado in 1434. Kintōsho, the collection of chants that recalls his journey and exile on the island, is dated 1436.'
         relic: "A Noh mask"
         relic_desc: "A small wooden mask with a fine line of lacquer between the brows."
         points:
-          p1: 'Stay beside Zeami on Sado and let him know that what he wrote will be handed on and read'
+          p1: 'Ask Zeami whether he wants someone to read a line with him on Sado. If he agrees, help the reader keep his pause on a detachable slip'
         points_fail:
-          p1: 'As in history he lives out his exile believing that the line of his art ended with his son.'
+          p1: 'The reader has to leave before Zeami can hear the line aloud. A mark on the page will have to wait.'
         shift:
           p1:
-            was: '1433: some seven months after Motomasa''s death, Zeami wrote that the way of their school had been cut off and the troupe was already ruined. In 1434 he was exiled to Sado. His treatises stayed hidden for centuries and were published only in 1909.'
-            now: 'On Sado he came to know that what he had written would be handed on and still read centuries later.'
-            who: zeami_sado
-            bio: 'In this timeline Zeami spent his exile on Sado knowing that his writings on his art would outlast him.'
+            was: 'Zeami’s surviving writings include the lament for his son and Kintōsho, which recalls his exile on Sado.'
+            now: 'In this branch Zeami hears a reader try a line of his in two ways. He chooses where the reader should pause and keeps the slip beside his own page.'
         vignettes:
           later: 'You tell the reader that people will still use the name in books about Sado. He tries the words as a place name, then as something a person longs for. You mark both pauses on a slip. The boat that brought Zeami to Sado has already gone.'
           mask: 'The reader holds up a practice mask and loses his place when he lowers it. You mark the start of the line on a loose slip and prop it where he can find it again. The mask goes back on its peg. You miss the reading after yours.'
@@ -47,19 +45,17 @@ events:
         name: '纸上的金岛'
         place: "佐渡岛"
         figure: "世阿弥"
-        story: '1432 年 8 月，世阿弥的长子、一座的继承人元雅客死伊势。几个月后，世阿弥写道，元雅一死，这一流的道就断了。1434 年，年过七十的他被流放佐渡，在岛上写下《金岛书》。他的论著此后秘藏数百年，1909 年才刊行于世。'
+        story: '1432 年，世阿弥的儿子元雅去世。世阿弥在《却来华》中写到这场失去，1434 年被流放佐渡。《金岛书》记着他渡海和在岛上的经历，定稿记年为 1436 年。'
         relic: "一张能面"
         relic_desc: "一张小小的木面，眉间有细细的漆痕。"
         points:
-          p1: '在佐渡陪着世阿弥，让他知道自己写下的东西会传下去、有人读'
+          p1: '问佐渡岛上的世阿弥愿不愿听人读一行，听完以后，把他选的停顿另记在纸条上'
         points_fail:
-          p1: '他照史实在流放中度日，以为自己这一流的道随儿子一起断了。'
+          p1: '念词人还没来得及让世阿弥听见这一行，就得先回去了。停在哪儿，纸上还没记。'
         shift:
           p1:
-            was: '1433 年，元雅去世约七个月后，世阿弥写道，这一流的道已经断绝，一座已经破败。1434 年他被流放佐渡。他的论著此后秘藏数百年，1909 年才刊行。'
-            now: '他在佐渡知道了，自己写下的东西会传下去，几百年后还有人读。'
-            who: zeami_sado
-            bio: '这条时间线里，世阿弥在佐渡度过流放的岁月，知道自己论艺的文字会比他活得更久。'
+            was: '世阿弥留下了缅怀元雅的文字，也留下了记佐渡流放的《金岛书》。'
+            now: '这条分支里，世阿弥听过同一行的两种念法，亲自挑了停顿的位置，把纸条留在自己那页旁边。'
         vignettes:
           later: '你告诉虚构的念词人，后来写佐渡的书还会提到这个名字。他先像念地名一样试一遍，再念得像一个人对着远处想什么。你记下两个停顿。载世阿弥来岛的船，你已经赶不上了。'
           mask: '念词人举起练习用的面具，放下时找不到念到哪儿。你拿一张散纸标出那行的起头，立在他伸手就能找见的位置。面具挂回钩上，下一轮念词你没能留下听。'
@@ -71,7 +67,7 @@ text:
   zh:
     name: "世阿弥"
     text: "日本能乐演员和剧作家，约 1363 年生，约 1443 年去世。他留下多部关于能乐的论著，1434 年被流放到佐渡岛。"
-hook: {en: 'He thinks his art ended with his son.', zh: '他以为自己的道随儿子断了。'}
+hook: {en: 'Where does he want the reader to pause?', zh: '这一行，世阿弥想让人停在哪里？'}
 facts:
   motomasa:
     date: '1432-08'
@@ -87,7 +83,7 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [zeami_sado_amano, zeami_sado_jawiki]
+    sources: [zeami_sado_amano]
     text:
       en: 'Some seven months after Motomasa''s death Zeami wrote at the opening of Kyakuraika that with Motomasa gone the way of their school had been cut off.'
       zh: '元雅去世约七个月后，世阿弥在《却来华》开头写道，元雅一死，这一流的道已经断绝。'
@@ -96,7 +92,7 @@ facts:
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [zeami_sado_island, zeami_sado_jawiki]
+    sources: [zeami_sado_island, zeami_sado_ntj]
     text:
       en: 'Zeami was exiled to Sado in 1434; no official record of the sentence survives. On the island he wrote Kintōsho, dated 1436, which calls Sado an island of gold.'
       zh: '1434 年世阿弥被流放佐渡，判罪的官方记录没有留存。他在岛上写下《金岛书》，书成于 1436 年，称佐渡为金之岛。'
@@ -133,12 +129,12 @@ wiki:
       text:
         en: 'Sado City, Historical Landscape Conservation Plan, chapter 1, on Zeami and Kintōsho https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf'
         zh: '佐渡市历史风貌计划第一章，世阿弥与《金岛书》 https://www.city.sado.niigata.jp/uploaded/attachment/15259.pdf'
-    zeami_sado_jawiki:
+    zeami_sado_ntj:
       order: 902
       status: checked
       text:
-        en: 'Japanese Wikipedia, Zeami https://ja.wikipedia.org/wiki/世阿弥'
-        zh: '日文维基百科，世阿弥 https://ja.wikipedia.org/wiki/世阿弥'
+        en: 'Japan Arts Council Digital Library, Zeami’s exile on Sado, on Kintōsho and the surviving letter. https://www2.ntj.jac.go.jp/dglib/contents/learn/edc9/zeami/kankyou/kankyou09.html'
+        zh: '日本艺术文化振兴会数字资料库，世阿弥流放佐渡与《金岛书》、存世书信。https://www2.ntj.jac.go.jp/dglib/contents/learn/edc9/zeami/kankyou/kankyou09.html'
     zeami_sado_amano:
       order: 903
       status: checked

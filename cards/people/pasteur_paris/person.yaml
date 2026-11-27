@@ -12,11 +12,11 @@ events:
     field: medicine
     tier: 2
     channels: {E: 2}
-    refs: [pasteur_paris_vallery_radot, pasteur_paris_hov, pasteur_paris_marie, pasteur_paris_arrival, pasteur_paris_paris_1885, pasteur_paris_grancher_role, pasteur_paris_institution_open]
+    refs: [pasteur_paris_vallery_radot, pasteur_paris_arbois, pasteur_paris_marie, pasteur_paris_arrival, pasteur_paris_paris_1885, pasteur_paris_grancher_role, pasteur_paris_institution_open]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 55, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
+        - {id: p1, kind: care, day: 65, overturns: [death], req: {"item":"nano_kit","any":[{"job":["doctor","physician","medical_teacher"]},{"job":["nurse","paramedic","caregiver","pharmacist"],"stat":{"will":5}}]}}
       vignettes:
         - {id: date, traits: [methodical, curious, quiet]}
         - {id: address, traits: [kind, patient, faithful]}
@@ -30,15 +30,15 @@ events:
         relic: 'An arrival slip'
         relic_desc: 'An invented record that distinguishes arrival from later news.'
         points:
-          p1: 'When the typhoid fever takes hold, nurse Jeanne through it and cure her'
+          p1: 'Bring the office’s medical kit to Jeanne’s grandfather and help him care for her when the fever takes hold'
         points_fail:
-          p1: 'As in history the fever does not break. Jeanne dies at Arbois in September.'
+          p1: 'The fever gets worse despite her grandfather’s care. Jeanne dies in Arbois.'
         shift:
           p1:
             was: 'September 1859: Pasteur''s eldest daughter Jeanne, nine years old, died of typhoid fever at Arbois, where she was staying with her grandfather.'
-            now: 'The fever broke and Jeanne got well. In the autumn she went back to her parents in Paris.'
+            now: 'In this branch Jeanne’s fever breaks after {staff} uses the office’s medical kit. Her grandfather can send her parents word that she is well enough to sit up.'
             who: pasteur_paris
-            bio: 'In this timeline Pasteur''s eldest daughter Jeanne came through the typhoid fever of 1859 at Arbois and grew up with her brother and sisters.'
+            bio: 'In this branch Pasteur’s eldest daughter Jeanne recovers from typhoid fever at Arbois in 1859.'
         vignettes:
           date: 'Claire has copied the day the letter was brought in beside the name in the arrival register. You set the envelope next to the register, and she finds the difference. Both dates stay on the desk, each beside the event it marks.'
           address: 'Émile has offered to take the family’s reply while Claire keeps the register. You give him a narrow slip with just the address he needs. He checks it before leaving and the register stays closed while the visitors wait.'
@@ -51,15 +51,15 @@ events:
         relic: '一张抵达登记副页'
         relic_desc: '登记副页，分开记录抵达与后来的来信。'
         points:
-          p1: '伤寒烧起来的时候，守着让娜照护，治好她'
+          p1: '等让娜发烧时，带事务所的纳米医疗箱去祖父家，帮祖父照护她'
         points_fail:
-          p1: '高烧照史实没有退下去，让娜九月死在阿尔布瓦。'
+          p1: '祖父守在身边，让娜还是越烧越重，最后死在阿尔布瓦。'
         shift:
           p1:
             was: '1859 年 9 月，巴斯德九岁的长女让娜在阿尔布瓦祖父家患伤寒去世。'
-            now: '烧退了，让娜病好起来，秋天回到巴黎爸爸妈妈身边。'
+            now: '这条分支里，{staff}用上了事务所的纳米医疗箱。让娜退了烧，祖父能给她父母捎信，说她已经有力气坐起来。'
             who: pasteur_paris
-            bio: '这条时间线里，巴斯德的长女让娜在 1859 年阿尔布瓦的那场伤寒里活了下来，和弟弟妹妹一起长大。'
+            bio: '这条分支里，巴斯德的长女让娜在 1859 年阿尔布瓦的那场伤寒后康复。'
         vignettes:
           date: '克莱尔把来信送到的日子抄进了抵达簿。你把信封摆到登记簿旁，她看出了两处不同。两天都留在桌上，各标它真正对应的事。'
           address: '埃米尔愿意代送家人的回信，克莱尔留守登记簿。你递给他一张窄条，只写他要核对的地址。他出门前核过一遍，有旁人等候时，登记簿仍合着。'
@@ -97,7 +97,7 @@ facts:
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [pasteur_paris_vallery_radot, pasteur_paris_hov]
+    sources: [pasteur_paris_vallery_radot, pasteur_paris_arbois]
     text:
       en: 'Jeanne Pasteur died of typhoid fever at Arbois in September 1859; a chronology gives 10 September.'
       zh: '1859 年 9 月，让娜·巴斯德在阿尔布瓦死于伤寒，一份年表记作 9 月 10 日。'
@@ -137,12 +137,12 @@ wiki:
       text:
         en: 'René Vallery-Radot, The Life of Pasteur, volume 1, translated by R. L. Devonshire (1902), chapters 4 and 6 https://archive.org/details/lifeofpasteur01vall'
         zh: '勒内·瓦莱里－拉多，《巴斯德传》第一卷，德文希尔英译（1902），第四、六章 https://archive.org/details/lifeofpasteur01vall'
-    pasteur_paris_hov:
+    pasteur_paris_arbois:
       order: 975
       status: checked
       text:
-        en: 'History of Vaccines, College of Physicians of Philadelphia, Louis Pasteur timeline https://www.historyofvaccines.org/content/first-laboratory-vaccine'
-        zh: '费城医师学院“疫苗史”，路易·巴斯德年表 https://www.historyofvaccines.org/content/first-laboratory-vaccine'
+        en: 'Philippe Bruniaux, Pasteur the Arboisien, Comptes Rendus Biologies https://comptes-rendus.academie-sciences.fr/biologies/articles/en/10.5802/crbiol.84/'
+        zh: '菲利普·布吕尼奥，《阿尔布瓦人巴斯德》，法国科学院《生物学报告》 https://comptes-rendus.academie-sciences.fr/biologies/articles/en/10.5802/crbiol.84/'
     pasteur_paris_marie:
       order: 976
       status: checked

@@ -12,14 +12,13 @@ events:
     field: exploration
     tier: 2
     channels: {L: 1, S: 3}
-    refs: [bessie_coleman_jacksonville_licence, bessie_coleman_jacksonville_paxon, coleman_nasa_history, coleman_jax_certificate]
+    refs: [bessie_coleman_jacksonville_licence, bessie_coleman_jacksonville_paxon, coleman_nasa_history, coleman_jax_certificate, coleman_jax_schools]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 14, req: {"any":[{"job":["teacher","journalist"],"stat":{"wit":7}},{"trait":["methodical","streetwise"],"stat":{"will":7}}]}}
         - {id: p2, kind: trust, day: 14.5, req: {"any":[{"trait":["kind","charismatic","patient"]},{"job":["teacher","tutor","flight_instructor"]}]}}
-        - {id: p3, kind: persuade, day: 12, req: {"any":[{"job":["teacher","market_trader","accountant"],"stat":{"will":6}},{"trait":["charismatic","glib"],"stat":{"wit":5}},{"job":["bush_pilot","flight_instructor"]}]}}
-        - {id: p4, kind: notice, day: 15, req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"finesse":9}}]}}
+        - {id: p4, kind: notice, day: 15, overturns: [paxon], req: {"any":[{"job":["bush_pilot","ferry_pilot","mechanic"],"stat":{"finesse":7}},{"trait":["methodical","vigil"],"stat":{"finesse":9}}]}}
       vignettes:
         - {id: proof, traits: [methodical, handy, curious]}
         - {id: school, traits: [artistic, kind, charismatic]}
@@ -34,26 +33,21 @@ events:
         relic_desc: 'A fictional ground crew notice, with Coleman’s name in full.'
         points:
           p1: 'Keep the air show preparations from displacing Coleman''s visits with Jacksonville students'
-          p2: 'Help Coleman and the teachers set up a follow-up lesson while the students are still asking about flying'
-          p3: 'While she lectures in Florida to raise money, help Coleman gather enough pledges to open the flight school for Black students she has been saving for'
-          p4: 'Use the fault found during the ground check to stop the Paxon test flight and keep both aviators on the ground'
+          p2: 'Help Coleman arrange one follow-up lesson with a local teacher who can answer the students’ questions about how to learn to fly'
+          p4: 'Ask the crew to review the aircraft on the ground and have the two aviators postpone the practice flight if it needs more work'
         points_fail:
           p1: 'The organizers drop the visits to make up time. The branch falls out of sync and the office recalls the employee that day.'
           p2: 'The students go home with their questions and no teacher has agreed to a follow-up lesson.'
-          p3: 'The lecture fees come in a little at a time, and in this branch the flight school is still only a plan.'
           p4: 'The old aircraft takes off as planned. Coleman and the pilot die on the practice flight.'
         shift:
           p1:
             was: 'On 29 April 1926, Coleman visited students at Jacksonville''s Black public schools.'
           p2:
-            was: 'On 29 April 1926, Coleman visited the schools, and the next day she died on a practice flight.'
-            now: '{staff} asks a teacher to collect the questions and set aside a lesson on how to learn to fly.'
-          p3:
-            was: 'In 1926 Coleman was touring Florida with lectures and exhibitions to raise money for her own school for Black fliers; she wrote to a sister that she would at last earn enough to open it, and died before it opened.'
-            now: '{staff} helps her set the pledges of the Jacksonville audiences down on one list. By May she has enough promised to rent a field and a training aircraft.'
+            was: 'Coleman wanted to open a flying school and spoke to students in Jacksonville. Her school did not open in her lifetime.'
+            now: 'In this branch a teacher collects the students’ questions and agrees to hold a follow-up lesson. Coleman has an address where she can send news of training opportunities.'
           p4:
             was: 'On 30 April 1926, Coleman and the pilot died in a practice flight accident at Paxon Field.'
-            now: '{staff} has the ground crew double-check the controls. They find a fault and call off the flight, and Coleman goes on speaking to Black students about aviation.'
+            now: 'In this branch the crew recommends another ground inspection and the aviators leave the practice flight for another day.'
             who: bessie_coleman_jacksonville
             bio: 'After Jacksonville, Coleman kept flying and continued working to open flight training to Black students.'
         vignettes:
@@ -69,26 +63,21 @@ events:
         relic_desc: '地面告示，完整排出了科尔曼的姓名。'
         points:
           p1: '护住科尔曼的学校行程，别让赶着筹备试飞的人取消她和学生见面的时间'
-          p2: '趁学生还在问怎么学飞，帮科尔曼和老师约好一堂后续课'
-          p3: '趁她在佛罗里达巡回演讲筹款，帮科尔曼凑齐认捐，把她一直攒钱要办的黑人飞行学校办起来'
-          p4: '凭检查时发现的问题叫停帕克森机场的试飞，让科尔曼和飞行员留在地面'
+          p2: '帮科尔曼同当地老师约好一堂后续课，请老师接着回答学生怎样学飞的问题'
+          p4: '请机务人员先在地面复查飞机，若还需检修，就劝科尔曼和驾驶员改天再飞'
         points_fail:
           p1: '临时筹备挤掉了约好的到访，科尔曼赶不到学校，这条分支与史实脱节，员工当天被召回。'
           p2: '孩子们问过学飞的事，散场时还没有老师答应接着教。'
-          p3: '讲座的钱一点点攒，这条分支里飞行学校仍只是个计划。'
           p4: '旧飞机按原安排升空，科尔曼和驾驶员在试飞中遇难。'
         shift:
           p1:
             was: '1926 年 4 月 29 日，科尔曼到杰克逊维尔的黑人公立学校拜访学生。'
           p2:
-            was: '1926 年 4 月 29 日，科尔曼进校拜访，次日试飞遇难。'
-            now: '{staff}请一位老师把课堂上的问题收齐，安排一堂课继续讲学飞的门槛。'
-          p3:
-            was: '1926 年科尔曼在佛罗里达巡回演讲和表演，为她要办的黑人飞行学校攒钱，写信告诉姐妹终于快攒够了；学校没办起来她就去世了。'
-            now: '{staff}帮她把杰克逊维尔听众的认捐记在同一张单子上。到五月，认下的钱已够租一块场地和一架教练机。'
+            was: '科尔曼到杰克逊维尔的学校与学生见面，也想筹办自己的飞行学校。她生前学校未能开办。'
+            now: '这条分支里，一位老师收好学生的问题，答应再讲一堂课。科尔曼留下这位老师的地址，往后有学飞的消息还能寄来。'
           p4:
             was: '1926 年 4 月 30 日，科尔曼和驾驶员在帕克森机场的试飞事故中遇难。'
-            now: '{staff}请机务人员复核飞行操纵，发现故障后取消当天的试飞。科尔曼往后继续办面向黑人学生的航空讲座。'
+            now: '这条分支里，机务人员建议再做一次地面检查，科尔曼和驾驶员把试飞改到别的日子。'
             who: bessie_coleman_jacksonville
             bio: '科尔曼从杰克逊维尔回去后继续飞行，也继续筹办向黑人学生开放的飞行训练。'
         vignettes:
@@ -116,12 +105,14 @@ facts:
   paxon:
     date: '1926-04-30'
     checked: official_record
-    level: usable
-    use: [story, wiki]
+    stay_day: 15
+    level: careful
+    use: [history, story, wiki]
     sources: [bessie_coleman_jacksonville_paxon]
     text:
       en: 'The museum places the fatal practice flight at Paxon Field on 30 April 1926.'
       zh: '馆方将致命的试飞记于1926年4月30日的帕克森机场。'
+    line: {en: '30 April 1926: Coleman and the pilot die during a practice flight at Paxon Field.', zh: '1926 年 4 月 30 日，科尔曼与驾驶员在帕克森机场的试飞中遇难。'}
 bystanders:
   ann:
     invented: true
@@ -131,6 +122,12 @@ bystanders:
     text: {en: 'A fictional runner who will read the notice to the crowd.', zh: '虚构跑腿人刘易斯，要把告示念给场外的人。'}
 wiki:
   refs:
+    coleman_jax_schools:
+      order: 804
+      status: checked
+      text:
+        en: 'Jacksonville Legacy, first edition, local history account of Coleman’s school visits on 29 April 1926. https://static1.squarespace.com/static/5d30d1612f761200014991b9/t/5e3d878d3ab73b55917c79e6/1581090711168/Jacksonville%2BLegacy.First%2BEdition.pdf.pdf'
+        zh: '《杰克逊维尔地方遗产》初版，1926 年 4 月 29 日科尔曼访校记载。https://static1.squarespace.com/static/5d30d1612f761200014991b9/t/5e3d878d3ab73b55917c79e6/1581090711168/Jacksonville%2BLegacy.First%2BEdition.pdf.pdf'
     coleman_nasa_history:
       order: 802
       status: checked

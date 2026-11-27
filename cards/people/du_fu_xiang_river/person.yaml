@@ -10,13 +10,13 @@ events:
     field: literature
     tier: 1
     channels: {C: 2, Y: 2}
-    refs: [du_fu_xiang_river_primary, du_fu_xiang_river_collected_poem, du_fu_xiang_river_hunan_edition]
+    refs: [du_fu_xiang_river_primary, du_fu_xiang_river_collected_poem, du_fu_xiang_river_hunan_edition, du_fu_xiang_river_epitaph]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 16, req: {"any":[{"job":["archivist","translator","caregiver"]},{"trait":["patient","artistic"],"stat":{"will":6}}]}}
         - {id: p2, kind: care, day: 10, req: {"any":[{"job":["doctor","physician","nurse","caregiver","pharmacist"]},{"trait":["kind","patient"],"item":"warm_blanket"}]}}
-        - {id: p3, kind: endure, day: 40, req: {"any":[{"job":["ferry_pilot","navigator","sailor","ferryman"],"stat":{"constitution":7}},{"job":["doctor","physician","nurse","caregiver"],"stat":{"will":7}},{"trait":["hardy","wanderer"],"item":"compass","stat":{"constitution":8}}]}}
+        - {id: p1, kind: hold, guard: true, day: 16, req: {"any":[{"job":["archivist","translator","caregiver"]},{"trait":["patient","artistic"],"stat":{"will":6}}]}}
+        - {id: p3, kind: trust, day: 25, req: {"any":[{"job":["ferry_pilot","navigator","sailor","ferryman","courier"],"stat":{"will":6}},{"job":["translator","teacher","lecturer","university_lecturer"],"stat":{"wit":7,"will":7}},{"trait":["streetwise","wanderer"],"stat":{"will":6}}]}}
       vignettes:
         - {id: shore, traits: [artistic, quiet]}
         - {id: delivery, traits: [kind, streetwise]}
@@ -32,22 +32,20 @@ events:
         points:
           p1: 'Keep a place for Du Fu’s pages on the boat so the long poem for friends in Hunan can be assembled'
           p2: 'Nurse him through his illness on the boat and ease his pain'
-          p3: 'See the boat north, so that he and his family get home safely'
+          p3: 'Ask Du Fu where he wants to stop next and help his family find a person who will take the finished verses on to their friends'
         points_fail:
           p1: 'Only the first and last leaves turn up after a hurried move. The poem cannot be assembled and the office recalls the employee.'
           p2: 'He lies on his pillow in the winter boat, and grows worse day by day.'
-          p3: 'The boat never got north. He died that winter far from home, and his coffin was laid in temporary burial at Yueyang.'
+          p3: 'The next boat leaves before the family finds someone to take the poem. They have to carry it to another landing.'
         shift:
           p1:
             was: 'In 770 Du Fu, ill on a boat, wrote a poem of thirty six rhymes for his friends and kin in Hunan, as its title says.'
           p2:
-            was: 'In the winter of 770 Du Fu lay ill on a boat on the Xiang, and died soon after away from home, at fifty nine.'
+            was: 'Du Fu’s poem to his friends in Hunan describes writing while ill aboard a boat.'
             now: 'That winter he suffered less on the boat.'
           p3:
-            was: 'In the winter of 770 Du Fu died far from home and was laid in temporary burial at Yueyang; more than forty years later his grandson Du Siye begged the money to rebury him at Yanshi.'
-            now: 'The boat reached the north the next spring, and Du Fu and his family came home. He lived some more years there.'
-            who: du_fu_xiang_river
-            bio: 'Du Fu drifted through Hunan in his last years, came home to the north in 771, and spent the rest of his life with his family.'
+            was: 'The poem is addressed to friends in Hunan. Its heading gives no record of how it reached them.'
+            now: 'In this branch the family makes a stop Du Fu chooses. Someone at the landing offers to take a copy of the verses onward and can repeat the name of the person to receive it.'
         vignettes:
           shore: 'The traveller writes that the shore looks gloomy. You ask what made them look up from the boat. They pause, then write down one thing that was actually there.'
           delivery: 'You hear that the next boat goes only partway to the friend''s town. The traveller nearly folds the note without a second name on it. You help them find someone who can take it onwards.'
@@ -62,22 +60,20 @@ events:
         points:
           p1: '在船上给杜甫留一处可以收好诗纸的位置，护住寄湖南亲友的长诗从零散纸页连成全篇'
           p2: '舟中照料他的风疾和旧病，减轻他的病痛'
-          p3: '护着这条船北上，让他一家平安回到故乡'
+          p3: '问杜甫下一程想在哪里靠岸，帮家人在那里找一个愿意把诗带给亲友的人'
         points_fail:
           p1: '匆忙挪舱时只找到头尾几张，长诗没能成篇，事务所因同步失败召回员工。'
           p2: '他伏在枕上，在冬天的船里一天比一天病重。'
-          p3: '船没能北上，他在那个冬天客死他乡，灵柩暂殡岳阳。'
+          p3: '家人还没找到能捎信的人，下一条船已经离开。他们只能把诗带到另一个渡口。'
         shift:
           p1:
             was: '大历五年，杜甫在舟中抱病，写下寄湖南亲友的三十六韵长诗，诗题记下了这些。'
           p2:
-            was: '大历五年冬，杜甫在湘江的船上病重，不久客死他乡，享年五十九。'
+            was: '寄湖南亲友的诗题记下杜甫在船上抱病写诗。'
             now: '那个冬天他在船上少受了些病痛。'
           p3:
-            was: '大历五年冬，杜甫客死他乡，灵柩暂殡岳阳；四十多年后，孙子杜嗣业四处乞借，才把他迁回偃师安葬。'
-            now: '那条船第二年开春到了北方，杜甫一家回到故乡，他在家中又过了几年。'
-            who: du_fu_xiang_river
-            bio: '杜甫晚年漂泊湖湘，大历六年回到北方故乡，在家人身边度过余年。'
+            was: '诗题把三十六韵写给湖南亲友，未记交递经过。'
+            now: '这条分支里，船在杜甫选的地方靠了岸。渡口有人愿意替家人捎去一份诗稿，接手时还能把收稿人的名字念回来。'
         vignettes:
           shore: '旅人写岸上阴沉。你问刚才是什么让他从舱里抬起头。他想了一会儿，只写下一样真正看见的东西。'
           delivery: '你听说下一条船只去半程。旅人差点没写转交人的名字就折起信。你帮他找了一个能再往前带的人。'
@@ -85,10 +81,10 @@ events:
 text:
   en:
     name: Du Fu
-    text: Chinese poet of the Tang, 712 to 770. He wrote of war, famine and ordinary lives with great technical control and was admired mainly after his death. He died on a boat on the Xiang River.
+    text: Chinese poet of the Tang, 712 to 770. He wrote about war, famine and ordinary lives. Yuan Zhen’s epitaph says he died away from home and was placed in temporary burial at Yueyang.
   zh:
     name: 杜甫
-    text: 唐代诗人，712 年生，770 年去世。他写战乱、饥荒和普通人的生活，格律功力深厚，主要在身后才受推崇。他死在湘江的一条船上。
+    text: 唐代诗人，712 年生，770 年去世。他写下许多关于战乱、饥荒与普通人生活的诗。元稹为他所作墓系铭记他客死他乡，暂殡岳阳。
 hook: {en: 'What can a poem send upriver?', zh: '舟上的诗能托给谁'}
 facts:
   boat_poem:
@@ -100,12 +96,27 @@ facts:
     text:
       en: 'A poem transmitted under Du Fu''s name is headed as verses written in illness aboard a boat and addressed to friends in Hunan. The poem evokes river and shore scenes.'
       zh: '传世杜诗《风疾舟中伏枕书怀三十六韵奉呈湖南亲友》，题中写舟中抱病、作诗寄湖南亲友，诗里也写到水岸景色。'
+  final_journey:
+    date: '770'
+    stay_day: 45
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [du_fu_xiang_river_epitaph]
+    text: {en: 'Yuan Zhen records Du Fu dying away from home and being placed in temporary burial at Yueyang. The epitaph does not clearly identify where he died.', zh: '元稹墓系铭记杜甫客死他乡、暂殡岳阳，卒地所指不够明确。'}
+    line: {en: 'Yuan Zhen’s epitaph records Du Fu’s death away from home and his temporary burial at Yueyang.', zh: '元稹墓系铭记杜甫客死他乡，暂殡岳阳。'}
 bystanders:
   du_fu_xiang_river_reader:
     invented: true
     text: {en: 'An invented boat traveller preparing a note for a friend.', zh: '一位虚构的舟中旅人，正在给朋友备一张信笺。'}
 wiki:
   refs:
+    du_fu_xiang_river_epitaph:
+      order: 203
+      status: checked
+      text:
+        en: 'Yuan Zhen, Epitaph for Du Fu, collected writings. https://www.shidianguji.com/zh/book/SBCK160/chapter/SBCK160_797'
+        zh: '元稹《唐故工部员外郎杜君墓系铭并序》，《元氏长庆集》。https://www.shidianguji.com/zh/book/SBCK160/chapter/SBCK160_797'
     du_fu_xiang_river_collected_poem:
       order: 10
       status: checked

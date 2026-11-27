@@ -2,7 +2,7 @@ order: 203
 events:
   wright_kitty_hawk:
     order: 88
-    build_step: 2
+    build_step: 3
     year: 1903
     lon: -75.7
     lat: 36
@@ -20,7 +20,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 16.05, req: {"any":[{"trait":["hardy","bold"]},{"stat":{"constitution":8}},{"provides":"strength"}]}}
-        - {id: p2, kind: hold, day: 16.35, req: {"any":[{"provides":"strength"},{"stat":{"constitution":9},"trait":["bold","vigil","hardy","calm"]}]}}
+        - {id: p2, kind: hold, day: 16.35, overturns: [flyer_damage], req: {"any":[{"provides":"strength"},{"stat":{"constitution":9},"trait":["bold","vigil","hardy","calm"]}]}}
       vignettes:
         - {id: numbers, traits: [methodical, vigil], day: 16.8}
         - {id: sand, traits: [hardy, cheerful], day: 10}
@@ -31,6 +31,24 @@ events:
         place: Kitty Hawk, North Carolina
         figure: Orville and Wilbur Wright
         story: 'In September 1903 the Wright brothers came back to their camp near Kitty Hawk with a powered machine. Wilbur''s attempt on 14 December failed. On the morning of 17 December they made four flights, the first of twelve seconds and the last of fifty nine. That afternoon they walked to Kitty Hawk and telegraphed their father in Dayton.'
+        story_prose:
+          opening:
+            - 'Near Kitty Hawk, December 1903. The Wright brothers have brought an engine-driven Flyer. The attempt on the 14th failed. The rail has to be set out again, and the wind is still blowing.'
+            - 'In history, the first flight on the 17th lasted twelve seconds. After the fourth landing, a gust overturned the machine with John Daniels of the lifesaving station caught between the wings. In this branch, there is another pair of hands at the camp to help with the rail and the machine on the ground.'
+            - 'This trip needs someone who can keep their feet in the wind. Someone with the right equipment can also help hold a wide wing steady.'
+          points:
+            p1: 'Before takeoff, {staff} checks the sand under the rail and steadies the wing into the wind until it passes out of reach. Daniels stands by the camera. The wingtip passes the end of the rail with a bright strip of sand beneath it.'
+            p2: 'After the fourth landing, {staff} feels the wind rise and helps the lifesaving crew hold the wing down and move Daniels clear. Sand skates beneath the wing, and the hands on its edge hold on. When the wind drops, a faint line of sand lies across the cloth.'
+          outcomes:
+            all: 'The distances went into the telegram. When the brothers packed the Flyer, they wiped the fabric once more, leaving a thin layer of sand at the bottom of the box.'
+            p2: 'The Flyer went up over the dunes a few more times. Whoever packed it laid a length of rail rope alongside the fabric, then closed the lid.'
+            p1: 'Twelve seconds and a hundred and twenty feet went into the notes. The photograph lay beside that page.'
+          none: 'Wind crossed the camp and buried the foot of the rail again. A point of red was all that showed in the stove.'
+          not_admitted: '{staff} found no place among the helpers. Passing the shed, one end of the rail still showed above the sand.'
+          desync: 'The wing scraped the sand, and the Flyer stopped beside the rail. As {staff} was recalled, the wind was still lifting the cloth.'
+          excerpts:
+            p2: 'Sand skates beneath the wing, and the hands on its edge hold on. When the wind drops, a faint line of sand lies across the cloth.'
+            p1: 'Daniels stands by the camera. The wingtip passes the end of the rail with a bright strip of sand beneath it.'
         relic: A propeller blade
         relic_desc: A wooden blade shaped like a twisted wing.
         points:
@@ -54,6 +72,24 @@ events:
         place: 北卡罗来纳基蒂霍克
         figure: 奥维尔和威尔伯·莱特
         story: '1903 年九月，莱特兄弟带着一架装了发动机的飞机回到基蒂霍克附近的营地。12 月 14 日威尔伯的尝试没有成功。12 月 17 日上午他们飞了四次，第一次 12 秒，最后一次 59 秒。当天下午，兄弟俩走到基蒂霍克，给代顿的父亲发了电报。'
+        story_prose:
+          opening:
+            - '1903 年 12 月，基蒂霍克附近。莱特兄弟带来的飞行者号有发动机，14 日试过一次，没能飞起来。滑轨还要重新架，风也还在吹。'
+            - '史实里，17 日首次飞了十二秒。第四次落地后，风掀翻了飞机，救生站的约翰·丹尼尔斯也被卷进机翼。在这条分支里，营地里多一双手，能跟着守滑轨和落地的飞机。'
+            - '这一趟用得上能在风里站住的人，也用得上带了助力装备、能在宽大的机翼旁稳住脚的人。'
+          points:
+            p1: '起飞前，{staff}顺着滑轨看过沙有没有垫平，迎风扶住机翼，等飞行者号滑出手边。丹尼尔斯站在相机旁。翼尖越过滑轨末端，下面有一线空亮的沙地。'
+            p2: '第四次落地后，{staff}察觉风又顶上来，和救生站的人一同压住机翼，把丹尼尔斯带离两翼之间。沙从机翼下擦过去，搭在翼边的手仍没有松开。等风落下来，布面上留着一道浅浅的沙印。'
+          outcomes:
+            all: '那天飞过的距离后来写进电报。装箱时，兄弟俩又把翼面抹了一遍，箱底只剩一层薄沙。'
+            p2: '飞行者号又在沙丘上飞了几回。装箱的人把一截滑轨绳放在翼面旁，最后才合盖。'
+            p1: '十二秒和一百二十英尺被写进记录。翻到那一页时，相机留下的照片就在旁边。'
+          none: '风刮过营地，沙又盖住滑轨的脚。棚里的炉火只剩一点红。'
+          not_admitted: '{staff}没能加入营地的帮手。走过棚外时，滑轨的一端露在沙上。'
+          desync: '机翼擦了沙，飞行者号停在轨边。{staff}被召回时，风还沿着翼面往上钻。'
+          excerpts:
+            p2: '沙从机翼下擦过去，搭在翼边的手仍没有松开。等风落下来，布面上留着一道浅浅的沙印。'
+            p1: '丹尼尔斯站在相机旁。翼尖越过滑轨末端，下面有一线空亮的沙地。'
         relic: 一片螺旋桨叶
         relic_desc: 一片木头叶子，像一只扭过的翅膀。
         points:
@@ -69,9 +105,9 @@ events:
             was: '1903 年 12 月 17 日，第四次飞行后一阵风掀翻了飞行者号，约翰·丹尼尔斯被卷在机翼中间，飞机损坏严重，从此再没飞过。'
             now: '{staff}和救生站的人把它按在了沙地上，丹尼尔斯没被卷进去。那年冬天，兄弟俩又让它在沙丘上飞了几回，才把它装箱运回代顿。'
         vignettes:
-          numbers: '天黑之前，{staff}把四次飞行按先后抄进本子，秒数一栏，英尺一栏，加了两遍。'
-          sand: '夜里风大，{staff}把滑轨从沙里刨出来，在滑轨脚下把沙踩平。一位编出来的救生站帮手说，天亮风就会停。天亮了，风没停。'
-          cold: '发动机预热时，{staff}在棚里守着炉子。外头的水洼结了冰，谁也没提。'
+          numbers: '天黑前，{staff}把四次飞行抄到同一页，左边秒数，右边英尺。加完第二遍，铅笔还夹在两栏之间。'
+          sand: '夜里风大，{staff}从沙里刨出滑轨，把两边踩实。救生站的帮手说天亮风会停，天亮时棚门还在响。'
+          cold: '发动机预热时，{staff}守着棚里的炉子。门缝漏进一点光，照着外头结冰的水洼。'
 text:
   en:
     name: Orville and Wilbur Wright
@@ -148,11 +184,29 @@ facts:
     use: [story, history, wiki]
     sources: [nps_first_flight, henryford_first_flight]
     text:
-      en: 'The fourth flight of the day was the longest, 852 feet in 59 seconds. The machine was badly damaged afterwards and never flew again.'
-      zh: '当天第四次飞行最长，59 秒，852 英尺。之后飞机严重受损，再也没有飞过。'
+      en: 'The fourth flight of the day was the longest, 852 feet in 59 seconds.'
+      zh: '当天第四次飞行最长，59 秒，852 英尺。'
     line:
-      en: 'The fourth flight of the day is the longest: 852 feet in 59 seconds. Afterwards the machine is badly damaged and never flies again.'
-      zh: '当天第四次最长，59 秒，852 英尺。之后飞机严重受损，再也没有飞过。'
+      en: 'The fourth flight of the day is the longest: 852 feet in 59 seconds.'
+      zh: '当天第四次最长，59 秒，852 英尺。'
+  flyer_damage:
+    date: '1903-12-17'
+    stay_day: 16.34
+    checked: 'two_sources'
+    level: 'usable'
+    use:
+      - 'story'
+      - 'history'
+      - 'wiki'
+    sources:
+      - 'nps_first_flight'
+      - 'henryford_first_flight'
+    text:
+      en: 'After the fourth flight a gust overturned the Flyer, which was badly damaged and never flew again.'
+      zh: '第四次飞行之后，阵风掀翻飞行者号，飞机严重受损，再也没有飞过。'
+    line:
+      en: 'A gust overturns the Flyer. The machine is badly damaged and never flies again.'
+      zh: '阵风掀翻飞行者号。飞机严重受损，再也没有飞过。'
   telegram:
     date: '1903-12-17'
     stay_day: 16.5

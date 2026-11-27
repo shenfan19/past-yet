@@ -10,11 +10,11 @@ events:
     field: music
     tier: 3
     channels: {C: 2, G: 2}
-    refs: [hildegard_bingen_interdict, hildegard_bingen_letter, hildegard_bingen_mainz_interdict, hildegard_bingen_manuscript_catalogue]
+    refs: [hildegard_bingen_interdict, hildegard_bingen_letter, hildegard_bingen_mainz_interdict, hildegard_bingen_manuscript_catalogue, hildegard_bingen_scribes]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: persuade, day: 30, req: {"any":[{"job":["translator","archivist"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","faithful"],"stat":{"wit":7,"will":8}},{"trait":["charismatic"],"stat":{"will":8}}]}}
+        - {id: p1, kind: hold, day: 30, req: {"any":[{"job":["archivist","proofreader","musician"],"stat":{"wit":7,"will":7}},{"trait":["patient","methodical","artistic"],"stat":{"wit":7,"will":8}}]}}
       vignettes:
         - {id: opening, traits: [methodical, quiet, artistic]}
         - {id: wait, traits: [faithful, calm, attached]}
@@ -24,19 +24,17 @@ events:
         name: 'The unvoiced opening'
         place: "Bingen"
         figure: "Hildegard of Bingen"
-        story: 'Hildegard’s letter to the Mainz prelates protests a restriction on her community’s worship during a dispute over a burial. Another letter in the Mainz regesta concerns the dispute in 1179.'
-        relic: 'A chant practice page'
+        story: 'A dispute over a burial interrupted singing in Hildegard’s community. Her letters to Mainz record what was at stake for her. The restriction was lifted in March 1179. Several collections of her writings and music preserve the work of copyists at Rupertsberg.'
+        relic: 'A marked practice page'
         relic_desc: 'An invented page with a thread marking its opening.'
         points:
-          p1: 'Get the testimony that the dead man had been reconciled with the Church to Mainz early, so the community can sing again months sooner'
+          p1: 'While the room is quiet, ask Hildegard and the copyists which damaged marks to carry over and where to leave a question on the spare leaf'
         points_fail:
-          p1: 'The interdict runs on until March 1179, and through those months the nuns may not sing the office.'
+          p1: 'The spare leaf is put aside with a blank above the first word. The next reader will still have to ask what the old page says.'
         shift:
           p1:
-            was: 'In 1178 the Mainz prelates placed Rupertsberg under interdict because a man once excommunicated was buried in its cemetery. Hildegard held that he had been reconciled before he died and would not have him dug up. The interdict was lifted only in March 1179.'
-            now: '{staff} carries the witnesses'' word to Mainz early and the interdict is lifted sooner. In the last year of her life the community sings for months longer.'
-            who: hildegard_bingen
-            bio: 'When her community was forbidden to sing in her eightieth year, the interdict in this timeline was lifted within weeks. Singing at Rupertsberg hardly stopped in her last year.'
+            was: 'Hildegard’s letters describe the interruption of singing. Copyists at Rupertsberg preserved her writings and music.'
+            now: 'In this branch {staff} keeps the old leaf beside the copy. Hildegard’s copyists can tell which marks they read clearly and which need another look.'
         vignettes:
           opening: 'Agnes can still find the first word but no longer reads the damaged mark above it. You ask her to compare the spare page with the line she knows. She sets a thread by the right place. Now the next person can open straight to the same beginning.'
           wait: 'Adelheid has the words by heart and is about to file the damaged sheet away. You hold it where Agnes can trace the line once more. Adelheid copies the opening onto a spare leaf, then keeps the old page beside it. The next reader will have both.'
@@ -45,19 +43,17 @@ events:
         name: '没唱出声的开头'
         place: "宾根"
         figure: "宾根的希尔德加德"
-        story: '希尔德加德致美因茨教长的信，抗议当局因安葬争议限制修院礼仪。美因茨文书目录还收有1179年关乎这一争议的另一封信。'
-        relic: '一页圣咏练习稿'
+        story: '一场安葬争议使希尔德加德住处的歌声停了下来。她写信给美因茨，谈到歌唱对身边人的意义。限制于 1179 年 3 月解除。留存的文集里，还看得见鲁珀茨贝格抄写人的工作。'
+        relic: '一页有记号的练习稿'
         relic_desc: '练习页，一根夹线标明起句。'
         points:
-          p1: '把死者生前已与教会和解的证词早些送到美因茨，让修院早几个月重新唱起来'
+          p1: '趁屋里安静，请希尔德加德和抄写人辨认旧页上的磨损处，把辨不清的记号注明在副页上'
         points_fail:
-          p1: '禁令照旧拖到 1179 年 3 月才解除，这几个月里修女们不能唱日课。'
+          p1: '副页先收起来了。第一个字上面仍留着白，下一个读到的人还得问旧页怎么写。'
         shift:
           p1:
-            was: '1178 年，因修院墓地葬了一位曾被绝罚的男子，美因茨的教长对鲁珀茨贝格下了禁令；希尔德加德申明他生前已与教会和解，不肯掘墓，禁令到 1179 年 3 月才解除。'
-            now: '{staff}早早把证人的话送到美因茨，禁令提前解除。她生命的最后一年里，修院的歌多唱了几个月。'
-            who: hildegard_bingen
-            bio: '希尔德加德八十岁那年修院被禁唱，在这条时间线里禁令几周就解除了，她最后一年里鲁珀茨贝格的歌声几乎没有断过。'
+            was: '希尔德加德在信中谈到歌唱中断。鲁珀茨贝格的抄写人也为她留下了文章和曲谱。'
+            now: '这条分支里，{staff}把旧页和副页并排留下。抄写人一眼就能看出哪些记号已经读清，哪些还要再看。'
         vignettes:
           opening: '阿格内斯还认得出第一个词，词上方磨坏的记号却看不清。你请她把知道的那句与备用纸对一遍。她夹一根线在对应处。下一个人翻开，也能找到同一个开头。'
           wait: '阿德尔海德背得出词，正要把损坏的那页收起来。你托住纸，让阿格内斯沿着那行再走一遍。阿德尔海德把开头抄到备用页上，旧纸放在旁边。下一个人来时，两份都还在。'
@@ -69,7 +65,7 @@ text:
   zh:
     name: 宾根的希尔德加德
     text: 德国女修道院长，1098 年生，1179 年去世，在莱茵河畔的宾根。她写幻象神学、医学与博物学著作，还作了大量圣咏，是中世纪个人留存作品最多的作曲家之一。
-hook: {en: 'How do you pass on a chant in silence?', zh: '不能唱的时候，圣咏怎样传下去？'}
+hook: {en: 'Which marks can the next reader still make out?', zh: '下一个人翻开这页，还能辨出几个记号？'}
 facts:
   interdict:
     date: '1178'
@@ -89,6 +85,14 @@ facts:
     text:
       en: 'The regesta record correspondence with Archbishop Christian over the burial and the interdict.'
       zh: '文书纪要收录她就安葬争议和禁令写给大主教克里斯蒂安的书信。'
+  lifted:
+    date: '1179-03'
+    checked: two_sources
+    level: careful
+    use: [history, story, wiki]
+    sources: [hildegard_bingen_interdict, hildegard_bingen_mainz_interdict]
+    text: {en: 'The dispute over the burial led to an interruption of singing. The restriction was lifted in March 1179.', zh: '安葬争议后，当地的歌唱中断。限制于 1179 年 3 月解除。'}
+    line: {en: 'March 1179: the restriction on singing ends.', zh: '1179 年 3 月，歌唱限制解除。'}
 bystanders:
   agnes:
     invented: true
@@ -98,6 +102,12 @@ bystanders:
     text: {en: 'A fictional member of the community who memorised the words.', zh: '虚构修院成员阿德尔海德，记得圣咏的词。'}
 wiki:
   refs:
+    hildegard_bingen_scribes:
+      order: 456
+      status: checked
+      text:
+        en: 'Hildegard of Bingen and Her Scribes, Cambridge Companion to Hildegard of Bingen. https://www.cambridge.org/core/books/abs/cambridge-companion-to-hildegard-of-bingen/hildegard-of-bingen-and-her-scribes/23880AC7638EE6817BD2473653244D8E'
+        zh: '《剑桥希尔德加德指南》，〈希尔德加德与抄写人〉。https://www.cambridge.org/core/books/abs/cambridge-companion-to-hildegard-of-bingen/hildegard-of-bingen-and-her-scribes/23880AC7638EE6817BD2473653244D8E'
     hildegard_bingen_mainz_interdict:
       order: 10
       status: checked

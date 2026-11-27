@@ -31,10 +31,10 @@ events:
         relic: "A sky sweep ruler"
         relic_desc: "A wooden ruler with a scale, used to mark the swept patches on a star chart."
         points:
-          p1: 'Fix the positions of the reference stars before the haze closes in and protect the evidence for Herschel''s first comet'
+          p1: 'Mark the reference stars and the time on both drawings so Herschel can show that the object moved between the two nights'
           p2: 'Use Herschel''s first comet report to secure regular nights for her own observations'
         points_fail:
-          p1: 'The haze hides the reference stars. The object returns the next evening, but there is no earlier position to compare. The branch loses sync and the employee is recalled.'
+          p1: 'Low haze leaves too few clear reference points on the first drawing. The second drawing cannot establish motion in this branch, and the office recalls the employee.'
           p2: 'When her brother uses the large telescope she spends the evening taking down his readings, and her own observations still fit around his.'
         shift:
           p1:
@@ -56,10 +56,10 @@ events:
         relic: "一把天区扫描记录尺"
         relic_desc: "一把刻着刻度的木尺，用来在星图上标出扫过的天区。"
         points:
-          p1: '趁薄雾遮住参照星前帮赫歇尔绘定星位，护住她第一颗彗星的观测证据'
+          p1: '在两夜的图上都标清观测时刻和参照星，让赫歇尔能对比两张图，说明那团光移动了'
           p2: '拿首份彗星报告为赫歇尔争取固定的独立观测时段'
         points_fail:
-          p1: '夜雾遮住参照星，第二夜有光点却没有前一夜的位置可比。历史脱节，员工被召回。'
+          p1: '低空的薄雾让第一张图缺少足够的参照点。第二晚画出的光点没法用来比较位移，这条分支与史实脱节，员工被召回。'
           p2: '每逢兄长用大望远镜，她仍得整晚记他的读数，自己的观测只能挤在空当里。'
         shift:
           p1:
@@ -82,6 +82,19 @@ text:
     text: "德国出生的英国天文学家，1750 年生，1848 年去世。她是天文学家威廉·赫歇尔的妹妹，1786 年发现了自己的第一颗彗星，后来又发现多颗彗星。"
 hook: {en: 'Put a time beside that fuzzy star.', zh: '给那团模糊的光记下时刻'}
 facts:
+  comet_letter:
+    date: '1786-08-02'
+    stay_day: 13
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [caroline_herschel_slough_primary]
+    text:
+      en: 'Herschel’s letter of 2 August compared two nights of observations. Her published account discussed uncertainty in matching the reference stars, while the comparison still demonstrated that the object had moved.'
+      zh: '赫歇尔在 8 月 2 日的信里比较了两夜的观测。刊行稿说明有几颗参照星难以确指，但两夜的图仍能用来判断那团光发生了位移。'
+    line:
+      en: '2 August 1786: Caroline Herschel sends the drawings from both nights with her comet report.'
+      zh: '1786 年 8 月 2 日，卡罗琳·赫歇尔寄出彗星报告和两夜的观测图。'
   comet:
     date: '1786-08-01'
     checked: official_record

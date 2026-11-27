@@ -17,7 +17,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, day: 54, req: {"any":[{"trait":["bold","hardy"],"stat":{"constitution":7,"will":7}},{"trait":["streetwise","wanderer"],"provides":"disguise","stat":{"will":5}}]}}
+        - {id: p1, kind: hold, day: 52, overturns: [death], req: {"any":[{"trait":["bold","hardy"],"stat":{"constitution":7,"will":7}},{"trait":["streetwise","wanderer"],"provides":"disguise","stat":{"will":5}}]}}
       vignettes:
         - {id: source, traits: [methodical, scholarly], day: 20}
         - {id: arc, traits: [curious, handy], day: 10}
@@ -27,17 +27,17 @@ events:
         name: 'The road out of Samarkand'
         place: Samarkand
         figure: Ulugh Beg
-        story: 'For twenty years Ulugh Beg had made Samarkand a city of astronomers, with an observatory whose great meridian arc measured the heights of the stars; the tables made there include a catalogue of 1018 stars. In the autumn of 1449, as power in the realm changed hands, he was forced to give up his rule and was sent away from Samarkand. On 27 October 1449 he was killed on the road, aged fifty five. The site of the observatory was found again in 1908.'
+        story: 'Ulugh Beg built an observatory at Samarkand and oversaw a catalogue of 1,018 stars. In autumn 1449 he lost power and was given leave to travel to Mecca. He was killed near Samarkand in late October. The date on his tomb is 27 October, two days after the date given by another source.'
         relic: 'A slip with two sources'
         relic_desc: 'Two marked rows for an older star position and a new observation.'
         points:
-          p1: 'Before Ulugh Beg is sent out of Samarkand, get him away safely by another road'
+          p1: 'After Ulugh Beg gives up power, arrange somewhere for him to stay on the first leg of his journey and offer to go with him'
         points_fail:
-          p1: 'As in history he sets out on the road he was sent on, and on 27 October he is killed.'
+          p1: 'He leaves with the company already waiting for him. The next news you hear is that he was killed near the city.'
         shift:
           p1:
-            was: '27 October 1449: after giving up his rule, Ulugh Beg was sent away from Samarkand and was killed on the road, aged fifty five.'
-            now: 'He left Samarkand by another road and lived on in safety.'
+            was: 'After giving up his rule, Ulugh Beg set out from Samarkand and was killed near the city in late October 1449.'
+            now: 'In this branch {staff} goes with Ulugh Beg to a place he has agreed to stay. He survives the journey out of Samarkand.'
             who: ulugh_beg_samarkand
             bio: 'In this timeline Ulugh Beg came safely away from Samarkand in the autumn of 1449 and lived on.'
         vignettes:
@@ -48,17 +48,17 @@ events:
         name: '出撒马尔罕的那条路'
         place: 撒马尔罕
         figure: 兀鲁伯
-        story: '二十年间，兀鲁伯把撒马尔罕经营成天文学家的城，天文台里巨大的子午弧用来测星的高度，那里编成的天文表收有 1018 颗星。1449 年秋，政局生变，他被迫交出权位，被遣离撒马尔罕。10 月 27 日他在途中遇害，年五十五。天文台遗址在 1908 年被重新发现。'
+        story: '兀鲁伯在撒马尔罕修建天文台，主持编成收有 1018 颗星的星表。1449 年秋他失去权位，获准前往麦加。十月下旬，他在撒马尔罕附近遇害。墓碑所载的卒日是 10 月 27 日，另有文献记早两天。'
         relic: '一张星表来源签'
         relic_desc: '一行记旧表星位，一行留给新的观测。'
         points:
-          p1: '兀鲁伯被遣出撒马尔罕之前，带他换一条路平安离开'
+          p1: '兀鲁伯交出权位后，替他商量出城以后的第一个落脚处，陪他走一段路'
         points_fail:
-          p1: '他照史实踏上被遣去的那条路，10 月 27 日遇害。'
+          p1: '他跟等着出发的一行人离开。再听到他的消息时，他已经在城外遇害了。'
         shift:
           p1:
-            was: '1449 年 10 月 27 日，交出权位后被遣离撒马尔罕的兀鲁伯在途中遇害，年五十五。'
-            now: '他换了一条路离开撒马尔罕，平安活了下来。'
+            was: '兀鲁伯交出权位后离开撒马尔罕，于 1449 年十月下旬在城外遇害。'
+            now: '这条分支里，{staff}陪兀鲁伯到了事先商量好的落脚处。他平安度过了离开撒马尔罕的这段路。'
             who: ulugh_beg_samarkand
             bio: '这条时间线里，兀鲁伯在 1449 年秋平安离开撒马尔罕，活了下来。'
         vignettes:
@@ -68,10 +68,10 @@ events:
 text:
   en:
     name: Ulugh Beg
-    text: Timurid ruler and astronomer, 1394 to 1449. At Samarkand he built a large observatory and produced a star catalogue of high accuracy. He died in Samarkand on 27 October 1449.
+    text: Timurid ruler and astronomer, 1394 to 1449. At Samarkand he built a large observatory and produced a star catalogue of high accuracy. He was killed near Samarkand in late October 1449.
   zh:
     name: 兀鲁伯
-    text: 帖木儿王朝的统治者与天文学家，1394 年生，1449 年去世。他在撒马尔罕建起大型天文台，编出精度很高的星表。1449 年 10 月 27 日他在撒马尔罕去世。
+    text: 帖木儿王朝的统治者与天文学家，1394 年生，1449 年去世。他在撒马尔罕建起大型天文台，编出精度很高的星表。1449 年十月下旬，他在撒马尔罕附近遇害。
 hook: {en: 'He has been told to leave the city.', zh: '他被遣出城去。'}
 facts:
   observatory:
@@ -100,6 +100,7 @@ facts:
       zh: '1437 年前后，撒马尔罕的星表编成，收星 1018 颗，多数是重新测定的。'
   fall:
     date: '1449'
+    stay_day: 48
     checked: two_sources
     level: careful
     use: [story, history, wiki]
@@ -111,18 +112,18 @@ facts:
       en: 'Samarkand: Ulugh Beg gives up his rule and is told to leave the city.'
       zh: '撒马尔罕，兀鲁伯交出权位，被遣离城。'
   death:
-    date: '1449-10-27'
+    date: '1449-10'
     stay_day: 56
     checked: two_sources
     level: careful
     use: [story, history, wiki]
     sources: [st_andrews_ulugh_beg, ulugh_beg_samarkand_vangent]
     text:
-      en: 'Ulugh Beg was killed on the road on 27 October 1449, aged 55.'
-      zh: '1449 年 10 月 27 日，兀鲁伯在途中遇害，终年 55 岁。'
+      en: 'Ulugh Beg was killed on the road in late October 1449. His tomb gives the 27th and other accounts give the 25th.'
+      zh: '1449 年十月下旬，兀鲁伯在途中遇害。墓碑记 27 日，另有文献记 25 日。'
     line:
-      en: '27 October 1449: Ulugh Beg is killed on the road.'
-      zh: '1449 年 10 月 27 日，兀鲁伯在途中遇害。'
+      en: 'Late October 1449: Ulugh Beg is killed on the road near Samarkand.'
+      zh: '1449 年十月下旬，兀鲁伯在撒马尔罕附近遇害。'
   rediscovered:
     date: '1908'
     checked: two_sources

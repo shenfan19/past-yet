@@ -12,14 +12,13 @@ events:
     field: literature
     tier: 1
     channels: {G: 1}
-    refs: [dickinson_amherst_primary, dickinson_lavinia_burn, dickinson_harvard_fascicles]
+    refs: [dickinson_amherst_primary, dickinson_lavinia_burn, dickinson_harvard_fascicles, dickinson_homestead]
     scene:
       star_rules: 2
       points:
+        - {id: p3, kind: care, day: 5, req: {"any":[{"job":["doctor","physician","nurse","caregiver","medical_teacher"]},{"trait":["kind","patient"],"item":"painkiller"},{"trait":["kind","patient","vigil"],"stat":{"constitution":6,"will":6}}]}}
         - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"wit":7}},{"trait":["methodical"],"stat":{"will":8}}]}}
         - {id: p2, kind: persuade, day: 38, req: {"any":[{"job":["archivist","translator"],"stat":{"will":8}},{"trait":["methodical","charismatic"],"stat":{"wit":9}}]}}
-        - {id: p3, kind: care, day: 5, req: {"any":[{"job":["doctor","physician","nurse","caregiver","medical_teacher"]},{"trait":["kind","patient"],"item":"painkiller"},{"trait":["kind","patient","vigil"],"stat":{"constitution":6,"will":6}}]}}
-        - {id: p4, kind: trust, day: 9, req: {"any":[{"trait":["scholarly","sensitive","artistic"],"stat":{"will":7}},{"job":["translator","proofreader","writer","teacher","lecturer","university_lecturer","bookseller"],"stat":{"will":7,"wit":6}},{"item":"golden_apple","trait":["kind","sensitive","scholarly","artistic"]}]}}
       vignettes:
         - {id: pause, traits: [artistic, quiet]}
         - {id: variant, traits: [methodical, vigil]}
@@ -29,33 +28,26 @@ events:
         name: "Poems in a chest"
         place: "Amherst"
         figure: "Emily Dickinson"
-        story: 'Many of Emily Dickinson''s poems survive in manuscripts.'
+        story: 'Emily Dickinson died at home in Amherst on 15 May 1886. Her sister Lavinia carried out her request to burn her incoming letters and found hundreds of poems. The earliest editors later took apart the booklets in which Emily had sewn many of the poems.'
         relic: "A sewn booklet"
         relic_desc: "A few pages sewn by hand with a poem on each."
         points:
           p1: 'Help Lavinia separate the letters to be destroyed from the bound poems and protect the unpublished work'
-          p2: 'Persuade Lavinia to keep the sewn books at home and send only copies that preserve the layout'
-          p3: 'Ease her illness in her last weeks, so that she can sleep at night'
-          p4: 'Before she dies, let her know that her poems will be printed and read for generations'
+          p2: 'Ask Lavinia to keep one booklet together and prepare a copy that marks the folds, page order and alternate words'
+          p3: 'Ask Emily what would make it easier to rest tonight, and help her household arrange it'
         points_fail:
           p1: 'The poems are mixed with the correspondence and much of the unpublished work is lost. The branch falls out of sync and the office recalls the employee.'
-          p2: 'The books are taken apart for editing. Later readers have to reconstruct the order from stitch marks and paper.'
-          p3: 'In mid May she fell into a coma and did not wake again.'
-          p4: 'Fewer than a dozen of her poems were printed in her lifetime, all without her name. In this branch nobody told her otherwise in those last days.'
+          p2: 'There is a clean copy, but its pages give no way to tell where the folded sheets joined.'
+          p3: 'The household keeps its usual evening routine. Emily still has to ask someone to stay when she needs a hand.'
         shift:
           p1:
             was: 'In 1886, after Dickinson died, Lavinia destroyed the incoming letters as requested and discovered hundreds of poems.'
           p2:
-            was: 'From 1886 on, Dickinson''s hand-sewn books were disbound during the early editing of her poems.'
-            now: '{staff} helps Lavinia copy the pages as laid out and keep the originals at home. Later readers can still see which poems Dickinson stitched together.'
+            was: 'Dickinson’s earliest editors disbound the hand-sewn booklets they worked from.'
+            now: 'In this branch {staff} copies a booklet without taking it apart. Lavinia has a copy that shows how the pages belong together, down to the alternative words in the margin.'
           p3:
-            was: 'In May 1886, after two and a half years of illness, Dickinson fell into a coma and died on 15 May.'
-            now: 'She suffered less in those last weeks and slept at night.'
-          p4:
-            was: 'When Dickinson died on 15 May 1886, fewer than a dozen of her nearly eighteen hundred poems had been printed, all without her name.'
-            now: '{staff} let her know while she was still awake that those poems would be printed as books and read for a long time to come.'
-            who: dickinson_amherst
-            bio: 'In her last days Dickinson learned that her poems would be read for generations, and she died at home in Amherst.'
+            was: 'Dickinson was gravely ill and died at home on 15 May 1886.'
+            now: 'In this branch the household takes her lead and leaves someone close enough to hear her, so she can rest without calling out for help.'
         vignettes:
           pause: 'The reader makes the dash disappear as they read aloud. You ask them to pause where the pencil broke off. They try the line again and hear a different ending.'
           variant: 'You see a word written above the line. The reader wants to choose one version and move on. You make room in the margin for both and label which comes from where.'
@@ -64,33 +56,26 @@ events:
         name: "箱子里的诗"
         place: "阿默斯特"
         figure: "艾米莉·狄金森"
-        story: '艾米莉·狄金森许多诗以手稿传世。'
+        story: '1886 年 5 月 15 日，艾米莉·狄金森在阿默斯特家中去世。妹妹拉维尼娅按姐姐的要求销毁了收到的来信，又发现数百首诗。早期编者后来将艾米莉手缝成册的诗稿拆开整理。'
         relic: "一册手缝的小本"
         relic_desc: "几页手工缝起来的纸，每页一首诗。"
         points:
           p1: '帮拉维尼娅分开要销毁的来信和姐姐捆好的诗稿，护住那批尚未刊行的诗'
-          p2: '劝拉维尼娅把原册留在家中，只把保留手稿版面的副本交出去编辑'
-          p3: '她病重的最后几周，减轻她的病痛，让她夜里睡得着'
-          p4: '去世之前让她知道，她的诗会印成书，一代代有人读'
+          p2: '请拉维尼娅留下一本未拆的诗册，抄出带折页、页序和备选用词的副本'
+          p3: '问艾米莉今晚怎样能歇得安稳些，帮家里人照她的意思安排'
         points_fail:
           p1: '诗稿和来信混进同一摞纸，大批未刊诗跟着消失。这条分支与史实脱节，员工被召回。'
-          p2: '编诗时原册被拆，后来的读者只能靠针孔和纸张重排册序。'
-          p3: '五月中旬她陷入昏迷，再没有醒来。'
-          p4: '她生前只有十来首诗印出来，都没署她的名字；这条分支里没人在最后那些天告诉过她以后的事。'
+          p2: '清抄稿有了，可纸页怎样折在一起，单看副本已经辨不出来。'
+          p3: '家里照平时的样子入夜。艾米莉需要人搭把手时，还得开口请人留下。'
         shift:
           p1:
             was: '1886 年，狄金森去世后，拉维尼娅按姐姐的要求销毁来信，另外发现了成批诗稿。'
           p2:
-            was: '1886 年以后，狄金森亲手缝成的诗册在早期编辑阶段被拆开。'
-            now: '{staff}帮拉维尼娅把摊开的页面逐页照原样副抄，原册留在家里。后来读者能看到哪些诗是狄金森自己缝在一起的。'
+            was: '狄金森的早期编者拆开了她亲手缝成的诗册。'
+            now: '这条分支里，{staff}抄了一册留样，始终没拆它。拉维尼娅从副本就能看出纸页怎样叠在一起，页边的备选词也留了下来。'
           p3:
-            was: '1886 年 5 月，狄金森病了两年半之后陷入昏迷，5 月 15 日去世。'
-            now: '最后那几周她少受了些苦，夜里睡得着。'
-          p4:
-            was: '1886 年 5 月 15 日狄金森去世时，她写下的近一千八百首诗只有十来首印出过，都没有署名。'
-            now: '{staff}在她还清醒时让她知道，那些诗会印成书，往后一直有人读。'
-            who: dickinson_amherst
-            bio: '狄金森在最后几天知道了她的诗会被一代代人读下去，在阿默斯特的家中去世。'
+            was: '狄金森病重，1886 年 5 月 15 日在家中去世。'
+            now: '这条分支里，家人照她的意思留了人在近处。她歇下之后，有事也不用提高声音喊。'
         vignettes:
           pause: '读者朗读时把破折号滑了过去。你请他在笔迹断开的地方停一停。再读那一行，他听出了另一种收尾。'
           variant: '你看见行上还写了一个词。读者想挑一个抄完就算，你腾出页边，把两个都留着，并注明各在何处。'
@@ -104,6 +89,15 @@ text:
     text: 美国诗人，1830 年生，1886 年去世，大半生住在马萨诸塞州的阿默斯特。她写了近一千八百首诗，许多手工装订成册，生前只发表了寥寥几首。
 hook: {en: 'What if a dash changes the reading?', zh: '一道破折号怎么读'}
 facts:
+  death:
+    date: '1886-05-15'
+    stay_day: 14
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [dickinson_homestead]
+    text: {en: 'Emily Dickinson died at home in Amherst on 15 May 1886.', zh: '艾米莉·狄金森于 1886 年 5 月 15 日在阿默斯特家中去世。'}
+    line: {en: '15 May 1886: Emily Dickinson dies at home in Amherst.', zh: '1886 年 5 月 15 日，艾米莉·狄金森在阿默斯特家中去世。'}
   manuscripts:
     date: '1886'
     checked: official_record
@@ -119,6 +113,12 @@ bystanders:
     text: {en: 'An invented reader sorting papers on a table in Amherst.', zh: '一位虚构的读者，正坐在阿默斯特一张桌边整理纸页。'}
 wiki:
   refs:
+    dickinson_homestead:
+      order: 813
+      status: checked
+      text:
+        en: 'Emily Dickinson Museum, Our Site, life at the Homestead and date of death https://www.emilydickinsonmuseum.org/the-museum/our-site/'
+        zh: '艾米莉·狄金森博物馆，故居与生卒纪年 https://www.emilydickinsonmuseum.org/the-museum/our-site/'
     dickinson_lavinia_burn:
       order: 811
       status: checked

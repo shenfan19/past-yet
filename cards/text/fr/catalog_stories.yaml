@@ -42,50 +42,100 @@ catalog:
       back_row: "Un étudiant fictif ne trouve pas de place et se lève sans cesse pour voir. Vous vous décalez sur le banc. Il écoute la suite en silence et vous salue d’un signe de tête quand la salle se vide."
       hundred: "Au dos de votre carnet, vous comptez les jours par groupes de cinq traits. À cent, un employé fictif vous demande ce que vous comptez. Vous répondez : les jours."
   lalibela_rock:
-    name: "Chercher où l’eau sort de la roche"
-    place: "Lalibela, Éthiopie"
-    figure: "Lalibela et les tailleurs de pierre"
-    story: "Le roi Lalibela, de la dynastie Zagwé, règne de 1181 à 1221. On lui attribue les onze églises creusées dans la roche de la ville qui porte son nom, ainsi que leurs fossés, tranchées et passages. La datation de chaque église reste incertaine. Dans les années 1520, le prêtre portugais Francisco Álvares arrive avec une ambassade et en rédige la première description européenne détaillée. Le site est inscrit au patrimoine mondial en 1978."
-    relic: "Un ciseau de tailleur de pierre"
-    relic_desc: "Un ciseau en fer au tranchant finement affûté."
+    name: 'Deux couches sur la paroi'
+    place: 'Lalibela, Éthiopie'
+    figure: 'L’équipe de dégagement de Lalibela'
+    story: 'La première phase de restauration à Lalibela commence le 19 décembre 1966. Le déblaiement des sédiments remet au jour des tranchées creusées dans la roche. Des objets mis au jour lors de la campagne, on n’a conservé que quelques photos et aucun inventaire détaillé.'
+    relic: 'Un relevé de la paroi'
+    relic_desc: 'Une coupe indique l’épaisseur des couches et la position des tessons.'
     points:
-      p1: "Se faire accepter par les tailleurs puis évacuer les éclats de la tranchée"
-      p2: "Avant les pluies, suivre une rigole jusqu’à sa sortie et indiquer où l’eau stagnera"
-      p3: "Pendant les pluies, aider à dégager un fossé d’un bout à l’autre"
+      p1: 'Mesurer les couches avec l’équipe et laisser sur place une copie de la coupe indiquant la position des tessons'
+    points_fail:
+      p1: 'La terre est évacuée. On ne peut plus mesurer la position d’origine des tessons.'
+    shift:
+      p1:
+        was: 'Quelques photographies subsistent, sans permettre de retrouver la position des objets dans les différentes couches.'
+        now: 'Une coupe reste à Lalibela. On peut y retrouver l’épaisseur des couches et la position des tessons.'
     vignettes:
-      outlet: "{staff} suit une rigole taillée dans la roche au-delà du coude, jusqu’à l’endroit où elle débouche à l’air libre, et y pose un éclat de pierre."
-      rain: "L’eau aux chevilles dans la tranchée, {staff} passe des paniers de limon jusqu’au bord, l’un après l’autre, jusqu’à la nuit."
-      bend: "{staff} marque sur un bout de papier le coude d’une tranchée pour qu’un aide le retrouve le lendemain matin."
+      work: '{staff} voit la bande claire apparaître sous la lame d’une bêche.'
+    story_prose:
+      opening:
+      - 'Lalibela, hiver 1966. Au coude de la tranchée, une bande de terre claire apparaît sous la boue. Des tessons y sont encore pris.'
+      - 'Les ouvriers dégagent une tranchée depuis longtemps comblée. Quelques photos des trouvailles ont traversé les années. Elles ne suffisent pas à retrouver leur position.'
+      - 'Il reste le temps de mesurer cette paroi avant le prochain panier.'
+      points:
+        p1: '{staff} demande une pause, mesure les couches et reporte chaque tesson sur le relevé. Un ouvrier recopie les mesures sur la feuille qui restera sur place.'
+      outcomes:
+        all: 'Des années plus tard, une règle contre la roche retrouve la hauteur de la bande claire.'
+        p1: 'Des années plus tard, une règle contre la roche retrouve la hauteur de la bande claire.'
+      none: 'La paroi est raclée. La terre rejoint le panier précédent.'
+      not_admitted: '{staff} reste au bord de la tranchée. Un ouvrier enroule une corde sur une planche.'
+      excerpts:
+        p1: '{staff} demande une pause, mesure les couches et reporte chaque tesson sur le relevé. Un ouvrier recopie les mesures sur la feuille qui restera sur place.'
   ife_bronzes:
-    name: "Le trait qui doit survivre à la coulée"
-    place: "Ife, Nigeria"
-    figure: "Les fondeurs d’Ife"
-    story: "À Ife, ville yoruba, les fondeurs réalisent des têtes réalistes en alliage de cuivre durant quelque quatre siècles ; la plupart des estimations situent ces œuvres autour de 1300. En 1910, l’Allemand Leo Frobenius fait pression sur le prêtre d’un bois sacré pour qu’il lui vende une tête qu’il nomme tête d’Olokun, puis doit la rendre. En 1938, des ouvriers trouvent plusieurs têtes en creusant dans l’enceinte de Wunmonije, dont celle qui se trouve aujourd’hui au British Museum. Lors d’une exposition à Londres en 1948, on les compare aux plus belles œuvres d’Italie et de Grèce."
-    relic: "Deux dessins d’étude"
-    relic_desc: "Des dessins qui comparent les traits sur une pièce d’essai brute de coulée."
+    name: 'Un plan avant le remblai'
+    place: 'Ile-Ife, Nigeria'
+    figure: 'L’équipe de fouille d’Ita Yemoo'
+    story: 'Les fouilles de sauvetage d’Ita Yemoo, à Ile-Ife, commencent en décembre 1957. L’équipe dégage des pavements en tessons. Le premier grand pavement est couvert par la suite, tandis que la plupart des tranchées sont remblayées. D’autres chercheurs doivent reconstituer leur emplacement à partir de pièces éparses.'
+    relic: 'Un plan de fouille avec une ligne de référence'
+    relic_desc: 'Une même ligne le long de la route sert à repérer plusieurs tranchées.'
     points:
-      p1: "Se faire accepter par les fondeurs puis façonner un modèle d’essai en cire"
-      p2: "Le jour de la coulée, entretenir le feu sous le creuset"
-      p3: "Après la coulée, distinguer le trait incisé dans la cire de celui ajouté ensuite"
+      p1: 'Raccorder les tranchées à une même ligne avant le remblai et laisser à Ife un plan vérifiable sur le terrain'
+    points_fail:
+      p1: 'Les tranchées sont comblées. Pour les localiser, il ne reste que des documents épars.'
+    shift:
+      p1:
+        was: 'Les chercheurs ont dû reconstituer l’implantation des tranchées en l’absence d’un plan d’ensemble.'
+        now: 'Un plan reprend des points fixes et reste à Ife. On peut retrouver les anciennes tranchées.'
     vignettes:
-      line: "{staff} met le dessin d’avant la finition à côté de la pièce du jour et trace la nouvelle rayure sur une feuille à part."
-      surface: "{staff} incline la planche sous la pièce pour faire courir la lumière à sa surface et note sur le papier où commence un trait fin."
-      edge: "{staff} dessine une pièce d’essai simple, puis à côté le seul trait apparu aujourd’hui, pour que la prochaine comparaison ne dépende pas de la mémoire."
+      work: '{staff} voit défiler les chiffres du ruban taché de terre.'
+    story_prose:
+      opening:
+      - 'Ile-Ife, décembre 1957. Près de la route, l’équipe dégage à la brosse le bord d’un pavement de tessons.'
+      - 'Le premier grand pavement sera couvert, mais la plupart des tranchées seront comblées. Plus tard, leur emplacement sera reconstitué à partir de notes et de photos.'
+      - 'Tant que les bords sont visibles, l’équipe peut encore les reporter depuis un même repère.'
+      points:
+        p1: '{staff} et l’équipe tendent un ruban jusqu’à un repère au bord de la route. Chaque coin mesuré est reporté sur un second plan, qui restera à Ife.'
+      outcomes:
+        all: 'Longtemps après, une personne part du même repère et retrouve l’angle d’une ancienne tranchée.'
+        p1: 'Longtemps après, une personne part du même repère et retrouve l’angle d’une ancienne tranchée.'
+      none: 'La terre efface le dernier angle. Deux croquis sans repère commun ne se raccordent pas.'
+      not_admitted: '{staff} reste derrière la clôture. Un membre de l’équipe rentre le ruban.'
+      excerpts:
+        p1: '{staff} et l’équipe tendent un ruban jusqu’à un repère au bord de la route. Chaque coin mesuré est reporté sur un second plan, qui restera à Ife.'
   great_zimbabwe:
-    name: "Le passage sur le plan"
-    place: "Masvingo, Zimbabwe"
-    figure: "Les bâtisseurs du Grand Zimbabwe"
-    story: "Le Grand Zimbabwe, construit par les ancêtres des Shonas, connaît son apogée du XIe au XVe siècle. Sa Grande Enceinte comprend un long mur courbe en granit aux assises régulières et un passage étroit entre deux murs qui mène à une tour conique. En 1871, l’Allemand Karl Mauch atteint les ruines. Le pays prend le nom de Zimbabwe en 1980 d’après cette cité ; le site est inscrit au patrimoine mondial en 1986."
-    relic: "Un croquis du passage"
-    relic_desc: "Un dessin de travail où le chemin entre les deux murs reste blanc."
+    name: 'La plateforme de terre au pied du mur'
+    place: 'Masvingo, Zimbabwe'
+    figure: 'Les ouvriers de l’enceinte occidentale'
+    story: 'En 1915, la plupart des plateformes, bancs et murs de terre de l’enceinte occidentale du Grand Zimbabwe sont enlevés. On craint qu’ils fragilisent les murs de pierre sèche. La fosse ainsi ouverte continue de s’éroder.'
+    story_prose:
+      opening:
+        - 'Grand Zimbabwe, 1915. Au pied des murs en pierre sèche de l’enceinte occidentale se trouvent encore des plateformes et des bancs en terre. Ils se trouvent dans la zone à déblayer.'
+        - 'Dans l’histoire, la plupart de ces structures ont été enlevées et la fosse a continué de s’éroder. Dans cette branche, quelqu’un peut examiner la jonction avec les ouvriers avant que le chantier y arrive.'
+        - 'Il faut savoir lire un mur et expliquer ce qu’on y voit aux personnes qui travaillent sur place. La partie à préserver doit être repérée avant le déblaiement.'
+      points:
+        p1: '{staff} examine la jonction avec les ouvriers et leur montre un tronçon qu’ils peuvent laisser. Ils déplacent le tracé du chantier. Un ouvrier plante un piquet au-delà de la plateforme. Une ancienne empreinte de doigt touche encore le joint entre les pierres.'
+      outcomes:
+        all: 'Plus tard, une personne venue faire un relevé pose sa règle sur la plateforme restante. Un bord repose sur la terre, l’autre touche la pierre.'
+        p1: 'Plus tard, une personne venue faire un relevé pose sa règle sur la plateforme restante. Un bord repose sur la terre, l’autre touche la pierre.'
+      none: 'Les ouvriers emportent un panier vide. La terre mise à nu est encore fraîche. Une ligne pâle marque son ancien contact avec le mur.'
+      not_admitted: '{staff} ne trouve pas de place parmi les ouvriers. En passant le croquis de main en main, on n’en voit qu’un coin au pied du mur.'
+      excerpts:
+        p1: 'Un ouvrier plante un piquet au-delà de la plateforme. Une ancienne empreinte de doigt touche encore le joint entre les pierres.'
+    relic: 'Un croquis en coupe'
+    relic_desc: 'Le dessin montre une plateforme de terre au pied d’un mur de pierre sèche.'
     points:
-      p1: "Se faire accepter par les bâtisseurs puis trier les pierres à la taille voulue pour l’assise suivante"
-      p2: "Parcourir le passage entre les deux murs et le dessiner en laissant le chemin blanc"
-      p3: "En saison sèche, monter de l’eau de la vallée aux bâtisseurs sur la colline"
+      p1: 'Examiner le pied du mur avec les ouvriers et faire laisser une partie de la plateforme en place avant le déblaiement'
+    points_fail:
+      p1: 'Comme dans l’histoire, l’essentiel de la terre façonnée est enlevé. Ce tronçon disparaît aussi.'
+    shift:
+      p1:
+        was: 'En 1915, le déblaiement de l’enceinte occidentale fait disparaître de nombreuses plateformes, banquettes et parois de terre.'
+        now: 'Dans cette branche, une partie de la plateforme demeure en place. Les relevés ultérieurs peuvent rendre compte de sa jonction avec le mur.'
     vignettes:
-      lines: "{staff} trace deux lignes et laisse le papier blanc entre elles pour qu’un messager suive le blanc plutôt que les murs."
-      width: "{staff} longe le mur intérieur jusqu’à son extrémité et arrête le crayon là, sans prolonger la ligne tout autour."
-      pace: "{staff} mesure une assise en comptant ses pas et grave le nombre sur une pierre plate au pied du mur."
+      lines: '{staff} suit du regard le pied du mur, jusqu’à la jointure où le bord de la plateforme s’abaisse.'
+      width: '{staff} tient le croquis. Un trait figure la pierre, un autre la terre.'
+      pace: 'Assis près de la marche, {staff} fait tomber de la boue sèche sur le sable.'
   euclid_alexandria:
     name: 'Tant que les Porismes existaient'
     place: 'Alexandrie'

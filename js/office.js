@@ -143,7 +143,7 @@ export function createOffice(X) {
     const pts = d.report.points || [];
     return {
       id: d.id, place: d.eraId, light: !!d.light, staffId: d.spec.staffId, day: Math.floor(d.startDay), back: Math.floor(d.recalled ? d.recallDay : d.readyDay),
-      stars: d.stars || 0, newBest: !!d.newBest, outcome: d.report.outcomeId, stamp: ctx.backend.stampOf(d), energy: d.paid?.energy || 0,
+      stars: d.stars || 0, max: d.max ?? ctx.backend.maxStars(d.eraId), newBest: !!d.newBest, outcome: d.report.outcomeId, stamp: ctx.backend.stampOf(d), energy: d.paid?.energy || 0,
       antique: d.paid?.antique || null, recalled: !!d.recalled, evacuated: !!d.evacuation && !d.recalled, found: d.report.found || null, items: Object.keys(d.spec.items || {}).filter((k) => d.spec.items[k] > 0),
       // won: the points met on this trip, which the timeline of the wiki and the record of the employee read after the full report is dropped
       redeemed: pts.some((p) => p.redeem && p.hit), won: pts.filter((p) => p.hit).map((p) => p.id), archived: false,
@@ -291,7 +291,7 @@ export function createOffice(X) {
     // Funds and antiques are paid every time.
     const best = s.stars[d.eraId] || 0;
     d.newBest = d.stars > best;
-    const top = ctx.backend.maxStars(d.eraId);
+    const top = d.max ?? ctx.backend.maxStars(d.eraId);
     const energy = d.newBest ? d.baseEnergy * (ST.energy_share[top][d.stars] - ST.energy_share[top][best]) : 0;
     if (d.newBest) s.stars[d.eraId] = d.stars;
     d.paid = { energy: Math.round(energy), restDays: restOf(d, d.payout.restDays, p.rest_cut), restCut: p.rest_cut };

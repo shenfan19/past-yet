@@ -15,8 +15,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
-        - {id: p2, kind: notice, day: 17.25, req: {"any":[{"trait":["methodical","scholarly","patient"]},{"job":["archivist","translator"]}]}}
-        - {id: p3, kind: persuade, day: 18, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
+        - {id: p2, kind: persuade, day: 18, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: binding, traits: [methodical, handy]}
         - {id: name, traits: [kind, curious]}
@@ -30,22 +29,17 @@ events:
         relic: "A sheet of poems"
         relic_desc: "A sheet of fine paper with brushed poems on flowers and distant places."
         points:
-          p1: 'Trace the poems Heo left with her family so her brother can later find the papers he used to make the collection'
-          p2: 'Identify the hand on the poems the author agrees to keep before the papers are copied and dispersed'
-          p3: 'Before papers can be destroyed, ask Heo to choose the poems she is willing to let others read'
+          p1: 'Keep the family’s copies together so Heo Gyun will have the poems he later included in his selection'
+          p2: 'Help Heo set aside and sign a small group of poems she wants other people to read'
         points_fail:
           p1: 'The family loses track of the separate papers and Heo Gyun cannot compile the collection from them. The branch falls out of sync and the office recalls the employee.'
-          p2: 'Copies bearing the same title circulate together. Later readers cannot tell which changes the poet checked herself.'
-          p3: 'After she dies, the family can only choose for her from the copies that remain.'
+          p2: 'After she dies, the family can only choose for her from the copies that remain.'
         shift:
           p1:
             was: 'After Heo Nanseolheon died in 1589, Heo Gyun used poems kept at her family home to compile her work.'
           p2:
-            was: 'Some poems in the Korean collection printed in 1608 later became the subject of disputes over authorship.'
-            now: '{staff} asks Heo to check the few poems she wants to leave and mark the parts she wrote herself.'
-          p3:
-            was: 'After Heo Nanseolheon''s death in 1589, autograph papers were said to have been burned. Heo Gyun made the later selections.'
-            now: '{staff} asks Heo which poems she is willing to circulate and which she wants to dispose of. The later collection preserves the small group she chose herself.'
+            was: 'After her death in 1589, her brother selected her poems. The 1597 selection and the 1608 edition preserve different readings.'
+            now: 'Heo marks the pages she wants to share. The family keeps her signed selection together when they later prepare the collection.'
             who: heo_nanseolheon_hanyang
             bio: 'Heo Nanseolheon selected a small group of poems she was willing to share. Her family kept her chosen order when preparing her surviving work.'
         vignettes:
@@ -60,22 +54,17 @@ events:
         relic: "一页诗稿"
         relic_desc: "一页细纸，用毛笔写着写花和远方的诗。"
         points:
-          p1: '理清许兰雪轩留在娘家的诗稿去向，让许筠后来找得到用来编集的那一份'
-          p2: '在纸页分散前给作者认可留下的诗注明笔迹，免得传抄时混入别人的句子'
-          p3: '在诗稿可能被销毁前，请许兰雪轩自己划出肯让人读的诗'
+          p1: '替家里把已经传抄的诗篇放在一处，给许筠日后编集留下能找到的底稿'
+          p2: '请许兰雪轩从中挑出想让人读的几篇，在那一小叠诗稿上署名'
         points_fail:
           p1: '分存的诗稿下落也断了，许筠后来无法循原稿编集。行程与史实脱节，员工被召回。'
-          p2: '同题的抄稿一起传开，后来分不清哪些改字经过作者亲手核定。'
-          p3: '去世之后，只能由家人从留存稿中替她选篇。'
+          p2: '去世之后，只能由家人从留存稿中替她选篇。'
         shift:
           p1:
             was: '1589 年许兰雪轩去世后，许筠后来以娘家留存的稿件整理她的作品。'
           p2:
-            was: '1608 年《兰雪轩集》朝鲜刻本所收作品中，后来有部分篇目引起真伪争议。'
-            now: '{staff}请许兰雪轩只为自己同意留下的几首核对字句，再标明哪部分是她的笔迹。'
-          p3:
-            was: '1589 年许兰雪轩去世后，亲笔稿据记载曾遭焚毁，后来的选编由许筠进行。'
-            now: '{staff}在生前请许兰雪轩决定哪些诗可以传阅，哪些应按她的意愿处理。后来的选本保留了她亲自挑出的一个小组。'
+            was: '1589 年许兰雪轩去世后，弟弟许筠编选了她的诗。1597 年选本和 1608 年刊本的诗句有不同版本。'
+            now: '许兰雪轩在愿意传阅的几首诗上署名。后来家人编集时，仍把她亲自选出的这些篇目放在一起。'
             who: heo_nanseolheon_hanyang
             bio: '许兰雪轩生前定下了一小组愿意传阅的诗。亲人整理她的遗稿时保留了这个次序。'
         vignettes:

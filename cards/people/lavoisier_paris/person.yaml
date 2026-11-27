@@ -12,12 +12,12 @@ events:
     field: science
     tier: 2
     channels: {E: 1, S: 1}
-    refs: [lavoisier_paris_historytoday, lavoisier_paris_herodote, lavoisier_paris_britannica, lavoisier_paris_wikipedia, lavoisier_paris_primary, lavoisier_paris_illustrated_first, lavoisier_paris_first_plates, lavoisier_paris_preface]
+    refs: [lavoisier_paris_historytoday, lavoisier_paris_herodote, lavoisier_paris_britannica, lavoisier_paris_wikipedia, lavoisier_paris_primary, lavoisier_paris_illustrated_first, lavoisier_paris_first_plates, lavoisier_paris_preface, lavoisier_paris_convictions]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: persuade, day: 22, req: {"any":[{"trait":["charismatic","glib","streetwise"],"stat":{"wit":5,"will":5}},{"job":["accountant","tax_preparer"],"stat":{"wit":5,"will":5}}]}}
-        - {id: p2, kind: persuade, day: 26, req: {"any":[{"trait":["charismatic","streetwise","cosmopolitan"],"stat":{"wit":6,"will":7}},{"provides":"disguise","trait":["streetwise","glib","bold","charismatic"],"stat":{"will":6}}]}}
+        - {id: p1, kind: persuade, day: 22, overturns: [paulze_execution], req: {"any":[{"trait":["charismatic","glib","streetwise"],"stat":{"wit":5,"will":5}},{"job":["accountant","tax_preparer"],"stat":{"wit":5,"will":5}}]}}
+        - {id: p2, kind: persuade, day: 26, overturns: [execution], req: {"any":[{"trait":["charismatic","streetwise","cosmopolitan"],"stat":{"wit":6,"will":7}},{"provides":"disguise","trait":["streetwise","glib","bold","charismatic"],"stat":{"will":6}}]}}
       vignettes:
         - {id: units, traits: [methodical, vigil]}
         - {id: air, traits: [curious, skeptical]}
@@ -31,18 +31,18 @@ events:
         relic: A precision balance
         relic_desc: A fine balance that kept the books of chemistry.
         points:
-          p1: 'Before the arrest order comes, persuade his father-in-law Paulze to leave Paris, and save him'
-          p2: 'Before the arrest order comes, persuade Lavoisier to leave Paris and keep out of sight, and save him'
+          p1: 'Ask Jacques Paulze to entrust his papers to his family and leave Paris before the arrest order comes'
+          p2: 'Get Lavoisier to consider leaving Paris while he still expects he can justify his accounts in person'
         points_fail:
-          p1: 'As in history Paulze is imprisoned at the end of November, and on 8 May 1794 he is put to death on the same day as his son-in-law.'
+          p1: 'Paulze stays with his papers in Paris. He is taken into custody and put to death on 8 May 1794.'
           p2: 'As in history Lavoisier is imprisoned at the end of November, and on 8 May 1794 he is put to death in Paris.'
         shift:
           p1:
-            was: '24 November 1793: the arrest of all the former tax farmers was ordered, Jacques Paulze among them. On 8 May 1794 he was put to death on the same day as his son-in-law Lavoisier.'
-            now: 'He left Paris before the arrest order came, and lived.'
+            was: 'Jacques Paulze was taken into custody in November 1793 and put to death on 8 May 1794.'
+            now: 'In this branch Paulze leaves the papers with his family and departs. He lives past May 1794.'
           p2:
             was: '24 November 1793: the arrest of all the former tax farmers was ordered, and Lavoisier was imprisoned. On 8 May 1794 he was put to death in Paris.'
-            now: 'He left Paris ahead of the arrest order, lived through those months, and went back to his laboratory.'
+            now: 'In this branch Lavoisier leaves Paris before the arrest order and lives past May 1794.'
             who: lavoisier_paris
             bio: 'In this timeline Lavoisier left Paris before the arrest order of November 1793, and lived on past 1794.'
         vignettes:
@@ -57,18 +57,18 @@ events:
         relic: 一台精密天平
         relic_desc: 一台精细的天平，给化学记账。
         points:
-          p1: '逮捕令下来之前，劝岳父保尔兹先离开巴黎，救下他'
-          p2: '逮捕令下来之前，劝拉瓦锡离开巴黎、避开风头，救下他'
+          p1: '逮捕令下来之前，请雅克·保尔兹把账册交给家人照管，先离开巴黎'
+          p2: '拉瓦锡还想当面说明账目，请他趁走得开时先考虑离开巴黎'
         points_fail:
-          p1: '保尔兹照史实在 11 月下旬入狱，1794 年 5 月 8 日与女婿同日被处死。'
+          p1: '保尔兹留在巴黎守着账册，随后入狱，1794 年 5 月 8 日被处死。'
           p2: '拉瓦锡照史实在 11 月下旬入狱，1794 年 5 月 8 日在巴黎被处死。'
         shift:
           p1:
-            was: '1793 年 11 月 24 日，前包税官一律被下令逮捕，雅克·保尔兹在内；1794 年 5 月 8 日，他与女婿拉瓦锡同日被处死。'
-            now: '他在逮捕令下来之前离开了巴黎，活了下来。'
+            was: '雅克·保尔兹于 1793 年 11 月入狱，1794 年 5 月 8 日被处死。'
+            now: '这条分支里，保尔兹把账册托给家人，离开了巴黎，活过了 1794 年 5 月。'
           p2:
             was: '1793 年 11 月 24 日，前包税官一律被下令逮捕，拉瓦锡随后入狱；1794 年 5 月 8 日，他在巴黎被处死。'
-            now: '他赶在逮捕令之前离开了巴黎，平安度过那几个月，又回到他的实验室。'
+            now: '这条分支里，拉瓦锡赶在逮捕令之前离开巴黎，活过了 1794 年 5 月。'
             who: lavoisier_paris
             bio: '这条时间线里，拉瓦锡在 1793 年 11 月的逮捕令下来之前离开巴黎，活过了 1794 年。'
         vignettes:
@@ -102,10 +102,19 @@ facts:
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [lavoisier_paris_britannica, lavoisier_paris_wikipedia]
+    sources: [lavoisier_paris_britannica, lavoisier_paris_convictions]
     text:
-      en: 'On 8 May 1794 Lavoisier, his father-in-law Jacques Paulze and other former tax farmers were condemned and put to death in Paris on the same day.'
-      zh: '1794 年 5 月 8 日，拉瓦锡、岳父雅克·保尔兹与其他前包税官同日在巴黎被判处死刑并处死。'
+      en: 'Lavoisier was condemned and put to death in Paris on 8 May 1794.'
+      zh: '1794 年 5 月 8 日，拉瓦锡在巴黎被判处死刑并处死。'
+    line: {en: '8 May 1794: Lavoisier is put to death in Paris.', zh: '1794 年 5 月 8 日，拉瓦锡在巴黎被处死。'}
+  paulze_execution:
+    date: '1794-05-08'
+    checked: official_record
+    level: careful
+    use: [story, history, wiki]
+    sources: [lavoisier_paris_convictions]
+    text: {en: 'Jacques Paulze, a former tax farmer and Lavoisier’s father-in-law, was put to death in Paris on 8 May 1794.', zh: '1794 年 5 月 8 日，拉瓦锡的岳父、前包税官雅克·保尔兹在巴黎被处死。'}
+    line: {en: '8 May 1794: Jacques Paulze is put to death in Paris.', zh: '1794 年 5 月 8 日，雅克·保尔兹在巴黎被处死。'}
   balance:
     date: '1789'
     checked: official_record
@@ -121,6 +130,12 @@ bystanders:
     text: {en: 'An invented compositor reading a table in proof.', zh: '一位虚构的排字工，正在校对表格。'}
 wiki:
   refs:
+    lavoisier_paris_convictions:
+      order: 144
+      status: checked
+      text:
+        en: 'Liste générale et très-exacte des noms, âges, qualités et demeures, fascicle IV, p. 24, entries 902 and 906, BnF Gallica https://gallica.bnf.fr/ark:/12148/bpt6k6216594m'
+        zh: '《革命法庭死刑名单》第 4 册第 24 页，第 902、906 条，法国国家图书馆 Gallica https://gallica.bnf.fr/ark:/12148/bpt6k6216594m'
     lavoisier_paris_historytoday:
       order: 140
       status: checked

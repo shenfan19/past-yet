@@ -12,13 +12,12 @@ events:
     field: music
     tier: 2
     channels: {S: 2, G: 1}
-    refs: [bizet_paris_premiere, bizet_paris_carmen_wiki, bizet_paris_sfopera, bizet_paris_bizet_wiki, bizet_paris_hektoen, bizet_rehearsal_score, bizet_comique_archive]
+    refs: [bizet_paris_premiere, bizet_paris_sfopera, bizet_rehearsal_score, bizet_comique_archive, bizet_paris_met_letter]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, guard: true, day: 15, req: {"any":[{"job":["musician","teacher","tutor"],"stat":{"will":5}},{"trait":["charismatic","patient"],"stat":{"will":7}}]}}
         - {id: p2, kind: trust, day: 45, req: {"any":[{"trait":["bold","charismatic"],"stat":{"will":6}},{"job":["musician","journalist"],"stat":{"wit":5}},{"trait":["kind","sensitive"],"stat":{"wit":6,"will":6}}]}}
-        - {id: p3, kind: care, day: 103, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic"},{"job":["nurse","paramedic","caregiver"],"item":"antibiotic","stat":{"will":5}},{"item":"nano_kit","trait":["kind","patient","vigil"],"stat":{"will":6}}]}}
       vignettes:
         - {id: future, traits: [bold, charismatic]}
         - {id: label, traits: [methodical, handy]}
@@ -28,28 +27,21 @@ events:
         name: 'The year of Carmen'
         place: "Paris"
         figure: "Georges Bizet"
-        story: 'In the last weeks of rehearsal for Carmen the orchestra called parts of the score unplayable and the chorus balked at acting while it sang. The opera opened at the Opéra-Comique on 3 March 1875 to cold notices, and Bizet believed it had failed. At the end of May he swam in the Seine at Bougival, fell ill, and died on 3 June, at thirty six.'
+        story: 'Carmen opened at the Opéra-Comique on 3 March 1875 after a long rehearsal period. The press was mixed and the production continued through the spring. On 3 June Bizet died in Bougival, aged thirty-six.'
         relic: "A fan"
         relic_desc: "A painted paper fan from the stalls."
         points:
-          p1: 'When the orchestra calls passages unplayable and the chorus will not act as it sings, rehearse them through it and hold the premiere of 3 March'
-          p2: 'When the cold notices after the premiere have sunk Bizet into gloom, let him know that Carmen will go on being played in theatres everywhere'
-          p3: 'Stop the fever that follows his swim in the Seine at Bougival from reaching his heart, and save Bizet at thirty six'
+          p1: 'Help the theatre set aside a final run for the singers to rehearse the difficult entries with the movement and the orchestra'
+          p2: 'Take Bizet a report from an evening performance, with the exact passage the singers still want to go over'
         points_fail:
           p1: 'The rehearsals stall and the theatre cannot raise the curtain on 3 March. The branch drifts out of sync, and the office recalls the employee.'
-          p2: 'In this branch Bizet goes on believing that Carmen has failed, and spends the spring low in spirits.'
-          p3: 'In this branch Bizet still dies at Bougival in the early hours of 3 June, at thirty six.'
+          p2: 'The note reaches Bizet with the passage left out. He learns there was a problem without hearing which part the singers wanted to rehearse.'
         shift:
           p1:
-            was: 'Winter 1875: in rehearsal the orchestra called parts of Carmen unplayable and the chorus resisted moving while it sang. The opera opened at the Opéra-Comique on 3 March 1875.'
+            was: 'The Opéra-Comique’s stage register records rehearsal and stage preparations on 3 March 1875, the day Carmen opened.'
           p2:
-            was: 'Carmen opened on 3 March 1875 to a largely hostile press; Bizet was convinced it had failed and stayed low in spirits through the spring.'
-            now: '{staff} tells Bizet at the end of March that this opera will be played in theatres in many countries. He goes on attending the performances, and the spring weighs less on him.'
-          p3:
-            was: 'At the end of May 1875 Bizet swam in the Seine at Bougival and fell ill with a high fever; after a heart attack on 1 June he died in the early hours of 3 June, at thirty six.'
-            now: 'The fever of June passed and Bizet spent the rest of the summer recovering at Bougival. In the autumn he went to Vienna to see Carmen at the Court Opera, and he went on writing for the theatre for many years.'
-            who: bizet_paris
-            bio: 'Bizet survived the illness of the summer of 1875. He saw Carmen staged in Vienna that autumn and kept writing operas for years after.'
+            was: 'The first run of Carmen continued after its March premiere.'
+            now: 'In this branch {staff} gives Bizet a report he can use. He marks the entry in the score and can discuss it with the singers before their next performance.'
         vignettes:
           future: 'You tell the attendant that later audiences will know this opera in cities he has never visited. He asks why he should keep an extra programme tonight. You show him where the first night and Galli-Marié’s name are printed. One copy goes into his drawer. You leave before it gets a second reader.'
           label: 'The attendant has filed two sheets under the same title. You split them by date and mark the first night on a spare wrapper. A later reader can now ask for the right sheet. You miss the audience coming out.'
@@ -58,28 +50,21 @@ events:
         name: '《卡门》的那一年'
         place: "巴黎"
         figure: "乔治·比才"
-        story: '《卡门》排练到最后几周，乐队说有几段奏不了，合唱不肯边唱边演。1875 年 3 月 3 日它在巴黎喜歌剧院首演，报刊多是冷评，比才认定它失败了。5 月底他在布日瓦尔下塞纳河游泳，随后病倒，6 月 3 日去世，三十六岁。'
+        story: '《卡门》经过数月排练，于 1875 年 3 月 3 日在巴黎喜歌剧院首演。报刊评价不一，剧院在那年春天继续演出。6 月 3 日，比才在布日瓦尔去世，终年三十六岁。'
         relic: "一把折扇"
         relic_desc: "一把来自池座的彩绘纸扇。"
         points:
-          p1: '乐队说几段奏不了、合唱不肯边唱边演时，陪他们练下来，护住 3 月 3 日的首演'
-          p2: '首演遭冷评后比才消沉，让他知道《卡门》会在各地的剧院一直演下去'
-          p3: '布日瓦尔下河游泳后的高烧烧到心上之前治好他，救下三十六岁的比才'
+          p1: '请剧院再留最后一轮排练，让歌手带上走位，和乐队再对一遍最难进声的地方'
+          p2: '把一晚的演出情况送给比才，替歌手标清下次还想一起过哪一段'
         points_fail:
           p1: '排练卡住，剧院 3 月 3 日拉不开幕。分支脱节，事务所因同步失败召回员工。'
-          p2: '这条分支里比才一直以为《卡门》失败了，消沉着过完这个春天。'
-          p3: '这条分支里比才仍在 6 月 3 日凌晨死于布日瓦尔，三十六岁。'
+          p2: '便条到了，却漏了是哪一段。比才只知道有个地方难唱，还要等人回来指明。'
         shift:
           p1:
-            was: '1875 年冬，《卡门》排练时乐队说有几段奏不了，合唱不愿边唱边走动。3 月 3 日它在巴黎喜歌剧院首演。'
+            was: '喜歌剧院的舞台日志记下了 1875 年 3 月 3 日首演当天的排练和舞台准备。'
           p2:
-            was: '1875 年 3 月 3 日《卡门》首演，报刊多是恶评，比才认定这部戏失败了，整个春天情绪低落。'
-            now: '三月底{staff}告诉比才，这部戏日后会在许多国家的剧院上演。他照常去剧院看演出，这个春天对他轻了些。'
-          p3:
-            was: '1875 年 5 月底，比才在布日瓦尔下塞纳河游泳后发起高烧，6 月 1 日心脏病发作，6 月 3 日凌晨去世，三十六岁。'
-            now: '六月的高烧退了，比才在布日瓦尔养完这个夏天。秋天他去维也纳，看《卡门》在宫廷歌剧院上演，此后又为剧院写了许多年。'
-            who: bizet_paris
-            bio: '比才熬过了 1875 年夏天的病，那年秋天看到《卡门》在维也纳上演，之后又写了多年歌剧。'
+            was: '三月首演后，《卡门》在当年春季继续演出。'
+            now: '这条分支里，{staff}带来了一张能对回总谱的便条。比才把难进声的位置圈出来，下一场之前可以问问歌手怎么唱比较顺。'
         vignettes:
           future: '你告诉帮工，以后连他没去过的城市也会有人知道这部戏。他问今夜有何必要多留一张。你指给他看首演日期和加利-马里耶的名字。一张节目单收进抽屉。你走时还没有第二个人来翻看。'
           label: '帮工把两张节目单按同一个剧名收了。你按日期把它们分开，给首演那张单独做了个写有日期的纸套。回头要查的人现在能拿准。只是你赶不上散场了。'
@@ -91,14 +76,15 @@ text:
   zh:
     name: 乔治·比才
     text: 法国作曲家，1838 年生，1875 年去世。他的歌剧《卡门》1875 年在巴黎首演，反响冷淡，几个月后他就去世了。后来它成了演出最多的歌剧之一。
-hook: {en: 'The orchestra says unplayable, the papers say a failure.', zh: '乐队说奏不了，报纸说失败了'}
+hook: {en: 'Where does the chorus come in again?', zh: '合唱再进声，是在哪一拍？'}
 facts:
   premiere:
     date: '1875-03-03'
     checked: official_record
     level: usable
-    use: [story, wiki]
-    sources: [bizet_paris_premiere]
+    stay_day: 17
+    use: [story, history, wiki]
+    sources: [bizet_paris_premiere, bizet_comique_archive]
     text:
       en: 'Carmen premiered at the Opéra-Comique on 3 March 1875, with Célestine Galli-Marié in the title role.'
       zh: '《卡门》于 1875 年 3 月 3 日在喜歌剧院首演，加利-马里耶首演卡门。'
@@ -110,36 +96,23 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [bizet_paris_carmen_wiki, bizet_paris_sfopera]
+    sources: [bizet_rehearsal_score, bizet_comique_archive]
     text:
-      en: 'Rehearsals ran longer than planned and delayed the premiere; the orchestra found parts of the score impossible to play, and the chorus resisted being asked to move while it sang.'
-      zh: '排练比预计拖得久，首演因此推迟；乐队认为总谱有几处没法演奏，合唱不愿边唱边走动。'
+      en: 'The production went through many rehearsals. The Opéra-Comique’s stage register records rehearsals and the last touches to scenery and lighting on opening day.'
+      zh: '《卡门》经过许多轮排练。喜歌剧院舞台日志记下首演当日的排练，以及布景和灯光的最后调整。'
     line:
-      en: 'February 1875: the orchestra calls passages of Carmen unplayable.'
-      zh: '1875 年 2 月，乐队说《卡门》有几段奏不了。'
-  reception:
-    date: '1875-03-04'
-    stay_day: 18
-    checked: two_sources
-    level: usable
-    use: [story, history, wiki]
-    sources: [bizet_paris_carmen_wiki, bizet_paris_bizet_wiki]
-    text:
-      en: 'The press reviews after the premiere ranged from disappointment to outrage, and Bizet believed the opera had failed.'
-      zh: '首演后的报刊评论从失望到愤怒都有，比才认定这部戏失败了。'
-    line:
-      en: '4 March 1875: the morning papers are cold to Carmen.'
-      zh: '1875 年 3 月 4 日，晨报对《卡门》一片冷评。'
+      en: 'The theatre keeps rehearsing Carmen up to the day it opens.'
+      zh: '《卡门》一直排练到首演当天。'
   death:
     date: '1875-06-03'
     stay_day: 109
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [bizet_paris_bizet_wiki, bizet_paris_hektoen]
+    sources: [bizet_paris_met_letter]
     text:
-      en: 'At the end of May 1875 Bizet swam in the Seine at Bougival and fell ill with fever; after a heart attack on 1 June he died early on 3 June, at thirty six.'
-      zh: '1875 年 5 月底，比才在布日瓦尔下塞纳河游泳后发烧，6 月 1 日心脏病发作，6 月 3 日凌晨去世，三十六岁。'
+      en: 'Bizet died in Bougival on 3 June 1875, aged thirty-six, while Carmen was still in its first run.'
+      zh: '1875 年 6 月 3 日，比才在布日瓦尔去世，终年三十六岁，当时《卡门》仍在第一轮演出。'
     line:
       en: '3 June 1875: Bizet dies at Bougival.'
       zh: '1875 年 6 月 3 日，比才在布日瓦尔去世。'
@@ -149,6 +122,12 @@ bystanders:
     text: {en: 'A fictional theatre attendant filing the loose programmes.', zh: '虚构的剧院帮工，要把散开的节目单收好。'}
 wiki:
   refs:
+    bizet_paris_met_letter:
+      order: 475
+      status: checked
+      text:
+        en: 'Metropolitan Opera Archives, Bispham Collection, Georges Bizet’s autograph letter and final weeks. https://v16live.metopera.org/discover/archives/bispham-collection-of-opera-memorabilia/lot-15/'
+        zh: '美国大都会歌剧院档案，比才亲笔信与其最后几周。https://v16live.metopera.org/discover/archives/bispham-collection-of-opera-memorabilia/lot-15/'
     bizet_paris_carmen_wiki:
       order: 471
       status: checked

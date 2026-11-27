@@ -2,8 +2,10 @@ order: 116
 events:
   lalibela_rock:
     order: 51
-    build_step: 1
-    year: 1200
+    build_step: 3
+    year: 1966
+    date: '1966-12-19'
+    stay: 2
     lon: 39.04
     lat: 12.03
     region: africa
@@ -11,49 +13,86 @@ events:
     field: architecture
     tier: 2
     channels: {A: 1, L: 3}
-    # finished: in the game with release.ready_only. No year is recorded for any one cut, so the stay carries the year of the reign only.
     ready: true
-    refs: [lalibela_rock_drainage, lalibela_mission, lalibela_archaeology, lalibela_alvares, lalibela_inscriptions]
+    refs: [lalibela_rock_drainage, lalibela_mission, lalibela_archaeology, lalibela_alvares, lalibela_inscriptions, lalibela_phase_one, lalibela_sustainable_trenches]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","kind"]},{"job":["carpenter"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 70, req: {"any":[{"trait":["curious","methodical","scholarly"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: endure, day: 140, req: {"any":[{"trait":["hardy","patient","vigil"]},{"stat":{"will":6}}]}}
+        - id: p1
+          kind: notice
+          day: 24
+          overturns: [sediment_record]
+          req:
+            any:
+              - job: [geologist, restorer, civil_engineer, archivist]
+                stat: {wit: 6}
+              - trait: [methodical, scholarly]
+                stat: {wit: 7, finesse: 5}
       vignettes:
-        - {id: outlet, traits: [methodical, scholarly], day: 75}
-        - {id: rain, traits: [hardy, curious], day: 130}
-        - {id: bend, day: 40}
+        - {id: work, day: 9}
     text:
       en:
-        name: 'Look for the outlet in the rock'
-        place: Lalibela, Ethiopia
-        figure: Lalibela and the stonecutters
-        story: 'At Lalibela, the builders cut down into the rock, leaving standing walls and columns as they cleared stone away. Eleven rock-cut buildings and a network of trenches, channels and passages survive. The complex is traditionally associated with King Lalibela of the Zagwe dynasty, but archaeologists have found traces of successive cuts and earlier structures. In the 1520s Francisco Álvares described the site after visiting with a Portuguese embassy.'
-        relic: A stonecutter's chisel
-        relic_desc: An iron chisel, the edge ground thin.
+        name: 'Two layers in the trench wall'
+        place: 'Lalibela, Ethiopia'
+        figure: 'The trench crew at Lalibela'
+        story: 'The first phase of conservation at Lalibela began on 19 December 1966. Clearing accumulated sediment exposed trenches that had been cut into the rock. Later archaeologists report that only a few photographs survive of the finds from the 1960s clearance, with no archive that documents them individually.'
+        relic: 'A drawing of the trench wall'
+        relic_desc: 'The section records the thickness of each layer and the positions of the sherds in the soil.'
         points:
-          p1: 'Be taken in by the stonecutters, then carry the broken rock out of the trench'
-          p2: 'Before the rains, follow a channel in the rock to its outlet and show where the water will stand'
-          p3: 'In the rains, help clear one whole ditch from end to end'
+          p1: 'Before the next basket goes up, measure the layers with the trench crew and leave a local copy of the section with the exposed sherds marked'
+        points_fail:
+          p1: 'The crew carries the soil away. The positions of the sherds in that section can no longer be measured.'
+        shift:
+          p1:
+            was: 'The few photographs that survive from the clearance are insufficient to reconstruct the original layers and positions of the finds.'
+            now: 'A copy of the trench section stays in town. A later surveyor can still check the thickness of the layers and the positions of the sherds in this stretch.'
         vignettes:
-          outlet: '{staff} follows a channel cut in the rock down past the bend to where it breaks out into the open, and marks the place with a chip of stone.'
-          rain: '{staff} stands in the trench with the water to the ankles and passes baskets of silt up to the rim, one after another, until the light goes.'
-          bend: '{staff} draws a notch at the turn of a trench on a scrap, so that a helper can find the same turn the next morning.'
+          work: '{staff} watches a worker shave the face flat with a narrow spade until the pale line in the soil comes clear.'
+        story_prose:
+          opening:
+          - 'Lalibela, the winter of 1966. The baskets coming up from the trench are full of stones and mud. Where the rock wall bends, a paler layer shows below the wet soil. A few potsherds are still embedded in it.'
+          - 'The work exposed trenches that had long been buried. In history, only a few photographs survived of the finds. A photograph alone will not put a sherd back where it lay.'
+          - 'The crew will dig past the bend on its next pass. There is still time for someone who can read the layers and make a drawing on the spot.'
+          points:
+            p1: '{staff} asks the person with the basket to wait, puts a rule against the line between the layers, and measures from the rock to the nearest sherd. A worker calls the numbers back and marks the same point on a second drawing. The second sheet stays in town.'
+          outcomes:
+            all: 'Years later, someone unfolds the local copy and holds a rule against the rock. The pale layer on the old drawing is at this end of the rule.'
+            p1: 'Years later, someone unfolds the local copy and holds a rule against the rock. The pale layer on the old drawing is at this end of the rule.'
+          none: 'An empty basket slides back down into the trench. The face where the sherds showed has been scraped flat, and the earth has gone in with the previous load.'
+          not_admitted: '{staff} cannot go down with the crew. Someone on the rim takes up a length of taut line and winds it round a board.'
+          excerpts:
+            p1: '{staff} asks the person with the basket to wait, puts a rule against the line between the layers, and measures from the rock to the nearest sherd. A worker calls the numbers back and marks the same point on a second drawing.'
       zh:
-        name: '沿岩沟找出口'
-        place: 埃塞俄比亚拉利贝拉
-        figure: 拉利贝拉与石匠们
-        story: '拉利贝拉的石匠向下开凿，把周围的石料清出去，墙和柱便从整片岩石中留了下来。如今遗址保存着十一座岩凿建筑，以及相通的深槽、水沟和通道。传统把这处建筑群与扎格韦王朝的拉利贝拉国王相联系；考古人员发现，岩石曾分期开凿，有些地方原来还立着更早的建筑。1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团到访，写下了他的见闻。'
-        relic: 石匠的凿子
-        relic_desc: 一把铁凿子，刃口磨得很薄。
+        name: '沟壁上的两层土'
+        place: '埃塞俄比亚拉利贝拉'
+        figure: '拉利贝拉的清沟工人'
+        story: '1966 年 12 月 19 日，拉利贝拉第一期修缮开工。工人掘走淤积的土，重新露出一段段凿进岩石的深槽。现代考古队指出，那次清理的出土物只留下少量照片，缺少可逐件核对的记录。'
+        relic: '一张沟壁剖面图'
+        relic_desc: '线图记下土层厚度和碎片还在土里的位置。'
         points:
-          p1: '先让石匠们认下，再替他们把凿下的碎石运出深槽'
-          p2: '雨季前，沿岩沟找到出口，指给他们看哪里会积水'
-          p3: '雨季里，帮着把一整条沟渠从头清到尾'
+          p1: '趁着下一筐土还没动，和工人量下土层厚度，把露出的陶片位置连同沟壁剖面抄一份留在当地'
+        points_fail:
+          p1: '清理继续进行。泥从沟里运出，后来再也无法量出这些碎片原来的位置。'
+        shift:
+          p1:
+            was: '清理时留下的少量照片不足以还原出土物原来的土层与位置。'
+            now: '当地留有一份沟壁剖面，后来的测绘人员还能查到这一段的土层厚度和陶片的位置。'
         vignettes:
-          outlet: '{staff}顺着一条凿在岩上的沟往下走，过了弯，找到它出岩壁的地方，用一块碎石做了记号。'
-          rain: '{staff}站在没过脚踝的水里，把一筐筐淤泥递上槽沿，一筐接一筐，直到天黑。'
-          bend: '{staff}在一片碎纸上画了个缺口，标出深槽的转弯处，帮工第二天早上照着就能找到同一个弯。'
+          work: '{staff}看着工人用一把窄铲刮出一小片平面，泥里的浅线这才变得清楚。'
+        story_prose:
+          opening:
+          - '1966 年冬，拉利贝拉。岩沟里一筐筐往上提带泥的碎石。沟壁转弯处，湿泥下方露着一条颜色浅些的土。泥里还有几片陶。'
+          - '这次工程重新露出了被埋的深槽。史实里，清理中发现的东西只留下少量照片。要把某块陶片放回原处，单凭照片已经办不到了。'
+          - '工人下一趟就会挖过这个弯。派个会看土层又能当场把位置画下来的人去，还来得及。'
+          points:
+            p1: '{staff}请提筐的人稍等，把尺贴到两层土的交界，再从岩壁边量到刚露出的陶片。工人照着报出的数，把同一个位置点在第二张图上。第二张图留在镇上。'
+          outcomes:
+            all: '多年后，有人展开留在镇上的图，把尺比在那段岩壁上。旧图上的浅色土层就在尺的这一头。'
+            p1: '多年后，有人展开留在镇上的图，把尺比在那段岩壁上。旧图上的浅色土层就在尺的这一头。'
+          none: '空筐从坡顶滑回沟里。原先露出陶片的一边已经削平，剩下的土与上一筐混在了一起。'
+          not_admitted: '{staff}没能跟清沟工人下去。有人从沟沿收起一段绷着的细线，绕回木板上。'
+          excerpts:
+            p1: '{staff}请提筐的人稍等，把尺贴到两层土的交界，再从岩壁边量到刚露出的陶片。工人照着报出的数，把同一个位置点在第二张图上。'
 text:
   en:
     name: Lalibela and the stonecutters
@@ -86,7 +125,9 @@ quotes:
       pt: {quote: 'ha pedra he dura'}
       en: {who: 'Francisco Álvares', quote: 'The stone is hard.', occasion: 'Portuguese embassy eyewitness describing the rock-cut entrance at Golgotha after his 1520s visit. Game translation.'}
       zh: {who: '弗朗西斯科·阿尔瓦雷斯', quote: '这石头很硬。', occasion: '葡萄牙使团成员于 1520 年代到访后，记下在各各他教堂亲眼所见的岩凿入口。本游戏译文。'}
-hook: {en: 'Does the rock channel lead out or stop?', zh: '凿出的水沟通出去了吗？'}
+hook:
+  en: 'What can a copy of the trench wall keep?'
+  zh: '岩沟挖开以后，图上能留下什么？'
 facts:
   reign:
     date: '1181'
@@ -102,7 +143,6 @@ facts:
       zh: '十三世纪前后，拉利贝拉统治着埃塞俄比亚高地。'
   drainage:
     date: '1200'
-    stay_day: 5
     checked: official_record
     level: usable
     use: [story, wiki]
@@ -152,13 +192,43 @@ facts:
     line:
       en: '1978: the rock hewn churches of Lalibela are inscribed as a World Heritage site.'
       zh: '1978 年，拉利贝拉的岩凿教堂列入世界遗产。'
+  conservation_start:
+    date: '1966-12-19'
+    checked: 'official_record'
+    level: 'usable'
+    use:
+    - 'story'
+    - 'wiki'
+    sources:
+    - 'lalibela_phase_one'
+    - 'lalibela_sustainable_trenches'
+    text:
+      en: 'The first phase of conservation at Lalibela began on 19 December 1966.'
+      zh: '1966 年 12 月 19 日，拉利贝拉第一期修缮开工。'
+  sediment_record:
+    date: '1967'
+    stay_day: 26
+    checked: 'official_record'
+    level: 'usable'
+    use:
+    - 'story'
+    - 'history'
+    - 'wiki'
+    sources:
+    - 'lalibela_phase_one'
+    - 'lalibela_sustainable_trenches'
+    text:
+      en: 'The few photographs that survive from the clearance are insufficient to reconstruct the original layers and positions of the finds.'
+      zh: '清理时留下的少量照片不足以还原出土物原来的土层与位置。'
+    line:
+      en: 'The few photographs that survive from the clearance are insufficient to reconstruct the original layers and positions of the finds.'
+      zh: '清理时留下的少量照片不足以还原出土物原来的土层与位置。'
 bystanders:
   helper:
     invented: true
-    text: {en: 'A helper, made up for the game, who carries the baskets out of the trench.', zh: '一位编出来的帮工，把筐从深槽里扛出去。'}
-  cutter:
-    invented: true
-    text: {en: 'A stonecutter, made up for the game, who reads the rock by its sound.', zh: '一位编出来的石匠，听声音就知道岩石的纹路。'}
+    text:
+      en: 'A trench worker who copies the measurements. A composite character created for the game.'
+      zh: '一位替清沟工人抄写尺寸的帮工，由游戏虚构。'
 wiki:
   refs:
     lalibela_mission:
@@ -197,17 +267,29 @@ wiki:
       text:
         en: 'Francisco Álvares, Verdadeira informação das terras do Preste João das Índias (first printed 1540), 1889 edition, ch. LIV, p. 60 (rock at São Salvador), and ch. LIII, p. 59 (the entrance to the enclosure at Golgotha). Chapter numbers follow the Portuguese edition. Primary text digitized from the University of Toronto’s Robarts Library copy. https://archive.org/details/verdadeirainform00alvauoft'
         zh: '弗朗西斯科·阿尔瓦雷斯《祭司王约翰诸地实录》（1540 年初版），1889 年版，第 LIV 章第 60 页（救世主教堂的岩石）、第 LIII 章第 59 页（各各他教堂围场入口）。章节编号依葡萄牙语版。多伦多大学罗巴茨图书馆藏本数字化原文。https://archive.org/details/verdadeirainform00alvauoft'
+    lalibela_phase_one:
+      order: 687
+      status: 'checked'
+      text:
+        en: 'International Fund for Monuments, Lalibela, Phase I, work schedule and Excavations, pp. 33–35. https://www.wmf.org/sites/default/files/article/pdfs/pubs_IFMLalibelaPhaseI1967.pdf'
+        zh: '国际古迹基金会，《拉利贝拉第一期》，施工日期与发掘记录，第 33–35 页。https://www.wmf.org/sites/default/files/article/pdfs/pubs_IFMLalibelaPhaseI1967.pdf'
+    lalibela_sustainable_trenches:
+      order: 688
+      status: 'checked'
+      text:
+        en: 'Sustainable Lalibela, account of the 1960s clearances and the limits of the surviving documentation. https://sustainablelalibela.cnrs.fr/en/1186-2/'
+        zh: '可持续拉利贝拉考古项目，1960 年代岩沟清理及存世记录。https://sustainablelalibela.cnrs.fr/en/1186-2/'
 self_check:
-  fact: alvares
-  quote_line: '1520 年代，弗朗西斯科·阿尔瓦雷斯随葡萄牙使团来访，记下这些凿进岩石的建筑。'
-  echo_note: 'Both echoes are observations of the rock cutting by Francisco Álvares, a later eyewitness who visited in the 1520s. The date is the first publication of his account.'
-  regret_choice: '派力气大的去，碎石运得出去，水从哪里流走却没人去找；派爱琢磨的去，出口找到了，雨季那条沟却清不到头。'
-  bookend: '从拉利贝拉在高地统治的年代开始，以 1978 年列入世界遗产收尾。'
-  share_line: '我在拉利贝拉的深槽里，替石匠们往外递过一筐筐碎石。'
-  share_number: '11'
-  knowing: 'heritage'
-  near: 'drainage'
-  lever: 'p1, p2'
-  missed: 'alvares'
+  fact: 'sediment_record'
+  quote_line: '清理时留下的少量照片不足以还原出土物原来的土层与位置。'
+  echo_note: 'The existing historical echoes are background. They do not document the field crew in this episode.'
+  regret_choice: '清理继续进行。泥从沟里运出，后来再也无法量出这些碎片原来的位置。'
+  bookend: '多年后，有人展开留在镇上的图，把尺比在那段岩壁上。旧图上的浅色土层就在尺的这一头。'
+  share_line: '{staff}请提筐的人稍等，把尺贴到两层土的交界，再从岩壁边量到刚露出的陶片。'
+  share_number: '1966'
+  knowing: 'conservation_start'
+  near: 'sediment_record'
+  lever: 'p1'
+  missed: 'sediment_record'
   brought: 'relic'
 pack: {license: MIT, version: 2, languages: [en, zh]}

@@ -12,12 +12,12 @@ events:
     field: literature
     tier: 1
     channels: {E: 2, G: 1}
-    refs: [buchner_zurich_ndb, buchner_zurich_hls, buchner_zurich_stol, buchner_zurich_fragments]
+    refs: [buchner_zurich_ndb, buchner_zurich_hls, buchner_zurich_jaegle, buchner_zurich_fragments]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 19, req: {"any":[{"trait":["kind","attached","vigil"],"stat":{"will":5}},{"job":["courier","driver","rideshare_driver"]},{"stat":{"luck":8}}]}}
-        - {id: p2, kind: care, day: 22, req: {"any":[{"job":["doctor","physician"],"item":"antibiotic"},{"job":["doctor","physician","nurse","paramedic","medical_teacher"],"item":"nano_kit"}]}}
+        - {id: p1, kind: care, day: 19, overturns: [minna], req: {"any":[{"trait":["kind","attached","vigil"],"stat":{"will":5}},{"job":["courier","driver","rideshare_driver"]},{"stat":{"luck":8}}]}}
+        - {id: p2, kind: care, day: 22, overturns: [death], req: {"item":"nano_kit","job":["doctor","physician","nurse","paramedic","medical_teacher"]}}
       vignettes:
         - {id: order, traits: [methodical, scholarly]}
         - {id: pause, traits: [bold, artistic]}
@@ -27,24 +27,24 @@ events:
         name: 'Two drafts on the rehearsal table'
         place: "Zurich"
         figure: "Georg Büchner"
-        story: 'In 1836 Georg Büchner, twenty three, had come to Zürich as a refugee and was lecturing at the new university. On 2 February 1837 he fell ill with typhus. His fiancée Minna Jaeglé hurried from Strasbourg and reached him when he was already dying, and he died on 19 February. He left Woyzeck unfinished.'
+        story: 'In 1836 Georg Büchner came to Zürich as a refugee and began lecturing at the university. He fell gravely ill in February 1837. His fiancée Minna Jaeglé came from Strasbourg and reached him near the end. He died on 19 February at twenty-three, leaving Woyzeck unfinished.'
         relic: "A bundle of scenes"
         relic_desc: "Loose scenes in a cramped hand, in no fixed order."
         points:
-          p1: 'Send word to Strasbourg in the first days of his fever, so that Minna reaches him days earlier'
-          p2: 'Stop the typhus and cure him, so that he lives through this February'
+          p1: 'Get a message to Strasbourg while Büchner can still ask Minna to come himself'
+          p2: 'Bring the office’s medical kit to the bedside and help the people caring for him through the fever'
         points_fail:
-          p1: 'The news reached Minna late. When she came to Zürich he was already dying.'
-          p2: 'The fever rose day by day, and on 19 February he died in Zürich at twenty three.'
+          p1: 'Minna reaches him late in his illness. The message he wanted to send her is still on the table.'
+          p2: 'The fever continues. He can no longer ask for the pages lying on his desk.'
         shift:
           p1:
             was: 'February 1837: his fiancée Minna Jaeglé hurried from Strasbourg to Zürich, arriving when he was already dying; he died soon after with her beside him.'
-            now: 'Minna arrived in Zürich days earlier and was there through the days when he could still talk with her.'
+            now: 'In this branch Minna reaches Zürich sooner. They can speak to each other while he is still strong enough.'
           p2:
-            was: '19 February 1837: Büchner died of typhus in Zürich, at twenty three, with Woyzeck unfinished.'
-            now: 'His fever broke, and in spring he was back at the university, teaching and writing.'
+            was: 'Büchner died in Zürich on 19 February 1837, with Woyzeck unfinished.'
+            now: 'In this branch the office’s medical kit helps {staff} bring the fever down. Büchner lives and can ask to see the pages that are still on his desk.'
             who: buchner_zurich
-            bio: 'Büchner came through the typhus of 1837 in Zürich and went back to his teaching and his writing.'
+            bio: 'In this branch Büchner lives through his illness in Zürich in February 1837.'
         vignettes:
           order: 'The reader has put the two copies together and numbered the scenes in ink. You add a separate label to each source and write the proposed order on a removable slip. The next reader can undo it. You bring home that slip; you still do not have a final order.'
           pause: 'You know future theatres will have to decide what goes next. The reader asks if your answer is the author’s. You try both beginnings aloud and mark where they leave different questions. You can take two pauses home, and no finished script.'
@@ -53,24 +53,24 @@ events:
         name: '排练桌上的两份残稿'
         place: "苏黎世"
         figure: "格奥尔格·毕希纳"
-        story: '1836 年，二十三岁的格奥尔格·毕希纳流亡到苏黎世，在新办的大学讲课。1837 年 2 月 2 日他染上伤寒。未婚妻明娜·耶格勒从斯特拉斯堡赶来，到时他已病危，2 月 19 日去世，《沃伊采克》没有写完。'
+        story: '1836 年，格奥尔格·毕希纳流亡到苏黎世，在大学讲课。次年 2 月，他病得很重。未婚妻明娜·耶格勒从斯特拉斯堡赶到时，他已病危。2 月 19 日，二十三岁的毕希纳去世，《沃伊采克》没有写完。'
         relic: "一叠零散的场景稿"
         relic_desc: "字迹局促的散页，没有固定的顺序。"
         points:
-          p1: '他发烧的头几天就往斯特拉斯堡送信，让明娜早几天赶到他身边'
-          p2: '拦下伤寒，治好他的病，让他活过这个二月'
+          p1: '趁毕希纳还有力气亲口说明，把他请明娜过来的话送到斯特拉斯堡'
+          p2: '把事务所的纳米医疗箱带到床边，帮守在那儿的人照护发高烧的毕希纳'
         points_fail:
-          p1: '消息到得晚，明娜赶到苏黎世时，他已经病危。'
-          p2: '高烧一天天加重，2 月 19 日他在苏黎世去世，年仅二十三岁。'
+          p1: '明娜赶到时，他已病危。他原想告诉她的几句话，还摊在案上。'
+          p2: '烧没有退下去。他病得已经开不了口，案上的稿子还摊在那里。'
         shift:
           p1:
             was: '1837 年 2 月，未婚妻明娜从斯特拉斯堡赶到苏黎世时，他已病危，不久在她身边去世。'
-            now: '明娜早几天到了苏黎世，他还能和她说话的那些日子，她都在。'
+            now: '这条分支里，明娜早几天到了苏黎世。他还有力气，两人能当面说说话。'
           p2:
-            was: '1837 年 2 月 19 日，毕希纳在苏黎世死于伤寒，年仅二十三岁，《沃伊采克》没有写完。'
-            now: '他退了烧，春天回到大学讲台，接着教书、写作。'
+            was: '1837 年 2 月 19 日，毕希纳在苏黎世去世，《沃伊采克》没有写完。'
+            now: '这条分支里，{staff}用事务所的纳米医疗箱帮他退了烧。毕希纳活过这一场病，有力气问起案上那几页稿子。'
             who: buchner_zurich
-            bio: '这条时间线里，毕希纳熬过了 1837 年苏黎世的那场伤寒，回到大学，接着教书、写作。'
+            bio: '这条分支里，毕希纳熬过了 1837 年 2 月在苏黎世的那场病。'
         vignettes:
           order: '试读人把两份拢在一起，用墨写好了场次。你为两份抄件各补一张出处签，把试排的顺序另写在能取下的纸上。下一个人还可以改排。你带回纸条，仍没有拿到定稿的场序。'
           pause: '你知道后来的剧院也得选下一场怎么接。试读人问你这是不是作者定的。你把两个起头各念一遍，标明它们各把什么问题留给台下。带回的是两个停顿，没有一本完整剧本。'
@@ -78,10 +78,10 @@ events:
 text:
   en:
     name: Georg Büchner
-    text: German writer and revolutionary, 1813 to 1837. He wrote the plays Danton's Death and Woyzeck, and fled to Zurich after a pamphlet calling for revolt. He died of typhus at twenty three.
+    text: German writer and revolutionary, 1813 to 1837. He wrote the plays Danton's Death and Woyzeck, and fled to Zurich after publishing a pamphlet calling for revolt. He died there at twenty-three.
   zh:
     name: 格奥尔格·毕希纳
-    text: 德国作家与革命者，1813 年生，1837 年去世。他写了《丹东之死》和《沃伊采克》，因一份号召起义的传单逃往苏黎世。他二十三岁死于伤寒。
+    text: 德国作家与革命者，1813 年生，1837 年去世。他写了《丹东之死》和《沃伊采克》，因一份号召起义的传单流亡，二十三岁时在苏黎世去世。
 hook: {en: 'The fever has started, and Strasbourg is far.', zh: '烧起来了，斯特拉斯堡还远。'}
 facts:
   typhus:
@@ -92,20 +92,22 @@ facts:
     use: [story, history, wiki]
     sources: [buchner_zurich_ndb, buchner_zurich_hls]
     text:
-      en: 'On 2 February 1837 Büchner fell ill in Zürich with typhus.'
-      zh: '1837 年 2 月 2 日，毕希纳在苏黎世染上伤寒。'
+      en: 'Büchner fell gravely ill in Zürich in February 1837. German historical accounts describe the illness as Typhus.'
+      zh: '1837 年 2 月，毕希纳在苏黎世病重。德语历史资料用 Typhus 记述这场病。'
     line:
       en: 'Büchner falls ill with a fever.'
       zh: '毕希纳发起高烧。'
   minna:
     date: '1837-02'
+    stay_day: 32
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [buchner_zurich_ndb, buchner_zurich_stol]
+    sources: [buchner_zurich_ndb, buchner_zurich_jaegle]
     text:
       en: 'His fiancée Wilhelmine (Minna) Jaeglé came from Strasbourg and reached him when he was already dying.'
       zh: '未婚妻威廉明妮（明娜）·耶格勒从斯特拉斯堡赶来，到时他已病危。'
+    line: {en: 'February 1837: Minna Jaeglé reaches Zürich late in Büchner’s illness.', zh: '1837 年 2 月，明娜·耶格勒到达苏黎世，毕希纳已病危。'}
   death:
     date: '1837-02-19'
     stay_day: 34
@@ -114,8 +116,8 @@ facts:
     use: [story, history, wiki]
     sources: [buchner_zurich_ndb, buchner_zurich_hls]
     text:
-      en: 'Büchner died of typhus in Zürich on 19 February 1837, aged twenty three.'
-      zh: '1837 年 2 月 19 日，毕希纳在苏黎世死于伤寒，年二十三岁。'
+      en: 'Büchner died in Zürich on 19 February 1837, aged twenty-three.'
+      zh: '1837 年 2 月 19 日，毕希纳在苏黎世去世，年二十三岁。'
     line:
       en: 'Büchner dies in Zürich, aged twenty three.'
       zh: '毕希纳在苏黎世去世，年二十三岁。'
@@ -146,12 +148,12 @@ wiki:
       text:
         en: 'Historical Dictionary of Switzerland, Georg Büchner https://hls-dhs-dss.ch/fr/articles/011620'
         zh: '《瑞士历史辞典》，格奥尔格·毕希纳 https://hls-dhs-dss.ch/fr/articles/011620'
-    buchner_zurich_stol:
+    buchner_zurich_jaegle:
       order: 909
       status: checked
       text:
-        en: 'Südtirol Online, on Büchner 175 years after his death https://www.stol.it/artikel/kultur/literatur/genialer-geist-vor-175-jahren-starb-der-junge-georg-buechner'
-        zh: '南蒂罗尔在线，毕希纳逝世一百七十五年 https://www.stol.it/artikel/kultur/literatur/genialer-geist-vor-175-jahren-starb-der-junge-georg-buechner'
+        en: 'Fédération des Sociétés d’Histoire et d’Archéologie d’Alsace, Louise Wilhelmine (Minna) Jaeglé. https://www.alsace-histoire.org/netdba/jaegle-louise-wilhelmine-dite-minna/'
+        zh: '阿尔萨斯历史与考古学会联合会，露易丝·威廉明妮（明娜）·耶格勒传。https://www.alsace-histoire.org/netdba/jaegle-louise-wilhelmine-dite-minna/'
     buchner_zurich_woyzeck_drafts:
       order: 10
       status: checked

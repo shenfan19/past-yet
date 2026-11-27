@@ -17,7 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, guard: true, day: 17, req: {"any":[{"job":["translator","archivist","teacher","lecturer","university_lecturer"],"stat":{"will":5}},{"trait":["curious","charismatic"],"stat":{"wit":6,"will":6}}]}}
-        - {id: p2, kind: notice, guard: true, day: 200, req: {"any":[{"job":["biologist","physician","lecturer","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","curious"],"stat":{"wit":8,"will":6}},{"item":"magnifier","trait":["methodical","curious","handy"],"stat":{"wit":6}}]}}
+        - {id: p2, kind: hold, guard: true, day: 157, req: {"any":[{"job":["archivist","translator","courier"],"stat":{"wit":6,"will":6}},{"trait":["methodical","scholarly"],"stat":{"wit":7,"will":6}}]}}
       vignettes:
         - {id: motion, traits: [skeptical, curious]}
         - {id: label, traits: [handy, methodical]}
@@ -27,20 +27,20 @@ events:
         name: A world in a drop of water
         place: Delft
         figure: Antonie van Leeuwenhoek
-        story: 'In October 1676 Leeuwenhoek wrote from Delft that a drop of pepper water held thousands of little animals. In London the Fellows of the Royal Society did not believe him, and Nehemiah Grew could not see them. Through the summer of 1677 eight witnesses in Delft looked through his lenses and wrote down what they saw; he sent their testimonials to London on 5 October. In November Robert Hooke failed twice, and at the third try showed the Society the little animals himself.'
+        story: 'In October 1676 Leeuwenhoek wrote from Delft that a drop of pepper water held thousands of little animals. The Royal Society in London asked how it might verify his observations. From May to August 1677, eight witnesses in and around Delft looked through his lenses and put their observations in writing. He sent their statements to London on 5 October. Robert Hooke later showed the little animals to members of the Society.'
         relic: A tiny brass lens plate
         relic_desc: A thumb sized plate holding one very small, very clear lens.
         points:
-          p1: 'When word of London’s disbelief reaches Delft, hold the witnesses to it until they have looked through the lens and written down what they saw'
-          p2: 'After Hooke has failed twice to find the little animals, help him steep the pepper water and set the lens, and hold the third showing in London'
+          p1: 'Give the first witnesses time at the lens and have each put the movement they saw into their own words'
+          p2: 'Go through the October packet in Delft. Match the loose statements to the witnesses before the letter leaves for London'
         points_fail:
-          p1: 'The first witnesses put off looking and no testimonial is written. The branch drifts out of sync, and the office recalls the employee.'
-          p2: 'Hooke’s third showing finds nothing either, and the Society’s doubt stands. The branch drifts out of sync, and the office recalls the employee.'
+          p1: 'The first witnesses leave before they put what they saw on paper. The office recalls {staff} when the first testimony falls out of sync.'
+          p2: 'The letter goes out but a sheet of testimony is left on the table. The office recalls {staff} when the packet falls out of sync.'
         shift:
           p1:
-            was: '18 May to 30 August 1677: eight witnesses in Delft looked through Leeuwenhoek’s lenses and wrote testimonials to the little animals in pepper water. He sent them to London with his letter of 5 October.'
+            was: 'On 18 May 1677 two witnesses signed a statement about the little animals they had seen. Six others added their testimony over the following months.'
           p2:
-            was: 'November 1677: Robert Hooke twice failed to show the Royal Society Leeuwenhoek’s little animals, and on the third try, with pepper steeped nine or ten days in rainwater, showed great numbers of them.'
+            was: 'Leeuwenhoek enclosed the witnesses’ statements with his letter from Delft dated 5 October. In November Hooke showed the little animals to the Royal Society in London.'
         vignettes:
           motion: 'The correspondent writes that something moved. You ask what the movement looked like to someone who cannot see the lens. They cross out a comparison and draw a second position beside the first.'
           label: 'There are drawings from wood and from wine on the table. You add temporary labels before the correspondent scrapes up the stray sheets, and the pictures go in the right order.'
@@ -49,20 +49,20 @@ events:
         name: 一滴水里的世界
         place: 代尔夫特
         figure: 列文虎克
-        story: '1676 年 10 月，列文虎克从代尔夫特写信说，一滴胡椒水里有成千上万的小动物。伦敦皇家学会的会员们不信，格鲁也没看见。1677 年夏天，代尔夫特先后有八位见证人凑到他的透镜前看过，写下证词，10 月 5 日随信寄往伦敦。11 月，胡克两次没看见，第三次才当着学会的面把小动物显了出来。'
+        story: '1676 年 10 月，列文虎克从代尔夫特写信说，一滴胡椒水里有成千上万的小动物。伦敦皇家学会来信询问怎样核实他的观察。次年 5 月到 8 月，代尔夫特一带有八人先后凑到透镜前看过，写下证词，10 月 5 日随信寄往伦敦。后来，胡克在学会上让会员们亲眼看到了小动物。'
         relic: 一块小黄铜透镜板
         relic_desc: 拇指大的板子，里面嵌着一片极小又极清晰的透镜。
         points:
-          p1: '伦敦不信的消息传到代尔夫特时，稳住见证人，等他们亲眼看过透镜、写下所见'
-          p2: '胡克两次没找到小动物之后，帮他泡足胡椒水、调好透镜，护住伦敦的第三次演示'
+          p1: '给头两位见证人留出看透镜的时间，请他们用自己的话写下小动物是怎么动的'
+          p2: '在代尔夫特核对十月的邮封，封口前把散开的证词逐张对回署名'
         points_fail:
-          p1: '头几位见证人一拖再拖，没有人写下证词。分支脱节，事务所召回员工。'
-          p2: '胡克第三次也没看见，学会的怀疑照旧。分支脱节，事务所召回员工。'
+          p1: '两位见证人还没写下所见就离开了。头一份证词脱节，事务所召回{staff}。'
+          p2: '信寄出去了，还有一页证词落在桌上。寄件记录脱节，事务所召回{staff}。'
         shift:
           p1:
-            was: '1677 年 5 月 18 日到 8 月 30 日，代尔夫特八位见证人先后看过列文虎克的透镜，为胡椒水里的小动物写下证词，他 10 月 5 日随信寄往伦敦。'
+            was: '1677 年 5 月 18 日，两位见证人为所见的小动物签下证词。此后几个月，另有六人也留下了证词。'
           p2:
-            was: '1677 年 11 月，胡克两次没能向皇家学会显出列文虎克说的小动物，第三次用雨水泡了九到十天的胡椒，显出了一大群。'
+            was: '列文虎克在 10 月 5 日从代尔夫特发出的信中附上见证人的证词。11 月，胡克在伦敦皇家学会演示了小动物。'
         vignettes:
           motion: '通信者写了句「有东西在动」。你问看不到透镜的人该怎样想象这个动法。他划去原先的比喻，在第一个位置旁画了第二个。'
           label: '桌上混着木头和酒的观察图。通信者收走散页前，你加了两张临时标签，图才按原来的顺序放进信里。'
@@ -112,8 +112,8 @@ facts:
       en: 'Leeuwenhoek’s letter of 5 October 1677 from Delft sent eight testimonials to London.'
       zh: '1677 年 10 月 5 日，列文虎克从代尔夫特寄出附八份证词的信。'
     line:
-      en: '5 October 1677: the testimonials go to London.'
-      zh: '1677 年 10 月 5 日，证词寄往伦敦。'
+      en: '5 October 1677: Leeuwenhoek dates the letter from Delft enclosing the testimonials.'
+      zh: '1677 年 10 月 5 日，列文虎克在附有证词的信上写下日期与地点代尔夫特。'
   hooke:
     date: '1677-11'
     stay_day: 208

@@ -96,7 +96,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   function stampOf(d) {
     const ST = D.get('config.stamp');
     const back = d.recalled ? ST.recalled : d.evacuation ? ST.evacuated : (ST.returns[d.report?.outcomeId] || ST.default_return);
-    const max = maxStars(d.eraId);
+    const max = d.max ?? maxStars(d.eraId);
     const n = d.evacuation ? 0 : (d.stars || 0);
     const won = n >= max ? 'full' : n > 0 ? 'part' : 'none';
     const C = d.report?.compare;
@@ -116,7 +116,7 @@ export function createLocalBackend(D, core = new LMCore({ model: D.get('core_mod
   const echoTier = (d) => {
     const E = D.get('config.echo');
     if (d.report?.outcomeId === 'desync') return 'desync';
-    const s = d.stars || 0, m = maxStars(d.eraId);
+    const s = d.stars || 0, m = d.max ?? maxStars(d.eraId);
     if (d.report?.journey?.accepted === false || s === 0) return 'none';
     return s >= m ? 'full' : s / m > E.most_share ? 'most' : 'some';
   };

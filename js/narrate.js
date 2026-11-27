@@ -367,7 +367,7 @@ export function keyByTags(map, tags) {
 export function tripStoryProse(D, d, staff, tagsOf, modelPoints) {
   const prose = D.get('text.' + (d.light ? 'catalog' : 'eras'))?.[d.eraId]?.story_prose;
   // Saves from an older model can describe a different set of stars. Keep their recorded prose.
-  if (!prose || (!d.light && d.report.points?.some((point) => !Object.hasOwn(prose.points, point.id)))) return null;
+  if (!prose || d.report.points?.some((point) => !Object.hasOwn(prose.points, point.id))) return null;
   const written = storyProse(prose, d, staff, tagsOf);
   if (!written) return null;
   const milestonePoints = new Map((modelPoints || []).map((p) => [p.milestone, p.id]));

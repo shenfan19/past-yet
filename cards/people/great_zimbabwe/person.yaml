@@ -2,8 +2,9 @@ order: 83
 events:
   great_zimbabwe:
     order: 53
-    build_step: 1
-    year: 1300
+    build_step: 3
+    year: 1915
+    stay: 2
     lon: 30.93
     lat: -20.27
     region: africa
@@ -11,49 +12,112 @@ events:
     field: architecture
     tier: 2
     channels: {L: 3, H: 1}
-    # finished: in the game with release.ready_only. No year is recorded for any wall, so the stay carries the century only.
     ready: true
     refs: [great_zimbabwe_passage, great_zimbabwe_met, great_zimbabwe_iccrom]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"trait":["hardy","cheerful","handy"]},{"job":["builder","carpenter"]},{"stat":{"constitution":6}}]}}
-        - {id: p2, kind: notice, day: 60, req: {"any":[{"trait":["methodical","scholarly","curious"]},{"stat":{"wit":6}}]}}
-        - {id: p3, kind: endure, day: 120, req: {"any":[{"trait":["hardy","patient","vigil"]},{"stat":{"will":6}}]}}
+        - id: 'p1'
+          kind: 'persuade'
+          day: 24
+          overturns:
+            - 'western_yard_loss'
+          req:
+            any:
+              - job:
+                  - 'builder'
+                  - 'geologist'
+                  - 'civil_engineer'
+                  - 'architecture_intern'
+                  - 'retired_engineer'
+                stat:
+                  wit: 6
+              - trait:
+                  - 'methodical'
+                  - 'handy'
+                stat:
+                  wit: 7
+                  will: 6
       vignettes:
-        - {id: lines, traits: [methodical, scholarly], day: 65}
-        - {id: width, traits: [hardy, curious], day: 90}
-        - {id: pace, day: 30}
+        - id: 'lines'
+          traits:
+            - 'methodical'
+            - 'scholarly'
+          day: 10
+        - id: 'width'
+          traits:
+            - 'hardy'
+            - 'curious'
+          day: 14
+        - id: 'pace'
+          day: 7
     text:
       en:
-        name: 'The passage in the plan'
-        place: Masvingo, Zimbabwe
-        figure: The builders of Great Zimbabwe
-        story: 'Great Zimbabwe was built by ancestors of the Shona people and flourished from the eleventh to the fifteenth century. Its Great Enclosure has a long curved wall of granite laid in regular courses and a narrow passage between two walls leading to a conical tower. In 1871 the German Karl Mauch reached the ruins. The country took the name Zimbabwe from the city in 1980, and the site was inscribed as a World Heritage site in 1986.'
-        relic: 'A sketch of the passage'
-        relic_desc: 'A work drawing that leaves the route blank between both walls.'
+        name: 'The earthen platform by the wall'
+        place: 'Masvingo, Zimbabwe'
+        figure: 'Workers in the Western Enclosure'
+        story: 'In 1915, most of the moulded earthen platforms, benches and walls in the Western Enclosure at Great Zimbabwe were removed. The work was based on concerns that the earthen structures endangered the dry-stone walls. The exposed pit continued to erode afterwards.'
+        story_prose:
+          opening:
+            - 'Great Zimbabwe, 1915. Earthen platforms and benches still stood at the foot of the dry-stone walls in the Western Enclosure. The clearing was marked to take those away as well.'
+            - 'In history, most of the earthen structures were removed, and the exposed pit continued to erode. In this branch, someone can look at the join with the workers before they reach that part of the wall.'
+            - 'This trip needs someone who understands what they are looking at in a wall and can explain it to the people doing the work. They will have to find a section worth leaving before the clearing starts.'
+          points:
+            p1: '{staff} checks the join with the workers and points out a stretch they can leave, then waits while they move the clearance line farther out. A worker drives a stake beyond the platform. An old finger mark in the earthen surface still meets the joint between two stones.'
+          outcomes:
+            all: 'Later, a surveyor crouches by the wall and lays a rule across the remaining platform. One edge rests on earth, and the other just touches stone.'
+            p1: 'Later, a surveyor crouches by the wall and lays a rule across the remaining platform. One edge rests on earth, and the other just touches stone.'
+          none: 'The workers carry an empty basket away. Earth still shows fresh at the pit, with a pale line where the platform met the wall.'
+          not_admitted: '{staff} finds no place with the workers in the Western Enclosure. As a sketch is passed out, only a small corner shows at the foot of the wall.'
+          excerpts:
+            p1: 'A worker drives a stake beyond the platform. An old finger mark in the earthen surface still meets the joint between two stones.'
+        relic: 'A sketch of a wall section'
+        relic_desc: 'On the paper, an earthen platform rests against the foot of a dry-stone wall.'
         points:
-          p1: 'Be taken in by the wall builders, then sort stones of a size for the next course'
-          p2: 'Walk the passage between the two walls and draw it with the way left blank'
-          p3: 'In the dry season, carry water up from the valley to the builders on the hill'
+          p1: 'Examine the foot of the wall with the local workers and get one section of the earthen platform left in place before the clearing'
+        points_fail:
+          p1: 'As in history, most of the earthen structures are cleared away. This section does not remain in place.'
+        shift:
+          p1:
+            was: 'In 1915, many earthen platforms, benches and walls in the Western Enclosure were removed during clearing.'
+            now: 'In this branch, a section of earthen platform remains in the Western Enclosure. Later surveyors can still see how it met the stone wall.'
         vignettes:
-          lines: '{staff} draws the passage as two lines with the paper left white between them, so that a runner can follow the white and not the walls.'
-          width: '{staff} follows the inner wall far enough to see where it stops, and stops the pencil there instead of carrying the line all the way round.'
-          pace: '{staff} paces the length of one course and scratches the count on a flat stone at the foot of the wall.'
+          lines: '{staff} follows the foot of the wall with their eyes. The edge of the platform dips only where it meets a joint.'
+          width: '{staff} holds a worker’s drawing. The stone wall and the platform each have a line of their own.'
+          pace: '{staff} sits by the step and taps dried mud off a shoe. The crumbs fall on the sandy ground.'
       zh:
-        name: '图上两墙之间的路'
-        place: 津巴布韦马斯温戈
-        figure: 大津巴布韦的建造者
-        story: '大津巴布韦由绍纳人的祖先建造，兴盛于十一世纪到十五世纪。大围场的弧形长墙用花岗岩逐层整齐垒起，两墙之间有一条狭道通向锥形塔。1871 年，德国人卡尔·毛赫来到这片遗址。1980 年，国家以这座城为名，定名津巴布韦；1986 年，遗址列入世界遗产。'
-        relic: '一张两墙间的草图'
-        relic_desc: '图上两段墙之间留白，标的是能走的狭道。'
+        name: '墙脚留下的泥台'
+        place: '津巴布韦马斯温戈'
+        figure: '大津巴布韦西围区的工人'
+        story: '1915 年，大津巴布韦山上西围区的塑土台、长凳和墙体大多被拆除。施工时，人们以为附着的泥土会危及干砌石墙。清理后留下的坑口又经年侵蚀。'
+        story_prose:
+          opening:
+            - '1915 年，大津巴布韦。西围区的干砌石墙脚下，还有用泥土塑成的台和长凳。清理的人把它们也划进了要搬走的范围。'
+            - '史实里，工人把这些土构大多拆去，露出的坑口后来继续受侵蚀。在这条分支里，有人能在轮到墙脚那一段之前，和工人一道把相接的地方看清楚。'
+            - '这一趟用得上读得懂一堵墙、能跟在地做工的人说清楚的人。要留住的那一段，要在动工以前摸得准。'
+          points:
+            p1: '{staff}沿着墙脚和工人核过泥台与石墙相接的地方，指清能让开的一段，等他们把清理界线往外挪。工人把木桩钉在泥台外头。那截台面上，一道旧指痕还贴着石缝。'
+          outcomes:
+            all: '后来测绘的人蹲到墙脚，把尺横在还留着的泥台上。尺的一边搁在土面，一边轻轻碰到了石头。'
+            p1: '后来测绘的人蹲到墙脚，把尺横在还留着的泥台上。尺的一边搁在土面，一边轻轻碰到了石头。'
+          none: '工人从墙脚把空筐带走。坑边土色新鲜，原来接着石墙的地方只剩一道浅线。'
+          not_admitted: '{staff}没能加入西围区的工人。草图从里头递出来，墙脚处只看得见一截纸角。'
+          excerpts:
+            p1: '工人把木桩钉在泥台外头。那截台面上，一道旧指痕还贴着石缝。'
+        relic: '一张墙脚剖面草图'
+        relic_desc: '纸上画着干砌石墙和紧贴墙脚的塑土台。'
         points:
-          p1: '先让砌墙的工匠认下，再替他们挑出大小合用的石块'
-          p2: '走一遍两墙之间的狭道，画成图，把路留成白'
-          p3: '旱季里，从河谷把水挑上山，给砌墙的人'
+          p1: '与西围区的工人核对墙脚，在清理前争取把一段塑土台留在原处'
+        points_fail:
+          p1: '照史实，塑土构件大多被清掉。这条分支里，原处没有留下这一段。'
+        shift:
+          p1:
+            was: '1915 年，西围区的多处塑土台、长凳和墙体在清理中被拆除。'
+            now: '这条分支里，西围区有一段塑土台留在原处。后来测绘的人还能看出它怎样贴着石墙。'
         vignettes:
-          lines: '{staff}把狭道画成两条线，中间留白，送信的人照着白处走，就不会去顺着墙走。'
-          width: '{staff}沿内墙走到它停下的地方，铅笔也停在那里，没有把线顺手绕满一圈。'
-          pace: '{staff}用步子量了一层石的长度，把数目刻在墙脚一块平石上。'
+          lines: '{staff}沿着墙脚看过去，泥台的边到了石缝才低下去。'
+          width: '{staff}替工人拿着草图，图上石墙和泥台各有一条线。'
+          pace: '{staff}坐到石阶边，把鞋上的干泥碰掉，泥屑落在脚下的砂土上。'
 text:
   en:
     name: The builders of Great Zimbabwe
@@ -61,7 +125,7 @@ text:
   zh:
     name: 大津巴布韦的建造者
     text: 大津巴布韦的建造者。这座石头城属于说绍纳语的族群，大约在十一世纪到十五世纪兴盛。
-hook: {en: 'Why do two people count different walls?', zh: '两人数的到底是不是同一面墙？'}
+hook: {en: 'What will be left at the foot of the wall?', zh: '石墙脚下还会剩什么'}
 facts:
   builders:
     date: '1100'
@@ -97,6 +161,35 @@ facts:
     line:
       en: '1871: the German Karl Mauch reaches the ruins.'
       zh: '1871 年，德国人卡尔·毛赫来到这片遗址。'
+  western_yard_loss:
+    date: '1915'
+    stay_day: 26
+    checked: 'official_record'
+    level: 'usable'
+    use:
+      - 'story'
+      - 'history'
+      - 'wiki'
+    sources:
+      - 'great_zimbabwe_iccrom'
+    text:
+      en: 'In 1915, many earthen platforms, benches and walls in the Western Enclosure were removed during clearing.'
+      zh: '1915 年，西围区的多处塑土台、长凳和墙体在清理中被拆除。'
+    line:
+      en: '1915: the crews remove most of the earthen platforms, benches and walls in the Western Enclosure.'
+      zh: '1915 年，清理工人拆去了西围区大部分的塑土台、长凳和墙体。'
+  western_yard_erosion:
+    date: '1915'
+    checked: 'official_record'
+    level: 'usable'
+    use:
+      - 'story'
+      - 'wiki'
+    sources:
+      - 'great_zimbabwe_iccrom'
+    text:
+      en: 'The clearance left an open pit in the Western Enclosure. Ongoing erosion enlarged it in the following years.'
+      zh: '清理后，西围区露出一个坑口，随后数年的侵蚀使它扩大。'
   name:
     date: '1980'
     checked: official_record
@@ -124,10 +217,10 @@ facts:
 bystanders:
   marker:
     invented: true
-    text: {en: 'A worker, made up for the game, who draws the ways through the stone yard.', zh: '一位编出来的石场工人，画着石场里的路。'}
+    text: {en: 'An invented worker preparing to clear the foot of the wall.', zh: '一位虚构的工人，正准备清理石墙脚。'}
   carrier:
     invented: true
-    text: {en: 'A water carrier, made up for the game, who knows every path down to the valley.', zh: '一位编出来的挑水人，认得下到河谷的每一条小路。'}
+    text: {en: 'An invented worker who holds the drawing beside the earthen platform.', zh: '一位虚构的工人，在塑土台旁扶着草图。'}
 quotes:
   great_zimbabwe_stone_joints:
     order: 1
@@ -189,13 +282,13 @@ self_check:
   fact: heritage
   quote_line: '1986 年，大津巴布韦列入世界遗产。'
   echo_note: 'The two contextual echoes are attributed to João de Barros, who compiled an early indirect account of Symbaoé commonly associated with the site. No builder is named.'
-  regret_choice: '派力气大的去，石块挑得好，狭道却没人画成图；派细心的去，图画好了，旱季的水挑不上山。'
-  bookend: '从绍纳人的祖先在山上垒起第一层石开始，以一个国家用这座城的名字命名自己收尾。'
-  share_line: '我在大津巴布韦替砌墙的人挑过石块。'
-  share_number: '1980'
+  regret_choice: '员工能争取让一段塑土台留在原处。清理一旦越过墙脚，土构和石墙的接合位置便难以复原。'
+  bookend: '从贴在墙脚的塑土台开始，以后来的测绘还能否认出这道接面收尾。'
+  share_line: '石墙下面，还有一段泥台。'
+  share_number: '1915'
   knowing: 'name'
-  near: 'passage'
-  lever: 'p1, p2'
-  missed: 'mauch'
+  near: 'western_yard_loss'
+  lever: 'p1'
+  missed: 'western_yard_erosion'
   brought: 'relic'
 pack: {license: MIT, version: 2, languages: [en, zh]}

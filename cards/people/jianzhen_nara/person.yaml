@@ -11,12 +11,12 @@ events:
     field: thought
     tier: 2
     channels: {Y: 3, E: 1}
-    refs: [jianzhen_nara_tozhengzhuan, jianzhen_nara_eiei, jianzhen_nara_enwiki, jianzhen_nara_jawiki, jianzhen_nara_arrival, jianzhen_nara_foundation]
+    refs: [jianzhen_nara_tozhengzhuan, jianzhen_nara_eiei, jianzhen_nara_shoku, jianzhen_nara_arrival, jianzhen_nara_foundation]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 8, req: {"any":[{"job":["doctor","physician","nurse","paramedic","pharmacist","medical_teacher","caregiver"],"stat":{"will":5}},{"provides":"cure","stat":{"will":4}}]}}
-        - {id: p2, kind: care, day: 150, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
+        - {id: p1, kind: care, day: 8, req: {"any":[{"job":["doctor","physician","nurse","paramedic","medical_teacher","caregiver"],"stat":{"will":5}},{"trait":["kind","patient"],"stat":{"will":5,"constitution":5}}]}}
+        - {id: p2, kind: care, day: 150, req: {"any":[{"job":["nurse","caregiver","translator","teacher","archivist"],"stat":{"will":6,"wit":6}},{"trait":["methodical","patient","faithful"],"stat":{"will":7}}]}}
       vignettes:
         - {id: sound, traits: [kind, charismatic, cosmopolitan]}
         - {id: tie, traits: [methodical, vigil, handy]}
@@ -26,24 +26,22 @@ events:
         name: 'The long road back to Yangzhou'
         place: "Lingnan"
         figure: "Jianzhen"
-        story: 'In 748 Jianzhen of Yangzhou set out for Japan for the fifth time, and his ship was blown to Hainan. On the long way back overland, Eiei, the Japanese visitor who had come to Yangzhou to ask him across, fell ill and died at Duanzhou. Further on, at Shaozhou, Jianzhen''s failing eyes were treated by a man who said he could cure them, and afterwards he was blind.'
+        story: 'Jianzhen’s fifth attempt to sail to Japan brought him to Hainan instead. On the long way back, Eiei, a monk who had come to ask him to travel to Japan, fell ill and died at Duanzhou. Jianzhen lost his sight on the journey. Accounts give different explanations.'
         relic: 'A practice wrapper label'
         relic_desc: 'An invented label used by the fictional temple helpers.'
         points:
-          p1: 'When Eiei falls ill at Duanzhou, nurse him and cure him'
-          p2: 'Before the man at Shaozhou treats Jianzhen''s eyes, talk him out of it and treat the eyes properly'
+          p1: 'At Duanzhou, ask how Eiei wants to be cared for and make time for him to speak with Jianzhen'
+          p2: 'As Jianzhen’s sight fails, have the party read its plans aloud so he can decide how he wants to continue'
         points_fail:
-          p1: 'As in history Eiei dies at Duanzhou. Jianzhen sees him to his burial and goes on north without him.'
-          p2: 'As in history the treatment leaves him blind. Three years later he crosses to Japan without his sight.'
+          p1: 'There is always something else to settle and the people at the bedside keep being called away. The time to talk passes.'
+          p2: 'The party gathers the route notes in a bundle again. Jianzhen has to wait for someone to tell him what is on the page.'
         shift:
           p1:
-            was: 'Around 750, on the way back after the fifth failed crossing, Eiei, who had come to Yangzhou ten years before to ask Jianzhen to Japan, fell ill and died at Duanzhou.'
-            now: 'He got well at Duanzhou and went on north with the others.'
+            was: 'Eiei fell ill and died at Duanzhou on the return journey after the fifth attempt to sail to Japan.'
+            now: 'In this branch {staff} stays with Eiei at Duanzhou and calls Jianzhen to the bedside. There is time for them to speak in private.'
           p2:
-            was: '750, Shaozhou: after the heat and strain of the road Jianzhen''s eyes had grown dim. A man who said he could cure eyes treated them, and afterwards he was blind.'
-            now: 'He never let the man treat him. His eyes were cured, and he could see the road and the people beside him.'
-            who: jianzhen_nara
-            bio: 'In this timeline Jianzhen kept his eyes on the road back of 750, and later saw the sea he crossed to Japan.'
+            was: 'Accounts say that Jianzhen lost his sight on this journey. He later sailed to Japan.'
+            now: 'In this branch {staff} reads out the next stops. Jianzhen asks the others to change one stop and tells them when he wants to set out again.'
         vignettes:
           sound: 'Chiyo points to the right bundle from across the room. Jun still cannot tell which one she means on the crowded shelf. You ask her to read the opening aloud instead. Jun finds the matching words on the wrapper and sets the bundle down for the next reader.'
           tie: 'Jun starts to retie a loose wrapper before checking the order. You hold the bundle as Chiyo reads the first line of each part in turn. He puts one misplaced part back. The bundle will now open in the order in which they practised it.'
@@ -52,24 +50,22 @@ events:
         name: '回扬州的长路'
         place: "岭南"
         figure: "鉴真"
-        story: '748 年，扬州的鉴真第五次动身去日本，船被风吹到海南。走陆路北返的长路上，十年前到扬州请他东渡的日本人荣叡在端州病逝。再往前到了韶州，鉴真日渐昏暗的眼睛经一个自称会治眼的人治过，从此失明。'
+        story: '鉴真第五次尝试前往日本，船却被风吹到海南。北返途中，曾来扬州请他东渡的日僧荣叡在端州病逝。鉴真在路上失明，两部早期文献对经过的记述不同。'
         relic: '一张练习用的卷签'
         relic_desc: '故事中的帮工使用的经卷签。'
         points:
-          p1: '荣叡在端州病倒，照料他，把病治好'
-          p2: '韶州那人给鉴真治眼之前，劝他别让人乱治，把眼睛好好治好'
+          p1: '在端州问荣叡想怎样被照料，再替他和鉴真留一段能说话的时间'
+          p2: '鉴真看不清时，把一行人的行程念出声，请他自己决定接下来怎么走'
         points_fail:
-          p1: '荣叡照史实病逝于端州，鉴真为他送葬，没有他同行，继续北上。'
-          p2: '那次治疗照史实让他双目失明，三年后他看不见地渡海去了日本。'
+          p1: '总有别的事要办，守在榻边的人一再被叫走。两人还能说话的那段时间，就这样过去了。'
+          p2: '同行的人又把路引捆回了一束。鉴真看不清纸上的字，只能等别人告诉他。'
         shift:
           p1:
-            was: '750 年前后，第五次渡海失败后的归途中，十年前到扬州请鉴真东渡的日本人荣叡在端州病逝。'
-            now: '他在端州病好了，和一行人一起继续北上。'
+            was: '第五次渡海失败后的北返途中，荣叡在端州病逝。'
+            now: '这条分支里，{staff}在端州守着荣叡，把鉴真请到榻边。两人得空单独说了一会儿话。'
           p2:
-            was: '750 年，归途走到韶州，鉴真的眼睛因一路炎热劳顿日渐昏暗，一个自称会治眼的人给他治过以后，他双目失明。'
-            now: '他没让那人动手，眼睛治好了，看得清路上的山水和身边的人。'
-            who: jianzhen_nara
-            bio: '这条时间线里，鉴真在 750 年的归途中保住了眼睛，后来看得见他渡过去的那片海。'
+            was: '早期文献记载鉴真在这趟归途中失明，后来仍东渡日本。'
+            now: '这条分支里，{staff}把接下来几个落脚处念给鉴真听。鉴真请同行改了一站，也说明自己想什么时候再出发。'
         vignettes:
           sound: '千代隔着屋子指给人看，可架上摆得太满，准还是分不清她指哪束。你请她念出开头。准听着去对包纸上的字，找到那一束，给接读的人摆了出来。'
           tie: '准想先把松开的包纸捆上，还没核对里面的次序。你扶着那束经卷，千代挨个念每部分的头一句。准把放错的一份放了回去。下次打开时，次序就是他们练过的那样。'
@@ -88,12 +84,13 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_enwiki]
+    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_arrival]
     text:
       en: 'In 748 Jianzhen set out from Yangzhou on his fifth attempt to reach Japan; the ship was blown off course to Hainan, and he made his way back north overland.'
       zh: '748 年，鉴真第五次从扬州出发东渡，船被风吹离航路，漂到海南，此后他走陆路北返。'
   eiei:
     date: '750'
+    stay_day: 30
     checked: two_sources
     level: careful
     use: [story, history, wiki]
@@ -106,16 +103,17 @@ facts:
       zh: '端州，当年到扬州请鉴真东渡的荣叡病逝。'
   eyes:
     date: '750'
+    stay_day: 146
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_enwiki, jianzhen_nara_jawiki]
+    sources: [jianzhen_nara_tozhengzhuan, jianzhen_nara_shoku]
     text:
-      en: 'At Shaozhou, after the heat and strain of the road had dimmed his eyes, Jianzhen was treated by a man who said he could cure eyes, and afterwards he was blind. Later writers suggest infection or age related cataract.'
-      zh: '在韶州，一路炎热劳顿使鉴真的眼睛昏暗，一个自称会治眼的人给他治过以后，他双目失明。后人推测是感染或老年白内障。'
+      en: 'The account by Ōmi no Mifune places the loss of sight after treatment on the return journey. Shoku Nihongi associates it with Jianzhen grieving Eiei’s death.'
+      zh: '真人元开的传记把失明写在归途中治眼之后，《续日本纪》则把失明同鉴真为荣叡病逝而哀哭联系起来。'
     line:
-      en: 'Shaozhou: a man who says he can cure eyes treats Jianzhen, and afterwards he cannot see.'
-      zh: '韶州，一个自称会治眼的人给鉴真治眼，治过以后他看不见了。'
+      en: 'On the journey north, Jianzhen loses his sight.'
+      zh: '北返途中，鉴真失明。'
   arrival:
     date: '754'
     checked: official_record
@@ -161,12 +159,12 @@ wiki:
       text:
         en: 'Wikipedia, Jianzhen https://en.wikipedia.org/wiki/Jianzhen'
         zh: '维基百科，鉴真 https://en.wikipedia.org/wiki/Jianzhen'
-    jianzhen_nara_jawiki:
+    jianzhen_nara_shoku:
       order: 898
       status: checked
       text:
-        en: 'Japanese Wikipedia, Ganjin https://ja.wikipedia.org/wiki/鑑真'
-        zh: '日文维基百科，鉴真 https://ja.wikipedia.org/wiki/鑑真'
+        en: 'Shoku Nihongi, vol. 24, entry on Jianzhen’s death in 763. https://zh.wikisource.org/zh-hant/續日本紀/卷第廿四'
+        zh: '《续日本纪》卷二十四，天平宝字七年五月戊申条。https://zh.wikisource.org/zh-hant/續日本紀/卷第廿四'
     jianzhen_nara_arrival:
       order: 893
       status: checked

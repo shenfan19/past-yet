@@ -10,12 +10,11 @@ events:
     field: philosophy
     tier: 2
     channels: {T: 1, H: 2}
-    refs: [empedocles_akragas_roots, empedocles_akragas_etna]
+    refs: [empedocles_akragas_roots, empedocles_papyrus, empedocles_akragas_etna]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, day: 15, req: {"any":[{"trait":["vigil","methodical","attached"],"stat":{"will":5}},{"job":["archivist","translator","proofreader","bookseller","writer"]}]}}
-        - {id: p2, kind: hold, day: 40, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":8}},{"trait":["scholarly"],"stat":{"wit":8,"will":6}},{"provides":"scan","stat":{"wit":7}}]}}
+        - {id: p1, kind: hold, day: 40, req: {"any":[{"job":["archivist","translator","proofreader","bookseller"],"stat":{"wit":8}},{"trait":["scholarly"],"stat":{"wit":8,"will":6}},{"provides":"scan","stat":{"wit":7}}]}}
       vignettes:
         - {id: cue, traits: [skeptical, wanderer, methodical]}
         - {id: handoff, traits: [charismatic, attached, kind]}
@@ -29,18 +28,13 @@ events:
         relic: "A scrap of verse"
         relic_desc: A strip from the imagined rehearsal, marked at two turns in the verse.
         points:
-          p1: 'Make a second copy of his hymn to Apollo and put it away safe, so the copy his household later burned by mistake is not the only one'
-          p2: 'Help him have his poem On Nature copied out in full several times, so it does not come down to us only in fragments'
+          p1: 'Help a copyist complete and check a copy of On Nature and arrange for it to be kept separately'
         points_fail:
-          p1: 'The hymn to Apollo stayed a single copy. In this branch his household still burned it without meaning to.'
-          p2: 'On Nature stayed in the copies it had. In this branch it was still lost, and later readers had only the lines others quoted and a few scraps of papyrus.'
+          p1: 'In this branch, as in history, later readers can piece together only part of the poem from quotations and papyrus fragments.'
         shift:
           p1:
-            was: 'In the fifth century BC Empedocles wrote a hymn to Apollo; according to Diogenes Laertius, citing Aristotle, his sister, or his daughter as Hieronymus says, later burned it without meaning to.'
-            now: 'A second copy of the hymn was kept apart, and in this timeline it outlasted the fire.'
-          p2:
-            was: 'In the fifth century BC Empedocles set out his teaching in the poem On Nature; the poem was later lost, and it survives only in fragments quoted by later authors and in the Strasbourg papyrus published in 1999.'
-            now: '{staff} helped him have On Nature copied in full several times. In this timeline the whole poem came down to later readers, and no one had to piece it together from quotations.'
+            was: 'Empedocles put his ideas in verse in the fifth century BC. On Nature survives in part through quotations and papyri, including fragments published from the Strasbourg collection in 1999.'
+            now: 'The copy is checked against the poem before it goes to another reader. In this branch a complete text survives alongside the extracts preserved in other works.'
             who: empedocles_akragas
             bio: 'In this line Empedocles'' poem On Nature survived whole, and later readers could follow his four roots, Love and Strife from the first line to the last.'
         vignettes:
@@ -55,18 +49,13 @@ events:
         relic: "一片诗稿"
         relic_desc: 排练用的纸莎草条，在诗句的两处转折做过记号。
         points:
-          p1: '把他的《阿波罗颂》另抄一份收好，日后家里人误烧时，烧掉的不是唯一的一份'
-          p2: '帮他把长诗《论自然》完整地多抄几部，不让它只剩残篇传世'
+          p1: '帮抄写人核全《论自然》的一份抄本，把这一份另找地方存下'
         points_fail:
-          p1: '《阿波罗颂》照旧只有一份，这条分支里它还是被家里人无意中烧掉了。'
-          p2: '《论自然》照旧只有原来那几部抄本，这条分支里它还是失传了，后人只读得到别人引过的句子和几片纸草。'
+          p1: '这条分支里，后人也只能从后世的引文和纸草残片中读到长诗的一部分。'
         shift:
           p1:
-            was: '公元前五世纪，恩培多克勒写过一首阿波罗颂；据第欧根尼·拉尔修引亚里士多德，后来被他的姐妹，希罗尼穆斯说是女儿，无意中烧掉了。'
-            now: '那首颂诗另有一份抄本收在别处，这条时间线里它躲过了那把火。'
-          p2:
-            was: '公元前五世纪，恩培多克勒把他的学说写成长诗《论自然》；原诗后来失传，只剩后世作者引用的残篇和 1999 年刊布的斯特拉斯堡纸草。'
-            now: '{staff}帮他把《论自然》完整地多抄了几部，这条时间线里整首诗传到了后世，不用再从引文里一句句拼回来。'
+            was: '公元前五世纪，恩培多克勒把自己的学说写进诗中。《论自然》传下来的只有引文和纸草残篇，包括 1999 年刊布的斯特拉斯堡藏片。'
+            now: '这份抄本核过全文，由另一名读者带走保管。这条分支里，后人还能找到整首诗。'
             who: empedocles_akragas
             bio: 'IF 线里，恩培多克勒的《论自然》完整传了下来，后人能从第一行读到最后一行，看他怎样讲四根和爱与争。'
         vignettes:
@@ -91,6 +80,15 @@ facts:
     text:
       en: 'The fragments describe the four constituents and alternate union and separation. The year is an approximate setting during the philosopher’s lifetime.'
       zh: '残篇写出四种成分及交替的聚合、分离。年份取哲学家生平中的约略时间。'
+  papyrus:
+    date: '1999'
+    checked: official_record
+    level: usable
+    use: [story, wiki]
+    sources: [empedocles_papyrus]
+    text:
+      en: 'The 1999 edition of the Strasbourg papyrus identifies and publishes part of Empedocles’ poem on nature. No complete copy is known.'
+      zh: '1999 年，研究者刊布了斯特拉斯堡所藏的恩培多克勒纸草残篇，其中可辨出《论自然》的一部分。完整抄本未见传世。'
   etna:
     date: '220'
     checked: official_record
@@ -109,6 +107,12 @@ bystanders:
     text: {en: 'A fictional reader who hopes to complete the rehearsal before supper.', zh: '虚构读者埃瑞涅，想在开饭前念完一次。'}
 wiki:
   refs:
+    empedocles_papyrus:
+      order: 823
+      status: checked
+      text:
+        en: 'Martin and Primavesi, L’Empédocle de Strasbourg, P. Strasb. gr. Inv. 1665–1666, 1999 critical edition. https://difusion.ulb.ac.be/vufind/Record/ULB-DIPOT%3Aoai%3Adipot.ulb.ac.be%3A2013/16335/Details'
+        zh: '马丁、普里马韦西《斯特拉斯堡的恩培多克勒》，1999 年纸草校本，P. Strasb. gr. Inv. 1665–1666。https://difusion.ulb.ac.be/vufind/Record/ULB-DIPOT%3Aoai%3Adipot.ulb.ac.be%3A2013/16335/Details'
     empedocles_akragas_roots:
       order: 821
       status: checked

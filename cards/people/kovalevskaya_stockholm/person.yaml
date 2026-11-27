@@ -16,7 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 32, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["methodical","scholarly"],"stat":{"will":6}}]}}
+        - {id: p1, kind: hold, guard: true, day: 61, req: {"any":[{"job":["university_lecturer","archivist"]},{"trait":["methodical","scholarly"],"stat":{"will":6}}]}}
         - {id: p2, kind: persuade, day: 82, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","scholarly"],"stat":{"wit":8,"will":7}}]}}
       vignettes:
         - {id: conditions, traits: [methodical, scholarly]}
@@ -31,17 +31,17 @@ events:
         relic: "A top model"
         relic_desc: "A brass spinning top with a number cut into its axis."
         points:
-          p1: 'Keep a Stockholm copy of the anonymous entry. Check that its identifying envelope matches before sending it to the Paris judges'
-          p2: 'Bring the prize record and her existing duties to the Stockholm university. Ask for written terms and pay before her old appointment expires'
+          p1: 'Check the Stockholm working copy against the revised memoir. Keep the earlier draft out of the packet for the journal'
+          p2: 'Bring the news from Paris and a list of her teaching duties to the Stockholm university. Ask when her new appointment would begin and get it in writing'
         points_fail:
-          p1: 'The entry has the wrong identifying envelope and cannot be matched to its author after judging. The office recalls the employee.'
-          p2: 'The news reaches the university. Her teaching hours and pay are still discussed only informally.'
+          p1: 'An older draft goes into the journal packet with conditions missing from the first page. The office calls {staff} back when the publication falls out of sync.'
+          p2: 'The news reaches the university. She still has to plan the next term without a written start date.'
         shift:
           p1:
-            was: 'Kovalevskaya won the Paris Academy’s 1888 Prix Bordin for work on rigid-body rotation.'
+            was: 'The Paris Academy announced the Prix Bordin for Kovalevskaya’s work in December 1888. Her expanded memoir appeared in Acta Mathematica in 1889.'
           p2:
-            was: 'She became a full professor in Stockholm in 1889. Private correspondence also records questions about the length of her appointment and pay.'
-            now: 'The university sets out the dates and pay in writing early. She can plan the next semester and the department has a commitment it can consult.'
+            was: 'She became a full professor in Stockholm in 1889.'
+            now: 'In this branch the university confirms the start date in writing early enough for her to plan the next term’s teaching and research.'
             who: kovalevskaya_stockholm
             bio: 'Kovalevskaya taught and studied rigid-body rotation in Stockholm. The international prize and her local working conditions were decided by different institutions.'
         vignettes:
@@ -56,17 +56,17 @@ events:
         relic: "一只陀螺模型"
         relic_desc: "一只铜陀螺，轴上刻着编号。"
         points:
-          p1: '在斯德哥尔摩留备份，核对匿名参赛稿和分存的身份封后，再发给巴黎的评委'
-          p2: '拿着奖项记录与她已经承担的工作清单，请斯德哥尔摩的校方在旧聘期结束前书面定下续聘和课酬'
+          p1: '在斯德哥尔摩把工作稿与修订稿逐页核对，免得早稿混进准备给刊物的纸包'
+          p2: '拿着巴黎的获奖消息和她承担的教学清单去找校方，请他们书面确认新聘期何时开始'
         points_fail:
-          p1: '匿名稿附错了识别封，无法在评定后认回作者，事务所因同步失败召回员工。'
-          p2: '荣誉已转达给学校，新的课时和薪酬仍只靠私下转述。'
+          p1: '送刊的纸包里混进了早稿，首页少了前提。刊行记录偏离原历史，事务所召回{staff}。'
+          p2: '获奖消息传到了学校，她排下学期的课时仍拿不到书面的起聘日期。'
         shift:
           p1:
-            was: '柯瓦列夫斯卡娅以刚体转动问题的研究获得巴黎科学院 1888 年博尔丹奖。'
+            was: '巴黎科学院于 1888 年 12 月公布博尔丹奖，表彰柯瓦列夫斯卡娅对刚体转动的研究。增订论文于 1889 年在《数学学报》刊行。'
           p2:
-            was: '她在斯德哥尔摩工作多年，于 1889 年获正式教授职位。私人通信还记有关于聘期和薪酬的争议。'
-            now: '校方提前给出书面聘期及课酬。她可以据此安排下一学期的教学和研究，系里也有可查的承诺。'
+            was: '她于 1889 年在斯德哥尔摩获正式教授职位。'
+            now: '这条分支里，校方提前书面确认了起聘日期，她可以据此安排下一学期的教学和研究。'
             who: kovalevskaya_stockholm
             bio: '柯瓦列夫斯卡娅在斯德哥尔摩教学并研究刚体转动。国际评奖及本地的工作条件分别由不同机构决定。'
         vignettes:
@@ -82,6 +82,15 @@ text:
     text: "俄国数学家，1850 年生，1891 年去世。她在斯德哥尔摩任教授，1888 年因对刚体旋转问题的研究获得法国科学院的奖。"
 hook: {en: 'Do the same equations describe every top?', zh: '谁把「某一种」抄成了「所有」？'}
 facts:
+  prize:
+    date: '1888-12-24'
+    stay_day: 60
+    checked: official_record
+    level: usable
+    use: [history, story, wiki]
+    sources: [kovalevskaya_stockholm_rotation, kovalevskaya_stockholm_bordin_memoir]
+    text: {en: 'The Paris Academy awarded Kovalevskaya the Prix Bordin for her work on rigid-body rotation.', zh: '巴黎科学院将博尔丹奖授予研究刚体转动的柯瓦列夫斯卡娅。'}
+    line: {en: '24 December 1888: The Paris Academy announced the Prix Bordin for Kovalevskaya’s work on rigid-body rotation.', zh: '1888 年 12 月 24 日，巴黎科学院宣布将博尔丹奖授予研究刚体转动的柯瓦列夫斯卡娅。'}
   rotation:
     date: '1889'
     checked: official_record

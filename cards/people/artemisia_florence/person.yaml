@@ -17,8 +17,7 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: trust, guard: true, day: 14, req: {"any":[{"job":["painter","archivist"]},{"trait":["methodical","artistic"],"stat":{"wit":5}}]}}
-        - {id: p2, kind: notice, day: 21, req: {"any":[{"job":["archivist","translator","proofreader"]},{"trait":["methodical","scholarly"],"stat":{"wit":6}}]}}
-        - {id: p3, kind: persuade, day: 43, req: {"any":[{"job":["archivist","painter"],"stat":{"wit":6}},{"trait":["methodical","scholarly"],"stat":{"will":7}}]}}
+        - {id: p2, kind: persuade, day: 36, req: {"any":[{"job":["archivist","painter"],"stat":{"wit":6}},{"trait":["methodical","scholarly"],"stat":{"will":7}}]}}
       vignettes:
         - {id: pose, traits: [artistic, curious]}
         - {id: name, traits: [methodical, vigil]}
@@ -32,22 +31,17 @@ events:
         relic: "A pigment jar"
         relic_desc: "A small jar of ground lapis blue."
         points:
-          p1: 'Before the July 19 admission, bring Florence’s Academy of the Arts of Drawing a commission record under Artemisia’s name so it can verify her work.'
-          p2: 'Read the advances for Allegory of Inclination against the delivery accounts. Leave the painter a copy she can show to the supplier herself.'
-          p3: 'Give Artemisia time to use her accounts to agree dates with the next patron for materials, delivery and final payment. Both copies of the agreement are to name her as payee.'
+          p1: 'Help Artemisia arrange the money for her academy fee in time for her admission on 19 July'
+          p2: 'As the first commission is settled, help Artemisia secure a dated advance in her next agreement so she can buy materials before she starts painting'
         points_fail:
-          p1: 'The academy receives a record bearing only the patron’s mark. The clerks cannot check who delivered the work and put off the vote. The office recalls the employee.'
-          p2: 'An advance and the expenses for another project sit side by side in the ledger. When the supplier calls again, Artemisia has to borrow the books and search them anew.'
-          p3: 'Both sides are in a hurry to start and write the deposit down on a single slip. At the next demand from the pigment seller, she still needs the patron to find the original account.'
+          p1: 'Artemisia cannot cover the fee on the day in this branch. Her enrolment falls out of sync, and the office recalls the employee.'
+          p2: 'The August balance is paid as recorded, but Artemisia still has to ask for money when she needs to buy supplies for another commission.'
         shift:
           p1:
             was: 'On July 19, 1616, the Academy of the Arts of Drawing in Florence admitted Artemisia Gentileschi.'
           p2:
-            was: 'The Buonarroti archive holds payment records for the commission. Artemisia also brought cases to the academy’s tribunal, including disputes over debts to suppliers.'
-            now: 'She puts away a dated account of her own. When the supplier returns, she can show which payment bought the pigments and which was an advance from the patron.'
-          p3:
-            was: 'The Buonarroti archive preserves records of advances and correspondence that show her finding money to work in Florence.'
-            now: 'Her early requests for money still survive in letters. For later commissions, she puts the materials and payment dates on both copies of the agreement, so suppliers can order their stock against the terms she has made.'
+            was: 'In 1615–16, the Buonarroti commission was paid in instalments. The archive preserves Artemisia’s request for money while she was working on it.'
+            now: 'The next commission sets a date for the materials advance before work begins. Artemisia can order pigments against the agreed payment.'
             who: artemisia_florence
             bio: 'She painted Allegory of Inclination for Michelangelo Buonarroti the Younger’s house, where it remains part of the decoration. Admission also gave her access to the academy’s tribunal for disputes arising from her trade.'
         vignettes:
@@ -62,22 +56,17 @@ events:
         relic: "一罐颜料"
         relic_desc: "一小罐磨好的青金石蓝。"
         points:
-          p1: '赶在7月19日入会前，把阿尔泰米西娅署名的委托记录送到佛罗伦萨绘画艺术学院，让院方有据可查。'
-          p2: '逐笔对读《倾向的寓意》的预付款与交画账，让画家自己留一份能答复材料商的账单。'
-          p3: '请阿尔泰米西娅拿她自己的账与下一位委托方议定付料钱、交画和结清的日期，并在两份画约上写明由她收款。'
+          p1: '帮阿尔泰米西娅调出一笔钱缴入会费，赶上 7 月 19 日入会'
+          p2: '趁上一个委托结款，帮阿尔泰米西娅在下一份画约里定下预付款日期，让她在开工前买齐颜料'
         points_fail:
-          p1: '送去的纸只有委托方的记号。院方查不到画是谁交的，推迟了表决。事务所因同步失败召回员工。'
-          p2: '预付款和别人的项目开支记在相邻行。材料商再问起时，阿尔泰米西娅只能重新借账翻查。'
-          p3: '双方急着开工，只把订金写在一张纸上。下次颜料商催款时，她仍得请委托人找原账。'
+          p1: '这条分支里，阿尔泰米西娅当天没能交齐入会费。入会偏离史实，事务所因同步失败召回员工。'
+          p2: '8 月的尾款照史实付清。下一次买颜料时，阿尔泰米西娅还得临时开口催钱。'
         shift:
           p1:
             was: '1616年7月19日，阿尔泰米西娅·真蒂莱斯基获佛罗伦萨绘画艺术学院接纳。'
           p2:
-            was: '博纳罗蒂家族档案保存了这项委托的付款记录。阿尔泰米西娅也曾借助学院的法庭处理包括材料商欠款在内的案件。'
-            now: '她自己收起一份有日期的对账单。材料商再来时，她能从哪笔是买颜料、哪笔是委托预付款讲起。'
-          p3:
-            was: '如今还能从博纳罗蒂家族档案的预付款记录及通信中看到她在佛罗伦萨如何筹措画资。'
-            now: '开头几次催付仍见于她的来信。此后谈新委托时，她会把供料和结清日期写在两份画约上，让材料商先按已约定的款项备货。'
+            was: '1615 至 1616 年，博纳罗蒂分期支付画款，档案里还留着阿尔泰米西娅作画期间催付的信。'
+            now: '下一份画约写明了预付材料款的日期，在开工以前。她可以照约定的款项订好颜料。'
             who: artemisia_florence
             bio: '她为小米开朗琪罗·博纳罗蒂的宅邸绘制《倾向的寓意》，作品至今仍属建筑装饰的一部分。入会以后，她也可以向学院的法庭提出与画业有关的争议。'
         vignettes:
@@ -93,6 +82,31 @@ text:
     text: 意大利画家，1593 年生，约 1656 年去世。她随父亲奥拉齐奥·真蒂莱斯基学画，1612 年卷入一桩著名的审判，此后画了许多坚毅的圣经与神话女性。1616 年她成为佛罗伦萨绘画艺术学院接纳的第一位女性。
 hook: {en: 'A painter chooses how to be seen.', zh: '画家怎样画自己的样子'}
 facts:
+  admission_fee:
+    date: '1616-07-19'
+    stay_day: 14
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [artemisia_florence_admission, artemisia_florence_payments]
+    text:
+      en: 'Artemisia entered the Florentine Academy of the Arts of Drawing on 19 July and paid the fee on enrolment. She and her husband had debts, and subsequent fees went unpaid.'
+      zh: '7 月 19 日，阿尔泰米西娅加入佛罗伦萨绘画艺术学院并缴了入会费。她和丈夫背有债务，后来未能继续缴费。'
+    line:
+      en: '19 July 1616: Artemisia enters the Academy of the Arts of Drawing in Florence.'
+      zh: '1616 年 7 月 19 日，阿尔泰米西娅加入佛罗伦萨绘画艺术学院。'
+  commission_balance:
+    date: '1616-08'
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [artemisia_florence_payments]
+    text:
+      en: 'The Buonarroti archive records the final payment for Allegory of Inclination in August 1616 and preserves Artemisia’s earlier request for money.'
+      zh: '博纳罗蒂档案记载《倾向的寓意》的尾款于 1616 年 8 月付清，还保存了阿尔泰米西娅早先催付的信。'
+    line:
+      en: 'August 1616: the final instalment for Allegory of Inclination is recorded.'
+      zh: '1616 年 8 月，《倾向的寓意》的最后一笔画款入账。'
   self_portrait:
     date: '1616'
     checked: official_record

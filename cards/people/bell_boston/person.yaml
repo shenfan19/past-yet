@@ -16,8 +16,8 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["mechanic","electrician"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":7}}]}}
-        - {id: p2, kind: persuade, guard: true, day: 120, req: {"any":[{"job":["tutor","teacher","lecturer","university_lecturer"],"stat":{"will":6}},{"trait":["charismatic","kind"],"stat":{"wit":6,"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 13, req: {"any":[{"job":["mechanic","electrician"],"stat":{"finesse":7}},{"trait":["methodical","handy"],"stat":{"wit":6,"finesse":5}}]}}
+        - {id: p2, kind: persuade, guard: true, day: 116, req: {"any":[{"job":["tutor","teacher","lecturer","university_lecturer"],"stat":{"will":6}},{"trait":["charismatic","kind","methodical"],"stat":{"wit":6,"will":7}}]}}
       vignettes:
         - {id: blind, traits: [methodical, scholarly]}
         - {id: future, traits: [bold, charismatic]}
@@ -27,20 +27,20 @@ events:
         name: 'Write down what came through'
         place: Boston
         figure: Alexander Graham Bell
-        story: 'Alexander Graham Bell’s laboratory notebook records that on 10 March 1876 in Boston, Thomas Watson heard and understood words Bell spoke into the transmitter. On 25 June the judges of the Philadelphia Centennial Exhibition heard the telephone; Bell had almost stayed in Boston to mark his students’ examinations.'
+        story: 'Alexander Graham Bell’s laboratory notebook records that on 10 March 1876 in Boston, Thomas Watson heard and understood words Bell spoke into the transmitter. At the Philadelphia Centennial Exhibition on 25 June, Bell demonstrated the telephone to judges.'
         relic: A telephone receiver
         relic_desc: A wooden handpiece with a thin diaphragm.
         points:
-          p1: 'Keep the speech experiment going while the backers press for a multiple telegraph, so the full sentence reaches the next room'
-          p2: 'Take over the examination papers and get the worn out Bell on the train to Philadelphia before the judges come round'
+          p1: 'Keep the Boston apparatus ready for one more trial, with Watson listening in the other room until he can repeat the words'
+          p2: 'Before Bell leaves Boston, have him and his colleagues agree what must be done for his students while he is away at the exhibition'
         points_fail:
-          p1: 'The workshop goes back to the telegraph work and the March speech trial is cut short. The branch loses sync and the office recalls the employee.'
-          p2: 'Bell stays in Boston with his examination papers and the judges pass an empty table on 25 June. The branch loses sync and the office recalls the employee.'
+          p1: 'The equipment goes back on the bench before Watson can confirm what he heard. The March trial falls out of sync and the office recalls {staff}.'
+          p2: 'Bell stays in Boston to see to his students. His exhibition demonstration falls out of sync and the office recalls {staff}.'
         shift:
           p1:
             was: 'On 10 March 1876 in Boston, Bell used the experimental apparatus to transmit an intelligible sentence to Watson in the next room.'
           p2:
-            was: 'On 25 June 1876 in Philadelphia, Bell showed the telephone to the Centennial judges, among them Dom Pedro II and William Thomson. Tired and behind with his students’ examinations, he had not wanted to go.'
+            was: 'On 25 June 1876 in Philadelphia, Bell showed the telephone to Centennial judges, including Dom Pedro II and William Thomson.'
         vignettes:
           blind: 'The assistant at the receiver wants to see the sentence first. You fold the paper and ask him to write only what he hears. Two words come back intact and the last is left blank. You keep that slip. Another trial is about to start when you go.'
           future: 'You tell the assistant that people will remember one sentence from this date. He guesses it will be whatever someone wrote on the transmitter side. You set out two slips, one for the speaker and one for the listener. The pair will show a difference the story of the famous sentence cannot tell you about this trial.'
@@ -49,20 +49,20 @@ events:
         name: '把听到的写下来'
         place: 波士顿
         figure: 亚历山大·格雷厄姆·贝尔
-        story: '亚历山大·格雷厄姆·贝尔的实验笔记记载，1876 年 3 月 10 日在波士顿，托马斯·沃森听懂了贝尔对着发话装置说的话。6 月 25 日，费城百年博览会的评委听到了电话；贝尔原本差点留在波士顿改学生的考卷。'
+        story: '亚历山大·格雷厄姆·贝尔的实验笔记记载，1876 年 3 月 10 日在波士顿，托马斯·沃森听懂了贝尔对着发话装置说的话。6 月 25 日，贝尔在费城百年博览会上向评委演示了电话。'
         relic: 一只电话听筒
         relic_desc: 一个木制听筒，里面有一片薄薄的振膜。
         points:
-          p1: '在资助人催多路电报时保住贝尔的传声试验，让隔壁的人听到那句完整的话'
-          p2: '接过考卷，赶在评委巡到之前把累垮的贝尔送上去费城的火车'
+          p1: '把波士顿的装置多留一轮，请隔壁的沃森复述他实际听到的话'
+          p2: '趁贝尔还在波士顿，请他和同事定下离校参展几天里学生的事怎么安排'
         points_fail:
-          p1: '工坊改回原来的电报工作，三月的传声试验没做完。历史脱节，员工被召回。'
-          p2: '贝尔守着考卷留在波士顿，6 月 25 日评委走过一张空桌。历史脱节，员工被召回。'
+          p1: '沃森还没来得及确认听见了什么，装置就收回桌上。三月的试验脱节，事务所召回{staff}。'
+          p2: '贝尔留在波士顿照管学生的事。展会演示脱节，事务所召回{staff}。'
         shift:
           p1:
             was: '1876 年 3 月 10 日，贝尔在波士顿用实验装置把一句完整清楚的话传给了隔壁的沃森。'
           p2:
-            was: '1876 年 6 月 25 日，贝尔在费城把电话演示给百年博览会的评委，其中有佩德罗二世和威廉·汤姆森。他当时疲惫不堪，学生的考卷还没改完，本来不想去。'
+            was: '1876 年 6 月 25 日，贝尔在费城把电话演示给百年博览会的评委，其中有佩德罗二世和威廉·汤姆森。'
         vignettes:
           blind: '接听的帮工想先看试句。你把纸折起来，请他只写实际听见的。传过来两个完整的词，最后一个留了空。你把这张纸条带回去，收队时又一轮刚要开始。'
           future: '你告诉帮工，后人会记住这天传过来的一句话。他猜只要留下说话那端写的句子就够了。你摊开两张纸条，一张给说话人，一张给听话人。眼下这趟究竟漏了哪儿，还得靠这两张对出来。'
@@ -80,21 +80,24 @@ facts:
     date: '1876-03-10'
     checked: official_record
     level: usable
-    use: [story, wiki]
+    stay_day: 13
+    use: [story, history, wiki]
     sources: [bell_boston_notebook]
     text:
       en: 'Bell’s notebook reports that Watson heard and understood the spoken sentence in their 10 March test.'
       zh: '贝尔在笔记里记下，沃森在 3 月 10 日的试验中听到并听懂了说出的一句话。'
+    line: {en: '10 March 1876: Watson understands Bell’s spoken words over the experimental telephone.', zh: '1876 年 3 月 10 日，沃森听懂了贝尔用实验装置传来的一句话。'}
   centennial:
     date: '1876-06-25'
     checked: two_sources
     level: usable
-    use: [story, wiki]
-    stay_day: 121
+    use: [story, history, wiki]
+    stay_day: 120
     sources: [bell_centennial_pbs, bell_centennial_smithsonian]
     text:
-      en: 'On 25 June 1876 Bell demonstrated the telephone to the judges of the Philadelphia Centennial Exhibition. He had examinations to mark at Boston University and did not want to go; Mabel Hubbard persuaded him.'
-      zh: '1876 年 6 月 25 日，贝尔在费城百年博览会向评委演示电话。他在波士顿大学有考卷要改，本不想去，是梅布尔·哈伯德劝他去的。'
+      en: 'On 25 June 1876 Bell demonstrated the telephone to the judges of the Philadelphia Centennial Exhibition.'
+      zh: '1876 年 6 月 25 日，贝尔在费城百年博览会向评委演示电话。'
+    line: {en: '25 June 1876: Bell demonstrates the telephone at the Centennial Exhibition in Philadelphia.', zh: '1876 年 6 月 25 日，贝尔在费城百年博览会演示电话。'}
 bystanders:
   listener:
     invented: true

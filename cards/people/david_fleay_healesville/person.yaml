@@ -33,6 +33,7 @@ events:
         - id: p3
           kind: persuade
           day: 83
+          overturns: [public_debut]
           req:
             any:
               - {trait: [methodical], stat: {will: 8}}
@@ -48,23 +49,21 @@ events:
         relic_desc: A small wooden scoop with a worn handle.
         points:
           p1: 'Keep loose soil clear of the opening long enough for Fleay to get Corrie back into the burrow'
-          p2: 'Get dry leaves to the new entrance so Jill can replace the bedding lost when the nest was opened'
+          p2: 'Ask the keepers to leave fresh leaves near the pool where Jill can gather them after dark'
           p3: 'Persuade the sanctuary to leave the burrow closed when Corrie hides on the day of the family display'
         points_fail:
           p1: 'Loose soil covers the opening before Fleay can return Corrie safely. The first successful rearing falls out of sync with history, and the office calls {staff} back that day.'
-          p2: 'Jill moves to a new entrance, and the young platypus has no bedding for weeks, as in the recorded history.'
+          p2: 'The keepers leave the area as it is. Jill will have to gather leaves from farther along the bank.'
           p3: 'The advertised time passes and the sanctuary resorts to shovels. By the time Corrie is brought out, most visitors have gone.'
         shift:
           p1:
             was: 'On 3 January 1944, Fleay returned the young platypus to the disturbed nest, and Jill went on rearing her.'
           p2:
-            was: 'After the nest was opened on 3 January 1944, Jill cleared out the old bedding and her young went without bedding for weeks.'
-            now: '{staff} leaves dry leaves where Jill passes on her evening feeding rounds, and Jill carries some back to line the nest.'
+            was: 'Fleay records that Jill pushed out some nesting material and earth after the burrow was opened.'
+            now: 'In this branch {staff} asks the keepers to leave leaves within reach of the pool. Jill can gather them after dark without anyone opening her burrow again.'
           p3:
             was: 'In March 1944, Corrie retreated into the tunnels during the advertised family display and was dug out after most visitors had left.'
-            now: '{staff} uses the evening observation notes to persuade the keepers to leave the burrow closed and invite visitors to wait quietly by the pool. The sanctuary uses the same arrangement at later displays.'
-            who: david_fleay_healesville
-            bio: 'At Healesville, Fleay began using his evening observations to plan displays that let the animals emerge in their own time. His later demonstrations gave visitors a place to wait by the water.'
+            now: 'In this branch {staff} shows the keepers the evening observations and gets them to put down the shovels. The visitors still there can wait by the pool or come back another day.'
       zh:
         name: 等科里自己出来
         place: 维多利亚州希尔斯维尔野生动物保护区
@@ -74,23 +73,21 @@ events:
         relic_desc: 一把小木勺，柄已经磨光了。
         points:
           p1: '挡住落进洞口的松土，让弗莱来得及把科里送回巢里'
-          p2: '把干叶备在吉尔的新洞口，让它有材料补回开巢时失去的垫窝'
+          p2: '请饲养员在水池边备些新叶，让吉尔天黑后能自己衔取'
           p3: '科里在全家亮相前躲进洞里，劝保护区放下铁锹，等它自己出来'
         points_fail:
           p1: '弗莱还没来得及把科里送回去，松土就堵住了洞口。这条分支失去了首次成功育成的记录，{staff}当天因同步失败被召回。'
-          p2: '吉尔另挖了洞口，科里像史实中一样，有好几周没有垫窝。'
+          p2: '饲养员照常离开。吉尔要衔叶子，还得沿着岸边多走一段。'
           p3: '约好的钟点过了，保护区还是用了铁锹。科里被带出来时，多数观众已经走了。'
         shift:
           p1:
             was: '1944 年 1 月 3 日，弗莱把幼兽送回受扰的巢里，吉尔后来继续把它养大。'
           p2:
-            was: '1944 年 1 月 3 日开巢后，吉尔清出了原有的垫窝，幼兽有好几周没有垫窝。'
-            now: '{staff}把干叶留在吉尔傍晚外出觅食的路上，吉尔衔了一些回去重新垫窝。'
+            was: '弗莱记下了打开巢穴后，吉尔把一部分垫窝的材料和泥土推出洞口。'
+            now: '这条分支里，{staff}请饲养员把叶子留在水池边。吉尔天黑后可以自己衔取，饲养员也不用再开洞。'
           p3:
             was: '1944 年 3 月，全家亮相时科里躲进地道，保护区动土把它挖出来时，多数观众已经离开。'
-            now: '{staff}拿晚间观察记录说服饲养员收起铁锹，请已经到场的人在池边安静等候。此后的展示也沿用这个办法。'
-            who: david_fleay_healesville
-            bio: '弗莱在希尔斯维尔开始按晚间的观察记录安排展示，让动物自己决定什么时候露面。他后来把供访客等候的位置留在水边。'
+            now: '这条分支里，{staff}拿晚间观察记录说服饲养员收起铁锹。留下的观众可以在池边等，也可以改天再来。'
 text:
   en:
     name: David Fleay
@@ -98,6 +95,24 @@ text:
   zh:
     name: 戴维·弗莱
     text: '戴维·弗莱（1907—1993）是澳大利亚博物学家。任希尔斯维尔保护区主任期间，他主持了首次成功的鸭嘴兽人工繁育，随后在《维多利亚博物学家》记录幼兽的发育。'
+hook: {en: 'Corrie has gone underground. Will the keepers put down their shovels?', zh: '科里躲进洞里了，饲养员肯收起铁锹吗？'}
+facts:
+  first_swim:
+    date: '1944-02-26'
+    checked: official_record
+    level: usable
+    use: [history, wiki]
+    sources: [fleay_platypus_1944, fleay_corrie_monument]
+    text: {en: 'Fleay first recorded Corrie coming out to swim on 26 February 1944.', zh: '1944 年 2 月 26 日，弗莱首次记录到科里出洞游水。'}
+    line: {en: '26 February 1944: Fleay first observed Corrie come out to swim.', zh: '1944 年 2 月 26 日，弗莱首次观察到科里出洞游水。'}
+  public_debut:
+    date: '1944-03'
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [fleay_platypus_1944]
+    text: {en: 'Corrie hid in the burrows on the day set for her public debut. Fleay reports that by the time she was dug out, most visitors had gone.', zh: '科里在预告的公开亮相当天躲入洞穴。弗莱记载，挖出科里时，多数观众已经离开。'}
+    line: {en: 'March 1944: Corrie hid before her public debut. By the time keepers dug her out, most visitors had left.', zh: '1944 年 3 月，科里在亮相前躲进洞里。饲养员挖出科里时，多数观众已经离开。'}
 wiki:
   refs:
     fleay_platypus_1944:
@@ -124,3 +139,11 @@ wiki:
       text:
         en: 'Australian Dictionary of Biography, David Howells Fleay. https://adbonline.anu.edu.au/biography/fleay-david-howells-18625'
         zh: '《澳大利亚传记辞典》，戴维·豪厄尔斯·弗莱。https://adbonline.anu.edu.au/biography/fleay-david-howells-18625'
+self_check:
+  fact: public_debut
+  quote_line: '科里躲进洞里了，饲养员肯收起铁锹吗？'
+  regret_choice: '请饲养员收起铁锹，接受这一场展示可能等不到科里露面。'
+  bookend: '第一次掘洞是为了知道幼兽还在不在，展示那天可以留着洞口等它出来。'
+  share_line: '铁锹收起来了，池边还有人等。'
+  share_number: '1944 年 2 月 26 日初见出洞游水'
+pack: {license: MIT, version: 1, languages: [en, zh]}

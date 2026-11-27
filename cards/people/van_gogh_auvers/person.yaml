@@ -2,7 +2,7 @@ order: 197
 events:
   van_gogh_auvers:
     order: 102
-    build_step: 2
+    build_step: 3
     year: 1890
     # three office days from the planned arrival on 20 May 1890, the day he came to Auvers
     date: '1890-05-20'
@@ -23,7 +23,7 @@ events:
         - {id: p1, kind: hold, guard: true, day: 49, req: {"any":[{"job":["painter","illustrator"]},{"trait":["hardy","handy","patient"],"stat":{"constitution":6}},{"item":"exoskeleton","trait":["hardy","handy","patient"],"stat":{"constitution":4}}]}}
         - {id: p2, kind: care, day: 50, req: {"any":[{"job":["accountant","tax_preparer","antique_dealer","market_trader"],"stat":{"will":5}},{"trait":["kind","sensitive","patient"],"stat":{"will":7}}]}}
         - {id: p3, kind: persuade, day: 55, req: {"any":[{"trait":["artistic","sensitive","charismatic","kind"]},{"job":["painter","illustrator","antique_dealer"]}]}}
-        - {id: p4, kind: care, day: 66, req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"stat":{"will":6}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch"}]}}
+        - {id: p4, kind: care, day: 66, overturns: [shot, death], req: {"any":[{"job":["doctor","physician","nurse","paramedic"],"stat":{"will":6}},{"job":["doctor","physician","nurse","paramedic","caregiver"],"item":"calm_patch"}]}}
       vignettes:
         - {id: sky, traits: [artistic, curious], day: 40}
         - {id: wind, traits: [quiet, vigil], day: 52}
@@ -34,6 +34,30 @@ events:
         place: "Auvers sur Oise"
         figure: "Vincent van Gogh"
         story: 'Vincent van Gogh came to Auvers sur Oise on 20 May 1890, lodged at the Auberge Ravoux and often went to see Dr Paul Gachet. He painted almost a work a day. In a letter of about 10 July he wrote of vast fields of wheat under troubled skies. On 27 July he shot himself in the chest, and he died on 29 July with his brother Theo beside him.'
+        story_prose:
+          opening:
+            - 'Auvers-sur-Oise, summer 1890. Van Gogh is staying at the Auberge Ravoux and paints almost every day. In a letter in July he writes about wide wheatfields beneath troubled skies.'
+            - 'In history, he worried about the livelihood of his brother’s family and died at Auvers late that month. In this branch, there is someone on the path between the wheat and the inn to hold a canvas for him or hear him out.'
+            - 'This trip needs someone who can steady an easel in the wind, someone who can make sense of the household accounts and someone who will listen. A person who knows care can also sit with him at the inn.'
+          points:
+            p1: 'Wind pushes against the canvas. {staff} braces the loose foot of the easel and holds the windward corner while Van Gogh makes his last strokes. The farther wheat bows first, while the stalks nearby still stir. When Van Gogh lowers the brush, the bottom of the canvas is still a finger’s width above the ground.'
+            p2: '{staff} spreads the letters out with him, goes from Theo’s work to the household expenses, and notes what can be settled at the edge of a sheet. Van Gogh folds the sheet back into its envelope. Before putting it away, he smooths the flap with his palm.'
+            p3: '{staff} lays out the painted wheatfields, one after another, and tells him that people will come a long way to a gallery to look at this ground and sky. Van Gogh moves the outermost painting back to the middle of the table. As the room grows dark, a thin line of yellow still shows.'
+            p4: '{staff} stays at the inn through the hardest days, sees to rest and daily care, and waits until Van Gogh wants to open the window himself. The girl from the inn puts down the tray by the door. Van Gogh takes it and moves it aside to make room for his paints.'
+          outcomes:
+            all: 'After summer the fields took on other colours. There were still sheets drying by the door at the inn, with a written letter tucked underneath.'
+            p4: 'In autumn, the people at the inn still saw him carry his paints out. As the door opened, the tin end of a tube showed in his pocket.'
+            p3: 'Later, people stopped before those fields in a gallery. A step nearer and the yellow seemed almost within reach.'
+            p2: 'The letter about the household stayed on the table at the inn. Opened again, it showed a small line beside the faintest crease.'
+            p1: 'The field stayed in the painting. Held by a window later, two thicknesses of paint showed along the horizon.'
+          none: 'Footsteps sounded in the inn corridor. When the tray came back, the water in the cup was still flat.'
+          not_admitted: '{staff} found no place at the inn. A little of the field was visible past the path, but the corner of the building hid the way on.'
+          desync: 'The easel lay on its side among the wheat. As {staff} was recalled, a stalk caught on one of its legs still nodded in the wind.'
+          excerpts:
+            p4: 'The girl from the inn puts down the tray by the door. Van Gogh takes it and moves it aside to make room for his paints.'
+            p3: 'Van Gogh moves the outermost painting back to the middle of the table. As the room grows dark, a thin line of yellow still shows.'
+            p2: 'Van Gogh folds the sheet back into its envelope. Before putting it away, he smooths the flap with his palm.'
+            p1: 'The farther wheat bows first, while the stalks nearby still stir. When Van Gogh lowers the brush, the bottom of the canvas is still a finger’s width above the ground.'
         relic: "A tube of chrome yellow"
         relic_desc: "A squeezed tin tube of the colour he used for the fields."
         points:
@@ -67,6 +91,30 @@ events:
         place: "奥维尔"
         figure: "文森特·梵高"
         story: '1890 年 5 月 20 日，文森特·梵高来到瓦兹河畔奥维尔，住进拉武客栈，常去看保罗·加歇医生。他几乎一天画一幅。约 7 月 10 日的一封信里，他写到不安的天空下大片的麦田。7 月 27 日，他朝自己胸口开了一枪，7 月 29 日去世，弟弟提奥在他身边。'
+        story_prose:
+          opening:
+            - '1890 年夏，瓦兹河畔奥维尔。梵高住在拉武客栈，几乎天天画。七月的一封信里，他写到不安天空下大片的麦田。'
+            - '史实里，他为弟弟一家的生计担忧，七月底在奥维尔去世。在这条分支里，麦田和客栈之间那条路上，还有人能扶一下画布，也有人能听他说完。'
+            - '这一趟用得上能在阵风里看住画架的人，也需要能把账说清楚、能好好听人说话的人。懂得照护的人还能在客栈陪一阵。'
+          points:
+            p1: '麦田里风压着画布。{staff}赶到画架旁，踩实松动的架脚，把迎风的角扶稳，等梵高落下最后几笔。深处的麦子先伏下去，近处还在动。梵高松开画笔时，画布下缘还离地半寸。'
+            p2: '{staff}和他把来信摊开，从提奥眼下的工作说到家里的花用，逐条把能问清的写在纸边。梵高把那张纸折回信封里。装进去之前，他用手把翘起的封口抚了一遍。'
+            p3: '{staff}把他画过的几片麦田一张张摊开，说以后会有人专程走进画馆，看这些地和天。梵高把最靠外的一张移回桌子中间。天色暗下去时，那一线黄还亮着。'
+            p4: '{staff}在客栈陪他熬过最难的几天，照应休息和日常起居，等到他自己愿意把窗推开。客栈女孩把托盘搁在门边。梵高伸手接住，往旁边挪出一个摆颜料的位置。'
+          outcomes:
+            all: '夏天过去以后，麦田也有了别的颜色。客栈门边还晾着几张纸，写过的信夹在最底下。'
+            p4: '秋天，客栈的人仍能看见他把画具拎出门。门开的时候，一管颜料从兜里露出锡色的一头。'
+            p3: '后来有人在画馆里停在那几片麦田前。再走近一步，画上的黄几乎挨到眼前。'
+            p2: '那封谈家计的信后来留在客栈桌上。展开时，从最浅的一道折痕旁还看得见一行小字。'
+            p1: '麦田留在那幅画里。后来有人把画举到窗边，看见油彩在地平线上有厚薄两层。'
+          none: '客栈楼道响过一阵脚步。门边的托盘推回去时，杯里的水还平着。'
+          not_admitted: '{staff}没能在客栈留下。小路尽头看得见一截麦田，往前的路却被屋角挡住。'
+          desync: '画架侧倒在麦田里。{staff}被召回时，挂在一条架腿上的麦穗还在风里点头。'
+          excerpts:
+            p4: '客栈女孩把托盘搁在门边。梵高伸手接住，往旁边挪出一个摆颜料的位置。'
+            p3: '梵高把最靠外的一张移回桌子中间。天色暗下去时，那一线黄还亮着。'
+            p2: '梵高把那张纸折回信封里。装进去之前，他用手把翘起的封口抚了一遍。'
+            p1: '深处的麦子先伏下去，近处还在动。梵高松开画笔时，画布下缘还离地半寸。'
         relic: "一管铬黄颜料"
         relic_desc: "一支挤瘪的锡管，里面是他画麦田用的那种黄。"
         points:
@@ -92,9 +140,9 @@ events:
             was: '1890 年 7 月 27 日他受了枪伤，两天后在奥维尔去世，只画了大约十年。'
             now: '{staff}陪他过了那个七月，病没有再把他压垮，那个夏天过去时他还在拉武客栈。他又画了几年，麦田之后还有别的季节。'
         vignettes:
-          sky: '{staff}在本子上把同一片田画了两遍，头一遍只留一条天，第二遍留得多，从第二幅里看出了头一幅藏住的东西。'
-          wind: '{staff}等下一阵风吹过麦田，看着那块暗影从田上移过去，没有擦掉头一眼画下的。'
-          path: '{staff}沿着田间小路一直走到看得见尽头的地方，回来时已经说得清它通到哪里。'
+          sky: '{staff}在本子上画同一片田，一张窄窄地留着天，另一张把天留得多。再并在一起看，第二张才看得见云底的暗。'
+          wind: '{staff}等风吹过麦田，看着暗影从这头走到那头。本子上的第一笔还留着。'
+          path: '{staff}走到看得见小路尽头的地方。回来时，鞋边沾了两根细小的麦芒。'
 text:
   en:
     name: Vincent van Gogh

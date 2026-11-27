@@ -604,6 +604,8 @@ events:
         - id: p1
           kind: persuade
           day: 60
+          overturns:
+            - death
           req:
             any:
               - trait:
@@ -1380,31 +1382,24 @@ events:
                   wit: 6
                   will: 6
         - id: p2
-          kind: notice
+          kind: hold
           guard: true
-          day: 200
+          day: 157
           req:
             any:
               - job:
-                  - biologist
-                  - physician
-                  - lecturer
-                  - university_lecturer
-                stat:
-                  wit: 7
-              - trait:
-                  - methodical
-                  - curious
-                stat:
-                  wit: 8
-                  will: 6
-              - item: magnifier
-                trait:
-                  - methodical
-                  - curious
-                  - handy
+                  - archivist
+                  - translator
+                  - courier
                 stat:
                   wit: 6
+                  will: 6
+              - trait:
+                  - methodical
+                  - scholarly
+                stat:
+                  wit: 7
+                  will: 6
       vignettes:
         - id: motion
           traits:
@@ -1514,11 +1509,14 @@ events:
         - id: p1
           kind: care
           day: 20
+          overturns:
+            - operations
           req:
             any:
               - job:
                   - doctor
                   - physician
+                  - medical_teacher
                 stat:
                   will: 7
               - job:
@@ -1526,8 +1524,6 @@ events:
                   - paramedic
                   - caregiver
                   - pharmacist
-                  - medical_teacher
-                provides: cure
                 stat:
                   will: 5
       vignettes:
@@ -1766,12 +1762,15 @@ events:
       - lavoisier_paris_illustrated_first
       - lavoisier_paris_first_plates
       - lavoisier_paris_preface
+      - lavoisier_paris_convictions
     scene:
       star_rules: 2
       points:
         - id: p1
           kind: persuade
           day: 22
+          overturns:
+            - paulze_execution
           req:
             any:
               - trait:
@@ -1790,6 +1789,8 @@ events:
         - id: p2
           kind: persuade
           day: 26
+          overturns:
+            - execution
           req:
             any:
               - trait:
@@ -1990,9 +1991,9 @@ events:
       T: 1
     refs:
       - faraday_london_primary
+      - faraday_disc_first_series
       - faraday_induction_manuscript
       - faraday_diary_ri
-      - faraday_1832_delay
     scene:
       star_rules: 2
       points:
@@ -2013,21 +2014,23 @@ events:
                 stat:
                   wit: 7
         - id: p2
-          kind: persuade
-          day: 103
+          kind: hold
+          guard: true
+          day: 73
           req:
             any:
               - job:
                   - electrician
-                  - university_lecturer
+                  - mechanic
                 stat:
-                  wit: 7
-                  will: 7
+                  finesse: 7
+                  will: 6
               - trait:
                   - methodical
-                  - vigil
+                  - handy
                 stat:
-                  will: 8
+                  finesse: 6
+                  wit: 7
       vignettes:
         - id: instant
           traits:
@@ -2501,7 +2504,7 @@ events:
       E: 2
     refs:
       - pasteur_paris_vallery_radot
-      - pasteur_paris_hov
+      - pasteur_paris_arbois
       - pasteur_paris_marie
       - pasteur_paris_arrival
       - pasteur_paris_paris_1885
@@ -2512,21 +2515,21 @@ events:
       points:
         - id: p1
           kind: care
-          day: 55
+          day: 65
+          overturns:
+            - death
           req:
+            item: nano_kit
             any:
               - job:
                   - doctor
                   - physician
-                stat:
-                  will: 7
+                  - medical_teacher
               - job:
                   - nurse
                   - paramedic
                   - caregiver
                   - pharmacist
-                  - medical_teacher
-                provides: cure
                 stat:
                   will: 5
       vignettes:
@@ -3036,8 +3039,10 @@ events:
       - AI
       - Fan Shen
   - id: lalibela_rock
-    build_step: 1
-    year: 1200
+    build_step: 3
+    year: 1966
+    date: '1966-12-19'
+    stay: 2
     lon: 39.04
     lat: 12.03
     region: africa
@@ -3055,62 +3060,42 @@ events:
       - lalibela_archaeology
       - lalibela_alvares
       - lalibela_inscriptions
+      - lalibela_phase_one
+      - lalibela_sustainable_trenches
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
-          req:
-            any:
-              - trait:
-                  - hardy
-                  - cheerful
-                  - kind
-              - job:
-                  - carpenter
-              - stat:
-                  constitution: 6
-        - id: p2
           kind: notice
-          day: 70
+          day: 24
+          overturns:
+            - sediment_record
           req:
             any:
+              - job:
+                  - geologist
+                  - restorer
+                  - civil_engineer
+                  - archivist
+                stat:
+                  wit: 6
               - trait:
-                  - curious
                   - methodical
                   - scholarly
-              - stat:
-                  wit: 6
-        - id: p3
-          kind: endure
-          day: 140
-          req:
-            any:
-              - trait:
-                  - hardy
-                  - patient
-                  - vigil
-              - stat:
-                  will: 6
+                stat:
+                  wit: 7
+                  finesse: 5
       vignettes:
-        - id: outlet
-          traits:
-            - methodical
-            - scholarly
-          day: 75
-        - id: rain
-          traits:
-            - hardy
-            - curious
-          day: 130
-        - id: bend
-          day: 40
+        - id: work
+          day: 9
     authors:
       - AI
       - Fan Shen
   - id: ife_bronzes
-    build_step: 1
-    year: 1300
+    build_step: 3
+    year: 1957
+    date: '1957-12-09'
+    stay: 2
     lon: 4.56
     lat: 7.48
     region: africa
@@ -3125,59 +3110,41 @@ events:
     refs:
       - ife_bronzes_cast
       - ife_exhibition_man
+      - ife_ita_yemoo_reconstruction
+      - ife_ita_yemoo_field_report
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
-          req:
-            any:
-              - stat:
-                  finesse: 6
-              - trait:
-                  - handy
-                  - patient
-              - job:
-                  - woodcarver
-        - id: p2
-          kind: endure
-          day: 60
-          req:
-            any:
-              - stat:
-                  constitution: 6
-              - trait:
-                  - hardy
-                  - vigil
-        - id: p3
           kind: notice
-          day: 61
+          day: 24
+          overturns:
+            - field_plan_gap
           req:
             any:
-              - stat:
+              - job:
+                  - civil_engineer
+                  - architecture_intern
+                  - geologist
+                  - archivist
+                stat:
                   wit: 6
               - trait:
                   - methodical
-                  - curious
+                  - scholarly
+                stat:
+                  wit: 7
+                  finesse: 5
       vignettes:
-        - id: line
-          traits:
-            - methodical
-            - scholarly
-          day: 62
-        - id: surface
-          traits:
-            - handy
-            - curious
-          day: 40
-        - id: edge
-          day: 25
+        - id: work
+          day: 9
     authors:
       - AI
       - Fan Shen
   - id: great_zimbabwe
-    build_step: 1
-    year: 1300
+    build_step: 3
+    year: 1915
+    stay: 2
     lon: 30.93
     lat: -20.27
     region: africa
@@ -3194,56 +3161,42 @@ events:
       - great_zimbabwe_met
       - great_zimbabwe_iccrom
     scene:
+      star_rules: 2
       points:
         - id: p1
-          kind: trust
-          day: 10
+          kind: persuade
+          day: 24
+          overturns:
+            - western_yard_loss
           req:
             any:
-              - trait:
-                  - hardy
-                  - cheerful
-                  - handy
               - job:
                   - builder
-                  - carpenter
-              - stat:
-                  constitution: 6
-        - id: p2
-          kind: notice
-          day: 60
-          req:
-            any:
+                  - geologist
+                  - civil_engineer
+                  - architecture_intern
+                  - retired_engineer
+                stat:
+                  wit: 6
               - trait:
                   - methodical
-                  - scholarly
-                  - curious
-              - stat:
-                  wit: 6
-        - id: p3
-          kind: endure
-          day: 120
-          req:
-            any:
-              - trait:
-                  - hardy
-                  - patient
-                  - vigil
-              - stat:
+                  - handy
+                stat:
+                  wit: 7
                   will: 6
       vignettes:
         - id: lines
           traits:
             - methodical
             - scholarly
-          day: 65
+          day: 10
         - id: width
           traits:
             - hardy
             - curious
-          day: 90
+          day: 14
         - id: pace
-          day: 30
+          day: 7
     authors:
       - AI
       - Fan Shen
@@ -3412,14 +3365,13 @@ events:
       - ibn_sina_hamadan_canon
       - ibn_sina_hamadan_date
       - ibn_sina_hamadan_nlm_completion
+      - ibn_sina_hamadan_juzjani
     scene:
       star_rules: 2
       points:
         - id: p1
           kind: care
           day: 45
-          overturns:
-            - death
           req:
             any:
               - job:
@@ -3429,19 +3381,11 @@ events:
                   - paramedic
                   - pharmacist
                   - medical_teacher
-                stat:
-                  will: 6
-              - provides: cure
-                job:
-                  - nurse
                   - caregiver
-                  - paramedic
-                  - pharmacist
                   - midwife
                 stat:
                   will: 5
-              - provides: cure
-                trait:
+              - trait:
                   - kind
                   - patient
                   - methodical
@@ -3464,11 +3408,11 @@ events:
       - AI
       - Fan Shen
   - id: omar_khayyam_nishapur
-    build_step: 2
+    build_step: 3
     year: 1079
     date: '1079-02-13'
-    lon: 58.8
-    lat: 36.2
+    lon: 51.68
+    lat: 32.66
     region: asia
     home:
       - middle_east
@@ -3483,7 +3427,7 @@ events:
       - omar_khayyam_nishapur_reform
       - omar_khayyam_nishapur_site
       - st_andrews_khayyam
-      - wikipedia_isfahan_observatory
+      - met_seljuq_science
     scene:
       star_rules: 2
       points:
@@ -3724,7 +3668,9 @@ events:
       points:
         - id: p1
           kind: hold
-          day: 54
+          day: 52
+          overturns:
+            - death
           req:
             any:
               - trait:
@@ -4793,7 +4739,7 @@ events:
       - AI
       - Fan Shen
   - id: wright_kitty_hawk
-    build_step: 2
+    build_step: 3
     year: 1903
     lon: -75.7
     lat: 36
@@ -4831,6 +4777,8 @@ events:
         - id: p2
           kind: hold
           day: 16.35
+          overturns:
+            - flyer_damage
           req:
             any:
               - provides: strength
@@ -5258,11 +5206,12 @@ events:
                   - methodical
                   - handy
                 stat:
-                  wit: 7
+                  wit: 6
+                  finesse: 5
         - id: p2
           kind: persuade
           guard: true
-          day: 120
+          day: 116
           req:
             any:
               - job:
@@ -5275,6 +5224,7 @@ events:
               - trait:
                   - charismatic
                   - kind
+                  - methodical
                 stat:
                   wit: 6
                   will: 7
@@ -5449,7 +5399,7 @@ events:
       - AI
       - Fan Shen
   - id: van_gogh_auvers
-    build_step: 2
+    build_step: 3
     year: 1890
     date: '1890-05-20'
     stay: 3
@@ -5529,6 +5479,9 @@ events:
         - id: p4
           kind: care
           day: 66
+          overturns:
+            - shot
+            - death
           req:
             any:
               - job:
@@ -6157,7 +6110,7 @@ events:
       S: 2
     refs:
       - cantor_halle_mactutor
-      - cantor_halle_wikipedia
+      - cantor_halle_duran
       - cantor_halle_primary
       - cantor_halle_unpublished_material
       - cantor_halle_letter_index
@@ -6189,25 +6142,19 @@ events:
           req:
             any:
               - job:
-                  - doctor
-                  - physician
-                stat:
-                  will: 8
-              - job:
                   - nurse
                   - caregiver
                   - cook
                   - chef
-                provides: ration
                 stat:
-                  will: 5
-              - provides: cure
+                  will: 6
+              - provides: ration
                 trait:
                   - kind
                   - patient
-                  - vigil
+                  - methodical
                 stat:
-                  will: 6
+                  will: 5
       vignettes:
         - id: list
           traits:
@@ -6990,9 +6937,32 @@ events:
       - dickinson_amherst_primary
       - dickinson_lavinia_burn
       - dickinson_harvard_fascicles
+      - dickinson_homestead
     scene:
       star_rules: 2
       points:
+        - id: p3
+          kind: care
+          day: 5
+          req:
+            any:
+              - job:
+                  - doctor
+                  - physician
+                  - nurse
+                  - caregiver
+                  - medical_teacher
+              - trait:
+                  - kind
+                  - patient
+                item: painkiller
+              - trait:
+                  - kind
+                  - patient
+                  - vigil
+                stat:
+                  constitution: 6
+                  will: 6
         - id: p1
           kind: hold
           guard: true
@@ -7027,56 +6997,6 @@ events:
                   - charismatic
                 stat:
                   wit: 9
-        - id: p3
-          kind: care
-          day: 5
-          req:
-            any:
-              - job:
-                  - doctor
-                  - physician
-                  - nurse
-                  - caregiver
-                  - medical_teacher
-              - trait:
-                  - kind
-                  - patient
-                item: painkiller
-              - trait:
-                  - kind
-                  - patient
-                  - vigil
-                stat:
-                  constitution: 6
-                  will: 6
-        - id: p4
-          kind: trust
-          day: 9
-          req:
-            any:
-              - trait:
-                  - scholarly
-                  - sensitive
-                  - artistic
-                stat:
-                  will: 7
-              - job:
-                  - translator
-                  - proofreader
-                  - writer
-                  - teacher
-                  - lecturer
-                  - university_lecturer
-                  - bookseller
-                stat:
-                  will: 7
-                  wit: 6
-              - item: golden_apple
-                trait:
-                  - kind
-                  - sensitive
-                  - scholarly
-                  - artistic
       vignettes:
         - id: pause
           traits:
@@ -7392,6 +7312,7 @@ events:
       - hertz_bonn_nature
       - hertz_bonn_wikipedia
       - hertz_bonn_resonator
+      - hertz_bonn_mechanics_preface
     scene:
       star_rules: 2
       points:
@@ -7403,22 +7324,24 @@ events:
               - job:
                   - doctor
                   - physician
-                provides: cure
-                stat:
-                  will: 5
-              - job:
-                  - doctor
-                  - physician
                   - medical_teacher
-                stat:
-                  wit: 8
-                  will: 8
-              - job:
                   - nurse
                   - paramedic
-                provides: cure
                 stat:
                   will: 6
+              - job:
+                  - lecturer
+                  - university_lecturer
+                stat:
+                  will: 6
+                  wit: 6
+              - trait:
+                  - patient
+                  - methodical
+                  - kind
+                stat:
+                  will: 7
+                  wit: 6
       vignettes:
         - id: repeat
           traits:
@@ -8115,12 +8038,10 @@ events:
       G: 1
     refs:
       - bizet_paris_premiere
-      - bizet_paris_carmen_wiki
       - bizet_paris_sfopera
-      - bizet_paris_bizet_wiki
-      - bizet_paris_hektoen
       - bizet_rehearsal_score
       - bizet_comique_archive
+      - bizet_paris_met_letter
     scene:
       star_rules: 2
       points:
@@ -8161,29 +8082,6 @@ events:
                   - sensitive
                 stat:
                   wit: 6
-                  will: 6
-        - id: p3
-          kind: care
-          day: 103
-          req:
-            any:
-              - job:
-                  - doctor
-                  - physician
-                item: antibiotic
-              - job:
-                  - nurse
-                  - paramedic
-                  - caregiver
-                item: antibiotic
-                stat:
-                  will: 5
-              - item: nano_kit
-                trait:
-                  - kind
-                  - patient
-                  - vigil
-                stat:
                   will: 6
       vignettes:
         - id: future
@@ -8688,6 +8586,7 @@ events:
       - bessie_coleman_jacksonville_paxon
       - coleman_nasa_history
       - coleman_jax_certificate
+      - coleman_jax_schools
     scene:
       star_rules: 2
       points:
@@ -8720,28 +8619,11 @@ events:
                   - teacher
                   - tutor
                   - flight_instructor
-        - id: p3
-          kind: persuade
-          day: 12
-          req:
-            any:
-              - job:
-                  - teacher
-                  - market_trader
-                  - accountant
-                stat:
-                  will: 6
-              - trait:
-                  - charismatic
-                  - glib
-                stat:
-                  wit: 5
-              - job:
-                  - bush_pilot
-                  - flight_instructor
         - id: p4
           kind: notice
           day: 15
+          overturns:
+            - paxon
           req:
             any:
               - job:
@@ -9007,6 +8889,22 @@ events:
     scene:
       star_rules: 2
       points:
+        - id: p2
+          kind: persuade
+          day: 10
+          req:
+            any:
+              - job:
+                  - musician
+                  - archivist
+                stat:
+                  wit: 6
+              - trait:
+                  - methodical
+                  - artistic
+                  - patient
+                stat:
+                  will: 6
         - id: p1
           kind: hold
           guard: true
@@ -9026,22 +8924,6 @@ events:
                   - artistic
                 stat:
                   wit: 8
-        - id: p2
-          kind: persuade
-          day: 10
-          req:
-            any:
-              - job:
-                  - musician
-                  - archivist
-                stat:
-                  wit: 6
-              - trait:
-                  - methodical
-                  - artistic
-                  - patient
-                stat:
-                  will: 6
         - id: p3
           kind: care
           day: 18
@@ -9050,14 +8932,17 @@ events:
               - job:
                   - doctor
                   - physician
-                stat:
-                  wit: 7
-              - job:
                   - paramedic
                   - nurse
-                item: handbook
-              - provides: heal
+                  - caregiver
                 stat:
+                  will: 6
+              - trait:
+                  - kind
+                  - patient
+                  - calm
+                stat:
+                  wit: 7
                   will: 7
       vignettes:
         - id: cover
@@ -9085,6 +8970,7 @@ events:
       G: 3
     refs:
       - camille_claudel_paris_variants
+      - camille_claudel_paris_confinement
     scene:
       star_rules: 2
       points:
@@ -9110,20 +8996,19 @@ events:
           req:
             any:
               - job:
-                  - doctor
-                  - physician
-                  - medical_teacher
-                item: calm_patch
-                stat:
-                  will: 7
-              - job:
                   - nurse
                   - caregiver
-                  - paramedic
-                item: calm_patch
+                  - archivist
+                  - painter
                 stat:
-                  will: 5
-                  wit: 4
+                  will: 6
+              - trait:
+                  - kind
+                  - patient
+                  - methodical
+                stat:
+                  will: 7
+                  wit: 5
       vignettes:
         - id: light
           traits:
@@ -9172,22 +9057,8 @@ events:
                 stat:
                   wit: 5
         - id: p2
-          kind: notice
-          day: 21
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-              - trait:
-                  - methodical
-                  - scholarly
-                stat:
-                  wit: 6
-        - id: p3
           kind: persuade
-          day: 43
+          day: 36
           req:
             any:
               - job:
@@ -9229,7 +9100,7 @@ events:
     refs:
       - buchner_zurich_ndb
       - buchner_zurich_hls
-      - buchner_zurich_stol
+      - buchner_zurich_jaegle
       - buchner_zurich_fragments
     scene:
       star_rules: 2
@@ -9237,6 +9108,8 @@ events:
         - id: p1
           kind: care
           day: 19
+          overturns:
+            - minna
           req:
             any:
               - trait:
@@ -9254,19 +9127,16 @@ events:
         - id: p2
           kind: care
           day: 22
+          overturns:
+            - death
           req:
-            any:
-              - job:
-                  - doctor
-                  - physician
-                item: antibiotic
-              - job:
-                  - doctor
-                  - physician
-                  - nurse
-                  - paramedic
-                  - medical_teacher
-                item: nano_kit
+            item: nano_kit
+            job:
+              - doctor
+              - physician
+              - nurse
+              - paramedic
+              - medical_teacher
       vignettes:
         - id: order
           traits:
@@ -9299,6 +9169,7 @@ events:
       - bronte_1850_editors_preface
       - bronte_cambridge_chronology
       - bronte_variants_edition
+      - bronte_gaskell_letters
     scene:
       star_rules: 2
       points:
@@ -9354,17 +9225,18 @@ events:
               - job:
                   - doctor
                   - physician
-                stat:
-                  will: 8
-              - job:
                   - nurse
                   - caregiver
                 trait:
                   - patient
                   - kind
+                  - quiet
                 stat:
                   will: 7
-              - provides: cure
+              - trait:
+                  - patient
+                  - kind
+                item: warm_blanket
                 stat:
                   will: 6
       vignettes:
@@ -9394,10 +9266,9 @@ events:
       E: 1
       G: 2
     refs:
-      - lili_boulanger_paris_wiki
-      - lili_boulanger_paris_snl
       - lili_boulanger_paris_baker
       - lili_boulanger_paris_score
+      - lili_boulanger_paris_pie_jesu
     scene:
       star_rules: 2
       points:
@@ -9407,19 +9278,28 @@ events:
           req:
             any:
               - job:
-                  - doctor
-                  - physician
+                  - musician
+                  - proofreader
                 stat:
-                  will: 7
+                  wit: 6
+                  will: 6
               - job:
                   - nurse
-                  - paramedic
                   - caregiver
-                  - pharmacist
-                  - medical_teacher
-                provides: cure
+                  - doctor
+                  - physician
+                trait:
+                  - patient
+                  - methodical
+                  - kind
                 stat:
-                  will: 5
+                  will: 6
+              - trait:
+                  - artistic
+                  - methodical
+                stat:
+                  wit: 7
+                  will: 7
       vignettes:
         - id: entry
           traits:
@@ -9495,25 +9375,6 @@ events:
                   - attached
                 stat:
                   constitution: 5
-        - id: p3
-          kind: persuade
-          day: 150
-          req:
-            any:
-              - trait:
-                  - kind
-                  - patient
-                  - calm
-                  - attached
-                stat:
-                  will: 9
-              - job:
-                  - doctor
-                  - physician
-                  - nurse
-                  - caregiver
-                stat:
-                  will: 8
       vignettes:
         - id: two_tales
           traits:
@@ -9540,6 +9401,7 @@ events:
       G: 2
     refs:
       - sima_qian_changan_primary
+      - sima_qian_changan_letter_date
     scene:
       star_rules: 2
       points:
@@ -9596,6 +9458,8 @@ events:
         - id: p3
           kind: persuade
           day: 120
+          overturns:
+            - sentence
           req:
             any:
               - job:
@@ -9644,24 +9508,10 @@ events:
       - du_fu_xiang_river_primary
       - du_fu_xiang_river_collected_poem
       - du_fu_xiang_river_hunan_edition
+      - du_fu_xiang_river_epitaph
     scene:
       star_rules: 2
       points:
-        - id: p1
-          kind: hold
-          guard: true
-          day: 16
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                  - caregiver
-              - trait:
-                  - patient
-                  - artistic
-                stat:
-                  will: 6
         - id: p2
           kind: care
           day: 10
@@ -9677,9 +9527,24 @@ events:
                   - kind
                   - patient
                 item: warm_blanket
+        - id: p1
+          kind: hold
+          guard: true
+          day: 16
+          req:
+            any:
+              - job:
+                  - archivist
+                  - translator
+                  - caregiver
+              - trait:
+                  - patient
+                  - artistic
+                stat:
+                  will: 6
         - id: p3
-          kind: endure
-          day: 40
+          kind: trust
+          day: 25
           req:
             any:
               - job:
@@ -9687,21 +9552,22 @@ events:
                   - navigator
                   - sailor
                   - ferryman
+                  - courier
                 stat:
-                  constitution: 7
+                  will: 6
               - job:
-                  - doctor
-                  - physician
-                  - nurse
-                  - caregiver
+                  - translator
+                  - teacher
+                  - lecturer
+                  - university_lecturer
                 stat:
+                  wit: 7
                   will: 7
               - trait:
-                  - hardy
+                  - streetwise
                   - wanderer
-                item: compass
                 stat:
-                  constitution: 8
+                  will: 6
       vignettes:
         - id: shore
           traits:
@@ -10294,8 +10160,7 @@ events:
     refs:
       - jianzhen_nara_tozhengzhuan
       - jianzhen_nara_eiei
-      - jianzhen_nara_enwiki
-      - jianzhen_nara_jawiki
+      - jianzhen_nara_shoku
       - jianzhen_nara_arrival
       - jianzhen_nara_foundation
     scene:
@@ -10311,33 +10176,36 @@ events:
                   - physician
                   - nurse
                   - paramedic
-                  - pharmacist
                   - medical_teacher
                   - caregiver
                 stat:
                   will: 5
-              - provides: cure
+              - trait:
+                  - kind
+                  - patient
                 stat:
-                  will: 4
+                  will: 5
+                  constitution: 5
         - id: p2
           kind: care
           day: 150
           req:
             any:
               - job:
-                  - doctor
-                  - physician
+                  - nurse
+                  - caregiver
+                  - translator
+                  - teacher
+                  - archivist
+                stat:
+                  will: 6
+                  wit: 6
+              - trait:
+                  - methodical
+                  - patient
+                  - faithful
                 stat:
                   will: 7
-              - job:
-                  - nurse
-                  - paramedic
-                  - caregiver
-                  - pharmacist
-                  - medical_teacher
-                provides: cure
-                stat:
-                  will: 5
       vignettes:
         - id: sound
           traits:
@@ -10371,7 +10239,9 @@ events:
       points:
         - id: p1
           kind: persuade
-          day: 160
+          day: 149
+          overturns:
+            - manuscript_lost
           req:
             any:
               - job:
@@ -10387,17 +10257,24 @@ events:
                 stat:
                   will: 4
         - id: p2
-          kind: hold
-          day: 150
+          kind: persuade
+          day: 151
+          overturns:
+            - death
           req:
             any:
-              - item: holo_cloak
-                trait:
-                  - bold
-                  - streetwise
-                  - vigil
-              - item: holo_cloak
+              - job:
+                  - archivist
+                  - translator
+                  - proofreader
                 stat:
+                  wit: 7
+                  will: 8
+              - trait:
+                  - charismatic
+                  - methodical
+                stat:
+                  wit: 8
                   will: 8
       vignettes:
         - id: notice
@@ -10452,7 +10329,7 @@ events:
                   will: 7
         - id: p2
           kind: notice
-          day: 49
+          day: 45
           req:
             any:
               - trait:
@@ -10466,22 +10343,10 @@ events:
                 stat:
                   will: 8
         - id: p3
-          kind: trust
-          day: 45
-          req:
-            any:
-              - trait:
-                  - kind
-                  - patient
-                  - quiet
-                stat:
-                  will: 7
-              - item: hologram_projector
-                stat:
-                  will: 5
-        - id: p4
           kind: care
-          day: 48
+          day: 50
+          overturns:
+            - death
           req:
             any:
               - job:
@@ -10565,21 +10430,26 @@ events:
         - id: p3
           kind: care
           day: 100
+          overturns:
+            - death
           req:
             any:
-              - provides: cure
-                stat:
-                  will: 5
               - job:
                   - doctor
                   - physician
-                item: antibiotic
-              - job:
+                  - medical_teacher
                   - nurse
                   - pharmacist
-                item: antibiotic
+                item: nano_kit
                 stat:
-                  wit: 5
+                  will: 5
+              - trait:
+                  - methodical
+                  - scholarly
+                item: nano_kit
+                stat:
+                  wit: 7
+                  will: 7
       vignettes:
         - id: index
           traits:
@@ -10608,10 +10478,10 @@ events:
       G: 1
       S: 1
     refs:
-      - sei_shonagon_kyoto_teishi_wiki
-      - sei_shonagon_kyoto_teishi_ja
       - sei_shonagon_kyoto_britannica
       - sei_shonagon_kyoto_opening
+      - sei_shonagon_kyoto_kiryaku
+      - sei_shonagon_kyoto_kobe
     scene:
       star_rules: 2
       points:
@@ -10627,16 +10497,18 @@ events:
               - job:
                   - doctor
                   - physician
-                stat:
-                  will: 7
-              - job:
                   - nurse
                   - paramedic
                   - caregiver
                   - medical_teacher
-                provides: cure
                 stat:
-                  will: 5
+                  will: 6
+              - trait:
+                  - patient
+                  - quiet
+                  - kind
+                stat:
+                  will: 7
       vignettes:
         - id: compare
           traits:
@@ -10725,6 +10597,26 @@ events:
     scene:
       star_rules: 2
       points:
+        - id: p2
+          kind: hold
+          day: 15
+          req:
+            any:
+              - trait:
+                  - scholarly
+                  - methodical
+                stat:
+                  wit: 8
+                  will: 7
+              - job:
+                  - archivist
+                  - translator
+                  - bookseller
+                  - proofreader
+                  - restorer
+                provides: disguise
+                stat:
+                  wit: 7
         - id: p1
           kind: trust
           day: 45
@@ -10747,26 +10639,11 @@ events:
                   - sensitive
                 stat:
                   will: 5
-        - id: p2
-          kind: hold
-          day: 15
-          req:
-            any:
-              - trait:
-                  - scholarly
-                  - methodical
-                stat:
-                  wit: 8
-                  will: 7
               - job:
-                  - archivist
+                  - courier
                   - translator
-                  - bookseller
-                  - proofreader
-                  - restorer
-                provides: disguise
                 stat:
-                  wit: 7
+                  will: 6
       vignettes:
         - id: premise
           traits:
@@ -10799,6 +10676,7 @@ events:
       - rumi_konya_copy
       - rumi_konya_konya_ms51
       - rumi_konya_walters_six_books
+      - rumi_konya_morgan
     scene:
       star_rules: 2
       points:
@@ -10822,26 +10700,19 @@ events:
           req:
             any:
               - job:
+                  - nurse
+                  - caregiver
                   - translator
                   - bookseller
-                  - former_monk
                 stat:
                   wit: 7
                   will: 6
               - trait:
+                  - kind
                   - patient
-                  - faithful
-                  - scholarly
+                  - quiet
                 stat:
-                  wit: 7
                   will: 7
-              - item: neural_chip
-                trait:
-                  - patient
-                  - scholarly
-                  - faithful
-                stat:
-                  will: 6
       vignettes:
         - id: reed
           traits:
@@ -11088,52 +10959,20 @@ events:
       points:
         - id: p1
           kind: hold
-          guard: true
-          day: 16
-          req:
-            any:
-              - job:
-                  - archivist
-                  - mechanic
-                  - translator
-              - trait:
-                  - methodical
-                  - vigil
-                stat:
-                  will: 6
-        - id: p2
-          kind: notice
           day: 17
           req:
             any:
               - job:
-                  - archivist
-                  - translator
-                  - proofreader
+                  - mechanic
+                  - restorer
+                stat:
+                  finesse: 6
               - trait:
+                  - handy
                   - methodical
-                  - vigil
-                  - curious
                 stat:
-                  wit: 6
-        - id: p3
-          kind: persuade
-          day: 40
-          req:
-            any:
-              - job:
-                  - archivist
-                  - translator
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - methodical
-                  - vigil
-                  - scholarly
-                stat:
-                  wit: 8
-                  will: 7
+                  finesse: 7
+                  will: 6
       vignettes:
         - id: clock
           traits:
@@ -11256,6 +11095,8 @@ events:
         - id: p1
           kind: persuade
           day: 17
+          overturns:
+            - first_interruption
           req:
             any:
               - trait:
@@ -11589,6 +11430,7 @@ events:
       T: 1
       H: 2
     refs:
+      - heron_alexandria_mechanica
       - heron_alexandria_doors
     scene:
       star_rules: 2
@@ -11698,6 +11540,8 @@ events:
         - id: p3
           kind: care
           day: 15.74
+          overturns:
+            - death
           req:
             any:
               - job:
@@ -11771,7 +11615,7 @@ events:
                   will: 8
         - id: p2
           kind: notice
-          day: 18.1
+          day: 23
           req:
             any:
               - trait:
@@ -11783,7 +11627,9 @@ events:
                   - doctor
         - id: p3
           kind: persuade
-          day: 18.2
+          day: 29
+          overturns:
+            - comedy_glossary_lost
           req:
             any:
               - job:
@@ -11825,6 +11671,7 @@ events:
       G: 3
     refs:
       - ovid_tomis_tristia
+      - ovid_tomis_tristia_iii
     scene:
       star_rules: 2
       points:
@@ -11877,26 +11724,6 @@ events:
               - provides: scout
                 stat:
                   will: 6
-        - id: p3
-          kind: persuade
-          day: 170
-          req:
-            any:
-              - job:
-                  - archivist
-                  - bookseller
-                  - translator
-                  - teacher
-                  - proofreader
-                stat:
-                  wit: 7
-                  will: 7
-              - trait:
-                  - scholarly
-                  - cosmopolitan
-                stat:
-                  wit: 8
-                  will: 8
       vignettes:
         - id: rumor
           traits:
@@ -11923,28 +11750,12 @@ events:
       H: 2
     refs:
       - empedocles_akragas_roots
+      - empedocles_papyrus
       - empedocles_akragas_etna
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: hold
-          day: 15
-          req:
-            any:
-              - trait:
-                  - vigil
-                  - methodical
-                  - attached
-                stat:
-                  will: 5
-              - job:
-                  - archivist
-                  - translator
-                  - proofreader
-                  - bookseller
-                  - writer
-        - id: p2
           kind: hold
           day: 40
           req:
@@ -12043,30 +11854,28 @@ events:
       - hildegard_bingen_letter
       - hildegard_bingen_mainz_interdict
       - hildegard_bingen_manuscript_catalogue
+      - hildegard_bingen_scribes
     scene:
       star_rules: 2
       points:
         - id: p1
-          kind: persuade
+          kind: hold
           day: 30
           req:
             any:
               - job:
-                  - translator
                   - archivist
+                  - proofreader
+                  - musician
                 stat:
                   wit: 7
                   will: 7
               - trait:
                   - patient
                   - methodical
-                  - faithful
+                  - artistic
                 stat:
                   wit: 7
-                  will: 8
-              - trait:
-                  - charismatic
-                stat:
                   will: 8
       vignettes:
         - id: opening
@@ -12398,7 +12207,7 @@ events:
       - tupaia_anmm_cannonball
       - tupaia_banks_june
       - tupaia_banks_hooker
-      - wikipedia_tupaia
+      - tupaia_banks_november
       - tupaia_chart_survival
       - tupaia_banks_july
       - potsdam_tupaia_map
@@ -12444,16 +12253,16 @@ events:
                   - physician
                   - nurse
                   - paramedic
-                item: antibiotic
-                any:
-                  - item: mosquito_net
-              - provides: cure
-                trait:
+                  - caregiver
+                stat:
+                  will: 6
+              - trait:
                   - kind
                   - patient
                   - vigil
                 stat:
                   will: 6
+                  wit: 6
       vignettes:
         - id: pronounce
           traits:
@@ -12506,18 +12315,6 @@ events:
                 stat:
                   will: 7
         - id: p2
-          kind: notice
-          day: 17.25
-          req:
-            any:
-              - trait:
-                  - methodical
-                  - scholarly
-                  - patient
-              - job:
-                  - archivist
-                  - translator
-        - id: p3
           kind: persuade
           day: 18
           req:
@@ -12559,6 +12356,7 @@ events:
       'Y': 1
     refs:
       - ghalib_delhi_divan
+      - ghalib_delhi_history
     scene:
       star_rules: 2
       points:
@@ -12981,19 +12779,6 @@ events:
               - stat:
                   will: 5
         - id: p2
-          kind: care
-          day: 10
-          req:
-            any:
-              - job:
-                  - doctor
-                  - nurse
-                  - caregiver
-              - trait:
-                  - kind
-                stat:
-                  constitution: 5
-        - id: p3
           kind: hold
           day: 18
           req:
@@ -13004,9 +12789,11 @@ events:
                   - translator
                 stat:
                   wit: 5
-              - stat:
+              - trait:
+                  - methodical
+                  - kind
+                stat:
                   will: 7
-                  finesse: 6
       vignettes:
         - id: bowl
           traits:
@@ -13165,11 +12952,11 @@ events:
       S: 1
     refs:
       - zeami_sado_island
-      - zeami_sado_jawiki
       - zeami_sado_amano
       - zeami_sado_motomasa
       - zeami_sado_corpus
       - zeami_sado_nearman
+      - zeami_sado_ntj
     scene:
       star_rules: 2
       points:
@@ -13551,18 +13338,6 @@ events:
                 stat:
                   wit: 7
         - id: p2
-          kind: notice
-          day: 19
-          req:
-            any:
-              - job:
-                  - archivist
-                  - teacher
-              - trait:
-                  - scholarly
-                  - patient
-                  - methodical
-        - id: p3
           kind: persuade
           day: 28
           req:
@@ -13728,7 +13503,7 @@ events:
         - id: p1
           kind: hold
           guard: true
-          day: 15
+          day: 14.9
           req:
             any:
               - job:
@@ -13860,7 +13635,7 @@ events:
         - id: p1
           kind: hold
           guard: true
-          day: 32
+          day: 61
           req:
             any:
               - job:
@@ -14023,7 +13798,7 @@ events:
       - AI
       - Fan Shen
   - id: hargrave_stanwell_park
-    build_step: 2
+    build_step: 3
     year: 1894
     date: '1894-11-01'
     stay: 1
@@ -14220,6 +13995,8 @@ events:
         - id: p3
           kind: persuade
           day: 83
+          overturns:
+            - public_debut
           req:
             any:
               - trait:

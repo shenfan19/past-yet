@@ -2,8 +2,10 @@ order: 105
 events:
   ife_bronzes:
     order: 52
-    build_step: 1
-    year: 1300
+    build_step: 3
+    year: 1957
+    date: '1957-12-09'
+    stay: 2
     lon: 4.56
     lat: 7.48
     region: africa
@@ -11,49 +13,86 @@ events:
     field: art
     tier: 2
     channels: {H: 2, T: 1}
-    # finished: in the game with release.ready_only. The heads are dated by century, so the stay carries no day.
     ready: true
-    refs: [ife_bronzes_cast, ife_exhibition_man]
+    refs: [ife_bronzes_cast, ife_exhibition_man, ife_ita_yemoo_reconstruction, ife_ita_yemoo_field_report]
     scene:
+      star_rules: 2
       points:
-        - {id: p1, kind: trust, day: 10, req: {"any":[{"stat":{"finesse":6}},{"trait":["handy","patient"]},{"job":["woodcarver"]}]}}
-        - {id: p2, kind: endure, day: 60, req: {"any":[{"stat":{"constitution":6}},{"trait":["hardy","vigil"]}]}}
-        - {id: p3, kind: notice, day: 61, req: {"any":[{"stat":{"wit":6}},{"trait":["methodical","curious"]}]}}
+        - id: p1
+          kind: notice
+          day: 24
+          overturns: [field_plan_gap]
+          req:
+            any:
+              - job: [civil_engineer, architecture_intern, geologist, archivist]
+                stat: {wit: 6}
+              - trait: [methodical, scholarly]
+                stat: {wit: 7, finesse: 5}
       vignettes:
-        - {id: line, traits: [methodical, scholarly], day: 62}
-        - {id: surface, traits: [handy, curious], day: 40}
-        - {id: edge, day: 25}
+        - {id: work, day: 9}
     text:
       en:
-        name: 'The line that must survive the cast'
-        place: Ife, Nigeria
-        figure: The casters of Ife
-        story: 'A brass head from the Yoruba city of Ife still holds traces of red and black pigment on its beaded headdress. The head was made by lost-wax casting. It was one of a group found in January 1938 when builders broke ground at the Wunmonije compound. Several of the Ife castings were shown together at the British Museum in 1948.'
-        relic: 'Two study drawings'
-        relic_desc: 'Drawings comparing lines on a plain casting sample.'
+        name: 'A plan before the trenches close'
+        place: 'Ile-Ife, Nigeria'
+        figure: 'The excavation team at Ita Yemoo'
+        story: 'Rescue excavations at Ita Yemoo in Ile-Ife began in December 1957. The crews exposed ancient potsherd pavements. The first large pavement was later roofed over, but most trenches were backfilled. Later archaeologists had to piece together their positions from scattered sketches, notes and photographs.'
+        relic: 'A trench plan with a baseline'
+        relic_desc: 'The sheet ties the positions of several trenches to a fixed line by the road.'
         points:
-          p1: 'Be taken in by the casters, then shape a practice model in wax'
-          p2: 'On the day of pouring, keep the fire under the crucible going'
-          p3: 'After the pour, tell which line was cut in the wax and which was added after'
+          p1: 'Before the trenches are filled, tie them to a shared baseline and leave a plan in Ife that can be surveyed again'
+        points_fail:
+          p1: 'The trenches are filled in. As the ground changes, later teams can only use scattered records to find where each cut was made.'
+        shift:
+          p1:
+            was: 'After most of the trenches were backfilled, later archaeologists had no comprehensive plan of the early excavations and had to reconstruct the layout.'
+            now: 'A trench plan with fixed reference points stays in Ife. Later crews can use it to find the old trenches.'
         vignettes:
-          line: '{staff} lays the drawing made before the finishing beside the sample of today, and draws the new scratch on a separate sheet.'
-          surface: '{staff} tilts the board under a sample so the light runs along it, and marks on paper where a fine line begins.'
-          edge: '{staff} draws a plain practice sample once, and next to it the one line seen only today, so the next comparison does not rest on memory.'
+          work: '{staff} watches the tape wind back into the reel, a smear of earth between two of the numbers.'
+        story_prose:
+          opening:
+          - 'Ile-Ife, December 1957. Near the road, people are kneeling in the dirt, brushing out the edge of a potsherd pavement. They stake the lip of the cut so no one will step in.'
+          - 'A roof later sheltered the first large pavement. Most trenches were filled in. In history, the people who came back spent years piecing together positions from notebooks, drawings and photographs.'
+          - 'The cuts are still open today. Someone who can survey them and check the measurements with the crew can tie them all to the same landmark.'
+          points:
+            p1: '{staff} and the crew run a tape to a fixed mark by the road and call out the distance to each corner. A worker dots the positions on the field drawing, then copies the same dots onto a sheet to stay in Ife.'
+          outcomes:
+            all: 'Long after the ground was filled in, a surveyor finds the mark by the road and follows the distance on the plan to an old trench corner. There is no trench left to see.'
+            p1: 'Long after the ground was filled in, a surveyor finds the mark by the road and follows the distance on the plan to an old trench corner. There is no trench left to see.'
+          none: 'Loose earth levels off the last corner. Two sketches lie one on top of the other with no common reference. The lines still will not meet.'
+          not_admitted: '{staff} cannot enter with the crew. Someone behind the fence takes in the tape that was trailing in the dirt.'
+          excerpts:
+            p1: '{staff} and the crew run a tape to a fixed mark by the road and call out the distance to each corner. A worker dots the positions on the field drawing, then copies the same dots onto a sheet to stay in Ife.'
       zh:
-        name: '铸好以后还能不能认出这道线'
-        place: 尼日利亚伊费
-        figure: 伊费的铸造匠人
-        story: '约鲁巴城市伊费出土的一尊黄铜头像，珠饰头冠上还留着红色和黑色的颜料。这尊头像用失蜡法铸成。1938 年 1 月，翁莫尼杰院落里开挖房屋地基，人们从土里挖出它和一批其他头像。1948 年，多件伊费铸像在大英博物馆一同展出。'
-        relic: '一对线样小图'
-        relic_desc: '对照无像练习铸样上两次所见的线。'
+        name: '回填前的探沟图'
+        place: '尼日利亚伊莱伊费'
+        figure: '伊塔耶穆发掘队'
+        story: '1957 年 12 月，发掘人员在伊莱伊费的伊塔耶穆开始抢救性发掘。他们清出古代陶片铺地。最早清出的大片铺地后来盖了棚，多数探沟则被回填。后来的考古队得从零散的草图、笔记和照片中重建探沟的分布。'
+        relic: '一张带基准线的探沟图'
+        relic_desc: '纸上把几条探沟的位置连到公路边的同一条基准线。'
         points:
-          p1: '先让铸匠们认下，再用蜡捏一个练习模'
-          p2: '浇铸那天，守着坩埚底下的火不让它弱下去'
-          p3: '浇铸之后，分辨哪道线是蜡模上刻的，哪道是后来添的'
+          p1: '在开挖的边界被填平前，把探沟量到同一条基准线上，在伊费留下可以复测的图'
+        points_fail:
+          p1: '沟口照常回填。随着地表变化，后来的人只能用零散记录重找各条沟的位置。'
+        shift:
+          p1:
+            was: '多数探沟回填后，后来的考古队手头没有一张完整的早期现场图，需要重新拼出探沟分布。'
+            now: '伊费留有一份按固定参照点测出的探沟图。后来的人能按图重找到这些探沟。'
         vignettes:
-          line: '{staff}把收面之前画的小图摆到今天的样块旁边，后来多出的那一道划痕，另画在一张纸上。'
-          surface: '{staff}把垫样块的木板略斜一斜，让光顺着它走，在纸上标出一道细线从哪里开始。'
-          edge: '{staff}描了一遍没有图像的练习样块，旁边另记下今天才看见的那一道线，下回比对就不用全靠记性。'
+          work: '{staff}看着尺带绕回盘里，泥土在数字二和三之间留了个印。'
+        story_prose:
+          opening:
+          - '1957 年 12 月，伊莱伊费。公路边，几个人蹲在土里，把陶片铺地的边缘一点点刷出来。他们在沟沿下钉桩，免得人一脚踏进去。'
+          - '最早清出的大片铺地后来有了棚子，多数探沟却要回填。史实里，重来这里的人花了不少时间，把笔记、草图和照片里的位置重新拼到一块。'
+          - '开口还在地上。趁今天走得通，找个会测量并肯和发掘队一道复核的人，把每条沟接到同一处地标上。'
+          points:
+            p1: '{staff}和队员把长尺拉到公路边的固定标记，逐个报出沟角的距离。一个人先在现场图上点清，一转手又在留给伊费的那张纸上点了一遍。'
+          outcomes:
+            all: '回填很久以后，拿图的人在路边找回标记，沿着纸上的距离走到旧沟拐角。地上已经看不到沟了。'
+            p1: '回填很久以后，拿图的人在路边找回标记，沿着纸上的距离走到旧沟拐角。地上已经看不到沟了。'
+          none: '松土把最后一个沟角填平。两张没标相对位置的草图叠在一起，纸上的线还是对不上。'
+          not_admitted: '{staff}没能跟发掘队进场。围栏内有人收走了垂在地上的长尺。'
+          excerpts:
+            p1: '{staff}和队员把长尺拉到公路边的固定标记，逐个报出沟角的距离。一个人先在现场图上点清，一转手又在留给伊费的那张纸上点了一遍。'
 text:
   en:
     name: The casters of Ife
@@ -64,7 +103,7 @@ text:
 quotes:
   ife_cast_surface:
     order: 1
-    tier: full
+    tier: most
     contextual: true
     date: '1949-01'
     checked: official_record
@@ -75,7 +114,7 @@ quotes:
       zh: {who: '威廉·法格与利昂·安德伍德', quote: '铸件的内表面与外表面高度吻合。', occasion: '1948 年展览后的鉴察报告，描述与奥洛昆头像一同受检的其他伊费头像内外表面的吻合程度。本游戏译文。'}
   ife_cast_repairs:
     order: 2
-    tier: none
+    tier: some
     contextual: true
     date: '1949-01'
     checked: official_record
@@ -84,11 +123,44 @@ quotes:
     text:
       en: {who: 'William Fagg and Leon Underwood', quote: 'several of the Ife castings show imperfections which had to be repaired', occasion: 'Post-exhibition report on casting flaws and repairs observed on Ife metalwork.'}
       zh: {who: '威廉·法格与利昂·安德伍德', quote: '几件伊费铸件上可见需要修补的瑕疵。', occasion: '1948 年展览后的鉴察报告，记录在伊费铸件上发现的铸造瑕疵和修补。本游戏译文。'}
-hook: {en: 'Which mark belongs to the wax model?', zh: '这道线是草样上刻的，还是后来留下的？'}
+  ife_reconstructed_plan:
+    order: 3
+    tier: full
+    contextual: true
+    date: '2021'
+    checked: official_record
+    sources: [ife_ita_yemoo_reconstruction]
+    original: en
+    text:
+      en: {who: 'The Ife–Sungbo research team', quote: 'a newly rendered field map of Willett’s excavations at Ita Yemoo provides a helpful visual aid', occasion: 'The research team on its reconstruction of the excavation plan, paragraph 16.'}
+      zh: {who: '伊费—孙博考古团队', quote: '新绘制的伊塔耶穆发掘图便于查阅。', occasion: '团队谈威利特发掘图的复原，见报告第 16 段。本游戏译文。'}
+      zh-Hant: {who: '伊費—孫博考古團隊', quote: '新繪製的伊塔耶穆發掘圖便於查閱。', occasion: '團隊談威利特發掘圖的復原，見報告第 16 段。本遊戲譯文。'}
+      fr: {who: 'L’équipe de recherche Ife–Sungbo', quote: 'Un nouveau plan des fouilles de Willett à Ita Yemoo facilite la consultation.', occasion: 'L’équipe décrit sa reconstitution du plan de fouille, paragraphe 16.'}
+      es: {who: 'El equipo de investigación Ife–Sungbo', quote: 'Un nuevo plano de las excavaciones de Willett en Ita Yemoo sirve de ayuda visual.', occasion: 'El equipo describe su reconstrucción del plano de excavación, párrafo 16.'}
+      ja: {who: 'イフェ・スンボ研究チーム', quote: 'ウィレットによるイタ・イェモー発掘の新たな図は、位置関係を確かめる手がかりになる。', occasion: '発掘図の復元に関する調査報告、第16段落。'}
+      ko: {who: '이페–숭보 연구팀', quote: '윌렛이 이타 예무를 발굴한 위치를 새로 그린 도면은 관계를 파악하는 데 도움이 된다.', occasion: '발굴 도면을 복원한 조사 보고서 16문단.'}
+  ife_missing_plan:
+    order: 4
+    tier: none
+    contextual: true
+    date: '2021'
+    checked: official_record
+    sources: [ife_ita_yemoo_reconstruction]
+    original: en
+    text:
+      en: {who: 'The Ife–Sungbo research team', quote: 'one faces the lack of a site map', occasion: 'The research team on the limitations of the excavation archive, paragraph 15.'}
+      zh: {who: '伊费—孙博考古团队', quote: '研究者发现手头缺了一张现场图。', occasion: '团队谈发掘档案的局限，见报告第 15 段。本游戏译文。'}
+      zh-Hant: {who: '伊費—孫博考古團隊', quote: '研究者發現手邊缺了一張現場圖。', occasion: '團隊談發掘檔案的局限，見報告第 15 段。本遊戲譯文。'}
+      fr: {who: 'L’équipe de recherche Ife–Sungbo', quote: 'On se heurte à l’absence de plan du site.', occasion: 'L’équipe évoque les limites des archives de fouille, paragraphe 15.'}
+      es: {who: 'El equipo de investigación Ife–Sungbo', quote: 'Nos encontramos con la falta de un plano del yacimiento.', occasion: 'El equipo describe las limitaciones del archivo de excavación, párrafo 15.'}
+      ja: {who: 'イフェ・スンボ研究チーム', quote: '現場全体の図がないという問題に直面する。', occasion: '発掘資料の限界に関する調査報告、第15段落。'}
+      ko: {who: '이페–숭보 연구팀', quote: '현장 도면이 없다는 문제에 부딪힌다.', occasion: '발굴 기록의 한계를 다룬 조사 보고서 15문단.'}
+hook:
+  en: 'Will the next crew find the trenches again?'
+  zh: '下一队人还能找到探沟吗？'
 facts:
   cast:
     date: '1300'
-    stay_day: 61
     checked: official_record
     level: usable
     use: [story, wiki]
@@ -132,13 +204,43 @@ facts:
     line:
       en: 'July 1948: the Ife castings go on display at the British Museum.'
       zh: '1948 年 7 月，伊费铸像在大英博物馆展出。'
+  rescue_start:
+    date: '1957-12-09'
+    checked: 'official_record'
+    level: 'usable'
+    use:
+    - 'story'
+    - 'wiki'
+    sources:
+    - 'ife_ita_yemoo_reconstruction'
+    - 'ife_ita_yemoo_field_report'
+    text:
+      en: 'Rescue excavations at Ita Yemoo in Ile-Ife began in December 1957.'
+      zh: '1957 年 12 月，发掘人员在伊莱伊费的伊塔耶穆开始抢救性发掘。'
+  field_plan_gap:
+    date: '1958'
+    stay_day: 26
+    checked: 'official_record'
+    level: 'usable'
+    use:
+    - 'story'
+    - 'history'
+    - 'wiki'
+    sources:
+    - 'ife_ita_yemoo_reconstruction'
+    - 'ife_ita_yemoo_field_report'
+    text:
+      en: 'After most of the trenches were backfilled, later archaeologists had no comprehensive plan of the early excavations and had to reconstruct the layout.'
+      zh: '多数探沟回填后，后来的考古队手头没有一张完整的早期现场图，需要重新拼出探沟分布。'
+    line:
+      en: 'After most of the trenches were backfilled, later archaeologists had no comprehensive plan of the early excavations and had to reconstruct the layout.'
+      zh: '多数探沟回填后，后来的考古队手头没有一张完整的早期现场图，需要重新拼出探沟分布。'
 bystanders:
   helper:
     invented: true
-    text: {en: 'A helper in the casting yard, made up for the game, who checks the marks on a practice sample.', zh: '一位编出来的铸场帮工，核对练习样块上的线痕。'}
-  stoker:
-    invented: true
-    text: {en: 'A stoker, made up for the game, who keeps the bellows going.', zh: '一位编出来的拉风箱的人，风箱一直不停。'}
+    text:
+      en: 'A field assistant who checks the reference marks. A composite character created for the game.'
+      zh: '一位复核测量基准的发掘助手，由游戏虚构。'
 wiki:
   refs:
     ife_bronzes_cast:
@@ -159,17 +261,29 @@ wiki:
       text:
         en: 'William Fagg and Leon Underwood, “An Examination of the So-Called ‘Olokun’ Head of Ife, Nigeria,” Man 49, art. 1 (January 1949), p. 4, point (d) (other Ife heads), and p. 6, note 9 (casting and repairs). Original report in the Indira Gandhi National Centre for the Arts digital library. https://ignca.gov.in/Asi_data/16908.pdf'
         zh: '威廉·法格、利昂·安德伍德，《鉴察尼日利亚伊费所谓的奥洛昆头像》，《Man》第 49 卷第 1 篇（1949 年 1 月），第 4 页第 (d) 点（其他伊费头像）和第 6 页注 9（铸造与修补）。英迪拉·甘地国家艺术中心数字图书馆收录原报告。https://ignca.gov.in/Asi_data/16908.pdf'
+    ife_ita_yemoo_reconstruction:
+      order: 710
+      status: 'checked'
+      text:
+        en: 'Chouin et al., Lost in Space? Reconstructing Frank Willett’s excavations at Ita Yemoo, 2021, paragraphs 7, 15–17. https://journals.openedition.org/aaa/3328'
+        zh: '舒安等，《失落在空间中？重建弗兰克·威利特在伊塔耶穆的发掘》，2021 年，第 7、15–17 段。https://journals.openedition.org/aaa/3328'
+    ife_ita_yemoo_field_report:
+      order: 711
+      status: 'checked'
+      text:
+        en: 'Ife–Sungbo Archaeological Project, June–July 2015 field report, D.1.4, potsherd pavements at Ita Yemoo. https://www.ifas.org.za/research/wp-content/uploads/2019/01/Ife-Sungbo-Archaeological-Project-Summer-2015.pdf'
+        zh: '伊费—孙博考古项目，2015 年 6–7 月现场报告，D.1.4，伊塔耶穆的陶片铺地。https://www.ifas.org.za/research/wp-content/uploads/2019/01/Ife-Sungbo-Archaeological-Project-Summer-2015.pdf'
 self_check:
-  fact: wunmonije
-  quote_line: '1938 年 1 月，翁莫尼杰院落里挖地基的人，挖出了一批头像。'
-  echo_note: 'Both contextual echoes are observations by William Fagg and Leon Underwood after the 1948 exhibition. The medieval casters remain unnamed.'
-  regret_choice: '派手巧的去，蜡模捏得好，浇铸那天的火却未必守得住；派守得住的去，火没弱，线是谁刻的却没人分。'
-  bookend: '从铸场里的一尊头像开始，以数百年后多件出土铸像同台展出收尾。'
-  share_line: '我在伊费的铸场替铸匠们守过一炉火。'
-  share_number: '1938'
-  knowing: 'exhibition'
-  near: 'cast'
-  lever: 'p1, p3'
-  missed: 'frobenius'
+  fact: 'field_plan_gap'
+  quote_line: '多数探沟回填后，后来的考古队手头没有一张完整的早期现场图，需要重新拼出探沟分布。'
+  echo_note: 'The full and zero-star echoes are from the 2021 reconstruction of the site plan. The two casting observations remain accessible for earlier saved trips.'
+  regret_choice: '沟口照常回填。随着地表变化，后来的人只能用零散记录重找各条沟的位置。'
+  bookend: '回填很久以后，拿图的人在路边找回标记，沿着纸上的距离走到旧沟拐角。地上已经看不到沟了。'
+  share_line: '{staff}和队员把长尺拉到公路边的固定标记，逐个报出沟角的距离。'
+  share_number: '1957'
+  knowing: 'rescue_start'
+  near: 'field_plan_gap'
+  lever: 'p1'
+  missed: 'field_plan_gap'
   brought: 'relic'
 pack: {license: MIT, version: 2, languages: [en, zh]}

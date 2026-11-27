@@ -12,12 +12,12 @@ events:
     field: literature
     tier: 3
     channels: {G: 2}
-    refs: [rumi_konya_reed, rumi_konya_copy, rumi_konya_konya_ms51, rumi_konya_walters_six_books]
+    refs: [rumi_konya_reed, rumi_konya_copy, rumi_konya_konya_ms51, rumi_konya_walters_six_books, rumi_konya_morgan]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 10, req: {"any":[{"job":["translator","archivist"]},{"trait":["patient","scholarly"],"stat":{"will":6}}]}}
-        - {id: p2, kind: care, day: 16, req: {"any":[{"job":["translator","bookseller","former_monk"],"stat":{"wit":7,"will":6}},{"trait":["patient","faithful","scholarly"],"stat":{"wit":7,"will":7}},{"item":"neural_chip","trait":["patient","scholarly","faithful"],"stat":{"will":6}}]}}
+        - {id: p2, kind: care, day: 16, req: {"any":[{"job":["nurse","caregiver","translator","bookseller"],"stat":{"wit":7,"will":6}},{"trait":["kind","patient","quiet"],"stat":{"will":7}}]}}
       vignettes:
         - {id: reed, traits: [artistic, wanderer, curious]}
         - {id: hand, traits: [patient, sensitive, calm]}
@@ -31,19 +31,17 @@ events:
         relic: 'A reader’s opening leaf'
         relic_desc: 'An imagined reading sheet marking the opening of a verse.'
         points:
-          p1: 'Put the pages of the Masnavi that Rumi checked in book order in Konya, ready for later copying'
-          p2: 'When he falls ill in December, help Husam al-Din Chalabi take down what Rumi still dictates, so the end of the sixth book goes a little further before he dies'
+          p1: 'In Konya, check the order of the sheets in a copy of the Masnavi before lending it to another reader'
+          p2: 'When Rumi falls ill, ask whom he wants to see and keep the room quiet when they sit down together'
         points_fail:
-          p1: 'Different reading copies were mixed and nobody could recover a set checked by Rumi. The branch came apart from history and the office recalled the employee.'
-          p2: 'The sixth book ended where history left it.'
+          p1: 'Two reading copies are mixed. One bundle leaves with a section in the wrong place, and the office recalls {staff} when the record falls out of sync.'
+          p2: 'Another visitor is at the door before the person Rumi asked for can sit down.'
         shift:
           p1:
-            was: 'Konya holds a Masnavi manuscript dated 1278. Collection research traces it to a copy that Rumi checked.'
+            was: 'Konya holds a six-book manuscript of the Masnavi dated 1278, five years after Rumi’s death.'
           p2:
-            was: 'Rumi fell ill in December 1273 and died in Konya on 17 December. The sixth book of the Masnavi ends inconclusively; whether it was finished, accounts differ.'
-            now: 'In his last days a few more couplets were taken down, and the sixth book closes the story it had begun.'
-            who: rumi_konya
-            bio: 'In this line Rumi''s last dictation in December 1273 was taken down to the end of the story he was telling. The six books went on being read in Konya after his death.'
+            was: 'Rumi died in Konya in December 1273. A later account depicts his companions gathered at his bedside.'
+            now: 'In this branch {staff} sets a chair for the person Rumi asks to see. The conversation can wait until Rumi is ready to speak.'
         vignettes:
           reed: 'Narin has performed both parts with the same voice. You ask where the reed first speaks as itself. She lets the next line begin after a breath. When Hasan listens with his eyes shut, he can hear the moment the reed takes over.'
           hand: 'Hasan has to leave the reading bench, and Narin reaches for his page while he is still speaking. You hold its corner until he completes the couplet and can put his finger on the next line. She begins there when it is her turn. The passage has passed between them without a gap.'
@@ -56,19 +54,17 @@ events:
         relic: '一张起句练习稿'
         relic_desc: '读书页，在起句处做了记号。'
         points:
-          p1: '在科尼亚把鲁米已经核过的《玛斯纳维》抄页按卷收好，留作后来重抄的底稿'
-          p2: '他十二月病倒以后，帮侯赛姆·切莱比记下他还在口述的诗句，让第六卷的结尾在他去世前多走一段'
+          p1: '在科尼亚对好一份《玛斯纳维》抄页的卷次，再把它交给下一位借读的人'
+          p2: '鲁米病中，问他想见谁，等那个人进屋坐下，让屋里先安静一会儿'
         points_fail:
-          p1: '几份读本混在一起，后来拿不出一套鲁米亲自核过的稿子。分支与历史脱了节，事务所因同步失败召回员工。'
-          p2: '第六卷照史实停在原处。'
+          p1: '两份抄本混了页，有一束漏排了一节就被借走。记录脱节，事务所召回{staff}。'
+          p2: '鲁米想见的人还没坐下，门外又有人来访。'
         shift:
           p1:
-            was: '科尼亚保存一份 1278 年的《玛斯纳维》手稿。馆藏研究认为它依据鲁米本人核过的一份抄本。'
+            was: '科尼亚保存一份 1278 年的《玛斯纳维》全六卷手稿，抄于鲁米去世五年后。'
           p2:
-            was: '1273 年 12 月鲁米病倒，17 日在科尼亚去世。《玛斯纳维》第六卷的结尾没有收束，是否写完，各家说法不一。'
-            now: '他最后几天又记下了几联，第六卷把开了头的那个故事讲完了。'
-            who: rumi_konya
-            bio: '这条时间线里，鲁米 1273 年 12 月最后的口述被记到那个故事的结尾。他去世后，六卷在科尼亚继续有人读。'
+            was: '1273 年 12 月，鲁米在科尼亚去世。后出的传记描写有同伴聚到他的病榻前。'
+            now: '这条分支里，{staff}替鲁米想见的人搬了把椅子。两人可以先坐一会儿，等鲁米有力气了再开口。'
         vignettes:
           reed: '娜琳把两处用同一种声音读过去。你问，芦管从哪里开始用自己的口吻说话。她换过一口气，才念下一句。哈桑闭着眼，也听得出哪里换成了芦管。'
           hand: '哈桑得离开读书凳，还没念完，娜琳手已够到那页。你按住纸角，等他把一联念完，手指落到下一行。轮到她时，她从那儿起句，一段诗从一人手里递到了另一人。'
@@ -82,6 +78,15 @@ text:
     text: 波斯诗人与导师，1207 年生，1273 年去世，住在科尼亚。他的《玛斯纳维》和抒情诗是苏菲文学中读者最多的作品之一，追随者创立了梅芙莱维教团。
 hook: {en: 'The reed speaks before the singer does.', zh: '先开口的是芦管，还是歌者？'}
 facts:
+  death:
+    date: '1273-12-17'
+    stay_day: 19
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [rumi_konya_morgan]
+    text: {en: 'Rumi died in Konya on 17 December 1273. The bedside visit is depicted in a later manuscript tradition.', zh: '鲁米于 1273 年 12 月 17 日在科尼亚去世。榻边相见的场面见于后出的传本。'}
+    line: {en: '17 December 1273: Rumi dies in Konya.', zh: '1273 年 12 月 17 日，鲁米在科尼亚去世。'}
   reed:
     date: '1273'
     checked: official_record
@@ -109,6 +114,12 @@ bystanders:
     text: {en: 'A fictional reader who has to leave before the next couplet.', zh: '虚构读者哈桑，下一联到来前得离开。'}
 wiki:
   refs:
+    rumi_konya_morgan:
+      order: 457
+      status: checked
+      text:
+        en: 'Morgan Library & Museum, Rumi Meets with His Followers for the Last Time, on his date of death and the later account. https://www.themorgan.org/collection/treasures-of-islamic-manuscript-painting/49'
+        zh: '摩根图书馆与博物馆，〈鲁米最后一次见他的追随者〉，卒日及后出传本介绍。https://www.themorgan.org/collection/treasures-of-islamic-manuscript-painting/49'
     rumi_konya_konya_ms51:
       order: 10
       status: checked

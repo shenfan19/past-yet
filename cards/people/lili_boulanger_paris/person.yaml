@@ -12,11 +12,11 @@ events:
     field: music
     tier: 1
     channels: {E: 1, G: 2}
-    refs: [lili_boulanger_paris_wiki, lili_boulanger_paris_snl, lili_boulanger_paris_baker, lili_boulanger_paris_score]
+    refs: [lili_boulanger_paris_baker, lili_boulanger_paris_score, lili_boulanger_paris_pie_jesu]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 50, req: {"any":[{"job":["doctor","physician"],"stat":{"will":7}},{"job":["nurse","paramedic","caregiver","pharmacist","medical_teacher"],"provides":"cure","stat":{"will":5}}]}}
+        - {id: p1, kind: care, day: 50, req: {"any":[{"job":["musician","proofreader"],"stat":{"wit":6,"will":6}},{"job":["nurse","caregiver","doctor","physician"],"trait":["patient","methodical","kind"],"stat":{"will":6}},{"trait":["artistic","methodical"],"stat":{"wit":7,"will":7}}]}}
       vignettes:
         - {id: entry, traits: [methodical, curious]}
         - {id: visitor, traits: [kind, charismatic]}
@@ -26,19 +26,17 @@ events:
         name: 'Parts spread across the table'
         place: "Mézy sur Seine"
         figure: "Lili Boulanger"
-        story: 'Lili Boulanger had been ill since early childhood. In the winter of 1918, at Mézy-sur-Seine, she was too weak to write and dictated her last work, for voice, string quartet, harp and organ, to her sister Nadia. She died there on 15 March 1918, at twenty four.'
+        story: 'Lili Boulanger was gravely ill in the winter of 1918 at Mézy-sur-Seine. Accounts of her last work describe her dictating Pie Jesu to her sister Nadia. The score calls for voice, string quartet, harp and organ. Lili died on 15 March, aged twenty-four.'
         relic: "A pencil"
         relic_desc: "A short pencil beside blank staff paper."
         points:
-          p1: 'Before the illness of her bowel wears her out, get it under control and save Lili'
+          p1: 'When Lili asks for a break, mark the place for Nadia and read back the last passage when Lili wants to begin again'
         points_fail:
-          p1: 'As in history the illness wins. Lili dies at Mézy on 15 March, at twenty four.'
+          p1: 'After stopping, the sisters have to find their place again. Lili spends some of the time she has left that day repeating what she has already given Nadia.'
         shift:
           p1:
-            was: '15 March 1918: Lili Boulanger, ill since childhood, died at Mézy-sur-Seine, aged twenty four.'
-            now: 'Her illness was brought under control. That spring she sat up at the table again and wrote the notes down in her own hand.'
-            who: lili_boulanger_paris
-            bio: 'In this timeline Lili Boulanger came through the winter of 1918 at Mézy. Her illness was treated, and she went on composing.'
+            was: 'Accounts of Pie Jesu describe Nadia helping Lili write down the music when Lili was very ill.'
+            now: 'In this branch {staff} keeps their place when Lili stops. When she is ready, Nadia reads back the last passage and her sister can begin exactly where she chose to pause.'
         vignettes:
           entry: 'The copyist has marked the singer’s entry on an instrumental part. You lay that sheet next to the full score and ask him to point to the voice. He moves one mark. You take a scrap with both places on it. The rehearsal begins after your return.'
           visitor: 'You tell the copyist that future readers will come looking for every part listed for the work. He sets the organ pages aside so they won’t be mistaken for a spare voice copy. You help him tie them separately. You never get to hear those two parts together.'
@@ -47,19 +45,17 @@ events:
         name: '桌上摊着几份声部谱'
         place: "梅齐"
         figure: "莉莉·布朗热"
-        story: '莉莉·布朗热自幼多病。1918 年冬在塞纳河畔梅齐，她已虚弱得握不住笔，把最后一部作品口述给姐姐娜迪亚记下，编制是人声、弦乐四重奏、竖琴和管风琴。同年 3 月 15 日她在那里去世，二十四岁。'
+        story: '1918 年冬，莉莉·布朗热在塞纳河畔梅齐病得很重。关于她最后一部作品的记述写到，她把《Pie Jesu》口述给姐姐娜迪亚。乐谱写给人声、弦乐四重奏、竖琴和管风琴。3 月 15 日，莉莉去世，终年二十四岁。'
         relic: "一支铅笔"
         relic_desc: "一支短铅笔，旁边是空白的五线谱纸。"
         points:
-          p1: '肠病把她耗尽之前把病治住，救下莉莉'
+          p1: '莉莉想歇一会儿时替娜迪亚标好谱上的位置，再按莉莉的意思念回刚记下的一段'
         points_fail:
-          p1: '病照史实拖垮了她，莉莉 3 月 15 日死在梅齐，二十四岁。'
+          p1: '停下来以后，姐妹俩要重新找口述的位置。莉莉今天剩下的力气，有一部分得花在重复已经说过的地方。'
         shift:
           p1:
-            was: '1918 年 3 月 15 日，自幼多病的莉莉·布朗热在塞纳河畔梅齐去世，二十四岁。'
-            now: '她的病治住了。那年春天她又能坐到桌前，自己把音符写下来。'
-            who: lili_boulanger_paris
-            bio: '这条时间线里，莉莉·布朗热熬过了 1918 年梅齐的那个冬天，病得到医治，继续作曲。'
+            was: '关于《Pie Jesu》的记述写到，莉莉病重时由姐姐娜迪亚帮她记谱。'
+            now: '这条分支里，莉莉停下时，{staff}替姐妹俩留好了记号。等莉莉觉得能继续了，娜迪亚念回最后一段，莉莉从自己挑的停顿处接着说。'
         vignettes:
           entry: '抄谱人把歌声进来的记号划在了一张器乐分谱上。你把它跟总谱并排搁好，请他指出人声那一行。他挪了一个记号。你带走写着两处位置的纸角。真正的排练在你回去之后才开始。'
           visitor: '你告诉抄谱人，后来的读者会照着编制来找各声部。他另收好管风琴谱，省得有人当成多出一份声乐谱。你帮他单独系住那一叠。这两份谱合起来响是什么样，你始终没听到。'
@@ -71,17 +67,17 @@ text:
   zh:
     name: 莉莉·布朗热
     text: 法国作曲家，1893 年生，1918 年去世。1913 年她成为第一位获得罗马大奖作曲奖的女性。她一生体弱，二十四岁去世。
-hook: {en: 'Too weak to hold the pen, she dictates the notes.', zh: '握不住笔了，她一个音一个音念给姐姐听'}
+hook: {en: 'When she wants to stop, can they keep her place?', zh: '莉莉想歇一会儿，刚念到哪一小节？'}
 facts:
   illness:
     date: '1918'
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [lili_boulanger_paris_wiki, lili_boulanger_paris_snl]
+    sources: [lili_boulanger_paris_baker, lili_boulanger_paris_pie_jesu]
     text:
-      en: 'Lili Boulanger was ill from early childhood with a chronic disease of the bowel, recorded as intestinal tuberculosis and now thought possibly to have been Crohn''s disease.'
-      zh: '莉莉·布朗热自幼患慢性肠病，当时记作肠结核，今人推测可能是克罗恩病。'
+      en: 'Lili Boulanger had poor health from childhood and was gravely ill in early 1918.'
+      zh: '莉莉·布朗热自幼体弱，1918 年初病重。'
     line:
       en: 'Winter 1918: Lili is too weak to write.'
       zh: '1918 年冬，莉莉已虚弱得写不了字。'
@@ -90,7 +86,7 @@ facts:
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [lili_boulanger_paris_snl, lili_boulanger_paris_wiki, lili_boulanger_paris_score]
+    sources: [lili_boulanger_paris_pie_jesu, lili_boulanger_paris_score]
     text:
       en: 'Her last work, for voice, string quartet, harp and organ, was dictated from her sickbed to her sister Nadia.'
       zh: '她的最后一部作品，为人声、弦乐四重奏、竖琴和管风琴而写，是在病床上口述给姐姐娜迪亚记下的。'
@@ -125,6 +121,12 @@ bystanders:
     text: {en: 'A fictional copyist with more pages than clear space on the table.', zh: '虚构的抄谱人，桌子摆不下要分清的谱。'}
 wiki:
   refs:
+    lili_boulanger_paris_pie_jesu:
+      order: 494
+      status: checked
+      text:
+        en: 'Royal School of Church Music, Angelus, programme commentary on the Pie Jesu and its dictation. https://www.rscm.org.uk/wp-content/uploads/2023/11/Angelus.pdf'
+        zh: '英国皇家教会音乐学校演出节目册，《Pie Jesu》的口述写作。https://www.rscm.org.uk/wp-content/uploads/2023/11/Angelus.pdf'
     lili_boulanger_paris_wiki:
       order: 491
       status: checked

@@ -12,11 +12,11 @@ events:
     field: science
     tier: 2
     channels: {G: 2}
-    refs: [hertz_bonn_mactutor, hertz_bonn_nature, hertz_bonn_wikipedia, hertz_bonn_resonator]
+    refs: [hertz_bonn_mactutor, hertz_bonn_nature, hertz_bonn_wikipedia, hertz_bonn_resonator, hertz_bonn_mechanics_preface]
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: care, day: 80, req: {"any":[{"job":["doctor","physician"],"provides":"cure","stat":{"will":5}},{"job":["doctor","physician","medical_teacher"],"stat":{"wit":8,"will":8}},{"job":["nurse","paramedic"],"provides":"cure","stat":{"will":6}}]}}
+        - {id: p1, kind: care, day: 80, req: {"any":[{"job":["doctor","physician","medical_teacher","nurse","paramedic"],"stat":{"will":6}},{"job":["lecturer","university_lecturer"],"stat":{"will":6,"wit":6}},{"trait":["patient","methodical","kind"],"stat":{"will":7,"wit":6}}]}}
       vignettes:
         - {id: repeat, traits: [methodical, handy]}
         - {id: signal, traits: [bold, curious]}
@@ -30,15 +30,13 @@ events:
         relic: "A spark gap"
         relic_desc: "A small brass spark gap from his experiments."
         points:
-          p1: 'Before the illness gets worse, cure the long illness of his nose and jaw, and save him'
+          p1: 'Ask Hertz which lecture he would let a colleague cover, and arrange for someone to take questions on that day'
         points_fail:
-          p1: 'On 1 January 1894, as in history, he dies in Bonn, aged thirty six.'
+          p1: 'The lecture stays on his schedule. He has to save the work on his manuscript for later.'
         shift:
           p1:
-            was: '1 January 1894: Hertz died in Bonn, aged thirty six. From 1892 a painful illness of his nose and throat had kept returning, and several operations had not cured it.'
-            now: 'His illness was cured and the pain stopped, and he went on lecturing in Bonn.'
-            who: hertz_bonn
-            bio: 'In this timeline Hertz was cured at the end of 1893 of the illness he had carried for two years, and lived on in Bonn past 1894.'
+            was: 'Hertz continued teaching in Bonn in 1893 while ill and finished his Principles of Mechanics before he died.'
+            now: 'In this branch Hertz lets a colleague cover one lecture. He uses the time to rest and dictate a correction to the manuscript before sending it away.'
         vignettes:
           repeat: 'The assistant is writing ‘none’ after one glance. You put the receiver back where it was and ask him to watch through the lens again. A brief spark appears on the second look. You change the first entry to ‘uncertain’. Its cause is still open when you leave.'
           signal: 'You know later devices will carry signals much farther. The assistant asks if the spark itself can carry a sentence. You leave two empty columns on his page, one for a recognised spark and one for any pattern he can reproduce. There is time to fill only the first.'
@@ -51,15 +49,13 @@ events:
         relic: "一个火花隙"
         relic_desc: "他做实验用过的一个小铜火花隙。"
         points:
-          p1: '病再重下去之前，治好他鼻子和颌骨里久治不愈的病，救下他'
+          p1: '问赫兹哪一堂课可以交给同事，帮他安排当天由谁回答学生的提问'
         points_fail:
-          p1: '1894 年 1 月 1 日，他照史实在波恩去世，年仅三十六岁。'
+          p1: '课还在赫兹的日程上。他只好把稿上的那处改动再往后放一放。'
         shift:
           p1:
-            was: '1894 年 1 月 1 日，赫兹在波恩去世，年仅三十六岁。1892 年起他的鼻子和喉咙反复剧痛，做过几次手术也没有治好。'
-            now: '他的病治好了，痛也止住了，接着在波恩讲课。'
-            who: hertz_bonn
-            bio: '这条时间线里，赫兹在 1893 年底治好了缠身两年的病，在波恩活过了 1894 年。'
+            was: '赫兹于 1893 年在波恩带病讲课，在去世前完成了《力学原理》。'
+            now: '这条分支里，赫兹请同事代一堂课，自己先歇了一会儿。稿子送出去以前，他还能口述一处更正，请人记下来。'
         vignettes:
           repeat: '帮工瞥一眼就要写「无」。你把接收环放回原处，请他透过镜头再看一遍。第二眼见到一点短促火花。你把第一条改成「未看清」。第一回究竟有没有，收队时仍无法断定。'
           signal: '你知道后来的装置会把信号送到更远处。帮工问这么一点火花能不能送一句话。你在他的记录上各留一栏，一栏记认出的火花，一栏记能重现的变化。收队前，只来得及填第一栏。'
@@ -86,17 +82,18 @@ facts:
       en: 'Hertz is lecturing again this term, between operations on his nose and throat.'
       zh: '这个学期赫兹又在讲课，鼻子和喉咙的手术做了一次又一次。'
   mechanics:
-    date: '1894'
+    date: '1893-12-03'
+    stay_day: 89
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [hertz_bonn_mactutor, hertz_bonn_wikipedia]
+    sources: [hertz_bonn_mactutor, hertz_bonn_mechanics_preface]
     text:
-      en: 'Hertz finished The Principles of Mechanics in 1893; it was published after his death, in 1894.'
-      zh: '赫兹在 1893 年写完《力学原理》，书在他死后于 1894 年出版。'
+      en: 'Hertz sent the manuscript of The Principles of Mechanics to his publisher on 3 December 1893. The book appeared in 1894 after he died.'
+      zh: '赫兹于 1893 年 12 月 3 日将《力学原理》书稿交给出版方，书于他去世后的 1894 年刊行。'
     line:
-      en: 'Hertz finishes the manuscript of The Principles of Mechanics.'
-      zh: '赫兹写完了《力学原理》的书稿。'
+      en: '3 December 1893: Hertz sends the manuscript of The Principles of Mechanics to the publisher.'
+      zh: '1893 年 12 月 3 日，赫兹将《力学原理》书稿交给出版方。'
   death:
     date: '1894-01-01'
     stay_day: 118
@@ -125,6 +122,12 @@ bystanders:
     text: {en: 'An invented assistant watching the narrow gap of the receiving apparatus.', zh: '虚构的帮工，盯着接收装置上那条细缝。'}
 wiki:
   refs:
+    hertz_bonn_mechanics_preface:
+      order: 148
+      status: checked
+      text:
+        en: 'Hermann von Helmholtz, preface to Heinrich Hertz, The Principles of Mechanics, 1894. https://upload.wikimedia.org/wikipedia/commons/3/31/The_principles_of_mechanics_presented_in_a_new_form_%28Hertz%2C_1894%29.pdf'
+        zh: '赫尔曼·冯·亥姆霍兹，赫兹《力学原理》序言，1894 年。https://upload.wikimedia.org/wikipedia/commons/3/31/The_principles_of_mechanics_presented_in_a_new_form_%28Hertz%2C_1894%29.pdf'
     hertz_bonn_mactutor:
       order: 140
       status: checked

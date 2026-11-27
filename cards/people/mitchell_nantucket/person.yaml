@@ -16,7 +16,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 15, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 14.9, req: {"any":[{"job":["archivist","university_lecturer"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":7}}]}}
         - {id: p2, kind: persuade, day: 15.5, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7,"will":7}},{"trait":["methodical","charismatic"],"stat":{"will":8}}]}}
       vignettes:
         - {id: field, traits: [methodical, scholarly]}
@@ -31,16 +31,16 @@ events:
         relic: "A small telescope"
         relic_desc: "A small brass telescope with a trace of sea salt on the tube."
         points:
-          p1: 'Get the discovery notice onto the first mail boat so the mainland observatory can follow the comet'
+          p1: 'Get the family’s dated notice ready for the first mail to the Cambridge observatory'
           p2: 'Send a second notice to the designated Danish recipient on the first boat and spare Mitchell the later medal appeal'
         points_fail:
-          p1: 'The observations remain in the family''s journal, but the first boat sails without the notice. The observatory misses its first chance to follow it, and the office recalls the employee.'
+          p1: 'The observations remain in the family’s journal, but the notice misses the first mail. The office recalls the employee after a loss of sync.'
           p2: 'Only the observatory gets the notice. The judges cannot grant the medal under the usual rules because the designated recipient was not notified.'
         shift:
           p1:
             was: 'On 3 October 1847 Mitchell''s father wrote to the Cambridge observatory about the discovery on the 1st. His letter left on the first mail after the sighting.'
           p2:
-            was: 'In 1848 the judges ruled that the notice had gone to the wrong recipient. Mitchell eventually received the Danish medal after a separate appeal.'
+            was: 'In 1848 correspondence about the prize records that the required immediate notice did not reach the designated recipients. Mitchell later received the medal after her claim was taken up with the Danish government.'
             now: '{staff} checks the rules and helps the family put another notice on the same boat. The judges can consider the claim under the usual rules because the notice arrived through the proper channel.'
             who: mitchell_nantucket
             bio: 'Mitchell received recognition on the strength of a timely report. She began recording when she saw an object, when she sent the notice, and who received it.'
@@ -56,16 +56,16 @@ events:
         relic: "一架小望远镜"
         relic_desc: "一架小小的黄铜望远镜，镜筒上有海盐的痕迹。"
         points:
-          p1: '护住第一次离岛邮船上的发现通知，让大陆天文台来得及追看彗星'
+          p1: '把家人写好日期的发现通知备齐，赶上首班送往剑桥天文台的离岛邮件'
           p2: '赶在第一班邮船开走前，再寄一份给丹麦方面指定的收件人，免去米切尔后来为金牌补申'
         points_fail:
-          p1: '家中有观测记录，但第一班邮船把通知落下。天文台没赶上那轮观测，员工因同步失败被召回。'
+          p1: '观测记录仍在家中，但通知没赶上首班邮船。这条分支与史实脱节，员工被召回。'
           p2: '通知只寄给天文台，评奖人因未按要求及时通报而不能按例授奖。'
         shift:
           p1:
             was: '1847 年 10 月 3 日，米切尔的父亲写信把 1 日的发现告知剑桥天文台，信随发现后首班离岛邮件寄出。'
           p2:
-            was: '1848 年，评奖人认定收件人不合规定，米切尔最终是在另行陈请后获得丹麦金牌。'
+            was: '1848 年的奖项通信记载，发现消息没有按规定立即报给指定收件人。丹麦方面另行审理后，米切尔获得金牌。'
             now: '{staff}查清通知应送何处，帮家人把另一个写好地址的信封赶上同一班船。评奖人已有在期限内通报的记录，可以按例审理。'
             who: mitchell_nantucket
             bio: '米切尔凭按期送到的发现报告获得认可。她开始在自己的记录里同时保留观测日、发件日和收件人。'

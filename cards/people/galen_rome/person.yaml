@@ -17,8 +17,8 @@ events:
       star_rules: 2
       points:
         - {id: p1, kind: hold, guard: true, day: 18, req: {"any":[{"job":["archivist","translator"],"stat":{"wit":7}},{"trait":["methodical","vigil"],"stat":{"will":8}}]}}
-        - {id: p2, kind: notice, day: 18.1, req: {"any":[{"trait":["methodical","scholarly","handy"]},{"job":["archivist","doctor"]}]}}
-        - {id: p3, kind: persuade, day: 18.2, req: {"any":[{"job":["archivist"],"stat":{"wit":8,"will":8}},{"trait":["methodical"],"stat":{"wit":8,"will":8}}]}}
+        - {id: p2, kind: notice, day: 23, req: {"any":[{"trait":["methodical","scholarly","handy"]},{"job":["archivist","doctor"]}]}}
+        - {id: p3, kind: persuade, day: 29, overturns: [comedy_glossary_lost], req: {"any":[{"job":["archivist"],"stat":{"wit":8,"will":8}},{"trait":["methodical"],"stat":{"wit":8,"will":8}}]}}
       vignettes:
         - {id: list, traits: [methodical, curious, quiet]}
         - {id: borrow, traits: [cosmopolitan, kind, charismatic]}
@@ -32,8 +32,8 @@ events:
         relic: 'An inventory leaf'
         relic_desc: 'A fictional inventory with one surviving title and an empty copy column.'
         points:
-          p1: 'Check both book shipments before the fire so the prose glossary rolls still leave early for Campania'
-          p2: 'Persuade Galen to have a craft worker keep wax models apart from the instruments going into storage'
+          p1: 'Secure room on the earlier shipment for the prose glossary rolls already meant to go to Campania'
+          p2: 'Before the instruments go into storage, have a craft worker make a second wax model of a hard-to-replace instrument and keep it at the workshop'
           p3: 'Persuade Galen to send his Old Comedy glossary out of Rome with the earlier shipment before it is loaded'
         points_fail:
           p1: 'The rolls are filed with the Rome stock and burn instead of reaching Campania. The branch falls out of sync and the office recalls the employee.'
@@ -44,7 +44,7 @@ events:
             was: 'When fire broke out in Rome at the end of winter in AD 192, Galen said his prose glossary had already gone to Campania.'
           p2:
             was: 'In AD 192, the fire destroyed the instruments Galen stored in Rome, including ones he had designed.'
-            now: '{staff} has the craft worker leave a set of wax models at the workshop. Galen can use them to get the instruments made again.'
+            now: 'A second wax model stays at the workshop. After the fire, Galen can use it to have the instrument made again.'
           p3:
             was: 'At the end of winter in AD 192, Galen''s Old Comedy glossary burned in the fire in Rome.'
             now: '{staff} gets the rolls into the earlier shipment and Galen can go on revising the text from a copy after the fire. Another copy later reaches a collection outside Rome.'
@@ -62,8 +62,8 @@ events:
         relic: '一页书目'
         relic_desc: '书目，有个书名依然可读，存卷一栏留空。'
         points:
-          p1: '在火灾前核对两批书的去向，让原先要送往坎帕尼亚的那批散文词语卷照原计划先发'
-          p2: '器械入仓前，劝盖伦请工匠另存一套蜡样'
+          p1: '先为要送往坎帕尼亚的散文词语卷留好运送位置，让这批书能照原计划先发'
+          p2: '器械入仓前，请工匠替一件难补的器械再做一个蜡样，留在工坊'
           p3: '趁先发的书还没装完，说服盖伦让旧喜剧词语手稿随同这批书离城'
         points_fail:
           p1: '书卷错收进罗马的仓房，旧时已经运走的那批也在火里失去。行程同步失败，员工被召回。'
@@ -74,7 +74,7 @@ events:
             was: '公元 192 年冬末罗马起火时，盖伦说那批散文作家词语汇编已经运往坎帕尼亚。'
           p2:
             was: '公元 192 年，盖伦存放在罗马仓房的器械随火灾毁坏，其中有他自己设计的器械。'
-            now: '{staff}请工匠保留一套蜡样在工坊，盖伦回城后还能对照样件重做器械。'
+            now: '另做的蜡样留在工坊。火灾之后，盖伦还能凭这个样件请工匠重做那件器械。'
           p3:
             was: '公元 192 年冬末，盖伦编的旧喜剧词语手稿在罗马仓房的火灾中烧毁。'
             now: '{staff}让这批卷子随先发的书运走，盖伦回到罗马后能凭副本继续修订。后来另有一份抄本交给外地的藏书处。'
@@ -93,6 +93,19 @@ text:
     text: 来自佩加蒙的希腊医生，129年生，后来在罗马行医。他留下多部解剖学与医学著作，也写到自己在192年火灾中的损失。
 hook: {en: 'The title survived. Did a copy survive too?', zh: '书名还在，书也还在吗？'}
 facts:
+  comedy_glossary_lost:
+    date: '192'
+    stay_day: 45
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [galen_192_critical_edition]
+    text:
+      en: 'Galen wrote that his glossary of words from Old Comedy was lost in the fire, while copies of the prose glossary had already reached Campania.'
+      zh: '盖伦说，旧喜剧词语汇编在火灾中失去。散文词语汇编已有副本先送到坎帕尼亚。'
+    line:
+      en: '192: the fire destroys Galen’s glossary of words from Old Comedy.'
+      zh: '192 年，盖伦的旧喜剧词语汇编在罗马火灾中损失。'
   fire:
     date: '192'
     checked: official_record
@@ -115,8 +128,8 @@ wiki:
       order: 813
       status: checked
       text:
-        en: 'Polemis and Xenophontos, Galen: On Avoiding Distress, critical edition and translation, sections 1–7. https://www.academia.edu/105893818/GALEN_On_Avoiding_Distress_and_On_My_Own_Opinions_Edited_by_Ioannis_Polemis_and_Sophia_Xenophontos_Berlin_2023_Trends_in_Classics_Supplementary_Volumes_151'
-        zh: '波莱米斯、泽诺丰托斯，《盖伦：论免于忧苦》校勘与译文，第 1–7 节。 https://www.academia.edu/105893818/GALEN_On_Avoiding_Distress_and_On_My_Own_Opinions_Edited_by_Ioannis_Polemis_and_Sophia_Xenophontos_Berlin_2023_Trends_in_Classics_Supplementary_Volumes_151'
+        en: 'Polemis and Xenophontos, Galen: On Avoiding Distress, critical edition and translation, sections 1–7 and 20–28. https://www.academia.edu/105893818/GALEN_On_Avoiding_Distress_and_On_My_Own_Opinions_Edited_by_Ioannis_Polemis_and_Sophia_Xenophontos_Berlin_2023_Trends_in_Classics_Supplementary_Volumes_151'
+        zh: '波莱米斯、泽诺丰托斯，《盖伦：论免于忧苦》校勘与译文，第 1–7、20–28 节。 https://www.academia.edu/105893818/GALEN_On_Avoiding_Distress_and_On_My_Own_Opinions_Edited_by_Ioannis_Polemis_and_Sophia_Xenophontos_Berlin_2023_Trends_in_Classics_Supplementary_Volumes_151'
     galen_rome_fire:
       order: 937
       status: checked

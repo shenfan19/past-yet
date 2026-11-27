@@ -12,12 +12,12 @@ events:
     field: math
     tier: 2
     channels: {G: 3, S: 2}
-    refs: [cantor_halle_mactutor, cantor_halle_wikipedia, cantor_halle_primary, cantor_halle_unpublished_material, cantor_halle_letter_index]
+    refs: [cantor_halle_mactutor, cantor_halle_duran, cantor_halle_primary, cantor_halle_unpublished_material, cantor_halle_letter_index]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: persuade, day: 60, req: {"any":[{"job":["doctor","physician","nurse","caregiver"],"stat":{"will":6}},{"trait":["kind","patient","charismatic"],"stat":{"wit":5,"will":7}}]}}
-        - {id: p2, kind: care, day: 150, req: {"any":[{"job":["doctor","physician"],"stat":{"will":8}},{"job":["nurse","caregiver","cook","chef"],"provides":"ration","stat":{"will":5}},{"provides":"cure","trait":["kind","patient","vigil"],"stat":{"will":6}}]}}
+        - {id: p2, kind: care, day: 150, req: {"any":[{"job":["nurse","caregiver","cook","chef"],"stat":{"will":6}},{"provides":"ration","trait":["kind","patient","methodical"],"stat":{"will":5}}]}}
       vignettes:
         - {id: list, traits: [curious, scholarly]}
         - {id: after, traits: [methodical, vigil]}
@@ -27,24 +27,22 @@ events:
         name: "Letters from the clinic"
         place: "Halle"
         figure: "Georg Cantor"
-        story: 'Cantor retired in 1913 and spent his last years ill and short of food under the war conditions in Germany. In June 1917 he entered the clinic in Halle for the last time, and wrote to his wife again and again asking to be allowed home. On 6 January 1918 he died there of a heart attack.'
+        story: 'Cantor retired in 1913 and spent his last years ill and short of food in wartime Germany. In 1917 he entered the clinic in Halle for the last time. He wrote to his wife asking to come home and died in the clinic on 6 January 1918.'
         relic: "A set of index cards"
         relic_desc: "Cards covered with lists that never end."
         points:
-          p1: 'Persuade the clinic and his family to let him go home to recover'
-          p2: 'Through the last winter of the war, keep him fed and look after his heart, and save him'
+          p1: 'Ask Cantor whom he most wants to see and arrange a quiet visit at the clinic in Halle'
+          p2: 'Ask the kitchen and his family what food they can spare that winter, and arrange a regular meal he can finish'
         points_fail:
-          p1: 'As in history he stays in the clinic. His letters asking to come home go out one after another and are never granted.'
-          p2: 'On 6 January 1918, as in history, he dies of a heart attack in the clinic.'
+          p1: 'The family has to answer by letter. The chair Cantor asked for stays empty.'
+          p2: 'Food comes when someone can spare it, and Cantor still has days when he goes hungry.'
         shift:
           p1:
-            was: 'June 1917: Cantor entered the clinic in Halle for the last time and wrote to his wife again and again asking to come home; he was not allowed to.'
-            now: 'He went home and recovered among his family.'
+            was: 'In 1917 Cantor entered the clinic in Halle for the last time. He wrote to his wife asking to come home.'
+            now: 'In this branch {staff} gets a visit arranged. Cantor can tell someone from home what he has been putting into his letters.'
           p2:
-            was: '6 January 1918: Cantor died of a heart attack in the clinic in Halle, after years of wartime hunger.'
-            now: 'That winter he had enough to eat and someone to look after him, and he lived on past January 1918.'
-            who: cantor_halle
-            bio: 'In this timeline Cantor had food and care through the last winter of the war, and lived on past January 1918.'
+            was: 'Cantor was ill in his final years and food was scarce in wartime Germany.'
+            now: 'In this branch {staff} arranges a dependable meal for Cantor, so on those days he can eat without waiting for a parcel.'
         vignettes:
           list: 'The learner says the list is already endless. You ask what would show that everything is on it. They leave a second line for the reasoning rather than merely extending the first.'
           after: 'The learner copies several numbers and forgets the rule for getting the next. You ask them to put the rule first so another person can carry on where the slate ends.'
@@ -53,24 +51,22 @@ events:
         name: "疗养院寄出的信"
         place: "哈雷"
         figure: "格奥尔格·康托尔"
-        story: '康托尔 1913 年退休，战时的德国缺粮，他最后几年多病，也吃不饱。1917 年 6 月他最后一次住进哈雷的疗养院，一再写信给妻子，请求让他回家。1918 年 1 月 6 日，他在那里死于心脏病发作。'
+        story: '康托尔 1913 年退休，晚年多病，又遇上战时缺粮。1917 年，他最后一次住进哈雷的疗养院。他写信给妻子，请求回家，1918 年 1 月 6 日在院中去世。'
         relic: "一叠索引卡片"
         relic_desc: "卡片上写满了永远列不完的清单。"
         points:
-          p1: '劝院方和他的家人答应，让他回到家里调养'
-          p2: '战时最后一个冬天里，让他吃饱、照看好他的心脏，救下他'
+          p1: '问康托尔最想见谁，帮他约一次在哈雷疗养院里能安静说话的探望'
+          p2: '和伙房及家人核对冬天还能匀出哪些食物，给他安排一顿能按时吃上的饭'
         points_fail:
-          p1: '他照史实留在疗养院里，求回家的信一封封寄出去，始终没有获准。'
-          p2: '1918 年 1 月 6 日，他照史实在疗养院里死于心脏病发作。'
+          p1: '家里只能回信。他请人搬来的椅子，一直空着。'
+          p2: '还得等有人匀出食物才有得吃，康托尔有些日子依然饿着。'
         shift:
           p1:
-            was: '1917 年 6 月，康托尔最后一次住进哈雷的疗养院，一再写信给妻子请求回家，没有获准。'
-            now: '他回到了家里，在家人身边养病。'
+            was: '1917 年，康托尔最后一次住进哈雷的疗养院，写信给妻子请求回家。'
+            now: '这条分支里，{staff}安排了一次探望。那些写在信里的话，康托尔可以当面说给家里人听。'
           p2:
-            was: '1918 年 1 月 6 日，康托尔在哈雷的疗养院里死于心脏病发作，此前几年他一直吃不饱。'
-            now: '那个冬天他吃得饱，也有人照看，活过了 1918 年 1 月。'
-            who: cantor_halle
-            bio: '这条时间线里，康托尔在战时最后一个冬天有饭食、有人照看，活过了 1918 年 1 月。'
+            was: '康托尔晚年多病，战时德国又缺粮。'
+            now: '这条分支里，{staff}让康托尔按时吃上了一顿饭。这几天他饿了，不用先等家里送东西过来。'
         vignettes:
           list: '学算者说这张表已经写不到头。你问怎样才知道什么都在上面。他另留一行记理由，没只顾把第一行续长。'
           after: '学算者抄了几个数，却忘了下一个该怎么算。你请他先写规则，石板写到边，换个人也能接下去。'
@@ -85,11 +81,11 @@ text:
 hook: {en: 'Letter after letter, he asks to be taken home.', zh: '他一封接一封写信，求家里接他回去'}
 facts:
   hunger:
-    date: '1913'
+    date: '1917'
     checked: two_sources
     level: usable
     use: [story, history, wiki]
-    sources: [cantor_halle_mactutor, cantor_halle_wikipedia]
+    sources: [cantor_halle_mactutor, cantor_halle_duran]
     text:
       en: 'Cantor retired in 1913 and spent his last years ill and short of food under the war conditions in Germany.'
       zh: '康托尔 1913 年退休，最后几年多病，又因战时德国的处境吃不饱。'
@@ -97,14 +93,14 @@ facts:
       en: 'The war has emptied the larders; Cantor is ill and short of food.'
       zh: '战时缺粮，康托尔病着，也吃不饱。'
   clinic:
-    date: '1917-06'
+    date: '1917'
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [cantor_halle_mactutor, cantor_halle_wikipedia]
+    sources: [cantor_halle_mactutor, cantor_halle_duran]
     text:
-      en: 'In June 1917 Cantor entered a clinic in Halle for the last time and wrote to his wife again and again asking to be allowed home.'
-      zh: '1917 年 6 月，康托尔最后一次住进哈雷的疗养院，一再写信给妻子，请求让他回家。'
+      en: 'In 1917 Cantor entered a clinic in Halle for the last time and wrote to his wife asking to be allowed home.'
+      zh: '1917 年，康托尔最后一次住进哈雷的疗养院，写信给妻子请求回家。'
     line:
       en: 'From the clinic Cantor writes to his wife again: he asks to come home.'
       zh: '康托尔又从疗养院写信给妻子，请求回家。'
@@ -114,7 +110,7 @@ facts:
     checked: two_sources
     level: careful
     use: [story, history, wiki]
-    sources: [cantor_halle_mactutor, cantor_halle_wikipedia]
+    sources: [cantor_halle_mactutor, cantor_halle_duran]
     text:
       en: 'Cantor died of a heart attack in the clinic in Halle on 6 January 1918.'
       zh: '1918 年 1 月 6 日，康托尔在哈雷的疗养院里死于心脏病发作。'
@@ -142,12 +138,12 @@ wiki:
       text:
         en: 'MacTutor History of Mathematics, University of St Andrews, Georg Cantor https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/'
         zh: '圣安德鲁斯大学 MacTutor 数学史档案，格奥尔格·康托尔 https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/'
-    cantor_halle_wikipedia:
+    cantor_halle_duran:
       order: 141
       status: checked
       text:
-        en: 'Wikipedia, Georg Cantor https://en.wikipedia.org/wiki/Georg_Cantor'
-        zh: '维基百科，格奥尔格·康托尔 https://en.wikipedia.org/wiki/Georg_Cantor'
+        en: 'Antonio J. Durán, Cien años sin Cantor, p. 274, quoting Ivor Grattan-Guinness on the war and Cantor’s last days https://gaceta.rsme.es/abrir.php?id=1446'
+        zh: '安东尼奥·杜兰，《康托尔逝世一百年》第 274 页，引格拉坦－吉尼斯论康托尔晚年。https://gaceta.rsme.es/abrir.php?id=1446'
     cantor_halle_unpublished_material:
       order: 10
       status: checked
@@ -172,5 +168,5 @@ self_check:
   regret_choice: '略过「说明例表打算列进哪些数」，这处细节便留给下一位核对。'
   bookend: '从「他一封接一封写信，求家里接他回去」开始，以员工留下的观察或更正收尾。'
   share_line: '他一封接一封写信，求家里接他回去'
-  share_number: '1917-06'
+  share_number: '1917'
 pack: {license: MIT, version: 1, languages: [en, zh]}

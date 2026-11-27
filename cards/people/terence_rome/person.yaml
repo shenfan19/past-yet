@@ -14,7 +14,7 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: persuade, day: 17, req: {"any":[{"trait":["charismatic","glib"],"stat":{"will":6}},{"job":["musician","radio_host","tour_guide","street_vendor"],"stat":{"will":5}},{"provides":"show"}]}}
+        - {id: p1, kind: persuade, day: 17, overturns: [first_interruption], req: {"any":[{"trait":["charismatic","glib"],"stat":{"will":6}},{"job":["musician","radio_host","tour_guide","street_vendor"],"stat":{"will":5}},{"provides":"show"}]}}
       vignettes:
         - {id: warning, traits: [bold, charismatic]}
         - {id: audibility, traits: [methodical, curious]}
@@ -28,17 +28,17 @@ events:
         relic: "A comic mask"
         relic_desc: "A linen mask with a raised brow, worn by an actor."
         points:
-          p1: 'When the rumour of a tightrope walker and boxers draws the crowd away, hold the audience in their seats and help the company play The Mother-in-Law through to the end the first time'
+          p1: 'When talk of boxers and a tightrope walker drowns out the players, get the people near the stage listening again so the company can finish its first performance'
         points_fail:
-          p1: 'The audience left as in history and the play broke off. In this branch the first staging of The Mother-in-Law still ended halfway.'
+          p1: 'The players cannot make themselves heard above the crowd. As in history, they stop before the end.'
         shift:
           p1:
-            was: 'In 165 BC The Mother-in-Law was first staged; a rumour that a tightrope walker and boxers were about to perform drew the audience away, and the play could not be finished.'
-            now: '{staff} kept the people in their seats, and the company played The Mother-in-Law to its last line at the first attempt. The play did not have to wait five more years and two more stagings to be heard to the end.'
+            was: 'In 165 BC the first staging of The Mother-in-Law was interrupted amid the noise and excitement over other performers.'
+            now: 'The audience near the stage starts listening again, and the company gets to the last line on the first attempt.'
             who: terence_rome
-            bio: 'In this line, Terence''s The Mother-in-Law was played to the end at its first staging in 165 BC, and did not go through two more interruptions.'
+            bio: 'In this branch, the first staging of Terence’s The Mother-in-Law reached its ending in 165 BC.'
         vignettes:
-          warning: 'You tell a stagehand that people will still read how the crowd left, two thousand years after it happened. He asks whether they will know what the actors were saying when they left. You stay for the rehearsal and write down the last line you could hear. The rehearsal ends with one more listener than it began with. The public performance is still ahead of you.'
+          warning: 'You tell a stagehand that people will still read about the interrupted performance two thousand years from now. He asks whether they will know what the actors were saying when they had to stop. You stay for the rehearsal and write down the last line you could hear. The public performance is still ahead of you.'
           audibility: 'You listen from beside the entrance and miss the reply to a line you heard clearly. The stagehand moves one bench and asks you to listen again. This time you hear both halves. You take home a sketch of the bench’s two positions. The street has grown too loud for you to hear the ending from outside.'
           bench: 'You help the stagehand set one bench back from the doorway. A latecomer sits down without making a whole row stand. You mark the clear space on a scrap of wood. You leave with the rehearsal still sounding through the doorway.'
       zh:
@@ -49,17 +49,17 @@ events:
         relic: "一副喜剧面具"
         relic_desc: "一副亚麻面具，眉毛高挑，演员戴的。"
         points:
-          p1: '走绳艺人和拳击手的传言引走观众时，留住看台上的人，帮剧团把《婆母》头一回演完'
+          p1: '在人声压过台词时，让舞台近处的人重新听戏，帮剧团把《婆母》头一回演完'
         points_fail:
-          p1: '观众照史实散去，戏演到一半收场，这条分支里《婆母》头一回上演仍没有演完。'
+          p1: '台上的声音被人声盖住了。剧团照史实提前收场，没有演到末尾。'
         shift:
           p1:
-            was: '公元前 165 年，《婆母》头一回上演，传言有走绳艺人和拳击手要来，观众散去，戏没能演完。'
-            now: '{staff}留住了看台上的人，剧团头一回就把《婆母》演到了最后一句。这部戏不必再等五年、再经两回上演才被人听完。'
+            was: '公元前 165 年，《婆母》首演时，拳击和走绳的消息引起骚动，戏没能演完。'
+            now: '舞台近处的人重新开始听戏，剧团头一回就演到了最后一句。'
             who: terence_rome
-            bio: 'IF 线里，泰伦提乌斯的《婆母》在公元前 165 年头一回上演就演完了，没有再经历两次中断。'
+            bio: '这条分支里，泰伦提乌斯的《婆母》于公元前 165 年首演，同一天演到了结尾。'
         vignettes:
-          warning: '你告诉虚构的舞台帮工，两千年后还有人读到观众离场这件事。他问后人知不知道观众走时演员说到哪儿。你留下听排练，记下最后一句听清的话。排练结束时比开头多了你这一个听众，正式演出还没到。'
+          warning: '你告诉舞台帮工，两千年后还有人读到这场戏中断的事。他问后人知不知道收场时演员说到哪儿。你留下听排练，记下最后一句听清的话。正式演出还没到。'
           audibility: '你靠门听，听清了一句，却漏掉了接它的那句。帮工挪了一条长凳，请你再听一遍。这回你把两句都听到了。你带回画着长凳两个位置的草图。等你退到街上，末尾的话已被街声盖住。'
           bench: '你帮舞台帮工把一条长凳从门口挪开。来迟的人终于能坐下，不用叫整排人都站起来。你在木片上记下空出来的地方。临走时，门里还传着排练的声音。'
 text:
@@ -71,6 +71,19 @@ text:
     text: 罗马剧作家，约公元前 195 年生，约公元前 159 年去世。据说他作为奴隶从北非被带到罗马，写了六部改编自希腊戏剧的喜剧，全部留存至今。
 hook: {en: 'Will anyone hear the ending?', zh: '今天能演到最后一句吗？'}
 facts:
+  first_interruption:
+    date: '-165'
+    stay_day: 18
+    checked: official_record
+    level: usable
+    use: [story, history, wiki]
+    sources: [terence_rome_prologues, terence_rome_stage_history]
+    text:
+      en: 'The surviving prologues recall that the first staging of Hecyra was broken off amid the noise and excitement about boxing and a tightrope walker.'
+      zh: '现存的《婆母》序言回忆了首演中断。观众盼着看拳击和走绳，现场很嘈杂。'
+    line:
+      en: '165 BC: the first staging of The Mother-in-Law breaks off before the end.'
+      zh: '公元前 165 年，《婆母》的首演没有演到结尾。'
   prologues:
     date: '-160'
     checked: official_record
@@ -106,7 +119,7 @@ wiki:
         zh: '泰伦提乌斯《婆母》第一、第二序言拉丁文 https://thelatinlibrary.com/ter.hecyra.html'
 self_check:
   fact: prologues
-  quote_line: '他问后人知不知道观众走时演员说到哪儿。'
+  quote_line: '他问后人知不知道收场时演员说到哪儿。'
   regret_choice: '守入口能帮迟到的观众落座，离席去查声响会漏听结尾。'
   bookend: '从观众为何走到自己究竟听到了哪句。'
   share_line: '这轮排练结束时多了我这一个听众。'

@@ -16,9 +16,9 @@ events:
     scene:
       star_rules: 2
       points:
-        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","artistic"],"stat":{"wit":8}}]}}
         - {id: p2, kind: persuade, day: 10, req: {"any":[{"job":["musician","archivist"],"stat":{"wit":6}},{"trait":["methodical","artistic","patient"],"stat":{"will":6}}]}}
-        - {id: p3, kind: care, day: 18, req: {"any":[{"job":["doctor","physician"],"stat":{"wit":7}},{"job":["paramedic","nurse"],"item":"handbook"},{"provides":"heal","stat":{"will":7}}]}}
+        - {id: p1, kind: hold, guard: true, day: 17, req: {"any":[{"job":["musician"],"stat":{"finesse":7}},{"job":["archivist"],"stat":{"wit":7}},{"trait":["methodical","artistic"],"stat":{"wit":8}}]}}
+        - {id: p3, kind: care, day: 18, req: {"any":[{"job":["doctor","physician","paramedic","nurse","caregiver"],"stat":{"will":6}},{"trait":["kind","patient","calm"],"stat":{"wit":7,"will":7}}]}}
       vignettes:
         - {id: cover, traits: [methodical, curious]}
         - {id: forward, traits: [bold, charismatic]}
@@ -28,28 +28,26 @@ events:
         name: 'Six songs under one name'
         place: "Berlin"
         figure: "Fanny Mendelssohn Hensel"
-        story: 'Fanny Hensel’s Six Songs, Op. 1, appeared under her own name in 1846.'
+        story: 'Fanny Hensel’s Six Songs, Op. 1, appeared under her own name in 1846. In her last spring she completed a piano trio and wrote Bergeslust. She fell ill during a rehearsal in Berlin on 14 May 1847 and died that day. The trio appeared in print in 1850.'
         relic: "A song sheet"
         relic_desc: "A handwritten song marked Fanny."
         points:
           p1: 'Protect Hensel''s writing time amid rehearsal preparations so she can finish her last song'
-          p2: 'Bring the publisher to Hensel with proofs and let her settle the version of the Trio readers will receive'
-          p3: 'When the stroke comes during the rehearsal on 14 May, recognise it at once and save her'
+          p2: 'Lay the Trio manuscript and the rehearsal copy side by side, and ask Hensel to mark which changes she wants the players to keep'
+          p3: 'When Hensel falls ill at rehearsal, stop the music, send for help and keep someone with her'
         points_fail:
           p1: 'Rehearsal takes up the hours she had set aside and the song stops at the draft. The branch falls out of sync and the office recalls the employee.'
-          p2: 'The Trio appears only after her death, so she never reviews the printed text herself.'
-          p3: 'She is taken ill at the piano and dies that same day, aged forty one. In this branch the Sunday concerts end there.'
+          p2: 'The players keep their changes on separate pages. Her family will have to ask which ones she approved.'
+          p3: 'People go in different directions to look for help. The room stays crowded while her family waits to get to her.'
         shift:
           p1:
             was: 'In late April 1847 Hensel wrote that composition had stalled after the Trio; in May she finished her final song shortly before her death.'
           p2:
             was: 'Hensel died on 14 May 1847. The Piano Trio first appeared in print in 1850.'
-            now: '{staff} persuades a publisher to bring proofs while they can still be changed. Her family later has the revisions she settled herself when they see the score into print.'
+            now: 'In this branch {staff} helps Hensel mark a working copy of the Trio that the players and her family can refer to. The separate publication comes later.'
           p3:
-            was: 'On 14 May 1847, rehearsing her brother Felix''s cantata Die erste Walpurgisnacht at home, Hensel suffered a stroke and died the same day.'
-            now: '{staff} sees the attack begin, has her lie down and sends for a doctor at once. She recovers, and goes on running the Sunday concerts in Berlin for years, composing and publishing under her own name.'
-            who: fanny_mendelssohn_berlin
-            bio: 'Hensel survived the stroke of May 1847. She kept the Sunday concerts going in Berlin for many more years and went on publishing her music under her own name.'
+            was: 'Hensel fell ill during a rehearsal on 14 May 1847 and died the same day.'
+            now: 'In this branch {staff} gets help sent for and asks the singers to close their scores. There is room beside Hensel for a member of her family to stay with her.'
         vignettes:
           cover: 'A singer has opened the score in the middle and asks whose music this is. You fetch its loose title sheet and set it beside the score. The initials on the title sheet are enough to settle what to write on the sleeve. You miss the first song while putting the papers together.'
           forward: 'You start to tell the singer how collectors will search for these songs in the future. She points to the loose cover and asks whether they will still have it. You ask for the cover to go out with the next copy. It goes with one reader. You cannot follow it any further.'
@@ -58,28 +56,26 @@ events:
         name: '用自己的名字印六首歌'
         place: "柏林"
         figure: "范妮·门德尔松·亨泽尔"
-        story: '范妮·亨泽尔的《六首歌曲》作品一号于 1846 年以她本人的名字出版。'
+        story: '范妮·亨泽尔的《六首歌曲》作品一号于 1846 年以她本人的名字出版。次年春，她写完钢琴三重奏，也写了《山间之乐》。5 月 14 日，她在柏林排练时发病，当天去世。三重奏于 1850 年刊行。'
         relic: "一页歌谱"
         relic_desc: "一页手写的歌谱，署名范妮。"
         points:
           p1: '在亨泽尔为排练忙碌时替她守住写谱的时间，让她完成最后一首歌'
-          p2: '让出版人带着校样来见亨泽尔，请她亲手确认三重奏交到读者手中的版本'
-          p3: '5 月 14 日排练中她突然发病时，当场认出是中风，救下她'
+          p2: '把三重奏手稿和排练本摊在一起，请亨泽尔标明哪些改动要留给演奏的人'
+          p3: '亨泽尔排练时发病，先停下音乐，请人去找医生，也留个人陪她'
         points_fail:
           p1: '排练占完了时间，最后的歌停在草稿。行程与史实脱节，员工被召回。'
-          p2: '三重奏直到她去世后才出版，作者没能亲自审定印本。'
-          p3: '她在钢琴旁发病，当天去世，年四十一岁。这条分支里星期日音乐会到此为止。'
+          p2: '改动还各记在分谱上。家人要弄清哪些是她认可的，还得逐个问人。'
+          p3: '大家各自出门找人，屋里却还是拥挤。家人得等其他人让开，才能到她身边。'
         shift:
           p1:
             was: '1847 年 4 月下旬，亨泽尔在日记中写到三重奏之后创作一度停滞，5 月去世前她完成了最后一首歌。'
           p2:
             was: '1847 年 5 月 14 日亨泽尔去世，钢琴三重奏的初版直到 1850 年才问世。'
-            now: '{staff}请出版人提前带来可改动的校样。家人后来付印时带着她亲手定下的修订页。'
+            now: '这条分支里，{staff}帮亨泽尔把她选的改动标进一册工作谱。演奏的人有谱可用，家人日后也能查到她留下的标记。'
           p3:
-            was: '1847 年 5 月 14 日，亨泽尔在家中排练弟弟费利克斯的康塔塔《第一个瓦尔普吉斯之夜》时中风，当天去世。'
-            now: '{staff}看出她发病，当即让她躺下，立刻请来医生。她恢复过来，又在柏林主持了许多年星期日音乐会，继续以自己的名字作曲出版。'
-            who: fanny_mendelssohn_berlin
-            bio: '亨泽尔挺过了 1847 年 5 月那次中风。她在柏林把星期日音乐会又办了许多年，继续以自己的名字出版作品。'
+            was: '1847 年 5 月 14 日，亨泽尔在排练中发病，当天去世。'
+            now: '这条分支里，{staff}请人去找医生，也请歌手们先合起谱来。亨泽尔身边腾出了地方，让家里人坐下陪她。'
         vignettes:
           cover: '虚构的歌手从中间翻开乐谱，问是谁写的。你找来散开的题名页放在旁边。封面上署的名字足够确定纸套上该写什么。等你把纸理齐，第一首已经唱完。'
           forward: '你刚要说后来的收藏者会怎样找这六首歌，歌手指着散开的封面，问他们还找不找得到它。你请她把封面随下一份谱一起交出去。一位读者带着它走了，再往下的去向你够不着。'
@@ -93,6 +89,15 @@ text:
     text: 德国作曲家与钢琴家，1805 年生，1847 年去世，费利克斯·门德尔松的姐姐。她写了几百首作品，包括歌曲和钢琴曲，但家人不赞成她出版。她在柏林排练时中风去世。
 hook: {en: 'Whose name is on the title page?', zh: '这张封面上是谁的名字？'}
 facts:
+  death:
+    date: '1847-05-14'
+    stay_day: 18
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [hensel_berlin_music_archive]
+    text: {en: 'Hensel fell ill while rehearsing on 14 May 1847 and died that day.', zh: '1847 年 5 月 14 日，亨泽尔在排练中发病，当天去世。'}
+    line: {en: '14 May 1847: Fanny Hensel dies in Berlin.', zh: '1847 年 5 月 14 日，范妮·亨泽尔在柏林去世。'}
   score:
     date: '1846'
     checked: official_record

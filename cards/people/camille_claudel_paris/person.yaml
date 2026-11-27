@@ -10,12 +10,12 @@ events:
     field: art
     tier: 3
     channels: {S: 2, G: 3}
-    refs: [camille_claudel_paris_variants]
+    refs: [camille_claudel_paris_variants, camille_claudel_paris_confinement]
     scene:
       star_rules: 2
       points:
         - {id: p1, kind: trust, day: 40, req: {"any":[{"trait":["kind","sensitive","attached"],"stat":{"will":5}},{"job":["nurse","caregiver"],"stat":{"will":4}}]}}
-        - {id: p2, kind: care, day: 46, req: {"any":[{"job":["doctor","physician","medical_teacher"],"item":"calm_patch","stat":{"will":7}},{"job":["nurse","caregiver","paramedic"],"item":"calm_patch","stat":{"will":5,"wit":4}}]}}
+        - {id: p2, kind: care, day: 46, req: {"any":[{"job":["nurse","caregiver","archivist","painter"],"stat":{"will":6}},{"trait":["kind","patient","methodical"],"stat":{"will":7,"wit":5}}]}}
       vignettes:
         - {id: light, traits: [curious, artistic]}
         - {id: mark, traits: [methodical, handy]}
@@ -25,25 +25,23 @@ events:
         name: 'Two versions of a turn'
         place: "Paris"
         figure: "Camille Claudel"
-        story: 'Camille Claudel’s The Waltz was conceived between 1889 and 1893. The Musée Camille Claudel catalogues several variants, including a cast dated 1905, and describes how she changed the sweep of the drapery.'
+        story: 'The Musée Camille Claudel catalogues several versions of The Waltz, including a bronze cast dated 1905. In 1913 Claudel’s father died in Villeneuve-sur-Fère and she did not learn of his death before the funeral. On 10 March she was admitted to Ville-Évrard.'
         relic: "A bronze hand"
         relic_desc: "A small bronze study of a hand."
         points:
-          p1: 'Her family tells her nothing of her father. Get her back to Villeneuve before 3 March to see the father who always protected her one last time'
-          p2: 'Before 10 March, cure her illness, so she does not spend her last thirty years in an asylum'
+          p1: 'Bring Claudel reliable news of her father’s death in time for her to decide whether to travel for the funeral'
+          p2: 'Before Claudel leaves the studio, ask her what she wants entrusted to someone she knows and help write down her choices'
         points_fail:
-          p1: 'Her father died and was buried without her knowing. In this branch she never saw again the one person who had always protected her.'
-          p2: '10 March happened as it did in history. In this branch she never went back to her studio.'
+          p1: 'The news reaches Paris after the funeral. Claudel has already lost the chance to decide whether to go.'
+          p2: 'There will be a record of the removal, but the things in the studio still have no note from Claudel saying who should keep them.'
         shift:
           p1:
             was: 'On 3 March 1913 her father, Louis-Prosper Claudel, died at Villeneuve; the family did not tell Camille, and she was not at the funeral.'
-            now: 'She reached Villeneuve before her father died, saw him one last time, and was at his funeral.'
+            now: 'In this branch Claudel receives the news in time and chooses to travel to Villeneuve-sur-Fère to attend her father’s funeral.'
           p2:
             was: 'On 10 March 1913 Camille was committed to the asylum of Ville-Évrard at her family''s request; moved to Montdevergues in 1914, she never left, and died there on 19 October 1943.'
-            now: '{staff} stayed with her through that spring, the illness slowly eased, and she was not taken away. She stayed in her studio in Paris and went on sculpting for many years.'
-            who: camille_claudel_paris
-            bio: 'In this line Camille Claudel recovered in the spring of 1913, was never committed, went on sculpting in Paris, and in her later years held exhibitions of her own.'
-        shift_all: 'She said goodbye to her father, her illness eased, and after that spring she was still sculpting in her own studio.'
+            now: 'In this branch {staff} records what Claudel wants done with a few studio objects. Someone she chose takes the list and follows it when she leaves.'
+        shift_all: 'Claudel could decide to go to her father’s funeral and choose someone to look after objects from her studio.'
         vignettes:
           light: 'You have seen a later museum display, but only now can you watch the shadow change as you walk around the skirt. The packer is about to write the same description on both cards. You draw the two curves in the margins. The crates will leave separately, and you will see neither unpacked.'
           mark: 'The packer finds two labels with the same title. You add one detail to each, where the drapery ends, before the lids go on. You keep both notes in your own hand. The marble commission you read about never arrives.'
@@ -52,25 +50,23 @@ events:
         name: '同一步舞，两种裙摆'
         place: "巴黎"
         figure: "卡米耶·克洛岱尔"
-        story: '卡米耶·克洛岱尔在 1889 至 1893 年间构思了《华尔兹》。克洛岱尔博物馆登记了多个版本，其中一件青铜铸件标为 1905 年，也记述她怎样改动了衣褶。'
+        story: '克洛岱尔博物馆登记了《华尔兹》的多个版本，其中有一件标为 1905 年的青铜铸件。1913 年，卡米耶的父亲在维尔纳夫去世。葬礼前她没有收到死讯。3 月 10 日，她被送进维尔-埃夫拉尔医院。'
         relic: "一只青铜手"
         relic_desc: "一件小小的青铜手部习作。"
         points:
-          p1: '家里不把父亲的消息告诉她，赶在 3 月 3 日之前带她回维尔纳夫，见那个一直护着她的父亲最后一面'
-          p2: '3 月 10 日之前，治好她的病，让她不必在精神病院度过最后三十年'
+          p1: '把父亲的死讯及时带给卡米耶，让她自己决定要不要回维尔纳夫参加葬礼'
+          p2: '卡米耶离开工作室以前，问她有哪些东西想托付给熟人，把她的选择写下来'
         points_fail:
-          p1: '父亲去世、下葬，她都不知道，这条分支里她没有见到那个一直护着她的人。'
-          p2: '3 月 10 日照史实发生，这条分支里她再没有回到工作室。'
+          p1: '消息到巴黎时，葬礼已经结束。卡米耶已经没法决定要不要回去了。'
+          p2: '离开工作室的日期有记录，屋里几样东西交给谁，却没有一张她亲自交代的纸。'
         shift:
           p1:
             was: '1913 年 3 月 3 日，父亲路易-普罗斯佩·克洛岱尔在维尔纳夫去世，家里没有告诉卡米耶，她没有去送葬。'
-            now: '她在父亲去世前回到了维尔纳夫，见了他最后一面，也去送了葬。'
+            now: '这条分支里，卡米耶及时收到死讯，决定回维尔纳夫参加父亲的葬礼。'
           p2:
             was: '1913 年 3 月 10 日，卡米耶由家人申请送进维尔-埃夫拉尔精神病院，1914 年转到蒙德维尔格，此后再没有出来，1943 年 10 月 19 日在那里去世。'
-            now: '{staff}陪她过了那个春天，病一点点缓下来，她没有被送走。她留在巴黎的工作室里，又做了许多年雕塑。'
-            who: camille_claudel_paris
-            bio: 'IF 线里，卡米耶·克洛岱尔 1913 年春天病情好转，没有进精神病院，在巴黎接着做雕塑，晚年还办过自己的展览。'
-        shift_all: '她送走了父亲，病也好了，那年春天以后仍在自己的工作室里雕塑。'
+            now: '这条分支里，{staff}记下卡米耶想怎样处理工作室里的几样物件。她离开时，自己选定的人拿着这张单子照办。'
+        shift_all: '卡米耶来得及决定去父亲的葬礼，也亲自选了替她照管工作室物件的人。'
         vignettes:
           light: '你见过后来的博物馆陈列，直到绕着裙摆走一圈，才看见影子怎样转。装箱人正要在两张标签上写同一句，你在边角各添了一道不同的弧线。箱子要分头走，开箱的时候你一处也看不到。'
           mark: '装箱人找来两张写着同一标题的纸签。趁箱盖还没合，你各补一项，衣褶收在哪儿。两项也都抄进自己的本子里。你在资料里读过的那笔大理石委托，终究没有成。'
@@ -84,6 +80,24 @@ text:
     text: 法国雕塑家，1864 年生，1943 年去世。她在罗丹的工作室做事，作品有《华尔兹》《成熟的年纪》。1913 年家人把她送进精神病院，她在那里度过最后三十年。
 hook: {en: 'Which cast keeps the full sweep of the cloth?', zh: '裙摆转到哪里才停？'}
 facts:
+  father:
+    date: '1913-03-03'
+    stay_day: 38
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [camille_claudel_paris_confinement]
+    text: {en: 'Louis-Prosper Claudel died on 3 March 1913 at Villeneuve-sur-Fère. Camille was unaware of the death before the funeral.', zh: '路易-普罗斯佩·克洛岱尔于 1913 年 3 月 3 日在维尔纳夫去世。卡米耶在葬礼前并不知情。'}
+    line: {en: '3 March 1913: Camille Claudel’s father dies at Villeneuve-sur-Fère.', zh: '1913 年 3 月 3 日，卡米耶的父亲在维尔纳夫去世。'}
+  admission:
+    date: '1913-03-10'
+    stay_day: 47
+    checked: official_record
+    level: careful
+    use: [history, story, wiki]
+    sources: [camille_claudel_paris_confinement]
+    text: {en: 'Camille Claudel was admitted to Ville-Évrard on 10 March 1913.', zh: '卡米耶·克洛岱尔于 1913 年 3 月 10 日被送进维尔-埃夫拉尔医院。'}
+    line: {en: '10 March 1913: Camille Claudel is admitted to Ville-Évrard.', zh: '1913 年 3 月 10 日，卡米耶被送进维尔-埃夫拉尔医院。'}
   variants:
     date: '1905'
     checked: official_record
@@ -99,6 +113,12 @@ bystanders:
     text: {en: 'A fictional packer with two labels bearing the same title.', zh: '虚构的装箱人，手里两张纸签写着同一标题。'}
 wiki:
   refs:
+    camille_claudel_paris_confinement:
+      order: 501
+      status: checked
+      text:
+        en: 'Musée Camille Claudel, The Years of Confinement, on her father’s death and admission in March 1913. https://www.museecamilleclaudel.fr/fr/collections/camille-claudel/1909-1943-les-annees-denfermement'
+        zh: '克洛岱尔博物馆，〈被收治的岁月〉，载 1913 年 3 月其父去世与卡米耶入院。https://www.museecamilleclaudel.fr/fr/collections/camille-claudel/1909-1943-les-annees-denfermement'
     camille_claudel_paris_variants:
       order: 500
       status: checked
