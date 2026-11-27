@@ -243,6 +243,904 @@ catalog:
         p3: Antes de que amanezca del todo, se incorpora y se ata las sandalias a oscuras. Se echa encima el manto y sale hacia la prisión con sus amigos, adelantándolos por el camino.
         p2: Por la noche, al pie del muro y a la luz de una lámpara de aceite, {staff} pasa el texto a un rollo de papiro. Por la mañana, un amigo se guarda el rollo bajo la ropa y sale con una mano apretada contra el pecho.
         p1: Sócrates retoma la frase donde se la habían cortado. Al terminar, recoge el borde del manto y se queda quieto en el estrado.
+  cao_xueqin_beijing:
+    name: La página en blanco tras el último capítulo
+    place: Colinas del Oeste, Pekín
+    figure: Cao Xueqin
+    story: Un manuscrito antiguo de La historia de la piedra da fe de que circularon copias comentadas durante la vida de Cao Xueqin. Una nota marginal posterior en ese manuscrito asocia la muerte de Cao con un libro que quedó inconcluso. El escenario se sitúa en su último invierno sin fijar la fecha exacta de su muerte ni el número de capítulos que escribió.
+    story_prose:
+      opening:
+        - Oscurece temprano en Western Hills. Llega un copista con un paquete de páginas y pregunta qué puede llevar consigo. Deja el paquete en la mesita junto a la cama. Encima hay una hoja en blanco.
+        - Copias comentadas de La historia de la piedra ya circulaban durante la vida de Cao Xueqin. Una nota posterior en el manuscrito de Jiaxu recuerda su muerte antes de terminar el libro. En esta imaginaria visita invernal, todavía le queda tiempo para ordenar él mismo la pila.
+        - El copista quiere volver a casa antes de que oscurezca. Alguien que conozca los manuscritos puede escoger la copia anotada de las páginas de trabajo. Alguien acostumbrado a cuidar de los demás puede cuidar del fuego y de la lámpara. Entonces habrá espacio sobre la mesa para distribuir el borrador.
+      points:
+        p1: El copista está a punto de atar un montón de páginas sueltas junto a la cama. Ves una línea en el margen de otra mano y le pides que la lea. Envuelve la copia anotada por separado y vuelve a poner a su alcance las páginas que Cao aún está revisando. Cada paquete queda atado con su propio cordel.
+        p2: Mientras las brasas se apagan, Cao cierra la página que acaba de abrir. Le pides a la persona que trae carbón que atienda el fuego, acercas la lámpara y le pasas a Cao solo la página que estaba leyendo. Saca la mano de debajo de la manta y vuelve a coger el hilo. Aquella noche, la lámpara queda al alcance de su mano.
+        p3: Le cuentas a Cao que en una continuación posterior la familia vuelve a prosperar. Frunce el ceño, busca el final de la canción de los pájaros que se dispersan en el capítulo quinto y señala los versos sobre la tierra que queda toda blanca. Abres el ejemplar anotado y le preguntas si tienen razón quienes leen el libro como un duelo por la caída de los Ming. Cao se ríe a carcajadas. No responde. Cuando vuelve a tomar el pincel, marca solo las páginas sobre las que ya se ha decidido. El copista sigue las marcas y deja el resto en blanco.
+      outcomes:
+        all: El copista se marcha con dos hojas. Leídos juntos, muestran qué capítulos había ordenado Cao y qué opciones todavía estaba considerando. Nadie escribe lo que quiso decir con la risa.
+        p1: El copista se marcha con la primera copia anotada. El borrador que Cao todavía quiere leer permanece junto a la cama.
+        p2: La lámpara al lado de la cama dura un poco más. Cao termina la página que dejó a un lado.
+        p3: Las partes marcadas se copian y los espacios indecisos quedan en blanco. El copista deja de lado sus propias conjeturas.
+      none: Las páginas están apiladas como estaban cuando llegaron. Más tarde, cuando alguien pregunta por los últimos capítulos, la hoja en blanco no da respuesta.
+      not_admitted: El copista entra. Esperas hasta que sólo queda una lámpara en el patio, sin llevar los papeles a la mesilla de noche.
+      desync: La copia comentada se remonta a las páginas de trabajo. El copista se marcha sin él y la oficina le llama.
+      excerpts:
+        p1: Cada paquete queda atado con su propio cordel.
+        p2: Aquella noche, la lámpara queda al alcance de su mano.
+        p3: El copista sigue las marcas y deja el resto en blanco.
+    relic: Una hoja suelta de planes de capítulos.
+    relic_desc: Un recuerdo del juego con un orden propuesto para varios capítulos y espacio en blanco para lo que Cao aún tenía que decidir.
+    points:
+      p1: Mantenga la primera copia anotada en manos del copista mientras le devuelven las páginas de trabajo de Cao.
+      p2: Encárgate del fuego y de las copias para que Cao pueda pasar una buena tarde pensando en el final.
+      p3: Si bien Cao todavía tiene fuerzas para revisarlo, deje una copia separada del plan del capítulo que acepta transmitir.
+    points_fail:
+      p1: La única copia que hay en esta mesa se remonta a la pila de páginas de trabajo. En esta rama el lector sale sin el texto anotado.
+      p2: La habitación se enfría antes de que los papeles estén listos. El trabajo espera otra tarde.
+      p3: El copista puede ordenar las páginas sueltas, pero no tiene constancia de qué final pretendía abandonar Cao.
+    shift:
+      p1:
+        was: El manuscrito Jiaxu conserva notas sobre un texto antiguo que se estaba copiando durante la vida de Cao Xueqin.
+      p2:
+        was: Una nota marginal en el manuscrito Jiaxu recuerda la muerte de Cao y dice que el libro quedó inconcluso.
+        now: En esta rama alguien atiende el fuego y trae las páginas una a la vez. Cao tiene una noche para decidir hacia dónde quiere que vaya la historia.
+      p3:
+        was: La nota marginal de Jiaxu considera que el libro está inacabado y no proporciona ningún plan de capítulo final aprobado por Cao.
+        now: El copista retira dos hojas. Se da la orden que Cao ha aprobado en esta rama. El otro enumera los destinos que aún tiene que decidir. En la siguiente copia las dos hojas quedan juntas.
+        who: cao_xueqin_beijing
+        bio: Antes de su muerte, Cao revisa el plan del capítulo con un copista. En esta rama, los lectores posteriores pueden ver qué decisiones tomó y dónde dejó abierto el final.
+    vignettes:
+      ink: El copista establece un desliz entre el orden de los capítulos propuesto y la suposición escrita a lápiz por el lector. Las páginas ahora se pueden volver a colocar en los lugares correctos.
+      paper: '{staff} lleva la lámpara. El copista levanta el manuscrito del borde de la mesa para hacer espacio.'
+      empty: La última hoja tiene espacio para otro título. El copista deja el espacio como está.
+  jenner_berkeley:
+    name: La primera vacuna
+    place: Berkeley, Inglaterra
+    figure: Edward Jenner
+    story: La investigación de Jenner de 1798 registra observaciones y casos anteriores relacionados con la viruela vacuna y la viruela.
+    story_prose:
+      opening:
+        - En Berkeley, Sarah Nelmes llega a la puerta con la mano envuelta contra el delantal. Jenner quiere preguntar cuándo se enfermó por primera vez. El copista pone su nombre en la cuenta de otra persona. Ella espera junto a la puerta y primero pregunta si tiene que volver a la lechería ese día.
+        - La investigación de Jenner de 1798 registra la viruela vacuna de Sarah y una vacunación temprana en 1796, tradicionalmente asociada con James Phipps. En esta rama usted puede comenzar con la atención que Sarah desea y ayudar a realizar observaciones posteriores que puedan rastrearse hasta las personas que regresaron.
+        - Pídale a alguien con experiencia en cuidados que escuche a Sarah primero. Un viajero que lleva registros puede verificar los nombres y las fechas mientras Jenner y las familias deciden si regresan para realizar más observaciones.
+      points:
+        p1: El copista está esperando una cita. Sarah retira la mano y pide asiento. Mueve una silla hacia la puerta y le pregunta si quiere que un cuidador la mire. Una vez que ella diga que sí, envía un mensaje a la lechería de que volverá más tarde. Al salir, a Sarah aún le queda una mano libre para recoger el papel con su nombre.
+        p2: Una página del cuaderno de Jenner describe la nueva visita del niño, sin una fecha aún escrita debajo para su verificación. Le entrega al copista una hoja nueva para separar los registros de primera mano de los informes posteriores. Jenner pregunta quién volverá para realizar más observaciones. Un hogar deja su dirección. El copista anota la fecha y deja un renglón para que la familia la compruebe al llegar.
+      outcomes:
+        all: Sarah tiene a alguien que la ayuda y las personas que regresan tienen registros que se pueden verificar. Jenner puede seguir trabajando en las observaciones de ese año.
+        p1: Sarah puede tomarse unos días antes de regresar a la lechería. Los registros posteriores todavía dependen de que otras personas regresen.
+        p2: Hay observaciones de seguimiento para consultar. Sarah todavía tiene que aguantar sola el dolor en la mano.
+      none: Sarah regresa a la lechería sin ayuda y nadie organiza las observaciones posteriores.
+      not_admitted: El copista comprueba con qué familia ha venido el visitante. Te quedas afuera y el espacio junto a la fecha sigue en blanco.
+      excerpts:
+        p1: Al salir, a Sarah aún le queda una mano libre para recoger el papel con su nombre.
+        p2: El copista anota la fecha y deja un renglón para que la familia la compruebe al llegar.
+    relic: Un desliz de seguimiento
+    relic_desc: Una hoja con nombre, fecha y espacio para escribir lo observado.
+    points:
+      p1: Viste las llagas de la viruela vacuna en la mano de Sarah Nelmes, para que la lechera no las sufra sola
+      p2: Verifique los nombres y las fechas en las primeras notas del caso y organice un seguimiento con las familias que acepten regresar.
+    points_fail:
+      p1: Las llagas en su mano siguieron su curso sin que nadie las vendara. En este ramo nadie aliviaba los días de la lechera.
+      p2: Nadie organiza una nueva visita. En esta rama, como en la historia, Jenner retoma sus investigaciones sobre vacunación en 1798.
+    shift:
+      p1:
+        was: En mayo de 1796, la lechera Sarah Nelmes contrajo viruela vacuna de las vacas de su amo y se le formó una gran llaga pustulosa en la mano con los síntomas habituales de la enfermedad.
+        now: '{staff} mantuvo su mano limpia y atada, y regresó a la lechería unos días antes.'
+      p2:
+        was: Después del primer caso en 1796, Jenner reanudó su investigación sobre vacunación en la primavera de 1798.
+        now: '{staff} ayudó a organizar visitas de regreso a familias dispuestas. Ese verano, Jenner tenía notas de seguimiento para compararlas con las observaciones anteriores.'
+        who: jenner_berkeley
+        bio: En esta línea de tiempo, Jenner recibió notas de seguimiento de familias que habían acordado regresar en el verano de 1796.
+    vignettes:
+      firsthand: Un copista ficticio ha escrito todos los relatos con la misma voz. Preguntas cuál vio realmente el escritor. El copista añade una nota al lado del resto en lugar de darle a cada línea el mismo peso.
+      order: Dos observaciones han cambiado de lugar en la copia. Compruebas las fechas y el copista invierte las tiras antes de utilizar el orden para contar una historia.
+      blank: Dejas espacio bajo una nota que el copista no puede confirmar. Cuando se pasa la página, el espacio en blanco tiene una etiqueta para que nadie lo confunda con una omisión.
+  mallory_everest:
+    name: La última vez que los vieron
+    place: Everest
+    figure: George Mallory
+    story: Las cartas de Mallory que se conservan de la expedición de 1924 describen las condiciones y los planes en diferentes campos. El destino de Mallory e Irvine no establece si alcanzaron la cumbre.
+    story_prose:
+      opening:
+        - Alguien junto a una tienda de campaña de North Col pregunta si Norton puede abrir los ojos después de bajar. Otro escalador mira hacia Mallory, quien se prepara para ser el siguiente. Una brújula de la tienda anterior no ha regresado con él.
+        - Norton y Somervell regresaron a lo alto del Everest en 1924. Mallory e Irvine fueron los siguientes. El 8 de junio, Odell vio a dos escaladores que seguían subiendo y ninguno regresó. En esta rama puedes ayudar al grupo anterior, devolver la brújula y ayudar al siguiente par a regresar al Collado Norte.
+        - Envía a alguien que pueda cuidar de Norton y Somervell. Un viajero familiarizado con los traspasos de campamentos puede encontrar la brújula. Para el último descenso, envíe a alguien que pueda ayudar al siguiente grupo a regresar al campamento.
+      points:
+        p1: Norton vuelve a llamar en voz alta. Somervell no puede responder y apoya una mano en la rodilla. Le pides a alguien que iba por delante que vuelva para buscarle dónde sentarse. Esperas a que Somervell pueda decir cómo se siente. Asiente y entre los dos apartáis la bolsa que tiene a los pies. Al ponerse en pie, espera a que Norton termine de preguntarle cómo se encuentra.
+        p2: Norton dice que la luz duele y vuelve a cerrar los ojos. Le pide que elija dónde descansar y deja que el cuidador del consultorio lo atienda. Después de un tiempo, dice que todavía le duele un lugar y que puede ver algo de luz con el otro ojo. Cuando el encargado vuelve a levantar la lista, Norton encuentra por sí mismo el renglón que le corresponde.
+        p3: Odell abre una caja en el Campamento V y encuentra la pequeña caja redonda junto a un artículo de repuesto. Lo comparas con el mensaje de Mallory y lo traes con su etiqueta. Lo abre delante de otro escalador y lo mete en el bolsillo que piensa utilizar en el ascenso. Guarda él mismo la brújula donde puede alcanzarla sin quitarse la mochila.
+        p4: Alguien en el Collado Norte pregunta si las dos figuras que salen de las nubes son las personas que están esperando. Espera a que digan sus nombres antes de pedirle al empleado que los ingrese. Mallory deja su mochila sobre la nieve e Irvine se sienta más adentro. Cuentan cómo bajaron. En el campamento nadie puede decir si llegaron a la cima, ni a qué hora.
+      outcomes:
+        all: Somervell y Norton regresan y Mallory tiene su brújula. Dos nombres más aparecen en el Collado Norte.
+        p1: Ambos escaladores del primer grupo regresan al campamento. La próxima pareja todavía necesitará que alguien los conozca.
+        p2: En esta rama, Norton puede ver lo suficientemente bien como para leer él mismo la escritura cercana. Otros resultados siguen el resto del viaje.
+        p3: Mallory tiene la brújula en un bolsillo al que puede llegar. Su regreso deja incierto su punto más lejano.
+        p4: Mallory e Irvine regresan vivos al Collado Norte. El descenso alterado deja abierto si alcanzaron la cumbre.
+      none: El viento y la nieve llegan al campamento y nadie cambia la lista. Odell registrará más tarde las dos figuras que vio por última vez en la cresta.
+      not_admitted: El encargado del campamento no permitirá que un extraño tenga un lugar en la tienda. Esperas afuera mientras discuten sobre los equipos que faltan.
+      desync: Somervell nunca regresa con Norton. El descenso anterior se desincroniza y la oficina llama al viajero.
+      excerpts:
+        p1: Al ponerse en pie, espera a que Norton termine de preguntarle cómo se encuentra.
+        p2: Cuando el encargado vuelve a levantar la lista, Norton encuentra por sí mismo el renglón que le corresponde.
+        p3: Guarda él mismo la brújula donde puede alcanzarla sin quitarse la mochila.
+        p4: Cuentan cómo bajaron. En el campamento nadie puede decir si llegaron a la cima, ni a qué hora.
+    relic: un piolet
+    relic_desc: Un piolet de madera sencillo con la cabeza desgastada.
+    points:
+      p1: Cuando Somervell se atragante en el descenso, ayúdalo a recuperar el aliento y observa cómo el intento que hizo con Norton termina sano y salvo.
+      p2: Cura a Norton de su ceguera de la nieve.
+      p3: Consigue la brújula que Mallory dejó en el Campamento V en sus manos.
+      p4: Haz regresar a Mallory e Irvine, o encuéntralos en el camino hacia abajo, para que ambos lleguen vivos al Collado Norte.
+    points_fail:
+      p1: Somervell se sienta en la nieve y no se levanta. Sólo uno de los dos escaladores regresa. Esta rama se ha desprendido de la historia y la oficina llama al empleado.
+      p2: A Norton le duelen demasiado los ojos como para abrirlos y durante los días siguientes no ve nada.
+      p3: La brújula todavía está en la tienda del Campamento V. Cuando los dos suben el 8 de junio, no la tienen.
+      p4: Algún tiempo después del mediodía del 8 de junio, Odell los vio por última vez en lo alto de la cresta, todavía subiendo. No regresan.
+    shift:
+      p1:
+        was: El 4 de junio de 1924, Norton y Somervell partieron del campo VI y alcanzaron unos 8.570 m; En el camino hacia abajo, la garganta de Somervell fue bloqueada por un tejido congelado y casi se ahoga, tosió y ambos llegaron al campamento.
+      p2:
+        was: En la noche del 4 de junio de 1924, Norton quedó ciego por la nieve y apenas podía ver después de regresar al Collado Norte.
+        now: Los ojos de Norton se habían aclarado al día siguiente y podía ver a la gente yendo y viniendo por el Collado Norte.
+      p3:
+        was: El 7 de junio de 1924, Mallory envió una nota desde el Campo VI a Odell diciendo que había dejado su brújula en la tienda del Campo V y que no tenían ninguna.
+        now: Cuando partieron a primera hora del 8 de junio, Mallory tenía su brújula en el bolsillo.
+      p4:
+        was: El 8 de junio de 1924, Odell vio por última vez a Mallory e Irvine subiendo lo alto de la cresta noreste y ninguno regresó; El cuerpo de Mallory fue encontrado en 1999 a unos 8.160 m.
+        now: El 9 de junio los dos llegaron al Collado Norte, congelados pero vivos. Mallory regresó a Inglaterra, con Ruth y sus tres hijos. Adónde llegaron ese día, esta línea de tiempo tampoco responde.
+        who: mallory_everest
+        bio: En 1924, él e Irvine descendieron vivos del Everest. Regresó a casa con su esposa Rut y sus tres hijos y vivió muchos años más.
+    vignettes:
+      date: Un mensajero ficticio tiene dos cartas de diferentes campos pero una fecha compartida en el albarán de transporte. Les pide que revisen los títulos por separado. Cada carta sale con su propio lugar y fecha.
+      question: El mensajero interpreta una partida prevista como una promesa. Te detienes en la frase donde la carta habla del tiempo. Esta vez repiten el plan con la condición aún adjunta.
+      wrap: Dejas a un lado el sobre de salida mientras el mensajero clasifica los papeles en su regazo. Pueden guardar la lista del campamento sin doblarla en la carta.
+  nightingale_scutari:
+    name: Enfermería con datos y cuidados
+    place: Escútari, Imperio otomano
+    figure: Florence Nightingale
+    story: El informe de Florence Nightingale de 1858 sobre la salud del ejército se basó en la guerra reciente e incluyó estadísticas hospitalarias. no es la creación del informe final.
+    story_prose:
+      opening:
+        - Una sala acaba de cambiar de turno en Scutari. Nightingale le entrega al empleado una lista de transferencias y le pide que la mantenga aparte de las nuevas admisiones. La Comisión Sanitaria ha llegado y tres comisionados están a punto de empezar a mirar alrededor.
+        - La Comisión Sanitaria inspeccionó los hospitales de Scutari en marzo de 1855. Héctor Gavin murió en un accidente en Balaklava en abril. Nightingale enfermó gravemente allí en mayo y se recuperó de la enfermedad inmediata, aunque a partir de entonces tuvo mala salud. Aquí puede conservar la inspección y cambiar lo que les sucede.
+        - Alguien familiarizado con los registros del barrio puede ayudar a que la inspección avance. En el campamento, haz que un viajero busque a Gavin. Más tarde, alguien que lo cuide puede preguntarle a Nightingale cómo quiere descansar.
+      points:
+        p1: Un empleado cuenta una lista de transferencias como nuevas admisiones. Haga que la enfermera lea ambas hojas y marque los duplicados antes de que los comisionados lleguen a la puerta. Pueden seguir el informe hasta la sala con un problema antes de preguntar sobre el siguiente lugar. Alguien sale con dos registros separados. En ambos quedan muchas páginas en blanco.
+        p2: Gavin está a punto de entregarle el revólver a su hermano en la tienda. Les pides a ambos que hagan una pausa hasta que la persona responsable de la seguridad del campamento venga a recogerlo. En la mesa del interior, Gavin abre las notas sanitarias que estaba a punto de quitarse. Cuando alguien viene a pedirle una firma esa tarde, sigue sentado a la misma mesa.
+        p3: Nightingale envía por una tabla de cifras y pide que la dejen a un lado cuando llegue. Le pregunta si quiere que el cuidador del consultorio se quede y le diga a la gente que espera una respuesta otro día. Cuando se siente más fuerte, primero les pide que abran un poco la ventana. Luego pregunta dónde lo dejó. La próxima vez que abre el informe, nadie la apremia para que termine de firmarlo.
+      outcomes:
+        all: La inspección continúa a tiempo. Gavin sobrevive al accidente en esta sucursal y Nightingale se recupera de la enfermedad de mayo. Vuelve a trabajar al ritmo que puede elegir.
+        p1: La comisión comienza su inspección y toma listas utilizables para su trabajo posterior.
+        p2: Gavin permanece a salvo en el campamento. Podrá continuar el trabajo registrado en sus notas sanitarias.
+        p3: Nightingale se recupera antes en esta rama. Ella elige cuándo está lista para abrir las figuras nuevamente.
+      none: Las listas siguen mezcladas en la sala por un tiempo. La gente que espera noticias seguirá esperando las cartas de abril y mayo.
+      not_admitted: El portero pide a las personas ajenas al grupo de inspección que esperen. Escuchas a la enfermera revisar la lista de transferencias nuevamente.
+      desync: La inspección no comienza a tiempo. Los registros de la sala no están sincronizados y la oficina llama al viajero.
+      excerpts:
+        p1: Alguien sale con dos registros separados. En ambos quedan muchas páginas en blanco.
+        p2: Cuando alguien viene a pedirle una firma esa tarde, sigue sentado a la misma mesa.
+        p3: La próxima vez que abre el informe, nadie la apremia para que termine de firmarlo.
+    relic: Una pequeña lámpara de aceite
+    relic_desc: La lámpara de sus rondas nocturnas.
+    points:
+      p1: A pesar del tifus y el cólera en las salas, prosigue la inspección de los hospitales de Scutari por parte de la Comisión Sanitaria a partir del 6 de marzo
+      p2: Evita que el revólver explote en la tienda de Balaklava y salva al comisario sanitario Héctor Gavin.
+      p3: Curar la fiebre de Crimea que Nightingale contrae en Balaklava en mayo, antes de que pueda quedarse con ella por el resto de su vida.
+    points_fail:
+      p1: Los puestos de inspección en las enfermerías y las alcantarillas obstruidas no se abren a tiempo. Esta rama no está en sintonía con la historia y la oficina retira al empleado.
+      p2: El tiro se produce en la tienda y también en esta sección la comisión pierde a uno de sus tres miembros un mes después del desembarco.
+      p3: La fiebre sigue su curso. A finales de mayo está fuera de peligro, pero en este ramo, como en la historia, la enfermedad la acompaña.
+    shift:
+      p1:
+        was: El 6 de marzo de 1855, la Comisión Sanitaria llegó a Constantinopla y esa tarde comenzó a examinar los hospitales de Scutari.
+      p2:
+        was: El 21 de abril de 1855, el comisario sanitario Héctor Gavin fue asesinado en Crimea cuando se disparó su revólver mientras se lo entregaba a su hermano.
+        now: '{staff} pide a ambos hombres que hagan una pausa. Gavin deja el revólver y llama a la persona responsable de la seguridad del campamento. Continúa el trabajo de la comisión y luego regresa a Gran Bretaña.'
+      p3:
+        was: En mayo de 1855, Nightingale fue a inspeccionar los hospitales de Balaklava y contrajo fiebre de Crimea a los pocos días; Estuvo gravemente enferma durante unos doce días y quedó inválida durante gran parte de su vida posterior.
+        now: '{staff} trata la fiebre de los primeros días con medicamentos que el siglo no tiene. Nightingale se recupera al cabo de una semana y regresa a Scutari sin la enfermedad que siguió a su regreso a casa.'
+        who: nightingale_scutari
+        bio: En esta rama, Nightingale se curó de la fiebre que contrajo en Balaklava en 1855. Realizó su trabajo en los hospitales y la salud del ejército en persona, de pie y no desde la habitación de un enfermo.
+    vignettes:
+      totals: Un empleado ficticio agrega la lista de transferencias al total de admisiones. Preguntas qué nombres son nuevos admitidos. Dejan las transferencias en su propia columna antes de enviar la devolución.
+      name: El empleado no puede oír ningún nombre debido al ruido de la habitación. Esperas junto a la persona que te lo dio hasta que pueda volver a decirlo. La siguiente copia lo deletrea como me pidieron.
+      fold: Coloca los papeles de la sala en el orden en que los dice el secretario. La hoja que antes aparecía después del total ahora llega antes.
+  scott_last_camp:
+    name: La tienda sobre la barrera de hielo
+    place: Barrera de hielo de Ross
+    figure: Robert Falcon Scott
+    story: La última entrada del diario de Scott está fechada el 29 de marzo de 1912. El manuscrito superviviente registra el último campamento del grupo durante su regreso del Polo Sur. La escena de la lectura se imagina tras la devolución de los periódicos.
+    story_prose:
+      opening:
+        - Cuando el viento sopla sobre la plataforma de hielo de Ross, hay una bolsa de piedras del glaciar en el trineo. Scott aleja su diario de la apertura. Nadie por delante puede prometer hasta dónde llegarán mañana. Oates se quita una bota y pregunta dónde puede sentarse en un lugar seco.
+        - En marzo de 1912, el grupo de Scott tuvo problemas a su regreso. Oates salió de la tienda y no regresó. Scott y otras dos personas fueron retenidas a unas once millas de One Ton Depot. Puedes mantener los diarios y los especímenes juntos, ayudar a Oates y Scott por turno e intentar llevar al resto del grupo al depósito.
+        - Envía a alguien que pueda manejar una carga y cuidar a otros en el frío. Deje que los cuidadores pregunten qué necesita cada hombre y luego dele suficiente tiempo a la persona más lenta en el último tramo.
+      points:
+        p1: Alguien propone quitar un saco de piedras. Pides a Wilson que lea en la etiqueta dónde las recogieron y a Scott que compruebe dónde está el diario. Lo que no hará falta buscar a oscuras va debajo. Las piedras y el diario quedan cada uno en su sitio. Al desmontar la tienda, el nombre del glaciar todavía se lee en el costado del trineo.
+        p2: Oates intenta abrir el maletero y lo mantiene allí. Dice que esta vez no puede ir rápido. Le pides que se siente en la tienda y discuta el ritmo de mañana con la persona que se queda para cuidarlo. Al abrir la tienda al día siguiente, espera a que pongan sus botas junto a las demás antes de levantarse.
+        p3: Scott dice que su pie derecho ya no soporta tanto peso como el izquierdo. Llamas a la persona que puede cuidarlo y haces que la gente que transporta la carga deje la cuerda por un rato. Al principio apoya el pie con firmeza antes de dar la orden de moverse. Tras el primer tramo aún puede detenerse y anotar en el diario cuánto han avanzado.
+        p4: Drift presiona contra la tienda. Quedan once millas. Esperas a que todos digan que están listos y te turnas para buscar la dirección con la persona que conoce el depósito. En la bandera, esperas a la última persona antes de que alguien vaya a ver qué hay dentro. Junto a las provisiones del depósito se abre una página nueva. El lápiz todavía puede recorrerla.
+      outcomes:
+        all: Los diarios y las piedras llegan al depósito con el grupo. Oates y Scott superan este tramo con los demás y un nuevo día entra en el diario.
+        p1: Los registros y muestras se conservan durante los últimos días. Permanecen en el trineo cuando el grupo tiene que aligerar la carga.
+        p2: Oates se queda con el partido. En la siguiente parada podrá descansar dentro con los demás.
+        p3: Scott puede pisar firme. Lo que pase con el resto del equipo todavía depende del último tramo.
+        p4: Las personas que hacen el último tramo llegan al depósito. El informe registra su llegada según el resto del viaje.
+      none: El combustible y las fuerzas se agotan. El viento mantiene la tienda en su lugar y el récord se detiene a finales de marzo.
+      not_admitted: El partido no ha dado cabida a un recién llegado. Te quedas afuera, con el combustible y las rocas todavía a su cargo.
+      desync: Los diarios o especímenes quedan atrás antes de que termine el registro histórico. La oficina recuerda al viajero.
+      excerpts:
+        p1: Al desmontar la tienda, el nombre del glaciar todavía se lee en el costado del trineo.
+        p2: Al abrir la tienda al día siguiente, espera a que pongan sus botas junto a las demás antes de levantarse.
+        p3: Tras el primer tramo aún puede detenerse y anotar en el diario cuánto han avanzado.
+        p4: Junto a las provisiones del depósito se abre una página nueva. El lápiz todavía puede recorrerla.
+    relic: un diario
+    relic_desc: Un pequeño diario escrito a lápiz, rígido por el frío.
+    points:
+      p1: En una marcha con poco combustible y pocas fuerzas, mantén los diarios y los especímenes de rocas del glaciar Beardmore en el trineo.
+      p2: Cura los pies congelados de Oates para que pueda seguir el ritmo de la fiesta y no salga de la tienda alrededor del 16 de marzo.
+      p3: Antes del 18 de marzo, salva el pie derecho de Scott de la congelación que frena toda la fiesta
+      p4: Lleva a los tres hombres a través de la tormenta de nieve que comienza el 21 de marzo y recorre las últimas once millas hasta One Ton Depot.
+    points_fail:
+      p1: Los ejemplares quedan en la plataforma de hielo y los diarios no llegan al último día. Esta rama no está en sintonía con la historia y la oficina retira al empleado.
+      p2: Sus pies empeoran cada día, y también en esta rama sale a la deriva hacia el 16 de marzo y no regresa.
+      p3: El pie se congela, y en esta rama, como en la historia, la marcha se ralentiza.
+      p4: La tormenta de nieve mantiene la tienda donde está y después del 29 de marzo el diario no tiene ninguna página nueva.
+    shift:
+      p1:
+        was: En marzo de 1912, ante la escasez de combustible en el camino de regreso, el grupo guardó en el trineo los diarios y los fósiles de Glossopteris del glaciar Beardmore; el grupo de búsqueda los encontró con la tienda el 12 de noviembre.
+      p2:
+        was: A principios de marzo de 1912, los pies de Oates estaban gravemente congelados y disminuyó la velocidad; el 16 o 17 de marzo salió de la tienda y no se le volvió a ver.
+        now: '{staff} le calienta los pies y se cambia los calcetines todas las noches y la congelación no empeora. Oates sigue el ritmo junto al trineo y sigue con el grupo en el último campamento.'
+      p3:
+        was: El 18 de marzo de 1912, Scott escribió que casi todos los dedos de su pie derecho habían desaparecido y que la marcha se ralentizó aún más.
+        now: '{staff} calienta y envuelve su pie derecho en cada campamento. Scott mantiene el pie y el grupo continúa hacia el norte a su antiguo ritmo.'
+      p4:
+        was: Desde el 21 de marzo de 1912, una tormenta de nieve retuvo a Scott, Wilson y Bowers en su tienda a once millas de One Ton Depot; la última entrada del diario está fechada el 29 de marzo y el grupo de búsqueda encontró la tienda el 12 de noviembre.
+        now: '{staff} conduce a los tres hombres hacia el norte en un momento de calma y divide las últimas once millas en etapas cortas. Encuentran combustible y comida en One Ton Depot y sobreviven a la tormenta de nieve. Antes del invierno están de regreso en Cabo Evans.'
+        who: scott_last_camp
+        bio: En esta línea de tiempo Scott regresó con vida del Polo con Wilson y Bowers y llegó al Cabo Evans. Regresó a Gran Bretaña y editó él mismo los diarios y los resultados científicos de la expedición.
+    vignettes:
+      distance: De vuelta en la Agencia, el empleado ficticio copia una distancia en una columna encabezada como distancia recorrida. Les muestras que aún quedaba mucho camino por recorrer. Mueven la entrada antes de archivar la copia.
+      blank: De regreso a la Agencia, el empleado se detiene en la fecha final. Espera mientras deciden cómo marcar el espacio en blanco más allá. Escriben que el acta termina aquí y luego dejan el lápiz.
+      opening: De vuelta en la Agencia, abres la copia de práctica y lees la fecha anterior a la historia. El empleado pone la misma fecha en el cubreobjetos para que las páginas se puedan encontrar nuevamente en orden.
+  seacole_balaklava:
+    name: La posada a la que llegó por su cuenta
+    place: Balaclava
+    figure: Mary Seacole
+    story: Las memorias de Mary Seacole de 1857 describen el hotel británico que dirigía con Thomas Day cerca de Balaklava, los productos que vendía y las personas que llegaron allí en 1855.
+    story_prose:
+      opening:
+        - El hotel de la carretera de Balaklava acaba de abrir su mostrador. Mary Seacole empuja la bolsa del hospital temporal hacia la puerta. Thomas Day pregunta qué se ha puesto a la venta. Ella dice que primero se ocupará de los heridos y luego volverá a las cuentas.
+        - El 18 de junio de 1855, Seacole registra que ayudó a los heridos cerca del hospital temporal y se lesionó el pulgar. El hotel que dirigía con Day también se enfrentaba a robos. Después de la paz, la pareja quebró en 1856. Puedes conservar el trabajo en el hospital y ayudar por separado con sus heridas, los caballos y el ganado.
+        - Envíe a alguien con experiencia en atención. Un viajero que conozca el hotel podrá observar el establo. Más adelante, utilice a alguien que pueda consultar los libros de ambos socios antes de decidir si pedir más acciones.
+      points:
+        p1: Alguien en la carretera pregunta si pueden enviar algo al hospital temporal. Pasas la bolsa por la puerta y un poco de agua, luego consultas con Seacole que está esperando junto a las camas. Cuando llega al hospital, la persona que preguntó ha encontrado un lugar donde puede dejar la bolsa. Lo abre y le pregunta al paciente más cercano qué necesita.
+        p2: Seacole sostiene su mano derecha y dice que le duele mover el pulgar. Llamas a alguien capacitado para cuidarla y le preguntas dónde quiere sentarse. Alguien más toma el bolso que ella llevaba. Tras descansar, levanta la mano y dice que le duele menos. Luego pide un papelito para anotar el nombre de un paciente.
+        p3: Un ruido proviene de la puerta trasera. El empleado se levanta y no encuentra a nadie vigilando el establo. Tienes una persona que llama a Seacole y otra que cuenta los caballos desde un lugar donde el patio sea visible. Quien está afuera escucha la respuesta del patio y se va. Al amanecer, los caballos que han de tirar del carro siguen en el abrevadero.
+        p4: El día está a punto de poner un nuevo orden. Seacole le pide que cuente en voz alta los productos de los estantes. Colocas los pedidos, las existencias y las deudas pendientes en una sola hoja y luego preguntas qué puedes vender antes de que se vaya el ejército. Los socios lo comprueban una vez y cancelan la siguiente entrega. Cuando Seacole cierra el libro de cuentas, detrás del mostrador queda un estante vacío para la última recogida.
+      outcomes:
+        all: Seacole llega al hospital temporal y aún puede usar su mano más tarde. El establo permanece lleno y los socios ajustan las cuentas cuando el hotel cierra.
+        p1: Cuida a la gente del hospital temporal como estaba previsto y esa misma noche regresa al hotel.
+        p2: Alguien se ocupa de su pulgar y usar un bolígrafo es más fácil cuando vuelve a sus notas.
+        p3: Los caballos permanecen en el establo esa noche. Por la mañana la gente del carro sabe dónde encontrarlos.
+        p4: Seacole y Day ajustan las cuentas. La última entrega no les deja existencias sin vender cuando las tropas regresan a casa.
+      none: Nadie ha terminado de contar el stock y la gente a lo largo de la carretera todavía espera que alguien los atienda.
+      not_admitted: El empleado le pide al visitante que no bloquee la puerta. La bolsa del hospital no está en su lista para llevar.
+      desync: Seacole no llega al lugar donde ayudó en el camino de la historia. La oficina recuerda al viajero.
+      excerpts:
+        p1: Lo abre y le pregunta al paciente más cercano qué necesita.
+        p2: Tras descansar, levanta la mano y dice que le duele menos. Luego pide un papelito para anotar el nombre de un paciente.
+        p3: Al amanecer, los caballos que han de tirar del carro siguen en el abrevadero.
+        p4: Cuando Seacole cierra el libro de cuentas, detrás del mostrador queda un estante vacío para la última recogida.
+    relic: Un botiquín
+    relic_desc: Un viejo cofre de madera con compartimentos para hierbas y gasas.
+    points:
+      p1: El 18 de junio, el día en que fracasa el asalto a Redan, mantenga a Seacole en su trabajo bajo fuego junto al hospital temporal en Woronzoff Road.
+      p2: Cuando se arroja desde un caparazón y se disloca el pulgar derecho, coloca la articulación y entablilla en el lugar.
+      p3: Detén a los ladrones que vienen por la noche a por los caballos del Hotel Británico
+      p4: Después de la caída de Sebastopol, persuadir a Seacole y Thomas Day para que dejen de comprar acciones y ajusten sus cuentas, para que la paz no los deje en quiebra.
+    points_fail:
+      p1: Ese día nunca llega al hospital temporal y los heridos esperan junto a la carretera sin vendar. Esta rama no está en sintonía con la historia y la oficina retira al empleado.
+      p2: El pulgar sólo se ata con prisa, y en esta rama, como en la historia, nunca vuelve a su forma adecuada.
+      p3: La mitad del establo está vacío por la mañana y el hotel tiene que pedir prestados animales al campamento de Transporte Terrestre para ir a buscar sus mercancías.
+      p4: Cuando el ejército se marcha después de la paz, las acciones no se venden, y en noviembre de 1856 los dos socios se declaran en quiebra en Londres.
+    shift:
+      p1:
+        was: El 18 de junio de 1855, el día en que fracasó el asalto aliado a Redan, Seacole llevó vendas y alimentos bajo fuego al hospital temporal de Woronzoff Road y ayudó a los médicos con los heridos.
+      p2:
+        was: El 18 de junio de 1855, Seacole se arrojó para escapar de un proyectil y se dislocó el pulgar derecho; quedó atado en el lugar y nunca volvió a su forma adecuada.
+        now: '{staff} coloca la articulación y la entablilla allí mismo. Unas semanas más tarde, su mano derecha mezcla medicinas y ata vendas como antes.'
+      p3:
+        was: En 1855, el hotel británico de Spring Hill fue asaltado una y otra vez; una mañana la mayoría de sus caballos habían desaparecido.
+        now: '{staff} detiene a los hombres que se llevan los caballos durante la guardia nocturna. Al día siguiente, los carros del hotel bajan como de costumbre a Balaklava.'
+      p4:
+        was: Después de la paz de marzo de 1856, el ejército se marchó rápidamente y Seacole y Day se quedaron con acciones y deudas sin vender; se presentó una petición de quiebra en su contra en octubre de 1856 y fueron declarados en quiebra en noviembre.
+        now: En otoño, {staff} convence a los dos socios para que suspendan los grandes pedidos y cobren lo que se les debe. Cuando llega la paz, sus acciones son pequeñas, abandonan Crimea con sus cuentas saldadas y nunca comparecen ante el tribunal de quiebras.
+        who: seacole_balaklava
+        bio: En esta línea de tiempo, Seacole regresó de Crimea sin estar en quiebra y con algo de capital propio. No tuvo que vivir de una suscripción pública y continuó cuidando y viajando con su propio dinero.
+    vignettes:
+      meal: Un cliente ficticio lleva tanto tiempo esperando que no puede explicar a qué vino. Primero encuentra un asiento. Cuando el camarero regresa, el cliente puede pedir la cena con sus propias palabras.
+      counter: Dos clientes repiten la misma orden, cada uno pensando que el otro no ha sido escuchado. Le pide al asistente que lea lo que escribió. Una bandeja resulta suficiente.
+      shelf: El encargado pide espacio al final del mostrador. Mueves dos platos vacíos y colocas un taburete donde un invitado que espera puede sentarse sin retrasar al siguiente cliente.
+  wegener_greenland:
+    name: A través de la capa de hielo
+    place: Capa de hielo de Groenlandia
+    figure: Alfred Wegener
+    story: Wegener llegó con provisiones a la estación interior de Eismitte en 1930 y murió en el viaje de regreso. El relato del Instituto Alfred Wegener conserva la secuencia de la expedición e identifica a su compañero groenlandés Rasmus Willumsen.
+    story_prose:
+      opening:
+        - Se ha vuelto a contar la carga de los trineos sobre el hielo de Groenlandia. Wegener pregunta si Loewe puede arreglárselas de pie. Villumsen dice que una vez que mejore la visibilidad, deben reconocer el lugar que queda delante como Eismitte.
+        - En octubre de 1930, Alfred Wegener, Fritz Loewe y Rasmus Villumsen llegaron a Eismitte. Loewe se quedó. Wegener murió en el camino de regreso y Villumsen y el diario que se llevó desaparecieron. En esta sucursal podrás conservar la llegada y ayudar a cada hombre en un punto diferente del recorrido.
+        - Envíe a alguien con experiencia en la nieve para ayudar al grupo a moverse y entregar suministros. Haga que los cuidadores revisen a Loewe y Wegener por separado. Asegúrate de que el campamento oeste sepa cuándo esperar a Villumsen.
+      points:
+        p1: Sólo puedes ver la parte trasera del trineo. Villumsen pide que la fiesta se cierre por un tiempo. Usted marca los suministros para entregar en la primera hoja y hace que la última persona llame a cada uno antes de que todos recorran la distancia restante. Cuando sale el equipo de la estación, cuenta a las personas y los bultos que esperan.
+        p2: Loewe descansa sus pies congelados y pregunta dónde se han ido los calcetines secos. Le pide al cuidador que escuche lo que dice antes de que alguien más vaya por él. Varios días después le preguntan si quiere probar otro lugar para sentarse. Toma lo que colgaba junto a su cama y se va al taburete que ha elegido.
+        p3: Alguien empieza a meter el diario en una bolsa con los papeles. Villumsen pide verlo primero. Le dejas elegir dónde puede alcanzarlo y le envías un mensaje de que el campamento occidental debe esperarlo. Cuando llega el trineo, alguien se adelanta para coger sus cosas. Villumsen recoge el diario que estaba junto a su equipaje y lo entrega él mismo.
+        p4: En la tienda de campaña, a la vuelta, Wegener pregunta si alguien puede avisarle con antelación. Lleva la solicitud afuera y luego trae al cuidador para preguntarle cuánto tiempo quiere descansar. Cuando el grupo llega al campamento oeste, la persona en la puerta trae mantas y les pide que se sienten. Con la mano aún temblorosa, Wegener escribe su propio nombre en la lista de llegadas.
+      outcomes:
+        all: El grupo de socorro llega a su fecha y Loewe recibe atención. Wegener y Villumsen llegan más tarde al campamento oeste y el diario se entrega a las personas que lo esperan.
+        p1: El grupo llega a la estación el 30 de octubre y los suministros se comparan con la lista.
+        p2: Los pies de Loewe mejoran tras los cuidados en la estación, y en esta sucursal evita la operación.
+        p3: Villumsen y el diario regresan al campamento occidental. El informe sigue los resultados del propio Wegener durante la otra parte del viaje.
+        p4: Wegener llega vivo al campamento oeste. La entrega del diario todavía depende de lo que le pasó a Villumsen.
+      none: El último tramo sobre el hielo sigue siendo más largo. La lista de llegadas al oeste todavía tiene una línea en blanco.
+      not_admitted: La lista de suministros no tiene lugar para el visitante. Alguien te pide que te alejes de la gente que trabaja junto al trineo.
+      desync: El partido extraña la llegada del 30 de octubre. La entrega no está sincronizada y la oficina llama al viajero.
+      excerpts:
+        p1: Cuando sale el equipo de la estación, cuenta a las personas y los bultos que esperan.
+        p2: Toma lo que colgaba junto a su cama y se va al taburete que ha elegido.
+        p3: Villumsen recoge el diario que estaba junto a su equipaje y lo entrega él mismo.
+        p4: Con la mano aún temblorosa, Wegener escribe su propio nombre en la lista de llegadas.
+    relic: Una correa de trineo
+    relic_desc: Una correa de cuero congelada de un trineo cargado.
+    points:
+      p1: Que el grupo de relevo atraviese el último tramo de hielo para que Wegener, Loewe y Villumsen lleguen a Eismitte el 30 de octubre.
+      p2: Trata los pies congelados de Loewe para que no tengas que cortarle los dedos en la cueva de hielo
+      p3: Mantén a Villumsen a salvo en el camino hacia el oeste para que llegue al campamento con el diario de Wegener.
+      p4: Trate a Wegener en el hielo en el camino de regreso, para que entre vivo al campamento occidental.
+    points_fail:
+      p1: La fiesta se celebra sobre el hielo por el frío y no llega a la estación el 30 de octubre. Esta rama se ha desprendido de la historia y la oficina llama al empleado.
+      p2: Los dedos de los pies congelados de Loewe no pudieron salvarse. Ese invierno se les cortó el paso en la estación y no pudo caminar hasta la primavera.
+      p3: Villumsen enterró a Wegener y siguió hacia el oeste con el diario. Nadie volvió a verlo y el diario se perdió con él.
+      p4: Wegener murió en el camino de regreso, a mediados de noviembre, en una tienda de campaña sobre el hielo. Fue encontrado en mayo del año siguiente.
+    shift:
+      p1:
+        was: '30 de octubre de 1930: después de cuarenta días sobre el hielo, Wegener, Loewe y Villumsen llegan a la estación Eismitte, en medio de la capa de hielo.'
+      p2:
+        was: 'Invierno de 1930: en Eismitte, a Loewe le cortan los dedos de los pies congelados con una navaja y no puede caminar durante el resto del invierno.'
+        now: Loewe mantuvo los dedos de los pies. Pasó el invierno en la estación por su cuenta.
+      p3:
+        was: 'Noviembre de 1930: Villumsen entierra a Wegener en el hielo, toma su diario y continúa hacia el oeste. Nunca lo encuentran.'
+        now: Villumsen llegó al campamento occidental y puso el diario de Wegener en manos de la expedición.
+        bio: Rasmus Villumsen regresó del hielo en noviembre de 1930 y regresó a Groenlandia con su familia.
+      p4:
+        was: '1 de noviembre de 1930: Wegener abandona Eismitte en su quincuagésimo cumpleaños. Muere en el hielo a mediados de noviembre y su cuerpo es encontrado el 12 de mayo de 1931.'
+        now: '{staff} se quedó con él durante todo el camino de regreso y observó su fuerza cada noche. Entró vivo al campamento occidental y vivió para ver las medidas de la expedición.'
+        who: wegener_greenland
+        bio: Wegener regresó con vida del centro de la capa de hielo en noviembre de 1930. Vivió muchos años más y vio cómo se realizaban las observaciones de la expedición.
+    shift_all: En esta línea de tiempo, todos los que entraron y salieron de Eismitte ese otoño regresaron vivos a la costa.
+    vignettes:
+      names: Un empleado ficticio enumera la expedición con un solo apellido. Preguntas quién entregó la carga. Dejan una línea para las demás personas involucradas en lugar de registrar solo el nombre más conocido.
+      count: El empleado ha hecho que el primer recuento parezca la cantidad entregada. Les pides que marquen de qué estación proviene cada figura. Los dos totales ya no se encuentran bajo el mismo título.
+      note: Copia el destino en un segundo comprobante mientras el empleado ata el libro mayor vacío. La siguiente persona aún podrá saber a qué emisora se refieren las entradas.
+  tupaia_tahiti:
+    name: La carta del navegante
+    place: A bordo del Endeavour
+    figure: Tupaia
+    story: Tupaia, un navegante de Raiatea, se unió al Endeavour en 1769 y ayudó a trazar los mapas de las islas que conocía. El barco chocó contra un arrecife frente a lo que hoy es Queensland en junio de 1770. Banks registró el escorbuto de Tupaia durante las reparaciones e informó de la muerte de Taiata y Tupaia ese mismo año en Batavia.
+    story_prose:
+      opening:
+        - En el Endeavour, Tupaia está comprobando los nombres de las islas que conoce cuando el barco choca. Un bulto se desliza de la esquina de una mesa y un vigilante pide ayuda. Todavía es de noche cuando se enteran de que el barco está rápido en un arrecife.
+        - El Endeavour chocó contra un arrecife frente a la actual Queensland en 1770. La tripulación lo reflotó y lo reparó. Tupaia enfermó durante ese período y Banks registró la noticia de la muerte de Taiata y Tupaia en Batavia meses después. La sucursal puede preservar el barco, llevar comida fresca a Tupaia y pasar tiempo juntos cuando estén enfermos.
+        - Envía a alguien que pueda ayudar a la tripulación a mantener sus puestos. Durante las reparaciones alguien debería preguntarle a Tupaia qué puede comer. En Batavia, el partido necesita tiempo para concertar una visita junto a la cama.
+      points:
+        p1: Una caja estorba el paso por donde suben la carga de la bodega. Haces sitio a quien viene a relevar al encargado de la bomba y dejas paso a los tripulantes que llevan la caja. Al otro extremo, los marineros se quedan junto al cabo hasta que les dan la señal de tirar juntos. Cuando se mueve el barco, lo primero que preguntan es si quien está junto a la bomba sigue en pie.
+        p2: La comida fresca se envía primero a los equipos de reparación. Tupaia escucha insultos y pregunta cuánto más se espera que espere. Le traen una porción donde él puede elegir lo que quiere comer y luego registrar lo que queda para el siguiente grupo. Cuando le llega el plato, puede elegir primero entre lo que le han guardado.
+        p3: Hay muchos enfermos en la sala de Batavia y los mismos cuidadores son llamados una y otra vez. Tupaia le pide a alguien que averigüe si Taiata lo verá. Pasas la pregunta y esperas a que ambos estén de acuerdo antes de mover una silla a la cama. Al marcharte, aún pueden oírse el uno al otro.
+      outcomes:
+        all: El barco viene gratis como en la historia. La sucursal también registra la porción de comida de Tupaia y sus visitas al paciente. La noticia de ambas muertes queda en el expediente.
+        p1: El Endeavour viene gratis. Los equipos de reparación tendrán más trabajo que hacer; Quedan por hacer arreglos posteriores.
+        p2: Tupaia recibe la porción que ha elegido. Esta parte del registro termina cuando le traen el plato.
+        p3: Los dos están lo suficientemente cerca como para hablar por un corto tiempo. Las muertes en Batavia continúan.
+      none: La gente todavía espera la próxima orden en cubierta. No se ha reservado ninguna nueva parte y no se ha previsto la visita posterior.
+      not_admitted: La tripulación pide a personas no asignadas que despejen la estación junto a la bomba. Desde el otro extremo ves que alguien recoge un fajo de papeles mojados.
+      desync: El Endeavour todavía va rápido al amanecer. La recuperación histórica se desincroniza y la oficina recuerda al viajero.
+      excerpts:
+        p1: Cuando se mueve el barco, lo primero que preguntan es si quien está junto a la bomba sigue en pie.
+        p2: Cuando le llega el plato, puede elegir primero entre lo que le han guardado.
+        p3: Al marcharte, aún pueden oírse el uno al otro.
+    relic: Un boceto de islas.
+    relic_desc: Una hoja de tinta y aguada con formas y nombres de pequeñas islas.
+    points:
+      p1: La noche en que el barco choca contra el arrecife, ayúdalo a aligerarlo, accionar las bombas y mantener el Endeavour a flote.
+      p2: Reserva comida fresca para Tupaia mientras se abastece a los equipos de reparación y déjale elegir lo que puede comer.
+      p3: En Batavia, tómese un tiempo para que Tupaia se siente con Taiata y le pregunte quién quiere cerca mientras está enfermo.
+    points_fail:
+      p1: Al amanecer, el barco todavía está amarrado en el arrecife con agua sobre la bodega. La sucursal no está sincronizada con la historia y la oficina llama al empleado ese día.
+      p2: Los suministros frescos van primero a los equipos de reparación. Tupaia tiene que esperar por una acción.
+      p3: Las personas que los rodean son llamadas a otros lechos de enfermos. La visita que Tupaia pidió tiene que esperar.
+    shift:
+      p1:
+        was: '10 al 11 de junio de 1770: el Endeavour llegó a lo que hoy es Endeavor Reef. La tripulación arrojó por la borda seis cañones, lastre, agua y provisiones estropeadas, y el barco se alejó flotando con la marea creciente.'
+      p2:
+        was: '16 de junio de 1770: Banks escribió que Tupaia tenía escorbuto grave, que le faltaban las encías y tenía manchas lívidas en las piernas, y que los remedios a bordo no ayudaban.'
+        now: En esta sucursal Tupaia recibe una parte de los alimentos frescos mientras se repara el barco. Puede elegir qué comer sin salir primero a pescar algo.
+      p3:
+        was: En Batavia, Banks recibió la noticia de la muerte de Taiata y luego la de Tupaia.
+        now: En esta rama {staff} hace un lugar para que Tupaia se siente cerca de Taiata. Los dos eligen quién puede quedarse y tener un poco de tiempo para hablar juntos.
+    vignettes:
+      pronounce: '{staff} le pide a un copista, preparado para el juego, que lea dos grafías en voz alta antes de dibujar una segunda isla, y en su lugar pone un signo de interrogación junto a los nombres.'
+      route: '{staff} pregunta desde qué isla se dio un rumbo antes de trazar una línea recta entre dos marcas y la línea no se dibuja.'
+      room: '{staff} mantiene presionada la esquina enrollada de una hoja para poder escribir un nuevo nombre sin cubrir el anterior.'
+  ulugh_beg_samarkand:
+    name: El camino que sale de Samarcanda
+    place: Samarcanda
+    figure: Ulugh Beg
+    story: Ulugh Beg construyó un observatorio en Samarcanda y supervisó un catálogo de 1.018 estrellas. En otoño de 1449 perdió el poder y se le dio permiso para viajar a La Meca. Fue asesinado cerca de Samarcanda a finales de octubre. La fecha que figura en su tumba es el 27 de octubre, dos días después de la fecha dada por otra fuente.
+    story_prose:
+      opening:
+        - En Samarcanda, junto a las mesas estelares recién apiladas, hay un bulto para el camino. Ulugh Beg ha cedido el poder y el partido espera afuera. Alguien pregunta dónde piensan pasar la primera noche fuera de la ciudad.
+        - Ulugh Beg participó en trabajos astronómicos en Samarcanda. En 1449 fue asesinado tras abandonar la ciudad. Aquí puedes comprobar dónde se quedaría en el partido de ida y preguntarle si quiere compañía.
+        - Envía a alguien que pueda hablar con el grupo y cuidar de un viajero. Pregúntele a Ulugh Beg dónde desea detenerse y luego verifique que la familia pueda recibirlo.
+      points:
+        p1: Ulugh Beg dice que alguien ya ha llamado para recoger el equipaje y que no sabe dónde podrá sentarse esa noche. Le dices a un compañero que una casa más alejada puede dejar la puerta abierta y luego le preguntas a Ulugh Beg si quiere ir contigo. Deja las mesas estrella al cuidado de alguien y toma una bolsa liviana. Al llegar, pide a quien lo ha acompañado que también se siente.
+      outcomes:
+        all: Ulugh Beg llega a un lugar para quedarse después de abandonar la ciudad. En esta sucursal hay noticias de que se encuentra a salvo esa noche.
+        p1: Alguien lo acompaña hasta el lugar donde acordó quedarse. Las mesas estrella permanecen en la ciudad.
+      none: Se marcha con la gente que ya espera el equipaje. La siguiente noticia es que lo mataron fuera de la ciudad.
+      not_admitted: El visitante no es admitido a la fiesta. Las mesas permanecen adentro y la gente de afuera se va con el equipaje.
+      excerpts:
+        p1: Al llegar, pide a quien lo ha acompañado que también se siente.
+    relic: Un desliz con dos fuentes
+    relic_desc: Dos filas marcadas para una posición de estrella más antigua y una nueva observación.
+    points:
+      p1: Después de que Ulugh Beg abandone el poder, organiza un lugar para que se quede en la primera etapa de su viaje y ofrécete a ir con él.
+    points_fail:
+      p1: Se marcha con la empresa ya esperándolo. La siguiente noticia que escuchas es que fue asesinado cerca de la ciudad.
+    shift:
+      p1:
+        was: Después de renunciar a su gobierno, Ulugh Beg partió de Samarcanda y fue asesinado cerca de la ciudad a finales de octubre de 1449.
+        now: En esta rama, {staff} va con Ulugh Beg a un lugar en el que ha acordado quedarse. Sobrevive al viaje fuera de Samarcanda.
+        who: ulugh_beg_samarkand
+        bio: En esta línea de tiempo, Ulugh Beg salió sano y salvo de Samarcanda en el otoño de 1449 y siguió viviendo.
+    vignettes:
+      source: '{staff} agrega una columna estrecha con encabezado de origen a la hoja del copista, de modo que una posición tomada de la tabla anterior y una medida esta noche no se encuentran en la misma línea.'
+      arc: '{staff} tiende una cuerda a lo largo de la curva de la zanja para el arco y la recorre de extremo a extremo con los albañiles, para ver que la curva sea verdadera.'
+      hold: '{staff} se sienta junto al arco con un brasero y una tabla, y escribe una lectura cada vez que lo llaman, hasta que la estrella se hunde debajo de la pared.'
+  darwin_galapagos:
+    name: Las islas y la diversidad de la vida
+    place: Islas Galápagos
+    figure: Charles Darwin
+    story: Darwin visitó las Galápagos en el Beagle de septiembre a octubre de 1835. En la isla Charles, el vicegobernador Lawson le dijo que las tortugas diferían de una isla a otra; Darwin escribió más tarde que no prestó suficiente atención en ese momento y que ya había mezclado las colecciones de dos islas. Del 8 al 17 de octubre, él, Bynoe y sus sirvientes acamparon en la isla James mientras el barco buscaba agua, con sólo un pequeño manantial cerca de la tienda. Sus notas sobre aves asocian especímenes de ruiseñor con islas particulares.
+    story_prose:
+      opening:
+        - El Beagle dejó al grupo de Darwin en tierra y se fue al agua a otro lugar. Las tiendas de campaña en James Island acaban de levantarse. Un pequeño manantial junto al campamento corre lentamente y en la misma hoja de papel se han escrito dos etiquetas de pájaros.
+        - En 1835, el gobernador interino Lawson le dijo a Darwin que se podían distinguir las tortugas de las islas. Darwin escribió más tarde que no había prestado suficiente atención. El grupo de James Island esperó el barco con poca agua. Puedes conservar las distinciones antes y ayudar al grupo en tierra a terminar su recolección.
+        - Alguien que observe especímenes y etiquetas puede escuchar a Lawson con Darwin. Para James Island, envíe a alguien que pueda ayudar al grupo en la costa con agua y suministros para acampar.
+      points:
+        p1: El frasco está casi vacío y todavía hay dos personas esperando junto al manantial. Cuentas cuánta agua queda y cuántas personas la necesitan, luego le pides al guía que hable con los hombres que trajeron agua antes. Una vez que llega el agua, Bynoe pide que traigan los paquetes restantes de la tienda. Cuando el barco vuelve a la bahía, los últimos paquetes esperan junto a las cantimploras vacías.
+        p2: Lawson dice que puede distinguir la isla por la forma del caparazón de una tortuga. Darwin pregunta el nombre de un lugar y está a punto de seguir caminando. Abres dos paquetes de muestras y lees dónde los recogió. Los lugares que no puede confirmar se dejan para verificar, y luego las muestras van en envoltorios separados. Un cordel nuevo rodea el primer paquete, con el nombre de la isla escrito por fuera.
+      outcomes:
+        all: Los nombres y los paquetes separados se pueden comparar entre sí. El grupo de James Island también regresa al barco con su recogida terminada.
+        p1: La fiesta en tierra dura hasta que regresa el barco y se cargan los ejemplares. Algunas de las etiquetas de islas anteriores siguen siendo inciertas.
+        p2: Parte del registro de la isla se mantiene aparte. El campamento fracasa más tarde y el viaje mantiene este momento de comprobación de nombres en la Isla Charles.
+      none: Los frascos junto al manantial siguen siendo los únicos en el campamento, y los paquetes anteriores todavía tienen nombres inciertos.
+      not_admitted: El visitante está ausente de la lista de costas. Ya hay un paquete en el barco y la etiqueta no se puede leer desde cubierta.
+      desync: El campamento se queda sin agua antes de que pueda finalizar la recolección en la isla James. La oficina recuerda al viajero.
+      excerpts:
+        p1: Cuando el barco vuelve a la bahía, los últimos paquetes esperan junto a las cantimploras vacías.
+        p2: Un cordel nuevo rodea el primer paquete, con el nombre de la isla escrito por fuera.
+    relic: Una pluma de pinzón
+    relic_desc: Una pequeña pluma marrón de las islas.
+    points:
+      p1: En la isla James, donde el campamento tiene un pequeño manantial pobre, mantenga el grupo en la costa hasta que el barco regrese y observe cómo se realiza la recolección en la isla.
+      p2: Cuando Lawson dice que las tortugas difieren de una isla a otra, haga que Darwin tome nota en ese momento y mantenga las aves de cada isla etiquetadas y empaquetadas separadas.
+    points_fail:
+      p1: El grupo en tierra se queda sin agua y la recolección en la isla James nunca se realiza. Esta rama se ha desprendido de la historia y la oficina ordena el regreso del empleado ese día.
+      p2: Como en la historia, Darwin presta poca atención a Lawson. Las colecciones de las islas Chatham y Charles ya están mezcladas y la mayoría de los pinzones no tienen isla.
+    shift:
+      p1:
+        was: '8 al 17 de octubre de 1835: Darwin, Bynoe y sus sirvientes acamparon en la isla James con una tienda de campaña y provisiones mientras el Beagle iba a buscar agua; cerca del campamento sólo había un pobre manantial.'
+      p2:
+        was: 'Finales de septiembre de 1835: en la isla Charles, el vicegobernador Lawson le dijo a Darwin que se podían distinguir las tortugas de cada isla. Darwin escribió más tarde que no había prestado suficiente atención, que ya había mezclado las colecciones de dos islas y que había mezclado la mayoría de sus pinzones.'
+        now: Ese día tomó la palabra de Lawson y trajo las aves de cada isla a Inglaterra etiquetadas y empaquetadas.
+        who: darwin_galapagos
+        bio: En esta línea de tiempo, Darwin escuchó a Lawson en las Galápagos y recolectó y etiquetó los pinzones y los sinsontes isla por isla antes de llevarlos a Inglaterra.
+    vignettes:
+      two_tags: Una etiqueta dice sólo "isla". Lo deja a un lado hasta que el ayudante pueda encontrar la nota de aterrizaje separada. Los dos ejemplares permanecen separados incluso después de guardar las bandejas.
+      differences: El ayudante señala dos pájaros de apariencia similar y quiere una entrada para ambos. Preguntas de qué isla vino cada uno. Dejan ambas etiquetas en el libro para que se pueda considerar nuevamente el parecido más adelante.
+      drawer: Mantiene la etiqueta de papel al lado de la bandeja hasta que el ayudante pueda leerle el nombre. Cuando cierran el cajón, la nota se queda donde pertenece.
+  finlay_havana:
+    name: Los mosquitos y la fiebre amarilla
+    place: La Habana
+    figure: Carlos Finlay
+    story: Carlos Finlay presentó la hipótesis del mosquito para la transmisión de la fiebre amarilla en La Habana en 1881. El título de su artículo la identifica como una hipótesis.
+    story_prose:
+      opening:
+        - Todavía hace calor en La Habana. Finlay coloca el papel que quiere leer junto al atril y guarda las notas del caso debajo de una carta. Alguien viene por la primera línea para ponerla en la agenda. Finlay dice claramente la palabra "hipotéticamente".
+        - El 14 de agosto de 1881, Finlay presentó en la Academia de La Habana su hipótesis del mosquito para la fiebre amarilla. Las medidas municipales contra los mosquitos siguieron mucho más tarde. Esta rama puede preservar la lectura y hacer que los miembros consideren hasta qué punto los registros respaldan lo que él propone.
+        - Alguien bueno con los documentos puede revisar la copia para la academia. Alguien que pueda organizar una discusión puede hacer que los miembros la revisen y lleven una propuesta pública de control de mosquitos a la ciudad.
+      points:
+        p1: El empleado dice que una página nunca ha sido revisada y no puede subir con el resto. Compara los envoltorios con la lista de Finlay y encuentra la hoja que falta en el pliegue alrededor de las cajas. Finlay vuelve a cerrar la copia de lectura. Cuando le llega el turno, el secretario lee el mismo título que figura en la hoja que Finlay tiene en la mano.
+        p2: El miembro más cercano a la puerta ya tiene su sombrero después de la lectura. Le pide que escuche una frase más y que diga qué registro le gustaría revisar. Se sienta y pregunta sobre un caso. Otro miembro pone una fecha al margen para el regreso. Finlay alza los papeles en cuestión y espera a que ambos vean a cuáles se refiere.
+        p3: La copia para la ciudad comienza llamando a la teoría establecida. Le pide a Finlay que enumere las observaciones por separado de las preguntas que aún están por verificar. El comité de la ciudad acuerda financiar una prueba anterior de control público de mosquitos. Antes de sellar la hoja, el secretario vuelve a escribir la palabra «hipótesis».
+      outcomes:
+        all: Se escucha el documento y los casos se someten a una segunda lectura. El control público de mosquitos comienza antes en esta rama, y los resultados aún están por verse.
+        p1: La academia escucha el artículo y archiva la copia. Los miembros aún tienen que decidir si harán un seguimiento.
+        p2: Algunos oyentes se quedan para preguntar por los discos. En las notas figura una fecha para una revisión. La ciudad aún tiene que actuar.
+        p3: La propuesta de juicio municipal obtiene respuesta. El informe registra acciones anteriores en esta rama.
+      none: La habitación se vacía. Nadie ha fijado una fecha para una segunda discusión.
+      not_admitted: Sólo se permite la entrada a las personas que figuran en la agenda. Desde fuera se oye al empleado anunciar el primer punto.
+      desync: La copia de lectura no se puede montar. La academia no escucha el artículo de Finlay el 14 de agosto y la oficina llama al viajero.
+      excerpts:
+        p1: Cuando le llega el turno, el secretario lee el mismo título que figura en la hoja que Finlay tiene en la mano.
+        p2: Finlay alza los papeles en cuestión y espera a que ambos vean a cuáles se refiere.
+        p3: Antes de sellar la hoja, el secretario vuelve a escribir la palabra «hipótesis».
+    relic: Un portaobjetos de cristal con mosquitos.
+    relic_desc: Un tobogán montado con ala de mosquito.
+    points:
+      p1: Durante la temporada de fiebre, mantenga seguros su trabajo y las notas del caso, para que pueda leer el trabajo en la Academia el 14 de agosto como estaba previsto.
+      p2: Después de la lectura, persuada a algunos miembros de la Academia para que se queden y vean sus casos, para que el documento no quede en silencio.
+      p3: Ayúdalo a convertir los mosquitos y los casos en pruebas convincentes, para que la ciudad empiece a luchar contra los mosquitos años antes.
+    points_fail:
+      p1: Las notas del caso se perdieron durante la temporada de fiebre y el documento no se leyó el 14 de agosto. Esta rama se separó de la historia y la oficina llamó al empleado.
+      p2: La sala permaneció en silencio y nadie pidió ver ni un solo caso. En esta rama el papel quedó apartado, como en la historia.
+      p3: Sus pruebas siguieron siendo tan escasas como antes. En esta rama la ciudad esperó todavía unos veinte años antes de actuar contra el mosquito, y la fiebre volvía todos los veranos hasta entonces.
+    shift:
+      p1:
+        was: El 14 de agosto de 1881 Carlos Finlay leyó en la Real Academia de Ciencias de La Habana su artículo sobre el mosquito como hipotético agente de la fiebre amarilla.
+      p2:
+        was: El 14 de agosto de 1881 su lectura fue recibida con silencio y durante años la idea fue ridiculizada.
+        now: Algunos miembros se quedaron esa noche y pidieron ver las notas de su caso.
+      p3:
+        was: Desde 1881, Finlay pasó casi veinte años intentando demostrar que el mosquito transmitía la fiebre amarilla; Sólo en 1900 la junta del ejército de los Estados Unidos, utilizando mosquitos criados a partir de sus huevos, demostró que tenía razón.
+        now: '{staff} lo ayudó a colocar los mosquitos y las cajas uno al lado del otro hasta que las pruebas se cumplieron. En esta línea de tiempo La Habana empezó a combatir el mosquito años antes, y la fiebre abandonó antes la ciudad. A Finlay se le creyó en su época.'
+        who: finlay_havana
+        bio: En esta línea, la idea del mosquito de Finlay fue aceptada a los pocos años de 1881, y La Habana actuó en consecuencia mucho antes de 1900.
+    vignettes:
+      headline: Un editor ficticio convierte una sugerencia en una certeza en el título. Lees el título lentamente. Vuelven a poner la palabra hipótesis antes de pasar la prueba.
+      columns: El editor lee sus notas como si cada línea significara lo mismo. Se dictaminan dos columnas por lo observado y lo propuesto. Una oración cambia de columna.
+      place: Compruebas el nombre del lugar donde se leyó el artículo. El editor lo pone al lado de la fecha, para que el informe no convierta la reunión en otra diferente.
+  humboldt_chimborazo:
+    name: La grieta por encima de la línea de las nieves
+    place: Chimborazo, Ecuador
+    figure: Alexander von Humboldt
+    story: El 23 de junio de 1802 Humboldt ascendió al Chimborazo con Aimé Bonpland y Carlos Montúfar. Los porteadores no quisieron ir más lejos; Los tres continuaron con hemorragias nasales, vómitos y mareos, hasta que un profundo barranco debajo de la cima los detuvo y regresaron.
+    story_prose:
+      opening:
+        - Por encima de la línea nevada del Chimborazo, Bonpland le entrega a Humboldt el barómetro para liberar una mano para su bolso. Montúfar se detiene donde puede ver hacia adelante. No se puede ver el otro lado del barranco que señala hasta que la nube se mueve.
+        - El 23 de junio de 1802, el grupo de Humboldt subió al Chimborazo y regresó a un profundo barranco. Esta rama permite al grupo encontrar una manera de continuar. Un informe de cumbre sólo cuenta cuando todos bajan.
+        - Envía a alguien que pueda cuidar de tus compañeros en la altura. Incluso con equipo de oficina disponible, pregunta a cada uno de los escaladores si quieren continuar.
+      points:
+        p1: Alguien se acerca al borde de la nieve y regresa para decirle a Humboldt que no hay ningún lugar firme donde pararse. Haga que el grupo descanse en un terreno seguro hasta que los demás hayan examinado el terreno y todos puedan decidir si continúan. Humboldt y Bonpland se turnan para llevar el instrumento. Montúfar se queda donde pueda ver a ambos en el camino de regreso. No sacan la media página escrita en la cima hasta llegar a la roca donde habían descansado.
+      outcomes:
+        all: Todos los escaladores llegan a la cima y regresan a su lugar de descanso. El informe da la hora a la que bajaron junto a la entrada de la cumbre.
+        p1: El grupo sube por el camino que encontraron en este ramal y regresa en el orden acordado antes de subir.
+      none: El grupo ve el barranco y regresa. Mientras los demás esperan, sus registros indican la altura realmente alcanzada y lo que pudieron ver.
+      not_admitted: No había lugar para el visitante cuando el grupo se fue. A continuación recibirá una caja de instrumentos vacía.
+      excerpts:
+        p1: No sacan la media página escrita en la cima hasta llegar a la roca donde habían descansado.
+    relic: un barómetro
+    relic_desc: Un barómetro de mercurio con alturas marcadas en el cristal.
+    points:
+      p1: Antes de que el profundo barranco bloquee el camino el 23 de junio, ayuda al grupo a resistir el mal de montaña, encuentra un camino para cruzar, alcanza la cima del Chimborazo y baja con seguridad.
+    points_fail:
+      p1: Como en la historia, regresan al barranco, debajo de la cima.
+    shift:
+      p1:
+        was: '23 de junio de 1802: Humboldt, Bonpland y Carlos Montúfar escalaron el Chimborazo con hemorragias nasales, vómitos y mareos, hasta que un profundo barranco debajo de la cumbre los detuvo y regresaron.'
+        now: Cruzaron el barranco, se detuvieron en la cima del Chimborazo y regresaron sanos y salvos al campamento.
+        who: humboldt_chimborazo
+        bio: En esta línea de tiempo Humboldt alcanzó la cumbre del Chimborazo con Bonpland y Montúfar el 23 de junio de 1802, y descendió sano y salvo.
+    vignettes:
+      turn: Un lector ficticio ha dibujado la cumbre al final del recorrido. Preguntas dónde termina el diario de describir el ascenso. Mueven su última marca pendiente abajo y dejan la cima intacta.
+      units: El lector quiere copiar una altura sin su unidad. Lo mantienes adherido a la medida original y dejas espacio para una conversión moderna por separado.
+      names: Le pide al lector que deje espacio al lado de Humboldt para los nombres de los demás viajeros. Cuando se dobla la nota, la lista sigue el relato del intento del día.
+  ibn_khaldun_cairo:
+    name: El barco frente a Alejandría
+    place: El Cairo
+    figure: Ibn Jaldún
+    story: Ibn Jaldún llegó a El Cairo en 1382 por invitación del sultán Barquq. En 1384, el sultán pidió al gobernante de Túnez que dejara que su familia lo siguiera, y el 8 de agosto lo nombró juez principal de la escuela malikí, un alto cargo para un recién llegado del oeste, y sus rivales en la ciudad pronto se pusieron a trabajar para derrocarlo. Ese año el barco que traía a su esposa e hijas se hundió en Alejandría. En Muqaddimah pide a los historiadores que comparen los informes con lo que podría suceder en la sociedad que describen.
+    story_prose:
+      opening:
+        - En El Cairo, un empleado pone en el mismo escritorio una cita y una lista de nombres para comprobar. Ibn Jaldún pregunta quién espera afuera. Él mismo está esperando otra carta con noticias del barco que trae a su esposa e hijas desde Túnez.
+        - En 1384, Ibn Jaldún se convirtió en juez superior de El Cairo. El barco que transportaba a su esposa e hijas se perdió más tarde en Alejandría. En este viaje podrás reservar la cita e ir al puerto para ayudar a las personas del barco a llegar a tierra.
+        - Utilice a alguien que pueda comprobar los documentos con un empleado en El Cairo. Envía temprano a Alejandría a un viajero que pueda trabajar con los marineros y ayudar a la gente en tierra.
+      points:
+        p1: El empleado dice que hay que volver a copiar el nombre y quiere esperar a que otro funcionario diga de quién es. Le pides que lea la cita que ya tienen y la compare con lo que dice el visitante. En la línea con la fecha, el portador lee en voz alta el nombre completo de Ibn Jaldún. El escribiente aparta el nombramiento del borde de la mesa y lo devuelve a los papeles que salen ese día.
+        p2: Alguien en el puerto avisa que ve a una persona y luego la pierde de vista en el agua. Le pides a la gente que mira que siga señalando el mismo lugar y deje espacio para los marineros que ya están saliendo. Cuando la esposa y las hijas de Ibn Jaldún llegan a la costa, la persona que espera en la puerta pregunta dónde deben ir primero las noticias. La carta para El Cairo espera hasta que puedan responder de viva voz.
+      outcomes:
+        all: Ibn Jaldún asume el nombramiento como en la historia. Desde el puerto llega una noticia urgente de que su familia está en tierra. En esta sucursal, el hombre que espera en El Cairo recibe un mensaje diferente.
+        p1: La cita sale el día registrado. El barco sigue perdido en Alejandría y su familia no llega a El Cairo.
+        p2: Su esposa e hijas tienen gente que las ayuda en el puerto. La cita no está sincronizada, pero aún se puede grabar la escena de su rescate.
+      none: La gente espera en El Cairo un documento y en el puerto a que amaine el viento. La carta que dice que su familia está a salvo nunca se escribe.
+      not_admitted: Nadie deja pasar a la persona que espera en la puerta para entregar la cita. Las noticias del barco no han llegado a la sala.
+      desync: El nombramiento destinado a Ibn Jaldún pasa a otra persona. La oficina llama al viajero cuando el registro no está sincronizado.
+      excerpts:
+        p1: El escribiente aparta el nombramiento del borde de la mesa y lo devuelve a los papeles que salen ese día.
+        p2: La carta para El Cairo espera hasta que puedan responder de viva voz.
+    relic: Un informe comprobado
+    relic_desc: Un informe de una procesión, con el lugar donde se encontraba el observador escrito en el margen.
+    points:
+      p1: Cuando sus rivales intentan mantener a un recién llegado fuera del tribunal, mantenga su nombramiento como juez principal de la escuela malikí el 8 de agosto.
+      p2: Cuando el barco que trae a su esposa e hijas se hunde en Alejandría, saca del agua a las personas a bordo y sálvalas.
+    points_fail:
+      p1: En esta rama el nombramiento del 8 de agosto recayó en otra persona. Esta rama se ha desprendido de la historia y la oficina ordena el regreso del empleado ese día.
+      p2: Como en la historia, el barco se hunde en Alejandría con todos a bordo y su esposa e hijas no llegan a El Cairo.
+    shift:
+      p1:
+        was: '8 de agosto de 1384: el sultán Barquq nombra a Ibn Jaldún juez principal de la escuela malikí de El Cairo; Los rivales de la ciudad trabajaron en su contra y perdió el puesto al año siguiente.'
+      p2:
+        was: '1384: el barco que traía a la esposa y las hijas de Ibn Jaldún desde Túnez se hundió en Alejandría y nadie a bordo sobrevivió.'
+        now: Las personas que iban en el barco fueron sacadas del agua en Alejandría. Su esposa e hijas se mudaron a El Cairo y la familia volvió a vivir junta.
+        who: ibn_khaldun_cairo
+        bio: 'En esta línea de tiempo, el barco que se hundió en Alejandría en 1384 no se llevó a su familia: su esposa e hijas se salvaron y se reunieron con él en El Cairo.'
+    vignettes:
+      gate: '{staff} le pregunta a un empleado, maquillado para el juego, cuánto tiempo estuvo abierta la puerta mientras la multitud pasaba. Escribe los minutos en el margen junto al total y luego cambia el total a una estimación.'
+      two: '{staff} entrega a un segundo observador, maquillado para el juego, una hoja propia, para que su relato de la calle no acabe encajado en el margen del de él.'
+      copy: '{staff} copia una página de la Muqaddimah para un estudiante de la corte y deja un dedo entre líneas, para las notas que el estudiante querrá tomar.'
+  lili_boulanger_paris:
+    name: Las partes sobre la mesa
+    place: Mézy-sur-Seine
+    figure: Lili Boulanger
+    story: Lili Boulanger estuvo gravemente enferma en el invierno de 1918 en Mézy-sur-Seine. Los relatos de su último trabajo la describen dictando Pie Jesu a su hermana Nadia. La partitura requiere voz, cuarteto de cuerda, arpa y órgano. Lili murió el 15 de marzo, a los veinticuatro años.
+    story_prose:
+      opening:
+        - Hay dos montones sobre la mesa de música, la copia en limpio y las páginas esperando ser dictadas. Nadia acaba de escribir una nota cuando Lili le pide que deje el bolígrafo. A través del fino papel es difícil leer la última barra escrita.
+        - Durante su última enfermedad, Lili Boulanger dictó la música de Pie Jesu a su hermana Nadia. Lili murió el 15 de marzo de 1918. Aquí puede hacer una pausa a su propio ritmo y pedirle a alguien que lea el punto donde se detuvo cuando quiera continuar.
+        - Alguien que lea música puede marcar el lugar de Nadia. Deje que Lili diga cuando esté lista antes de volver a leer el pasaje.
+      points:
+        p1: Nadia empieza a pasar página. Lili le pide que espere. Pones un resbalón estrecho donde ambos puedan ver la última barra. La habitación queda en silencio por un rato. Una vez que Lili habla, cuentas hacia atrás los tiempos que ha marcado Nadia. Lili cambia una nota. Nadia sigue en el mismo renglón.
+      outcomes:
+        all: Lili decide cuándo continuar. Los pasajes que ella dictó permanecen sobre la mesa, y el registro posterior todavía marca su muerte el 15 de marzo.
+        p1: Nadia regresa al lugar marcado cuando Lili está lista. Esta vez Lili no tiene que repetir el pasaje que dictó antes de la pausa.
+      none: Tras la pausa las hermanas todavía tienen que encontrar su lugar. Lili aprovecha parte del tiempo para volver a dictar un pasaje.
+      not_admitted: Nadia le pide al visitante que espere afuera y mantenga el paso en silencio. Sólo las hermanas escuchan la última frase antes de detenerse.
+      excerpts:
+        p1: Lili cambia una nota. Nadia sigue en el mismo renglón.
+    relic: Un marcador de papel estrecho
+    relic_desc: Un desliz inventado que marcaba la barra donde terminaba el dictado.
+    points:
+      p1: Cuando Lili pide un descanso, marca el lugar para Nadia y vuelve a leer el último pasaje cuando Lili quiera empezar de nuevo.
+    points_fail:
+      p1: Después de detenerse, las hermanas tienen que volver a encontrar su lugar. Lili dedica parte del tiempo que le queda de ese día repitiendo lo que ya le ha dado a Nadia.
+    shift:
+      p1:
+        was: Los relatos de Pie Jesu describen a Nadia ayudando a Lili a escribir la música cuando Lili estaba muy enferma.
+        now: En esta rama {staff} mantiene su lugar cuando Lili se detiene. Cuando está lista, Nadia vuelve a leer el último pasaje y su hermana puede comenzar exactamente donde eligió hacer una pausa.
+    vignettes:
+      entry: '{staff} le pide a Nadia que señale la nota más reciente antes de pasar la página. Mantiene un dedo en esa línea mientras revisa la voz que aparece encima.'
+      visitor: Una persona en la puerta pregunta cuánta música queda. {staff} deja la pregunta afuera mientras Lili decide si descansar.
+      stand: '{staff} deja espacio en el estrado para que Nadia deje el bolígrafo sin tapar la partitura.'
+  jianzhen_nara:
+    name: El largo regreso a Yangzhou
+    place: Lingnan
+    figure: Jianzhen
+    story: El quinto intento de Jianzhen de navegar a Japón lo llevó a Hainan. En el largo camino de regreso, Eiei, un monje que había venido a pedirle que viajara a Japón, enfermó y murió en Duanzhou. Jianzhen perdió la vista durante el viaje. Los relatos dan diferentes explicaciones.
+    story_prose:
+      opening:
+        - En Duanzhou, un compañero deja junto a la puerta los documentos de ruta recién copiados. Alguien dentro de la habitación de Eiei ha pedido a las personas que traen mensajes que esperen. Jianzhen viene a preguntar si puede sentarse adentro por un rato.
+        - El relato de los viajes de Jianzhen registra la muerte de Eiei en Duanzhou. Más tarde, la vista de Jianzhen empeoró y el grupo regresó a Yangzhou. Esta rama toma dos pequeños momentos del recorrido. Puede darles tiempo a los dos hombres para hablar y luego leer la ruta a Jianzhen.
+        - Alguien con experiencia en cuidados puede preguntar qué quiere Eiei. Un viajero que pueda leer los periódicos y escuchar a diferentes personas podrá leer más tarde la ruta a Jianzhen, parada tras parada.
+      points:
+        p1: Después de que la persona que pregunta sobre la salida se va, le preguntas a Eiei si quiere que Jianzhen entre. Él asiente y pide un taburete que deje la puerta despejada. Acuerdas con los demás guardar sus mensajes y luego esperar en el patio. De dentro llegan dos voces. Cuando bajan el tono, nadie las apresura.
+        p2: Los papeles están doblados en una pila y un compañero está a punto de contarle a Jianzhen la ruta que decidió. Lea en voz alta las paradas que aún están en cuestión y diga dónde podría pasar la noche el grupo. Jianzhen pide un nombre una vez más antes de decir qué etapa quiere tomar primero. Alguien anota su elección en la hoja que hasta entonces solo llevaba nombres de lugares.
+      outcomes:
+        all: Los dos hombres tienen tiempo de hablar. Eiei todavía muere en Duanzhou. Más tarde, cuando Jianzhen no puede leer los periódicos, viajan por una ruta que él ha escuchado en voz alta.
+        p1: Los dos hombres pueden encontrarse. Eiei todavía muere, y los documentos de ruta posteriores necesitarán que alguien se los explique a Jianzhen.
+        p2: Jianzhen escucha las siguientes etapas y decide por sí mismo adónde quiere ir. La oportunidad de pasar tiempo con Eiei ya pasó.
+      none: Los documentos de ruta regresan en su paquete. Los mensajes en la sala y en los lugares más adelante aún esperan que alguien los lea en voz alta.
+      not_admitted: Nunca entras a la habitación donde se aloja Eiei. Se llevan los papeles y nadie los lee en la puerta.
+      excerpts:
+        p1: De dentro llegan dos voces. Cuando bajan el tono, nadie las apresura.
+        p2: Alguien anota su elección en la hoja que hasta entonces solo llevaba nombres de lugares.
+    relic: Una hoja de notas de ruta.
+    relic_desc: Una hoja inventada del viaje del grupo al norte.
+    points:
+      p1: En Duanzhou, pregunte cómo quiere que lo atiendan Eiei y tómele tiempo para hablar con Jianzhen.
+      p2: Cuando la vista de Jianzhen falla, haga que el grupo lea sus planes en voz alta para que pueda decidir cómo quiere continuar.
+    points_fail:
+      p1: Siempre hay algo más que resolver y las personas que están al lado de la cama siguen siendo llamadas. El tiempo de hablar pasa.
+      p2: El grupo vuelve a reunir las notas de ruta en un paquete. Jianzhen tiene que esperar a que alguien le diga lo que hay en la página.
+    shift:
+      p1:
+        was: Eiei enfermó y murió en Duanzhou en el viaje de regreso después del quinto intento de navegar a Japón.
+        now: En esta sucursal, {staff} se queda con Eiei en Duanzhou y llama a Jianzhen para que se acerque a su cama. Hay tiempo para que hablen en privado.
+      p2:
+        was: Los relatos dicen que Jianzhen perdió la vista en este viaje. Posteriormente navegó hacia Japón.
+        now: En esta rama {staff} lee las siguientes paradas. Jianzhen les pide a los demás que cambien una parada y les dice cuándo quiere volver a partir.
+    vignettes:
+      sound: Un compañero señala el siguiente pueblo de la hoja. {staff} pide que se lea el nombre dos veces mientras Jianzhen escucha.
+      tie: El partido está a punto de cerrar los papeles de ruta. {staff} mantiene el paquete abierto hasta que alguien verifica el orden de las paradas.
+      temple: '{staff} responde una pregunta en el patio para que la gente que está dentro pueda terminar de hablar sin alzar la voz.'
+  sei_shonagon_kyoto:
+    name: El invierno en que la emperatriz iba a dar a luz
+    place: Kioto
+    figure: Sei Shōnagon
+    story: Sei Shōnagon sirvió a la emperatriz Teishi y luego escribió sobre la vida a su alrededor en The Pillow Book. Cerca del final del segundo año de Chōhō, Teishi dio a luz a una hija, la princesa Bishi, y murió poco después.
+    story_prose:
+      opening:
+        - El invierno ha llegado a Kioto y hay un cojín extra junto al biombo. Sei Shōnagon pregunta quién debería tomarlo. Mientras ella habla, llega un mensajero. Teishi mira hacia el lugar vacío mientras el mensajero todavía está allí.
+        - Teishi se preparó para dar a luz a finales del año 1000 y murió el 13 de enero de 1001 en el calendario convertido. Sei Shōnagon escribió más tarde sobre la vida en su corte en The Pillow Book. Aquí puedes preguntar quién quiere Teishi cerca y dejar espacio para las personas que ella elija.
+        - Envía un viajero que la escuche con Shōnagon. Alguien más puede responder el siguiente mensaje desde afuera mientras Teishi habla.
+      points:
+        p1: Shōnagon recoge el cojín para ponerlo en su lugar habitual. Esperas a que termine el mensajero y luego le pides que averigüe a quién quiere ver Teishi. Teishi nombra a una persona y le pide que se siente un poco detrás de la lámpara. Shōnagon deja el cojín hacia donde ella señala. Cuando la sala se calma, la persona que pidió Teishi está sentada y ella tiene la mano donde quería.
+      outcomes:
+        all: La persona que pidió ver sigue cerca. Teishi todavía muere y el informe conserva el momento en el que eligió quién se sentaría con ella.
+        p1: Shōnagon mantiene el cojín libre hasta que llega la persona que eligió Teishi. El registro posterior sigue su vida histórica.
+      none: Un mensaje tras otro llega a la puerta. El cojín pasa a la primera persona que aparece antes de que alguien pueda preguntarle a Teishi a quién quería.
+      not_admitted: Nadie te llama. Alguien mueve un cojín más allá de la pantalla. Desde fuera no se puede ver para quién era.
+      excerpts:
+        p1: Cuando la sala se calma, la persona que pidió Teishi está sentada y ella tiene la mano donde quería.
+    relic: Una nota doblada para el hogar.
+    relic_desc: Una nota inventada que nombra a quién se le debe mostrar la habitación.
+    points:
+      p1: Pregúntale a quién quiere Teishi cerca de ella mientras se prepara para dar a luz y ayuda a Shōnagon a hacer espacio para esas personas.
+    points_fail:
+      p1: Alguien está en la puerta con el siguiente mensaje antes de que tenga tiempo de preguntar a quién quiere Teishi a su lado.
+    shift:
+      p1:
+        was: Las crónicas de la corte registran el nacimiento de la princesa Bishi y la muerte de Teishi poco después.
+        now: En esta sucursal {staff} mantiene a los demás visitantes en la puerta hasta que Teishi dice a quién quiere ver. Shōnagon tiene tiempo de escuchar antes de transmitir el siguiente mensaje.
+    vignettes:
+      compare: '{staff} le pide al mensajero que lea claramente un nombre antes de doblar el mensaje. Shōnagon ahora puede transmitirlo sin volver a preguntar.'
+      colour: Shōnagon mueve la lámpara para ver el espacio detrás de ella. {staff} mueve el cojín de repuesto al lugar que Teishi señaló.
+      listen: '{staff} espera hasta que se contesta el mensaje en la puerta antes de preguntar si la habitación necesita algo más.'
+  ibn_rushd_lucena:
+    name: Antes de la orden de quemar los libros
+    place: Córdoba
+    figure: Averroes
+    story: Hacia 1195, Averroes perdió el favor de la corte almohade y fue enviado al exilio en Lucena. Los relatos registran la condena y quema de libros. El texto árabe de su Largo Comentario a la Física de Aristóteles se ha perdido, aunque sobreviven traducciones en hebreo y latín.
+    story_prose:
+      opening:
+        - En una mesa de Córdoba aún esperan dos mensajes, uno de ellos dirigido a Lucena. Un lector pregunta si Averroes seguirá respondiendo. Dibuja un largo comentario de Física hacia el copista y señala un lugar donde falta una palabra.
+        - Averroes fue enviado al exilio en Lucena alrededor de 1195. Relatos posteriores registran restricciones sobre los libros. El texto árabe de su Largo Comentario sobre la Física sobrevive sólo en parte. Aquí puede volver a poner a un lector en contacto con él y dejarle una copia revisada de una sección.
+        - Deje a alguien que pueda organizar la correspondencia a cargo de las dos direcciones. Un lector de árabe o un copista cuidadoso puede comprobar dónde termina el original y comienza el comentario.
+      points:
+        p1: El lector ha escrito varias líneas. Cuando llega el momento, te pide que le digas sólo que todavía quiere seguir leyendo. En Lucena le lees esas palabras a Averroes y le dices adónde enviar una respuesta. Pregunta a qué sección llegó el lector y toma una hoja propia. Te entrega dos hojas dobladas y te pide que se las des a quien sigue leyendo.
+        p2: El copista ha escrito más allá de un hueco. Dice que el texto tiene sentido, pero un lector del original puede nombrar la frase que falta. Pídale que deje espacio para la línea original y copie el comentario debajo, luego vuelva a leer ambos. Cuando la copia llega al lector, este pone un dedo entre los dos pasajes y dice que puede encontrar ambos por su cuenta.
+      outcomes:
+        all: Una respuesta pasa entre Lucena y Córdoba, y el lector tiene revisada una sección árabe del comentario. La pérdida de otras páginas queda en el registro histórico.
+        p1: Averroes sabe que alguien todavía está leyendo. Lucena trae su respuesta y la copia revisada queda inacabada.
+        p2: El lector se marcha con páginas en árabe revisadas. El mensaje que quería enviar a Lucena aún está esperando.
+      none: El mensaje y la página a medio escribir permanecen sobre el escritorio. El lector espera a que venga la siguiente persona.
+      not_admitted: La gente que está en la puerta no acepta una carta de un mensajero desconocido. Las palabras del lector nunca llegan a Averroes.
+      excerpts:
+        p1: Te entrega dos hojas dobladas y te pide que se las des a quien sigue leyendo.
+        p2: Cuando la copia llega al lector, este pone un dedo entre los dos pasajes y dice que puede encontrar ambos por su cuenta.
+    relic: Extracto de práctica del lector
+    relic_desc: Un extracto inventado al que se le ha añadido espacio para una premisa.
+    points:
+      p1: Enviar mensaje desde Córdoba a Averroes en Lucena de que uno de sus lectores todavía quiere escribirle y puede recibir su respuesta.
+      p2: Antes de que llegue el pedido, compare una sección del comentario árabe sobre Física con su fuente y deje una segunda copia con el lector.
+    points_fail:
+      p1: El lector guarda la nota en Córdoba. Tendrán que esperar otra oportunidad para enviarlo.
+      p2: La copia adicional queda inacabada. El lector no tiene páginas árabes separadas que llevarse.
+    shift:
+      p1:
+        was: Averroes cayó en desgracia y fue desterrado a Lucena antes de regresar a la corte.
+        now: En esta sucursal le llega una nota de lector en Lucena. Puede responder mientras todavía tengan una forma de devolver la carta.
+      p2:
+        was: El texto árabe del Largo comentario sobre física de Averroes se ha perdido. Sus traducciones medievales sobreviven.
+        now: En esta rama, una sección marcada permanece en manos del lector hasta la condena. El lector aún puede compararlo con otra copia en el original árabe.
+    vignettes:
+      premise: Mariam ha copiado una conclusión en cuidadosas cartas. Yusuf sólo puede seguirlo asumiendo algo que ella no ha dicho. Le preguntas dónde se detuvo y dejas espacio antes de la conclusión. Mariam escribe su suposición en ese espacio, donde Yusuf puede cuestionarla.
+      together: Yusuf quiere devolver el libro y quedarse con una sola línea para su propio uso. Le das tiempo para copiar el paso que lo acompaña. En la puerta, Mariam pregunta en voz alta la conclusión y ahora él también puede darle la razón.
+      language: Reconoce un término que los lectores posteriores encontrarán en otro idioma. Mariam sólo quiere saber si ha copiado la premisa tal como está. Sostienes la página plana mientras ella la revisa. La pregunta que escribe al lado se dirigirá a un lector que no conocerás.
+  maya_codices_mani:
+    name: Recordar dónde va el pliegue
+    place: Maní
+    figure: Escribas mayas
+    story: El 12 de julio de 1562 las autoridades coloniales quemaron libros y otros objetos mayas en público en Maní. Las comunidades mayas continuaron generando y transmitiendo conocimientos. Sobreviven pocos libros plegables fabricados antes de la conquista española.
+    story_prose:
+      opening:
+        - En Maní, Yucatán, una cuidadora coloca un libro doblado sobre un tapete y lo convierte en una página que una vez un niño leyó con ella. Un visitante de un pueblo cercano se marcha hoy. Antes de irse, le pregunta si le confiaría un libro.
+        - Está documentada una quema de libros en Maní en julio de 1562. Los códices mayas supervivientes conservan escrituras e imágenes, cuya historia exacta a menudo es incierta. El guardián aquí es ficticio y puede elegir a alguien para que guarde uno de sus libros.
+        - Envíe a alguien dispuesto a dejar que el guardián le muestre cómo funcionan las páginas. Si decide regalarle un libro, dóblelo según sus indicaciones y pregúntele al destinatario cómo podrán encontrarlo los lectores.
+      points:
+        p1: El guardián abre el segundo pliegue y señala un margen que otro lector alguna vez confundió. Le pide al destinatario que siga sus instrucciones para que pueda ver a ambos lectores detenerse en el mismo lugar. Separa un libro de los demás, lo envuelve en una tela gastada y lo pasa por el tapete. Quien lo recibe lo sostiene con ambas manos y espera a que ella le explique la marca del último pliegue.
+      outcomes:
+        all: Un libro va al lugar elegido por su guardián. La quema de Maní aún ocurre y esta sucursal conserva el único volumen que ella misma entregó.
+        p1: El lector lleva el libro envuelto contra su pecho. Cuando se abre de nuevo, puede encontrar el segundo pliegue como ella le mostró.
+      none: El lector vuelve a casa con las manos vacías. El guardián desdobla el libro y lo vuelve a cerrar. Todavía tiene que decidir dónde se quedará.
+      not_admitted: El guardián no invita al visitante a tocar las páginas. En la puerta la ves darles la vuelta y seguir hablando con su vecina.
+      excerpts:
+        p1: Quien lo recibe lo sostiene con ambas manos y espera a que ella le explique la marca del último pliegue.
+    relic: Un pliegue de práctica en blanco
+    relic_desc: Un pliegue ficticio ofrecido por su guardián.
+    points:
+      p1: Pregúntale al guardián qué libro quiere que tenga un lector de confianza en otra aldea y ayúdala a realizar esa entrega.
+    points_fail:
+      p1: La persona que eligió se marcha sin el libro. Su guardián tiene que decidir dónde puede quedarse.
+    shift:
+      p1:
+        was: '12 de julio de 1562: en Maní se queman en público gran cantidad de libros plegables mayas. De los libros elaborados antes de la conquista, sólo unos pocos sobreviven.'
+        now: En esta sucursal el guardián elige quién cuidará un libro. Llega al siguiente lector y permanece en manos de Maya durante la quema.
+        who: maya_codices_mani
+        bio: En esta sucursal un libro de Maní pasaba a un lector elegido por su guardián antes de la quema pública de 1562.
+    vignettes:
+      fold: El guardián coloca dos pliegues en blanco sobre un banco y le pregunta a su vecino cuál se abrió primero en el libro que recuerda. Sostienes el papel mientras comparan. No puede colocar el segundo pliegue. Se queda con el primero y deja suelto el otro para la próxima vez que hablen.
+      listen: El vecino empieza a contar la parte que perdió el portero, pero recuerda el orden de otra manera. Escuchas mientras cada uno termina. Coinciden en el primer pliegue y dejan indeciso el segundo. El guardián le pide que le deje la copia que lleva ambas cuentas.
+      survive: Has visto un códice maya superviviente en una colección posterior. La guardiana pregunta si usted puede decir qué libro recuerda su vecina. Puede nombrar la colección pero no puede conectar sus páginas a esta sala. Ella te entrega un pliegue de práctica en blanco para el camino de regreso. El libro que recordaban permanece con su relato.
+  zeami_sado:
+    name: La isla en el papel
+    place: Isla de Sado
+    figure: Zeami
+    story: El hijo de Zeami, Motomasa, murió en 1432. Zeami escribió sobre la pérdida en Kyakuraika antes de ser exiliado a Sado en 1434. Kintōsho, la colección de cánticos que recuerda su viaje y exilio en la isla, está fechada en 1436.
+    story_prose:
+      opening:
+        - En Sado, el lector viene con una hoja lo suficientemente pequeña como para guardarla en un bolsillo. Zeami ya lo escuchó practicar dos veces junto a la puerta, respirando en un punto diferente cada vez. Desde su asiento pregunta por dónde quiere empezar el lector.
+        - Zeami fue exiliado a Sado más tarde y escribió sobre la isla en Kintōsho. Esta rama le ofrece una lectura breve que puede elegir escuchar y una pausa que puede elegir él mismo. El trabajo posterior todavía pasa a la historia como lo hizo.
+        - Envía a alguien que escuche las palabras y su ritmo. Pregunte a Zeami si quiere escucharlos y registre la pausa que elija en su propia hoja.
+      points:
+        p1: El lector respira profundamente al final de la frase. Zeami le pide que empiece de nuevo en el mismo lugar y levanta la mano a mitad de camino. Observas dónde la mano detiene las palabras y marcas el desliz una vez termina la lectura. Al tercer intento, el lector se detiene en esa palabra sin bajar la vista, antes de que Zeami levante la mano.
+      outcomes:
+        all: El desliz preserva la pausa que Zeami eligió después de escuchar la línea. Va al lado de la página mientras sigue escribiendo sobre la isla.
+        p1: Zeami ha elegido él mismo la pausa. El lector dice que la próxima vez traerá la misma hoja.
+      none: El lector no puede quedarse el tiempo suficiente para que lo llamen. Su hoja doblada aún no tiene marca para la pausa.
+      not_admitted: El visitante aún no ha sido invitado a leer. El lector dobla su página y se aleja de la puerta.
+      excerpts:
+        p1: Al tercer intento, el lector se detiene en esa palabra sin bajar la vista, antes de que Zeami levante la mano.
+    relic: Una máscara de Noh
+    relic_desc: Una pequeña máscara de madera con una fina línea de laca entre las cejas.
+    points:
+      p1: Pregúntale a Zeami si quiere que alguien lea una línea con él sobre Sado. Si está de acuerdo, ayude al lector a mantener su pausa en una hoja desmontable.
+    points_fail:
+      p1: El lector tiene que irse antes de que Zeami pueda escuchar la línea en voz alta. Una marca en la página tendrá que esperar.
+    shift:
+      p1:
+        was: Los escritos de Zeami que se conservan incluyen el lamento por su hijo y Kintōsho, que recuerda su exilio en Sado.
+        now: En esta rama, Zeami escucha a un lector intentar una línea suya de dos maneras. Elige dónde debe detenerse el lector y guarda el papel junto a su propia página.
+    vignettes:
+      later: Le dices al lector que la gente seguirá usando el nombre en los libros sobre Sado. Prueba las palabras como el nombre de un lugar y luego como algo que una persona anhela. Marcas ambas pausas en una hoja. El barco que llevó a Zeami a Sado ya partió.
+      mask: El lector levanta una máscara de práctica y pierde su lugar cuando la baja. Marcas el inicio de la línea en un trozo suelto y lo apoyas donde pueda encontrarlo nuevamente. La máscara vuelve a su lugar. Te pierdes la lectura después de la tuya.
+      wind: Una corriente de aire dispersa las hojas de lectura. Ayudas al lector a recuperar uno de debajo del banco y a sujetarlo con una piedra. Lee esa línea una vez más. Cuando te vas, el papel se queda debajo de la piedra y te llevas la pausa en tus notas.
+  mozart_requiem_vienna:
+    name: Que se reconozca la letra
+    place: Viena
+    figure: Wolfgang Amadeus Mozart
+    story: Mozart murió en Viena en diciembre de 1791 con el Réquiem incompleto. La Biblioteca Nacional de Austria conserva material de trabajo y una partitura con aportaciones de Franz Xaver Süssmayr.
+    story_prose:
+      opening:
+        - En Viena, un mensajero busca el montón más ordenado de la mesa. Mozart pregunta desde su cama si las partes instrumentales del comienzo siguen ahí. Constanze le pide al mensajero que espere. Algunas de las otras páginas son borradores que no han sido eliminados.
+        - Mozart enfermó en sus últimas semanas y murió el 5 de diciembre de 1791. El Réquiem quedó inacabado, aunque ya había compuesto completamente su apertura. Aquí puede mantener esa sección junta y pedirle a un cuidador que traiga el botiquín médico ficticio del consultorio.
+        - Un lector que pueda distinguir las partes instrumentales de las hojas de trabajo puede ayudar a Constanze a clasificarlas. Utilice a alguien que tenga el kit y experiencia en cuidados, después de preguntar a la familia y a Mozart qué quiere.
+      points:
+        p1: El mensajero da la vuelta a dos hojas y lee en las dos el nombre de la misma voz. Constanze y tú pedís el fajo con la orquestación completa y comprobáis las páginas hasta el final del pasaje inicial. Los borradores se separan y se etiquetan. En la puerta, el mensajero comprueba el interior y el exterior del paquete para saber qué juego de hojas entregar primero al copista.
+        p2: Alguien trae una sábana limpia junto a la cama y pregunta si habrá copias hoy. Les explicas el material de oficina a Mozart y su familia y le pides al copista que espere en la otra habitación. Cuando Mozart se despierta más tarde, su fiebre ha desaparecido. Pide que acerquen la mesa y solo abre la página en la que se detuvo.
+      outcomes:
+        all: Las partes iniciales se pueden volver a utilizar y Mozart puede trabajar en la mesa. Las páginas siguientes todavía están en blanco cuando te vas. Nadie sabe todavía cómo acabará con ellos.
+        p1: La apertura sigue siendo un paquete completo. Mozart muere el 5 de diciembre y el resto de la partitura queda en manos de otros.
+        p2: Mozart se recupera, pero la apertura original está dispersa. Esta visita conserva el momento en que se despierta y pide ver el marcador.
+      none: Frases inacabadas yacen junto a la cama. Mozart muere el 5 de diciembre y los numerosos montones todavía esperan que alguien los identifique.
+      not_admitted: Constanze no hizo arreglos para recibir a este visitante. El copista se queda afuera y nunca ve lo que hay en el montón.
+      desync: Las partes iniciales se mezclan con páginas sueltas y el traspaso histórico se desincroniza. La oficina recuerda al viajero.
+      excerpts:
+        p1: En la puerta, el mensajero comprueba el interior y el exterior del paquete para saber qué juego de hojas entregar primero al copista.
+        p2: Pide que acerquen la mesa y solo abre la página en la que se detuvo.
+    relic: Una hoja de práctica sin terminar.
+    relic_desc: Una hoja de copia ficticia que muestra dónde terminan las notas supervivientes.
+    points:
+      p1: Mantener junta la apertura terminada del Réquiem cuando la enfermedad obligue a un traspaso
+      p2: Después de que se acueste en cama el 20 de noviembre, cura la fiebre que lo mantiene allí.
+    points_fail:
+      p1: Las partes iniciales se mezclan con borradores sueltos y el primer movimiento ya no se puede volver a montar. La oficina retira al empleado después de que la sucursal no está sincronizada.
+      p2: En esta rama la enfermedad no desaparece. Muere en Viena el 5 de diciembre, a los 35 años.
+    shift:
+      p1:
+        was: En diciembre de 1791, Mozart murió con la apertura del Réquiem completamente orquestada y gran parte del resto inacabado.
+      p2:
+        was: Desde el 20 de noviembre de 1791, Mozart estuvo confinado en cama. Murió en Viena el 5 de diciembre y el registro parroquial indicó que la causa era fiebre miliar severa.
+        now: '{staff} trae un medicamento que le quita la fiebre y en diciembre se vuelve a sentar. En esta línea de tiempo termina el Réquiem de su propia mano y continúa componiendo y actuando en Viena durante muchos años.'
+        who: mozart
+        bio: Mozart se recuperó en el invierno de 1791, terminó él mismo el Réquiem y continuó componiendo y actuando en Viena durante muchos años.
+    vignettes:
+      stack: Greta está limpiando la mesa y deja a un lado una hoja que parece vacía. Sostienes la pila mientras Emil revisa la página que tiene delante. El pentagrama vacío pertenece a la secuencia. Greta lo devuelve con un papel suelto que marca el lugar de donde vino.
+      hand: Emil puede copiar la línea que tiene delante y está listo para continuar directamente con un pentagrama no escrito. Le pide que marque una pequeña marca en el margen en el punto donde se detiene la copia. En el traspaso finalizado, el siguiente lector puede ver exactamente dónde tendría que comenzar una nueva mano.
+      finish: Puedes tararear el pasaje mientras lo cantará un futuro coro. Greta necesita la copia ahora y pregunta dónde termina la música escrita en esa página. Le muestras el límite y te guardas la melodía para ti. La próxima versión se creará después de que usted se vaya.
   cajal_barcelona:
     name: Las neuronas, una a una
     place: Barcelona
@@ -386,6 +1284,20 @@ quotes:
     authors:
       - AI
       - Fan Shen
+  cao_xueqin_beijing_story_echo_full:
+    who: Cao Xueqin, La historia de la piedra
+    quote: Y todo ese vasto terreno blanco quedó limpio.
+    occasion: La última línea de la canción de cierre del capítulo cinco, impresa en la edición Cheng de 1791.
+    authors:
+      - AI
+      - Fan Shen
+  darwin_galapagos_story_echo_full:
+    who: Charles Darwin
+    quote: un miserable manantial de agua
+    occasion: El diario de Darwin registra la pequeña fuente de agua cerca del campamento del grupo.
+    authors:
+      - AI
+      - Fan Shen
   finlay_havana_story_echo_full:
     who: Carlos J. Finlay
     quote: El mosquito hipotéticamente considerado como agente de transmisión de la fiebre amarilla
@@ -400,10 +1312,94 @@ quotes:
     authors:
       - AI
       - Fan Shen
+  humboldt_chimborazo_story_echo_full:
+    who: Alexander von Humboldt
+    quote: Alcanzar grandes alturas tiene poco interés científico.
+    occasion: Un comentario en el relato de Humboldt publicado posteriormente sobre los atentados contra el Chimborazo.
+    authors:
+      - AI
+      - Fan Shen
+  ibn_khaldun_cairo_story_echo_full:
+    who: Ibn Jaldún
+    quote: Muchas fuentes, conocimientos variados, buen juicio y cuidado en la verificación.
+    occasion: La Muqaddimah describe lo que requiere una investigación del pasado. La fecha es su año aproximado de composición inicial.
+    authors:
+      - AI
+      - Fan Shen
+  ibn_rushd_lucena_story_echo_full:
+    who: Averroes
+    quote: Porque la verdad no se opone a la verdad. Está de acuerdo con ello y da testimonio de ello.
+    occasion: Del Tratado Decisivo, obra separada del comentario. La fecha es aproximada.
+    authors:
+      - AI
+      - Fan Shen
+  jenner_berkeley_story_echo_full:
+    who: Edward Jenner
+    quote: SARAH NELMES, lechera en una granja cercana a este lugar
+    occasion: Jenner presenta a Sarah por su nombre en el Caso XVI de su Investigación publicada.
+    authors:
+      - AI
+      - Fan Shen
+  jianzhen_nara_story_echo_full:
+    who: Omi no Mifune
+    quote: Bajaron por el río Gui, llegaron a Wuzhou después de siete días y luego llegaron al templo Longxing en Duanzhou.
+    occasion: La biografía posterior enumera estas paradas antes de registrar la muerte de Eiei. Su fecha es la del texto.
+    authors:
+      - AI
+      - Fan Shen
+  lili_boulanger_paris_story_echo_full:
+    who: Lili Boulanger
+    quote: Bastante lento.
+    occasion: La instrucción de tempo al comienzo de la partitura le dictó a Nadia.
+    authors:
+      - AI
+      - Fan Shen
+  mallory_everest_story_echo_full:
+    who: George Mallory
+    quote: Probablemente mañana (8) empecemos temprano para tener un tiempo despejado.
+    occasion: Nota de Mallory al fotógrafo de la expedición John Noel, escrita antes de partir.
+    authors:
+      - AI
+      - Fan Shen
   maya_codices_mani_story_echo_full:
     who: Diego de Landa
     quote: gran número de libros de estas sus letras
     occasion: The official who ordered the burning describes the books his party found. The date marks his account, written after the event.
+    authors:
+      - AI
+      - Fan Shen
+  mozart_requiem_vienna_story_echo_full:
+    who: Autógrafo de Réquiem
+    quote: Descanso eterno.
+    occasion: Texto inicial del Introito en la partitura de Mozart.
+    authors:
+      - AI
+      - Fan Shen
+  nightingale_scutari_story_echo_full:
+    who: Florence Nightingale
+    quote: El primer requisito en un hospital es que no debe causar daño a los enfermos.
+    occasion: Nightingale abre la edición de 1863 de Notes on Hospitals con este requisito.
+    authors:
+      - AI
+      - Fan Shen
+  scott_last_camp_story_echo_full:
+    who: Robert Falcon Scott
+    quote: fuera de la puerta de la tienda sigue siendo una escena de deriva arremolinada
+    occasion: La entrada final del diario con fecha describe el clima que detuvo la fiesta.
+    authors:
+      - AI
+      - Fan Shen
+  seacole_balaklava_story_echo_full:
+    who: Mary Seacole
+    quote: La pequeña cabalgata salió del Hotel Británico.
+    occasion: Seacole relata su partida con suministros el 18 de junio de 1855. La fecha marca las memorias.
+    authors:
+      - AI
+      - Fan Shen
+  sei_shonagon_kyoto_story_echo_full:
+    who: Sei Shōnagon
+    quote: La nieve había caído muy profundamente.
+    occasion: Apertura de un pasaje del Pillow Book sobre un día de nieve con Teishi. La fecha es aproximada y marca el período de servicio judicial.
     authors:
       - AI
       - Fan Shen
@@ -414,10 +1410,52 @@ quotes:
     authors:
       - AI
       - Fan Shen
+  tupaia_tahiti_story_echo_full:
+    who: James Cook
+    quote: el barco chocó y quedó atascado
+    occasion: El diario de Cook describe el instante en que el barco chocó.
+    authors:
+      - AI
+      - Fan Shen
+  ulugh_beg_samarkand_story_echo_full:
+    who: Tablas astronómicas de Ulugh Beg
+    quote: Tablas Astronómicas del Sultán.
+    occasion: Título persa de las tablas compiladas en Samarcanda. La fecha marca la finalización del catálogo de estrellas.
+    authors:
+      - AI
+      - Fan Shen
+  wegener_greenland_story_echo_full:
+    who: Alfred Wegener
+    quote: Nuestro viaje en trineo también se ha visto interrumpido por el mal tiempo.
+    occasion: Una carta conservada en el relato publicado posteriormente describe las dificultades en el camino a Eismitte.
+    authors:
+      - AI
+      - Fan Shen
+  zeami_sado_story_echo_full:
+    who: Zeami
+    quote: No hay que olvidar los comienzos.
+    occasion: De Kakyō, donde Zeami habla de comienzos en diferentes etapas de la experiencia.
+    authors:
+      - AI
+      - Fan Shen
   cajal_barcelona_perseverance:
     who: Santiago Ramón y Cajal
     occasion: Reglas y consejos sobre investigación científica, 6.ª edición, capítulo VI
     quote: El entusiasmo y la perseverancia hacen milagros.
+    authors:
+      - AI
+      - Fan Shen
+  cao_xueqin_beijing_story_echo_none:
+    who: Un anotador del manuscrito Jiaxu
+    quote: El libro estaba inacabado cuando Qin murió y se le acabaron las lágrimas.
+    occasion: Una nota marginal posterior en el manuscrito Jiaxu. La fecha que da para la muerte de Cao es controvertida.
+    authors:
+      - AI
+      - Fan Shen
+  darwin_galapagos_story_echo_none:
+    who: Charles Darwin
+    quote: El principal mal que padecen estas islas es la escasez de agua.
+    occasion: El diario de Darwin describe la escasez después de una excursión a la isla Charles.
     authors:
       - AI
       - Fan Shen
@@ -435,6 +1473,55 @@ quotes:
     authors:
       - AI
       - Fan Shen
+  humboldt_chimborazo_story_echo_none:
+    who: Alexander von Humboldt
+    quote: Las ganas de vomitar estuvieron acompañadas de algunos mareos.
+    occasion: El relato posterior de Humboldt describe los efectos del ascenso en el grupo.
+    authors:
+      - AI
+      - Fan Shen
+  ibn_khaldun_cairo_story_echo_none:
+    who: Ibn Jaldún
+    quote: cuando los informes se basan únicamente en la transmisión
+    occasion: La introducción advierte contra la confianza en informes transmitidos sin compararlos con las circunstancias.
+    authors:
+      - AI
+      - Fan Shen
+  ibn_rushd_lucena_story_echo_none:
+    who: Averroes
+    quote: Examinar las cosas existentes por la razón y tratar de conocerlas por ella.
+    occasion: Del argumento inicial del Tratado Decisivo. La fecha es aproximada.
+    authors:
+      - AI
+      - Fan Shen
+  jenner_berkeley_story_echo_none:
+    who: Edward Jenner
+    quote: Una investigación sobre las causas y efectos de Variolae Vaccinae
+    occasion: El título principal de la colección de casos de Jenner, publicada en 1798.
+    authors:
+      - AI
+      - Fan Shen
+  jianzhen_nara_story_echo_none:
+    who: Omi no Mifune
+    quote: Eiei murió repentinamente y el maestro quedó profundamente afligido.
+    occasion: La biografía describe lo que sucedió en Duanzhou. La fecha es la del texto.
+    authors:
+      - AI
+      - Fan Shen
+  lili_boulanger_paris_story_echo_none:
+    who: Puntuación de Pie Jesús
+    quote: concédeles descanso
+    occasion: Palabras fijadas por Lili Boulanger en la obra que dictó cerca del final de su vida.
+    authors:
+      - AI
+      - Fan Shen
+  mallory_everest_story_echo_none:
+    who: George Mallory
+    quote: En la tienda debí dejar una brújula.
+    occasion: Del mensaje separado que le pide a Noel Odell que recupere la brújula.
+    authors:
+      - AI
+      - Fan Shen
   maya_codices_mani_story_echo_none:
     who: Diego de Landa
     quote: lo cual sintieron a maravilla y les dio mucha pena
@@ -442,10 +1529,73 @@ quotes:
     authors:
       - AI
       - Fan Shen
+  mozart_requiem_vienna_story_echo_none:
+    who: Constanza Mozart
+    quote: El propietario y encargado del Réquiem, cuyo nombre permanece totalmente oculto desde 1791, se ha presentado.
+    occasion: Constanze escribe a los editores de Leipzig sobre el encargo. Su carta fue escrita años después de que el trabajo quedara inconcluso.
+    authors:
+      - AI
+      - Fan Shen
+  nightingale_scutari_story_echo_none:
+    who: Florence Nightingale
+    quote: Notas sobre asuntos que afectan la salud, la eficiencia y la administración hospitalaria del ejército británico
+    occasion: El título del informe detallado de Nightingale sobre la guerra de Crimea.
+    authors:
+      - AI
+      - Fan Shen
+  scott_last_camp_story_echo_none:
+    who: Robert Falcon Scott
+    quote: Aguantaremos hasta el final.
+    occasion: Scott escribe después de días de esperar para partir hacia el depósito.
+    authors:
+      - AI
+      - Fan Shen
+  seacole_balaklava_story_echo_none:
+    who: Mary Seacole
+    quote: Cuidé de muchos heridos
+    occasion: El propio relato de Seacole sobre su trabajo el día del asalto fallido.
+    authors:
+      - AI
+      - Fan Shen
+  sei_shonagon_kyoto_story_echo_none:
+    who: Sei Shōnagon
+    quote: En primavera, el amanecer.
+    occasion: La inauguración de El libro de la almohada. La fecha marca el período aproximado de composición.
+    authors:
+      - AI
+      - Fan Shen
   sor_juana_kitchen_echo:
     who: Sor Juana Inés de la Cruz
     quote: Si Aristóteles hubiera guisado, mucho más hubiera escrito.
     occasion: 'Respuesta: observaciones en la cocina'
+    authors:
+      - AI
+      - Fan Shen
+  tupaia_tahiti_story_echo_none:
+    who: José Bancos
+    quote: Recibimos la noticia de la muerte de Tupias.
+    occasion: Banks registró el día que escuchó la noticia en Batavia.
+    authors:
+      - AI
+      - Fan Shen
+  ulugh_beg_samarkand_story_echo_none:
+    who: Thomas Hyde
+    quote: de las observaciones de Ulugh Beg
+    occasion: Frase en la portada de la impresión de las tablas en latín y persa, mucho más tardía, de Hyde.
+    authors:
+      - AI
+      - Fan Shen
+  wegener_greenland_story_echo_none:
+    who: Alfred Wegener
+    quote: El origen de los continentes y los océanos.
+    occasion: Título de la segunda edición, obra publicada antes de la última expedición de Wegener a Groenlandia.
+    authors:
+      - AI
+      - Fan Shen
+  zeami_sado_story_echo_none:
+    who: Zeami
+    quote: Mantenida oculta, puede ser la flor. Sin ocultamiento no puede florecer.
+    occasion: De las instrucciones orales recopiladas con Fūshikaden, sobre cómo retener un dispositivo para mantener la sorpresa de la audiencia. La fecha es el período aproximado de la obra.
     authors:
       - AI
       - Fan Shen

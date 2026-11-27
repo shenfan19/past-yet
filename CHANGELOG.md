@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Twenty story cards, from Cao Xueqin to Mozart’s Requiem, now have Traditional Chinese, French, Spanish, Japanese, Korean and Russian text for their catalogue cards, reports, historical echoes and share excerpts.
+
 - Eleven stories are now available in normal play, including Shakespeare in Stratford, Li Qingzhao in Kuaiji, Vesalius in Regensburg, and Sappho before leaving Mytilene. Each has written reports in Simplified Chinese and English, two sourced echoes, and an excerpt for sharing.
 - Seven more stories are now available in normal play: Bessie Coleman, Fanny Hensel, Camille Claudel, Emily Brontë, Qu Yuan, Sima Qian and Du Fu. Their Simplified Chinese and English reports have written branches, sourced echoes and share excerpts.
 - Twelve more stories are now available in normal play: Hua Tuo, Kenji Miyazawa, Ichiyō Higuchi, Rumi, Taqi al-Din, Terence, Heron, Pliny the Elder, Galen, Ovid, Empedocles and Hildegard of Bingen. All twelve have Simplified Chinese and English reports with sourced echoes and share excerpts.
