@@ -738,6 +738,33 @@ try {
     await p2.click('#tabs [data-tab=shop]');
     ok('closing the restored wiki gives the page back', await p2.locator('#modal .modalbg').count() === 0
       && await p2.locator('#tabs [data-tab=shop].on').isVisible());
+    await p2.evaluate(() => {
+      const { ctx, ui } = window.__game;
+      const s = ctx.S();
+      for (const [id, employee] of Object.entries(s.staff)) employee.hired = id === s.founder.id;
+      s.hire = { ...s.hire, next: s.clock.day + 1, slots: [{ id: 's_ning' }] };
+      ui.render();
+    });
+    await p2.click('#open-hire');
+    const trait = p2.locator('#modal [data-id="traits:patient"][data-tip]');
+    await trait.hover();
+    const tooltipAboveProcurement = await p2.locator('#tip').evaluate((tip) => {
+      const box = tip.getBoundingClientRect();
+      if (!box.width || getComputedStyle(tip).pointerEvents !== 'none') return false;
+      tip.style.pointerEvents = 'auto';
+      const top = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+      tip.style.pointerEvents = '';
+      return top === tip;
+    });
+    ok('a trait tooltip is above the hiring dialog without intercepting clicks', tooltipAboveProcurement);
+    await trait.click();
+    ok('an unavailable trait shows its own locked state instead of the last article', await p2.evaluate(() => {
+      const { D, ui } = window.__game;
+      return ui.state.wiki.cur === 'traits:patient'
+        && document.getElementById('wiki-article')?.textContent === D.get('text.ui.enc.locked_text');
+    }));
+    await p2.click('#modal .mclose');
+    ok('closing the trait article returns to hiring', await p2.locator('#modal #lb-hire').isVisible());
     await solo.close();
     ok('without dev only the stories turned on are in the game, with their places, antiques and start', shown.all && shown.eras && shown.relics && shown.start && shown.n >= 1);
   }

@@ -263,6 +263,9 @@ export function createUI(D, ctx, DEV = false) {
   const modalEl = document.createElement('div');
   modalEl.id = 'modal';
   document.body.appendChild(modalEl);
+  const tipEl = document.createElement('div');
+  tipEl.id = 'tip';
+  document.body.appendChild(tipEl);
   let modalLast = '';
   const reportBackScroll = new WeakMap();
   st.map = worldMap.init();
@@ -1302,7 +1305,10 @@ export function createUI(D, ctx, DEV = false) {
       st.pendingModalScroll = reportBackScroll.get(st.modal);
       reportBackScroll.delete(st.modal);
     }
-    if (!st.modal) st.modalStack = [];
+    if (!st.modal) {
+      st.modalStack = [];
+      renderModal();
+    }
     render();
     if (fromHomeCompletion) document.getElementById('home-complete')?.focus();
     if (procurement) document.getElementById(`open-${procurement}`)?.focus({ preventScroll: true });
@@ -1340,6 +1346,7 @@ export function createUI(D, ctx, DEV = false) {
     const html = inner ? `<div class="modalbg" data-bg="1"><div class="mwrap">${inner.replace('<div class="mbox', st.modal.kind === 'welcome' ? '<div class="mbox' : `<button class="mclose ghost" data-act="modalclose" aria-label="${esc(U.share.close)}">✕</button><div class="mbox`)}</div></div>` : '';
     document.body.classList.toggle('modal-open', !!html);
     if (html === modalLast) return;
+    tipEl.style.display = 'none';
     modalLast = html;
     const keeps = {};
     modalEl.querySelectorAll('[data-keep]').forEach((el) => { keeps[el.dataset.keep] = el.scrollTop; });
@@ -1492,7 +1499,15 @@ export function createUI(D, ctx, DEV = false) {
       document.getElementById('procurement-title')?.focus();
     }
     else if (act === 'hire') { if (office.hire(id)) ctx.audio.sfx('coin'); render(); }
-    else if (act === 'wiki') { wiki.go(id); if (st.modal && st.modal.kind === 'wiki') wiki.refresh(); else { if (st.modal) st.modalStack.push(st.modal); st.modal = { kind: 'wiki' }; render(); } }
+    else if (act === 'wiki') {
+      if (!wiki.go(id)) return;
+      if (st.modal?.kind === 'wiki') wiki.refresh();
+      else {
+        if (st.modal) st.modalStack.push(st.modal);
+        st.modal = { kind: 'wiki' };
+        render();
+      }
+    }
     else if (act === 'wikitag') { st.wiki.tag = id; wiki.refresh(); }
     else if (act === 'wikiback') { wiki.move(-1); wiki.refresh(); }
     else if (act === 'wikifwd') { wiki.move(1); wiki.refresh(); }
@@ -1576,9 +1591,6 @@ export function createUI(D, ctx, DEV = false) {
   }
   view.addEventListener('toggle', onToggle, true);
   modalEl.addEventListener('toggle', onToggle, true);
-  const tipEl = document.createElement('div');
-  tipEl.id = 'tip';
-  document.body.appendChild(tipEl);
   document.addEventListener('mouseover', (ev) => {
     const el = ev.target.closest && ev.target.closest('[data-tip]');
     if (!el) { tipEl.style.display = 'none'; return; }

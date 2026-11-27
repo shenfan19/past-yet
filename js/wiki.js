@@ -364,11 +364,12 @@ export function createWiki(X) {
 
   function go(id) {
     const x = byId(id);
-    if (!x || !visible(x)) return;
+    if (!x) return false;
     const s = w();
     if (s.hist[s.pos] !== id) { s.hist = s.hist.slice(0, s.pos + 1); s.hist.push(id); s.pos = s.hist.length - 1; }
     s.cur = id;
-    s.openCats[x.cat] = true;
+    if (visible(x)) s.openCats[x.cat] = true;
+    return true;
   }
   function move(d) { const s = w(); const p = s.pos + d; if (p >= 0 && p < s.hist.length) { s.pos = p; s.cur = s.hist[p]; w().openCats[byId(s.cur).cat] = true; } }
   // update only the wiki panels, so the page scroll and the list scroll stay where they are
