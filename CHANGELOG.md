@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- All 144 stories in normal play now have catalogue cards, reports, historical timelines, echoes and share excerpts in Simplified Chinese, English, Traditional Chinese, French, Spanish, Japanese, Korean and Russian. The Guangzhou 1924 scenario also has complete text for its full simulation in all eight languages.
+
 - Twenty story cards, from Cao Xueqin to Mozart’s Requiem, now have Traditional Chinese, French, Spanish, Japanese, Korean and Russian text for their catalogue cards, reports, historical echoes and share excerpts.
 
 - Eleven stories are now available in normal play, including Shakespeare in Stratford, Li Qingzhao in Kuaiji, Vesalius in Regensburg, and Sappho before leaving Mytilene. Each has written reports in Simplified Chinese and English, two sourced echoes, and an excerpt for sharing.
