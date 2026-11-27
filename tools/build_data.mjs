@@ -495,8 +495,9 @@ let storyLine = '';
   storyLine += `
 open stories without the echoes full and none: ${noEcho.length}/${open.length}${noEcho.length ? ', the first ' + noEcho.slice(0, 8).map((row) => row.event).join(', ') : ''}`;
   // every open story with a scene is told by its Chinese story prose; the list is the work left, and the story agent takes its batches from it
-  const hasStory = (event) => event.scene || config.eras.includes(event.era);
-  const noProse = open.filter((event) => hasStory(event) && !(config.eras.includes(event.era) ? langEras.zh[event.era]?.story_prose : event.text?.zh?.story_prose)).map((event) => event.id);
+  const hasLiveModel = (event) => config.eras.includes(event.era) && modelOf(event.era)?.metadata.status !== 'draft';
+  const hasStory = (event) => event.scene || hasLiveModel(event);
+  const noProse = open.filter((event) => hasStory(event) && !(hasLiveModel(event) ? langEras.zh[event.era]?.story_prose : event.text?.zh?.story_prose)).map((event) => event.id);
   storyLine += `
 open stories without Chinese story prose: ${noProse.length}/${open.filter(hasStory).length}${noProse.length ? ': ' + noProse.join(', ') : ''}`;
   if (storyDetails) storyLine += '\n' + rows.map(({ event, owner, gaps }) =>

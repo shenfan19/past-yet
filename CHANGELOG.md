@@ -11,6 +11,8 @@
 - Added Enheduanna, Ibn Sina, Al-Jazari, Hokusai, Alexander Graham Bell and Georg Cantor to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
 - Added Mozart’s Requiem, Emily Dickinson, Heinrich Hertz, Bizet, Artemisia Gentileschi and Georg Büchner to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
 - Added Lili Boulanger, Jianzhen, Sei Shōnagon, Ibn Rushd, the Maya book at Maní and Zeami to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+- Added the short stories for Tupaia, Ulugh Beg, Darwin, Finlay, Humboldt, Ibn Khaldun, Jenner, Mallory, Nightingale, Scott, Seacole and Wegener to normal play, with Simplified Chinese and English reports, sourced echoes and share excerpts.
+- Added Cao Xueqin’s The Blank After the Last Chapter to normal play, with Simplified Chinese and English reports, sourced echoes and a share excerpt.
 
 - The report now says which traveller you are to reach the place, such as “You are traveller number 12 to come here”. The count comes from an anonymous counting service; no save and no identifier are sent, and the line stays empty when the service cannot be reached. About, Data and privacy explains it.
 - New story prose for Omar Khayyam, the Wright brothers, Van Gogh, Hargrave, Lalibela, Ife and Great Zimbabwe. All 65 open stories now have written reports. The three archaeological stories use documented conservation and excavation episodes. Ife’s share card quotes the reconstruction of the excavation plan.
